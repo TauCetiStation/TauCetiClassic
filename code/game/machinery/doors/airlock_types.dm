@@ -22,6 +22,11 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/virology
+	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_viro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -79,6 +84,10 @@
 	glass   = TRUE
 
 /obj/machinery/door/airlock/medical/glass
+	opacity = FALSE
+	glass   = TRUE
+
+/obj/machinery/door/airlock/virology/glass
 	opacity = FALSE
 	glass   = TRUE
 
@@ -155,16 +164,12 @@
 
 /obj/machinery/door/airlock/phoron/proc/PhoronBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2, loc))
-		var/datum/gas_mixture/napalm = new
-		var/phoronToDeduce = 35
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 400 + T0C
-		target_tile.assume_air(napalm)
+		target_tile.assume_gas("phoron", 35, 400 + T0C)
 		INVOKE_ASYNC(target_tile, /turf/simulated/floor.proc/hotspot_expose, temperature, 400)
 
 	for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
-		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)
+		T.ChangeTurf(/turf/simulated/wall/mineral/phoron)
 		qdel(F)
 
 	for(var/turf/simulated/wall/mineral/phoron/W in range(3, src))
@@ -331,8 +336,8 @@
 /obj/machinery/door/airlock/multi_tile
 	var/width = 2
 
-/obj/machinery/door/airlock/multi_tile/New()
-	..()
+/obj/machinery/door/airlock/multi_tile/atom_init()
+	. = ..()
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
 		bound_height = width * world.icon_size
@@ -340,7 +345,7 @@
 		bound_width  = width * world.icon_size
 		bound_height = world.icon_size
 
-/obj/machinery/door/airlock/multi_tile/Move()
+/obj/machinery/door/airlock/multi_tile/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
@@ -362,7 +367,7 @@
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		to_chat(user, "<span class='red'>This airlock cannot be painted.</span>")
 	else
-		..()
+		return ..()
 
 
 /*******************

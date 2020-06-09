@@ -30,18 +30,19 @@ Possible to do for anyone motivated enough:
 var/const/HOLOPAD_MODE = 0
 
 /obj/machinery/hologram/holopad
-	name = "\improper AI holopad"
+	name = "AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
 
 	layer = TURF_LAYER+0.1 //Preventing mice and drones from sneaking under them.
+	plane = FLOOR_PLANE
 
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 
-/obj/machinery/hologram/holopad/New()
-	..()
+/obj/machinery/hologram/holopad/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
@@ -69,23 +70,27 @@ var/const/HOLOPAD_MODE = 0
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
-	if(!istype(user))
-		return
+/obj/machinery/hologram/holopad/attack_hand(mob/user) //Carn: Hologram requests.
+	if(..())
+		return 1
+	if(!ishuman(user) && !IsAdminGhost(user))
+		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time
 			to_chat(user, "<span class='notice'>You request an AI's presence.</span>")
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in living_mob_list)
-				if(!AI.client)	continue
+			for(var/mob/living/silicon/ai/AI in ai_list)
+				if(!AI.client || AI.stat == DEAD)
+					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
 		else
 			to_chat(user, "<span class='notice'>A request for AI presence was already sent recently.</span>")
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
-		return
+		return ..()
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
@@ -101,11 +106,16 @@ var/const/HOLOPAD_MODE = 0
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
-			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+			playsound(src, 'sound/machines/holopadon.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+			if(user.holohack)
+				change_holo_to_carp(user)
+
+			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
-			to_chat(user, "\red ERROR: \black Image feed in progress.")
+			to_chat(user, "<span class='warning'>ERROR:</span> Image feed in progress.")
 	else
-		to_chat(user, "\red ERROR: \black Unable to project hologram.")
+		to_chat(user, "<span class='warning'>ERROR:</span> Unable to project hologram.")
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
@@ -123,8 +133,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(speaking)
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [speaking.format_message(text, verb)]</span></i>"
 		else
-			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[sanitize_plus_chat(text)]\"</span></span></i>"
-		master.show_message(rendered, 2)
+			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\"</span></span></i>"
+		to_chat(master, rendered)
 	return
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
@@ -133,14 +143,19 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = 1//So space wind cannot drag it.
-	hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
+	hologram.name = "[A.name]"//If someone decides to right click.
+	hologram.desc = "Hologram of [A.name]"
 	hologram.set_light(2)	//hologram lighting
 	set_light(2)			//pad lighting
 	icon_state = "holopad1"
 	A.holo = src
 	master = A//AI is the master.
-	use_power = 2//Active power usage.
-	return 1
+	use_power = ACTIVE_POWER_USE//Active power usage.
+
+/obj/machinery/hologram/holopad/proc/change_holo_to_carp(mob/living/silicon/ai/A)
+	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+	hologram.name = "space carp"
+	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
@@ -151,22 +166,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	master = null//Null the master, since no-one is using it now.
 	set_light(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 	icon_state = "holopad0"
-	use_power = 1//Passive power usage.
+	use_power = IDLE_POWER_USE//Passive power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
 		if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if(!(stat & NOPOWER))//If the  machine has power.
-				if((HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range)))
+				if(HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range))
 					return 1
 
 				else if (HOLOPAD_MODE == 1)
-
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
-
-					if(eye_area in holo_area.master.related)
+					if(eye_area == holo_area)
 						return 1
 
 		clear_holo()//If not, we want to get rid of the hologram.
@@ -185,7 +198,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
@@ -195,6 +208,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		stat &= ~NOPOWER
 	else
 		stat |= ~NOPOWER
+	update_power_use()
 
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity)
@@ -221,7 +235,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(hologram)
 		src:clear_holo()
 	return ..()
-
 /*
 Holographic project of everything else.
 

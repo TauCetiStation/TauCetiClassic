@@ -11,28 +11,65 @@
 /obj/item/stack
 	gender = PLURAL
 	origin_tech = "materials=1"
+	usesound = 'sound/items/Deconstruct.ogg'
+
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount = 50                 // also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/merge_type = null               // This path and its children should merge with this stack, defaults to src.type
+	var/full_w_class = ITEM_SIZE_NORMAL // The weight class the stack should have at amount > 2/3rds max_amount
+	var/is_fusion_fuel
 
-/obj/item/stack/New(var/loc, var/amount=null)
-	..()
-	if (amount)
-		src.amount=amount
-	return
+/obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
+	. = ..()
+
+	if(new_amount)
+		amount = new_amount
+	if(!merge_type)
+		merge_type = type
+	if(merge)
+		for(var/obj/item/stack/S in loc)
+			if(S.merge_type == merge_type)
+				merge(S)
+
+	update_weight()
+	update_icon()
 
 /obj/item/stack/Destroy()
-	if (src && usr && usr.machine==src)
+	amount = 0 // lets say anything that wants to use us, that we are empty.
+
+	if (usr && usr.machine == src)
 		usr << browse(null, "window=stack")
 	if(recipes)
 		recipes = null
+
 	return ..()
+
+/obj/item/stack/proc/update_weight()
+	if(amount <= (max_amount * (1 / 3)))
+		w_class = CLAMP(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+	else if (amount <= (max_amount * (2 / 3)))
+		w_class = CLAMP(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+	else
+		w_class = full_w_class
 
 /obj/item/stack/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		to_chat(user, "There are [amount] [singular_name]\s in the stack.")
+		if(get_amount() > 1)
+			to_chat(user, "There are [get_amount()] [get_stack_name()] in the stack.")
+		else
+			to_chat(user, "There is [get_amount()] [get_stack_name()] in the stack.")
+
+/obj/item/stack/proc/get_stack_name()
+	if(singular_name)
+		if(get_amount() > 1)
+			return "[singular_name]\s"
+		else
+			return "[singular_name]"
+	else
+		return ""
 
 /obj/item/stack/attack_self(mob/user)
 	list_recipes(user)
@@ -67,7 +104,7 @@
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
 			var/max_multiplier = round(src.amount / R.req_amount)
-			var/title as text
+			var/title
 			var/can_build = 1
 			can_build = can_build && (max_multiplier>0)
 			/*
@@ -97,13 +134,13 @@
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
-	user << browse(t1, "window=stack")
+	user << browse(entity_ja(t1), "window=stack")
 	onclose(user, "stack")
 	return
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
 	if (href_list["sublist"] && !href_list["make"])
@@ -119,19 +156,21 @@
 		if (!multiplier) multiplier = 1
 		if(src.amount < (R.req_amount*multiplier))
 			if (R.req_amount*multiplier>1)
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 			else
-				to_chat(usr, "\red You haven't got enough [src] to build \the [R.title]!")
+				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			to_chat(usr, "\red There is another [R.title] here!")
+			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 			return
 		if (R.on_floor)
 			usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
-			to_chat(usr, "\blue Building [R.title] ...")
+			if(usr.is_busy())
+				return
+			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 			if (!do_after(usr, R.time, target = usr))
 				return
 		if(!src.use(R.req_amount*multiplier))
@@ -152,14 +191,42 @@
 		return
 	return
 
-/obj/item/stack/proc/use(used)
-	if(src.amount < used)
-		return 0
-	else
-		amount -= used
-		if ((src.amount <= 0) && !istype(loc,/obj/item/weapon/robot_module) && !istype(loc,/mob/living/silicon))
-			qdel(src)
-		return 1
+/obj/item/stack/proc/get_amount()
+	. = (amount)
+
+/obj/item/stack/proc/is_cyborg()
+	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
+
+/obj/item/stack/use(used, transfer = FALSE)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		return FALSE
+	if(zero_amount())
+		return FALSE
+	if(amount < used)
+		return FALSE
+
+	amount -= used
+
+	if(!zero_amount())
+		update_weight()
+		update_icon()
+
+	return TRUE
+
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
+
+	return TRUE
 
 /obj/item/proc/use_multi(mob/user, list/res_list)
 	. = TRUE
@@ -167,61 +234,99 @@
 		var/obj/item/stack/S = x
 		if(S.amount < res_list[x])
 			. = FALSE
-			to_chat(user, "There is not enough [S.name]. You need [res_list[x]].")
+			to_chat(user, "<span class='notice'>There is not enough [S.name]. You need [res_list[x]].</span>")
 			break
 	if(.)
 		for(var/x in res_list)
 			var/obj/item/stack/S = x
 			S.use(res_list[x])
 
-/obj/item/stack/proc/add_to_stacks(mob/usr)
-	var/obj/item/stack/oldsrc = src
-	src = null
-	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
-			continue
-		if (!istype(item, oldsrc.type))
-			continue
-		if (item.amount>=item.max_amount)
-			continue
-		oldsrc.attackby(item, usr)
-		to_chat(usr, "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
-		if(!oldsrc)
-			break
+/obj/item/stack/proc/zero_amount()
+	if(amount < 1 && !is_cyborg())
+		qdel(src)
+		return TRUE
+	return FALSE
+
+/obj/item/stack/proc/add(_amount)
+	if(_amount < 0)
+		stack_trace("[src.type]/add() called with a negative parameter [_amount]")
+		return
+	amount += _amount
+	update_icon()
+	update_weight()
+
+/obj/item/stack/proc/set_amount(_amount)
+	amount = _amount
+	if(!zero_amount())
+		update_icon()
+		update_weight()
+
+/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return
+	var/transfer = get_amount()
+	var/old_loc = loc
+	transfer = min(transfer, S.max_amount - S.amount)
+	if(pulledby)
+		pulledby.start_pulling(S)
+	S.copy_evidences(src)
+	use(transfer, TRUE)
+	if (istype(old_loc, /obj/item/weapon/storage) && amount < 1 && !is_cyborg())
+		var/obj/item/weapon/storage/s = old_loc
+		s.update_ui_after_item_removal()
+	S.add(transfer)
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
-		if(!use(1))
+		if(zero_amount())
 			return
-		var/obj/item/stack/F = new src.type( user, 1)
-		F.copy_evidences(src)
-		user.put_in_hands(F)
-		src.add_fingerprint(user)
-		F.add_fingerprint(user)
-		if (src && usr.machine==src)
+		change_stack(user, 1)
+		if(!QDELETED(src) && usr.machine == src)
 			INVOKE_ASYNC(src, .proc/interact, usr)
 	else
 		..()
-	return
+
+/obj/item/stack/AltClick(mob/living/user)
+	if(!istype(user) || !CanUseTopic(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	if(is_cyborg())
+		return
+	else
+		if(zero_amount())
+			return
+		//get amount from user
+		var/min = 0
+		var/max = get_amount()
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
+		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= get_amount() || !CanUseTopic(user))
+			return
+		else
+			change_stack(user, stackmaterial)
+			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
+
+/obj/item/stack/proc/change_stack(mob/user, amount)
+	var/obj/item/stack/F = new type(user, amount, FALSE)
+	. = F
+	F.copy_evidences(src)
+	user.put_in_hands(F)
+	add_fingerprint(user)
+	F.add_fingerprint(user)
+	use(amount, TRUE)
 
 /obj/item/stack/attackby(obj/item/W, mob/user)
-	..()
-	if (istype(W, src.type))
+	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		if (S.amount >= max_amount)
-			return 1
-		var/to_transfer as num
-		if (user.get_inactive_hand()==src)
-			to_transfer = 1
-		else
-			to_transfer = min(src.amount, S.max_amount-S.amount)
-		if(src.use(to_transfer))
-			S.amount+=to_transfer
-		if (S && usr.machine==S)
+		merge(S)
+		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(!QDELETED(S) && usr.machine == S)
 			INVOKE_ASYNC(S, /obj/item/stack.proc/interact, usr)
-		if (src && usr.machine==src)
+		if(!QDELETED(src) && usr.machine == src)
 			INVOKE_ASYNC(src, .proc/interact, usr)
-	else return ..()
+	else
+		..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	src.blood_DNA = from.blood_DNA
@@ -240,17 +345,18 @@
 	var/res_amount = 1
 	var/max_res_amount = 1
 	var/time = 0
-	var/one_per_turf = 0
-	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
-		src.title = title
-		src.result_type = result_type
-		src.req_amount = req_amount
-		src.res_amount = res_amount
-		src.max_res_amount = max_res_amount
-		src.time = time
-		src.one_per_turf = one_per_turf
-		src.on_floor = on_floor
+	var/one_per_turf = FALSE
+	var/on_floor = FALSE
+
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE)
+	src.title = title
+	src.result_type = result_type
+	src.req_amount = req_amount
+	src.res_amount = res_amount
+	src.max_res_amount = max_res_amount
+	src.time = time
+	src.one_per_turf = one_per_turf
+	src.on_floor = on_floor
 
 /*
  * Recipe list datum
@@ -259,7 +365,8 @@
 	var/title = "ERROR"
 	var/list/recipes = null
 	var/req_amount = 1
-	New(title, recipes, req_amount = 1)
-		src.title = title
-		src.recipes = recipes
-		src.req_amount = req_amount
+
+/datum/stack_recipe_list/New(title, recipes, req_amount = 1)
+	src.title = title
+	src.recipes = recipes
+	src.req_amount = req_amount

@@ -15,6 +15,8 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	has_head = TRUE
+
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."
@@ -30,9 +32,12 @@
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
 
-/mob/living/simple_animal/adultslime/New()
-	..()
-	overlays += "aslime-:33"
+	has_head = TRUE
+
+/mob/living/simple_animal/adultslime/atom_init()
+	. = ..()
+	add_overlay("aslime-:33")
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME)
 
 
 /mob/living/simple_animal/slime/adult/death()

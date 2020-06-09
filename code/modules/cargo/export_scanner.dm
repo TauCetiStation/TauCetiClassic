@@ -4,7 +4,7 @@
 	icon_state = "export_scanner"
 	item_state = "radio"
 	flags = NOBLUDGEON
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
 
@@ -13,7 +13,10 @@
 	if(!cargo_console)
 		to_chat(user, "<span class='notice'>The [src] is currently not linked to a cargo console.</span>")
 
-/obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/export_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!isobj(target))
+		return
+	var/obj/O = target
 	if(!istype(O) || !proximity)
 		return
 

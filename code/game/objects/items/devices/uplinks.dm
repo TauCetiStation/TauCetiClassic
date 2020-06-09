@@ -16,10 +16,14 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/uplink_type = "traitor" //0 - триторский аплинк, 1 - нюкерский
 	var/list/uplink_items = list()
 
-/obj/item/device/uplink/New()
-	..()
-	welcome = ticker.mode.uplink_welcome
-	uses = ticker.mode.uplink_uses
+/obj/item/device/uplink/atom_init()
+	. = ..()
+	if(ticker && ticker.mode)
+		welcome = ticker.mode.uplink_welcome
+		uses = ticker.mode.uplink_uses
+	else
+		welcome = "Syndicate Uplink Console:"
+		uses = 20
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
@@ -73,7 +77,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
 	dat += "</font></body>"
-	user << browse(dat, "window=hidden")
+	user << browse(entity_ja(dat), "window=hidden")
 	onclose(user, "hidden")
 	return
 
@@ -179,7 +183,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // Includes normal radio uplink, multitool uplink,
 // implant uplink (not the implant tool) and a preset headset uplink.
 
-/obj/item/device/radio/uplink/New()
+/obj/item/device/radio/uplink/atom_init()
+	. = ..()
 	hidden_uplink = new(src)
 	icon_state = "radio"
 	hidden_uplink.uplink_type = "nuclear"
@@ -188,7 +193,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
-/obj/item/device/multitool/uplink/New()
+/obj/item/device/multitool/uplink/atom_init()
+	. = ..()
 	hidden_uplink = new(src)
 
 /obj/item/device/multitool/uplink/attack_self(mob/user)
@@ -198,7 +204,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/headset/uplink
 	traitor_frequency = 1445
 
-/obj/item/device/radio/headset/uplink/New()
-	..()
+/obj/item/device/radio/headset/uplink/atom_init()
+	. = ..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 20

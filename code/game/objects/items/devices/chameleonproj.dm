@@ -2,18 +2,25 @@
 	name = "chameleon-projector"
 	icon_state = "shield0"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = TRUE
 	var/toggled = FALSE
 	var/obj/effect/dummy/chameleon/active_dummy = null
+	var/recharge = FALSE
+	var/last_used = 0
+	var/cooldown = 20
 
-/obj/item/device/chameleon/New()
+/obj/item/device/chameleon/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/chameleon/atom_init_late()
 	active_dummy = new
 	active_dummy.master = src
 	init_disguise()
@@ -44,17 +51,24 @@
 /obj/item/device/chameleon/equipped()
 	disrupt()
 
-/obj/item/device/chameleon/attack_self()
-	toggle()
+/obj/item/device/chameleon/attack_self(mob/living/user)
+	if(last_used + cooldown < world.time)
+		recharge = FALSE
+		last_used = world.time
 
-/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity)
+	if(recharge)
+		to_chat(user, "<span class='warning'>[src.name] is still recharging. </span>")
+	else
+		toggle()
+
+/obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!active_dummy)
 		active_dummy = new
 	if(active_dummy.current_type != target.type)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
+			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
 			copy_item(target)
 	else
@@ -83,7 +97,7 @@
 	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
 
 /obj/item/device/chameleon/proc/play_transform_effect()
-	playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
 	flick("emppulse",T)
@@ -105,6 +119,7 @@
 			M.reset_view(null)
 	C.loc = master
 	toggled = FALSE
+	recharge = TRUE
 
 /obj/item/device/chameleon/proc/disrupt()
 	if(toggled)

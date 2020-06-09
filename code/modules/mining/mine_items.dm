@@ -1,3 +1,4 @@
+#define COUNTER_COOLDOWN (20 SECONDS)
 /**********************Light************************/
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
@@ -17,9 +18,7 @@
 	icon_off = "miningsecoff"
 	req_access = list(access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
-	..()
-	sleep(2)
+/obj/structure/closet/secure_closet/miner/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
@@ -34,18 +33,18 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	/*/New year part
+	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
-	*/
+	#endif
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
-proc/move_mining_shuttle()
+/proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
 	mining_shuttle_moving = 1
 	spawn(mining_shuttle_tickstomove*10)
@@ -118,10 +117,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 
-/obj/machinery/computer/mining_shuttle/attack_hand(user)
-	if(..(user))
-		return
-	src.add_fingerprint(usr)
+/obj/machinery/computer/mining_shuttle/ui_interact(user)
 	var/dat
 
 	dat = "<center>Mining Shuttle Control<hr>"
@@ -132,9 +128,7 @@ proc/move_mining_shuttle()
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-
-
-	user << browse("[dat]", "window=miningshuttle;size=200x150")
+	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=200x150")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	. = ..()
@@ -169,39 +163,35 @@ proc/move_mining_shuttle()
 	icon_state = "lantern"
 	item_state = "lantern"
 	desc = "A mining lantern."
+	button_sound = 'sound/items/lantern.ogg'
 	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
-//	slot_flags = SLOT_BELT
+//	slot_flags = SLOT_FLAGS_BELT
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 50 //moving the delay to an item var so R&D can make improved picks. --NEO
+	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	var/drill_sound = 'sound/weapons/Genhit.ogg'
+	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
 	sharp = 1
 
 	var/excavation_amount = 100
 
-/obj/item/weapon/pickaxe/hammer
-	name = "sledgehammer"
-	//icon_state = "sledgehammer" Waiting on sprite
-	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
-
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -209,7 +199,7 @@ proc/move_mining_shuttle()
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	digspeed = 45
+	toolspeed = 0.9
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
@@ -217,34 +207,83 @@ proc/move_mining_shuttle()
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	w_class = 3.0 //it is smaller than the pickaxe
+	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
 	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
+
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 10
+	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
+/*****************************Sledgehammer********************************/
+/obj/item/weapon/twohanded/sledgehammer
+	name = "Sledgehammer"
+	icon_state = "sledgehammer0"
+	force = 15
+	origin_tech = "materials=3"
+	desc = "This thing breaks skulls pretty well, right?"
+	hitsound = 'sound/items/sledgehammer_hit.ogg'
+	w_class = ITEM_SIZE_HUGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 15
+	force_wielded = 35
+	attack_verb = list("attacked", "smashed", "hit", "space assholed")
+	var/asshole_counter = 0
+	var/next_hit = 0
+
+/obj/item/weapon/twohanded/sledgehammer/update_icon()
+	icon_state = "sledgehammer[wielded]"
+
+/obj/item/weapon/twohanded/sledgehammer/attack(mob/living/target, mob/living/user)
+	..()
+	if(next_hit < world.time)
+		asshole_counter = 0
+	next_hit = world.time + COUNTER_COOLDOWN
+	asshole_counter += 1
+
+	var/target_zone = user.zone_sel.selecting
+	if(target_zone == BP_HEAD)
+		shake_camera(target, 2, 2)
+
+	if((CLUMSY in user.mutations) && asshole_counter >= 5)
+		target.emote("scream")
+		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
+		asshole_counter = 0
+	if(wielded)
+		INVOKE_ASYNC(src, .proc/spin, user)
+
+/obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
+	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
+		user.dir = i
+		sleep(1)
+
+/obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
+	..()
+	asshole_counter = 0
 
 /*****************************Shovel********************************/
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -256,7 +295,7 @@ proc/move_mining_shuttle()
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
@@ -283,26 +322,26 @@ proc/move_mining_shuttle()
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'sound/items/drill.ogg'
+	usesound = 'sound/items/drill.ogg'
+	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	digspeed = 30
+	toolspeed = 0.6
 	var/drill_cost = 15
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = 0
 
-/obj/item/weapon/pickaxe/drill/New()
-	..()
+/obj/item/weapon/pickaxe/drill/atom_init()
+	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
-	return
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -314,7 +353,7 @@ proc/move_mining_shuttle()
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -366,18 +405,20 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
-	digspeed = 40 //Drills 3 tiles in front of user
+	item_state = "jackhammer"
+	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/jackhammer/attackby()
+	return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
-	digspeed = 15 //Digs through walls, girders, and can dig up sand
+	item_state = "d_drill"
+	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -387,12 +428,12 @@ proc/move_mining_shuttle()
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
-	digspeed = 20
+	toolspeed = 0.4
 	desc = ""
 	drill_verb = "drilling"
 
-	attackby()
-		return
+/obj/item/weapon/pickaxe/drill/borgdrill/attackby()
+	return
 
 
 
@@ -405,7 +446,7 @@ proc/move_mining_shuttle()
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = NOBLUDGEON
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/timer = 10
 	var/atom/target = null
 	var/blast_range = 1
@@ -419,11 +460,13 @@ proc/move_mining_shuttle()
 	timer = newtime
 	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
-/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
+		return
+	if(user.is_busy(src))
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
@@ -433,7 +476,7 @@ proc/move_mining_shuttle()
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
+		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -458,37 +501,39 @@ proc/move_mining_shuttle()
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
-	var/overheat = 0
-	var/overheat_time = 20
-	var/recent_reload = 1
+	var/recharge_time = 20
+	var/already_improved = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	overheat = 1
-	spawn(overheat_time)
-		overheat = 0
-		recent_reload = 0
-	..()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
+	power_supply.give(500)
+	playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
+	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
-	if(overheat || recent_reload)
-		return
-	power_supply.give(500)
-	if(!silenced)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/kinetic_upgrade/speed))
+		if(already_improved == FALSE)
+			already_improved = TRUE
+			recharge_time -= 8 //We get 1.2 seconds of reload instead.
+			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+			qdel(O)
+		else
+			to_chat(user, "<span class='notice'>Already improved.</span>")
 	else
-		to_chat(usr, "<span class='warning'>You silently charge [src].<span>")
-	recent_reload = 1
-	update_icon()
-	return
+		return ..()
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/guns/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
@@ -499,16 +544,16 @@ proc/move_mining_shuttle()
 	var/range = 3
 	var/power = 4
 
-obj/item/projectile/kinetic/New()
+/obj/item/projectile/kinetic/atom_init()
+	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
-		return
+		return INITIALIZE_HINT_QDEL
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
-	..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -516,7 +561,7 @@ obj/item/projectile/kinetic/New()
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -530,18 +575,27 @@ obj/item/projectile/kinetic/New()
 	icon_state = "kinetic_blast"
 	layer = 4.1
 
-/obj/item/effect/kinetic_blast/New()
-	spawn(4)
-		qdel(src)
+/obj/item/effect/kinetic_blast/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/item/effect/kinetic_blast/atom_init_late()
+	QDEL_IN(src, 4)
+
+/obj/item/kinetic_upgrade/speed
+	name = "upgrade for accelerator"
+	desc = "Speeds up reloading Proto-kinetic accelerator."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "accelerator_speedupgrade"
 
 /*****************************Survival Pod********************************/
 
 
-/area/survivalpod
-	name = "\improper Emergency Shelter"
+/area/custom/survivalpod
+	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 
 /obj/item/weapon/survivalcapsule
@@ -549,7 +603,7 @@ obj/item/projectile/kinetic/New()
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -577,7 +631,7 @@ obj/item/projectile/kinetic/New()
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) //we don't need complete all checks
+		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE
@@ -586,7 +640,7 @@ obj/item/projectile/kinetic/New()
 			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
 			new /obj/item/clothing/suit/space/cheap(T)
 			new /obj/item/clothing/head/helmet/space/cheap(T)
-			playsound(T, 'sound/effects/sparks2.ogg', 100, 1)
+			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
 			src.loc.visible_message("<span class='warning'>\The [src] begins \
 				to shake. Stand back!</span>")
@@ -610,9 +664,9 @@ obj/item/projectile/kinetic/New()
 				used = FALSE
 				return
 
-			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(T, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
+			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
@@ -645,7 +699,7 @@ obj/item/projectile/kinetic/New()
 /obj/item/inflatable/survival
 	name = "inflatable pod wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/structure/inflatable/survival
 	name = "pod wall"
@@ -653,8 +707,8 @@ obj/item/projectile/kinetic/New()
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 
-/obj/structure/inflatable/survival/New()
-	..()
+/obj/structure/inflatable/survival/atom_init()
+	. = ..()
 	update_nearby_icons()
 
 /obj/structure/inflatable/survival/Destroy()
@@ -716,11 +770,12 @@ obj/item/projectile/kinetic/New()
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src))
+			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -742,7 +797,7 @@ obj/item/projectile/kinetic/New()
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
 	icon_panel = "donkvendor-panel"
-	luminosity = 5
+	light_range = 5
 	max_n_of_items = 10
 	pixel_y = -4
 	active_power_usage = 0
@@ -753,17 +808,25 @@ obj/item/projectile/kinetic/New()
 	name = "dusty survival pod storage"
 	desc = "A heated storage unit. This one's seen better days."
 
-/obj/machinery/smartfridge/survival_pod/empty/New()
-	return()
+/obj/machinery/smartfridge/survival_pod/empty/atom_init_late()
+	stat = 0
+	ispowered = 1
+	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/survival_pod/New()
+/obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
-	set_light(luminosity)
+	set_light(light_range)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/smartfridge/survival_pod/atom_init_late()
+	stat = 0
+	ispowered = 1
+
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/W = new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 		W.warm = 1
@@ -784,17 +847,14 @@ obj/item/projectile/kinetic/New()
 	forbidden_tools += typecacheof(/obj/item/weapon/screwdriver)
 	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
 	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
-	spawn(20)
-		stat = 0
-		ispowered = 1
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
-		if(istype(O,/obj/item/weapon/wrench))
-			to_chat(user, "\blue You start to disassemble the storage unit...")
-			if(do_after(user,20,target = src))
-				if(!src)
-					return
+		if(iswrench(O))
+			if(user.is_busy(src))
+				return
+			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
+			if(O.use_tool(src, user, 20, volume = 50))
 				qdel(src)
 			return
 		if(accept_check(O))
@@ -808,8 +868,8 @@ obj/item/projectile/kinetic/New()
 					item_quants[O.name]++
 				else
 					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
-									 "<span class='notice'>You add \the [O] to \the [src].")
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [O] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
@@ -825,11 +885,13 @@ obj/item/projectile/kinetic/New()
 	density = 1
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src))
+			return
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(W.use_tool(src, user, 20, volume = 50))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)
@@ -842,11 +904,11 @@ obj/item/projectile/kinetic/New()
 	density = 0
 	icon_state = "fan_tiny"
 
-/obj/structure/fans/tiny/New()
+/obj/structure/fans/tiny/atom_init()
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = 1
-	..()
+	. = ..()
 
 /obj/structure/fans/tiny/Destroy()
 	var/turf/T = get_turf(loc)
@@ -855,9 +917,6 @@ obj/item/projectile/kinetic/New()
 		if(SSair)
 			SSair.mark_for_update(get_turf(loc))
 	return ..()
-
-/obj/structure/fans/New(loc)
-	..()
 
 /obj/structure/fans/Destroy()
 	return ..()
@@ -878,6 +937,7 @@ obj/item/projectile/kinetic/New()
 /obj/structure/sign/mining/attack_hand(mob/user)
 	if(..(user))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 
@@ -889,3 +949,5 @@ obj/item/projectile/kinetic/New()
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
+
+#undef COUNTER_COOLDOWN

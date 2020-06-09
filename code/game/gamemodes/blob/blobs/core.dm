@@ -10,14 +10,14 @@
 	var/point_rate = 2
 	var/last_resource_collection
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
+/obj/effect/blob/core/atom_init(mapload, h = 200, client/new_overmind, new_rate = 2)
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!overmind)
 		create_overmind(new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
-	..(loc, h)
+	. = ..()
 
 
 /obj/effect/blob/core/Destroy()
@@ -50,8 +50,8 @@
 		last_resource_collection = world.time
 
 	health = min(initial(health), health + 1)
-	for(var/i = 1; i < 8; i += i)
-		Pulse(0, i)
+	for(var/dir in cardinal)
+		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue

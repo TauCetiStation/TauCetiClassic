@@ -7,7 +7,8 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -26,10 +27,10 @@
 	var/last_output = 0
 	var/last_online = 0
 	var/constructed = 0
-	var/initialized = 0
 
-/obj/machinery/power/smes/initialize()
-	initialized = 1
+/obj/machinery/power/smes/atom_init()
+	. = ..()
+	smes_list += src
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
@@ -38,7 +39,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 5)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 5)
 	var/map_capacity = capacity
 	var/map_charge = charge
 	var/map_max_input = max_input
@@ -55,27 +56,33 @@
 	if(map_max_output)
 		max_output = map_max_output
 
-/obj/machinery/power/smes/New()
-	..()
-	spawn(5)
-		if(!constructed && !initialized)
-			initialize()
-		dir_loop:
-			for(var/d in cardinal)
-				var/turf/T = get_step(src, d)
-				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
-						terminal = term
-						break dir_loop
+	dir_loop:
+		for(var/d in cardinal)
+			var/turf/T = get_step(src, d)
+			for(var/obj/machinery/power/terminal/term in T)
+				if(term && term.dir == turn(d, 180))
+					terminal = term
+					break dir_loop
 
-		if(!terminal)
-			stat |= BROKEN
-			return
-		terminal.master = src
-		if(!powernet)
-			connect_to_network()
-		update_icon()
-	return
+	if(!terminal)
+		stat |= BROKEN
+		return
+	terminal.master = src
+
+	if(!powernet)
+		connect_to_network()
+	update_icon()
+
+/obj/machinery/power/smes/Destroy()
+	smes_list -= src
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/area/area = get_area(src)
+		message_admins("SMES deleted at [area.name] [ADMIN_JMP(src)]")
+		log_game("SMES deleted at ([area.name])")
+		log_investigate("<font color='red'>deleted</font> at ([area.name])",INVESTIGATE_SINGULO)
+	if(terminal)
+		disconnect_terminal()
+	return ..()
 
 /obj/machinery/power/smes/proc/update_cells()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
@@ -133,7 +140,7 @@
 
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/weapon/cable_coil))
+	if(iscoil(I))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -152,15 +159,14 @@
 			return
 
 
-		var/obj/item/weapon/cable_coil/C = I
-		if(C.amount < 10)
+		var/obj/item/stack/cable_coil/C = I
+		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		if(I.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -179,7 +185,7 @@
 		return
 
 	//disassembling the terminal
-	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
+	if(iswirecutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	//crowbarring it !
@@ -187,7 +193,7 @@
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in ([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+		log_investigate("SMES deconstructed by [key_name(user)]",INVESTIGATE_SINGULO)
 
 /obj/machinery/power/smes/construction()
 	charge = 0
@@ -195,16 +201,6 @@
 
 /obj/machinery/power/smes/deconstruction()
 	update_cells()
-
-/obj/machinery/power/smes/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
-		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
-	if(terminal)
-		disconnect_terminal()
-	return ..()
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
@@ -219,25 +215,25 @@
 		terminal = null
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)	return
 
 	if(panel_open)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 
-	overlays += image('icons/obj/power.dmi', "smes-op[online]")
+	add_overlay(image('icons/obj/power.dmi', "smes-op[online]"))
 
 	if(charging)
-		overlays += image('icons/obj/power.dmi', "smes-oc1")
+		add_overlay(image('icons/obj/power.dmi', "smes-oc1"))
 	else
 		if(chargemode)
-			overlays += image('icons/obj/power.dmi', "smes-oc0")
+			add_overlay(image('icons/obj/power.dmi', "smes-oc0"))
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += image('icons/obj/power.dmi', "smes-og[clevel]")
+		add_overlay(image('icons/obj/power.dmi', "smes-og[clevel]"))
 	return
 
 
@@ -339,16 +335,6 @@
 		terminal.powernet.newload += amount
 
 
-/obj/machinery/power/smes/attack_ai(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
-
-/obj/machinery/power/smes/attack_hand(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
-
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	if(stat & BROKEN)
@@ -357,7 +343,7 @@
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["nameTag"] = name_tag
-	data["storedCapacity"] = round(100.0*charge/capacity, 0.1)
+	data["storedCapacity"] = round(100.0 * charge / capacity, 0.1)
 	data["charging"] = charging
 	data["chargeMode"] = chargemode
 	data["chargeLevel"] = chargelevel
@@ -391,7 +377,7 @@
 	//world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in all_areas)
-		A.master.powerupdate = 3
+		A.powerupdate = 3
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode
@@ -422,15 +408,13 @@
 				output = input(usr, "Enter new output level (0-[max_output])", "SMES Output Power Control", output) as num
 		output = max(0, min(max_output, output))	// clamp to range
 
-	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+	log_investigate("input/output; [chargelevel>output ? "<font color='green'>[chargelevel]/[output]</font>" : "<font color='red'>[chargelevel]/[output]</font>"] | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/proc/ion_act()
-	if(src.z == ZLEVEL_STATION)
+	if(is_station_level(z))
 		if(prob(1)) //explosion
-			to_chat(world, "\red SMES explosion in [src.loc.loc]")
-			for(var/mob/M in viewers(src))
-				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
+			audible_message("<span class='warning'>The [src.name] is making strange noises!</span>")
 			sleep(10*pick(4,5,6,7,10,14))
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
@@ -438,9 +422,10 @@
 			smoke.start()
 			explosion(src.loc, -1, 0, 1, 3, 0)
 			qdel(src)
+			message_admins("SMES explosion in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES explosion in [src.loc.loc]")
 			return
 		if(prob(15)) //Power drain
-			to_chat(world, "\red SMES power drain in [src.loc.loc]")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -448,12 +433,15 @@
 				emp_act(1)
 			else
 				emp_act(2)
+			message_admins("SMES power drain in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES power drain in [src.loc.loc]")
 		if(prob(5)) //smoke only
-			to_chat(world, "\red SMES smoke in [src.loc.loc]")
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)
 			smoke.start()
+			message_admins("SMES smoke in [src.loc.loc] [ADMIN_JMP(src)]")
+			log_game("SMES smoke in [src.loc.loc]")
 
 
 /obj/machinery/power/smes/emp_act(severity)
@@ -474,9 +462,10 @@
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		charge = capacity
-		..()
+
+/obj/machinery/power/smes/magical/process()
+	charge = capacity
+	..()
 
 
 

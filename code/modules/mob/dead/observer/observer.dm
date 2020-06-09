@@ -13,6 +13,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -31,29 +33,31 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
-/mob/dead/observer/New(mob/body)
-	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
+	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
+
+/mob/dead/observer/atom_init()
+	invisibility = INVISIBILITY_OBSERVER
+
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	stat = DEAD
-
-	ghostimage = image(icon,src,"ghost")
+	ghostimage = image(icon, src, "ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
 		if(ishuman(body))
-			overlays = body.overlays
+			copy_overlays(body)
 		else
 			icon = body.icon
 			icon_state = body.icon_state
-			overlays = body.overlays
+			copy_overlays(body)
+
+		cut_overlay(list(body.typing_indicator, body.stat_indicator))
 
 		alpha = 127
 
@@ -71,20 +75,29 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
-	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)
+		T = pick(latejoin)			//Safety in case we cannot find the body's position
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	..()
+
+	dead_mob_list += src
+
+	. = ..()
+
+	observer_list += src
 
 /mob/dead/observer/Destroy()
+	observer_list -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	QDEL_NULL(adminMulti)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.
@@ -112,6 +125,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
+		user.SetNextMove(CLICK_CD_MELEE)
 		var/mob/dead/M = src
 		if(src.invisibility != 0)
 			M.invisibility = 0
@@ -192,6 +206,8 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
+		ghost.playsound_stop(CHANNEL_AMBIENT)
+		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
 		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
 			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
 		return ghost
@@ -226,13 +242,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			robot.toggle_all_components()
 		else
 			resting = 1
+			Sleeping(2 SECONDS)
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
 
 
-/mob/dead/observer/Move(NewLoc, direct)
-	dir = direct
+/mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = TRUE
+	dir = Dir
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -240,13 +258,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		update_parallax_contents()
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
-	if((direct & NORTH) && y < world.maxy)
+	if((Dir & NORTH) && y < world.maxy)
 		y++
-	else if((direct & SOUTH) && y > 1)
+	else if((Dir & SOUTH) && y > 1)
 		y--
-	if((direct & EAST) && x < world.maxx)
+	if((Dir & EAST) && x < world.maxx)
 		x++
-	else if((direct & WEST) && x > 1)
+	else if((Dir & WEST) && x > 1)
 		x--
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
@@ -260,14 +278,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker)
-			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
+			if(isnum(mode.A_timer))
+				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+			if(isnum(mode.B_timer))
+				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -279,16 +295,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
-	if(mind.current.ajourn && mind.current.stat != DEAD) //check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
-		var/found_rune
-		for(var/obj/effect/rune/R in mind.current.loc)   //whilst corpse is alive, we can only reenter the body if it's on the rune
-			if(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]) // Found an astral journey rune.
-				found_rune = 1
-				break
-		if(!found_rune)
-			to_chat(usr, "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
-			return
-	mind.current.ajourn=0
 	mind.current.key = key
 	return 1
 
@@ -462,51 +468,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!istype(usr, /mob/dead/observer)) return
 
-	// Shamelessly copied from the Gas Analyzers
-	if (!( istype(usr.loc, /turf) ))
-		return
-
-	var/datum/gas_mixture/environment = usr.loc.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	to_chat(src, "<span class='danger'>Results:</span>")
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		to_chat(src, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
-	else
-		to_chat(src, "<span class='red'>Pressure: [round(pressure,0.1)] kPa</span>")
-	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/phoron_concentration = environment.phoron/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			to_chat(src, "<span class='info'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='red'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>")
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			to_chat(src, "<span class='info'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='red'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>")
-
-		if(co2_concentration > 0.01)
-			to_chat(src, "<span class='red'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='info'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>")
-
-		if(phoron_concentration > 0.01)
-			to_chat(src, "<span class='red'>Phoron: [round(phoron_concentration*100)]% ([round(environment.phoron,0.01)] moles)</span>")
-
-		if(unknown_concentration > 0.01)
-			to_chat(src, "<span class='red'>Unknown: [round(unknown_concentration*100)]% ([round(unknown_concentration*total_moles,0.01)] moles)</span>")
-
-		to_chat(src, "<span class='info'>Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>")
-		to_chat(src, "<span class='info'>Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>")
-
+	var/turf/t = get_turf(src)
+	if(t)
+		print_atmos_analysis(src, atmosanalyzer_scan(t))
 
 /mob/dead/observer/verb/become_mouse()
 	set name = "Become mouse"
@@ -541,9 +505,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/proc/mousize()
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
-	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in machines)
 		if(!v.welded && v.z == src.z)
 			found_vents.Add(v)
 	if(found_vents.len)
@@ -580,7 +544,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	var/mob/living/carbon/ian/phoron_dog
-	for(var/mob/living/carbon/ian/IAN in living_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
+	for(var/mob/living/carbon/ian/IAN in alive_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
 		if(IAN.mind) // Mind means someone was or is in a body.
 			continue
 		phoron_dog = IAN
@@ -600,10 +564,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
-/mob/dead/verb/bloody_doodle()
+/mob/dead/observer/verb/bloody_doodle()
 
 	set category = "Ghost"
 	set name = "Write in blood"
@@ -652,7 +616,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!choice || choice.amount == 0 || !(src.Adjacent(choice)))
 		return
 
-	var/doodle_color = (choice.basecolor) ? choice.basecolor : "#A10808"
+	var/datum/dirt_cover/doodle_color = new/datum/dirt_cover(choice.basedatum)
 
 	var/num_doodles = 0
 	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
@@ -663,16 +627,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_length = 50
 
-	var/message = stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", "")
+	var/message = sanitize_safe(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 
 		if (length(message) > max_length)
-			message += "-"
+			message += "-"//Should crop any letters? No?
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
-		W.basecolor = doodle_color
+		W.basedatum = new/datum/dirt_cover(doodle_color)
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
@@ -717,3 +681,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.images |= ghost_darkness_images
 		if (ghostimage)
 			client.images -= ghostimage //remove ourself
+
+/mob/dead/observer/IsAdvancedToolUser()
+	return IsAdminGhost(src)

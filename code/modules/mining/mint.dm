@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/mint
 	name = "Coin press"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = 1
 	anchored = 1.0
@@ -17,20 +17,23 @@
 	var/amt_uranium = 0
 	var/amt_clown = 0
 	var/amt_platinum = 0
+	var/amt_hydrogen = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
 	var/chosen = "metal" //which material will be used to make coins
 	var/coinsToProduce = 10
 
 
-/obj/machinery/mineral/mint/initialize()
+/obj/machinery/mineral/mint/atom_init()
+	. = ..()
 	for (var/dir in cardinal)
 		src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-		if(src.input) break
+		if(src.input)
+			break
 	for (var/dir in cardinal)
 		src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-		if(src.output) break
-	START_PROCESSING(SSobj, src)
+		if(src.output)
+			break
 
 /obj/machinery/mineral/mint/process()
 	if ( src.input)
@@ -38,32 +41,35 @@
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/gold))
-				amt_gold += 100 * O.amount
+				amt_gold += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/silver))
-				amt_silver += 100 * O.amount
+				amt_silver += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
-				amt_diamond += 100 * O.amount
+				amt_diamond += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/phoron))
-				amt_phoron += 100 * O.amount
+				amt_phoron += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
-				amt_uranium += 100 * O.amount
+				amt_uranium += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/metal))
-				amt_iron += 100 * O.amount
+				amt_iron += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/clown))
-				amt_clown += 100 * O.amount
+				amt_clown += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/platinum))
-				amt_platinum += 100 * O.amount
+				amt_platinum += 100 * O.get_amount()
+				qdel(O)
+			if (istype(O,/obj/item/stack/sheet/mineral/mhydrogen))
+				amt_hydrogen += 100 * O.get_amount()
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user)
+/obj/machinery/mineral/mint/ui_interact(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -106,15 +112,20 @@
 		dat += text("<A href='?src=\ref[src];choose=uranium'>Choose</A>")
 	if(amt_clown > 0)
 		dat += text("<br><font color='#AAAA00'><b>Bananium inserted: </b>[amt_clown]</font> ")
-		if (chosen == "clown")
-			dat += text("chosen")
-		else
-			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
+	if (chosen == "clown")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
 	dat += text("<br><font color='#888888'><b>Platinum inserted: </b>[amt_platinum]</font> ")//I don't even know these color codes, so fuck it.
 	if (chosen == "platinum")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=platinum'>Choose</A>")
+	dat += text("<br><font color='#bc8585'><b>Hydrogen inserted: </b>[amt_hydrogen]</font> ")
+	if (chosen == "hydrogen")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=hydrogen'>Choose</A>")
 
 	dat += text("<br><br>Will produce [coinsToProduce] [chosen] coins if enough materials are available.<br>")
 	//dat += text("The dial which controls the number of conins to produce seems to be stuck. A technician has already been dispatched to fix this.")
@@ -127,7 +138,7 @@
 
 	dat += text("<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins.")
 	dat += text("<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-	user << browse("[dat]", "window=mint")
+	user << browse("[entity_ja(dat)]", "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	. = ..()
@@ -135,7 +146,7 @@
 		return
 
 	if(processing == 1)
-		to_chat(usr, "\blue The machine is processing.")
+		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return FALSE
 	if(href_list["choose"])
 		chosen = href_list["choose"]
@@ -226,20 +237,32 @@
 							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
-						new /obj/item/weapon/coin/clown(M)
+						new /obj/item/weapon/coin/bananium(M)
 						amt_clown -= 20
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
 						sleep(5)
 				if("platinum")
-					while(amt_clown > 0 && coinsToProduce > 0)
+					while(amt_platinum > 0 && coinsToProduce > 0)
 						if (locate(/obj/item/weapon/moneybag, output.loc))
 							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/platinum(M)
-						amt_clown -= 20
+						amt_platinum -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5)
+				if("hydrogen")
+					while(amt_hydrogen > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/mythril(M)
+						amt_hydrogen -= 20
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()

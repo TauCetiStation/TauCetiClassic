@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -22,6 +22,10 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/cat/Life()
@@ -31,7 +35,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote(pick("\red splats the [M]!","\red toys with the [M]","worries the [M]"))
+					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = 0
 					break
@@ -72,18 +76,18 @@
 /mob/living/simple_animal/cat/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H))
+	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else
 		return ..()
 
 /mob/living/simple_animal/cat/show_inv(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 
 	user.set_machine(src)
@@ -101,7 +105,7 @@
 	popup.open()
 
 /mob/living/simple_animal/cat/Topic(href, href_list)
-	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	//Removing from inventory
@@ -128,10 +132,10 @@
 		..()
 
 /mob/living/simple_animal/cat/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 
 	if(inventory_mouth)
-		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
+		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime

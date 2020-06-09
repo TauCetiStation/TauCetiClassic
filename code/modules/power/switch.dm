@@ -29,25 +29,23 @@
 		to_chat(user, "The switch is in the off position.")
 
 /obj/structure/powerswitch/attack_ai(mob/user)
-	to_chat(user, "\red You're an AI. This is a manual switch. It's not going to work.")
+	to_chat(user, "<span class='warning'>You're an AI. This is a manual switch. It's not going to work.</span>")
 	return
 
 /obj/structure/powerswitch/attack_hand(mob/user)
 
 	if(busy)
-		to_chat(user, "\red This switch is already being toggled.")
+		to_chat(user, "<span class='warning'>This switch is already being toggled.</span>")
 		return
 
 	..()
 
 	busy = 1
-	for(var/mob/O in viewers(user))
-		O.show_message(text("\red [user] started pulling the [src]."), 1)
+	visible_message("<span class='warning'>[user] started pulling the [src].</span>")
 
 	if(do_after(user, 50))
 		set_state(!on)
-		for(var/mob/O in viewers(user))
-			O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
+		visible_message("<span class='warning'>[user] flipped the [src] into the [on ? "on": "off"] position.</span>")
 	busy = 0
 
 /obj/structure/powerswitch/proc/set_state(state)

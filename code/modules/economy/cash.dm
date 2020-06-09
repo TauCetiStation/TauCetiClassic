@@ -2,7 +2,7 @@
 	name = "0 credit chip"
 	desc = "It's worth 0 credits."
 	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
 	density = 0
@@ -11,13 +11,13 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 0
 
-/obj/item/weapon/spacecash/New()
-	..()
+/obj/item/weapon/spacecash/atom_init()
+	. = ..()
 	price = worth
 
 /obj/item/weapon/spacecash/c1
@@ -68,7 +68,7 @@
 	desc = "It's worth 1000 credits."
 	worth = 1000
 
-proc/spawn_money(sum, spawnloc)
+/proc/spawn_money(sum, spawnloc)
 	var/cash_type
 	for(var/i in list(1000,500,200,100,50,20,10,1))
 		cash_type = text2path("/obj/item/weapon/spacecash/c[i]")

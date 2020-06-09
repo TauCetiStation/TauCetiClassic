@@ -8,8 +8,8 @@
 	flags = CONDUCT
 	var/obj/item/target/pinned_target // the current pinned target
 
-/obj/structure/target_stake/Move()
-	..()
+/obj/structure/target_stake/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	// Move the pinned target along with the stake
 	if(pinned_target in view(3, src))
 		pinned_target.loc = loc
@@ -30,8 +30,8 @@
 		W.loc = loc
 		W.layer = 3.1
 		pinned_target = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
-	return
 
 /obj/structure/target_stake/attack_hand(mob/user)
 	// taking pinned targets off!

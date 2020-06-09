@@ -3,28 +3,20 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
-	var/last_tick //used to delay the powercheck
-
-/obj/item/device/radio/intercom/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/radio/intercom/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
-	return src.attack_hand(user)
+	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
+	return
 
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
@@ -54,20 +46,14 @@
 		return
 	..()
 
-/obj/item/device/radio/intercom/process()
-	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
-		last_tick = world.timeofday
+/obj/item/device/radio/intercom/proc/power_change()
+	var/area/A = get_area(src)
+	if(!A)
+		on = 0
+	else
+		on = A.powered(STATIC_EQUIP) // set "on" to the power status
 
-		if(!src.loc)
-			on = 0
-		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
-				on = 0
-			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
-
-		if(!on)
-			icon_state = "intercom-p"
-		else
-			icon_state = "intercom"
+	if(!on)
+		icon_state = "intercom-p"
+	else
+		icon_state = "intercom"

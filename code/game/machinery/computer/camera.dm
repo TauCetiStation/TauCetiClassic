@@ -1,15 +1,17 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
-	for(var/obj/machinery/computer/security/s in machines)
+	for(var/obj/machinery/computer/security/s in computer_list)
 		s.camera_cache = null
-	for(var/datum/alarm/A in world)
-		A.cameras = null
+	for(var/datum/alarm/A in datum_alarm_list)
+		A.cameras = list()
 
 /obj/machinery/computer/security
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	circuit = /obj/item/weapon/circuitboard/security
 	light_color = "#a91515"
 	var/obj/machinery/camera/current = null
@@ -20,24 +22,23 @@
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
+	if ((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
 		return null
-	if ( !current || !current.can_use() ) //camera doesn't work
+	if (!current || !current.can_use()) //camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
-	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+	if(isrobot(user) && !viewing.Find(user))
 		return null
 	user.reset_view(current)
 	return 1
 
 /obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	if(src.z > ZLEVEL_EMPTY) return
 	if(stat & (NOPOWER|BROKEN)) return
 	if(user.stat) return
 
 	var/data[0]
 
-	data["current"] = null
+	data["current"] = 0
 
 	if(isnull(camera_cache))
 		cameranet.process_sort()
@@ -54,7 +55,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache=list2json(camera_list)
+		camera_cache = replacetext(list2json(camera_list), "'", "`")
 	else
 		if(current)
 			data["current"] = current.nano_structure()
@@ -83,8 +84,6 @@
 		return
 
 	if(href_list["switchTo"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
@@ -92,29 +91,23 @@
 			return FALSE
 		switch_to_camera(usr, C)
 	else if(href_list["reset"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		reset_current()
 		usr.check_eye(current)
 
+/obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
+	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
-		return
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
-	if (!(istype(network,/list)))
+	if (!istype(network, /list))
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 
-	if(..())
-		return
-
-	ui_interact(user)
+	..()
 
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
@@ -195,22 +188,14 @@
 	if(istype(usr.machine,/obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = usr.machine
 		console.jump_on_click(usr,src)
-//Camera control: arrow keys.
-/mob/Move(n,direct)
-	if(istype(machine,/obj/machinery/computer/security))
-		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
-		for(var/i;i<10;i++)
-			T = get_step(T,direct)
-		console.jump_on_click(src,T)
-		return
-	return ..(n,direct)
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
 	density = 0
@@ -219,7 +204,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-		playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment
@@ -227,12 +212,16 @@
 	desc = "Damn, why do they never have anything interesting on these things?"
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ea4444"
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#3550b6"
 
 /obj/machinery/computer/security/mining
@@ -245,6 +234,8 @@
 	name = "engineering camera monitor"
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
+	state_broken_preset = "powerb"
+	state_nopower_preset = "power0"
 	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
 
@@ -252,14 +243,23 @@
 	name = "head mounted camera monitor"
 	desc = "Used to access the built-in cameras in helmets."
 	icon_state = "syndicam"
+	state_broken_preset = "tcbossb"
+	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
+
+/obj/machinery/computer/security/nuclear/shiv
+	name = "pilot camera monitor"
+	desc = "Console used by fighter pilot to monitor the battlefield."
+	network = list("shiv")
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
 	desc = "Used to access the cameras in agent helmet."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#642850"
 	network = list()
 	var/team
@@ -276,5 +276,7 @@
 	desc = "Shows how subjects are living."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera_alt"
+	state_broken_preset = null
+	state_nopower_preset = null
 	network = list("SS13")
 	light_color = "#642850"

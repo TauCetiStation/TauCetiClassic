@@ -4,7 +4,7 @@
 	endWhen = 110
 
 /datum/event/anomaly/anomaly_pyro/announce()
-	command_alert("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	command_alert("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "pyroanom")
 
 /datum/event/anomaly/anomaly_pyro/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
@@ -15,16 +15,14 @@
 	if(!newAnomaly)
 		kill()
 		return
-	if(IsMultiple(activeFor, 5))
+	if(IS_MULTIPLE(activeFor, 5))
 		newAnomaly.anomalyEffect()
 
 /datum/event/anomaly/anomaly_pyro/end()
 	if(newAnomaly.loc)//Kill the anomaly if it still exists at the end.
 		var/turf/simulated/T = get_turf(newAnomaly)
 		if(istype(T))
-			var/datum/gas_mixture/payload = new
-			payload.phoron = 200
-			T.zone.air.merge(payload)
+			T.assume_gas("phoron", 200)
 			T.hotspot_expose(1000, CELL_VOLUME)
 
 		var/mob/living/carbon/slime/S

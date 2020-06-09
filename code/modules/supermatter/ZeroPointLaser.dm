@@ -5,24 +5,24 @@
 	desc = "A super-powerful laser."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_research)
+	frequency = 1
 
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
-	var/active = 0
+	var/active = FALSE
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
-
+	var/locked = FALSE
 	var/energy = 0.0001
-	frequency = 1
-
 	var/freq = 50000
 	var/id
 
@@ -37,10 +37,6 @@
 	src.dir = turn(src.dir, 90)
 	return 1
 
-/obj/machinery/zero_point_emitter/New()
-	..()
-	return
-
 /obj/machinery/zero_point_emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))
 		icon_state = "laser"//"emitter_+a"
@@ -48,24 +44,28 @@
 		icon_state = "laser"//"emitter"
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
+
 	if(state == 2)
-		if(!src.locked)
-			if(src.active==1)
-				src.active = 0
+		if(!locked || IsAdminGhost(user))
+			if(active == 1)
+				active = 0
 				to_chat(user, "You turn off the [src].")
-				src.use_power = 1
+				use_power = 1
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "You turn on the [src].")
-				src.shot_number = 0
-				src.fire_delay = 100
-				src.use_power = 2
+				shot_number = 0
+				fire_delay = 100
+				use_power = 2
 			update_icon()
 		else
-			to_chat(user, "\red The controls are locked!")
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 	else
-		to_chat(user, "\red The [src] needs to be firmly secured to the floor first.")
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
 
 
@@ -93,7 +93,7 @@
 			src.shot_number = 0
 		use_power(1000)
 		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
+		playsound(src, 'sound/weapons/guns/gunpulse_emitter.ogg', VOL_EFFECTS_MASTER, 25)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
@@ -117,66 +117,64 @@
 
 /obj/machinery/zero_point_emitter/attackby(obj/item/W, mob/user)
 
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
 		switch(state)
 			if(0)
 				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear a ratchet")
 				src.anchored = 1
 			if(1)
 				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear a ratchet")
 				src.anchored = 0
 			if(2)
-				to_chat(user, "\red The [src.name] needs to be unwelded from the floor.")
+				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
 		switch(state)
 			if(0)
-				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
+				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor.</span>")
 			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if(user.is_busy()) return
+				if(WT.use(0,user))
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (do_after(user,20,target = src))
-						if(!src || !WT.isOn()) return
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 				else
-					to_chat(user, "\red You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if(user.is_busy()) return
+				if(WT.use(0,user))
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (do_after(user,20,target = src))
-						if(!src || !WT.isOn()) return
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 				else
-					to_chat(user, "\red You need more welding fuel to complete this task.")
+					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			to_chat(user, "\red The lock seems to be broken")
+			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
 		if(src.allowed(user))
 			if(active)
@@ -184,21 +182,20 @@
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				to_chat(user, "\red The controls can only be locked when the [src] is online")
+				to_chat(user, "<span class='warning'>The controls can only be locked when the [src] is online</span>")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
-
-
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
-		return
-
 	..()
 	return
 
+/obj/machinery/zero_point_emitter/emag_act(obj/item/W, mob/user)
+	if(!emagged)
+		locked = 0
+		emagged = 1
+		user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You short out the lock.</span>")
+		return TRUE
+	return FALSE
 
 /obj/machinery/zero_point_emitter/power_change()
 	..()

@@ -54,9 +54,10 @@
 	healthcheck()
 	return
 
-/obj/structure/cellular_biomass/attack_hand()
+/obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	user.SetNextMove(CLICK_CD_MELEE)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/cellular_biomass/attack_paw()
@@ -66,11 +67,10 @@
 	return attack_hand()
 
 /obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
 	health -= W.force
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
-	return
 
 ////////////////////////////
 // WALLS GRASS AND CORES////
@@ -89,7 +89,8 @@
 	health = 40
 	layer = 2
 
-/obj/structure/cellular_biomass/grass/New()
+/obj/structure/cellular_biomass/grass/atom_init()
+	. = ..()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
 
 
@@ -101,13 +102,14 @@
 /obj/structure/cellular_biomass/core
 	layer = 3
 	health = 120
-	luminosity = 3
-	light_color = "#710F8C"
+	light_color = "#710f8c"
+	light_range = 3
 	icon_state = "light_1"
 
-/obj/structure/cellular_biomass/core/New()
+/obj/structure/cellular_biomass/core/atom_init()
+	. = ..()
 	icon_state = "light_[pick(1,2)]"
-	set_light(luminosity)
+	set_light(light_range)
 
 /obj/structure/cellular_biomass/core/process()
 	health = max(120, health + 1)

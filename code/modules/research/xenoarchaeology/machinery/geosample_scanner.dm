@@ -2,12 +2,12 @@
 /obj/machinery/radiocarbon_spectrometer
 	name = "Radiocarbon spectrometer"
 	desc = "A specialised, complex scanner for gleaning information on all manner of small things."
-	anchored = 1
-	density = 1
-	icon = 'icons/obj/virology.dmi'
-	icon_state = "analyser"
+	anchored = TRUE
+	density = TRUE
+	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
+	icon_state = "spectrometer"
 
-	use_power = 1			//1 = idle, 2 = active
+	use_power = IDLE_POWER_USE // 1 = idle, 2 = active
 	idle_power_usage = 20
 	active_power_usage = 300
 
@@ -21,13 +21,13 @@
 	var/last_process_worldtime = 0
 	//
 	var/scanner_progress = 0
-	var/scanner_rate = 1.25			//80 seconds per scan
+	var/scanner_rate = 1.25 // 80 seconds per scan
 	var/scanner_rpm = 0
 	var/scanner_rpm_dir = 1
 	var/scanner_temperature = 0
 	var/scanner_seal_integrity = 100
 	//
-	var/coolant_usage_rate = 0		//measured in u/microsec
+	var/coolant_usage_rate = 0 // measured in u/microsec
 	var/fresh_coolant = 0
 	var/coolant_purity = 0
 	var/datum/reagents/coolant_reagents
@@ -40,12 +40,12 @@
 	var/tleft_retarget_optimal_wavelength = 0
 	var/maser_efficiency = 0
 	//
-	var/radiation = 0				//0-100 mSv
+	var/radiation = 0 // 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
 
-/obj/machinery/radiocarbon_spectrometer/New()
-	..()
+/obj/machinery/radiocarbon_spectrometer/atom_init()
+	. = ..()
 	create_reagents(500)
 	coolant_reagents_purity["water"] = 0.5
 	coolant_reagents_purity["icecoffee"] = 0.6
@@ -60,18 +60,16 @@
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2
 
-/obj/machinery/radiocarbon_spectrometer/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/radiocarbon_spectrometer/attackby(obj/I, mob/user)
 	if(scanning)
 		to_chat(user, "<span class='warning'>You can't do that while [src] is scanning!</span>")
 	else
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(istype(I, /obj/item/stack/nanopaste))
 			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
 			if(choice == "Fix seal integrity")
 				var/obj/item/stack/nanopaste/N = I
-				var/amount_used = min(N.amount, 10 - scanner_seal_integrity / 10)
+				var/amount_used = min(N.get_amount(), 10 - scanner_seal_integrity / 10)
 				N.use(amount_used)
 				scanner_seal_integrity = round(scanner_seal_integrity + amount_used * 10)
 				return
@@ -116,7 +114,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat)
+	if(user.stat && !isobserver(user))
 		return
 
 	// this is the data which will be sent to the ui
@@ -160,6 +158,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/process()
 	if(scanning)
+		icon_state = "spectrometer_processing"
 		if(!scanned_item || scanned_item.loc != src)
 			scanned_item = null
 			stop_scanning()
@@ -231,19 +230,20 @@
 			//emergency stop if seal integrity reaches 0
 			if(scanner_seal_integrity <= 0 || (scanner_temperature >= 1273 && !rad_shield))
 				stop_scanning()
-				src.visible_message("\blue [bicon(src)] buzzes unhappily. It has failed mid-scan!", 2)
+				src.visible_message("<span class='notice'>[bicon(src)] [src] buzzes unhappily. It has failed mid-scan!</span>", 2)
 
 			if(prob(5))
-				src.visible_message("\blue [bicon(src)] [pick("whirrs","chuffs","clicks")][pick(" excitedly"," energetically"," busily")].", 2)
+				src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("whirrs", "chuffs", "clicks")][pick(" excitedly", " energetically", " busily")].</span>", 2)
 	else
 		//gradually cool down over time
 		if(scanner_temperature > 0)
 			scanner_temperature = max(scanner_temperature - 5 - 10 * rand(), 0)
 		if(prob(0.75))
-			src.visible_message("\blue [bicon(src)] [pick("plinks","hisses")][pick(" quietly"," softly"," sadly"," plaintively")].", 2)
+			src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("plinks", "hisses")][pick(" quietly", " softly", " sadly", " plaintively")].</span>", 2)
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
+	icon_state = "spectrometer"
 	scanning = 0
 	scanner_rpm_dir = 1
 	scanner_rpm = 0
@@ -258,7 +258,7 @@
 		used_coolant = 0
 
 /obj/machinery/radiocarbon_spectrometer/proc/complete_scan()
-	src.visible_message("\blue [bicon(src)] makes an insistent chime.", 2)
+	src.visible_message("<span class='notice'>[bicon(src)] [src] makes an insistent chime.</span>", 2)
 
 	if(scanned_item)
 		//create report
@@ -315,6 +315,7 @@
 
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<b>Scanned item:</b> [scanned_item.name]<br><br>" + data
+		P.update_icon()
 		last_scan_data = P.info
 		P.loc = src.loc
 

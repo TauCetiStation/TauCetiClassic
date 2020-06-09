@@ -4,14 +4,11 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	item_state = ""
+	w_class = ITEM_SIZE_SMALL
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/syndie = 0
 	var/list/channels = list()
-
-/obj/item/device/encryptionkey/New()
-
-/obj/item/device/encryptionkey/attackby(obj/item/weapon/W, mob/user)
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
@@ -29,6 +26,12 @@
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "sec_cypherkey"
 	channels = list("Security" = 1)
+
+/obj/item/device/encryptionkey/headset_int
+	name = "Internal Affairs Agent's Encryption Key"
+	desc = "An encyption key for a radio headset.  Contains cypherkeys."
+	icon_state = "int_cypherkey"
+	channels = list("Security" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/headset_eng
 	name = "Engineering Radio Encryption Key"

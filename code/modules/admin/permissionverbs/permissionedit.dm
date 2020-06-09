@@ -53,7 +53,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=600x500")
+	usr << browse(entity_ja(output),"window=editrights;size=600x500")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -111,7 +111,7 @@
 		if(null,"")
 			return
 		if("*New Rank*")
-			new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
+			new_rank = sanitize(input("Please input a new rank", "New custom rank", null, null) as null|text)
 			if(!new_rank)
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return
@@ -167,7 +167,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(output,"window=change_permissions;size=250x380;")
+	usr << browse(entity_ja(output),"window=change_permissions;size=250x380;")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)
@@ -219,11 +219,11 @@ var elements = document.getElementsByName('rights');
 	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [new_rights] WHERE id = [admin_id]")
 	insert_query.Execute()
 	if(removed_rights)
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission[removed_rights] to admin [adm_ckey]');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log`) VALUES (NULL, NOW( ), [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed permission[removed_rights] to admin [adm_ckey]');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Permissions removed.</span>")
 	if(added_rights)
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission[added_rights] to admin [adm_ckey]')")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id`, `datetime`, `round_id`, `adminckey`, `adminip`, `log` ) VALUES (NULL, NOW( ), [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added permission[added_rights] to admin [adm_ckey]')")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Permissions added.</span>")
 
@@ -253,7 +253,7 @@ var elements = document.getElementsByName('rights');
 	ment_ckey = ckey(ment_ckey)
 	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_mentor` (`id`, `ckey`) VALUES (null, '[ment_ckey]');")
 	insert_query.Execute()
-	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new mentor [ment_ckey].');")
+	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` , `round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new mentor [ment_ckey].');")
 	log_query.Execute()
 	to_chat(usr, "<span class='notice'>New mentor added.</span>")
 
@@ -279,7 +279,7 @@ var elements = document.getElementsByName('rights');
 		ment_ckey = ckey(ment_ckey)
 		var/DBQuery/remove_query = dbcon.NewQuery("DELETE FROM `erro_mentor` WHERE `ckey` = '[ment_ckey]';")
 		remove_query.Execute()
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed mentor [ment_ckey].');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Removed mentor [ment_ckey].');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>Mentor removed.</span>")
 
@@ -313,13 +313,13 @@ var elements = document.getElementsByName('rights');
 	if(new_admin)
 		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_admin` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
 		insert_query.Execute()
-		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Added new admin [adm_ckey] to rank [new_rank]');")
 		log_query.Execute()
 		to_chat(usr, "<span class='notice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
 			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET rank = '[new_rank]' WHERE id = [admin_id]")
 			insert_query.Execute()
-			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
+			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [round_id], '[sanitize_sql(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")

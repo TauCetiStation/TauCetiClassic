@@ -17,7 +17,8 @@
 
 	item_color="yellow"
 
-/obj/item/clothing/gloves/fyellow/New()
+/obj/item/clothing/gloves/fyellow/atom_init()
+	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 
@@ -28,9 +29,9 @@
 	item_state = "bgloves"
 	item_color="brown"
 
-	cold_protection = HANDS
+	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = HANDS
+	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/gloves/black/strip // gloves for stripping items
@@ -122,3 +123,20 @@
 
 /obj/item/clothing/gloves/brown/cargo
 	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
+/obj/effect/spawner/lootdrop/gloves
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "random_gloves"
+	loot = list(
+		/obj/item/clothing/gloves/orange = 1,
+		/obj/item/clothing/gloves/red = 1,
+		/obj/item/clothing/gloves/blue = 1,
+		/obj/item/clothing/gloves/purple = 1,
+		/obj/item/clothing/gloves/green = 1,
+		/obj/item/clothing/gloves/grey = 1,
+		/obj/item/clothing/gloves/light_brown = 1,
+		/obj/item/clothing/gloves/brown = 1,
+		/obj/item/clothing/gloves/white = 1,
+		/obj/item/clothing/gloves/rainbow = 1)

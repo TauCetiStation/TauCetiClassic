@@ -8,22 +8,20 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	luminosity = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
-/obj/effect/anomaly/New()
-	..()
-	poi_list |= src
-	SetLuminosity(initial(luminosity))
+/obj/effect/anomaly/atom_init()
+	. = ..()
+	poi_list += src
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -52,8 +50,8 @@
 	density = 1
 	var/boing = 0
 
-/obj/effect/anomaly/grav/New()
-	..()
+/obj/effect/anomaly/grav/atom_init()
+	. = ..()
 	aSignal.origin_tech = "magnets=5;powerstorage=4"
 
 /obj/effect/anomaly/grav/anomalyEffect()
@@ -88,8 +86,8 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 
-/obj/effect/anomaly/flux/New()
-	..()
+/obj/effect/anomaly/flux/atom_init()
+	. = ..()
 	aSignal.origin_tech = "powerstorage=5;programming=3;phorontech=2"
 
 /////////////////////
@@ -99,8 +97,8 @@
 	icon_state = "bluespace"
 	density = 1
 
-/obj/effect/anomaly/bluespace/New()
-	..()
+/obj/effect/anomaly/bluespace/atom_init()
+	. = ..()
 	aSignal.origin_tech = "bluespace=5;magnets=3;powerstorage=2"
 
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
@@ -114,8 +112,8 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 
-/obj/effect/anomaly/pyro/New()
-	..()
+/obj/effect/anomaly/pyro/atom_init()
+	. = ..()
 	aSignal.origin_tech = "phorontech=5;powerstorage=3;biotech=3"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
@@ -135,8 +133,8 @@
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
 
-/obj/effect/anomaly/bhole/New()
-	..()
+/obj/effect/anomaly/bhole/atom_init()
+	. = ..()
 	aSignal.origin_tech = "materials=5;combat=4;engineering=3"
 
 /obj/effect/anomaly/bhole/anomalyEffect()

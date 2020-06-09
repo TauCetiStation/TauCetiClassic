@@ -1,10 +1,10 @@
 /obj/item/device/suit_cooling_unit
 	name = "portable suit cooling unit"
 	desc = "A portable heat sink and liquid cooled radiator that can be hooked up to a space suit's existing temperature controls to provide industrial levels of cooling."
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	icon = 'icons/obj/device.dmi'
 	icon_state = "suitcooler0"
-	slot_flags = SLOT_BACK	//you can carry it on your back if you want, but it won't do anything unless attached to suit storage
+	slot_flags = SLOT_FLAGS_BACK	//you can carry it on your back if you want, but it won't do anything unless attached to suit storage
 
 	//copied from tank.dm
 	flags = CONDUCT
@@ -24,7 +24,8 @@
 
 	//TODO: make it heat up the surroundings when not in space
 
-/obj/item/device/suit_cooling_unit/New()
+/obj/item/device/suit_cooling_unit/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
@@ -64,9 +65,10 @@
 		if(istype(H.loc, /obj/mecha))
 			var/obj/mecha/M = H.loc
 			return M.return_temperature()
-		else if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
-			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = H.loc
-			return cryo.air_contents.temperature
+		else if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo = H.loc
+			var/datum/gas_mixture/G = cryo.AIR1
+			return G.temperature
 
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/space))
@@ -101,7 +103,7 @@
 /obj/item/device/suit_cooling_unit/proc/turn_off()
 	if (ismob(src.loc))
 		var/mob/M = src.loc
-		M.show_message("\The [src] clicks and whines as it powers down.", 2)	//let them know in case it's run out of power.
+		M.show_message("\The [src] clicks and whines as it powers down.", SHOWMSG_AUDIO)
 	on = 0
 	updateicon()
 
@@ -129,7 +131,7 @@
 			to_chat(user, "You switch on the [src].")
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if(cover_open)
 			cover_open = 0
 			to_chat(user, "You screw the panel into place.")
@@ -183,3 +185,21 @@
 			to_chat(user, "The charge meter reads [round(cell.percent())]%.")
 		else
 			to_chat(user, "It doesn't have a power cell installed.")
+
+/obj/item/device/suit_cooling_unit/miniature
+	name = "Miniature suit cooling device"
+	desc = "Minituarized heat sink that can be hooked up to a space suit's existing temperature controls to cool down the suit's internals. Weaker than it's bigger counterpart."
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/device.dmi'
+	icon_state = "miniaturesuitcooler0"
+	max_cooling = 8
+	charge_consumption = 10
+
+/obj/item/device/suit_cooling_unit/miniature/updateicon()
+	if (cover_open)
+		if (cell)
+			icon_state = "miniaturesuitcooler1"
+		else
+			icon_state = "miniaturesuitcooler2"
+	else
+		icon_state = "miniaturesuitcooler0"

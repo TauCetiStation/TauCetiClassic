@@ -1,0 +1,201 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s6"
+	},
+/area/space_structures/delivery_shuttle)
+"c" = (
+/obj/structure/shuttle/window,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"d" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall_s10"
+	},
+/area/space_structures/delivery_shuttle)
+"e" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall3"
+	},
+/area/space_structures/delivery_shuttle)
+"f" = (
+/obj/structure/computerframe{
+	anchored = 1;
+	dir = 2
+	},
+/obj/item/weapon/shard,
+/obj/machinery/door_control{
+	id = "pizza";
+	name = "Cargo Compartment Control";
+	pixel_x = 25
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"g" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"h" = (
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"i" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swallc4"
+	},
+/area/space_structures/delivery_shuttle)
+"j" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swallc3"
+	},
+/area/space_structures/delivery_shuttle)
+"k" = (
+/obj/structure/closet/crate/freezer/rations,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"l" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/pizzabox/margherita,
+/obj/item/pizzabox/meat,
+/obj/item/pizzabox/mushroom,
+/obj/item/pizzabox/vegetable,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"m" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/food/snacks/sushi,
+/obj/item/weapon/reagent_containers/food/snacks/sushi,
+/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"n" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"o" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"p" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"q" = (
+/obj/structure/shuttle/engine/heater,
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "swall3"
+	},
+/area/space_structures/delivery_shuttle)
+"r" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "pizza";
+	name = "Cargo Compartment Shutters"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space_structures/delivery_shuttle)
+"s" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/space,
+/area/space_structures/delivery_shuttle)
+"t" = (
+/obj/structure/shuttle/engine/propulsion{
+	desc = "Looks like meteor hit the engine!";
+	dir = 4;
+	icon_state = "burst_r";
+	name = "broken propulsion"
+	},
+/turf/space,
+/area/space_structures/delivery_shuttle)
+
+(1,1,1) = {"
+a
+a
+a
+b
+e
+e
+q
+s
+"}
+(2,1,1) = {"
+b
+e
+g
+i
+k
+n
+r
+a
+"}
+(3,1,1) = {"
+c
+f
+h
+c
+l
+o
+r
+a
+"}
+(4,1,1) = {"
+d
+e
+c
+j
+m
+p
+r
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+d
+e
+e
+q
+t
+"}

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -64,10 +64,9 @@
 	icon_state = "cart-s"
 	access_security = 1
 
-/obj/item/weapon/cartridge/security/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/beepsky(src)
+/obj/item/weapon/cartridge/security/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/detective
 	name = "D.E.T.E.C.T. Cartridge"
@@ -116,10 +115,9 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/signal/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/signal(src)
+/obj/item/weapon/cartridge/signal/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/quartermaster
 	name = "Space Parts & Space Vendors Cartridge"
@@ -127,10 +125,9 @@
 	icon_state = "cart-q"
 	access_quartermaster = 1
 
-/obj/item/weapon/cartridge/quartermaster/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/mule(src)
+/obj/item/weapon/cartridge/quartermaster/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/head
 	name = "Easy-Record DELUXE"
@@ -145,10 +142,9 @@
 	access_janitor = 1
 	access_security = 1
 
-/obj/item/weapon/cartridge/hop/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/mule(src)
+/obj/item/weapon/cartridge/hop/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/hos
 	name = "R.O.B.U.S.T. DELUXE"
@@ -156,10 +152,9 @@
 	access_status_display = 1
 	access_security = 1
 
-/obj/item/weapon/cartridge/hos/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/beepsky(src)
+/obj/item/weapon/cartridge/hos/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/ce
 	name = "Power-On DELUXE"
@@ -182,10 +177,9 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/rd/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/signal(src)
+/obj/item/weapon/cartridge/rd/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/captain
 	name = "Value-PAK Cartridge"
@@ -234,8 +228,8 @@
 						user = user_client.mob
 
 				if(user)
-					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
+					log_admin("STATUS: [key_name(user)] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [key_name_admin(user)] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
 				else
 					var/turf/PDA_turf = get_turf(PDA)
 					log_admin("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2]")
@@ -279,7 +273,7 @@
 	/*		Power Monitor (Mode: 43 / 433)			*/
 	if(mode==43)
 		var/pMonData[0]
-		for(var/obj/machinery/computer/monitor/pMon in machines)
+		for(var/obj/machinery/computer/monitor/pMon in computer_list)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor))
@@ -474,7 +468,7 @@
 		else
 			JaniData["user_loc"] = list("x" = 0, "y" = 0)
 		var/MopData[0]
-		for(var/obj/item/weapon/mop/M in world)
+		for(var/obj/item/weapon/mop/M in mop_list)
 			var/turf/ml = get_turf(M)
 			if(ml)
 				if(ml.z != cl.z)
@@ -487,7 +481,7 @@
 
 
 		var/BucketData[0]
-		for(var/obj/structure/mopbucket/B in world)
+		for(var/obj/structure/mopbucket/B in mopbucket_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -499,7 +493,7 @@
 			BucketData[++BucketData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
 		var/CbotData[0]
-		for(var/obj/machinery/bot/cleanbot/B in machines)
+		for(var/obj/machinery/bot/cleanbot/B in bots_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -511,13 +505,13 @@
 		if(!CbotData.len)
 			CbotData[++CbotData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 		var/CartData[0]
-		for(var/obj/structure/janitorialcart/B in world)
+		for(var/obj/structure/stool/bed/chair/janitorialcart/B in janitorialcart_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
 					continue
 				var/direction = get_dir(src,B)
-				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
+				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.mybucket ? B.mybucket.reagents.total_volume / 100 : "No bucket.")
 		if(!CartData.len)
 			CartData[++CartData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
@@ -539,7 +533,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if (usr.incapacitated() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -596,10 +590,10 @@
 				if("alert")
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
-					message1 = input("Line 1", "Enter Message Text", message1) as text|null
+					message1 = sanitize_safe(input("Line 1", "Enter Message Text", message1) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				if("setmsg2")
-					message2 = input("Line 2", "Enter Message Text", message2) as text|null
+					message2 = sanitize_safe(input("Line 2", "Enter Message Text", message2) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])

@@ -9,20 +9,28 @@
 	var/summon_amt = 1 //amount of objects summoned
 	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
+	var/deleting_previous = 0 //if set to 1, a new cast delete previous objects
+	var/list/previous_objects = list() // Containts object references, which was spawned last time.
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 	var/delay = 1//Go Go Gadget Inheritance
+	sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	playsound(usr, sound, VOL_EFFECTS_MASTER)
 
 	if(do_after(usr,delay,target=usr))
-		for(var/i=0,i<summon_amt,i++)
+		if(deleting_previous)
+			listclearnulls(previous_objects)
+			for(var/atom/A in previous_objects)
+				qdel(A)
+				previous_objects -= A
+		for(var/i in 0 to summon_amt)
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)
@@ -41,9 +49,10 @@
 						summoned_object.vars[varName] = newVars[varName]
 
 				if(summon_lifespan)
-					spawn(summon_lifespan)
-						if(summoned_object)
-							qdel(summoned_object)
+					QDEL_IN(summoned_object, summon_lifespan)
+				if(deleting_previous)
+					previous_objects += summoned_object
+
 	else
 		switch(charge_type)
 			if("recharge")
@@ -78,14 +87,23 @@
 	density = 1
 	unacidable = 1
 
+/obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	for(var/mob/living/M in get_turf(loc))
+		M.bullet_act(Proj, def_zone)
 
-	bullet_act(obj/item/projectile/Proj, def_zone)
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			for(var/mob/M in T)
-				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
-		return
-		
+/obj/effect/forcefield/magic
+	var/mob/wizard
+
+/obj/effect/forcefield/magic/atom_init(mapload, mob/wiz, timeleft = 300)
+	. = ..()
+	wizard = wiz
+	QDEL_IN(src, timeleft)
+
+/obj/effect/forcefield/magic/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover == wizard)
+		return 1
+	return 0
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."
@@ -105,19 +123,20 @@
 	S.attach(location)
 	S.set_up(reagents, 5, 0, location, 15, 5)
 	S.start()
-	
+
 /datum/reagent/toxin/harvester
 	name = "Harvester Toxin"
 	id = "harvester"
 	description = "A toxic cloud."
-	color = "#9C3636"
+	color = "#9c3636"
 	toxpwr = 0
 	custom_metabolism = 1
-	
-	on_mob_life(var/mob/living/carbon/M as mob)
-		if(!M) M = holder.my_atom
-		if(!data) data = 1
-		if(!volume) volume = 1
-		if(volume > 5)
-			M.Weaken(4)
-		return
+
+/datum/reagent/toxin/harvester/on_general_digest(mob/living/carbon/M)
+	..()
+	if(!data)
+		data = 1
+	if(!volume)
+		volume = 1
+	if(volume > 5)
+		M.Weaken(4)

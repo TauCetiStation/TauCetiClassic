@@ -185,7 +185,6 @@ var/list/advance_cures = 	list(
 
 	if(!symptoms || !symptoms.len)
 		CRASH("We did not have any symptoms before generating properties.")
-		return
 
 	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 1)
 
@@ -206,9 +205,9 @@ var/list/advance_cures = 	list(
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
-		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
-		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		SetSpread(CLAMP(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		permeability_mod = max(CEIL(0.4 * properties["transmittable"]), 1)
+		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -257,7 +256,7 @@ var/list/advance_cures = 	list(
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(list/properties = list())
 	if(properties && properties.len)
-		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
 		cure_id = advance_cures[res]
 
@@ -394,15 +393,15 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = sanitize_safe(input(user, "Name your new disease.", "New Name"), MAX_LNAME_LEN)
 		D.AssignName(new_name)
 		D.Refresh()
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
-			if(H.z != ZLEVEL_STATION)
+		for(var/mob/living/carbon/human/H in shuffle(human_list))
+			if(H.stat == DEAD || !is_station_level(H.z))
 				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)

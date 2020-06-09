@@ -4,17 +4,19 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
 	var/on = 0
+	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
+	var/last_button_sound = 0 // Prevents spamming for Object lights
 
-/obj/item/device/flashlight/initialize()
-	..()
+/obj/item/device/flashlight/atom_init()
+	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -31,13 +33,26 @@
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
+	if (last_button_sound >= world.time)
+		return 0
+
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
 		return 0
+
+	if (button_sound)
+		playsound(user, button_sound, VOL_EFFECTS_MASTER, 20)
+
 	on = !on
+	last_button_sound = world.time + 3
 	update_brightness(user)
 	action_button_name = null
 	return 1
+
+/obj/item/device/flashlight/get_current_temperature()
+	if(on)
+		return 10
+	return 0
 
 /obj/item/device/flashlight/Destroy()
 	if(on)
@@ -45,9 +60,9 @@
 	return ..()
 
 
-/obj/item/device/flashlight/attack(mob/living/M, mob/living/user)
+/obj/item/device/flashlight/attack(mob/living/M, mob/living/user, def_zone)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && def_zone == O_EYES)
 
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -87,14 +102,23 @@
 	else
 		return ..()
 
+/obj/item/device/flashlight/seclite
+	name = "seclite"
+	desc = "A robust flashlight used by security."
+	icon_state = "seclite"
+	item_state = "seclite"
+	force = 7 // Not as good as a stun baton.
+	hitsound = list('sound/weapons/genhit1.ogg')
+
 /obj/item/device/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
+	button_sound = 'sound/items/penlight.ogg'
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -103,7 +127,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 // the desk lamps are a bit special
@@ -112,13 +136,18 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
+	button_sound = 'sound/items/buttonclick.ogg'
 	brightness_on = 4
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
 	on = 1
 
+/obj/item/device/flashlight/lamp/get_current_temperature()
+	if(on)
+		return 20
+	return 0
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
@@ -133,7 +162,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!usr.stat)
+	if(!usr.incapacitated())
 		attack_self(usr)
 
 // FLARES
@@ -141,7 +170,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
@@ -149,14 +178,14 @@
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
-	light_color = "#ff0000"
+	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
 	action_button_name = "Toggle Flare"
 
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/device/flashlight/flare/atom_init()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	..()
+	. = ..()
 
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
@@ -165,9 +194,11 @@
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
-		if(!fuel)
-			src.icon_state = "[initial(icon_state)]-empty"
-		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/get_current_temperature()
+	if(on)
+		return 1000
+	return 0
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -178,6 +209,11 @@
 		update_brightness(U)
 	else
 		update_brightness(null)
+
+	if(!fuel)
+		icon_state = "[initial(icon_state)]-empty"
+		item_state = icon_state
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
@@ -191,9 +227,16 @@
 	. = ..()
 	// All good, turn it on.
 	if(.)
+		playsound(user, 'sound/items/flare.ogg', VOL_EFFECTS_MASTER)
+
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
+		item_state = icon_state
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
@@ -203,17 +246,19 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
 
-/obj/item/device/flashlight/slime/New()
-	set_light(brightness_on)
-	spawn(1) //Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
-		update_brightness()
-		icon_state = initial(icon_state)
+/obj/item/device/flashlight/slime/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/flashlight/slime/atom_init_late()
+	update_brightness()
+	icon_state = initial(icon_state)
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
@@ -225,8 +270,8 @@
 	var/charge_tick = 0
 
 
-/obj/item/device/flashlight/emp/New()
-	..()
+/obj/item/device/flashlight/emp/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
@@ -241,28 +286,26 @@
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 	return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user, def_zone)
+	if(on && def_zone == O_EYES) // call original attack proc only if aiming at the eyes
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/device/flashlight/emp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
 	if(emp_cur_charges)
-		emp_cur_charges -= 1
+		emp_cur_charges--
 
-		if(ismob(A))
-			var/mob/M = A
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
-			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
+		if(isliving(target))
+			var/mob/living/M = target
+			M.log_combat(user, "EMP-lighted with [name]")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [target]</span>")
 		else
-			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
-		A.emp_act(1)
+			target.visible_message("<span class='danger'>[user] blinks \the [src] at \the [target].</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
+		target.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

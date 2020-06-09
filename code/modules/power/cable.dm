@@ -9,12 +9,11 @@
 
 /* Cable directions (d1 and d2)
 
-
-  9   1   5
-	\ | /
-  8 - 0 - 4
-	/ | \
-  10  2   6
+>  9   1   5
+>    \ | /
+>  8 - 0 - 4
+>    / | \
+>  10  2   6
 
 If d1 = 0 and d2 = 0, there's no cable
 If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
@@ -57,8 +56,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/white
 	color = COLOR_WHITE
 
-/obj/structure/cable/New()
-	..()
+/obj/structure/cable/atom_init()
+	. = ..()
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")
@@ -69,7 +68,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = src.loc			// hide if turf is not intact
 
-	if(level==1) hide(T.intact)
+	if(level==1)
+		hide(T.intact)
 	cable_list += src //add it to the global cable list
 	update_icon()
 
@@ -114,17 +114,18 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 
 		if (shock(user, 50))
 			return
 
 		var/atom/newcable
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			newcable = new /obj/item/weapon/cable_coil(T, 2, color)
+			newcable = new /obj/item/stack/cable_coil(T, 2, color)
 		else
-			newcable = new /obj/item/weapon/cable_coil(T, 1, color)
+			newcable = new /obj/item/stack/cable_coil(T, 1, color)
 		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
 
@@ -133,11 +134,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(iscoil(W))
+		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
@@ -172,12 +173,12 @@ By design, d1 is the smallest direction and d2 is the highest
 			qdel(src)
 		if(2.0)
 			if (prob(50))
-				new /obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new /obj/item/stack/cable_coil(loc, d1 ? 2 : 1, color)
 				qdel(src)
 
 		if(3.0)
 			if (prob(25))
-				new /obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new /obj/item/stack/cable_coil(loc, d1 ? 2 : 1, color)
 				qdel(src)
 	return
 
@@ -378,67 +379,70 @@ By design, d1 is the smallest direction and d2 is the highest
 
 #define MAXCOIL 30
 
-/obj/item/weapon/cable_coil
+/obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
+	force = 1.0
 	icon_state = "coil"
-	var/amount = MAXCOIL
-	var/max_amount = MAXCOIL
+	amount = MAXCOIL
+	max_amount = MAXCOIL
 	color = COLOR_WHITE
 	desc = "A coil of power cable."
 	throwforce = 10
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
+	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	singular_name = "cable piece"
+	full_w_class = ITEM_SIZE_SMALL
+	merge_type = /obj/item/stack/cable_coil
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
-		return(OXYLOSS)
-
-/obj/item/weapon/cable_coil/cyborg
-	max_amount = 50
+/obj/item/stack/cable_coil/cyborg
+	max_amount = 90
 	m_amt = 0
 	g_amt = 0
 
-/obj/item/weapon/cable_coil/New(loc, amount = max_amount, param_color = null)
-	..()
-	src.amount = amount
+/obj/item/stack/cable_coil/atom_init(mapload, new_amount = null, param_color = null)
+	. = ..()
+
 	if(param_color)
 		color = param_color
+
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
-	update_icon()
-	update_wclass()
+
+/obj/item/stack/cable_coil/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	return(OXYLOSS)
 
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
 
 //you can use wires to heal robotics
-/obj/item/weapon/cable_coil/attack(mob/M, mob/user)
-	if(hasorgans(M))
+/obj/item/stack/cable_coil/attack(mob/M, mob/user, def_zone)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 
-		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
+		if(!BP.is_robotic() || user.a_intent != INTENT_HELP)
 			return ..()
 
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				if(M == user)
-					to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
-					return
+		if(H.species.flags[IS_SYNTHETIC])
+			if(H == user)
+				to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
+				return
 
-		if(S.burn_dam > 0)
+		if(BP.burn_dam > 0)
 			if(use(1))
-				S.heal_damage(0,15,0,1)
-				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src].</span>")
+				BP.heal_damage(0, 15, 0, 1)
+				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [H]'s [BP.name] with \the [src].</span>")
 				return
 			else
 				to_chat(user, "Need more cable!")
@@ -448,7 +452,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return ..()
 
-/obj/item/weapon/cable_coil/update_icon()
+/obj/item/stack/cable_coil/update_icon()
 	if(amount == 1)
 		icon_state = "coil1"
 		name = "cable piece"
@@ -459,100 +463,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		icon_state = "coil"
 		name = "cable coil"
 
-/obj/item/weapon/cable_coil/proc/update_wclass()
-	if(amount == 1)
-		w_class = 1.0
-	else
-		w_class = 2.0
-
-
-/obj/item/weapon/cable_coil/examine(mob/user)
-	..()
-	if(src in view(1, user))
-		if(amount == 1)
-			to_chat(user, "A short piece of power cable.")
-		else if(amount == 2)
-			to_chat(user, "A piece of power cable.")
-		else
-			to_chat(user, "A coil of power cable. There are [amount] lengths of cable in the coil.")
-
-
-/obj/item/weapon/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf))
-			return
-		if(!src.use(15))
-			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
-			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-		B.color = color
-		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
-	..()
-
-// Items usable on a cable coil :
-//   - Wirecutters : cut them duh !
-//   - Cable coil : merge cables
-/obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/wirecutters) && src.use(1))
-		new /obj/item/weapon/cable_coil(user.loc, 1, color)
-		to_chat(user, "<span class='notice'>You cut a piece off the cable coil.</span>")
-		src.update_icon()
-		src.update_wclass()
-		return
-
-	else if( istype(W, /obj/item/weapon/cable_coil) )
-		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount == C.max_amount)
-			to_chat(user, "<span class='notice'>The coil is too long, you cannot add any more cable to it.</span>")
-			return
-
-		if( (C.amount + src.amount <= C.max_amount) )
-			C.give(src.amount)
-			to_chat(user, "<span class='notice'>You join the cable coils together.</span>")
-			qdel(src)
-			return
-		else
-			to_chat(user, "<span class='notice'>You transfer [C.max_amount - C.amount ] length\s of cable from one coil to the other.</span>")
-			src.use(C.max_amount-C.amount)
-			C.give(C.max_amount-C.amount)
-			return
-
-//remove cables from the stack
-/obj/item/weapon/cable_coil/proc/use(used)
-	if(src.amount < used)
-		return 0
-	else
-		amount -= used
-		if ((src.amount <= 0) && !istype(loc,/obj/item/weapon/robot_module) && !istype(loc,/mob/living/silicon))
-			. = 1
-			qdel(src)
-		else
-			update_icon()
-			update_wclass()
-		return 1
-
-//add cables to the stack
-/obj/item/weapon/cable_coil/proc/give(extra)
-	if(amount + extra > max_amount)
-		amount = max_amount
-	else
-		amount += extra
-	update_icon()
-	update_wclass()
-
 ///////////////////////////////////////////////
 // Cable laying procedures
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/weapon/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
+/obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
 	if(!isturf(user.loc))
 		return
 
@@ -600,13 +516,13 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new /obj/item/weapon/cable_coil(C.loc, 1, C.color)
+				new /obj/item/stack/cable_coil(C.loc, 1, C.color)
 				qdel(C)
 
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/weapon/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -661,7 +577,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new /obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
+					new /obj/item/stack/cable_coil(NC.loc, 1, NC.color)
 					qdel(NC)
 
 			return
@@ -701,7 +617,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				new /obj/item/weapon/cable_coil(C.loc, 2, C.color)
+				new /obj/item/stack/cable_coil(C.loc, 2, C.color)
 				qdel(C)
 				return
 
@@ -712,36 +628,49 @@ By design, d1 is the smallest direction and d2 is the highest
 // Misc.
 /////////////////////////////
 
-/obj/item/weapon/cable_coil/cut
+/obj/item/stack/cable_coil/cut
 	item_state = "coil2"
 
-/obj/item/weapon/cable_coil/cut/New(loc)
-	..(amount = rand(1,2))
+/obj/item/stack/cable_coil/cut/atom_init(mapload)
+	. = ..(mapload, rand(1,2))
 
-/obj/item/weapon/cable_coil/cut/red
+/obj/item/stack/cable_coil/cut/red
 	color = COLOR_RED
 
-/obj/item/weapon/cable_coil/yellow
+/obj/item/stack/cable_coil/yellow
 	color = COLOR_YELLOW
 
-/obj/item/weapon/cable_coil/blue
+/obj/item/stack/cable_coil/blue
 	color = COLOR_BLUE
 
-/obj/item/weapon/cable_coil/green
+/obj/item/stack/cable_coil/green
 	color = COLOR_GREEN
 
-/obj/item/weapon/cable_coil/pink
+/obj/item/stack/cable_coil/pink
 	color = COLOR_PINK
 
-/obj/item/weapon/cable_coil/orange
+/obj/item/stack/cable_coil/orange
 	color = COLOR_ORANGE
 
-/obj/item/weapon/cable_coil/cyan
+/obj/item/stack/cable_coil/cyan
 	color = COLOR_CYAN
 
-/obj/item/weapon/cable_coil/red
+/obj/item/stack/cable_coil/red
 	color = COLOR_RED
 
-/obj/item/weapon/cable_coil/random/New()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
+/obj/item/stack/cable_coil/gray
+	color = COLOR_GRAY
+
+/obj/item/stack/cable_coil/random/atom_init(mapload, new_amount = null)
 	..()
+	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
+						/obj/item/stack/cable_coil/blue,
+						/obj/item/stack/cable_coil/green,
+						/obj/item/stack/cable_coil/pink,
+						/obj/item/stack/cable_coil/orange,
+						/obj/item/stack/cable_coil/cyan,
+						/obj/item/stack/cable_coil/red,
+						/obj/item/stack/cable_coil/gray,
+						/obj/item/stack/cable_coil)
+	new new_type(loc, new_amount)
+	return INITIALIZE_HINT_QDEL

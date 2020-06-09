@@ -1,0 +1,1111 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ac" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ad" = (
+/turf/simulated/wall,
+/area/space_structures/agrospheregarden)
+"ae" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/pill_bottle/zoom{
+	pixel_x = -4
+	},
+/obj/item/weapon/storage/pill_bottle/paroxetine{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/pill_bottle/citalopram{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/pill/LSD{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"af" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ag" = (
+/obj/item/toy/figure/chemist,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ah" = (
+/obj/item/weapon/reagent_containers/pill/paracetamol{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/item/weapon/spacecash/c500{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/item/weapon/spacecash/c1000{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/weapon/spacecash/c1000,
+/obj/item/weapon/spacecash/c200{
+	pixel_y = 9
+	},
+/obj/item/weapon/spacecash/c500{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomittox_2"
+	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/storage/labcoat/mad,
+/obj/item/clothing/head/cakehat,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ai" = (
+/obj/item/weapon/reagent_containers/pill/LSD{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/pill/LSD{
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/pill/LSD{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aj" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/reagent_containers/hypospray,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ak" = (
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"al" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/food/snacks/dionaroast,
+/obj/item/weapon/kitchenknife/plastic,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"am" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"an" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ao" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ap" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/space,
+/area/space_structures/agrospheregarden)
+"aq" = (
+/obj/structure/table/glass,
+/obj/machinery/kitchen_machine/microwave,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"ar" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"as" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"at" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/pill/happy{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/pill/happy,
+/obj/item/weapon/storage/pill_bottle/happy{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/pill_bottle/citalopram,
+/obj/item/weapon/reagent_containers/syringe/antitoxin,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"au" = (
+/obj/item/seeds/ambrosiadeusseed,
+/obj/item/seeds/ambrosiadeusseed,
+/obj/item/seeds/ambrosiadeusseed,
+/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/walkingmushroommycelium,
+/obj/structure/closet/crate,
+/obj/item/seeds/vale,
+/obj/item/seeds/surik,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"av" = (
+/obj/item/weapon/hatchet,
+/obj/item/weapon/pestspray,
+/obj/item/weapon/reagent_containers/spray/plantbgone,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aw" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"ay" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aA" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aB" = (
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aC" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aD" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/grown/deathnettle,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aE" = (
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aF" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aG" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aH" = (
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aI" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aK" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aL" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aM" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aN" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aO" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aP" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aQ" = (
+/obj/structure/flora/junglebush/c,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aR" = (
+/obj/structure/flora/tree/jungle,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aS" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aT" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aU" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aV" = (
+/obj/structure/flora/junglebush/large,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aW" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
+	pixel_x = -15;
+	pixel_y = 15
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aX" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aY" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aZ" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"ba" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bb" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bc" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{
+	pixel_x = -20;
+	pixel_y = 10
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bd" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/tree/jungle/small,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"fK" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/harebell{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"OZ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aM
+aa
+aa
+aa
+aa
+aa
+aM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aO
+am
+am
+am
+am
+am
+aO
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+am
+aE
+aY
+aK
+am
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aE
+aV
+aE
+aQ
+aE
+am
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aP
+aE
+aV
+aE
+aE
+aE
+aV
+am
+am
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aJ
+aE
+aE
+aE
+aE
+aE
+aR
+aE
+aJ
+am
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+ap
+as
+ad
+ad
+am
+ad
+ad
+ad
+am
+ad
+ad
+aw
+ay
+aI
+as
+am
+am
+aE
+aE
+aQ
+aR
+aE
+aE
+aE
+aE
+aE
+aV
+aA
+am
+aw
+ay
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+ad
+ad
+af
+aj
+aC
+ao
+an
+aC
+au
+ad
+ad
+ad
+ad
+ad
+ad
+aE
+aE
+aE
+aE
+aS
+aW
+aP
+aE
+aE
+bd
+aE
+aE
+aG
+ad
+ad
+ad
+ad
+ad
+"}
+(9,1,1) = {"
+aa
+ad
+ab
+ag
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+aH
+aH
+ad
+aE
+aA
+aG
+aE
+aE
+aE
+aG
+aE
+aE
+aE
+aE
+fK
+aQ
+aE
+aE
+ad
+aH
+aH
+ad
+"}
+(10,1,1) = {"
+aa
+ad
+ae
+ah
+aB
+aB
+aC
+aB
+aD
+ac
+ac
+aN
+aH
+aH
+aN
+aE
+aE
+aE
+aK
+aE
+aE
+aE
+aF
+aG
+aE
+aE
+aE
+aE
+aE
+aE
+aN
+aH
+aH
+aN
+"}
+(11,1,1) = {"
+aa
+ad
+at
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+aH
+aH
+ad
+aE
+aE
+aE
+aE
+aE
+aE
+aX
+aE
+aE
+aE
+aE
+aE
+aE
+aA
+aE
+ad
+aH
+aH
+ad
+"}
+(12,1,1) = {"
+aa
+ad
+ad
+aq
+al
+an
+ar
+aC
+an
+av
+ad
+ad
+ad
+ad
+ad
+ad
+aE
+aE
+aE
+aR
+aE
+aE
+aG
+aE
+aE
+aE
+aR
+aV
+aE
+ad
+ad
+ad
+ad
+ad
+"}
+(13,1,1) = {"
+ap
+as
+ad
+ad
+am
+ad
+ad
+ad
+am
+ad
+ad
+aw
+ay
+aI
+as
+am
+am
+aE
+aE
+aQ
+aE
+aG
+aK
+aE
+aV
+aE
+aG
+aE
+am
+aw
+ay
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aL
+aE
+aE
+aE
+aZ
+aQ
+aE
+aE
+OZ
+am
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aE
+aE
+aE
+aR
+bb
+aE
+aP
+am
+am
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+am
+am
+aE
+aG
+aG
+bc
+aG
+am
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+am
+aE
+ba
+aV
+am
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+am
+am
+am
+am
+am
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aU
+aa
+aa
+aa
+aa
+aa
+aU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

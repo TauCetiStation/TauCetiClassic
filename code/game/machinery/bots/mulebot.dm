@@ -20,20 +20,22 @@
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/atom/movable/load = null		// the loaded crate (usually)
-	var/beacon_freq = 1400
-	var/control_freq = 1447
+
 	can_buckle = 1
 	buckle_lying = 0
 
 	suffix = ""
+	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 
+	var/atom/movable/load = null		// the loaded crate (usually)
+	var/beacon_freq = 1400
+	var/control_freq = 1447
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -57,7 +59,7 @@
 	var/datum/wires/mulebot/wires = null
 	var/bloodiness = 0		// count of bloodiness
 
-/obj/machinery/bot/mulebot/New()
+/obj/machinery/bot/mulebot/atom_init()
 	..()
 	wires = new(src)
 	botcard = new(src)
@@ -68,17 +70,19 @@
 	cell.charge = 2000
 	cell.maxcharge = 2000
 
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
-			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+	if(radio_controller)
+		radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
+		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-		var/count = 0
-		for(var/obj/machinery/bot/mulebot/other in machines)
-			count++
-		if(!suffix)
-			suffix = "#[count]"
-		name = "Mulebot ([suffix])"
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/bot/mulebot/atom_init_late()
+	var/count = 0
+	for(var/obj/machinery/bot/mulebot/other in bots_list)
+		count++
+	if(!suffix)
+		suffix = "#[count]"
+	name = "Mulebot ([suffix])"
 
 /obj/machinery/bot/mulebot/Destroy()
 	QDEL_NULL(wires)
@@ -94,51 +98,54 @@
 // cell: insert it
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
-		locked = !locked
-		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
-		flick("mulebot-emagged", src)
-		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
 		updateDialog()
-	else if(istype(I,/obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(locked)
-			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
+			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "\blue You open [src]'s maintenance hatch.")
+			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
 			icon_state="mulebot-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "\blue You close [src]'s maintenance hatch.")
+			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
 			icon_state = "mulebot0"
 
 		updateDialog()
-	else if (istype(I, /obj/item/weapon/wrench))
+	else if(is_wire_tool(I))
+		wires.interact(user)
+	else if (iswrench(I))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
+				"<span class='warning'>[user] repairs [src]!</span>",
+				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			to_chat(user, "\blue [src] does not need a repair!")
+			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
 		..()
 	return
 
+/obj/machinery/bot/mulebot/emag_act(mob/user)
+	locked = !locked
+	to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
+	flick("mulebot-emagged", src)
+	playsound(src, 'sound/effects/sparks1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	return TRUE
 
 /obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
@@ -160,22 +167,10 @@
 		wires.random_cut()
 	..()
 
-
-/obj/machinery/bot/mulebot/attack_ai(mob/user)
-	user.set_machine(src)
-	interact(user, 1)
-
-/obj/machinery/bot/mulebot/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(wires.interact(user))
-		return
-	user.set_machine(src)
-	interact(user, 0)
-
-/obj/machinery/bot/mulebot/interact(mob/user, ai=0)
+/obj/machinery/bot/mulebot/ui_interact(mob/user)
+	var/ai = isAI(user) || isobserver(user)
 	var/dat
+
 	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 	dat += "ID: [suffix]<BR>"
 	dat += "Power: [on ? "On" : "Off"]<BR>"
@@ -233,9 +228,8 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
+	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
 	onclose(user, "mulebot")
-	return
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	. = ..()
@@ -247,14 +241,14 @@
 			if(src.allowed(usr))
 				locked = !locked
 			else
-				to_chat(usr, "\red Access denied.")
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return FALSE
 		if("power")
 			if (src.on)
 				turn_off()
 			else if (cell && !open)
 				if (!turn_on())
-					to_chat(usr, "\red You can't switch on [src].")
+					to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 					return FALSE
 			else
 				return FALSE
@@ -268,7 +262,7 @@
 				cell.add_fingerprint(usr)
 				cell = null
 
-				usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 
 		if("cellinsert")
 			if(open && !cell)
@@ -279,7 +273,7 @@
 					C.loc = src
 					C.add_fingerprint(usr)
 
-					usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 
 
 		if("stop")
@@ -296,7 +290,7 @@
 
 		if("destination")
 			refresh=0
-			var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
+			var/new_dest = sanitize_safe(input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", input_default(destination)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_dest)
 				set_destination(new_dest)
@@ -304,7 +298,7 @@
 
 		if("setid")
 			refresh=0
-			var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null,1,MAX_NAME_LEN))
+			var/new_id = sanitize_safe(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", input_default(suffix)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_id)
 				suffix = new_id
@@ -312,7 +306,7 @@
 
 		if("sethome")
 			refresh=0
-			var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
+			var/new_home = sanitize_safe(input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", input_default(home_destination)) as text|null, MAX_LNAME_LEN)
 			refresh=1
 			if(new_home)
 				home_destination = new_home
@@ -344,16 +338,17 @@
 	switch(type)
 		if(SIGH)
 			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(ANNOYED)
 			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(DELIGHT)
 			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-
+	if(!iscarbon(user) && !isrobot(user))
+		return
 	if(user.stat)
 		return
 
@@ -368,6 +363,8 @@
 // mousedrop a crate to load the bot
 // can load anything if emagged
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(user.incapacitated() || user.lying)
 		return
 	if (!istype(AM))
@@ -406,7 +403,7 @@
 		AM.pixel_y += 9
 		if(AM.layer < layer)
 			AM.layer = layer + 0.1
-		overlays += AM
+		add_overlay(AM)
 
 	load= AM
 	mode = 0
@@ -446,7 +443,7 @@
 
 	mode = 0
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(buckled_mob)
 		unbuckle_mob()
@@ -634,7 +631,7 @@
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
-		playsound(src.loc, 'sound/machines/chime.ogg', 50, 0)
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		reached_target = 1
 
 		if(load)		// if loaded, unload at target
@@ -671,9 +668,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -687,16 +684,16 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head")
-	H.apply_damage(2*damage, BRUTE, "chest")
-	H.apply_damage(0.5*damage, BRUTE, "l_leg")
-	H.apply_damage(0.5*damage, BRUTE, "r_leg")
-	H.apply_damage(0.5*damage, BRUTE, "l_arm")
-	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+	H.apply_damage(2*damage, BRUTE, BP_HEAD)
+	H.apply_damage(2*damage, BRUTE, BP_CHEST)
+	H.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+	H.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+	H.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+	H.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = list()
@@ -840,13 +837,13 @@
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut/red(Tsec)
+	new /obj/item/stack/cable_coil/cut/red(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()

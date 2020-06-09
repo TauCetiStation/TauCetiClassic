@@ -5,7 +5,7 @@
 	icon_state = "table2-idle"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
@@ -13,15 +13,14 @@
 
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/machinery/optable/New()
-	..()
+/obj/machinery/optable/atom_init()
+	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
-		if (computer)
+		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -47,24 +46,22 @@
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	if (!( locate(/obj/machinery/optable, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user)
 	if (HULK in usr.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	return
+	else
+		return ..() // for fun, for braindamage and fingerprints.
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -75,16 +72,14 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
-	if(isrobot(user))
+/obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
+	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+		var/mob/living/carbon/M = A
+		if (M.buckled)
+			M.buckled.user_unbuckle_mob(user)
+		take_victim(M, user)
 		return
-
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
+	return ..()
 
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
@@ -104,7 +99,7 @@
 	if (C == user)
 		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>", 3)
+		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
@@ -125,7 +120,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
 	if(src.victim)
@@ -139,11 +134,11 @@
 		return
 
 	if (istype(W, /obj/item/weapon/grab))
-		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
-			qdel(W)
+		var/obj/item/weapon/grab/G = W
+		if(iscarbon(G.affecting))
+			take_victim(G.affecting, usr)
+			user.SetNextMove(CLICK_CD_MELEE)
+			qdel(G)
 			return
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
-	return
+
+	return ..()

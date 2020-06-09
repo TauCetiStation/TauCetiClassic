@@ -1,31 +1,242 @@
-"a" = (/obj/structure/table/holotable,/obj/item/clothing/gloves/boxing/hologlove,/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"b" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"c" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"d" = (/obj/machinery/door/window/holowindoor{base_state = "right"; dir = 2; icon_state = "right"; name = "Red Corner"},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"e" = (/obj/structure/window/reinforced/holowindow,/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"f" = (/obj/structure/window/reinforced/holowindow{dir = 4},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"g" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_boxingcourt)
-"h" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_boxingcourt)
-"i" = (/turf/simulated/floor/holofloor,/area/holodeck/source_boxingcourt)
-"j" = (/obj/structure/window/reinforced/holowindow{dir = 8},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"k" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/holodeck/source_boxingcourt)
-"l" = (/turf/simulated/floor/holofloor{icon_state = "bluefull"},/area/holodeck/source_boxingcourt)
-"m" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/holodeck/source_boxingcourt)
-"n" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/source_boxingcourt)
-"o" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "green"},/area/holodeck/source_boxingcourt)
-"p" = (/obj/structure/window/reinforced/holowindow{dir = 1},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"q" = (/obj/machinery/door/window/holowindoor{dir = 1; name = "Green Corner"},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
-"r" = (/obj/structure/table/holotable,/obj/item/clothing/gloves/boxing/hologlove{icon_state = "boxinggreen"; item_state = "boxinggreen"},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_boxingcourt)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/holotable,
+/obj/item/clothing/gloves/boxing/hologlove,
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"b" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"c" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"d" = (
+/obj/machinery/door/window/holowindoor{
+	base_state = "right";
+	icon_state = "right";
+	name = "Red Corner"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"e" = (
+/obj/structure/window/reinforced/holowindow,
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"f" = (
+/obj/structure/window/reinforced/holowindow{
+	dir = 4
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"g" = (
+/turf/simulated/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"h" = (
+/turf/simulated/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"i" = (
+/turf/simulated/floor/holofloor,
+/area/station/civilian/holodeck/source_boxingcourt)
+"j" = (
+/obj/structure/window/reinforced/holowindow{
+	dir = 8
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"k" = (
+/turf/simulated/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"l" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "bluefull"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"m" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"n" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"o" = (
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"p" = (
+/obj/structure/window/reinforced/holowindow{
+	dir = 1
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"q" = (
+/obj/machinery/door/window/holowindoor{
+	dir = 1;
+	name = "Green Corner"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"r" = (
+/obj/structure/table/holotable,
+/obj/item/clothing/gloves/boxing/hologlove{
+	icon_state = "boxinggreen";
+	item_state = "boxinggreen"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
 
 (1,1,1) = {"
-aabbbbbbbb
-bbbbcccbbb
-bbbdeeebbb
-bcfghhijcb
-bcfkllmjcb
-bcfkllmjcb
-bcfinnojcb
-bbbpppqbbb
-bbbcccbbbb
-bbbbbbbbrr
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+a
+b
+b
+c
+c
+c
+c
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+f
+f
+f
+f
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+d
+g
+k
+k
+i
+p
+c
+b
+"}
+(5,1,1) = {"
+b
+c
+e
+h
+l
+l
+n
+p
+c
+b
+"}
+(6,1,1) = {"
+b
+c
+e
+h
+l
+l
+n
+p
+c
+b
+"}
+(7,1,1) = {"
+b
+c
+e
+i
+m
+m
+o
+q
+b
+b
+"}
+(8,1,1) = {"
+b
+b
+b
+j
+j
+j
+j
+b
+b
+b
+"}
+(9,1,1) = {"
+b
+b
+b
+c
+c
+c
+c
+b
+b
+r
+"}
+(10,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+r
 "}

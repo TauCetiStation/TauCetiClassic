@@ -8,25 +8,33 @@
 /*
  * Lasertag
  */
-/obj/item/clothing/suit/bluetag
-	name = "blue laser tag armour"
-	desc = "Blue Pride, Station Wide."
+/obj/item/clothing/suit/lasertag
+	name = "laser tag armour"
+	desc = "Be none's man, shoot everybody!"
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
 	siemens_coefficient = 3.0
 
-/obj/item/clothing/suit/redtag
+	var/lasertag_color = "none"
+
+/obj/item/clothing/suit/lasertag/bluetag
+	name = "blue laser tag armour"
+	desc = "Blue Pride, Station Wide."
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	lasertag_color = "blue"
+
+/obj/item/clothing/suit/lasertag/redtag
 	name = "red laser tag armour"
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
-	siemens_coefficient = 3.0
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	lasertag_color = "red"
 
 /*
  * Costume
@@ -78,7 +86,7 @@
 	icon_state = "justice"
 	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 
 /obj/item/clothing/suit/judgerobe
@@ -113,51 +121,51 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/hastur
 	name = "Hastur's Robes"
 	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/imperium_monk
-	name = "Imperium monk"
+	name = "imperium monk"
 	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
-	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/chickensuit
-	name = "Chicken Suit"
+	name = "chicken suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
-	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
 
 /obj/item/clothing/suit/monkeysuit
-	name = "Monkey Suit"
+	name = "monkey suit"
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
-	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
 
 /obj/item/clothing/suit/holidaypriest
-	name = "Holiday Priest"
+	name = "holiday priest"
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
@@ -173,6 +181,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/byzantine_dress
+	name = "Byzantine dress"
+	desc = "Fancy expensive clothes from Space Byzantium"
+	icon_state = "Byzantine_dress"
+	item_state = "Byzantine_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /*
  * Misc
  */
@@ -182,7 +197,7 @@
 	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/ianshirt
@@ -197,6 +212,66 @@
 	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+
+/obj/item/clothing/suit/blueshirt
+	name = "blue shirt"
+	desc = "A blue shirt with some strange symbols. Look out for aliens!"
+	icon_state = "blueshirt"
+	item_state = "blueshirt"
+
+/obj/item/clothing/suit/chemshirt
+	name = "chemistry shirt"
+	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
+	icon_state = "chemshirt"
+	item_state = "chemshirt"
+
+/obj/item/clothing/suit/roundshirt
+	name = "science shirt"
+	desc = "A purple, sciency t-shirt with a picture of a burning star. Save the Earth! Oh wait, already too late for that"
+	icon_state = "roundshirt"
+	item_state = "roundshirt"
+
+/obj/item/clothing/suit/catshirt
+	name = "cat shirt"
+	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
+	icon_state = "catshirt"
+	item_state = "catshirt"
+
+/obj/item/clothing/suit/engishirt
+	name = "engineer shirt"
+	desc = "Loose t-shirt made of insulating material. Trust me i'm an engineer"
+	icon_state = "engishirt"
+	item_state = "engishirt"
+
+/obj/item/clothing/suit/badengishirt
+	name = "bad engineer shirt"
+	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
+	icon_state = "badengishirt"
+	item_state = "badengishirt"
+
+/obj/item/clothing/suit/docshirt
+	name = "doc shirt"
+	desc = "Nice white T-shirt, designed to show that you are a fashionable doctor. Blood stains are not included"
+	icon_state = "docshirt"
+	item_state = "docshirt"
+
+/obj/item/clothing/suit/battonshirt
+	name = "stunning shirt"
+	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
+	icon_state = "battonshirt"
+	item_state = "battonshirt"
+
+/obj/item/clothing/suit/arstotzkashirt
+	name = "dictator shirt"
+	desc = "Grim-looking T-shirt with a picture of red eagle. A good banner for creating your own state in a single department"
+	icon_state = "arstotzkashirt"
+	item_state = "arstotzkashirt"
+
+/obj/item/clothing/suit/toxicshirt
+	name = "toxic shirt"
+	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
+	icon_state = "toxicshirt"
+	item_state = "toxicshirt"
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -214,7 +289,7 @@
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
-	icon_state = "leathercoat"
+	icon_state = "leather_overcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -236,27 +311,12 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
-//Blue suit jacket toggle
-/obj/item/clothing/suit/suit/verb/toggle()
-	set name = "Toggle Jacket Buttons"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	if(src.icon_state == "suitjacket_blue_open")
-		src.icon_state = "suitjacket_blue"
-		src.item_state = "suitjacket_blue"
-		to_chat(usr, "You button up the suit jacket.")
-	else if(src.icon_state == "suitjacket_blue")
-		src.icon_state = "suitjacket_blue_open"
-		src.item_state = "suitjacket_blue_open"
-		to_chat(usr, "You unbutton the suit jacket.")
-	else
-		to_chat(usr, "You button-up some imaginary buttons on your [src].")
-		return
-	usr.update_inv_wear_suit()
+/obj/item/clothing/suit/storage/postal_dude_coat
+	name = "black trenchcoat"
+	desc = "A black trenchcoat."
+	icon_state = "dude_coat"
+	item_state = "jensensuit"
+	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -276,25 +336,18 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 //coats
-/*
+
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
 	desc = "A flowing, black coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
-	*/
 
-/obj/item/clothing/suit/browncoat
-	name = "brown leather coat"
-	desc = "A long, brown leather coat."
-	icon_state = "browncoat"
-	item_state = "browncoat"
-
-/obj/item/clothing/suit/neocoat
-	name = "black coat"
-	desc = "A flowing, black coat."
-	icon_state = "neocoat"
-	item_state = "neocoat"
+/obj/item/clothing/suit/serifcoat
+	name = "serif coat"
+	desc = "A old coat"
+	icon_state = "serif_coat"
+	item_state = "det_suit"
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -303,28 +356,28 @@
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
-	icon_state = "stripper_p_under"
+	icon_state = "stripper_p"
 	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
-	icon_state = "stripper_g_under"
+	icon_state = "stripper_g"
 	item_color = "stripper_g"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_pink
+/obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
-	icon_state = "stripper_p_over"
+	icon_state = "stripper_p"
 	item_state = "stripper_p"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_green
+/obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
-	icon_state = "stripper_g_over"
+	icon_state = "stripper_g"
 	item_state = "stripper_g"
 	siemens_coefficient = 1
 
@@ -340,11 +393,11 @@
 	desc = "A suit made out of chitinous alien hide."
 	icon_state = "xenos"
 	item_state = "xenos_helm"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 //swimsuit
-/obj/item/clothing/under/swimsuit/
+/obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
 
@@ -388,7 +441,7 @@
 	desc = "My parents are dead"
 	icon_state = "batman"
 	item_state = "batman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/superman
@@ -396,12 +449,12 @@
 	desc = "Is it a bird? Is it a plane?"
 	icon_state = "superman"
 	item_state = "superman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/storage/miljacket_army
-	name = "Field jacket olive"
+	name = "field jacket olive"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Classic olive."
 	icon_state = "miljacket_army"
 	item_state = "miljacket_army"
@@ -414,7 +467,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 	if(!can_button_up)
 		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
@@ -431,22 +484,16 @@
 	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
-	name = "Field jacket desert"
+	name = "field jacket desert"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Marine cold desert."
 	icon_state = "miljacket_ranger"
 	item_state = "miljacket_ranger"
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
-	name = "Field jacket navy"
+	name = "field jacket navy"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
-
-/obj/item/clothing/suit/leathercoat
-	name = "leather coat"
-	desc = "A flowing, black coat."
-	icon_state = "leathercoat"
-	item_state = "leathercoat"
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -491,10 +538,6 @@
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
 
-/obj/item/clothing/suit/storage/det_suit/max_payne
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
-
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"
 	desc = "This suit says to you 'hush'!"
@@ -526,7 +569,7 @@
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/goodman_jacket
-	name = "Brown jacket"
+	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
 
@@ -535,7 +578,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "gmjacket_open")
@@ -551,3 +594,81 @@
 		return
 	usr.update_inv_wear_suit()
 
+/obj/item/clothing/suit/hooded/carp_costume
+	name = "carp costume"
+	desc = "A costume made from 'synthetic' carp scales, it smells."
+	icon_state = "carp_casual"
+	item_state = "labcoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS //Space carp like space, so you should too
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
+	hoodtype = /obj/item/clothing/head/hooded/carp_hood
+
+/obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
+	name = "corgi costume"
+	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
+	icon_state = "ian"
+	item_state = "labcoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list()
+	hoodtype = /obj/item/clothing/head/hooded/ian_hood
+
+/obj/item/clothing/suit/hooded/angel_suit
+	name = "Angel Suit"
+	desc = "Angel costume, which Emits aura of light."
+	icon_state = "angela_suit"
+	hoodtype = /obj/item/clothing/head/angel_nimb
+
+/obj/item/clothing/suit/student_jacket
+	name = "Student Jacket"
+	desc = "A Student's jacket from the eighties."
+	icon_state = "student_jacket"
+	action_button_name = "To Fasten"
+	var/fastened = TRUE
+
+/obj/item/clothing/suit/student_jacket/ui_action_click()
+	if(fastened)
+		icon_state = "student_jacket_open"
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_suit == src)
+				H.update_inv_wear_suit()
+	else
+		icon_state = "student_jacket"
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_suit == src)
+				H.update_inv_wear_suit()
+	fastened = !fastened
+
+/obj/item/clothing/suit/atlas_jacket
+	name = "atlas jacket"
+	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
+	icon_state = "atlas_jacket"
+
+/obj/item/clothing/suit/shawl
+	name = "shawl"
+	desc = "A pink Shawl for Hindi Womans."
+	icon_state = "shawl"
+
+/obj/item/clothing/suit/sukeban_coat
+	name = "sukeban coat"
+	desc = "Just a Street Japanese coat"
+	icon_state = "sukeban_coat"
+
+/obj/item/clothing/suit/plaid
+	name = "plaid"
+	desc = "Home warm plaid"
+	icon_state = "plaid"
+
+/obj/item/clothing/suit/tuxedo
+	name = "tuxedo"
+	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
+	icon_state = "tuxedo"
+
+/obj/item/clothing/suit/syndieshirt
+	name = "red shirt"
+	desc = "Brand new, incredibly comfortable t-shirt with a logo of Syndicate."
+	icon_state = "syndieshirt"
+	item_state = "syndieshirt"
+	body_parts_covered = UPPER_TORSO|ARMS

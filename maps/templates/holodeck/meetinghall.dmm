@@ -1,31 +1,234 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
-"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"; tag = "icon-plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
-"c" = (/turf/simulated/floor/holofloor{icon_state = "carpet2-0"; dir = 4},/area/holodeck/source_meetinghall)
-"d" = (/turf/simulated/floor/holofloor{icon_state = "carpet1-0"; dir = 4},/area/holodeck/source_meetinghall)
-"e" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_meetinghall)
-"f" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_meetinghall)
-"g" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_meetinghall)
-"h" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet10-8"; dir = 4},/area/holodeck/source_meetinghall)
-"i" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet11-12"; dir = 4},/area/holodeck/source_meetinghall)
-"j" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_meetinghall)
-"k" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_meetinghall)
-"l" = (/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_meetinghall)
-"m" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet14-10"; dir = 4},/area/holodeck/source_meetinghall)
-"n" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet15-15"; dir = 4},/area/holodeck/source_meetinghall)
-"o" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet13-5"; dir = 4},/area/holodeck/source_meetinghall)
-"p" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet6-2"; dir = 4},/area/holodeck/source_meetinghall)
-"q" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet7-3"; dir = 4},/area/holodeck/source_meetinghall)
-"r" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet5-1"; dir = 4},/area/holodeck/source_meetinghall)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "wooden"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"b" = (
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-6"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "wooden"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"c" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet4-0"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"d" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet8-0"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"e" = (
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "carpetsymbol"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"f" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "grimy"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "siding1"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"g" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "wood_stairs2"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"h" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet10-8"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"i" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet11-12"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"j" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet9-4"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"k" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"m" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet14-10"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"n" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet15-15"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"o" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet13-5"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"p" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet6-2"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"q" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet7-3"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"r" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet5-1"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
 
 (1,1,1) = {"
-aaaaaaaaab
-aacdecdaaa
-aaaaaaaaaa
-fffffffffg
-ehiiiiijkl
-emnnnnnokl
-kmnnnnnokl
-kmnnnnnokl
-kpqqqqqrkl
-kkkkkkkkkl
+a
+a
+a
+f
+k
+k
+k
+k
+k
+k
+"}
+(2,1,1) = {"
+a
+a
+a
+f
+p
+q
+q
+q
+r
+k
+"}
+(3,1,1) = {"
+a
+c
+a
+f
+m
+n
+n
+n
+o
+e
+"}
+(4,1,1) = {"
+a
+d
+a
+f
+m
+n
+n
+n
+o
+k
+"}
+(5,1,1) = {"
+a
+e
+a
+f
+m
+n
+n
+n
+o
+k
+"}
+(6,1,1) = {"
+a
+c
+a
+f
+m
+n
+n
+n
+o
+k
+"}
+(7,1,1) = {"
+a
+d
+a
+f
+m
+n
+n
+n
+o
+k
+"}
+(8,1,1) = {"
+a
+a
+a
+f
+h
+i
+i
+i
+j
+e
+"}
+(9,1,1) = {"
+a
+a
+a
+f
+k
+k
+k
+k
+k
+k
+"}
+(10,1,1) = {"
+b
+a
+a
+g
+k
+k
+k
+k
+k
+k
 "}

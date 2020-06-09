@@ -82,6 +82,7 @@
 	desc = "lightblue"
 	icon_state = "lightblue"
 	item_color = "lightblue"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/aqua
 	name = "aqua"

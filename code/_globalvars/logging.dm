@@ -1,5 +1,15 @@
-var/diary = null
-var/href_logfile = null
+var/global/log_directory
+var/global/log_investigate_directory
+var/global/log_debug_directory
+var/global/log_debug_js_directory
+
+var/global/game_log
+var/global/hrefs_log
+var/global/access_log
+var/global/initialization_log
+var/global/runtime_log
+var/global/qdel_log
+var/global/sql_error_log
 
 var/list/jobMax = list()
 var/list/bombers = list(  )

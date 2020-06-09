@@ -57,17 +57,13 @@ var/list/ingredients_source = list(
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container
 
-/obj/machinery/icecream_vat/New()
-	..()
+/obj/machinery/icecream_vat/atom_init()
+	. = ..()
 
 	while(ingredients.len < 11)
 		ingredients.Add(5)
 
-/obj/machinery/icecream_vat/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/icecream_vat/interact(mob/user)
+/obj/machinery/icecream_vat/ui_interact(mob/user)
 	var/dat
 	dat += "<a href='?src=\ref[src];dispense=[ICECREAM_VANILLA]'><b>Dispense vanilla icecream</b></a> There is [ingredients[ICECREAM_VANILLA]] scoops of vanilla icecream left (made from milk and ice).<br>"
 	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_STRAWBERRY]'><b>Dispense strawberry icecream</b></a> There is [ingredients[FLAVOUR_STRAWBERRY]] dollops of strawberry flavouring left (obtained from berry juice.<br>"
@@ -187,7 +183,7 @@ var/list/ingredients_source = list(
 
 	if(href_list["dispense"])
 		dispense_flavour = text2num(href_list["dispense"])
-		src.visible_message("\blue[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.")
+		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
 		if(ingredients[dispense_cone] <= ingredients.len)
@@ -220,14 +216,15 @@ var/list/ingredients_source = list(
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+/obj/item/weapon/reagent_containers/food/snacks/icecream/atom_init()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
 	name = "[flavour_name] icecream"
-	src.overlays += "icecream_[flavour_name]"
+	src.add_overlay("icecream_[flavour_name]")
 	desc = "Delicious [cone_type] cone with a dollop of [flavour_name] ice cream."
 	ice_creamed = 1
 

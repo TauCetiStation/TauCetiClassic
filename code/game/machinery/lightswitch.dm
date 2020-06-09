@@ -6,71 +6,80 @@
 	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
-	var/on = 1
+	anchored = TRUE
+	idle_power_usage = 20
+	power_channel = STATIC_LIGHT
+	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
+	var/static/image/overlay
 
-/obj/machinery/light_switch/New()
+/obj/machinery/light_switch/atom_init()
 	..()
-	spawn(5)
-		src.area = src.loc.loc
+	return INITIALIZE_HINT_LATELOAD
 
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+/obj/machinery/light_switch/atom_init_late()
+	area = loc.loc
 
-		if(!name)
-			name = "light switch ([area.name])"
+	if(otherarea)
+		area = locate(text2path("/area/[otherarea]"))
 
-		src.on = src.area.lightswitch
-		updateicon()
+
+	if(name == initial(name))
+		name = "light switch ([area.name])"
+
+	on = area.lightswitch
+	updateicon()
 
 
 
 /obj/machinery/light_switch/proc/updateicon()
-	if(stat & NOPOWER)
+	if(!overlay)
+		overlay = image(icon, "light1-overlay")
+		overlay.plane = LIGHTING_PLANE + 1
+
+	cut_overlays()
+	if(stat & (NOPOWER|BROKEN))
 		icon_state = "light-p"
+		set_light(0)
 	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = "light[on]"
+		overlay.icon_state = "light[on]-overlay"
+		add_overlay(overlay)
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
 	if(src in oview(1, user))
 		to_chat(user, "A light switch. It is [on? "on" : "off"].")
 
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
-
 /obj/machinery/light_switch/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 
-	src.add_fingerprint(usr)
 	on = !on
-	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 20)
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 
 	if(!otherarea)
-		if(powered(LIGHT))
+		if(powered(power_channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER
 
 		updateicon()
+	update_power_use()
 
 /obj/machinery/light_switch/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

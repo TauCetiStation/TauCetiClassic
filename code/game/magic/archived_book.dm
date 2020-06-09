@@ -7,11 +7,11 @@
 
 var/global/datum/book_manager/book_mgr = new()
 
-datum/book_manager/proc/path(id)
+/datum/book_manager/proc/path(id)
 	if(isnum(id)) // kill any path exploits
 		return "[BOOK_PATH][id].sav"
 
-datum/book_manager/proc/getall()
+/datum/book_manager/proc/getall()
 	var/list/paths = flist(BOOK_PATH)
 	var/list/books = new()
 
@@ -21,7 +21,7 @@ datum/book_manager/proc/getall()
 
 	return books
 
-datum/book_manager/proc/freeid()
+/datum/book_manager/proc/freeid()
 	var/list/paths = flist(BOOK_PATH)
 	var/id = paths.len + 101
 
@@ -53,16 +53,15 @@ datum/book_manager/proc/freeid()
 			var/DBQuery/query = dbcon.NewQuery("DELETE FROM library WHERE id=[isbn]")
 			if(!query.Execute())
 				to_chat(usr, query.ErrorMsg())
-			dbcon.Disconnect()
 	else
 		book_mgr.remove(isbn)
-	log_admin("[usr.key] has deleted the book [isbn]")
+	log_admin("[key_name(usr)] has deleted the book [isbn]")
 
 // delete a book
-datum/book_manager/proc/remove(id)
+/datum/book_manager/proc/remove(id)
 	fdel(path(id))
 
-datum/archived_book
+/datum/archived_book
 	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 	var/title		 // The real name of the book.
 	var/category	 // The category/genre of the book
@@ -74,7 +73,7 @@ datum/archived_book
 	var/list/icon/photos	 // in-game photos used
 
 // loads the book corresponding by the specified id
-datum/archived_book/New(var/path)
+/datum/archived_book/New(var/path)
 	if(isnull(path))
 		return
 
@@ -107,7 +106,7 @@ datum/archived_book/New(var/path)
 			return
 
 
-datum/archived_book/proc/save()
+/datum/archived_book/proc/save()
 	var/savefile/F = new(book_mgr.path(id))
 
 	F["version"] << BOOK_VERSION_MAX

@@ -6,18 +6,17 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/cable_coil = 2,
+							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1)
 
-datum/design/pacman/scrap
+/datum/design/pacman/scrap
 	name = "Scrapman Circuit Board"
 	desc = "Scrapman Generator Board (PACMAN-type Generator)"
 	id = "scrapman"
-	req_tech = list("programming" = 2, "phorontech" = 3, "powerstorage" = 2, "engineering" = 4)
 	build_type = IMPRINTER
-	reliability = 79
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman/scrap
+	category = list("Power")
 
 /obj/machinery/power/port_gen/pacman/scrap
 	name = "Scrapman Portable Generator"
@@ -30,4 +29,4 @@ datum/design/pacman/scrap
 	board_path = "/obj/item/weapon/circuitboard/pacman/scrap"
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
-		explosion(src.loc, 1, 5, 2, -1)
+	explosion(src.loc, 1, 5, 2, -1)

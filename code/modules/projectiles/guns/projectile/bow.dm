@@ -6,7 +6,7 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	sharp = 1
 	edge = 0
 
@@ -38,22 +38,25 @@
 /obj/item/weapon/crossbow
 
 	name = "powered crossbow"
-	desc = "A 2557AD twist on an old classic. Pick up that can."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 	var/tension = 0                       // Current draw on the bow.
-	var/max_tension = 5                   // Highest possible tension.
-	var/release_speed = 5                 // Speed per unit of tension.
+	var/max_tension = 3                   // Highest possible tension.
+	var/release_speed = 4                 // Speed per unit of tension.
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
+
+/obj/item/weapon/crossbow/atom_init()
+	. = ..()
+	desc = "A [gamestory_start_year+2]AD twist on an old classic. Pick up that can."
 
 /obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
@@ -96,7 +99,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(cell)
 			var/obj/item/C = cell
 			C.loc = get_turf(user)
@@ -153,13 +156,8 @@
 		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
 		spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		src.dropped()
-		return
-
-	else if (target.loc == user.loc)
+/obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
+	if (target.loc == user.loc)
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -179,6 +177,11 @@
 		spawn(0) Fire(target,user,params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	add_fingerprint(user)
 
@@ -205,92 +208,44 @@
 		tension = 0
 		icon_state = "crossbow"
 
-// Crossbow construction.
+// *(CROSSBOW craft in recipes.dm)*
 
-/obj/item/weapon/crossbowframe
-	name = "crossbow frame"
-	desc = "A half-finished crossbow."
-	icon_state = "crossbowframe0"
+/obj/item/weapon/crossbowframe1
+	name = "crossbow(1 stage)"
+	desc = "To finish you need: add 3 rods; weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe1"
 	item_state = "crossbow-solid"
 
-	var/buildstate = 0
+/obj/item/weapon/crossbowframe2
+	name = "crossbow(2 stage)"
+	desc = "To finish you need: weld it all; add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe2"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/update_icon()
-	icon_state = "crossbowframe[buildstate]"
+/obj/item/weapon/crossbowframe3
+	name = "crossbow(3 stage)"
+	desc = "To finish you need: add 5 cable coil; add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe3"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/examine(mob/user)
-	..()
-	switch(buildstate)
-		if(1)
-			to_chat(user, "It has a loose rod frame in place.")
-		if(2)
-			to_chat(user, "It has a steel backbone welded in place.")
-		if(3)
-			to_chat(user, "It has a steel backbone and a cell mount installed.")
-		if(4)
-			to_chat(user, "It has a steel backbone, plastic lath and a cell mount installed.")
-		if(5)
-			to_chat(user, "It has a steel cable loosely strung across the lath.")
+/obj/item/weapon/crossbowframe4
+	name = "crossbow(4 stage)"
+	desc = "To finish you need: add 3 plastic; add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe4"
+	item_state = "crossbow-solid"
 
-/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user)
-	if(istype(user, /mob/living/silicon/robot)) return
-	if(istype(W,/obj/item/stack/rods))
-		if(buildstate == 0)
-			var/obj/item/stack/rods/R = W
-			if(R.amount >= 3)
-				R.use(3)
-				to_chat(user, "\blue You assemble a backbone of rods around the wooden stock.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least three rods to complete this task.")
-			return
-	else if(istype(W,/obj/item/weapon/weldingtool))
-		if(buildstate == 1)
-			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0,user))
-				if(!src || !T.isOn()) return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "\blue You weld the rods into place.")
-			buildstate++
-			update_icon()
-		return
-	else if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
-		if(buildstate == 2)
-			if(C.amount >= 5)
-				C.use(5)
-				to_chat(user, "\blue You wire a crude cell mount into the top of the crossbow.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
-			return
-		else if(buildstate == 4)
-			if(C.amount >= 5)
-				C.use(5)
-				to_chat(user, "\blue You string a steel cable across the crossbow's lath.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
-			return
-	else if(istype(W,/obj/item/stack/sheet/mineral/plastic))
-		if(buildstate == 3)
-			var/obj/item/stack/sheet/mineral/plastic/P = W
-			if(P.amount >= 3)
-				P.use(3)
-				to_chat(user, "\blue You assemble and install a heavy plastic lath onto the crossbow.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least three plastic sheets to complete this task.")
-			return
-	else if(istype(W,/obj/item/weapon/screwdriver))
-		if(buildstate == 5)
-			to_chat(user, "\blue You secure the crossbow's various parts.")
-			new /obj/item/weapon/crossbow(get_turf(src))
-			qdel(src)
-		return
-	else
-		..()
+/obj/item/weapon/crossbowframe5
+	name = "crossbow(5 stage)"
+	desc = "To finish you need: add 5 cable coil; tighten the bolts by screwdriver."
+	icon_state = "crossbowframe5"
+	item_state = "crossbow-solid"
+
+/obj/item/weapon/crossbowframe6
+	name = "crossbow(6 stage)"
+	desc = "To finish you need: tighten the bolts by screwdriver."
+	icon_state = "crossbowframe6"
+	item_state = "crossbow-solid"
+
+/obj/item/weapon/crossbow/vox
+	max_tension = 5
+	release_speed = 5

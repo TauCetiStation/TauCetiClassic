@@ -1,8 +1,7 @@
 /mob/living/carbon/brain/death(gibbed)
 	if(stat == DEAD)	return
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
-		for(var/mob/O in viewers(container, null))
-			O.show_message(text("\red <B>[]'s MMI flatlines!</B>", src), 1, "\red You hear something flatline.", 2)
+		container.visible_message("<span class='warning'><B>[src]'s MMI flatlines!</B></span>", blind_message = "<span class='warning'>You hear something flatline.</span>")
 		container.icon_state = "mmi_dead"
 	stat = DEAD
 
@@ -18,7 +17,7 @@
 /mob/living/carbon/brain/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101

@@ -1,14 +1,12 @@
-mob/living/carbon/monkey/var
-	mob/npc_target = null // the NPC this monkey is attacking
-	mob/npc_fleeing = null // the monkey is scared of this mob
-	mob/hiding_behind = null
-	hid_behind = 0
-
+/mob/living/carbon/monkey
+	var/mob/npc_target = null // the NPC this monkey is attacking
+	var/mob/npc_fleeing = null // the monkey is scared of this mob
+	var/mob/hiding_behind = null
+	var/hid_behind = 0
 	var/list/hostiles = list()
+	var/fleeing_duration = 0
 
-	fleeing_duration = 0
-
-mob/living/carbon/monkey/proc/npc_act()
+/mob/living/carbon/monkey/proc/npc_act()
 	if(!client && !stat)
 		if(npc_fleeing && canmove)
 			var/prevloc = loc
@@ -69,7 +67,7 @@ mob/living/carbon/monkey/proc/npc_act()
 				else
 					emote(pick("scratch","jump","roll","tail"))
 
-mob/living/carbon/monkey/react_to_attack(mob/M)
+/mob/living/carbon/monkey/react_to_attack(mob/M)
 	if(npc_fleeing == M)
 		fleeing_duration += 30
 		return

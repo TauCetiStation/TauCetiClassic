@@ -2,9 +2,9 @@
 	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
-	density = 0
-	anchored = 1.0
-	use_power = 1
+	density = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 50
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
@@ -14,15 +14,14 @@
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
 	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
-	var/locked = 1
-	var/open = 1
-	req_access = list(access_robotics)
+	var/locked = TRUE
+	var/open = TRUE
 	var/recharge_speed
 	var/repairs
 
 
-/obj/machinery/recharge_station/New()
-	..()
+/obj/machinery/recharge_station/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
@@ -73,7 +72,7 @@
 
 	if(idle_power_usage != charge_diff) // Force update, but only when our power usage changed this tick.
 		idle_power_usage = charge_diff
-		update_use_power(1,1)
+		set_power_use(IDLE_POWER_USE)
 
 	current_internal_charge = min((current_internal_charge + ((charge_diff - 50) * CELLRATE)), max_internal_charge)
 
@@ -97,7 +96,7 @@
 	return ((current_internal_charge / max_internal_charge) * 100)
 
 /obj/machinery/recharge_station/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open_machine()
 
@@ -110,12 +109,6 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/attack_paw(user)
-	return attack_hand(user)
-
-/obj/machinery/recharge_station/attack_ai(user)
-	return attack_hand(user)
-
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
@@ -127,12 +120,14 @@
 	default_deconstruction_crowbar(P)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..())	return
-	if(construct_op == 0)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(!construct_op)
 		toggle_open()
 	else
 		to_chat(user, "The recharger can't be closed in this state.")
-	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(open)
@@ -147,7 +142,7 @@
 			occupant.client.perspective = MOB_PERSPECTIVE
 		occupant.forceMove(loc)
 		occupant = null
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	open = 1
 	density = 0
 	build_icon()
@@ -160,7 +155,7 @@
 				R.client.perspective = EYE_PERSPECTIVE
 			R.forceMove(src)
 			occupant = R
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 			add_fingerprint(R)
 			break
 		open = 0
@@ -169,20 +164,20 @@
 
 /obj/machinery/recharge_station/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	switch(round(chargepercentage()))
 		if(1 to 20)
-			overlays += image('icons/obj/objects.dmi', "statn_c0")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c0"))
 		if(21 to 40)
-			overlays += image('icons/obj/objects.dmi', "statn_c20")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c20"))
 		if(41 to 60)
-			overlays += image('icons/obj/objects.dmi', "statn_c40")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c40"))
 		if(61 to 80)
-			overlays += image('icons/obj/objects.dmi', "statn_c60")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c60"))
 		if(81 to 98)
-			overlays += image('icons/obj/objects.dmi', "statn_c80")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c80"))
 		if(99 to 110)
-			overlays += image('icons/obj/objects.dmi', "statn_c100")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c100"))
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if(NOPOWER|BROKEN)
@@ -203,7 +198,7 @@
 			if(R.module)
 				R.module.respawn_consumable(R)
 			if(repairs)
-				R.heal_organ_damage(repairs, repairs - 1)
+				R.heal_bodypart_damage(repairs, repairs - 1)
 			if(!R.cell)
 				return
 			else if(R.cell.charge >= R.cell.maxcharge)

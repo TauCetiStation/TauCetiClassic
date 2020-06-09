@@ -10,8 +10,10 @@
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
+		if(user.is_busy(src))
+			return
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
-		if(do_after(user, 50, target = src) )
+		if(W.use_tool(src, user, 50, volume = 100))
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
 			if(open)
 				close(user)
@@ -25,13 +27,14 @@
 			to_chat(user, "<span class='notice'>There's already a grave marker here.</span>")
 		else
 			var/obj/item/stack/sheet/wood/plank = W
-			if(plank.amount < 1)
+			if(plank.get_amount() < 1)
 				return
+			if(user.is_busy()) return
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
-			if(do_after(user, 50, target = src))
-				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
+			if(plank.use_tool(src, user, 50, volume = 100))
 				if(!plank.use(1))
 					return
+				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
 				new/obj/structure/gravemarker(src.loc)
 			else
 				to_chat(user, "<span class='notice'>You stop making a grave marker.</span>")
@@ -68,19 +71,19 @@
 	if(open)
 		return
 
-	if(escapee.stat || escapee.restrained())
+	if(escapee.incapacitated())
 		return
 
 	to_chat(escapee, "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>")
 	visible_message("<span class='danger'>Something is scratching its way out of \the [src]!</span>")
 
 	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
-		playsound(src.loc, 'sound/weapons/bite.ogg', 100, 1)
+		playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 
 		if(!do_after(escapee, 50, target = src))
 			to_chat(escapee, "<span class='warning'>You have stopped digging.</span>")
 			return
-		if(!escapee || escapee.stat || escapee.loc != src)
+		if(!escapee || escapee.incapacitated() || escapee.loc != src)
 			return
 		if(open)
 			return
@@ -90,7 +93,7 @@
 
 	to_chat(escapee, "<span class='warning'>You successfuly dig yourself out!</span>")
 	visible_message("<span class='danger'>\the [escapee] emerges from \the [src]!</span>")
-	playsound(src.loc, 'sound/effects/squelch1.ogg', 100, 1)
+	playsound(src, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 	open()
 
 /obj/structure/pit/closed
@@ -98,8 +101,8 @@
 	desc = "Some things are better left buried."
 	open = 0
 
-/obj/structure/pit/closed/New()
-	..()
+/obj/structure/pit/closed/atom_init()
+	. = ..()
 	close()
 
 //invisible until unearthed first
@@ -115,7 +118,7 @@
 	name = "grave"
 	icon_state = "pit0"
 
-/obj/structure/pit/closed/grave/New()
+/obj/structure/pit/closed/grave/atom_init()
 	var/obj/structure/closet/coffin/C = new(src.loc)
 
 	var/obj/effect/decal/remains/human/bones = new(C)
@@ -150,14 +153,14 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/tie/fluff/altair_locket,
-			/obj/item/clothing/tie/holobadge,
-			/obj/item/clothing/tie/horrible,
-			/obj/item/clothing/tie/medal,
-			/obj/item/clothing/tie/medal/silver,
-			/obj/item/clothing/tie/medal/silver/valor,
-			/obj/item/clothing/tie/medal/gold,
-			/obj/item/clothing/tie/medal/gold/heroism,
+			/obj/item/clothing/accessory/fluff/altair_locket,
+			/obj/item/clothing/accessory/holobadge,
+			/obj/item/clothing/accessory/tie/horrible,
+			/obj/item/clothing/accessory/medal,
+			/obj/item/clothing/accessory/medal/silver,
+			/obj/item/clothing/accessory/medal/silver/valor,
+			/obj/item/clothing/accessory/medal/gold,
+			/obj/item/clothing/accessory/medal/gold/heroism,
 			/obj/item/weapon/gun/energy/laser/retro/jetsons
 			)
 		loot = pick(misc)
@@ -165,7 +168,7 @@
 
 	var/obj/structure/gravemarker/random/R = new(src.loc)
 	R.generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker
 	name = "grave marker"
@@ -184,9 +187,9 @@
 	..()
 	to_chat(user, message)
 
-/obj/structure/gravemarker/random/New()
+/obj/structure/gravemarker/random/atom_init()
 	generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker/random/proc/generate()
 	icon_state = pick("wood","cross")
@@ -199,15 +202,18 @@
 	message = "Here lies [nam], [born] - [died]."
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/hatchet))
+	if(istype(W, /obj/item/weapon/hatchet))
+		if(user.is_busy(src))
+			return
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
-		if(do_after(user, 30, target = src))
+		if(W.use_tool(src, user, 30, volume = 100))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
 			new /obj/item/stack/sheet/wood(src)
 			qdel(src)
 			return
 	if(istype(W,/obj/item/weapon/pen))
-		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
+		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null)
+		add_fingerprint(user)
 		if(msg)
 			message = msg
 
@@ -215,7 +221,7 @@
 //Grave jetsons items
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons
+/obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
 	item_state = "jetsons"
@@ -224,13 +230,13 @@ obj/item/weapon/gun/energy/laser/retro/jetsons
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
-obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
+/obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	return 0
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons
 	projectile_type = /obj/item/projectile/beam/practice/jetsons
 	select_name = "practice_jetsons"
-	fire_sound = 'sound/weapons/Laser2.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser2.ogg'
 
 /obj/item/projectile/beam/practice/jetsons
 	name = "laser"

@@ -28,13 +28,13 @@
 	if(burning)
 		switch(amount)
 			if(1 to 10)
-				msg = "\red <b>Your [partname] burns.</b>"
+				msg = "<span class='warning'><b>Your [partname] burns.</b></span>"
 			if(11 to 90)
 				flash_weak_pain()
-				msg = "\red <b><font size=2>Your [partname] burns badly!</font></b>"
+				msg = "<span class='warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
 			if(91 to 10000)
 				flash_pain()
-				msg = "\red <b><font size=3>OH GOD! Your [partname] is on fire!</font></b>"
+				msg = "<span class='warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
 	else
 		switch(amount)
 			if(1 to 10)
@@ -66,9 +66,9 @@
 		return
 	if(analgesic)
 		return
-	var/msg = "\red <b>[message]</b>"
+	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
-		msg = "\red <font size=3><b>[message]</b></font>"
+		msg = "<span class='warning'><font size=3><b>[message]</b></font></span>"
 
 	// Anti message spam checks
 	if(msg && ((msg != last_pain_message) || (world.time >= next_pain_time)))
@@ -91,25 +91,24 @@
 	if(analgesic)
 		return
 	var/maxdam = 0
-	var/datum/organ/external/damaged_organ = null
-	for(var/datum/organ/external/E in organs)
-		// amputated limbs don't cause pain
-		if(E.amputated) continue
-		if(E.status & ORGAN_DEAD) continue
-		var/dam = E.get_damage()
+	var/obj/item/organ/external/damaged_organ = null
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.status & ORGAN_DEAD || BP.is_robotic())
+			continue
+		var/dam = BP.get_damage()
 		// make the choice of the organ depend on damage,
 		// but also sometimes use one of the less damaged ones
 		if(dam > maxdam && (maxdam == 0 || prob(70)) )
-			damaged_organ = E
+			damaged_organ = BP
 			maxdam = dam
 	if(damaged_organ)
-		pain(damaged_organ.display_name, maxdam, 0)
+		pain(damaged_organ.name, maxdam, 0)
 
-	// Damage to internal organs hurts a lot.
-	for(var/datum/organ/internal/I in internal_organs)
-		if(I.damage > 2) if(prob(2))
-			var/datum/organ/external/parent = get_organ(I.parent_organ)
-			src.custom_pain("You feel a sharp pain in your [parent.display_name]", 1)
+	// Damage to organs hurts a lot.
+	for(var/obj/item/organ/internal/IO in organs)
+		if(IO.damage > 2 && prob(2))
+			var/obj/item/organ/external/BP = bodyparts_by_name[IO.parent_bodypart]
+			src.custom_pain("You feel a sharp pain in your [BP.name]", 1)
 
 	var/toxDamageMessage = null
 	var/toxMessageProb = 1

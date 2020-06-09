@@ -3,6 +3,7 @@
 
 	name = "Embedded Controller"
 	anchored = 1
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/on = 1
 
@@ -29,25 +30,16 @@
 		program.process()
 
 	update_icon()
-	src.updateDialog()
-
-/obj/machinery/embedded_controller/attack_ai(mob/user)
-	src.ui_interact(user)
+	updateUsrDialog()
 
 /obj/machinery/embedded_controller/attack_paw(mob/user)
 	to_chat(user, "You do not have the dexterity to use this.")
 	return
 
-/obj/machinery/embedded_controller/attack_hand(mob/user)
-	src.ui_interact(user)
-
-/obj/machinery/embedded_controller/ui_interact()
-	return
-
 /obj/machinery/embedded_controller/radio
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	density = 0
 
 	// Setup parameters only
@@ -64,7 +56,8 @@
 
 	unacidable = 1
 
-/obj/machinery/embedded_controller/radio/initialize()
+/obj/machinery/embedded_controller/radio/atom_init()
+	. = ..()
 	set_frequency(frequency)
 	var/datum/computer/file/embedded_program/new_prog = new
 

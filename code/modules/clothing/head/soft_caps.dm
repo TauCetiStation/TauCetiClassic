@@ -18,7 +18,7 @@
 	set category = "Object"
 	set name = "Flip cap"
 	set src in usr
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		src.flipped = !src.flipped
 		if(src.flipped)
 			icon_state = "[item_color]soft_flipped"
@@ -105,3 +105,10 @@
 	desc = "It's janitor hat."
 	icon_state = "janitorsoft"
 	item_color = "janitor"
+
+/obj/item/clothing/head/soft/nt_pmc_cap
+	name = "NT PMC Cap"
+	desc = "Dark cap used by the private security corporation. This one looks good."
+	icon_state = "nt_pmcsoft"
+	item_state = "necromancer"
+	item_color = "nt_pmc"

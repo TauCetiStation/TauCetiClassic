@@ -5,8 +5,8 @@
 		return
 
 	//add wires
-	if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
+	if(iscoil(W))
+		var/obj/item/stack/cable_coil/C = W
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
@@ -15,12 +15,11 @@
 			to_chat(user, "<span class='notice'>The [src] are already wired.</span>")
 			return
 
-		if(C.amount < 2)
+		if(!C.use(2))
 			to_chat(user, "<span class='notice'>There is not enough wire to cover the [src].</span>")
 			return
 
-		C.use(2)
-		wired = 1
+		wired = TRUE
 		siemens_coefficient = 3.0
 		to_chat(user, "<span class='notice'>You wrap some wires around the [src].</span>")
 		update_icon()
@@ -40,7 +39,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+	else if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
 
 		//stunglove stuff
 		if(cell)
@@ -51,7 +50,7 @@
 			update_icon()
 			return
 		if(wired) //wires disappear into the void because fuck that shit
-			wired = 0
+			wired = FALSE
 			siemens_coefficient = initial(siemens_coefficient)
 			to_chat(user, "<span class='notice'>You cut the wires away from the [src].</span>")
 			update_icon()
@@ -59,31 +58,61 @@
 
 		//clipping fingertips
 		if(!clipped)
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+			user.visible_message("<span class='warning'>[user] cuts the fingertips off of the [src].</span>","<span class='warning'>You cut the fingertips off of the [src].</span>")
 
-			clipped = 1
+			clipped = TRUE
 			name = "mangled [name]"
 			desc = "[desc]<br>They have had the fingertips cut off of them."
 			if("exclude" in species_restricted)
 				species_restricted -= UNATHI
 				species_restricted -= TAJARAN
-			return
+				species_restricted -= VOX
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
-			return
-
 		return
-
 	..()
+
+/obj/item/clothing/gloves/proc/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(cell)
+			attacker.do_attack_animation(L)
+			if(attacker.a_intent == INTENT_HARM)//Stungloves. Any contact will stun the alien.
+				if(cell.charge >= 2500)
+					cell.use(2500)
+					update_icon()
+					var/calc_power = 150
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						var/obj/item/organ/external/BP = H.get_bodypart(attacker.zone_sel.selecting)
+
+						calc_power *= H.get_siemens_coefficient_organ(BP)
+
+					L.visible_message("<span class='warning bold'>[L] has been touched with the stun gloves by [attacker]!</span>")
+					L.log_combat(attacker, "stungloved witht [name]")
+
+					L.apply_effects(0,0,0,0,2,0,0,calc_power)
+					L.apply_effect(5, WEAKEN)
+					if(L.stuttering < 5)
+						L.stuttering = 5
+					L.apply_effect(5, STUN)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+					s.set_up(3, 1, L)
+					s.start()
+				else
+					to_chat(attacker, "<span class='warning'>Not enough charge!</span>")
+					attacker.visible_message("<span class='warning'><B>[L] has been touched with the stun gloves by [attacker]!</B></span>")
+			return TRUE
+	return FALSE
 
 /obj/item/clothing/gloves/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(wired)
-		overlays += image(icon = icon, icon_state = "gloves_wire")
+		add_overlay(image(icon = icon, icon_state = "gloves_wire"))
 	if(cell)
-		overlays += image(icon = icon, icon_state = "gloves_cell")
+		add_overlay(image(icon = icon, icon_state = "gloves_cell"))
 	if(wired && cell)
 		var/obj/item/weapon/stock_parts/cell/C = cell
 		if(!C.charge)

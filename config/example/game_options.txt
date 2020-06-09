@@ -9,13 +9,6 @@ HEALTH_THRESHOLD_CRIT -50
 ## level of health at which a mob becomes dead
 HEALTH_THRESHOLD_DEAD -100
 
-## Determines whether bones can be broken through excessive damage to the organ
-## 0 means bones can't break, 1 means they can
-BONES_CAN_BREAK 1
-## Determines whether limbs can be amputated through excessive damage to the organ
-## 0 means limbs can't be amputated, 1 means they can
-LIMBS_CAN_BREAK 1
-
 ## multiplier which enables organs to take more damage before bones breaking or limbs being destroyed
 ## 100 means normal, 50 means half
 ORGAN_HEALTH_MULTIPLIER 100
@@ -56,3 +49,17 @@ MONKEY_DELAY 0
 ALIEN_DELAY 0
 METROID_DELAY 0
 ANIMAL_DELAY 0
+
+### CRAFTING ###
+
+## Controls if players can see recipes in menu, even if they don't have required components (this does not affect crafting itself, just visibility).
+#CRAFT_RECIPES_VISIBILITY
+
+### ETC ###
+
+## Starlight for exterior walls and breaches. Uncomment for starlight!
+## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
+#STARLIGHT
+
+## If server time is beetween 11 pm and 8 am, lights will become more dim and easy on the eyes, comment to disable
+NIGHTSHIFT

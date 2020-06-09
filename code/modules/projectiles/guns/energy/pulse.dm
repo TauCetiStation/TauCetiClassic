@@ -9,12 +9,6 @@
 	var/mode = 2
 	fire_delay = 25
 
-/obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user)
-	select_fire(user)
-
-/obj/item/weapon/gun/energy/pulse_rifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/pulse_rifle/cyborg/newshot()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -42,15 +36,13 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
-	attack_self(mob/living/user)
-		to_chat(user, "\red [src.name] has three settings, and they are all DESTROY.")
+/obj/item/weapon/gun/energy/pulse_rifle/destroyer/attack_self(mob/living/user)
+	to_chat(user, "<span class='warning'>[src.name] has three settings, and they are all DESTROY.</span>")
 
 /obj/item/weapon/gun/energy/pulse_rifle/M1911
 	name = "m1911-P"
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
 	item_state = "gun"
+	can_be_holstered = TRUE
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
-
-	isHandgun()
-		return 1

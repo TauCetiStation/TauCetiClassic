@@ -67,7 +67,7 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
-	w_class = 10.0
+	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
@@ -87,7 +87,7 @@ var/const/tk_maxrange = 15
 
 	//stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
+	if( (slot == SLOT_L_HAND) || (slot == SLOT_R_HAND) )	return
 	qdel(src)
 	return
 
@@ -96,7 +96,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		focus.attack_self_tk(user)
 
-/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)//TODO: go over this
+/obj/item/tk_grab/afterattack(atom/target, mob/user, proximity, params) //TODO: go over this
 	if(!target || !user)	return
 	if(last_throw+3 > world.time)	return
 	if(!host || host != user)
@@ -121,7 +121,7 @@ var/const/tk_maxrange = 15
 		if(8 to tk_maxrange)
 			user.next_move += 10
 		else
-			to_chat(user, "\blue Your mind won't reach that far.")
+			to_chat(user, "<span class='notice'>Your mind won't reach that far.</span>")
 			return
 
 	if(!focus)
@@ -177,22 +177,22 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
+		add_overlay(icon(focus.icon,focus.icon_state))
 	return
 
 /*Not quite done likely needs to use something thats not get_step_to
-	proc/check_path()
-		var/turf/ref = get_turf(src.loc)
-		var/turf/target = get_turf(focus.loc)
-		if(!ref || !target)	return 0
-		var/distance = get_dist(ref, target)
-		if(distance >= 10)	return 0
-		for(var/i = 1 to distance)
-			ref = get_step_to(ref, target, 0)
-		if(ref != target)	return 0
-		return 1
+/obj/item/tk_grab/proc/check_path()
+	var/turf/ref = get_turf(src.loc)
+	var/turf/target = get_turf(focus.loc)
+	if(!ref || !target)	return 0
+	var/distance = get_dist(ref, target)
+	if(distance >= 10)	return 0
+	for(var/i = 1 to distance)
+		ref = get_step_to(ref, target, 0)
+	if(ref != target)	return 0
+	return 1
 */
 
 //equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)

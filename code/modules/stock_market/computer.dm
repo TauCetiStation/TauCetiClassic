@@ -1,57 +1,52 @@
 /obj/machinery/computer/stockexchange
 	name = "Stock exchange computer"
-	icon_state = "oldcomp"
+	icon_state = "computer_regular_stock"
+	state_broken_preset = "computer_regularb"
+	state_nopower_preset = "computer_regular0"
 	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 
-/obj/machinery/computer/stockexchange/New()
-	..()
-	logged_in = "[world.name] Cargo Department"
+/obj/machinery/computer/stockexchange/atom_init()
+	. = ..()
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if(!logged_in)
 		return 0
 	return SSshuttle.points
 
-/obj/machinery/computer/cargo/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/stockexchange/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
-
+/obj/machinery/computer/stockexchange/ui_interact(mob/user)
 	var/css={"<style>
-.change {
-	font-weight: bold;
-	font-family: monospace;
-}
-.up {
-	background: #00a000;
-}
-.down {
-	background: #a00000;
-}
-.stable {
-	width: 100%
-	border-collapse: collapse;
-	border: 1px solid #305260;
-	border-spacing: 4px 4px;
-}
-.stable td, .stable th {
-	border: 1px solid #305260;
-	padding: 0px 3px;
-}
-.bankrupt {
-	border: 1px solid #a00000;
-	background: #a00000;
-}
+		.change {
+			font-weight: bold;
+			font-family: monospace;
+		}
+		.up {
+			background: #00a000;
+		}
+		.down {
+			background: #a00000;
+		}
+		.stable {
+			width: 100%
+			border-collapse: collapse;
+			border: 1px solid #305260;
+			border-spacing: 4px 4px;
+		}
+		.stable td, .stable th {
+			border: 1px solid #305260;
+			padding: 0px 3px;
+		}
+		.bankrupt {
+			border: 1px solid #a00000;
+			background: #a00000;
+		}
 
-a.updated {
-	color: red;
-}
-</style>"}
+		a.updated {
+			color: red;
+		}
+		</style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
 	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
@@ -73,7 +68,7 @@ a.updated {
 			var/mystocks = 0
 			if(logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
-			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
+			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <span style='color:red'><b>BANKRUPT</b></span>" : null]<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if(S.bankrupt)
@@ -159,11 +154,11 @@ a.updated {
 
 	dat += "<A href='?src=\ref[user];mach_close=stock_comp'>Close</A> <A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += "</body></html>"
+
 	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/S, mob/user)
 	if(!user || !S)
@@ -227,7 +222,7 @@ a.updated {
 	if(!amt)
 		return
 	if(!S.buyShares(logged_in, amt))
-		to_chat(user, "<<span class='danger'>Could not complete transaction.</span>")
+		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
 
 	var/total = amt * S.current_value
@@ -280,14 +275,14 @@ a.updated {
 				continue
 			if (p > 0)
 				dat += "<hr>"
-			dat += "<div><b style='font-size:1.25em'>[E.current_title]</b><br>[E.current_desc]</div>"
+			dat += "<div><span style='font-size:1.25em'><b>[E.current_title]</b></span><br>[E.current_desc]</div>"
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
 		for (var/datum/article/A in S.articles)
 			if (p > 0)
 				dat += "<hr>"
-			dat += "<div><b style='font-size:1.25em'>[A.headline]</b><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"
+			dat += "<div><span style='font-size:1.25em'><b>[A.headline]</b></span><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"
 			p++
 		dat += "</div></body></html>"
 		var/datum/browser/popup = new(usr, "archive_[S.name]", "Stock News", 600, 400)

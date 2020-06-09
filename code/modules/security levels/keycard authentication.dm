@@ -15,14 +15,15 @@
 	//1 = select event
 	//2 = authenticate
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	to_chat(user, "The station AI is not to interact with these devices.")
-	return
 
 /obj/machinery/keycard_auth/attack_paw(mob/user)
 	to_chat(user, "You are too primitive to use this device.")
@@ -45,21 +46,20 @@
 				broadcast_request() //This is the device making the initial event request. It needs to broadcast to other devices
 
 /obj/machinery/keycard_auth/power_change()
-	if(powered(ENVIRON))
+	if(powered(power_channel))
 		stat &= ~NOPOWER
 		icon_state = "auth_off"
 	else
 		stat |= NOPOWER
+	update_power_use()
 
-/obj/machinery/keycard_auth/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+/obj/machinery/keycard_auth/ui_interact(mob/user)
+	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "This device is not powered.")
 		return
 	if(busy)
 		to_chat(user, "This device is busy.")
 		return
-
-	user.set_machine(src)
 
 	var/dat = "<h1>Keycard Authentication Device</h1>"
 
@@ -75,12 +75,11 @@
 		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
 		dat += "</ul>"
-		user << browse(dat, "window=keycard_auth;size=500x250")
+		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
 	if(screen == 2)
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
 		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
-		user << browse(dat, "window=keycard_auth;size=500x250")
-	return
+		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
@@ -157,10 +156,11 @@
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
-				to_chat(usr, "\red All emergency response teams are dispatched and can not be called at this time.")
+				to_chat(usr, "<span class='warning'>All emergency response teams are dispatched and can not be called at this time.</span>")
 				return
 
 			trigger_armed_response_team(1)
+			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
@@ -176,9 +176,7 @@ var/global/timer_maint_revoke_id = 0
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-
-	to_chat(world, "<font size=4 color='red'>Attention!</font>")
-	to_chat(world, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
+	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
 	if(priority)
@@ -187,12 +185,10 @@ var/global/timer_maint_revoke_id = 0
 		return
 
 	change_maintenance_access(FALSE)
-
-	to_chat(world, "<font size=4 color='red'>Attention!</font>")
-	to_chat(world, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
+	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
 /proc/change_maintenance_access(allow_state)
-	for(var/area/maintenance/M in all_areas)
+	for(var/area/station/maintenance/M in all_areas)
 		for(var/obj/machinery/door/airlock/A in M)
 			A.emergency = allow_state
 			A.update_icon()

@@ -5,13 +5,13 @@
 	var/effect // description of what happens when not treated
 	var/duration = 0 // delay between start() and finish()
 
-	proc/start(mob/living/carbon/human/H)
-		// start the side effect, this should give some cue as to what's happening,
-		// such as gasping. These cues need to be unique among side-effects.
+/datum/genetics/side_effect/proc/start(mob/living/carbon/human/H)
+	// start the side effect, this should give some cue as to what's happening,
+	// such as gasping. These cues need to be unique among side-effects.
 
-	proc/finish(mob/living/carbon/human/H)
-		// Finish the side-effect. This should first check whether the cure has been
-		// applied, and if not, cause bad things to happen.
+/datum/genetics/side_effect/proc/finish(mob/living/carbon/human/H)
+	// Finish the side-effect. This should first check whether the cure has been
+	// applied, and if not, cause bad things to happen.
 
 /datum/genetics/side_effect/genetic_burn
 	name = "Genetic Burn"
@@ -24,12 +24,12 @@
 	H.emote("me", 1, "starts turning very red..")
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
-	for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-		var/datum/organ/external/E = H.get_organ(organ_name)
+	for(var/bodypart in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 		if(prob(85))//#Z2 - now 15% chance even for more burn
-			E.take_damage(0, 5, 0)
+			BP.take_damage(0, 5, 0)
 		else
-			E.take_damage(0, 20, 0)
+			BP.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -42,16 +42,13 @@
 	H.emote("me", 1, "'s limbs start shivering uncontrollably.")
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
-	if(prob(85))//#Z2 - now 15% chance for heavy brute damage
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(20, 0, 0)
-		E.fracture()
+	var/bodypart = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+	if(prob(85))
+		BP.take_damage(20)
+		BP.fracture()
 	else
-		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-		var/datum/organ/external/E = H.get_organ(organ_name)
-		E.take_damage(70, 0, 0)
-		//E.fracture()
+		BP.take_damage(70)
 
 /datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"
@@ -64,7 +61,7 @@
 	H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
 
 /datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
-	H.monkeyize()
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"
@@ -94,7 +91,7 @@
 	H.h_style = "Skinhead"
 	H.update_hair()
 
-proc/trigger_side_effect(mob/living/carbon/human/H)
+/proc/trigger_side_effect(mob/living/carbon/human/H)
 	set waitfor = 0
 	if(!H || !istype(H))
 		return

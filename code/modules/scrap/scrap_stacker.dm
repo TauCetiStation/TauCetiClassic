@@ -2,8 +2,9 @@
 	name = "scrap stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
@@ -18,20 +19,21 @@
 		return
 	if(istype(AM, /obj/item/stack/sheet/refined_scrap))
 		var/obj/item/stack/sheet/refined_scrap/S = AM
-		scrap_amount += S.amount
+		scrap_amount += S.get_amount()
 		qdel(S)
 		if(scrap_amount >= stack_amt)
-			var/obj/item/stack/sheet/NS = new /obj/item/stack/sheet/refined_scrap(src.loc)
-			NS.amount = stack_amt
+			new /obj/item/stack/sheet/refined_scrap(loc, stack_amt)
 			scrap_amount -= stack_amt
 	else
-		AM.forceMove(src.loc)
+		AM.forceMove(loc)
 
 /obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
-	if(scrap_amount < 1)
+	. = ..()
+	if(.)
 		return
+	if(scrap_amount < 1)
+		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")
-	var/obj/item/stack/sheet/S = new /obj/item/stack/sheet/refined_scrap(src.loc)
-	S.amount = scrap_amount
+	new /obj/item/stack/sheet/refined_scrap(loc, scrap_amount)
 	scrap_amount = 0
-	..()

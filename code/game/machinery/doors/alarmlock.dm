@@ -9,21 +9,17 @@
 	var/air_frequency = 1437
 	autoclose = 0
 
-/obj/machinery/door/airlock/alarmlock/New()
-	..()
+/obj/machinery/door/airlock/alarmlock/atom_init()
+	. = ..()
+	radio_controller.remove_object(src, air_frequency)
 	air_connection = new
+	air_connection = radio_controller.add_object(src, air_frequency, RADIO_TO_AIRALARM)
+	open()
 
 /obj/machinery/door/airlock/alarmlock/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,air_frequency)
 	return ..()
-
-/obj/machinery/door/airlock/alarmlock/initialize()
-	..()
-	radio_controller.remove_object(src, air_frequency)
-	air_connection = radio_controller.add_object(src, air_frequency, RADIO_TO_AIRALARM)
-	open()
-
 
 /obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)
 	..()
@@ -34,8 +30,6 @@
 	var/alert = signal.data["alert"]
 
 	var/area/our_area = get_area(src)
-	if (our_area.master)
-		our_area = our_area.master
 
 	if(alarm_area == our_area.name)
 		switch(alert)

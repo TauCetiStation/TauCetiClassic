@@ -24,7 +24,7 @@
 	for(var/R in cures)
 		if(H.reagents.has_reagent(R))
 			if (cure_message)
-				to_chat(H, "\blue [cure_message]")
+				to_chat(H, "<span class='notice'>[cure_message]</span>")
 			return 1
 	return 0
 
@@ -34,14 +34,14 @@
 /mob/living/carbon/human/var/list/datum/medical_effect/side_effects = list()
 /mob/proc/add_side_effect(name, strength = 0)
 /mob/living/carbon/human/add_side_effect(name, strength = 0)
-	for(var/datum/medical_effect/M in src.side_effects)
+	for(var/datum/medical_effect/M in side_effects)
 		if(M.name == name)
 			M.strength = max(M.strength, 10)
 			M.start = life_tick
 			return
 
 
-	var/T = side_effects[name]
+	var/T = global.side_effects[name]
 	if (!T)
 		return
 
@@ -56,11 +56,11 @@
 	if(life_tick % 15 != 0)
 		return 0
 
-	var/list/L = typesof(/datum/medical_effect)-/datum/medical_effect
+	var/list/L = subtypesof(/datum/medical_effect)
 	for(var/T in L)
 		var/datum/medical_effect/M = new T
 		if (M.manifest(src))
-			src.add_side_effect(M.name)
+			add_side_effect(M.name)
 
 	// One full cycle(in terms of strength) every 10 minutes
 	for (var/datum/medical_effect/M in side_effects)

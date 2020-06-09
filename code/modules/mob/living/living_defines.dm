@@ -1,6 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -44,10 +43,23 @@
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
 
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
-	var/list/pipes_shown = list()
-	var/last_played_vent
-
+	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
 
-	var/isHandsBusy = FALSE
+	var/list/recent_tastes = list()
+	var/lasttaste = 0 // Prevent tastes spam
+
+	var/list/roundstart_quirks = list()
+	var/list/status_effects // a list of all status effects the mob has
+
+	var/force_remote_viewing = FALSE
+
+	// These should be changed whenever the mob somehow permanently affects their image.
+	// By default these are filled in in atom_init().
+	var/matrix/default_transform = matrix()
+	var/default_pixel_x = 0
+	var/default_pixel_y = 0
+	var/default_layer = 0
+
+	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
+	var/logs_combat = TRUE

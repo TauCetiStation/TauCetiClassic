@@ -14,26 +14,11 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/is_on_same_plane_or_station(z1, z2)
-	if(z1 == z2)
-		return 1
-	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
-		return 1
-	return 0
-
-/proc/get_area_master(const/O)
-	var/area/A = get_area(O)
-
-	if (isarea(A))
+/proc/get_area(atom/A)
+	if(isarea(A))
 		return A
-
-/proc/get_area(O)
-	if(isarea(O))
-		return O
-	var/turf/loc = get_turf(O)
-	if(loc)
-		var/area/res = loc.loc
-		. = res
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
@@ -58,21 +43,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/isStationLevel(level)
-	return level in config.station_levels
-
-/proc/isNotStationLevel(level)
-	return !isStationLevel(level)
-
-/proc/isPlayerLevel(level)
-	return level in config.player_levels
-
-/proc/isAdminLevel(level)
-	return level in config.admin_levels
-
-/proc/isNotAdminLevel(level)
-	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -200,7 +170,7 @@
 
 	return hear
 
-
+// todo: tg
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -274,41 +244,37 @@
 
 	return mobs
 
-#define SIGN(X) ((X<0)?-1:1)
-
-proc
-	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
-		var/turf/T
-		if(X1==X2)
-			if(Y1==Y2)
-				return 1 //Light cannot be blocked on same tile
-			else
-				var/s = SIGN(Y2-Y1)
-				Y1+=s
-				while(Y1!=Y2)
-					T=locate(X1,Y1,Z)
-					if(T.opacity)
-						return 0
-					Y1+=s
+/proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
+	var/turf/T
+	if(X1==X2)
+		if(Y1==Y2)
+			return 1 //Light cannot be blocked on same tile
 		else
-			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
-			if(X1<X2)
-				b+=m
-			while(X1!=X2 || Y1!=Y2)
-				if(round(m*X1+b-Y1))
-					Y1+=signY //Line exits tile vertically
-				else
-					X1+=signX //Line exits tile horizontally
+			var/s = SIGN(Y2-Y1)
+			Y1+=s
+			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
 					return 0
-		return 1
-#undef SIGN
+				Y1+=s
+	else
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
+		if(X1<X2)
+			b+=m
+		while(X1!=X2 || Y1!=Y2)
+			if(round(m*X1+b-Y1))
+				Y1+=signY //Line exits tile vertically
+			else
+				X1+=signX //Line exits tile horizontally
+			T=locate(X1,Y1,Z)
+			if(T.opacity)
+				return 0
+	return 1
 
-proc/isInSight(atom/A, atom/B)
+/proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -323,11 +289,11 @@ proc/isInSight(atom/A, atom/B)
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
-	var/area/our_area = get_area_master(the_area)
+	var/area/our_area = get_area(the_area)
 	for(var/mob/M in moblist)
 		if(client_needed && !M.client)
 			continue
-		if(our_area != get_area_master(M))
+		if(our_area != get_area(M))
 			continue
 		mobs_found += M
 	return mobs_found
@@ -359,42 +325,29 @@ proc/isInSight(atom/A, atom/B)
 			return M
 	return null
 
-
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-/proc/get_active_candidates(buffer = 1)
-
+/proc/get_larva_candidates()
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
+	var/afk_time = 0
+	var/afk_threesold = 3000
+	while(!candidates.len && afk_time <= afk_threesold)
 		for(var/mob/dead/observer/G in player_list)
-			if(((G.client.inactivity/10)/60) <= buffer + i) // the most active players are more likely to become an alien
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+			if(!G.client)
+				continue
+			if((ROLE_ALIEN in G.client.prefs.be_role) && !jobban_isbanned(G, ROLE_ALIEN))
+				if(!G.client.is_afk(afk_time)) // the most active players are more likely to become an alien
 					candidates += G.key
-		i++
-	return candidates
-
-// Same as above but for alien candidates.
-
-/proc/get_alien_candidates()
-
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(ROLE_ALIEN in G.client.prefs.be_role)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+		afk_time += 600
 	return candidates
 
 /proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
+	if(!be_role_type)
+		return
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role))
+				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role)) // TODO: Replace it with something else. Causes runtimes if there are no ghosts(not observers!)
 					candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
@@ -488,21 +441,68 @@ proc/isInSight(atom/A, atom/B)
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
-/proc/random_color()
-	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
-	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
-
 /proc/noob_notify(mob/M)
 	//todo: check db before
 	if(!M.client)
 		return
 	if(M.client.holder)
 		return
-	if(M.client.player_age == 0)
-		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
-		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
+	var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
+	var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
+	if(M.client.player_age == 0)
+		var/adminmsg = {"New player notify
+					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
+					Byond profile: <a href='[player_byond_profile]'>open</a>
+					Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"}
+
+		message_admins(adminmsg)
+
+	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
+		var/mentormsg = {"New player notify
+					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
+					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
+					Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"}
+
+		message_mentors(mentormsg, 1)
+
+// Better get_dir proc
+/proc/get_general_dir(atom/Loc1, atom/Loc2)
+	var/dir = get_dir(Loc1, Loc2)
+	switch(dir)
+		if(NORTH, EAST, SOUTH, WEST)
+			return dir
+
+		if(NORTHEAST, SOUTHWEST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,-45)
+			else
+				return dir
+
+		if(NORTHWEST, SOUTHEAST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,-45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,45)
+			else
+				return dir
+
+/proc/window_flash(client/C)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C)
+		return
+	winset(C, "mainwindow", "flash=5")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

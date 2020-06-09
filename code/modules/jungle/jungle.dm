@@ -14,12 +14,11 @@
 #define RANDOM_LOWER_X 18
 #define RANDOM_LOWER_Y 18
 
-/area/jungle
+/area/awaymission/jungle
 	name = "jungle"
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "area"
-	dynamic_lighting = 0
-	luminosity = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 //randomly spawns, will create paths around the map
 /obj/effect/landmark/path_waypoint
@@ -32,28 +31,25 @@
 	icon_state = "x2"
 	var/obj/structure/ladder/my_ladder
 
-	New()
-		//pick a random temple to link to
-		var/list/waypoints = list()
-		for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
-			waypoints.Add(T)
-			if(!T)
-				return
-			else continue
-		var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
-		dest_temple.init()
+/obj/effect/landmark/temple/atom_init()
+	..()
+	//pick a random temple to link to
+	var/list/waypoints = list()
+	for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
+		waypoints.Add(T)
+		continue
 
-		//connect this landmark to the other
-		my_ladder = new /obj/structure/ladder(src.loc)
-		my_ladder.id = dest_temple.my_ladder.id
-		dest_temple.my_ladder.up = my_ladder
+	var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
+	dest_temple.init()
 
-		//delete the landmarks now that we're finished
-		qdel(dest_temple)
-		qdel(src)
+	//connect this landmark to the other
+	my_ladder = new /obj/structure/ladder(src.loc)
+	my_ladder.id = dest_temple.my_ladder.id
+	dest_temple.my_ladder.up = my_ladder
 
-/obj/effect/landmark/temple/destination/New()
-	//nothing
+	//delete the landmarks now that we're finished
+	qdel(dest_temple)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/temple/destination/proc/init()
 	my_ladder = new /obj/structure/ladder(src.loc)
@@ -104,22 +100,22 @@
 			qdel(D)*/
 
 //a shuttle has crashed somewhere on the map, it should have a power cell to let the adventurers get home
-/area/jungle/crash_ship_source
+/area/awaymission/jungle/crash_ship_source
 	icon_state = "crash"
 
-/area/jungle/crash_ship_clean
+/area/awaymission/jungle/crash_ship_clean
 	icon_state = "crash"
 
-/area/jungle/crash_ship_one
+/area/awaymission/jungle/crash_ship_one
 	icon_state = "crash"
 
-/area/jungle/crash_ship_two
+/area/awaymission/jungle/crash_ship_two
 	icon_state = "crash"
 
-/area/jungle/crash_ship_three
+/area/awaymission/jungle/crash_ship_three
 	icon_state = "crash"
 
-/area/jungle/crash_ship_four
+/area/awaymission/jungle/crash_ship_four
 	icon_state = "crash"
 
 //randomly spawns, will create rivers around the map
@@ -134,13 +130,14 @@
 	var/list/animal_spawners = list()
 
 
-/obj/machinery/jungle_controller/initialize()
-	to_chat(world, "\red \b Setting up jungle, this may take a bleeding eternity...")
+/obj/machinery/jungle_controller/atom_init()
+	. = ..()
+	to_chat(world, "<span class='warning'><b>Setting up jungle, this may take a bleeding eternity...</b></span>")
 
 	//crash dat shuttle
-	var/area/start_location = locate(/area/jungle/crash_ship_source)
-	var/area/clean_location = locate(/area/jungle/crash_ship_clean)
-	var/list/ship_locations = list(/area/jungle/crash_ship_one, /area/jungle/crash_ship_two, /area/jungle/crash_ship_three, /area/jungle/crash_ship_four)
+	var/area/start_location = locate(/area/awaymission/jungle/crash_ship_source)
+	var/area/clean_location = locate(/area/awaymission/jungle/crash_ship_clean)
+	var/list/ship_locations = list(/area/awaymission/jungle/crash_ship_one, /area/awaymission/jungle/crash_ship_two, /area/awaymission/jungle/crash_ship_three, /area/awaymission/jungle/crash_ship_four)
 	var/area/end_location = locate( pick(ship_locations) )
 	ship_locations -= end_location.type
 
@@ -275,7 +272,7 @@
 			cur_turf = get_step(cur_turf, cur_dir)
 
 			//if we're not a jungle turf, get back to what we were doing
-			if(!istype(cur_turf, /turf/unsimulated/jungle/))
+			if(!istype(cur_turf, /turf/unsimulated/jungle))
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue

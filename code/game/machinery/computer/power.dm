@@ -8,7 +8,7 @@
 	light_color = "#ffcc33"
 	density = 1
 	anchored = 1
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor
@@ -16,8 +16,8 @@
 
 //fix for issue 521, by QualityVan.
 //someone should really look into why circuits have a powernet var, it's several kinds of retarded.
-/obj/machinery/computer/monitor/New()
-	..()
+/obj/machinery/computer/monitor/atom_init()
+	. = ..()
 	var/obj/structure/cable/attached = null
 	var/turf/T = loc
 	if(isturf(T))
@@ -35,28 +35,22 @@
 			powernet = attached.get_powernet()
 	return
 
-/obj/machinery/computer/monitor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/monitor/interact(mob/user)
+/obj/machinery/computer/monitor/ui_interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
+		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=powcomp")
 			return
 
 
-	user.set_machine(src)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
-		t += "\red No connection"
+		t += "<span class='warning'>No connection</span>"
 	else
 
 		var/list/L = list()
@@ -83,7 +77,7 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(t, "window=powcomp;size=450")
+	user << browse(entity_ja(t), "window=powcomp;size=450x900")
 	onclose(user, "powcomp")
 
 

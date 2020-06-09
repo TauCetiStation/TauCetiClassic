@@ -5,10 +5,10 @@
 	by Lummox JR
  */
 
-mob/verb/Convert(filename)
+/mob/verb/Convert(filename)
 	dmp2swapmap(filename)
 
-proc/d2sm_prepmap(filename)
+/proc/d2sm_prepmap(filename)
 	var/txt = file2text(filename)
 	if(!txt) return
 	var/i,j
@@ -23,7 +23,7 @@ proc/d2sm_prepmap(filename)
 		i=findText(txt,"\\\n",i)
 	return txt
 
-proc/dmp2swapmap(filename)
+/proc/dmp2swapmap(filename)
 	//var/txt = file2text(filename)
 	//if(!txt) return
 	var/txt = d2sm_prepmap(filename)
@@ -187,7 +187,7 @@ proc/dmp2swapmap(filename)
 				to_chat(F, "&emsp;&emsp;&emsp;[x]")
 				to_chat(F, codes[pick(codes)])*/
 
-proc/d2sm_ParseCommaList(txt)
+/proc/d2sm_ParseCommaList(txt)
 	var/list/L=new
 	var/i,ch
 	for(i=1,i<=length(txt),++i)
@@ -205,7 +205,7 @@ proc/d2sm_ParseCommaList(txt)
 	if(i>1) L+=copytext(txt,1,i)
 	return L
 
-proc/d2sm_MatchBrace(txt, i, which)
+/proc/d2sm_MatchBrace(txt, i, which)
 	if(which==40) ++which
 	else which+=2
 	var/j,ch
@@ -216,7 +216,7 @@ proc/d2sm_MatchBrace(txt, i, which)
 			j=d2sm_MatchBrace(txt,j,ch)
 			if(!j) return 0
 
-proc/d2sm_ConvertType(tt,tabs="")
+/proc/d2sm_ConvertType(tt,tabs="")
 	var/i=findText(tt,"{")
 	if(!i) return "[tabs]type = [tt]\n"
 	.="[tabs]type = [copytext(tt,1,i)]\n"
@@ -225,7 +225,7 @@ proc/d2sm_ConvertType(tt,tabs="")
 	for(var/pair in L)
 		.="[.][tabs][pair]\n"
 
-proc/d2sm_Contents(list/conts,n,tabs="")
+/proc/d2sm_Contents(list/conts,n,tabs="")
 	.="[tabs]contents = list("
 	var/i
 	for(i=0,i<n,++i)

@@ -50,16 +50,16 @@
 /datum/recipe/grill/waffles
 	reagents = list("sugar" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/waffles
 
 /datum/recipe/grill/rofflewaffles
 	reagents = list("psilocybin" = 5, "sugar" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 
@@ -116,21 +116,17 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/human/kabob
 
-/datum/recipe/grill/monkeykabob
+/datum/recipe/grill/kabob
 	items = list(
 		/obj/item/stack/rods,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
-
-/datum/recipe/grill/syntikabob
-	items = list(
-		/obj/item/stack/rods,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
+	// see /datum/recipe/grill/human/kabob
+	excluded_items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/human
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
 
 /datum/recipe/grill/tofukabob
 	items = list(

@@ -7,7 +7,7 @@
 	usr.set_machine(src)
 	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
 	src.drawmap(usr)
 
@@ -73,7 +73,7 @@
 					if("/turf/unsimulated/floor")
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+					if("/turf/unsimulated/wall")
 						colour  = rgb(140,140,140)
 
 					else
@@ -124,7 +124,7 @@
 
 			if(!colour2 && !T.density)
 				var/datum/gas_mixture/environment = T.return_air()
-				var/turf_total = environment.total_moles()
+				var/turf_total = environment.total_moles
 				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
 
@@ -211,7 +211,7 @@
 
 					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
 						var/datum/gas_mixture/environment = T.return_air()
-						var/turf_total = environment.total_moles()
+						var/turf_total = environment.total_moles
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
 
 						if(t1<=100)
@@ -229,7 +229,7 @@
 					if("/turf/unsimulated/floor")
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+					if("/turf/unsimulated/wall")
 						colour  = rgb(140,140,140)
 
 					else
@@ -342,13 +342,13 @@
 
 		return
 
-proc/getr(col)
+/proc/getr(col)
 	return hex2num( copytext(col, 2,4))
 
-proc/getg(col)
+/proc/getg(col)
 	return hex2num( copytext(col, 4,6))
 
-proc/getb(col)
+/proc/getb(col)
 	return hex2num( copytext(col, 6))
 
 

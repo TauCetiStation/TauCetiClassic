@@ -11,9 +11,6 @@
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 
-/obj/effect/spacevine/New()
-	return
-
 /obj/effect/spacevine/Destroy()
 	if(master)
 		master.vines -= src
@@ -25,7 +22,7 @@
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
+		if(/obj/item/weapon/kitchenknife) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
@@ -39,20 +36,23 @@
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(istype(W, /obj/item/weapon/weldingtool))
+			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
+				if(WT.use(0, user)) qdel(src)
 			else
 				user_unbuckle_mob(user)
 				return
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	..()
+	return ..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+
 
 /obj/effect/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/effect/spacevine_controller
 	var/list/obj/effect/spacevine/vines = list()
@@ -62,9 +62,10 @@
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
-/obj/effect/spacevine_controller/New()
-	if(!istype(src.loc,/turf/simulated/floor))
-		qdel(src)
+/obj/effect/spacevine_controller/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/simulated/floor))
+		return INITIALIZE_HINT_QDEL
 
 	spawn_spacevine_piece(src.loc)
 	START_PROCESSING(SSobj, src)
@@ -164,8 +165,8 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/effect/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door/))
+		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
+		if (istype(O, /obj/machinery/door))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0
 	if (dogrowth == 1)
@@ -212,14 +213,13 @@
 /proc/spacevine_infestation()
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
+		for(var/areapath in typesof(/area/station/hallway))
 			var/area/A = locate(areapath)
-			for(var/area/B in A.related)
-				for(var/turf/simulated/floor/F in B.contents)
-					if(!F.contents.len)
-						turfs += F
+			for(var/turf/simulated/floor/F in A.contents)
+				if(!F.contents.len)
+					turfs += F
 
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
 			new/obj/effect/spacevine_controller(T) //spawn a controller at turf
-			message_admins("\blue Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])")
+			message_admins("<span class='notice'>Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]</span>")

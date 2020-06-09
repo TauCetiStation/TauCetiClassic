@@ -51,13 +51,13 @@
 /datum/export/extinguisher
 	cost = 15
 	unit_name = "fire extinguisher"
-	export_types = list(/obj/item/weapon/extinguisher)
+	export_types = list(/obj/item/weapon/reagent_containers/spray/extinguisher)
 	include_subtypes = FALSE
 
 /datum/export/extinguisher/mini
 	cost = 2
 	unit_name = "pocket fire extinguisher"
-	export_types = list(/obj/item/weapon/extinguisher/mini)
+	export_types = list(/obj/item/weapon/reagent_containers/spray/extinguisher/mini)
 
 
 // Flashlights
@@ -72,6 +72,10 @@
 	unit_name = "flare"
 	export_types = list(/obj/item/device/flashlight/flare)
 
+/datum/export/flashlight/seclite
+	cost = 10
+	unit_name = "seclite"
+	export_types = list(/obj/item/device/flashlight/seclite)
 
 // Analyzers and Scanners
 /datum/export/analyzer
@@ -101,3 +105,10 @@
 	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits
 	unit_name = "compressed matter cardridge"
 	export_types = list(/obj/item/weapon/rcd_ammo)
+
+// Kitchen utensils
+
+/datum/export/knife
+	cost = 20
+	unit_name = "kitchen knife"
+	export_types = list(/obj/item/weapon/kitchenknife)

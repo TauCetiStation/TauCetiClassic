@@ -1,20 +1,47 @@
 /obj/item/weapon/twohanded/spear
-		icon = 'icons/obj/makeshift.dmi'
-		icon_state = "spearglass0"
-		name = "spear"
-		desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-		force = 10
-		w_class = 4.0
-		slot_flags = SLOT_BACK
-		force_unwielded = 10
-		force_wielded = 18 // Was 13, Buffed - RR
-		throwforce = 15
-		flags = NOSHIELD
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "spearglass0"
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 10
+	force_wielded = 18 // Was 13, Buffed - RR
+	throwforce = 15
+	flags = NOSHIELD
+	hitsound = list('sound/weapons/bladeslice.ogg')
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
 
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
+
+/obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/organ/external/head))
+		if(loc == user)
+			user.drop_from_inventory(src)
+		var/obj/structure/headpole/H = new (get_turf(src), W, src)
+		user.drop_from_inventory(W, H)
 
 
 /obj/item/clothing/head/helmet/battlebucket
@@ -25,47 +52,36 @@
 	item_state = "bucket"
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
-/obj/item/weapon/handcuffs/cable/attackby(obj/item/I, mob/user)
-	..()
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if(!R.use(1))
-			return
-
-		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-
-		user.remove_from_mob(src)
-
-		user.put_in_hands(W)
-		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
-
-		qdel(src)
-
 /obj/item/weapon/melee/cattleprod
-		icon = 'icons/obj/makeshift.dmi'
-		name = "stunprod"
-		desc = "An improvised stun baton."
-		icon_state = "stunprod"
-		item_state = "prod"
-		var/obj/item/weapon/stock_parts/cell/bcell = null
-		var/stunforce = 5
-		var/hitcost = 2500
-		force = 3
-		throwforce = 5
-		var/status = 0
-		slot_flags = null
+	icon = 'icons/obj/makeshift.dmi'
+	name = "stunprod"
+	desc = "An improvised stun baton."
+	icon_state = "stunprod"
+	item_state = "prod"
+	var/obj/item/weapon/stock_parts/cell/bcell = null
+	var/stunforce = 5
+	var/hitcost = 2000
+	force = 3
+	throwforce = 5
+	var/status = 0
+	slot_flags = null
 
+/obj/item/weapon/melee/cattleprod/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
 
-/obj/item/weapon/melee/cattleprod/New()
-	..()
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
-	return
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	else
 		status = 0
 		if(!bcell)
@@ -89,7 +105,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
@@ -105,15 +121,19 @@
 
 /obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
+		if(C.maxcharge < hitcost)
+			to_chat(user, "<span class='notice'>[C]'s maximum capacity seems too small to be useful.</span>")
+			return
 		if(!bcell)
 			user.drop_item()
 			W.loc = src
 			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
@@ -137,14 +157,13 @@
 		..()
 		return
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Beat [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		H.log_combat(user, "attacked with [name]")
+
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
@@ -164,11 +183,9 @@
 			deductcharge(hitcost)
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]")
+		H.log_combat(user, "stunned with [name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)
 	//		status = 0
 	//		update_icon()
@@ -183,41 +200,127 @@
 			bcell.reliability -= 10 / severity
 	..()
 
-/obj/item/weapon/wirerod
-		icon = 'icons/obj/makeshift.dmi'
-		icon_state = "wirerod"
-		name = "wired rod"
-		desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-		item_state = "rods"
-		flags = CONDUCT
-		force = 9
-		throwforce = 10
-		w_class = 3
-		m_amt = 1875
-		attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+/obj/item/weapon/wirerod // assembly component for spear and stunprod.
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "wirerod"
+	name = "wired rod"
+	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
+	item_state = "rods"
+	flags = CONDUCT
+	force = 9
+	throwforce = 10
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 1875
+	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
+/obj/item/weapon/transparant
+	icon_custom ='icons/mob/inhands/transparant.dmi'
+	icon_state = "blank"
+	item_state = "blank"
+	name = "blank sign"
+	desc = "Nothing."
+	var/not_bloody_state
+	var/not_bloody_item_state
+	force = 8
+	w_class = ITEM_SIZE_LARGE
+	throwforce = 5
+//	flags = NOSHIELD
+		//var/protest_text
+ 		//	var/protest_text_lenght = 100
+ 	//var/image/inhand_blood_overlay
+	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
-/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user)
+/obj/item/weapon/transparant/atom_init()
+	. = ..()
+	not_bloody_state = icon_state
+	not_bloody_item_state = item_state
+
+/obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/weapon/shard))
-		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
+	if(icon_state!="blank")
+		to_chat(user, "<span class='notice'>Something allready written on this sign.</span>")
+		return
+	if(istype(I, /obj/item/weapon/pen))
 
-		user.remove_from_mob(I)
+		var/defaultText = "FUK NT!1"
+		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
+		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
+		W.desc = targName
 		user.remove_from_mob(src)
-
-		user.put_in_hands(S)
-		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
-		qdel(I)
+		user.put_in_hands(W)
 		qdel(src)
+		to_chat(user, "<span class='notice'>You writed: <span class='emojify'>[targName]</span> on your sign.</span>")
+		return
 
-	else if(istype(I, /obj/item/weapon/wirecutters))
-
-		var/obj/item/weapon/melee/cattleprod/P = new /obj/item/weapon/melee/cattleprod
-
-		user.remove_from_mob(I)
+	if(istype(I, /obj/item/toy/crayon))
+		var/paths = typesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant - /obj/item/weapon/transparant/text
+		var/targName = input(usr, "Choose transparant pattern", "Pattern list") in paths
+		if(!targName)
+			return
+		var/obj/item/weapon/transparant/W = new targName
 		user.remove_from_mob(src)
-
-		user.put_in_hands(P)
-		to_chat(user, "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>")
-		qdel(I)
+		user.put_in_hands(W)
 		qdel(src)
+		to_chat(user, "<span class='notice'>You painted your blank sign as [W.name].</span>")
+
+/obj/item/weapon/transparant/attack_self(mob/user)
+	user.visible_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>")
+
+/obj/item/weapon/transparant/attack(mob/M, mob/user)
+	..()
+	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
+
+/obj/item/weapon/transparant/update_icon()
+	if(blood_DNA)
+		icon_state = "bloody"
+		item_state = "bloody"
+	else
+		icon_state = not_bloody_state
+		item_state = not_bloody_item_state
+	..()
+	if(istype(src.loc, /mob/living))
+		var/mob/living/user = src.loc
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+
+/obj/item/weapon/transparant/clean_blood()
+	..()
+	update_icon()
+
+/obj/item/weapon/transparant/add_blood()
+	..()
+	update_icon()
+
+/obj/item/weapon/transparant/no_nt
+	icon_state = "no_nt"
+	item_state = "no_nt"
+	name = "no NT sign"
+	desc = "Nanotrasen go home! Nanotrasen go home!"
+
+/obj/item/weapon/transparant/peace
+	icon_state = "peace"
+	item_state = "peace"
+	name = "peace sign"
+	desc = "No more war! No more opression! No more violence!"
+
+/obj/item/weapon/transparant/text
+	icon_state = "text"
+	item_state = "text"
+	name = "text sign"
+	desc = "..."
+
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		var/list/resources_to_use = list()
+		resources_to_use[R] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/weapon/transparant/W = new /obj/item/weapon/transparant
+		user.remove_from_mob(src)
+		user.put_in_hands(W)
+		to_chat(user, "<span class='notice'>You attached a big cardboard sign to the metal rod, making a blank transparant.</span>")
+

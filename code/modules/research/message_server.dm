@@ -1,5 +1,3 @@
-var/global/list/obj/machinery/message_server/message_servers = list()
-
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
@@ -48,23 +46,22 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	name = "Messaging Server"
-	density = 1
-	anchored = 1.0
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
-	var/active = 1
+	var/active = TRUE
 	var/decryptkey = "password"
 
-/obj/machinery/message_server/New()
+/obj/machinery/message_server/atom_init()
 	message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
-	..()
-	return
+	. = ..()
 
 /obj/machinery/message_server/Destroy()
 	message_servers -= src
@@ -94,12 +91,14 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user)
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+	. = ..()
+	if(.)
+		return
+
+//	user << "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>"
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
-
-	return
 
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
@@ -176,7 +175,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	name = "Blackbox Recorder"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/list/messages = list()		//Stores messages of non-standard frequencies
@@ -196,14 +195,16 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/datum/feedback_variable/feedback = new()
 
 	//Only one can exsist in the world!
-/obj/machinery/blackbox_recorder/New()
+/obj/machinery/blackbox_recorder/atom_init()
+	. = ..()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
-	var/turf/T = locate(1,1,2)
+	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
+	var/turf/T = locate(1,1, centcom_z)
 	if(T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
@@ -240,7 +241,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for(var/obj/machinery/message_server/MS in machines)
+	for(var/obj/machinery/message_server/MS in message_servers)
 		if(MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
 		if(MS.rc_msgs.len > rc_msg_amt)
@@ -273,33 +274,16 @@ var/obj/machinery/blackbox_recorder/blackbox
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
-	var/round_id
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
-	query.Execute()
-	while(query.NextRow())
-		round_id = query.item[1]
-
-	if(!isnum(round_id))
-		round_id = text2num(round_id)
-	round_id++
 
 	for(var/datum/feedback_variable/FV in feedback)
-		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[sanitize_sql(FV.get_variable())]\", [sanitize_sql(FV.get_value())], \"[sanitize_sql(FV.get_details())]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 
-// Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
-
-proc/feedback_set(variable,value)
+/proc/feedback_set(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -307,10 +291,10 @@ proc/feedback_set(variable,value)
 
 	FV.set_value(value)
 
-proc/feedback_inc(variable,value)
+/proc/feedback_inc(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -318,10 +302,10 @@ proc/feedback_inc(variable,value)
 
 	FV.inc(value)
 
-proc/feedback_dec(variable,value)
+/proc/feedback_dec(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -329,11 +313,11 @@ proc/feedback_dec(variable,value)
 
 	FV.dec(value)
 
-proc/feedback_set_details(variable,details)
+/proc/feedback_set_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -341,11 +325,11 @@ proc/feedback_set_details(variable,details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(variable,details)
+/proc/feedback_add_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 

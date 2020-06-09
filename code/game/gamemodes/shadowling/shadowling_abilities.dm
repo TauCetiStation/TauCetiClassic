@@ -7,8 +7,9 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!ishuman(target))
+		if(target.species.flags[NO_SCAN] || target.species.flags[IS_SYNTHETIC])
 			charge_counter = charge_max
+			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
 		if(target.stat)
 			charge_counter = charge_max
@@ -17,7 +18,7 @@
 			to_chat(usr, "<span class='danger'>You don't see why you would want to paralyze an ally.</span>")
 			charge_counter = charge_max
 			return
-		var/mob/living/carbon/human/M = target
+
 		usr.visible_message("<span class='warning'><b>[usr]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
 		if(in_range(target, usr))
@@ -25,7 +26,7 @@
 		else //Only alludes to the shadowling if the target is close by
 			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
 		target.Stun(10)
-		M.silent += 10
+		target.silent += 10
 
 
 
@@ -39,6 +40,9 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
 	to_chat(usr, "<span class='shadowling'>You silently disable all nearby lights.</span>")
+	light_off_range(targets, usr)
+
+/proc/light_off_range(list/targets, atom/center)
 	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
@@ -46,13 +50,12 @@
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				return
 			F.set_light(0)
+
 		for(var/obj/machinery/light/L in T.contents)
 			L.on = 0
 			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
 			L.update(0)
-		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
-			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-			qdel(G)
+
 		for(var/mob/living/carbon/human/H in T.contents)
 			for(var/obj/item/F in H)
 				if(is_type_in_list(F, blacklisted_lights))
@@ -61,7 +64,16 @@
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
 
+		for(var/obj/machinery/door/airlock/A in T.contents)
+			if(get_dist(center, A) <= 4)
+				if(A.lights && A.hasPower())
+					A.lights = 0
+					A.update_icon()
 
+		for(var/obj/effect/glowshroom/G in T.contents)
+			if(get_dist(center, G) <= 2) //Very small radius
+				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
+				qdel(G)
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk
 	name = "Shadow Walk"
@@ -74,7 +86,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
 	for(var/mob/living/user in targets)
-		playsound(user.loc, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
 		user.SetStunned(0)
 		user.SetWeakened(0)
@@ -87,6 +99,9 @@
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
+		var/turf/mobloc = get_turf(user.loc)
+		if(!mobloc.is_mob_placeable(user))
+			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
 
 
 
@@ -100,7 +115,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
 	to_chat(usr, "<span class='shadowling'>You freeze the nearby air.</span>")
-	playsound(usr.loc, 'sound/effects/ghost2.ogg', 50, 1)
+	playsound(usr, 'sound/effects/ghost2.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
@@ -155,7 +170,7 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -180,17 +195,17 @@
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
-					if(target.is_loyalty_implanted(target))
+					if(ismindshielded(target))
 						to_chat(usr, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts for a moment, then begins passing its hand over [target]'s body.</span>")
 						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
 						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
 						to_chat(usr, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts thier hand and resumes staring into [target]'s face.</span>")
-						for(var/obj/item/weapon/implant/loyalty/L in target)
-							if(L && L.implanted)
+						for(var/obj/item/weapon/implant/mindshield/L in target)
+							if(L.implanted)
 								qdel(L)
-								to_chat(target, "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies. You feel a sense of liberation which is quickly stifled by terror.</span>")
+								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -227,12 +242,13 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
+		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
 		for(var/mob/M in mob_list)
-			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
-				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [sanitize(text)]</span>")
+			if(is_shadow_or_thrall(M) || isobserver(M))
+				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
 
 
@@ -250,16 +266,18 @@
 		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
 							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 		for(var/obj/item/I in user)
-			user.remove_from_mob(I)
 			if(I.flags & ABSTRACT)
 				qdel(I)
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
+			else
+				user.remove_from_mob(I)
+
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, SLOT_W_UNIFORM)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, SLOT_SHOES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, SLOT_WEAR_SUIT)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, SLOT_HEAD)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, SLOT_GLOVES)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, SLOT_WEAR_MASK)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"
@@ -287,7 +305,7 @@
 
 		to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
 
-		for(M in living_mob_list)
+		for(M in alive_mob_list)
 			if(is_thrall(M))
 				thralls++
 				to_chat(M, "<span class='shadowling'>You feel hooks sink into your mind and pull.</span>")
@@ -309,7 +327,7 @@
 
 		if(thralls >= 7 && !screech_acquired)
 			screech_acquired = 1
-			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
+			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</i></span>")
 			user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 
 		if(thralls >= 9 && !reviveThrallAcquired)
@@ -322,15 +340,14 @@
 			to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
 
 		else if(thralls >= victory_threshold)
-			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>")
+			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></b></span>")
 			to_chat(usr, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
-			for(M in living_mob_list)
+			for(M in alive_mob_list)
 				if(is_shadow(M))
 					M.mind.current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch //In case a shadowling hasn't hatched
 					M.mind.current.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 					for(var/obj/effect/proc_holder/spell/targeted/collective_mind/spell_to_remove in M.spell_list)
-						qdel(spell_to_remove)
-						M.spell_list -= spell_to_remove
+						M.RemoveSpell(spell_to_remove)
 					if(M == usr)
 						to_chat(M, "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>")
 					else
@@ -351,7 +368,7 @@
 	for(var/mob/living/user in targets)
 		user.visible_message("<span class='warning'>[user] suddenly bends over and coughs out a cloud of black smoke, which begins to spread rapidly!</span>")
 		to_chat(user, "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>")
-		playsound(user, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 		var/datum/effect/effect/system/smoke_spread/chem/S = new
 		var/turf/location = get_turf(user)
 		create_reagents(10)
@@ -360,7 +377,7 @@
 		S.set_up(reagents, 10, 0, location, 15, 5)
 		S.start()
 
-datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowlings/thralls
+/datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowlings/thralls
 	name = "Odd Black Liquid"
 	id = "blindness_smoke"
 	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
@@ -368,23 +385,19 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 	//metabolization_rate = 100 //lel
 	custom_metabolism = 100
 
-datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
-	if(!M) M = holder.my_atom
+/datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
+	..()
 	if(!is_shadow_or_thrall(M))
-		to_chat(M, "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>")
+		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
 		M.eye_blind = 5
 		if(prob(25))
 			M.visible_message("<b>[M]</b> claws at their eyes!")
 			M.Stun(3)
 	else
-		to_chat(M, "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>")
-		M.heal_organ_damage(2,2)
+		to_chat(M, "<span class='notice bold'>You breathe in the black smoke, and you feel revitalized!</span>")
+		M.heal_bodypart_damage(2, 2)
 		M.adjustOxyLoss(-2)
 		M.adjustToxLoss(-2)
-	..()
-	return
-
-
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 	name = "Sonic Screech"
@@ -396,8 +409,8 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("me",1,"<span class='warning'><b>lets out a horrible scream!</b></span>")
-	playsound(usr.loc, 'sound/effects/screech.ogg', 100, 1)
+	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
+	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/target in T.contents)
@@ -416,8 +429,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			else if(issilicon(target))
 				var/mob/living/silicon/S = target
 				to_chat(S, "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSOR OVERLOAD \[$(!@#</b></span>")
-				S << 'sound/misc/interference.ogg'
-				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
+				playsound(S, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
@@ -446,7 +458,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			nearbyTargets.Add(M)
 		for(var/mob/living/carbon/M in nearbyTargets)
 			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
-			U.heal_organ_damage(10, 10)
+			U.heal_bodypart_damage(10, 10)
 			U.adjustToxLoss(-10)
 			U.adjustOxyLoss(-10)
 			U.AdjustWeakened(-1)
@@ -485,15 +497,15 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
-			ghost << 'sound/effects/genetics.ogg'
+			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		if(!do_mob(usr, thrallToRevive, 100))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
 			return
 		to_chat(usr, "<span class='shadowling'><b><i>You release a massive surge of energy into [thrallToRevive]!</b></i></span>")
 		usr.visible_message("<span class='boldannounce'><i>Red lightning surges from [usr]'s hands into [thrallToRevive]'s chest!</i></span>")
-		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
-		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
+		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 		sleep(20)
 		thrallToRevive.revive()
 		thrallToRevive.timeofdeath = 0
@@ -502,7 +514,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
 		thrallToRevive.Weaken(4)
 		thrallToRevive.emote("gasp")
-		playsound(thrallToRevive, "bodyfall", 50, 1)
+		playsound(thrallToRevive, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
 
@@ -523,7 +535,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 	for(var/mob/boom in targets)
 		if(is_shadow_or_thrall(boom))
-			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.<span>")
+			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.</span>")
 			charge_counter = charge_max
 			return
 		usr.visible_message("<span class='danger'>[usr]'s eyes flare as they gesture at [boom]!</span>", \
@@ -531,12 +543,12 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		to_chat(boom, "<span class='userdanger'><font size=3>You feel an immense pressure building all across your body!</span></font>")
 		boom.Stun(10)
 		//boom.audible_message("<b>[boom]</b> screams!")
-		boom.emote("scream",,, 1)
+		boom.emote("scream")
 		sleep(20)
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
 			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
 			boom = usr
-		playsound(boom, 'sound/effects/splat.ogg', 100, 1)
+		playsound(boom, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
 		boom.gib()
 
@@ -559,7 +571,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 	for(var/mob/living/carbon/human/target in targets)
 		if(is_shadow_or_thrall(target))
-			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.<span>")
+			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.</span>")
 			charge_counter = charge_max
 			return
 		if(!target.ckey)
@@ -570,7 +582,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		if(!ishuman(target) || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -628,7 +640,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		return
 
 	to_chat(usr, "<span class='shadowling'>You freeze the nearby air.</span>")
-	playsound(usr.loc, 'sound/effects/ghost2.ogg', 100, 1)
+	playsound(usr, 'sound/effects/ghost2.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
@@ -642,7 +654,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.bodytemperature -= INFINITY //:^)
-			target.take_organ_damage(0,80)
+			target.take_bodypart_damage(0, 80)
 
 
 
@@ -657,7 +669,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
@@ -677,7 +689,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", "")
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""))
 		if(!text)
 			return
-		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</font></span>")
+		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

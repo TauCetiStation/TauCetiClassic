@@ -24,7 +24,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	var/input = null
 	while(!input)
-		input = sanitize(copytext(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""),1,MAX_MESSAGE_LEN))
+		input = sanitize(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""))
 		if(!input)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
@@ -44,7 +44,7 @@ var/global/sent_syndicate_strike_team = 0
 //Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in world)
+	for(var/obj/machinery/nuclearbomb/N in poi_list)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
@@ -78,10 +78,10 @@ var/global/sent_syndicate_strike_team = 0
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
-				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.")
+			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input]</span>.")
 
-			to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B>[input]</B>")
+			to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='warning'><B>[input]</B></span></span>")
 
 			syndicate_commando_number--
 
@@ -98,7 +98,7 @@ var/global/sent_syndicate_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a Syndicate strike squad.</span>")
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -114,7 +114,7 @@ var/global/sent_syndicate_strike_team = 0
 	A.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.age = !syndicate_leader_selected ? rand(new_syndicate_commando.species.min_age, new_syndicate_commando.species.min_age * 1.5) : rand(new_syndicate_commando.species.min_age * 1.25, new_syndicate_commando.species.min_age * 1.75)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -131,40 +131,40 @@ var/global/sent_syndicate_strike_team = 0
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, slot_l_ear)
-	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
+	equip_to_slot_or_del(R, SLOT_L_EAR)
+	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/black(src), slot_wear_suit)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), SLOT_WEAR_SUIT)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/black/red(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), slot_gloves)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), SLOT_WEAR_SUIT)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/black(src), slot_head)
+		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite(src), SLOT_HEAD)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/black/red(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
+		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite/commander(src), SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), SLOT_WEAR_MASK)
+	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
 
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
 
-	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_IN_BACKPACK)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
+		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
 	else
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
-		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
+		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), SLOT_IN_BACKPACK)
+		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), SLOT_IN_BACKPACK)
 
-	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/empgrenade(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/grenade/empgrenade(src), SLOT_R_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), SLOT_S_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), SLOT_BELT)
 
-	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand) //Will change to something different at a later time -- Superxpdude
+	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND) //Will change to something different at a later time -- Superxpdude
 
 	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
 	W.name = "[real_name]'s ID Card"
@@ -173,6 +173,6 @@ var/global/sent_syndicate_strike_team = 0
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)//Let's add their forged CentCom access and syndicate access.
 	W.assignment = "Syndicate Commando"
 	W.registered_name = real_name
-	equip_to_slot_or_del(W, slot_wear_id)
+	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	return 1

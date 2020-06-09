@@ -4,18 +4,18 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
 
-/obj/item/device/gps/New()
-	..()
+/obj/item/device/gps/atom_init()
+	. = ..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -23,12 +23,12 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
-	overlays -= "working"
-	overlays += "emp"
+	cut_overlay("working")
+	add_overlay("emp")
 	spawn(300)
 		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+		cut_overlay("emp")
+		add_overlay("working")
 
 /obj/item/device/gps/attack_self(mob/user)
 
@@ -48,7 +48,7 @@ var/list/GPS_list = list()
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
+				t += "<BR>[tracked_gpstag]: [gps_area.name] ([pos.x], [pos.y], [pos.z])"
 
 	var/datum/browser/popup = new(user, "GPS", name, 600, 450)
 	popup.set_content(t)
@@ -58,9 +58,8 @@ var/list/GPS_list = list()
 /obj/item/device/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = uppertext(copytext(sanitize(a), 1, 5))
-		if(src.loc == usr)
+		var/a = uppertext(sanitize_safe(input("Please enter desired tag.", name, input_default(gpstag)) as text, 5))
+		if(a && src.loc == usr)
 			gpstag = a
 			name = "global positioning system ([gpstag])"
 			attack_self(usr)

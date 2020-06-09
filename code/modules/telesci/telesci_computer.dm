@@ -1,5 +1,5 @@
 /obj/machinery/computer/telescience
-	name = "\improper Telepad Control Console"
+	name = "Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
@@ -26,15 +26,20 @@
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
 	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
-	var/starting_crystals = 3
+	var/starting_crystals = 0
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
 
-/obj/machinery/computer/telescience/New()
-	..()
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
 	recalibrate()
+
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
+	for(var/i = 1; i <= starting_crystals; i++)
+		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -50,11 +55,6 @@
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
 	to_chat(user, "There are [crystals.len] bluespace crystals in the crystal ports.")
-
-/obj/machinery/computer/telescience/initialize()
-	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
@@ -95,7 +95,7 @@
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)
@@ -108,15 +108,7 @@
 	else
 		..()
 
-/obj/machinery/computer/telescience/attack_ai(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/computer/telescience/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/telescience/interact(mob/user)
+/obj/machinery/computer/telescience/ui_interact(mob/user)
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
@@ -165,7 +157,6 @@
 	var/datum/browser/popup = new(user, "telesci", name, 300, 550)
 	popup.set_content(t)
 	popup.open()
-	return
 
 /obj/machinery/computer/telescience/proc/create_wormhole(turf/exit)
 	if(exit.density)
@@ -196,7 +187,7 @@
 
 /obj/machinery/computer/telescience/proc/close_wormhole()
 	if(active_wormhole)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		qdel(active_wormhole)
 		active_wormhole = null
 
@@ -213,15 +204,15 @@
 		return
 
 	if(telepad)
-		var/truePower = Clamp(power + power_off, 1, 1000)
+		var/truePower = CLAMP(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle + angle_off, 1, 90)
+		var/trueAngle = CLAMP(angle + angle_off, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/trueX = CLAMP(round(proj_data.dest_x, 1), 1, world.maxx)
+		var/trueY = CLAMP(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -230,7 +221,7 @@
 		flick("pad-beam", telepad)
 
 		if(spawn_time > 15) // 1.5 seconds
-			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
+			playsound(telepad, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, 25)
 			// Wait depending on the time the projectile took to get there
 			teleporting = 1
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
@@ -248,7 +239,7 @@
 
 				// use a lot of power
 				use_power(power * 1500)
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, get_turf(telepad))
@@ -259,14 +250,14 @@
 					temp_msg += "<BR>Calibration required soon."
 				else
 					temp_msg += "<BR>Data printed below."
-				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 
 			else
 				use_power(power * 1500)
@@ -275,7 +266,7 @@
 				SS.start()
 
 				flick("pad-beam", telepad)
-				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				playsound(telepad, 'sound/weapons/guns/gunpulse_emitter2.ogg', VOL_EFFECTS_MASTER, 25)
 				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 
@@ -291,9 +282,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(!SSmapping.has_level(z_co) || is_centcom_level(z_co) || is_junkyard_level(z_co)) // Change this to notele trait or something
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! This sector is unreachable."
 		return
 	if(teles_left > 0)
 		open_wormhole(user)
@@ -325,14 +316,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = Clamp(new_rot, -900, 900)
+		rotation = CLAMP(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(!..())
 			return
-		angle = Clamp(round(new_angle, 0.1), 1, 9999)
+		angle = CLAMP(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -344,7 +335,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(!..())
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		z_co = CLAMP(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		inserted_gps.loc = loc
@@ -376,7 +367,7 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	if(telepad)
-		teles_left = Clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
+		teles_left = CLAMP(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
 	else
 		teles_left = 0
 	angle_off = rand(-25, 25)

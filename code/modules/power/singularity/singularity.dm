@@ -5,7 +5,8 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = SINGULARITY_LAYER
+	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1
@@ -24,38 +25,40 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 
-/obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
+/obj/singularity/atom_init(mapload, starting_energy = 50, temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
-	src.energy = starting_energy
+	energy = starting_energy
 	if(temp)
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	poi_list += src
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/singularity/atom_init_late()
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
 	return 1
 
-/obj/singularity/Move(atom/newloc, direct)
-	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
+/obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
-		last_failed_movement = direct
-		return 0
+		last_failed_movement = Dir
+		return FALSE
 
 /obj/singularity/blob_act(severity)
 	return
@@ -64,7 +67,7 @@
 	switch(severity)
 		if(1.0)
 			if(current_size <= 3)
-				investigate_log("has been destroyed by a heavy explosion.","singulo")
+				log_investigate("has been destroyed by a heavy explosion.",INVESTIGATE_SINGULO)
 				qdel(src)
 				return
 			else
@@ -103,8 +106,8 @@
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
-	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) [ADMIN_JMP(src)]")
+	log_investigate("was created. [count?"":"<font color='red'>No containment fields were active</font>"]",INVESTIGATE_SINGULO)
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -176,12 +179,16 @@
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
+		log_investigate("<font color='red'>grew to size [current_size]</font>",INVESTIGATE_SINGULO)
 		return 1
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
 	else
 		return 0
+
+/obj/singularity/get_current_temperature()
+	// var/total_potential_energy = energy * energy / dissipate_strength
+	return WATTS_2_CELSIUM * energy * energy / dissipate_strength
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
@@ -334,8 +341,7 @@
 					return
 		to_chat(M, "<span class='red'>You look directly into The [src.name] and feel weak.</span>")
 		M.apply_effect(3, STUN)
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='danger'>[] stares blankly at The []!</span>", M, src), 1)
+		M.visible_message("<span class='danger'>[M] stares blankly at The [src]!</span>")
 	return
 
 /obj/singularity/proc/emp_area()

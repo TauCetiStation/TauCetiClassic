@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-
+	var/turf/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
@@ -25,20 +25,43 @@
 	//Mining resource generation stuff.
 	var/has_resources
 	var/list/resources
+	var/slowdown = 0
 
-/turf/New()
-	..()
-	for(var/atom/movable/AM as mob|obj in src)
-		spawn( 0 )
-			src.Entered(AM)
-			return
+/turf/atom_init()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
-/turf/Destroy()
+	if(smooth)
+		queue_smooth(src)
+
+	for(var/atom/movable/AM in src)
+		Entered(AM)
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity)
+		has_opaque_atom = TRUE
+
+	return INITIALIZE_HINT_NORMAL
+
+/turf/Destroy(force)
+	if(!force)
+		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+/turf/attack_animal(mob/user)
+	return
+
+/turf/attack_robot(mob/user)
+	if(Adjacent(user))
+		return attack_hand(user)
 
 /turf/ex_act(severity)
 	return 0
@@ -53,7 +76,7 @@
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -93,28 +116,59 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
+/turf/proc/is_mob_placeable(mob/M)
+	if(density)
+		return FALSE
+	for(var/atom/movable/on_turf in contents)
+		if(on_turf == M)
+			continue
+		if(istype(on_turf, /mob) && !on_turf.anchored)
+			continue
+		if(on_turf.density)
+			if(istype(on_turf, /obj/structure/window))
+				continue
+			if(istype(on_turf, /obj/machinery/door))
+				continue
+			if(istype(on_turf, /obj/structure/table))
+				continue
+			if(istype(on_turf, /obj/structure/grille))
+				continue
+			return FALSE
+	return TRUE
 
-/turf/Entered(atom/atom as mob|obj)
-	if(!istype(atom, /atom/movable))
+/turf/Entered(atom/movable/AM)
+	if(!istype(AM, /atom/movable))
 		return
 
-	var/atom/movable/A = atom
 	var/loopsanity = 100
-	if(ismob(A))
-		var/mob/M = A
+	if(ismob(AM))
+		var/mob/M = AM
 		if(!M.lastarea)
 			M.lastarea = get_area(M.loc)
 
 	..()
+
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM && AM.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
+
 	var/objects = 0
 	for(var/atom/O as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((O && A))
-				O.HasProximity(A, 1)
+			if ((O && AM))
+				O.HasProximity(AM, 1)
 			return
 	return
+
+/turf/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+
+	if (Obj && Obj.opacity)
+		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
+		reconsider_lights()
 
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, temperature, volume)
 	return
@@ -156,9 +210,16 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(turf/N, force_lighting_update = 0)
-	if (!N)
+/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
+	if (!path)
 		return
+
+	if (path == type)
+		return src
+
+	/*if(istype(src, path))
+		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
+		return*/
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -166,72 +227,119 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
-	var/list/old_affecting_lights = affecting_lights
-	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
-	var/list/old_lighting_corners = corners
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_object = lighting_object
+	var/old_corners = corners
+
+	var/old_basetype = basetype
+	var/old_flooded = flooded
+	var/obj/effect/fluid/F = locate() in src
+
+	var/list/temp_res = resources
 
 	//world << "Replacing [src.type] with [N]"
 
-	if(connections) connections.erase_all()
+	if(connections)
+		connections.erase_all()
 
-	if(istype(src,/turf/simulated))
+	if(istype(src, /turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
-		if(S.zone) S.zone.rebuild()
+		if(S.zone)
+			S.zone.rebuild()
 
-	if(ispath(N, /turf/simulated/floor))
+	arguments.Insert(0, src)
 
-		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		//W.Assimilate_Air()
+	//BEGIN: ECS SHIT (UNTIL SOMEONE MAKES POSSIBLE TO USE QDEL IN THIS PROC FOR TURFS)
+	signal_enabled = FALSE
 
-		if (istype(W,/turf/simulated/floor))
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for(var/I in all_components)
+				var/datum/component/C = I
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for(var/i in comps)
+					var/datum/component/comp = i
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+	//END: ECS SHIT
+
+	var/turf/W = new path(arglist(arguments))
+
+	W.has_resources = has_resources
+	W.resources = temp_res
+
+	if(ispath(path, /turf/simulated/floor))
+		if (istype(W, /turf/simulated/floor))
 			W.RemoveLattice()
 
-		if(SSair)
-			SSair.mark_for_update(src) //handle the addition of the new turf.
+	if(SSair)
+		SSair.mark_for_update(W)
 
-		for(var/turf/space/S in range(W,1))
+	W.levelupdate()
+
+	basetype = old_basetype
+
+	queue_smooth_neighbors(W)
+
+	if(SSlighting.initialized)
+		recalc_atom_opacity()
+		lighting_object = old_lighting_object
+		affecting_lights = old_affecting_lights
+		corners = old_corners
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+			reconsider_lights()
+
+		if (dynamic_lighting != old_dynamic_lighting)
+			if (IS_DYNAMIC_LIGHTING(src))
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
+
+		for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
-		W.levelupdate()
-		. = W
+	if(F)
+		F.forceMove(src)
+		F.start_loc = src
+		fluid_update()
 
+	if(old_flooded)
+		flooded = 1
+		update_icon()
+	SSdemo.mark_turf(W)
+
+	return W
+
+/turf/proc/MoveTurf(turf/target, move_unmovable = 0)
+	if(type != basetype || move_unmovable)
+		. = target.ChangeTurf(src.type)
+		ChangeTurf(basetype)
 	else
+		return target
 
-		var/turf/W = new N( locate(src.x, src.y, src.z) )
-
-		for(var/turf/space/S in range(W,1))
-			S.update_starlight()
-
-		if(SSair)
-			SSair.mark_for_update(src)
-
-		W.levelupdate()
-		. =  W
-
-	lighting_overlay = old_lighting_overlay
-	affecting_lights = old_affecting_lights
-	corners = old_lighting_corners
-
-	for(var/atom/A in contents)
-		if(A.light)
-			A.light.force_update = 1
-
-	for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
-		if(corners[i]) // Already have a corner on this direction.
-			continue
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
-
-	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
-		reconsider_lights()
-	if(dynamic_lighting != old_dynamic_lighting)
-		if(dynamic_lighting)
-			lighting_build_overlay()
-		else
-			lighting_clear_overlay()
-
+/turf/proc/BreakToBase()
+	ChangeTurf(basetype)
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
 //  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
@@ -286,7 +394,7 @@
 
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(basetype)
 	spawn()
 		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
@@ -335,7 +443,16 @@
 	ChangeTurf(/turf/space)
 	return(2)
 
-/turf/hitby(atom/movable/AM)
+/turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.turf_collision(src)
+
+/turf/proc/update_icon()
+	if(is_flooded(absolute = 1))
+		if(!(locate(/obj/effect/flood) in contents))
+			new /obj/effect/flood(src)
+	else
+		if(locate(/obj/effect/flood) in contents)
+			for(var/obj/effect/flood/F in contents)
+				qdel(F)

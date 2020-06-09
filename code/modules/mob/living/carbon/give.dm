@@ -3,22 +3,27 @@
 	set name = "Give"
 	set src in view(1)
 
-	if(src.stat == DEAD || usr.stat == DEAD || src.client == null)
+	if(src.stat == DEAD || usr.incapacitated() || src.client == null)
 		return
-	if(src == usr || isalien(src) || isslime(src))
+	if(src == usr || isxeno(src) || isslime(src))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
 		return
-	if(ishuman(src) && hasorgans(src))
-		var/mob/living/carbon/human/U = src
-		var/datum/organ/external/temp = U.organs_by_name["r_hand"]
-		if (U.hand)
-			temp = U.organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+		if(BP && !BP.is_usable())
 			return
 	var/obj/item/I = usr.get_active_hand()
 	if(!I)
 		to_chat(usr, "<span class='red'>You don't have anything in your hand to give to [src.name]</span>")
 		return
+	if(I.flags & (ABSTRACT | DROPDEL))
+		to_chat(usr, "<span class='red'>You can't give this to [name]</span>")
+		return
+	if(HULK in src.mutations)
+		if(I.w_class < ITEM_SIZE_LARGE)
+			to_chat(usr, "<span class='red'>[I] is too small for [name] to hold.</span>")
+			return
 	if(!src.get_active_hand() || !src.get_inactive_hand())
 		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")

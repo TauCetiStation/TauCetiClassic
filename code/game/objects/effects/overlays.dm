@@ -12,8 +12,8 @@
 	icon_state="b_beam"
 	var/tmp/atom/BeamSource
 
-/obj/effect/overlay/beam/New()
-	..()
+/obj/effect/overlay/beam/atom_init()
+	. = ..()
 	QDEL_IN(src, 10)
 
 /obj/effect/overlay/palmtree_r
@@ -50,3 +50,16 @@
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
 	anchored = 1
+
+/obj/effect/overlay/droppod_open
+	layer = 4
+	plane = 4
+	anchored = 1
+	icon = 'icons/obj/structures/droppod.dmi'
+	icon_state = "panel_opening"
+
+/obj/effect/overlay/droppod_open/atom_init(mapload, icon_modifier)
+	. = ..()
+	if(icon_modifier)
+		icon_state += icon_modifier
+	QDEL_IN(src, 27)

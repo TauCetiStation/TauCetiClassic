@@ -9,24 +9,18 @@
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
 
-/obj/machinery/mineral/stacking_unit_console/New()
-
+/obj/machinery/mineral/stacking_unit_console/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if (machine)
-			machine.console = src
-		else
-			qdel(src)
+/obj/machinery/mineral/stacking_unit_console/atom_init_late()
+	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	if (machine)
+		machine.console = src
+	else
+		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/mineral/stacking_unit_console/interact(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
 	var/dat
 
 	dat += text("<table>")
@@ -40,7 +34,6 @@
 	var/datum/browser/popup = new(user, "window=processor_console", "Stacking Unit Console", 400, 400)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	. = ..()
@@ -54,8 +47,7 @@
 	if(href_list["release_stack"])
 		if(machine.stack_storage[href_list["release_stack"]] > 0)
 			var/stacktype = machine.stack_paths[href_list["release_stack"]]
-			var/obj/item/stack/sheet/S = new stacktype (get_turf(machine.output))
-			S.amount = machine.stack_storage[href_list["release_stack"]]
+			new stacktype (get_turf(machine.output), machine.stack_storage[href_list["release_stack"]])
 			machine.stack_storage[href_list["release_stack"]] = 0
 
 	src.updateUsrDialog()
@@ -75,28 +67,32 @@
 	var/list/stack_paths[0]
 	var/stack_amt = 50; // Amount to stack before releassing
 
-/obj/machinery/mineral/stacking_machine/New()
+/obj/machinery/mineral/stacking_machine/atom_init()
 	..()
-	for(var/stacktype in typesof(/obj/item/stack/sheet/mineral)-/obj/item/stack/sheet/mineral)
-		var/obj/item/stack/S = new stacktype(src)
-		stack_storage[S.name] = 0
-		stack_paths[S.name] = stacktype
-		qdel(S)
+	for(var/stacktype in subtypesof(/obj/item/stack/sheet/mineral))
+		var/obj/item/stack/S = stacktype //= new stacktype(src)
+		stack_storage[initial(S.name)] = 0
+		stack_paths[initial(S.name)] = stacktype
+		//qdel(S)
 	stack_storage["glass"] = 0
 	stack_paths["glass"] = /obj/item/stack/sheet/glass
 	stack_storage["metal"] = 0
 	stack_paths["metal"] = /obj/item/stack/sheet/metal
 	stack_storage["plasteel"] = 0
 	stack_paths["plasteel"] = /obj/item/stack/sheet/plasteel
-	spawn( 5 )
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		return
-	return
+	stack_storage["phoron glass"] = 0
+	stack_paths["phoron glass"] = /obj/item/stack/sheet/glass/phoronglass
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/stacking_machine/atom_init_late()
+	for (var/dir in cardinal)
+		input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(input)
+			break
+	for (var/dir in cardinal)
+		output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(output)
+			break
 
 /obj/machinery/mineral/stacking_machine/process()
 	if (src.output && src.input)
@@ -106,7 +102,7 @@
 			if(istype(O,/obj/item/stack))
 				var/obj/item/stack/S = O
 				if(!isnull(stack_storage[S.name]))
-					stack_storage[S.name] += S.amount
+					stack_storage[S.name] += S.get_amount()
 					qdel(S)
 				else
 					S.loc = output.loc
@@ -116,8 +112,7 @@
 	for(var/sheet in stack_storage)
 		if(stack_storage[sheet] >= stack_amt)
 			var/stacktype = stack_paths[sheet]
-			var/obj/item/stack/sheet/S = new stacktype (get_turf(output))
-			S.amount = stack_amt
+			new stacktype (get_turf(output), stack_amt)
 			stack_storage[sheet] -= stack_amt
 	console.updateUsrDialog()
 	return

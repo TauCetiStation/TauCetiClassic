@@ -44,6 +44,9 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/system_name()
+	if(system_name)
+		return system_name
+
 	return "Tau Ceti" //Screw Nyx
 
 /proc/station_name()
@@ -183,7 +186,6 @@ var/syndicate_code_response//Code response for traitors.
 	Obviously, some people will be better at this than others but in theory, everyone should be able to do it and it only enhances roleplay.
 	Can probably be done through "{ }" but I don't really see the practical benefit.
 	One example of an earlier system is commented below.
-	/N
 	*/
 
 /proc/generate_code_phrase()//Proc is used for phrase and response in master_controller.dm
@@ -197,7 +199,7 @@ var/syndicate_code_response//Code response for traitors.
 	)
 
 	var/safety[] = list(1,2,3)//Tells the proc which options to remove later on.
-	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
+	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","groan","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
 	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 	var/locations[] = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
 
@@ -255,7 +257,7 @@ var/syndicate_code_response//Code response for traitors.
 	set name = "Generate Code Phrase"
 	set category = "Debug"
 
-	to_chat(world, "\red Code Phrase is: \black [generate_code_phrase()]")
+	to_chat(world, "<span class='warning'>Code Phrase is:</span> [generate_code_phrase()]")
 	return
 
 
@@ -263,7 +265,6 @@ var/syndicate_code_response//Code response for traitors.
 	This system more or less works as intended--aside from being unfinished--but it's still very predictable.
 	Particularly, the phrase opening statements are pretty easy to recognize and identify when metagaming.
 	I think the above-used method solves this issue by using words in a sequence, providing for much greater flexibility.
-	/N
 
 	switch(choice)
 		if(1)

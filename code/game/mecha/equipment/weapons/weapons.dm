@@ -8,7 +8,7 @@
 	var/deviation = 0 //Inaccuracy of shots.
 	var/fire_cooldown = 0 //Duration of sleep between firing projectiles in single shot.
 	var/fire_sound //Sound played while firing.
-	var/fire_volume = 50 //How loud it is played.
+	var/fire_volume = null //How loud it is played (null to use playsound's default value)
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
@@ -38,7 +38,7 @@
 			aimloc = locate(targloc.x+GaussRandRound(deviation,1),targloc.y+GaussRandRound(deviation,1),targloc.z)
 		if(!aimloc || aimloc == curloc)
 			break
-		playsound(chassis, fire_sound, fire_volume, 1)
+		playsound(chassis, fire_sound, VOL_EFFECTS_MASTER, fire_volume)
 		projectiles--
 		var/P = new projectile(curloc)
 		Fire(P, target, aimloc)
@@ -57,6 +57,10 @@
 	P.starting = P.loc
 	P.current = P.loc
 	P.firer = chassis.occupant
+	if(isbrain(chassis.occupant))
+		P.def_zone = ran_zone()
+	else
+		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
 	P.process()
@@ -71,7 +75,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -79,7 +83,7 @@
 	icon_state = "mecha_laser"
 	energy_drain = 60
 	projectile = /obj/item/projectile/beam/heavylaser
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/weapons/guns/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 40
@@ -87,7 +91,7 @@
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
@@ -97,7 +101,7 @@
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
 	projectile = /obj/item/projectile/beam/pulse/heavy
-	fire_sound = 'sound/weapons/marauder.ogg'
+	fire_sound = 'sound/weapons/guns/marauder.ogg'
 
 
 /obj/item/projectile/beam/pulse/heavy
@@ -105,12 +109,12 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-	Bump(atom/A)
-		A.bullet_act(src, def_zone)
-		src.life -= 10
-		if(life <= 0)
-			qdel(src)
-		return
+/obj/item/projectile/beam/pulse/heavy/Bump(atom/A)
+	A.bullet_act(src, def_zone)
+	src.life -= 10
+	if(life <= 0)
+		qdel(src)
+	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "PBT \"Pacifier\" Mounted Taser"
@@ -118,7 +122,7 @@
 	energy_drain = 20
 	equip_cooldown = 8
 	projectile = /obj/item/projectile/beam/stun
-	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -128,82 +132,82 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 
-	can_attach(obj/mecha/combat/honker/M)
-		if(!istype(M))
-			return 0
-		return ..()
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
+	if(!istype(M))
+		return 0
+	return ..()
 
-	action(target)
-		if(!chassis)
-			return 0
-		if(energy_drain && chassis.get_charge() < energy_drain)
-			return 0
-		if(!equip_ready)
-			return 0
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target)
+	if(!chassis)
+		return 0
+	if(energy_drain && chassis.get_charge() < energy_drain)
+		return 0
+	if(!equip_ready)
+		return 0
 
-		playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
-		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
-		for(var/mob/living/carbon/M in ohearers(6, chassis))
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-					continue
-			to_chat(M, "<font color='red' size='7'>HONK</font>")
-			M.sleeping = 0
-			M.stuttering += 20
-			M.ear_deaf += 30
-			M.Weaken(3)
-			if(prob(30))
-				M.Stun(10)
-				M.Paralyse(4)
-			else
-				M.make_jittery(500)
-			/* //else the mousetraps are useless
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(isobj(H.shoes))
-					var/thingy = H.shoes
-					H.drop_from_inventory(H.shoes)
-					walk_away(thingy,chassis,15,2)
-					spawn(20)
-						if(thingy)
-							walk(thingy,0)
-			*/
-		chassis.use_power(energy_drain)
-		log_message("Honked from [src.name]. HONK!")
-		do_after_cooldown()
-		return
+	playsound(chassis, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)
+	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
+	for(var/mob/living/carbon/M in ohearers(6, chassis))
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				continue
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
+		M.SetSleeping(0)
+		M.stuttering += 20
+		M.ear_deaf += 30
+		M.Weaken(3)
+		if(prob(30))
+			M.Stun(10)
+			M.Paralyse(4)
+		else
+			M.make_jittery(500)
+		/* //else the mousetraps are useless
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(isobj(H.shoes))
+				var/thingy = H.shoes
+				H.drop_from_inventory(H.shoes)
+				walk_away(thingy,chassis,15,2)
+				spawn(20)
+					if(thingy)
+						walk(thingy,0)
+		*/
+	chassis.use_power(energy_drain)
+	log_message("Honked from [src.name]. HONK!")
+	do_after_cooldown()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "General Ballisic Weapon"
 	var/projectile_energy_cost
 
-	get_equip_info()
-		return "[..()]\[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
+	return "[..()]\[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
 
-	proc/rearm()
-		if(projectiles < initial(projectiles))
-			var/projectiles_to_add = initial(projectiles) - projectiles
-			while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
-				projectiles++
-				projectiles_to_add--
-				chassis.use_power(projectile_energy_cost)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-		log_message("Rearmed [src.name].")
-		return
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/proc/rearm()
+	if(projectiles < initial(projectiles))
+		var/projectiles_to_add = initial(projectiles) - projectiles
+		while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
+			projectiles++
+			projectiles_to_add--
+			chassis.use_power(projectile_energy_cost)
+	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+	log_message("Rearmed [src.name].")
+	return
 
-	Topic(href, href_list)
-		..()
-		if (href_list["rearm"])
-			src.rearm()
-		return
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
+	..()
+	if (href_list["rearm"])
+		src.rearm()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
-	name = "\improper FNX-66 Carbine"
+	name = "FNX-66 Carbine"
 	icon_state = "mecha_carbine"
 	equip_cooldown = 5
 	projectile = /obj/item/projectile/bullet/incendiary
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 24
 	projectile_energy_cost = 15
 
@@ -211,9 +215,8 @@
 	name = "LBX AC 10 \"Scattershot\""
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
-	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
-	fire_volume = 80
+	projectile = /obj/item/projectile/bullet/smg
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 40
 	projectiles_per_shot = 4
 	deviation = 0.7
@@ -223,8 +226,8 @@
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/midbullet
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	projectile = /obj/item/projectile/bullet/smg
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 300
 	projectiles_per_shot = 3
 	deviation = 0.3
@@ -258,7 +261,7 @@
 	var/primed = null
 	throwforce = 15
 
-/obj/item/missile/throw_impact(atom/hit_atom)
+/obj/item/missile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(primed)
 		explosion(hit_atom, 0, 0, 2, 4)
 		qdel(src)
@@ -302,10 +305,10 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 20
 
-	can_attach(obj/mecha/combat/honker/M)
-		if(!istype(M))
-			return 0
-		return ..()
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M)
+	if(!istype(M))
+		return 0
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar
 	name = "Mousetrap Mortar"

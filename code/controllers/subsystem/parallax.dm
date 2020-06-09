@@ -9,9 +9,16 @@ var/datum/subsystem/parallax/SSparallax
 	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
 
 	var/list/currentrun
+	var/planet_x_offset = 128
+	var/planet_y_offset = 128
 
 /datum/subsystem/parallax/New()
 	NEW_SS_GLOBAL(SSparallax)
+
+/datum/subsystem/parallax/Initialize(timeofday)
+	planet_y_offset = rand(100, 160)
+	planet_x_offset = rand(100, 160)
+	..()
 
 /datum/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)

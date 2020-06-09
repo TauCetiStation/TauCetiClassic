@@ -48,42 +48,109 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/server = ""
 	var/port = 3306
 
-/DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
+/DBConnection/New(dbi_handler, username, password_handler, cursor_handler)
 	src.dbi = dbi_handler
 	src.user = username
 	src.password = password_handler
 	src.default_cursor = cursor_handler
 	_db_con = _dm_db_new_con()
 
-/DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
-	if(!sqllogging)
+/DBConnection/proc/Connect(dbi_handler = src.dbi, user_handler = src.user, password_handler = src.password, cursor_handler)
+	if(!config.sql_enabled || !src)
 		return 0
-	if(!src) return 0
 	cursor_handler = src.default_cursor
-	if(!cursor_handler) cursor_handler = Default_Cursor
-	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
+	if(!cursor_handler)
+		cursor_handler = Default_Cursor
+	return _dm_db_connect(_db_con, dbi_handler, user_handler, password_handler, cursor_handler, null)
 
-/DBConnection/proc/Disconnect() return _dm_db_close(_db_con)
+/DBConnection/proc/Disconnect()
+	return _dm_db_close(_db_con)
 
 /DBConnection/proc/IsConnected()
-	if(!sqllogging) return 0
+	if(!config.sql_enabled)
+		return 0
 	var/success = _dm_db_is_connected(_db_con)
 	return success
 
-/DBConnection/proc/Quote(str) return _dm_db_quote(_db_con,str)
+/DBConnection/proc/Quote(str)
+	return _dm_db_quote(_db_con,str)
 
-/DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
+/DBConnection/proc/ErrorMsg()
+	return _dm_db_error_msg(_db_con)
+
 /DBConnection/proc/SelectDB(database_name,dbi)
-	if(IsConnected()) Disconnect()
+	if(IsConnected())
+		Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
-	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
-/DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
+	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]", user, password)
 
+/DBConnection/proc/NewQuery(sql_query, cursor_handler = src.default_cursor)
+	return new/DBQuery(sql_query, src, cursor_handler)
 
-/DBQuery/New(sql_query,DBConnection/connection_handler,cursor_handler)
-	if(sql_query) src.sql = sql_query
-	if(connection_handler) src.db_connection = connection_handler
-	if(cursor_handler) src.default_cursor = cursor_handler
+/DBConnection/proc/NewMassInsertQuery(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE)
+	// Create new DBQuery to add more then one row in a table
+	//
+	// table - full name of a table in DB with prefix
+	// rows -  list of accossiative lists where key = name of column and value are value to insert DB
+	// duplicate_key - text of "ON DUPLICATE KEY UPDATE" part of request. If FALSE skip, if TRUE update all columns
+	// ignore_errors - if TRUE all errors are warnings
+	// delayed - DELAYED instert. Faster, but restart mysql can lost this data
+	// Return null on errors or new DBQuery
+
+	if(!table || !rows || !istype(rows))
+		return
+	var/list/columns = list()
+	var/list/sorted_rows = list()
+	// Sort all keys in the list to one order
+	// Fill columns list
+	for(var/list/row in rows)
+		var/list/sorted_row = list()
+		sorted_row.len = columns.len
+		for (var/column in row)
+			var/index = columns[column]
+			if (!index)
+				// New column
+				index = columns.len + 1
+				columns[column] = index
+				sorted_row.len = columns.len
+			// Setup index in row same as column index
+			sorted_row[index] = row[column]
+		sorted_rows[++sorted_rows.len] = sorted_row
+
+	// Auto generate "ON DUPLICATE KEY UPDATE" if TRUE
+	// duplicate_key can be used from arguments if its not TRUE or FALSE
+	if(duplicate_key == TRUE)
+		var/list/column_list = list()
+		for(var/column in columns)
+			column_list += "[column] = VALUES([column])"
+		duplicate_key = "ON DUPLICATE KEY UPDATE [column_list.Join(", ")]\n"
+	else if (duplicate_key == FALSE)
+		duplicate_key = null
+
+	ignore_errors = ignore_errors ? " IGNORE" : null
+	delayed = delayed ? " DELAYED" : null
+
+	// Generate sql request
+	var/list/sqlrowlist = list()
+	var/length_columns = columns.len
+	for(var/list/row in sorted_rows)
+		if(length(row) != length_columns)
+			// null(s) in row list
+			row.len = length_columns
+		for(var/value in row)
+			if(isnull(value))
+				value = "NULL"
+		sqlrowlist += "([row.Join(",\n	")])"
+	sqlrowlist = "	[sqlrowlist.Join(",\n	")]" // list -> text
+	return NewQuery("INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n[sqlrowlist]\n[duplicate_key]")
+
+/DBQuery/New(sql_query, DBConnection/connection_handler, cursor_handler)
+	if(sql_query)
+		src.sql = sql_query
+	if(connection_handler)
+		src.db_connection = connection_handler
+	if(cursor_handler)
+		src.default_cursor = cursor_handler
 	_db_query = _dm_db_new_query()
 	return ..()
 
@@ -98,23 +165,42 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/DBConnection/db_connection
 	var/_db_query
 
-/DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
+/DBQuery/proc/Connect(DBConnection/connection_handler)
+	src.db_connection = connection_handler
 
-/DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
+/DBQuery/proc/Execute(sql_query = src.sql, cursor_handler = default_cursor)
 	Close()
-	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
 
-/DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
+	. = _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
+	if(!.)
+		var/errmsg = ErrorMsg()
 
-/DBQuery/proc/RowsAffected() return _dm_db_rows_affected(_db_query)
+		log_sql("ERROR: [errmsg] | [sql_query]")
 
-/DBQuery/proc/RowCount() return _dm_db_row_count(_db_query)
+		if(findtext(errmsg, "Lost connection"))//something bad happened, basically "temporary" debug output before we hunt down this error
+			message_admins("<span style='color: red;'>[errmsg]</span>")
+			world.send2bridge(
+				type = list(BRIDGE_SERVICE),
+				attachment_title = errmsg,
+				attachment_msg = sql_query,
+				attachment_color = BRIDGE_COLOR_ADMINALERT,
+			)
 
-/DBQuery/proc/ErrorMsg() return _dm_db_error_msg(_db_query)
+/DBQuery/proc/NextRow()
+	return _dm_db_next_row(_db_query, item, conversions)
+
+/DBQuery/proc/RowsAffected()
+	return _dm_db_rows_affected(_db_query)
+
+/DBQuery/proc/RowCount()
+	return _dm_db_row_count(_db_query)
+
+/DBQuery/proc/ErrorMsg()
+	return _dm_db_error_msg(_db_query)
 
 /DBQuery/proc/Columns()
 	if(!columns)
-		columns = _dm_db_columns(_db_query,/DBColumn)
+		columns = _dm_db_columns(_db_query, /DBColumn)
 	return columns
 
 /DBQuery/proc/GetRowData()
@@ -138,9 +224,12 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	return db_connection.Quote(str)
 
 /DBQuery/proc/SetConversion(column,conversion)
-	if(istext(column)) column = columns.Find(column)
-	if(!conversions) conversions = new/list(column)
-	else if(conversions.len < column) conversions.len = column
+	if(istext(column))
+		column = columns.Find(column)
+	if(!conversions)
+		conversions = new/list(column)
+	else if(conversions.len < column)
+		conversions.len = column
 	conversions[column] = conversion
 
 
@@ -153,7 +242,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	var/length
 	var/max_length
 
-/DBColumn/New(name_handler,table_handler,position_handler,type_handler,flag_handler,length_handler,max_length_handler)
+/DBColumn/New(name_handler, table_handler, position_handler, type_handler, flag_handler, length_handler, max_length_handler)
 	src.name = name_handler
 	src.table = table_handler
 	src.position = position_handler
@@ -164,7 +253,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 	return ..()
 
 
-/DBColumn/proc/SqlTypeName(type_handler=src.sql_type)
+/DBColumn/proc/SqlTypeName(type_handler = src.sql_type)
 	switch(type_handler)
 		if(TINYINT) return "TINYINT"
 		if(SMALLINT) return "SMALLINT"

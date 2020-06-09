@@ -5,11 +5,10 @@
 	icon_state = "paper"
 	item_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throw_range = 2
 	throw_speed = 1
 	layer = 4
-	pressure_resistance = 1
 	attack_verb = list("bapped")
 	var/amount = 0 //Amount of items clipped to the paper
 	var/page = 1
@@ -18,11 +17,12 @@
 
 /obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W, mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/obj/item/weapon/paper/P
 	if(istype(W, /obj/item/weapon/paper))
 		P = W
-		if(P.crumpled>0)
-			to_chat(usr, "Paper to crumpled for bundle.")
+		if(P.crumpled)
+			to_chat(usr, "Paper too crumpled for anything")
 			return
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
@@ -104,15 +104,15 @@
 		if(istype(src[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
 			dat += P.show_content(human_user, view = FALSE)
-			human_user << browse(dat, "window=[name]")
+			human_user << browse(entity_ja(dat), "window=[name]")
 			P.add_fingerprint(usr)
 		else if(istype(src[page], /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/P = W
 			human_user << browse_rsc(P.img, "tmp_photo.png")
-			human_user << browse(dat + "<html><head><title>[sanitize_popup(P.name)]</title></head>" \
+			human_user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
 			+ "<body style='overflow:hidden'>" \
 			+ "<div> <img src='tmp_photo.png' width = '180'" \
-			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : ]"\
+			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : null]"\
 			+ "</body></html>", "window=[name]")
 			P.add_fingerprint(usr)
 		add_fingerprint(usr)
@@ -132,7 +132,7 @@
 			else if(page == amount+1)
 				return
 			page++
-			playsound(src.loc, "pageturn", 50, 1)
+			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		if(href_list["prev_page"])
 			if(page == 1)
 				return
@@ -141,7 +141,7 @@
 			else if(page == amount+1)
 				screen = 1
 			page--
-			playsound(src.loc, "pageturn", 50, 1)
+			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		if(href_list["remove"])
 			var/obj/item/weapon/W = src[page]
 			usr.put_in_hands(W)
@@ -171,17 +171,25 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = sanitize(copytext(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, 1, MAX_NAME_LEN))
-	if((loc == usr && usr.stat == CONSCIOUS))
+	if(usr.incapacitated())
+		return
+
+	var/n_name = sanitize_safe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
+	if(usr.incapacitated())
+		return
+
+	if(loc == usr)
 		name = "[(n_name ? text("[n_name]") : "paper")]"
-	add_fingerprint(usr)
-	return
+		add_fingerprint(usr)
 
 
 /obj/item/weapon/paper_bundle/verb/remove_all()
 	set name = "Loose bundle"
 	set category = "Object"
 	set src in usr
+
+	if(usr.incapacitated())
+		return
 
 	to_chat(usr, "<span class='notice'>You loosen the bundle.</span>")
 	for(var/obj/O in src)
@@ -195,9 +203,11 @@
 
 
 /obj/item/weapon/paper_bundle/update_icon()
-	var/obj/item/weapon/paper/P = src.contents
-	icon_state = P.icon_state
-	overlays = P.overlays
+	cut_overlays()
+	if(contents.len)
+		var/obj/item/weapon/paper/P = contents[1]
+		icon_state = P.icon_state
+		copy_overlays(P)
 	underlays = 0
 	var/i = 0
 	var/photo
@@ -215,12 +225,12 @@
 			var/obj/item/weapon/photo/Ph = O
 			img = Ph.tiny
 			photo = 1
-			overlays += img
+			add_overlay(img)
 	if(i>1)
 		desc =  "[i] papers clipped to each other."
 	else
 		desc = "A single sheet of paper."
 	if(photo)
 		desc += "\nThere is a photo attached to it."
-	overlays += image('icons/obj/bureaucracy.dmi', "clip")
+	add_overlay(image('icons/obj/bureaucracy.dmi', "clip"))
 	return

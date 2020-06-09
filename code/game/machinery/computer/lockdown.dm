@@ -11,7 +11,7 @@
 	var/department*/
 	var/list/displayedNetworks
 
-/obj/machinery/computer/lockdown/New()
+/obj/machinery/computer/lockdown/atom_init()
 	..()
 	connected_doors = new/list()
 	displayedNetworks  = new/list()
@@ -45,34 +45,23 @@
 	for(var/net in connected_doors)
 		connected_doors[net] = new/list()
 
-	//loop through the world, grabbing all the relevant doors
-	spawn(1)
-		ConnectDoors()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/lockdown/atom_init_late()
+	//loop through the machines, grabbing all the relevant doors
+	ConnectDoors()
 
 /obj/machinery/computer/lockdown/proc/ConnectDoors()
 	for(var/list/L in connected_doors)
 		for(var/item in L)
 			L.Remove(item)
 	//
-	for(var/obj/machinery/door/poddoor/D in world)
+	for(var/obj/machinery/door/poddoor/D in machines)
 		if(D.network in connected_doors)
 			var/list/L = connected_doors[D.network]
 			L.Add(D)
 
-/obj/machinery/computer/lockdown/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/lockdown/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=lockdown")
-			return
-
+/obj/machinery/computer/lockdown/ui_interact(mob/user)
 	var/t = "<B>Lockdown Control</B><BR>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
@@ -85,7 +74,7 @@
 		empty = 0
 		t += "<tr>"
 		if(curNetId in displayedNetworks)
-			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "</b></td>"
 			t += "<td colspan=\"2\"><b><a href='?src=\ref[src];open_net=[curNetId]'>Open all</a> / <a href='?src=\ref[src];close_net=[curNetId]'>Close all</a></b></td>"
 			t += "</tr>"
 
@@ -100,13 +89,13 @@
 				t += "<td><b><a href='?src=\ref[D];toggle=1'>Toggle</a></b></td>"
 				t += "</tr>"
 		else
-			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "</b></td>"
 	t += "</table>"
 	if(empty)
-		t += "\red No networks connected.<br>"
+		t += "<span class='warning'>No networks connected.<br></span>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(t, "window=lockdown;size=550x600")
+	user << browse(entity_ja(t), "window=lockdown;size=550x600")
 	onclose(user, "lockdown")
 
 /obj/machinery/computer/lockdown/Topic(href, href_list)

@@ -26,7 +26,7 @@
 	name = "Cellular horror"
 	desc = "You don't whant to know what is this..."
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
-	light_color = "#710F8C"
+	light_color = "#710f8c"
 
 /obj/effect/decal/cleanable/cellular/meat
 	name = "horror"
@@ -35,27 +35,29 @@
 	icon_state = "creep_1"
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
 
-/obj/structure/cellular_biomass/wall/meat/New()
+/obj/structure/cellular_biomass/wall/meat/atom_init()
+	. = ..()
 	icon_state = "bloodwall_[pick(1,1,2,2,3,4)]"
 
-/obj/structure/cellular_biomass/grass/meat/New()
+/obj/structure/cellular_biomass/grass/meat/atom_init()
+	. = ..()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
 
-/obj/structure/cellular_biomass/core/meat/New()
+/obj/structure/cellular_biomass/core/meat/atom_init()
+	. = ..()
 	icon_state = "light_[pick(1,2)]"
-	set_light(luminosity)
 
-/obj/structure/cellular_biomass/lair/meat/New()
+/obj/structure/cellular_biomass/lair/meat/atom_init(mapload)
 	icon_state = "lair"
-	..(pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat/)))
+	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat)))
 
-/mob/living/simple_animal/hostile/cellular/meat/
+/mob/living/simple_animal/hostile/cellular/meat
 	name = "insane creature"
 	desc = "A sanity-destroying otherthing."
 	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
-	attacktext = "brutally chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attacktext = "brutally chomp"
+	attack_sound = list('sound/weapons/bite.ogg')
 	faction = "meat"
 
 /mob/living/simple_animal/hostile/cellular/meat/creep_standing
@@ -64,8 +66,7 @@
 	icon_dead = "light-dead"
 	health = 160
 	maxHealth = 160
-	melee_damage_lower = 25
-	melee_damage_upper = 50
+	melee_damage = 38
 	move_speed = 25
 
 /mob/living/simple_animal/hostile/cellular/meat/maniac
@@ -74,8 +75,7 @@
 	icon_dead = "sovmeat-dead"
 	health = 50
 	maxHealth = 50
-	melee_damage_lower = 10
-	melee_damage_upper = 18
+	melee_damage = 14
 	move_speed = 4
 
 /mob/living/simple_animal/hostile/cellular/meat/changeling
@@ -84,8 +84,7 @@
 	icon_dead = "horrormeat-dead"
 	health = 80
 	maxHealth = 80
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 	move_speed = 15
 
 /mob/living/simple_animal/hostile/cellular/meat/flesh
@@ -94,8 +93,7 @@
 	icon_dead = "livingflesh-dead"
 	health = 80
 	maxHealth = 80
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 	move_speed = 15
 
 /mob/living/simple_animal/hostile/cellular/meat/death()

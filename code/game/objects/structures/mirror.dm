@@ -10,18 +10,18 @@
 
 
 /obj/structure/mirror/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == "hurt")
+		if(H.a_intent == INTENT_HARM)
 			H.do_attack_animation(src)
 			if(!H.gloves)
-				var/organ = (H.hand ? "l_" : "r_") + "hand"
-				var/datum/organ/external/affecting = H.get_organ(organ)
-				affecting.take_damage(rand(0,4))
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+				BP.take_damage(rand(0, 4))
 			if(!shattered && prob(20))
 				shatter()
 			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		else
 			H.visible_message("[user] stares into \the [src].")
 	..()
@@ -31,7 +31,7 @@
 		return
 	shattered = 1
 	icon_state = "mirror_broke"
-	playsound(src, "shatter", 70, 1)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
 
 
@@ -40,14 +40,15 @@
 		if(!shattered)
 			shatter()
 		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(prob(I.force * 2))
@@ -55,40 +56,39 @@
 		shatter()
 	else
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
-	if(islarva(user) || isfacehugger(user))
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
 
 
-/obj/structure/mirror/attack_animal(mob/user)
-	if(!isanimal(user))
+/obj/structure/mirror/attack_animal(mob/living/simple_animal/attacker)
+	..()
+	if(attacker.melee_damage <= 0)
 		return
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
-		return
-	M.do_attack_animation(src)
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
+	attacker.visible_message("<span class='danger'>[attacker] smashes [src]!</span>")
 	shatter()
 
 
 /obj/structure/mirror/attack_slime(mob/user)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	shatter()
@@ -102,9 +102,6 @@
 	icon_state = "magic_mirror"
 //	var/list/choosable_races = list()
 
-/obj/structure/mirror/magic/New()
-	..()
-
 /obj/structure/mirror/magic/attack_hand(mob/user)
 	if(!ishuman(user))
 		return
@@ -115,7 +112,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = sanitize_safe(input(H, "Who are we again?", "Name change", H.name) as null|text, MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -128,9 +125,9 @@
 				H.mind.name = newname
 
 		if ("skin tone")
-			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as text
+			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as num
 			if(new_tone)
-				H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
 			H.update_hair()
 			H.update_body()
@@ -142,6 +139,7 @@
 				H.r_skin = hex2num(copytext(new_skin, 2, 4))
 				H.g_skin = hex2num(copytext(new_skin, 4, 6))
 				H.b_skin = hex2num(copytext(new_skin, 6, 8))
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
@@ -167,7 +165,7 @@
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
-					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7f7f7f")[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
@@ -205,7 +203,7 @@
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				var/userloc = H.loc
-				//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
+				//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 				//this is largely copypasted from there.
 				//handle facial hair (if necessary)
 				if(H.gender == MALE)
@@ -244,13 +242,12 @@
 					H.g_hair = hex2num(copytext(new_hair, 4, 6))
 					H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-
 				if(H.gender == "male")
 					var/new_facial = input(H, "Choose your facial hair color", "Hair Color") as null|color
 					if(new_facial)
-						H.r_hair = hex2num(copytext(new_facial, 2, 4))
-						H.g_hair = hex2num(copytext(new_facial, 4, 6))
-						H.b_hair = hex2num(copytext(new_facial, 6, 8))
+						H.r_facial = hex2num(copytext(new_facial, 2, 4))
+						H.g_facial = hex2num(copytext(new_facial, 4, 6))
+						H.b_facial = hex2num(copytext(new_facial, 6, 8))
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

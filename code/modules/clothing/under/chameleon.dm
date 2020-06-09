@@ -12,22 +12,21 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/under/chameleon/New()
-	..()
-	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud,
-		/obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
+/obj/item/clothing/under/chameleon/atom_init()
+	. = ..()
+	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
 	for(var/U in typesof(/obj/item/clothing/under)-blocked)
 		var/obj/item/clothing/under/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
+	item_state = "psyche"
 	item_color = "psyche"
 	update_icon()
-	usr.update_inv_w_uniform()
+	update_inv_mob()
 
 /obj/item/clothing/under/chameleon/verb/change()
 	set name = "Change Jumpsuit Appearance"
@@ -56,8 +55,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_w_uniform()	//so our overlays update.
+	update_inv_mob()
 
 //*****************
 //**Chameleon Hat**
@@ -73,22 +71,24 @@
 	body_parts_covered = 0
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/head/chameleon/New()
-	..()
+/obj/item/clothing/head/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/head/chameleon,
-		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)//Prevent infinite loops and bad hats.
+		/obj/item/clothing/head/helmet/space/golem, 
+		/obj/item/clothing/head/justice, 
+		/obj/item/clothing/head/collectable/tophat/badmin_magic_hat, )//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/head)-blocked)
 		var/obj/item/clothing/head/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
+	item_state = "greysoft"
 	item_color = "grey"
 	update_icon()
-	usr.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/chameleon/verb/change()
 	set name = "Change Hat/Helmet Appearance"
@@ -117,8 +117,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_head()	//so our overlays update.
+	update_inv_mob()
 
 //******************
 //**Chameleon Suit**
@@ -132,23 +131,23 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/suit/chameleon/New()
-	..()
+/obj/item/clothing/suit/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/suit, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
+		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
 		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
 	for(var/U in typesof(/obj/item/clothing/suit)-blocked)
 		var/obj/item/clothing/suit/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
+	item_state = "armor"
 	item_color = "armor"
 	update_icon()
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/chameleon/verb/change()
 	set name = "Change Exosuit Appearance"
@@ -177,8 +176,7 @@
 	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_suit()	//so our overlays update.
+	update_inv_mob()
 
 //*******************
 //**Chameleon Shoes**
@@ -186,29 +184,28 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
-	item_state = "black"
+	item_state = "bl_shoes"
 	item_color = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/shoes/chameleon/New()
-	..()
+/obj/item/clothing/shoes/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/shoes/chameleon,
 		/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg)//prevent infinite loops and bad shoes.
 	for(var/U in typesof(/obj/item/clothing/shoes)-blocked)
 		var/obj/item/clothing/shoes/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
-	item_state = "black"
+	item_state = "bl_shoes"
 	item_color = "black"
 	update_icon()
-	usr.update_inv_shoes()
+	update_inv_mob()
 
 /obj/item/clothing/shoes/chameleon/verb/change()
 	set name = "Change Footwear Appearance"
@@ -235,8 +232,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_shoes()	//so our overlays update.
+	update_inv_mob()
 
 //**********************
 //**Chameleon Backpack**
@@ -249,13 +245,12 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/weapon/storage/backpack/chameleon/New()
-	..()
+/obj/item/weapon/storage/backpack/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/weapon/storage/backpack/chameleon, /obj/item/weapon/storage/backpack/satchel/withwallet)
 	for(var/U in typesof(/obj/item/weapon/storage/backpack)-blocked)//Prevent infinite loops and bad backpacks.
 		var/obj/item/weapon/storage/backpack/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "backpack"
@@ -263,7 +258,7 @@
 	icon_state = "backpack"
 	item_state = "backpack"
 	update_icon()
-	usr.update_inv_back()
+	update_inv_mob()
 
 /obj/item/weapon/storage/backpack/chameleon/verb/change()
 	set name = "Change Backpack Appearance"
@@ -290,8 +285,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
-	if(usr)
-		usr.update_inv_back()	//so our overlays update.
+	update_inv_mob()
 
 //********************
 //**Chameleon Gloves**
@@ -306,21 +300,21 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/gloves/chameleon/New()
-	..()
+/obj/item/clothing/gloves/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/gloves/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/gloves)-blocked)
 		var/obj/item/clothing/gloves/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
+	item_state = "bgloves"
 	item_color = "brown"
 	update_icon()
-	usr.update_inv_gloves()
+	update_inv_mob()
 
 /obj/item/clothing/gloves/chameleon/verb/change()
 	set name = "Change Gloves Appearance"
@@ -348,8 +342,7 @@
 	item_state = A.item_state
 	item_color = A.item_color
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_gloves()	//so our overlays update.
+	update_inv_mob()
 
 //******************
 //**Chameleon Mask**
@@ -363,14 +356,13 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/mask/chameleon/New()
-	..()
+/obj/item/clothing/mask/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/mask/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/mask)-blocked)
 		var/obj/item/clothing/mask/V = new U
 		if(V)
-			src.clothing_choices[V.name] = U
-	return
+			clothing_choices[V.name] = U
 
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
@@ -378,7 +370,7 @@
 	item_state = "gas_mask_tc"
 	icon_state = "gas_mask_tc"
 	update_icon()
-	usr.update_inv_wear_mask()
+	update_inv_mob()
 
 /obj/item/clothing/mask/chameleon/verb/change()
 	set name = "Change Mask Appearance"
@@ -406,35 +398,34 @@
 	item_state = A.item_state
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
-	if(usr)
-		usr.update_inv_wear_mask()	//so our overlays update.
+	update_inv_mob()
 
 //*********************
 //**Chameleon Glasses**
 //*********************
 
 /obj/item/clothing/glasses/chameleon
-	name = "Optical Meson Scanner"
+	name = "optical meson scanner"
 	icon_state = "meson"
 	item_state = "glasses"
 	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/glasses/chameleon/New()
-	..()
+/obj/item/clothing/glasses/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/glasses/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/glasses)-blocked)
 		var/obj/item/clothing/glasses/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
-	name = "Optical Meson Scanner"
+	name = "optical meson scanner"
 	desc = "It's a set of mesons."
 	icon_state = "meson"
+	item_state = "glasses"
 	update_icon()
-	usr.update_inv_glasses()
+	update_inv_mob()
 
 /obj/item/clothing/glasses/chameleon/verb/change()
 	set name = "Change Glasses Appearance"
@@ -461,8 +452,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_glasses()	//so our overlays update.
+	update_inv_mob()
 
 //*****************
 //**Chameleon Gun**
@@ -471,26 +461,26 @@
 	name = "desert eagle"
 	desc = "A fake Desert Eagle with a dial on the side to change the gun's disguise."
 	icon_state = "deagle"
-	w_class = 3.0
+	item_state = "deagle"
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=2;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/chameleon
 	var/list/gun_choices = list()
 
-/obj/item/weapon/gun/projectile/chameleon/New()
-	..()
+/obj/item/weapon/gun/projectile/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/weapon/gun/projectile/chameleon)
-	for(var/U in typesof(/obj/item/weapon/gun/)-blocked)
+	for(var/U in typesof(/obj/item/weapon/gun)-blocked)
 		var/obj/item/weapon/gun/V = new U
-		src.gun_choices[V.name] = U
-	return
+		gun_choices[V.name] = U
 
 /obj/item/weapon/gun/projectile/chameleon/emp_act(severity)
 	name = "desert eagle"
 	desc = "It's a desert eagle."
 	icon_state = "deagle"
+	item_state = "deagle"
 	update_icon()
-	usr.update_inv_r_hand()
-	usr.update_inv_l_hand()
+	update_inv_mob()
 
 /obj/item/weapon/gun/projectile/chameleon/verb/change()
 	set name = "Change Gun Appearance"
@@ -517,6 +507,4 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	flags_inv = A.flags_inv
-	if(usr)
-		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()	//so our overlays update.
+	update_inv_mob()

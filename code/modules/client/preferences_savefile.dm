@@ -1,35 +1,182 @@
-#define SAVEFILE_VERSION_MIN	8
-#define SAVEFILE_VERSION_MAX	13
+//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
+#define SAVEFILE_VERSION_MIN 8
 
-//handles converting savefiles to new formats
-//MAKE SURE YOU KEEP THIS UP TO DATE!
-//If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,
-//this will mean that savefile_version will still be over SAVEFILE_VERSION_MIN, meaning
-//this savefile update doesn't run everytime we load from the savefile.
-//This is mainly for format changes, such as the bitflags in toggles changing order or something.
-//if a file can't be updated, return 0 to delete it and start again
-//if a file was updated, return 1
-/datum/preferences/proc/savefile_update()
-	if(savefile_version < 8)	//lazily delete everything + additional files so they can be saved in the new format
-		for(var/ckey in preferences_datums)
-			var/datum/preferences/D = preferences_datums[ckey]
-			if(D == src)
-				var/delpath = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/"
-				if(delpath && fexists(delpath))
-					fdel(delpath)
-				break
-		return 0
+//This is the current version, anything below this will attempt to update (if it's not obsolete)
+#define SAVEFILE_VERSION_MAX 28
 
-	if(savefile_version == SAVEFILE_VERSION_MAX)	//update successful.
-		save_preferences()
-		save_character()
-		return 1
-	return 0
+/*
+SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
+	This proc checks if the current directory of the savefile S needs updating
+	It is to be used by the load_character and load_preferences procs.
+	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
+	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
+	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
+	respective update_preferences() or update_character() proc.
+	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
+	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
+	initial() values if necessary.
+*/
 
-/datum/preferences/proc/load_path(ckey,filename="preferences.sav")
-	if(!ckey)	return
+#define SAVEFILE_UP_TO_DATE -1 // everything is okay, nothing to update.
+#define SAVEFILE_TOO_OLD    -2 // savefile is too old, all data will be wiped.
+
+/datum/preferences/proc/savefile_needs_update(savefile/S)
+	S["version"] >> savefile_version
+
+	if(isnull(savefile_version)) // By the time this feature added, we don't have separate "version" value for characters, so let's set it.
+		savefile_version = 8     // Don't touch this magic number.
+
+	if(savefile_version < SAVEFILE_VERSION_MIN)
+		S.dir.Cut()
+		return SAVEFILE_TOO_OLD
+
+	if(savefile_version < SAVEFILE_VERSION_MAX)
+		return savefile_version
+
+	return SAVEFILE_UP_TO_DATE
+
+/datum/preferences/proc/update_preferences(current_version, savefile/S)
+	/* JUST AN EXAMPLE for future updates.
+	if(current_version < 10)
+		toggles |= MEMBER_PUBLIC
+	*/
+	if(current_version < 15)
+		S["warns"]    << null
+		S["warnbans"] << null
+
+	if(current_version < 16)
+		S["aooccolor"] << S["ooccolor"]
+		aooccolor = ooccolor
+
+	if(current_version < 25)
+		var/const/SOUND_STREAMING = 64
+
+		toggles &= ~(SOUND_MIDI|SOUND_LOBBY|SOUND_STREAMING)
+		S["toggles"] << toggles
+
+	if(current_version < 26)
+		for(var/role in be_role)
+			if(!CanBeRole(role))
+				be_role -= role
+
+/datum/preferences/proc/update_character(current_version, savefile/S)
+	if(current_version < 17)
+		for(var/organ_name in organ_data)
+			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
+				organ_data -= organ_name
+				S["organ_data"] -= organ_name
+	if(current_version < 18)
+		ResetJobs()
+
+		if(language && species && language != "None")
+			if(!istext(language))
+				var/atom/A = language
+				language = A.name
+
+			var/datum/language/lang = all_languages[language]
+			if(!(species in lang.allowed_species))
+				language = "None"
+				S["language"] << language
+
+	if(current_version < 21)
+		S["disabilities"] << null
+
+		all_quirks = list()
+		positive_quirks = list()
+		negative_quirks = list()
+		neutral_quirks = list()
+
+		S["all_quirks"] << all_quirks
+		S["positive_quirks"] << positive_quirks
+		S["negative_quirks"] << negative_quirks
+		S["neutral_quirks"] << neutral_quirks
+
+	if(current_version < 23)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && \
+			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
+
+			player_alt_titles -= J.title
+
+	if(current_version < 27)
+		job_preferences = list() //It loaded null from nonexistant savefile field.
+		var/job_civilian_high = 0
+		var/job_civilian_med = 0
+		var/job_civilian_low = 0
+
+		var/job_medsci_high = 0
+		var/job_medsci_med = 0
+		var/job_medsci_low = 0
+
+		var/job_engsec_high = 0
+		var/job_engsec_med = 0
+		var/job_engsec_low = 0
+
+		S["job_civilian_high"]	>> job_civilian_high
+		S["job_civilian_med"]	>> job_civilian_med
+		S["job_civilian_low"]	>> job_civilian_low
+		S["job_medsci_high"]	>> job_medsci_high
+		S["job_medsci_med"]		>> job_medsci_med
+		S["job_medsci_low"]		>> job_medsci_low
+		S["job_engsec_high"]	>> job_engsec_high
+		S["job_engsec_med"]		>> job_engsec_med
+		S["job_engsec_low"]		>> job_engsec_low
+
+		//Can't use SSjob here since this happens right away on login
+		for(var/job in subtypesof(/datum/job))
+			var/datum/job/J = job
+			var/new_value
+			var/fval = initial(J.flag)
+			switch(initial(J.department_flag))
+				if(CIVILIAN)
+					if(job_civilian_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_civilian_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_civilian_low & fval)
+						new_value = JP_LOW
+				if(MEDSCI)
+					if(job_medsci_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_medsci_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_medsci_low & fval)
+						new_value = JP_LOW
+				if(ENGSEC)
+					if(job_engsec_high & fval)
+						// Since we can have only one high pref now, let the user pick which of the bunch they want.
+						new_value = JP_MEDIUM
+					else if(job_engsec_med & fval)
+						new_value = JP_MEDIUM
+					else if(job_engsec_low & fval)
+						new_value = JP_LOW
+			if(new_value)
+				job_preferences[initial(J.title)] = new_value
+		S["job_preferences"]	<< job_preferences
+
+	if(current_version < 28)
+		//This is necessary so that old players remove unnecessary roles
+		//and automatically set the preference "ROLE_GHOSTLY"
+		var/role_removed = FALSE
+		var/static/list/deleted_selectable_roles = list(ROLE_PAI, ROLE_PLANT, "Survivor", "Talking staff", "Religion familiar")
+		for(var/role in deleted_selectable_roles)
+			if(role in be_role)
+				be_role -= role
+				role_removed = TRUE
+
+		if(role_removed)
+			be_role |= ROLE_GHOSTLY
+
+		S["be_role"] << be_role
+
+/datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
+	if(!ckey)
+		return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
-	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -41,14 +188,9 @@
 		return 0
 	S.cd = "/"
 
-	S["version"] >> savefile_version
-	//Conversion
-	if(!savefile_version || !isnum(savefile_version) || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
-		if(!savefile_update())  //handles updates
-			savefile_version = SAVEFILE_VERSION_MAX
-			save_preferences()
-			save_character()
-			return 0
+	var/needs_update = savefile_needs_update(S)
+	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
+		return 0
 
 	//Account data
 	S["cid_list"]			>> cid_list
@@ -56,26 +198,43 @@
 
 	//General preferences
 	S["ooccolor"]			>> ooccolor
+	S["aooccolor"]			>> aooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
-	S["warns"]				>> warns
-	S["warnbans"]			>> warnbans
 	S["randomslot"]			>> randomslot
-	S["UI_style_color"]		>> UI_style_color
-	S["UI_style_alpha"]		>> UI_style_alpha
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
+	S["parallax"]			>> parallax
+	S["parallax_theme"]		>> parallax_theme
+	S["ambientocclusion"]	>> ambientocclusion
 
-	//Antag preferences
-	S["be_role"]			>> be_role
+	//Sound preferences
+	S["snd_music_vol"]						>> snd_music_vol
+	S["snd_ambient_vol"]					>> snd_ambient_vol
+	S["snd_effects_master_vol"]				>> snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				>> snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			>> snd_effects_instrument_vol
+	S["snd_notifications_vol"]				>> snd_notifications_vol
+	S["snd_admin_vol"]						>> snd_admin_vol
+	S["snd_jukebox_vol"]					>> snd_jukebox_vol
+
+	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
+	//try to fix any outdated data if necessary
+	if(needs_update >= 0)
+		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
+
 	//Sanitize
-	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
+	ooccolor		= normalize_color(sanitize_hexcolor(ooccolor, initial(ooccolor)))
+	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
@@ -83,9 +242,23 @@
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
+	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+
+	snd_music_vol = sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
+	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
+	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
+	snd_effects_voice_announcement_vol = sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
+	snd_effects_misc_vol = sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
+	snd_effects_instrument_vol = sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
+	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
+	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
+	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -96,7 +269,7 @@
 		return 0
 	S.cd = "/"
 
-	S["version"] << savefile_version
+	S["version"] << SAVEFILE_VERSION_MAX
 
 	//Account data
 	S["cid_list"]			<< cid_list
@@ -104,24 +277,42 @@
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor
+	S["aooccolor"]			<< aooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["be_role"]			<< be_role
+	S["UI_style_color"]		<< UI_style_color
+	S["UI_style_alpha"]		<< UI_style_alpha
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
-	S["warns"]				<< warns
-	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
+	S["parallax"]			<< parallax
+	S["parallax_theme"]		<< parallax_theme
+	S["ambientocclusion"]	<< ambientocclusion
+
+	//Sound preferences
+	S["snd_music_vol"]						<< snd_music_vol
+	S["snd_ambient_vol"]					<< snd_ambient_vol
+	S["snd_effects_master_vol"]				<< snd_effects_master_vol
+	S["snd_effects_voice_announcement_vol"]	<< snd_effects_voice_announcement_vol
+	S["snd_effects_misc_vol"]				<< snd_effects_misc_vol
+	S["snd_effects_instrument_vol"]			<< snd_effects_instrument_vol
+	S["snd_notifications_vol"]				<< snd_notifications_vol
+	S["snd_admin_vol"]						<< snd_admin_vol
+	S["snd_jukebox_vol"]					<< snd_jukebox_vol
 	return 1
 
-/datum/preferences/proc/load_save(dir)
+/datum/preferences/proc/load_saved_character(dir)
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return 0
 	S.cd = dir
+
+	var/needs_update = savefile_needs_update(S)
+	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
+		return 0
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -154,17 +345,14 @@
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
-	//Jobs
-	S["alternate_option"]	>> alternate_option
-	S["job_civilian_high"]	>> job_civilian_high
-	S["job_civilian_med"]	>> job_civilian_med
-	S["job_civilian_low"]	>> job_civilian_low
-	S["job_medsci_high"]	>> job_medsci_high
-	S["job_medsci_med"]		>> job_medsci_med
-	S["job_medsci_low"]		>> job_medsci_low
-	S["job_engsec_high"]	>> job_engsec_high
-	S["job_engsec_med"]		>> job_engsec_med
-	S["job_engsec_low"]		>> job_engsec_low
+	//Load prefs
+	S["job_preferences"] >> job_preferences
+
+	//Traits
+	S["all_quirks"]			>> all_quirks
+	S["positive_quirks"]	>> positive_quirks
+	S["negative_quirks"]	>> negative_quirks
+	S["neutral_quirks"]		>> neutral_quirks
 
 	//Miscellaneous
 	S["flavor_text"]		>> flavor_text
@@ -172,33 +360,42 @@
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
 	S["be_role"]			>> be_role
-	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["ipc_head"]			>> ipc_head
 	S["gear"]				>> gear
+	S["custom_items"]		>> custom_items
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
 	S["faction"] 			>> faction
 	S["religion"] 			>> religion
-	S["parallax"]			>> parallax
+
 	S["uplinklocation"] 	>> uplinklocation
 
-	S["UI_style_color"]		>> UI_style_color
-	S["UI_style_alpha"]		>> UI_style_alpha
+
+	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
+	//try to fix any outdated data if necessary
+	if(needs_update >= 0)
+		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
-	real_name		= reject_bad_name(real_name)
-	if(isnull(species)) species = HUMAN
+	real_name		= sanitize_name(real_name)
+
+	if(isnull(species))
+		species = HUMAN
+	var/datum/species/species_obj = all_species[species]
+
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
+	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
-	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -219,21 +416,16 @@
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
-	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
-	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-	if(isnull(disabilities)) disabilities = 0
+	all_quirks = SANITIZE_LIST(all_quirks)
+	positive_quirks = SANITIZE_LIST(positive_quirks)
+	negative_quirks = SANITIZE_LIST(negative_quirks)
+	neutral_quirks = SANITIZE_LIST(neutral_quirks)
+
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
+	if(!ipc_head) src.ipc_head = "Default"
 	if(!be_role) src.be_role = list()
 
 	if(!home_system) home_system = "None"
@@ -251,7 +443,7 @@
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
+	for(var/i = 1 to MAX_SAVE_SLOTS)
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -262,7 +454,7 @@
 		load_character()
 		return 0
 	S.cd = pick(saves)
-	load_save(S.cd)
+	load_saved_character(S.cd)
 	return 1
 
 /datum/preferences/proc/load_character(slot)
@@ -274,13 +466,14 @@
 	if(!S)
 		return 0
 	S.cd = "/"
-	if(!slot)	slot = default_slot
+	if(!slot)
+		slot = default_slot
 	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
 	S.cd = "/character[slot]"
-	load_save(S.cd)
+	load_saved_character(S.cd)
 
 	return 1
 
@@ -291,6 +484,8 @@
 	if(!S)
 		return 0
 	S.cd = "/character[default_slot]"
+
+	S["version"]			<< SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
 	S["OOC_Notes"]			<< metadata
@@ -321,42 +516,38 @@
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
 
-	//Jobs
+	//Write prefs
 	S["alternate_option"]	<< alternate_option
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	S["job_preferences"]	<< job_preferences
+
+	//Traits
+	S["all_quirks"]			<< all_quirks
+	S["positive_quirks"]	<< positive_quirks
+	S["negative_quirks"]	<< negative_quirks
+	S["neutral_quirks"]		<< neutral_quirks
 
 	//Miscellaneous
 	S["flavor_text"]		<< flavor_text
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]		<< player_alt_titles
 	S["be_role"]			<< be_role
-	S["disabilities"]		<< disabilities
+	S["player_alt_titles"]		<< player_alt_titles
 	S["organ_data"]			<< organ_data
+	S["ipc_head"]			<< ipc_head
 	S["gear"]				<< gear
+	S["custom_items"]		<< custom_items
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
-	S["parallax"]			<< parallax
 	S["uplinklocation"] << uplinklocation
-
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
 
 	return 1
 
-
+#undef SAVEFILE_TOO_OLD
+#undef SAVEFILE_UP_TO_DATE
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

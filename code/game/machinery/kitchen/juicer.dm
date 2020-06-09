@@ -6,12 +6,12 @@
 	layer = 2.9
 	density = 1
 	anchored = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/global/list/allowed_items = list (
+	var/static/list/allowed_items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
@@ -25,8 +25,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
 	)
 
-/obj/machinery/juicer/New()
+/obj/machinery/juicer/atom_init()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	. = ..()
 
 /obj/machinery/juicer/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -56,17 +57,12 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/juicer/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/juicer/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
 
-/obj/machinery/juicer/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/juicer/interact(mob/user) // The microwave Menu
+/obj/machinery/juicer/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -93,17 +89,16 @@
 		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
 
 	var/dat = {"
-<b>Processing chamber contains:</b><br>
-[processing_chamber]<br>
-[beaker_contents]<hr>
-"}
+		<b>Processing chamber contains:</b><br>
+		[processing_chamber]<br>
+		[beaker_contents]<hr>
+		"}
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
+	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
 	onclose(user, "juicer")
-	return
 
 
 /obj/machinery/juicer/Topic(href, href_list)
@@ -123,7 +118,7 @@
 	set category = "Object"
 	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!beaker)
 		return
@@ -151,7 +146,7 @@
 		return
 	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
@@ -159,20 +154,10 @@
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice
-	New()
-		..()
-		new/obj/machinery/juicer(src)
+/obj/structure/closet/crate/juice/PopulateContents()
+	new/obj/machinery/juicer(src)
+	for (var/i in 1 to 3)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-

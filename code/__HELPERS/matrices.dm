@@ -25,6 +25,57 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+//Dumps the matrix data in format a-f
+/matrix/proc/tolist()
+	. = list()
+	. += a
+	. += b
+	. += c
+	. += d
+	. += e
+	. += f
+
+//Dumps the matrix data in a matrix-grid format
+/*
+  a d 0
+  b e 0
+  c f 1
+*/
+/matrix/proc/togrid()
+	. = list()
+	. += a
+	. += d
+	. += 0
+	. += b
+	. += e
+	. += 0
+	. += c
+	. += f
+	. += 1
+
+//The X pixel offset of this matrix
+/matrix/proc/get_x_shift()
+	. = c
+
+//The Y pixel offset of this matrix
+/matrix/proc/get_y_shift()
+	. = f
+
+/matrix/proc/get_x_skew()
+	. = b
+
+/matrix/proc/get_y_skew()
+	. = d
+
+//Skews a matrix in a particular direction
+//Missing arguments are treated as no skew in that direction
+
+//As Rotation is defined as a scale+skew, these procs will break any existing rotation
+//Unless the result is multiplied against the current matrix
+/matrix/proc/set_skew(x = 0, y = 0)
+	b = x
+	d = y
+
 /datum/ColorMatrix
 	var/list/matrix
 	var/combined = 1
@@ -59,10 +110,9 @@
 	return mat
 
 /datum/ColorMatrix/proc/SetSaturation(s, c = 1, b = null)
-	var
-		sr = (1 - s) * lumR
-		sg = (1 - s) * lumG
-		sb = (1 - s) * lumB
+	var/sr = (1 - s) * lumR
+	var/sg = (1 - s) * lumG
+	var/sb = (1 - s) * lumB
 
 	matrix = list(c * (sr + s), c * (sr),     c * (sr),
 				  c * (sg),     c * (sg + s), c * (sg),
@@ -166,9 +216,9 @@
 						  0.05,0.95,0.05,
 						  0.05,0,1)
 		if("greyscale")
-			matrix = list(0.33,0.33,0.33,
-						  0.59,0.59,0.59,
-						  0.11,0.11,0.11)
+			matrix =  list(0.33, 0.33, 0.33,
+                           0.33, 0.33, 0.33,
+                           0.33, 0.33, 0.33)
 		if("sepia")
 			matrix = list(0.393,0.349,0.272,
 						  0.769,0.686,0.534,

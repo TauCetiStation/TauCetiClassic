@@ -144,6 +144,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		return new type()
 	return asset_datums[type]
 
+/datum/asset
+	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
+
 /datum/asset/New()
 	asset_datums[type] = src
 
@@ -155,6 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //If you don't need anything complicated.
 /datum/asset/simple
+	_abstract = /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
 
@@ -164,9 +168,26 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
 
+/datum/asset/simple/goonchat
+	_abstract = /datum/asset/simple/goonchat
+	assets = list(
+		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
+		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
+		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
+		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
+		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
+	)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
+	_abstract = /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
 		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
@@ -185,8 +206,39 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/paper
+	_abstract = /datum/asset/simple/paper
 	assets = list(
-		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png'
+		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
+		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
+	)
+
+/datum/asset/simple/newscaster
+	_abstract = /datum/asset/simple/newscaster
+	assets = list(
+		"like.png" = 'icons/newscaster_icons/like.png',
+		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
+		"dislike.png" = 'icons/newscaster_icons/dislike.png',
+		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
+	)
+
+/datum/asset/simple/chess
+	_abstract = /datum/asset/simple/chess
+	assets = list(
+		"BR.png" = 'icons/obj/chess/board_BR.png',
+		"BN.png" = 'icons/obj/chess/board_BN.png',
+		"BI.png" = 'icons/obj/chess/board_BI.png',
+		"BQ.png" = 'icons/obj/chess/board_BQ.png',
+		"BK.png" = 'icons/obj/chess/board_BK.png',
+		"BP.png" = 'icons/obj/chess/board_BP.png',
+		"WR.png" = 'icons/obj/chess/board_WR.png',
+		"WN.png" = 'icons/obj/chess/board_WN.png',
+		"WI.png" = 'icons/obj/chess/board_WI.png',
+		"WQ.png" = 'icons/obj/chess/board_WQ.png',
+		"WK.png" = 'icons/obj/chess/board_WK.png',
+		"WP.png" = 'icons/obj/chess/board_WP.png',
+		"CB.png" = 'icons/obj/chess/board_CB.png',
+		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
 /datum/asset/nanoui
@@ -200,6 +252,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 	var/list/uncommon_dirs = list(
 		"nano/templates/"
+	)
+
+	var/assets = list(
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
 	)
 
 /datum/asset/nanoui/register()
@@ -217,6 +273,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 			if(copytext(filename, length(filename)) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
+	
+	for(var/asset_name in assets)
+		register_asset(asset_name, assets[asset_name])
 
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
@@ -224,3 +283,122 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
+	send_asset_list(client, assets)
+
+/*Spritesheet implementation - coalesces various icons into a single .png file
+ and uses CSS to select icons out of that file - saves on transferring some
+1400-odd individual PNG files. (this is the port from tgstation)*/
+#define SPR_SIZE 1 //sprite size in list/sprites
+#define SPR_IDX 2 //sprite index in list/sprites
+#define SPRSZ_COUNT 1 //sprite size count in list/sizes
+#define SPRSZ_ICON 2 //sprite size icon in list/sizes
+#define SPRSZ_STRIPPED 3 //sprite size stripped in list/sizes
+
+/datum/asset/spritesheet
+	_abstract = /datum/asset/spritesheet
+	var/name
+	var/list/sizes = list()    // "32x32" -> list(sprite count, icon/normal, icon/stripped)
+	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
+
+/datum/asset/spritesheet/register()
+	if (!name)
+		CRASH("spritesheet [type] cannot register without a name")
+	ensure_stripped()
+	var/res_name = "spritesheet_[name].css"
+	var/fname = "data/spritesheets/[res_name]"
+	fdel(fname)
+	text2file(generate_css(), fname)
+	register_asset(res_name, fcopy_rsc(fname))
+	fdel(fname)
+
+	for(var/size_id in sizes)
+		var/size = sizes[size_id]
+		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+
+/datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
+	for(var/size_id in sizes_to_strip)
+		var/size = sizes[size_id]
+		if (size[SPRSZ_STRIPPED])
+			continue
+
+		// save flattened version
+		var/fname = "data/spritesheets/[name]_[size_id].png"
+		fcopy(size[SPRSZ_ICON], fname)
+		world.ext_python("strip_metadata.py", "[fname]")
+		size[SPRSZ_STRIPPED] = icon(fname)
+		fdel(fname)
+
+/datum/asset/spritesheet/proc/generate_css()
+	var/list/out = list()
+
+	for (var/size_id in sizes)
+		var/size = sizes[size_id]
+		var/icon/tiny = size[SPRSZ_ICON]
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
+
+	for (var/sprite_id in sprites)
+		var/sprite = sprites[sprite_id]
+		var/size_id = sprite[SPR_SIZE]
+		var/idx = sprite[SPR_IDX]
+		var/size = sizes[size_id]
+
+		var/icon/tiny = size[SPRSZ_ICON]
+		var/icon/big = size[SPRSZ_STRIPPED]
+		var/per_line = big.Width() / tiny.Width()
+		var/x = (idx % per_line) * tiny.Width()
+		var/y = round(idx / per_line) * tiny.Height()
+
+		out += ".[name][size_id].[sprite_id]{background-position:-[x]px -[y]px;}"
+
+	return out.Join("\n")
+
+/datum/asset/spritesheet/proc/insert_icon_in_list(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
+	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
+		return
+	var/size_id = "[I.Width()]x[I.Height()]"
+	var/size = sizes[size_id]
+
+	if (sprites[sprite_name])
+		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
+
+	if (size)
+		var/position = size[SPRSZ_COUNT]++
+		var/icon/sheet = size[SPRSZ_ICON]
+		size[SPRSZ_STRIPPED] = null
+		sheet.Insert(I, icon_state=sprite_name)
+		sprites[sprite_name] = list(size_id, position)
+	else
+		sizes[size_id] = size = list(1, I, null)
+		sprites[sprite_name] = list(size_id, 0)
+
+#undef SPR_SIZE
+#undef SPR_IDX
+#undef SPRSZ_COUNT
+#undef SPRSZ_ICON
+#undef SPRSZ_STRIPPED
+
+/datum/asset/spritesheet/vending
+	name = "vending"
+
+/datum/asset/spritesheet/vending/register()
+	for (var/k in global.vending_products)
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/autolathe
+	name = "autolathe"
+
+/datum/asset/spritesheet/autolathe/register()
+	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
+	for (var/obj/item in recipes)
+		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()

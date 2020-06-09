@@ -71,7 +71,7 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b></font>"
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" </b></font>"
 
 					body += "</td><td align='center'>";
 
@@ -233,8 +233,8 @@
 						M_job = "slime"
 					else if(ismonkey(M))
 						M_job = "Monkey"
-					else if(isalien(M)) //aliens
-						if(islarva(M))
+					else if(isxeno(M)) //aliens
+						if(isxenolarva(M))
 							M_job = "Alien larva"
 						else if(isfacehugger(M))
 							M_job = "Alien facehugger"
@@ -262,7 +262,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(isnewplayer(M))
 				M_job = "New player"
 
 			else if(isobserver(M))
@@ -295,7 +295,7 @@
 						<a id='link[i]'
 						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"\ref[M]")'
 						>
-						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
+						<span id='search[i]'><b>[M_name] - [M_rname] - [M_key] ([M_job])</b></span>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>
@@ -318,7 +318,7 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	usr << browse(entity_ja(dat), "window=players;size=600x480")
 
 //The old one
 /datum/admins/proc/player_panel_old()
@@ -348,10 +348,12 @@
 			dat += "<td>Ghost</td>"
 		else if(ismonkey(M))
 			dat += "<td>Monkey</td>"
-		else if(isalien(M))
+		else if(isxeno(M))
 			dat += "<td>Alien</td>"
 		else if(istype(M, /mob/living/parasite/meme))
 			dat += "<td>Meme</td>"
+		else if(istype(M, /mob/living/parasite/essence))
+			dat += "<td>Changelling Essence</td>"
 		else
 			dat += "<td>Unknown</td>"
 
@@ -378,7 +380,7 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(dat, "window=players;size=640x480")
+	usr << browse(entity_ja(dat), "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
@@ -389,13 +391,12 @@
 		if (!SSshuttle.online)
 			dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
 		else
-			var/timeleft = SSshuttle.timeleft()
 			switch(SSshuttle.location)
 				if(0)
-					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
 					dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
 				if(1)
-					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
+					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
 		dat += "<a href='?src=\ref[src];delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 		if(ticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
@@ -509,7 +510,7 @@
 			dat += "<br><tr><td><B>Enthrall Progress(Must be alive):</B></td><td></td></tr>"
 			var/thrall = 0
 			var/mob/Count
-			for(Count in living_mob_list)
+			for(Count in alive_mob_list)
 				if(is_thrall(Count))
 					thrall++
 			dat += "<tr><td>[thrall] of 15</td></tr>"
@@ -562,9 +563,9 @@
 			dat += "<br><table cellspacing=5><tr><td align=center><font color='green'><B>Heist:</font></B></td><td></td><td></td></tr>"
 			if(mode.raid_objectives && mode.raid_objectives.len)
 				for(var/datum/objective/heist/H in mode.raid_objectives)
-					heist_get_shuttle_price()
+					//heist_get_shuttle_price()
 					dat += "<tr><td><B>[H.explanation_text]</B></td></tr>"
-					dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
+					//dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
 			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
 		if(ticker.mode.ninjas.len)
@@ -581,7 +582,7 @@
 			dat += mutiny.check_antagonists_ui(src)
 
 		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=400x500")
+		usr << browse(entity_ja(dat), "window=roundstatus;size=400x500")
 	else
 		alert("The game hasn't started yet!")
 

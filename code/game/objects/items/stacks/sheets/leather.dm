@@ -92,24 +92,20 @@
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user)
 	if(	istype(W, /obj/item/weapon/kitchenknife) || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife) || \
 		istype(W, /obj/item/weapon/twohanded/fireaxe) || \
 		istype(W, /obj/item/weapon/hatchet) )
 
 		//visible message on mobs is defined as visible_message(message, self_message, blind_message)
-		usr.visible_message("\blue \the [usr] starts cutting hair off \the [src]", "\blue You start cutting the hair off \the [src]", "You hear the sound of a knife rubbing against flesh")
-		if(do_after(user,50,target = src))
-			to_chat(usr, "\blue You cut the hair from this [src.singular_name]")
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/hairlesshide/HS in usr.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/hairlesshide/HS = new(usr.loc)
-			HS.amount = 1
-			src.use(1)
+		if(user.is_busy(src))
+			return
+		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
+		if(W.use_tool(src, user, 50, volume = 50))
+			if(!use(1))
+				return
+
+			to_chat(usr, "<span class='notice'>You cut the hair from this [src.singular_name]</span>")
+			new/obj/item/stack/sheet/hairlesshide(usr.loc, , TRUE)
+
 	else
 		..()
 
@@ -122,15 +118,8 @@
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
 		if(wetness == 0)
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/leather/HS in src.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					wetness = initial(wetness)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/leather/HS = new(src.loc)
-			HS.amount = 1
+			if(!use(1))
+				return
+
+			new/obj/item/stack/sheet/leather(loc)
 			wetness = initial(wetness)
-			src.use(1)

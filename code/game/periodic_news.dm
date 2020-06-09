@@ -8,6 +8,10 @@
 	var/channel_name = "Tau Ceti Daily"
 	var/can_be_redacted = 0
 
+/datum/news_announcement/New()
+	if(channel_name == "Tau Ceti Daily")
+		channel_name = "[system_name()] Daily" // meh but whatever
+
 /datum/news_announcement/revolution_inciting_event/paycuts_suspicion
 	author = "Unauthorized"
 

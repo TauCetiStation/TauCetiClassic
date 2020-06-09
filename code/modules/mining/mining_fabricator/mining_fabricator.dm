@@ -5,11 +5,12 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 25000
 	req_access = list(access_mining)
 	build_type = MINEFAB
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	resources = list(
 						MAT_METAL=0,
 						MAT_GLASS=0,
@@ -96,7 +97,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mine_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mine_fabricator;size=1000x430")
 	onclose(user, "mine_fabricator")
 	return
 
@@ -135,16 +136,13 @@
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
 	if(total_amount)//if there's still enough material for sheets
 		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
-		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
-		result += res.amount
+		resources[mat_string] -= res.get_amount()*MINERAL_MATERIAL_AMOUNT
+		result += res.get_amount()
 
 	return result
 
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag()
-		return
 
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
@@ -153,7 +151,7 @@
 		return
 
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			for(var/material in resources)
 				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
@@ -193,15 +191,15 @@
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
-			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
+			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

@@ -3,38 +3,37 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
-	var/on = 1.0
-	anchored = 1.0
-	use_power = 1
+	plane = FLOOR_PLANE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
-
-/obj/machinery/igniter/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/igniter/attack_paw(mob/user)
-	return
+	var/id = null
+	var/on = TRUE
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(user)
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	use_power(50)
-	src.on = !( src.on )
-	src.icon_state = text("igniter[]", src.on)
-	return
+	on = !on
+	icon_state = text("igniter[]", on)
+
+/obj/machinery/igniter/get_current_temperature()
+	if(on)
+		return 1000
+	return ..()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (src.on && !(stat & NOPOWER) )
+	if (on && !(stat & NOPOWER))
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(1000,500,1)
+			location.hotspot_expose(1000, 500)
 	return 1
 
-/obj/machinery/igniter/New()
-	..()
+/obj/machinery/igniter/atom_init()
+	. = ..()
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/power_change()
@@ -42,6 +41,7 @@
 		icon_state = "igniter[src.on]"
 	else
 		icon_state = "igniter0"
+	update_power_use()
 
 // Wall mounted remote-control igniter.
 
@@ -56,46 +56,43 @@
 	var/base_state = "migniter"
 	anchored = 1
 
-/obj/machinery/sparker/New()
-	..()
-
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]"
-//		src.sd_SetLuminosity(2)
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]-p"
-//		src.sd_SetLuminosity(0)
+	update_power_use()
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
-			user.visible_message("\red [user] has disabled the [src]!", "\red You disable the connection to the [src].")
+			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
 		if (!src.disable)
-			user.visible_message("\red [user] has reconnected the [src]!", "\red You fix the connection to the [src].")
+			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
 			if(src.powered())
 				icon_state = "[base_state]"
 			else
 				icon_state = "[base_state]-p"
 
 /obj/machinery/sparker/attack_ai()
-	if (src.anchored)
-		return src.ignite()
+	if (anchored)
+		return ignite()
 	else
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!(powered()))
+	if (!powered())
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if (disable || (last_spark && world.time < last_spark + 50))
 		return
 
 
@@ -103,11 +100,11 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, src)
 	s.start()
-	src.last_spark = world.time
+	last_spark = world.time
 	use_power(1000)
-	var/turf/location = src.loc
+	var/turf/location = loc
 	if (isturf(location))
-		location.hotspot_expose(1000,500,1)
+		location.hotspot_expose(1000, 500)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
@@ -117,41 +114,36 @@
 	ignite()
 	..(severity)
 
-/obj/machinery/ignition_switch/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user)
-
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(.)
 		return
 	if(active)
-		return
+		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"
+	message_admins("Ignition switch was activated at ([x],[y],[z]) [ADMIN_JMP(src)] Last touched by: [key_name(usr)] [ADMIN_JMP(usr)]")
+	log_game("Ignition switch was activated at ([x],[y],[z]) Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)
-		if (M.id == src.id)
-			spawn( 0 )
+		if (M.id == id)
+			spawn(0)
 				M.ignite()
 
 	for(var/obj/machinery/igniter/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			use_power(50)
-			M.on = !( M.on )
+			M.on = !M.on
 			M.icon_state = text("igniter[]", M.on)
 
 	sleep(50)
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

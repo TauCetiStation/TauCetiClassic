@@ -14,16 +14,16 @@
 							/obj/item/weapon/stock_parts/subspace/crystal = 1,
 							/obj/item/weapon/stock_parts/subspace/amplifier = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/cable_coil = 5)
+							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_gen_ex
+/datum/design/shield_gen_ex
 	name = "Circuit Design (Experimental hull shield generator)"
 	desc = "Allows for the construction of circuit boards used to build an experimental hull shield generator."
-	id = "shield_gen"
-	req_tech = list("bluespace" = 4, "phorontech" = 3)
+	id = "shield_gen_ex"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 10000, MAT_DIAMOND = 5000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/shield_gen_ex
+	category = list("Machine")
 
 ////////////////////////////////////////
 // Shield Generator
@@ -40,16 +40,16 @@ datum/design/shield_gen_ex
 							/obj/item/weapon/stock_parts/subspace/crystal = 1,
 							/obj/item/weapon/stock_parts/subspace/amplifier = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/cable_coil = 5)
+							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_gen
+/datum/design/shield_gen
 	name = "Circuit Design (Bubble shield generator)"
 	desc = "Allows for the construction of circuit boards used to build an experimental shield generator."
 	id = "shield_gen"
-	req_tech = list("bluespace" = 4, "phorontech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 10000, MAT_DIAMOND = 5000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/shield_gen
+	category = list("Machine")
 
 ////////////////////////////////////////
 // Shield Capacitor
@@ -66,13 +66,13 @@ datum/design/shield_gen
 							/obj/item/weapon/stock_parts/subspace/treatment = 1,
 							/obj/item/weapon/stock_parts/subspace/analyzer = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/cable_coil = 5)
+							/obj/item/stack/cable_coil = 5)
 
-datum/design/shield_cap
+/datum/design/shield_cap
 	name = "Circuit Design (Shield capacitor)"
 	desc = "Allows for the construction of circuit boards used to build an experimental shielding capacitor."
 	id = "shield_cap"
-	req_tech = list("magnets" = 3, "powerstorage" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 10000, MAT_DIAMOND = 5000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/shield_cap
+	category = list("Machine")

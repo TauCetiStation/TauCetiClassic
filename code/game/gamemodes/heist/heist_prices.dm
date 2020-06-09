@@ -4,7 +4,7 @@
 	return price
 
 /obj/item/stack/get_price()
-	return price * amount
+	return price * get_amount()
 
 /obj/machinery/get_price()
 	var/my_price = price
@@ -44,7 +44,7 @@
 
 /obj/item/ammo_casing/price = 10
 /obj/item/ammo_casing/energy/price = 0
-/obj/item/ammo_casing/l10/price = 0
+/obj/item/ammo_casing/plasma/price = 0
 /obj/item/ammo_casing/magic/price = 0
 
 /obj/item/projectile/bullet/price = 50
@@ -54,7 +54,7 @@
 /obj/item/projectile/bullet/gyro/price = 175
 /obj/item/projectile/bullet/heavy/a145/price = 708
 /obj/item/projectile/bullet/incendiary/price = 522
-/obj/item/projectile/bullet/midbullet/price = 144
+/obj/item/projectile/bullet/smg/price = 144
 /obj/item/projectile/bullet/midbullet2/price = 187
 /obj/item/projectile/bullet/midbullet3/price = 210
 /obj/item/projectile/bullet/pellet/price = 11
@@ -103,13 +103,13 @@
 /obj/item/clothing/head/helmet/tactical/price = 4444
 /obj/item/clothing/head/welding/price = 250
 
-/obj/item/clothing/shoes/combat/price = 2000
-/obj/item/clothing/shoes/galoshes/price = 660
-/obj/item/clothing/shoes/jackboots/price = 440
+/obj/item/clothing/shoes/boots/combat/price = 2000
+/obj/item/clothing/shoes/boots/galoshes/price = 660
+/obj/item/clothing/shoes/boots/price = 440
 /obj/item/clothing/shoes/magboots/price = 5550
 /obj/item/clothing/shoes/rainbow/price = 176
 /obj/item/clothing/shoes/slippers/price = 333
-/obj/item/clothing/shoes/swat/price = 3200
+/obj/item/clothing/shoes/boots/swat/price = 3200
 
 /obj/item/clothing/suit/armor/price = 5000
 /obj/item/clothing/suit/armor/bulletproof/price = 18500
@@ -125,10 +125,10 @@
 /obj/item/clothing/suit/space/price = 24456
 /obj/item/clothing/suit/space/rig/price = 32547
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
-/obj/item/clothing/tie/holobadge/price = 350
-/obj/item/clothing/tie/holster/price = 1600
-/obj/item/clothing/tie/medal/price = 9500
-/obj/item/clothing/tie/medal/gold/captain/price = 70000
+/obj/item/clothing/accessory/holobadge/price = 350
+/obj/item/clothing/accessory/holster/price = 1600
+/obj/item/clothing/accessory/medal/price = 9500
+/obj/item/clothing/accessory/medal/gold/captain/price = 70000
 /obj/item/clothing/under/M35_Jacket/price = 750
 /obj/item/clothing/under/M35_Jacket_Oficer/price = 1000
 /obj/item/clothing/under/chameleon/price = 444
@@ -161,7 +161,6 @@
 /obj/item/device/mass_spectrometer/price = 2650
 /obj/item/device/mass_spectrometer/adv/price = 3020
 /obj/item/device/mmi/posibrain/price = 30090
-/obj/item/device/pipe_painter/price = 384
 /obj/item/device/radio/headset/price = 150
 /obj/item/device/radio/headset/ert/price = 7000
 /obj/item/device/radio/headset/heads/price = 5500
@@ -223,22 +222,22 @@
 /obj/item/weapon/circular_saw/price = 1250
 /obj/item/weapon/claymore/price = 5000
 /obj/item/weapon/coin/price = 15
-/obj/item/weapon/coin/clown/price = 3000
+/obj/item/weapon/coin/bananium/price = 3000
 /obj/item/weapon/coin/diamond/price = 20000
 /obj/item/weapon/coin/gold/price = 7300
 /obj/item/weapon/coin/uranium/price = 3200
 /obj/item/weapon/defibrillator/price = 300
-/obj/item/weapon/extinguisher/price = 140
+/obj/item/weapon/reagent_containers/spray/extinguisher/price = 140
 /obj/item/weapon/gun/price = 2000
 /obj/item/weapon/gun/energy/gun/nuclear/price = 7770
 /obj/item/weapon/gun/energy/ionrifle/price = 5860
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
-/obj/item/weapon/gun/energy/laser/captain/price = 13500
+/obj/item/weapon/gun/energy/laser/selfcharging/captain/price = 13500
 /obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
-/obj/item/weapon/gun/energy/stunrevolver/price = 3200
+/obj/item/weapon/gun/energy/taser/stunrevolver/price = 3200
 /obj/item/weapon/gun/energy/taser/price = 1800
 /obj/item/weapon/gun/energy/temperature/price = 11000
 /obj/item/weapon/gun/energy/toxgun/price = 8300
@@ -248,7 +247,7 @@
 /obj/item/weapon/gun/projectile/m79/price = 2500
 /obj/item/weapon/gun/projectile/shotgun/price = 4000
 /obj/item/weapon/gun/projectile/shotgun/combat/price = 6500
-/obj/item/weapon/gun/projectile/sigi/price = 3000
+/obj/item/weapon/gun/projectile/wjpp/price = 3000
 /obj/item/weapon/hand_tele/price = 8000
 /obj/item/weapon/hemostat/price = 1250
 /obj/item/weapon/implantcase/death_alarm/price = 750
@@ -310,7 +309,7 @@
 /obj/structure/closet/price = 200
 /obj/structure/device/piano/price = 25000
 /obj/structure/flora/price = 300
-/obj/structure/janitorialcart/price = 3000
+/obj/structure/stool/bed/chair/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
 /obj/structure/particle_accelerator/price = 20000
 /obj/structure/sign/price = 987

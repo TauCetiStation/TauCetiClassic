@@ -21,9 +21,11 @@
 
 //Временный и очень грубый костыль для космоса, в шаттлконтроллере он не заменяется на движущийся.
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
-turf/space/shuttle
+//======
+//Привет! Как дела?
+/turf/space/shuttle
 	icon = 'code/modules/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"
 
-	New()
-		icon_state = "[rand(1,4)]swall_s"
+/turf/space/shuttle/New()
+	icon_state = "[rand(1,4)]swall_s"

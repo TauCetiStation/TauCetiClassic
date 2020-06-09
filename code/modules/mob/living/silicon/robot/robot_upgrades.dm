@@ -39,14 +39,14 @@
 
 
 
-/obj/item/borg/upgrade/flashproof/
+/obj/item/borg/upgrade/flashproof
 	name = "Borg Flash-Supression"
 	desc = "A highly advanced, complicated system for supressing incoming flashes directed at the borg's optical processing system."
 	icon_state = "cyborg_upgrade4"
 	require_module = 1
 
 
-/obj/item/borg/upgrade/flashproof/New()   // Why the fuck does the fabricator make a new instance of all the items?
+//obj/item/borg/upgrade/flashproof/atom_init()   // Why the fuck does the fabricator make a new instance of all the items?
 	//desc = "Sunglasses with duct tape." // Why?  D:
 
 /obj/item/borg/upgrade/flashproof/action(mob/living/silicon/robot/R)
@@ -55,7 +55,7 @@
 
 	return 1
 
-/obj/item/borg/upgrade/restart/
+/obj/item/borg/upgrade/restart
 	name = "Borg emergancy restart module"
 	desc = "Used to force a restart of a disabled-but-repaired borg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
@@ -63,7 +63,7 @@
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(!R.key)
-		for(var/mob/dead/observer/ghost in world)
+		for(var/mob/dead/observer/ghost in observer_list)
 			if(ghost.corpse == R && ghost.client)
 				ghost.client.mob = ghost.corpse
 
@@ -75,7 +75,7 @@
 	return 1
 
 
-/obj/item/borg/upgrade/vtec/
+/obj/item/borg/upgrade/vtec
 	name = "Borg VTEC Module"
 	desc = "Used to kick in a borgs VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
@@ -89,7 +89,7 @@
 	return 1
 
 
-/obj/item/borg/upgrade/tasercooler/
+/obj/item/borg/upgrade/tasercooler
 	name = "Borg Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate.."
 	icon_state = "cyborg_upgrade3"
@@ -121,7 +121,7 @@
 
 	return 1
 
-/obj/item/borg/upgrade/jetpack/
+/obj/item/borg/upgrade/jetpack
 	name = "Mining Borg Jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
 	icon_state = "cyborg_upgrade3"

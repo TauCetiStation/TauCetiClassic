@@ -6,13 +6,14 @@
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effect/mine/New()
+/obj/effect/mine/atom_init()
+	. = ..()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/Crossed(AM as mob|obj)
+/obj/effect/mine/Crossed(atom/movable/AM)
+	. = ..()
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M)
@@ -23,9 +24,18 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
 		triggered = 1
-		call(src,triggerproc)(M)
+		trigger_act(M)
 
-/obj/effect/mine/proc/triggerrad(obj)
+/obj/effect/mine/proc/trigger_act(obj)
+	explosion(loc, 0, 1, 2, 3)
+	spawn(0)
+		qdel(src)
+
+/obj/effect/mine/dnascramble
+	name = "Radiation Mine"
+	icon_state = "uglymine"
+
+/obj/effect/mine/dnascramble/trigger_act(obj)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
@@ -35,7 +45,52 @@
 	spawn(0)
 		qdel(src)
 
-/obj/effect/mine/proc/triggerstun(obj)
+/obj/effect/mine/phoron
+	name = "Phoron Mine"
+	icon_state = "uglymine"
+
+/obj/effect/mine/phoron/trigger_act(obj)
+	for (var/turf/simulated/floor/target in range(1,src))
+		if(!target.blocks_air)
+
+			target.assume_gas("phoron", 30)
+
+			target.hotspot_expose(1000, CELL_VOLUME)
+
+	spawn(0)
+		qdel(src)
+
+/obj/effect/mine/kick
+	name = "Kick Mine"
+	icon_state = "uglymine"
+
+/obj/effect/mine/kick/trigger_act(obj)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, src)
+	s.start()
+	del(obj:client)
+	spawn(0)
+		qdel(src)
+
+/obj/effect/mine/n2o
+	name = "N2O Mine"
+	icon_state = "uglymine"
+
+/obj/effect/mine/n2o/trigger_act(obj)
+	//note: im lazy
+
+	for (var/turf/simulated/floor/target in range(1,src))
+		if(!target.blocks_air)
+			target.assume_gas("sleeping_agent", 30)
+
+	spawn(0)
+		qdel(src)
+
+/obj/effect/mine/stun
+	name = "Stun Mine"
+	icon_state = "uglymine"
+
+/obj/effect/mine/stun/trigger_act(obj)
 	if(ismob(obj))
 		var/mob/M = obj
 		M.Stun(30)
@@ -44,74 +99,3 @@
 	s.start()
 	spawn(0)
 		qdel(src)
-
-/obj/effect/mine/proc/triggern2o(obj)
-	//example: n2o triggerproc
-	//note: im lazy
-
-	for (var/turf/simulated/floor/target in range(1,src))
-		if(!target.blocks_air)
-
-			var/datum/gas_mixture/payload = new
-			var/datum/gas/sleeping_agent/trace_gas = new
-
-			trace_gas.moles = 30
-			payload += trace_gas
-
-			target.zone.air.merge(payload)
-
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/triggerphoron(obj)
-	for (var/turf/simulated/floor/target in range(1,src))
-		if(!target.blocks_air)
-
-			var/datum/gas_mixture/payload = new
-
-			payload.phoron = 30
-
-			target.zone.air.merge(payload)
-
-			target.hotspot_expose(1000, CELL_VOLUME)
-
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/triggerkick(obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-	s.set_up(3, 1, src)
-	s.start()
-	del(obj:client)
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/explode(obj)
-	explosion(loc, 0, 1, 2, 3)
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/dnascramble
-	name = "Radiation Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerrad"
-
-/obj/effect/mine/phoron
-	name = "Phoron Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerphoron"
-
-/obj/effect/mine/kick
-	name = "Kick Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerkick"
-
-/obj/effect/mine/n2o
-	name = "N2O Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggern2o"
-
-/obj/effect/mine/stun
-	name = "Stun Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerstun"

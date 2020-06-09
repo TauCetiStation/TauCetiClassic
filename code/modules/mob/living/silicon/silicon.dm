@@ -7,6 +7,7 @@
 	immune_to_ssd = 1
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
+	var/obj/item/device/pda/silicon/pda = null
 
 
 
@@ -19,7 +20,21 @@
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
 
+/mob/living/silicon/atom_init()
+	. = ..()
+	silicon_list += src
+
+/mob/living/silicon/Destroy()
+	silicon_list -= src
+	return ..()
+
 /mob/living/silicon/proc/show_laws()
+	return
+
+/mob/living/silicon/proc/checklaws()
+	return
+
+/mob/living/silicon/proc/show_alerts()
 	return
 
 /mob/living/silicon/drop_item()
@@ -28,14 +43,14 @@
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.take_organ_damage(20)
+			src.take_bodypart_damage(20)
 			Stun(rand(5,10))
 		if(2)
-			src.take_organ_damage(10)
+			src.take_bodypart_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
-	to_chat(src, "\red <B>*BZZZT*</B>")
-	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
+	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
+	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
@@ -43,20 +58,6 @@
 
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
-
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-
-
-	if(!Proj.nodamage)
-		switch(Proj.damage_type)
-			if(BRUTE)
-				adjustBruteLoss(Proj.damage)
-			if(BURN)
-				adjustFireLoss(Proj.damage)
-
-	Proj.on_hit(src,2)
-
-	return 2
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
@@ -87,40 +88,24 @@
 		return 1
 	return 0
 
-
-// this function shows the health of the pAI in the Status panel
-/mob/living/silicon/proc/show_system_integrity()
-	if(!src.stat)
-		stat(null, text("System integrity: [round((health/maxHealth)*100)]%"))
-	else
-		stat(null, text("Systems nonfunctional"))
-
-
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
-
-
-// this function displays the station time in the status panel
-/mob/living/silicon/proc/show_station_time()
-	stat(null, "Station Time: [worldtime2text()]")
-
-
-// this function displays the shuttles ETA in the status panel if the shuttle has been called
-/mob/living/silicon/proc/show_SSshuttle_eta()
-	if(SSshuttle.online && SSshuttle.location < 2)
-		var/timeleft = SSshuttle.timeleft()
-		if (timeleft)
-			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
 	if(statpanel("Status"))
-		show_station_time()
-		show_SSshuttle_eta()
-		show_system_integrity()
+		stat(null, "Station Time: [worldtime2text()]")
+
+		if(SSshuttle.online && SSshuttle.location < 2)
+			stat(null, "ETA-[shuttleeta2text()]")
+
+		if(stat == CONSCIOUS)
+			stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
+		else
+			stat(null, text("Systems nonfunctional"))
+
 		show_malf_ai()
 
 // this function displays the stations manifest in a separate window
@@ -130,14 +115,14 @@
 	if(data_core)
 		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
-	src << browse(dat, "window=airoster")
+	src << browse(entity_ja(dat), "window=airoster")
 	onclose(src, "airoster")
 
 //can't inject synths
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/try_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
-	return 0
+	return FALSE
 
 
 //Silicon mob language procs
@@ -164,9 +149,12 @@
 	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] (:[L.key])</b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
+		dat += "<b>[L.name] "
+		for(var/l_key in L.key)
+			dat += "(:[l_key])"
+		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
 
-	src << browse(dat, "window=checklanguage")
+	src << browse(entity_ja(dat), "window=checklanguage")
 	return
 
 /mob/living/silicon/proc/toggle_sensor_mode()
@@ -192,3 +180,8 @@
 /mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
+
+/mob/living/silicon/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	if(show_message)
+		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
+	return FALSE

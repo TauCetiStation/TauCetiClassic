@@ -27,15 +27,13 @@
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
 
-/obj/structure/stool/bed/chair/pedalgen/initialize()
-	..()
-	if(anchored)
-		Generator.loc = src.loc
-		Generator.connect_to_network()
-
-/obj/structure/stool/bed/chair/pedalgen/New()
+/obj/structure/stool/bed/chair/pedalgen/atom_init()
+	. = ..()
 	handle_rotation()
 	Generator = new /obj/machinery/power/dynamo(src)
+	if(anchored)
+		Generator.loc = loc
+		Generator.connect_to_network()
 
 /obj/structure/stool/bed/chair/pedalgen/examine(mob/user)
 	..()
@@ -48,6 +46,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user,W))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
 			Generator.loc = src.loc
 			Generator.connect_to_network()
@@ -71,8 +70,9 @@
 			unbuckle_mob()
 			src.add_fingerprint(user)
 		else
+			user.SetNextMove(CLICK_CD_INTERACT)
 			if(buckled_mob.nutrition > 10)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 20, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
 				Generator.Rotated()
 				var/mob/living/carbon/human/pedaler = buckled_mob
 				pedaler.nutrition -= 0.5
@@ -98,8 +98,8 @@
 			pedal(user)
 
 
-/obj/structure/stool/bed/chair/pedalgen/Move()
-	..()
+/obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc

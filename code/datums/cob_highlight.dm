@@ -1,18 +1,17 @@
-#define COB_HINT "Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.amount]"
+#define COB_HINT "Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.get_amount()]"
 
 /client/var/datum/craft_or_build/cob
 
 /datum/craft_or_build
-	var
-		in_building_mode = FALSE
-		datum/stack_recipe/from_recipe = null
-		atom/build_this = null
-		obj/item/stack/using_this = null
-		turf/over_this = null
-		busy = FALSE
-		build_direction = NORTH
-		image/b_overlay = null
-		obj/effect/holo_build = null
+	var/in_building_mode = FALSE
+	var/datum/stack_recipe/from_recipe = null
+	var/atom/build_this = null
+	var/obj/item/stack/using_this = null
+	var/turf/over_this = null
+	var/busy = FALSE
+	var/build_direction = NORTH
+	var/image/b_overlay = null
+	var/obj/effect/holo_build = null
 
 /datum/craft_or_build/proc/turn_on_build_overlay(client/C, datum/stack_recipe/recipe, using)
 	if(!C.cob.in_building_mode)
@@ -64,7 +63,7 @@
 	. = TRUE
 	if(busy || !using_this || !from_recipe)
 		return FALSE //return, no need to play red animation.
-	else if(using_this.amount < from_recipe.req_amount)
+	else if(using_this.get_amount() < from_recipe.req_amount)
 		. = FALSE
 		to_chat(M, "<span class='notice'>You haven't got enough [using_this.name] to build \the [from_recipe.title]!</span>")
 	else if(from_recipe.one_per_turf && (locate(from_recipe.result_type) in here))
@@ -95,7 +94,7 @@
 	var/turf/over_this_saved = over_this
 	if(from_recipe.time)
 		busy = TRUE
-		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		b_overlay.alpha = 0
 		holo_build = new(over_this_saved) //Everyone will see what you trying to build.
 		holo_build.anchored = TRUE
@@ -123,13 +122,10 @@
 		return
 
 	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
-		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)//Yes, 2nd time with timed recipe.
+		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.dir = build_direction
-		using_this.amount -= from_recipe.req_amount
-		if(using_this.amount <= 0)
-			M.remove_from_mob(using_this)
-			qdel(using_this)
+		using_this.use(from_recipe.req_amount)
 		A.add_fingerprint(M)
 		b_overlay.maptext = COB_HINT
 
@@ -137,7 +133,7 @@
 	if(!usr.client.cob)
 		return
 	if(usr.client.cob.in_building_mode)
-		if(usr.restrained() || usr.stat || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
+		if(usr.incapacitated() || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
 			usr.client.cob.remove_build_overlay(usr.client)
 			return
 		var/turf/T = src

@@ -22,19 +22,19 @@
 /datum/anomaly_frost/process()
 	spawn(0)
 		if(prob(Speed))
-			for(var/zone/A in SSair.zones)
-				if(A.air != null && A.contents.len > 0)
-					var/turf/T =pick(A.contents)
+			for(var/zone/Z in SSair.zones)
+				if(Z.air != null && Z.contents.len > 0)
+					var/turf/T =pick(Z.contents)
 					if(T.z == Zlevel)
 						if(T.air.total_moles < 300)
-							if(A.air.temperature > Temperature + 1)
-								A.air.temperature -= 1
+							if(Z.air.temperature > Temperature + 1)
+								Z.air.temperature -= 1
 								sleep(1)
-								A.needs_update = 1
-							if(A.air.temperature < Temperature - 1)
-								A.air.temperature += 1
+								Z.needs_update = TRUE
+							if(Z.air.temperature < Temperature - 1)
+								Z.air.temperature += 1
 								sleep(1)
-								A.needs_update = 1
+								Z.needs_update = TRUE
 
 		Time -= 1
 		if(Time < 0)

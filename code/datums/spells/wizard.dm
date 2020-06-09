@@ -3,14 +3,14 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 150
+	charge_max = 350
 	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
 
-	max_targets = 0
-
+	max_targets = 5
+	sound = 'sound/magic/MAGIC_MISSILE.ogg'
 	proj_icon_state = "magicm"
 	proj_name = "a magic missile"
 	proj_lingering = 1
@@ -26,8 +26,18 @@
 	action_icon_state = "magicm"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
+	desc = "Some kind of Blasphemy"
 	amt_weakened = 5
 	amt_dam_fire = 10
+	sound = 'sound/magic/MAGIC_MISSILE.ogg'
+
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
+	if(loc && in_range(usr, src))
+		qdel(src)
+	else if(cast_check())
+		choose_targets()
+	return 1
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -38,13 +48,13 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
+	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
 	range = -1
 	include_user = 1
-
+	sound = 'sound/magic/Mutate.ogg'
 	action_icon_state = "mutate"
 
-	mutations = list(LASER, HULK)
+	mutations = list(LASEREYES, HULK)
 	duration = 300
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
@@ -76,7 +86,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-
+	sound = 'sound/magic/Smoke.ogg'
 	action_icon_state = "smoke"
 
 	smoke_spread = 2
@@ -91,7 +101,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-
+	sound = 'sound/magic/Disable_Tech.ogg'
 	action_icon_state = "emp"
 
 	emp_heavy = 6
@@ -108,7 +118,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-
+	sound = 'sound/magic/blink.ogg'
 	action_icon_state = "blink"
 
 	smoke_spread = 1
@@ -130,28 +140,34 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-
+	sound = 'sound/magic/Teleport_app.ogg'
 	action_icon_state = "spell_teleport"
 
 	smoke_spread = 1
 	smoke_amt = 5
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+/obj/effect/proc_holder/spell/targeted/forcewall
 	name = "Forcewall"
 	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
-
 	school = "transmutation"
-	charge_max = 100
+	charge_max = 600
 	clothes_req = 0
+	range = -1
+	include_user = 1
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
-	range = 0
-
+	sound = 'sound/magic/ForceWall.ogg'
 	action_icon_state = "shield"
+	var/summon_path = /obj/effect/forcefield/magic
 
-	summon_type = list("/obj/effect/forcefield")
-	summon_lifespan = 300
-
+/obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets, mob/living/user = usr)
+	new summon_path(get_turf(user), user)
+	if(user.dir == SOUTH || user.dir == NORTH)
+		new summon_path(get_step(user, EAST), user)
+		new summon_path(get_step(user, WEST), user)
+	else
+		new summon_path(get_step(user, NORTH), user)
+		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -206,7 +222,8 @@
 	clothes_req = 0
 	invocation = "STI KALY"
 	invocation_type = "whisper"
-	message = "\blue Your eyes cry out in pain!"
+	sound = 'sound/magic/Blind.ogg'
+	message = "<span class ='notice'>Your eyes cry out in pain!</span>"
 
 	action_icon_state = "blind"
 
@@ -215,10 +232,12 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
+	sound = 'sound/magic/Blind.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	disabilities = 1
 	duration = 300
+	sound = 'sound/magic/Blind.ogg'
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
@@ -229,6 +248,7 @@
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
+	sound = 'sound/magic/Fireball.ogg'
 	range = 20
 
 	action_icon_state = "fireball"
@@ -347,3 +367,22 @@
 	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds
 	centcomm_cancast = 0 //Stop people from getting to centcomm
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	name = "The Traps!"
+	desc = "Summon a number of traps to confuse and weaken your enemies, and possibly you."
+	charge_max = 250
+	clothes_req = 1
+	invocation = "CAVERE INSIDIAS"
+	invocation_type = "shout"
+	range = 3
+	summon_type = list(
+		/obj/structure/trap/stun,
+		/obj/structure/trap/fire,
+		/obj/structure/trap/chill,
+		/obj/structure/trap/damage,
+					)
+	summon_lifespan = 3000
+	summon_amt = 5
+
+	action_icon_state = "the_traps"

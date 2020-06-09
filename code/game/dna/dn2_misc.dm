@@ -15,19 +15,19 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		to_chat(usr, "\red You can't jump right now!")
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
+		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
 	if(usr.hulk_cd)
-		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
+		to_chat(usr, "<span class='warning'>You need a bit of time, before you can use any ability!</span>")
 		return
 
 	usr.hulk_cd = 1
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf/) && !(istype(usr.loc,/turf/space)))
+	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
@@ -37,8 +37,8 @@
 		if(usr.pinned.len)
 			failure = 1
 
-		usr.visible_message("\red <b>[usr.name]</b> takes a huge leap!")
-		playsound(usr.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
+		playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
 			usr.Weaken(5)
 			usr.Stun(5)
@@ -65,26 +65,23 @@
 			if(i < 7) usr.pixel_y += 8
 			else usr.pixel_y -= 8
 			sleep(1)
-		playsound(usr.loc, 'sound/effects/explosionfar.ogg', 50, 1)
+		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
 		for(tile in range(1, usr))
 			if(prob(50))
 				tile.break_tile()
 		for(var/mob/living/M in usr.loc.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump")
+				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human/))
-					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/datum/organ/external/E = H.get_organ(organ_name)
-					E.take_damage(20, 0, 0, 0, "Hulk Foot")
-					E.fracture()
+				if(istype(H,/mob/living/carbon/human))
+					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
+					BP.take_damage(20, null, null, "Hulk Foot")
+					BP.fracture()
 					H.Stun(5)
 					H.Weaken(5)
 				else
-					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+					playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					M.Stun(5)
 					M.Weaken(5)
 					M.take_overall_damage(35, used_weapon = "Hulk Foot")
@@ -95,16 +92,16 @@
 				if( (M != usr) && !(M.stat))
 					if(snd)
 						snd = 0
-						playsound(M.loc, 'sound/misc/slip.ogg', 50, 1)
+						playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 					M.Weaken(2)
 					for(var/i=0, i<6, i++)
 						spawn(i)
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if ((FAT in usr.mutations) && prob(66))
-			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
-			playsound(usr.loc, 'sound/misc/slip.ogg', 50, 1)
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
 			usr.stunned += 5
 
@@ -112,16 +109,16 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		to_chat(usr, "\red You need a ground to do this!")
+		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj/))
+	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You leap and slam your head against the inside of [container]! Ouch!")
+		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
 		usr.weakened += 5
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
-		playsound(usr.loc, 'sound/effects/bang.ogg', 50, 1)
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
@@ -143,27 +140,27 @@
 
 	var/turf/T = get_turf(get_step(usr,usr.dir))
 	for(var/mob/living/M in T.contents)
-		to_chat(usr, "\red Something right in front of you!")
+		to_chat(usr, "<span class='warning'>Something right in front of you!</span>")
 		return
 	T = get_turf(get_step(T,usr.dir))
 	for(var/mob/living/M in T.contents)
-		to_chat(usr, "\red Something right in front of you!")
+		to_chat(usr, "<span class='warning'>Something right in front of you!</span>")
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		to_chat(usr, "\red You can't dash right now!")
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
+		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
 	if(usr.hulk_cd)
-		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
+		to_chat(usr, "<span class='warning'>You need a bit of time, before you can use any ability!</span>")
 		return
 
 	usr.hulk_cd = 1
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf/) && !(istype(usr.loc,/turf/space)))
+	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
 				if(M.pulling == usr)
@@ -172,8 +169,8 @@
 		if(usr.pinned.len)
 			failure = 1
 
-		usr.visible_message("\red <b>[usr.name]</b> dashes forward!")
-		playsound(usr.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
+		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
+		playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
 			usr.Weaken(5)
 			usr.Stun(5)
@@ -194,31 +191,31 @@
 			var/hit = 0
 			T = get_turf(get_step(usr,usr.dir))
 			if(i < 7)
-				if(istype(T,/turf/simulated/wall/))
+				if(istype(T,/turf/simulated/wall))
 					hit = 1
-				else if(istype(T,/turf/simulated/floor/))
+				else if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
-						if(istype(S,/obj/structure/window/))
+						if(istype(S,/obj/structure/window))
 							hit = 1
-						if(istype(S,/obj/structure/grille/))
+						if(istype(S,/obj/structure/grille))
 							hit = 1
 			else if(i > 6)
-				if(istype(T,/turf/simulated/floor/))
+				if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
-						if(istype(S,/obj/structure/window/))
+						if(istype(S,/obj/structure/window))
 							S.ex_act(2)
-						if(istype(S,/obj/structure/grille/))
+						if(istype(S,/obj/structure/grille))
 							qdel(S)
-				if(istype(T,/turf/simulated/wall/))
+				if(istype(T,/turf/simulated/wall))
 					var/turf/simulated/wall/W = T
 					var/mob/living/carbon/human/H = usr
 					if(istype(T,/turf/simulated/wall/r_wall))
-						playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+						playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						hit = 1
 						H.Weaken(10)
 						H.take_overall_damage(25, used_weapon = "reinforced wall")
 					else
-						playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+						playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						if(i > 20)
 							if(prob(65))
 								hit = 1
@@ -236,20 +233,17 @@
 				usr.density = 0
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
-						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
-						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash")
+						M.log_combat(usr, "hulk_dashed")
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
-						playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+						playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						for(var/o=0, o<10, o++)
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
-						if(istype(H,/mob/living/carbon/human/))
-							var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-							var/datum/organ/external/E = H.get_organ(organ_name)
-							E.take_damage(20, 0, 0, 0, "Hulk Shoulder")
-							E.fracture()
+						if(istype(H,/mob/living/carbon/human))
+							var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
+							BP.take_damage(20, null, null, "Hulk Shoulder")
+							BP.fracture()
 							M.Weaken(5)
 							M.Stun(5)
 						else
@@ -260,7 +254,7 @@
 						break
 			else if(i > 6)
 				for(var/mob/living/M in T.contents)
-					playsound(M.loc, 'sound/misc/slip.ogg', 50, 1)
+					playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 					M.Weaken(5)
 			if(usr.lying)
 				break
@@ -285,9 +279,9 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if ((FAT in usr.mutations) && prob(66))
-			usr.visible_message("\red <b>[usr.name]</b> crashes due to their heavy weight!")
-			playsound(usr.loc, 'sound/misc/slip.ogg', 50, 1)
+		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
 			usr.stunned += 5
 
@@ -295,16 +289,16 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		to_chat(usr, "\red You need a ground to do this!")
+		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj/))
+	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You dash and slam your head against the inside of [container]! Ouch!")
+		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
 		usr.weakened += 5
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
-		playsound(usr.loc, 'sound/effects/bang.ogg', 50, 1)
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
@@ -324,28 +318,28 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		return
 
-	if (usr.lying || usr.stunned || usr.stat)
-		to_chat(usr, "\red You can't smash right now!")
+	if (usr.incapacitated() || !usr.canmove)
+		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
 	if(usr.hulk_cd)
-		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
+		to_chat(usr, "<span class='warning'>You need a bit of time, before you can use any ability!</span>")
 		return
 
 	usr.hulk_cd = 1
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf/))
-		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b>")
+	if (istype(usr.loc,/turf))
+		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
 			usr.anchored = 1
 			sleep(1)
 		usr.anchored = 0
 		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		usr.visible_message("\red <b>[usr.name] slams the ground with \his arms!</b>")
-		playsound(usr.loc, 'sound/effects/explosionfar.ogg', 50, 1)
+		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
+		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
 		var/cur_dir = usr.dir
 		var/turf/T = get_turf(get_step(usr,cur_dir))
 		var/turf/simulated/floor/tile = T
@@ -353,33 +347,30 @@
 		if(istype(tile))
 			tile.break_tile()
 		if(istype(W,/turf/simulated/wall/r_wall))
-			to_chat(usr, "\red <B>Ouch!</B> This wall is too strong.")
+			to_chat(usr, "<span class='warning'><B>Ouch!</B> This wall is too strong.</span>")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
 		else if(istype(W,/turf/simulated/wall))
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash")
+				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human/))
-					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/datum/organ/external/E = H.get_organ(organ_name)
-					if(FAT in usr.mutations)
-						E.take_damage(100, 0, 0, 0, "Hulk Fat Arm")
+				if(istype(H,/mob/living/carbon/human))
+					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
+					if(HAS_TRAIT(usr, TRAIT_FAT))
+						BP.take_damage(100, null, null, "Hulk Fat Arm")
 						H.Stun(10)
 						H.Weaken(10)
 					else
-						E.take_damage(50, 0, 0, 0, "Hulk Arm")
+						BP.take_damage(50, null, null, "Hulk Arm")
 						H.Stun(5)
 						H.Weaken(5)
-					E.fracture()
+					BP.fracture()
 				else
-					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					if(FAT in usr.mutations)
+					playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+					if(HAS_TRAIT(usr, TRAIT_FAT))
 						M.Stun(10)
 						M.Weaken(10)
 						M.take_overall_damage(130, used_weapon = "Hulk Fat Arm")
@@ -393,12 +384,12 @@
 				tile.break_tile()
 		for(var/mob/living/M in range(1, T))
 			if( (M != usr) && !M.lying)
-				playsound(M.loc, 'sound/misc/slip.ogg', 50, 1)
+				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
-			if(istype(S,/obj/structure/window/))
+			if(istype(S,/obj/structure/window))
 				S.ex_act(2)
-			if(istype(S,/obj/structure/grille/))
+			if(istype(S,/obj/structure/grille))
 				qdel(S)
 		sleep(3)
 		for(tile in range(2, T))
@@ -406,21 +397,21 @@
 				tile.break_tile()
 		for(var/mob/living/M in range(2, T))
 			if( (M != usr) && !M.lying)
-				playsound(M.loc, 'sound/misc/slip.ogg', 50, 1)
+				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 				M.Weaken(2)
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
-				if(istype(S,/obj/structure/window/))
+				if(istype(S,/obj/structure/window))
 					S.ex_act(2)
-				if(istype(S,/obj/structure/grille/))
+				if(istype(S,/obj/structure/grille))
 					qdel(S)
 		usr.canmove = 1
 
-	if (istype(usr.loc,/obj/))
+	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
-		to_chat(usr, "\red You smash [container]!")
-		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
-		playsound(usr.loc, 'sound/effects/bang.ogg', 50, 1)
+		to_chat(usr, "<span class='warning'>You smash [container]!</span>")
+		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
 		while(wiggle > 0)
 			wiggle--
@@ -429,11 +420,11 @@
 			sleep(1)
 		container.pixel_x = 0
 		container.pixel_y = 0
-		visible_message("\red [usr] destroys the [container]. ")
+		visible_message("<span class='warning'>[usr] destroys the [container]. </span>")
 		for(var/atom/movable/A as mob|obj in container)
 			A.loc = container.loc
 			var/mob/M = A
-			if( (istype(M, /mob/)) && M.client)
+			if( (istype(M, /mob)) && M.client)
 				M.client.eye = M.client.mob
 				M.client.perspective = MOB_PERSPECTIVE
 		qdel(container)
@@ -446,15 +437,16 @@
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
-		if(user.a_intent == "hurt")
-			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(user.a_intent == INTENT_HARM)
+			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			if (prob(75))
-				to_chat(user, text("\blue You destroy that girder!"))
+				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/stack/sheet/metal(loc)
 				qdel(src)
 			else
-				to_chat(user, text("\blue You punch the girder."))
+				to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 		else
-			to_chat(user, "\blue You push the girder but nothing happens!")
+			to_chat(user, "<span class='notice'>You push the girder but nothing happens!</span>")
 		return

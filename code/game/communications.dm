@@ -104,6 +104,7 @@ var/list/radiochannels = list(
 	"Engineering" = 1357,
 	"Security" = 1359,
 	"Response Team" = 1345,
+	"Velocity" = 1245,
 	"Deathsquad" = 1341,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
@@ -111,11 +112,12 @@ var/list/radiochannels = list(
 //depenging helpers
 var/list/DEPT_FREQS = list(1351, 1355, 1357, 1359, 1213, 1345, 1341, 1347)
 
-// central command channels, i.e deathsquid & response teams
-var/list/CENT_FREQS = list(1345, 1341)
+// central command channels, i.e deathsquid & response teams & Velocity.
+var/list/CENT_FREQS = list(1345, 1341, 1245)
 
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
+var/const/VELOCITY_FREQ = 1245
 
 // department channels
 var/const/SEC_FREQ = 1359
@@ -181,7 +183,7 @@ var/global/datum/controller/radio/radio_controller
 
 /datum/radio_frequency
 	var/frequency as num
-	var/list/list/obj/devices = list()
+	var/list/obj/devices = list()
 
 /datum/radio_frequency/proc/post_signal(obj/source, datum/signal/signal, filter = null, range = null)
 	//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")

@@ -4,7 +4,12 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	anchored = 1
+	anchored = 0
+
+/obj/effect/decal/remains/human/burned
+	name = "burned remains"
+	desc = "They look like burned human remains. They have a strange aura about them."
+	icon_state = "remains_burned"
 
 /obj/effect/decal/remains/xeno
 	name = "remains"
@@ -12,7 +17,12 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
-	anchored = 1
+	anchored = 0
+
+/obj/effect/decal/remains/xeno/burned
+	name = "burned remains"
+	desc = "They look like burned remains of something... alien. They have a strange aura about them."
+	icon_state = "remainsxeno_burned"
 
 /obj/effect/decal/remains/robot
 	name = "remains"
@@ -20,4 +30,4 @@
 	gender = PLURAL
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"
-	anchored = 1
+	anchored = 0

@@ -3,16 +3,16 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "fax"
 	req_one_access = list(access_lawyer, access_heads)
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
-	power_channel = EQUIP
-
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
@@ -22,8 +22,8 @@ var/list/alldepartments = list("Central Command")
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
 
-/obj/machinery/faxmachine/New()
-	..()
+/obj/machinery/faxmachine/atom_init()
+	. = ..()
 	allfaxes += src
 
 	if( !("[department]" in alldepartments) )
@@ -31,21 +31,11 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine/Destroy()
 	allfaxes -= src
-	if(scan)
-		QDEL_NULL(scan)
-	if(tofax)
-		QDEL_NULL(tofax)
+	QDEL_NULL(scan)
+	QDEL_NULL(tofax)
 	return ..()
 
-/obj/machinery/faxmachine/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/faxmachine/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/faxmachine/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/faxmachine/ui_interact(mob/user)
 	var/dat
 
 	var/scan_name
@@ -93,7 +83,6 @@ var/list/alldepartments = list("Central Command")
 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/faxmachine/is_operational_topic()
 	return TRUE
@@ -110,7 +99,7 @@ var/list/alldepartments = list("Central Command")
 		if(tofax)
 			if(dptdest == "Central Command")
 				sendcooldown = 1800
-				centcomm_fax(usr, tofax)
+				centcomm_fax(usr, tofax, src)
 			else
 				sendcooldown = 600
 				send_fax(usr, tofax, dptdest)
@@ -140,7 +129,7 @@ var/list/alldepartments = list("Central Command")
 			else
 				scan.loc = src.loc
 				scan = null
-		else
+		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
 				usr.drop_item()
@@ -184,13 +173,10 @@ var/list/alldepartments = list("Central Command")
 			idcard.loc = src
 			scan = idcard
 
-	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-	return
+	else if(iswrench(O))
+		default_unfasten_wrench(user, O)
 
-/proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P)
+/proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
 	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",
 	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
 	"(<a href='?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
@@ -198,14 +184,25 @@ var/list/alldepartments = list("Central Command")
 	"(<a href='?_src_=holder;subtlemessage=\ref[sender]'>SM</a>)",
 	ADMIN_JMP(sender),
 	"(<a href='?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
-	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender]'>RPLY</a>)",
+	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
 	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
 	for(var/client/C in admins)
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
-	send2slack_custommsg("[key_name(sender)] sent fax to Centcomm", P.info + P.stamp_text, ":fax:")
+
+	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+
+	for(var/client/X in global.admins)
+		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINCOM),
+		attachment_title = ":fax: **[key_name(sender)]** sent fax to ***Centcomm***",
+		attachment_msg = strip_html_properly(replacetext((P.info + "\n" + P.stamp_text),"<br>", "\n")),
+		attachment_color = BRIDGE_COLOR_ADMINCOM,
+	)
 
 /proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
@@ -217,7 +214,7 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/paper/P)
 	set waitfor = FALSE
 
-	playsound(src, "sound/items/polaroid1.ogg", 50, 1)
+	playsound(src, "sound/items/polaroid1.ogg", VOL_EFFECTS_MASTER)
 	flick("faxreceive", src)
 
 	sleep(20)

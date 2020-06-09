@@ -229,7 +229,7 @@
 	if(!surrounding_turfs.len)
 		return
 
-	for(var/mob/living/simple_animal/hostile/blobspore/BS in living_mob_list)
+	for(var/mob/living/simple_animal/hostile/blobspore/BS in alive_mob_list)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)

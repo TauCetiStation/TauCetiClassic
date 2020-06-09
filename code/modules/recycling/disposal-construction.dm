@@ -9,7 +9,6 @@
 	icon_state = "conpipe-s"
 	anchored = 0
 	density = 0
-	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
 	level = 2
 	var/ptype = 0
@@ -96,7 +95,7 @@
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 
 	if(anchored)
@@ -110,7 +109,8 @@
 	set category = "Object"
 	set name = "Flip Pipe"
 	set src in view(1)
-	if(usr.stat)
+
+	if(usr.incapacitated())
 		return
 
 	if(anchored)
@@ -191,13 +191,14 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if(CP) // There's something there
-			if(!istype(CP,/obj/structure/disposalpipe/trunk))
+		if (!(iswrench(I) && anchored))
+			if(CP) // There's something there
+				if(!istype(CP,/obj/structure/disposalpipe/trunk))
+					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
+					return
+			else // Nothing under, fuck.
 				to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 				return
-		else // Nothing under, fuck.
-			to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
-			return
 	else
 		if(CP)
 			update()
@@ -209,7 +210,7 @@
 				return
 
 
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(anchored)
 			anchored = 0
 			if(ispipe)
@@ -226,17 +227,16 @@
 			else
 				density = 1 // We don't want disposal bins or outlets to go density 0
 			to_chat(user, "You attach the [nicetype] to the underfloor.")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		update()
 
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(iswelder(I))
 		if(anchored)
+			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			if(W.use(0,user))
 				to_chat(user, "Welding the [nicetype] in place.")
-				if(do_after(user, 20, target = src))
-					if(!src || !W.isOn()) return
+				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "The [nicetype] has been welded in place!")
 					update() // TODO: Make this neat
 					if(ispipe) // Pipe
@@ -261,9 +261,8 @@
 
 					else if(ptype==7) // Disposal outlet
 
-						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
+						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc, dir)
 						src.transfer_fingerprints_to(P)
-						P.dir = dir
 						var/obj/structure/disposalpipe/trunk/Trunk = CP
 						Trunk.linked = P
 

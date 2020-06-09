@@ -87,11 +87,16 @@
 	icon_state = "id_mod"
 /obj/random/science/common_circuit/item_to_spawn()
 	return pick(\
+					/obj/item/weapon/module/power_control,\
+					/obj/item/weapon/airalarm_electronics,\
+					/obj/item/weapon/firealarm_electronics,\
+					/obj/item/weapon/airlock_electronics,\
 					/obj/item/weapon/circuitboard/circuit_imprinter,\
 					/obj/item/weapon/circuitboard/rdconsole,\
 					/obj/item/weapon/circuitboard/destructive_analyzer,\
 					/obj/item/weapon/circuitboard/protolathe,\
 					/obj/item/weapon/circuitboard/autolathe,\
+					/obj/item/weapon/circuitboard/chem_dispenser,\
 					/obj/item/weapon/circuitboard/pandemic,\
 					/obj/item/weapon/circuitboard/message_monitor,\
 					/obj/item/weapon/circuitboard/arcade,\
@@ -139,8 +144,8 @@
 	return pick(\
 					/obj/item/weapon/aiModule/antimov,\
 					/obj/item/weapon/aiModule/robocop,\
-					/obj/item/weapon/aiModule/syndicate,\
-					/obj/item/weapon/aiModule/freeformcore,\
+					/obj/item/weapon/aiModule/freeform/syndicate,\
+					/obj/item/weapon/aiModule/freeform/core,\
 					/obj/item/weapon/aiModule/tyrant,\
 					/obj/item/weapon/aiModule/paladin,\
 					/obj/item/weapon/aiModule/oxygen,\
@@ -154,7 +159,7 @@
 	icon_state = "id_mod"
 /obj/random/science/circuit/item_to_spawn()
 	return pick(\
-					prob(80);/obj/random/science/common_circuit,\
+					prob(100);/obj/random/science/common_circuit,\
 					prob(8);/obj/random/science/rare_circuit,\
 					prob(10);/obj/random/science/common_ai_module,\
 					prob(2);/obj/random/science/rare_ai_module\
@@ -166,7 +171,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 /obj/random/science/slimecore/item_to_spawn()
-	return pick(subtypesof(/obj/item/slime_extract/))
+	return pick(subtypesof(/obj/item/slime_extract))
 
 /obj/random/science/bomb_supply
 	name = "Bomb Supply"
@@ -196,6 +201,14 @@
 					prob(20);/obj/random/science/bomb_supply,\
 					prob(5);/obj/random/science/slimecore,\
 					prob(10);/obj/random/science/circuit,\
-					prob(2);/obj/item/weapon/extinguisher,\
-					prob(50);/obj/random/science/stock_part\
+					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
+					prob(50);/obj/random/science/stock_part,\
+					prob(1);/obj/item/device/encryptionkey/headset_sec,\
+					prob(1);/obj/item/device/encryptionkey/headset_int,\
+					prob(1);/obj/item/device/encryptionkey/headset_eng,\
+					prob(1);/obj/item/device/encryptionkey/headset_rob,\
+					prob(1);/obj/item/device/encryptionkey/headset_med,\
+					prob(1);/obj/item/device/encryptionkey/headset_sci,\
+					prob(1);/obj/item/device/encryptionkey/headset_medsci,\
+					prob(1);/obj/item/device/encryptionkey/headset_com\
 				)

@@ -19,8 +19,8 @@
 	var/burn_damage = 0                     // Specifically burn damage.
 	var/base_name                           // Used to keep the original name safe while we apply modifiers.
 
-/obj/item/clothing/suit/space/New()
-	..()
+/obj/item/clothing/suit/space/atom_init()
+	. = ..()
 	base_name = "[name]"
 
 //Some simple descriptors for breaches. Global because lazy, TODO: work out a better way to do this.
@@ -52,10 +52,11 @@ var/global/list/breach_burn_descriptors = list(
 		descriptor = breach_brute_descriptors[class]
 
 //Repair a certain amount of brute or burn damage to the suit.
-/obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user)
+/obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user, stop_messages = FALSE)
 
 	if(!can_breach || !breaches || !breaches.len || !damage)
-		to_chat(user, "There are no breaches to repair on \the [src].")
+		if(!stop_messages)
+			to_chat(user, "There are no breaches to repair on \the [src].")
 		return
 
 	var/list/valid_breaches = list()
@@ -65,7 +66,8 @@ var/global/list/breach_burn_descriptors = list(
 			valid_breaches += B
 
 	if(!valid_breaches.len)
-		to_chat(user, "There are no breaches to repair on \the [src].")
+		if(!stop_messages)
+			to_chat(user, "There are no breaches to repair on \the [src].")
 		return
 
 	var/amount_left = amount
@@ -81,7 +83,8 @@ var/global/list/breach_burn_descriptors = list(
 			amount_left = 0
 			B.update_descriptor()
 
-	user.visible_message("<b>[user]</b> patches some of the damage on \the [src].")
+	if(!stop_messages)
+		user.visible_message("<b>[user]</b> patches some of the damage on \the [src].")
 	calc_breach_damage()
 
 /obj/item/clothing/suit/space/proc/create_breaches(damtype, amount)
@@ -177,8 +180,8 @@ var/global/list/breach_burn_descriptors = list(
 /obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
 
-		if(istype(src.loc,/mob/living))
-			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
+		if(isliving(loc))
+			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
 
 		if(!damage || !burn_damage)
@@ -186,18 +189,19 @@ var/global/list/breach_burn_descriptors = list(
 			return
 
 		var/obj/item/stack/sheet/P = W
-		if(P.amount < 3)
-			P.use(P.amount)
-			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.amount : (P.amount*2) ), user)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(P.get_amount() < 3)
+			P.use(P.get_amount())
+			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.get_amount() : (P.get_amount() * 2) ), user)
 		else
 			P.use(3)
 			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? 3 : 5), user)
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 
-		if(istype(src.loc,/mob/living))
-			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
+		if(isliving(loc))
+			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
 
 		if (!damage || ! brute_damage)
@@ -205,8 +209,9 @@ var/global/list/breach_burn_descriptors = list(
 			return
 
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.remove_fuel(5))
-			to_chat(user, "\red You need more welding fuel to repair this suit.")
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(!WT.use(5))
+			to_chat(user, "<span class='warning'>You need more welding fuel to repair this suit.</span>")
 			return
 
 		repair_breaches(BRUTE, 3, user)

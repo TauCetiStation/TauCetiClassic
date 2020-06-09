@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	..()
@@ -41,13 +41,6 @@
 
 	//Status updates, death etc.
 	handle_regular_status_updates()
-
-
-
-/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/headcrab))
-		var/mob/living/simple_animal/headcrab/crab = M
-		crab.Infect(src)
 
 /mob/living/carbon/slime
 	var/AIproc = 0 // determines if the AI loop is activated
@@ -159,22 +152,13 @@
 
 	AIproc = 0
 
-/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
 
 	//var/environment_heat_capacity = environment.heat_capacity()
-	var/loc_temp = T0C
-	if(istype(get_turf(src), /turf/space))
-		//environment_heat_capacity = loc:heat_capacity
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		loc_temp = loc:air_contents.temperature
-	else
-		loc_temp = environment.temperature
-
+	var/loc_temp = get_temperature(environment)
 	/*
 	if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
 		var/transfer_coefficient
@@ -235,9 +219,8 @@
 	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
+	if(reagents)
+		reagents.metabolize(src)
 
 	src.updatehealth()
 
@@ -250,9 +233,6 @@
 		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-
-
 
 	if(health < config.health_threshold_dead && stat != DEAD)
 		death()
@@ -350,7 +330,7 @@
 			if(nutrition >= 800)
 				if(prob(40)) amount_grown++
 
-	if(amount_grown >= 10 && !Victim && !Target)
+	if(amount_grown >= max_grown && !Victim && !Target)
 		if(istype(src, /mob/living/carbon/slime/adult))
 			if(!client)
 				for(var/i=1,i<=4,i++)
@@ -467,8 +447,13 @@
 				var/list/targets = list()
 
 				for(var/mob/living/L in view(7,src))
+					if(L.get_species() == IPC) //Ignore IPC
+						continue
 
-					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(L.get_species() == SLIME || L.stat == DEAD) // Ignore other slimes and dead mobs
+						continue
+
+					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 						continue
 
 					if(L in Friends) // No eating friends!
@@ -476,12 +461,6 @@
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
-
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
-						var/mob/living/carbon/human/H = L
-						if(H.dna)
-							if(H.dna.mutantrace == "slime")
-								continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0
@@ -499,11 +478,11 @@
 					else
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && prob(5))
-								if(ishuman(C) || isalienadult(C))
+								if(ishuman(C) || isxenoadult(C))
 									Target = C
 									break
 
-							if(islarva(C) || isfacehugger(C) || ismonkey(C))
+							if(isxenolarva(C) || isfacehugger(C) || ismonkey(C))
 								Target = C
 								break
 
@@ -563,7 +542,7 @@
 	var/to_say
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
-		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
+		var/phrase = lowertext_(speech_buffer[2]) // What did they say?
 		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "слайм") || findtext(phrase, "легион"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \

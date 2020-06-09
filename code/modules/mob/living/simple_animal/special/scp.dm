@@ -18,18 +18,17 @@
 	response_harm   = "hits the"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "brutally crushes"
+	melee_damage = 0
+	attacktext = "brutally crush"
 	environment_smash = 0
 
 	speed = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -42,6 +41,10 @@
 
 	see_in_dark = 100
 
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
+
 	var/life_cicle = 0
 	var/next_cicle = 10
 	var/activated = 0 //So, it wont start its massacre right away and can be delayed for event or what ever...
@@ -49,12 +52,11 @@
 /mob/living/var/scp_mark = 0
 /turf/var/scp_was_here = 0
 
-/mob/living/simple_animal/special/scp173/New()
-	for(var/mob/living/simple_animal/special/scp173/SA in world) //only 1 can exist at the same time
-		if(SA && SA != src)
-			qdel(src)
-			return
-	..()
+/mob/living/simple_animal/special/scp173/atom_init()
+	. = ..()
+	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
+		if(SA != src)
+			qdel(SA)
 
 /mob/living/simple_animal/special/scp173/Life()
 	if(!activated) return
@@ -120,7 +122,7 @@
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
 				src.dir = L.dir
-				playsound(L, 'sound/effects/blobattack.ogg', 100, 1)
+				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()
 				did_move = 1
 			var/chance = rand(10,65)
@@ -154,7 +156,7 @@
 			target_turf.scp_was_here = 1
 			loc = target_turf
 			dir = pick(cardinal)
-			playsound(src, 'sound/effects/scp_move.ogg', 100, 1)
+			playsound(src, 'sound/effects/scp_move.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/special/scp173/death()
 	return
@@ -186,20 +188,13 @@
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
 
-/mob/living/simple_animal/special/scp173/airflow_stun()
-	return
-
-/mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
-	return
-
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
-	to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

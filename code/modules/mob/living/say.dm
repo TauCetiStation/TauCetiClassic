@@ -90,7 +90,7 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/proc/hivecheck()
-	if (isalien(src))
+	if (isxeno(src))
 		return 1
 	if (!ishuman(src))
 		return
@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = 1)
+/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
@@ -115,9 +115,13 @@ var/list/department_radio_keys = list(
 			return
 
 	if(sanitize)
-		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+		message = sanitize(message)
 
 	var/turf/T = get_turf(src)
+
+	//log
+	var/area/A = get_area(src)
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 
 	//handle nonverbal and sign languages here
 	if (speaking)
@@ -137,9 +141,9 @@ var/list/department_radio_keys = list(
 		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
-					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
+					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
 				if (speech_sound)
-					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
+					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
 		speech_sound = null	//so we don't play it twice.
 
@@ -161,23 +165,16 @@ var/list/department_radio_keys = list(
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
-		for(var/I in hear)
-			if(istype(I, /mob/))
-				var/mob/M = I
-				listening += M
-				hearturfs += M.locs[1]
-				for(var/obj/O in M.contents)
-					listening_obj |= O
-			else if(istype(I, /obj/))
-				var/obj/O = I
-				hearturfs += O.locs[1]
-				listening_obj |= O
+		for(var/atom/movable/AM in hear)
+			listening |= AM.get_listeners()
+			listening_obj |= AM.get_listening_objs()
+			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
-			if(M.loc && M.locs[1] in hearturfs)
+			if(M.loc && (M.locs[1] in hearturfs))
 				listening |= M
 
 	//speech bubble
@@ -188,9 +185,9 @@ var/list/department_radio_keys = list(
 	var/speech_bubble_test = say_test(message)
 	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
-
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
@@ -199,7 +196,6 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	log_say("[name]/[key] : [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
@@ -208,6 +204,3 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
-/mob/living/proc/GetVoice()
-	return name

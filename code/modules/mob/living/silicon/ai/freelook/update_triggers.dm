@@ -8,15 +8,14 @@
 	var/image/obscured
 
 /turf/proc/visibilityChanged()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	cameranet.updateVisibility(src)
 
 /turf/simulated/Destroy()
 	visibilityChanged()
 	return ..()
 
-/turf/simulated/New()
-	..()
+/turf/simulated/atom_init()
+	. = ..()
 	visibilityChanged()
 
 
@@ -24,27 +23,23 @@
 // STRUCTURES
 
 /obj/structure/Destroy()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	cameranet.updateVisibility(src)
 	climbers.Cut()
 	return ..()
 
-/obj/structure/New()
-	..()
-	if(ticker)
-		cameranet.updateVisibility(src)
+/obj/structure/atom_init()
+	. = ..()
+	cameranet.updateVisibility(src)
 
 // EFFECTS
 
 /obj/effect/Destroy()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	cameranet.updateVisibility(src)
 	return ..()
 
-/obj/effect/New()
-	..()
-	if(ticker)
-		cameranet.updateVisibility(src)
+/obj/effect/atom_init()
+	. = ..()
+	cameranet.updateVisibility(src)
 
 
 // DOORS
@@ -64,7 +59,7 @@
 // This might be laggy, comment it out if there are problems.
 /mob/living/silicon/robot/var/updating = 0
 
-/mob/living/silicon/robot/Move()
+/mob/living/silicon/robot/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/oldLoc = src.loc
 	. = ..()
 	if(.)

@@ -27,22 +27,22 @@
 	desc = "A keyring with a small steel key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys_bike"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/id = 0
 
 /obj/item/weapon/key/spacebike/examine(mob/user)
 	..()
 	to_chat(user, "There is a small tag reading [id].")
 
-/obj/vehicle/space/spacebike/New()
-	..()
+/obj/vehicle/space/spacebike/atom_init()
+	. = ..()
 	ion = new /datum/effect/effect/system/ion_trail_follow()
 	ion.set_up(src)
 	turn_off()
 	id = rand(1,1000)
 	key = new(src)
 	key.id = id
-	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
+	add_overlay(image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1))
 	icon_state = "[bike_icon]_off"
 
 /obj/vehicle/space/spacebike/examine(mob/user)
@@ -59,6 +59,8 @@
 /obj/vehicle/space/spacebike/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!istype(user) || !istype(M))
 		return
+	if(isessence(user))
+		return
 	if(user.incapacitated() || user.lying)
 		return
 	if(!load(M))
@@ -68,6 +70,7 @@
 /obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(load != user)
 		if(do_after(user, 20, target=src))
 			load.visible_message(\
@@ -91,7 +94,8 @@
 			user.drop_item()
 			K.loc = src
 			key = K
-			playsound(loc, 'sound/items/insert_key.ogg', 25, 1)
+			user.SetNextMove(CLICK_CD_INTERACT)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
@@ -116,36 +120,34 @@
 				unload(Driver)
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
-			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")
-			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
-			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+			L.log_combat(Driver, "driven over with [src]")
 
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()
 			L.apply_effects(8,5)
 			L.lying = 1
 			var/damage = rand(5,15)
-			L.apply_damage(2*damage, BRUTE, "head")
-			L.apply_damage(2*damage, BRUTE, "chest")
-			L.apply_damage(0.5*damage, BRUTE, "l_leg")
-			L.apply_damage(0.5*damage, BRUTE, "r_leg")
-			L.apply_damage(0.5*damage, BRUTE, "l_arm")
-			L.apply_damage(0.5*damage, BRUTE, "r_arm")
+			L.apply_damage(2*damage, BRUTE, BP_HEAD)
+			L.apply_damage(2*damage, BRUTE, BP_CHEST)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
 	return Move(get_step(src, direction))
 
 
-/obj/vehicle/space/spacebike/Move(var/turf/destination)
+/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(destination,/turf/space) || pulledby)
+	if(istype(NewLoc, /turf/space) || pulledby)
 		if(!space_speed)
-			return 0
+			return FALSE
 		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
-			return 0
+			return FALSE
 		move_delay = land_speed + slow_cooef
 	return ..()
 
@@ -246,13 +248,13 @@
 	..()
 
 /obj/vehicle/space/spacebike/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(on)
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_on"
 	else
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_off"
 
 	..()

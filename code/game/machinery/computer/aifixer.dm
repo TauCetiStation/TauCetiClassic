@@ -4,31 +4,27 @@
 	icon_state = "ai-fixer"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/aifixer
-	req_access = list(access_captain, access_robotics, access_heads)
+	req_access = list(access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
 
-/obj/machinery/computer/aifixer/New()
-	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-	..()
+/obj/machinery/computer/aifixer/atom_init()
+	add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
+	. = ..()
 
 /obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
-		var/obj/item/device/aicard/AIcard = I
-		if(stat & (NOPOWER|BROKEN))
+		if(stat & (NOPOWER | BROKEN))
 			to_chat(user, "This terminal isn't functioning right now, get it working!")
 			return
-		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
+		var/obj/item/device/aicard/AIcard = I
+		AIcard.transfer_ai("AIFIXER", "AICARD", src, user)
 	else
 		..()
 	return
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupier)
@@ -63,9 +59,8 @@
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
@@ -79,25 +74,25 @@
 
 	if (href_list["fix"])
 		src.active = 1
-		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
+		add_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 		while (src.occupier.health < 100)
 			src.occupier.adjustOxyLoss(-1)
 			src.occupier.adjustFireLoss(-1)
 			src.occupier.adjustToxLoss(-1)
 			src.occupier.adjustBruteLoss(-1)
 			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupant.stat == DEAD)
+			if (src.occupier.health >= 0 && src.occupier.stat == DEAD)
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
-				dead_mob_list -= src.occupant
-				living_mob_list += src.occupant
-				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
-				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+				dead_mob_list -= src.occupier
+				alive_mob_list += src.occupier
+				src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
+				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 				src.occupier.add_ai_verbs()
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
+		src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 
 	src.updateUsrDialog()
 
@@ -106,15 +101,15 @@
 	..()
 	// Broken / Unpowered
 	if((stat & BROKEN) || (stat & NOPOWER))
-		overlays.Cut()
+		cut_overlays()
 
 	// Working / Powered
 	else
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+					add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 				if (2)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+					add_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 		else
-			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+			add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))

@@ -11,13 +11,14 @@
 		item.forceMove(loc)
 	qdel(src)
 
-/obj/structure/scrap_cube/New(var/newloc, var/size = -1)
+/obj/structure/scrap_cube/atom_init(mapload, size = -1)
 	if(size < 0)
 		new /obj/random/scrap/moderate_weighted(src)
-	..(newloc)
+	. = ..()
 
 /obj/structure/scrap_cube/attackby(obj/item/W, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W,/obj/item/weapon) && W.force >=8)
 		visible_message("<span class='notice'>\The [user] smashes the [src], restoring it's original form.</span>")
 		make_pile()
@@ -29,10 +30,12 @@
 	desc = "This thing is messed up beyond any recognition. Into the grinder it goes!"
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 	icon_state = "unrefined"
-	w_class = 4
-/obj/item/weapon/scrap_lump/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	w_class = ITEM_SIZE_LARGE
+
+/obj/item/weapon/scrap_lump/atom_init()
+	. = ..()
+	pixel_x = rand(0, 16) - 8
+	pixel_y = rand(0, 8) - 8
 
 var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \

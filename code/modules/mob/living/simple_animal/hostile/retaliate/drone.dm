@@ -15,13 +15,12 @@
 	response_harm = "hits the"
 	speak = list("ALERT.","Hostile-ile-ile entities dee-twhoooo-wected.","Threat parameterszzzz- szzet.","Bring sub-sub-sub-systems uuuup to combat alert alpha-a-a.")
 	emote_see = list("beeps menacingly","whirrs threateningly","scans its immediate vicinity")
-	a_intent = "harm"
 	stop_automated_movement_when_pulled = 0
 	health = 300
 	maxHealth = 300
 	speed = 8
 	projectiletype = /obj/item/projectile/beam/drone
-	projectilesound = 'sound/weapons/laser3.ogg'
+	projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
 	destroy_surroundings = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 
@@ -49,11 +48,13 @@
 	var/has_loot = 1
 	faction = "malf_drone"
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/New()
-	..()
+	animalistic = FALSE
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/atom_init()
+	. = ..()
 	if(prob(5))
 		projectiletype = /obj/item/projectile/beam/pulse/drone
-		projectilesound = 'sound/weapons/pulse2.ogg'
+		projectilesound = 'sound/weapons/guns/gunpulse2.ogg'
 	ion_trail = new
 	ion_trail.set_up(src)
 	ion_trail.start()
@@ -85,7 +86,7 @@
 
 	//repair a bit of damage
 	if(prob(1))
-		src.visible_message("\red [bicon(src)] [src] shudders and shakes as some of it's damaged systems come back online.")
+		src.visible_message("<span class='warning'>[bicon(src)] [src] shudders and shakes as some of it's damaged systems come back online.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
@@ -100,10 +101,10 @@
 	//sometimes our targetting sensors malfunction, and we attack anyone nearby
 	if(prob(disabled ? 0 : 1))
 		if(hostile_drone)
-			src.visible_message("\blue [bicon(src)] [src] retracts several targetting vanes, and dulls it's running lights.")
+			src.visible_message("<span class='notice'>[bicon(src)] [src] retracts several targetting vanes, and dulls it's running lights.</span>")
 			hostile_drone = 0
 		else
-			src.visible_message("\red [bicon(src)] [src] suddenly lights up, and additional targetting vanes slide into place.")
+			src.visible_message("<span class='warning'>[bicon(src)] [src] suddenly lights up, and additional targetting vanes slide into place.</span>")
 			hostile_drone = 1
 
 	if(health / maxHealth > 0.9)
@@ -124,17 +125,17 @@
 		exploding = 0
 		if(!disabled)
 			if(prob(50))
-				src.visible_message("\blue [bicon(src)] [src] suddenly shuts down!")
+				src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly shuts down!</span>")
 			else
-				src.visible_message("\blue [bicon(src)] [src] suddenly lies still and quiet.")
+				src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly lies still and quiet.</span>")
 			disabled = rand(150, 600)
 			walk(src,0)
 
 	if(exploding && prob(20))
 		if(prob(50))
-			src.visible_message("\red [bicon(src)] [src] begins to spark and shake violenty!")
+			src.visible_message("<span class='warning'>[bicon(src)] [src] begins to spark and shake violenty!</span>")
 		else
-			src.visible_message("\red [bicon(src)] [src] sparks and shakes like it's about to explode!")
+			src.visible_message("<span class='warning'>[bicon(src)] [src] sparks and shakes like it's about to explode!</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
@@ -158,7 +159,7 @@
 	walk(src,0)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/death()
-	src.visible_message("\blue [bicon(src)] [src] suddenly breaks apart.")
+	src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly breaks apart.</span>")
 	..()
 	qdel(src)
 

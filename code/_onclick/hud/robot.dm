@@ -8,6 +8,142 @@ var/obj/screen/robot_inventory
 	var/obj/screen/using
 
 
+	if(!isdrone(mymob))
+//Medical/Security sensors
+		using = new /obj/screen()
+		using.name = "Sensor Augmentation"
+		using.icon = 'icons/mob/screen1_robot.dmi'
+		using.icon_state = "setsensor"
+		using.screen_loc = ui_borg_sensor
+		using.layer = ABOVE_HUD_LAYER
+		using.plane = ABOVE_HUD_PLANE
+		adding += using
+
+//Show PDA screens
+		using = new /obj/screen()
+		using.name = "Show Pda Screens"
+		using.icon = 'icons/mob/screen1_robot.dmi'
+		using.icon_state = "pda"
+		using.screen_loc = ui_borg_show_pda
+		using.layer = ABOVE_HUD_LAYER
+		using.plane = ABOVE_HUD_PLANE
+		adding += using
+		var/list/screens = list("PDA - Send Message" = "pda_send", "PDA - Show Message Log" = "pda_log",\
+		"Pda - Ringtone" = "ringtone", "Pda - Toggle" = "toggleringer")
+		var/screen_position = 2
+		for(var/name in screens)
+			var/obj/screen/ousing = new /obj/screen()
+			ousing.name = name
+			ousing.icon = 'icons/mob/screen1_robot.dmi'
+			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
+			ousing.plane = ABOVE_HUD_PLANE
+			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST"
+			screen_position++
+			other += ousing
+
+//Show foto screens
+		using = new /obj/screen()
+		using.name = "Show Foto Screens"
+		using.icon = 'icons/mob/screen1_robot.dmi'
+		using.icon_state = "photo"
+		using.screen_loc = ui_borg_show_foto
+		using.layer = ABOVE_HUD_LAYER
+		using.plane = ABOVE_HUD_PLANE
+		adding += using
+		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
+		screen_position = 2
+		for(var/name in screens)
+			var/obj/screen/ousing = new /obj/screen()
+			ousing.name = name
+			ousing.icon = 'icons/mob/screen1_robot.dmi'
+			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
+			ousing.plane = ABOVE_HUD_PLANE
+			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
+			screen_position++
+			other += ousing
+
+//Namepick
+		using = new /obj/screen()
+		using.name = "Namepick"
+		using.icon = 'icons/mob/screen1_robot.dmi'
+		using.icon_state = "changename"
+		using.screen_loc = ui_borg_namepick
+		using.layer = ABOVE_HUD_LAYER
+		using.plane = ABOVE_HUD_PLANE
+		adding += using
+
+//Manifest
+	using = new /obj/screen()
+	using.name = "Show Crew Manifest"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "crewmanifest"
+	using.screen_loc = ui_borg_show_manifest
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+//Diagnosis
+	using = new /obj/screen()
+	using.name = "Self Diagnosis"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "selfdiagnosis"
+	using.screen_loc = ui_borg_diagnostic
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+//Alerts
+	using = new /obj/screen()
+	using.name = "Show Alerts"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "showalerts"
+	using.screen_loc = ui_borg_show_alerts
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+//State Laws
+	using = new /obj/screen()
+	using.name = "State Laws"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "statelaws"
+	using.screen_loc = ui_borg_state_laws
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+// Show Laws
+	using = new /obj/screen()
+	using.name = "Show Laws"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "showlaws"
+	using.screen_loc = ui_borg_show_laws
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+// Toggle Component
+	using = new /obj/screen()
+	using.name = "Toggle Components"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "togglecompanent"
+	using.screen_loc = ui_borg_component
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
+// Toggle Lights
+	using = new /obj/screen()
+	using.name = "Toggle Lights"
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "togglelights"
+	using.screen_loc = ui_borg_light
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	adding += using
+
 //Radio
 	using = new /obj/screen()
 	using.name = "radio"
@@ -56,7 +192,7 @@ var/obj/screen/robot_inventory
 	using = new /obj/screen()
 	using.name = "act_intent"
 	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
@@ -108,8 +244,8 @@ var/obj/screen/robot_inventory
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
@@ -134,7 +270,7 @@ var/obj/screen/robot_inventory
 	mymob.client.screen = list()
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += src.adding
 	mymob.client.screen += mymob.client.void
 
 	return
@@ -213,3 +349,21 @@ var/obj/screen/robot_inventory
 				r.client.screen -= A
 		r.shown_robot_modules = 0
 		r.client.screen -= r.robot_modules_background
+
+/datum/hud/proc/toggle_robot_additional_screens(screen_type, toggled) // if screen_type is 0. it's PDA.
+	if(!isrobot(mymob))
+		return
+	var/list/screens
+	if(screen_type)
+		screens = list("Take Image", "View Images", "Delete Image")
+	else
+		screens = list("PDA - Send Message", "PDA - Show Message Log", "Pda - Ringtone", "Pda - Toggle")
+	var/mob/living/silicon/robot/R = mymob
+	if(toggled)
+		for(var/obj/screen/using in other)
+			if(using.name in screens)
+				R.client.screen += using
+	else
+		for(var/obj/screen/using in other)
+			if(using.name in screens)
+				R.client.screen -= using

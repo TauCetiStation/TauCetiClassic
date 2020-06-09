@@ -11,20 +11,17 @@
 	var/energy = 0
 	var/obj/effect/biomass_controller/master = null
 
-	New()
-		return
-
-	Destroy()
-		if(master)
-			master.vines -= src
-			master.growth_queue -= src
-		return ..()
+/obj/effect/biomass/Destroy()
+	if(master)
+		master.vines -= src
+		master.growth_queue -= src
+	return ..()
 
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
+		if(/obj/item/weapon/kitchenknife) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
@@ -38,12 +35,12 @@
 
 		else //weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(istype(W, /obj/item/weapon/weldingtool))
+			else if(iswelder(W))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
+				if(WT.use(0, user)) qdel(src)
 			else
 				return
-	..()
+	return ..()
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
@@ -53,66 +50,67 @@
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the biomasssss..s' size to something less than 20 plots, it won't grow anymore.
 
-	New()
-		if(!istype(src.loc,/turf/simulated/floor))
-			qdel(src)
+/obj/effect/biomass_controller/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/simulated/floor))
+		return INITIALIZE_HINT_QDEL
 
-		spawn_biomass_piece(src.loc)
-		START_PROCESSING(SSobj, src)
+	spawn_biomass_piece(loc)
+	START_PROCESSING(SSobj, src)
 
-	Destroy()
-		STOP_PROCESSING(SSobj, src)
-		return ..()
+/obj/effect/biomass_controller/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	proc/spawn_biomass_piece(turf/location)
-		var/obj/effect/biomass/BM = new(location)
-		growth_queue += BM
-		vines += BM
-		BM.master = src
+/obj/effect/biomass_controller/proc/spawn_biomass_piece(turf/location)
+	var/obj/effect/biomass/BM = new(location)
+	growth_queue += BM
+	vines += BM
+	BM.master = src
 
-	process()
-		if(!vines)
-			qdel(src) //space  vines exterminated. Remove the controller
-			return
-		if(!growth_queue)
-			qdel(src) //Sanity check
-			return
-		if(vines.len >= 250 && !reached_collapse_size)
-			reached_collapse_size = 1
-		if(vines.len >= 30 && !reached_slowdown_size )
-			reached_slowdown_size = 1
+/obj/effect/biomass_controller/process()
+	if(!vines)
+		qdel(src) //space  vines exterminated. Remove the controller
+		return
+	if(!growth_queue)
+		qdel(src) //Sanity check
+		return
+	if(vines.len >= 250 && !reached_collapse_size)
+		reached_collapse_size = 1
+	if(vines.len >= 30 && !reached_slowdown_size )
+		reached_slowdown_size = 1
 
-		var/maxgrowth = 0
-		if(reached_collapse_size)
-			maxgrowth = 0
-		else if(reached_slowdown_size)
-			if(prob(25))
-				maxgrowth = 1
-			else
-				maxgrowth = 0
+	var/maxgrowth = 0
+	if(reached_collapse_size)
+		maxgrowth = 0
+	else if(reached_slowdown_size)
+		if(prob(25))
+			maxgrowth = 1
 		else
-			maxgrowth = 4
-		var/length = min( 30 , vines.len / 5 )
-		var/i = 0
-		var/growth = 0
-		var/list/obj/effect/biomass/queue_end = list()
+			maxgrowth = 0
+	else
+		maxgrowth = 4
+	var/length = min( 30 , vines.len / 5 )
+	var/i = 0
+	var/growth = 0
+	var/list/obj/effect/biomass/queue_end = list()
 
-		for( var/obj/effect/biomass/BM in growth_queue )
-			i++
-			queue_end += BM
-			growth_queue -= BM
-			if(BM.energy < 2) //If tile isn't fully grown
-				if(prob(20))
-					BM.grow()
+	for( var/obj/effect/biomass/BM in growth_queue )
+		i++
+		queue_end += BM
+		growth_queue -= BM
+		if(BM.energy < 2) //If tile isn't fully grown
+			if(prob(20))
+				BM.grow()
 
-			if(BM.spread())
-				growth++
-				if(growth >= maxgrowth)
-					break
-			if(i >= length)
+		if(BM.spread())
+			growth++
+			if(growth >= maxgrowth)
 				break
+		if(i >= length)
+			break
 
-		growth_queue = growth_queue + queue_end
+	growth_queue = growth_queue + queue_end
 
 /obj/effect/biomass/proc/grow()
 	if(!energy)
@@ -162,14 +160,13 @@
 
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
+		for(var/areapath in typesof(/area/station/hallway))
 			var/area/A = locate(areapath)
-			for(var/area/B in A.related)
-				for(var/turf/simulated/floor/F in B.contents)
-					if(!F.contents.len)
-						turfs += F
+			for(var/turf/simulated/floor/F in A.contents)
+				if(!F.contents.len)
+					turfs += F
 
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
 			new/obj/effect/biomass_controller(T) //spawn a controller at turf
-			message_admins("\blue Event: Biomass spawned at [T.loc.loc] ([T.x],[T.y],[T.z])")
+			message_admins("<span class='notice'>Event: Biomass spawned at [T.loc.loc] ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]</span>")

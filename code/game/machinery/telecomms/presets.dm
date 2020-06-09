@@ -29,7 +29,7 @@
 	hide = 1
 	toggled = 1
 	//anchored = 1
-	//use_power = 0
+	//use_power = NO_POWER_USE
 	//idle_power_usage = 0
 	heatgen = 0
 	autolinkers = list("c_relay")
@@ -70,17 +70,17 @@
 	freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-	New()
-		for(var/i = 1441, i < 1489, i += 2)
-			freq_listening |= i
-		..()
+/obj/machinery/telecomms/receiver/preset_right/atom_init()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	. = ..()
 
 /obj/machinery/telecomms/receiver/preset_cent
 	id = "CentComm Receiver"
 	network = "tcommsat"
 	heatgen = 0
 	autolinkers = list("receiverCent")
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 
 
 //Buses
@@ -109,15 +109,15 @@
 	freq_listening = list(1357)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/New()
+/obj/machinery/telecomms/bus/preset_four/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
+	. = ..()
 
 /obj/machinery/telecomms/bus/preset_cent
 	id = "CentComm Bus"
 	network = "tcommsat"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("processorCent", "centcomm")
 
@@ -177,10 +177,10 @@
 
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
-/obj/machinery/telecomms/server/presets/common/New()
+/obj/machinery/telecomms/server/presets/common/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
+	. = ..()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
@@ -199,7 +199,7 @@
 
 /obj/machinery/telecomms/server/presets/centcomm
 	id = "CentComm Server"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("centcomm")
 

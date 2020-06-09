@@ -51,11 +51,10 @@
 	move_out_content()
 	return ..()
 
-/obj/structure/transit_tube_pod/New()
-	..()
+/obj/structure/transit_tube_pod/atom_init()
+	. = ..()
 
-	air_contents.oxygen = MOLES_O2STANDARD * 2
-	air_contents.nitrogen = MOLES_N2STANDARD
+	air_contents.adjust_multi("oxygen", MOLES_O2STANDARD * 2, "nitrogen", MOLES_N2STANDARD)
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
@@ -75,6 +74,8 @@
 		AM.forceMove(loc)
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 	if(contents.len)
 		to_chat(user, "<span class='notice'>You started to get everything out of the [src].</span>")
 
@@ -86,8 +87,8 @@
 			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
 			move_out_content()
 
-/obj/structure/transit_tube/New()
-	..()
+/obj/structure/transit_tube/atom_init()
+	. = ..()
 	if(tube_dirs == null)
 		init_dirs()
 
@@ -106,14 +107,15 @@
 			if(locate(/mob) in pod.contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
-			else if(!pod.moving && pod.dir in directions())
+			else if(!pod.moving && (pod.dir in directions()))
 				pod.move_into_content(M)
 				return
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(!pod.moving && pod.dir in directions())
+			if(!pod.moving && (pod.dir in directions()))
 				if(icon_state == "closed")
 					open_animation()
 				else if(icon_state == "open")
@@ -139,7 +141,7 @@
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	for(var/obj/structure/transit_tube_pod/pod in loc)
-		if(!pod.moving && pod.dir in directions())
+		if(!pod.moving && (pod.dir in directions()))
 			addtimer(CALLBACK(src, .proc/move_pod, pod), 5)
 			return
 
@@ -344,29 +346,10 @@
 //  currently on.
 /obj/structure/transit_tube_pod/proc/mix_air()
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/env_pressure = environment.return_pressure()
-	var/int_pressure = air_contents.return_pressure()
-	var/total_pressure = env_pressure + int_pressure
 
-	if(total_pressure == 0)
-		return
-
-	// Math here: Completely made up, not based on realistic equasions.
-	//  Goal is to balance towards equal pressure, but ensure some gas
-	//  transfer in both directions regardless.
-	// Feel free to rip this out and replace it with something better,
-	//  I don't really know muhch about how gas transfer rates work in
-	//  SS13.
-	var/transfer_in = max(0.1, 0.5 * (env_pressure - int_pressure) / total_pressure)
-	var/transfer_out = max(0.1, 0.3 * (int_pressure - env_pressure) / total_pressure)
-
-	var/datum/gas_mixture/from_env = loc.remove_air(environment.total_moles() * transfer_in)
-	var/datum/gas_mixture/from_int = air_contents.remove(air_contents.total_moles() * transfer_out)
-
-	loc.assume_air(from_int)
-	air_contents.merge(from_env)
-
-
+	//note that share_ratio assumes both gas mixes have the same volume,
+	//so if the volume is changed this may need to be changed as well.
+	air_contents.share_ratio(environment, 1)
 
 // When the player moves, check if the pos is currently stopped at a station.
 //  if it is, check the direction. If the direction matches the direction of
@@ -529,7 +512,7 @@
 //  but it is probably safer to assume the existence of, and
 //  rely on, a sufficiently smart compiler/optimizer.
 /obj/structure/transit_tube/proc/parse_dirs(text)
-	var/global/list/direction_table = list()
+	var/static/list/direction_table = list()
 
 	if(text in direction_table)
 		return direction_table[text]

@@ -1,192 +1,5089 @@
-"aa" = (/turf/space,/area)
-"ab" = (/turf/simulated/wall,/area/awaymission/example)
-"ac" = (/turf/simulated/floor,/area/awaymission/example)
-"ad" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/awaymission/example)
-"ae" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
-"af" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
-"ag" = (/obj/machinery/power/apc{dir = 1; name = "area power controller"; pixel_x = 0; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
-"ah" = (/obj/machinery/gateway{dir = 9},/turf/simulated/floor,/area/awaymission/example)
-"ai" = (/obj/machinery/gateway{dir = 1},/turf/simulated/floor,/area/awaymission/example)
-"aj" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor,/area/awaymission/example)
-"ak" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"al" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"am" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"an" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor,/area/awaymission/example)
-"ao" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/gateway/centeraway,/turf/simulated/floor,/area/awaymission/example)
-"ap" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor,/area/awaymission/example)
-"aq" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"ar" = (/obj/item/weapon/cigbutt,/turf/simulated/floor,/area/awaymission/example)
-"as" = (/obj/machinery/gateway{dir = 10},/turf/simulated/floor,/area/awaymission/example)
-"at" = (/obj/machinery/gateway,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"au" = (/obj/machinery/gateway{dir = 6},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"av" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/awaymission/example)
-"aw" = (/turf/simulated/floor/plating,/area/awaymission/example)
-"ax" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/awaymission/example)
-"ay" = (/obj/machinery/light/small,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/example)
-"az" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/example)
-"aA" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor,/area/awaymission/example)
-"aB" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor,/area/awaymission/example)
-"aC" = (/obj/machinery/light,/turf/simulated/floor,/area/awaymission/example)
-"aD" = (/obj/structure/table,/obj/item/device/flashlight,/turf/simulated/floor,/area/awaymission/example)
-"aE" = (/obj/structure/table,/obj/item/weapon/crowbar,/turf/simulated/floor,/area/awaymission/example)
-"aF" = (/obj/effect/decal/cleanable/vomit,/turf/simulated/floor,/area/awaymission/example)
-"aG" = (/obj/structure/ladder{height = 1; id = "example"},/turf/simulated/floor/plating,/area/awaymission/example)
-"aH" = (/obj/structure/table,/turf/simulated/floor,/area/awaymission/example)
-"aI" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/awaymission/example)
-"aJ" = (/obj/machinery/door/airlock/command,/turf/simulated/floor,/area/awaymission/example)
-"aK" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor,/area/awaymission/example)
-"aL" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating,/area/awaymission/example)
-"aM" = (/turf/simulated/floor{icon_state = "yellowcorner"},/area/awaymission/example)
-"aN" = (/turf/simulated/floor{icon_state = "yellow"},/area/awaymission/example)
-"aO" = (/turf/simulated/floor{dir = 8; icon_state = "yellowcorner"},/area/awaymission/example)
-"aP" = (/turf/simulated/floor{tag = "icon-yellowfull (WEST)"; icon_state = "yellowfull"; dir = 8},/area/awaymission/example)
-"aQ" = (/turf/simulated/floor{icon_state = "whitehall"; dir = 2},/area/awaymission/example)
-"aR" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aS" = (/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aT" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aU" = (/obj/machinery/vending/cola,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aV" = (/obj/machinery/vending/coffee,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aW" = (/obj/machinery/door/airlock/medical,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"aX" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/obj/machinery/door/poddoor/shutters{density = 0; icon_state = "shutter0"; id = "example"; name = "Privacy Shutters"; opacity = 0},/turf/simulated/floor/plating,/area/awaymission/example)
-"aY" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/poddoor/shutters{density = 0; icon_state = "shutter0"; id = "example"; name = "Privacy Shutters"; opacity = 0},/turf/simulated/floor/plating,/area/awaymission/example)
-"aZ" = (/obj/machinery/door_control{id = "example"; name = "Privacy Shutters"; pixel_y = 25},/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"ba" = (/obj/structure/table,/obj/item/device/healthanalyzer,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bb" = (/obj/structure/stool/bed,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bc" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bd" = (/obj/structure/table,/obj/item/device/mass_spectrometer/adv,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"be" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bf" = (/obj/structure/table,/obj/item/weapon/folder/white,/obj/item/weapon/pen/red,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bg" = (/obj/machinery/light,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bh" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/reagent_containers/syringe/antiviral,/turf/simulated/floor{icon_state = "white"},/area/awaymission/example)
-"bi" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/awaymission/example)
-"bj" = (/turf/simulated/floor{dir = 4; icon_state = "yellowcorner"},/area/awaymission/example)
-"bk" = (/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/awaymission/example)
-"bl" = (/turf/simulated/floor{dir = 1; icon_state = "yellowcorner"},/area/awaymission/example)
-"bm" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/example)
-"bn" = (/turf/simulated/floor{tag = "icon-stage_stairs (WEST)"; icon_state = "stage_stairs"; dir = 8},/area/awaymission/example)
-"bo" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/example)
-"bp" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/example)
-"bq" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area/awaymission/example)
-"br" = (/obj/structure/toilet{pixel_y = 12},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bs" = (/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bt" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bu" = (/obj/machinery/door/airlock{name = "Unit 1"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bv" = (/obj/machinery/door/airlock{name = "Unit 2"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bw" = (/obj/structure/table,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bx" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"by" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bz" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bA" = (/obj/structure/stool/bed/chair/wood/normal,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bB" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bC" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bD" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/example)
-"bE" = (/obj/machinery/door/airlock{name = "Unisex Restrooms"; req_access_txt = "0"},/turf/simulated/floor,/area/awaymission/example)
-"bF" = (/obj/machinery/vending/boozeomat{density = 0; pixel_x = -32},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bG" = (/obj/structure/bookcase{density = 0; pixel_y = 32},/obj/item/weapon/book/manual/barman_recipes,/obj/item/weapon/book/manual/chef_recipes,/obj/item/weapon/book/manual/ripley_build_and_repair,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bH" = (/obj/structure/stool/bed/chair/wood/normal{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bI" = (/obj/structure/table/woodentable,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bJ" = (/obj/structure/stool/bed/chair/wood/normal{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bK" = (/obj/structure/bookcase{density = 0; pixel_y = 32},/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/book/manual/security_space_law,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bL" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bM" = (/obj/structure/stool/bed/chair/wood/normal{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bN" = (/obj/machinery/vending/snack,/turf/simulated/floor,/area/awaymission/example)
-"bO" = (/obj/structure/table,/obj/machinery/light/small,/obj/item/weapon/paper{info = "X X O<br>X O X<br>O X"},/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bP" = (/obj/structure/device/piano,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bQ" = (/obj/machinery/light/small,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bR" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/validsalad,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/example)
-"bS" = (/obj/machinery/vending/cigarette,/turf/simulated/floor,/area/awaymission/example)
-"bT" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/floor,/area/awaymission/example)
-"bU" = (/obj/structure/table,/obj/item/weapon/rack_parts,/turf/simulated/floor,/area/awaymission/example)
-"bV" = (/obj/structure/table,/obj/item/device/toner,/turf/simulated/floor,/area/awaymission/example)
-"bW" = (/obj/structure/table,/obj/item/weapon/wirecutters,/obj/item/weapon/cable_coil/yellow,/turf/simulated/floor,/area/awaymission/example)
-"bX" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/simulated/floor,/area/awaymission/example)
-"bY" = (/obj/machinery/vending/assist,/turf/simulated/floor,/area/awaymission/example)
-"bZ" = (/obj/structure/ladder{id = "example"},/turf/simulated/floor/plating,/area/awaymission/example)
-"ca" = (/obj/structure/filingcabinet,/obj/item/weapon/paper{info = "Todo: write up a lawsuit for Ted, fuck what the pamphlets say, nothing good is gonna come out of that gate. Ted'll thank me later, I'll bet."; name = "documents"},/turf/simulated/floor,/area/awaymission/example)
-"cb" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue,/turf/simulated/floor,/area/awaymission/example)
-"cc" = (/obj/machinery/photocopier,/turf/simulated/floor,/area/awaymission/example)
-"cd" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/item/weapon/hand_labeler,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/awaymission/example)
-"ce" = (/obj/structure/stool/bed/chair/office/dark{dir = 4},/turf/simulated/floor,/area/awaymission/example)
-"cf" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet,/turf/simulated/floor,/area/awaymission/example)
-"cg" = (/obj/machinery/door/airlock,/turf/simulated/floor,/area/awaymission/example)
-"ch" = (/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/awaymission/example)
-"ci" = (/obj/item/weapon/paper{info = "Hey Ted, remind me to take Angeline out some time before I ship out. You know how bad my memory is, so don't get all high and mighty with me. READ THIS."; name = "note"},/turf/simulated/floor,/area/awaymission/example)
-"cj" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor,/area/awaymission/example)
-"ck" = (/obj/structure/noticeboard{pixel_y = 32},/obj/item/weapon/paper{info = "Remember, friday is David Bowie night! You guys had better fucking <i>be there!</i>"; name = "friday night"},/obj/item/weapon/cigbutt,/turf/simulated/floor{icon_state = "yellowcorner"},/area/awaymission/example)
-"cl" = (/obj/item/trash/pistachios,/turf/simulated/floor,/area/awaymission/example)
-"cm" = (/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor,/area/awaymission/example)
-"cn" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor,/area/awaymission/example)
-"co" = (/obj/machinery/light_construct/small{tag = "icon-bulb-construct-stage1 (WEST)"; icon_state = "bulb-construct-stage1"; dir = 8},/turf/simulated/floor,/area/awaymission/example)
-"cp" = (/obj/item/weapon/mop,/turf/simulated/floor,/area/awaymission/example)
-"cq" = (/obj/structure/closet,/turf/simulated/floor,/area/awaymission/example)
-"cr" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell/high,/turf/simulated/floor,/area/awaymission/example)
-"cs" = (/obj/structure/stool,/turf/simulated/floor,/area/awaymission/example)
-"ct" = (/obj/structure/mopbucket,/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor,/area/awaymission/example)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area)
+"ab" = (
+/turf/simulated/wall,
+/area/awaymission/example)
+"ac" = (
+/turf/simulated/floor,
+/area/awaymission/example)
+"ad" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ae" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"af" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ag" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ah" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ai" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"aj" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ak" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"al" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"am" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"an" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ao" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
+/obj/machinery/gateway/center,
+/turf/simulated/floor,
+/area/awaymission/example)
+"ap" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"aq" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ar" = (
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor,
+/area/awaymission/example)
+"as" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"at" = (
+/obj/machinery/gateway,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"au" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"av" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aw" = (
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"ax" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"ay" = (
+/obj/machinery/light/small,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"az" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"aA" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/weapon/paper/pamphlet,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aB" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"aC" = (
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aD" = (
+/obj/structure/table,
+/obj/item/device/flashlight,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aE" = (
+/obj/structure/table,
+/obj/item/weapon/crowbar,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aF" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aG" = (
+/obj/structure/ladder{
+	height = 1;
+	id = "example"
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aH" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aI" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aJ" = (
+/obj/machinery/door/airlock/command,
+/turf/simulated/floor,
+/area/awaymission/example)
+"aK" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"aL" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aM" = (
+/turf/simulated/floor{
+	icon_state = "yellowcorner"
+	},
+/area/awaymission/example)
+"aN" = (
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/awaymission/example)
+"aO" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowcorner"
+	},
+/area/awaymission/example)
+"aP" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowfull"
+	},
+/area/awaymission/example)
+"aQ" = (
+/turf/simulated/floor{
+	icon_state = "whitehall"
+	},
+/area/awaymission/example)
+"aR" = (
+/obj/structure/stool/bed/chair{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aS" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aT" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aU" = (
+/obj/machinery/vending/cola,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aV" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aW" = (
+/obj/machinery/door/airlock/medical,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"aX" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "example";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aY" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "example";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aZ" = (
+/obj/machinery/door_control{
+	id = "example";
+	name = "Privacy Shutters";
+	pixel_y = 25
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"ba" = (
+/obj/structure/table,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bb" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bc" = (
+/obj/structure/stool,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bd" = (
+/obj/structure/table,
+/obj/item/device/mass_spectrometer/adv,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"be" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/beaker,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bf" = (
+/obj/structure/table,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/pen/red,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bg" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bh" = (
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/obj/item/weapon/reagent_containers/syringe/antiviral,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/example)
+"bi" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"bj" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellowcorner"
+	},
+/area/awaymission/example)
+"bk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/awaymission/example)
+"bl" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellowcorner"
+	},
+/area/awaymission/example)
+"bm" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"bn" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "stage_stairs"
+	},
+/area/awaymission/example)
+"bo" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"bp" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"bq" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"br" = (
+/obj/structure/toilet{
+	pixel_y = 12
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bs" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bt" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bu" = (
+/obj/machinery/door/airlock{
+	name = "Unit 1"
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bv" = (
+/obj/machinery/door/airlock{
+	name = "Unit 2"
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bw" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bx" = (
+/obj/structure/stool,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"by" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bz" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bA" = (
+/obj/structure/stool/bed/chair/wood/normal,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bB" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bC" = (
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/awaymission/example)
+"bE" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms";
+	req_access = list(0)
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"bF" = (
+/obj/machinery/vending/boozeomat{
+	density = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bG" = (
+/obj/structure/bookcase{
+	density = 0;
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/barman_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bH" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bI" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bJ" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bK" = (
+/obj/structure/bookcase{
+	density = 0;
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bL" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bM" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bN" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bO" = (
+/obj/structure/table,
+/obj/machinery/light/small,
+/obj/item/weapon/paper{
+	info = "X X O<br>X O X<br>O X"
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bP" = (
+/obj/structure/device/piano,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bQ" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bR" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/validsalad,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/awaymission/example)
+"bS" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bT" = (
+/obj/structure/table,
+/obj/item/device/analyzer,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bU" = (
+/obj/structure/table,
+/obj/item/weapon/rack_parts,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bV" = (
+/obj/structure/table,
+/obj/item/device/toner,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bW" = (
+/obj/structure/table,
+/obj/item/weapon/wirecutters,
+/obj/item/stack/cable_coil/yellow,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bX" = (
+/obj/structure/table,
+/obj/item/weapon/wrench,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bY" = (
+/obj/machinery/vending/assist,
+/turf/simulated/floor,
+/area/awaymission/example)
+"bZ" = (
+/obj/structure/ladder{
+	id = "example"
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"ca" = (
+/obj/structure/filingcabinet,
+/obj/item/weapon/paper{
+	info = "Todo: write up a lawsuit for Ted, fuck what the pamphlets say, nothing good is gonna come out of that gate. Ted'll thank me later, I'll bet.";
+	name = "documents"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"cb" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen/blue,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cc" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cd" = (
+/obj/structure/table,
+/obj/item/weapon/screwdriver,
+/obj/item/weapon/hand_labeler,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"ce" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"cf" = (
+/obj/structure/table,
+/obj/item/weapon/paper/pamphlet,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cg" = (
+/obj/machinery/door/airlock,
+/turf/simulated/floor,
+/area/awaymission/example)
+"ch" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/awaymission/example)
+"ci" = (
+/obj/item/weapon/paper{
+	info = "Hey Ted, remind me to take Angeline out some time before I ship out. You know how bad my memory is, so don't get all high and mighty with me. READ THIS.";
+	name = "note"
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"cj" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor,
+/area/awaymission/example)
+"ck" = (
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/item/weapon/paper{
+	info = "Remember, friday is David Bowie night! You guys had better fucking <i>be there!</i>";
+	name = "friday night"
+	},
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor{
+	icon_state = "yellowcorner"
+	},
+/area/awaymission/example)
+"cl" = (
+/obj/item/trash/pistachios,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cm" = (
+/obj/item/device/assembly/mousetrap/armed,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cn" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor,
+/area/awaymission/example)
+"co" = (
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"cp" = (
+/obj/item/weapon/mop,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cq" = (
+/obj/structure/closet,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cr" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell/high,
+/turf/simulated/floor,
+/area/awaymission/example)
+"cs" = (
+/obj/structure/stool,
+/turf/simulated/floor,
+/area/awaymission/example)
+"ct" = (
+/obj/structure/mopbucket,
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaabababababaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacadacababaaaaaaabaeafagabaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacahaiajacabaaaaaaabakalamabaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacanaoapacabababababaqarababaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacasatauavawaxayazazamacabaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaAacacacaBabababababaCaDabaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaabaEacacacaFabaaaaaaababababaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaGawabaaabaHacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabawaIabaaabababaJabababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabawawabaaaaaaabaKabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaLababababababaJabababababaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacaMaNaOacacacabaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaPaPaPaPaPaPaPaPaPaPaPacabaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacaCacacacacacaCacacacabaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaQaQabababababababaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaRaSaTaSaSaUabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaRaSaSaSaSaVabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaRaSaSaSaSababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaWabaXaYabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaSaSaZaSbaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaSbbaSbcbdabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbebfbgaSbhabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacacacacacacacacacacacadacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabbiaPacacacaCbjbkblacacacacacbjbkblaCacacacaPaBabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaabababababacaPacabababbmbnbmabbobpbqabbmbnbmabababacaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaabbrabbrabacaPacabbsbtbsbsbsabaaaaaaabbsbsbsabaaabacaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaababbuabbvabacaPacabbsbwbxbsbyabbobpbqabbzbsbAabaaabacaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaabbBbCbDbCbEacaPacabbFbwbxbsbsbGbHbIbJbKbsbsbLabaaabacaPacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaabbBbCbCbCabacaPacabbsbwbxbsbsbsbsbsbsbsbsbsbMabaaabacaPacbNabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaababababababacaPaBabbsbObxbsbsbPbxbQbHbRbJbsbyabaaabbiaPacbSabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPacabababababababababababababababababacaPacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPacabaHbTbUacbVbWbXbYabbZawabcacbccabaMaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPacabcdacacacacacacaBabawaIabcecfaccgchaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPacabaHacacacacacacacabawawabacaCciabbjaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPacababcjbobpbpbqcjababaLababababababacaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabbiaPacacckaNaOacacaMaNaOacacacacacacacacacaPaBabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabacacacacacaCacbjbkblacaCacacacacclaCacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaabababababababababcgabababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaccmaccnabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcoaccpaccqabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcrcsacctababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
-
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bB
+bB
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+br
+bu
+bC
+bC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bD
+bC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+br
+bv
+bC
+bC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bE
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+bi
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+bi
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ac
+ac
+ac
+ac
+ac
+aB
+ac
+ac
+ac
+ac
+ac
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+bs
+bs
+bF
+bs
+bs
+ab
+aH
+cd
+aH
+ab
+ck
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+aC
+ab
+bt
+bw
+bw
+bw
+bO
+ab
+bT
+ac
+ac
+cj
+aN
+aP
+aC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bj
+bm
+bs
+bx
+bx
+bx
+bx
+ab
+bU
+ac
+ac
+bo
+aO
+aP
+ac
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bk
+bn
+bs
+bs
+bs
+bs
+bs
+ab
+ac
+ac
+ac
+bp
+ac
+aP
+bj
+ab
+ac
+co
+cr
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bl
+bm
+bs
+by
+bs
+bs
+bs
+ab
+bV
+ac
+ac
+bp
+ac
+aP
+bk
+cg
+ac
+ac
+cs
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+ab
+ab
+bG
+bs
+bP
+ab
+bW
+ac
+ac
+bq
+aM
+aP
+bl
+ab
+cm
+cp
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+bo
+aa
+bo
+bH
+bs
+bx
+ab
+bX
+ac
+ac
+cj
+aN
+aP
+ac
+ab
+ac
+ac
+ct
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ad
+aP
+ac
+bp
+aa
+bp
+bI
+bs
+bQ
+ab
+bY
+aB
+ac
+ab
+aO
+aP
+aC
+ab
+cn
+cq
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+bq
+aa
+bq
+bJ
+bs
+bH
+ab
+ab
+ab
+ab
+ab
+ac
+aP
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+ab
+ab
+bK
+bs
+bR
+ab
+bZ
+aw
+aw
+aL
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bj
+bm
+bs
+bz
+bs
+bs
+bJ
+ab
+aw
+aI
+aw
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bk
+bn
+bs
+bs
+bs
+bs
+bs
+ab
+ab
+ab
+ab
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+bl
+bm
+bs
+bA
+bL
+bM
+by
+ab
+ca
+ce
+ac
+ab
+ac
+aP
+cl
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+aC
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+cb
+cf
+aC
+ab
+ac
+aP
+aC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+cc
+ac
+ci
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+cg
+ab
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ac
+ac
+ac
+ac
+ac
+bi
+ac
+aM
+ch
+bj
+ac
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+aB
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aB
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bN
+bS
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aG
+aw
+aw
+aL
+ac
+aP
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aw
+aI
+aw
+ab
+ac
+aP
+ac
+ab
+aR
+aR
+aR
+ab
+aS
+aS
+be
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+aP
+aC
+ab
+aS
+aS
+aS
+aW
+aS
+bb
+bf
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aP
+ac
+ab
+aT
+aS
+aS
+ab
+aZ
+aS
+bg
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+ab
+ac
+aP
+ac
+aQ
+aS
+aS
+aS
+aX
+aS
+bc
+aS
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+aA
+aE
+aH
+ab
+aa
+ab
+ac
+aP
+ac
+aQ
+aS
+aS
+aS
+aY
+ba
+bd
+bh
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ah
+an
+as
+ac
+ac
+ac
+ab
+ab
+ab
+aM
+aP
+ac
+ab
+aU
+aV
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ad
+ai
+ao
+at
+ac
+ac
+ac
+aJ
+aK
+aJ
+aN
+aP
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aj
+ap
+au
+ac
+ac
+ac
+ab
+ab
+ab
+aO
+aP
+aC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+av
+aB
+aF
+ac
+ab
+aa
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aw
+ab
+ab
+ab
+ab
+aa
+ab
+ac
+aP
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ax
+ab
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ay
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(53,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+az
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(54,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+az
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(55,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ak
+aq
+am
+aC
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(56,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+af
+al
+ar
+ac
+aD
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(57,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ag
+am
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(58,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(59,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(60,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(61,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(62,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(63,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(64,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

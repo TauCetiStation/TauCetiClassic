@@ -1,44 +1,46 @@
 /obj/machinery/emergency_authentication_device
 	var/datum/game_mode/mutiny/mode
 
-	name = "\improper Emergency Authentication Device"
+	name = "Emergency Authentication Device"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackbox"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
 
 	var/captains_key
 	var/secondary_key
-	var/activated = 0
+	var/activated = FALSE
 
-	use_power = 0
+/obj/machinery/emergency_authentication_device/atom_init(mapload, mode)
+	src.mode = mode
+	. = ..()
 
-	New(loc, mode)
-		src.mode = mode
-		..(loc)
+/obj/machinery/emergency_authentication_device/proc/check_key_existence()
+	if(!mode.captains_key)
+		captains_key = 1
 
-	proc/check_key_existence()
-		if(!mode.captains_key)
-			captains_key = 1
+	if(!mode.secondary_key)
+		secondary_key = 1
 
-		if(!mode.secondary_key)
-			secondary_key = 1
-
-	proc/get_status()
-		if(activated)
-			return "Activated"
-		if(captains_key && secondary_key)
-			return "Both Keys Authenticated"
-		if(captains_key)
-			return "Captain's Key Authenticated"
-		if(secondary_key)
-			return "Secondary Key Authenticated"
-		else
-			return "Inactive"
+/obj/machinery/emergency_authentication_device/proc/get_status()
+	if(activated)
+		return "Activated"
+	if(captains_key && secondary_key)
+		return "Both Keys Authenticated"
+	if(captains_key)
+		return "Captain's Key Authenticated"
+	if(secondary_key)
+		return "Secondary Key Authenticated"
+	else
+		return "Inactive"
 
 /obj/machinery/emergency_authentication_device/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(activated)
-		to_chat(user, "\blue \The [src] is already active!")
+		to_chat(user, "<span class='notice'>\The [src] is already active!</span>")
 		return
 
 	if(!mode.current_directive.directives_complete())
@@ -48,7 +50,7 @@
 	check_key_existence()
 	if(captains_key && secondary_key)
 		activated = 1
-		to_chat(user, "\blue You activate \the [src]!")
+		to_chat(user, "<span class='notice'>You activate \the [src]!</span>")
 		state("Command acknowledged. Initiating quantum entanglement relay to NanoTrasen High Command.")
 		return
 
@@ -69,7 +71,7 @@
 
 /obj/machinery/emergency_authentication_device/attackby(obj/item/weapon/O, mob/user)
 	if(activated)
-		to_chat(user, "\blue \The [src] is already active!")
+		to_chat(user, "<span class='notice'>\The [src] is already active!</span>")
 		return
 
 	if(!mode.current_directive.directives_complete())

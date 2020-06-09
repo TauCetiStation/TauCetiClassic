@@ -1,41 +1,333 @@
-"a" = (/obj/structure/rack/holorack,/obj/item/clothing/under/dress/dress_saloon,/obj/item/clothing/head/hairflower,/obj/item/clothing/head/plaguedoctorhat,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"b" = (/obj/structure/rack/holorack,/obj/item/clothing/suit/chickensuit,/obj/item/clothing/head/chicken,/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/clothing/under/owl,/obj/item/clothing/mask/gas/owl_mask,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"c" = (/obj/structure/rack/holorack,/obj/item/clothing/under/gladiator,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/under/sexyclown,/obj/item/clothing/under/sexymime,/obj/item/clothing/mask/gas/sexyclown,/obj/item/clothing/mask/gas/sexymime,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"d" = (/obj/structure/rack/holorack,/obj/item/clothing/under/gimmick/rank/captain/suit,/obj/item/clothing/head/flatcap,/obj/item/clothing/suit/storage/labcoat/mad,/obj/item/clothing/glasses/gglasses,/obj/item/clothing/mask/cigarette/cigar/havana,/obj/item/clothing/shoes/jackboots,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"e" = (/obj/structure/rack/holorack,/obj/item/clothing/under/schoolgirl,/obj/item/clothing/head/kitty,/obj/item/clothing/under/waiter,/obj/item/clothing/suit/apron,/obj/item/clothing/under/blackskirt,/obj/item/clothing/head/rabbitears,/obj/item/clothing/glasses/sunglasses/blindfold,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"f" = (/obj/structure/rack/holorack,/obj/item/clothing/suit/wcoat,/obj/item/clothing/under/suit_jacket,/obj/item/clothing/head/that,/obj/item/clothing/glasses/monocle,/obj/item/clothing/head/bowler,/obj/item/clothing/shoes/black,/obj/item/weapon/cane,/obj/item/clothing/under/sl_suit,/obj/item/clothing/mask/fakemoustache,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"g" = (/obj/structure/rack/holorack,/obj/item/clothing/under/soviet,/obj/item/clothing/head/ushanka,/obj/item/clothing/suit/imperium_monk,/obj/item/clothing/mask/gas/cyborg,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"h" = (/obj/structure/rack/holorack,/obj/item/clothing/suit/wizrobe/marisa/fake,/obj/item/clothing/head/wizard/marisa/fake,/obj/item/clothing/head/witchwig,/obj/item/clothing/under/sundress,/obj/item/weapon/staff/broom,/obj/item/weapon/staff,/obj/item/clothing/suit/wizrobe/fake,/obj/item/clothing/head/wizard/fake,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"i" = (/obj/structure/rack/holorack,/obj/item/clothing/gloves/white,/obj/item/clothing/shoes/white,/obj/item/clothing/under/scratch,/obj/item/clothing/head/cueball,/obj/item/clothing/suit/holidaypriest,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"j" = (/obj/structure/rack/holorack,/obj/item/clothing/under/kilt,/obj/item/clothing/head/beret,/obj/item/clothing/under/pirate,/obj/item/clothing/suit/pirate,/obj/item/clothing/head/pirate,/obj/item/clothing/glasses/eyepatch,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"k" = (/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
-"l" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_theatre)
-"m" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_theatre)
-"n" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
-"o" = (/turf/simulated/floor/holofloor{icon_state = "carpet6-2"; dir = 4},/area/holodeck/source_theatre)
-"p" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet14-10"; dir = 4},/area/holodeck/source_theatre)
-"q" = (/turf/simulated/floor/holofloor{icon_state = "carpet10-8"; dir = 4},/area/holodeck/source_theatre)
-"r" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet2-0"},/area/holodeck/source_theatre)
-"s" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet7-3"},/area/holodeck/source_theatre)
-"t" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet15-15"; dir = 4},/area/holodeck/source_theatre)
-"u" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet11-12"},/area/holodeck/source_theatre)
-"v" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "carpet3-0"},/area/holodeck/source_theatre)
-"w" = (/turf/simulated/floor/holofloor{icon_state = "carpet5-1"; dir = 4},/area/holodeck/source_theatre)
-"x" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet13-5"; dir = 4},/area/holodeck/source_theatre)
-"y" = (/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_theatre)
-"z" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet1-0"},/area/holodeck/source_theatre)
-"A" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"; tag = "icon-plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
-"B" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_theatre)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/dress/dress_saloon,
+/obj/item/clothing/head/hairflower,
+/obj/item/clothing/head/plaguedoctorhat,
+/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"b" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/suit/chickensuit,
+/obj/item/clothing/head/chicken,
+/obj/item/weapon/reagent_containers/food/snacks/egg,
+/obj/item/clothing/under/owl,
+/obj/item/clothing/mask/gas/owl_mask,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"c" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/gladiator,
+/obj/item/clothing/head/helmet/gladiator,
+/obj/item/clothing/under/sexyclown,
+/obj/item/clothing/under/sexymime,
+/obj/item/clothing/mask/gas/sexyclown,
+/obj/item/clothing/mask/gas/sexymime,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"d" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/gimmick/rank/captain/suit,
+/obj/item/clothing/head/flatcap,
+/obj/item/clothing/suit/storage/labcoat/mad,
+/obj/item/clothing/glasses/gglasses,
+/obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/item/clothing/shoes/holoboots,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"e" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/soviet,
+/obj/item/clothing/head/ushanka,
+/obj/item/clothing/suit/imperium_monk,
+/obj/item/clothing/mask/gas/cyborg,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"f" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/head/kitty,
+/obj/item/clothing/under/waiter,
+/obj/item/clothing/suit/apron,
+/obj/item/clothing/under/blackskirt,
+/obj/item/clothing/head/rabbitears,
+/obj/item/clothing/glasses/sunglasses/blindfold,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"g" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/under/suit_jacket,
+/obj/item/clothing/head/that,
+/obj/item/clothing/glasses/monocle,
+/obj/item/clothing/head/bowler,
+/obj/item/clothing/shoes/black,
+/obj/item/weapon/cane,
+/obj/item/clothing/under/sl_suit,
+/obj/item/clothing/mask/fakemoustache,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"h" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/suit/wizrobe/marisa/fake,
+/obj/item/clothing/head/wizard/marisa/fake,
+/obj/item/clothing/head/witchwig,
+/obj/item/clothing/under/sundress,
+/obj/item/weapon/staff/broom,
+/obj/item/weapon/staff,
+/obj/item/clothing/suit/wizrobe/fake,
+/obj/item/clothing/head/wizard/fake,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"i" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/gloves/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/under/scratch,
+/obj/item/clothing/head/cueball,
+/obj/item/clothing/suit/holidaypriest,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"j" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/kilt,
+/obj/item/clothing/under/pirate,
+/obj/item/clothing/suit/pirate,
+/obj/item/clothing/head/pirate,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/head/beret/red,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"k" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"l" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "wood"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "siding1"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"m" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "quiltystair"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"n" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "wood"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"o" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet6-2"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"p" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet14-10"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"q" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet10-8"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"s" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet7-3"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"t" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet15-15"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"u" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet11-12"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"w" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet5-1"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"x" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet13-5"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"y" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet9-4"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"A" = (
+/obj/structure/flora/pottedplant{
+	icon_state = "plant-6"
+	},
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "wood"
+	},
+/area/station/civilian/holodeck/source_theatre)
 
 (1,1,1) = {"
-abcdefghij
-kkkkkkkkkk
-kkkkkkkkkk
-kkkkkkkkkk
-lllllllllm
-noppppppqr
-nsttttttuv
-nsttttttuv
-nwxxxxxxyz
-AnnnnnnnnB
+a
+d
+f
+k
+l
+n
+n
+n
+n
+A
+"}
+(2,1,1) = {"
+b
+k
+k
+k
+l
+o
+s
+s
+w
+n
+"}
+(3,1,1) = {"
+c
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(4,1,1) = {"
+k
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(5,1,1) = {"
+k
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(6,1,1) = {"
+k
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(7,1,1) = {"
+k
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(8,1,1) = {"
+h
+k
+k
+k
+l
+p
+t
+t
+x
+n
+"}
+(9,1,1) = {"
+i
+k
+k
+k
+l
+q
+u
+u
+y
+n
+"}
+(10,1,1) = {"
+j
+e
+g
+k
+m
+n
+n
+n
+n
+A
 "}

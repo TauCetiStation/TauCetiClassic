@@ -1,5 +1,8 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
+
+	a_intent = INTENT_HARM
+
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
 	var/atom/target
 	var/attack_same = 0
@@ -29,6 +32,20 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
+/mob/living/simple_animal/hostile/atom_init()
+	. = ..()
+	gen_modifiers()
+
+/mob/living/simple_animal/hostile/examine(mob/user)
+	..()
+	if(stat == DEAD)
+		to_chat(user, "<span class='danger'>Is dead.</span>")
+	else if(health <= maxHealth * 0.2)
+		to_chat(user, "<span class='danger'>Is almost dead.</span>")
+	else if(health <= maxHealth * 0.6)
+		to_chat(user, "<span class='warning'>Appears badly wounded.</span>")
+	else if(health <= maxHealth * 0.9)
+		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -102,25 +119,27 @@
 
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
 		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
-			return 0
+			return FALSE
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
-			return 0
+			return FALSE
 		if(L in friends)
-			return 0
-		return 1
+			return FALSE
+		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
+		return TRUE
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)
-			return 1
+			return TRUE
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
@@ -161,10 +180,10 @@
 	LostTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
-        walk_to(src, target, minimum_distance, delay)
+	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
-	..(damage)
+	..()
 	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
@@ -192,6 +211,7 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 	target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -223,7 +243,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
-	visible_message("\red <b>[src]</b> [ranged_message] at [target]!", 1)
+	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -250,8 +270,10 @@
 	if(target == start)
 		return
 
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
+
 	var/obj/item/projectile/A = new projectiletype(user:loc)
-	playsound(user, projectilesound, 100, 1)
+	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)	return
 
 	if (!istype(target, /turf))

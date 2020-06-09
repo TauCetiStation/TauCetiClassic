@@ -1,14 +1,31 @@
 # Tau Ceti Classic
-[tauceti.ru](http://tauceti.ru/)  
-[RocketChat](https://chat.tauceti.ru/channel/rnd)
+
+[![taucetistation.org](https://img.shields.io/badge/site-taucetistation.org-blue.svg)](http://taucetistation.org/)
+[![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/YCWRjkb)
+[![Build Status](https://travis-ci.com/TauCetiStation/TauCetiClassic.svg?branch=master)](https://travis-ci.com/TauCetiStation/TauCetiClassic)
+
+https://github.com/TauCetiStation/TauCetiClassic/
 
 ---
+
+### Maintainers WANTED
+
+Проекту остро необходимы мейнтейнеры для поддержания развития. Если у вас есть время и желание, опыт - пишите в ``#rnd`` канал в Дискорде с меншоном на ``@Build Maintainer``
+
+---
+#### Changelogs: https://changelog.taucetistation.org
 
 [Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:  
 * [/tg/station13](https://tgstation13.org/)
 * [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
 * [/vg/station13](http://ss13.pomf.se/)
 * [Goonstation](http://goonhub.com/)
+
+---
+
+### ВНЕСТИ ВКЛАД (CONTRIBUTING)
+
+Обязательно прочитайте [CONTRIBUTING.md](https://github.com/TauCetiStation/TauCetiClassic/blob/master/CONTRIBUTING.md).
 
 ---
 

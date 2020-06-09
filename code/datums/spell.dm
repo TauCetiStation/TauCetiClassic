@@ -9,6 +9,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	panel = "Spells"//What panel the proc holder needs to go on.
 	density = 0
 	opacity = 0
+	var/sound = null //The sound the spell makes when it is cast
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
@@ -16,6 +17,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+
+	/****RELIGIOUS ASPECT****/
+	var/favor_cost = 0 //cost
+	var/divine_power = 0 //control of spell power depending on the aspect
+	var/list/needed_aspect
+	/****RELIGIOUS ASPECT****/
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -45,14 +52,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
+	var/static/list/casting_clothes
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
-		to_chat(usr, "\red You shouldn't have this spell! Something's wrong.")
+		to_chat(usr, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
 		return 0
 
-	if(usr.z == ZLEVEL_CENTCOMM && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
+	if(is_centcom_level(usr.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(!skipcharge)
@@ -66,27 +74,36 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					to_chat(usr, "[name] has no charges left.")
 					return 0
 
+	if(!skipcharge && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(favor_cost > 0 && global.chaplain_religion.aspects.len == 0)
+			to_chat(usr, "<span class ='warning'>First choose aspects in your religion!</span>")
+			return 0
+		if(favor_cost > 0 && global.chaplain_religion.favor < favor_cost)
+			to_chat(usr, "<span class ='warning'>You need [favor_cost - global.chaplain_religion.favor] more favors.</span>")
+			return 0
+
 	if(usr.stat && !stat_allowed)
 		to_chat(usr, "Not when you're incapacitated.")
 		return 0
 
 	if(ishuman(usr) || ismonkey(usr))
 		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
-			to_chat(usr, "Mmmf mrrfff!")
+			usr.say("Mmmf mrrfff!")
 			return 0
 
 	if(clothes_req) //clothes check
-		if(!istype(usr, /mob/living/carbon/human))
-			to_chat(usr, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
+		if(!istype(user, /mob/living/carbon/human))
+			to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return 0
-		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(user:wear_suit, /obj/item/clothing/suit/space/rig/wizard))
-			to_chat(usr, "I don't feel strong enough without my robe.")
+		var/mob/living/carbon/human/H = user
+		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+			to_chat(user, "I don't feel strong enough without my robe.")
 			return 0
-		if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-			to_chat(usr, "I don't feel strong enough without my sandals.")
+		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			to_chat(user, "I don't feel strong enough without my sandals.")
 			return 0
-		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/rig/wizard))
-			to_chat(usr, "I don't feel strong enough without my hat.")
+		if(!is_type_in_typecache(H.head, casting_clothes))
+			to_chat(user, "I don't feel strong enough without my hat.")
 			return 0
 
 	if(!skipcharge)
@@ -98,6 +115,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 
+		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+			global.chaplain_religion.favor -= favor_cost //steals favor from spells per favor
+
 	return 1
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
@@ -105,23 +125,23 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
-				usr.say(invocation)
+				user.say(invocation)
 			else
-				usr.say(replacetext(invocation," ","`"))
-			if(usr.gender==MALE)
-				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-			else
-				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+				user.say(replacetext(invocation," ", "`"))
 		if("whisper")
 			if(prob(50))
-				usr.whisper(invocation)
+				user.whisper(invocation)
 			else
-				usr.whisper(replacetext(invocation," ","`"))
+				user.whisper(replacetext(invocation," ", "`"))
+	if(sound)
+		playsound(user, sound, VOL_EFFECTS_MASTER)
 
-/obj/effect/proc_holder/spell/New()
-	..()
-
+/obj/effect/proc_holder/spell/atom_init()
+	. = ..()
 	charge_counter = charge_max
+	if(!casting_clothes)
+		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
+		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
@@ -131,24 +151,23 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/start_recharge()
+/obj/effect/proc_holder/spell/proc/start_recharge(mob/user = usr)
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
-	before_cast(targets)
-	invocation()
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
+	before_cast(targets, user)
+	invocation(user)
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge, user)
 	if(prob(critfailchance))
-		critfail(targets)
+		critfail(targets, user)
 	else
-		cast(targets)
-	after_cast(targets)
+		cast(targets, user)
+	after_cast(targets, user)
 
-/obj/effect/proc_holder/spell/proc/before_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/before_cast(list/targets, mob/user = usr)
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
@@ -161,10 +180,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
 			spell.density = 0
-			spawn(overlay_lifespan)
-				qdel(spell)
+			QDEL_IN(spell, overlay_lifespan)
 
-/obj/effect/proc_holder/spell/proc/after_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
 	for(var/atom/target in targets)
 		var/location
 		if(istype(target,/mob/living))
@@ -187,10 +205,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 
-/obj/effect/proc_holder/spell/proc/cast(list/targets)
+/obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
 	return
 
-/obj/effect/proc_holder/spell/proc/critfail(list/targets)
+/obj/effect/proc_holder/spell/proc/critfail(list/targets, mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
@@ -201,6 +219,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+
+	if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		global.chaplain_religion.favor += favor_cost
 
 	return
 
@@ -270,7 +291,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast(user)
 		return
 
-	perform(targets)
+	perform(targets, user)
 
 	return
 
@@ -285,7 +306,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		revert_cast()
 		return
 
-	perform(targets)
+	perform(targets, user)
 
 	return
 
@@ -293,7 +314,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		return 0
 
-	if(user.z == ZLEVEL_CENTCOMM && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
+	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
 		return 0
 
 	switch(charge_type)

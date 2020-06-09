@@ -22,12 +22,15 @@
 	name = "chest drawer"
 	icon_state = "chestdrawer"
 
+/obj/structure/filingcabinet/chestdrawer/black
+	icon_state = "chestdrawer_black"
 
 /obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/initialize()
+/obj/structure/filingcabinet/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
 			I.loc = src
@@ -42,8 +45,9 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+	else if(iswrench(P))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	else
@@ -60,9 +64,9 @@
 	var/i
 	for(i=contents.len, i>=1, i--)
 		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize_popup(P.name)]</a></td></tr>"
+		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
+	user << browse("<html><head><title>[name]</title></head><body>[entity_ja(dat)]</body></html>", "window=filingcabinet;size=350x300")
 
 	return
 
@@ -122,9 +126,9 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Security Record ([G.fields["name"]])"
+			P.update_icon()
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
-	..()
 
 /obj/structure/filingcabinet/security/attack_hand()
 	populate()
@@ -158,9 +162,9 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Medical Record ([G.fields["name"]])"
+			P.update_icon()
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
-	..()
 
 /obj/structure/filingcabinet/medical/attack_hand()
 	populate()

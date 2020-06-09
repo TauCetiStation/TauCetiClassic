@@ -6,31 +6,30 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
-	..()
-	if(!istype(src.loc, /turf/space))
-		qdel(src)
-		return
-	for(var/obj/structure/lattice/LAT in src.loc)
+/obj/structure/lattice/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/space))
+		return INITIALIZE_HINT_QDEL
+	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
-			qdel(LAT)
+			warning("Found stacked lattice at [COORD(src)] while initializing map.")
+			QDEL_IN(LAT, 0)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
 			L.updateOverlays()
 
 /obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays(src.loc)
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
+			L.updateOverlays(loc)
 	return ..()
 
 /obj/structure/lattice/blob_act()
@@ -56,10 +55,10 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (istype(C, /obj/item/weapon/weldingtool))
+	if (iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
-		if(WT.remove_fuel(0, user))
-			to_chat(user, "\blue Slicing lattice joints ...")
+		if(WT.use(0, user))
+			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/stack/rods(loc)
 			qdel(src)
 
@@ -69,7 +68,7 @@
 	//if(!(istype(src.loc, /turf/space)))
 	//	qdel(src)
 	spawn(1)
-		overlays = list()
+		cut_overlays()
 
 		var/dir_sum = 0
 

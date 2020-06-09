@@ -6,7 +6,7 @@
 	item_state = "render"
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/charged = 1
 
 
@@ -20,19 +20,20 @@
 	anchored = 1.0
 
 
-/obj/effect/rend/New()
+/obj/effect/rend/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/rend/atom_init_late()
 	spawn(50)
 		new /obj/singularity/narsie/wizard(get_turf(src))
 		qdel(src)
-		return
-	return
-
 
 /obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		visible_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
+		visible_message("<span class='warning'><B>[src] hums with power as [usr] deals a blow to reality itself!</B></span>")
 	else
-		to_chat(user, "\red The unearthly energies that powered the blade are now dormant")
+		to_chat(user, "<span class='warning'>The unearthly energies that powered the blade are now dormant</span>")
 

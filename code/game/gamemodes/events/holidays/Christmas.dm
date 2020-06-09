@@ -1,6 +1,7 @@
 /proc/Christmas_Game_Start()
-	for(var/obj/structure/flora/tree/pine/xmas in world)
-		if(xmas.z != ZLEVEL_STATION)	continue
+	for(var/obj/structure/flora/tree/pine/xmas in tree_xmas_list)
+		if(!is_station_level(xmas.z))
+			continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
@@ -8,7 +9,7 @@
 	//	Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian)) equipment procs also has been changed. so this must be rewritten when added back.
 
 /proc/ChristmasEvent()
-	for(var/obj/structure/flora/tree/pine/xmas in world)
+	for(var/obj/structure/flora/tree/pine/xmas in tree_xmas_list)
 		var/mob/living/simple_animal/hostile/tree/evil_tree = new /mob/living/simple_animal/hostile/tree(xmas.loc)
 		evil_tree.icon_state = xmas.icon_state
 		evil_tree.icon_living = evil_tree.icon_state
@@ -22,9 +23,6 @@
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
 	var/cracked = 0
-
-/obj/item/weapon/toy/xmas_cracker/New()
-	..()
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
@@ -49,7 +47,7 @@
 		other_half.cracked = 1
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
-		playsound(user, 'sound/effects/snap.ogg', 50, 1)
+		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	return ..()
 

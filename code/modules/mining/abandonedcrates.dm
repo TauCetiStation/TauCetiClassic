@@ -11,9 +11,11 @@
 	var/min = 1
 	var/max = 10
 
-/obj/structure/closet/crate/secure/loot/New()
-	..()
+/obj/structure/closet/crate/secure/loot/atom_init()
+	. = ..()
 	code = rand(min,max)
+
+/obj/structure/closet/crate/secure/loot/PopulateContents()
 	var/loot = rand(1,30)
 	switch(loot)
 		if(1)
@@ -31,20 +33,20 @@
 		if(4)
 			new/obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 		if(5 to 6)
-			for(var/i = 0, i < 10, i++)
+			for (var/i in 1 to 10)
 				new/obj/item/weapon/ore/diamond(src)
 		if(7)
 			return
 		if(8)
 			return
 		if(9)
-			for(var/i = 0, i < 3, i++)
+			for (var/i in 1 to 3)
 				new/obj/machinery/hydroponics/constructable(src)
 		if(10)
-			for(var/i = 0, i < 3, i++)
+			for (var/i in 1 to 3)
 				new/obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
 		if(11 to 12)
-			for(var/i = 0, i < 9, i++)
+			for (var/i in 1 to 9)
 				new/obj/item/bluespace_crystal(src)
 		if(13)
 			new/obj/item/weapon/melee/classic_baton(src)
@@ -52,8 +54,8 @@
 			return
 		if(15)
 			new/obj/item/clothing/under/chameleon(src)
-			for(var/i = 0, i < 7, i++)
-				new/obj/item/clothing/tie/horrible(src)
+			for (var/i in 1 to 7)
+				new/obj/item/clothing/accessory/tie/horrible(src)
 		if(16)
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)
@@ -70,12 +72,12 @@
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
 		if(in_range(src, user))
-			input = Clamp(input, 0, 10)
+			input = CLAMP(input, 0, 10)
 			if (input == code)
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = 0
-				overlays.Cut()
-				overlays += greenlight
+				cut_overlays()
+				add_overlay(greenlight)
 			else if (input == null || input > max || input < min)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
@@ -96,10 +98,8 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if (istype(W, /obj/item/weapon/card/emag))
-			to_chat(user, "<span class='notice'>The crate unlocks!</span>")
-			locked = 0
-		if (istype(W, /obj/item/device/multitool))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if (ismultitool(W))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if (attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
@@ -113,5 +113,14 @@
 				to_chat(user, "<span class='notice'>* Last access attempt lower than expected code.</span>")
 			else
 				to_chat(user, "<span class='notice'>* Last access attempt higher than expected code.</span>")
-		else ..()
-	else ..()
+		else
+			..()
+	else
+		..()
+
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		to_chat(user, "<span class='notice'>The crate unlocks!</span>")
+		locked = 0
+		return TRUE
+	return FALSE
