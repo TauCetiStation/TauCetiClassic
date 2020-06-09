@@ -278,6 +278,12 @@
 		return FALSE
 	return TRUE
 
+/obj/item/weapon/twohanded/shockpaddles/proc/check_CPR(mob/living/carbon/human/H)
+	var/obj/item/organ/internal/heart/heart = H.organs_by_name[O_HEART]
+	if(heart.heart_status == HEART_FIBR)
+		return FALSE
+	return TRUE
+
 /obj/item/weapon/twohanded/shockpaddles/proc/check_blood_level(mob/living/carbon/human/H)
 	if(!H.should_have_organ(O_HEART))
 		return FALSE
@@ -344,6 +350,11 @@
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
+	if(check_CPR(H))
+		make_announcement("buzzes, \"Error - Need CPR. Operation aborted.\"")
+		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		return
+	
 	//placed on chest and short delay to shock for dramatic effect, revive time is ~5sec total
 	if(!do_after(user, charge_time, H))
 		return
@@ -354,6 +365,7 @@
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
 
+	
 	H.log_combat(user, "shocked with [name]")
 	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
 
