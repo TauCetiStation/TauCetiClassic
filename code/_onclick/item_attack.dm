@@ -3,6 +3,7 @@
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(user)
 
@@ -87,9 +88,7 @@
 					flick(G.hud.icon_state, G.hud)
 					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
-					user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					msg_admin_attack("[key_name(user)] knifed [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", user)
+					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
 	if (istype(M,/mob/living/carbon/brain))
@@ -101,9 +100,7 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", user)
+	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
 	if(HULK in user.mutations)
@@ -196,7 +193,20 @@
 			if(user.client)
 				to_chat(user, "<span class='warning'><B>You attack [M] with [src]. </B></span>")
 
+	// Attacking yourself can't miss
+	if(user == M)
+		def_zone = user.get_targetzone()
+	else
+		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
 
+	if(!def_zone)
+		visible_message("<span class='userdanger'>[user] misses [M] with \the [src]!</span>")
+		return FALSE
+
+	if(user != M)
+		user.do_attack_animation(M)
+		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
+			return FALSE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

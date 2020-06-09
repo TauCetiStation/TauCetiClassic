@@ -172,6 +172,21 @@ var/global/combos_cheat_sheet = ""
 
 	return attack_unarmed(attacker)
 
+/// This proc checks whether src can be attacked by attacker at all.
+/mob/living/proc/can_be_attacked(mob/living/attacker)
+	// Why does this exist? ~Luduk
+	if(isturf(loc) && istype(loc.loc, /area/start))
+		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
+		return FALSE
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	if((attacker != src) && check_shields(attacker, attack_obj["damage"], attacker.name, get_dir(attacker, src)))
+		attacker.do_attack_animation(src)
+		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
+		return FALSE
+
+	return TRUE
+
 /*
  * The running horse of current combo system.
  * Handles all unarmed attacks, to unite all the attack_paw, attack_slime, attack_human, etc procs.
@@ -181,13 +196,7 @@ var/global/combos_cheat_sheet = ""
  * Return TRUE if unarmed attack was "succesful".
  */
 /mob/living/proc/attack_unarmed(mob/living/attacker)
-	// Why does this exist? ~Luduk
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")
-		return FALSE
-
-	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
-		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
+	if(!can_be_attacked(attacker))
 		return FALSE
 
 	var/tz = attacker.get_targetzone()
@@ -295,9 +304,7 @@ var/global/combos_cheat_sheet = ""
 		visible_message("<span class='warning'><B>[attacker] tried to [damVerb] [src]!</B></span>")
 		return FALSE
 
-	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>[damVerb]ed [src.name] ([src.ckey])</font>")
-	attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [damVerb]ed by [attacker.name] ([attacker.ckey])</font>")
-	msg_admin_attack("[key_name(attacker)] [damVerb]ed [key_name(src)]", attacker)
+	log_combat(attacker, "[damVerb]ed")
 
 	var/armor_block = 0
 	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.

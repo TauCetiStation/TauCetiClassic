@@ -73,7 +73,7 @@
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
-	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/blackpepper
 	name = "pack of piper nigrum seeds"
@@ -1244,12 +1244,14 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
+		return
+	return ..()
 
 
 /obj/item/weapon/grown/sunflower

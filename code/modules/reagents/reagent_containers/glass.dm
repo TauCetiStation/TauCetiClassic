@@ -81,9 +81,8 @@
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
 		var/contained = english_list(injected)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[key_name(user)] splashed [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+
+		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 		user.visible_message("<span class = 'rose'>[target] has been splashed with something by [user]!</span>")
 		src.reagents.reaction(target, TOUCH)

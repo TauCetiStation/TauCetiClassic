@@ -48,45 +48,71 @@
 	set category = "Object"
 	set src in oview(1)
 
-	do_climb(usr)
+	if(!can_climb(usr, usr))
+		return
 
-/obj/structure/MouseDrop_T(mob/target, mob/user)
+	do_climb(usr, usr)
+
+/obj/structure/MouseDrop_T(atom/dropping, mob/user)
 	if(isessence(user))
 		return
-	var/mob/living/H = user
-	if(can_climb(H) && target == user)
-		do_climb(target)
-	else
-		return ..()
 
-/obj/structure/proc/can_climb(mob/living/user, post_climb_check=0)
-	if (!climbable || !can_touch(user) || (!post_climb_check && (user in climbers)))
-		return 0
+	if(ismob(dropping) && can_climb(dropping, user))
+		do_climb(dropping, user)
+		return
 
-	if (!user.Adjacent(src))
-		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
-		return 0
+	return ..()
+
+/obj/structure/proc/can_climb(mob/living/climber, mob/living/user, post_climb_check = FALSE)
+	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
+		return FALSE
+
+	if(climber.loc == loc)
+		return FALSE
+
+	if(user != climber)
+		if(!can_touch(climber))
+			return FALSE
+		if(climber.is_bigger_than(user))
+			to_chat(user, "<span class='danger'>[climber] is too big for you to be pulled up by them!</span>")
+			return FALSE
+
+	if(!user.Adjacent(src))
+		if(climber == user)
+			to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+		else
+			to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src], the way is blocked.</span>")
+		return FALSE
+
+	if(user != climber && !climber.Adjacent(src))
+		to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src], the way is blocked.</span>")
+		return FALSE
 
 	if(user.is_busy())
-		return 0
+		return FALSE
 
 	var/obj/occupied = turf_is_crowded()
 	if(occupied)
 		to_chat(user, "<span class='danger'>There's \a [occupied] in the way.</span>")
-		return 0
-	return 1
+		return FALSE
+
+	return TRUE
 
 /obj/structure/proc/turf_is_crowded()
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
-		return 0
+		return null
+
 	for(var/obj/O in T.contents)
 		if(istype(O,/obj/structure))
 			var/obj/structure/S = O
-			if(S.climbable) continue
+			if(S.climbable)
+				continue
+
 		if(O && O.density)
 			return O
-	return 0
+
+	return null
 
 /obj/structure/proc/get_climb_time(mob/living/user)
 	. = 50
@@ -96,37 +122,50 @@
 	//aliens are terrifyingly fast
 	if(isxeno(user))
 		. *= 0.25
+	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
+		. *= 0.5
 
-/obj/structure/proc/do_climb(mob/living/user)
-	if (!can_climb(user))
+
+/obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
+	add_fingerprint(climber)
+	if(user == climber)
+		user.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
+	else
+		user.visible_message("<span class='warning'>[user] starts pulling [climber] up onto \the [src]!</span>")
+		add_fingerprint(user)
+
+	climbers |= climber
+
+	var/adjusted_climb_time = get_climb_time(climber)
+	if(user != climber)
+		adjusted_climb_time += get_climb_time(user)
+		adjusted_climb_time *= 0.5 * get_size_ratio(user, climber)
+
+	if(!do_after(user, adjusted_climb_time, target = climber))
+		climbers -= climber
 		return
-	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
-	climbers |= user
 
-	var/adjusted_climb_time = get_climb_time(user)
-
-	if(!do_after(user, adjusted_climb_time, target = user))
-		climbers -= user
+	if(!can_climb(climber, user, post_climb_check = TRUE))
+		climbers -= climber
 		return
 
-	if (!can_climb(user, post_climb_check=1))
-		climbers -= user
-		return
+	on_climb(climber, user)
+	climbers -= climber
 
-	on_climb(user)
-	climbers -= user
+/obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
+	climber.forceMove(get_turf(src))
 
-/obj/structure/proc/on_climb(mob/living/user)
-	usr.forceMove(get_turf(src))
-
-	if (get_turf(user) == get_turf(src))
-		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
+	if(get_turf(climber) == get_turf(src))
+		if(climber == user)
+			user.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
+		else
+			user.visible_message("<span class='warning'>[user] pulls [climber] up onto \the [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
 		M.Weaken(2)
 		to_chat(M, "<span class='danger'>You topple as you are shaken off \the [src]!</span>")
-		climbers.Cut(1,2)
+		climbers -= M
 
 	for(var/mob/living/M in get_turf(src))
 		if(M.lying) return //No spamming this on people.

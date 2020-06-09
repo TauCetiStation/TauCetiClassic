@@ -127,8 +127,7 @@
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/atom/check_access = user
-	if(!Adjacent(user))
-		check_access = null
+
 	if(!requiresID())
 		check_access = null
 
@@ -143,8 +142,6 @@
 		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user)
-	if(isrobot(user))
-		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	try_open(user)
 
 /obj/machinery/door/attack_tk(mob/user)

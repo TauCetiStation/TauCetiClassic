@@ -15,6 +15,8 @@
 	var/datum/cult/reveal/power
 	var/static/list/scum
 
+	var/tried_replacing = FALSE
+
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
@@ -24,6 +26,30 @@
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 	power = new(src)
+
+/obj/item/weapon/nullrod/attack_self(mob/living/user)
+	if(user.mind && user.mind.holy_role && !tried_replacing)
+		if(!global.chaplain_religion)
+			to_chat(user, "<span class='warning'>The stars are not in position for this tribute. Await round start.</span>")
+			return
+
+		tried_replacing = TRUE
+
+		var/list/choices = list()
+		for(var/null_type in typesof(/obj/item/weapon/nullrod))
+			var/obj/item/weapon/nullrod/N = null_type
+			choices[initial(N.name)] = N
+
+		var/choice = input(user, "Choose your nullrod type.", "Nullrod choice") as null|anything in choices
+		if(choice && Adjacent(user))
+			qdel(src)
+			var/chosen_type = choices[choice]
+			var/obj/item/weapon/nullrod/new_rod = new chosen_type(user.loc)
+			new_rod.tried_replacing = TRUE
+			user.put_in_hands(new_rod)
+		return
+
+	return ..()
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
@@ -50,14 +76,12 @@
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
-/obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
+/obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
+	M.log_combat(user, "deconvered (attempt) via [name]")
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
@@ -79,16 +103,6 @@
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
-/obj/item/weapon/nullrod/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	if(user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && istype(W, /obj/item/weapon/storage/bible))
-		var/obj/item/weapon/storage/bible/B = W
-		var/obj/item/weapon/nullrod/staff/staff = new /obj/item/weapon/nullrod/staff(user.loc)
-		staff.god_name = B.deity_name
-		staff.god_lore = B.god_lore
-		if(B.icon_state == "koran")
-			staff.islam = TRUE
-		qdel(src)
-
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
 	desc = "A mystical and frightening staff with ancient magic. Only one chaplain remembers how to use it."
@@ -103,11 +117,15 @@
 	var/mob/living/simple_animal/shade/god/brainmob = null
 	var/searching = FALSE
 	var/next_ping = 0
-	var/islam = FALSE
 
 	var/image/god_image
 
 	var/list/next_apply = list()
+
+/obj/item/weapon/nullrod/staff/atom_init()
+	. = ..()
+	god_name = pick(global.chaplain_religion.deity_names)
+	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	// Damn... He's free now.
@@ -235,10 +253,7 @@
 	candidate.cancel_camera()
 	candidate.reset_view()
 
-	if(islam)
-		brainmob.universal_speak = FALSE
-		brainmob.islam = TRUE
-		brainmob.speak.Add("[god_name] akbar!")
+	brainmob.universal_speak = FALSE
 
 	global.chaplain_religion.add_deity(brainmob)
 
@@ -304,6 +319,48 @@
 
 	next_ping = world.time + 5 SECONDS
 	audible_message("<span class='notice'>\The [src] stone blinked.</span>", deaf_message = "\The [src] stone blinked.")
+
+
+
+/obj/item/weapon/nullrod/forcefield_staff
+	name = "forcefield staff"
+	desc = "Makes the wielder believe that they are protected by something, anything, really. Probably works on AA batteries."
+
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+
+	icon_state = "godstaff"
+	item_state = "godstaff"
+
+	var/is_active = FALSE
+
+/obj/item/weapon/nullrod/forcefield_staff/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "forcefield", 20, 5 SECONDS, 3 SECONDS, F)
+
+/obj/item/weapon/nullrod/forcefield_staff/proc/activate(mob/living/user)
+	if(is_active)
+		return
+	is_active = TRUE
+
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/weapon/nullrod/forcefield_staff/proc/deactivate(mob/living/user)
+	is_active = FALSE
+
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/weapon/nullrod/forcefield_staff/equipped(mob/living/user, slot)
+	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND || slot == SLOT_BACK)
+		activate(user)
+	else if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
+		deactivate(user)
+
+/obj/item/weapon/nullrod/forcefield_staff/dropped(mob/living/user)
+	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
+		deactivate(user)
 
 
 

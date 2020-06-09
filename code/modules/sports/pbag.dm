@@ -4,7 +4,7 @@
 
 	icon = 'code/modules/sports/pbag.dmi'
 	icon_state = "pbag"
-	var/my_icon_state = "pbag" // Used so after a swing we fall correctly in async calls.
+	logs_combat = FALSE
 
 	anchored = TRUE
 	density = FALSE
@@ -12,7 +12,8 @@
 	maxHealth = 100
 
 	var/list/ghosts_were_here = list()
-
+	// Used so after a swing we fall correctly in async calls.
+	var/my_icon_state = "pbag"
 	var/swinging = FALSE
 
 /mob/living/pbag/atom_init()
