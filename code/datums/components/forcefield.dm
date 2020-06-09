@@ -6,7 +6,7 @@
 
 /datum/mechanic_tip/forcefielding/New(datum/component/forcefield/F)
 	// See human_attackhand.dm. Default damage is 2.
-	description = "[F.parent] appears to be able to create a [F.name] that can withstand about [round(F.max_health * 0.5)] human punches."
+	description = "Appears to be able to create a [F.name] that can withstand about [round(F.max_health * 0.5)] human punches."
 	description += "\nTakes [round(F.reactivation_time * 0.1)] seconds to be reactivated after completely destroyed."
 	description += "\nTakes about [round(F.recharge_time * 0.1)] seconds to be fully recharged."
 
@@ -17,7 +17,7 @@
 	tip_name = FORCEFIELDED_TIP
 
 /datum/mechanic_tip/forcefielded/New(datum/component/forcefield/F)
-	description = "Is currently protected by [F.parent] with \a [F.name]."
+	description = "Is currently protected with \a [F.name]."
 
 
 
@@ -43,6 +43,11 @@
 /obj/effect/effect/forcefield/rune/atom_init()
 	. = ..()
 	icon_state = "[rand(1, 6)]"
+
+/obj/effect/effect/forcefield/eva
+	name = "AT field"
+
+	icon_state = "at_shield2"
 
 /*
  * A forcefield component.
@@ -96,9 +101,6 @@
 	var/static/hit_sounds = list('sound/effects/forcefield_hit1.ogg', 'sound/effects/forcefield_hit2.ogg')
 
 /datum/component/forcefield/Initialize(name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE)
-	if(!isatom(parent))
-		return COMPONENT_INCOMPATIBLE
-
 	src.name = name
 
 	src.max_health = max_health
@@ -126,8 +128,9 @@
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_PROTECT), .proc/add_protected)
 	RegisterSignal(parent, list(COMSIG_FORCEFIELD_UNPROTECT), .proc/remove_protected)
 
-	var/datum/mechanic_tip/forcefielding/forcefielding_tip = new(src)
-	parent.AddComponent(/datum/component/mechanic_desc, list(forcefielding_tip))
+	if(isatom(parent))
+		var/datum/mechanic_tip/forcefielding/forcefielding_tip = new(src)
+		parent.AddComponent(/datum/component/mechanic_desc, list(forcefielding_tip))
 
 	shield_up()
 
@@ -138,7 +141,8 @@
 		remove_protected(parent, A)
 	protected = null
 
-	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(FORCEFIELDING_TIP))
+	if(isatom(parent))
+		SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(FORCEFIELDING_TIP))
 
 	QDEL_NULL(shield_overlay)
 	return ..()
@@ -149,19 +153,32 @@
 /datum/component/forcefield/process()
 	add_charge(charge_per_tick)
 
+/datum/component/forcefield/proc/get_sound_atom()
+	if(isatom(parent))
+		return parent
+	if(protected)
+		return pick(protected)
+	return null
+
 /// Reactivate the shield.
 /datum/component/forcefield/proc/reactivate()
 	if(istype(parent, /obj/item))
 		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
-	playsound(parent, reactivate_sound, VOL_EFFECTS_MASTER)
+	var/atom/play_at = get_sound_atom()
+	if(play_at)
+		playsound(play_at, reactivate_sound, VOL_EFFECTS_MASTER)
+
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
 	if(istype(parent, /obj/item))
 		UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle)
 
-	playsound(parent, destroy_sound, VOL_EFFECTS_MASTER)
+	var/atom/play_at = get_sound_atom()
+	if(play_at)
+		playsound(play_at, destroy_sound, VOL_EFFECTS_MASTER)
+
 	shield_down()
 	addtimer(CALLBACK(src, .proc/reactivate), reactivation_time)
 
