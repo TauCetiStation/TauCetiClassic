@@ -12,8 +12,6 @@
 	var/slices_num
 	var/deepfried = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/atom_init()
-	return ..()
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
 	if(!usr)	return
@@ -1770,12 +1768,12 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init_late()
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init_late() //All food are made after map loaded and round started, so late initialization will be there
 	storage = new /obj/item/weapon/storage/internal/sliceable(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
 	if (!storage.handle_mousedrop(usr, over_object))
-		..(usr, over_object)
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path)
@@ -1827,8 +1825,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/attackby(obj/item/weapon/W, mob/user)
 	if(user.a_intent == INTENT_HARM)
-		..()
-		return
+		return ..()
 	var/holding = user.get_active_hand()
 	if(!holding)
 		return
