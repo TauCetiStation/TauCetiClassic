@@ -222,9 +222,11 @@
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
-	..()
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
-		health -= P.agony / 10
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
+	health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
 	do_attack_animation(D)

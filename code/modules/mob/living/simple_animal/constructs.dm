@@ -115,9 +115,9 @@
 				// redirect the projectile
 				P.redirect(new_x, new_y, curloc, src)
 
-			return -1 // complete projectile permutation
+			return PROJECTILE_FORCE_MISS // complete projectile permutation
 
-	return (..(P))
+	return ..()
 
 
 ////////////////////////Wraith/////////////////////////////////////////////

@@ -506,10 +506,13 @@
 
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
-	..(Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
 	updatehealth()
-	if(prob(75) && Proj.damage > 0) spark_system.start()
-	return 2
+	if(prob(75) && Proj.damage > 0)
+		spark_system.start()
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
