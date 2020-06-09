@@ -35,6 +35,7 @@
 		if(usr.get_active_hand() == src || usr.get_inactive_hand() == src)
 			usr.drop_from_inventory(src)
 
+		visible_message("<span class='warning'>[usr] spin the [src]!</span>")
 		if(isturf(loc))
 			var/speed = rand(1, 3)
 			var/loops
