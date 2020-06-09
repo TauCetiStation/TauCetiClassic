@@ -1755,14 +1755,13 @@
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
-	
+	w_class = ITEM_SIZE_NORMAL
 	var/obj/item/weapon/storage/internal/sliceable/storage
 
 /obj/item/weapon/storage/internal/sliceable
 	name = "sliceable inventory"
 	max_w_class = ITEM_SIZE_SMALL
 	storage_slots = 5
-	cant_hold = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
 	. = ..()
