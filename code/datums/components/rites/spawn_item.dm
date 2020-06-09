@@ -25,16 +25,16 @@
 	invoke_effect = _callback
 
 	var/datum/religion_rites/rite = parent
-	var/text
+	var/text_of_tip
 	if(sacrifice_type)
 		var/obj/item/item = sacrifice_type
-		text = "This ritual requires a <i>[initial(item.name)]</i>."
-		rite.add_tip(text)
+		text_of_tip = "This ritual requires a <i>[initial(item.name)]</i>."
+		rite.add_tips(text_of_tip)
 
 	if(spawn_type)
 		var/obj/item/item = spawn_type
-		text = "This ritual creates a <i>[initial(item.name)]</i>."
-		rite.add_tip(text)
+		text_of_tip = "This ritual creates a <i>[initial(item.name)]</i>."
+		rite.add_tips(text_of_tip)
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)

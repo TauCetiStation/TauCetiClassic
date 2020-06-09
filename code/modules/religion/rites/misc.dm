@@ -5,7 +5,7 @@
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
-	ritual_length = (2.9 MINUTES)
+	ritual_length = (2.1 MINUTES)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",

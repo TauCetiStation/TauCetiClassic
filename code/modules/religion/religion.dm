@@ -344,7 +344,9 @@
 			continue
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites_by_name[RR.name] = new rite_type
+			var/datum/religion_rites/R = new rite_type
+			R.religion = src
+			rites_by_name[RR.name] = R
 
 		QDEL_NULL(RR)
 
