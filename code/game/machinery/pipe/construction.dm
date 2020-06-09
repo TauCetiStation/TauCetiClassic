@@ -284,11 +284,6 @@ Buildable meters
 	)
 	icon_state = islist[pipe_type + 1]
 
-//called when a turf is attacked with a pipe item
-/obj/item/pipe/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return
-
 // rotate the pipe item clockwise
 /obj/item/pipe/verb/rotate()
 	set category = "Object"
