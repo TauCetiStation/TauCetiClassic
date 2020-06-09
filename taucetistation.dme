@@ -1357,6 +1357,7 @@
 #include "code\modules\mining\coins.dm"
 #include "code\modules\mining\distribution.dm"
 #include "code\modules\mining\equipment_locker.dm"
+#include "code\modules\mining\exotic_furnace.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"
 #include "code\modules\mining\machine_processing.dm"
 #include "code\modules\mining\machine_stacking.dm"
