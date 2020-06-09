@@ -8,7 +8,7 @@
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
 	/// Just unique tip when examine altar
-	var/tip_text = ""
+	var/list/tips = list()
 	/// Length it takes to complete the ritual
 	var/ritual_length = (10 SECONDS) //total length it'll take
 	/// Strings that are by default said evenly throughout the rite
@@ -17,13 +17,20 @@
 	var/invoke_msg
 	/// Cost of rite in favor
 	var/favor_cost = 0
-	/// Needed aspects for get ritue
+	/// Needed aspects to get the rite.
 	var/list/needed_aspects
 
-/datum/religion_rites/proc/update_tip(tip)
+/datum/religion_rites/proc/update_tip()
 	if(global.chaplain_religion)
-		tip_text = initial(tip_text) + tip
 		global.chaplain_religion.update_rites()
+
+/datum/religion_rites/proc/add_tip(text)
+	if(global.chaplain_religion)
+		tips += text
+
+/datum/religion_rites/proc/remove_tip(text)
+	if(global.chaplain_religion)
+		tips -= text
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)

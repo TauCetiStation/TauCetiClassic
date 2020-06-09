@@ -17,7 +17,7 @@
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
 
 // Send ask to victim
-/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	var/mob/victim = AOG.buckled_mob
 	if(!victim.IsAdvancedToolUser())
 		consent = TRUE
@@ -26,7 +26,7 @@
 			consent = TRUE
 
 // Checks for a victim
-/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, atom/movable/AOG)
+/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return COMPONENT_CHECK_FAILED

@@ -308,8 +308,13 @@
 			var/datum/religion_rites/RI = rites_by_name[i]
 			var/name_entry = ""
 
-			if(RI.tip_text)
-				name_entry += "[EMBED_TIP(RI.name, RI.tip_text)]"
+			var/tip_text
+			for(var/tip in RI.tips)
+				if(tip_text)
+					tip_text += " "
+				tip_text += tip
+			if(tip_text)
+				name_entry += "[EMBED_TIP(RI.name, tip_text)]"
 			else
 				name_entry += "[RI.name]"
 

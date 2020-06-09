@@ -6,4 +6,6 @@
 
 /datum/component/rite/Initialize()
 	var/datum/religion_rites/rite = parent
-	rite.update_tip(tip_text)
+	if(tip_text && tip_text != "")
+		rite.add_tip(tip_text)
+	rite.update_tip()

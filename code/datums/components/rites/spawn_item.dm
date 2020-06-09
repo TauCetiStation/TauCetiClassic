@@ -24,18 +24,17 @@
 	adding_favor_per_item = _adding_favor_per_item
 	invoke_effect = _callback
 
+	var/datum/religion_rites/rite = parent
+	var/text
 	if(sacrifice_type)
 		var/obj/item/item = sacrifice_type
-		tip_text += "This ritual requires a <i>[initial(item.name)]</i>."
+		text = "This ritual requires a <i>[initial(item.name)]</i>."
+		rite.add_tip(text)
 
 	if(spawn_type)
-		if(tip_text)
-			tip_text += " "
 		var/obj/item/item = spawn_type
-		tip_text += "This ritual creates a <i>[initial(item.name)]</i>."
-
-	var/datum/religion_rites/rite = parent
-	rite.update_tip(tip_text)
+		text = "This ritual creates a <i>[initial(item.name)]</i>."
+		rite.add_tip(text)
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)
@@ -45,7 +44,7 @@
 
 /datum/component/rite/spawn_item/Destroy()
 	clear_lists()
-	qdel(invoke_effect)
+	QDEL_NULL(invoke_effect)
 	return ..()
 
 // Used to choose which items will be replaced with others
