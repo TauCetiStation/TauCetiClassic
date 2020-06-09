@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(act,m_type=1,message = null)
+/mob/living/carbon/slime/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 
 	if (findtext(act, "-", 1, null))
@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "\red You cannot send IC messages (muted).")
+					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -31,35 +31,40 @@
 			return custom_emote(m_type, message)
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("jiggle")
 			message = "<B>The [src.name]</B> jiggles!"
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("light")
 			message = "<B>The [src.name]</B> lights up for a bit, then stops."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("moan")
 			message = "<B>The [src.name]</B> moans."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 
 		if("shiver")
 			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
+			m_type = SHOWMSG_AUDIO
 
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("twitch")
 			message = "<B>The [src.name]</B> twitches."
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
 
 		if("vibrate")
 			message = "<B>The [src.name]</B> vibrates!"
-			m_type = 1
+			m_type = SHOWMSG_VISUAL
+
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 		if("noface") //mfw I have no face
 			mood = null
@@ -90,7 +95,7 @@
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 	if ((message && src.stat == CONSCIOUS))
-		if (m_type & 1)
+		if (m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 				//Foreach goto(703)

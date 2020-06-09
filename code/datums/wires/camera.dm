@@ -14,7 +14,7 @@ var/const/CAMERA_WIRE_NOTHING2 = 32
 	var/obj/machinery/camera/C = holder
 	. = ..()
 	. += "<br>[(C.view_range == initial(C.view_range) ? "The focus light is on." : "The focus light is off.")]"
-	. += "<br>[(C.can_use() ? "The power link light is on." : "The power link light is off.")]"
+	. += "<br>[(C.can_use(check_paint = FALSE) ? "The power link light is on." : "The power link light is off.")]"
 	. += "<br>[(C.light_disabled ? "The camera light is off." : "The camera light is on.")]"
 	. += "<br>[(C.alarm_on ? "The alarm light is on." : "The alarm light is off.")]"
 

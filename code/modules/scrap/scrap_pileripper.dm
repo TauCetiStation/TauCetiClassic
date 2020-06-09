@@ -13,7 +13,7 @@
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
@@ -22,9 +22,9 @@
 	var/rating = 1
 	var/last_ripped = 0
 
-/obj/machinery/pile_ripper/New()
+/obj/machinery/pile_ripper/atom_init()
 	// On us
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/pile_ripper(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -36,7 +36,7 @@
 		return
 	last_ripped = world.time
 	if(safety_mode)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		safety_mode = 0
 		update_icon()
 	var/turf/ripped_turf = get_turf(get_step(src, 8))
@@ -51,7 +51,7 @@
 			break
 		if(istype(ripped_item, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = ripped_item
-			while(pile.dig_out_lump(loc))
+			while(pile.dig_out_lump(loc, 1))
 				if(prob(20))
 					break
 			count++
@@ -78,7 +78,7 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/proc/stop(mob/living/L)
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	safety_mode = 1
 	update_icon()
 	L.forceMove(src.loc)
@@ -88,8 +88,7 @@
 
 /obj/machinery/pile_ripper/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if (istype(I, /obj/item/weapon/card/emag))
-		emag_act(user)
+
 	if(default_deconstruction_screwdriver(user, "grinder-bOpen", "grinder-b0", I))
 		return
 
@@ -102,18 +101,19 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
-	..()
-	return
+	else
+		default_deconstruction_crowbar(I)
 
-/obj/machinery/pile_ripper/proc/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		if(safety_mode)
-			safety_mode = 0
-			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+/obj/machinery/pile_ripper/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	if(safety_mode)
+		safety_mode = 0
+		update_icon()
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
+	return TRUE
 
 /obj/machinery/pile_ripper/update_icon()
 	..()
@@ -125,16 +125,16 @@
 
 /obj/machinery/pile_ripper/proc/eat(mob/living/L)
 	if(issilicon(L))
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	else
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/gib = 1
 	// By default, the emagged pile_ripper will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.emote("scream",,, 1)
+			L.emote("scream")
 		add_blood(L)
 	if(!blood && !issilicon(L))
 		blood = 1

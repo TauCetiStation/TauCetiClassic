@@ -8,7 +8,7 @@
 	user.mind.changeling.purchasedpowers -= src
 	if(user.stat == DEAD)
 		dead_mob_list -= user
-		living_mob_list += user
+		alive_mob_list += user
 	if(HUSK in user.mutations)
 		user.mutations.Remove(HUSK)
 	user.fake_death = 0
@@ -29,7 +29,8 @@
 		user.fake_death = 0
 		user.mind.changeling.purchasedpowers -= src //We dont need that power from now anyway.
 		return
-	if(user.stat < 2)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
-		to_chat(user, "<span class='notice'>We ready to regenerate, but we need to stop any life activity in our body.</span>")
+	if(user.stat != DEAD)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
+		user.mind.changeling.purchasedpowers -= src  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
+		to_chat(user, "<span class='notice'>We need to stop any life activity in our body.</span>")
 		return
 	return ..()

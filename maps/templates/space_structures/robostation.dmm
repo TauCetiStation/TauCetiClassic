@@ -1,0 +1,2520 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/structure/lattice,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/space,
+/area/space)
+"ac" = (
+/mob/living/simple_animal/hostile/hivebot,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ad" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"ae" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/robostatoin)
+"af" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ag" = (
+/obj/item/weapon/circuitboard/mecha/honker/peripherals,
+/obj/structure/closet/crate,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ah" = (
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ai" = (
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aj" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ak" = (
+/obj/structure/dresser,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"al" = (
+/obj/item/weapon/disk/research_points/rare,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"am" = (
+/obj/machinery/door/airlock/hatch,
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"an" = (
+/obj/item/weapon/bikehorn,
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"ao" = (
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"ap" = (
+/turf/simulated/floor/plating{
+	dir = 9;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"aq" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"ar" = (
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"as" = (
+/mob/living/simple_animal/hostile/hivebot/range,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"at" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/robostatoin)
+"au" = (
+/obj/machinery/door/airlock/clown,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"av" = (
+/obj/effect/landmark/corpse/clown,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aw" = (
+/obj/structure/flora/pottedplant/unusual,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ax" = (
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ay" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"az" = (
+/obj/item/mecha_parts/part/honker_head,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/clown,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aB" = (
+/obj/structure/clown_stuff_spawner,
+/obj/structure/table/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"aC" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"aD" = (
+/obj/item/mecha_parts/part/honker_right_arm,
+/obj/structure/table/reinforced,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aE" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"aF" = (
+/obj/structure/ore_box,
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aG" = (
+/obj/structure/closet/acloset,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aH" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/gloves/rainbow/clown,
+/obj/item/stack/sheet/mineral/clown,
+/obj/item/weapon/cartridge/clown,
+/obj/item/weapon/stamp/clown,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aI" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/soup/clownstears,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aJ" = (
+/obj/structure/bedsheetbin,
+/obj/structure/table/woodentable,
+/obj/item/toy/waterflower,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aK" = (
+/obj/structure/curtain/open/bed,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aL" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
+	dir = 10;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"aM" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas/sexyclown,
+/obj/item/weapon/storage/pill_bottle/dermaline,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aN" = (
+/turf/simulated/floor/plating{
+	dir = 5;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"aO" = (
+/obj/structure/closet/lasertag/blue,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aP" = (
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"aQ" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/photo_album,
+/obj/item/weapon/storage/box/monkeycubes,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aR" = (
+/obj/structure/closet/theatrecloset,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aS" = (
+/obj/structure/sign/warning/lethal_turrets,
+/turf/simulated/wall/r_wall,
+/area/space_structures/robostatoin)
+"aT" = (
+/obj/structure/table/reinforced,
+/obj/item/device/violin,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aU" = (
+/obj/machinery/light,
+/obj/item/weapon/storage/box/matches,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aV" = (
+/obj/machinery/light,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aW" = (
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/carpet,
+/area/space_structures/robostatoin)
+"aX" = (
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aY" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"aZ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ba" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"bb" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/ash,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bc" = (
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bd" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"be" = (
+/obj/item/weapon/twohanded/fireaxe,
+/obj/item/clothing/head/collectable/petehat,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bf" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/robostatoin)
+"bg" = (
+/obj/effect/glowshroom,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bh" = (
+/obj/machinery/door/airlock/clown,
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bi" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/capacitor/adv,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bj" = (
+/obj/structure/foamedmetal,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bk" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/subspace/crystal,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bl" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/cell/potato,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bm" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/console_screen,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bn" = (
+/obj/item/mecha_parts/part/honker_left_leg,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/survival,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bo" = (
+/obj/structure/largecrate,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bp" = (
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"br" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/micro_laser/quadultra,
+/obj/item/weapon/stock_parts/manipulator,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bs" = (
+/obj/item/weapon/circuitboard/mecha/honker/main,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/lipstick,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bt" = (
+/obj/structure/table/reinforced,
+/obj/machinery/media/receiver/boombox,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bu" = (
+/obj/item/mecha_parts/chassis/honker,
+/obj/structure/kitchenspike,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/robostatoin)
+"bv" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/bikehorn,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bw" = (
+/obj/machinery/porta_turret/stationary,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bx" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/cell/crap,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"by" = (
+/obj/item/weapon/table_parts,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bz" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bA" = (
+/mob/living/simple_animal/hostile/hivebot,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bB" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/manipulator/nano,
+/obj/item/weapon/stock_parts/matter_bin,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bC" = (
+/obj/structure/flora/pottedplant/crystal,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bD" = (
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/robostatoin)
+"bE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bF" = (
+/obj/machinery/floodlight,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bG" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/subspace/ansible,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bH" = (
+/mob/living/simple_animal/hostile/hivebot/range,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bI" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stock_parts/matter_bin/super,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bJ" = (
+/obj/item/weapon/bikehorn,
+/obj/structure/closet/crate,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bK" = (
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bL" = (
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"bM" = (
+/obj/item/weapon/wirecutters,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bN" = (
+/turf/simulated/wall,
+/area/space_structures/robostatoin)
+"bO" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/ash,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bP" = (
+/obj/item/weapon/grown/sunflower,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bQ" = (
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/robostatoin)
+"bR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/turf/space,
+/area/space_structures/robostatoin)
+"bS" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space_structures/robostatoin)
+"bT" = (
+/obj/item/weapon/circuitboard/mecha/honker/targeting,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bU" = (
+/obj/effect/glowshroom,
+/obj/item/toy/gun,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bV" = (
+/obj/item/mecha_parts/part/honker_left_arm,
+/obj/item/weapon/paper{
+	info = "Oh no! The jokes of the robot were so terrible! So, we decided to slip it on a banana peel. Haha, but when the robot fell to the floor, something sparkled in it, it rised and started killing! Damn, some more in the pantry. I am very scared and I dont havin fun.";
+	name = "NOT FUNNY NOT FUNNY"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"bW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/inflatable,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"bX" = (
+/obj/item/weapon/bikehorn,
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"bY" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreenfull"
+	},
+/area/space_structures/robostatoin)
+"bZ" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave,
+/turf/simulated/floor{
+	icon_state = "whiteredcorner"
+	},
+/area/space_structures/robostatoin)
+"ca" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/space_structures/robostatoin)
+"cb" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/robostatoin)
+"cc" = (
+/turf/simulated/floor{
+	icon_state = "blue"
+	},
+/area/space_structures/robostatoin)
+"cd" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"ce" = (
+/obj/structure/sign/warning/docking,
+/turf/simulated/wall/r_wall,
+/area/space_structures/robostatoin)
+"cf" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall15"
+	},
+/area/space_structures/robostatoin)
+"cg" = (
+/obj/structure/inflatable,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"ch" = (
+/obj/machinery/light/small,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"ci" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/robostatoin)
+"cj" = (
+/obj/item/mecha_parts/part/honker_right_leg,
+/obj/structure/table,
+/obj/item/weapon/paper{
+	info = "Bingo! Our research in robotics is amazing. The newest prototype of the robot-comedian is completed and we are ready for testing. Tonight we will make everyone laugh!";
+	name = "Bingo!"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blue"
+	},
+/area/space_structures/robostatoin)
+"ck" = (
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/robostatoin)
+"cl" = (
+/turf/simulated/floor/plating,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/robostatoin)
+"cm" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/space_structures/robostatoin)
+"cn" = (
+/obj/structure/closet/critter/pig,
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/space_structures/robostatoin)
+"co" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/robostatoin)
+"cp" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkgreen"
+	},
+/area/space_structures/robostatoin)
+"cq" = (
+/obj/structure/stool/bed/psych,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/robostatoin)
+"cr" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitecorner"
+	},
+/area/space_structures/robostatoin)
+"cs" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/robostatoin)
+"ct" = (
+/obj/structure/sign/warning/airlock,
+/turf/simulated/wall/r_wall,
+/area/space_structures/robostatoin)
+"cu" = (
+/obj/machinery/door/airlock/external,
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cv" = (
+/obj/item/weapon/reagent_containers/pill/cyanide,
+/turf/simulated/floor/plating,
+/turf/space,
+/area/space_structures/robostatoin)
+"cw" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cx" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/turf/space,
+/area/space_structures/robostatoin)
+"cy" = (
+/obj/item/weapon/paper{
+	info = "August 31, 2556. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
+	name = "no hope"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cB" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cC" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/space_structures/robostatoin)
+"cE" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 9;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"cF" = (
+/mob/living/simple_animal/hostile/hivebot/range,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/space_structures/robostatoin)
+"cG" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "yellow"
+	},
+/area/space_structures/robostatoin)
+"cH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/robostatoin)
+"cI" = (
+/obj/structure/sign/poster/random,
+/turf/simulated/wall/r_wall,
+/area/space_structures/robostatoin)
+"cJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
+/area/space_structures/robostatoin)
+"cK" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cL" = (
+/obj/effect/landmark/corpse/clown,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cM" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cN" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/obj/effect/landmark/corpse/clown,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"cO" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"cQ" = (
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/space_structures/robostatoin)
+"cR" = (
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/space_structures/robostatoin)
+"cS" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "escape"
+	},
+/area/space_structures/robostatoin)
+"cU" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
+/area/space_structures/robostatoin)
+"cV" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"cW" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 5;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"cX" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"cZ" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/robostatoin)
+"da" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space_structures/robostatoin)
+"db" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "purple"
+	},
+/area/space_structures/robostatoin)
+"dd" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellow"
+	},
+/area/space_structures/robostatoin)
+"de" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"dg" = (
+/obj/structure/stool/bed/chair/comfy/teal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/robostatoin)
+"di" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 10;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"dk" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/turf/space,
+/area/space_structures/robostatoin)
+"dm" = (
+/turf/simulated/floor/plating,
+/turf/space,
+/area/space_structures/robostatoin)
+"dn" = (
+/obj/structure/table,
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreenfull"
+	},
+/area/space_structures/robostatoin)
+"do" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"dr" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "arrival"
+	},
+/area/space_structures/robostatoin)
+"ds" = (
+/turf/simulated/floor{
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/robostatoin)
+"dI" = (
+/obj/structure/trap/stun,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
+	},
+/area/space_structures/robostatoin)
+"en" = (
+/obj/machinery/porta_turret/stationary{
+	check_n_synth = 1;
+	shot_synth = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"eQ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/hivebot,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitered"
+	},
+/area/space_structures/robostatoin)
+"gc" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/space_structures/robostatoin)
+"gA" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkgreencorners"
+	},
+/area/space_structures/robostatoin)
+"ki" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/space_structures/robostatoin)
+"nb" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
+/obj/structure/closet/crate,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"Cw" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"Ge" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostatoin)
+"Iy" = (
+/obj/structure/stool/bed/chair/comfy/teal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/robostatoin)
+"Ju" = (
+/obj/structure/table,
+/obj/item/weapon/bikehorn,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbrown"
+	},
+/area/space_structures/robostatoin)
+"JZ" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"Na" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blue"
+	},
+/area/space_structures/robostatoin)
+"Sx" = (
+/obj/structure/stool/bed/psych,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "escape"
+	},
+/area/space_structures/robostatoin)
+"UA" = (
+/obj/structure/lattice,
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"XQ" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/robostatoin)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+ab
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aE
+aE
+aE
+aa
+aa
+aa
+aE
+aE
+aE
+aE
+aE
+aa
+aa
+aa
+aa
+aE
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aE
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aa
+aa
+aC
+aa
+aE
+aa
+aE
+aa
+aa
+aC
+aa
+aa
+aE
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aE
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aE
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aE
+aC
+aC
+ad
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+ae
+bY
+cb
+cj
+cF
+dd
+eQ
+ae
+aa
+aa
+aE
+"}
+(6,1,1) = {"
+aa
+aa
+aE
+aC
+aa
+ad
+ad
+aD
+aM
+aQ
+aT
+ae
+ae
+ad
+ae
+ae
+bo
+bo
+ae
+aa
+aa
+ae
+ae
+ae
+aa
+aa
+ae
+bZ
+cc
+cr
+cJ
+dg
+Iy
+ae
+aC
+aC
+aE
+"}
+(7,1,1) = {"
+aa
+aE
+aC
+ad
+ad
+ad
+aw
+ah
+ah
+ah
+ah
+bh
+bj
+bj
+ar
+bj
+bp
+bu
+ad
+bS
+ar
+bN
+bT
+ae
+bS
+bS
+ae
+cn
+ds
+cQ
+cZ
+dn
+Ju
+ae
+aa
+aa
+aE
+"}
+(8,1,1) = {"
+aa
+aE
+aa
+ad
+ax
+ah
+aR
+ah
+bb
+ah
+aU
+ae
+ae
+ad
+ae
+ae
+ar
+bv
+ae
+aa
+aa
+ae
+ae
+ae
+aa
+aa
+ae
+co
+cG
+cR
+da
+dr
+XQ
+ae
+aa
+aa
+aE
+"}
+(9,1,1) = {"
+aa
+aE
+aC
+ad
+ai
+al
+ah
+ah
+aO
+ah
+ah
+ae
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+ae
+cp
+cH
+cS
+db
+Na
+gA
+ae
+aa
+aa
+ab
+"}
+(10,1,1) = {"
+aa
+aE
+aa
+ad
+ax
+ah
+ah
+aF
+bc
+ah
+aV
+ae
+aa
+aa
+aa
+en
+aa
+aa
+en
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+ae
+cq
+cI
+de
+de
+ae
+Sx
+ae
+aC
+aC
+aE
+"}
+(11,1,1) = {"
+aa
+aE
+aC
+ad
+ad
+ad
+ah
+aG
+bc
+bb
+ah
+ae
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+bp
+bp
+ae
+ae
+ae
+aa
+aa
+aE
+"}
+(12,1,1) = {"
+aa
+aa
+aE
+aC
+aa
+ad
+ad
+bC
+bd
+ah
+ah
+ae
+aa
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+ae
+de
+de
+ae
+aC
+aa
+aa
+aa
+aE
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aE
+aC
+aC
+ad
+ae
+ae
+aX
+aX
+ae
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+cd
+ar
+ar
+cd
+aC
+aa
+aa
+aE
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ah
+ah
+ae
+aa
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aC
+aC
+aC
+bX
+aC
+aC
+aC
+ar
+cK
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aX
+aX
+ae
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+aa
+aC
+aa
+aC
+aa
+aC
+cd
+ar
+ar
+aa
+UA
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+ad
+ad
+ad
+ae
+ae
+ae
+ae
+cI
+ah
+ah
+bi
+bk
+bl
+bm
+bn
+br
+bx
+bB
+bG
+bI
+ae
+aa
+aC
+aa
+aC
+aa
+aC
+ae
+cu
+cu
+ae
+aC
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aC
+ad
+ac
+ah
+aj
+am
+ah
+ah
+aX
+ah
+aY
+ah
+ah
+ah
+ah
+bb
+aY
+ah
+ah
+ah
+ah
+ae
+aa
+aC
+aa
+aC
+aa
+aC
+ae
+bp
+ch
+ae
+aC
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+ad
+af
+ag
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aX
+aS
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ct
+de
+de
+ct
+ae
+ae
+ae
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+ae
+ae
+ae
+ae
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+ae
+bs
+by
+bE
+cg
+ah
+ae
+ah
+cg
+bW
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aj
+nb
+ae
+ar
+aa
+"}
+(20,1,1) = {"
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+ae
+bt
+ah
+ah
+ah
+ah
+aX
+cg
+ah
+ah
+ah
+cg
+ah
+ah
+bb
+as
+ah
+ah
+aV
+ae
+bw
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+ae
+bC
+ah
+as
+ah
+ah
+ae
+aw
+ah
+aY
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+Ge
+bC
+ae
+ar
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+cI
+ah
+as
+bb
+ah
+bM
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ct
+de
+de
+ct
+ae
+ae
+ae
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+an
+ar
+ah
+ar
+ah
+aZ
+ah
+ah
+ar
+ah
+aX
+ah
+ah
+bF
+ah
+aw
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bp
+ch
+ae
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ar
+as
+ar
+ah
+ar
+be
+ah
+ar
+ah
+ar
+aX
+ah
+bz
+ah
+bz
+bJ
+ae
+aa
+aC
+aC
+aC
+aC
+aC
+ce
+de
+de
+ce
+aC
+aC
+aC
+aC
+aC
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ar
+ar
+ar
+cI
+ae
+ae
+ae
+ad
+ad
+ae
+ae
+ae
+ae
+aX
+ae
+ae
+ae
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+ae
+ae
+ae
+au
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+ae
+ah
+ae
+aa
+aa
+aa
+aE
+aa
+aa
+aa
+at
+cC
+cm
+au
+cm
+cm
+ci
+aa
+aa
+aE
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+ae
+ak
+ao
+aW
+aH
+ae
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+ad
+ah
+ad
+aa
+aa
+aa
+aE
+aa
+aa
+at
+ca
+bD
+cw
+cL
+ar
+cw
+ki
+ci
+aa
+aE
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+ae
+aK
+aK
+av
+aI
+ae
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+ad
+ah
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+cB
+ar
+cy
+ar
+cv
+ar
+ck
+gc
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+ae
+az
+aK
+aA
+aJ
+ae
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+ad
+ah
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+bR
+cB
+cM
+cE
+cO
+di
+dm
+ar
+Cw
+JZ
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+ad
+bA
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+cB
+cN
+cV
+cU
+cx
+ar
+ar
+Cw
+JZ
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+ae
+ah
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+cB
+cN
+cW
+cX
+dI
+ar
+ar
+Cw
+JZ
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aE
+aa
+aC
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+aP
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+ad
+cB
+ar
+ar
+ar
+ar
+ar
+cl
+cf
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+ab
+aa
+aa
+ae
+ae
+ad
+ae
+ae
+aa
+aa
+aa
+aa
+ae
+ar
+bg
+ah
+ar
+ah
+ah
+bK
+bO
+bU
+ae
+aa
+aa
+bf
+cC
+bQ
+do
+ar
+ar
+do
+ki
+cs
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aE
+aa
+en
+ad
+ap
+ar
+aL
+ae
+aS
+ae
+ae
+ae
+cI
+ar
+ah
+ah
+bA
+ar
+bH
+ah
+bP
+bV
+ae
+aa
+aa
+aa
+bf
+cf
+cm
+au
+dk
+cm
+cs
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aE
+aC
+aC
+ae
+aq
+aB
+ar
+aP
+ay
+bg
+ar
+ah
+ar
+ar
+ah
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aE
+aa
+en
+ad
+aN
+ar
+ba
+ae
+aS
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aC
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aE
+aa
+aa
+ae
+ae
+ad
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+bL
+aE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aE
+aa
+aa
+aC
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

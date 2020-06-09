@@ -12,12 +12,13 @@ REAGENT SCANNER
 	name = "T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
-	slot_flags = SLOT_BELT
-	w_class = 2
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"
+
+	var/on = FALSE
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -27,11 +28,26 @@ REAGENT SCANNER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
+/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
+	if(ismob(loc))
+		var/mob/M = loc
+		var/image/I = new(loc = get_turf(pipe))
+
+		var/mutable_appearance/MA = new(pipe)
+		MA.alpha = 128
+		MA.dir = pipe.dir
+
+		I.appearance = MA
+		if(M.client)
+			flick_overlay(I, list(M.client), 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
-		return
+		return null
+	scan()
+
+/obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(1, src.loc) )
 
@@ -43,169 +59,90 @@ REAGENT SCANNER
 			if(O.level != 1)
 				continue
 
-			if(O.invisibility == 101)
-				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
-
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
-
+			if(O.invisibility >= INVISIBILITY_MAXIMUM)
+				flick_sonar(O)
 
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
 	icon_state = "health"
-	item_state = "analyzer"
+	item_state = "healthanalyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
-	var/mode = 1;
-
+	var/mode = TRUE
+	var/output_to_chat = TRUE
+	var/last_scan = ""
+	var/last_scan_name = ""
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
-	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		to_chat(user, text("\red You try to analyze the floor's vitals!"))
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
-		user.show_message(text("\blue Analyzing Results for The floor:\n&emsp; Overall Status: Healthy"), 1)
-		user.show_message(text("\blue &emsp; Damage Specifics: [0]-[0]-[0]-[0]"), 1)
-		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
-		user.show_message("\blue Body Temperature: ???", 1)
-		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(usr, "\red You don't have the dexterity to do this!")
-		return
-	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
-
-	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags[IS_SYNTHETIC])))
-		//these sensors are designed for organic life
-		user.show_message("\blue Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR")
-		user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
-		user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
-		user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-		user.show_message("\red <b>Warning: Blood Level ERROR: --% --cl.\blue Type: ERROR")
-		user.show_message("\blue Subject's pulse: <font color='red'>-- bpm.</font>")
-		return
-
-	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
-	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
-		user.show_message("\blue Analyzing Results for [M]:\n&emsp; Overall Status: dead")
-	else
-		user.show_message("\blue Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]")
-	user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
-	user.show_message("&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font>")
-	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		user.show_message("\blue Time of Death: [M.tod]")
-	if(istype(M, /mob/living/carbon/human) && mode == 1)
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
-		user.show_message("\blue Localized Damage, Brute/Burn:",1)
-		if(length(damaged)>0)
-			for(var/datum/organ/external/org in damaged)
-				user.show_message(text("\blue &emsp; []: [][]\blue - []",	\
-				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
-				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"&emsp;", 		\
-				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
-		else
-			user.show_message("\blue &emsp; Limbs are OK.",1)
-
-	OX = M.getOxyLoss() > 50 ? 	"<font color='blue'><b>Severe oxygen deprivation detected</b></font>" 		: 	"Subject bloodstream oxygen level normal"
-	TX = M.getToxLoss() > 50 ? 	"<font color='green'><b>Dangerous amount of toxins detected</b></font>" 	: 	"Subject bloodstream toxin level minimal"
-	BU = M.getFireLoss() > 50 ? 	"<font color='#FFA500'><b>Severe burn damage detected</b></font>" 			:	"Subject burn injury status O.K"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" 		: 	"Subject brute-force injury status O.K"
-	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"\red Severe oxygen deprivation detected\blue" 	: 	"Subject bloodstream oxygen level normal"
-	user.show_message("[OX] | [TX] | [BU] | [BR]")
-	if (istype(M, /mob/living/carbon))
-		if(M:reagents.total_volume > 0)
-			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
-		if(M:virus2.len)
-			var/mob/living/carbon/C = M
-			for (var/ID in C.virus2)
-				if (ID in virusDB)
-					var/datum/data/record/V = virusDB[ID]
-					user.show_message(text("\red Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]"))
-//			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
-	if (M.getCloneLoss())
-		user.show_message("\red Subject appears to have been imperfectly cloned.")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
-	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		user.show_message("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.")
-	if (M.has_brain_worms())
-		user.show_message("\red Subject suffering from aberrant brain activity. Recommend further scanning.")
-	else if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
-		user.show_message("\red Subject is brain dead.")
-	else if (M.getBrainLoss() >= 60)
-		user.show_message("\red Severe brain damage detected. Subject likely to have mental retardation.")
-	else if (M.getBrainLoss() >= 10)
-		user.show_message("\red Significant brain damage detected. Subject may have had a concussion.")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			var/limb = e.display_name
-			if(e.status & ORGAN_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
-					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
-			if(e.has_infected_wound())
-				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
+		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+			var/message = ""
+			if(!output_to_chat)
+				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
 
-		for(var/name in H.organs_by_name)
-			var/datum/organ/external/e = H.organs_by_name[name]
-			if(e.status & ORGAN_BROKEN)
-				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
-				break
-		for(var/datum/organ/external/e in H.organs)
-			for(var/datum/wound/W in e.wounds) if(W.internal)
-				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
-				break
-		if(M:vessel)
-			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
-			var/blood_percent =  blood_volume / 560
-			var/blood_type = M.dna.b_type
-			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
-				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")
-			else if(blood_volume <= 336)
-				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.\blue Type: [blood_type]")
+			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
+			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
+			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+			message += "<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+			message += "<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span><br>"
+			message += "<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font><br>"
+
+			last_scan = message
+			last_scan_name = M.name
+			if(!output_to_chat)
+				message += "</BODY></HTML>"
+				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]")
-		user.show_message("\blue Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font>")
-	src.add_fingerprint(user)
-	return
+				to_chat(user, message)
+
+			add_fingerprint(user)
+			return
+		else
+			add_fingerprint(user)
+			var/dat = health_analyze(M, user, mode, output_to_chat)
+			last_scan = dat
+			last_scan_name = M.name
+			if(!output_to_chat)
+				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				onclose(user, "[M.name]_scan_report")
+			else
+				to_chat(user, dat)
+	else
+		add_fingerprint(user)
+		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+
+/obj/item/device/healthanalyzer/attack_self(mob/user)
+	user << browse(entity_ja(last_scan), "window=[last_scan_name]_scan_report;size=400x400;can_resize=1")
+	onclose(user, "[last_scan_name]")
+
+/obj/item/device/healthanalyzer/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
 
 	mode = !mode
-	switch (mode)
-		if(1)
-			to_chat(usr, "The scanner now shows specific limb damage.")
-		if(0)
-			to_chat(usr, "The scanner no longer shows limb damage.")
+	if(mode)
+		to_chat(usr, "The scanner now shows specific limb damage.")
+	else
+		to_chat(usr, "The scanner no longer shows limb damage.")
 
 /obj/item/device/healthanalyzer/rad_laser
 	materials = list(MAT_METAL=400)
@@ -220,7 +157,6 @@ REAGENT SCANNER
 	if(!irradiate)
 		return
 	if(!used)
-		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span>")
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
 		icon_state = "health1"
@@ -228,8 +164,7 @@ REAGENT SCANNER
 			used = 0
 			icon_state = "health"
 		to_chat(user,"<span class='warning'>Successfully irradiated [M].</span>")
-		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been irradiated by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>irradiated [M.name]'s ([M.ckey])</font>")
+		M.log_combat(user, "irradiated with [name]")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
@@ -289,9 +224,9 @@ REAGENT SCANNER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2.0
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -301,69 +236,50 @@ REAGENT SCANNER
 
 	action_button_name = "Use Analyzer"
 
+	var/advanced_mode = 0
+
+/obj/item/device/analyzer/verb/verbosity(mob/user as mob)
+	set name = "Toggle Advanced Gas Analysis"
+	set category = "Object"
+	set src in usr
+
+	if (!user.incapacitated())
+		advanced_mode = !advanced_mode
+		to_chat(usr, "You toggle advanced gas analysis [advanced_mode ? "on" : "off"].")
+
 /obj/item/device/analyzer/attack_self(mob/user)
 
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(usr, "\red You don't have the dexterity to do this!")
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
+	analyze_gases(user.loc, user,advanced_mode)
+	return TRUE
+
+/obj/item/device/analyzer/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
 		return
-
-	var/datum/gas_mixture/environment = location.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	user.show_message("\blue <B>Results:</B>", 1)
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("\blue Pressure: [round(pressure,0.1)] kPa", 1)
-	else
-		user.show_message("\red Pressure: [round(pressure,0.1)] kPa", 1)
-	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/phoron_concentration = environment.phoron/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("\blue Nitrogen: [round(n2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Nitrogen: [round(n2_concentration*100)]%", 1)
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("\blue Oxygen: [round(o2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Oxygen: [round(o2_concentration*100)]%", 1)
-
-		if(co2_concentration > 0.01)
-			user.show_message("\red CO2: [round(co2_concentration*100)]%", 1)
-		else
-			user.show_message("\blue CO2: [round(co2_concentration*100)]%", 1)
-
-		if(phoron_concentration > 0.01)
-			user.show_message("\red Phoron: [round(phoron_concentration*100)]%", 1)
-
-		if(unknown_concentration > 0.01)
-			user.show_message("\red Unknown: [round(unknown_concentration*100)]%", 1)
-
-		user.show_message("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", 1)
-
-	src.add_fingerprint(user)
-	return
+	if (user.incapacitated())
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+	if(!isobj(target))
+		return
+	var/obj/O = target
+	if(O.simulated)
+		analyze_gases(O, user, advanced_mode)
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT | OPENCONTAINER
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -373,8 +289,8 @@ REAGENT SCANNER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/mass_spectrometer/New()
-	..()
+/obj/item/device/mass_spectrometer/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(5)
 	reagents = R
 	R.my_atom = src
@@ -386,20 +302,18 @@ REAGENT SCANNER
 		icon_state = initial(icon_state)
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
-	if (user.stat)
-		return
 	if (crit_fail)
-		to_chat(user, "\red This device has critically failed and is no longer functional!")
+		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
 				reagents.clear_reagents()
-				to_chat(user, "\red The sample was contaminated! Please insert another sample")
+				to_chat(user, "<span class='warning'>The sample was contaminated! Please insert another sample</span>")
 				return
 			else
 				blood_traces = params2list(R.data["trace_chem"])
@@ -434,9 +348,9 @@ REAGENT SCANNER
 	desc = "A hand-held reagent scanner which identifies chemical agents."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -446,16 +360,15 @@ REAGENT SCANNER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user)
-	if (user.stat)
-		return
+/obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "\red You don't have the dexterity to do this!")
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	if (crit_fail)
-		to_chat(user, "\red This device has critically failed and is no longer functional!")
+		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
 
 	if(!isnull(O.reagents))
@@ -464,7 +377,7 @@ REAGENT SCANNER
 			var/one_percent = O.reagents.total_volume / 100
 			for (var/datum/reagent/R in O.reagents.reagent_list)
 				if(prob(reliability))
-					dat += "\n &emsp; \blue [R][details ? ": [R.volume / one_percent]%" : ""]"
+					dat += "\n &emsp; <span class='notice'>[R][details ? ": [R.volume / one_percent]%" : ""]</span>"
 					recent_fail = 0
 				else if(recent_fail)
 					crit_fail = 1
@@ -473,11 +386,11 @@ REAGENT SCANNER
 				else
 					recent_fail = 1
 		if(dat)
-			to_chat(user, "\blue Chemicals found: [dat]")
+			to_chat(user, "<span class='notice'>Chemicals found: [dat]</span>")
 		else
-			to_chat(user, "\blue No active chemical agents found in [O].")
+			to_chat(user, "<span class='notice'>No active chemical agents found in [O].</span>")
 	else
-		to_chat(user, "\blue No significant chemical agents found in [O].")
+		to_chat(user, "<span class='notice'>No significant chemical agents found in [O].</span>")
 
 	return
 
@@ -492,60 +405,315 @@ REAGENT SCANNER
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locoff"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 2.0
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/obj/item/weapon/ectoplasm/ectoplasm = null
-	var/active = 0
+	var/target = null
+	var/target_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
+	var/active = FALSE
 
+/obj/item/weapon/occult_pinpointer/attack_self()
+	if(!active)
+		to_chat(usr, "<span class='notice'>You activate the [name]</span>")
+		START_PROCESSING(SSobj, src)
+	else
+		icon_state = "locoff"
+		to_chat(usr, "<span class='notice'>You deactivate the [name]</span>")
+		STOP_PROCESSING(SSobj, src)
+	active = !active
 
-	attack_self()
-		if(!active)
-			active = 1
-			search()
-			to_chat(usr, "\blue You activate the [src.name]")
-		else
-			active = 0
-			icon_state = "locoff"
-			to_chat(usr, "\blue You deactivate the [src.name]")
+/obj/item/weapon/occult_pinpointer/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		target_type = OS.scanned_type
+		target = null // So we ain't looking for the old target
+		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical","magical","arcane")] knowledge from [W]</span>")
 
-	proc/search()
-		if(!active) return
-		if(!ectoplasm)
-			ectoplasm = locate()
-			if(!ectoplasm)
-				icon_state = "locnull"
-				return
-		dir = get_dir(src,ectoplasm)
-		switch(get_dist(src,ectoplasm))
-			if(0)
-				icon_state = "locon"
-			if(1 to 8)
-				icon_state = "locon"
-			if(9 to 16)
-				icon_state = "locon"
-			if(16 to INFINITY)
-				icon_state = "locon"
-		spawn(5) .()
+/obj/item/weapon/occult_pinpointer/Destroy()
+	active = FALSE
+	STOP_PROCESSING(SSobj, src)
+	target = null
+	return ..()
+
+/obj/item/weapon/occult_pinpointer/process()
+	if(!active)
+		return
+	if(!target)
+		target = locate(target_type)
+		if(!target)
+			icon_state = "locnull"
+			return
+	dir = get_dir(src,target)
+	if(get_dist(src,target))
+		icon_state = "locon"
 
 /obj/item/device/occult_scanner
 	name = "occult scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "occult_scan"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 2.0
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
+	var/scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 
-/obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
-	if(user && user.client)
-		if(ishuman(M) && M.stat == DEAD)
-			user.visible_message("\blue [user] scans [M], the air around them humming gently.")
-			user.show_message("\blue [M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]", 1)
-		else	return
+/obj/item/device/occult_scanner/attack_self(mob/user)
+	if(!istype(scanned_type, /obj/item/weapon/reagent_containers/food/snacks/ectoplasm))
+		scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
+		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
+
+/obj/item/device/occult_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	if(user && user.client && H.stat == DEAD)
+		user.visible_message("<span class='notice'>[user] scans [H], the air around them humming gently.</span>",
+			                 "<span class='notice'>[H] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]</span>")
+
+/obj/item/device/contraband_finder
+	name = "Contrband Finder"
+	icon_state = "contraband_scanner"
+	item_state = "contraband_scanner"
+	desc = "A hand-held body scanner able to detect items that can't go past customs."
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	throwforce = 3
+	w_class = ITEM_SIZE_SMALL
+	throw_speed = 5
+	throw_range = 10
+	m_amt = 200
+	origin_tech = "magnets=4"
+
+	var/can_scan = TRUE
+
+	var/list/contraband_items = list(/obj/item/weapon/storage/box/syndie_kit/merch,
+	                                 /obj/item/weapon/match,
+	                                 /obj/item/clothing/mask/cigarette,
+	                                 /obj/item/weapon/lighter,
+	                                 /obj/item/weapon/storage/fancy/cigarettes,
+	                                 /obj/item/weapon/storage/secure/briefcase,
+	                                 /obj/item/weapon/storage/pouch/pistol_holster,
+	                                 /obj/item/weapon/storage/pouch/baton_holster,
+	                                 /obj/item/clothing/accessory/holster,
+	                                 /obj/item/device/flash,
+	                                 /obj/item/weapon/reagent_containers/hypospray,
+	                                 /obj/item/weapon/reagent_containers/syringe,
+	                                 /obj/item/weapon/reagent_containers/glass/bottle,
+	                                 /obj/item/weapon/reagent_containers/food,
+	                                 /obj/item/weapon/cartridge/clown,
+	                                 /obj/item/weapon/bananapeel,
+	                                 /obj/item/weapon/soap,
+	                                 /obj/item/weapon/bikehorn,
+	                                 /obj/item/toy/laugh_button,
+	                                 /obj/item/device/tabletop_assistant,
+	                                 /obj/item/weapon/storage/pill_bottle,
+	                                 /obj/item/device/paicard,
+	                                 /obj/item/clothing/mask/ecig,
+	                                 /obj/item/weapon/game_kit,
+	                                 /obj/item/weapon/legcuffs,
+	                                 /obj/item/weapon/handcuffs,
+	                                 /obj/item/weapon/reagent_containers/spray/pepper
+	                                 )
+
+	var/list/danger_items = list(/obj/item/device/uplink,
+	                             /obj/item/weapon/gun,
+	                             /obj/item/weapon/shield,
+	                             /obj/item/clothing/head/helmet,
+	                             /obj/item/clothing/suit/armor,
+	                             /obj/item/weapon/melee/powerfist,
+	                             /obj/item/weapon/melee/energy/sword,
+	                             /obj/item/weapon/storage/box/emps,
+	                             /obj/item/weapon/grenade/empgrenade,
+	                             /obj/item/weapon/grenade/syndieminibomb,
+	                             /obj/item/weapon/grenade/spawnergrenade/manhacks,
+	                             /obj/item/weapon/antag_spawner/borg_tele,
+	                             /obj/item/ammo_box,
+	                             /obj/item/ammo_casing,
+	                             /obj/item/weapon/storage/box/syndie_kit/cutouts,
+	                             /obj/item/cardboard_cutout,
+	                             /obj/item/clothing/gloves/black/strip,
+	                             /obj/item/weapon/soap/syndie,
+	                             /obj/item/weapon/cartridge/syndicate,
+	                             /obj/item/toy/carpplushie/dehy_carp,
+	                             /obj/item/weapon/storage/box/syndie_kit/chameleon,
+	                             /obj/item/weapon/storage/box/syndie_kit/fake,
+	                             /obj/item/weapon/storage/backpack/satchel/flat,
+	                             /obj/item/clothing/shoes/syndigaloshes,
+	                             /obj/item/clothing/mask/gas/voice,
+	                             /obj/item/device/chameleon,
+	                             /obj/item/device/camera_bug,
+	                             /obj/item/weapon/silencer,
+	                             /obj/item/weapon/storage/box/syndie_kit/throwing_weapon,
+	                             /obj/item/weapon/pen/edagger,
+	                             /obj/item/weapon/grenade/clusterbuster/soap,
+	                             /obj/item/device/healthanalyzer/rad_laser,
+	                             /obj/item/weapon/card/emag,
+	                             /obj/item/weapon/storage/toolbox/syndicate,
+	                             /obj/item/weapon/storage/backpack/dufflebag/surgery,
+	                             /obj/item/weapon/storage/backpack/dufflebag/c4,
+	                             /obj/item/weapon/plastique,
+	                             /obj/item/weapon/storage/belt/military,
+	                             /obj/item/weapon/storage/firstaid/tactical,
+	                             /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	                             /obj/item/weapon/storage/box/syndie_kit/space,
+	                             /obj/item/clothing/glasses/thermal/syndi,
+	                             /obj/item/device/flashlight/emp,
+	                             /obj/item/device/encryptionkey/binary,
+	                             /obj/item/device/encryptionkey/syndicate,
+	                             /obj/item/weapon/storage/box/syndie_kit/posters,
+	                             /obj/item/device/biocan,
+	                             /obj/item/device/multitool/ai_detect,
+	                             /obj/item/weapon/aiModule/freeform/syndicate,
+	                             /obj/item/device/powersink,
+	                             /obj/item/device/radio/beacon/syndicate,
+	                             /obj/item/device/radio/beacon/syndicate_bomb,
+	                             /obj/item/device/syndicatedetonator,
+	                             /obj/item/weapon/shield/energy,
+	                             /obj/item/device/traitor_caller,
+	                             /obj/item/weapon/storage/box/syndie_kit/imp_freedom,
+	                             /obj/item/weapon/storage/box/syndie_kit/imp_uplink,
+	                             /obj/item/weapon/implanter/storage,
+	                             /obj/item/weapon/storage/box/syndicate,
+	                             /obj/item/device/assembly/mousetrap
+	                             )
+
+	var/list/contraband_reagents = list("sugar",
+	                                    "serotrotium",
+	                                    "kyphotorin",
+	                                    "lube",
+	                                    "glycerol",
+	                                    "nicotine",
+	                                    "nanites",
+	                                    "nanites2",
+	                                    "nanobots",
+	                                    "mednanobots"
+	                                    )
+
+	var/list/contraband_reagents_types = list(/datum/reagent/consumable)
+
+	var/list/danger_reagents_types = list(/datum/reagent/toxin)
+
+	var/list/danger_reagents = list("potassium",
+	                                "mercury",
+	                                "chlorine",
+	                                "radium",
+	                                "uranium",
+	                                "alphaamanitin",
+	                                "aflatoxin",
+	                                "chefspecial",
+	                                "dioxin",
+	                                "mulligan",
+	                                "mutationtoxin",
+	                                "amutationtoxin",
+	                                "space_drugs",
+	                                "cryptobiolin",
+	                                "impedrezene",
+	                                "stoxin2",
+	                                "hyperzine",
+	                                "blood",
+	                                "nitroglycerin",
+	                                "thermite",
+	                                "fuel",
+	                                "xenomicrobes",
+	                                "ectoplasm"
+	                                )
+
+/obj/item/device/contraband_finder/proc/reset_color()
+	icon_state = "contraband_scanner"
+	item_state = "contraband_scanner"
+	if(ismob(loc))
+		var/mob/M = loc
+		if(M.is_in_hands(src))
+			if(M.hand)
+				M.update_inv_l_hand()
+			else
+				M.update_inv_r_hand()
+	can_scan = TRUE
+
+/obj/item/device/contraband_finder/attack(mob/M, mob/user)
+	return
+
+/obj/item/device/contraband_finder/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	scan(target, user)
+
+/obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
+	if(!dropping.Adjacent(user))
+		return
+	scan(dropping, user)
+
+/obj/item/device/contraband_finder/proc/scan(atom/target, mob/user)
+	if(!can_scan)
+		return
+
+	var/list/to_check = target.get_contents()
+	to_check += target
+
+	var/danger_color = "green"
+
+	to_check_loop:
+		for(var/atom/A in to_check)
+			if(danger_color == "green" && is_type_in_list(A, contraband_items))
+				danger_color = "yellow"
+			if(A.blood_DNA)
+				danger_color = "red"
+				break
+			if(istype(A, /obj/item))
+				var/obj/item/I = A
+				if(I.is_sharp())
+					danger_color = "red"
+					break
+				if(I.force >= 10)
+					danger_color = "red"
+					break
+			if(is_type_in_list(A, danger_items))
+				danger_color = "red"
+				break
+
+			if(A.reagents)
+				if(danger_color == "green")
+					for(var/reagent in contraband_reagents_types)
+						if(locate(reagent) in A.reagents.reagent_list)
+							danger_color = "yellow"
+
+					for(var/reagent_id in contraband_reagents)
+						if(A.reagents.has_reagent(reagent_id))
+							danger_color = "yellow"
+
+				for(var/reagent in danger_reagents_types)
+					if(locate(reagent) in A.reagents.reagent_list)
+						danger_color = "red"
+						break to_check_loop
+
+				for(var/reagent_id in danger_reagents)
+					if(A.reagents.has_reagent(reagent_id))
+						danger_color = "red"
+						break to_check_loop
+
+	switch(danger_color)
+		if("green")
+			user.visible_message("[bicon(src)] <span class='notice'>Ping.</span>")
+			playsound(user, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
+		if("yellow")
+			user.visible_message("[bicon(src)] <span class='warning'>Beep!</span>")
+			playsound(user, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+		if("red")
+			user.visible_message("[bicon(src)] <span class='warning bold'>BE-E-E-EP!</span>")
+			playsound(user, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+
+	icon_state = "contraband_scanner_[danger_color]"
+	item_state = "contraband_scanner_[danger_color]"
+	if(user.hand)
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()
+	can_scan = FALSE
+	addtimer(CALLBACK(src, .proc/reset_color), 2 SECONDS)

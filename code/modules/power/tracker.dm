@@ -10,12 +10,12 @@
 	icon_state = "tracker"
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
-/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc)
+/obj/machinery/power/tracker/atom_init(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
@@ -57,13 +57,13 @@
 /obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user)
 
 	if(iscrowbar(W))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 50, target = src))
+		if(user.is_busy()) return
+		if(W.use_tool(src, user, 50, volume = 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			qdel(src)
 		return
@@ -89,4 +89,4 @@
 	name = "tracker electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL

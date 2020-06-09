@@ -4,20 +4,22 @@
 	name = "Gravity Generator Control"
 	desc = "A computer to control a local gravity generator.  Qualified personnel only."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
+	icon_state = "airtunnel"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	anchored = 1
 	density = 1
 	var/obj/machinery/gravity_generator = null
 
 
-/obj/machinery/gravity_generator/
+/obj/machinery/gravity_generator
 	name = "Gravitational Generator"
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000
 	var/on = 1
@@ -25,21 +27,19 @@
 	var/effectiverange = 25
 
 	// Borrows code from cloning computer
-/obj/machinery/computer/gravity_control_computer/New()
+/obj/machinery/computer/gravity_control_computer/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/gravity_generator/New()
+/obj/machinery/computer/gravity_control_computer/atom_init_late()
+	updatemodules()
+
+/obj/machinery/gravity_generator/atom_init()
 	..()
-	spawn(5)
-		locatelocalareas()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-
+/obj/machinery/gravity_generator/atom_init_late()
+	locatelocalareas()
 
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
 	src.gravity_generator = findgenerator()
@@ -50,33 +50,20 @@
 	for(var/area/A in range(src,effectiverange))
 		if(A.name == "Space")
 			continue // No (de)gravitizing space.
-		if(A.master && !( A.master in localareas) )
-			localareas += A.master
+		if(!(A in localareas))
+			localareas += A
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		//world << "SEARCHING IN [dir]"
-		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
+		foundgenerator = locate(/obj/machinery/gravity_generator, get_step(src, dir))
 		if (!isnull(foundgenerator))
 			//world << "FOUND"
 			break
 	return foundgenerator
 
-
-/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user)
-	user.set_machine(src)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
+/obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"
@@ -108,7 +95,7 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(dat, "window=gravgen")
+	user << browse(entity_ja(dat), "window=gravgen")
 	onclose(user, "gravgen")
 
 
@@ -124,7 +111,7 @@
 			for(var/area/A in gravity_generator:localareas)
 				var/obj/machinery/gravity_generator/G
 				for(G in machines)
-					if((A.master in G.localareas) && (G.on))
+					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
 					A.gravitychange(0,A)

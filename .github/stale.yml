@@ -1,0 +1,30 @@
+# Configuration for probot-stale - https://github.com/probot/stale
+
+pulls:
+  daysUntilStale: 30
+  daysUntilClose: 7
+  staleLabel: Stalled PR
+  exemptLabels:
+    - Pinned
+  markComment: >
+    Данный ПР автоматически отмечен как застоявшийся по причине длительного отсутствия обновлений.
+    Он будет закрыт через 7 дней, если никакой активности не будет проявлено.
+    Если вы считаете, что ПР еще актуален, или что я (злобный робот) пристаю к вам зря - просто напишите любой комментарий.
+    Спасибо за ваш вклад.
+  closeComment: >
+    ПР закрыт из-за длительного отсуствия активности. Для переоткрытия ПРа, пожалуйста, обратитесь к
+    кому-либо из мейнтейнеров. Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.
+
+issues:
+  daysUntilStale: 200
+  daysUntilClose: 1
+  staleLabel: Stalled Proposal
+  onlyLabels: 
+    - Proposal
+  exemptLabels:
+    - Bug
+  markComment: false
+  closeComment: >
+    Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
+    и вам нужно открыть данный ишью, пожалуйста, обратитесь к кому-либо из мейнтейнеров.
+    Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.

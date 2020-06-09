@@ -17,15 +17,16 @@
 /obj/item/weapon/rocksliver
 	name = "rock sliver"
 	desc = "It looks extremely delicate."
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "sliver1"	//0-4
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	sharp = 1
 	//item_state = "electronic"
 	var/source_rock = "/turf/simulated/mineral/"
 	var/datum/geosample/geological_data
 
-/obj/item/weapon/rocksliver/New()
+/obj/item/weapon/rocksliver/atom_init()
+	. = ..()
 	icon_state = "sliver[rand(1,3)]"
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8

@@ -4,28 +4,37 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
-	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
-	var/mode = "grey"
 
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
-	var/obj/item/device/toner/ink = null
+	var/static/list/modes // used to dye pipes, contains pipe colors.
+	var/obj/item/device/toner/ink
 
-/obj/item/weapon/airlock_painter/New()
+/obj/item/weapon/airlock_painter/atom_init()
+	. = ..()
+
+	if(!modes)
+		modes = new()
+		for(var/C in pipe_colors)
+			modes += "[C]"
+
 	ink = new /obj/item/device/toner(src)
 
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user, cost)
-	if(can_use(user, cost))
+/obj/item/weapon/airlock_painter/use(cost)
+	if(cost < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		return 0
+	if(can_use(usr, cost))
 		ink.charges -= cost
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	else
 		return 0
@@ -69,24 +78,33 @@
 		W.loc = src
 		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
 		ink = null
 
-/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user)
-	if(user && user.client)
-		if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
-			return
-		else
-			mode = input("Which colour do you want to use?","Universal painter") in modes
-			var/obj/machinery/atmospherics/pipe/P = A
-			P.pipe_color = mode
-			user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
-			P.update_icon()
-	return
+/obj/item/weapon/airlock_painter/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+
+	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
+		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
+		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
+		!in_range(user, target))
+	{
+		return
+	}
+
+	var/obj/machinery/atmospherics/pipe/P = target
+
+	var/selected_color = input("Which colour do you want to use?", "Universal painter") in modes
+	if(!selected_color)
+		return
+
+	user.visible_message("<span class='notice'>[user] paints \the [P] [selected_color].</span>", "<span class='notice'>You paint \the [P] [selected_color].</span>")
+	P.change_color(pipe_colors[selected_color])

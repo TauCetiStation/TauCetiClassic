@@ -9,14 +9,9 @@
 	var/rad_range = 1
 
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
+	if(!active)
 
-	if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		emp_act(1)
-
-	else if(!active)
-
-		if(istype(O, /obj/item/weapon/wrench))
+		if(iswrench(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -27,29 +22,20 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-/obj/machinery/power/port_gen/riteg/attack_hand(mob/user)
-	..()
-	if (!anchored)
+/obj/machinery/power/port_gen/riteg/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	emagged = 1
+	emp_act(1)
+	return TRUE
+
+/obj/machinery/power/port_gen/riteg/ui_interact(mob/user)
+	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+		user.unset_machine(src)
+		user << browse(null, "window=port_gen")
 		return
-
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_ai(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
-			user.unset_machine(src)
-			user << browse(null, "window=port_gen")
-			return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)
@@ -59,7 +45,7 @@
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[dat]", "window=port_gen")
+	user << browse("[entity_ja(dat)]", "window=port_gen")
 	onclose(user, "port_gen")
 
 /obj/machinery/power/port_gen/riteg/is_operational_topic()
@@ -88,9 +74,9 @@
 	src.updateUsrDialog()
 
 
-obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
+/obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
 	for(var/mob/living/l in range(rad_range,src))
-		l.show_message("<span class=\"warning\">You feel warm</span>", 2)
+		l.show_message("<span class=\"warning\">You feel warm</span>", SHOWMSG_FEEL)
 		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)
 

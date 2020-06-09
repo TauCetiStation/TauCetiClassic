@@ -25,7 +25,8 @@
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
 	var/mutantrace = "human"
 
-/obj/effect/landmark/corpse/initialize()
+/obj/effect/landmark/corpse/atom_init()
+	. = ..()
 	createCorpse()
 
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
@@ -34,29 +35,29 @@
 	M.real_name = src.name
 	M.death(1) //Kills the new mob
 	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
+		M.equip_to_slot_or_del(new src.corpseuniform(M), SLOT_W_UNIFORM)
 	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
+		M.equip_to_slot_or_del(new src.corpsesuit(M), SLOT_WEAR_SUIT)
 	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
+		M.equip_to_slot_or_del(new src.corpseshoes(M), SLOT_SHOES)
 	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
+		M.equip_to_slot_or_del(new src.corpsegloves(M), SLOT_GLOVES)
 	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_l_ear)
+		M.equip_to_slot_or_del(new src.corpseradio(M), SLOT_L_EAR)
 	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
+		M.equip_to_slot_or_del(new src.corpseglasses(M), SLOT_GLASSES)
 	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
+		M.equip_to_slot_or_del(new src.corpsemask(M), SLOT_WEAR_MASK)
 	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
+		M.equip_to_slot_or_del(new src.corpsehelmet(M), SLOT_HEAD)
 	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
+		M.equip_to_slot_or_del(new src.corpsebelt(M), SLOT_BELT)
 	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
+		M.equip_to_slot_or_del(new src.corpsepocket1(M), SLOT_R_STORE)
 	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
+		M.equip_to_slot_or_del(new src.corpsepocket2(M), SLOT_L_STORE)
 	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
+		M.equip_to_slot_or_del(new src.corpseback(M), SLOT_BACK)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
 		W.name = "[M.real_name]'s ID Card"
@@ -76,7 +77,7 @@
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
-		M.equip_to_slot_or_del(W, slot_wear_id)
+		M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	qdel(src)
 
 
@@ -91,7 +92,7 @@
 	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
@@ -107,7 +108,7 @@
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
@@ -226,7 +227,7 @@
 	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	corpsehelmet = /obj/item/clothing/head/centhat
 	corpsegloves = /obj/item/clothing/gloves/swat
-	corpseshoes = /obj/item/clothing/shoes/swat
+	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsepocket1 = /obj/item/weapon/lighter/zippo
 	corpseid = 1
 	corpseidjob = "Commander"

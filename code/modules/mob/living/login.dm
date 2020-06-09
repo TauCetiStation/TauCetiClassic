@@ -33,13 +33,18 @@
 				if((mind in ticker.mode.thralls) || (mind in ticker.mode.shadows))
 					ticker.mode.update_all_shadows_icons()
 
+	//Zombies
+	if(src in zombie_list)
+		update_all_zombie_icons()
+
 	//Vents
 	if(ventcrawler)
 		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
-	//Should update regardless of if we can ventcrawl, since we can end up in pipes in other ways.
-	update_pipe_vision()
 
 	noob_notify(src)
+	
+	if(config.guard_enabled)
+		client.guard.trigger_init()
 
 	//Jukebox
 	client.media = new /datum/media_manager(src)

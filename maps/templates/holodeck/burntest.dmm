@@ -1,15 +1,141 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"; nitrogen = 0.01; phoron = 82.1472},/area/holodeck/source_burntest)
-"b" = (/obj/effect/landmark{name = "Atmospheric Test Start"},/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"; nitrogen = 0.01; phoron = 82.1472},/area/holodeck/source_burntest)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "engine";
+	name = "Holodeck Projector Floor";
+	nitrogen = 0.01;
+	phoron = 82.1472
+	},
+/area/station/civilian/holodeck/source_burntest)
+"b" = (
+/obj/effect/landmark{
+	name = "Atmospheric Test Start"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "engine";
+	name = "Holodeck Projector Floor";
+	nitrogen = 0.01;
+	phoron = 82.1472
+	},
+/area/station/civilian/holodeck/source_burntest)
 
 (1,1,1) = {"
-aaaaaaaaaa
-aaaaaaaaaa
-aabaaaabaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aabaaaabaa
-aaaaaaaaaa
-aaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+a
+a
+a
+a
+b
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+b
+a
+a
+a
+a
+b
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

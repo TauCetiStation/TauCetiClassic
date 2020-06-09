@@ -34,14 +34,15 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap_icon = null
+	var/obj/screen/leap/leap_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
+	var/obj/screen/nutrition_icon = null
 
-	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/xenomorph_plasma_display = null
 	var/obj/screen/nightvisionicon = null
 
-	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
+	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -57,10 +58,9 @@
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/monkeyizing = null	//Carbon
 	var/other = 0.0
 	var/notransform = null	//Carbon
-	var/hand = null
+	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
@@ -73,13 +73,10 @@
 	var/sec_record = ""
 	var/gen_record = ""
 	var/blinded = null
-	var/bhunger = 0			//Carbon
-	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
 	var/phoron = null
-	var/sleeping = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
@@ -96,14 +93,14 @@
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
 	var/floating = 0
-
+    // What is the maximum size ratio that we can pull. The more it is the stronger the mob.
+	var/pull_size_ratio = 2.0
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
-	var/cpr_time = 1.0//Carbon
 
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
 	var/dizziness = 0//Carbon
 	var/is_dizzy = 0
@@ -119,7 +116,7 @@
 	var/weakened = 0.0
 	var/losebreath = 0.0//Carbon
 	var/intent = null//Living
-	var/a_intent = "help"//Living
+	var/a_intent = INTENT_HELP //Living
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
@@ -130,8 +127,6 @@
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
-
-	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/datum/hud/hud_used = null
 
@@ -181,7 +176,7 @@
 	var/mob/living/carbon/LAssailant = null
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/effect/proc_holder/spell/list/spell_list = list()
+	var/list/obj/effect/proc_holder/spell/spell_list = list()
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
@@ -198,7 +193,7 @@
 
 	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
 
-	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
+	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 
@@ -213,6 +208,8 @@
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
+	var/atom/movable/remote_control //Calls relay_move() to whatever this is set to when the mob tries to move
+
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/universal_understand = 0 // Set to 1 to enable the mob to understand everyone, not necessarily speak
@@ -220,7 +217,7 @@
 	var/alien_talk_understand = 0
 
 	var/has_limbs = 1 //Whether this mob have any limbs he can move with
-	var/can_stand = 1 //Whether this mob have ability to stand
+	var/stance_damage = 1 //Whether this mob's ability to stand has been affected
 
 	var/immune_to_ssd = 0
 
@@ -230,3 +227,8 @@
 	var/list/active_genes=list()
 
 	var/fake_death = 0 //New changeling statis
+	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
+
+	var/list/weather_immunities = list()
+
+	var/list/progressbars = null //for stacking do_after bars

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	min_oxy = 0
 	max_oxy = 0
@@ -17,9 +17,9 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	weather_immunities = list("ash", "acid")
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -38,7 +38,7 @@
 
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
+/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
 		if(!stat)
@@ -47,6 +47,8 @@
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
 			return
 	..()
+
+////////////////////////////////////////////////////////////////
 
 
 ////////////////Basilisk////////////////
@@ -72,15 +74,17 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
-	attacktext = "bites into"
-	a_intent = "harm"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	melee_damage = 12
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bladeslice.ogg')
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
-
+	loot_list = list(/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond,
+					/obj/item/weapon/ore/diamond)
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
@@ -111,14 +115,6 @@
 		if(3.0)
 			adjustBruteLoss(110)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
-	var/counter
-	for(counter=0, counter<2, counter++)
-		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
-		D.layer = 4.1
-	..(gibbed)
-
-
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
@@ -146,15 +142,18 @@
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3
+	loot_list = list(/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold,
+					/obj/item/weapon/ore/gold)
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 60
 	health = 60
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "barrels into"
-	a_intent = "help"
+	melee_damage = 0
+	attacktext = "barrell"
+	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
@@ -247,13 +246,13 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	loot_list = list(/obj/item/asteroid/hivelord_core = 1)
 	speed = 3
 	maxHealth = 75
 	health = 75
 	harm_intent_damage = 5
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "lashes out at"
+	melee_damage = 0
+	attacktext = "lash"
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_cap = 0
@@ -273,7 +272,6 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
 	..(gibbed)
 
@@ -284,7 +282,8 @@
 	icon_state = "boiledrorocore"
 	var/inert = 0
 
-/obj/item/asteroid/hivelord_core/New()
+/obj/item/asteroid/hivelord_core/atom_init()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/make_inert), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
@@ -329,20 +328,24 @@
 	maxHealth = 1
 	health = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 2
-	melee_damage_upper = 2
-	attacktext = "slashes"
+	melee_damage = 2
+	attacktext = "slash"
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init_late()
 	QDEL_IN(src, 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
+	return
 
 ////////////////Goliath////////////////
 
@@ -355,7 +358,7 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
+	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -363,13 +366,13 @@
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 4
+	loot_list = list(/obj/item/asteroid/goliath_hide = 1)
 	speed = 2
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	attacktext = "pulverizes"
+	melee_damage = 25
+	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
@@ -382,7 +385,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || incapacitated() || stance == HOSTILE_STANCE_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -408,12 +411,13 @@
 		icon_state = icon_aggro
 	return
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 
-/obj/effect/goliath_tentacle/New()
+/obj/effect/goliath_tentacle/atom_init()
+	. = ..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
@@ -422,15 +426,14 @@
 
 /obj/effect/goliath_tentacle/original
 
-/obj/effect/goliath_tentacle/original/New()
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
 	var/list/directions = cardinal.Copy()
-	var/counter
-	for(counter = 1, counter <= 3, counter++)
+	for (var/i in 1 to 3)
 		var/spawndir = pick(directions)
 		directions -= spawndir
-		var/turf/T = get_step(src,spawndir)
+		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T)
-	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
@@ -438,16 +441,11 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		Trip()
 		return
-	..()
-
-/mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..(gibbed)
+	. = ..()
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
@@ -455,17 +453,19 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag)
+/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
-			var/obj/item/clothing/suit/space/C = target
+			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 80)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
-				C.breach_threshold = min(C.breach_threshold + 2, 24)
+			if(current_armor["melee"] < 80)
+				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
+				if(istype(C, /obj/item/clothing/suit/space))
+					var/obj/item/clothing/suit/space/S = C
+					S.breach_threshold = min(S.breach_threshold + 2, 24)
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				qdel(src)
 			else

@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////
 ////////////Santa suit & hat//////////////////
 //////////////////////////////////////////////
@@ -21,17 +22,18 @@
 ////////////Winter suits//////////////////////
 //////////////////////////////////////////////
 
-/obj/item/clothing/proc/can_use(mob/user) // Checking if mob can use the object eg restrained and other
-	if(user && ismob(user))
-		if(!user.stat && user.canmove && !user.restrained())
-			return 1
-	return 0
+/obj/item/clothing/proc/can_use(mob/living/user) // Checking if mob can use the object eg restrained and other
+	return istype(user) && !user.incapacitated()
 
-/obj/item/clothing/suit/wintercoat/attack_self() //Refactored function for using coat's hood by clicking on it
+/obj/item/clothing/suit/wintercoat/attack_self() // Refactored function for using coat's hood by clicking on it
 
 	if(!can_use(usr))
 		return 0
-
+	if(ishuman(usr))
+		var/mob/living/carbon/human/C = usr
+		if(C.head)
+			to_chat(C, "<span class='warning'>You're wearing something on your head!</span>")
+			return
 	src.hooded = !src.hooded
 
 	if(!src.hooded)
@@ -40,10 +42,9 @@
 	else
 		src.icon_state = "[initial(icon_state)]_t"
 		to_chat(usr, "You toggle on [src]'s hood.")
-
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_hair(0)	//only human type has hair
+		H.update_hair(0) // only human type has hair
 	usr.update_inv_head(0)
 	usr.update_inv_wear_suit()
 
@@ -55,7 +56,7 @@
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS|HEAD
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
@@ -100,7 +101,7 @@
 /obj/item/clothing/suit/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 
 /obj/item/clothing/suit/wintercoat/cargo
 	name = "cargo winter coat"
@@ -119,9 +120,9 @@
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "winterboots"
 	item_state = "winterboots"
-	cold_protection = FEET|LEGS
+	cold_protection = LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET|LEGS
+	heat_protection = LEGS
 
 
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
@@ -132,7 +133,7 @@
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_emt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | ARMS | HANDS
+	cold_protection = UPPER_TORSO | LOWER_TORSO | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
@@ -157,7 +158,7 @@
 		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
-	name = "Ded moroz hat"
+	name = "christmas hat"
 	desc = "Perfect for hot winter in Siberia, da?"
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
@@ -165,3 +166,13 @@
 	item_state = "santa"
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
+
+/obj/item/clothing/under/sexy_santa
+	name = "sexy santa suit"
+	desc = "Prepare to jingle all the bells."
+	icon_state = "sexy_santa"
+	item_state = "sexy_santa"
+	item_color = "sexy_santa"
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)

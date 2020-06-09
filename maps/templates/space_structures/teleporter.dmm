@@ -1,0 +1,267 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/turf/simulated/wall/r_wall,
+/area/station/aisat/teleport)
+"c" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"d" = (
+/obj/structure/computerframe,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"e" = (
+/obj/machinery/teleport/station,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"f" = (
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"g" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"h" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"i" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/yellow,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"j" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"k" = (
+/obj/item/weapon/stock_parts/cell,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"l" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"m" = (
+/turf/space,
+/area/station/aisat/teleport)
+"n" = (
+/obj/item/weapon/table_parts,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"o" = (
+/obj/structure/lattice,
+/turf/space,
+/area/station/aisat/teleport)
+"p" = (
+/obj/structure/closet,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"q" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"r" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/space,
+/area/station/aisat/teleport)
+"s" = (
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+"t" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/plating/airless,
+/area/station/aisat/teleport)
+
+(1,1,1) = {"
+a
+a
+c
+a
+a
+a
+c
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+a
+a
+a
+c
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+c
+c
+a
+a
+a
+c
+c
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+b
+j
+f
+b
+b
+c
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+k
+f
+t
+b
+b
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+b
+b
+g
+f
+f
+o
+q
+b
+b
+c
+a
+a
+"}
+(7,1,1) = {"
+b
+d
+f
+l
+o
+o
+r
+f
+b
+a
+c
+a
+"}
+(8,1,1) = {"
+b
+e
+h
+m
+o
+m
+m
+o
+f
+c
+c
+c
+"}
+(9,1,1) = {"
+b
+f
+f
+f
+o
+o
+o
+f
+b
+a
+c
+a
+"}
+(10,1,1) = {"
+b
+b
+i
+f
+f
+m
+s
+b
+b
+c
+a
+a
+"}
+(11,1,1) = {"
+c
+b
+b
+n
+f
+p
+b
+b
+c
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}

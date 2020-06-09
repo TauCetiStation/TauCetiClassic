@@ -4,25 +4,26 @@
 	name = "Emergency Floodlight"
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
-	density = 1
-	var/on = 0
+	density = TRUE
+	light_power = 2
+	interact_offline = TRUE
+	var/on = FALSE
 	var/obj/item/weapon/stock_parts/cell/high/cell = null
 	var/use = 5
-	var/unlocked = 0
-	var/open = 0
+	var/unlocked = FALSE
+	var/open = FALSE
 	var/brightness_on = 7
-	light_power = 2
 
-/obj/machinery/floodlight/New()
-	src.cell = new(src)
-	..()
+/obj/machinery/floodlight/atom_init()
+	cell = new(src)
+	. = ..()
 
 /obj/machinery/floodlight/proc/updateicon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
 
 /obj/machinery/floodlight/process()
 	if(on)
-		if(cell.charge >= use)
+		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
 			on = 0
@@ -31,7 +32,12 @@
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
+
 /obj/machinery/floodlight/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(open && cell)
 		if(ishuman(user))
 			if(!user.get_active_hand())
@@ -43,29 +49,36 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		src.cell = null
+		cell = null
 		to_chat(user, "You remove the power cell")
 		updateicon()
 		return
 
 	if(on)
 		on = 0
-		to_chat(user, "\blue You turn off the light")
+		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		set_light(0)
+		
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 	else
 		if(!cell)
 			return
 		if(cell.charge <= 0)
 			return
 		on = 1
-		to_chat(user, "\blue You turn on the light")
+		to_chat(user, "<span class='notice'>You turn on the light</span>")
 		set_light(brightness_on)
+		
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
+		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	updateicon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if (!open)
 			if(unlocked)
 				unlocked = 0
@@ -74,11 +87,11 @@
 				unlocked = 1
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (istype(W, /obj/item/weapon/crowbar))
+	if (iscrowbar(W))
 		if(unlocked)
 			if(open)
 				open = 0
-				overlays = null
+				cut_overlays()
 				to_chat(user, "You crowbar the battery panel in place.")
 			else
 				if(unlocked)

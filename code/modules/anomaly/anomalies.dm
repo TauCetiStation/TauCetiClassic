@@ -10,14 +10,15 @@
 	anchored = 1
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/atom_init()
+	. = ..()
 	set_light(3,5,light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 
@@ -47,8 +48,8 @@
 	density = 1
 	var/boing = 0
 
-/obj/effect/anomaly/grav/New()
-	..()
+/obj/effect/anomaly/grav/atom_init()
+	. = ..()
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
 
 /obj/effect/anomaly/grav/anomalyEffect()
@@ -82,10 +83,10 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux2"
-	light_color = "#FFE194"
+	light_color = "#ffe194"
 
-/obj/effect/anomaly/flux/New()
-	..()
+/obj/effect/anomaly/flux/atom_init()
+	. = ..()
 	aSignal.origin_tech = "powerstorage=8;programming=4;phorontech=4"
 
 /////////////////////
@@ -94,10 +95,10 @@
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
 	density = 1
-	light_color = "#009EFF"
+	light_color = "#009eff"
 
-/obj/effect/anomaly/bluespace/New()
-	..()
+/obj/effect/anomaly/bluespace/atom_init()
+	. = ..()
 	aSignal.origin_tech = "bluespace=8;magnets=5;powerstorage=3"
 
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
@@ -111,19 +112,20 @@
 	name = "pyroclastic anomaly"
 	icon_state = "pyro"
 
-/obj/effect/anomaly/pyro/New()
-	..()
+/obj/effect/anomaly/pyro/atom_init()
+	. = ..()
 	aSignal.origin_tech = "phorontech=8;powerstorage=4;biotech=6"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
-		var/datum/gas_mixture/payload = new
-		payload.phoron = 30
-		T.zone.air.merge(payload)
+		T.assume_gas("phoron", 30)
 		T.hotspot_expose(1000, CELL_VOLUME)
 
+
+/obj/effect/anomaly/pyro/get_current_temperature()
+	return 1000
 
 /////////////////////
 
@@ -132,8 +134,8 @@
 	icon_state = "vortex"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
 
-/obj/effect/anomaly/bhole/New()
-	..()
+/obj/effect/anomaly/bhole/atom_init()
+	. = ..()
 	aSignal.origin_tech = "materials=8;combat=4;engineering=4"
 
 /obj/effect/anomaly/bhole/anomalyEffect()

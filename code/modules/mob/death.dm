@@ -3,7 +3,7 @@
 /mob/proc/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -21,33 +21,31 @@
 		if(animation)	qdel(animation)
 		if(src)			qdel(src)
 
-
-//This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
-//Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
-//Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
-/mob/proc/dust()
-	death(1)
+/mob/proc/dust_process()
+	var/icon/I = build_disappear_icon(src)
 	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
+	animation = new(loc)
+	animation.master = src
+	flick(I, animation)
+
+	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
+	emote("scream",,, 1)
+	death(1)
+	notransform = TRUE
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	QDEL_IN(animation, 20)
+	QDEL_IN(src, 20)
 
-//	flick("dust-m", animation)
+/mob/proc/dust()
+	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
-
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
-
 
 /mob/proc/death(gibbed)
+	SEND_SIGNAL(src, COMSIG_MOB_DIED, gibbed)
 
 	//Quick fix for corpses kept propped up in chairs. ~Z
 	drop_r_hand()
@@ -56,7 +54,6 @@
 
 	timeofdeath = world.time
 
-	living_mob_list -= src
+	alive_mob_list -= src
 	dead_mob_list += src
 	clear_fullscreens()
-	return ..(gibbed)

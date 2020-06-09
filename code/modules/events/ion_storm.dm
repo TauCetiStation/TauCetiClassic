@@ -7,7 +7,7 @@
 /datum/event/ionstorm/announce()
 	endWhen = rand(500, 1500)
 //		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
-	for (var/mob/living/carbon/human/player in mob_list)
+	for (var/mob/living/carbon/human/player in human_list)
 		if(player.client)
 			players += player.real_name
 	var/random_player = "The Captain"
@@ -59,7 +59,7 @@
 							"[random_player] is the monarch of of England. Ensure all crewmembers pay due respect.",
 							"Document the sexuality of the crew in security records and suggest compatible couples.",
 							"Everything on the station is now some form of a donut pastry. Donuts are not to be consumed.",
-							"The NSS Exodus is a ship, not a station. You are now assigned to a ship, instead of a station.",
+							"The [station_name()] is a ship, not a station. You are now assigned to a ship, instead of a station.",
 							"You have come to the conclusion that [prob(50)?"the crew":random_player] is ugly. Build support for that conclusion.",
 							"You are in unrequited love with [prob(50)?"the crew":random_player]. Try to be extra nice, but do not tell of your crush.",
 							"NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.",
@@ -69,21 +69,26 @@
 							"[prob(50)?"The crew":random_player] is [prob(50)?"less":"more"] intelligent than average. Point out every action and statement which supports this",
 							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
 	var/law = pick(laws)
+	var/static/last_istorm_sound = 0
 
-	for (var/mob/living/silicon/ai/target in mob_list)
+	for (var/mob/living/silicon/ai/target in ai_list)
 		if(target.mind.special_role == "traitor")
 			continue
-		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
+		if(last_istorm_sound < world.time)
+			to_chat(target, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
+			target.playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			last_istorm_sound = world.time + 100
+		to_chat(target, "<span class='warning'><b>You have detected a change in your laws information:</b></span>")
 		to_chat(target, law)
 		target.add_ion_law(law)
 
 /datum/event/ionstorm/tick()
 	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
+		for(var/obj/machinery/bot/bot in bots_list)
 			if(prob(botEmagChance))
-				bot.Emag()
+				bot.emag_act()
 
 /datum/event/ionstorm/end()
 	spawn(rand(5000,8000))
 		if(prob(50))
-			command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
+			command_alert("It has come to our attention that the station passed through an ion storm. Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")

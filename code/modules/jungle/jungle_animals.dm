@@ -4,16 +4,16 @@
 	icon_state = "x3"
 	var/spawn_type
 	var/mob/living/spawned_animal
-	invisibility = 101
 
-/obj/effect/landmark/animal_spawner/New()
+/obj/effect/landmark/animal_spawner/atom_init()
+	. = ..()
+
 	if(!spawn_type)
 		var/new_type = pick(typesof(/obj/effect/landmark/animal_spawner) - /obj/effect/landmark/animal_spawner)
 		new new_type(get_turf(src))
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 	START_PROCESSING(SSobj, src)
-	spawned_animal = new spawn_type(get_turf(src))
 
 /obj/effect/landmark/animal_spawner/process()
 	//if any of our animals are killed, spawn new ones
@@ -58,7 +58,7 @@
 	icon_gib = "panther_dead"
 	speak_chance = 0
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 3)
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
@@ -67,10 +67,9 @@
 	health = 50
 
 	harm_intent_damage = 8
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 15
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3
@@ -116,7 +115,7 @@
 	icon_gib = "snake_dead"
 	speak_chance = 0
 	turns_per_move = 1
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
@@ -125,10 +124,9 @@
 	health = 25
 
 	harm_intent_damage = 2
-	melee_damage_lower = 3
-	melee_damage_upper = 10
-	attacktext = "bites"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 7
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3

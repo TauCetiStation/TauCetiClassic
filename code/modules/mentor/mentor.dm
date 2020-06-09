@@ -1,5 +1,5 @@
-/var/list/mentor_ckeys = list()
-/var/list/mentors = list()
+/var/list/mentor_ckeys = list()//all server mentors list
+/var/list/mentors = list()     //online mentors
 
 /world/proc/load_mentors()
 	mentor_ckeys.Cut()
@@ -33,6 +33,8 @@
 			mentor_ckeys += ckey
 			mentors += directory[ckey]
 
-/proc/message_mentors(msg)
+/proc/message_mentors(msg, observer_only = 0)
+	msg = "<span class=\"admin\"><span class=\"prefix\">MENTOR LOG:</span> <span class=\"message\">[msg]</span></span>"
 	for(var/client/C in mentors)
-		to_chat(C, msg)
+		if(!observer_only || (observer_only && isobserver(C.mob)))
+			to_chat(C, msg)

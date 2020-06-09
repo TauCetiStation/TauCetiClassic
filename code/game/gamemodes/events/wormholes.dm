@@ -1,16 +1,13 @@
 /proc/wormhole_event()
 	spawn()
 		var/list/pick_turfs = list()
-		for(var/turf/simulated/floor/T in world)
-			if(T.z == ZLEVEL_STATION)
+		for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			for(var/turf/simulated/floor/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
 				pick_turfs += T
 
 		if(pick_turfs.len)
 			//All ready. Announce that bad juju is afoot.
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			for(var/mob/M in player_list)
-				if(!isnewplayer(M))
-					M << sound('sound/AI/spanomalies.ogg')
+			command_alert("Space-time anomalies detected on the station. It is recommended to avoid suspicious things or phenomena. There is no additional data.", "Anomaly Alert", "wormholes")
 
 			//prob(20) can be approximated to 1 wormhole every 5 turfs!
 			//admittedly less random but totally worth it >_<

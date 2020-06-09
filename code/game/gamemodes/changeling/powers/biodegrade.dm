@@ -13,7 +13,7 @@
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(user.back && istype(user.back,/obj/item/device/radio/electropack))
+	if(user.back && istype(user.back, /obj/item/device/radio/electropack))
 		user.visible_message("<span class='warning'>[user] vomits a glob of \
 			acid on \his [user.back]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
@@ -21,7 +21,9 @@
 		addtimer(CALLBACK(src, .proc/dissolve_electropack, user, user.back), 30)
 		used = TRUE
 
-	if(user.wear_mask  && istype(user.wear_mask ,/obj/item/clothing/mask/horsehead))
+	if(!used && user.wear_mask && (istype(user.wear_mask, /obj/item/clothing/mask/horsehead)|| \
+		istype(user.wear_mask, /obj/item/clothing/mask/pig) || istype(user.wear_mask, /obj/item/clothing/mask/cowmask) \
+		|| istype(user.wear_mask, /obj/item/clothing/head/chicken)))
 		user.visible_message("<span class='warning'>[user] vomits a glob of \
 			acid on \his [user.wear_mask ]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
@@ -69,54 +71,39 @@
 		feedback_add_details("changeling_powers","BD")
 	return 1
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
-	if(istype(O,/obj/item/weapon/handcuffs))
-		var/obj/item/weapon/handcuffs/cuffs = O
-		if(O && user.handcuffed == O)
-			user.unEquip(cuffs)
-			cuffs.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
-			cuffs.loc = get_turf(user)
-			qdel(cuffs)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/item/weapon/handcuffs/O)
+	if(istype(O) && user.handcuffed == O)
+		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+		qdel(O)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/O)
-	if(istype(O,/obj/item/clothing/suit/straight_jacket))
-		var/obj/item/clothing/suit/straight_jacket/S = O
-		if(S && user.wear_suit == S)
-			user.unEquip(S)
-			S.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
-			S.loc = get_turf(user)
-			qdel(S)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/item/clothing/suit/straight_jacket/O)
+	if(istype(O) && user.wear_suit == O)
+		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+		qdel(O)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/O)
-	if(istype(O,/obj/structure/closet))
+/obj/effect/proc_holder/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/structure/closet/O)
+	if(istype(O) && user.loc == O)
 		var/obj/structure/closet/C = O
-		if(C && user.loc == C)
-			C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
-			C.welded = FALSE
-			C.locked = FALSE
-			C.broken = TRUE
-			C.open(TRUE)
-			to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
+		C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
+		C.welded = FALSE
+		C.locked = FALSE
+		C.broken = TRUE
+		C.open(TRUE)
+		to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/O)
-	if(istype(O,/obj/effect/spider/cocoon))
-		var/obj/effect/spider/cocoon/C = O
-		if(C && user.loc == C)
-			qdel(C) //The cocoon's destroy will move the changeling outside of it without interference
-			to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/effect/spider/cocoon/O)
+	if(istype(O) && user.loc == O)
+		qdel(O) //The cocoon's destroy will move the changeling outside of it without interference
+		to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_electropack(mob/living/carbon/human/user, obj/O)
-	if(istype(user.back,/obj/item/device/radio/electropack))
-		var/obj/item/device/radio/electropack/E = O
-		if(E && user.back == E)
-			user.unEquip(E)
-			E.visible_message("<span class='warning'>[E] dissolves into a puddle of sizzling goop.</span>")
-			qdel(E)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_electropack(mob/living/carbon/human/user, obj/item/device/radio/electropack/O)
+	if(istype(O) && user.back == O)
+		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+		qdel(O)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/O)
-	if(istype(O,/obj/item/clothing/mask/horsehead))
-		var/obj/item/clothing/mask/horsehead/Horse = O
-		if(Horse && user.wear_mask  == Horse)
-			user.unEquip(Horse)
-			Horse.visible_message("<span class='warning'>[Horse] dissolves into a puddle of sizzling goop.</span>")
-			qdel(Horse)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/item/clothing/mask/O)
+	if(user.wear_mask == O && (istype(O, /obj/item/clothing/mask/horsehead)|| \
+		istype(O, /obj/item/clothing/mask/pig) || istype(O, /obj/item/clothing/mask/cowmask) \
+		|| istype(O, /obj/item/clothing/head/chicken)))
+		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+		qdel(O)

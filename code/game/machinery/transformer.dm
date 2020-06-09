@@ -9,9 +9,9 @@
 	var/transform_dead = 0
 	var/transform_standing = 0
 
-/obj/machinery/transformer/New()
+/obj/machinery/transformer/atom_init()
 	// On us
-	..()
+	. = ..()
 	new /obj/machinery/conveyor(loc, WEST, 1)
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
@@ -27,19 +27,19 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot = H.Robotize()
 	robot.lying = 1
 	spawn(50) // So he can't jump out the gate right away.
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(robot)
 			robot.lying = 0
 
-/obj/machinery/transformer/conveyor/New()
-	..()
+/obj/machinery/transformer/conveyor/atom_init()
+	. = ..()
 	var/turf/T = loc
 	if(T)
 		// Spawn Conveyour Belts

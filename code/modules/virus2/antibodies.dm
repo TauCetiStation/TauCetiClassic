@@ -30,20 +30,19 @@ var/global/list/ANTIGENS = list(
 )
 
 // pure concentrated antibodies
-datum/reagent/antibodies
-	data = list("antibodies"=0)
+/datum/reagent/antibodies
+	data = list("antibodies" = 0)
 	name = "Antibodies"
 	id = "antibodies"
 	reagent_state = LIQUID
-	color = "#0050F0"
+	color = "#0050f0"
 
-	reaction_mob(mob/M, method=TOUCH, volume)
-		if(istype(M,/mob/living/carbon))
-			if(src.data && method == INGEST)
-				if(M:virus2) if(src.data["antibodies"] & M:virus2.antigen)
-					M:virus2.dead = 1
-				M:antibodies |= src.data["antibodies"]
-		return
+/datum/reagent/antibodies/reaction_mob(mob/living/carbon/C, method=TOUCH, volume)
+	if (istype(C) && data && method == INGEST)
+		for (var/datum/disease2/disease/V in C.virus2)
+			if (data["antibodies"] & V.antigen)
+				V.dead = TRUE
+		C.antibodies |= data["antibodies"]
 
 // iterate over the list of antigens and see what matches
 /proc/antigens2string(antigens)

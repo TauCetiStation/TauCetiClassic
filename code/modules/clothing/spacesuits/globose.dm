@@ -82,14 +82,14 @@
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/space/globose/recycler
-	name = "Recycler space suit"
+	name = "recycler space suit"
 	desc = "Recycler space suit that protects against low pressure environments."
 	icon_state = "recycler_space"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 40)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/trash/miners,/obj/item/weapon/shovel)
 
 /obj/item/clothing/head/helmet/space/globose/recycler
-	name = "Recycler space helmet"
+	name = "recycler space helmet"
 	desc = "Recycler space helmet that protects against low pressure environments. Has reinforced plating."
 	icon_state = "glob0_recycler"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)

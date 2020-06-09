@@ -8,12 +8,6 @@
 	unit_name = "stun baton"
 	export_types = list(/obj/item/weapon/melee/baton)
 
-/datum/export/weapon/knife
-	cost = 750
-	unit_name = "combat knife"
-	export_types = list(/obj/item/weapon/kitchenknife)
-
-
 /datum/export/weapon/taser
 	cost = 250
 	unit_name = "taser"

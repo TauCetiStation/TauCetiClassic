@@ -84,3 +84,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 40
 	damage_type = BURN
+
+/obj/item/projectile/energy/laser/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT

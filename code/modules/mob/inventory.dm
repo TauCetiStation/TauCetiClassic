@@ -4,9 +4,14 @@
 	if(istype(W))
 		if(isIAN(src))
 			switch(slot)
-				if(slot_head, slot_back)
+				if(SLOT_HEAD, SLOT_BACK)
 					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
 					return
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(slot in C.check_obscured_slots())
+				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+				return
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
@@ -20,9 +25,9 @@
 			equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+	if(equip_to_slot_if_possible(W, SLOT_L_HAND, del_on_fail, disable_warning, redraw_mob))
 		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, SLOT_R_HAND, del_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
 
@@ -54,34 +59,44 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
+var/list/slot_equipment_priority = list(
+	SLOT_BACK,
+	SLOT_WEAR_ID,
+	SLOT_W_UNIFORM,
+	SLOT_WEAR_SUIT,
+	SLOT_WEAR_MASK,
+	SLOT_HEAD,
+	SLOT_SHOES,
+	SLOT_GLOVES,
+	SLOT_L_EAR,
+	SLOT_R_EAR,
+	SLOT_GLASSES,
+	SLOT_BELT,
+	SLOT_S_STORE,
+	SLOT_TIE,
+	SLOT_L_STORE,
+	SLOT_R_STORE
 	)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
-/mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+/mob/proc/equip_to_appropriate_slot(obj/item/W, check_obscured = FALSE)
+	if(!istype(W))
+		return FALSE
+
+	var/list/obscured
+
+	if(check_obscured)
+		obscured = check_obscured_slots()
 
 	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, del_on_fail=0, disable_warning=1, redraw_mob=1))
-			return 1
+		if (slot in obscured)
+			continue
 
-	return 0
+		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
+			return TRUE
+
+	return FALSE
 
 // Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
 // Used in job equipping so shit doesn't pile up at the start loc.
@@ -112,9 +127,6 @@ var/list/slot_equipment_priority = list( \
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 //Returns the thing in our active hand
-
-
-//Returns the thing in our active hand
 /mob/proc/get_active_hand()
 	if(hand)	return l_hand
 	else		return r_hand
@@ -125,12 +137,32 @@ var/list/slot_equipment_priority = list( \
 	else		return l_hand
 
 //Checks if thing in mob's hands
-/mob/living/carbon/human/proc/is_in_hands(typepath)
-	if(istype(l_hand,typepath))
+/mob/proc/is_in_hands(typepath)
+	return FALSE
+
+/mob/living/carbon/monkey/is_in_hands(typepath)
+	if(istype(l_hand, typepath))
 		return l_hand
-	if(istype(r_hand,typepath))
+	if(istype(r_hand, typepath))
 		return r_hand
-	return 0
+	return FALSE
+
+/mob/living/carbon/human/is_in_hands(typepath)
+	if(istype(l_hand, typepath))
+		return l_hand
+	if(istype(r_hand, typepath))
+		return r_hand
+	return FALSE
+
+/mob/living/carbon/ian/is_in_hands(typepath)
+	if(istype(mouth, typepath))
+		return mouth
+	return FALSE
+
+/mob/living/silicon/robot/is_in_hands(typepath)
+	if(istype(module_active, typepath))
+		return module_active
+	return FALSE
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/W)
@@ -138,13 +170,14 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
+		W.forceMove(src)		//TODO: move to equipped?
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
+		W.equipped(src,SLOT_L_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
@@ -159,13 +192,14 @@ var/list/slot_equipment_priority = list( \
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
-		W.loc = src
+		W.forceMove(src)
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
+		W.equipped(src,SLOT_R_HAND)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
@@ -197,8 +231,9 @@ var/list/slot_equipment_priority = list( \
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = 0
+		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
+		W.slot_equipped = initial(W.slot_equipped)
 		return 0
 
 // Removes an item from inventory and places it in the target atom
@@ -213,10 +248,18 @@ var/list/slot_equipment_priority = list( \
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
+	if(istype(l_hand, /obj/item))
+		var/obj/item/W = l_hand
+		if(W.flags & NODROP)
+			return FALSE
 	return drop_from_inventory(l_hand, Target)
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
+	if(istype(r_hand, /obj/item))
+		var/obj/item/W = r_hand
+		if(W.flags & NODROP)
+			return FALSE
 	return drop_from_inventory(r_hand, Target)
 
 //Drops the item in our active hand.
@@ -251,17 +294,21 @@ var/list/slot_equipment_priority = list( \
 	return
 
 //This differs from remove_from_mob() in that it checks canremove first.
-/mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/unEquip(obj/item/I, force = FALSE) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically successful.
-		return 1
+		return TRUE
 
-	if(!I.canremove && !force)
-		return 0
+	if(!force)
+		if(!I.canremove)
+			return FALSE
+		if(I.slot_equipped && (I.slot_equipped in check_obscured_slots()))
+			to_chat(src, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+			return FALSE
 
 	drop_from_inventory(I)
-	return 1
+	return TRUE
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+// Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)
@@ -269,7 +316,7 @@ var/list/slot_equipment_priority = list( \
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
-	O.appearance_flags = 0
+	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
@@ -278,57 +325,204 @@ var/list/slot_equipment_priority = list( \
 		else
 			I.forceMove(loc)
 		I.dropped(src)
+		I.slot_equipped = initial(I.slot_equipped)
 	return 1
 
+/mob/proc/get_hand_slots()
+	return list(l_hand, r_hand)
 
-//Outdated but still in use apparently. This should at least be a human proc.
+/mob/living/carbon/ian/get_hand_slots()
+	return list(mouth)
+
+//Returns the item equipped to the specified slot, if any.
+/mob/proc/get_equipped_item(var/slot)
+	return null
+
+/mob/living/carbon/get_equipped_item(var/slot)
+	switch(slot)
+		if(SLOT_BACK) return back
+		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_L_HAND) return l_hand
+		if(SLOT_R_HAND) return r_hand
+	return null
+
+/mob/living/carbon/human/get_equipped_item(var/slot)
+	switch(slot)
+		if(SLOT_BELT) return belt
+		if(SLOT_L_EAR) return l_ear
+		if(SLOT_R_EAR) return r_ear
+		if(SLOT_GLASSES) return glasses
+		if(SLOT_GLOVES) return gloves
+		if(SLOT_HEAD) return head
+		if(SLOT_SHOES) return shoes
+		if(SLOT_WEAR_ID) return wear_id
+		if(SLOT_WEAR_SUIT) return wear_suit
+		if(SLOT_W_UNIFORM) return w_uniform
+		if(SLOT_BACK) return back
+		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_L_HAND) return l_hand
+		if(SLOT_R_HAND) return r_hand
+		if(SLOT_S_STORE) return s_store
+	return null
+
 /mob/proc/get_equipped_items()
-	var/list/items = new/list()
+	return null
 
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
-	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
+/mob/living/carbon/get_equipped_items()
+	var/list/items = list()
 
-	if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+	if(back)
+		items += back
+	if(wear_mask)
+		items += wear_mask
+	if(l_hand)
+		items += l_hand
+	if(r_hand)
+		items += r_hand
 
 	return items
+
+/mob/living/carbon/human/get_equipped_items()
+	var/list/items = ..()
+
+	if(belt)
+		items += belt
+	if(l_ear)
+		items += l_ear
+	if(r_ear)
+		items += r_ear
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(head)
+		items += head
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
+
+	return items
+
+/mob/proc/check_obscured_slots()
+	return
+
+/mob/living/carbon/check_obscured_slots()
+	var/list/obscured = list()
+	var/hidden_slots = NONE
+
+	for(var/obj/item/I in get_equipped_items() - list(l_hand, r_hand))
+		hidden_slots |= I.flags_inv
+
+	if(hidden_slots & HIDEMASK)
+		obscured |= SLOT_WEAR_MASK
+	if(hidden_slots & HIDEEYES)
+		obscured |= SLOT_GLASSES
+	if(hidden_slots & HIDEEARS)
+		obscured |= SLOT_EARS
+		obscured |= SLOT_L_EAR
+		obscured |= SLOT_R_EAR
+	if(hidden_slots & HIDEGLOVES)
+		obscured |= SLOT_GLOVES
+	if(hidden_slots & HIDEJUMPSUIT)
+		obscured |= SLOT_W_UNIFORM
+	if(hidden_slots & HIDESHOES)
+		obscured |= SLOT_SHOES
+	if(hidden_slots & HIDESUITSTORAGE)
+		obscured |= SLOT_S_STORE
+
+	return obscured
+
+/mob/proc/slot_id_to_name(slot)
+	switch(slot)
+		if(SLOT_BACK)
+			return "back"
+		if(SLOT_WEAR_MASK)
+			return "mask"
+		if(SLOT_HANDCUFFED)
+			return "hands"
+		if(SLOT_L_HAND)
+			return "left hand"
+		if(SLOT_R_HAND)
+			return "right hand"
+		if(SLOT_BELT)
+			return "belt"
+		if(SLOT_WEAR_ID)
+			return "suit"
+		if(SLOT_L_EAR)
+			return "left ear"
+		if(SLOT_R_EAR)
+			return "right ear"
+		if(SLOT_GLASSES)
+			return "glasses"
+		if(SLOT_GLOVES)
+			return "gloves"
+		if(SLOT_HEAD)
+			return "head"
+		if(SLOT_SHOES)
+			return "shoes"
+		if(SLOT_WEAR_SUIT)
+			return "exosuit"
+		if(SLOT_W_UNIFORM)
+			return "uniform"
+		if(SLOT_L_STORE)
+			return "left pocket"
+		if(SLOT_R_STORE)
+			return "right pocket"
+		if(SLOT_S_STORE)
+			return "suit storage"
+		if(SLOT_IN_BACKPACK)
+			return "backpack"
+		if(SLOT_LEGCUFFED)
+			return "legs"
+		if(SLOT_TIE)
+			return "suit"
+		if(SLOT_EARS)
+			return "ears"
+		else
+			return "error=[slot]"
+
+/mob/living/carbon/ian/slot_id_to_name(slot)
+	if(slot == SLOT_NECK)
+		return "neck"
+	else
+		return ..()
+
+/mob/proc/CanUseTopicInventory(mob/target)
+	if(is_busy() || isdrone(src) || incapacitated() || !isturf(target.loc) || !Adjacent(target))
+		return FALSE
+
+	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
+		return TRUE
 
 //Create delay for equipping
 /mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
 
-	if(!istype(C)) return 0
+	if(!istype(C))
+		return 0
 
-	if(C.equipping) return 0 // Item is already being (un)equipped
+	if(usr.is_busy())
+		return
 
-	var/tempX = usr.x
-	var/tempY = usr.y
+	if(C.equipping) // Item is already being (un)equipped
+		return 0
+
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	remove_from_mob(C)
-	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	if(do_after(usr, C.equip_time, target = C))
+		remove_from_mob(C)
+		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
+	else
+		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 	C.equipping = 0
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	if(!istype(C)) return 0
+	if(!istype(C))
+		return 0
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -336,28 +530,25 @@ var/list/slot_equipment_priority = list( \
 			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
 			return
 
-	if(C.equipping) return 0 // Item is already being equipped
+	if(usr.is_busy())
+		return
 
-	var/tempX = usr.x
-	var/tempY = usr.y
+	if(C.equipping) // Item is already being equipped
+		return 0
+
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	var/equip_time = round(C.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
-			C.equipping = 0
-			return 0
-	equip_to_slot_if_possible(C, slot)
-	to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
+	if(do_after(usr, C.equip_time, target = C))
+		equip_to_slot_if_possible(C, slot)
+		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
+	else
+		to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
 	C.equipping = 0
 
 /mob/proc/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(slot_l_hand)
+		if(SLOT_L_HAND)
 			return l_hand
-		if(slot_r_hand)
+		if(SLOT_R_HAND)
 			return r_hand
 	return null

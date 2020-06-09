@@ -1,4 +1,8 @@
 //I will need to recode parts of this but I am way too tired atm
+
+#define BLOB_NODE_MAX_PATH 10
+#define BLOB_CORE_MAX_PATH 15
+
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -12,26 +16,26 @@
 	var/brute_resist = 4
 	var/fire_resist = 1
 
+	density = TRUE
+	opacity = TRUE
 
-/obj/effect/blob/New(loc)
+/obj/effect/blob/atom_init()
 	blobs += src
-	src.dir = pick(1, 2, 4, 8)
-	src.update_icon()
-	..(loc)
+	dir = pick(1, 2, 4, 8)
+	update_icon()
+	. = ..()
 	for(var/atom/A in loc)
 		A.blob_act()
-	return
-
 
 /obj/effect/blob/Destroy()
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+	if(air_group || (height==0))	return 0
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0
 
@@ -42,7 +46,7 @@
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	var/damage = Clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
+	var/damage = CLAMP(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
 	if(damage)
 		health -= damage
 		update_icon()
@@ -64,38 +68,41 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(max_pulse_path = BLOB_NODE_MAX_PATH, origin_dir = 0) //Todo: Fix spaceblob expand
 
 	//set background = 1
 
-	PulseAnimation()
+	var/to_pulse = max_pulse_path
 
-	RegenHealth()
+	var/dirn = origin_dir
+	if(!dirn)
+		dirn = pick(cardinal)
 
-	if(run_action())//If we can do something here then we dont need to pulse more
-		return
+	var/obj/effect/blob/CurBlob = src
+	var/list/blobs_affected = list()
+	blobs_affected += src
 
-	if(pulse > 30)
-		return//Inf loop check
+	while(to_pulse > 0)
+		var/turf/T = get_step(CurBlob, dirn)
+		var/obj/effect/blob/NextBlob = (locate(/obj/effect/blob) in T)
+		if(!NextBlob)
+			CurBlob.expand(T) // No blob here so try and expand
+			break
+		var/prev_dir = reverse_dir[dirn]
+		dirn = pick(cardinal - prev_dir)
+		CurBlob = NextBlob
+		blobs_affected += CurBlob
+		to_pulse -= 1
 
-	//Looking for another blob to pulse
-	var/list/dirs = list(1,2,4,8)
-	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
-	for(var/i = 1 to 4)
-		if(!dirs.len)	break
-		var/dirn = pick(dirs)
-		dirs.Remove(dirn)
-		var/turf/T = get_step(src, dirn)
-		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-		if(!B)
-			expand(T)//No blob here so try and expand
-			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
-		return
+	for (var/obj/effect/blob/B in blobs_affected)
+		B.run_action()
+		B.RegenHealth()
+
 	return
 
 
 /obj/effect/blob/proc/run_action()
+	PulseAnimation()
 	return 0
 
 
@@ -144,21 +151,22 @@
 	update_icon()
 	return 0
 
-/obj/effect/blob/Crossed(var/mob/living/L)
-	..()
-	L.blob_act()
+/obj/effect/blob/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.blob_act()
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+	..()
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
 			damage = (W.force / max(src.fire_resist,1))
-			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			if(iswelder(W))
+				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		if("brute")
 			damage = (W.force / max(src.brute_resist,1))
 
@@ -167,10 +175,10 @@
 	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	..()
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+	src.visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
+	var/damage = M.melee_damage
 	if(!damage) // Avoid divide by zero errors
 		return
 	damage /= max(src.brute_resist, 1)
@@ -186,7 +194,6 @@
 
 /obj/effect/blob/normal
 	icon_state = "blob"
-	luminosity = 0
 	health = 21
 
 /obj/effect/blob/normal/update_icon()

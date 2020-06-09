@@ -1,19 +1,178 @@
-"a" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
-"b" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
-"c" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
-"d" = (/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
-"e" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
-"f" = (/obj/structure/table/woodentable/holotable,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"b" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"c" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"d" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_picnicarea)
+"e" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_picnicarea)
+"f" = (
+/obj/structure/table/holotable/wooden,
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_picnicarea)
+"g" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"h" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"i" = (
+/obj/structure/flora/tree/jungle,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"j" = (
+/obj/structure/flora/junglebush,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"k" = (
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"l" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
+"m" = (
+/obj/structure/flora/ausbushes/genericbush,
+/turf/simulated/floor/holofloor/grass,
+/area/station/civilian/holodeck/source_picnicarea)
 
 (1,1,1) = {"
-aaaaaaaaaa
-bcbcbcbcbc
-cbcbcbcbcb
-bcbdeedcbc
-ddddffdbcb
-ddddffdbcb
-bcbdeedcbc
-cbcbcbcbcb
-bcbcbcbccb
-aaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+b
+j
+c
+b
+h
+b
+k
+k
+"}
+(3,1,1) = {"
+a
+b
+i
+k
+k
+k
+k
+c
+m
+d
+"}
+(4,1,1) = {"
+a
+c
+b
+k
+l
+e
+e
+d
+d
+d
+"}
+(5,1,1) = {"
+a
+g
+c
+h
+k
+f
+f
+d
+d
+d
+"}
+(6,1,1) = {"
+a
+c
+b
+k
+k
+f
+f
+d
+d
+d
+"}
+(7,1,1) = {"
+a
+b
+c
+i
+b
+e
+e
+d
+d
+d
+"}
+(8,1,1) = {"
+a
+c
+b
+c
+k
+b
+c
+l
+k
+d
+"}
+(9,1,1) = {"
+a
+h
+c
+b
+c
+c
+b
+c
+k
+h
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

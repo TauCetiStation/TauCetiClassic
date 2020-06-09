@@ -10,42 +10,10 @@ var/const/INGEST = 2
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
+	var/proccessing_reaction_count = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-
-	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!chemical_reagents_list)
-		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
-		var/paths = typesof(/datum/reagent) - /datum/reagent
-		chemical_reagents_list = list()
-		for(var/path in paths)
-			var/datum/reagent/D = new path()
-			chemical_reagents_list[D.id] = D
-	if(!chemical_reactions_list)
-		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
-		// It is filtered into multiple lists within a list.
-		// For example:
-		// chemical_reaction_list["phoron"] is a list of all reactions relating to phoron
-
-		var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
-		chemical_reactions_list = list()
-
-		for(var/path in paths)
-
-			var/datum/chemical_reaction/D = new path()
-			var/list/reaction_ids = list()
-
-			if(D.required_reagents && D.required_reagents.len)
-				for(var/reaction in D.required_reagents)
-					reaction_ids += reaction
-
-			// Create filters based on each reagent id in the required reagents list
-			for(var/id in reaction_ids)
-				if(!chemical_reactions_list[id])
-					chemical_reactions_list[id] = list()
-				chemical_reactions_list[id] += D
-				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /datum/reagents/proc/remove_any(amount=1)
 	var/total_transfered = 0
@@ -95,7 +63,7 @@ var/const/INGEST = 2
 	if(amount < 0) return
 	if(amount > 2000) return
 	var/datum/reagents/R
-	if(istype(target,/datum/reagents/))
+	if(istype(target,/datum/reagents))
 		R = target
 	else
 		if (!target.reagents || src.total_volume<=0)
@@ -180,15 +148,22 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
 
-	var/datum/reagents/R = target.reagents
+	var/datum/reagents/R = null
+	if(istype(target, /datum/reagents))
+		R = target
+	else
+		if(!target.reagents)
+			return
+		R = target.reagents
+
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
@@ -197,8 +172,8 @@ var/const/INGEST = 2
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
-			R.add_reagent(current_reagent.id, amount, trans_data)
-			src.remove_reagent(current_reagent.id, amount, 1)
+			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
+			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
 	src.update_total()
@@ -207,12 +182,14 @@ var/const/INGEST = 2
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(mob/M, alien)
+/datum/reagents/proc/metabolize(mob/M)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
-			R.on_mob_life(M, alien)
-			remove_reagent(R.id, R.custom_metabolism)
+			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
+			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
+			R.on_mob_life(M)
+			remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -226,8 +203,18 @@ var/const/INGEST = 2
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
+	if(!my_atom)
+		/*
+		We are created abstractly, there is no need for us to handle any reactions, unless somebody wants to
+		code in such support.
+		*/
+		return
+
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
+
+	// Carefull, next while cycle are async
+	proccessing_reaction_count += 1
 	var/reaction_occured = 0
 	do
 		reaction_occured = 0
@@ -271,7 +258,7 @@ var/const/INGEST = 2
 						matching_container = 1
 
 				if(!C.required_other)
-					matching_other = 1
+					matching_other = C.check_requirements(src)
 
 				else
 					/*if(istype(my_atom, /obj/item/slime_core))
@@ -284,8 +271,6 @@ var/const/INGEST = 2
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
-
-
 
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
@@ -309,25 +294,26 @@ var/const/INGEST = 2
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					for(var/mob/M in seen)
-						to_chat(M, "\blue [bicon(my_atom)] The solution begins to bubble.")
+						to_chat(M, "<span class='notice'>[bicon(my_atom)] The solution begins to bubble.</span>")
 
 				/*	if(istype(my_atom, /obj/item/slime_core))
 						var/obj/item/slime_core/ME = my_atom
 						ME.Uses--
 						if(ME.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								to_chat(M, "\blue [bicon(my_atom)] The innards begin to boil!")
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The innards begin to boil!</span>")
 					*/
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								to_chat(M, "\blue [bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
+							ME2.origin_tech = null
 
-					playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
+					playsound(my_atom, 'sound/effects/bubbles.ogg', VOL_EFFECTS_MASTER)
 
 					C.on_reaction(src, created_volume)
 					reaction_occured = 1
@@ -335,7 +321,14 @@ var/const/INGEST = 2
 
 	while(reaction_occured)
 	update_total()
+	if (proccessing_reaction_count > 0)
+		proccessing_reaction_count -= 1
 	return 0
+
+/datum/reagents/proc/is_reaction_in_proccessing()
+	if (proccessing_reaction_count > 0)
+		return TRUE
+	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
@@ -410,19 +403,23 @@ var/const/INGEST = 2
 	return
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount))
+		return 1
+	if(amount < 0)
+		return 0
+	if(amount > 2000)
+		return
 	update_total()
-	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-
+	if(total_volume + amount > maximum_volume)
+		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 
 			// mix dem viruses
 			if(R.id == "blood" && reagent == "blood")
@@ -448,6 +445,11 @@ var/const/INGEST = 2
 								if(!istype(D, /datum/disease/advance))
 									preserve += D
 							R.data["viruses"] = preserve
+			else if(R.id == "customhairdye" || R.id == "paint_custom")
+				for(var/color in R.data)
+					R.data[color] = (R.data[color] + data[color]) * 0.5
+				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
+				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
 			if(!safety)
 				handle_reactions()
@@ -467,8 +469,14 @@ var/const/INGEST = 2
 		//for(var/D in R.data)
 		//	world << "Container data: [D] = [R.data[D]]"
 		//debug
+		if(reagent == "customhairdye" || reagent == "paint_custom")
+			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+
+		R.on_new(data)
+
 		update_total()
-		my_atom.on_reagent_change()
+		if(my_atom)
+			my_atom.on_reagent_change()
 		if(!safety)
 			handle_reactions()
 		return 0
@@ -481,9 +489,8 @@ var/const/INGEST = 2
 	return 1
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount) || amount < 0 || amount > 2000)
+		return FALSE
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -492,10 +499,11 @@ var/const/INGEST = 2
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			my_atom.on_reagent_change()
-			return 0
+			if(my_atom)
+				my_atom.on_reagent_change()
+			return TRUE
 
-	return 1
+	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = 0)
 	for(var/datum/reagent/R in reagent_list)
@@ -514,6 +522,9 @@ var/const/INGEST = 2
 
 	return 0
 
+/datum/reagents/proc/get_reagent(type)
+	. = locate(type) in reagent_list
+
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
@@ -521,6 +532,11 @@ var/const/INGEST = 2
 		res += A.name
 
 	return res
+
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+	for(var/r_id in list_reagents)
+		var/amt = list_reagents[r_id]
+		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1

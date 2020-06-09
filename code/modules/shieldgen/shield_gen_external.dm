@@ -4,14 +4,9 @@
 /obj/machinery/shield_gen/external
 	name = "hull shield generator"
 
-/obj/machinery/shield_gen/external/New()
-	..()
-
 /obj/machinery/shield_gen/external/get_shielded_turfs()
-	var
-		list
-			open = list(get_turf(src))
-			closed = list()
+	var/list/open = list(get_turf(src))
+	var/list/closed = list()
 
 	while(open.len)
 		for(var/turf/T in open)

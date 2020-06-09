@@ -12,7 +12,7 @@
 	level = 1		// underfloor
 	layer = 2.5
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
 	var/freq = 1449		// radio frequency
@@ -28,18 +28,13 @@
 	var/center_y = 0
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
 
-/obj/machinery/magnetic_module/New()
-	..()
+/obj/machinery/magnetic_module/atom_init()
+	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
-
-	spawn(10)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_MAGNETS)
-
-	spawn()
-		magnetic_process()
+	radio_controller.add_object(src, freq, RADIO_MAGNETS)
+	INVOKE_ASYNC(src, .proc/magnetic_process)
 
 	// update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
@@ -145,10 +140,10 @@
 
 	// Update power usage:
 	if(on)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 		active_power_usage = electricity_level *15
 	else
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 
 	// Overload conditions:
@@ -196,7 +191,7 @@
 	icon_state = "airlock_control_standby"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	frequency = 1449
 	var/code = 0
@@ -215,19 +210,15 @@
 
 
 
-/obj/machinery/magnetic_controller/New()
-	..()
+/obj/machinery/magnetic_controller/atom_init()
+	. = ..()
 
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-	spawn(45)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
-
+	radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
 
 	if(path) // check for default path
 		filter_path() // renders rpath
@@ -240,13 +231,7 @@
 				magnets.Add(M)
 
 
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
+/obj/machinery/magnetic_controller/ui_interact(mob/user)
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"
@@ -267,8 +252,7 @@
 	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
 	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
-
-	user << browse(dat, "window=magnet;size=400x500")
+	user << browse(entity_ja(dat), "window=magnet;size=400x500")
 	onclose(user, "magnet")
 
 /obj/machinery/magnetic_controller/Topic(href, href_list)
@@ -319,7 +303,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = sanitize(copytext(input(usr, "Please define a new path!",,path) as text|null,1,MAX_MESSAGE_LEN))
+				var/newpath = sanitize_safe(input(usr, "Please define a new path!",,input_default(path)) as text|null)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath

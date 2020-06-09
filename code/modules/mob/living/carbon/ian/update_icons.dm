@@ -12,11 +12,11 @@
 /mob/living/carbon/ian/proc/apply_overlay(index)
 	var/image/I = overlays_inv[index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/ian/proc/remove_overlay(index)
 	if(overlays_inv[index])
-		overlays -= overlays_inv[index]
+		cut_overlay(overlays_inv[index])
 		overlays_inv[index] = null
 
 /mob/living/carbon/ian/regenerate_icons()
@@ -269,78 +269,21 @@
 	update_inv_mouth()
 	update_inv_back()
 
-/mob/living/carbon/ian/update_canmove() // uh oh, i have no other idea, except copypaste this proc as edited version for now.
-	if(!ismob(src))
-		return
+/mob/living/carbon/ian/update_canmove()
 
-	if(buckled)
-		if(istype(buckled, /obj/vehicle))
-			var/obj/vehicle/V = buckled
-			if(incapacitated())
-				V.unload(src)
-				lying = TRUE
-				canmove = FALSE
-				pose_last = POSE_STAT
-			else
-				if(buckled.buckle_lying != -1)
-					lying = buckled.buckle_lying
-				canmove = TRUE
-				pixel_y = V.mob_offset_y
-				pose_last = POSE_SIT
-		else
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-			if(istype(buckled, /obj/structure/stool/bed/chair))
-				var/obj/structure/stool/bed/chair/C = buckled
-				if(C.flipped)
-					lying = TRUE
-			if(!buckled.buckle_movable)
-				anchored = TRUE
-				canmove = FALSE
-			else
-				anchored = FALSE
-				canmove = TRUE
-			pose_last = POSE_SIT
-	else if( stat || weakened || paralysis || sleeping || (status_flags & FAKEDEATH))
-		lying = TRUE
-		canmove = FALSE
-		pose_last = POSE_STAT
-	else if(resting)
-		lying = FALSE
-		canmove = FALSE
+	. = ..(TRUE)
+
+	if(buckled || resting)
 		pose_last = POSE_SIT
-	else if(stunned)
-		canmove = FALSE
+	else if(stat || weakened || stunned)
+		pose_last = POSE_STAT
+	else if(crawling)
 		pose_last = POSE_REST
-	else if(captured)
-		anchored = TRUE
-		canmove = FALSE
-		lying = FALSE
-		pose_last = POSE_NORM
-	else if (crawling)
-		lying = TRUE
-		canmove = TRUE
-		pose_last = POSE_REST
-	else if(!buckled)
-		lying = !can_stand
-		canmove = has_limbs
-		pose_last = POSE_NORM
-
-	if(lying)
-		density = FALSE
-		if(mouth && mouth.canremove)
-			drop_from_inventory(mouth)
 	else
-		density = TRUE
+		pose_last = POSE_NORM
 
-	for(var/obj/item/weapon/grab/G in grabbed_by)
-		if(G.state >= GRAB_AGGRESSIVE)
-			canmove = FALSE
-			break
+	if(lying && mouth && mouth.canremove)
+		drop_from_inventory(mouth)
 
 	if(pose_last != pose_prev)
 		update_transform()
-	if(update_icon)
-		update_icon = FALSE
-		regenerate_icons()
-	return canmove

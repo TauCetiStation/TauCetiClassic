@@ -100,7 +100,7 @@ var/ninja_confirmed_selection = 0
 /proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
-		to_chat(usr, "\red Ninja selection already in progress. Please wait until it ends.")
+		to_chat(usr, "<span class='warning'>Ninja selection already in progress. Please wait until it ends.</span>")
 		return
 
 	var/datum/game_mode/current_mode = ticker.mode
@@ -178,7 +178,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				break
 
 	if(!candidate_mob)
-		to_chat(usr, "\red The randomly chosen mob was not found in the second check.")
+		to_chat(usr, "<span class='warning'>The randomly chosen mob was not found in the second check.</span>")
 		return
 
 	ninja_selection_active = 1
@@ -187,7 +187,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	spawn(1)
 		if(alert(candidate_mob, "You have been selected to play as a space ninja. Would you like to play as this role? (You have 30 seconds to accept - You will spawn in 30 seconds if you accept)",,"Yes","No")!="Yes")
-			to_chat(usr, "\red The selected candidate for space ninja declined.")
+			to_chat(usr, "<span class='warning'>The selected candidate for space ninja declined.</span>")
 			return
 
 		ninja_confirmed_selection = this_selection_id
@@ -195,12 +195,12 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	spawn(300)
 		if(!ninja_selection_active || (this_selection_id != ninja_selection_id ))
 			ninja_selection_active = 0
-			to_chat(candidate_mob, "\red Sorry, you were too late. You only had 30 seconds to accept.")
+			to_chat(candidate_mob, "<span class='warning'>Sorry, you were too late. You only had 30 seconds to accept.</span>")
 			return
 
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
-			to_chat(usr, "\red The ninja did not accept the role in time.")
+			to_chat(usr, "<span class='warning'>The ninja did not accept the role in time.</span>")
 			return
 
 		ninja_selection_active = 0
@@ -219,22 +219,22 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		//Xenos and deathsquads take precedence over everything else.
 
 		//Unless the xenos are hiding in a locker somewhere, this'll find em.
-		for(var/mob/living/carbon/alien/humanoid/xeno in player_list)
+		for(var/mob/living/carbon/xenomorph/humanoid/xeno in player_list)
 			if(istype(xeno))
 				xeno_list += xeno
 
 		if(assign_mission)
-			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>")
+			new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
+			to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
 				var/xeno_queen_list[] = list()
-				for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_list)
+				for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_list)
 					if(xeno_queen.mind&&xeno_queen.stat!=2)
 						xeno_queen_list += xeno_queen
 				if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
-					for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_queen_list)
+					for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
 						var/datum/objective/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
 						//We'll do some manual overrides to properly set it up.
@@ -357,7 +357,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
-				for(var/obj/machinery/nuclearbomb/N in machines)
+				for(var/obj/machinery/nuclearbomb/N in poi_list)
 					temp_code = text2num(N.r_code)
 					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code
@@ -373,11 +373,11 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>")
-			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
+			to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: <span class='warning'><B>[directive]</B></span></span>")
+			new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>")
 
 			var/obj_count = 1
-			to_chat(new_ninja, "\blue Your current objectives:")
+			to_chat(new_ninja, "<span class='notice'>Your current objectives:</span>")
 			for(var/datum/objective/objective in ninja_mind.objectives)
 				to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
@@ -484,7 +484,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	var/mission
 	while(!mission)
-		mission = sanitize(copytext(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""),1,MAX_MESSAGE_LEN))
+		mission = sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""))
 		if(!mission)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
@@ -495,8 +495,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("\blue [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]")
-	log_admin("[key] used Spawn Space Ninja.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
+	log_admin("[key_name(usr)] used Spawn Space Ninja.")
 
 	return
 
@@ -534,20 +534,26 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		qdel(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(R, SLOT_L_EAR)
 	if(gender==FEMALE)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), SLOT_W_UNIFORM)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), slot_s_store)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), SLOT_WEAR_SUIT)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), SLOT_GLOVES)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), SLOT_HEAD)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), SLOT_WEAR_MASK)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_BELT)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_R_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), SLOT_S_STORE)
+	var/obj/item/weapon/implant/dexplosive/L = new(src)
+	L.imp_in = src
+	L.implanted = TRUE
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	BP.implants += L
+	L.part = BP
 	return 1
 
 //=======//HELPER PROCS//=======//
@@ -563,43 +569,43 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	a_boost = rand(1,7)
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/U, X = FALSE)
 	if(X)//If you want to check for icons.
-		if(U.mind.protector_role == 1)
-			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
-			U:gloves.icon_state = "s-ninjak"
-			U:gloves.item_state = "s-ninjak"
+		if(U.mind.protector_role)
+			icon_state = U.gender == FEMALE ? "s-ninjakf" : "s-ninjak"
+			U.gloves.icon_state = "s-ninjak"
+			U.gloves.item_state = "s-ninjak"
 		else
-			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-			U:gloves.icon_state = "s-ninjan"
-			U:gloves.item_state = "s-ninjan"
+			icon_state = U.gender == FEMALE ? "s-ninjanf" : "s-ninjan"
+			U.gloves.icon_state = "s-ninjan"
+			U.gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
-			to_chat(U, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR...")
+			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 			U.gib()
 			return 0
-		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			to_chat(U, "\red <B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...")
+		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
-		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			to_chat(U, "\red <B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...")
+		if(!istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
-		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			to_chat(U, "\red <B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...")
+		if(!istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
+			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
 		canremove = 0
 		slowdown = 0
-		n_hood = U:head
+		n_hood = U.head
 		n_hood.canremove=0
-		n_shoes = U:shoes
+		n_shoes = U.shoes
 		n_shoes.canremove=0
 		n_shoes.slowdown--
-		n_gloves = U:gloves
+		n_gloves = U.gloves
 		n_gloves.canremove=0
 
-	return 1
+	return TRUE
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
@@ -639,14 +645,14 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			if(4)
 				I.pixel_y += 1
 
-		overlays += I//And finally add the overlay.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+		add_overlay(I)//And finally add the overlay.
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
 	invisibility = 0//Set ninja invis to 0.
-	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
-	playsound(loc, 'sound/effects/stealthoff.ogg', 75, 1)
+	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
+	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 
 //=======//GENERIC VERB MODIFIERS//=======//
 
@@ -713,7 +719,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	cancel_stealth()
 
 	U << browse(null, "window=spideros")
-	to_chat(U, "\red Do or Die, <b>LET'S ROCK!!</b>")
+	to_chat(U, "<span class='warning'>Do or Die, <b>LET'S ROCK!!</b></span>")
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze(mob/living/carbon/U)
 	if(kamikaze)
@@ -731,7 +737,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
+		to_chat(U, "<span class='notice'>Disengaging mode...\n</span><b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 
 //=======//AI VERBS//=======//
 
@@ -787,13 +793,13 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 		if(isturf(T) && T.is_plating())
 			attached = locate() in T
 			if(!attached)
-				to_chat(U, "\red Warning: no exposed cable available.")
+				to_chat(U, "<span class='warning'>Warning: no exposed cable available.</span>")
 			else
-				to_chat(U, "\blue Connecting to wire, stand still...")
+				to_chat(U, "<span class='notice'>Connecting to wire, stand still...</span>")
 				if(do_after(U,50)&&!isnull(attached))
 					drain("WIRE",attached,U:wear_suit,src)
 				else
-					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
+					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 	return
 
 I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
@@ -906,7 +912,7 @@ Most of these are at various points of incomplete.
 	usr:proc_holder_list += A_C
 	usr:proc_holder_list += B_C
 
-mob/verb/remove_object_panel()
+/mob/verb/remove_object_panel()
 	set name = "Remove AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
 	var/obj/effect/proc_holder/ai_return_control/A = locate() in src

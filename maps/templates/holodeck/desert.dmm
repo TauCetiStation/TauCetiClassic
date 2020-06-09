@@ -1,24 +1,161 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
-"b" = (/turf/simulated/floor/holofloor{icon_state = "asteroid6"; dir = 2},/area/holodeck/source_desert)
-"c" = (/turf/simulated/floor/holofloor{icon_state = "asteroid2"; dir = 4},/area/holodeck/source_desert)
-"d" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
-"e" = (/turf/simulated/floor/holofloor{icon_state = "asteroid8"; dir = 4},/area/holodeck/source_desert)
-"f" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
-"g" = (/turf/simulated/floor/holofloor{icon_state = "asteroid11"; dir = 4},/area/holodeck/source_desert)
-"h" = (/turf/simulated/floor/holofloor{icon_state = "asteroid7"; dir = 2},/area/holodeck/source_desert)
-"i" = (/turf/simulated/floor/holofloor{icon_state = "asteroid5"; dir = 2},/area/holodeck/source_desert)
-"j" = (/turf/simulated/floor/holofloor{icon_state = "asteroid1"; dir = 4},/area/holodeck/source_desert)
-"k" = (/turf/simulated/floor/holofloor{icon_state = "asteroid3"; dir = 4},/area/holodeck/source_desert)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_desert)
+"b" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid6"
+	},
+/area/station/civilian/holodeck/source_desert)
+"c" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "asteroid2"
+	},
+/area/station/civilian/holodeck/source_desert)
+"d" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_desert)
+"f" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/holodeck/source_desert)
+"h" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "asteroid7"
+	},
+/area/station/civilian/holodeck/source_desert)
+"k" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "asteroid3"
+	},
+/area/station/civilian/holodeck/source_desert)
 
 (1,1,1) = {"
-aaaaaaabaa
-aacaaadaae
-aadcaacaaa
-aacaaaafga
-aaaaahaaaa
-acfaaahaai
-aacaaadhaf
-aacaaaaaha
-adaaaajaah
-aaaaafakad
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+c
+a
+a
+d
+a
+"}
+(3,1,1) = {"
+a
+c
+d
+c
+a
+f
+c
+c
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+h
+a
+a
+a
+a
+f
+"}
+(7,1,1) = {"
+a
+d
+c
+a
+a
+h
+d
+a
+a
+a
+"}
+(8,1,1) = {"
+b
+a
+a
+f
+a
+a
+h
+a
+a
+k
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+h
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+f
+a
+h
+d
 "}

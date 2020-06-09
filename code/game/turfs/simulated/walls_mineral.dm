@@ -1,74 +1,31 @@
 /turf/simulated/wall/mineral
 	name = "mineral wall"
 	desc = "This shouldn't exist."
-	icon_state = ""
-	var/last_event = 0
-	var/active = null
-
-/turf/simulated/wall/mineral/gold
-	name = "gold wall"
-	desc = "A wall with gold plating. Swag!"
-	icon_state = "gold0"
-	walltype = "gold"
-	mineral = "gold"
-	sheet_type = /obj/item/stack/sheet/mineral/gold
-	//var/electro = 1
-	//var/shocked = null
-
-/turf/simulated/wall/mineral/silver
-	name = "silver wall"
-	desc = "A wall with silver plating. Shiny!"
-	icon_state = "silver0"
-	walltype = "silver"
-	mineral = "silver"
-	sheet_type = /obj/item/stack/sheet/mineral/silver
-	//var/electro = 0.75
-	//var/shocked = null
-
-/turf/simulated/wall/mineral/diamond
-	name = "diamond wall"
-	desc = "A wall with diamond plating. You monster."
-	icon_state = "diamond0"
-	walltype = "diamond"
-	mineral = "diamond"
-	sheet_type = /obj/item/stack/sheet/mineral/diamond
-
-/turf/simulated/wall/mineral/clown
-	name = "bananium wall"
-	desc = "A wall with bananium plating. Honk!"
-	icon_state = "clown0"
-	walltype = "clown"
-	mineral = "clown"
-//	sheet_type = /obj/item/stack/sheet/mineral/bananium
-
-/turf/simulated/wall/mineral/sandstone
-	name = "sandstone wall"
-	desc = "A wall with sandstone plating."
-	icon_state = "sandstone0"
-	walltype = "sandstone"
-	mineral = "sandstone"
-	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	icon_state = "box"
+	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
-	icon_state = "uranium0"
-	walltype = "uranium"
+	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
 	mineral = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
+	canSmoothWith = list(/turf/simulated/wall/mineral/uranium, /obj/structure/falsewall/uranium)
+
+	var/last_event = 0
+	var/active = null
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
 	if(!active)
-		if(world.time > last_event+15)
+		if(world.time > last_event + 15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+			for(var/mob/living/L in range(3, src))
+				L.apply_effect(12, IRRADIATE, 0)
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time
 			active = null
-			return
-	return
 
 /turf/simulated/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
@@ -82,17 +39,60 @@
 	radiate()
 	..()
 
+/turf/simulated/wall/mineral/gold
+	name = "gold wall"
+	desc = "A wall with gold plating. Swag!"
+	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
+	mineral = "gold"
+	sheet_type = /obj/item/stack/sheet/mineral/gold
+	canSmoothWith = list(/turf/simulated/wall/mineral/gold, /obj/structure/falsewall/gold)
+
+/turf/simulated/wall/mineral/silver
+	name = "silver wall"
+	desc = "A wall with silver plating. Shiny!"
+	icon = 'icons/turf/walls/has_false_walls/silver_wall.dmi'
+	mineral = "silver"
+	sheet_type = /obj/item/stack/sheet/mineral/silver
+	canSmoothWith = list(/turf/simulated/wall/mineral/silver, /obj/structure/falsewall/silver)
+
+/turf/simulated/wall/mineral/diamond
+	name = "diamond wall"
+	desc = "A wall with diamond plating. You monster."
+	icon = 'icons/turf/walls/has_false_walls/diamond_wall.dmi'
+	mineral = "diamond"
+	sheet_type = /obj/item/stack/sheet/mineral/diamond
+	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
+
+/turf/simulated/wall/mineral/bananium
+	name = "bananium wall"
+	desc = "A wall with bananium plating. Honk!"
+	icon = 'icons/turf/walls/has_false_walls/bananium_wall.dmi'
+	mineral = "bananium"
+//	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	canSmoothWith = list(/turf/simulated/wall/mineral/bananium, /obj/structure/falsewall/bananium)
+
+/turf/simulated/wall/mineral/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating."
+	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
+	mineral = "sandstone"
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	canSmoothWith = list(/turf/simulated/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
+
+
+
 /turf/simulated/wall/mineral/phoron
 	name = "phoron wall"
 	desc = "A wall with phoron plating. This is definately a bad idea."
-	icon_state = "phoron0"
-	walltype = "phoron"
+	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
 	mineral = "phoron"
 	sheet_type = /obj/item/stack/sheet/mineral/phoron
+	canSmoothWith = list(/turf/simulated/wall/mineral/phoron, /obj/structure/falsewall/phoron)
 
 /turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
-		ignite(is_hot(W))
+	var/W_temp = W.get_current_temperature()
+	if(W_temp > 300)//If the temperature of the object is over 300, then ignite
+		ignite(W_temp)
 		return
 	..()
 
@@ -103,15 +103,11 @@
 	for(var/turf/simulated/floor/target_tile in range(0,src))
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/
-		var/datum/gas_mixture/napalm = new
-		var/phoronToDeduce = 20
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 400+T0C
-		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		target_tile.assume_gas("phoron", 20)
+		target_tile.hotspot_expose(400 + T0C, 400)
 	for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
-		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)
+		T.ChangeTurf(/turf/simulated/wall/mineral/phoron)
 		qdel(F)
 	for(var/turf/simulated/wall/mineral/phoron/W in range(3,src))
 		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame

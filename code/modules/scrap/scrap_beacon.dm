@@ -14,6 +14,7 @@
 	var/active = 0
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if((last_summon + summon_cooldown) >= world.time)
 		to_chat(user, "<span class='notice'>[src.name] not charged yet.</span>")
 		return
@@ -28,6 +29,7 @@
 	set waitfor = FALSE
 
 	active = 1
+	playsound(src, 'sound/machines/scrap_beacon_start.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	update_icon()
 	sleep(30)
 	var/list/flooring_near_beacon = list()

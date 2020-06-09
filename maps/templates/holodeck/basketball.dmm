@@ -1,38 +1,266 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_basketball)
-"b" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{dir = 5; icon_state = "vault"},/area/holodeck/source_basketball)
-"c" = (/obj/structure/window/reinforced/holowindow{dir = 4},/obj/structure/holostool,/turf/simulated/floor/holofloor{dir = 5; icon_state = "vault"},/area/holodeck/source_basketball)
-"d" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_basketball)
-"e" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_basketball)
-"f" = (/obj/structure/holohoop,/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_basketball)
-"g" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "red"},/area/holodeck/source_basketball)
-"h" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/holodeck/source_basketball)
-"i" = (/turf/simulated/floor/holofloor,/area/holodeck/source_basketball)
-"j" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "red"},/area/holodeck/source_basketball)
-"k" = (/obj/machinery/door/window/holowindoor{dir = 4; name = "Red Team"},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_basketball)
-"l" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "red"},/area/holodeck/source_basketball)
-"m" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "red"},/area/holodeck/source_basketball)
-"n" = (/obj/item/weapon/beach_ball/holoball,/turf/simulated/floor/holofloor{dir = 2; icon_state = "red"},/area/holodeck/source_basketball)
-"o" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "red"},/area/holodeck/source_basketball)
-"p" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "green"},/area/holodeck/source_basketball)
-"q" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "green"},/area/holodeck/source_basketball)
-"r" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "green"},/area/holodeck/source_basketball)
-"s" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "green"},/area/holodeck/source_basketball)
-"t" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/holodeck/source_basketball)
-"u" = (/obj/machinery/door/window/holowindoor{base_state = "right"; dir = 4; icon_state = "right"; name = "Green Team"},/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_basketball)
-"v" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/source_basketball)
-"w" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "green"},/area/holodeck/source_basketball)
-"x" = (/obj/structure/holohoop{dir = 1},/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/source_basketball)
-"y" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "green"},/area/holodeck/source_basketball)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"b" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"c" = (
+/obj/structure/holohoop{
+	dir = 4
+	},
+/turf/simulated/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"d" = (
+/turf/simulated/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"e" = (
+/turf/simulated/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"f" = (
+/obj/item/weapon/beach_ball/holoball,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"g" = (
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"h" = (
+/turf/simulated/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"i" = (
+/turf/simulated/floor/holofloor,
+/area/station/civilian/holodeck/source_basketball)
+"j" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"k" = (
+/obj/structure/holohoop{
+	dir = 8
+	},
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"l" = (
+/turf/simulated/floor/holofloor{
+	dir = 10;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"m" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"n" = (
+/obj/structure/holostool,
+/obj/structure/window/reinforced/holowindow{
+	dir = 1
+	},
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"o" = (
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"p" = (
+/turf/simulated/floor/holofloor{
+	dir = 9;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"q" = (
+/turf/simulated/floor/holofloor{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"r" = (
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"s" = (
+/turf/simulated/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"t" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"v" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"w" = (
+/turf/simulated/floor/holofloor{
+	dir = 10;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"y" = (
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
 
 (1,1,1) = {"
-abcdedfgeg
-abchihijij
-aakhieeeij
-abchiiiiij
-abclmmnmmo
-abcpqqqqqr
-abcsiiiiit
-aausivvvit
-abcsisitit
-abcwvwxyvy
+d
+h
+d
+c
+l
+h
+l
+n
+b
+a
+"}
+(2,1,1) = {"
+e
+i
+g
+j
+o
+i
+m
+n
+b
+a
+"}
+(3,1,1) = {"
+e
+i
+i
+i
+i
+i
+m
+a
+a
+a
+"}
+(4,1,1) = {"
+e
+i
+i
+i
+i
+i
+m
+n
+b
+a
+"}
+(5,1,1) = {"
+g
+j
+j
+f
+j
+j
+o
+n
+b
+a
+"}
+(6,1,1) = {"
+p
+s
+s
+s
+s
+s
+w
+n
+b
+a
+"}
+(7,1,1) = {"
+q
+i
+i
+i
+i
+i
+v
+n
+b
+a
+"}
+(8,1,1) = {"
+q
+i
+i
+i
+i
+i
+v
+a
+a
+a
+"}
+(9,1,1) = {"
+q
+i
+p
+s
+w
+i
+v
+n
+b
+a
+"}
+(10,1,1) = {"
+r
+t
+r
+k
+y
+t
+y
+n
+b
+a
 "}

@@ -1,34 +1,37 @@
 //Lallander was here
+// Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/whisper(message as text)
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
-		return
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
+		return FALSE
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_whisper("[key_name(src)]: [message]")
 
 	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot whisper (muted).")
-			return
+			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
+			return FALSE
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			return
+			return FALSE
 
 	if(!speech_allowed && usr == src)
-		to_chat(usr, "\red You can't speak.")
-		return
+		to_chat(usr, "<span class='warning'>You can't speak.</span>")
+		return FALSE
 
 	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
-			return
+			return FALSE
 		return src.say_dead(message)
 
 	if(src.stat)
-		return
+		return FALSE
 
-	message = trim(sanitize_plus(copytext(message,1,MAX_MESSAGE_LEN)))	//made consistent with say
+	message = sanitize(message)	//made consistent with say
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
@@ -37,71 +40,55 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 
-	whisper_say(message, speaking, alt_name)
+	return whisper_say(message, speaking, alt_name)
 
 
 //This is used by both the whisper verb and human/say() to handle whispering
+// Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/proc/whisper_say(var/message, var/datum/language/speaking = null, var/alt_name="", var/verb="whispers")
+	// Whispering with gestures? You mad bro?
+	if(speaking && (speaking.flags & SIGNLANG))
+		return FALSE
+
 	var/message_range = 1
 	var/eavesdropping_range = 2
 	var/watching_range = 5
 	var/italics = 1
 
-	if (speaking)
-		verb = speaking.speech_verb + pick(" quietly", " softly")
-
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming)
-		return
+	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
+		return FALSE
 
 	// Mute disability
 	//TODO: handle_speech_problems
 	if(src.sdisabilities & MUTE)
-		return
+		return FALSE
 
 	//TODO: handle_speech_problems
 	if(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-		return
+		return FALSE
 
 	if(src.species.name == ABDUCTOR)
-		return
-
-	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
-		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = splittext(message, " ")
-			var/list/pick_list = list()
-			for(var/i = 1, i <= temp_message.len, i++)
-				pick_list += i
-			for(var/i=1, i <= abs(temp_message.len/3), i++)
-				var/H = pick(pick_list)
-				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-				temp_message[H] = ninjaspeak(temp_message[H])
-				pick_list -= H
-			// TODO:CYRILLIC
-			message = jointext(temp_message, " ")
-			message = replacetext(message, "o", "¤")
-			message = replacetext(message, "p", "þ")
-			message = replacetext(message, "l", "£")
-			message = replacetext(message, "s", "§")
-			message = replacetext(message, "u", "µ")
-			message = replacetext(message, "b", "ß")
+		return FALSE
 
 	//TODO: handle_speech_problems
 	if(src.stuttering)
 		message = stutter(message)
 
+	if (speaking)
+		verb = speaking.speech_verb + pick(" quietly", " softly")
+
 	var/list/listening = hearers(message_range, src)
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
-		if (!(M.client))
-			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.
@@ -137,6 +124,7 @@
 	var/speech_bubble_test = say_test(message)
 	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 
@@ -151,4 +139,6 @@
 	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
 		for (var/mob/M in watching)
-			M.show_message(rendered, 2)
+			M.show_message(rendered, SHOWMSG_VISUAL|SHOWMSG_AUDIO)
+
+	return TRUE

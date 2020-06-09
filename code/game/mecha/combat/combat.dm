@@ -26,8 +26,8 @@
 	if(!melee_can_hit || !istype(target, /atom)) return
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
-		if(src.occupant.a_intent == "hurt")
-			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+		if(src.occupant.a_intent == INTENT_HARM)
+			playsound(src, 'sound/weapons/punch4.ogg', VOL_EFFECTS_MASTER)
 			if(damtype == "brute")
 				step_away(M,src,15)
 			/*
@@ -42,14 +42,14 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
-				if(temp)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
+				if(BP)
 					switch(damtype)
 						if("brute")
 							H.Paralyse(1)
-							temp.take_damage(rand(force/2, force), 0)
+							BP.take_damage(rand(force / 2, force), 0)
 						if("fire")
-							temp.take_damage(0, rand(force/2, force))
+							BP.take_damage(0, rand(force / 2, force))
 						if("tox")
 							if(H.reagents)
 								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)
@@ -98,9 +98,9 @@
 						target:attackby(src,src.occupant)
 					else if(prob(5))
 						target:dismantle_wall(1)
-						src.occupant_message("\blue You smash through the wall.")
+						src.occupant_message("<span class='notice'>You smash through the wall.</span>")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
-						playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+						playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 					melee_can_hit = 0
 					if(do_after(melee_cooldown))
 						melee_can_hit = 1
@@ -116,7 +116,7 @@
 		M.adjustBruteLoss(1)
 		M.updatehealth()
 		for (var/mob/V in viewers(src))
-			V.show_message("[src.name] shakes [M] like a rag doll.")
+			V.oldshow_message("[src.name] shakes [M] like a rag doll.")
 	return
 */
 
@@ -260,13 +260,13 @@
 
 /obj/mecha/combat/Topic(href,href_list)
 	..()
-	var/datum/topic_input/filter = new (href,href_list)
-	if(filter.get("close"))
+	var/datum/topic_input/F = new (href,href_list)
+	if(F.get("close"))
 		am = null
 		return
 	/*
-	if(filter.get("saminput"))
-		if(md5(filter.get("saminput")) == am)
+	if(F.get("saminput"))
+		if(md5(F.get("saminput")) == am)
 			occupant_message("From the lies of the Antipath, Circuit preserve us.")
 		am = null
 	return

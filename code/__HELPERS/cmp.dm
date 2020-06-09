@@ -42,3 +42,31 @@ var/cmp_field = "name"
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
+
+/proc/cmp_qdel_item_time(datum/qdel_item/A, datum/qdel_item/B)
+	. = B.hard_delete_time - A.hard_delete_time
+	if (!.)
+		. = B.destroy_time - A.destroy_time
+	if (!.)
+		. = B.failures - A.failures
+	if (!.)
+		. = B.qdels - A.qdels
+
+
+/proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
+	var/a_sign = num2sign(initial(A.value) * -1)
+	var/b_sign = num2sign(initial(B.value) * -1)
+
+	// Neutral traits go last.
+	if(a_sign == 0)
+		a_sign = 2
+	if(b_sign == 0)
+		b_sign = 2
+
+	var/a_name = initial(A.name)
+	var/b_name = initial(B.name)
+
+	if(a_sign != b_sign)
+		return a_sign - b_sign
+	else
+		return sorttext(b_name, a_name)

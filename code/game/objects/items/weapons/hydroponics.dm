@@ -14,14 +14,14 @@
 //uncomment when this is updated to match storage update
 /*
 /obj/item/weapon/seedbag
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "seedbag"
 	name = "Seed Bag"
 	desc = "A small satchel made for organizing seeds."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 500; //the number of seeds it can carry.
-	slot_flags = SLOT_BELT
-	w_class = 1
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_TINY
 	var/list/item_quants = list()
 
 /obj/item/weapon/seedbag/attack_self(mob/user)
@@ -52,10 +52,10 @@
 					else
 						S.item_quants[G.name] = 1
 				else
-					to_chat(user, "\blue The seed bag is full.")
+					to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 					S.updateUsrDialog()
 					return
-			to_chat(user, "\blue You pick up all the seeds.")
+			to_chat(user, "<span class='notice'>You pick up all the seeds.</span>")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
@@ -64,7 +64,7 @@
 				else
 					S.item_quants[name] = 1
 			else
-				to_chat(user, "\blue The seed bag is full.")
+				to_chat(user, "<span class='notice'>The seed bag is full.</span>")
 		S.updateUsrDialog()
 	return
 
@@ -126,28 +126,29 @@
  */
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
-	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
+	to_chat(M, "<font color='green'><b>[user]</b> smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER</b></font>")
+	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
 
 
 /*
  * Nettle
  */
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user)
-	if(!user.gloves)
-		to_chat(user, "\red The nettle burns your bare hand!")
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
-			affecting.take_damage(0,force)
-		else
-			user.take_organ_damage(0,force)
+/obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		user.take_bodypart_damage(0, force)
+		return
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A, mob/user, proximity)
+	if(!H.gloves)
+		to_chat(H, "<span class='warning'>The [src] burns your bare hand!</span>")
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+		BP.take_damage(0, force)
+
+/obj/item/weapon/grown/nettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
@@ -160,28 +161,27 @@
  * Deathnettle
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user)
-	if(!user.gloves)
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
-			affecting.take_damage(0,force)
-		else
-			user.take_organ_damage(0,force)
-		if(prob(50))
-			user.Paralyse(5)
-			to_chat(user, "\red You are stunned by the Deathnettle when you try picking it up!")
+/obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+			BP.take_damage(0, force)
+	else
+		user.take_bodypart_damage(0, force)
+
+	if(prob(50))
+		user.Paralyse(5)
+		to_chat(user, "<span class='warning'>You are stunned by \the [src] when you try picking it up!</span>")
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		to_chat(M, "\red You are stunned by the powerful acid of the Deathnettle!")
+		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		M.log_combat(user, "stunned with [name]")
 
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
 		M.eye_blurry += force/7
 		if(prob(20))
@@ -189,7 +189,7 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/grown/deathnettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
@@ -208,7 +208,7 @@
  */
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
 		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)

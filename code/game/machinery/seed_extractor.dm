@@ -1,15 +1,15 @@
 /obj/machinery/seed_extractor
 	name = "seed extractor"
 	desc = "Extracts and bags seeds from produce."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
 	density = 1
 	anchored = 1
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
-/obj/machinery/seed_extractor/New()
-	..()
+/obj/machinery/seed_extractor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -23,7 +23,7 @@
 		seed_multiplier = M.rating
 
 
-obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
@@ -39,7 +39,17 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
+	if(istype(O, /obj/item/organ/external))
+		var/obj/item/organ/external/IO = O
+		if(IO.species.name == DIONA)
+			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
+			var/t_amount = 0
+			var/t_max = rand(1,4)
+			for(var/I in t_amount to t_max)
+				new /obj/item/seeds/replicapod(loc)
+			qdel(IO)
+
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
@@ -58,7 +68,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 			t_amount++
 		qdel(O)
 
-	else if(istype(O, /obj/item/weapon/grown/))
+	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")

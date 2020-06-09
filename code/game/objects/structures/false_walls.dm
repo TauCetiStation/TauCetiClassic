@@ -4,267 +4,133 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	anchored = 1
-	icon = 'icons/turf/walls.dmi'
-	var/mineral = "metal"
-	var/opening = 0
+	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
+	icon_state = "box"
+	anchored = TRUE
+	density = TRUE
+	opacity = TRUE
 
-/obj/structure/falsewall/New()
-	relativewall_neighbours()
-	..()
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/turf/simulated/wall/r_wall,
+		/obj/structure/falsewall,
+		/obj/structure/falsewall/reinforced,
+		/obj/structure/girder,
+		/obj/structure/girder/reinforced
+	)
+	smooth = SMOOTH_TRUE
+	can_be_unanchored = FALSE
 
-/obj/structure/falsewall/Destroy()
+	var/walltype = /turf/simulated/wall
+	var/opening = FALSE
+	var/block_air_zones = TRUE
 
-	var/temploc = src.loc
-
-	spawn(10)
-		for(var/turf/simulated/wall/W in range(temploc,1))
-			W.relativewall()
-
-		for(var/obj/structure/falsewall/W in range(temploc,1))
-			W.relativewall()
-
-		for(var/obj/structure/falserwall/W in range(temploc,1))
-			W.relativewall()
-	return ..()
-
-
-/obj/structure/falsewall/relativewall()
-
-	if(!density)
-		icon_state = "[mineral]fwall_open"
-		return
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	icon_state = "[mineral][junction]"
-	return
+/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group) return !block_air_zones
+	if(istype(mover, /obj/effect/beam))
+		return !opacity
+	return !density
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
 
-	if(density)
-		opening = 1
-		icon_state = "[mineral]fwall_open"
-		flick("[mineral]fwall_opening", src)
-		sleep(15)
-		src.density = 0
-		set_opacity(0)
-		opening = 0
-	else
-		opening = 1
-		flick("[mineral]fwall_closing", src)
-		icon_state = "[mineral]0"
-		density = 1
-		sleep(15)
-		set_opacity(1)
-		src.relativewall()
-		opening = 0
+	user.SetNextMove(CLICK_CD_MELEE)
+	opening = TRUE
+	update_icon()
+	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
+
+/obj/structure/falsewall/proc/toggle_open()
+	if(!QDELETED(src))
+		opening = FALSE
+		if(!density)
+			var/turf/T = get_turf(src)
+			for(var/obj/O in T.contents)
+				if(O.density)
+					update_icon()
+					return
+		density = !density
+		set_opacity(density)
+		update_icon()
+		update_nearby_tiles()
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
-	..()
-	if(density)
-		icon_state = "[mineral]0"
-		src.relativewall()
+	if(opening)
+		if(density)
+			flick("fwall_opening", src)
+			icon_state = "fwall_open"
+			smooth = SMOOTH_FALSE
+		else
+			flick("fwall_closing", src)
+			icon_state = initial(icon_state)
 	else
-		icon_state = "[mineral]fwall_open"
+		if(density)
+			icon_state = initial(icon_state)
+			smooth = SMOOTH_TRUE
+			queue_smooth(src)
+		else
+			icon_state = "fwall_open"
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "\red You must wait until the door has stopped moving.")
+		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving.</span>")
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			to_chat(user, "\red The wall is blocked!")
+			to_chat(user, "<span class='warning'>The wall is blocked!</span>")
 			return
-		if(istype(W, /obj/item/weapon/screwdriver))
+		if(isscrewdriver(W))
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-			if(!mineral || mineral == "metal")
-				T.ChangeTurf(/turf/simulated/wall)
-			else
-				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
+		if( iswelder(W) )
 			var/obj/item/weapon/weldingtool/WT = W
-			if( WT:welding )
-				if(!mineral)
-					T.ChangeTurf(/turf/simulated/wall)
-				else
-					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-				if(mineral != "phoron")//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
+			if( WT.welding )
+				T.ChangeTurf(walltype)
+				if(walltype != /turf/simulated/wall/mineral/phoron)//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)
-					T.attackby(W,user)
+					T.attackby(W, user)
 				qdel(src)
 	else
-		to_chat(user, "\blue You can't reach, close it first!")
+		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
 
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "phoron")
+		T.ChangeTurf(walltype)
+		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
-			T.attackby(W,user)
+			T.attackby(W, user)
 		qdel(src)
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
+		T.ChangeTurf(walltype)
 		T = get_turf(src)
-		T.attackby(W,user)
+		T.attackby(W, user)
 		qdel(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "phoron")
+		T.ChangeTurf(walltype)
+		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
-			T.attackby(W,user)
+			T.attackby(W, user)
 		qdel(src)
-
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
-	..()
-	if(density)
-		icon_state = "[mineral]0"
-		src.relativewall()
-	else
-		icon_state = "[mineral]fwall_open"
 
 /*
  * False R-Walls
  */
 
-/obj/structure/falserwall
+/obj/structure/falsewall/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "r_wall"
-	density = 1
-	opacity = 1
-	anchored = 1
-	var/mineral = "metal"
-	var/opening = 0
-
-/obj/structure/falserwall/New()
-	relativewall_neighbours()
-	..()
-
-
-/obj/structure/falserwall/attack_hand(mob/user)
-	if(opening)
-		return
-
-	if(density)
-		opening = 1
-		// Open wall
-		icon_state = "frwall_open"
-		flick("frwall_opening", src)
-		sleep(15)
-		density = 0
-		set_opacity(0)
-		opening = 0
-	else
-		opening = 1
-		icon_state = "r_wall"
-		flick("frwall_closing", src)
-		density = 1
-		sleep(15)
-		set_opacity(1)
-		relativewall()
-		opening = 0
-
-/obj/structure/falserwall/relativewall()
-
-	if(!density)
-		icon_state = "frwall_open"
-		return
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falserwall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.mineral == W.mineral)
-				junction |= get_dir(src,W)
-	icon_state = "rwall[junction]"
-	return
-
-
-
-/obj/structure/falserwall/attackby(obj/item/weapon/W, mob/user)
-	if(opening)
-		to_chat(user, "\red You must wait until the door has stopped moving.")
-		return
-
-	if(istype(W, /obj/item/weapon/screwdriver))
-		var/turf/T = get_turf(src)
-		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
-		T.ChangeTurf(/turf/simulated/wall/r_wall)
-		qdel(src)
-
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if( WT.remove_fuel(0,user) )
-			var/turf/T = get_turf(src)
-			T.ChangeTurf(/turf/simulated/wall/r_wall)
-			T = get_turf(src)
-			T.attackby(W,user)
-			qdel(src)
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall/r_wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		qdel(src)
-
-	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall/r_wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		qdel(src)
-
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall/r_wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		qdel(src)
-
+	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
+	walltype = /turf/simulated/wall/r_wall
 
 /*
  * Uranium Falsewalls
@@ -273,8 +139,10 @@
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
-	icon_state = ""
-	mineral = "uranium"
+	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/uranium
+	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/simulated/wall/mineral/uranium)
+
 	var/active = null
 	var/last_event = 0
 
@@ -288,16 +156,15 @@
 
 /obj/structure/falsewall/uranium/proc/radiate()
 	if(!active)
-		if(world.time > last_event+15)
+		if(world.time > last_event + 15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+			for(var/mob/living/L in range(3, src))
+				L.apply_effect(12, IRRADIATE, 0)
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time
 			active = null
-			return
-	return
+
 /*
  * Other misc falsewall types
  */
@@ -305,37 +172,41 @@
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
-	icon_state = ""
-	mineral = "gold"
+	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/gold
+	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/simulated/wall/mineral/gold)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
-	icon_state = ""
-	mineral = "silver"
+	icon = 'icons/turf/walls/has_false_walls/silver_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/silver
+	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/simulated/wall/mineral/silver)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
-	icon_state = ""
-	mineral = "diamond"
+	icon = 'icons/turf/walls/has_false_walls/diamond_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/diamond
+	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/simulated/wall/mineral/diamond)
 
-/obj/structure/falsewall/phoron
-	name = "phoron wall"
-	desc = "A wall with phoron plating. This is definately a bad idea."
-	icon_state = ""
-	mineral = "phoron"
-
-//-----------wtf?-----------start
-/obj/structure/falsewall/clown
+/obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
-	icon_state = ""
-	mineral = "clown"
+	icon = 'icons/turf/walls/has_false_walls/bananium_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/bananium
+	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/simulated/wall/mineral/bananium)
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
-	icon_state = ""
-	mineral = "sandstone"
-//------------wtf?------------end
+	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/sandstone
+	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
+
+/obj/structure/falsewall/phoron
+	name = "phoron wall"
+	desc = "A wall with phoron plating. This is definately a bad idea."
+	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
+	walltype = /turf/simulated/wall/mineral/phoron
+	canSmoothWith = list(/obj/structure/falsewall/phoron, /turf/simulated/wall/mineral/phoron)

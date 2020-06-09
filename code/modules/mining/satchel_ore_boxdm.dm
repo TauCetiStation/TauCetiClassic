@@ -16,10 +16,11 @@
 		src.contents += W
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		to_chat(user, "\blue You empty the satchel into the box.")
+		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 
 	update_ore_count()
 
@@ -99,7 +100,7 @@
 		dat += text("Strange rocks: [amt_strange]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
-	user << browse("[dat]", "window=orebox")
+	user << browse("[entity_ja(dat)]", "window=orebox")
 	return
 
 /obj/structure/ore_box/examine(mob/user)
@@ -136,7 +137,7 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		to_chat(usr, "\blue You empty the box")
+		to_chat(usr, "<span class='notice'>You empty the box</span>")
 	src.updateUsrDialog()
 	return
 
@@ -146,10 +147,10 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living/carbon/human)) //Only living, intelligent creatures with hands can empty ore boxes.
-		to_chat(usr, "\red You are physically incapable of emptying the ore box.")
+		to_chat(usr, "<span class='warning'>You are physically incapable of emptying the ore box.</span>")
 		return
 
-	if( usr.stat || usr.restrained() )
+	if( usr.incapacitated() )
 		return
 
 	if(!Adjacent(usr)) //You can only empty the box if you can physically reach it
@@ -159,12 +160,12 @@
 	add_fingerprint(usr)
 
 	if(contents.len < 1)
-		to_chat(usr, "\red The ore box is empty")
+		to_chat(usr, "<span class='warning'>The ore box is empty</span>")
 		return
 
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
-	to_chat(usr, "\blue You empty the ore box")
+	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return

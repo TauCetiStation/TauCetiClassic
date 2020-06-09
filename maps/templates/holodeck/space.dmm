@@ -1,15 +1,131 @@
-"a" = (/turf/simulated/floor/holofloor/space,/area/holodeck/source_space)
-"b" = (/obj/effect/landmark{name = "Holocarp Spawn Random"},/turf/simulated/floor/holofloor/space,/area/holodeck/source_space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor/space,
+/area/station/civilian/holodeck/source_space)
+"b" = (
+/obj/effect/landmark{
+	name = "Holocarp Spawn Random"
+	},
+/turf/simulated/floor/holofloor/space,
+/area/station/civilian/holodeck/source_space)
 
 (1,1,1) = {"
-aaaaaaaaaa
-aaabaaaaba
-aaaaaaaaaa
-abaaaabaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaabaaaaba
-aaaaaaaaaa
-abaaaabaaa
-aaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+b
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+b
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+b
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

@@ -5,15 +5,15 @@
 	name = "Atmospheric Alert Computer"
 	desc = "Used to access the station's atmospheric sensors."
 	circuit = /obj/item/weapon/circuitboard/atmos_alert
-	icon_state = "alert:0"
+	icon_state = "atmos"
 	light_color = "#e6ffff"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
 
 
-/obj/machinery/computer/atmos_alert/initialize()
-	..()
+/obj/machinery/computer/atmos_alert/atom_init()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
@@ -39,12 +39,8 @@
 	receive_frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
-
-/obj/machinery/computer/atmos_alert/attack_hand(mob/user)
-	if(..(user))
-		return
-	user << browse(return_text(),"window=computer")
-	user.set_machine(src)
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user)
+	user << browse(entity_ja(return_text()),"window=computer")
 	onclose(user, "computer")
 
 /obj/machinery/computer/atmos_alert/process()
@@ -52,16 +48,16 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
-	if (stat & NOPOWER)
+	if(stat & NOPOWER)
 		icon_state = "atmos0"
 	else if(stat & BROKEN)
 		icon_state = "atmosb"
 	else if(priority_alarms.len)
-		icon_state = "alert:2"
+		icon_state = "atmos_alert_2"
 	else if(minor_alarms.len)
-		icon_state = "alert:1"
+		icon_state = "atmos_alert_1"
 	else
-		icon_state = "alert:0"
+		icon_state = "atmos_alert_0"
 
 
 /obj/machinery/computer/atmos_alert/proc/return_text()

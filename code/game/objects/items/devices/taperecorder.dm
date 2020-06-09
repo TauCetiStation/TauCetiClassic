@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 60
 	g_amt = 30
 	var/emagged = 0.0
@@ -22,29 +22,33 @@
 
 	action_button_name = "Toggle Recorder"
 
+/obj/item/device/taperecorder/get_current_temperature()
+	. = 0
+	if(recording || playing)
+		. += 10
+	if(emagged)
+		. += 10
+
 /obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
 		timestamp+= timerecorded
-		if(isanimal(M)) // Taken from say(). Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
-			var/mob/living/simple_animal/S = M
-			msg = pick(S.speak)
-		else if(isIAN(M))
-			var/mob/living/carbon/ian/IAN = M
-			msg = pick(IAN.speak)
+		if(isanimal(M) || isIAN(M)) // Temporary fix before refactor. Needs to actually pass languages or something like that here and when we see paper or hear audioplayback it depends whenever we can actually understand that language.
+			msg = M.get_scrambled_message(msg)
+		if(!msg)
+			return
 
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
-		return
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
 
-/obj/item/device/taperecorder/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			recording = 0
-			to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-			icon_state = "taperecorderidle"
-		else
-			to_chat(user, "<span class='warning'>It is already emagged!</span>")
+/obj/item/device/taperecorder/emag_act(mob/user)
+	if(emagged == 0)
+		emagged = 1
+		recording = 0
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+		icon_state = "taperecorderidle"
+		return TRUE
+	else
+		to_chat(user, "<span class='warning'>It is already emagged!</span>")
+		return FALSE
 
 /obj/item/device/taperecorder/proc/explode()
 	var/turf/T = get_turf(loc)
@@ -61,10 +65,10 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	icon_state = "taperecorderrecording"
 	if(timerecorded < 3600 && playing == 0)
@@ -88,10 +92,10 @@
 	set name = "Stop"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	if(recording == 1)
 		recording = 0
@@ -112,7 +116,7 @@
 	set name = "Clear Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
@@ -132,7 +136,7 @@
 	set name = "Playback Memory"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(recording == 1)
 		to_chat(usr, "<span class='notice'>You can't playback when recording!</span>")
@@ -149,7 +153,7 @@
 		if(storedinfo.len < i)
 			break
 		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [sanitize_chat(storedinfo[i])]</font>")
+		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
 		if(storedinfo.len < i+1)
 			playsleepseconds = 1
 			sleep(10)
@@ -188,10 +192,10 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	if(emagged == 1)
-		to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	if(!canprint)
 		to_chat(usr, "<span class='notice'>The recorder can't print that fast!</span>")
@@ -206,6 +210,7 @@
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
+	P.update_icon()
 	canprint = 0
 	sleep(300)
 	canprint = 1
@@ -213,14 +218,14 @@
 
 /obj/item/device/taperecorder/attack_self(mob/user)
 	if(recording == 0 && playing == 0)
-		if(usr.stat)
+		if(usr.incapacitated())
 			return
 		if(emagged == 1)
-			to_chat(usr, "\red The tape recorder makes a scratchy noise.")
+			to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 			return
 		icon_state = "taperecorderrecording"
 		if(timerecorded < 3600 && playing == 0)
-			to_chat(usr, "\blue Recording started.")
+			to_chat(usr, "<span class='notice'>Recording started.</span>")
 			recording = 1
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
@@ -233,25 +238,23 @@
 			icon_state = "taperecorderidle"
 			return
 		else
-			to_chat(usr, "\red Either your tape recorder's memory is full, or it is currently playing back its memory.")
+			to_chat(usr, "<span class='warning'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
 	else
-		if(usr.stat)
+		if(usr.incapacitated())
 			to_chat(usr, "Not when you're incapacitated.")
 			return
 		if(recording == 1)
 			recording = 0
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
-			to_chat(usr, "\blue Recording stopped.")
+			to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 			icon_state = "taperecorderidle"
 			return
 		else if(playing == 1)
 			playing = 0
-			var/turf/T = get_turf(src)
-			for(var/mob/O in hearers(world.view-1, T))
-				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
+			audible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 			icon_state = "taperecorderidle"
 			return
 		else
-			to_chat(usr, "\red Stop what?")
+			to_chat(usr, "<span class='warning'>Stop what?</span>")
 			return

@@ -1,29 +1,30 @@
+/* disabled due to pirate gamemode switching back to vox, leaving this for reference.
 var/global/raider_tick = 1
 
 /mob/living/carbon/human/proc/equip_raider()
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(R, SLOT_L_EAR)
 
 	switch(raider_tick)
 		if(1) // Aye Cap'n!
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), slot_wear_suit)
-			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), slot_l_hand)
+			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), SLOT_W_UNIFORM)
+			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), SLOT_SHOES)
+			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), SLOT_WEAR_SUIT)
+			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), SLOT_HEAD)
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), SLOT_GLASSES)
+			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), SLOT_R_HAND)
+			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), SLOT_L_HAND)
 		if(2) // Piretezzz
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
+			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), SLOT_W_UNIFORM)
+			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), SLOT_SHOES)
+			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), SLOT_HEAD)
+			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), SLOT_GLASSES)
+			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), SLOT_R_HAND)
 
-	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
+	equip_to_slot_or_del(new /obj/item/device/price_tool(src), SLOT_L_STORE)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_R_STORE)
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
@@ -35,10 +36,10 @@ var/global/raider_tick = 1
 	var/obj/item/weapon/storage/wallet/W = new(src)
 	W.handle_item_insertion(C)
 	spawn_money(rand(50,150)*10,W)
-	equip_to_slot_or_del(W, slot_wear_id)
+	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	raider_tick = 2
-	return 1
+	return 1*/
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"
@@ -46,19 +47,13 @@ var/global/raider_tick = 1
 	item_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silenced_pistol_nl"
 	mag_type = /obj/item/ammo_box/magazine/sm45/nonlethal
-
-/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "a28w[chambered ? "" : "-e"]"
-	return
 
 /obj/item/ammo_box/magazine/m556/nonlethal
 	name = "A28 magazine (.556NL)"
@@ -86,10 +81,10 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 55
 
-/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(20)//+10=30
+		S.take_bodypart_damage(20)//+10=30
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -100,10 +95,10 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 30
 
-/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(10)//+10=20
+		S.take_bodypart_damage(10)//+10=20
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -113,7 +108,7 @@ var/global/raider_tick = 1
 /obj/item/weapon/storage/backpack/santabag/pirate
 	name = "Loot bag"
 	desc = "Just another ordinary bag."
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/grenade/monsternade
 	name = "pocketnade"
@@ -124,7 +119,7 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	switch(rand(1,4))
 		if(1)
 			for(var/i=0,i<2,i++)
@@ -148,7 +143,7 @@ var/global/raider_tick = 1
 	icon_state = "hacktool"
 	flags = CONDUCT
 	force = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
@@ -166,9 +161,10 @@ var/global/raider_tick = 1
 		to_chat(user, "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>")
 	return 1
 
-/obj/item/device/price_tool/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/price_tool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>")
 	return

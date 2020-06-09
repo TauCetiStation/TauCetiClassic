@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 0
 	unacidable = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	light_range = 4
 
 	var/obj/machinery/field_generator/FG1 = null
@@ -30,7 +30,7 @@
 	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
-	if(get_dist(src, user) <= 1)
+	if(in_range(src, user) && !isobserver(user))
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()

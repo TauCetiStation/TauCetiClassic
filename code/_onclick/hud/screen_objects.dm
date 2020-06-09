@@ -14,6 +14,7 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
+	var/internal_switch = 0 // Cooldown for internal switching
 	appearance_flags = APPEARANCE_UI
 
 /obj/screen/Destroy()
@@ -66,7 +67,7 @@
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.incapacitated())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
@@ -75,6 +76,23 @@
 		if(I)
 			master.attackby(I, usr, params)
 			usr.next_move = world.time+2
+			return 1
+
+		var/obj/item/weapon/storage/S = master
+		if(!S || !S.storage_ui)
+			return 1
+		// Taking something out of the storage screen (including clicking on item border overlay)
+		var/list/PM = params2list(params)
+		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
+
+		for(var/i=1,i<=S.storage_ui.click_border_start.len,i++)
+			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+				I = S.contents[i]
+				if (I)
+					I.Click(location, control, params)
+					return 1
 	return 1
 
 /obj/screen/gun
@@ -82,32 +100,32 @@
 	icon = 'icons/mob/screen1.dmi'
 	master = null
 
-	move
-		name = "Allow Walking"
-		icon_state = "no_walk0"
-		screen_loc = ui_gun2
+/obj/screen/gun/move
+	name = "Allow Walking"
+	icon_state = "no_walk0"
+	screen_loc = ui_gun2
 
-	run
-		name = "Allow Running"
-		icon_state = "no_run0"
-		screen_loc = ui_gun3
+/obj/screen/gun/run
+	name = "Allow Running"
+	icon_state = "no_run0"
+	screen_loc = ui_gun3
 
-	item
-		name = "Allow Item Use"
-		icon_state = "no_item0"
-		screen_loc = ui_gun1
+/obj/screen/gun/item
+	name = "Allow Item Use"
+	icon_state = "no_item0"
+	screen_loc = ui_gun1
 
-	mode
-		name = "Toggle Gun Mode"
-		icon_state = "gun0"
-		screen_loc = ui_gun_select
-		//dir = 1
+/obj/screen/gun/mode
+	name = "Toggle Gun Mode"
+	icon_state = "gun0"
+	screen_loc = ui_gun_select
+	//dir = 1
 
 /obj/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = "chest"
+	var/selecting = BP_CHEST
 
 /obj/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
@@ -119,60 +137,63 @@
 		if(1 to 3) //Feet
 			switch(icon_x)
 				if(10 to 15)
-					selecting = "r_foot"
+					selecting = BP_R_LEG
 				if(17 to 22)
-					selecting = "l_foot"
+					selecting = BP_L_LEG
 				else
 					return 1
 		if(4 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					selecting = "r_leg"
+					selecting = BP_R_LEG
 				if(17 to 22)
-					selecting = "l_leg"
+					selecting = BP_L_LEG
 				else
 					return 1
-		if(10 to 13) //Hands and groin
+		if(10 to 13) //Arms and groin
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_hand"
+					selecting = BP_R_ARM
 				if(12 to 20)
-					selecting = "groin"
+					selecting = BP_GROIN
 				if(21 to 24)
-					selecting = "l_hand"
+					selecting = BP_L_ARM
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_arm"
+					selecting = BP_R_ARM
 				if(12 to 20)
-					selecting = "chest"
+					selecting = BP_CHEST
 				if(21 to 24)
-					selecting = "l_arm"
+					selecting = BP_L_ARM
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				selecting = "head"
+				selecting = BP_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							selecting = "mouth"
+							selecting = O_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							selecting = "eyes"
+							selecting = O_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							selecting = "eyes"
+							selecting = O_EYES
 
 	if(old_selecting != selecting)
+		var/mob/living/L = usr
+		if(istype(L))
+			L.update_combos()
 		update_icon()
 	return 1
 
 /obj/screen/zone_sel/update_icon()
-	overlays.Cut()
-	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -234,7 +255,7 @@
 					if("walk")
 						usr.m_intent = "run"
 						usr.hud_used.move_intent.icon_state = "running"
-				if(istype(usr,/mob/living/carbon/alien/humanoid))
+				if(istype(usr,/mob/living/carbon/xenomorph/humanoid))
 					usr.update_icons()
 		if("m_intent")
 			if(!usr.m_int)
@@ -262,103 +283,122 @@
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
 				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+					if(internal_switch > world.time)
+						return
+					var/internalsound
 					if(C.internal)
 						C.internal = null
 						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
+						internalsound = 'sound/misc/internaloff.ogg'
+						if(ishuman(C))
+							var/mob/living/carbon/human/H = C
+							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+								internalsound = 'sound/misc/riginternaloff.ogg'
+						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 						if(C.internals)
 							C.internals.icon_state = "internal0"
 					else
 						if(!istype(C.wear_mask, /obj/item/clothing/mask))
 							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
+							internal_switch = world.time + 8
 							return 1
 						else
-							var/list/nicename = null
-							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
-							var/list/contents = list()
+							if(C.wear_mask.flags & MASKINTERNALS)
+								var/list/nicename = null
+								var/list/tankcheck = null
+								var/breathes = "oxygen"    //default, we'll check later
+								var/list/contents = list()
 
-							if(ishuman(C))
-								var/mob/living/carbon/human/H = C
-								breathes = H.species.breath_type
-								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-
-							else
-
-								nicename = list("Right Hand", "Left Hand", "Back")
-								tankcheck = list(C.r_hand, C.l_hand, C.back)
-
-							for(var/i=1, i<tankcheck.len+1, ++i)
-								if(istype(tankcheck[i], /obj/item/weapon/tank))
-									var/obj/item/weapon/tank/t = tankcheck[i]
-									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
-										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-										continue					//in it, so we're going to believe the tank is what it says it is
-									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
-
-											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
-												contents.Add(t.air_contents.nitrogen)
-											else
-												contents.Add(0)
-
-										if ("oxygen")
-											if(t.air_contents.oxygen && !t.air_contents.phoron)
-												contents.Add(t.air_contents.oxygen)
-											else
-												contents.Add(0)
-
-										// No races breath this, but never know about downstream servers.
-										if ("carbon dioxide")
-											if(t.air_contents.carbon_dioxide && !t.air_contents.phoron)
-												contents.Add(t.air_contents.carbon_dioxide)
-											else
-												contents.Add(0)
-
+								if(ishuman(C))
+									var/mob/living/carbon/human/H = C
+									breathes = H.species.breath_type
+									nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+									tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
 
 								else
-									//no tank so we set contents to 0
-									contents.Add(0)
 
-							//Alright now we know the contents of the tanks so we have to pick the best one.
+									nicename = list("Right Hand", "Left Hand", "Back")
+									tankcheck = list(C.r_hand, C.l_hand, C.back)
 
-							var/best = 0
-							var/bestcontents = 0
-							for(var/i=1, i <  contents.len + 1 , ++i)
-								if(!contents[i])
-									continue
-								if(contents[i] > bestcontents)
-									best = i
-									bestcontents = contents[i]
+								for(var/i=1, i<tankcheck.len+1, ++i)
+									if(istype(tankcheck[i], /obj/item/weapon/tank))
+										var/obj/item/weapon/tank/t = tankcheck[i]
+										if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
+											contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+											continue					//in it, so we're going to believe the tank is what it says it is
+										switch(breathes)
+																			//These tanks we're sure of their contents
+											if("nitrogen") 							//So we're a bit more picky about them.
+
+												if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+													contents.Add(t.air_contents.gas["nitrogen"])
+												else
+													contents.Add(0)
+
+											if ("oxygen")
+												if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+													contents.Add(t.air_contents.gas["oxygen"])
+												else
+													contents.Add(0)
+
+											// No races breath this, but never know about downstream servers.
+											if ("carbon dioxide")
+												if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+													contents.Add(t.air_contents.gas["carbon_dioxide"])
+												else
+													contents.Add(0)
 
 
-							//We've determined the best container now we set it as our internals
+									else
+										//no tank so we set contents to 0
+										contents.Add(0)
 
-							if(best)
-								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
-								C.internal = tankcheck[best]
+								//Alright now we know the contents of the tanks so we have to pick the best one.
+
+								var/best = 0
+								var/bestcontents = 0
+								for(var/i=1, i <  contents.len + 1 , ++i)
+									if(!contents[i])
+										continue
+									if(contents[i] > bestcontents)
+										best = i
+										bestcontents = contents[i]
 
 
-							if(C.internal)
-								if(C.internals)
-									C.internals.icon_state = "internal1"
+								//We've determined the best container now we set it as our internals
+
+								if(best)
+									to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
+									C.internal = tankcheck[best]
+									internalsound = 'sound/misc/internalon.ogg'
+									if(ishuman(C))
+										var/mob/living/carbon/human/H = C
+										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+											internalsound = 'sound/misc/riginternalon.ogg'
+									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+
+								if(C.internal)
+									if(C.internals)
+										C.internals.icon_state = "internal1"
+								else
+									to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
 							else
-								to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+								to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
+					internal_switch = world.time + 16
 		if("act_intent")
-			usr.a_intent_change("right")
-		if("help")
-			usr.a_intent = "help"
+			usr.a_intent_change(INTENT_HOTKEY_RIGHT)
+		if(INTENT_HELP)
+			usr.a_intent = INTENT_HELP
 			usr.hud_used.action_intent.icon_state = "intent_help"
-		if("harm")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "intent_hurt"
-		if("grab")
-			usr.a_intent = "grab"
+		if(INTENT_HARM)
+			usr.a_intent = INTENT_HARM
+			usr.hud_used.action_intent.icon_state = "intent_harm"
+		if(INTENT_GRAB)
+			usr.a_intent = INTENT_GRAB
 			usr.hud_used.action_intent.icon_state = "intent_grab"
-		if("disarm")
-			usr.a_intent = "disarm"
-			usr.hud_used.action_intent.icon_state = "intent_disarm"
+		if(INTENT_PUSH)
+			usr.a_intent = INTENT_PUSH
+			usr.hud_used.action_intent.icon_state = "intent_push"
 		if("throw")
 			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
@@ -439,14 +479,14 @@
 				AI.control_integrated_radio()
 
 		if("Show Crew Manifest")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_roster()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.show_station_manifest()
 
 		if("Show Alerts")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_alerts()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.show_alerts()
 
 		if("Announcement")
 			if(isAI(usr))
@@ -459,38 +499,93 @@
 				AI.ai_call_shuttle()
 
 		if("State Laws")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.checklaws()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.checklaws()
+
+		if("Show Laws")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.show_laws()
+
+		if("Toggle Lights")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.toggle_lights()
+
+		if("Self Diagnosis")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.self_diagnosis()
+
+		if("Namepick")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.Namepick()
+
+		if("Show Pda Screens")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.shown_robot_pda = !R.shown_robot_pda
+				R.hud_used.toggle_robot_additional_screens(0, R.shown_robot_pda)
+
+		if("Show Foto Screens")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.shown_robot_foto = !R.shown_robot_foto
+				R.hud_used.toggle_robot_additional_screens(1, R.shown_robot_foto)
+
+		if("Toggle Components")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.toggle_component()
 
 		if("PDA - Send Message")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/pda/ai/PDA = AI.aiPDA
-				PDA.cmd_send_pdamesg(usr)
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/pda/silicon/PDA = S.pda
+				PDA.cmd_send_pdamesg(S)
 
 		if("PDA - Show Message Log")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/pda/ai/PDA = AI.aiPDA
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/pda/silicon/PDA = S.pda
 				PDA.cmd_show_message_log(usr)
 
+		if("Pda - Ringtone")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/pda/silicon/PDA = R.pda
+				PDA.cmd_toggle_pda_silent()
+
+		if("Pda - Toggle")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/pda/silicon/PDA = R.pda
+				PDA.cmd_toggle_pda_receiver()
+
 		if("Take Image")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
 				camera.take_image()
 
 		if("View Images")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
 				camera.view_images()
 
+		if("Delete Image")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/camera/siliconcam/ai_camera/camera = R.aiCamera
+				camera.deletepicture(camera)
+
 		if("Sensor Augmentation")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.sensor_mode()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.toggle_sensor_mode()
 
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
@@ -559,7 +654,7 @@
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+	if(usr.incapacitated())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
@@ -584,3 +679,13 @@
 				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/inventory/craft
+	name = "crafting menu"
+	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon_state = "craft"
+	screen_loc = ui_crafting
+
+/obj/screen/inventory/craft/Click()
+	var/mob/living/M = usr
+	M.OpenCraftingMenu()

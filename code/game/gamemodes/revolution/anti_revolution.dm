@@ -1,3 +1,5 @@
+//not used anymore
+
 // A sort of anti-revolution where the heads are given objectives to mess with the crew
 
 /datum/game_mode/anti_revolution
@@ -31,7 +33,7 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/anti_revolution/pre_setup()
-	for(var/mob/new_player/player in world) if(player.mind)
+	for(var/mob/dead/new_player/player in not_world)
 		if(player.mind.assigned_role in command_positions)
 			heads += player.mind
 		else
@@ -95,8 +97,8 @@
 /datum/game_mode/proc/greet_head(datum/mind/head_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		to_chat(head_mind.current, "\blue It looks like this shift CentComm has some special orders for you.. check your objectives.")
-		to_chat(head_mind.current, "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.")
+		to_chat(head_mind.current, "<span class='notice'>It looks like this shift CentComm has some special orders for you.. check your objectives.</span>")
+		to_chat(head_mind.current, "<span class='notice'>Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.</span>")
 	for(var/datum/objective/objective in head_mind.objectives)
 		to_chat(head_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		head_mind.special_role = "Corrupt Head"
@@ -151,9 +153,13 @@
 
 	var/text = ""
 	if(finished == 2)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>")
+		mode_result = "loss - crew wins"
+		feedback_set_details("round_end_result",mode_result)
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>")
 	else if(finished == 1)
-		to_chat(world, "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>")
+		mode_result = "win - heads wins"
+		feedback_set_details("round_end_result",mode_result)
+		to_chat(world, "<span class='warning'><FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>")
 
 
 
@@ -180,10 +186,10 @@
 			var/count = 1
 			for(var/datum/objective/objective in head_mind.objectives)
 				if(objective.check_completion())
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 					feedback_add_details("head_objective","[objective.type]|SUCCESS")
 				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 					feedback_add_details("head_objective","[objective.type]|FAIL")
 				count++
 		break // just print once
@@ -215,4 +221,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	to_chat(src, "\red You resigned from your position, now you have the consequences.")
+	to_chat(src, "<span class='warning'>You resigned from your position, now you have the consequences.</span>")

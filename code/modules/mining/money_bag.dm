@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 2.0
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/moneybag/attack_hand(user)
 	var/amt_gold = 0
@@ -17,6 +17,8 @@
 	var/amt_phoron = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_platinum
+	var/amt_hydrogen
 
 	for (var/obj/item/weapon/coin/C in contents)
 		if (istype(C,/obj/item/weapon/coin/diamond))
@@ -31,10 +33,12 @@
 			amt_gold++;
 		if (istype(C,/obj/item/weapon/coin/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/coin/clown))
+		if (istype(C,/obj/item/weapon/coin/bananium))
 			amt_clown++;
 		if (istype(C,/obj/item/weapon/coin/platinum))
-			amt_clown++;
+			amt_platinum++;
+		if (istype(C,/obj/item/weapon/coin/mythril))
+			amt_hydrogen++;
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
@@ -51,22 +55,24 @@
 		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
 	if (amt_clown)
 		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
-	if (amt_clown)
-		dat += text("Platinum coins: [amt_clown] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
-	user << browse("[dat]", "window=moneybag")
+	if (amt_platinum)
+		dat += text("Platinum coins: [amt_platinum] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
+	if (amt_hydrogen)
+		dat += text("Mythril coins: [amt_hydrogen] <A href='?src=\ref[src];remove=hydrogen'>Remove one</A><br>")
+	user << browse("[entity_ja(dat)]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
-		to_chat(user, "\blue You add the [C.name] into the bag.")
-		usr.drop_item()
+		to_chat(user, "<span class='notice'>You add the [C.name] into the bag.</span>")
+		user.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
 		for (var/obj/O in C.contents)
 			contents += O;
-		to_chat(user, "\blue You empty the [C.name] into the bag.")
+		to_chat(user, "<span class='notice'>You empty the [C.name] into the bag.</span>")
 	return
 
 /obj/item/weapon/moneybag/Topic(href, href_list)
@@ -90,9 +96,11 @@
 			if("uranium")
 				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
 			if("clown")
-				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+				COIN = locate(/obj/item/weapon/coin/bananium,src.contents)
 			if("platinum")
 				COIN = locate(/obj/item/weapon/coin/platinum,src.contents)
+			if("hydrogen")
+				COIN = locate(/obj/item/weapon/coin/mythril,src.contents)
 		if(!COIN)
 			return
 		COIN.loc = src.loc
@@ -102,12 +110,10 @@
 
 /obj/item/weapon/moneybag/vault
 
-/obj/item/weapon/moneybag/vault/New()
-	..()
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/gold(src)
-	new /obj/item/weapon/coin/gold(src)
+/obj/item/weapon/moneybag/vault/atom_init()
+	. = ..()
+	for (var/i in 1 to 4)
+		new /obj/item/weapon/coin/silver(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/coin/gold(src)
 	new /obj/item/weapon/coin/platinum(src)

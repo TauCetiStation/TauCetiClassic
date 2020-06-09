@@ -14,26 +14,28 @@
 	var/mineral = "phoron"
 	var/is_metal = 0
 
-/obj/structure/temple_falsewall/New()
+/obj/structure/temple_falsewall/atom_init()
 	..()
-	spawn(10)
-		if(prob(95))
-			desc = pick("Something seems slightly off about it.","")
+	return INITIALIZE_HINT_LATELOAD
 
-		var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+/obj/structure/temple_falsewall/atom_init_late()
+	if(prob(95))
+		desc = pick("Something seems slightly off about it.","")
 
-		for(var/turf/unsimulated/wall/W in orange(src,1))
-			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-				junction |= get_dir(src,W)
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
-		closed_wall_dir = junction
-		density = 1
-		icon_state = "[mineral][closed_wall_dir]"
+	for(var/turf/unsimulated/wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			junction |= get_dir(src,W)
+
+	closed_wall_dir = junction
+	density = 1
+	icon_state = "[mineral][closed_wall_dir]"
 
 /obj/structure/temple_falsewall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(density)
 		opening = 1
 		if(is_metal)

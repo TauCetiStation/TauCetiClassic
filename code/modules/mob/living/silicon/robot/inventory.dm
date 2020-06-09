@@ -5,6 +5,10 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
+// I'd rather do this then have something broken.
+/mob/living/silicon/robot/get_inactive_hand()
+	return module_active
+
 /*-------TODOOOOOOOOOO--------*/
 
 /mob/living/silicon/robot/u_equip(obj/W)
@@ -89,7 +93,6 @@
 		return 1
 	else
 		return 0
-	updateicon()
 
 //Helper procs for cyborg modules on the UI.
 //These are hackish but they help clean up code elsewhere.

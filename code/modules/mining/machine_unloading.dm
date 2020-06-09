@@ -7,21 +7,24 @@
 	icon_state = "unloader"
 	density = 1
 	anchored = 1.0
+	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 
 
-/obj/machinery/mineral/unloading_machine/New()
+/obj/machinery/mineral/unloading_machine/atom_init()
 	..()
-	spawn( 5 )
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/unloading_machine/atom_init_late()
+	for (var/dir in cardinal)
+		input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(input)
+			break
+	for (var/dir in cardinal)
+		output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(output)
+			break
 
 /obj/machinery/mineral/unloading_machine/process()
 	if (src.output && src.input)

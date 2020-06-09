@@ -44,10 +44,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
 
-	var/datum/subsystem/queue_head //Start of queue linked list
-	var/datum/subsystem/queue_tail //End of queue linked list (used for appending to the list)
-	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
-	var/queue_priority_count_bg = 0 //Same, but for background subsystems
+	var/datum/subsystem/queue_head      // Start of queue linked list
+	var/datum/subsystem/queue_tail      // End of queue linked list (used for appending to the list)
+	var/queue_priority_count = 0        // Running total so that we don't have to loop thru the queue each run to split up the tick
+	var/queue_priority_count_bg = 0     // Same, but for background subsystems
+	var/map_loading = FALSE             // Are we loading in a new map?
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -121,6 +122,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
 	world.log << "Initializing subsystems..."
+	log_initialization("Initializing subsystems...")
 	to_chat(world, "<span class='boldannounce'>Initializing game. Please wait...</span>")
 
 	var/start_timeofday = world.timeofday
@@ -136,13 +138,18 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/time = (world.timeofday - start_timeofday) / 10
 
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
+	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
 	to_chat(world, "<span class='success'>Initializations complete!</span>")
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 
 	// Set world options.
-	world.sleep_offline = 1
+#ifdef UNIT_TEST
+	world.sleep_offline = FALSE
+#else
+	world.sleep_offline = TRUE
+#endif
 	world.fps = config.fps
 
 	sleep(1)
@@ -483,5 +490,22 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Initializing...", src)
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (TickDrift:[round(Master.tickdrift)]) (Iteration:[Master.iteration])"))
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
+
+	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time / world.tick_lag]) (TickDrift:[round(Master.tickdrift, 1)]([round((Master.tickdrift / (world.time / world.tick_lag)) * 100, 0.1)]%))")
+	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration])"))
+
+/datum/controller/master/StartLoadingMap()
+	//disallow more than one map to load at once, multithreading it will just cause race conditions
+	while(map_loading)
+		stoplag()
+	for(var/S in subsystems)
+		var/datum/subsystem/SS = S
+		SS.StartLoadingMap()
+	map_loading = TRUE
+
+/datum/controller/master/StopLoadingMap(bounds = null)
+	map_loading = FALSE
+	for(var/S in subsystems)
+		var/datum/subsystem/SS = S
+		SS.StopLoadingMap()

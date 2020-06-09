@@ -8,8 +8,8 @@
 	var/on = 0 //Are we currently active??
 	var/menu_message = ""
 
-/obj/item/radio/integrated/New()
-	..()
+/obj/item/radio/integrated/atom_init()
+	. = ..()
 	if (istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
 
@@ -43,11 +43,9 @@
 	var/control_freq = 1447
 
 	// create a new QM cartridge, and register to receive bot control & beacon message
-/obj/item/radio/integrated/beepsky/New()
-	..()
-	spawn(5)
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+/obj/item/radio/integrated/beepsky/atom_init()
+	. = ..()
+	radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 
 	// receive radio signals
 	// can detect bot status signals
@@ -114,14 +112,14 @@
 	var/control_freq = 1447
 
 	// create a new QM cartridge, and register to receive bot control & beacon message
-/obj/item/radio/integrated/mule/New()
+/obj/item/radio/integrated/mule/atom_init()
 	..()
-	spawn(5)
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
-			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-			spawn(10)
-				post_signal(beacon_freq, "findbeacon", "delivery", s_filter = RADIO_NAVBEACONS)
+	radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
+	radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/radio/integrated/mule/atom_init_late() // if this even necessary
+	post_signal(beacon_freq, "findbeacon", "delivery", s_filter = RADIO_NAVBEACONS)
 
 /obj/item/radio/integrated/mule/Destroy()
 	if(radio_controller)
@@ -222,12 +220,8 @@
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 
-/obj/item/radio/integrated/signal/New()
-	..()
-	if(radio_controller)
-		initialize()
-
-/obj/item/radio/integrated/signal/initialize()
+/obj/item/radio/integrated/signal/atom_init()
+	. = ..()
 	if (src.frequency < 1441 || src.frequency > 1489)
 		src.frequency = sanitize_frequency(src.frequency)
 
@@ -247,8 +241,8 @@
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-	message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-	log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+	message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] [ADMIN_JMP(usr)]")
+	log_game("[key_name(usr)] used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
 
 	var/datum/signal/signal = new
 	signal.source = src

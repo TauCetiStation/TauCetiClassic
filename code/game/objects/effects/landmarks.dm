@@ -2,20 +2,27 @@
 	name = "landmark"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1.0
-	unacidable = 1
+	anchored = TRUE
+	unacidable = TRUE
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()
-
 	..()
 	tag = text("landmark*[]", name)
-	invisibility = 101
 	landmarks_list += src
-	switch(name)			//some of these are probably obsolete
+
+/obj/effect/landmark/Destroy()
+	landmarks_list -= src
+	return ..()
+
+/obj/effect/landmark/atom_init()
+	. = ..()
+
+	switch(name)
 		if("shuttle")
 			shuttle_z = z
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
+
 		if("airtunnel_stop")
 			airtunnel_stop = x
 
@@ -25,215 +32,251 @@
 		if("airtunnel_bottom")
 			airtunnel_bottom = y
 
+		if ("awaystart")
+			awaydestinations += src
+
 		if("monkey")
 			monkeystart += loc
-			qdel(src)
-		if("start")
-			newplayer_start += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 		if("wizard")
 			wizardstart += loc
-			qdel(src)
-			return
-		if("JoinLate")
-			latejoin += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 	//	if("mazewarp")
 	//		mazewarp += loc
 		if("Holding Facility")
 			holdingfacility += loc
 		if("tdome1")
-			tdome1	+= loc
+			tdome1 += loc
 		if("tdome2")
 			tdome2 += loc
 		if("tdomeadmin")
-			tdomeadmin	+= loc
+			tdomeadmin += loc
 		if("tdomeobserve")
 			tdomeobserve += loc
 		//not prisoners
 		if("prisonsecuritywarp")
 			prisonsecuritywarp += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 		if("blobstart")
 			blobstart += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 		if("xeno_spawn")
 			xeno_spawn += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 		if("ninjastart")
 			ninjastart += loc
-			qdel(src)
-			return
+			return INITIALIZE_HINT_QDEL
 
-	return 1
+/obj/effect/landmark/sound_source
+	name = "Sound Source"
 
-/obj/effect/landmark/Destroy()
-	landmarks_list -= src
-	return ..()
+/obj/effect/landmark/sound_source/shuttle_docking
+	name = "Shuttle Docking"
 
 /obj/effect/landmark/start
 	name = "start"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/effect/landmark/start/New()
 	..()
-	tag = "start*[name]"
-	invisibility = 101
+	if(name != "start")
+		tag = "start*[name]"
 
-	return 1
+/obj/effect/landmark/start/new_player
+	name = "New Player"
+
+// Must be on New() rather than Initialize, because players will
+// join before SSatom initializes everything.
+/obj/effect/landmark/start/new_player/New(loc)
+	..()
+	newplayer_start += loc
+
+/obj/effect/landmark/start/new_player/atom_init(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/latejoin
+	name = "JoinLate"
+
+/obj/effect/landmark/latejoin/New(loc)
+	..()
+	latejoin += loc
+
+/obj/effect/landmark/latejoin/atom_init(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
 
 //Costume spawner landmarks
 
-/obj/effect/landmark/costume/New() //costume spawner, selects a random subclass and disappears
-
+/obj/effect/landmark/costume/atom_init() // costume spawner, selects a random subclass and disappears
+	..()
 	var/list/options = typesof(/obj/effect/landmark/costume)
-	var/PICK= options[rand(1,options.len)]
-	new PICK(src.loc)
-	qdel(src)
+	var/PICK = options[rand(1, options.len)]
+	new PICK(loc)
+	return INITIALIZE_HINT_QDEL
 
 //SUBCLASSES.  Spawn a bunch of items and disappear likewise
-/obj/effect/landmark/costume/chicken/New()
-	new /obj/item/clothing/suit/chickensuit(src.loc)
-	new /obj/item/clothing/head/chicken(src.loc)
-	new /obj/item/weapon/reagent_containers/food/snacks/egg(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/chicken/atom_init()
+	..()
+	new /obj/item/clothing/suit/chickensuit(loc)
+	new /obj/item/clothing/head/chicken(loc)
+	new /obj/item/weapon/reagent_containers/food/snacks/egg(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/gladiator/New()
-	new /obj/item/clothing/under/gladiator(src.loc)
-	new /obj/item/clothing/head/helmet/gladiator(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/gladiator/atom_init()
+	..()
+	new /obj/item/clothing/under/gladiator(loc)
+	new /obj/item/clothing/head/helmet/gladiator(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/madscientist/New()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
-	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/suit/storage/labcoat/mad(src.loc)
-	new /obj/item/clothing/glasses/gglasses(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/madscientist/atom_init()
+	..()
+	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
+	new /obj/item/clothing/head/flatcap(loc)
+	new /obj/item/clothing/suit/storage/labcoat/mad(loc)
+	new /obj/item/clothing/glasses/gglasses(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/elpresidente/New()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
-	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/mask/cigarette/cigar/havana(src.loc)
-	new /obj/item/clothing/shoes/jackboots(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/elpresidente/atom_init()
+	..()
+	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
+	new /obj/item/clothing/head/flatcap(loc)
+	new /obj/item/clothing/mask/cigarette/cigar/havana(loc)
+	new /obj/item/clothing/shoes/boots(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/nyangirl/New()
-	new /obj/item/clothing/under/schoolgirl(src.loc)
-	new /obj/item/clothing/head/kitty(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/nyangirl/atom_init()
+	..()
+	new /obj/item/clothing/under/schoolgirl(loc)
+	new /obj/item/clothing/head/kitty(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/maid/New()
-	new /obj/item/clothing/under/blackskirt(src.loc)
-	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
-	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/maid/atom_init()
+	..()
+	new /obj/item/clothing/under/blackskirt(loc)
+	var/CHOICE = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
+	new CHOICE(loc)
+	new /obj/item/clothing/glasses/sunglasses/blindfold(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/butler/New()
-	new /obj/item/clothing/suit/wcoat(src.loc)
-	new /obj/item/clothing/under/suit_jacket(src.loc)
-	new /obj/item/clothing/head/that(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/butler/atom_init()
+	..()
+	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/under/suit_jacket(loc)
+	new /obj/item/clothing/head/that(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/scratch/New()
-	new /obj/item/clothing/gloves/white(src.loc)
-	new /obj/item/clothing/shoes/white(src.loc)
-	new /obj/item/clothing/under/scratch(src.loc)
+/obj/effect/landmark/costume/scratch/atom_init()
+	..()
+	new /obj/item/clothing/gloves/white(loc)
+	new /obj/item/clothing/shoes/white(loc)
+	new /obj/item/clothing/under/scratch(loc)
 	if (prob(30))
-		new /obj/item/clothing/head/cueball(src.loc)
-	qdel(src)
+		new /obj/item/clothing/head/cueball(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/highlander/New()
-	new /obj/item/clothing/under/kilt(src.loc)
-	new /obj/item/clothing/head/beret(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/highlander/atom_init()
+	..()
+	new /obj/item/clothing/under/kilt(loc)
+	new /obj/item/clothing/head/beret/red(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/prig/New()
-	new /obj/item/clothing/suit/wcoat(src.loc)
-	new /obj/item/clothing/glasses/monocle(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
-	new CHOICE(src.loc)
-	new /obj/item/clothing/shoes/black(src.loc)
-	new /obj/item/weapon/cane(src.loc)
-	new /obj/item/clothing/under/sl_suit(src.loc)
-	new /obj/item/clothing/mask/fakemoustache(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/prig/atom_init()
+	..()
+	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/glasses/monocle(loc)
+	var/CHOICE = pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
+	new CHOICE(loc)
+	new /obj/item/clothing/shoes/black(loc)
+	new /obj/item/weapon/cane(loc)
+	new /obj/item/clothing/under/sl_suit(loc)
+	new /obj/item/clothing/mask/fakemoustache(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/plaguedoctor/New()
-	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
-	new /obj/item/clothing/head/plaguedoctorhat(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/plaguedoctor/atom_init()
+	..()
+	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(loc)
+	new /obj/item/clothing/head/plaguedoctorhat(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/nightowl/New()
-	new /obj/item/clothing/under/owl(src.loc)
-	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/nightowl/atom_init()
+	..()
+	new /obj/item/clothing/under/owl(loc)
+	new /obj/item/clothing/mask/gas/owl_mask(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/waiter/New()
-	new /obj/item/clothing/under/waiter(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
-	new CHOICE(src.loc)
-	new /obj/item/clothing/suit/apron(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/waiter/atom_init()
+	..()
+	new /obj/item/clothing/under/waiter(loc)
+	var/CHOICE = pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
+	new CHOICE(loc)
+	new /obj/item/clothing/suit/apron(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/pirate/New()
-	new /obj/item/clothing/under/pirate(src.loc)
-	new /obj/item/clothing/suit/pirate(src.loc)
+/obj/effect/landmark/costume/pirate/atom_init()
+	..()
+	new /obj/item/clothing/under/pirate(loc)
+	new /obj/item/clothing/suit/pirate(loc)
 	var/CHOICE = pick( /obj/item/clothing/head/pirate , /obj/item/clothing/head/bandana )
-	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/eyepatch(src.loc)
-	qdel(src)
+	new CHOICE(loc)
+	new /obj/item/clothing/glasses/eyepatch(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/commie/New()
-	new /obj/item/clothing/under/soviet(src.loc)
-	new /obj/item/clothing/head/ushanka(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/commie/atom_init()
+	..()
+	new /obj/item/clothing/under/soviet(loc)
+	new /obj/item/clothing/head/ushanka(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/imperium_monk/New()
-	new /obj/item/clothing/suit/imperium_monk(src.loc)
+/obj/effect/landmark/costume/imperium_monk/atom_init()
+	..()
+	new /obj/item/clothing/suit/imperium_monk(loc)
 	if (prob(25))
-		new /obj/item/clothing/mask/gas/cyborg(src.loc)
-	qdel(src)
+		new /obj/item/clothing/mask/gas/cyborg(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/holiday_priest/New()
-	new /obj/item/clothing/suit/holidaypriest(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/holiday_priest/atom_init()
+	..()
+	new /obj/item/clothing/suit/holidaypriest(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/marisawizard/fake/New()
-	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
-	new/obj/item/clothing/suit/wizrobe/marisa/fake(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/marisawizard/fake/atom_init()
+	..()
+	new /obj/item/clothing/head/wizard/marisa/fake(loc)
+	new/obj/item/clothing/suit/wizrobe/marisa/fake(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/cutewitch/New()
-	new /obj/item/clothing/under/sundress(src.loc)
-	new /obj/item/clothing/head/witchwig(src.loc)
-	new /obj/item/weapon/staff/broom(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/cutewitch/atom_init()
+	..()
+	new /obj/item/clothing/under/sundress(loc)
+	new /obj/item/clothing/head/witchwig(loc)
+	new /obj/item/weapon/staff/broom(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/fakewizard/New()
-	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
-	new /obj/item/clothing/head/wizard/fake(src.loc)
-	new /obj/item/weapon/staff/(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/fakewizard/atom_init()
+	..()
+	new /obj/item/clothing/suit/wizrobe/fake(loc)
+	new /obj/item/clothing/head/wizard/fake(loc)
+	new /obj/item/weapon/staff/(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/sexyclown/New()
-	new /obj/item/clothing/mask/gas/sexyclown(src.loc)
-	new /obj/item/clothing/under/sexyclown(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/sexyclown/atom_init()
+	..()
+	new /obj/item/clothing/mask/gas/sexyclown(loc)
+	new /obj/item/clothing/under/sexyclown(loc)
+	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/costume/sexymime/New()
-	new /obj/item/clothing/mask/gas/sexymime(src.loc)
-	new /obj/item/clothing/under/sexymime(src.loc)
-	qdel(src)
+/obj/effect/landmark/costume/sexymime/atom_init()
+	..()
+	new /obj/item/clothing/mask/gas/sexymime(loc)
+	new /obj/item/clothing/under/sexymime(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/blockway
+	density = TRUE

@@ -8,7 +8,6 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "brushes the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"
@@ -19,10 +18,9 @@
 	pixel_x = -16
 
 	harm_intent_damage = 5
-	melee_damage_lower = 8
-	melee_damage_upper = 12
-	attacktext = "bites"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 10
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	//Space carp aren't affected by atmos.
 	min_oxy = 0
@@ -36,6 +34,8 @@
 	minbodytemp = 0
 
 	faction = "carp"
+	has_head = TRUE
+	has_arm = TRUE
 
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()
@@ -52,6 +52,6 @@
 
 /mob/living/simple_animal/hostile/tree/death()
 	..()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
+	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
 	new /obj/item/stack/sheet/wood(loc)
 	qdel(src)

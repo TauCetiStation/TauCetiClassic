@@ -1,16 +1,17 @@
 /obj/machinery/iv_drip
-	name = "\improper IV drip"
+	name = "IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	density = 0
+	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
 
 
-/obj/machinery/iv_drip/New()
-	..()
+/obj/machinery/iv_drip/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/machinery/iv_drip/update_icon()
@@ -25,13 +26,13 @@
 		else
 			icon_state = "donateidle"
 
-	overlays = null
+	cut_overlays()
 
 	if(beaker)
 		if(attached)
-			overlays += "beakeractive"
+			add_overlay("beakeractive")
 		else
-			overlays += "beakeridle"
+			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
@@ -46,11 +47,12 @@
 				if(91 to INFINITY)	filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			overlays += filling
+			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
-
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
@@ -86,7 +88,7 @@
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			src.attached:apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
 			src.attached = null
 			src.update_icon()
 			return
@@ -135,13 +137,19 @@
 				beaker.reagents.handle_reactions()
 				update_icon()
 
-/obj/machinery/iv_drip/attack_hand(mob/user)
-	if(src.beaker)
-		src.beaker.loc = get_turf(src)
-		src.beaker = null
-		update_icon()
-	else
+/obj/machinery/iv_drip/attack_ai(mob/user)
+	if(IsAdminGhost(user))
 		return ..()
+
+/obj/machinery/iv_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(beaker)
+		beaker.loc = get_turf(src)
+		beaker = null
+		update_icon()
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"

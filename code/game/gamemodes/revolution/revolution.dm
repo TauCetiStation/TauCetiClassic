@@ -15,9 +15,9 @@
 	name = "revolution"
 	config_tag = "revolution"
 	role_type = ROLE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
-	required_players_secret = 15
+	required_players_secret = 20
 	required_enemies = 3
 	recommended_enemies = 3
 
@@ -48,7 +48,7 @@
 		restricted_jobs += protected_jobs
 
 	var/head_check = 0
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
@@ -118,14 +118,14 @@
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		to_chat(rev_mind.current, "\blue You are a member of the revolutionaries' leadership!")
+		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in rev_mind.objectives)
 			to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			rev_mind.special_role = "Head Revolutionary"
 			obj_count++
 	else
-		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 /////////////////////////////////////////////////////////////////////////////////
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
@@ -144,11 +144,11 @@
 	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	mob.equip_in_one_of_slots(R,slots)
@@ -192,7 +192,7 @@
 	if(rev_mind.assigned_role in command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	if(isloyal(H))
+	if(ismindshielded(H))
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
@@ -201,10 +201,10 @@
 		var/mob/living/carbon/carbon_mob = rev_mind.current
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 	rev_mind.current.Stun(5)
-	to_chat(rev_mind.current, "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>")
+	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
-		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	update_all_rev_icons()
 	return 1
 //////////////////////////////////////////////////////////////////////////////
@@ -217,15 +217,15 @@
 		rev_mind.current.hud_updateflag |= 1 << SPECIALROLE_HUD
 
 		if(beingborged)
-			to_chat(rev_mind.current, "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT>")
+			to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT></span>")
 
 		else
-			to_chat(rev_mind.current, "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT>")
+			to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT></span>")
 
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
 			if(beingborged)
-				to_chat(rev_mind.current, "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</B></FONT>")
+				to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</B></FONT></span>")
 				message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> has been borged while being a member of the revolution.")
 
 			else
@@ -363,7 +363,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && is_station_level(T.z))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -372,20 +372,24 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
-	completion_text += "<B>Revolution mode resume:</B><BR>"
+	if(name == "rp-revolution") // hack, we should move game_mode/revolution/rp_revolution to game_mode/rp_revolution
+		return ..()
+	completion_text += "<h3>Revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
-			feedback_set_details("round_end_result","win - heads killed")
-			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff were killed or exiled! The revolutionaries win!</B></FONT>"
+			mode_result = "win - heads killed"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<br><span style='color: red; font-weight: bold;'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
 		else if(finished == 2)
-			feedback_set_details("round_end_result","loss - rev heads killed")
-			completion_text += "<br><FONT size = 3, color='red'><B>The heads of staff managed to stop the revolution!</B></FONT>"
+			mode_result = "loss - rev heads killed"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<br><span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
 	var/num_revs = 0
-	for(var/mob/living/carbon/mob in living_mob_list)
+	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
-			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+			if((mob.mind in head_revolutionaries) || (mob.mind in revolutionaries))
 				num_revs++
-	completion_text += "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	completion_text += "<br>[TAB]Command's Approval Rating: <b>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</b>" // % of loyal crew
 	..()
 	return 1
 
@@ -401,12 +405,12 @@
 				var/icon/flat = getFlatIcon(headrev.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[headrev.key]</B> was <B>[headrev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[headrev.key]</b> was <b>[headrev.name]</b> ("}
 				if(headrev.current.stat == DEAD)
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(headrev.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(headrev.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -416,41 +420,41 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[headrev.key]</B> was <B>[headrev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[headrev.key]</b> was <b>[headrev.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 			if(headrev.total_TC)
 				if(headrev.spent_TC)
-					text += "<BR><B>TC Remaining:</B> [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC]"
-					text += "<BR><B>The tools used by the Head Revolutionary were:</B>"
+					text += "<br><b>TC Remaining:</b> [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC]"
+					text += "<br><b>The tools used by the Head Revolutionary were:</b>"
 					for(var/entry in headrev.uplink_items_bought)
-						text += "<BR>[entry]"
+						text += "<br>[entry]"
 				else
-					text += "<BR>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)."
+					text += "<br>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)."
 
 			for(var/datum/objective/mutiny/objective in headrev.objectives)
 				targets |= objective.target
 
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		text += "<BR>"
+		text += "<br>"
 		text += printlogo("rev-logo", "head revolutionaries")
 		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
 		end_icons += logo2
 		var/tempstate = end_icons.len
-		text += {"<BR><img src="logo_[tempstate].png"> <B>The revolutionaries were:</B> <img src="logo_[tempstate].png">"}
+		text += {"<br><img src="logo_[tempstate].png"> <b>The revolutionaries were:</b> <img src="logo_[tempstate].png">"}
 
 		for(var/datum/mind/rev in revolutionaries)
 			if(rev.current)
 				var/icon/flat = getFlatIcon(rev.current,exact=1)
 				end_icons += flat
 				tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[rev.key]</B> was <B>[rev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[rev.key]</b> was <b>[rev.name]</b> ("}
 				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(rev.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(rev.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -460,30 +464,30 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[rev.key]</B> was <B>[rev.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[rev.key]</b> was <b>[rev.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 
 
-	text += "<BR>"
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+		text += "<br>"
 		text += printlogo("nano-logo", "heads of staff")
 
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
-				text += "<FONT color='red'>"
+				text += "<span style='color: red'>"
 			if(head.current)
 				var/icon/flat = getFlatIcon(head.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[head.key]</B> was <B>[head.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[head.key]</b> was <b>[head.name]</b> ("}
 				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(head.current.z != ZLEVEL_STATION)
+				else if(!is_station_level(head.current.z))
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -493,11 +497,14 @@
 				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 				end_icons += sprotch
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[head.key]</B> was <B>[head.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[head.key]</b> was <b>[head.name]</b> ("}
 				text += "body destroyed"
 			text += ")"
 			if(target)
-				text += "</FONT>"
+				text += "</span>"
 
-		text += "<BR><HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "revolution", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text

@@ -7,26 +7,42 @@ it creates. All the menus and other manipulation commands are in the R&D console
 Note: Must be placed west/left of and R&D console to function.
 
 */
+/datum/rnd_material
+	var/name
+	var/amount
+	var/sheet_size
+	var/sheet_type
+
+/datum/rnd_material/New(Name, obj/item/stack/sheet/Sheet_type)
+	name = Name
+	amount = 0
+	sheet_type = Sheet_type
+	sheet_size = initial(Sheet_type.perunit)
+
+/datum/rnd_queue_design
+	var/name
+	var/datum/design/design
+	var/amount
+
+/datum/rnd_queue_design/New(datum/design/D, Amount)
+	name = D.name
+	if(Amount > 1)
+		name = "[name] x[Amount]"
+
+	design = D
+	amount = Amount
+
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
 	icon_state = "protolathe"
-	flags = OPENCONTAINER
 
-	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/gold_amount = 0.0
-	var/silver_amount = 0.0
-	var/phoron_amount = 0.0
-	var/uranium_amount = 0.0
-	var/diamond_amount = 0.0
-	var/clown_amount = 0.0
+	var/max_material_storage = 100000
 	var/efficiency_coeff
-	reagents = new()
+	var/list/datum/rnd_material/loaded_materials = list()
+	var/list/queue = list()
 
-
-/obj/machinery/r_n_d/protolathe/New()
-	..()
+/obj/machinery/r_n_d/protolathe/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/protolathe(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -36,15 +52,24 @@ Note: Must be placed west/left of and R&D console to function.
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	RefreshParts()
-	reagents.my_atom = src
+
+	loaded_materials[MAT_METAL]    = new /datum/rnd_material("Metal",    /obj/item/stack/sheet/metal)
+	loaded_materials[MAT_GLASS]    = new /datum/rnd_material("Glass",    /obj/item/stack/sheet/glass)
+	loaded_materials[MAT_SILVER]   = new /datum/rnd_material("Silver",   /obj/item/stack/sheet/mineral/silver)
+	loaded_materials[MAT_GOLD]     = new /datum/rnd_material("Gold",     /obj/item/stack/sheet/mineral/gold)
+	loaded_materials[MAT_DIAMOND]  = new /datum/rnd_material("Diamond",  /obj/item/stack/sheet/mineral/diamond)
+	loaded_materials[MAT_URANIUM]  = new /datum/rnd_material("Uranium",  /obj/item/stack/sheet/mineral/uranium)
+	loaded_materials[MAT_PHORON]   = new /datum/rnd_material("Phoron",   /obj/item/stack/sheet/mineral/phoron)
+	loaded_materials[MAT_BANANIUM] = new /datum/rnd_material("Bananium", /obj/item/stack/sheet/mineral/clown)
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	return m_amount + g_amount + gold_amount + silver_amount + phoron_amount + uranium_amount + diamond_amount + clown_amount
+	var/am = 0
+	for(var/M in loaded_materials)
+		am += loaded_materials[M].amount
+	return am
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
@@ -55,26 +80,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)
 	var/A = 0
-	switch(M)
-		if(MAT_METAL)
-			A = m_amount
-		if(MAT_GLASS)
-			A = g_amount
-		if(MAT_GOLD)
-			A = gold_amount
-		if(MAT_SILVER)
-			A = silver_amount
-		if(MAT_PHORON)
-			A = phoron_amount
-		if(MAT_URANIUM)
-			A = uranium_amount
-		if(MAT_DIAMOND)
-			A = diamond_amount
-		if("$clown")
-			A = clown_amount
-		else
-			A = reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
-			//return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
+	if(loaded_materials[M])
+		A = loaded_materials[M].amount
 	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
 	return A
 
@@ -94,101 +101,151 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-				reagents.trans_to(G, G.reagents.maximum_volume)
-			if(m_amount >= 3750)
-				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(m_amount / G.perunit)
-			if(g_amount >= 3750)
-				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(g_amount / G.perunit)
-			if(phoron_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/phoron/G = new /obj/item/stack/sheet/mineral/phoron(src.loc)
-				G.amount = round(phoron_amount / G.perunit)
-			if(silver_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
-				G.amount = round(silver_amount / G.perunit)
-			if(gold_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-				G.amount = round(gold_amount / G.perunit)
-			if(uranium_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
-				G.amount = round(uranium_amount / G.perunit)
-			if(diamond_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-				G.amount = round(diamond_amount / G.perunit)
-			if(clown_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
-				G.amount = round(clown_amount / G.perunit)
+		if(iscrowbar(I))
+			for(var/M in loaded_materials)
+				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+					var/sheet_type = loaded_materials[M].sheet_type
+					var/obj/item/stack/sheet/G = new sheet_type(loc)
+					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
-		else
-			to_chat(user, "\red You can't load the [src.name] while it's opened.")
+		else if (is_wire_tool(I) && wires.interact(user))
 			return 1
+		else
+			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
+			return 1
+
 	if (disabled)
 		return
 	if (!linked_console)
 		to_chat(user, "\The protolathe must be linked to an R&D console first!")
 		return 1
 	if (busy)
-		to_chat(user, "\red The protolathe is busy. Please wait for completion of previous operation.")
+		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 	if (!istype(I, /obj/item/stack/sheet))
-		to_chat(user, "\red You cannot insert this item into the protolathe!")
+		to_chat(user, "<span class='warning'>You cannot insert this item into the protolathe!</span>")
 		return 1
 	if (stat)
 		return 1
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			to_chat(user, "\red The protolathe's material bin is full. Please remove material before adding more.")
+			to_chat(user, "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>")
 			return 1
 
 	var/obj/item/stack/sheet/stack = I
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
 	if(!I)
 		return
+	if(amount > stack.get_amount())
+		amount = stack.get_amount()
+	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
+		amount = min(stack.get_amount(), round((max_material_storage-TotalMaterials())/stack.perunit))
 	if(amount < 0)//No negative numbers
 		amount = 0
 	if(amount == 0)
 		return
-	if(amount > stack.amount)
-		amount = stack.amount
-	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
-		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
-	src.overlays += "protolathe_[stack.name]"
+	busy = TRUE
+
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
+
+	add_overlay("protolathe_[stack.name]")
 	sleep(10)
-	src.overlays -= "protolathe_[stack.name]"
+	cut_overlay("protolathe_[stack.name]")
 
-	icon_state = "protolathe"
-	busy = 1
-	use_power(max(1000, (3750*amount/10)))
-	var/stacktype = stack.type
-	stack.use(amount)
-	if (do_after(user, 16, target = src))
-		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
-		icon_state = "protolathe"
-		switch(stacktype)
-			if(/obj/item/stack/sheet/metal)
-				m_amount += amount * 3750
-			if(/obj/item/stack/sheet/glass)
-				g_amount += amount * 3750
-			if(/obj/item/stack/sheet/mineral/gold)
-				gold_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/silver)
-				silver_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/phoron)
-				phoron_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/uranium)
-				uranium_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/diamond)
-				diamond_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/clown)
-				clown_amount += amount * 2000
-	else
-		new stacktype(src.loc, amount)
-	busy = 0
-	src.updateUsrDialog()
-	return
+	use_power(max(1000, (3750 * amount / 10)))
+
+	if(stack.get_amount() >= amount)
+		for(var/M in loaded_materials)
+			if(stack.type == loaded_materials[M].sheet_type)
+				loaded_materials[M].amount += amount * stack.perunit
+				stack.use(amount)
+				break
+
+	busy = FALSE
+	if(linked_console)
+		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)
+
+	if(queue.len) // Something is already being created, put us into queue
+		queue += RNDD
+	else if(!busy)
+		queue += RNDD
+		produce_design(RNDD)
+
+/obj/machinery/r_n_d/protolathe/proc/clear_queue()
+	queue = list()
+
+/obj/machinery/r_n_d/protolathe/proc/restart_queue()
+	if(queue.len && !busy)
+		produce_design(queue[1])
+
+/obj/machinery/r_n_d/protolathe/proc/produce_design(datum/rnd_queue_design/RNDD)
+	var/datum/design/D = RNDD.design
+	var/amount = RNDD.amount
+	var/power = 2000
+	amount = max(1, min(10, amount))
+	for(var/M in D.materials)
+		power += round(D.materials[M] * amount / 5)
+	power = max(2000, power)
+	if(busy)
+		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
+		return
+	if (!(D.build_type & PROTOLATHE))
+		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]! [ADMIN_JMP(usr)]")
+		return
+
+	busy = TRUE
+	flick("protolathe_n",src)
+	use_power(power)
+
+	for(var/M in D.materials)
+		if(check_mat(D, M) < amount)
+			visible_message("<span class='warning'>The [name] beeps, \"Not enough materials to complete prototype.\"</span>")
+			busy = FALSE
+			return
+	for(var/M in D.materials)
+		loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff * amount)))
+
+	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
+
+/obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
+	if(!linked_console)
+		return
+	var/datum/design/D = RNDD.design
+	var/amount = RNDD.amount
+	for(var/i = 1 to amount)
+		var/obj/new_item = new D.build_path(loc)
+		// This is very important. Almost all items constructed via protolathe are unreliable
+		// And are deconstructions of items made by deconstructing other items
+		// So consider them tests of "new" construction techniques for an item already known
+		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
+		new_item.prototipify(min_reliability=linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
+		new_item.m_amt /= efficiency_coeff
+		new_item.g_amt /= efficiency_coeff
+
+		linked_console.files.design_reliabilities[D.id] += linked_console.files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** linked_console.files.design_created_prototypes[D.id])
+		linked_console.files.design_reliabilities[D.id] = max(round(linked_console.files.design_reliabilities[D.id], 5), 1)
+		linked_console.files.design_created_prototypes[D.id]++
+	busy = FALSE
+	queue -= RNDD
+
+	if(queue.len)
+		produce_design(queue[1])
+
+	if(linked_console)
+		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/proc/eject_sheet(sheet_type, amount)
+	if(loaded_materials[sheet_type])
+		var/available_num_sheets = FLOOR(loaded_materials[sheet_type].amount / loaded_materials[sheet_type].sheet_size, 1)
+		if(available_num_sheets > 0)
+			var/S = loaded_materials[sheet_type].sheet_type
+			var/obj/item/stack/sheet/sheet = new S(loc)
+			var/sheet_ammount = min(available_num_sheets, amount)
+			sheet.set_amount(sheet_ammount)
+			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_ammount * loaded_materials[sheet_type].sheet_size)

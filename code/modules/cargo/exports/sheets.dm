@@ -8,7 +8,7 @@
 /datum/export/stack/get_amount(obj/O)
 	var/obj/item/stack/S = O
 	if(istype(S))
-		return S.amount
+		return S.get_amount()
 	return 0
 
 
@@ -92,7 +92,7 @@
 
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 25
+	cost = 15
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/wood)
 
@@ -113,15 +113,15 @@
 /datum/export/stack/cable
 	cost = 0.2
 	unit_name = "cable piece"
-	export_types = list(/obj/item/weapon/cable_coil)
+	export_types = list(/obj/item/stack/cable_coil)
 
 /datum/export/stack/cable/get_cost(O)
 	return round(..(O))
 
 /datum/export/stack/cable/get_amount(obj/O)
-	var/obj/item/weapon/cable_coil/S = O
+	var/obj/item/stack/cable_coil/S = O
 	if(istype(S))
-		return S.amount
+		return S.get_amount()
 	return 0
 
 /datum/export/stack/bananium
@@ -137,7 +137,7 @@
 
 // Phoron. The oil of 26 century. The reason why you are here.
 /datum/export/stack/phoron
-	cost = 300
+	cost = 350
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
 	message = "of phoron"
 
@@ -148,7 +148,7 @@
 
 // Refined scrap. The coal of 26 century. The reason why you are here.
 /datum/export/stack/scrap
-	cost = 300
+	cost = 250
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"
 

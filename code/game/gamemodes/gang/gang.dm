@@ -22,7 +22,7 @@
 	name = "gang war"
 	config_tag = "gang"
 	role_type = ROLE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 2
@@ -98,13 +98,13 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
-	log_game("[boss.key] has been selected as the boss for the [gang_name("A")] Gang (A)")
+	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
-	log_game("[boss.key] has been selected as the boss for the [gang_name("B")] Gang (B)")
+	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	if(istype(ticker.mode, /datum/game_mode/gang))
@@ -150,11 +150,11 @@
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob)
 
 	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"left hand" = SLOT_L_HAND,
+		"right hand" = SLOT_R_HAND,
 	)
 
 	. = 0
@@ -284,7 +284,7 @@
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, gang, check = 1)
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
 		return 0
-	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
+	if(check && ismindshielded(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
 	if(gang == "A")
 		A_gang += gangster_mind
@@ -340,7 +340,7 @@
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
-				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
+				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!</B></font>")
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
 
 	update_gang_icons_removed(gangster_mind)
@@ -469,11 +469,15 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/declare_completion()
-	completion_text += "<B>Gang mode resume:</B><BR>"
+	completion_text += "<h3>Gang mode resume:</h3>"
 	if(!finished)
-		completion_text += "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
+		mode_result = "loss - gangs were not successful"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</span>"
 	else
-		completion_text += "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
+		mode_result = "win - gang captured the station"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</span>"
 		score["roleswon"]++
 	..()
 	return 1
@@ -492,22 +496,24 @@
 
 		if(A_bosses.len || A_gang.len)
 			if(winner)
-				text += "<BR><B>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((A_territory.len/start_state.num_territories)*100, 1)]% control of the station!</B>"
-			text += "<BR><B>The [gang_name("A")] Gang Bosses were:</B>"
+				text += "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<span style='color: green;'>victorious</span>" : "<span style='color: red;'>defeated</span>"] with [round((A_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
+			text += "<br><b>The [gang_name("A")] Gang Bosses were:</b>"
 			text += gang_membership_report(A_bosses)
-			text += "<BR><B>The [gang_name("A")] Gangsters were:</B>"
+			text += "<br><b>The [gang_name("A")] Gangsters were:</b>"
 			text += gang_membership_report(A_gang)
-			text += "<BR>"
 
 		if(B_bosses.len || B_gang.len)
 			if(winner)
-				text += "<BR><B>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((B_territory.len/start_state.num_territories)*100, 1)]% control of the station!</B>"
-			text += "<BR>The [gang_name("B")] Gang Bosses were:"
+				text += "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((B_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
+			text += "<br>The [gang_name("B")] Gang Bosses were:"
 			text += gang_membership_report(B_bosses)
-			text += "<BR>The [gang_name("B")] Gangsters were:"
+			text += "<br>The [gang_name("B")] Gangsters were:"
 			text += gang_membership_report(B_gang)
-			text += "<BR>"
-		text += "<HR>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "gang", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text
 
 /datum/game_mode/proc/gang_membership_report(list/membership)
@@ -518,22 +524,22 @@
 			var/icon/flat = getFlatIcon(gangster.current,exact=1)
 			end_icons += flat
 			tempstate = end_icons.len
-			text += {"<BR><img src="logo_[tempstate].png"> <B>[gangster.key]</B> was <B>[gangster.name]</B> ("}
+			text += {"<br><img src="logo_[tempstate].png"> <b>[gangster.key]</b> was <b>[gangster.name]</b> ("}
 			if(gangster.current.stat == DEAD || isbrain(gangster.current))
 				text += "died"
 				flat.Turn(90)
 				end_icons[tempstate] = flat
-			else if(gangster.current.z != ZLEVEL_STATION)
+			else if(!is_station_level(gangster.current.z))
 				text += "fled the station"
 			else
 				text += "survived"
 			if(gangster.current.real_name != gangster.name)
-				text += " as <B>[gangster.current.real_name]</B>"
+				text += " as <b>[gangster.current.real_name]</b>"
 		else
 			var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 			end_icons += sprotch
 			tempstate = end_icons.len
-			text += {"<BR><img src="logo_[tempstate].png"> [gangster.key] was [gangster.name] ("}
+			text += {"<br><img src="logo_[tempstate].png"> [gangster.key] was [gangster.name] ("}
 			text += "body destroyed"
 		text += ")"
 	return text
@@ -588,7 +594,7 @@
 		if(ishuman(gangmind.current))
 			var/mob/living/carbon/human/gangster = gangmind.current
 			//Gangster must be alive and on station
-			if((gangster.stat == DEAD) || (gangster.z > ZLEVEL_STATION))
+			if((gangster.stat == DEAD) || !is_station_level(gangster.z))
 				continue
 
 			var/obj/item/clothing/outfit
@@ -701,4 +707,4 @@
 			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
 				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[bicon(tool)] [message]</span>")
 				if(beep)
-					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					playsound(mob, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

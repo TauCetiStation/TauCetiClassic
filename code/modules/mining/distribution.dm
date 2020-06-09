@@ -70,7 +70,7 @@ Deep minerals:
 	return 1
 
 //Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.
-/datum/ore_distribution/proc/populate_distribution_map()
+/datum/ore_distribution/proc/populate_distribution_map(z)
 
 	//Seed beginning values.
 	var/x = 1
@@ -93,7 +93,7 @@ Deep minerals:
 		map = null
 		return
 	else
-		apply_to_asteroid()
+		apply_to_asteroid(z)
 
 /datum/ore_distribution/proc/clear_distribution_map()
 	for(var/x = 1, x <= real_size, x++)
@@ -128,7 +128,7 @@ Deep minerals:
 		generate_distribution_map(x,y+(input_size/2),input_size/2)
 		generate_distribution_map(x+(input_size/2),y+(input_size/2),input_size/2)
 
-/datum/ore_distribution/proc/apply_to_asteroid()
+/datum/ore_distribution/proc/apply_to_asteroid(z)
 
 	// THESE VALUES DETERMINE THE AREA THAT THE DISTRIBUTION MAP IS APPLIED TO.
 	// IF YOU DO NOT RUN OFFICIAL BAYCODE ASTEROID MAP YOU NEED TO CHANGE THEM.
@@ -139,7 +139,7 @@ Deep minerals:
 	var/origin_y = 32  //...and here...
 	var/limit_x = 218  //...and iterate until here...
 	var/limit_y = 223  //...and here...
-	var/asteroid_z = 5 //...on this Z-level.
+	var/asteroid_z = z //...on this Z-level.
 
 	var/tx = origin_x
 	var/ty = origin_y
@@ -166,16 +166,7 @@ Deep minerals:
 						target_turf.resources["carbonaceous rock"] = rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
 
 						switch(map[MAP_CELL])
-							if(0 to 130) 	// ~50% chance
-								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								//target_turf.resources["gold"] =       0
-								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["uranium"] =    0
-								//target_turf.resources["diamond"] =    0
-								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["osmium"] =     0
-								//target_turf.resources["hydrogen"] =   0
-							if(131 to 200) // ~27% chance
+							if(0 to 70)
 								target_turf.resources["iron"] =       rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
@@ -184,7 +175,16 @@ Deep minerals:
 								//target_turf.resources["phoron"] =     o
 								//target_turf.resources["osmium"] =     0
 								//target_turf.resources["hydrogen"] =   0
-							if(201 to 255)// ~21 % chanse
+							if(71 to 125)
+								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
+								//target_turf.resources["gold"] =       0
+								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["uranium"] =    0
+								//target_turf.resources["diamond"] =    0
+								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["osmium"] =     0
+								//target_turf.resources["hydrogen"] =   0
+							if(126 to 255)
 								//target_turf.resources["iron"] =       0
 								//target_turf.resources["gold"] =       0
 								//target_turf.resources["silver"] =     0

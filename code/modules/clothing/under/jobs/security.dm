@@ -82,7 +82,7 @@
  * Detective
  */
 /obj/item/clothing/under/det
-	name = "hard-worn suit"
+	name = "white hard-worn suit with brown pants"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
@@ -91,12 +91,19 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/det/max_payne
+	name = "white hard-worn suit with blue jeans"
+	icon_state = "max"
+	item_color = "max"
+
 /obj/item/clothing/under/det/black
+	name = "black hard-worn suit"
 	icon_state = "detective2"
 	item_color = "detective2"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/det/slob
+	name = "white hard-worn suit with grey pants"
 	icon_state = "polsuit"
 	item_color = "polsuit"
 	flags = ONESIZEFITSALL
@@ -110,19 +117,6 @@
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_w_uniform()
 
-/obj/item/clothing/head/det_hat
-	name = "hat"
-	desc = "Someone who wears this will look very smart."
-	icon_state = "detective"
-	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
-	body_parts_covered = 0
-
-/obj/item/clothing/head/det_hat/black
-	icon_state = "detective2"
-
-
 /*
  * Head of Security
  */
@@ -135,6 +129,13 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8
+
+/obj/item/clothing/under/rank/head_of_security/turtleneck
+	name = "head of security's turtleneck"
+	icon_state = "hos_turtleneck"
+	item_color = "hos_turtleneck"
+	item_state = "hos_turtleneck"
+	flags = 0
 
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"

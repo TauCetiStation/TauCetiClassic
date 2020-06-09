@@ -9,11 +9,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	config_tag = "changeling"
 	role_type = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 2
-	required_players_secret = 10
+	required_players_secret = 20
 	required_enemies = 1
 	recommended_enemies = 4
+
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 
 	votable = 0
 
@@ -103,24 +105,25 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	switch(rand(1,100))
 		if(1 to 80)
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = changeling
-				changeling.objectives += escape_objective
-		else
 			if (!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
+		else
+			if (!(locate(/datum/objective/escape) in changeling.objectives))
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = changeling
+				changeling.objectives += escape_objective
 	return
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
+	changeling.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if (you_are)
-		to_chat(changeling.current, "<B>\red You are a changeling!</B>")
-	to_chat(changeling.current, "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>")
+		to_chat(changeling.current, "<B><span class='warning'>You are a changeling!</span></B>")
+	to_chat(changeling.current, "<b><span class='warning'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span></b>")
 
 	if(config.objectives_disabled)
-		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 	if (!config.objectives_disabled)
 		to_chat(changeling.current, "<B>You must complete the following tasks:</B>")
@@ -166,23 +169,26 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/changeling/declare_completion()
 	var/prefinal_text = ""
 	var/final_text = ""
-	completion_text += "<B>Changeling mode resume:</B><BR>"
+	completion_text += "<h3>Changeling mode resume:</h3>"
 
 	for(var/datum/mind/changeling in changelings)
 		if(changeling.current.stat == DEAD)
-			feedback_set_details("round_end_result","loss - changeling killed")
-			prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Thing failed again...</FONT><BR>"
+			mode_result = "loss - changeling killed"
+			feedback_set_details("round_end_result", mode_result)
+			prefinal_text = "<span>Changeling <b>[changeling.changeling.changelingID]</b> <i>([changeling.key])</i> has been <span style='color: red; font-weight: bold;'>killed</span> by the crew! The Thing failed again...</span><br>"
 		else
 			var/failed = 0
 			for(var/datum/objective/objective in changeling.objectives)
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - changeling alive")
-				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to <font color='green'><B>complete</B></font> his mission! All humanity soon will be infested!</FONT><BR>"
+				mode_result = "win - changeling alive"
+				feedback_set_details("round_end_result", mode_result)
+				prefinal_text = "<span>Changeling <b>[changeling.changeling.changelingID]</b> <i>([changeling.key])</i> managed to <span style='color: green; font-weight: bold;'>complete</span> his mission! All humanity soon will be infested!</span><br>"
 			else
-				feedback_set_details("round_end_result","loss - changeling alive")
-				prefinal_text = "<FONT size = 3>Changeling <b>[changeling.changeling.changelingID]</b><i> ([changeling.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! Next time he will come more prepared!</FONT><BR>"
+				mode_result = "loss - changeling alive"
+				feedback_set_details("round_end_result", mode_result)
+				prefinal_text = "<span>Changeling <b>[changeling.changeling.changelingID]</b> <i>([changeling.key])</i> managed to stay alive, but <span style='color: red; font-weight: bold;'>failed</span> his mission! Next time he will come more prepared!</span><br>"
 		final_text += "[prefinal_text]"
 
 	completion_text += "[final_text]"
@@ -198,7 +204,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		var/tempstatea = end_icons.len
 		end_icons += logob
 		var/tempstateb = end_icons.len
-		text += {"<img src="logo_[tempstatea].png"> <B>The changelings were:</B> <img src="logo_[tempstateb].png">"}
+		text += {"<img src="logo_[tempstatea].png"> <b>The changelings were:</b> <img src="logo_[tempstateb].png">"}
 
 		for(var/datum/mind/changeling in changelings)
 			text += printplayerwithicon(changeling)
@@ -207,57 +213,54 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			if(!changeling.current)
 				changelingwin = 0
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-			text += "<BR><B>Changeling ID:</B> [changeling.changeling.changelingID]"
-			text += "<BR><B>Genomes Absorbed:</B> [changeling.changeling.absorbedcount]"
+			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]"
+			text += "<br><b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"
+			text +="<br><b>Stored Essences:</b>"
+			for(var/mob/living/parasite/essence/E in changeling.changeling.essences)
+				text += printplayerwithicon(E.mind)
+				text += "<br>"
 			if(!config.objectives_disabled)
 				if(changeling.objectives.len)
 					var/count = 1
 					for(var/datum/objective/objective in changeling.objectives)
 						if(objective.check_completion())
-							text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 							feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
 						else
-							text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 							feedback_add_details("changeling_objective","[objective.type]|FAIL")
 							changelingwin = 0
 						count++
 					if(changelingwin)
-						text += "<BR><FONT color='green'><B>The changeling was successful!</B></FONT>"
+						text += "<br><span style='color: green; font-weight: bold;'>The changeling was successful!</span>"
 						feedback_add_details("changeling_success","SUCCESS")
 						score["roleswon"]++
 					else
-						text += "<BR><FONT color='red'><B>The changeling has failed.</B></FONT>"
+						text += "<br><span style='color: red; font-weight: bold;'>The changeling has failed.</span>"
 						feedback_add_details("changeling_success","FAIL")
 					if(changeling.current && changeling.changeling.purchasedpowers)
-						text += "<BR><B>[changeling.changeling.changelingID] used the following abilities: </B>"
-						var/list/invisible_powers = list("-Evolution Menu-",
-														"Absorb DNA",
-														"Change Species",
-														"Regenerative Stasis",
-														"Hive Channel",
-														"Hive Absorb",
-														"Transform"
-														)
-						var/i = 1
+						text += "<br><b>[changeling.changeling.changelingID] used the following abilities: </b>"
+						var/i = 0
 						for(var/obj/effect/proc_holder/changeling/C in changeling.changeling.purchasedpowers)
-							if(C.name in invisible_powers)
-								continue
-							text += "<BR><B>#[i]</B>: [C.name]"
-							i++
-						i--
+							if(C.genomecost >= 1)
+								text += "<br><b>#[++i]</b>: [C.name]"
 						if(!i)
-							text += "<BR>Changeling was too autistic and did't buy anything."
+							text += "<br>Changeling was too autistic and did't buy anything."
 
 
 			if(changeling.total_TC)
 				if(changeling.spent_TC)
-					text += "<BR><B>TC Remaining:</B> [changeling.total_TC - changeling.spent_TC]/[changeling.total_TC]"
-					text += "<BR><B>The tools used by the Changeling were:</B>"
+					text += "<br><b>TC Remaining:</b> [changeling.total_TC - changeling.spent_TC]/[changeling.total_TC]"
+					text += "<br><b>The tools used by the Changeling were:</b>"
 					for(var/entry in changeling.uplink_items_bought)
-						text += "<BR>[entry]"
+						text += "<br>[entry]"
 				else
-					text += "<BR>The Changeling was a smooth operator this round (did not purchase any uplink items)"
-		text += "<BR><HR>"
+					text += "<br>The Changeling was a smooth operator this round (did not purchase any uplink items)"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "changeling", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
 	return text
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
@@ -281,6 +284,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/space_suit_active = 0
 	var/instatis = 0
 	var/strained_muscles = 0
+	var/list/essences = list()
+	var/mob/living/parasite/essence/trusted_entity
+	var/mob/living/parasite/essence/controled_by
+	var/delegating = FALSE
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -295,6 +302,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
+
+/datum/changeling/Destroy()
+	trusted_entity = null
+	controled_by = null
+	QDEL_LIST(essences)
+	return ..()
 
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)

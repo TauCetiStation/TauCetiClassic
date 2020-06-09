@@ -6,12 +6,12 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -19,12 +19,12 @@
 		to_chat(B.host, "The captive mind of [src] whispers, \"[message]\"")
 
 		for (var/mob/M in player_list)
-			if (istype(M, /mob/new_player))
+			if (isnewplayer(M))
 				continue
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(message)
+/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
 	return
 
 /mob/living/simple_animal/borer
@@ -40,7 +40,7 @@
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attacktext = "nips"
@@ -57,6 +57,13 @@
 	var/controlling                         // Used in human death check.
 	var/docile = 0                          // Sugar can stop borers from acting.
 
+/mob/living/simple_animal/borer/atom_init()
+	. = ..()
+	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	host_brain = new/mob/living/captive_brain(src)
+
+	request_player()
+
 /mob/living/simple_animal/borer/Life()
 
 	..()
@@ -68,16 +75,16 @@
 			if(host.reagents.has_reagent("sugar"))
 				if(!docile)
 					if(controlling)
-						to_chat(host, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(host, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					else
-						to_chat(src, "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility.")
+						to_chat(src, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					docile = 1
 			else
 				if(docile)
 					if(controlling)
-						to_chat(host, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(host, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					else
-						to_chat(src, "\blue You shake off your lethargy as the sugar leaves your host's blood.")
+						to_chat(src, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					docile = 0
 
 			if(chemicals < 250)
@@ -85,7 +92,7 @@
 			if(controlling)
 
 				if(docile)
-					to_chat(host, "\blue You are feeling far too docile to continue controlling your host...")
+					to_chat(host, "<span class='notice'>You are feeling far too docile to continue controlling your host...</span>")
 					host.release_control()
 					return
 
@@ -93,20 +100,11 @@
 					host.adjustBrainLoss(rand(1,2))
 
 				if(prob(host.brainloss/20))
-					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
-
-/mob/living/simple_animal/borer/New()
-	..()
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
-	host_brain = new/mob/living/captive_brain(src)
-
-	request_player()
-
+					host.say("*[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say(var/message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	message = capitalize(message)
+	message = capitalize(sanitize(message))
 
 	if(!message)
 		return
@@ -119,7 +117,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -172,7 +170,7 @@
 		to_chat(src, "You cannot do that from within a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -193,8 +191,8 @@
 		to_chat(src, "You cannot infest someone who is already infested!")
 		return
 
-	to_chat(src, "\red You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.")
-	to_chat(M, "\red You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.")
+	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
+	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 	M.Weaken(3)
 
 	used_dominate = world.time
@@ -208,16 +206,16 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.internal_organs_by_name["brain"]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
@@ -227,8 +225,8 @@
 		if(!host || !src || controlling)
 			return
 		else
-			to_chat(src, "\red <B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B>")
-			to_chat(host, "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>")
+			to_chat(src, "<span class='warning'><B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B></span>")
+			to_chat(host, "<span class='warning'><B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B></span>")
 
 			host_brain.ckey = host.ckey
 			host.ckey = src.ckey
@@ -247,11 +245,12 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot secrete chemicals in your current state.")
+		return
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(chemicals < 50)
@@ -262,7 +261,7 @@
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
 
-	to_chat(src, "\red <B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B>")
+	to_chat(src, "<span class='warning'><B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B></span>")
 	host.reagents.add_reagent(chem, 15)
 	chemicals -= 50
 
@@ -275,11 +274,12 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot leave your host in your current state.")
+		return
 
 	if(docile)
-		to_chat(src, "\blue You are feeling far too docile to do that.")
+		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(!host || !src) return
@@ -293,7 +293,7 @@
 
 		if(!host || !src) return
 
-		if(src.stat)
+		if(incapacitated())
 			to_chat(src, "You cannot infest a target in your current state.")
 			return
 
@@ -303,14 +303,14 @@
 
 		detatch()
 
-mob/living/simple_animal/borer/proc/detatch()
+/mob/living/simple_animal/borer/proc/detatch()
 
 	if(!host) return
 
 	if(istype(host,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		var/datum/organ/external/head = H.get_organ("head")
-		head.implants -= src
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.implants -= src
 
 	src.loc = get_turf(host)
 	controlling = 0
@@ -331,14 +331,8 @@ mob/living/simple_animal/borer/proc/detatch()
 		host_brain.ckey = null
 		host_brain.name = "host brain"
 		host_brain.real_name = "host brain"
-
-	var/mob/living/H = host
+	host.parasites -= src
 	host = null
-
-	for(var/atom/A in H.contents)
-		if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
-			return
-	H.status_flags &= ~PASSEMOTES
 
 /mob/living/simple_animal/borer/verb/infest()
 	set category = "Alien"
@@ -349,7 +343,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		to_chat(src, "You are already within a host.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
@@ -373,7 +367,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
 			return
-
+	if(is_busy()) return
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 
@@ -383,7 +377,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(!M || !src) return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
@@ -401,12 +395,12 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
-			head.implants += src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.implants += src
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name
-		host.status_flags |= PASSEMOTES
+		host.parasites |= src
 
 		return
 	else
@@ -421,13 +415,13 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Procs for grabbing players.
-mob/living/simple_animal/borer/proc/request_player()
+/mob/living/simple_animal/borer/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_ALIEN))
 			continue
@@ -435,10 +429,10 @@ mob/living/simple_animal/borer/proc/request_player()
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_BORER) && (ROLE_ALIEN in C.prefs.be_role))
 				question(C)
 
-mob/living/simple_animal/borer/proc/question(client/C)
+/mob/living/simple_animal/borer/proc/question(client/C)
 	spawn(0)
 		if(!C)	return
 		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
@@ -447,9 +441,9 @@ mob/living/simple_animal/borer/proc/question(client/C)
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.ignore_question += "borer"
+			C.prefs.ignore_question += IGNORE_BORER
 
-mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
+/mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return

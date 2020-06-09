@@ -36,27 +36,28 @@
 /datum/game_mode/meteor/declare_completion()
 	var/text = ""
 	var/survivors = 0
-	completion_text += "<B>Meteor mode resume:</B><BR>"
+	completion_text += "<h3>Meteor mode resume:</h3>"
 	for(var/mob/living/player in player_list)
 		if(player.stat != DEAD)
 			var/turf/location = get_turf(player.loc)
 			if(!location)	continue
 			switch(location.loc.type)
 				if( /area/shuttle/escape/centcom )
-					text += "<BR><b><font size=2>[player.real_name] escaped on the emergency shuttle</font></b>"
-				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
-					text += "<BR><font size=2>[player.real_name] escaped in a life pod.</font>"
+					text += "<br><b>[player.real_name] escaped on the emergency shuttle</b>"
+				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom )
+					text += "<br>[player.real_name] escaped in a life pod."
 				else
-					text += "<BR><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+					text += "<br>[player.real_name] survived but is stranded without any hope of rescue."
 			survivors++
 
 	if(survivors)
-		completion_text += "<B>The following survived the meteor storm</B>:"
+		completion_text += "<b>The following survived the meteor storm</b>:"
 		completion_text += "[text]"
 	else
-		completion_text += "<font color='red'><B>Nobody survived the meteor storm!</B></font>"
+		completion_text += "<span style='color: red; font-weight: bold;'>Nobody survived the meteor storm!</span>"
 
-	feedback_set_details("round_end_result","end - evacuation")
+	mode_result = "end - evacuation"
+	feedback_set_details("round_end_result",mode_result)
 	feedback_set("round_end_result",survivors)
 
 	..()

@@ -66,6 +66,25 @@
 	holder.desc = step["desc"]
 	return
 
+
+/datum/construction/mecha/custom_action(step, atom/used_atom, mob/user)
+	if(istype(used_atom, /obj))
+		var/obj/part = used_atom
+		if(part.crit_fail || part.reliability < 50)
+			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
+			return 0
+	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+	holder.add_overlay(used_atom.icon_state+"+o")
+	user.drop_item()
+	qdel(used_atom)
+	return 1
+
+
+/datum/construction/mecha/action(atom/used_atom,mob/user)
+	return check_all_steps(used_atom,user)
+
+
+
 /datum/construction/reversible
 	var/index
 

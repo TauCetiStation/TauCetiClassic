@@ -2,9 +2,9 @@
 	name = "folder"
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
+	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder"
-	w_class = 2
-	pressure_resistance = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -22,10 +22,14 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
+/obj/item/weapon/folder/purple
+	desc = "A purple folder."
+	icon_state = "folder_purple"
+
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 	return
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
@@ -35,7 +39,7 @@
 		to_chat(user, "<span class='notice'>You put the [W] into \the [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
-		var/n_name = sanitize_alt(copytext(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text, 1, MAX_NAME_LEN))
+		var/n_name = sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null) as text, MAX_NAME_LEN)
 		if((loc == usr && usr.stat == CONSCIOUS))
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
@@ -44,19 +48,19 @@
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/weapon/paper/P in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize_popup(P.name)]</A><BR>"
+		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize(P.name)]</A><BR>"
 	for(var/obj/item/weapon/photo/Ph in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize_popup(Ph.name)]</A><BR>"
+		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 	for(var/obj/item/weapon/paper_bundle/Pb in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='?src=\ref[src];browse=\ref[Pb]'>[sanitize_popup(Pb.name)]</A><BR>"
-	user << browse(dat, "window=folder")
+		dat += "<A href='?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='?src=\ref[src];browse=\ref[Pb]'>[sanitize(Pb.name)]</A><BR>"
+	user << browse(entity_ja(dat), "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
 	return
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.incapacitated())
 		return
 
 	if(usr.contents.Find(src))

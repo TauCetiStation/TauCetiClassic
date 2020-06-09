@@ -3,22 +3,22 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/machines/pdapainter.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
 	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
 
 
 /obj/machinery/pdapainter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
 	if(storedpda)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
@@ -27,10 +27,16 @@
 
 	return
 
-/obj/machinery/pdapainter/New()
-	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/ai/robot,
-						/obj/item/device/pda/heads, /obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+/obj/machinery/pdapainter/atom_init()
+	. = ..()
+	var/blocked = list(
+		/obj/item/device/pda/silicon/pai,
+		/obj/item/device/pda/silicon,
+		/obj/item/device/pda/silicon/robot,
+		/obj/item/device/pda/heads,
+		/obj/item/device/pda/clear,
+		/obj/item/device/pda/syndicate
+		)
 
 	for(var/P in typesof(/obj/item/device/pda)-blocked)
 		var/obj/item/device/pda/D = new P
@@ -38,7 +44,7 @@
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
 
-		src.colorlist += D
+		colorlist += D
 
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user)
@@ -55,24 +61,21 @@
 				P.add_fingerprint(usr)
 				update_icon()
 	else
-		if(istype(O, /obj/item/weapon/wrench))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(iswrench(O))
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
-	..()
-
-	src.add_fingerprint(user)
+	if(..())
+		return 1
 
 	if(storedpda)
 		var/obj/item/device/pda/P
 		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 		if(!P)
-			return
-		if(!in_range(src, user))
-			return
+			return 1
 
 		storedpda.icon = 'icons/obj/pda.dmi'
 		storedpda.icon_state = P.icon_state
@@ -86,6 +89,8 @@
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
+	if(usr.incapacitated())
+		return
 
 	if(storedpda)
 		storedpda.loc = get_turf(src.loc)

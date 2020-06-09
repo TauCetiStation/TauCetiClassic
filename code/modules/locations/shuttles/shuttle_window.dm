@@ -9,7 +9,7 @@
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
@@ -20,18 +20,18 @@
 				if(1)
 					M.apply_damage(7)
 					take_damage(7)
-					visible_message("\red [user] slams [M] against \the [src]!")
+					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(9)
-					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
+					visible_message("<span class='warning'><b>[user] bashes [M] against \the [src]!</b></span>")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12)
-					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+					visible_message("<span class='warning'><big><b>[user] crushes [M] against \the [src]!</b></big></span>")
 			return
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
@@ -41,9 +41,8 @@
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
-			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		..()
-	return
 
 /obj/structure/window/reinforced/shuttle/mining
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'

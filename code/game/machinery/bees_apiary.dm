@@ -3,7 +3,7 @@
 
 /obj/machinery/apiary
 	name = "apiary tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 	density = 1
 	anchored = 1
@@ -25,9 +25,9 @@
 	var/hydrotray_type = /obj/machinery/hydroponics
 
 //overwrite this after it's created if the apiary needs a custom machinery sprite
-/obj/machinery/apiary/New()
-	..()
-	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
+/obj/machinery/apiary/atom_init()
+	. = ..()
+	add_overlay(image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary"))
 
 /obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
@@ -46,56 +46,58 @@
 /obj/machinery/apiary/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
-			to_chat(user, "\red There is already a queen in there.")
+			to_chat(user, "<span class='warning'>There is already a queen in there.</span>")
 		else
 			health = 10
 			nutrilevel += 10
 			user.drop_item()
 			qdel(O)
-			to_chat(user, "\blue You carefully insert the queen into [src], she gets busy making a hive.")
+			to_chat(user, "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>")
 			bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
 		beezeez += 100
 		nutrilevel += 10
 		user.drop_item()
 		if(health > 0)
-			to_chat(user, "\blue You insert [O] into [src]. A relaxed humming appears to pick up.")
+			to_chat(user, "<span class='notice'>You insert [O] into [src]. A relaxed humming appears to pick up.</span>")
 		else
-			to_chat(user, "\blue You insert [O] into [src]. Now it just needs some bees.")
+			to_chat(user, "<span class='notice'>You insert [O] into [src]. Now it just needs some bees.</span>")
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/minihoe))
 		if(health > 0)
-			to_chat(user, "\red <b>You begin to dislodge the apiary from the tray, the bees don't like that.</b>")
+			to_chat(user, "<span class='warning'><b>You begin to dislodge the apiary from the tray, the bees don't like that.</b></span>")
 			angry_swarm(user)
 		else
-			to_chat(user, "\blue You begin to dislodge the dead apiary from the tray.")
-		if(do_after(user, 50, target = src))
+			to_chat(user, "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>")
+		if(user.is_busy()) return
+		if(O.use_tool(src, user, 50, volume = 50))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
-			to_chat(user, "\red You dislodge the apiary from the tray.")
+			to_chat(user, "<span class='warning'>You dislodge the apiary from the tray.</span>")
 			qdel(src)
 	else if(istype(O, /obj/item/weapon/bee_net))
 		var/obj/item/weapon/bee_net/N = O
 		if(N.caught_bees > 0)
-			to_chat(user, "\blue You empty the bees into the apiary.")
+			to_chat(user, "<span class='notice'>You empty the bees into the apiary.</span>")
 			bees_in_hive += N.caught_bees
 			N.caught_bees = 0
 		else
-			to_chat(user, "\blue There are no more bees in the net.")
+			to_chat(user, "<span class='notice'>There are no more bees in the net.</span>")
 	else if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		if(harvestable_honey > 0)
 			if(health > 0)
-				to_chat(user, "\red You begin to harvest the honey. The bees don't seem to like it.")
+				to_chat(user, "<span class='warning'>You begin to harvest the honey. The bees don't seem to like it.</span>")
 				angry_swarm(user)
 			else
-				to_chat(user, "\blue You begin to harvest the honey.")
-			if(do_after(user,50,target = src))
+				if(user.is_busy()) return
+				to_chat(user, "<span class='notice'>You begin to harvest the honey.</span>")
+			if(O.use_tool(src, user, 50, volume = 50))
 				G.reagents.add_reagent("honey",harvestable_honey)
 				harvestable_honey = 0
-				to_chat(user, "\blue You successfully harvest the honey.")
+				to_chat(user, "<span class='notice'>You successfully harvest the honey.</span>")
 		else
-			to_chat(user, "\blue There is no honey left to harvest.")
+			to_chat(user, "<span class='notice'>There is no honey left to harvest.</span>")
 	else
 		angry_swarm(user)
 		..()
@@ -238,5 +240,5 @@
 		if(toxic > 0)
 			H.reagents.add_reagent("toxin", toxic)
 
-	to_chat(usr, "\blue You harvest the honeycomb from the hive. There is a wild buzzing!")
+	to_chat(usr, "<span class='notice'>You harvest the honeycomb from the hive. There is a wild buzzing!</span>")
 	angry_swarm(usr)

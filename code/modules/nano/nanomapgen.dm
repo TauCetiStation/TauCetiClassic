@@ -21,8 +21,8 @@
 	set category = "Server"
 
 	if(holder)
-		var/input_z = input(usr,"Enter the Z level to generate")
-		if(!input_z || isnull(text2num(input_z)))
+		var/input_z = input(usr,"Enter the Z level to generate") as num
+		if(!input_z)
 			return
 		nanomapgen_DumpTile(1, 1, text2num(input_z))
 

@@ -84,7 +84,41 @@
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
+							/obj/item/toy/prize/poly/polyspecial			= 1,
+							/obj/item/toy/eight_ball						= 3,
+							/obj/item/toy/eight_ball/conch					= 2,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/item/toy/carpplushie						= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1,
+							/obj/random/plushie								= 1
 							)
 
 	light_color = "#00ff00"
@@ -92,8 +126,8 @@
 /obj/machinery/computer/arcade
 	var/turtle = 0
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/atom_init()
+	. = ..()
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -103,31 +137,29 @@
 	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
 	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn")
 
-	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
-	src.name = (name_action + name_part1 + name_part2)
+	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
+	name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/arcade/ui_interact(mob/user)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
 	dat += "<br><center><h3>[src.temp]</h3></center>"
 	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
 
+	dat += "<center><b>"
 	if (src.gameover)
-		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
-		dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
+		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
 		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
 		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
 
-	user << browse(dat, "window=arcade")
+	user << browse(entity_ja(dat), "window=arcade")
 	onclose(user, "arcade")
-	return
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
 	. = ..()
@@ -138,6 +170,7 @@
 		if (href_list["attack"])
 			src.blocked = 1
 			var/attackamt = rand(2,6)
+			playsound(src, pick('sound/machines/arcade/attack1.ogg', 'sound/machines/arcade/attack2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
 			if(turtle > 0)
@@ -151,6 +184,7 @@
 			src.blocked = 1
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
+			playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80 , null, -6)
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			src.updateUsrDialog()
 			turtle++
@@ -165,6 +199,7 @@
 		else if (href_list["charge"])
 			src.blocked = 1
 			var/chargeamt = rand(4,7)
+			playsound(src, pick('sound/machines/arcade/+mana1.ogg', 'sound/machines/arcade/+mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 			src.temp = "You regain [chargeamt] points"
 			src.player_mp += chargeamt
 			if(turtle > 0)
@@ -197,14 +232,15 @@
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1
+			playsound(src, 'sound/machines/arcade/e_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
 			src.temp = "[src.enemy_name] has fallen! Rejoice!"
 
 			if(emagged)
 				feedback_inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
-				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb. [ADMIN_JMP(usr)]")
+				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				src.New()
 				emagged = 0
 			else if(!contents.len)
@@ -225,11 +261,13 @@
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
+		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		src.player_hp -= boomamt
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
+		playsound(src, pick('sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
 		src.player_mp -= stealamt
 		src.updateUsrDialog()
@@ -237,6 +275,7 @@
 		if (src.player_mp <= 0)
 			src.gameover = 1
 			sleep(10)
+			playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
 				feedback_inc("arcade_loss_mana_emagged")
@@ -245,17 +284,20 @@
 				feedback_inc("arcade_loss_mana_normal")
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
+		playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] heals for 4 health!"
 		src.enemy_hp += 4
 		src.enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
+		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] attacks for [attackamt] damage!"
 		src.player_hp -= attackamt
 
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
+		playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "You have been crushed! GAME OVER"
 		if(emagged)
 			feedback_inc("arcade_loss_hp_emagged")
@@ -266,27 +308,20 @@
 	src.blocked = 0
 	return
 
-
-/obj/machinery/computer/arcade/attackby(I, user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = 0
-		blocked = 0
-
-		emagged = 1
-
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
-
-
-		src.updateUsrDialog()
-	else
-		..()
-	return
+/obj/machinery/computer/arcade/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = 0
+	blocked = 0
+	emagged = 1
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
+	src.updateUsrDialog()
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))

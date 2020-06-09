@@ -1,26 +1,195 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_emptycourt)
-"b" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{dir = 5; icon_state = "vault"},/area/holodeck/source_emptycourt)
-"c" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_emptycourt)
-"d" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_emptycourt)
-"e" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "red"},/area/holodeck/source_emptycourt)
-"f" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/holodeck/source_emptycourt)
-"g" = (/turf/simulated/floor/holofloor,/area/holodeck/source_emptycourt)
-"h" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "red"},/area/holodeck/source_emptycourt)
-"i" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "green"},/area/holodeck/source_emptycourt)
-"j" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/holodeck/source_emptycourt)
-"k" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "green"},/area/holodeck/source_emptycourt)
-"l" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/source_emptycourt)
-"m" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "green"},/area/holodeck/source_emptycourt)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"b" = (
+/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"c" = (
+/turf/simulated/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"d" = (
+/turf/simulated/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"e" = (
+/turf/simulated/floor/holofloor{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"f" = (
+/turf/simulated/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"g" = (
+/turf/simulated/floor/holofloor,
+/area/station/civilian/holodeck/source_emptycourt)
+"h" = (
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"i" = (
+/turf/simulated/floor/holofloor{
+	dir = 10;
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"j" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"k" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "red"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"l" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
+"m" = (
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_emptycourt)
 
 (1,1,1) = {"
-abbcddddde
-abbfgggggh
-aaafgggggh
-abbfgggggh
-abbfgggggh
-abbigggggj
-abbigggggj
-aaaigggggj
-abbigggggj
-abbklllllm
+c
+f
+f
+f
+f
+f
+i
+b
+b
+a
+"}
+(2,1,1) = {"
+d
+g
+g
+g
+g
+g
+k
+b
+b
+a
+"}
+(3,1,1) = {"
+d
+g
+g
+g
+g
+g
+k
+a
+a
+a
+"}
+(4,1,1) = {"
+d
+g
+g
+g
+g
+g
+k
+b
+b
+a
+"}
+(5,1,1) = {"
+d
+g
+g
+g
+g
+g
+k
+b
+b
+a
+"}
+(6,1,1) = {"
+e
+g
+g
+g
+g
+g
+l
+b
+b
+a
+"}
+(7,1,1) = {"
+e
+g
+g
+g
+g
+g
+l
+b
+b
+a
+"}
+(8,1,1) = {"
+e
+g
+g
+g
+g
+g
+l
+a
+a
+a
+"}
+(9,1,1) = {"
+e
+g
+g
+g
+g
+g
+l
+b
+b
+a
+"}
+(10,1,1) = {"
+h
+j
+j
+j
+j
+j
+m
+b
+b
+a
 "}

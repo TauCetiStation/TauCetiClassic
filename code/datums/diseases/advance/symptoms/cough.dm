@@ -28,12 +28,14 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
+		if(M.reagents.has_reagent("dextromethorphan"))
+			return
 		switch(A.stage)
 			if(1, 2, 3)
 				to_chat(M, "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 			else
 				M.emote("cough")
 				var/obj/item/I = M.get_active_hand()
-				if(I && I.w_class < 3)
+				if(I && I.w_class < ITEM_SIZE_NORMAL)
 					M.drop_item()
 	return

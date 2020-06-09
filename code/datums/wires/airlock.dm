@@ -24,7 +24,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	if(HULK in user.mutations)
 		return TRUE
 	var/obj/machinery/door/airlock/A = holder
-	if(A.isElectrified() && !issilicon(user) && !IsAdminGhost(user))
+	if(A.isElectrified() && !issilicon(user) && !isobserver(user))
 		if(A.shock(user, 100))
 			return TRUE
 
@@ -38,6 +38,27 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "<br>[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
 	. += "<br>[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
 	. += "<br>[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
+	. += "<br><fieldset class='block'>"
+	. += "<legend><h3>Remote control</h3></legend>"
+	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of your multitool</a>"
+	. += "</fieldset>"
+
+/datum/wires/airlock/Topic(href, href_list)
+	if(!..())
+		return
+	if(href_list["buffer"])
+		var/obj/item/I = usr.get_active_hand()
+		if(ismultitool(I))
+			var/obj/item/device/multitool/M = I
+			if(holder in M.airlocks_buffer)
+				to_chat(usr, "<span class='warning'>This airlock is already in the buffer!</span>")
+			else if(M.airlocks_buffer.len >= M.buffer_limit)
+				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
+			else
+				M.airlocks_buffer += holder
+				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
+		else
+			to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 
 /datum/wires/airlock/update_cut(index, mended)
 	var/obj/machinery/door/airlock/A = holder
@@ -94,8 +115,8 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
-			A.update_icon()
 
+	A.update_icon()
 
 /datum/wires/airlock/update_pulsed(index)
 	var/obj/machinery/door/airlock/A = holder
@@ -114,11 +135,11 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 			if(!A.locked)
 				A.bolt()
-				A.audible_message("You hear a click from the bottom of the door.", null,  1)
+				A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 			else
 				if(A.hasPower())
 					A.unbolt()
-					A.audible_message("You hear a click from the bottom of the door.", null, 1)
+					A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			A.loseBackupPower()
@@ -154,4 +175,5 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
-			A.update_icon()
+
+	A.update_icon()

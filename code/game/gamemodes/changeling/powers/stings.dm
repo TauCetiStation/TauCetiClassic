@@ -49,7 +49,7 @@
 		return
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/living/target)
 	if(!target)
 		return
 	if((get_dist(user, target) <= 1))
@@ -59,12 +59,12 @@
 	if(target.mind && target.mind.changeling)
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	//	add_logs(user, target, "unsuccessfully stung")
-	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	target.log_combat(user, "stinged with [name]")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)
 	if(!target)
-		return
+		return 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit)
@@ -76,19 +76,26 @@
 				H.drip(10)
 				return 1
 	if(ishuman(target))
-		var/datum/organ/external/affecting = target:get_organ(user.zone_sel.selecting)
-		if(target:check_thickmaterial(affecting))
-			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
-			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.zone_sel.selecting)
+		if(result)
+			if(result == NOLIMB)
+				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
+			else
+				to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
+				to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
+				if(ishuman(user))
+					var/mob/living/carbon/human/HU = user
+					HU.drip(10)
 			unset_sting(user)
 			user.mind.changeling.chem_charges -= rand(5,10)
-			if(ishuman(user))
-				user:drip(10)
+
 			return 1
 		else
 			return 0
 
-obj/effect/proc_holder/changeling/sting/cryo
+/obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
@@ -105,7 +112,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	feedback_add_details("changeling_powers","CS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/LSD
+/obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
@@ -167,7 +174,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/extract_dna
+/obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
@@ -199,7 +206,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/silence
+/obj/effect/proc_holder/changeling/sting/silence
 	name = "Silence Sting"
 	desc = "We silently sting a human, completely deafening and silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
@@ -217,7 +224,7 @@ obj/effect/proc_holder/changeling/sting/silence
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/blind
+/obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
 	helptext = "Temporarily blinds the target."
 
@@ -237,48 +244,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/paralysis
-	name = "Paralysis Sting"
-	helptext = "Temporarily paralyse the target."
-	desc = "We silently sting a human, paralyzing them for a short time."
-	sting_icon = "sting_paralyse"
-	chemical_cost = 30
-	genomecost = 6
-
-/obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
-		return 0
-	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
-	target.Weaken(20)
-	feedback_add_details("changeling_powers","PS")
-	return 1
-
-/obj/effect/proc_holder/changeling/sting/death
-	name = "Death Sting"
-	helptext = "Causes spasms onto death."
-	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	sting_icon = "sting_death"
-	chemical_cost = 40
-	genomecost = 8
-
-/obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
-		return 0
-	to_chat(target, "<span class='danger'>You feel a small prick and your chest becomes tight.</span>")
-	target.silent = 15
-	if(target.reagents)
-		target.reagents.add_reagent("cryptobiolin", 20)
-	spawn(50)
-		if(target && target.reagents)
-			target.reagents.add_reagent("lexorin", 20)
-			target.reagents.add_reagent("toxin", 20)
-			target.reagents.add_reagent("radium", 20)
-			target.reagents.add_reagent("phoron", 20)
-			target.reagents.add_reagent("pacid", 20)
-	feedback_add_details("changeling_powers","DTHS")
-	return 1
-
-obj/effect/proc_holder/changeling/sting/unfat
+/obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
 	helptext = ""
@@ -289,7 +255,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 /obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	if(FAT in target.mutations)
+	if(HAS_TRAIT(target, TRAIT_FAT))
 		target.overeatduration = 0
 		target.nutrition -= 100
 		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>")

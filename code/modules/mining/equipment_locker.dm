@@ -31,8 +31,8 @@
 								"uranium" = 20,
 								"osmium" = 	40)
 
-/obj/machinery/mineral/ore_redemption/New()
-	..()
+/obj/machinery/mineral/ore_redemption/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -60,11 +60,11 @@
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
+		storage.add(sheet_per_ore) //Stack the sheets
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -96,7 +96,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -110,7 +110,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
@@ -124,12 +124,7 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
@@ -144,17 +139,16 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	for(var/O in stack_list)
 		s = stack_list[O]
-		if(s.amount > 0)
+		if(s.get_amount() > 0)
 			if(O == stack_list[1])
 				dat += "<br>"		//just looks nicer
-			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
@@ -197,11 +191,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			var/obj/item/stack/sheet/mineral/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/mineral/out = new inp.type()
 			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = min(desired,50,inp.amount)
-			if(out.amount >= 1)
-				inp.amount -= out.amount
+			out.set_amount(min(desired, 50, inp.get_amount()))
+			if(out.get_amount() >= 1)
+				inp.use(out.get_amount())
 				unload_mineral(out)
-			if(inp.amount < 1)
+			if(inp.get_amount() < 1)
 				stack_list -= text2path(href_list["release"])
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
@@ -228,8 +222,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	for(var/O in stack_list)
 		s = stack_list[O]
-		while(s.amount > s.max_amount)
-			new s.type(loc,s.max_amount)
+		while(s.get_amount() > s.max_amount)
+			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
@@ -247,29 +241,23 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-//		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
-		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,           100),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                     100),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,     150),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						            150),
-		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                    250),
-//		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
-//		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
-//		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
-//		new /datum/data/mining_equipment("Shelter capsule",		/obj/item/weapon/survivalcapsule,								    500),
-		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
-//		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
-//		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
-//		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
-//		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
-//		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1100),
-//		new /datum/data/mining_equipment("Special mining rig",  /obj/item/mining_rig_pack,										   1500),
-//		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
-//		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
-		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			   5000)
+		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
+		new /datum/data/mining_equipment("Chili",                    /obj/item/weapon/reagent_containers/food/snacks/hotchili,              100),
+		new /datum/data/mining_equipment("Cigar",                    /obj/item/clothing/mask/cigarette/cigar/havana,                        100),
+		new /datum/data/mining_equipment("Vodka",                    /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,          150),
+		new /datum/data/mining_equipment("Soap",                     /obj/item/weapon/soap/nanotrasen, 						                150),
+		new /datum/data/mining_equipment("lipozine pill",            /obj/item/weapon/reagent_containers/pill/lipozine,                     200),
+		new /datum/data/mining_equipment("leporazine autoinjector",  /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine, 300),
+		new /datum/data/mining_equipment("Alien toy",                /obj/item/clothing/mask/facehugger_toy, 		                        250),
+		new /datum/data/mining_equipment("Stimpack Bundle",	         /obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
+		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
+		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
+		new /datum/data/mining_equipment("Accelerator upgrade",      /obj/item/kinetic_upgrade/speed,										2500),
+		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
+		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
 		)
 
-/datum/data/mining_equipment/
+/datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
@@ -279,8 +267,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/New()
-	..()
+/obj/machinery/mineral/equipment_vendor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -300,12 +288,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -321,7 +304,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	. = ..()
@@ -365,13 +347,13 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			usr.drop_item()
 			C.loc = src
 			inserted_id = C
-			interact(user)
+			updateUsrDialog()
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
+		if(iscrowbar(I))
 			default_deconstruction_crowbar(I)
 		return 1
 	..()
@@ -405,10 +387,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /**********************Mining Equipment Locker Items**************************/
 /**********************Mining Rig Pack**********************/
 
-/obj/item/mining_rig_pack/New()
+/obj/item/mining_rig_pack/atom_init()
+	..()
 	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /**********************Mining Equipment Voucher**********************/
 
@@ -417,7 +400,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 
 /**********************Mining Point Card**********************/
@@ -453,7 +436,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -468,9 +451,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 		var/list/L = list()
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/device/radio/beacon/B in radio_beacon_list)
 			var/turf/T = get_turf(B)
-			if(T.z == ZLEVEL_STATION)
+			if(is_station_level(T.z))
 				L += B
 		if(!L.len)
 			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
@@ -481,12 +464,13 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		spawn(100) qdel(J)	//Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B)
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
 	if(istype(B, /obj/item/device/radio/beacon))
-		usr.visible_message("<span class='notice'>[usr.name] spent [B.name] above [src.name], scanning the serial code.</span>",
+		user.SetNextMove(CLICK_CD_INTERACT)
+		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
 							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
 		src.chosen_beacon = B
 		icon_state = "Jaunter_locked"
@@ -507,16 +491,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			if(isliving(M))
 				var/mob/living/L = M
 				L.Weaken(3)
+				shake_camera(L, 20, 1)
 				if(ishuman(L))
-					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.visible_message("<span class='danger'>[L.name] vomits from travelling through the [src.name]!</span>", "<span class='userdanger'>You throw up from travelling through the [src.name]!</span>")
-							L.nutrition -= 20
-							L.adjustToxLoss(-3)
-							var/turf/T = get_turf(L)
-							T.add_vomit_floor(L)
-							playsound(L, 'sound/effects/splat.ogg', 50, 1)
+					var/mob/living/carbon/human/H = L
+					H.invoke_vomit_async()
 
 
 /**********************Resonator**********************/
@@ -527,14 +505,14 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	if(cooldown <= 0)
-		playsound(src,'sound/effects/stealthoff.ogg',50,1)
+		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
 		cooldown = 1
@@ -545,10 +523,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	CreateResonance(src, user)
 	..()
 
-/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
 	if(target in user.contents)
 		return
-	if(proximity_flag)
+	if(proximity)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -561,13 +539,17 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/resonance_damage = 30
 	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/resonance/atom_init_late()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
+		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		M.GetDrilled()
 		spawn(5)
 			qdel(src)
@@ -578,7 +560,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
-			playsound(src,'sound/effects/sparks4.ogg',50,1)
+			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
@@ -593,30 +575,44 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 /**********************Facehugger toy**********************/
 
-/obj/item/clothing/mask/facehugger/toy
+/obj/item/clothing/mask/facehugger_toy
+	name = "alien"
 	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
-	throwforce = 0
-	real = 0
-	sterile = 1
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "facehugger"
+	item_state = "facehugger"
+	layer = ABOVE_WINDOW_LAYER
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
+	body_parts_covered = FACE | EYES
+	var/next_leap = 0
 
-/obj/item/clothing/mask/facehugger/toy/Die()
-	return
-
-/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
-	return
+/obj/item/clothing/mask/facehugger_toy/HasProximity(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(loc == H)
+		return
+	if(next_leap > world.time)
+		return
+	if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		return
+	if(H.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE))
+		H.visible_message("<span class='danger'>[src] leaps at [H]'s face!</span>")
+		next_leap = world.time + 10 SECONDS
 
 /**********************Mining drone**********************/
 
-/mob/living/simple_animal/hostile/mining_drone/
+/mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "A small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "harm"
+	var/emagged = 0
+	light_power = 2
+	light_range = 4
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -627,22 +623,21 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	max_n2 = 0
 	minbodytemp = 0
 	wander = 0
-	idle_vision_range = 5
-	move_to_delay = 10
-	retreat_distance = 1
-	minimum_distance = 2
-	health = 100
-	maxHealth = 100
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	idle_vision_range = 6
+	move_to_delay = 7
+	retreat_distance = 2
+	minimum_distance = 3
+	health = 140
+	maxHealth = 140
+	melee_damage = 18
 	environment_smash = 0
-	attacktext = "drills"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attacktext = "drill"
+	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
-	ranged_cooldown_cap = 3
+	ranged_cooldown_cap = 2
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -656,43 +651,46 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.welding && !stat)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				health += 10
-				to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				if(W.use_tool(src, user, 20, volume = 50))
+					health += 15
+					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
 			return
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
 	new /obj/effect/decal/remains/robot(src.loc)
 	DropOre()
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/New()
-	..()
+/mob/living/simple_animal/hostile/mining_drone/atom_init()
+	. = ..()
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		switch(search_objects)
-			if(0)
-				SetCollectBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
-			if(2)
-				SetOffenseBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
-		return
-	..()
+/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	switch(search_objects)
+		if(0)
+			SetCollectBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+		if(2)
+			SetOffenseBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	stop_automated_movement_when_pulled = 1
@@ -706,12 +704,12 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	stop_automated_movement_when_pulled = 0
-	idle_vision_range = 5
+	idle_vision_range = 6
 	search_objects = 0
 	wander = 0
 	ranged = 1
-	retreat_distance = 1
-	minimum_distance = 2
+	retreat_distance = 2
+	minimum_distance = 3
 	icon_state = "mining_drone_offense"
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
@@ -751,6 +749,39 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	to_chat(usr, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 	DropOre()
 
+/mob/living/simple_animal/hostile/mining_drone/AltClick(mob/user)
+	if(in_range(user, src))
+		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
+		DropOre()
+
+/mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
+	..()
+	var/msg = null
+	if (src.health < src.maxHealth)
+		if (src.health >= src.maxHealth * 0.7)
+			msg += "<span class='warning'>It looks slightly dented.</span>\n"
+		else if (src.health <= src.maxHealth * 0.3)
+			msg += "<span class='warning'><B>IT IS FALLING APART!</B></span>\n"
+		else
+			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
+	else
+		msg += "<span class='notice'>It looks without dents.</span>\n"
+	to_chat(user, msg)
+
+/mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "Already hacked.")
+		return FALSE
+	else
+		to_chat(user, "You hack the NT mining drone, his gun clicked.")
+		emagged = 1
+		projectiletype = /obj/item/projectile/beam/xray
+		projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
+		ranged_cooldown_cap = 1
+		minimum_distance = 4
+		retreat_distance = 3
+		return TRUE
+
 /**********************Lazarus Injector**********************/
 
 /obj/item/weapon/lazarus_injector
@@ -760,15 +791,15 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(istype(target, /mob/living) && proximity)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
@@ -777,10 +808,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				if(istype(target, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.friends += user
-					log_game("[user] has revived hostile mob [target] with a lazarus injector")
+					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src,'sound/effects/refill.ogg',50,1)
+				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 				icon_state = "lazarus_empty"
 				return
 			else
@@ -804,32 +835,44 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	icon_state = "patcher"
 	item_state = "patcher"
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/patcher/afterattack(obj/O, mob/user)
+/obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(O, /obj/item/clothing/suit/space))
-		var/obj/item/clothing/suit/space/C = O
-		if(C.breaches.len)
-			C.breaches.Cut()
-			C.damage = 0
-			C.brute_damage = 0
-			C.burn_damage = 0
-			C.name = C.base_name
-			loaded = 0
-			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
-			playsound(src,'sound/effects/refill.ogg',50,1)
-			icon_state = "patcher_empty"
-			return
-		else
-			to_chat(user, "<span class='info'>[O] absolutely intact.</span>")
-			return
+	if(istype(target, /obj/item/clothing/suit/space))
+		var/obj/item/clothing/suit/space/C = target
+		fix_spacesuit(C, user)
 	else
 		..()
+
+/obj/item/weapon/patcher/attack(mob/living/M, mob/living/user)
+	if(!loaded)
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/C = H.wear_suit
+			fix_spacesuit(C, user)
+
+/obj/item/weapon/patcher/proc/fix_spacesuit(obj/item/clothing/suit/space/C, mob/living/user)
+	if(C.breaches.len)
+		C.breaches.Cut()
+		C.damage = 0
+		C.brute_damage = 0
+		C.burn_damage = 0
+		C.name = C.base_name
+		loaded = 0
+		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "patcher_empty"
+		return TRUE
+	else
+		to_chat(user, "<span class='info'>[C] is absolutely intact.</span>")
+		return FALSE
 
 /obj/item/weapon/patcher/examine(mob/user)
 	..()

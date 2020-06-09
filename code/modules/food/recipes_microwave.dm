@@ -16,7 +16,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
 /datum/recipe/microwave/dionaroast
-	reagents = list("facid" = 5) //It dissolves the carapace. Still poisonous, though.
+	reagents = list("pacid" = 5) //It dissolves the carapace. Still poisonous, though.
 	items = list(
 		/obj/item/weapon/holder/diona,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -26,28 +26,28 @@
 /datum/recipe/microwave/jellydonut
 	reagents = list("berryjuice" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
 /datum/recipe/microwave/jellydonut/slime
 	reagents = list("slimejelly" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 
 /datum/recipe/microwave/jellydonut/cherry
 	reagents = list("cherryjelly" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 
 /datum/recipe/microwave/donut
 	reagents = list("sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 
@@ -110,7 +110,7 @@
 /datum/recipe/microwave/ghostburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/weapon/ectoplasm //where do you even find this stuff
+		/obj/item/weapon/reagent_containers/food/snacks/ectoplasm //where do you even find this stuff
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/ghostburger
 
@@ -118,32 +118,35 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
 		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/weapon/bikehorn,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownburger
 
 /datum/recipe/microwave/mimeburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/clothing/head/beret
+		/obj/item/clothing/head/beret/red
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mimeburger
 
 /datum/recipe/microwave/donkpocket
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
-	proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-		being_cooked.warm = 1
-		being_cooked.reagents.add_reagent("tricordrazine", 5)
-		being_cooked.bitesize = 6
-		being_cooked.name = "Warm " + being_cooked.name
-		being_cooked.cooltime()
-	make_food(obj/container)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
-		warm_up(being_cooked)
-		return being_cooked
+
+/datum/recipe/microwave/donkpocket/proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
+	being_cooked.warm = 1
+	being_cooked.reagents.add_reagent("tricordrazine", 5)
+	being_cooked.bitesize = 6
+	being_cooked.name = "Warm " + being_cooked.name
+	being_cooked.cooltime()
+
+/datum/recipe/microwave/donkpocket/make_food(obj/container)
+	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
+	warm_up(being_cooked)
+	return being_cooked
 
 /datum/recipe/microwave/donkpocket/warm
 	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
@@ -151,11 +154,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	make_food(obj/container)
-		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
-		if(being_cooked && !being_cooked.warm)
-			warm_up(being_cooked)
-		return being_cooked
+
+/datum/recipe/microwave/donkpocket/warm/make_food(obj/container)
+	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
+	if(being_cooked && !being_cooked.warm)
+		warm_up(being_cooked)
+	return being_cooked
 
 /datum/recipe/microwave/eggplantparm
 	items = list(
@@ -183,7 +187,7 @@
 /datum/recipe/microwave/chaosdonut
 	reagents = list("frostoil" = 5, "capsaicin" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
@@ -196,7 +200,7 @@
 
 /datum/recipe/microwave/cubancarp
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	)
@@ -229,7 +233,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup
 
 /datum/recipe/microwave/vegetablesoup
 	reagents = list("water" = 10)
@@ -239,7 +243,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/vegetablesoup
 
 /datum/recipe/microwave/nettlesoup
 	reagents = list("water" = 10)
@@ -248,11 +252,11 @@
 		/obj/item/weapon/grown/nettle,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettlesoup
 
 /datum/recipe/microwave/wishsoup
 	reagents = list("water" = 20)
-	result= /obj/item/weapon/reagent_containers/food/snacks/wishsoup
+	result= /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup
 
 /datum/recipe/microwave/hotchili
 	items = list(
@@ -348,7 +352,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/tomatosoup
 
 /datum/recipe/microwave/stew
 	reagents = list("water" = 10)
@@ -360,7 +364,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/stew
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/stew
 
 /datum/recipe/microwave/slimetoast
 	reagents = list("slimejelly" = 5)
@@ -384,7 +388,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/milosoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/milosoup
 
 /datum/recipe/microwave/stewedsoymeat
 	items = list(
@@ -406,6 +410,11 @@
 	reagents = list("water" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrice
 
+/datum/recipe/microwave/sushi
+	reagents = list("rice" = 10)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/carpmeat)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sushi
+
 /datum/recipe/microwave/ricepudding
 	reagents = list("milk" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/ricepudding
@@ -422,7 +431,7 @@
 /datum/recipe/microwave/poppypretzel
 	items = list(
 		/obj/item/seeds/poppyseed,
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 
@@ -487,7 +496,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 
-datum/recipe/microwave/slimesandwich
+/datum/recipe/microwave/slimesandwich
 	reagents = list("slimejelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
@@ -509,12 +518,12 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup
 
 /datum/recipe/microwave/slimesoup
 	reagents = list("water" = 10, "slimejelly" = 5)
 	items = list()
-	result = /obj/item/weapon/reagent_containers/food/snacks/slimesoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/slimesoup
 
 /datum/recipe/microwave/clownstears
 	reagents = list("water" = 10)
@@ -522,7 +531,7 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/ore/clown,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/clownstears
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 
 /datum/recipe/microwave/boiledslimeextract
 	reagents = list("water" = 5)
@@ -550,14 +559,14 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup
 
 /datum/recipe/microwave/mushroomsoup
 	reagents = list("water" = 5, "milk" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mushroomsoup
 
 /datum/recipe/microwave/chawanmushi
 	reagents = list("water" = 5, "soysauce" = 5)
@@ -574,7 +583,7 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/beetsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup
 
 /datum/recipe/microwave/herbsalad
 	items = list(
@@ -603,6 +612,15 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
+
+/datum/recipe/microwave/olivyesalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sausage,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/olivyesalad
 
 ////////////////////////////FOOD ADDITTIONS///////////////////////////////
 
@@ -657,7 +675,7 @@ datum/recipe/microwave/slimesandwich
 /datum/recipe/microwave/friedbanana
 	reagents = list("sugar" = 10, "cornoil" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedbanana
@@ -676,6 +694,29 @@ datum/recipe/microwave/slimesandwich
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
+
+/datum/recipe/microwave/boiledspiderleg
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+
+/datum/recipe/microwave/spidereggsham
+	reagents = list("sodiumchloride" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+
+/datum/recipe/microwave/sashimi
+	reagents = list("soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi
 
 //////////////////////////////////////////
 // bs12 food port stuff

@@ -12,22 +12,6 @@ var/sqlfdbkdb = "test"
 var/sqlfdbklogin = "root"
 var/sqlfdbkpass = ""
 
-var/sqllogging = 0 // Should we log deaths, population stats, etc?
-
-
-
-// Forum MySQL configuration (for use with forum account/key authentication)
-// These are all default values that will load should the forumdbconfig.txt
-// file fail to read for whatever reason.
-
-var/forumsqladdress = "localhost"
-var/forumsqlport = "3306"
-var/forumsqldb = "tgstation"
-var/forumsqllogin = "root"
-var/forumsqlpass = ""
-var/forum_activated_group = "2"
-var/forum_authenticated_group = "10"
-
 // For FTP requests. (i.e. downloading runtime logs.)
 // However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 0
@@ -42,4 +26,4 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 // Xeno/role whitelist database ( code/modules/admin/whitelist.dm )
 //
 var/list/role_whitelist   // cache of all ckeys and their roles
-var/list/whitelisted_roles = list(UNATHI, TAJARAN, SKRELL, DIONA, IPC, "ian") // Case not important, whitelist_DB_add/edit proc corrects that, but specie names !! ARE !!.
+var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "vox", "ian") // Case important, everything must be in lowercase.

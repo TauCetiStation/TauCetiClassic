@@ -60,10 +60,14 @@ var/list/datum/puddle/puddles = list()
 	var/new_volume = 0
 	var/datum/puddle/controller
 
-/obj/effect/liquid/New()
+/obj/effect/liquid/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/liquid/atom_init_late()
 	if( !isturf(loc) )
 		qdel(src)
+		return
 
 	for( var/obj/effect/liquid/L in loc )
 		if(L != src)
@@ -128,8 +132,8 @@ var/list/datum/puddle/puddles = list()
 	new_volume = 0
 	update_icon2()
 
-/obj/effect/liquid/Move()
-	return 0
+/obj/effect/liquid/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	return FALSE
 
 /obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)

@@ -5,8 +5,8 @@
 /obj/nano_module/crew_monitor/Topic(href, href_list)
 	if(..()) return
 	var/turf/T = get_turf(src)
-	if (!T || !(T.z in config.player_levels))
-		to_chat(usr, "<span class='warning'>Unable to establish a connection<span>: You're too far away from the station!")
+	if (!T || !(T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING))))
+		to_chat(usr, "<span class='warning'>Unable to establish a connection</span>: You're too far away from the station!")
 		return 0
 	if(href_list["close"] )
 		var/mob/user = usr
@@ -80,7 +80,7 @@
 		ui.set_auto_update(1)
 
 /obj/nano_module/crew_monitor/proc/scan()
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/C = H.w_uniform
 			if (C.has_sensor)

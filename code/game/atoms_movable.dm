@@ -1,11 +1,11 @@
 /atom/movable
 	layer = 3
+	appearance_flags = TILE_BOUND
 	var/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
-	var/thrower
 	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -20,58 +20,94 @@
 	var/inertia_move_delay = 5
 
 	var/list/client_mobs_in_contents
+	var/freeze_movement = FALSE
 
-/atom/movable/New()
+/atom/movable/Destroy()
+
+	var/turf/T = loc
+
+	unbuckle_mob()
+
+	if(loc)
+		loc.handle_atom_del(src)
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	loc = null
+	invisibility = 101
+	if(pulledby)
+		pulledby.stop_pulling()
+
 	. = ..()
 
-/atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	// If we have opacity, make sure to tell (potentially) affected light sources.
+	if (opacity && istype(T))
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
+
+// Previously known as HasEntered()
+// This is automatically called when something enters your square
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+/atom/movable/Crossed(atom/movable/AM)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+
+/atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if(!loc || !NewLoc || freeze_movement)
+		return FALSE
+
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
+
 	var/atom/oldloc = loc
 
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
+	if(loc != NewLoc)
+		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (direct & 1)
-				if (direct & 4)
+			if (Dir & NORTH)
+				if (Dir & EAST)
 					if (step(src, NORTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, NORTH)
-				else if (direct & 8)
+				else if (Dir & WEST)
 					if (step(src, NORTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
+			else if (Dir & SOUTH)
+				if (Dir & EAST)
 					if (step(src, SOUTH))
 						. = step(src, EAST)
 					else if (step(src, EAST))
 						. = step(src, SOUTH)
-				else if (direct & 8)
+				else if (Dir & WEST)
 					if (step(src, SOUTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
+	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
-		return
+		return FALSE
 
 	src.move_speed = world.time - src.l_move_time
 	src.l_move_time = world.time
 
-	last_move = direct
+	last_move = Dir
 
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
 		. = 0
 
 	if(.)
-		Moved(oldloc, direct)
+		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -84,64 +120,43 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	SSdemo.mark_dirty(src)
 	return 1
+
+/atom/movable/proc/locMoved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T
 
-/atom/movable/Destroy()
-	//If we have opacity, make sure to tell (potentially) affected light sources.
-	var/turf/T = loc
-	if(opacity && istype(T))
-		opacity = 0
-		T.recalc_atom_opacity()
-		T.reconsider_lights()
+/atom/movable/Bump(atom/A, non_native_bump)
+	STOP_THROWING(src, A)
 
-	unbuckle_mob()
+	if(A && non_native_bump)
+		A.last_bumped = world.time
+		A.Bumped(src)
 
-	if(loc)
-		loc.handle_atom_del(src)
-	if(reagents)
-		qdel(reagents)
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
-	loc = null
-	invisibility = 101
-	if(pulledby)
-		pulledby.stop_pulling()
-	return ..()
 
-/atom/movable/Bump(atom/A, yes)
-	if(throwing)
-		throwing = FALSE
-		throw_impact(A)
-		fly_speed = 0
-
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
-	..()
-	return
-
-/atom/movable/proc/forceMove(atom/destination)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
 	if(destination)
-		if(pulledby)
+		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
 		var/same_loc = (oldloc == destination)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
 		loc = destination
 
 		if(!same_loc)
+			if(oldloc)
+				oldloc.Exited(src, destination)
+				if(old_area && old_area != destarea)
+					old_area.Exited(src, destination)
+			for(var/atom/movable/AM in oldloc)
+				AM.Uncrossed(src)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
@@ -149,41 +164,42 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src)
+				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove()
-	stop_pulling()
+/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+	if(!keep_pulling)
+		stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob()
 	. = ..()
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //called when src is thrown into hit_atom
-/atom/movable/proc/throw_impact(atom/hit_atom)
-	hit_atom.hitby(src)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	hit_atom.hitby(src, throwingdatum)
 
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
-			step(O, dir)
+			O.Move(get_step(O, dir))
 
 	if(isturf(hit_atom) && hit_atom.density)
-		step(src, turn(dir, 180))
+		Move(get_step(src, turn(dir, 180)))
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
 		return
 
@@ -224,6 +240,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.callback = callback
+	TT.early_callback = early_callback
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -250,6 +267,7 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	throw_source = get_turf(loc)
 	fly_speed = speed
 	throwing = TRUE
 	if(spin)
@@ -259,6 +277,7 @@
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
+	return TRUE
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -299,10 +318,10 @@
 	var/atom/master = null
 	anchored = 1
 
-/atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
-	return
+/atom/movable/overlay/atom_init()
+	. = ..()
+	for(var/x in verbs)
+		verbs -= x
 
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)

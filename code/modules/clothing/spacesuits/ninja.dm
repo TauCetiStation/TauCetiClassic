@@ -4,7 +4,7 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	allowed = list(/obj/item/weapon/stock_parts/cell)
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
+	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 50, bio = 100, rad = 50)
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
 	blockTracking = 1
@@ -16,7 +16,7 @@
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 30, bio = 100, rad = 50)
 	species_restricted = null //Workaround for spawning alien ninja without internals.
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	supporting_limbs = list()
@@ -30,7 +30,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell//Starts out with a high-capacity cell using New().
 	var/datum/effect/effect/system/spark_spread/spark_system//To create sparks.
 	var/reagent_list[] = list("tricordrazine","tramadol","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
-	var/stored_research[]//For stealing station research.
+	var/list/stored_research//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.

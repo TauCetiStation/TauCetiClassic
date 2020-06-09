@@ -42,7 +42,7 @@ Bonus
 						else
 							random_name = pick(first_names_female)
 					random_name += " [pick(last_names)]"
-					H.SetSpecialVoice(random_name)
+					H.special_voice = random_name
 
 	return
 
@@ -50,5 +50,5 @@ Bonus
 	..()
 	if(ishuman(A.affected_mob))
 		var/mob/living/carbon/human/H = A.affected_mob
-		H.UnsetSpecialVoice()
+		H.special_voice = ""
 	return

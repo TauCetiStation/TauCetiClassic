@@ -1,70 +1,48 @@
-/obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user)
-	var/limbloc = null
+/obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 
-	if(!istype(M))
+	if(!ishuman(M))
 		return ..()
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || (locate(/obj/structure/table, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))))
 		return ..()
 
-	if(!istype(M, /mob/living/carbon/human))
-		return ..()
-
-	if((user.zone_sel.selecting == "l_arm") && (istype(src, /obj/item/robot_parts/l_arm)))
-		limbloc = "l_hand"
-	else if((user.zone_sel.selecting == "r_arm") && (istype(src, /obj/item/robot_parts/r_arm)))
-		limbloc = "r_hand"
-	else if((user.zone_sel.selecting == "r_leg") && (istype(src, /obj/item/robot_parts/r_leg)))
-		limbloc = "r_foot"
-	else if((user.zone_sel.selecting == "l_leg") && (istype(src, /obj/item/robot_parts/l_leg)))
-		limbloc = "l_foot"
-	else
-		to_chat(user, "\red That doesn't fit there!")
+	if(user.zone_sel.selecting != part)
+		to_chat(user, "<span class='warning'>That doesn't fit there!</span>")
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-	if(S.status & ORGAN_DESTROYED)
-		if(!(S.status & ORGAN_ATTACHABLE))
-			to_chat(user, "\red The wound is not ready for a replacement!")
+	var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
+	if(BP.status & ORGAN_DESTROYED)
+		if(!(BP.status & ORGAN_ATTACHABLE))
+			to_chat(user, "<span class='warning'>The wound is not ready for a replacement!</span>")
 			return 0
 		if(M != user)
 			M.visible_message( \
-				"\red [user] is beginning to attach \the [src] where [H]'s [S.display_name] used to be.", \
-				"\red [user] begins to attach \the [src] where your [S.display_name] used to be.")
+				"<span class='warning'>[user] is beginning to attach \the [src] where [H]'s [BP.name] used to be.</span>", \
+				"<span class='warning'>[user] begins to attach \the [src] where your [BP.name] used to be.</span>")
 		else
 			M.visible_message( \
-				"\red [user] begins to attach a robotic limb where \his [S.display_name] used to be with [src].", \
-				"\red You begin to attach \the [src] where your [S.display_name] used to be.")
+				"<span class='warning'>[user] begins to attach a robotic limb where \his [BP.name] used to be with [src].</span>", \
+				"<span class='warning'>You begin to attach \the [src] where your [BP.name] used to be.</span>")
 
 		if(do_mob(user, H, 100))
 			if(M != user)
 				M.visible_message( \
-					"\red [user] finishes attaching [H]'s new [S.display_name].", \
-					"\red [user] finishes attaching your new [S.display_name].")
+					"<span class='warning'>[user] finishes attaching [H]'s new [BP.name].</span>", \
+					"<span class='warning'>[user] finishes attaching your new [BP.name].</span>")
 			else
 				M.visible_message( \
-					"\red [user] finishes attaching \his new [S.display_name].", \
-					"\red You finish attaching your new [S.display_name].")
+					"<span class='warning'>[user] finishes attaching \his new [BP.name].</span>", \
+					"<span class='warning'>You finish attaching your new [BP.name].</span>")
 
 			if(H == user && prob(25))
-				to_chat(user, "\red You mess up!")
-				S.take_damage(15)
+				to_chat(user, "<span class='warning'>You mess up!</span>")
+				BP.take_damage(15)
 
-			S.status &= ~ORGAN_BROKEN
-			S.status &= ~ORGAN_SPLINTED
-			S.status &= ~ORGAN_ATTACHABLE
-			S.status &= ~ORGAN_DESTROYED
-			S.status |= ORGAN_ROBOT
-			var/datum/organ/external/T = H.organs["[limbloc]"]
-			T.status &= ~ORGAN_BROKEN
-			T.status &= ~ORGAN_SPLINTED
-			T.status &= ~ORGAN_ATTACHABLE
-			T.status &= ~ORGAN_DESTROYED
-			T.status |= ORGAN_ROBOT
+			BP.status = ORGAN_ROBOT // in this situtation, we can simply set exact flag.
 			H.update_body()
 			M.updatehealth()
-			M.UpdateDamageIcon(S)
+			M.UpdateDamageIcon(BP)
 			qdel(src)
 
 			return 1

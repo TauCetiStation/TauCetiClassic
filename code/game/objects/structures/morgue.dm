@@ -16,121 +16,172 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	dir = EAST
-	density = 1
-	var/obj/structure/m_tray/connected = null
+	density = TRUE
 	anchored = 1.0
 
+	var/obj/structure/m_tray/connected = null
+	var/check_delay = 0
+	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
+
 /obj/structure/morgue/Destroy()
-	if(connected)
-		qdel(connected)
-		connected = null
+	QDEL_NULL(connected)
 	return ..()
 
+/obj/structure/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+
+/obj/structure/morgue/AltClick(mob/user)
+	..()
+	if(!CanUseTopic(user) || !user.IsAdvancedToolUser())
+		return
+	beeper = !beeper
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
+
 /obj/structure/morgue/proc/update()
-	if (src.connected)
-		src.icon_state = "morgue0"
+	if (connected)
+		STOP_PROCESSING(SSobj, src)
+		icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
+		if (contents.len)
+			START_PROCESSING(SSobj, src)
+			icon_state = "morgue2"
 		else
-			src.icon_state = "morgue1"
+			icon_state = "morgue1"
 	return
 
 /obj/structure/morgue/ex_act(severity)
+	var/chance = 0
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-			qdel(src)
-			return
+			chance = 100
 		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
-				return
+			chance = 50
 		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
-				return
-	return
+			chance = 5
+
+	if (prob(chance))
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
+			A.ex_act(severity)
+		qdel(src)
 
 /obj/structure/morgue/alter_health()
-	return src.loc
+	return loc
 
 /obj/structure/morgue/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
-/obj/structure/morgue/attack_hand(mob/user)
-	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
+/obj/structure/morgue/proc/has_clonable_bodies()
+	var/list/compiled = recursive_mob_check(src, sight_check = FALSE, include_radio = FALSE) // Search for mobs in all contents.
+	if(!length(compiled)) // No mobs?
+		return FALSE
+
+	for(var/mob/living/carbon/human/H in compiled)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || !H.has_brain() || H.suiciding || !H.ckey || !H.mind)
+			continue
+
+		return TRUE
+	return FALSE
+
+/obj/structure/morgue/process()
+	if(check_delay > world.time)
+		return
+	check_delay = world.time + 10 SECONDS
+
+	if (!contents.len)
+		update()
+		return //nothing inside
+
+	if (has_clonable_bodies())
+		if(beeper)
+			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		icon_state = "morgue3"
+	else
+		update()
+
+/obj/structure/morgue/proc/close()
+	if (connected)
+		for(var/atom/movable/A in connected.loc)
+			if(!A.anchored)
 				A.loc = src
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		qdel(src.connected)
-		src.connected = null
-	else
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		src.connected = new /obj/structure/m_tray( src.loc )
-		step(src.connected, src.dir)
-		src.connected.layer = OBJ_LAYER
-		var/turf/T = get_step(src, src.dir)
-		if (T.contents.Find(src.connected))
-			src.connected.connected = src
-			src.icon_state = "morgue0"
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.connected.loc
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
+		qdel(connected)
+		connected = null
+		update()
+
+/obj/structure/morgue/proc/open()
+	if (!connected)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
+		connected = new /obj/structure/m_tray( loc )
+		step(connected, dir)
+		connected.layer = BELOW_CONTAINERS_LAYER
+		var/turf/T = get_step(src, dir)
+		if (T.contents.Find(connected))
+			connected.connected = src
+			icon_state = "morgue0"
+			for(var/atom/movable/A in src)
+				A.forceMove(connected.loc)
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(0)
-			src.connected.icon_state = "morguet"
-			src.connected.dir = src.dir
+			connected.icon_state = "morguet"
+			connected.dir = dir
 		else
-			qdel(src.connected)
-			src.connected = null
-	src.add_fingerprint(user)
-	update()
+			qdel(connected)
+			connected = null
+		update()
+
+/obj/structure/morgue/proc/toggle()
+	if (connected)
+		close()
+	else
+		open()
+
+/obj/structure/morgue/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	toggle()
+	add_fingerprint(user)
 	return
 
 /obj/structure/morgue/attackby(P, mob/user)
-	if (istype(P, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+	if(istype(P, /obj/item/weapon/pen))
+
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_range(src, usr) && loc != user))
 			return
-		t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+		add_fingerprint(user)
+
 		if (t)
 			src.name = text("Morgue- '[]'", t)
 		else
 			src.name = "Morgue"
-	src.add_fingerprint(user)
-	return
+	else
+		..()
 
 /obj/structure/morgue/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
-	src.connected = new /obj/structure/m_tray( src.loc )
-	step(src.connected, src.dir)
-	src.connected.layer = OBJ_LAYER
-	var/turf/T = get_step(src, src.dir)
-	if (T.contents.Find(src.connected))
-		src.connected.connected = src
-		src.icon_state = "morgue0"
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.connected.loc
-		src.connected.icon_state = "morguet"
+	connected = new /obj/structure/m_tray( loc )
+	step(connected, dir)
+	connected.layer = BELOW_CONTAINERS_LAYER
+	var/turf/T = get_step(src, dir)
+	if (T.contents.Find(connected))
+		connected.connected = src
+		icon_state = "morgue0"
+		for(var/atom/movable/A in src)
+			A.loc = connected.loc
+		connected.icon_state = "morguet"
 	else
-		qdel(src.connected)
-		src.connected = null
+		qdel(connected)
+		connected = null
 	return
 
 
@@ -158,25 +209,16 @@
 	return src.attack_hand(user)
 
 /obj/structure/m_tray/attack_hand(mob/user)
-	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
-				A.loc = src.connected
-			//Foreach goto(26)
-		src.connected.connected = null
-		src.connected.update()
-		add_fingerprint(user)
-		//SN src = null
-		qdel(src)
-		return
-	return
+	user.SetNextMove(CLICK_CD_INTERACT)
+	connected.close()
+	add_fingerprint(user)
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -202,7 +244,12 @@
 	var/id = 1
 	var/locked = 0
 
+/obj/structure/crematorium/atom_init()
+	. = ..()
+	crematorium_list += src
+
 /obj/structure/crematorium/Destroy()
+	crematorium_list -= src
 	if(connected)
 		qdel(connected)
 		connected = null
@@ -250,26 +297,27 @@
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (cremating)
-		to_chat(usr, "<span class='rose'>It's locked.</span>")
+		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
 	if ((src.connected) && (src.locked == 0))
-		for(var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in src.connected.loc)
+			if(!A.anchored)
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
 	else if (src.locked == 0)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
-		src.connected.layer = OBJ_LAYER
+		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, SOUTH)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
@@ -284,26 +332,26 @@
 	update()
 
 /obj/structure/crematorium/attackby(P, mob/user)
-	if (istype(P, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+	if(istype(P, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) > 1 && src.loc != user))
 			return
-		t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+		add_fingerprint(user)
 		if (t)
 			src.name = text("Crematorium- '[]'", t)
 		else
 			src.name = "Crematorium"
-	src.add_fingerprint(user)
-	return
+	else
+		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
-	if (user.stat || locked)
+	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
-	src.connected.layer = OBJ_LAYER
+	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, SOUTH)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -324,28 +372,23 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream",,, 1)
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+				M.emote("scream")
+			M.log_combat(user, "cremated")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
@@ -357,7 +400,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
 
 
@@ -379,25 +422,22 @@
 	return src.attack_hand(user)
 
 /obj/structure/c_tray/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in loc)
+			if (!A.anchored)
 				A.loc = src.connected
-			//Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		qdel(src)
-		return
-	return
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -408,14 +448,14 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
-	if(src.allowed(usr))
-		for (var/obj/structure/crematorium/C in world)
-			if (C.id == id)
-				if (!C.cremating)
-					for(var/mob/living/M in C.contents)
-						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					C.cremate(user)
-	else
-		to_chat(usr, "<span class='rose'>Access denied.</span>")
-	return
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	for (var/obj/structure/crematorium/C in crematorium_list)
+		if (C.id == id)
+			if (!C.cremating)
+				for(var/mob/living/M in C.contents)
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). [ADMIN_JMP(user)]")
+				C.cremate(user)

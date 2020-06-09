@@ -1,150 +1,142 @@
 //Regular syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
-	desc = "Top secret Spess Helmet."
-	icon_state = "syndicate"
-	item_state = "syndicate"
+	icon_state = "syndicate-helm"
+	item_state = "syndicate-helm"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	action_button_name = "Toggle Helmet Light"
+	var/brightness = 3 //light_range when on
+	var/lit = FALSE
+	species_restricted = list("exclude" , DIONA , VOX)
+	var/image/lamp = null
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
-	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	w_class = ITEM_SIZE_NORMAL
+	allowed = list(/obj/item/weapon/gun,
+	               /obj/item/ammo_box/magazine,
+	               /obj/item/ammo_casing,
+	               /obj/item/weapon/melee/baton,
+	               /obj/item/weapon/melee/energy/sword,
+	               /obj/item/weapon/handcuffs,
+	               /obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	species_restricted = list("exclude" , DIONA , VOX)
+
+/obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
+	. = ..()
+	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
+	if(user)
+		user.update_inv_head()
+
+/obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
+	. = ..()
+	lit = !lit
+	set_light(lit ? brightness : 0)
+	update_icon(user)
 
 
-//Green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/green
-	name = "Green Space Helmet"
-	icon_state = "syndicate-helm-green"
-	item_state = "syndicate-helm-green"
+//Civilian syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/civilian
+	name = "civilian space helmet"
+	desc = "Space helmet made by unknown manufacturer."
+	icon_state = "syndicate-helm-civ"
+	item_state = "syndicate-helm-jailbreaker"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , DIONA , VOX)
 
-/obj/item/clothing/suit/space/syndicate/green
-	name = "Green Space Suit"
-	icon_state = "syndicate-green"
-	item_state = "syndicate-green"
-
-
-//Dark green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/green/dark
-	name = "Dark Green Space Helmet"
-	icon_state = "syndicate-helm-green-dark"
-	item_state = "syndicate-helm-green-dark"
-
-/obj/item/clothing/suit/space/syndicate/green/dark
-	name = "Dark Green Space Suit"
-	icon_state = "syndicate-green-dark"
-	item_state = "syndicate-green-dark"
+/obj/item/clothing/suit/space/syndicate/civilian
+	name = "civilian space suit"
+	desc = "Space suit made by unknown manufacturer."
+	icon_state = "syndicate-civ"
+	item_state = "s_suit"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 
 
-//Orange syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/orange
-	name = "Orange Space Helmet"
-	icon_state = "syndicate-helm-orange"
-	item_state = "syndicate-helm-orange"
+//Striker syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/striker
+	name = "striker space helmet"
+	desc = "That's obviously some kind of military space helmet."
+	icon_state = "syndicate-helm-striker"
+	item_state = "syndicate-helm-striker"
+	armor = list(melee = 60, bullet = 45, laser = 40,energy = 45, bomb = 50, bio = 100, rad = 30)
+	brightness = 4
 
-/obj/item/clothing/suit/space/syndicate/orange
-	name = "Orange Space Suit"
-	icon_state = "syndicate-orange"
-	item_state = "syndicate-orange"
-
-
-//Blue syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/blue
-	name = "Blue Space Helmet"
-	icon_state = "syndicate-helm-blue"
-	item_state = "syndicate-helm-blue"
-
-/obj/item/clothing/suit/space/syndicate/blue
-	name = "Blue Space Suit"
-	icon_state = "syndicate-blue"
-	item_state = "syndicate-blue"
+/obj/item/clothing/suit/space/syndicate/striker
+	name = "striker space suit"
+	desc = "That's obviously some kind of military space suit."
+	icon_state = "syndicate-striker"
+	item_state = "syndicate-striker"
+	armor = list(melee = 60, bullet = 45, laser = 40,energy = 45, bomb = 50, bio = 100, rad = 30)
+	breach_threshold = 12
 
 
-//Black syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black"
-	item_state = "syndicate-helm-black"
+//Jailbreaker syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/jailbreaker
+	name = "jailbreaker space helmet"
+	desc = "The look of this space helmet gives you an urge to buckle up and dismantle the floor in a crowded room."
+	icon_state = "syndicate-helm-jailbreaker"
+	item_state = "syndicate-helm-jailbreaker"
 
-/obj/item/clothing/suit/space/syndicate/black
-	name = "Black Space Suit"
-	icon_state = "syndicate-black"
-	item_state = "syndicate-black"
-
-
-//Black-green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-green"
-	item_state = "syndicate-helm-black-green"
-
-/obj/item/clothing/suit/space/syndicate/black/green
-	name = "Black and Green Space Suit"
-	icon_state = "syndicate-black-green"
-	item_state = "syndicate-black-green"
+/obj/item/clothing/suit/space/syndicate/jailbreaker
+	name = "jailbreaker space suit"
+	desc = "The look of this space suit gives you an urge to buckle up and dismantle the floor in a crowded room."
+	icon_state = "syndicate-jailbreaker"
+	item_state = "syndicate-jailbreaker"
 
 
-//Black-blue syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/blue
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-blue"
-	item_state = "syndicate-helm-black-blue"
+//Infiltrator syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/infiltrator
+	name = "infiltrator space helmet"
+	desc = "Space helmet made by unknown manufacturer. It's made from some strange composite material."
+	icon_state = "syndicate-helm-infiltrator"
+	item_state = "syndicate-helm-elite"
+	action_button_name = null
 
-/obj/item/clothing/suit/space/syndicate/black/blue
-	name = "Black and Blue Space Suit"
-	icon_state = "syndicate-black-blue"
-	item_state = "syndicate-black-blue"
+/obj/item/clothing/suit/space/syndicate/infiltrator
+	name = "infiltrator space suit"
+	desc = "Space suit made by unknown manufacturer. It's made from some strange composite material."
+	icon_state = "syndicate-infiltrator"
+	item_state = "syndicate-elite"
 
-
-//Black medical syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-med"
-	item_state = "syndicate-helm-black"
-
-/obj/item/clothing/suit/space/syndicate/black/med
-	name = "Green Space Suit"
-	icon_state = "syndicate-black-med"
-	item_state = "syndicate-black"
+/obj/item/clothing/head/helmet/space/syndicate/infiltrator/attack_self(mob/user)
+	return
 
 
-//Black-orange syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-orange"
-	item_state = "syndicate-helm-black"
+//Striketeam syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/elite
+	name = "elite striker space helmet"
+	desc = "It looks like the person wearing this should be death incarnate wannabe."
+	icon_state = "syndicate-helm-elite"
+	item_state = "syndicate-helm-elite"
+	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
+	action_button_name = null
 
-/obj/item/clothing/suit/space/syndicate/black/orange
-	name = "Black and Orange Space Suit"
-	icon_state = "syndicate-black-orange"
-	item_state = "syndicate-black"
+/obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
+	return
 
-
-//Black-red syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/red
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
-
-/obj/item/clothing/suit/space/syndicate/black/red
-	name = "Black and Red Space Suit"
-	icon_state = "syndicate-black-red"
-	item_state = "syndicate-black-red"
+/obj/item/clothing/suit/space/syndicate/elite
+	name = "elite striker space suit"
+	desc = "It looks like the person wearing this should be death incarnate wannabe."
+	icon_state = "syndicate-elite"
+	item_state = "syndicate-elite"
+	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
+	breach_threshold = 32
 
 
-//Black with yellow/red engineering syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-engie"
-	item_state = "syndicate-helm-black"
+/obj/item/clothing/head/helmet/space/syndicate/elite/commander
+	name = "striker commander space helmet"
+	desc = "Person wearing this was the death incarnate. You still feel edgy vibes coming from the inside."
+	icon_state = "syndicate-helm-commander"
+	item_state = "syndicate-helm-commander"
 
-/obj/item/clothing/suit/space/syndicate/black/engie
-	name = "Black Engineering Space Suit"
-	icon_state = "syndicate-black-engie"
-	item_state = "syndicate-black"
+/obj/item/clothing/suit/space/syndicate/elite/commander
+	name = "striker commander space suit"
+	desc = "Person wearing this was the death incarnate. You still feel edgy vibes coming from the inside."
+	icon_state = "syndicate-commander"
+	item_state = "syndicate-commander"

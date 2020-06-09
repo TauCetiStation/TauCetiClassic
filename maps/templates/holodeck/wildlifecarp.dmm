@@ -1,15 +1,137 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_wildlife)
-"b" = (/obj/effect/landmark{name = "Holocarp Spawn"},/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_wildlife)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/holofloor{
+	icon_state = "engine";
+	name = "Holodeck Projector Floor"
+	},
+/area/station/civilian/holodeck/source_wildlife)
+"b" = (
+/obj/effect/landmark{
+	name = "Holocarp Spawn"
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "engine";
+	name = "Holodeck Projector Floor"
+	},
+/area/station/civilian/holodeck/source_wildlife)
 
 (1,1,1) = {"
-aaaaaaaaaa
-abaaaaaaba
-aaaaaaaaaa
-aaabaabaaa
-aaaaaaaaaa
-aaaaaaaaaa
-aaabaabaaa
-aaaaaaaaaa
-abaaaaaaba
-aaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+a
+a
+a
+a
+a
+a
+b
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+a
+a
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+a
+a
+b
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+b
+a
+a
+a
+a
+a
+a
+b
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

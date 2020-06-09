@@ -1,62 +1,36 @@
+//In this file: Summon Magic/Summon Guns/Summon Events
 
-
-/mob/proc/rightandwrong()
-	to_chat(usr, "<B>You summoned guns!</B>")
-	message_admins("[key_name_admin(usr, 1)] summoned guns!")
+/proc/rightandwrong(summon_type, mob/user) //0 = Summon Guns, 1 = Summon Magic
+	var/list/gunslist
+	var/list/magiclist
+	if(!summon_type)
+		gunslist = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile))
+	else
+		magiclist = list(/obj/effect/proc_holder/spell/targeted/area_teleport/teleport, /obj/effect/proc_holder/spell/targeted/gnomecurse, /obj/effect/proc_holder/spell/targeted/barnyardcurse, /obj/effect/proc_holder/spell/targeted/lighting_shock, /obj/effect/proc_holder/spell/targeted/charge,
+	/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke, /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech, /obj/effect/proc_holder/spell/targeted/ethereal_jaunt,
+	/obj/effect/proc_holder/spell/in_hand/fireball, /obj/effect/proc_holder/spell/in_hand/tesla, /obj/effect/proc_holder/spell/in_hand/arcane_barrage,
+	/obj/effect/proc_holder/spell/aoe_turf/knock, /obj/effect/proc_holder/spell/targeted/mind_transfer, /obj/effect/proc_holder/spell/aoe_turf/repulse,
+	/obj/effect/proc_holder/spell/targeted/spacetime_dist, /obj/effect/proc_holder/spell/targeted/summonitem, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop,
+	/obj/effect/proc_holder/spell/targeted/projectile/magic_missile, /obj/effect/proc_holder/spell/targeted/genetic/mutate, /obj/effect/proc_holder/spell/targeted/turf_teleport/blink,
+	/obj/effect/proc_holder/spell/targeted/forcewall, /obj/effect/proc_holder/spell/targeted/trigger/blind, /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps)
+	if(user) //in this case either someone holding a spellbook or a badmin
+		to_chat(user, "<B>You summoned [summon_type ? "magic" : "guns"]!</B>")
+		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
+		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == DEAD || !(H.client)) continue
-		if(is_special_character(H)) continue
-		if(prob(25))
-			ticker.mode.traitors += H.mind
-			H.mind.special_role = "traitor"
-			var/datum/objective/survive/survive = new
-			survive.owner = H.mind
-			H.mind.objectives += survive
-			to_chat(H, "<B>You are the survivor! Your own safety matters above all else, trust no one and kill anyone who gets in your way. However, armed as you are, now would be the perfect time to settle that score or grab that pair of yellow gloves you've been eyeing...</B>")
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in H.mind.objectives)
-				to_chat(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-				obj_count++
-		var/randomize = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
-		switch (randomize)
-			if("taser")
-				new /obj/item/weapon/gun/energy/taser(get_turf(H))
-			if("egun")
-				new /obj/item/weapon/gun/energy/gun(get_turf(H))
-			if("laser")
-				new /obj/item/weapon/gun/energy/laser(get_turf(H))
-			if("revolver")
-				new /obj/item/weapon/gun/projectile(get_turf(H))
-			if("detective")
-				new /obj/item/weapon/gun/projectile/revolver/detective(get_turf(H))
-			if("smg")
-				new /obj/item/weapon/gun/projectile/automatic/c20r(get_turf(H))
-			if("nuclear")
-				new /obj/item/weapon/gun/energy/gun/nuclear(get_turf(H))
-			if("deagle")
-				new /obj/item/weapon/gun/projectile/automatic/deagle/gold(get_turf(H))
-			if("gyrojet")
-				new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
-			if("pulse")
-				new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
-			if("silenced")
-				new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
-				new /obj/item/weapon/silencer(get_turf(H))
-			if("cannon")
-				new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
-			if("doublebarrel")
-				new /obj/item/weapon/gun/projectile/revolver/doublebarrel/(get_turf(H))
-			if("shotgun")
-				new /obj/item/weapon/gun/projectile/shotgun/(get_turf(H))
-			if("combatshotgun")
-				new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
-			if("mateba")
-				new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
-			if("smg")
-				new /obj/item/weapon/gun/projectile/automatic(get_turf(H))
-			if("uzi")
-				new /obj/item/weapon/gun/projectile/automatic/mini_uzi(get_turf(H))
-			if("crossbow")
-				new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
-			if("saw")
-				new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
+		if(H.stat == DEAD || !H.client || (H.mind && H.mind.special_role == "Wizard")) continue
+		if(!summon_type)
+			var/randomizeguns = pick(gunslist)
+			H.put_in_hands(new randomizeguns(H))
+		else
+			var/randomizemagic = pick(magiclist)
+			H.AddSpell(new randomizemagic(H))
+			for(var/obj/effect/proc_holder/spell/S in H.spell_list)
+				if(istype(S, randomizemagic))
+					S.clothes_req = 0
+	if(!summon_type)
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_guns.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+	else
+		for(var/mob/M in player_list)
+			M.playsound_local(null, 'sound/magic/Summon_Magic.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)

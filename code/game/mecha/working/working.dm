@@ -1,12 +1,11 @@
 /obj/mecha/working
 	internal_damage_threshold = 60
 
-/obj/mecha/working/New()
-	..()
+/obj/mecha/working/atom_init()
+	. = ..()
 	var/turf/T = get_turf(src)
-	if(T.z != ZLEVEL_CENTCOMM)
+	if(!is_centcom_level(T.z) && !is_junkyard_level(T.z))
 		new /obj/item/mecha_parts/mecha_tracking(src)
-	return
 
 /*
 /obj/mecha/working/melee_action(atom/target)

@@ -1,7 +1,7 @@
 /mob/living/carbon/ian/Login()
 	..()
 
-	if(!is_alien_whitelisted(src, "ian"))
+	if(!(is_alien_whitelisted(src, "ian") || (client.supporter && !is_alien_whitelisted_banned(src, "ian"))))
 		return
 
 	update_hud()

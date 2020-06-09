@@ -4,7 +4,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	anchored = 1.0
-	pressure_resistance = 15
 
 /obj/structure/stool/bar
 	name = "bar stool"
@@ -28,28 +27,40 @@
 
 /obj/structure/stool/blob_act()
 	if(prob(75))
-		new /obj/item/stack/sheet/metal(src.loc)
+		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc)
+	if(iswrench(W) && !(flags & NODECONSTRUCT))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
-	if(istype(W, /obj/item/weapon/melee/energy))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+		return
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		var/obj/item/weapon/melee/energy/blade/B = W
+		if(B.active)
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
-			if(!(flags&NODECONSTRUCT))
-				new /obj/item/stack/sheet/metal(src.loc)
+			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+			if(!(flags & NODECONSTRUCT))
+				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
-	return
+			return
+
+	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = W
+		if(S.wielded && !(flags & NODECONSTRUCT))
+			new /obj/item/stack/sheet/metal(loc)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			qdel(src)
+			return
+	else
+		..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
@@ -69,12 +80,17 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	force = 10
+	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null
 
-/obj/item/weapon/stool/throw_at()
+/obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
+
+/obj/item/weapon/stool/atom_init()
+	. = ..()
+	flags |= DROPDEL
 
 /obj/item/weapon/stool/Destroy()
 	if(origin_stool)
@@ -90,7 +106,7 @@
 	if(origin_stool)
 		origin_stool.loc = src.loc
 		origin_stool = null
-	qdel(src)
+	..()
 
 /obj/item/weapon/stool/attack(mob/M, mob/user)
 	if (prob(5) && isliving(M))

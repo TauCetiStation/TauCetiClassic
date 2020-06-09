@@ -43,8 +43,8 @@
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/effect/decal/mecha_wreckage/mauler
 
-/obj/mecha/combat/marauder/mauler/New()
-	..()
+/obj/mecha/combat/marauder/mauler/atom_init()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
@@ -55,12 +55,11 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
-	src.smoke_system.set_up(3, 0, src)
-	src.smoke_system.attach(src)
-	return
+	smoke_system.set_up(3, 0, src)
+	smoke_system.attach(src)
 
-/obj/mecha/combat/marauder/loaded/New()
-	..()
+/obj/mecha/combat/marauder/loaded/atom_init()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive(src)
@@ -69,12 +68,16 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
-	src.smoke_system.set_up(3, 0, src)
-	src.smoke_system.attach(src)
-	return
+	smoke_system.set_up(3, 0, src)
+	smoke_system.attach(src)
 
-/obj/mecha/combat/marauder/seraph/New()
+/obj/mecha/combat/marauder/seraph/atom_init()
 	..()//Let it equip whatever is needed.
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/mecha/combat/marauder/seraph/atom_init_late() // because of qdel() ...
+	// actually, mech equipment should be made as closets with their PopulateContents proc ...
+	// or any other idea. so we dont need to clean parent's equipment
 	var/obj/item/mecha_parts/mecha_equipment/ME
 	if(equipment.len)//Now to remove it and equip anew.
 		for(ME in equipment)
@@ -90,7 +93,6 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
-	return
 
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(zoom)
@@ -111,7 +113,7 @@
 		if(get_charge() > 0)
 			thrusters = !thrusters
 			src.log_message("Toggled thrusters.")
-			src.occupant_message("<font color='[src.thrusters?"blue":"red"]'>Thrusters [thrusters?"en":"dis"]abled.")
+			src.occupant_message("<font color='[src.thrusters?"blue":"red"]'>Thrusters [thrusters?"en":"dis"]abled.</font>")
 	return
 
 /obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
@@ -149,7 +151,7 @@
 		src.occupant_message("<font color='[src.zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 		if(zoom)
 			src.occupant.client.view = 12
-			src.occupant << sound('sound/mecha/imag_enh.ogg',volume=50)
+			occupant.playsound_local(null, 'sound/mecha/imag_enh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			src.occupant.client.view = world.view//world.view - default mob view size
 	return

@@ -2,43 +2,52 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	light_power = 2
 	var/on = 0
 	var/colourName = null
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
+	var/start_brightness = 4
 	action_button_name = "Break Glowstick"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/New()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
 	name = "[colourName] glowstick"
 	desc = "A Nanotrasen issued [colourName] glowstick. There are instructions on the side, it reads 'bend it, make light'."
 	icon_state = "glowstick_[colourName]"
 	item_state = "glowstick_[colourName]"
-	..()
+	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/process()
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
-	if(liquid_fuel.volume)
-		if(liquid_fuel.volume < reagents.maximum_volume/3)
-			if(light_range != 3) set_light(2,1)
-		else if(liquid_fuel.volume < reagents.maximum_volume/2)
-			if(light_range != 5) set_light(3)
+	check_volume()
 	if(!liquid_fuel.volume || !on)
 		turn_off()
 		if(!liquid_fuel.volume)
 			src.icon_state = "glowstick_[colourName]-over"
 		STOP_PROCESSING(SSobj, src)
 
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/check_volume()
+	if(liquid_fuel.volume)
+		if(liquid_fuel.volume < reagents.maximum_volume/3)
+			if(light_range == 3)
+				set_light(2,1)
+			return
+		else if(liquid_fuel.volume < reagents.maximum_volume/2)
+			if(light_range == 4)
+				set_light(3)
+			return
+
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
-		set_light(4)
+		set_light(start_brightness)
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)
@@ -58,7 +67,6 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		usr.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 	return
 
@@ -79,11 +87,11 @@
 	on = !on
 	update_brightness(user)
 	action_button_name = null
-	playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
+	playsound(src, 'sound/weapons/glowstick_bend.ogg', VOL_EFFECTS_MASTER, 35, FALSE)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/living/M, mob/user, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
 	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
 		to_chat(user, "<span class='info'>[src] is defective.</span>")
@@ -110,40 +118,35 @@
 
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
+				user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 
 				if(!do_mob(user, M)) return
 
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='danger'>[user] feeds [M] [src].</span>", 1)
+				user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
 
 			else
 				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list
-				var/datum/reagents/list_regs = new /datum/reagents
+				var/list/list_regs = list()
 				var/datum/reagent/luminold = new /datum/reagent/luminophore_temp
 				luminold.volume = my_reagent.volume
 				luminold.color = my_reagent.color
-				list_regs.reagent_list += luminold
+				list_regs += luminold
 
 				reagents.trans_to(M, reagents.total_volume)
 
 				var/datum/reagent/luminnew = locate(/datum/reagent/luminophore) in M.reagents.reagent_list
 				if(luminnew.color == "#ffffff")
 					luminnew.color = luminold.color
-				list_regs.reagent_list += luminnew
-				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
-				qdel(list_regs)
+				list_regs += luminnew
+				var/mixedcolor = mix_color_from_reagents(list_regs)
 				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
@@ -151,17 +154,14 @@
 
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W, mob/user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
-	if(contents)
-		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
-	STOP_PROCESSING(SSobj, src)
+	liquid_fuel = null // as long as this is in reagent_list, no need to qdel, will be handled by parent's reagent cleaning process.
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(mob/M)
@@ -179,60 +179,84 @@
 			liquid_fuel = luminophore
 
 	var/datum/reagent/lum = locate(/datum/reagent/luminophore) in R.reagent_list
-	if(lum)
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/green))
-			lum.color = "#88EBC3"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/red))
-			lum.color = "#EA0052"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue))
-			lum.color = "#24C1FF"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow))
-			lum.color = "#FFFA18"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange))
-			lum.color = "#FF9318"
+	lum.color = filling_color
 
 ////////////////G L O W S T I C K - C O L O R S////////////////
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/green
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green
 	colourName = "green"
-	light_color = "#88EBC3"
-	filling_color = "#88EBC3"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
 
-	New()
-		..()
-		add_fuel()
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/red
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red
 	colourName = "red"
-	light_color = "#EA0052"
-	filling_color = "#EA0052"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
 
-	New()
-		..()
-		add_fuel()
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue
 	colourName = "blue"
-	light_color = "#24C1FF"
-	filling_color = "#24C1FF"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
 
-	New()
-		..()
-		add_fuel()
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow
 	colourName = "yellow"
-	light_color = "#FFFA18"
-	filling_color = "#FFFA18"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
 
-	New()
-		..()
-		add_fuel()
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange
 	colourName = "orange"
-	light_color = "#FF9318"
-	filling_color = "#FF9318"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"
 
-	New()
-		..()
-		add_fuel()
+/obj/effect/spawner/lootdrop/glowstick
+	name = "random colored glowstick"
+	icon = 'icons/obj/glowsticks.dmi'
+	icon_state = "random_glowstick"
+
+/obj/effect/spawner/lootdrop/glowstick/atom_init()
+	loot = typesof(/obj/item/weapon/reagent_containers/food/snacks/glowstick/regular)
+	. = ..()
+
+///////////////////// POWER GLOWSTICK //////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power
+	start_brightness = 7
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/atom_init()
+	name = "Advanset [colourName] glowstick"
+	. = ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/check_volume()
+	if(liquid_fuel.volume)
+		if(liquid_fuel.volume < reagents.maximum_volume/3)
+			if(light_range == 5)
+				set_light(3)
+			return
+		else if(liquid_fuel.volume < reagents.maximum_volume/2)
+			if(light_range == 7)
+				set_light(5)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green
+	colourName = "green"
+	light_color = "#88ebc3"
+	filling_color = "#88ebc3"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red
+	colourName = "red"
+	light_color = "#ea0052"
+	filling_color = "#ea0052"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue
+	colourName = "blue"
+	light_color = "#24c1ff"
+	filling_color = "#24c1ff"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow
+	colourName = "yellow"
+	light_color = "#fffa18"
+	filling_color = "#fffa18"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange
+	colourName = "orange"
+	light_color = "#ff9318"
+	filling_color = "#ff9318"

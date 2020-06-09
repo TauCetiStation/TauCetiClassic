@@ -15,21 +15,23 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/New()
+/obj/machinery/abductor/gland_dispenser/atom_init()
+	. = ..()
 	gland_types = typesof(/obj/item/gland) - /obj/item/gland
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
-	for(var/i=1,i<=gland_types.len,i++)
+	for (var/i in 1 to gland_types.len)
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
-	if(..())
+/obj/machinery/abductor/gland_dispenser/interact(mob/user)
+	if(!IsAbductor(user) && !isobserver(user))
 		return
-	if(!IsAbductor(user))
-		return
-	user.set_machine(src)
+	else
+		..()
+
+/obj/machinery/abductor/gland_dispenser/ui_interact(mob/user)
 	var/box_css = {"
 	<style>
 	a.box.gland {
@@ -53,12 +55,12 @@
 		if(item_count == 3) // Three boxes per line
 			dat +="</br></br>"
 			item_count = 0
+
 	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
 	popup.add_head_content(box_css)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/gland))
@@ -67,6 +69,8 @@
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
+		return
+	return ..()
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
 	. = ..()

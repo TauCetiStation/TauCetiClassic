@@ -16,66 +16,57 @@
 
 	var/show_value_list = 0
 	var/list/ore_values = list(
-							"glass" = 	1,
-							"iron" = 	1,
-							"coal" = 	1,
-							"steel" =	5,
-							"hydrogen"=	10,
-							"uranium" = 20,
-							"silver" = 	25,
-							"gold" = 	30,
-							"platinum"= 45,
-							"plasteel"= 50,
-							"diamond" = 70)
+							"glass" 			= 1,
+							"iron" 				= 1,
+							"coal" 				= 1,
+							"steel" 			= 5,
+							"hydrogen"			= 10,
+							"uranium" 			= 20,
+							"phoron" 			= 20,
+							"phoron glass"		= 25,
+							"silver" 			= 25,
+							"gold" 				= 30,
+							"platinum"			= 45,
+							"plasteel"			= 50,
+							"diamond" 			= 70)
 
-/obj/machinery/mineral/processing_unit_console/New()
+/obj/machinery/mineral/processing_unit_console/atom_init()
 	..()
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
-		if (machine)
-			machine.console = src
-		else
-			qdel(src)
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
+/obj/machinery/mineral/processing_unit_console/atom_init_late()
+	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
+	if (machine)
+		machine.console = src
+	else
+		qdel(src)
 
-/obj/machinery/mineral/processing_unit_console/interact(mob/user)
-
-	if(..())
-		return
-
-	if(!allowed(user))
-		to_chat(user, "\red Access denied.")
-		return
-
-	user.set_machine(src)
-
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
 	var/dat
 
 	dat += "<hr><table>"
 
 	for(var/ore in machine.ores_processing)
 
-		if(!machine.ores_stored[ore] && !show_all_ores) continue
+		if(!machine.ores_stored[ore] && !show_all_ores)
+			continue
 
-		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100><font color='"
+		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100>"
 		if(machine.ores_processing[ore])
 			switch(machine.ores_processing[ore])
 				if(0)
-					dat += "red'>not processing"
+					dat += "<font color='red'>not processing</font>"
 				if(1)
-					dat += "orange'>smelting"
+					dat += "<font color='orange'>smelting</font>"
 				if(2)
-					dat += "yellow'>compressing"
+					dat += "<font color='yellow'>compressing</font>"
 				if(3)
-					dat += "gray'>alloying"
+					dat += "<font color='gray'>alloying</font>"
 				if(4)
-					dat += "green'>drop"
+					dat += "<font color='green'>drop</font>"
 		else
-			dat += "red'>not processing"
-		dat += "</font></td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
+			dat += "<font color='red'>not processing</font>"
+		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
 
 	dat += "</table><hr>"
 
@@ -102,7 +93,6 @@
 	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
 	. = ..()
@@ -161,7 +151,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 	else
 		..()
 
@@ -173,17 +163,18 @@
 	density = 1
 	anchored = 1
 	light_range = 3
+	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
 	var/sheets_per_tick = 10
-	var/list/ores_processing[0]
-	var/list/ores_stored[0]
-	var/list/ore_data[0]
-	var/list/alloy_data[0]
+	var/list/ores_processing = list()
+	var/list/ores_stored = list()
+	var/list/ore_data = list()
+	var/list/alloy_data = list()
 	var/active = 0
 
-/obj/machinery/mineral/processing_unit/New()
+/obj/machinery/mineral/processing_unit/atom_init()
 	..()
 	//TODO: Ore and alloy global storage datum.
 	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
@@ -193,16 +184,18 @@
 		ore_data[OD.oretag] = OD
 		ores_processing[OD.oretag] = 0
 		ores_stored[OD.oretag] = 0
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/processing_unit/atom_init_late()
 	//Locate our output and input machinery.
-	spawn(5)
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		return
-	return
+	for (var/dir in cardinal)
+		input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(input)
+			break
+	for (var/dir in cardinal)
+		output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(output)
+			break
 
 /obj/machinery/mineral/processing_unit/process()
 
@@ -230,7 +223,7 @@
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
 			if(ores_processing[metal] == 4) //Drop.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -262,7 +255,7 @@
 							console.points += A.points
 							new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
@@ -272,7 +265,7 @@
 					console.points += O.points
 					new O.compresses_to(output.loc)
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -286,5 +279,3 @@
 				new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
-
-	console.updateUsrDialog()

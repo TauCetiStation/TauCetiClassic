@@ -8,25 +8,27 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, used_weapon = null, sharp = 0, edge = 0)
-	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))	return 0
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
+	if(!damage || (blocked >= 100))
+		return FALSE
+
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked )
+			adjustBruteLoss(damage * blocked_mult(blocked))
 		if(BURN)
-			if(COLD_RESISTANCE in mutations)	damage = 0
-			adjustFireLoss(damage * blocked)
+			adjustFireLoss(damage * blocked_mult(blocked))
 		if(TOX)
-			adjustToxLoss(damage * blocked)
+			adjustToxLoss(damage * blocked_mult(blocked))
 		if(OXY)
-			adjustOxyLoss(damage * blocked)
+			adjustOxyLoss(damage * blocked_mult(blocked))
 		if(CLONE)
-			adjustCloneLoss(damage * blocked)
+			adjustCloneLoss(damage * blocked_mult(blocked))
 		if(HALLOSS)
-			adjustHalLoss(damage * blocked)
+			adjustHalLoss(damage * blocked_mult(blocked))
+
+	flash_weak_pain()
 	updatehealth()
-	return 1
+	return TRUE
 
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, halloss = 0, def_zone = null, blocked = 0)
@@ -54,7 +56,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(AGONY)
-			halloss += effect // Useful for objects that cause "subdual" damage. PAIN!
+			adjustHalLoss(effect) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
 			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)

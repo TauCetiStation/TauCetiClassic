@@ -2,10 +2,9 @@
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
 
-/obj/item/weapon/Bump(mob/M as mob)
-	spawn(0)
-		..()
-	return
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
 
 /obj/item/weapon/throwing_star
 	name = "throwing star"
@@ -15,7 +14,7 @@
 	force = 2
 	throwforce = 20
 	throw_speed = 6
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	sharp = 1
 	edge = 1
 	can_embed = 1

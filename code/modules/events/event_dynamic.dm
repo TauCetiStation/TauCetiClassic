@@ -143,10 +143,7 @@ var/list/event_last_fired = list()
 
 	/*switch(picked_event)
 		if("Meteor")
-			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/meteors.ogg')
+			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert", "meteors")
 			spawn(100)
 				meteor_wave(10)
 				spawn_meteors()
@@ -201,18 +198,23 @@ var/list/event_last_fired = list()
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
 
-		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
-			active_with_role["Engineer"]++
+		if (istype(M, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = M
+			if (R.module)
+				switch (R.module.name)
+					if ("engineering robot module")
+						active_with_role["Engineer"]++
+					if ("medical robot module")
+						active_with_role["Medical"]++
+					if ("security robot module")
+						active_with_role["Security"]++
+
 		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
 			active_with_role["Engineer"]++
 
-		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
-			active_with_role["Medical"]++
 		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
 			active_with_role["Medical"]++
 
-		if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
-			active_with_role["Security"]++
 		if(M.mind.assigned_role in security_positions)
 			active_with_role["Security"]++
 

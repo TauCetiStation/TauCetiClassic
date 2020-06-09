@@ -2,9 +2,12 @@
 	name = "Cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	circuit = /obj/item/weapon/circuitboard/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/temp = ""
@@ -16,12 +19,12 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
-/obj/machinery/computer/cloning/New()
+/obj/machinery/computer/cloning/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/cloning/atom_init_late()
+	updatemodules()
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pod1 && autoprocess))
@@ -45,30 +48,26 @@
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
-
 	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/nextdir in cardinal)
 
 		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, nextdir))
 
 		// If found, then we break, and return the scanner
-		if (!isnull(scannerf))
+		if(!isnull(scannerf))
 			break
-
 	// If no scanner was found, it will return null
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
+	for(var/newdir in cardinal)
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		podf = locate(/obj/machinery/clonepod, get_step(src, newdir))
 
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
-		if (!isnull(podf))
+		if(!isnull(podf))
 			break
-
 	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
@@ -84,17 +83,7 @@
 		..()
 	return
 
-/obj/machinery/computer/cloning/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/cloning/interact(mob/user)
-	user.set_machine(src)
-	add_fingerprint(user)
-	if(..())
-		return
-
+/obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 
 	var/dat = "<h3>Cloning System Control</h3>"
@@ -204,7 +193,7 @@
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
 
 
-	user << browse(dat, "window=cloning")
+	user << browse(entity_ja(dat), "window=cloning")
 	onclose(user, "cloning")
 	return
 
@@ -339,7 +328,7 @@
 				menu = 1
 			else
 				var/mob/selected = find_dead_player("[C.ckey]")
-				selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+				selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
 				if(answer != "No" && pod1.growclone(C))
 					temp = "Initiating cloning cycle..."
@@ -358,10 +347,10 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
+	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (subject.brain_op_stage == 4.0)
+	if (!subject.has_brain())
 		scantemp = "Error: No signs of intelligence detected."
 		return
 	if (subject.suiciding == 1)
@@ -386,6 +375,11 @@
 	R.name=R.dna.real_name
 	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
 	R.languages=subject.languages
+
+	R.quirks = list()
+	for(var/V in subject.roundstart_quirks)
+		var/datum/quirk/T = V
+		R.quirks += T.type
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
@@ -415,10 +409,10 @@
 /obj/machinery/computer/cloning/update_icon()
 
 	if(stat & BROKEN)
-		icon_state = "commb"
+		icon_state = "crewb"
 	else
 		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
+			src.icon_state = "crew0"
 			stat |= NOPOWER
 		else
 			icon_state = initial(icon_state)

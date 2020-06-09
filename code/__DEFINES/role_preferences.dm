@@ -20,30 +20,36 @@
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
+#define ROLE_GHOSTLY           "Ghostly Roles"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
 
 
-//Equating to one means that it's not gamemode prefs, so it should be visible always.
-//Pay attention to 'IS_MODE_COMPILED' parametr.
-//If there will be link to non-existent mode or any typo mistake, mode wouldn't be visible in prefs.
 var/global/list/special_roles = list(
-	ROLE_TRAITOR = IS_MODE_COMPILED("traitor"),          //0
-	ROLE_OPERATIVE = IS_MODE_COMPILED("nuclear"),        //1
-	ROLE_CHANGELING = IS_MODE_COMPILED("changeling"),    //2
-	ROLE_WIZARD = IS_MODE_COMPILED("wizard"),            //3
-	ROLE_MALF = IS_MODE_COMPILED("malfunction"),         //4
-	ROLE_REV = IS_MODE_COMPILED("revolution"),           //5
-	ROLE_ALIEN = 1,                                      //6
-	ROLE_PAI = 1,                                        //7
-	ROLE_CULTIST = IS_MODE_COMPILED("cult"),             //8
-	ROLE_BLOB =  IS_MODE_COMPILED("blob"),               //9
-	ROLE_NINJA = 1,                                      //10
-	ROLE_RAIDER = IS_MODE_COMPILED("heist"),             //11
-	ROLE_PLANT = 1,                                      //12
-	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
-	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
-	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
+	ROLE_TRAITOR,
+	ROLE_OPERATIVE,
+	ROLE_CHANGELING,
+	ROLE_WIZARD,
+	ROLE_MALF,
+	ROLE_REV,
+	ROLE_ALIEN,
+	ROLE_CULTIST,
+	ROLE_BLOB ,
+	ROLE_NINJA,
+	ROLE_RAIDER,
+	ROLE_MEME,
+	ROLE_MUTINEER,
+	ROLE_SHADOWLING,
+	ROLE_ABDUCTOR,
+	ROLE_GHOSTLY,
 )
+
+//Prefs for ignore a question which give ghosty roles
+#define IGNORE_PLANT       "diona"
+#define IGNORE_TSTAFF      "chstaff"
+#define IGNORE_SURVIVOR    "survivor"
+#define IGNORE_POSBRAIN    "posibrain"
+#define IGNORE_DRONE       "drone"
+#define IGNORE_BORER       "borer"
+#define IGNORE_FAMILIAR    "chfamiliar"

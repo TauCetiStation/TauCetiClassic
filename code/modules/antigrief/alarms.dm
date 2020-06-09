@@ -11,11 +11,14 @@
 
 	var/last_activation = 0
 
-/obj/effect/landmark/antigrief_alarm/New()
+/obj/effect/landmark/antigrief_alarm/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/antigrief_alarm/atom_init_late()
 	//todo: check if we have alive db. qdel if not.
 	var/area/A = get_area(src)
 	area_name = A.name
-	return
 
 /obj/effect/landmark/antigrief_alarm/HasProximity(atom/A)
 	if(!isliving(A))
@@ -32,9 +35,9 @@
 			last_activation = world.time
 
 			if(trigger_tag)
-				message_admins("Noob alarm (<font color='[tag_color]'>[trigger_tag]</font>): [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
+				message_admins("Noob alarm (<font color='[tag_color]'>[trigger_tag]</font>): [M.name] ([M.ckey]) at [area_name] area [ADMIN_JMP(M)]")
 			else
-				message_admins("Noob alarm: [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
+				message_admins("Noob alarm: [M.name] ([M.ckey]) at [area_name] area [ADMIN_JMP(M)]")
 
 /obj/effect/landmark/antigrief_alarm/fueltank
 	name = "Alarm trigger (fueltank)"

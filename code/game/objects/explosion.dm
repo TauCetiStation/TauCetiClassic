@@ -7,8 +7,7 @@
 	else		return dy + (0.5*dx)
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 1)
-	set waitfor = 0
-	src = null	//so we don't abort once src is deleted
+	set waitfor = FALSE
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion

@@ -21,13 +21,12 @@
 	name = "text"
 	var/data = null
 
-/obj/effect/datacore/proc/manifest(nosleep = 0)
-	spawn()
-		if(!nosleep)
-			sleep(40)
-		for(var/mob/living/carbon/human/H in player_list)
-			manifest_inject(H)
-		return
+/obj/effect/datacore/proc/manifest()
+	set waitfor = FALSE
+	for(var/mob/living/carbon/human/H in player_list)
+		manifest_inject(H)
+
+		CHECK_TICK
 
 /obj/effect/datacore/proc/manifest_modify(name, assignment)
 	if(PDA_Manifest.len)
@@ -69,14 +68,14 @@
 		else
 			assignment = "Unassigned"
 
-		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
+		var/static/record_id_num = 1001
+		var/id = num2hex(record_id_num++, 6)
 
 		//General Record
 		//Creating photo
-		var/icon/ticon = get_id_photo(H)
+		var/icon/ticon = get_id_photo(H, cardinal)
 		var/icon/photo_front = new(ticon, dir = SOUTH)
 		var/icon/photo_side = new(ticon, dir = WEST)
-		qdel(ticon)
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
 		G.fields["name"]		= H.real_name
@@ -98,6 +97,12 @@
 			G.fields["notes"] = H.gen_record
 		else
 			G.fields["notes"] = "No notes found."
+		if(H.mind.initial_account)
+			G.fields["acc_number"]	= H.mind.initial_account.account_number
+			G.fields["acc_datum"] = H.mind.initial_account
+		else
+			G.fields["acc_number"]	= 0
+			G.fields["acc_datum"] =	0
 		general += G
 
 		//Medical Record
@@ -150,17 +155,18 @@
 		L.fields["citizenship"]	= H.citizenship
 		L.fields["faction"]		= H.personal_faction
 		L.fields["religion"]	= H.religion
-		L.fields["identity"]	= H.dna.UI // "
-		//L.fields["image"]		= getFlatIcon(H)	//This is god-awful
-		L.fields["image"]		= get_id_photo(H)
+		L.fields["identity"]	= H.dna.UI
+		L.fields["image"]		= ticon
 		locked += L
+
+		score["crew_total"]++
 	return
 
 
-proc/get_id_photo(mob/living/carbon/human/H)
+/proc/get_id_photo(mob/living/carbon/human/H, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
-	return get_flat_human_icon(null,J,P)
+	return get_flat_human_icon(null, J, P, show_directions)
 
 
 
