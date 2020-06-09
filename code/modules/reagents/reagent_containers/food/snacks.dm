@@ -1766,10 +1766,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
 	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init_late() //All food are made after map loaded and round started, so late initialization will be there
-	storage = new /obj/item/weapon/storage/internal/sliceable(src)
+	storage = new /obj/item/weapon/storage/internal/sliceable(src)	
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
 	if (!storage.handle_mousedrop(usr, over_object))
