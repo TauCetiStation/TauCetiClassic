@@ -1734,6 +1734,15 @@
 	if(life_tick % 5)
 		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
 
+	//var/mob/living/carbon/human/H
+	//if(HAS_TRAIT(H,LIFE_ASSIST_MACHINES_TRAIT))
+	if(HAS_TRAIT(src,LIFE_ASSIST_MACHINES_TRAIT))
+		return PULSE_NORM
+		
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		return PULSE_NONE
+		
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
 
