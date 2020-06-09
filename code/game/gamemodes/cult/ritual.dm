@@ -101,6 +101,8 @@ var/list/cult_datums = list()
 	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
+	else
+		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
 	if(!istype(power, /datum/cult/teleport) && !istype(power, /datum/cult/item_port))
@@ -413,6 +415,8 @@ var/list/cult_datums = list()
 		for(var/w in words)
 			words[w] = T.words[w]
 		to_chat(user, "You copy the translation notes from your tome.")
+		return
+	return ..()
 
 /obj/item/weapon/book/tome/examine(mob/user)
 	..()

@@ -98,6 +98,7 @@
 	access = list(access_research, access_xenoarch)
 	salary = 190
 	minimal_player_ingame_minutes = 1400
+	restricted_species = list(IPC)
 
 /datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

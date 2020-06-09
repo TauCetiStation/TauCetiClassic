@@ -904,7 +904,7 @@ ________________________________________________________________________________
 				t_disk = I
 				to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
 			return
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting
@@ -995,7 +995,7 @@ ________________________________________________________________________________
 			else
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
-/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 		return
 
@@ -1590,5 +1590,4 @@ It is possible to destroy the net by the occupant or someone else.
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	healthcheck()
-	..()
-	return
+	return ..()

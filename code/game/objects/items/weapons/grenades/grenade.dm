@@ -75,7 +75,8 @@
 				det_time = 1
 		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time/10] second detonation time"].</span>")
 		add_fingerprint(user)
-	..()
+		return
+	return ..()
 
 /obj/item/weapon/grenade/syndieminibomb
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."

@@ -1326,6 +1326,9 @@
 		return Expand()
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/monkeycube/entered_water_turf()
+	Expand()
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)
 	if(wrapped)
 		Unwrap(user)
