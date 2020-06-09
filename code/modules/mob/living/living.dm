@@ -510,6 +510,8 @@
 			var/mob/living/carbon/human/H = src
 			H.restore_blood()
 			H.full_prosthetic = null
+			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+			Heart.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()

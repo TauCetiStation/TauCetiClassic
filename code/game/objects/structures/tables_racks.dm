@@ -243,15 +243,21 @@
 	to_chat(user, "<span class='notice'>You tried to slice through [src] but [I] is too weak.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 
+// React to tools attacking src.
+/obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
+	if(iswrench(I))
+		if(user.is_busy(src))
+			return FALSE
+		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
+		if(I.use_tool(src, user, 50, volume = 50))
+			destroy()
+		return TRUE
+	return FALSE
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
 	. = TRUE
-	if (iswrench(W))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Now disassembling table</span>")
-		if(W.use_tool(src, user, 50, volume = 50))
-			destroy()
+
+	if(attack_tools(W, user))
 		return
 
 	if(user.a_intent == INTENT_HARM)
@@ -532,29 +538,37 @@
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if (iswelder(W))
-		if(user.is_busy()) return FALSE
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
+	if(iswelder(I))
+		if(user.is_busy())
+			return FALSE
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
-			if(src.status == 2)
-				to_chat(user, "<span class='notice'>Now weakening the reinforced table</span>")
+			if(status == 2)
+				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>Table weakened</span>")
+					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
 					src.status = 1
 			else
-				to_chat(user, "<span class='notice'>Now strengthening the reinforced table</span>")
+				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>Table strengthened</span>")
+					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
 					src.status = 2
+			return TRUE
+		return FALSE
+
+	else if(status != 2 && iswrench(I))
+		if(user.is_busy(src))
 			return FALSE
+		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
+		if(I.use_tool(src, user, 50, volume = 50))
+			destroy()
 		return TRUE
 
-	if (iswrench(W))
-		if(src.status == 2)
-			return TRUE
+	return FALSE
 
-	else if(istype(W, /obj/item/door_control_frame))
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/door_control_frame))
 		var/obj/item/door_control_frame/frame = W
 		frame.try_build(src)
 		return
