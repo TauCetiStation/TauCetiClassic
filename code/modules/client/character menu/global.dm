@@ -27,8 +27,20 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Preferences:</b></td></tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Toggle Announcements Styles:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=announce_style'><b>[(toggles & ANNOUNCE_STYLE) ? "New" : "Old"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost ears:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Play admin midis:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
+	. += 					"<td width='45%'>Play lobby music:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
 	. +=				"<tr>"
 	. += 					"<td width='45%'>Ghost hear NPCs:</td>"
@@ -152,6 +164,16 @@
 				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
 					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 
+		if("hear_midis")
+			toggles ^= SOUND_MIDI
+
+		if("lobby_music")
+			toggles ^= SOUND_LOBBY
+			if(toggles & SOUND_LOBBY)
+				user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+			else
+				user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
 
@@ -172,3 +194,6 @@
 
 		if("see_progbar")
 			toggles ^= SHOW_PROGBAR
+
+		if("announce_style")
+			toggles ^= ANNOUNCE_STYLE

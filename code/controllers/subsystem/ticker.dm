@@ -259,8 +259,12 @@ var/datum/subsystem/ticker/ticker
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
+
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
+		if(M.client.prefs.toggles & ANNOUNCE_STYLE)
+			M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
+		else
+			M.playsound_local(null, 'sound/AI/welcome.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	//Holiday Round-start stuff	~Carn
 	Holiday_Game_Start()

@@ -257,3 +257,47 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","CGSO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggletitlemusic()
+	set name = "Hear/Silence LobbyMusic"
+	set category = "Preferences"
+	set desc = "Toggles hearing the GameLobby music."
+	prefs.toggles ^= SOUND_LOBBY
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_LOBBY)
+		to_chat(src, "You will now hear music in the game lobby.")
+		if(isnewplayer(mob))
+			playtitlemusic()
+	else
+		to_chat(src, "You will no longer hear music in the game lobby.")
+		if(isnewplayer(mob))
+			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/togglemidis()
+	set name = "Hear/Silence Midis"
+	set category = "Preferences"
+	set desc = "Toggles hearing sounds uploaded by admins."
+	prefs.toggles ^= SOUND_MIDI
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_MIDI)
+		to_chat(src, "You will now hear any sounds uploaded by admins.")
+		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
+
+		break_sound.priority = 250
+		src << break_sound	//breaks the client's sound output on channel CHANNEL_ADMIN
+	else
+		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
+	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggleannouncestyle()
+	set name = "New/Old Announcements style"
+	set category = "Preferences"
+	set desc = "Toggles old and new announcements styles."
+	prefs.toggles ^= ANNOUNCE_STYLE
+	prefs.save_preferences()
+	if(prefs.toggles & ANNOUNCE_STYLE)
+		to_chat(src, "You will now hear new announcements sounds")
+
+	else
+		to_chat(src, "You will now hear old announcements sounds")

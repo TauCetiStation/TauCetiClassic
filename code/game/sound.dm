@@ -110,10 +110,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		return
 	return ..()
 
-/mob/proc/playsound_lobbymusic()
-	if(!ticker || !ticker.login_music || !client)
-		return
-	playsound_music(ticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!isfile(soundin))
@@ -248,116 +244,176 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 	set_sound_volume(slider, vol_raw)
 
+/client/proc/playtitlemusic()
+	if(!ticker || !ticker.login_music)	return
+	if(prefs.toggles & SOUND_LOBBY)
+		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
-/proc/get_announce_sound(soundin)
+/proc/get_announce_sound(soundin, mob/user)
 	if(istext(soundin))
-		switch(soundin)
-			if("delta")
-				. = 'sound/AI/delta.ogg'
-			if("downtogreen")
-				. = 'sound/AI/downtogreen.ogg'
-			if("blue")
-				. = 'sound/AI/blue.ogg'
-			if("downtoblue")
-				. = 'sound/AI/downtoblue.ogg'
-			if("red")
-				. = 'sound/AI/red.ogg'
-			if("downtored")
-				. = 'sound/AI/downtored.ogg'
-			if("radpassed")
-				. = 'sound/AI/radpassed.ogg'
-			if("radiation")
-				. = pick('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg')
-			if("noert")
-				. = 'sound/AI/noert.ogg'
-			if("yesert")
-				. = 'sound/AI/yesert.ogg'
-			if("meteors")
-				. = pick('sound/AI/meteors1.ogg', 'sound/AI/meteors2.ogg')
-			if("meteorcleared")
-				. = 'sound/AI/meteorcleared.ogg'
-			if("gravanom")
-				. = 'sound/AI/gravanomalies.ogg'
-			if("fluxanom")
-				. = 'sound/AI/flux.ogg'
-			if("vortexanom")
-				. = 'sound/AI/vortex.ogg'
-			if("bluspaceanom")
-				. = 'sound/AI/blusp_anomalies.ogg'
-			if("bluspacetrans")
-				. = 'sound/AI/mas-blu-spa_anomalies.ogg'
-			if("pyroanom")
-				. = 'sound/AI/pyr_anomalies.ogg'
-			if("wormholes")
-				. = 'sound/AI/wormholes.ogg'
-			if("outbreak7")
-				. = 'sound/AI/outbreak7.ogg'
-			if("outbreak5")
-				. = pick('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg')
-			if("lifesigns")
-				. = pick('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg')
-			if("greytide")
-				. = 'sound/AI/greytide.ogg'
-			if("rampbrand")
-				. = 'sound/AI/rampant_brand_int.ogg'
-			if("carps")
-				. = 'sound/AI/carps.ogg'
-			if("estorm")
-				. = 'sound/AI/e-storm.ogg'
-			if("istorm")
-				. = 'sound/AI/i-storm.ogg'
-			if("poweroff")
-				. = pick('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg')
-			if("poweron")
-				. = 'sound/AI/poweron.ogg'
-			if("gravoff")
-				. = 'sound/AI/gravityoff.ogg'
-			if("gravon")
-				. = 'sound/AI/gravityon.ogg'
-			if("artillery")
-				. = 'sound/AI/artillery.ogg'
-			if("icaruslost")
-				. = 'sound/AI/icarus.ogg'
-			if("fungi")
-				. = 'sound/AI/fungi.ogg'
-			if("emer_shut_called")
-				. = 'sound/AI/emergency_s_called.ogg'
-			if("emer_shut_recalled")
-				. = 'sound/AI/emergency_s_recalled.ogg'
-			if("emer_shut_docked")
-				. = 'sound/AI/emergency_s_docked.ogg'
-			if("emer_shut_left")
-				. = 'sound/AI/emergency_s_left.ogg'
-			if("crew_shut_called")
-				. = 'sound/AI/crew_s_called.ogg'
-			if("crew_shut_recalled")
-				. = 'sound/AI/crew_s_recalled.ogg'
-			if("crew_shut_docked")
-				. = 'sound/AI/crew_s_docked.ogg'
-			if("crew_shut_left")
-				. = 'sound/AI/crew_s_left.ogg'
-			if("malf")
-				. = 'sound/AI/aimalf.ogg'
-			if("malf1")
-				. = 'sound/AI/ai_malf_1.ogg'
-			if("malf2")
-				. = 'sound/AI/ai_malf_2.ogg'
-			if("malf3")
-				. = 'sound/AI/ai_malf_3.ogg'
-			if("malf4")
-				. = 'sound/AI/ai_malf_4.ogg'
-			if("aiannounce")
-				. = 'sound/AI/aiannounce.ogg'
-			if("nuke")
-				. = 'sound/AI/nuke.ogg'
-			if("animes")
-				. = 'sound/AI/animes.ogg'
-			if("announce")
-				. = 'sound/AI/announce.ogg'
-			if("commandreport")
-				. = 'sound/AI/commandreport.ogg'
+		if(user.client && (user.client.prefs.toggles & ANNOUNCE_STYLE))
+			switch(soundin)
+				if("delta")
+					. = 'sound/AI/delta.ogg'
+				if("downtogreen")
+					. = 'sound/AI/downtogreen.ogg'
+				if("blue")
+					. = 'sound/AI/blue.ogg'
+				if("downtoblue")
+					. = 'sound/AI/downtoblue.ogg'
+				if("red")
+					. = 'sound/AI/red.ogg'
+				if("downtored")
+					. = 'sound/AI/downtored.ogg'
+				if("radpassed")
+					. = 'sound/AI/radpassed.ogg'
+				if("radiation")
+					. = pick('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg')
+				if("noert")
+					. = 'sound/AI/noert.ogg'
+				if("yesert")
+					. = 'sound/AI/yesert.ogg'
+				if("meteors")
+					. = pick('sound/AI/meteors1.ogg', 'sound/AI/meteors2.ogg')
+				if("meteorcleared")
+					. = 'sound/AI/meteorcleared.ogg'
+				if("gravanom")
+					. = 'sound/AI/gravanomalies.ogg'
+				if("fluxanom")
+					. = 'sound/AI/flux.ogg'
+				if("vortexanom")
+					. = 'sound/AI/vortex.ogg'
+				if("bluspaceanom")
+					. = 'sound/AI/blusp_anomalies.ogg'
+				if("bluspacetrans")
+					. = 'sound/AI/mas-blu-spa_anomalies.ogg'
+				if("pyroanom")
+					. = 'sound/AI/pyr_anomalies.ogg'
+				if("wormholes")
+					. = 'sound/AI/wormholes.ogg'
+				if("outbreak7")
+					. = 'sound/AI/outbreak7.ogg'
+				if("outbreak5")
+					. = pick('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg')
+				if("lifesigns")
+					. = pick('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg')
+				if("greytide")
+					. = 'sound/AI/greytide.ogg'
+				if("rampbrand")
+					. = 'sound/AI/rampant_brand_int.ogg'
+				if("carps")
+					. = 'sound/AI/carps.ogg'
+				if("estorm")
+					. = 'sound/AI/e-storm.ogg'
+				if("istorm")
+					. = 'sound/AI/i-storm.ogg'
+				if("poweroff")
+					. = pick('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg')
+				if("poweron")
+					. = 'sound/AI/poweron.ogg'
+				if("gravoff")
+					. = 'sound/AI/gravityoff.ogg'
+				if("gravon")
+					. = 'sound/AI/gravityon.ogg'
+				if("artillery")
+					. = 'sound/AI/artillery.ogg'
+				if("icaruslost")
+					. = 'sound/AI/icarus.ogg'
+				if("fungi")
+					. = 'sound/AI/fungi.ogg'
+				if("emer_shut_called")
+					. = 'sound/AI/emergency_s_called.ogg'
+				if("emer_shut_recalled")
+					. = 'sound/AI/emergency_s_recalled.ogg'
+				if("emer_shut_docked")
+					. = 'sound/AI/emergency_s_docked.ogg'
+				if("emer_shut_left")
+					. = 'sound/AI/emergency_s_left.ogg'
+				if("crew_shut_called")
+					. = 'sound/AI/crew_s_called.ogg'
+				if("crew_shut_recalled")
+					. = 'sound/AI/crew_s_recalled.ogg'
+				if("crew_shut_docked")
+					. = 'sound/AI/crew_s_docked.ogg'
+				if("crew_shut_left")
+					. = 'sound/AI/crew_s_left.ogg'
+				if("malf")
+					. = 'sound/AI/aimalf.ogg'
+				if("malf1")
+					. = 'sound/AI/ai_malf_1.ogg'
+				if("malf2")
+					. = 'sound/AI/ai_malf_2.ogg'
+				if("malf3")
+					. = 'sound/AI/ai_malf_3.ogg'
+				if("malf4")
+					. = 'sound/AI/ai_malf_4.ogg'
+				if("aiannounce")
+					. = 'sound/AI/aiannounce.ogg'
+				if("nuke")
+					. = 'sound/AI/nuke.ogg'
+				if("animes")
+					. = 'sound/AI/animes.ogg'
+				if("announce")
+					. = 'sound/AI/announce.ogg'
+				if("commandreport")
+					. = 'sound/AI/commandreport.ogg'
+		else
+			switch(soundin)
+				if("radiation")
+					. = 'sound/AI/radiation.ogg'
+				if("meteors")
+					. = 'sound/AI/meteors.ogg'
+				if("gravanom")
+					. = 'sound/AI/granomalies.ogg'
+				if("wormholes")
+					. = 'sound/AI/spanomalies.ogg'
+				if("outbreak7")
+					. = 'sound/AI/outbreak7.ogg'
+				if("outbreak5")
+					. = 'sound/AI/outbreak5.ogg'
+				if("lifesigns")
+					. = 'sound/AI/aliens.ogg'
+				if("carps")
+					. = 'sound/AI/aliens.ogg'
+				if("estorm")
+					. = 'sound/AI/ionstorm.ogg'
+				if("istorm")
+					. = 'sound/AI/ionstorm.ogg'
+				if("poweroff")
+					. = 'sound/AI/poweroff.ogg'
+				if("poweron")
+					. = 'sound/AI/poweron.ogg'
+				if("emer_shut_called")
+					. = 'sound/AI/shuttlecalled.ogg'
+				if("emer_shut_recalled")
+					. = 'sound/AI/shuttlerecalled.ogg'
+				if("emer_shut_docked")
+					. = 'sound/AI/shuttledock.ogg'
+				if("emer_shut_left")
+					. = 'sound/AI/shuttleleft.ogg'
+				if("crew_shut_called")
+					. = 'sound/AI/shuttlecalled.ogg'
+				if("crew_shut_recalled")
+					. = 'sound/AI/shuttlerecalled.ogg'
+				if("crew_shut_docked")
+					. = 'sound/AI/shuttledock.ogg'
+				if("malf")
+					. = 'sound/AI/aimalfold.ogg'
+				if("aiannounce")
+					. = 'sound/AI/aireport.ogg'
+				if("nuke")
+					. = 'sound/AI/attention.ogg'
+				if("fungi")
+					. = 'sound/AI/attention.ogg'
+				if("animes")
+					. = 'sound/AI/animes.ogg'
+				if("announce")
+					. = 'sound/AI/commandreportold.ogg'
+				if("commandreport")
+					. = 'sound/AI/commandreportold.ogg'
 	if(!.)
 		WARNING("No sound file for [soundin]")
 

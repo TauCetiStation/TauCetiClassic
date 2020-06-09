@@ -50,13 +50,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		aooccolor = ooccolor
 
 	if(current_version < 25)
-		var/const/SOUND_ADMINHELP = 1
-		var/const/SOUND_MIDI = 2
-		var/const/SOUND_AMBIENCE = 4
-		var/const/SOUND_LOBBY = 8
 		var/const/SOUND_STREAMING = 64
 
-		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
+		toggles &= ~(SOUND_MIDI|SOUND_LOBBY|SOUND_STREAMING)
 		S["toggles"] << toggles
 
 	if(current_version < 26)

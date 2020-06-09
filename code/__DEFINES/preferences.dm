@@ -1,8 +1,12 @@
 //Preference toggles (it had more bits, but updating player saves without wiping method is a bit more complex).
+
+#define ANNOUNCE_STYLE	1
+#define SOUND_MIDI		2
+#define SOUND_LOBBY		8
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
 
-#define TOGGLES_DEFAULT (SHOW_ANIMATIONS|SHOW_PROGBAR)
+#define TOGGLES_DEFAULT (ANNOUNCE_STYLE|SOUND_MIDI|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
 
 //Chat toggles
 #define CHAT_OOC		1
