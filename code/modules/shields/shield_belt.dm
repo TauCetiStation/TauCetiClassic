@@ -1,5 +1,5 @@
 /obj/item/weapon/shield_belt
-    name = "shield belt"
+    name = "personal forcefield belt"
     icon = 'icons/obj/clothing/belts.dmi'
     desc = "Protective energy belt for personal use"
     item_color = "shield_belt"
