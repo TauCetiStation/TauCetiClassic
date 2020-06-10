@@ -10,7 +10,7 @@
 /obj/item/weapon/shield_belt/atom_init()
     . = ..()
     var/obj/effect/effect/forcefield/energy_field/F = new
-    AddComponent(/datum/component/forcefield, "energy field", 120, 9 SECONDS, 14 SECONDS, F, TRUE, TRUE)
+    AddComponent(/datum/component/forcefield, "energy field", 80, 8 SECONDS, 16 SECONDS, F, TRUE, TRUE)
 
 /obj/item/weapon/shield_belt/equipped(mob/user, slot)
     if(slot == SLOT_BELT)

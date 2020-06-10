@@ -3315,6 +3315,7 @@
 /obj/item/clothing/suit/space/rig/security,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/security,
+/obj/item/weapon/shield_belt,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -68285,6 +68286,13 @@
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
+/obj/item/weapon/shield_belt,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"

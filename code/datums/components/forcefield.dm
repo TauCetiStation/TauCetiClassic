@@ -49,6 +49,10 @@
 
 	icon_state = "at_shield2"
 
+/obj/effect/effect/forcefield/energy_field
+	name = "energy field"
+	icon_state = "emppulse"
+
 /*
  * A forcefield component.
  *
