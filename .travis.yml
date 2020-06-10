@@ -3,8 +3,8 @@ sudo: false
 
 env:
   global:
-    - BYOND_MAJOR=512
-    - BYOND_MINOR=1463
+    - BYOND_MAJOR=513
+    - BYOND_MINOR=1525
 
 cache:
   directories:
