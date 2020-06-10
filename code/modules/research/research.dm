@@ -1257,7 +1257,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("shield_gen", "shield_gen_ex", "shield_cap")
+	unlocks_designs = list("shield_gen", "shield_gen_ex", "shield_cap", "shield_belt")
 
 /datum/technology/transmission_encryption
 	name = "Transmission Encryption"

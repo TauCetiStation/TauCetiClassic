@@ -1963,6 +1963,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/toxgun
 	category = list("Weapons")
 
+/datum/design/shieldbelt
+	name = "Shield Belt"
+	desc = "Protective energy belt for personal use"
+	id = "shield_belt"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000, MAT_GOLD = 2000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/shield_belt
+	category = list("Weapons")
+
 /////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////

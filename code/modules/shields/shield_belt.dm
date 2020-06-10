@@ -1,6 +1,7 @@
 /obj/item/weapon/shield_belt
     name = "shield belt"
     icon = 'icons/obj/clothing/belts.dmi'
+    desc = "Protective energy belt for personal use"
     item_color = "shield_belt"
     item_state = "shield_belt"
     icon_state = "shieldbelt"
