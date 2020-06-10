@@ -4,6 +4,7 @@
 	icon = 'icons/obj/rune.dmi'
 	layer = 2.1
 	anchored = 1
+	plane = GAME_PLANE //makes the graffiti visible over a wall.
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
