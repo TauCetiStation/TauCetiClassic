@@ -1744,7 +1744,7 @@
 	if(IO.heart_status == HEART_FAILURE)
 		return PULSE_NONE
 
-		if(IO.heart_status == HEART_FIBR)
+	if(IO.heart_status == HEART_FIBR)
 		return PULSE_SLOW
 
 	if(stat == DEAD)
