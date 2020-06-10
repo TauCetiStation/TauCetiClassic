@@ -83,11 +83,11 @@ var/global/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 		T = thing
 		if (T.lighting_object)
 			active = TRUE
+			return
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
 /datum/lighting_corner/proc/update_lumcount(delta_r, delta_g, delta_b)
-
-	if ((abs(delta_r)+abs(delta_g)+abs(delta_b)) == 0)
+	if (!(delta_r || delta_g || delta_b)) // 0 is falsey ok
 		return
 
 	lum_r += delta_r
@@ -99,7 +99,7 @@ var/global/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 		global.lighting_update_corners += src
 
 /datum/lighting_corner/proc/update_objects()
-	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
+	// Cache these values ahead of time so 4 individual lighting objects don't all calculate them individually.
 	var/lum_r = src.lum_r
 	var/lum_g = src.lum_g
 	var/lum_b = src.lum_b
@@ -129,10 +129,8 @@ var/global/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 				T.lighting_object.needs_update = TRUE
 				global.lighting_update_objects += T.lighting_object
 
-
 /datum/lighting_corner/dummy/New()
 	return
-
 
 /datum/lighting_corner/Destroy(force)
 	if (!force)
