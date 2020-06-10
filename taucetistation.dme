@@ -1903,6 +1903,7 @@
 #include "code\modules\shieldgen\shield_capacitor.dm"
 #include "code\modules\shieldgen\shield_gen.dm"
 #include "code\modules\shieldgen\shield_gen_external.dm"
+#include "code\modules\shields\shield_belt.dm"
 #include "code\modules\sports\pbag.dm"
 #include "code\modules\sports\PedalGen.dm"
 #include "code\modules\sports\wrestler.dm"
