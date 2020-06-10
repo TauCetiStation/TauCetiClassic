@@ -35,6 +35,9 @@
 		color = main
 	add_hiddenprint(usr)
 
+	if(istype(mapload, /turf/simulated/wall))
+		plane = GAME_PLANE //makes the graffiti visible over a wall.	
+
 /obj/effect/decal/cleanable/crayon/gang
 	layer = 3.6 //Harder to hide
 	var/gang
