@@ -15,9 +15,9 @@
 
 	name = e_name
 	desc = "A [type] drawn in crayon."
-	if(type == "poseur tag")
-		gang_name() //Generate gang names so they get removed from the pool
-		type = pick(gang_name_pool)
+	//if(type == "poseur tag")
+	//	gang_name() //Generate gang names so they get removed from the pool
+	//	type = pick(gang_name_pool)
 
 	icon_state = type
 
@@ -25,7 +25,7 @@
 		if("rune")
 			type = "rune[rand(1,6)]"
 		if("graffiti")
-			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","poseur tag")
+			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa") // (... ,"poseur tag")
 
 	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
