@@ -131,7 +131,8 @@
 				to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 			else
-				new /obj/effect/decal/cleanable/crayon/(target,colour,shadeColour,drawtype)
+				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			else
