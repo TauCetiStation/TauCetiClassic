@@ -78,6 +78,7 @@
 				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
 			if("rune")
 				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
+		if(get_dist(src, target) > 1) return
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
