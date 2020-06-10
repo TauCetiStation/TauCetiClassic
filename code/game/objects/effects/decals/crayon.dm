@@ -7,9 +7,11 @@
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
-	var/turf/T = get_turf(src)
-	if(istype(T,/turf/simulated/wall))
-		plane = GAME_PLANE //makes the graffiti visible over a wall.	
+	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
+	if(istype(loc, /atom/movable))
+		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
+	RegisterSignal(loc, list(COMSIG_PARENT_QDELETED), .proc/destroy_rune)
+	update_plane()
 	
 	name = e_name
 	desc = "A [type] drawn in crayon."
@@ -72,3 +74,12 @@
 		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
 	return ..()
+
+/obj/effect/decal/cleanable/crayon/proc/update_plane()
+  if(istype(loc, /turf/simulated/floor))
+    plane = FLOOR_PLANE
+  else
+    plane = GAME_PLANE
+
+/obj/effect/decal/cleanable/crayon/proc/destroy_rune()
+  qdel(src)
