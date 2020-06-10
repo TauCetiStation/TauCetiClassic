@@ -30,7 +30,6 @@
 		if(!M.dna.GetSEState(block))
 			possible_blocks.Add(block)
 	var/block_pick = pick(possible_blocks)
-	message_admins(block_pick)
 	M.dna.SetSEState(block_pick, 1)
 
 // Give Random Good Mutation to M
@@ -43,7 +42,6 @@
 		if(!M.dna.GetSEState(block))
 			possible_blocks.Add(block)
 	var/block_pick = pick(possible_blocks)
-	message_admins(block_pick)
 	M.dna.SetSEState(block_pick, 1)
 
 // Random Appearance Mutation
