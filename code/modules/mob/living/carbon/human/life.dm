@@ -1737,7 +1737,7 @@
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
 
-	if(HAS_TRAIT(src,TRAIT_CPB))
+	if(HAS_TRAIT(src, TRAIT_CPB))
 		return PULSE_NORM
 		
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
