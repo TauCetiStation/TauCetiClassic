@@ -7,7 +7,10 @@
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
-
+	var/turf/T = get_turf(src)
+	if(istype(T,/turf/simulated/wall))
+		plane = GAME_PLANE //makes the graffiti visible over a wall.	
+	
 	name = e_name
 	desc = "A [type] drawn in crayon."
 	if(type == "poseur tag")
@@ -34,9 +37,6 @@
 	if(override_color)
 		color = main
 	add_hiddenprint(usr)
-
-	if(istype(mapload, /turf/simulated/wall))
-		plane = GAME_PLANE //makes the graffiti visible over a wall.	
 
 /obj/effect/decal/cleanable/crayon/gang
 	layer = 3.6 //Harder to hide
