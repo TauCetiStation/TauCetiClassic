@@ -180,8 +180,6 @@
 		src.updatehealth()
 	return
 
-//mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
-
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr

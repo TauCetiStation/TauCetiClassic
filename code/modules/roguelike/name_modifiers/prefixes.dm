@@ -40,3 +40,6 @@
 
 /datum/name_modifier/prefix/invisible
 	text = "invisible"
+
+/datum/name_modifier/prefix/angelic
+	text = "angelic"

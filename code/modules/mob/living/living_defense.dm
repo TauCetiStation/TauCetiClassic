@@ -26,7 +26,6 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-
 	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
 		if(istype(loc, /turf/simulated))
 			loc.add_blood(src)
@@ -34,7 +33,7 @@
 
 	if(check_shields(P, P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, def_zone, 100)
-		return
+		return PROJECTILE_ABSORBED
 
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)

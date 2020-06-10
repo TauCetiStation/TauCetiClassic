@@ -519,3 +519,31 @@
 	H.alpha = 127
 
 	add_vis_timer()
+
+
+
+/datum/component/mob_modifier/angelic
+	modifier_name = RL_MM_ANGELIC
+	name_modifier_type = /datum/name_modifier/prefix/angelic
+
+	rarity_cost = 2
+
+	max_strength = 1
+
+/datum/component/mob_modifier/angelic/apply(update = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	if(update)
+		return
+
+	var/obj/effect/effect/forcefield/eva/F = new
+	AddComponent(/datum/component/forcefield, "AT field", 20, 5 SECONDS, 3 SECONDS, F, TRUE, TRUE)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, parent)
+
+/datum/component/mob_modifier/angelic/revert(update = FALSE)
+	if(!update)
+		qdel(GetComponent(/datum/component/forcefield))
+
+	return ..()
