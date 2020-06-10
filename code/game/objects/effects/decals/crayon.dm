@@ -12,7 +12,7 @@
 		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
 	RegisterSignal(loc, list(COMSIG_PARENT_QDELETED), .proc/destroy_rune)
 	update_plane()
-	
+
 	name = e_name
 	desc = "A [type] drawn in crayon."
 	if(type == "poseur tag")
