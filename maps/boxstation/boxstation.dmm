@@ -47664,11 +47664,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
-	base_layer = 2.62;
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
-	layer = 2.62;
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
