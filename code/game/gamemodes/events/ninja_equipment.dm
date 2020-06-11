@@ -834,7 +834,7 @@ ________________________________________________________________________________
 //=======//GENERAL SUIT PROCS//=======//
 
 /obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/user, params)
-	if(I == affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
+	if(user == affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
 		if(istype(I, /obj/item/device/aicard))//If it's an AI card.
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,user)
