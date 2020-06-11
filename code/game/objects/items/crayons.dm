@@ -57,6 +57,7 @@
 		if(!instant)
 			qdel(src)
 		return
+	var/obj/item/i = usr.get_active_hand()
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
@@ -80,7 +81,7 @@
 			if("rune")
 				sub = "a"
 
-		if(get_dist(src, target) > 1) 
+		if(!in_range(src, target) || !in_range(src, usr) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 		////////////////////////// GANG FUNCTIONS
