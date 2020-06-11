@@ -83,16 +83,16 @@
 		hang_up(attacker)
 
 /mob/living/pbag/death(gibbed)
-	return
+	if(gibbed)
+		var/list/pos_turfs = RANGE_TURFS(3, src)
+		for(var/i in 1 to 5)
+			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
+			R.color = color
+			var/turf/target = pick(pos_turfs)
+			R.throw_at(target, 3, 2)
 
 /mob/living/pbag/gib()
-	var/list/pos_turfs = RANGE_TURFS(3, src)
-	for(var/i in 1 to 5)
-		var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
-		R.color = color
-		var/turf/target = pick(pos_turfs)
-		R.throw_at(target, 3, 2)
-
+	death()
 	dead_mob_list -= src
 	qdel(src)
 
