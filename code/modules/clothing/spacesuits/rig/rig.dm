@@ -713,17 +713,18 @@
 	if(src in view(1, user))
 		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
 
-/obj/item/clothing/head/helmet/space/rig/syndi/attackby(obj/item/W, mob/living/carbon/human/user)
-	if(!istype(user) || user.species.flags[IS_SYNTHETIC])
-		return
-	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
-		return
+/obj/item/clothing/head/helmet/space/rig/syndi/attackby(obj/item/I, mob/user, params)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H) || H.species.flags[IS_SYNTHETIC])
+		return ..()
+	if(!istype(I, /obj/item/weapon/reagent_containers/pill))
+		return ..()
 	if(!combat_mode && equipped_on_head)
 		user.SetNextMove(CLICK_CD_RAPID)
-		var/obj/item/weapon/reagent_containers/pill/P = W
-		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
-		to_chat(user, "<span class='notice'>[src] consumes [W] and injects reagents to you!</span>")
-		qdel(W)
+		var/obj/item/weapon/reagent_containers/pill/P = I
+		P.reagents.trans_to_ingest(user, I.reagents.total_volume)
+		to_chat(user, "<span class='notice'>[src] consumes [I] and injects reagents to you!</span>")
+		qdel(I)
 
 /obj/item/clothing/suit/space/rig/syndi
 	name = "blood-red hybrid suit"

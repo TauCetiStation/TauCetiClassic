@@ -278,7 +278,7 @@
 	origin_tech = "programming=1"
 
 
-/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
+/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
 	if(ismultitool(I))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
@@ -296,9 +296,9 @@
 
 			if("Cancel")
 				return
-			else
-				to_chat(user, "DERP! BUG! Report this (And what you were doing to cause it) to Agouri")
-	return
+
+	else
+		return ..()
 
 /obj/item/weapon/circuitboard/computer/cargo/emag_act(mob/user)
 	if(hacked)
@@ -308,7 +308,7 @@
 	contraband_enabled = TRUE
 	return TRUE
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
@@ -318,9 +318,10 @@
 			name = "circuit board (Book Inventory Management Console)"
 			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
-	return
+	else
+		return ..()
 
-/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
+/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
 			to_chat(user, "<span class='warning'>Circuit lock does not respond.</span>")
@@ -345,7 +346,8 @@
 			to_chat(usr, "No network found please hang up and try your call again.")
 			return
 		network = tempnetwork
-	return
+	else
+		return ..()
 
 /obj/item/weapon/circuitboard/security/emag_act(mob/user)
 	if(emagged)
@@ -356,7 +358,7 @@
 	locked = 0
 	return TRUE
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
 		user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
 		switch(src.build_path)
@@ -384,7 +386,8 @@
 			src.name = "Circuit Board (RD Console)"
 			src.build_path = /obj/machinery/computer/rdconsole/core
 			to_chat(user, "<span class='notice'>Access protocols set to default.</span>")*/
-	return
+	else
+		return ..()
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
 	if(!user.IsAdvancedToolUser())

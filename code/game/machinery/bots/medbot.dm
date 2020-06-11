@@ -543,11 +543,9 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user)
-
-	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
-		..()
-		return
+/obj/item/weapon/storage/firstaid/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
+		return ..()
 
 	//Making a medibot!
 	if(contents.len >= 1)
@@ -562,42 +560,43 @@
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
 
-	qdel(S)
 	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
-	user.drop_from_inventory(src)
+	to_chat(user, "<span class='notice'>You add \the [I] to the first aid kit.</span>")
+	qdel(I)
 	qdel(src)
 
-
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/pen))
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
-	else
-		switch(build_step)
-			if(0)
-				if(istype(W, /obj/item/device/healthanalyzer))
-					user.drop_item()
-					qdel(W)
-					build_step++
-					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
-					name = "First aid/robot arm/health analyzer assembly"
-					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
-			if(1)
-				if(isprox(W))
-					user.drop_item()
-					qdel(W)
-					build_step++
-					to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
-					var/turf/T = get_turf(src)
-					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
-					S.skin = skin
-					S.name = created_name
-					user.drop_from_inventory(src)
-					qdel(src)
+	var/did_something = FALSE
+
+	switch(build_step)
+		if(0)
+			if(istype(I, /obj/item/device/healthanalyzer))
+				build_step++
+				to_chat(user, "<span class='notice'>You add \the [I] to [src].</span>")
+				qdel(I)
+				name = "First aid/robot arm/health analyzer assembly"
+				add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
+				did_something = TRUE
+
+		if(1)
+			if(isprox(I))
+				qdel(I)
+				build_step++
+				to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
+				var/turf/T = get_turf(src)
+				var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
+				S.skin = skin
+				S.name = created_name
+				qdel(src)
+				did_something = TRUE
+
+	if(!did_something)
+		return ..()

@@ -62,10 +62,10 @@
 	var/datum/faith_reaction/FR = global.chaplain_religion.faith_reactions[chosen_id]
 	FR.react(target, user)
 
-/obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
-	if (length(use_sound))
+/obj/item/weapon/storage/bible/attackby(obj/item/I, mob/user, params)
+	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
-	..()
+	return ..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
 	if(user.mind && (user.mind.holy_role))
