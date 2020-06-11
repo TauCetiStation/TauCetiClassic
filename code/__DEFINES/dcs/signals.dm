@@ -37,6 +37,9 @@
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 
 // /atom signals
+/// emp_act() : severity
+#define COMSIG_ATOM_EMP_ACT "atom_emp_act"
+	#define COMPONENT_PREVENT_EMP 1
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)

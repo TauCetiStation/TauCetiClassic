@@ -1208,9 +1208,9 @@
 /obj/machinery/power/apc/emp_act(severity)
 	flick("apc-spark", src)
 	if(cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	if(occupier)
-		occupier.emp_act(severity)
+		occupier.emplode(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0

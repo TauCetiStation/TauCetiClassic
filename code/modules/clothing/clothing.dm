@@ -509,7 +509,7 @@ BLIND     // can't see anything
 	..()
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emp_act(severity)
+			A.emplode(severity)
 
 /obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(istype(A))
