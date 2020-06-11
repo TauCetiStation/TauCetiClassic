@@ -14,15 +14,18 @@
 	var/count_items = 1
 	// Determinate effect for /invoke_effect()
 	var/datum/callback/invoke_effect
+	// Change spawn_type
+	var/datum/callback/change_spawn_type
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_callback)
+/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type)
 	spawn_type = _spawn_type
 	count_items = _count_items
 	sacrifice_type = _sacrifice_type
 	adding_favor_per_item = _adding_favor_per_item
-	invoke_effect = _callback
+	invoke_effect = _invoke_effect
+	change_spawn_type = _change_spawn_type
 
 	var/datum/religion_rites/rite = parent
 	var/text_of_tip
@@ -45,6 +48,7 @@
 /datum/component/rite/spawn_item/Destroy()
 	clear_lists()
 	QDEL_NULL(invoke_effect)
+	QDEL_NULL(change_spawn_type)
 	return ..()
 
 // Used to choose which items will be replaced with others
@@ -159,6 +163,9 @@
 		if(!ismob(created))
 			created.pixel_x = I.pixel_x
 			created.pixel_y = I.pixel_y
+
+	if(change_spawn_type)
+		spawn_type = change_spawn_type.Invoke()
 
 	clear_lists()
 
