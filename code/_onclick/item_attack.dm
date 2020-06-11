@@ -100,6 +100,14 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
+	if (slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
+		user.remove_from_mob(src)
+		M.equip_to_slot_if_possible(src, SLOT_HEAD, disable_warning = TRUE)
+		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!</span>")
+		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
+		M.apply_damage(force ? force : 1, BRUTE, BP_HEAD) // if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
+		return TRUE
+
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
