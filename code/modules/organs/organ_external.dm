@@ -166,7 +166,7 @@
 	return controller.is_damageable(additional_damage)
 
 /obj/item/organ/external/emp_act(severity)
-	controller.emplode(severity)
+	controller.emp_act(severity)
 
 /obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
 	return controller.take_damage(brute, burn, damage_flags, used_weapon)
