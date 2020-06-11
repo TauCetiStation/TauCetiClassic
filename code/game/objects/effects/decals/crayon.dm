@@ -14,7 +14,7 @@
 	update_plane()
 
 	name = e_name
-	desc = "This is [type]..."
+	desc = "It's \a [type]. Somebody's being naughty leaving it here."
 	//if(type == "poseur tag")
 	//	gang_name() //Generate gang names so they get removed from the pool
 	//	type = pick(gang_name_pool)
