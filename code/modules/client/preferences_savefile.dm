@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 29
+#define SAVEFILE_VERSION_MAX 30
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -177,7 +177,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-	if(current_version < 29)
+	if(current_version < 30)
 		if(species != HUMAN)
 			for(var/datum/job/job in SSjob.occupations)
 				if(!job.is_species_permitted(parent))
