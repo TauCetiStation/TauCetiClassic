@@ -180,7 +180,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 29)
 		if(species != HUMAN)
 			for(var/datum/job/job in SSjob.occupations)
-				if(!job.is_species_permitted(parent))
+				if(job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
 
