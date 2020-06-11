@@ -21,16 +21,6 @@
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_FILTER
 
-	/*
-	Filter types:
-	-1: Nothing
-	 0: Phoron: Phoron, Oxygen Agent B
-	 1: Oxygen: Oxygen ONLY
-	 2: Nitrogen: Nitrogen ONLY
-	 3: Carbon Dioxide: Carbon Dioxide ONLY
-	 4: Sleeping Agent (N2O)
-	 5: Hydrogen: Hydrogen ONLY
-	*/
 	var/filter_type = NOTHING_FILTER
 	var/list/filtered_out = list()
 
