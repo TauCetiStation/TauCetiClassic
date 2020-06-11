@@ -377,7 +377,7 @@
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
-		O.emp_act(severity)
+		O.emplode(severity)
 	..()
 
 /mob/living/singularity_act()

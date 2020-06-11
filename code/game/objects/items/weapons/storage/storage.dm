@@ -395,7 +395,7 @@
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
-			O.emp_act(severity)
+			O.emplode(severity)
 	..()
 
 // BubbleWrap - A box can be folded up to make card
