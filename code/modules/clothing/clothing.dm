@@ -364,8 +364,8 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 //Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W))
+/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+	if(iswirecutter(I))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -385,7 +385,7 @@ BLIND     // can't see anything
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
@@ -565,7 +565,7 @@ BLIND     // can't see anything
 		action_button_name = null
 
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
 		for (var/i in 1 to 3)
 			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
@@ -589,10 +589,10 @@ BLIND     // can't see anything
 
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attackby(I, user)
+			A.attackby(I, user, params)
 		return
 
-	..()
+	return ..()
 
 /obj/item/clothing/under/AltClick()
 	handle_accessories_removal()

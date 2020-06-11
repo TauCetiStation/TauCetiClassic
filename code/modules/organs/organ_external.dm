@@ -98,11 +98,11 @@
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	qdel(src)
 
-/obj/item/organ/external/attackby(obj/item/I, mob/user)
+/obj/item/organ/external/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/butch) || istype(I, /obj/item/weapon/kitchenknife))
 		harvest(I, user)
 	else
-		..()
+		return ..()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
@@ -762,46 +762,46 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			add_overlay(hair)
 
-/obj/item/organ/external/head/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/scalpel) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/shard))
+/obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
 		switch(brain_op_stage)
 			if(0)
 				//todo: should be replaced with visible_message
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [W] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
-				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [I] by [user].</span>", SHOWMSG_VISUAL)
+				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
+				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
 				brain_op_stage = 1
 
 			if(2)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [W] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [W]!</span>")
-					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [W]!</span>")
+						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [I] by [user].</span>", SHOWMSG_VISUAL)
+					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
+					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
 					brain_op_stage = 3.0
 			else
-				..()
-	else if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/crowbar) || istype(W, /obj/item/weapon/hatchet))
+				return ..()
+
+	else if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [W] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [W]!</span>")
-				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [W]!</span>")
+					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [I] by [user].</span>", SHOWMSG_VISUAL)
+				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [I]!</span>")
+				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [I]!</span>")
 
 				brain_op_stage = 2
 			if(3)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [W] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
-					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
+						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [I] by [user].</span>", SHOWMSG_VISUAL)
+					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [I]!</span>")
+					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [I]!</span>")
 
-					brainmob.log_combat(user, "debrained with [W.name] (INTENT: [uppertext(user.a_intent)])")
+					brainmob.log_combat(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
 
 					if(istype(src,/obj/item/organ/external/head/robot))
 						var/obj/item/device/mmi/posibrain/B = new(loc)
@@ -812,9 +812,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 					brain_op_stage = 4.0
 			else
-				..()
+				return ..()
 	else
-		..()
+		return ..()
 
 /obj/item/organ/external/head/diona
 	vital = FALSE

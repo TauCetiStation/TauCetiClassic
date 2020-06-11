@@ -291,9 +291,6 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
-	return
-
 /obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 

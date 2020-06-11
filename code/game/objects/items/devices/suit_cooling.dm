@@ -130,8 +130,8 @@
 		if (on)
 			to_chat(user, "You switch on the [src].")
 
-/obj/item/device/suit_cooling_unit/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewdriver(W))
+/obj/item/device/suit_cooling_unit/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(cover_open)
 			cover_open = 0
 			to_chat(user, "You screw the panel into place.")
@@ -141,14 +141,13 @@
 		updateicon()
 		return
 
-	if (istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(cover_open)
 			if(cell)
 				to_chat(user, "There is a [cell] already installed here.")
 			else
-				user.drop_item()
-				W.loc = src
-				cell = W
+				user.drop_from_inventory(I, src)
+				cell = I
 				to_chat(user, "You insert the [cell].")
 		updateicon()
 		return

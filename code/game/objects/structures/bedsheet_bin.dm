@@ -28,8 +28,7 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user)
-	. = ..()
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && isturf(loc)) // you can cut only bedsheet lying on the floor
 		if(!ishuman(user))
 			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
@@ -41,6 +40,7 @@ LINEN BINS
 			R.amount = 3
 			qdel(src)
 		return
+	return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"

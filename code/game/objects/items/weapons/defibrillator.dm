@@ -84,6 +84,7 @@
 /obj/item/weapon/defibrillator/attackby(obj/item/I, mob/user, params)
 	if(I == paddles)
 		reattach_paddles(user)
+
 	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(bcell)
 			to_chat(user, "<span class='notice'>\the [src] already has a cell.</span>")
@@ -102,6 +103,7 @@
 			bcell = null
 			to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
 			update_icon()
+
 	else
 		return ..()
 

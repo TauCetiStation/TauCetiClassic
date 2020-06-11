@@ -11,8 +11,8 @@
 	slot_flags = null
 	action_button_name = null
 
-/obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
-	..()
+/obj/item/device/flashlight/flare/torch/attackby(obj/item/I, mob/user, params) // ravioli ravioli here comes stupid copypastoli
+	. = ..()
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(W.get_current_temperature())
 		light(user)
@@ -40,21 +40,19 @@
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
-	if(user.hand && loc == user)
-		user.update_inv_r_hand()
-	else
-		user.update_inv_l_hand()
+	if(loc == user)
+		user.update_inv_item(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
 	return
 
-/obj/item/stack/sheet/wood/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/medical/bruise_pack/rags))
-		use(1)
+/obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
 		new /obj/item/device/flashlight/flare/torch(get_turf(user))
-		qdel(W)
-	..()
+		qdel(I)
+		return
+	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
 	name = "rags"

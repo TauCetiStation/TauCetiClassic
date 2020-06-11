@@ -425,13 +425,14 @@ REAGENT SCANNER
 		STOP_PROCESSING(SSobj, src)
 	active = !active
 
-/obj/item/weapon/occult_pinpointer/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+/obj/item/weapon/occult_pinpointer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		target_type = OS.scanned_type
 		target = null // So we ain't looking for the old target
-		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical","magical","arcane")] knowledge from [W]</span>")
+		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical", "magical", "arcane")] knowledge from [I].</span>")
+	else
+		return ..()
 
 /obj/item/weapon/occult_pinpointer/Destroy()
 	active = FALSE

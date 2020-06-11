@@ -84,11 +84,11 @@
 		add_fingerprint(usr)
 		M.put_in_hands(src)
 
-/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/W, mob/user, params)
+/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/I, mob/user, params)
 	if(W == noz)
 		remove_noz()
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/dropped(mob/user)
 	..()
