@@ -265,7 +265,7 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	if(iscarbon(target) && uses - 10 > 0)
+	if(iscarbon(target) && uses - 10 >= 0)
 		uses -= 10
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
@@ -277,7 +277,7 @@
 			H.lip_style = "spray_face"
 			H.lip_color = colour
 			H.update_body()
-	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 > 0)
+	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
 		if(!choice)
