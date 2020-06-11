@@ -81,7 +81,7 @@
 			if("rune")
 				sub = "a"
 
-		if(!in_range(src, target) || !in_range(src, usr) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
+		if(!in_range(src, target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 		////////////////////////// GANG FUNCTIONS
@@ -139,6 +139,7 @@
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
 			to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
+			else
 			if(instant<0)
 				playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 			uses = max(0,uses-1)
