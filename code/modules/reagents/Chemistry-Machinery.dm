@@ -1127,6 +1127,8 @@
 	//Fill machine with the plantbag!
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
 
+		var/obj/item/weapon/storage/bag/plants/P = O
+		P.close(user) //Force close the bag inventory to avoid a bug
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 			O.contents -= G
 			G.loc = src
