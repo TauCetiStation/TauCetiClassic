@@ -1738,6 +1738,16 @@
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
 
+	if(HAS_TRAIT(src, TRAIT_CPB))
+		return PULSE_NORM
+		
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		return PULSE_NONE
+
+	if(IO.heart_status == HEART_FIBR)
+		return PULSE_SLOW
+
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
 
