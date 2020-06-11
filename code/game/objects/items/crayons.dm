@@ -61,6 +61,7 @@
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti", "rune", "letter", "arrow", "cancel")
+		var/sub = ""
 		switch(drawtype)
 			if("cancel")
 				return
@@ -68,18 +69,20 @@
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "left", "right", "up", "down")
 				if(drawtype == "cancel")
 					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] an arrow on the [target.name].</span>")
+				sub = "an"
 			if("letter")
+				sub = "a "
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 				if(drawtype == "cancel")
 					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			if("graffiti")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
+				sub = ""
 			if("rune")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
-		if(get_dist(src, target) > 1) return
+				sub = "a"
 
+		if(get_dist(src, target) > 1) 
+			return
+		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
 		var/gangID
