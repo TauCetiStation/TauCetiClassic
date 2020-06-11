@@ -13298,17 +13298,17 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	step_x = -2
+	pixel_x = -2
 	},
 /obj/item/device/gps/engineering{
-	step_x = 5
+	pixel_x = 5
 	},
 /obj/item/device/gps/engineering{
-	step_x = 5
+	pixel_x = 5
 	},
 /obj/item/weapon/pen{
-	step_x = -8;
-	step_y = 8
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
