@@ -1,3 +1,11 @@
+#define NOTHING_FILTER -1
+#define PHORON_FILTER 0
+#define OXYGEN_FILTER 1
+#define NITROGEN_FILTER 2
+#define CARBON_DIOXIDE_FILTER 3
+#define NITROUS_OXIDE_FILTER 4
+#define HYDROGEN_FILTER 5
+
 /obj/machinery/atmospherics/components/trinary/filter
 	icon = 'icons/atmos/filter.dmi'
 	icon_state = "map"
@@ -23,7 +31,7 @@
 	 4: Sleeping Agent (N2O)
 	 5: Hydrogen: Hydrogen ONLY
 	*/
-	var/filter_type = -1
+	var/filter_type = NOTHING_FILTER
 	var/list/filtered_out = list()
 
 
@@ -42,17 +50,17 @@
 /obj/machinery/atmospherics/components/trinary/filter/atom_init()
 	. = ..()
 	switch(filter_type)
-		if(0) //removing hydrocarbons
+		if(PHORON_FILTER)
 			filtered_out = list("phoron")
-		if(1) //removing O2
+		if(OXYGEN_FILTER)
 			filtered_out = list("oxygen")
-		if(2) //removing N2
+		if(NITROGEN_FILTER)
 			filtered_out = list("nitrogen")
-		if(3) //removing CO2
+		if(CARBON_DIOXIDE_FILTER)
 			filtered_out = list("carbon_dioxide")
-		if(4)//removing N2O
+		if(NITROUS_OXIDE_FILTER)
 			filtered_out = list("sleeping_agent")
-		if(5)//removing H2
+		if(HYDROGEN_FILTER)
 			filtered_out = list("hydrogen")
 
 	var/datum/gas_mixture/air1 = AIR1
@@ -131,19 +139,19 @@
 	var/dat
 	var/current_filter_type
 	switch(filter_type)
-		if(0)
+		if(PHORON_FILTER)
 			current_filter_type = "Phoron"
-		if(1)
+		if(OXYGEN_FILTER)
 			current_filter_type = "Oxygen"
-		if(2)
+		if(NITROGEN_FILTER)
 			current_filter_type = "Nitrogen"
-		if(3)
+		if(CARBON_DIOXIDE_FILTER)
 			current_filter_type = "Carbon Dioxide"
-		if(4)
+		if(NITROUS_OXIDE_FILTER)
 			current_filter_type = "Nitrous Oxide"
-		if(5)
+		if(HYDROGEN_FILTER)
 			current_filter_type = "Hydrogen"
-		if(-1)
+		if(NOTHING_FILTER)
 			current_filter_type = "Nothing"
 		else
 			current_filter_type = "ERROR - Report this bug to the admin, please!"
@@ -180,17 +188,17 @@
 
 		filtered_out.Cut() //no need to create new lists unnecessarily
 		switch(filter_type)
-			if(0) // removing hydrocarbons
+			if(PHORON_FILTER)
 				filtered_out += "phoron"
-			if(1) // removing O2
+			if(OXYGEN_FILTER)
 				filtered_out += "oxygen"
-			if(2) // removing N2
+			if(NITROGEN_FILTER)
 				filtered_out += "nitrogen"
-			if(3) // removing CO2
+			if(CARBON_DIOXIDE_FILTER)
 				filtered_out += "carbon_dioxide"
-			if(4) // removing N2O
+			if(NITROUS_OXIDE_FILTER)
 				filtered_out += "sleeping_agent"
-			if(5) // removing H2
+			if(HYDROGEN_FILTER)
 				filtered_out += "hydrogen"
 
 	var/datum/gas_mixture/air1 = AIR1
@@ -223,3 +231,10 @@
 			initialize_directions = EAST|WEST|NORTH
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
+
+#undef PHORON_FILTER 0
+#undef OXYGEN_FILTER 1
+#undef NITROGEN_FILTER 2
+#undef CARBON_DIOXIDE_FILTER 3
+#undef NITROUS_OXIDE_FILTER 4
+#undef HYDROGEN_FILTER 5
