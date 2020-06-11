@@ -72,7 +72,7 @@
 					return
 				sub = "an"
 			if("letter")
-				sub = "a "
+				sub = "a letter"
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 				if(drawtype == "cancel")
 					return
@@ -138,10 +138,7 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
-			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
-				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
-			else
-				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
+			to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 			if(instant<0)
 				playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 			uses = max(0,uses-1)
