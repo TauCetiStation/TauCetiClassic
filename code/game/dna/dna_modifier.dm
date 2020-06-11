@@ -209,6 +209,9 @@
 		var/mob/M = G.affecting
 		M.forceMove(loc)
 		qdel(G)
+		return
+
+	return ..()
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..())
@@ -287,7 +290,7 @@
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()

@@ -528,6 +528,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			to_chat(user, "<span class='notice'>Already improved.</span>")
 	else
 		return ..()
+
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"

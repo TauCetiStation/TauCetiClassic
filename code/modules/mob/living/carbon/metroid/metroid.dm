@@ -200,9 +200,7 @@
 
 /mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
 	attacked += 10
-	..(Proj)
-	return 0
-
+	return ..()
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -349,18 +347,18 @@
 	var/enhanced = 0 // has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/weapon/O, mob/user)
-	..()
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
 			to_chat(user, "<span class='warning'>This extract has already been enhanced!</span>")
-			return ..()
+			return
 		if(Uses == 0)
 			to_chat(user, "<span class='warning'>You can't enhance a used extract!</span>")
-			return ..()
+			return
 		to_chat(user, "You apply the enhancer. It now has triple the amount of uses.")
 		Uses = 3
 		enhanced = 1
 		qdel(O)
+	return ..()
 
 /obj/item/slime_extract/atom_init()
 	. = ..()

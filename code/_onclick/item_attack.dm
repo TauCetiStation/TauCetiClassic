@@ -3,6 +3,7 @@
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(user)
 
@@ -192,7 +193,20 @@
 			if(user.client)
 				to_chat(user, "<span class='warning'><B>You attack [M] with [src]. </B></span>")
 
+	// Attacking yourself can't miss
+	if(user == M)
+		def_zone = user.get_targetzone()
+	else
+		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
 
+	if(!def_zone)
+		visible_message("<span class='userdanger'>[user] misses [M] with \the [src]!</span>")
+		return FALSE
+
+	if(user != M)
+		user.do_attack_animation(M)
+		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
+			return FALSE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

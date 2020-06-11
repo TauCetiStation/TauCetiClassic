@@ -410,7 +410,7 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
-/obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 
 //Spacesuit

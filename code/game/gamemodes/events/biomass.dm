@@ -40,7 +40,7 @@
 				if(WT.use(0, user)) qdel(src)
 			else
 				return
-	..()
+	return ..()
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
