@@ -49,6 +49,7 @@
 	var/amt_strange = 0
 	var/amt_osmium = 0
 	var/amt_coal = 0
+	var/amt_hydrogen = 0
 
 
 	for (var/obj/item/weapon/ore/C in contents)
@@ -74,6 +75,8 @@
 			amt_coal++;
 		if (istype(C,/obj/item/weapon/ore/strangerock))
 			amt_strange++;
+		if (istype(C,/obj/item/weapon/ore/hydrogen))
+			amt_hydrogen++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
 	if (amt_gold)
@@ -96,6 +99,8 @@
 		dat += text("Osmium ore: [amt_osmium]<br>")
 	if (amt_coal)
 		dat += text("Coal ore: [amt_coal]<br>")
+	if (amt_hydrogen)
+		dat += text("Hydrogen ore: [amt_hydrogen]<br>")
 	if (amt_strange)
 		dat += text("Strange rocks: [amt_strange]<br>")
 
