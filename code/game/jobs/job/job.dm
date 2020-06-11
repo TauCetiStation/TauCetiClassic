@@ -48,6 +48,13 @@
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
 
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	var/list/restricted_species = list()
 
 	var/list/survival_kit_items = list()
