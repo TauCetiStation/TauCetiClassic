@@ -14,10 +14,7 @@
 	update_plane()
 
 	name = e_name
-	if(shade == "#220000")
-		desc = "A [type] painted with spray paint."
-	else
-		desc = "A [type] drawn in crayon."
+	desc = "This is [type]..."
 	//if(type == "poseur tag")
 	//	gang_name() //Generate gang names so they get removed from the pool
 	//	type = pick(gang_name_pool)
