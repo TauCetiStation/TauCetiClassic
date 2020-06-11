@@ -47657,11 +47657,6 @@
 	},
 /area/station/medical/storage)
 "bLT" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Mech Bay";
-	req_access = list(29)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -47669,6 +47664,11 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	name = "Mech Bay";
+	req_access = list(29)
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
