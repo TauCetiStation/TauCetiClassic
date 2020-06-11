@@ -277,7 +277,7 @@
 			H.lip_style = "spray_face"
 			H.lip_color = colour
 			H.update_body()
-	else if(istype(target, /obj/machinery/nuclearbomb))
+	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 > 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
 		if(!choice)
