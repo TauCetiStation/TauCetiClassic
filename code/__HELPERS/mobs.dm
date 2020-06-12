@@ -280,10 +280,7 @@
 	if(target && target != user)
 		target.in_use_action = FALSE
 
-/// Just a wrapper for alert() proc to be called from popup().
-/proc/_popup(user, message)
-	alert(user, message)
-
-/// Async alert() proc, without return handling(duh).
-/proc/popup(user, message)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/_popup, user, message)
+/proc/popup(user, message, title)
+	var/datum/browser/P = new(user, title, title)
+	P.set_content(message)
+	P.open()

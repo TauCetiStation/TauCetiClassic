@@ -89,6 +89,12 @@
 	return IsAllowedQuirk(quirk_name)
 
 /datum/preferences/proc/UpdateAllowedQuirks()
+	if(!SSquirks)
+		return
+
+	if(!SSquirks.initialized)
+		return
+
 	allowed_quirks = list()
 
 	for(var/quirk_name in SSquirks.quirks)
