@@ -230,7 +230,7 @@
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
 
 /obj/effect/effect/bell/attackby(obj/item/I, mob/user)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		ring_global(user, I.force)
 	else
 		ring(user, I.force)
@@ -239,7 +239,7 @@
 	attack_hand(user)
 
 /obj/effect/effect/bell/attack_hand(mob/living/carbon/human/user)
-	if(user.a_intent == I_HURT)
+	if(user.a_intent == INTENT_HARM)
 		ring_global(user, 1)
 	else
 		ring(user, 1)
