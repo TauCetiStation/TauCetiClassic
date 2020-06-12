@@ -156,8 +156,7 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
@@ -674,7 +673,7 @@
 
 
 						pulling.Move(T, get_dir(pulling, T))
-						if(M)
+						if(M && AM)
 							M.start_pulling(AM)
 				else
 					if (pulling)
