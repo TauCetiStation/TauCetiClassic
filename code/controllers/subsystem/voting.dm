@@ -37,7 +37,7 @@ var/datum/subsystem/vote/SSvote
 			if(mode == "restart")
 				theme = CSS_THEME_LIGHT
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", , , , theme)
+				client_popup = new(C, "vote", "Voting Panel", 0, 0, null, theme)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
@@ -254,10 +254,13 @@ var/datum/subsystem/vote/SSvote
 	voting |= C
 
 	if(mode)
-		if(question)
-			. += "<h2>Vote: '[sanitize(question)]'</h2>"
-		else
-			. += "<h2>Vote: [capitalize(mode)]</h2>"
+		switch(mode)
+			if("custom")
+				. += "<h2>Vote: '[sanitize(question)]'</h2>"
+			if("restart")
+				. += "<h2 style='color:red'>Vote: /!!!\\ Restart /!!!\\ </font></h2>"
+			else
+				. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
