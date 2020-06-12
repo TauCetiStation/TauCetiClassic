@@ -84,6 +84,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/examine(mob/user)
 	..()
+	if(contents.len == 0)
+		return
 	var/obj/item/O = pick(contents)
 	to_chat(user, "<span class='notice'>You think you can see [O.name] in there.</span>")
 
