@@ -70,8 +70,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
 				organ_data -= organ_name
 				S["organ_data"] -= organ_name
+
 	if(current_version < 18)
-		popup(parent.mob, "Your character had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
+		popup(parent.mob, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
 		ResetJobs()
 		S["job_preferences"]	<< job_preferences
 
