@@ -258,7 +258,7 @@ var/datum/subsystem/vote/SSvote
 			if("custom")
 				. += "<h2>Vote: '[sanitize(question)]'</h2>"
 			if("restart")
-				. += "<h2 style='color:red'>Vote: /!!!/ Restart /!!!/ </font></h2>"
+				. += "<h2 style='color:red'>Vote: /!!!\\ Restart /!!!\\</h2>"
 			else
 				. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
