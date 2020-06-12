@@ -27,6 +27,10 @@
 			I.forceMove(src)
 	PopulateContents()
 	update_icon()
+	for(var/mob/M in src)
+		weight += 1
+	for(var/obj/O in src)
+		weight += O.weight * 0.3
 
 	AddComponent(/datum/component/clickplace)
 
