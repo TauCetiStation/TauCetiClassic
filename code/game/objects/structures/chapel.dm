@@ -177,23 +177,23 @@
 	if(next_ring > world.time)
 		to_chat(user, "<span class='notice'>The bell is still swinging. Please wait [round((next_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
 		return
-	next_ring = world.time + 2.5 SECONDS
+	next_ring = world.time + 3 SECONDS
 
 	visible_message("[bicon(src)] <span class='notice'>[src] rings, strucken by [user].</span>")
 
-	var/shake_duration = adjust_strength(2, strength, 0.25, 6)
+	var/shake_duration = adjust_strength(2, strength, 0.25, 4)
 	var/shake_strength = adjust_strength(0, strength, 0.1, 3)
 
 	if(shake_strength > 0)
 		shake_camera(user, shake_duration, shake_strength)
-	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 50, null)
+	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
 
 	var/swing_angle = adjust_strength(6, strength, 0.25, 16)
 
 	for(var/mob/living/L in get_turf(src))
 		stun_insides(L, 1)
 
-	INVOKE_ASYNC(src, .proc/swing, swing_angle, 1 SECOND, 2)
+	INVOKE_ASYNC(src, .proc/swing, swing_angle, 2 SECONDS, 2)
 
 /obj/effect/effect/bell/proc/ring_global(mob/user, strength)
 	if(!user.mind || !user.mind.holy_role)
@@ -209,17 +209,18 @@
 	var/ring_msg = input(user, "What do you want to ring on [src]?", "Enter message") as null|text
 	if(!ring_msg)
 		return
+
 	next_global_ring = world.time + 10 MINUTES
 
 	visible_message("[bicon(src)] <span class='warning'>[src] rings loudly, strucken by [user]!</span>")
 
-	var/shake_duration = adjust_strength(4, strength, 0.25, 24)
+	var/shake_duration = adjust_strength(4, strength, 0.25, 16)
 	var/shake_strength = adjust_strength(1, strength, 0.1, 5)
 
 	for(var/mob/M in player_list)
 		if(M.z == z)
 			shake_camera(M, shake_duration, shake_strength)
-			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_NOTIFICATIONS, 50)
+			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_NOTIFICATIONS, 75)
 			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[ring_msg]\"</span>")
 
 	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
