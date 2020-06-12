@@ -86,6 +86,11 @@
 		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
+/mob/living/simple_animal/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/lazarus_injector))
+		return
+	..()
+
 /mob/living/simple_animal/get_unarmed_attack()
 	var/retDam = melee_damage
 	var/retDamType = melee_damtype
