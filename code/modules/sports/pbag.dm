@@ -206,8 +206,8 @@
 		else
 			rejuvenate()
 
-		user.visible_message("<span class='notice'>[user] [anchored ? "secures" : "unsecures"] \the [src].</span>",
-			"<span class='notice'>You [anchored? "secure" : "unsecure"] \the [src].</span>",
+		user.visible_message("<span class='notice'>[user] [!resting ? "secures" : "unsecures"] \the [src].</span>",
+			"<span class='notice'>You [!resting ? "secure" : "unsecure"] \the [src].</span>",
 			"<span class='notice'>You hear a ratchet.</span>")
 
 /mob/living/pbag/is_usable_eyes(targetzone = null)
