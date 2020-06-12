@@ -142,6 +142,9 @@
 	pixel_y = old_pixel_y
 
 /obj/effect/effect/bell/proc/stun_insides(mob/living/L, force)
+	if(L.crawling || L.resting)
+		return
+
 	var/ear_safety = 0
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
