@@ -143,41 +143,39 @@
 
 /obj/effect/effect/bell/proc/stun_insides(mob/living/L, force)
 	var/ear_safety = 0
-	if(iscarbon(L))
-		eye_safety = L.eyecheck()
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-				ear_safety += 2
-			if(HULK in M.mutations)
-				ear_safety += 1
-			if(istype(H.head, /obj/item/clothing/head/helmet))
-				ear_safety += 1
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			ear_safety += 2
+		if(HULK in H.mutations)
+			ear_safety += 1
+		if(istype(H.head, /obj/item/clothing/head/helmet))
+			ear_safety += 1
 
 	to_chat(L, "<span class='danger'>[name] rings all throughout your mind!</span>")
 
 	ear_safety *= 1 / force
 
 	if(ear_safety > 1)
-		M.Stun(1.5)
+		L.Stun(1.5)
 	else if(ear_safety > 0)
-		M.Stun(2)
-		M.Weaken(1)
+		L.Stun(2)
+		L.Weaken(1)
 	else
-		M.Stun(10)
-		M.Weaken(3)
-		if((prob(14) || (M == loc && prob(70))))
-			M.ear_damage += rand(1, 10)
+		L.Stun(10)
+		L.Weaken(3)
+		if((prob(14) || (L == loc && prob(70))))
+			L.ear_damage += rand(1, 10)
 		else
-			M.ear_damage += rand(0, 5)
-			M.ear_deaf = max(M.ear_deaf, 15)
+			L.ear_damage += rand(0, 5)
+			L.ear_deaf = max(L.ear_deaf, 15)
 
 /obj/effect/effect/bell/proc/adjust_strength(def_val, strength, strength_coeff, max_val)
 	return min(round(def_val + strength * strength_coeff), max_val)
 
 /obj/effect/effect/bell/proc/ring(mob/user, strength)
 	if(next_ring > world.time)
-		to_chat(user, "<span class='notice'>The bell is still swinging. Please wait [round((next_ring - world.time) * 0.1)] seconds before next ring.</span>")
+		to_chat(user, "<span class='notice'>The bell is still swinging. Please wait [round((next_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
 		return
 	next_ring = world.time + 2.5 SECONDS
 
@@ -203,7 +201,7 @@
 		return
 
 	if(next_global_ring > world.time)
-		to_chat(user, "<span class='warning'>You can't alarm the whole station so often! Please wait [round((next_global_ring - world.time) * 0.1)] seconds before next ring.</span>")
+		to_chat(user, "<span class='warning'>You can't alarm the whole station so often! Please wait [round((next_global_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
 		return
 
 	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
