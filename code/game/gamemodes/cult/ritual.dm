@@ -365,24 +365,17 @@ var/list/cult_datums = list()
 		w1 = input("Write your first rune:", "Rune Scribing") as null|anything in english
 		if(!w1)
 			return
-		if(w1 == "Cancel")
-			return
 		if(w1 in cultwords)
 			w1 = english[w1]
-
 	if(user)
 		w2 = input("Write your second rune:", "Rune Scribing") as null|anything in english
 		if(!w2)
-			return
-		if(w2 == "Cancel")
 			return
 		if(w2 in cultwords)
 			w2 = english[w2]
 	if(user)
 		w3 = input("Write your third rune:", "Rune Scribing") as null|anything in english
 		if(!w3)
-			return
-		if(w3 == "Cancel")
 			return
 		if(w3 in cultwords)
 			w3 = english[w3]
