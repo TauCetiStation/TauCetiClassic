@@ -949,6 +949,7 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/on_lay_down()
 	return
 
@@ -979,7 +980,8 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
-		on_lay_down()
+		if(on_lay_down())
+			return
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 

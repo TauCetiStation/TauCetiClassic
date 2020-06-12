@@ -62,6 +62,7 @@
 
 /mob/living/pbag/on_lay_down()
 	drop_down()
+	return TRUE
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(ckey && !incapacitated())
