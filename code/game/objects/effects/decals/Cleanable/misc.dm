@@ -67,7 +67,7 @@
 	desc = "Somebody should remove that."
 	density = 0
 	anchored = 1
-	plane = -1
+	plane = GAME_PLANE
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
@@ -86,7 +86,7 @@
 	desc = "Somebody should remove that."
 	density = 0
 	anchored = 1
-	plane = -1
+	plane = GAME_PLANE
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
