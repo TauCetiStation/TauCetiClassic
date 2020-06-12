@@ -69,7 +69,7 @@
 	var/uses = 10
 
 /obj/item/weapon/card/emag/attack(mob/living/M, mob/living/user, def_zone)
-	if(!(..()))
+	if(!..())
 		return TRUE
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
