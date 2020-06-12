@@ -797,7 +797,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
-	return
+	..()
+	return FALSE
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
