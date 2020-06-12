@@ -141,6 +141,37 @@
 	transform = old_transform
 	pixel_y = old_pixel_y
 
+/obj/effect/effect/bell/proc/stun_insides(mob/living/L, force)
+	var/ear_safety = 0
+	if(iscarbon(L))
+		eye_safety = L.eyecheck()
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				ear_safety += 2
+			if(HULK in M.mutations)
+				ear_safety += 1
+			if(istype(H.head, /obj/item/clothing/head/helmet))
+				ear_safety += 1
+
+	to_chat(L, "<span class='danger'>[name] rings all throughout your mind!</span>")
+
+	ear_safety *= 1 / force
+
+	if(ear_safety > 1)
+		M.Stun(1.5)
+	else if(ear_safety > 0)
+		M.Stun(2)
+		M.Weaken(1)
+	else
+		M.Stun(10)
+		M.Weaken(3)
+		if((prob(14) || (M == loc && prob(70))))
+			M.ear_damage += rand(1, 10)
+		else
+			M.ear_damage += rand(0, 5)
+			M.ear_deaf = max(M.ear_deaf, 15)
+
 /obj/effect/effect/bell/proc/adjust_strength(def_val, strength, strength_coeff, max_val)
 	return min(round(def_val + strength * strength_coeff), max_val)
 
@@ -160,6 +191,9 @@
 	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 50, null)
 
 	var/swing_angle = adjust_strength(6, strength, 0.25, 16)
+
+	for(var/mob/living/L in get_turf(src))
+		stun_insides(L, 1)
 
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 1 SECOND, 2)
 
@@ -191,6 +225,9 @@
 			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[ring_msg]\"</span>")
 
 	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
+
+	for(var/mob/living/L in get_turf(src))
+		stun_insides(L, 2)
 
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
 
