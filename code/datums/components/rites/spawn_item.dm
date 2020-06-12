@@ -28,16 +28,16 @@
 	change_spawn_type = _change_spawn_type
 
 	var/datum/religion_rites/rite = parent
-	var/text_of_tip
+	var/list/tips_to_add = list()
 	if(sacrifice_type)
 		var/obj/item/item = sacrifice_type
-		text_of_tip = "This ritual requires a <i>[initial(item.name)]</i>."
-		rite.add_tips(text_of_tip)
+		tips_to_add += "This ritual requires a <i>[initial(item.name)]</i>."
 
 	if(spawn_type)
 		var/obj/item/item = spawn_type
-		text_of_tip = "This ritual creates a <i>[initial(item.name)]</i>."
-		rite.add_tips(text_of_tip)
+		tips_to_add += "This ritual creates a <i>[initial(item.name)]</i>."
+
+	rite.add_tips(tips_to_add)
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)

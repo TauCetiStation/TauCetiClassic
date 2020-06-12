@@ -27,14 +27,12 @@
 		religion.update_rites()
 
 /datum/religion_rites/proc/add_tips(tip)
-	if(religion)
-		tips += tip
-		update_tip()
+	tips |= tip
+	update_tip()
 
 /datum/religion_rites/proc/remove_tip(tip)
-	if(religion)
-		tips -= tip
-		update_tip()
+	tips -= tip
+	update_tip()
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
