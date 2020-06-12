@@ -166,25 +166,18 @@
 
 		//General pull debuff for playable mobs (playable without shitspawn, yeah)
 		if(ismonkey(src))
-			tally += 1
+			tally += 0.7
 		else if(isslime(src))
-			tally += 1.5
-		else
-			tally += 0.3
+			tally += 1.2
 
 		var/atom/movable/AM = pulling
 		//Mob pulling
 		if(ismob(AM))
 			tally += 1
-		//Structure pulling
-		if(istype(AM, /obj/structure))
-			tally += 0.5
-			var/obj/structure/S = AM
-			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.5
-		//Machinery pulling
-		if(istype(AM, /obj/machinery))
-			tally += 0.5
+		//weight pulling
+		if(istype(AM, /obj))
+			var/obj/structure/O = AM
+			tally += O.weight
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()

@@ -2,6 +2,7 @@
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
 	var/list/climbers = list()
+	weight = 0.8
 
 /obj/structure/atom_init()
 	. = ..()

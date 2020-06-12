@@ -72,22 +72,24 @@
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
 
-	//Cham Projector Exception
-	for(var/obj/effect/dummy/chameleon/AD in src.loc)
-		if(itemcount >= storage_capacity)
-			break
-		AD.forceMove(src)
-		itemcount++
-
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)
 			break
 		if(!I.anchored)
 			I.forceMove(src)
+			weight += I.weight * 0.3
 			itemcount++
 
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src.loc)
+		if(itemcount + 9 >= storage_capacity)
+			break
+		AD.forceMove(src)
+		weight += 1
+		itemcount += 10
+
 	for(var/mob/M in src.loc)
-		if(itemcount >= storage_capacity)
+		if(itemcount + 9 >= storage_capacity)
 			break
 		if(istype (M, /mob/dead/observer))
 			continue
@@ -96,7 +98,8 @@
 
 		M.forceMove(src)
 		M.instant_vision_update(1,src)
-		itemcount++
+		weight += 1
+		itemcount += 10
 
 /obj/structure/closet/proc/open()
 	if(src.opened)
@@ -109,7 +112,9 @@
 	src.opened = 1
 
 	src.dump_contents()
-
+	weight = 0.8
+	if(pulledby)
+		pulledby.count_pull_debuff()
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
@@ -125,6 +130,8 @@
 		return 0
 
 	collect_contents()
+	if(pulledby)
+		pulledby.count_pull_debuff()
 
 	src.icon_state = src.icon_closed
 	src.opened = 0
