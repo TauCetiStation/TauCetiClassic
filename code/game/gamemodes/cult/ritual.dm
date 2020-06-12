@@ -101,6 +101,8 @@ var/list/cult_datums = list()
 	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
+	else
+		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
 	if(!istype(power, /datum/cult/teleport) && !istype(power, /datum/cult/item_port))
@@ -274,10 +276,7 @@ var/list/cult_datums = list()
 	usr << browse("[entity_ja(notedat)]", "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
+	M.log_combat(user, "beaten with [name]")
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -416,6 +415,8 @@ var/list/cult_datums = list()
 		for(var/w in words)
 			words[w] = T.words[w]
 		to_chat(user, "You copy the translation notes from your tome.")
+		return
+	return ..()
 
 /obj/item/weapon/book/tome/examine(mob/user)
 	..()

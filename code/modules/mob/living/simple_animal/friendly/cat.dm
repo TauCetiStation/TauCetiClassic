@@ -22,6 +22,10 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/cat/Life()
@@ -76,7 +80,7 @@
 		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else

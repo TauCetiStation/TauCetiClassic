@@ -604,11 +604,6 @@
 			if(counter >= 5) //So things dont get squiiiiished!
 				jobs += "</tr><tr align='center'>"
 				counter = 0
-		
-		if(jobban_isbanned(M, ROLE_SURVIVOR))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -796,11 +791,11 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
 
-		//chaplain talking staff
-		if(jobban_isbanned(M, ROLE_TSTAFF))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'><font color=red>[ROLE_TSTAFF]</font></a></td>"
+		//many roles available to ghost after die
+		if(jobban_isbanned(M, ROLE_GHOSTLY))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'><font color=red>[ROLE_GHOSTLY]</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TSTAFF];jobban4=\ref[M]'>[ROLE_TSTAFF]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
 
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"

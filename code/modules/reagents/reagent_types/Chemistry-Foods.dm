@@ -175,6 +175,9 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && S.flags[NO_PAIN])
+		return
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/victim = M
@@ -247,6 +250,7 @@
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	for(var/mob/living/carbon/slime/M in T)
 		M.adjustToxLoss(rand(15,30))
 
@@ -343,8 +347,9 @@
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if (!istype(T)) return
-	src = null
+	. = ..()
+	if (!istype(T))
+		return
 	if(volume >= 3)
 		T.make_wet_floor(WATER_FLOOR)
 	var/hotspot = (locate(/obj/fire) in T)

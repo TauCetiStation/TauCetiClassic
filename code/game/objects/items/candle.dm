@@ -152,9 +152,11 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(!iscultist(M))
 			M.confused += 10
 			M.make_jittery(150)
-	for(var/obj/machinery/light/L in range(4, get_turf(src)))
-		L.on = TRUE
-		L.broken()
+
+	var/list/targets = list()
+	for(var/turf/T in range(4))
+		targets += T
+	light_off_range(targets, src)
 
 /obj/item/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()

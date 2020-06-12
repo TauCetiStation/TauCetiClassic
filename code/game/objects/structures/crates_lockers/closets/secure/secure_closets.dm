@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
-		O.emp_act(severity)
+		O.emplode(severity)
 	if(!broken)
 		if(prob(50/severity))
 			src.locked = !src.locked
@@ -68,18 +68,8 @@
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
-	if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			if(src.large)
-				var/obj/item/weapon/grab/G = W
-				MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
-			else
-				to_chat(user, "<span class='notice'>The locker is too small to stuff [W:affecting] into!</span>")
-		if(isrobot(user))
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+	if(opened  || istype(W, /obj/item/weapon/grab))
+		return ..()
 	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0

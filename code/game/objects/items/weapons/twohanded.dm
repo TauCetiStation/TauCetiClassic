@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/pickup(mob/user)
+/obj/item/weapon/twohanded/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
@@ -65,7 +65,6 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
-	..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
@@ -82,12 +81,11 @@
 			user.drop_from_inventory(O)
 		return
 
-	else //Trying to wield it
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name), wieldsound)
-			if(W)
-				wield()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/W = H.wield(src, initial(name), wieldsound)
+		if(W)
+			wield()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -118,9 +116,28 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
+	sweep_step = 5
+
 /obj/item/weapon/twohanded/fireaxe/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_spin)
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	hitsound = SOUNDIN_DESCERATION
+
+/obj/item/weapon/twohanded/fireaxe/proc/can_sweep(mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/fireaxe/proc/can_spin(mob/user)
+	return wielded
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -166,6 +183,8 @@
 	edge = 1
 	can_embed = 0
 
+	sweep_step = 2
+
 /obj/item/weapon/twohanded/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
@@ -186,6 +205,30 @@
 			light_color = COLOR_PINK
 		if("black")
 			light_color = COLOR_GRAY
+
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_spin)
+	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/get_sweep_objs)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/dualsaber/proc/can_spin(mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
+
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
+	return sweep_objects
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)

@@ -62,6 +62,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/toggleattacklogs,
+	/client/proc/toggle_noclient_attacklogs,
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
@@ -883,6 +884,15 @@ var/list/admin_verbs_hideable = list(
 	else
 		to_chat(usr, "You now won't get attack log messages")
 
+/client/proc/toggle_noclient_attacklogs()
+	set name = "Toggle No Client Attack Log Messages"
+	set category = "Preferences"
+
+	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
+	if (prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
+		to_chat(usr, "You now will get attack log messages for mobs that don't have a client")
+	else
+		to_chat(usr, "You now won't get attack log messages for mobs that don't have a client")
 
 /client/proc/toggleghostwriters()
 	set name = "Toggle ghost writers"

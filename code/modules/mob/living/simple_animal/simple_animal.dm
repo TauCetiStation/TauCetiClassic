@@ -46,8 +46,8 @@
 
 
 	// LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
+	var/melee_damage = 0
+	var/melee_damtype = BRUTE
 	var/attacktext = "attacks"
 	var/list/attack_sound = list()
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
@@ -56,6 +56,9 @@
 	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
+	var/has_head = FALSE
+	var/has_arm = FALSE
+	var/has_leg = FALSE
 
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
@@ -65,10 +68,45 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
+/mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
+	return
+
+/mob/living/simple_animal/helpReaction(mob/living/attacker, show_message = TRUE)
+	if(health > 0)
+		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
+	return ..(attacker, show_message = FALSE)
+
+/mob/living/simple_animal/disarmReaction(mob/living/attacker, show_message = TRUE)
+	if(health > 0)
+		visible_message("<span class='warning'>[attacker] [response_disarm] [src]</span>")
+	return ..(attacker, show_message = FALSE)
+
+/mob/living/simple_animal/hurtReaction(mob/living/attacker, show_message = TRUE)
+	if(health > 0)
+		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
+	return ..(attacker, show_message = FALSE)
+
+/mob/living/simple_animal/get_unarmed_attack()
+	var/retDam = melee_damage
+	var/retDamType = melee_damtype
+	var/retFlags = 0
+	var/retVerb = attacktext
+	var/retSound = null
+	if(length(attack_sound) > 0)
+		retSound = pick(attack_sound)
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+
+	if(HULK in mutations)
+		retDam += 4
+
+	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
+				"miss_sound" = retMissSound)
+
 /mob/living/simple_animal/updatehealth()
 	return
 
 /mob/living/simple_animal/Life()
+	handle_combat() // Even in death we still fight.
 
 	// Health
 	if(stat == DEAD)
@@ -190,6 +228,10 @@
 		if(3)
 			emote(pick(emote_see), 1)
 
+/mob/living/simple_animal/rejuvenate()
+	..()
+	icon_state = icon_living
+
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -204,118 +246,12 @@
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
 		..(act, m_type)
 
-/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
-	if(src == M)
-		return TRUE
-	..()
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-		return TRUE
-	else
-		if(length(M.attack_sound))
-			playsound(src, pick(M.attack_sound), VOL_EFFECTS_MASTER)
-		visible_message("<span class='userdanger'><B>[M]</B> [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		return TRUE
-
-/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	if(Proj.nodamage)
-		Weaken(20)
-	adjustBruteLoss(Proj.damage)
-	return 0
-
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
-
-	switch(M.a_intent)
-
-		if("help")
-			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src]</span>")
-
-		if("grab")
-			M.Grab(src)
-
-		if("hurt", "disarm")
-			M.do_attack_animation(src)
-			adjustBruteLoss(harm_intent_damage)
-			visible_message("<span class='warning'>[M] [response_harm] [src]</span>")
-
-	return
-
-/mob/living/simple_animal/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-
-	switch(M.a_intent)
-
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-		if ("grab")
-			M.Grab(src)
-
-		if("hurt", "disarm")
-			var/damage = rand(15, 30)
-			visible_message("<span class='warning'><B>[M] has slashed at [src]!</B></span>")
-			adjustBruteLoss(damage)
-
-	return
-
-/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/L)
-
-	switch(L.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[L] rubs it's head against [src]</span>")
-
-
-		else
-
-			var/damage = rand(5, 10)
-			visible_message("<span class='warning'><B>[L] bites [src]!</B></span>")
-
-			if(stat != DEAD)
-				adjustBruteLoss(damage)
-				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-
-
-/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.Victim)
-		return // can't attack while eating!
-
-	visible_message("<span class='danger'>The [M.name] glomps [src]!</span>")
-
-	var/damage = rand(1, 3)
-
-	if(istype(src, /mob/living/carbon/slime/adult))
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-
-	adjustBruteLoss(damage)
-
-
-	return
-
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/user) // Marker -Agouri
-	if(istype(O, /obj/item/stack/medical))
-		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth && MED.use(1))
-				adjustBruteLoss(-MED.heal_brute)
-				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
-		else
-			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
-	user.SetNextMove(CLICK_CD_MELEE)
-	..()
-
+/mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
+	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
+		var/attack_obj = attacker.get_unarmed_attack()
+		var/atk_damage = attack_obj["damage"]
+		attacker.amount_grown = min(attacker.amount_grown + atk_damage, attacker.max_grown)
+	return ..()
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 // Incase I need to add stuff other than "speed" later
@@ -354,6 +290,9 @@
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
+	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
+	damage *= perc_block
+
 	health = CLAMP(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()
@@ -449,3 +388,12 @@
 	if(!speak.len)
 		return null
 	return pick(speak)
+
+/mob/living/simple_animal/is_usable_head(targetzone = null)
+	return has_head
+
+/mob/living/simple_animal/is_usable_arm(targetzone = null)
+	return has_arm
+
+/mob/living/simple_animal/is_usable_leg(targetzone = null)
+	return has_leg

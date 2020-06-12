@@ -333,7 +333,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
 				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
+					explosion(get_turf(owner), 0, 0, 2, 3)
 					var/datum/effect/effect/system/spark_spread/spark_system = new
 					spark_system.set_up(5, 0, owner)
 					spark_system.attach(owner)
@@ -801,9 +801,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [W]!</span>")
 					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [W]!</span>")
 
-					user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-					brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-					msg_admin_attack("[user.name] ([user.ckey]) debrained [brainmob.name] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)])", user)
+					brainmob.log_combat(user, "debrained with [W.name] (INTENT: [uppertext(user.a_intent)])")
 
 					if(istype(src,/obj/item/organ/external/head/robot))
 						var/obj/item/device/mmi/posibrain/B = new(loc)
@@ -888,7 +886,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
-
 
 /obj/item/organ/external/r_leg
 	name = "right leg"

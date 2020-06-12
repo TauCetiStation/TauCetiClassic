@@ -39,7 +39,7 @@
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
 	aspect_preset = list(
 		/datum/aspect/rescue = 1,
-		/datum/aspect/light = 1,
+		/datum/aspect/lightbending/light = 1,
 		/datum/aspect/mystic = 1,
 	)
 
@@ -78,6 +78,8 @@
 	. = list()
 	for(var/i in subtypesof(/datum/aspect))
 		var/datum/aspect/asp = i
+		if(!initial(asp.name))
+			continue
 		if(!initial(asp.starter))
 			continue
 		. += list(initial(asp.name) = i)

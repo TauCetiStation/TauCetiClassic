@@ -54,7 +54,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/Crossed(atom/movable/AM)
 	. = ..()
-	if(!iscarbon(AM))
+	if(!iscarbon(AM) || HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		return
 	var/mob/living/carbon/perp = AM
 	if(amount < 1)

@@ -84,3 +84,18 @@
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human
 #define HULK_SKIN_COLOR RGB_CONTRAST(0, 180, 60) // xenos
 #define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
+
+// Slime color matrices. Used for /datum/component/mob_modifier-s.
+#define SLIME_COLOR(r, g, b) list( \
+	0.3, 0.0, 0.0, 0.0, \
+	0.0, 0.3, 0.0, 0.0, \
+	0.0, 0.0, 0.3, 0.0, \
+	0.0, 0.0, 0.0, 0.8, \
+	r, g, b, 0.0, \
+)
+
+#define SLIME_COLOR_RED SLIME_COLOR(0.5, 0.2, 0.3)
+#define SLIME_COLOR_GREEN SLIME_COLOR(0.2, 0.5, 0.2)
+#define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
+#define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
+#define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)

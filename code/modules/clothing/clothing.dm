@@ -182,6 +182,28 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		icon = initial(icon)
 
+
+/obj/item/clothing/MouseDrop(obj/over_object)
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
@@ -300,9 +322,6 @@ BLIND     // can't see anything
 			cell.reliability -= 10 / severity
 	..()
 
-// Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
-	return 0 // return 1 to cancel attack_hand()
 
 //Head
 /obj/item/clothing/head
@@ -346,7 +365,7 @@ BLIND     // can't see anything
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
+	if(iswirecutter(W))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -391,7 +410,7 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
-/obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 
 //Spacesuit
@@ -490,7 +509,7 @@ BLIND     // can't see anything
 	..()
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emp_act(severity)
+			A.emplode(severity)
 
 /obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(istype(A))
@@ -589,30 +608,6 @@ BLIND     // can't see anything
 		return
 
 	..()
-
-//This is to ensure people can take off suits when there is an attached accessory
-/obj/item/clothing/under/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
-		if (!over_object)
-			return
-
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
 
 /obj/item/clothing/under/examine(mob/user)
 	..()

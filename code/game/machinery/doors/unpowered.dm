@@ -15,8 +15,7 @@
 		return
 	if(locked)
 		return
-	..()
-	return
+	return ..()
 
 /obj/machinery/door/unpowered/emag_act(mob/user)
 	return FALSE

@@ -46,7 +46,7 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind.special_role == "Wizard")
+	if(M.mind && M.mind.special_role == "Wizard")
 		return FALSE
 	return TRUE
 
@@ -70,7 +70,7 @@
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
-		O.emp_act(severity)
+		O.emplode(severity)
 
 /obj/item/weapon/gun/Destroy()
 	qdel(chambered)
@@ -231,7 +231,7 @@
 
 	if (can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			Fire(M, user, null, null, TRUE)
 			return
 		else if(target && (M in target))

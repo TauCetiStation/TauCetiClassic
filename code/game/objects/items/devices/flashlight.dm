@@ -298,16 +298,14 @@
 	if(emp_cur_charges)
 		emp_cur_charges--
 
-		if(ismob(target))
-			var/mob/M = target
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light", user)
-			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+		if(isliving(target))
+			var/mob/living/M = target
+			M.log_combat(user, "EMP-lighted with [name]")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [target]</span>")
 		else
 			target.visible_message("<span class='danger'>[user] blinks \the [src] at \the [target].</span>")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		target.emp_act(1)
+		target.emplode(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

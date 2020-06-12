@@ -983,7 +983,7 @@
 /area/centcom/control)
 "adP" = (
 /obj/machinery/vending/boozeomat{
-	req_access = list(0)
+	req_access = list()
 	},
 /turf/unsimulated/wall,
 /area/centcom/holding)
@@ -1243,8 +1243,7 @@
 "afQ" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
-	req_access = list(0)
+	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -1253,8 +1252,7 @@
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -9236,7 +9234,7 @@
 "aGr" = (
 /obj/structure/rack,
 /obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/shoes/galoshes,
+/obj/item/clothing/shoes/boots/galoshes,
 /obj/item/clothing/gloves/purple,
 /obj/item/clothing/suit/bio_suit/new_hazmat/janitor,
 /obj/item/clothing/head/bio_hood/new_hazmat/janitor,
@@ -9521,8 +9519,7 @@
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
-	req_access = list(0)
+	pixel_x = -30
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
@@ -9536,8 +9533,7 @@
 "aHu" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
@@ -10384,8 +10380,7 @@
 "aKt" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = -30;
-	req_access = list(0)
+	pixel_x = -30
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -12681,7 +12676,7 @@
 /area/centcom/tdome)
 "aTr" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,
@@ -12706,7 +12701,7 @@
 /area/centcom/living)
 "aTt" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,
@@ -13244,7 +13239,7 @@
 /area/centcom/living)
 "aVh" = (
 /obj/structure/closet/secure_closet,
-/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/boots/combat,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/device/flash,
@@ -19238,8 +19233,7 @@
 "hhb" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_x = 30;
-	req_access = list(0)
+	pixel_x = 30
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -22123,10 +22117,9 @@
 /obj/structure/table,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = 32;
-	req_access = list(0)
+	pixel_y = 32
 	},
-/obj/item/weapon/storage/firstaid,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "opb" = (
@@ -22856,7 +22849,7 @@
 /obj/structure/closet/medical_wall{
 	pixel_x = 32
 	},
-/obj/item/weapon/storage/firstaid,
+/obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -22870,8 +22863,7 @@
 /obj/structure/flora/plant/random,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
-	pixel_y = -32;
-	req_access = list(0)
+	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)

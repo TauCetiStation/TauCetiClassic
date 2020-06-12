@@ -405,6 +405,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
+	item_state = "jackhammer"
 	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
@@ -416,6 +417,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
+	item_state = "d_drill"
 	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
@@ -499,31 +501,33 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
-	var/overheat = 0
-	var/overheat_time = 20
-	var/recent_reload = 1
+	var/recharge_time = 20
+	var/already_improved = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	overheat = 1
-	spawn(overheat_time)
-		overheat = 0
-		recent_reload = 0
-	..()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
+	power_supply.give(500)
+	playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
+	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/user)
-	if(overheat || recent_reload)
-		return
-	power_supply.give(500)
-	if(!silenced)
-		playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/kinetic_upgrade/speed))
+		if(already_improved == FALSE)
+			already_improved = TRUE
+			recharge_time -= 8 //We get 1.2 seconds of reload instead.
+			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+			qdel(O)
+		else
+			to_chat(user, "<span class='notice'>Already improved.</span>")
 	else
-		to_chat(user, "<span class='warning'>You silently charge [src].</span>")
-	recent_reload = TRUE
-	update_icon()
-	return
+		return ..()
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -578,6 +582,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/effect/kinetic_blast/atom_init_late()
 	QDEL_IN(src, 4)
 
+/obj/item/kinetic_upgrade/speed
+	name = "upgrade for accelerator"
+	desc = "Speeds up reloading Proto-kinetic accelerator."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "accelerator_speedupgrade"
 
 /*****************************Survival Pod********************************/
 

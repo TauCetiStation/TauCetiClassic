@@ -169,7 +169,7 @@
 /obj/item/weapon/dice/ghost/d20/attack_self(mob/living/user)
 	diceroll(user)
 	if(result == 20)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			to_chat(user, "<span class='notice'>You suddenly feel sligly better because of your own luck.</span>")
 			user.adjustBruteLoss(-1)
 			user.adjustFireLoss(-1)
@@ -183,7 +183,7 @@
 	diceroll()
 	..()
 	if(result == 20 && istype(target) && istype(thrower))
-		if(thrower.a_intent == "help")
+		if(thrower.a_intent == INTENT_HELP)
 			to_chat(target, "<span class='notice'>You suddenly feel sligly better because of [thrower]'s luck.</span>")
 			target.adjustBruteLoss(-1)
 			target.adjustFireLoss(-1)
@@ -232,7 +232,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled  && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
@@ -241,7 +241,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled)
+	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)

@@ -1,5 +1,5 @@
-#define BOUNDED_TIP "Bounded"
-#define BOUNDS_TIP(B) "Bounds [B.parent]"
+#define BOUNDED_TIP "Is bounded."
+#define BOUNDS_TIP(B) "Is bounding [B.parent]."
 
 /datum/mechanic_tip/bounded
 	tip_name = BOUNDED_TIP
@@ -8,7 +8,6 @@
 	description = "Appears to not be able to get too far away from [B.bound_to]."
 
 /datum/mechanic_tip/bound
-	tip_name = "Bound"
 
 /datum/mechanic_tip/bound/New(datum/component/B)
 	tip_name = BOUNDS_TIP(B)

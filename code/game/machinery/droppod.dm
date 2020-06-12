@@ -420,7 +420,7 @@
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
@@ -509,10 +509,10 @@
 		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
 		qdel(src)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
 	..()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 

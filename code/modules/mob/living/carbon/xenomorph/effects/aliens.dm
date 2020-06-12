@@ -77,11 +77,12 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/alien/resin/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 /obj/structure/alien/resin/ex_act(severity)
 	switch(severity)
@@ -285,7 +286,7 @@
 		healthcheck()
 
 /obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
-	return -1
+	return PROJECTILE_FORCE_MISS
 
 /*/obj/structure/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
@@ -473,11 +474,12 @@
 			spawn(15)
 				status = BURST
 
-/obj/structure/alien/egg/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 /obj/structure/alien/egg/process()
 	if(prob(10))
@@ -579,10 +581,11 @@
 	return
 
 /obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)

@@ -8883,7 +8883,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ti" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/computer/mech_bay_power_console,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -9265,7 +9265,7 @@
 "ue" = (
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_x = -2;
-	pixel_y = -1
+	pixel_y = 5
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -9527,7 +9527,7 @@
 /area/asteroid/mine/eva)
 "uJ" = (
 /obj/machinery/mech_bay_recharge_port{
-	dir = 2
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
@@ -9624,13 +9624,18 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "uX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
@@ -9663,9 +9668,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "vc" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/turf/simulated/floor,
 /area/asteroid/mine/eva)
 "vd" = (
 /obj/structure/disposalpipe/segment,
@@ -9693,6 +9696,11 @@
 /area/asteroid/mine/west_outpost)
 "vf" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "vg" = (
@@ -10118,7 +10126,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/mech_bay_recharge_floor,
+/turf/simulated/floor,
 /area/asteroid/mine/eva)
 "wb" = (
 /obj/structure/flora/pottedplant{
@@ -10475,7 +10483,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "wR" = (
-/turf/simulated/floor,
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/asteroid/mine/eva)
 "wS" = (
 /obj/structure/cable{
@@ -10519,10 +10527,15 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 8
+/obj/machinery/recharge_station,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bot"
+	},
 /area/asteroid/mine/eva)
 "wX" = (
 /turf/simulated/floor{
@@ -10583,10 +10596,10 @@
 /area/asteroid/mine/west_outpost)
 "xc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10644,10 +10657,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10805,6 +10818,11 @@
 "xy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -10969,8 +10987,8 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	network = list("MINE");
-	dir = 1
+	dir = 1;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -11264,8 +11282,14 @@
 	pixel_x = 1;
 	pixel_y = -23
 	},
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
 /obj/structure/cable,
-/obj/machinery/recharge_station,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bot"
@@ -11285,7 +11309,6 @@
 /obj/item/clothing/suit/space/globose/mining,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/mining,
-/obj/item/device/suit_cooling_unit,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
@@ -11328,10 +11351,10 @@
 	pixel_y = -25
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11370,10 +11393,10 @@
 /area/asteroid/mine/eva)
 "zE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -12105,6 +12128,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
+"Cr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor,
+/area/asteroid/mine/eva)
 "Db" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12506,7 +12533,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12554,13 +12581,6 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "browncorner"
-	},
-/area/asteroid/mine/production)
-"Kf" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Kg" = (
@@ -12614,6 +12634,7 @@
 	},
 /area/asteroid/mine/production)
 "Lf" = (
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12832,6 +12853,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/machinery/power/port_gen/pacman/scrap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12840,6 +12862,13 @@
 "Pf" = (
 /turf/simulated/floor{
 	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
+"Py" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Qb" = (
@@ -12887,6 +12916,12 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
+"Qz" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Rb" = (
@@ -12942,6 +12977,14 @@
 	oxygen = 0.01
 	},
 /area/asteroid/mine/production)
+"Ri" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/asteroid/mine/eva)
 "Sb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -13095,6 +13138,16 @@
 	oxygen = 0.01
 	},
 /area/asteroid/mine/production)
+"UP" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/asteroid/mine/eva)
 "Vb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -13144,10 +13197,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -13244,8 +13297,19 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table,
-/obj/item/device/gps/engineering,
-/obj/item/device/gps/engineering,
+/obj/item/weapon/paper_bin{
+	pixel_x = -2
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/weapon/pen{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57460,7 +57524,7 @@ lA
 lA
 jT
 ti
-xE
+Cr
 xE
 xC
 vf
@@ -57718,8 +57782,8 @@ lA
 jT
 wR
 vc
-wR
-vc
+Ri
+UP
 xy
 zq
 ws
@@ -57727,10 +57791,10 @@ Dd
 ws
 Dd
 ws
-Oe
+Py
 Te
 Df
-Kf
+Lf
 Bs
 Rf
 ws
@@ -58244,7 +58308,7 @@ ws
 Oe
 Ue
 Ef
-Kf
+Qz
 AV
 Tf
 ws

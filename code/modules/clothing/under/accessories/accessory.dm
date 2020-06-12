@@ -76,7 +76,8 @@
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
-		if(user.a_intent == "help")
+		var/obj/item/organ/internal/heart/H = M.organs_by_name[O_HEART]
+		if(user.a_intent == INTENT_HELP)
 			var/target_zone = parse_zone(user.zone_sel.selecting)
 			if(target_zone)
 				var/their = "their"
@@ -89,8 +90,11 @@
 									"<span class='notice'>You place [src] against [their] [target_zone] and start to listen attentively.</span>")
 				if(M.stat != DEAD && !(M.status_flags & FAKEDEATH))
 					if(target_zone == BP_CHEST)
-						if(M.oxyloss < 50)
-							user.playsound_local(null, 'sound/machines/cardio/pulse.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+						if(H)
+							if(H.heart_status == HEART_FIBR)
+								user.playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+							else if(H.heart_status == HEART_NORMAL)
+								user.playsound_local(null, 'sound/machines/cardio/pulse.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 						var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
 						if(L)
 							if(L.is_bruised())
@@ -104,15 +108,17 @@
 					var/pulse_strength = "hear a weak"
 					var/chest_inspected = FALSE
 
-					if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+					if(M.stat == DEAD || (M.status_flags & FAKEDEATH) || H.heart_status == HEART_FAILURE)
 						pulse_strength = "cannot hear"
 						pulse_status = "anything"
 					else
 						switch(target_zone)
 							if(BP_CHEST)
 								pulse_status = "pulse"
-								if(M.oxyloss < 50)
+								if(H.heart_status == HEART_NORMAL && M.oxyloss < 50)
 									pulse_strength = "hear a healthy"
+								else if(H.heart_status == HEART_FIBR)
+									pulse_strength = "hear an odd pulse"
 								var/obj/item/organ/internal/lungs/L = M.organs_by_name[O_LUNGS]
 								if(L)
 									if(L.is_bruised())

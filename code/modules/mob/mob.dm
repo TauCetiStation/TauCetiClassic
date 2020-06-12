@@ -505,6 +505,9 @@
 	if(!AM.anchored)
 		if(ismob(AM))
 			var/mob/M = AM
+			if(get_size_ratio(M, src) > pull_size_ratio)
+				to_chat(src, "<span class=warning>You are too small in comparison to [M] to pull them!</span>")
+				return
 			if(M.buckled) // If we are trying to pull something that is buckled we will pull the thing its buckled to
 				start_pulling(M.buckled)
 				return
@@ -1058,17 +1061,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
 	spell_list -= S
-	qdel(S)
-	mind.spell_list -= S
+	if(mind)
+		mind.spell_list -= S
 	qdel(S)
 
 /mob/proc/ClearSpells()
 	for(var/spell in spell_list)
 		spell_list -= spell
 		qdel(spell)
-	for(var/spell in mind.spell_list)
-		mind.spell_list -= spell
-		qdel(spell)
+
+	if(mind)
+		for(var/spell in mind.spell_list)
+			mind.spell_list -= spell
+			qdel(spell)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
@@ -1131,6 +1136,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/mob/proc/get_targetzone()
+	return null
 
 /mob/proc/update_stat()
 	return

@@ -20,13 +20,13 @@
 		..(over_object)
 
 /obj/item/clothing/suit/storage/attackby(obj/item/W, mob/user)
-	..()
-	if(pockets)
-		pockets.attackby(W, user)
+	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(W, user))
+		return
+	return ..()
 
 /obj/item/clothing/suit/storage/emp_act(severity)
 	if(pockets)
-		pockets.emp_act(severity)
+		pockets.emplode(severity)
 	..()
 
 /obj/item/clothing/suit/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)

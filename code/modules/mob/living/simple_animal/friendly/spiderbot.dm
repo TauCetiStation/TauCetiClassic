@@ -26,10 +26,8 @@
 	health = 10
 	maxHealth = 10
 
-	attacktext = "shocks"
-	attacktext = "shocks"
-	melee_damage_lower = 1
-	melee_damage_upper = 3
+	attacktext = "shock"
+	melee_damage = 2
 
 	response_help  = "pets"
 	response_disarm = "shoos"
