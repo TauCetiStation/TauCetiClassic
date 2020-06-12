@@ -278,16 +278,10 @@
 	return ..()
 
 /obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.checkpass(PASSCRAWL))
-		return TRUE
-	return FALSE
+	return istype(mover) && mover.checkpass(PASSCRAWL)
 
 /obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/caller)
-	if(istype(caller) && caller.checkpass(PASSCRAWL))
-		return TRUE
-	return FALSE
+	return istype(caller) && caller.checkpass(PASSCRAWL)
 
 /obj/structure/big_bell/CheckExit(atom/movable/mover, target)
-	if(istype(mover) && mover.checkpass(PASSCRAWL))
-		return TRUE
-	return FALSE
+	return istype(mover) && mover.checkpass(PASSCRAWL)
