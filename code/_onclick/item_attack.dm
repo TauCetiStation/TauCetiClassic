@@ -44,7 +44,6 @@
 			V.attack_reaction(src, REACTION_ATACKED, user)
 	
 	if(istype(src, /mob/living/silicon/robot))  // emag the borg
-		var/mob/living/silicon/robot/R = src
 		if(istype(I, /obj/item/weapon/card/emag))
 			return
 
