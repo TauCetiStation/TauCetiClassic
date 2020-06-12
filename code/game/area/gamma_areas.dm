@@ -44,3 +44,7 @@
 /area/station/medical/surgerystorage
 	name = "Operating Storage"
 	icon_state = "surgery2"
+
+/area/station/maintenance/brig
+	name = "Brig maintenance"
+	icon_state = "fmaint"

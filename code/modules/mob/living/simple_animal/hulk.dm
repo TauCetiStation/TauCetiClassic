@@ -15,7 +15,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 
-	harm_intent_damage = 8
+	harm_intent_damage = 7
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2
@@ -38,7 +38,7 @@
 	minbodytemp = 0
 	var/hulk_powers = list()
 	var/mob/living/original_body
-	var/health_regen = 2
+	var/health_regen = 1.5
 
 	animalistic = FALSE
 	has_head = TRUE
@@ -222,9 +222,11 @@
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
-	..()
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
-		health -= P.agony / 10
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
+	health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
 	do_attack_animation(D)

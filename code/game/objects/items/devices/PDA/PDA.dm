@@ -869,7 +869,7 @@
 		if("Staff Salary")
 			mode = 73
 			subordinate_staff = my_subordinate_staff(ownrank)
-		
+
 		if("Change Salary")
 			var/account_number = text2num(href_list["account"])
 			for(var/person in subordinate_staff)
@@ -1261,7 +1261,6 @@
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user)
-	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		user.drop_item()
@@ -1310,7 +1309,7 @@
 			user.drop_item()
 			C.loc = src
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
-	return
+	return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
 	if (istype(L, /mob/living/carbon))
@@ -1447,7 +1446,7 @@
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
-		A.emp_act(severity)
+		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
 	if(istype(target, /mob/living/carbon/human))

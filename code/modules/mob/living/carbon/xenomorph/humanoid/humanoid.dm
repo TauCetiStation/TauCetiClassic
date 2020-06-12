@@ -41,8 +41,6 @@
 /mob/living/carbon/xenomorph/humanoid/movement_delay()
 	return (move_delay_add + config.alien_delay)
 
-///mob/living/carbon/xenomorph/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
-
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
 	return ..() && istype(O, /obj/item/clothing/mask/facehugger)
 

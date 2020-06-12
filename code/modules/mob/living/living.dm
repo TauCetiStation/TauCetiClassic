@@ -377,7 +377,7 @@
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
-		O.emp_act(severity)
+		O.emplode(severity)
 	..()
 
 /mob/living/singularity_act()
@@ -510,6 +510,8 @@
 			var/mob/living/carbon/human/H = src
 			H.restore_blood()
 			H.full_prosthetic = null
+			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+			Heart.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -947,6 +949,7 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/on_lay_down()
 	return
 
@@ -977,7 +980,8 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
-		on_lay_down()
+		if(on_lay_down())
+			return
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 

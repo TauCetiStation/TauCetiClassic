@@ -17,6 +17,7 @@
 	volume = 15
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
@@ -181,6 +182,9 @@
 	if(target.try_inject(user, FALSE, TRUE))
 		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
+		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+			return
+
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
@@ -190,9 +194,6 @@
 				return
 
 			var/hit_area = BP.name
-
-			if((user != target) && target.check_shields(7, "the [src.name]", get_dir(user,target)))
-				return
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
@@ -265,6 +266,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 50
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/ld50_syringe/on_reagent_change()

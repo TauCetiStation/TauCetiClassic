@@ -344,7 +344,7 @@
 
 /mob/living/carbon/ian/emp_act(severity)
 	if(neck)
-		neck.emp_act(severity)
+		neck.emplode(severity)
 	..()
 
 /mob/living/carbon/ian/ex_act(severity)
@@ -399,9 +399,6 @@
 	return TRUE
 
 /mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-
 	var/chance = 0
 	if(head && istype(head,/obj/item/clothing/head/helmet))
 		chance += 50
@@ -418,7 +415,8 @@
 			var/expression = pick("a resentful","a happy","an excited")
 			emote("me",1,"looks with [expression] expression on his face and wants to play more!")
 		return
-	..()
+
+	return ..()
 
 /mob/living/carbon/ian/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	if(is_armored(AM, msg = "armored"))

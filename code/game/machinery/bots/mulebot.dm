@@ -830,9 +830,9 @@
 
 /obj/machinery/bot/mulebot/emp_act(severity)
 	if (cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	if(load)
-		load.emp_act(severity)
+		load.emplode(severity)
 	..()
 
 
