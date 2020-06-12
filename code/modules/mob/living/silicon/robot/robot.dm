@@ -720,7 +720,6 @@
 	else
 		if( !(istype(W, /obj/item/device/robotanalyzer) || istype(W, /obj/item/device/healthanalyzer)) )
 			spark_system.start()
-			return
 	..()
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(!opened)//Cover is closed
