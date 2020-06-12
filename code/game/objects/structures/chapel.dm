@@ -160,18 +160,13 @@
 	ear_safety *= 1 / force
 
 	if(ear_safety > 1)
-		L.Stun(1.5)
+		L.Stun(1)
 	else if(ear_safety > 0)
-		L.Stun(2)
 		L.Weaken(1)
 	else
-		L.Stun(10)
 		L.Weaken(3)
-		if((prob(14) || (L == loc && prob(70))))
-			L.ear_damage += rand(1, 10)
-		else
-			L.ear_damage += rand(0, 5)
-			L.ear_deaf = max(L.ear_deaf, 15)
+		L.ear_damage += rand(0, 5)
+		L.ear_deaf = max(L.ear_deaf, 15)
 
 /obj/effect/effect/bell/proc/adjust_strength(def_val, strength, strength_coeff, max_val)
 	return min(round(def_val + strength * strength_coeff), max_val)
