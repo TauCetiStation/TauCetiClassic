@@ -42,10 +42,6 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
-	
-	if(istype(src, /mob/living/silicon/robot))  // emag the borg
-		if(istype(I, /obj/item/weapon/card/emag))
-			return
 
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(I)
