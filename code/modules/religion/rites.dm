@@ -93,6 +93,7 @@
 	if(!required_checks(user, AOG))
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
+	return TRUE
 
 // Will not work if ritual_invocations is null.
 /datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
