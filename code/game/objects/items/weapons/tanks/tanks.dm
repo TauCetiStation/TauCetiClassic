@@ -84,6 +84,7 @@
 
 	else if(istype(I, /obj/item/device/assembly_holder))
 		bomb_assemble(I, user)
+		return
 
 	else
 		return ..()
