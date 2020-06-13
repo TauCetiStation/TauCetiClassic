@@ -7,8 +7,6 @@
 /obj/machinery/door/unpowered/Bumped(atom/AM)
 	if(locked)
 		return
-	if(bolted)
-		return
 	..()
 	return
 
