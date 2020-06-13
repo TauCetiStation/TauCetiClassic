@@ -94,7 +94,7 @@
 		itemcount += MOB_SIZE
 
 	for(var/mob/M in src.loc)
-		if(itemcount + MOB_SIZE - 1 >= storage_capacity)
+		if(itemcount + MOB_SIZE > storage_capacity)
 			break
 		if(istype (M, /mob/dead/observer))
 			continue
