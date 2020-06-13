@@ -265,7 +265,7 @@
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.species.after_job_equip(synd_mob, "Test Subject")
+	synd_mob.species.after_job_equip(synd_mob, GetJob("Test Subject"))
 	if(boss)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), SLOT_WEAR_ID)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver(synd_mob), SLOT_BELT)
