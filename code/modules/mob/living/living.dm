@@ -156,8 +156,7 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
@@ -377,7 +376,7 @@
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
-		O.emp_act(severity)
+		O.emplode(severity)
 	..()
 
 /mob/living/singularity_act()
@@ -674,7 +673,7 @@
 
 
 						pulling.Move(T, get_dir(pulling, T))
-						if(M)
+						if(M && AM)
 							M.start_pulling(AM)
 				else
 					if (pulling)
@@ -949,6 +948,7 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/on_lay_down()
 	return
 
@@ -979,7 +979,8 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
-		on_lay_down()
+		if(on_lay_down())
+			return
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 

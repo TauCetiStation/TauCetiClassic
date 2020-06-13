@@ -246,14 +246,6 @@
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
 		..(act, m_type)
 
-/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	if(Proj.nodamage)
-		Weaken(20)
-	adjustBruteLoss(Proj.damage)
-	return 0
-
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
 		var/attack_obj = attacker.get_unarmed_attack()

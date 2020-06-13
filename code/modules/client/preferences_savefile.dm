@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 28
+#define SAVEFILE_VERSION_MAX 29
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -176,6 +176,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role |= ROLE_GHOSTLY
 
 		S["be_role"] << be_role
+
+	if(current_version < 29)
+		if(species != HUMAN)
+			for(var/datum/job/job in SSjob.occupations)
+				if(job.is_species_permitted(species))
+					SetJobPreferenceLevel(job, 0)
+			S["job_preferences"] << job_preferences
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
