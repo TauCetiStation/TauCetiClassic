@@ -105,7 +105,7 @@
 			return 1
 			
 	//Fat
-	if(HAS_TRAIT(M, TRAIT_FAT) && (M.a_intent != INTENT_HELP || a_intent != INTENT_HELP) )
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
 		return 1
 
