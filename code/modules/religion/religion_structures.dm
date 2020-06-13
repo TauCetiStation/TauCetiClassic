@@ -151,7 +151,12 @@
 			to_chat(user, "<span class='notice'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		var/rite_select = input(user, "Select a rite to perform!", "Select a rite", null) in religion.rites_by_name
+		var/list/rite_choices = list()
+		for(var/rite in religion.rites_by_name)
+			rite_choices[rite] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_magic")
+
+		var/rite_select = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
+
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
