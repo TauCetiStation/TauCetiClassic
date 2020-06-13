@@ -94,15 +94,6 @@
 		icon_state = "dshotgun[open ? "-o" : ""]"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
-		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
-		else
-			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
-		return
-
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
 		if(short)
 			return
@@ -130,6 +121,14 @@
 			short = TRUE
 			can_be_holstered = TRUE
 		return
+
+	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
+		if(open)
+			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
+			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
+			chamber_round()
+		else
+			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
 
 	return ..()
 
