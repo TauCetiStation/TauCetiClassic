@@ -80,7 +80,7 @@
 				return 1
 
 		//Fat
-		if(HAS_TRAIT(src, TRAIT_FAT))
+		if(HAS_TRAIT(M, TRAIT_FAT))
 			var/ran = 40
 			if(isrobot(src))
 				ran = 20
