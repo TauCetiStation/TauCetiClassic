@@ -87,7 +87,7 @@
 
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src.loc)
-		if(itemcount + MOB_SIZE - 1 >= storage_capacity)
+		if(itemcount + MOB_SIZE > storage_capacity)
 			break
 		AD.forceMove(src)
 		weight += 1
