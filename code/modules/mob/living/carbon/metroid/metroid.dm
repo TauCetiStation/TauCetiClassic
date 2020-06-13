@@ -720,25 +720,22 @@
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
 	check_spirit()
 
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.my_golem || !H.species.can_summon_golem)
+/obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
+	if(H.my_golem || !H.get_species() == GOLEM)
 		return
 	if(!check_spirit())
-		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
+		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
-	user.SetNextMove(CLICK_CD_INTERACT)
+	H.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
-	G.my_master = user
+	G.my_master = H
 	G.update_golem_hud_icons()
 	H.my_golem = G
 	H.update_golem_hud_icons()
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()

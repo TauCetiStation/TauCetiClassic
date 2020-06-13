@@ -143,6 +143,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
+	my_master = null
+	if(my_golem)
+		my_golem.death()
+	my_golem = null
 	return ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
