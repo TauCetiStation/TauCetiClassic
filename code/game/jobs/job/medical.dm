@@ -15,8 +15,16 @@
 		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels,
 		access_medbay_storage
 	)
+	salary = 250
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -52,8 +60,16 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
+	salary = 160
 	alt_titles = list("Surgeon", "Nurse")
 	minimal_player_ingame_minutes = 960
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -113,8 +129,20 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_medbay_storage, access_engineering_lobby)
+	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
-	restricted_species = list(IPC, DIONA)
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
+	restricted_species = list(IPC)
+
+// Slow species shouldn't be paramedics.
+/datum/job/paramedic/special_species_check(datum/species/S)
+	return S.speed_mod <= 1
 
 /datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -154,6 +182,7 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_chemistry, access_medbay_storage)
+	salary = 150
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
@@ -194,6 +223,7 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_research, access_medbay_storage)
+	salary = 180
 	minimal_player_ingame_minutes = 960
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -235,6 +265,14 @@
 	access = list(access_medical, access_virology, access_medbay_storage)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
+	salary = 180
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -277,6 +315,7 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_psychiatrist, access_medbay_storage)
 	alt_titles = list("Psychologist")
+	salary = 140
 	minimal_player_ingame_minutes = 960
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -318,6 +357,7 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical)
+	salary = 50
 
 /datum/job/intern/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)

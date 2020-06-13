@@ -76,6 +76,10 @@
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 //  ========== SPECIAL ==========
 

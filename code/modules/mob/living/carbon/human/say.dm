@@ -232,10 +232,10 @@
 			return 1
 		if(isslime(other))
 			return 1
-		if(isgod(other) && mind.assigned_role == "Chaplain")
+		if(isgod(other))
 			var/mob/living/simple_animal/shade/god/G = other
-			if(G.islam)
-				return 1
+			if(l_hand == G.container || r_hand == G.container)
+				return TRUE
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))

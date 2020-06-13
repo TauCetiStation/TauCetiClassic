@@ -240,7 +240,7 @@
 	if (!(on))
 		return
 
-	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
+	if(U.incapacitated())
 		return
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

@@ -42,7 +42,7 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	to_chat(user, "<span class='notice'>You cant move.</span>")
 
@@ -184,7 +184,7 @@
 	if (!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
+	if (H.incapacitated())
 		if (src.amount > 2)
 			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
@@ -195,9 +195,7 @@
 
 			H.loc = present
 
-			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-			msg_admin_attack("[key_name(user)] used [src] to wrap [key_name(H)]", user)
+			H.log_combat(user, "wrapped with [name]")
 
 		else
 			to_chat(user, "<span class='notice'>You need more paper.</span>")

@@ -69,10 +69,61 @@
 	using = new
 	using.name = "act_intent"
 	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	src.adding += using
 	action_intent = using
+
+//intent small hud objects
+	var/icon/ico
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = new /obj/screen( src )
+	using.name = INTENT_HELP
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	help_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = new /obj/screen( src )
+	using.name = INTENT_PUSH
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	push_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = INTENT_GRAB
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	grab_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = INTENT_HARM
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	harm_intent = using
 
 	using = new
 	using.name = "resist"

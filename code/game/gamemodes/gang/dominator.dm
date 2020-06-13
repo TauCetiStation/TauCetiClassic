@@ -213,13 +213,10 @@
 	"<span class='italics'>You hear metal scraping.</span>")
 	healthcheck(15)
 
-/obj/machinery/dominator/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
+/obj/machinery/dominator/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper > 0)
-		healthcheck(M.melee_damage_upper)
+	if(attacker.melee_damage > 0)
+		healthcheck(attacker.melee_damage)
 
 //obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")
@@ -235,15 +232,8 @@
 //	"<span class='italics'>You hear metal being slammed.</span>")
 //	healthcheck(5)
 
-/obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		add_fingerprint(user)
-		user.SetNextMove(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
-		if(I.damtype == BURN || I.damtype == BRUTE)
-			healthcheck(I.force)
-		return
+/obj/machinery/dominator/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
+	if(I.damtype == BURN || I.damtype == BRUTE)
+		healthcheck(I.force)

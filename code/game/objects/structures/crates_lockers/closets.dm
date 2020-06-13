@@ -28,6 +28,8 @@
 	PopulateContents()
 	update_icon()
 
+	AddComponent(/datum/component/clickplace)
+
 /obj/structure/closet/Destroy()
 	closet_list -= src
 	return ..()
@@ -40,8 +42,9 @@
 	return get_turf(src)
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0 || wall_mounted)) return 1
-	return (!density)
+	if(wall_mounted)
+		return TRUE
+	return ..()
 
 /obj/structure/closet/proc/can_open()
 	if(src.welded)
@@ -66,31 +69,7 @@
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
 
-/obj/structure/closet/proc/open()
-	if(src.opened)
-		return 0
-
-	if(!src.can_open())
-		return 0
-
-	src.dump_contents()
-
-	src.icon_state = src.icon_opened
-	src.opened = 1
-	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 0
-	SSdemo.mark_dirty(src)
-	return 1
-
-/obj/structure/closet/proc/close()
-	if(!src.opened)
-		return 0
-	if(!src.can_close())
-		return 0
-
+/obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
 
 	//Cham Projector Exception
@@ -119,6 +98,34 @@
 		M.instant_vision_update(1,src)
 		itemcount++
 
+/obj/structure/closet/proc/open()
+	if(src.opened)
+		return 0
+
+	if(!src.can_open())
+		return 0
+
+	src.icon_state = src.icon_opened
+	src.opened = 1
+
+	src.dump_contents()
+
+	if(istype(src, /obj/structure/closet/body_bag))
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	else
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	density = 0
+	SSdemo.mark_dirty(src)
+	return 1
+
+/obj/structure/closet/proc/close()
+	if(!src.opened)
+		return 0
+	if(!src.can_close())
+		return 0
+
+	collect_contents()
+
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
@@ -139,28 +146,27 @@
 	switch(severity)
 		if(1)
 			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-				A.forceMove(src.loc)
 				A.ex_act(severity++)
+			dump_contents()
 			qdel(src)
 		if(2)
 			if(prob(50))
 				for (var/atom/movable/A as mob|obj in src)
-					A.forceMove(src.loc)
 					A.ex_act(severity++)
+				dump_contents()
 				qdel(src)
 		if(3)
 			if(prob(5))
 				for(var/atom/movable/A as mob|obj in src)
-					A.forceMove(src.loc)
 					A.ex_act(severity++)
+				dump_contents()
 				qdel(src)
 
 /obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <= 0)
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		dump_contents()
 		qdel(src)
 
 	return
@@ -188,21 +194,11 @@
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
+		add_fingerprint(user)
 		return
 
-	else if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
-		if(istype(W,/obj/item/tk_grab))
-			return 0
-		if(isrobot(user))
-			return
-		if(!W.canremove || W.flags & NODROP)
-			return
-		usr.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+	else if(opened || istype(W, /obj/item/weapon/grab))
+		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
@@ -233,40 +229,12 @@
 								"<span class='warning'>You hear welding.</span>")
 				return TRUE
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
-	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
-		return
-	if(O.loc == user)
-		return
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
-		return
-	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
-		return
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return
-	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
-	if(!src.opened)
-		return
-	if(istype(O, /obj/structure/closet))
-		return
-	if(istype(O, /obj/item))
-		var/obj/item/W = O
-		if(!W.canremove || W.flags & NODROP)
-			return
-	user.SetNextMove(CLICK_CD_INTERACT)
-	step_towards(O, src.loc)
-	if(user != O)
-		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
-	src.add_fingerprint(user)
-	return
-
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
 		attack_hand(user)
 
 /obj/structure/closet/relaymove(mob/user)
-	if(user.stat || !isturf(src.loc))
+	if(user.incapacitated() || !isturf(src.loc))
 		return
 
 	if(!src.open())
@@ -298,7 +266,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	if(ishuman(usr))
@@ -335,12 +303,13 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.SetNextMove(100)
 	user.last_special = world.time + 100
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
-	for(var/mob/O in viewers(src))
-		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
+	user.visible_message(
+		"<span class='warning'>[src] begins to shake violently!</span>",
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	)
 
-	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+	if(do_after(user, (breakout_time MINUTES), target=src))
+		if(!user || user.loc != src || opened || (!locked && !welded))
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 

@@ -8,6 +8,7 @@
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
+	salary = 20
 	alt_titles = list("Lawyer","Mecha Operator","Private Eye","Reporter","Waiter","Vice Officer","Paranormal Investigator")
 
 /datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -33,7 +34,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless(H), SLOT_GLOVES)
 			if("Private Eye")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/leathercoat(H), SLOT_WEAR_SUIT)
 				H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), SLOT_L_STORE)
 			if("Reporter")
@@ -43,7 +44,7 @@
 				H.equip_to_slot_or_del(new /obj/item/device/camera(H), SLOT_L_STORE)
 			if("Security Cadet")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 			if("Test Subject")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), SLOT_W_UNIFORM)
 				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)

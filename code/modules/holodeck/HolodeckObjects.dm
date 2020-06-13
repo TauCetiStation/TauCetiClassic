@@ -60,16 +60,8 @@
 /obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
-
-/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		to_chat(user, "It's a holotable!  There are no bolts!")
-		return
-
-	if(isrobot(user))
-		return
-
-	..()
+/obj/structure/table/holotable/attack_tools(obj/item/I, mob/user)
+	return
 
 /obj/structure/table/holotable/wooden
 	name = "table"
@@ -406,14 +398,12 @@
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	if (safe)
 		faction = "neutral"
-		melee_damage_lower = 0
-		melee_damage_upper = 0
+		melee_damage = 0
 		//wall_smash = 0
 		destroy_surroundings = 0
 	else
 		faction = "carp"
-		melee_damage_lower = initial(melee_damage_lower)
-		melee_damage_upper = initial(melee_damage_upper)
+		melee_damage = initial(melee_damage)
 		//wall_smash = initial(wall_smash)
 		destroy_surroundings = initial(destroy_surroundings)
 

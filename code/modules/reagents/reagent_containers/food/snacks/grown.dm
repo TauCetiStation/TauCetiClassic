@@ -332,7 +332,7 @@
 		loc.set_light(0)
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
 	src.set_light(0)
 	user.set_light(2,1)
 

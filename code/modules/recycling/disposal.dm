@@ -113,7 +113,7 @@
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
-			var/mob/GM = G.affecting
+			var/mob/living/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
@@ -122,17 +122,14 @@
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
-				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit.", usr)
+
+				GM.log_combat(usr, "placed in disposals")
 		return
 
 
 	if(istype(I, /obj/item/weapon/holder))
-		for(var/mob/holdermob in I.contents)
-			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [holdermob.name] ([holdermob.ckey]) in disposals.</font>"
-			holdermob.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit", usr)
+		for(var/mob/living/holdermob in I.contents)
+			holdermob.log_combat(usr, "placed in disposals")
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
@@ -146,7 +143,7 @@
 
 // mouse drop another mob or self
 //
-/obj/machinery/disposal/proc/MouseDrop_Mob(mob/target, mob/user)
+/obj/machinery/disposal/proc/MouseDrop_Mob(mob/living/target, mob/living/user)
 	if(user.incapacitated())
 		return
 	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
@@ -181,9 +178,7 @@
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
 		self_msg = "<span class='red'>You stuff [target.name] into the [src]!</span>"
 
-		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
-		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit.", usr)
+		target.log_combat(user, "placed in disposals")
 	else
 		return
 
@@ -202,7 +197,7 @@
 	else if(istype(A, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/target = A
 
-		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai)) return
+		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || istype(user, /mob/living/silicon/ai)) return
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
@@ -211,14 +206,16 @@
 		var/msg
 		var/self_msg
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
+		if(user.incapacitated())
+			return
 		user.visible_message("<span class='notice'>[user] starts stuffing [target.name] into the disposal.</span>")
 		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
+		if(user.incapacitated())
+			return
 		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
 		self_msg = "<span class='notice'>You stuff [target.name] into the [src]!</span>"
 

@@ -285,8 +285,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -299,6 +299,8 @@ var/global/loopModeNames=list(
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
 		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
+		"thematic" = "Side-Bursting Tunes",
 	)
 
 // Relaxing elevator music~
@@ -312,8 +314,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -326,6 +328,8 @@ var/global/loopModeNames=list(
 		"finland" = "Suomi wave",
 		"dreamsofvenus" = "Dreams of Venus",
 		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
+		"thematic" = "Side-Bursting Tunes",
 	)
 
 /obj/machinery/media/jukebox/techno

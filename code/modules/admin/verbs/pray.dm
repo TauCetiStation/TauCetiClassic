@@ -32,14 +32,20 @@
 		font_color = "blue"
 		prayer_type = "chaplain prayer"
 
-		if(ticker.Bible_deity_name)
-			deity = ticker.Bible_deity_name
+		if(global.chaplain_religion)
+			deity = pick(global.chaplain_religion.deity_names)
 
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
 		font_color = "red"
 		prayer_type = "cultist prayer"
 		deity = "Nar'Sie"
+
+	else if(isgod(usr))
+		cross.icon_state = "necronomicon"
+		font_color = "purple"
+		prayer_type = "god's call"
+		deity = "their progenitor"
 
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(msg)
@@ -59,8 +65,10 @@
 	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
-	var/scrambled_msg = get_scrambled_message(speaking, msg)
-	var/god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
+	var/scrambled_msg = get_scrambled_message(msg, speaking)
+	var/god_not_understand_msg = ""
+	if(scrambled_msg)
+		god_not_understand_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]</b>:</font> \"[scrambled_msg]\"</span>"
 
 	for(var/mob/M in player_list)
 		if(isnewplayer(M))
@@ -82,10 +90,12 @@
 
 	for(var/mob/living/simple_animal/shade/god/G in gods_list)
 		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
-			if(!G.say_understands(src, speaking))
-				to_chat(G, god_not_understand_msg)
-			else
+			if(G == src) // Don't hear your own prayer.
+				continue
+			if(G.say_understands(src, speaking))
 				to_chat(G, gods_msg)
+			else if(god_not_understand_msg)
+				to_chat(G, god_not_understand_msg)
 
 	pray_act(msg, speaking, alt_name, "prays")
 
@@ -105,18 +115,15 @@
 /mob/proc/pray_animation()
 	return
 
-/mob/living/carbon/human/var/next_pray_anim = 0
+/mob/living/var/next_pray_anim = 0
 
-/mob/living/carbon/human/pray_animation()
+/mob/living/pray_animation()
 	if(next_pray_anim > world.time)
 		return
 	next_pray_anim = world.time + 1 SECOND
 
-	if(incapacitated())
-		return
-	if(!bodyparts_by_name[BP_L_ARM] || !bodyparts_by_name[BP_L_ARM].is_usable())
-		return
-	if(!bodyparts_by_name[BP_R_ARM] || !bodyparts_by_name[BP_R_ARM].is_usable())
+	// So restrained people can also pray.
+	if(stat)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

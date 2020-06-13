@@ -98,9 +98,11 @@ var/list/cult_datums = list()
 	if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 		to_chat(user, "<span class='cult'>You retrace your steps, carefully undoing the lines of the rune.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.assigned_role == "Chaplain")
+	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
+	else
+		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
 	if(!istype(power, /datum/cult/teleport) && !istype(power, /datum/cult/item_port))
@@ -274,10 +276,7 @@ var/list/cult_datums = list()
 	usr << browse("[entity_ja(notedat)]", "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
+	M.log_combat(user, "beaten with [name]")
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -305,7 +304,7 @@ var/list/cult_datums = list()
 		target.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return
 
 	if(!cultwords["travel"])
@@ -352,6 +351,10 @@ var/list/cult_datums = list()
 	if(usr.get_active_hand() != src)
 		return
 
+	if(user.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='warning'>You don't have any blood, how do you suppose to write a blood rune?</span>")
+		return
+
 	var/w1
 	var/w2
 	var/w3
@@ -359,20 +362,19 @@ var/list/cult_datums = list()
 	for(var/w in words)
 		english[words[w]] = w
 	if(user)
-		w1 = input("Write your first rune:", "Rune Scribing") in english
+		w1 = input("Write your first rune:", "Rune Scribing") as null|anything in english
 		if(!w1)
 			return
 		if(w1 in cultwords)
 			w1 = english[w1]
-
 	if(user)
-		w2 = input("Write your second rune:", "Rune Scribing") in english
+		w2 = input("Write your second rune:", "Rune Scribing") as null|anything in english
 		if(!w2)
 			return
 		if(w2 in cultwords)
 			w2 = english[w2]
 	if(user)
-		w3 = input("Write your third rune:", "Rune Scribing") in english
+		w3 = input("Write your third rune:", "Rune Scribing") as null|anything in english
 		if(!w3)
 			return
 		if(w3 in cultwords)
@@ -412,6 +414,8 @@ var/list/cult_datums = list()
 		for(var/w in words)
 			words[w] = T.words[w]
 		to_chat(user, "You copy the translation notes from your tome.")
+		return
+	return ..()
 
 /obj/item/weapon/book/tome/examine(mob/user)
 	..()

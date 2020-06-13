@@ -71,7 +71,8 @@ var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
 var/global/list/all_money_accounts = list()
-var/global/economy_init = 0
+var/global/economy_init = FALSE
+var/global/initial_station_money = 7500
 
 /proc/setup_economy()
 	if(economy_init)
@@ -105,7 +106,7 @@ var/global/economy_init = 0
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
-	economy_init = 1
+	economy_init = TRUE
 	return 1
 
 /proc/create_station_account()
@@ -116,13 +117,13 @@ var/global/economy_init = 0
 		station_account.owner_name = "[station_name()] Station Account"
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = 75000
+		station_account.money = global.initial_station_money
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
 		T.target_name = station_account.owner_name
 		T.purpose = "Account creation"
-		T.amount = 75000
+		T.amount = station_account.money
 		T.date = "2nd April, [gamestory_start_year]"
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
@@ -138,7 +139,7 @@ var/global/economy_init = 0
 	department_account.owner_name = "[department] Account"
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
-	department_account.money = 5000
+	department_account.money = 500
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

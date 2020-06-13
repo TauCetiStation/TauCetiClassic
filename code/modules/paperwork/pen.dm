@@ -47,7 +47,7 @@
 		OS.scanned_type = src.type
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+		if(H.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 			if(entity && istype(I, /obj/item/weapon/nullrod))
 				entity = ""
 				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
@@ -136,6 +136,7 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	tools = list()
 	var/on = 0
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
@@ -149,6 +150,7 @@
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+		tools = list()
 	else
 		on = 1
 		force = 18
@@ -159,6 +161,9 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+		tools = list(
+			TOOL_KNIFE = 1
+			)
 	update_icon()
 
 /obj/item/weapon/pen/edagger/update_icon()
@@ -180,7 +185,7 @@
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
-	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()

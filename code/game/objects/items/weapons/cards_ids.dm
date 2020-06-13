@@ -68,6 +68,10 @@
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
+/obj/item/weapon/card/emag/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return TRUE
+
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)

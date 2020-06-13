@@ -622,7 +622,7 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
-		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == I_GRAB && C)
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == INTENT_GRAB && C)
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -630,12 +630,12 @@
 				s.start()
 				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
 				H.adjustFireLoss(10,0)
-			else if(src.cell && src.cell.charge > 500 && H.a_intent == I_GRAB)
+			else if(src.cell && src.cell.charge > 500 && H.a_intent == INTENT_GRAB)
 				if(H.nutrition < C.maxcharge*0.9)
 					if(src.cell.charge)
 						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
 						while(H.nutrition < C.maxcharge)
-							if(do_after(user,10,target = src) && H.a_intent == I_GRAB)
+							if(do_after(user,10,target = src) && H.a_intent == INTENT_GRAB)
 								if(!src.cell)
 									to_chat(user, "<span class='notice'>There is no cell.</span>")
 									break
@@ -1208,9 +1208,9 @@
 /obj/machinery/power/apc/emp_act(severity)
 	flick("apc-spark", src)
 	if(cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	if(occupier)
-		occupier.emp_act(severity)
+		occupier.emplode(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0

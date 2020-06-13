@@ -48,6 +48,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	var/datum/holy_turf/holy
+
 /turf/simulated/floor/proc/get_lightfloor_state()
 	return lightfloor_state & LIGHTFLOOR_STATE_BITS
 
@@ -76,6 +78,7 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/Destroy()
 	if(floor_type)
 		floor_type = null
+	QDEL_NULL(holy)
 	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -304,6 +307,8 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine))
 		return
+	if(istype(src,/turf/simulated/floor/plating/airless/asteroid))
+		return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
 		src.ChangeTurf(/turf/simulated/floor/plating)
 	if(broken)
@@ -495,6 +500,13 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(!C || !user)
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
+
+	if(istype(C, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = C
+		if(S.wielded)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			break_tile()
 
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())

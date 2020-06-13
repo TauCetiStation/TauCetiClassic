@@ -531,7 +531,7 @@
 /area/space_structures/robostatoin)
 "cb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -717,7 +717,7 @@
 	},
 /area/space_structures/robostatoin)
 "cI" = (
-/obj/structure/sign/poster,
+/obj/structure/sign/poster/random,
 /turf/simulated/wall/r_wall,
 /area/space_structures/robostatoin)
 "cJ" = (

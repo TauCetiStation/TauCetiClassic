@@ -66,13 +66,12 @@
 	desc = "A sanity-destroying otherthing."
 	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
 	speak_emote = list("gibbers")
-	attacktext = " bites into"
+	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	faction = "nanite"
 	maxHealth = 60
 	health = 60
-	melee_damage_upper = 10
-	melee_damage_lower = 5
+	melee_damage = 8
 	speed = 3
 	min_oxy = 0
 	max_oxy = 0
@@ -95,13 +94,12 @@
 	icon_dead = "nanitemobdead_1"
 	maxHealth = 80
 	health = 80
-	melee_damage_upper = 10
-	melee_damage_lower = 5
+	melee_damage = 8
 	speed = 4
 
 /mob/living/simple_animal/hostile/cellular/nanite/ranged
 	ranged = TRUE
-	projectiletype = /obj/item/projectile/bullet/midbullet
+	projectiletype = /obj/item/projectile/bullet/smg
 	projectilesound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	retreat_distance = 6
 	minimum_distance = 6
@@ -110,8 +108,7 @@
 	icon_dead = "nanitemobdead_2"
 	health = 60
 	maxHealth = 60
-	melee_damage_lower = 15
-	melee_damage_upper = 25
+	melee_damage = 20
 	speed = 3
 
 /mob/living/simple_animal/hostile/cellular/nanite/eng
@@ -121,14 +118,12 @@
 	retreat_distance = 6
 	maxHealth = 120
 	health = 120
-	melee_damage_upper = 50
-	melee_damage_lower = 40
+	melee_damage = 45
 	freeze_movement = TRUE
 	light_power = 3
 	light_range = 1.5
 	light_color = "#00cc10"
 	anchored = TRUE
-	a_intent = "harm"
 	var/cap_spawn = 6
 	var/spawned = 0
 	var/chance_spawn = 15

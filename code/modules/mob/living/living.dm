@@ -2,7 +2,16 @@
 	. = ..()
 	living_list += src
 
+	default_transform = transform
+	default_pixel_x = pixel_x
+	default_pixel_y = pixel_y
+	default_layer = layer
+
+
 /mob/living/Destroy()
+	QDEL_LIST(combos_performed)
+	QDEL_LIST(combos_saved)
+
 	if(LAZYLEN(status_effects))
 		for(var/s in status_effects)
 			var/datum/status_effect/S = s
@@ -10,6 +19,7 @@
 				qdel(S)
 			else
 				S.be_replaced()
+
 	living_list -= src
 	return ..()
 
@@ -80,7 +90,7 @@
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		var/can_switch = TRUE
 		var/turf/T = get_turf(src)
 		for(var/atom/A in T.contents - src)
@@ -146,8 +156,7 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
@@ -339,11 +348,15 @@
 /mob/living/proc/adjustHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	if(amount > 0)
+		add_combo_value_all(amount)
 	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
+	if(amount - halloss > 0)
+		add_combo_value_all(amount - halloss)
 	halloss = CLAMP(amount, 0, maxHealth * 2)
 
 // ============================================================
@@ -363,7 +376,7 @@
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
-		O.emp_act(severity)
+		O.emplode(severity)
 	..()
 
 /mob/living/singularity_act()
@@ -451,6 +464,8 @@
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()
+	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
+
 	if(reagents)
 		reagents.clear_reagents()
 
@@ -494,6 +509,8 @@
 			var/mob/living/carbon/human/H = src
 			H.restore_blood()
 			H.full_prosthetic = null
+			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+			Heart.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -656,7 +673,7 @@
 
 
 						pulling.Move(T, get_dir(pulling, T))
-						if(M)
+						if(M && AM)
 							M.start_pulling(AM)
 				else
 					if (pulling)
@@ -731,7 +748,9 @@
 	set category = "IC"
 
 	if(!isliving(usr) || usr.next_move > world.time)
-		return
+		return FALSE
+
+	. = TRUE
 	usr.SetNextMove(20)
 
 	var/mob/living/L = usr
@@ -783,9 +802,7 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened > 2)
-			return
+	if (!L.incapacitated())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
@@ -795,12 +812,11 @@
 			resisting++
 			switch(G.state)
 				if(GRAB_PASSIVE)
-					if(G.assailant.shoving_fingers)
-						if(iscarbon(src))
-							var/mob/living/carbon/C_ = src
-							if(!istype(C_.wear_mask, /obj/item/clothing/mask/muzzle))
-								G.assailant.adjustBruteLoss(5) // We bit them.
-								G.assailant.shoving_fingers = FALSE
+					if(ishuman(G.assailant))
+						var/mob/living/carbon/human/H = G.assailant
+						if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+							H.adjustBruteLoss(5) // We bit them.
+							H.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(50 - (L.lying ? 35 : 0)))
@@ -857,7 +873,6 @@
 				ExtinguishMob()
 			return
 		if(CM.handcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -933,6 +948,10 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/// What should the mob do when laying down. Return TRUE to prevent default behavior.
+/mob/living/proc/on_lay_down()
+	return
+
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -960,6 +979,8 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
+		if(on_lay_down())
+			return
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
@@ -980,10 +1001,10 @@
 	return TRUE
 
 //-TG Port for smooth standing/lying animations
-/mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
+/mob/living/proc/get_pixel_x_offset(lying_current = FALSE)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying_current = 0)
+/mob/living/proc/get_pixel_y_offset(lying_current = FALSE)
 	return initial(pixel_y)
 
 //Attack animation port below
@@ -1021,7 +1042,7 @@
 
 
 /mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
+	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
 	//Show an image of the wielded weapon over the person who got dunked.
@@ -1187,6 +1208,11 @@
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
+		var/mob/living/carbon/human/H = src
+
+		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
+			H.try_mutate_to_hulk()
+
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
@@ -1218,4 +1244,28 @@
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
+	return TRUE
+
+/mob/living/get_targetzone()
+	if(zone_sel)
+		return zone_sel.selecting
+	return pick(TARGET_ZONE_ALL)
+
+/mob/living/proc/has_bodypart(name)
+	switch(name)
+		if(BP_HEAD)
+			return is_usable_head()
+		if(BP_L_ARM, BP_R_ARM)
+			return is_usable_arm()
+		if(BP_L_LEG, BP_R_LEG)
+			return is_usable_leg()
+	return FALSE
+
+/mob/living/proc/has_organ(name)
+	if(name == O_EYES)
+		return is_usable_eyes()
+	return FALSE
+
+// Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
+/mob/living/proc/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	return TRUE

@@ -7,6 +7,7 @@
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 	custom_metabolism = 0.1
 	taste_message = "bitterness"
+	flags = list(IS_ORGANIC = TRUE)
 
 	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
 	data = list()
@@ -16,6 +17,10 @@
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * REM)
 
+/datum/reagent/toxin/on_skrell_digest(mob/living/M)
+	..()
+	return !flags[IS_ORGANIC]
+
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	id = "amatoxin"
@@ -23,6 +28,7 @@
 	reagent_state = LIQUID
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 1
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -31,6 +37,7 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	toxpwr = 0
+	flags = list()
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
 	if(!..())
@@ -58,6 +65,7 @@
 	reagent_state = LIQUID
 	color = "#ef0097" // rgb: 231, 27, 0
 	toxpwr = 3
+	flags = list()
 
 /datum/reagent/toxin/phoron/on_general_digest(mob/living/M)
 	..()
@@ -79,6 +87,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	if(volume < 0)
 		return
 	if(volume > 300)
@@ -103,6 +112,7 @@
 	toxpwr = 0
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/lexorin/on_general_digest(mob/living/M)
 	..()
@@ -119,6 +129,7 @@
 	reagent_state = LIQUID
 	color = "#801e28" // rgb: 128, 30, 40
 	toxpwr = 0
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
 	..()
@@ -136,11 +147,23 @@
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
 	custom_metabolism = 0.4
+	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.SetSleeping(20 SECONDS)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 5)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+		if(6 to INFINITY)
+			M.SetSleeping(20 SECONDS)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+	if(data["ticks"] % 3 == 0)
+		M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
@@ -149,6 +172,7 @@
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 0
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
@@ -162,6 +186,7 @@
 	reagent_state = LIQUID
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -195,6 +220,7 @@
 	toxpwr = 0
 	custom_metabolism = 0.05
 	overdose = REAGENTS_OVERDOSE
+	flags = list()
 
 /datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M)
 	..()
@@ -207,9 +233,11 @@
 	reagent_state = LIQUID
 	color = "#49002e" // rgb: 73, 0, 46
 	toxpwr = 1
+	flags = list()
 
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
+	. = ..()
 	if(istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
@@ -254,6 +282,7 @@
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
 	..()
@@ -285,6 +314,7 @@
 	overdose = 15
 	overdose_dam = 6
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/chloralhydrate/on_general_digest(mob/living/M)
 	..()
@@ -308,6 +338,7 @@
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 0
 	overdose = 30
+	flags = list()
 
 /datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M)
 	..()
@@ -326,6 +357,7 @@
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 2
 	overdose = 20
+	flags = list()
 
 /datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M)
 	..()
@@ -369,6 +401,7 @@
 	color = "#f0f8ff" // rgb: 240, 248, 255
 	custom_metabolism = 0.4
 	toxpwr = 0
+	flags = list()
 
 /datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M)
 	..()
@@ -382,6 +415,7 @@
 	color = "#db5008" // rgb: 219, 80, 8
 	toxpwr = 1
 	var/meltprob = 10
+	flags = list()
 
 /datum/reagent/toxin/acid/on_general_digest(mob/living/M)
 	..()
@@ -463,6 +497,7 @@
 	color = "#8e18a9" // rgb: 142, 24, 169
 	toxpwr = 2
 	meltprob = 30
+	flags = list()
 
 //////////////////////////////////////////////
 //////////////New poisons///////////////////// // TODO: Make them a subtype of /toxin/
@@ -490,6 +525,8 @@
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
+	data = list()
+
 /datum/reagent/aflatoxin/on_general_digest(mob/living/M)
 	..()
 
@@ -511,6 +548,8 @@
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
 
+	data = list()
+
 /datum/reagent/chefspecial/on_general_digest(mob/living/M)
 	..()
 
@@ -529,6 +568,8 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
+
+	data = list()
 
 /datum/reagent/dioxin/on_general_digest(mob/living/M)
 	..()
@@ -594,12 +635,16 @@
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.02
 
+	data = list()
+
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == SLIME)
 			return
+		if(!data["ticks"])
+			data["ticks"] = 1
 		data["ticks"]++
 		switch(data["ticks"])
 			if(1)
@@ -658,7 +703,7 @@
 			W.loc = M.loc
 			W.dropped(M)
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = INTENT_HARM
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
@@ -683,7 +728,7 @@
 	..()
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove && !M.restrained())
+		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))
 	if(prob(7))

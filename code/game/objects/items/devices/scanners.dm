@@ -157,7 +157,6 @@ REAGENT SCANNER
 	if(!irradiate)
 		return
 	if(!used)
-		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey])</span>", user)
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
 		icon_state = "health1"
@@ -165,8 +164,7 @@ REAGENT SCANNER
 			used = 0
 			icon_state = "health"
 		to_chat(user,"<span class='warning'>Successfully irradiated [M].</span>")
-		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been irradiated by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>irradiated [M.name]'s ([M.ckey])</font>")
+		M.log_combat(user, "irradiated with [name]")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
@@ -227,7 +225,7 @@ REAGENT SCANNER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
@@ -304,8 +302,6 @@ REAGENT SCANNER
 		icon_state = initial(icon_state)
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
-	if (user.stat)
-		return
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
@@ -365,8 +361,6 @@ REAGENT SCANNER
 	var/recent_fail = 0
 
 /obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if (user.stat)
-		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return

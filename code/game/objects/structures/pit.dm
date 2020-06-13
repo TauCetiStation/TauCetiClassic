@@ -71,7 +71,7 @@
 	if(open)
 		return
 
-	if(escapee.stat || escapee.restrained())
+	if(escapee.incapacitated())
 		return
 
 	to_chat(escapee, "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>")
@@ -83,7 +83,7 @@
 		if(!do_after(escapee, 50, target = src))
 			to_chat(escapee, "<span class='warning'>You have stopped digging.</span>")
 			return
-		if(!escapee || escapee.stat || escapee.loc != src)
+		if(!escapee || escapee.incapacitated() || escapee.loc != src)
 			return
 		if(open)
 			return

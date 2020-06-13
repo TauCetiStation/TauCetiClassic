@@ -80,7 +80,7 @@
 	set name = "Eject ID"
 	set category = "Object"
 	set src in oview(1)
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	if(storedcard)

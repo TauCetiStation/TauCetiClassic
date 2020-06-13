@@ -83,7 +83,7 @@
 		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
 
-		if (!( usr.restrained() ) && !( usr.stat ))
+		if (!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -129,7 +129,7 @@
 
 	prepare_ui()
 	storage_ui.on_open(user)
-	storage_ui.show_to(user)
+	show_to(user)
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
@@ -302,8 +302,6 @@
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user)
-	..()
-
 	if(isrobot(user))
 		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
@@ -385,7 +383,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.incapacitated())
 		return
 
 	var/turf/T = get_turf(src)
@@ -397,7 +395,7 @@
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
-			O.emp_act(severity)
+			O.emplode(severity)
 	..()
 
 // BubbleWrap - A box can be folded up to make card
