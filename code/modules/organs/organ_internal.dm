@@ -148,7 +148,7 @@
 	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
-	name = "servomotor"
+	name = "cooling pump"
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
