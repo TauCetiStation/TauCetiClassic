@@ -34,7 +34,7 @@ var/datum/subsystem/vote/SSvote
 		else
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", 0, 0, null, mode == "restart" ? CSS_THEME_LIGHT :  CSS_THEME_DARK)
+				client_popup = new(C, "vote", "Voting Panel", ntheme = mode == "restart" ? CSS_THEME_LIGHT :  CSS_THEME_DARK)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
