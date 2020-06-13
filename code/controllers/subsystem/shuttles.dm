@@ -418,6 +418,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			else if(istype(DOOR, /obj/machinery/door/unpowered))
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
+				D.bolted = 0
 				D.open()
 
 /datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
@@ -433,6 +434,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.close()
 				D.locked = 1
+				D.bolted = 1
 
 /datum/subsystem/shuttle/proc/send()
 	var/area/from

@@ -1,6 +1,7 @@
 /obj/machinery/door/unpowered
 	autoclose = 0
 	var/locked = 0
+	var/bolted = 0
 
 
 /obj/machinery/door/unpowered/Bumped(atom/AM)
@@ -14,6 +15,8 @@
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
 		return
 	if(locked)
+		return
+	if(bolted)
 		return
 	return ..()
 
