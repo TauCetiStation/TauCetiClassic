@@ -80,14 +80,9 @@
 				return 1
 
 		//Fat
-		if(HAS_TRAIT(M, TRAIT_FAT))
-			var/ran = 40
-			if(isrobot(src))
-				ran = 20
-			if(prob(ran))
-				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
-				return 1
-			return
+		if(HAS_TRAIT(M, TRAIT_FAT) && (M.a_intent != INTENT_HELP || a_intent != INTENT_HELP) )
+			to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
+			return 1
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
