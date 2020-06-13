@@ -946,7 +946,7 @@
 	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.my_golem || !H.species.can_summon_golem)

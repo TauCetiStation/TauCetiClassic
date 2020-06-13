@@ -129,6 +129,7 @@
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 	var/can_summon_golem = TRUE
+	var/can_mutate = TRUE
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -1004,6 +1005,7 @@
 	min_age = 1
 	max_age = 1000
 	can_summon_golem = FALSE
+	can_mutate = FALSE
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)

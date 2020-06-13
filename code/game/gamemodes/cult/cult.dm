@@ -12,8 +12,7 @@
 	if(ishuman(mind.current))
 		if((mind.assigned_role in list("Captain", "Chaplain")))
 			return FALSE
-		var/mob/living/carbon/human/H = mind.current
-		if(H.species.name == GOLEM)
+		if(mind.current.get_species() == GOLEM)
 			return FALSE
 	if(ismindshielded(mind.current))
 		return FALSE

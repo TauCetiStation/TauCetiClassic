@@ -5,12 +5,14 @@
 // connected: Machine we're in, type unchecked so I doubt it's used beyond monkeying
 // flags: See below, bitfield.
 /proc/domutcheck(mob/living/M, connected=null, flags=0, forced=1)
+	if(!M || !M.dna)
+		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && !S.can_mutate)
+		return
 	for(var/datum/dna/gene/gene in dna_genes)
-		if(!M || !M.dna)
-			return
 		if(!gene.block)
 			continue
-
 		domutation(gene, M, connected, flags, forced)
 		// To prevent needless copy pasting of code i put this commented out section
 		// into domutation so domutcheck and genemutcheck can both use it.
@@ -53,6 +55,9 @@
 		return
 	if(block < 0)
 		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && !S.can_mutate)
+		return
 
 	var/datum/dna/gene/gene = assigned_gene_blocks[block]
 	domutation(gene, M, connected, flags)
@@ -60,12 +65,12 @@
 
 /proc/domutation(datum/dna/gene/gene, mob/living/M, connected=null, flags=0, forced=1)
 	if(!gene || !istype(gene))
-		return 0
+		return FALSE
 
 	// Sanity checks, don't skip.
 	if(!gene.can_activate(M,flags))
 		//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
-		return 0
+		return FALSE
 
 	// Current state
 	var/gene_active = (gene.flags & GENE_ALWAYS_ACTIVATE)
