@@ -751,7 +751,7 @@
 		return FALSE
 
 	. = TRUE
-	usr.SetNextMove(20)
+	usr.SetNextMove(CLICK_CD_ACTION)
 
 	var/mob/living/L = usr
 
