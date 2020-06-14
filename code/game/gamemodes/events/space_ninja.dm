@@ -533,7 +533,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		qdel(shoes)
 		qdel(gloves)
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/ninja(src)
 	equip_to_slot_or_del(R, SLOT_L_EAR)
 	if(gender==FEMALE)
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), SLOT_W_UNIFORM)
