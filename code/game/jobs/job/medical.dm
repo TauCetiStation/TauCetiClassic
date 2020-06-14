@@ -138,7 +138,11 @@
 		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
 		~Luduk
 	*/
-	restricted_species = list(IPC, DIONA)
+	restricted_species = list(IPC)
+
+// Slow species shouldn't be paramedics.
+/datum/job/paramedic/special_species_check(datum/species/S)
+	return S.speed_mod <= 1
 
 /datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

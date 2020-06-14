@@ -302,13 +302,19 @@
 // Generate new rite_list
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
+		rites_info = list()
 		// Generates a list of information of rite, used for examine() in altar_of_gods
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			var/name_entry = ""
 
-			if(RI.tip_text)
-				name_entry += "[EMBED_TIP(RI.name, RI.tip_text)]"
+			var/tip_text
+			for(var/tip in RI.tips)
+				if(tip_text)
+					tip_text += " "
+				tip_text += tip
+			if(tip_text)
+				name_entry += "[EMBED_TIP(RI.name, tip_text)]"
 			else
 				name_entry += "[RI.name]"
 
@@ -338,7 +344,9 @@
 			continue
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			rites_by_name[RR.name] = new rite_type
+			var/datum/religion_rites/R = new rite_type
+			R.religion = src
+			rites_by_name[RR.name] = R
 
 		QDEL_NULL(RR)
 
