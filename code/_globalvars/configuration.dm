@@ -4,7 +4,7 @@ var/host = null
 var/join_motd = null
 var/host_announcements
 var/join_test_merge = null
-var/station_name = "NSS Exodus"
+var/station_name = "Prometheus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
