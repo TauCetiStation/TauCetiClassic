@@ -15,8 +15,6 @@
 	var/datum/cult/reveal/power
 	var/static/list/scum
 
-	var/choice
-
 	var/tried_replacing = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
@@ -42,7 +40,7 @@
 			choices[initial(N.name)] = N
 			nullrod_list[initial(N.name)] = image(icon = initial(N.icon), icon_state = initial(N.icon_state))
 
-		choice = show_radial_menu(user, src, nullrod_list, require_near = TRUE, tooltips = TRUE)
+		var/choice = show_radial_menu(user, src, nullrod_list, require_near = TRUE, tooltips = TRUE)
 
 		if(choice && Adjacent(user))
 			qdel(src)
