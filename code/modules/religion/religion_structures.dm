@@ -12,7 +12,6 @@
 	buckle_lying = TRUE
 
 	var/datum/religion_rites/performing_rite
-	var/choosed_rite
 	var/datum/religion_sect/sect //easy access
 	var/datum/religion/chaplain/religion //easy access
 	var/chosen_aspect = FALSE
@@ -44,10 +43,6 @@
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
 
 	if(religion.rites_info.len != 0 || religion.rites_by_name.len != 0)
-		if(choosed_rite)
-			msg += "<span class='notice'>Chosen ritual - <i>[choosed_rite]</i>.\n</span>"
-		else
-			msg += "<span class='notice'>No ritual selected.\n</span>"
 		msg += "List of available Rites:"
 		for(var/i in global.chaplain_religion.rites_info)
 			msg += "\n[i]"
@@ -159,16 +154,31 @@
 			to_chat(user, "<span class='warning'>Your religion doesn't have any rites to perform!</span>")
 			return
 
-		if(!choosed_rite)
-			to_chat(user, "<span class='warning'>No ritual selected! Choose it with your bible!</span>")
-			return
-
 		if(!Adjacent(user))
 			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			return
 
 		if(performing_rite)
 			to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
+			return
+
+		// Choices of rite in radial menu
+		var/list/rite_choices = list()
+		for(var/i in religion.rites_by_name)
+			var/aspect
+			var/aspect_power = 0
+			var/datum/religion_rites/rite = religion.rites_by_name[i]
+			for(var/asp in rite.needed_aspects)
+				if(rite.needed_aspects[asp] > aspect_power)
+					aspect = asp
+					aspect_power = rite.needed_aspects[asp]
+
+			var/datum/aspect/strongest_aspect = religion.aspects[aspect]
+			rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
+
+		var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
+
+		if(!choosed_rite)
 			return
 
 		performing_rite = religion.rites_by_name[choosed_rite]
@@ -179,7 +189,6 @@
 			performing_rite.invoke_effect(user, src)
 			religion.adjust_favor(-performing_rite.favor_cost)
 			performing_rite = null
-			choosed_rite = null
 		return
 
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)
@@ -202,32 +211,6 @@
 		religion.altar = src
 
 		sect.on_select(user, religion)
-		return
-	
-	else if(istype(I, /obj/item/weapon/storage/bible))
-		if(!religion)
-			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
-			return
-
-		if(religion.rites_info.len == 0 || religion.rites_by_name.len == 0)
-			to_chat(user, "<span class='warning'>Your religion doesn't have any rites to perform!</span>")
-			return
-
-		// Choices of rite in radial menu
-		var/list/rite_choices = list()
-		for(var/i in religion.rites_by_name)
-			var/aspect
-			var/aspect_power = 0
-			var/datum/religion_rites/rite = religion.rites_by_name[i]
-			for(var/asp in rite.needed_aspects)
-				if(rite.needed_aspects[asp] > aspect_power)
-					aspect = asp
-					aspect_power = rite.needed_aspects[asp]
-
-			var/datum/aspect/strongest_aspect = religion.aspects[aspect]
-			rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
-
-		choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
 		return
 
 	// Except when it is not.
