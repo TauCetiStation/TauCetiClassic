@@ -2122,9 +2122,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 			if(health > config.health_threshold_dead)
 				Heart.heart_fibrillate()
-				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!")
+				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
-				to_chat(user, "<span class='warning'>[src]'s body seems to be too weak, you do not feel a heart beat.")
+				to_chat(user, "<span class='warning'>[src]'s body seems to be too weak, you do not feel a heart beat.</span>")
 
 			last_massage = world.time
 		return
