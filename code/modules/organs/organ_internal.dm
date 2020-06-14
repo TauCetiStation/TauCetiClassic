@@ -158,7 +158,7 @@
 		return
 
 	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
-	if(!lungs)
+	if(!istype(lungs))
 		return
 	
 	var/pumping_volume = pumping_rate
