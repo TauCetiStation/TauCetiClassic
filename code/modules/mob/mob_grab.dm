@@ -463,7 +463,7 @@
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustStamina(-8)
+						H.adjustStamina(-stamina_damage)
 						H.adjustHalLoss(CLAMP(0, 10 - H.halloss, 10)) //up to 10 halloss
 					return
 				if(INTENT_HARM)
@@ -606,7 +606,6 @@
 		if(assailant.client)
 			assailant.client.screen -= hud
 		var/list/grabs = assailant.GetGrabs()
-		message_admins(grabs.len)
 		if(!grabs.len)
 			REMOVE_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, STAMINA_TRAIT)
 		assailant = null
