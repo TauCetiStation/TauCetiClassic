@@ -190,6 +190,9 @@
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
+/obj/item/device/camera/CtrlClick(src)
+	set_zoom()
+
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		user.SetNextMove(CLICK_CD_INTERACT)
