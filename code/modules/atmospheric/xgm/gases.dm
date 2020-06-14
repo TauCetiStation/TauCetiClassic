@@ -15,6 +15,7 @@
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
 	dangerous = TRUE
+	/// This variable determines whether the crew knows about this gas from the round start.
 	knowable = TRUE
 
 /datum/xgm_gas/oxygen

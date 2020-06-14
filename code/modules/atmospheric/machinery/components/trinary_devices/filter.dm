@@ -43,6 +43,12 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
+	var/subdat
+	for(var/id in gas_data.gases)
+	if(gas_data.gases_knowable[id])
+		subdat += {"
+			<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
+	
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	..()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
@@ -120,12 +126,7 @@
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
 			<h4>Set Filter Type:</h4>"}	
-
-	for(var/id in gas_data.gases)
-		if(gas_data.gases_knowable[id])
-			dat += {"
-				<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
-
+	dat += subdat
 	dat += {"
 			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
 			<HR>

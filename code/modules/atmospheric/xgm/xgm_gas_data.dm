@@ -34,6 +34,7 @@
 	var/flags = 0
 	var/burn_product = "carbon_dioxide"
 	var/dangerous = FALSE // currently used by canisters
+	/// This variable determines whether the crew knows about this gas from the round start.
 	var/knowable = FALSE
 
 /proc/generateGasData()
