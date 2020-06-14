@@ -34,5 +34,3 @@
 	var/obj/item/shoes
 	var/obj/item/neck
 	var/obj/item/mouth
-
-	 //Ian uses this for now.
