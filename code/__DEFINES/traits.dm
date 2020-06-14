@@ -79,8 +79,10 @@
 #define TRAIT_LIGHT_STEP          "light_step"
 #define TRAIT_FREERUNNING         "freerunning"
 #define TRAIT_AGEUSIA             "ageusia"
+#define TRAIT_NOSTAMINAREGEN	  "no_stamina_regen"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
+#define STAMINA_TRAIT	   "stamina"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"

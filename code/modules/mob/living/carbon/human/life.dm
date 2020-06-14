@@ -102,7 +102,7 @@
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!is_grabbing)
+			if(!HAS_TRAIT(src, TRAIT_NOSTAMINAREGEN))
 				adjustStamina(1)
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))

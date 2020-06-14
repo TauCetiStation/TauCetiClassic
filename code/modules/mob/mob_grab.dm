@@ -16,7 +16,7 @@
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
 	var/state = GRAB_NONE
-
+	var/grab_name
 	var/allow_upgrade = 1
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
@@ -74,10 +74,9 @@
 	. = ..()
 	assailant = loc
 	affecting = victim
-	assailant.is_grabbing = TRUE
 	hud = new /obj/screen/grab(src)
 	hud.master = src
-
+	ADD_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, STAMINA_TRAIT)
 	victim.grabbed_by += src
 	victim.LAssailant = assailant
 
@@ -180,14 +179,6 @@
 	
 	if(assailant.pulling == affecting)
 		assailant.stop_pulling()
-	var/grab_name
-	switch(state)
-		if(GRAB_AGGRESSIVE)
-			grab_name = "grip"
-		if(GRAB_NECK)
-			grab_name = "headlock"
-		if(GRAB_KILL)
-			grab_name = "asphyxiation"
 	if(assailant.getStamina() <= 0)
 		visible_message("<span class='danger'>[affecting] broken free of [assailant]'s [grab_name]!</span>")
 		QDEL_NULL(src)
@@ -366,6 +357,7 @@
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
+		grab_name = "grip"
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
@@ -384,6 +376,7 @@
 
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
+		grab_name = "headlock"
 
 	else if(state < GRAB_KILL)
 		if(ishuman(affecting))
@@ -400,6 +393,7 @@
 		affecting.set_dir(WEST)
 
 		set_state(GRAB_KILL)
+		grab_name = "asphyxiation"
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
@@ -607,12 +601,14 @@
 		affecting.layer = 4
 		if(affecting)
 			affecting.grabbed_by -= src
-			if(!affecting.grabbed_by)
-				assailant.is_grabbing = FALSE
 			affecting = null
 	if(assailant)
 		if(assailant.client)
 			assailant.client.screen -= hud
+		var/list/grabs = assailant.GetGrabs()
+		message_admins(grabs.len)
+		if(!grabs.len)
+			REMOVE_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, STAMINA_TRAIT)
 		assailant = null
 	QDEL_NULL(hud)
 	return ..()

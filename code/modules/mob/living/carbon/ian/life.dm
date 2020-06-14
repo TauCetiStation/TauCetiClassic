@@ -164,7 +164,7 @@
 
 	if(hud_used && hud_used.staminadisplay)
 		var/obj/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
-		SB.icon_state = "stam_bar_[round(stamina, 5)]"
+		SB.icon_state = "stam_bar_[round(stamina_ian, 5)]"
 
 	if(oxygen_alert)
 		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
@@ -394,7 +394,7 @@
 	if(confused)
 		confused = max(0, confused - 1)
 
-	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
+	stamina_ian = min(stamina_ian + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 
 	if(resting)
 		dizziness = max(0, dizziness - 5)

@@ -825,7 +825,7 @@
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			if(L.getStamina() >= resist_cost)
-				G.assailant.adjustStamina(resist_cost)
+				G.assailant.adjustStamina(-resist_cost)
 			switch(G.state)
 				if(GRAB_PASSIVE)
 					if(ishuman(G.assailant))
@@ -836,7 +836,7 @@
 					qdel(G)
 		if(resisting)
 			if(L.getStamina() >= resist_cost)
-				L.adjustStamina(resist_cost)
+				L.adjustStamina(-resist_cost)
 				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
