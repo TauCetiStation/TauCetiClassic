@@ -1,10 +1,4 @@
-#define NOTHING_FILTER -1
-#define PHORON_FILTER 0
-#define OXYGEN_FILTER 1
-#define NITROGEN_FILTER 2
-#define CARBON_DIOXIDE_FILTER 3
-#define NITROUS_OXIDE_FILTER 4
-#define HYDROGEN_FILTER 5
+#define NOTHING_FILTER "Nothing"
 
 /obj/machinery/atmospherics/components/trinary/filter
 	icon = 'icons/atmos/filter.dmi'
@@ -21,10 +15,8 @@
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_FILTER
 
-	var/filter_type = NOTHING_FILTER
+	var/filter_type = NOTHING_FILTER  // or gas id
 	var/list/filtered_out = list()
-
-
 	frequency = 0
 
 /obj/machinery/atmospherics/components/trinary/filter/on
@@ -39,19 +31,9 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/atom_init()
 	. = ..()
-	switch(filter_type)
-		if(PHORON_FILTER)
-			filtered_out = list("phoron")
-		if(OXYGEN_FILTER)
-			filtered_out = list("oxygen")
-		if(NITROGEN_FILTER)
-			filtered_out = list("nitrogen")
-		if(CARBON_DIOXIDE_FILTER)
-			filtered_out = list("carbon_dioxide")
-		if(NITROUS_OXIDE_FILTER)
-			filtered_out = list("sleeping_agent")
-		if(HYDROGEN_FILTER)
-			filtered_out = list("hydrogen")
+	
+	if(filter_type != NOTHING_FILTER)
+		filtered_out = list("[filter_type]")
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -128,35 +110,24 @@
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(user) // -- TLE
 	var/dat
 	var/current_filter_type
-	switch(filter_type)
-		if(PHORON_FILTER)
-			current_filter_type = "Phoron"
-		if(OXYGEN_FILTER)
-			current_filter_type = "Oxygen"
-		if(NITROGEN_FILTER)
-			current_filter_type = "Nitrogen"
-		if(CARBON_DIOXIDE_FILTER)
-			current_filter_type = "Carbon Dioxide"
-		if(NITROUS_OXIDE_FILTER)
-			current_filter_type = "Nitrous Oxide"
-		if(HYDROGEN_FILTER)
-			current_filter_type = "Hydrogen"
-		if(NOTHING_FILTER)
-			current_filter_type = "Nothing"
-		else
-			current_filter_type = "ERROR - Report this bug to the admin, please!"
+
+	if(filter_type != NOTHING_FILTER)
+		current_filter_type = filter_type
+	else
+		current_filter_type = NOTHING_FILTER
 
 	dat += {"
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
-			<b>Filtering: </b>[current_filter_type]<br><HR>
-			<h4>Set Filter Type:</h4>
-			<A href='?src=\ref[src];filterset=0'>Phoron</A><BR>
-			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
-			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
-			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
-			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
-			<A href='?src=\ref[src];filterset=5'>Hydrogen</A><BR>
-			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
+			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
+			<h4>Set Filter Type:</h4>"}	
+
+	for(var/id in gas_data.gases)
+		if(gas_data.gases_knowable[id])
+			dat += {"
+				<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
+
+	dat += {"
+			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
 			<HR>
 			<B>Set Flow Rate Limit:</B>
 			[src.set_flow_rate]L/s | <a href='?src=\ref[src];set_flow_rate=1'>Change</a><BR>
@@ -174,22 +145,12 @@
 	add_fingerprint(usr)
 
 	if(href_list["filterset"])
-		filter_type = text2num(href_list["filterset"])
+		filter_type = href_list["filterset"]
 
 		filtered_out.Cut() //no need to create new lists unnecessarily
-		switch(filter_type)
-			if(PHORON_FILTER)
-				filtered_out += "phoron"
-			if(OXYGEN_FILTER)
-				filtered_out += "oxygen"
-			if(NITROGEN_FILTER)
-				filtered_out += "nitrogen"
-			if(CARBON_DIOXIDE_FILTER)
-				filtered_out += "carbon_dioxide"
-			if(NITROUS_OXIDE_FILTER)
-				filtered_out += "sleeping_agent"
-			if(HYDROGEN_FILTER)
-				filtered_out += "hydrogen"
+
+		if(filter_type != NOTHING_FILTER)
+			filtered_out += filter_type
 
 	var/datum/gas_mixture/air1 = AIR1
 
@@ -222,9 +183,4 @@
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
 
-#undef PHORON_FILTER
-#undef OXYGEN_FILTER
-#undef NITROGEN_FILTER
-#undef CARBON_DIOXIDE_FILTER
-#undef NITROUS_OXIDE_FILTER
-#undef HYDROGEN_FILTER
+#undef NOTHING_FILTER
