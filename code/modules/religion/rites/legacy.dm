@@ -55,8 +55,6 @@
 /datum/religion_rites/legacy/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(on_invocation_spell && prob(invocation_prob))
 		cast_spell(user, AOG, on_invocation_spell)
-	return TRUE
-
 
 
 /*
@@ -66,7 +64,7 @@
 /datum/religion_rites/legacy/charge
 	name = "Electric Charge Pulse"
 	desc = "Charge equipment, cells, and other things around you."
-	ritual_length = (30 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("By the power of our gods...",
 						"...We call upon you, who make the energy flow...",
 						"...to give us a piece of what we will be...")

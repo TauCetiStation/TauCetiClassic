@@ -16,7 +16,7 @@
 
 /obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	for(var/i in 1 to divine_power)
@@ -188,7 +188,7 @@
 
 /obj/effect/proc_holder/spell/targeted/food/cast()
 	for(var/mob/living/carbon/human/M in viewers(usr.loc))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	spawn_food(usr.loc, 4 + rand(1, divine_power))
@@ -215,7 +215,7 @@
 	if(divine_power != 1)
 		summon_amt += divine_power
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 	..()
 
