@@ -81,6 +81,16 @@ var/global/list/radial_menus = list()
 	var/py_shift = 0
 	var/entry_animation = TRUE
 
+/datum/radial_menu/New()
+	close_button = new
+	close_button.parent = src
+
+/datum/radial_menu/Destroy()
+	Reset()
+	hide()
+	QDEL_NULL(custom_check_callback)
+	return ..()
+
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
 	var/atom/movable/AM = anchor
@@ -204,10 +214,6 @@ var/global/list/radial_menus = list()
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
 
-/datum/radial_menu/New()
-	close_button = new
-	close_button.parent = src
-
 /datum/radial_menu/proc/Reset()
 	choices.Cut()
 	choices_icons.Cut()
@@ -274,12 +280,6 @@ var/global/list/radial_menus = list()
 			else
 				next_check = world.time + check_delay
 		stoplag()
-
-/datum/radial_menu/Destroy()
-	Reset()
-	hide()
-	QDEL_NULL(custom_check_callback)
-	. = ..()
 
 /*
 	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen)
