@@ -15,20 +15,14 @@
 		var/obj/item/weapon/ore/O = W
 		user.remove_from_mob(O)
 		src.contents += O
-		if(stored_ore[O.name])
-			stored_ore[O.name]++
-		else
-			stored_ore[O.name] = 1
+		(stored_ore[O.name]) ? stored_ore[O.name]++ : (stored_ore[O.name] = 1)
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-			if(stored_ore[O.name])
-				stored_ore[O.name]++
-			else
-				stored_ore[O.name] = 1
+			(stored_ore[O.name]) ? stored_ore[O.name]++ : (stored_ore[O.name] = 1)
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 
 	return
@@ -36,9 +30,8 @@
 /obj/structure/ore_box/attack_hand(mob/user)
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	for(var/obj/item/weapon/ore/O in contents)
-		if(stored_ore[O.name])
-			dat += text("[O.name]: [stored_ore[O.name]]<br>")
+	for(var/ore in stored_ore)
+		dat += text("[ore]: [stored_ore[ore]]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[entity_ja(dat)]", "window=orebox")
