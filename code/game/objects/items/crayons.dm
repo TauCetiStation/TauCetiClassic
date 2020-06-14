@@ -65,10 +65,6 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/list/actions = list(
-		"graffiti" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "face"),
-		"rune" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "rune1"),
-		"letter" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "a"),
 		if(actions.len == 0)
 			var/static/list/action_icon = list(
 			"graffiti" = "face",
