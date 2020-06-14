@@ -195,6 +195,11 @@
 	cut_overlays()
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
+/obj/screen/stamina_bar
+	name = "stamina"
+	icon = 'icons/effects/staminabar.dmi'
+	icon_state = "stam_bar_100"
+	
 /obj/screen/pull
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -212,7 +217,6 @@
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return 1
-
 	switch(name)
 		if("toggle")
 			if(usr.hud_used.inventory_shown)

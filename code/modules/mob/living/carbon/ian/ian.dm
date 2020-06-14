@@ -14,7 +14,7 @@
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
 	var/response_harm   = "kicks"
-	var/stamina_ian = 100
+
 	var/list/speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	var/list/emote_hear = list("barks", "woofs", "yaps","pants")
@@ -288,8 +288,8 @@
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina_ian >= 10)
-		stamina_ian = max(0, stamina_ian - 10)
+	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
+		stamina = max(0, stamina - 10)
 		tally -= 1
 
 	var/health_deficiency = (100 - health)
