@@ -147,7 +147,7 @@
 	if(gas_data.gases_knowable[href_list["filterset"]])
 		filter_type = href_list["filterset"]
 	else
-		filter_type. = NOTHING_FILTER
+		filter_type = NOTHING_FILTER
 
 		filtered_out.Cut() //no need to create new lists unnecessarily
 
