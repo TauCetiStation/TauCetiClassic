@@ -38,6 +38,10 @@
 		return FALSE
 	if(target.anchored)
 		return FALSE
+	if(isliving(src))
+		var/mob/living/L = src 
+		if(L.getStamina() <= 0)
+			return FALSE
 	return TRUE
 
 /mob/proc/tryGrab(atom/movable/target, force_state, show_warnings = TRUE)
@@ -70,7 +74,7 @@
 	. = ..()
 	assailant = loc
 	affecting = victim
-
+	assailant.is_grabbing = TRUE
 	hud = new /obj/screen/grab(src)
 	hud.master = src
 
@@ -173,9 +177,21 @@
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
-
+	
 	if(assailant.pulling == affecting)
 		assailant.stop_pulling()
+	var/grab_name
+	switch(state)
+		if(GRAB_AGGRESSIVE)
+			grab_name = "grip"
+		if(GRAB_NECK)
+			grab_name = "headlock"
+		if(GRAB_KILL)
+			grab_name = "asphyxiation"
+	if(assailant.getStamina() <= 0)
+		visible_message("<span class='danger'>[affecting] broken free of [assailant]'s [grab_name]!</span>")
+		QDEL_NULL(src)
+		return
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
@@ -453,7 +469,8 @@
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(CLAMP(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustStamina(-8)
+						H.adjustHalLoss(CLAMP(0, 10 - H.halloss, 10)) //up to 10 halloss
 					return
 				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
@@ -590,6 +607,8 @@
 		affecting.layer = 4
 		if(affecting)
 			affecting.grabbed_by -= src
+			if(!affecting.grabbed_by)
+				assailant.is_grabbing = FALSE
 			affecting = null
 	if(assailant)
 		if(assailant.client)

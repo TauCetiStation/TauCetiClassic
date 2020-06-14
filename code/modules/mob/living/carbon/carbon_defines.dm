@@ -35,4 +35,4 @@
 	var/obj/item/neck
 	var/obj/item/mouth
 
-	var/stamina = 100 //Ian uses this for now.
+	 //Ian uses this for now.

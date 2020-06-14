@@ -14,7 +14,7 @@
 	var/response_help  = "pets"
 	var/response_disarm = "bops"
 	var/response_harm   = "kicks"
-
+	var/stamina_ian = 100
 	var/list/speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	var/list/emote_hear = list("barks", "woofs", "yaps","pants")

@@ -359,6 +359,19 @@
 		add_combo_value_all(amount - halloss)
 	halloss = CLAMP(amount, 0, maxHealth * 2)
 
+// ========== STAMINA ==========
+/mob/living/proc/getStamina()
+	return stamina
+
+/mob/living/proc/adjustStamina(amount)
+	if(status_flags & GODMODE)
+		return
+	stamina = CLAMP(stamina + amount, 0, maxStamina)
+
+/mob/living/proc/setStamina(amount)
+	if(status_flags & GODMODE)
+		return
+	stamina = CLAMP(amount, 0, maxStamina)
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -478,6 +491,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setStamina(maxStamina)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -810,6 +824,8 @@
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
+			if(L.getStamina() >= resist_cost)
+				G.assailant.adjustStamina(resist_cost)
 			switch(G.state)
 				if(GRAB_PASSIVE)
 					if(ishuman(G.assailant))
@@ -818,31 +834,10 @@
 							H.adjustBruteLoss(5) // We bit them.
 							H.shoving_fingers = FALSE
 					qdel(G)
-				if(GRAB_AGGRESSIVE)
-					if(ishuman(G.assailant))
-						if(prob(25))
-							G.assailant.adjustHalLoss(5)
-					if(prob(50 - (L.lying ? 35 : 0)))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				if(GRAB_NECK)
-					if(ishuman(G.assailant))
-						if(prob(20))
-							G.assailant.adjustHalLoss(10)
-					if(prob(10))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
-						qdel(G)
-				if(GRAB_KILL)
-					if(ishuman(G.assailant))
-						if(prob(15))
-							G.assailant.adjustHalLoss(15)
-							if(prob(1))
-								G.assailant.Weaken(3) //for very rare but funny comebacks
-					if(prob(5))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s asphyxiation!</span>")
-						qdel(G)
 		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+			if(L.getStamina() >= resist_cost)
+				L.adjustStamina(resist_cost)
+				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
