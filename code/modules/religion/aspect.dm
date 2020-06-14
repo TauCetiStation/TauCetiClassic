@@ -1,12 +1,15 @@
 /datum/aspect
 	var/name
 	var/desc = "This aspect not used in game"
-	//used for give a god the information about aspect and desire items
+	// Used for give a god the information about aspect and desire items
 	var/god_desc
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
+	// Used in the radial menu when choosing a ritual
+	var/icon = 'icons/mob/radial.dmi'
+	var/icon_state = "radial_magic"
 
 	// List of holy turfs blessed with this aspect.
 	var/list/holy_turfs

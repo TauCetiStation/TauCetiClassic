@@ -273,7 +273,7 @@ var/global/list/radial_menus = list()
 				return
 			else
 				next_check = world.time + check_delay
-		stoplag(1)
+		stoplag()
 
 /datum/radial_menu/Destroy()
 	Reset()
