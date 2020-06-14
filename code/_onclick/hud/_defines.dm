@@ -141,3 +141,4 @@
 #define ui_ian_neck    "CENTER-2:16,SOUTH:5"
 #define ui_ian_head    "CENTER-3:14,SOUTH:5"
 #define ui_ian_pselect "EAST-4:22,SOUTH:5"
+#define ui_stamina_ian "EAST-1:28,CENTER:5"
