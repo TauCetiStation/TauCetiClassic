@@ -19,6 +19,9 @@
 // Send ask to victim
 /datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	var/mob/victim = AOG.buckled_mob
+	if(!victim)
+		return
+
 	if(!victim.IsAdvancedToolUser())
 		consent = TRUE
 	else 
