@@ -167,6 +167,7 @@
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
+		return
 
 	try_slice(I, user)
 
