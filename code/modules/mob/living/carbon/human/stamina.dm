@@ -11,7 +11,11 @@
 	if(isnull(maxStamina))
 		hud_used.staminadisplay.invisibility = 101
 		return
-
+	if(getStamina() == maxStamina)
+		hud_used.staminadisplay.invisibility = 101
+		return
+	else
+		hud_used.staminadisplay.invisibility = initial(hud_used.staminadisplay.invisibility)
 	if(getStamina() <= 0)
 		hud_used.staminadisplay.icon_state = "stam_bar_0"
 		return

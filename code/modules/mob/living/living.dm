@@ -818,14 +818,18 @@
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
 		var/resisting = 0
+		var/size_ratio_resisting
+		var/size_ratio_grabbing
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
-			if(L.getStamina() >= resist_cost)
-				G.assailant.adjustStamina(-resist_cost)
+			size_ratio_resisting = get_size_ratio(G.assailant, G.affecting)
+			size_ratio_grabbing = get_size_ratio(G.affecting, G.assailant)
+			if(L.getStamina() >= resist_cost * size_ratio_grabbing)
+				G.assailant.adjustStamina(-resist_cost * size_ratio_grabbing)
 			switch(G.state)
 				if(GRAB_PASSIVE)
 					if(ishuman(G.assailant))
@@ -835,8 +839,8 @@
 							H.shoving_fingers = FALSE
 					qdel(G)
 		if(resisting)
-			if(L.getStamina() >= resist_cost)
-				L.adjustStamina(-resist_cost)
+			if(L.getStamina() >= resist_cost * size_ratio_resisting)
+				L.adjustStamina(-resist_cost * size_ratio_resisting)
 				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
