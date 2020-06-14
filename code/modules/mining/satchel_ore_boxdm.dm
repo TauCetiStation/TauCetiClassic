@@ -11,12 +11,12 @@
 	var/list/stored_ore = list()
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/ore))
+	if(istype(W, /obj/item/weapon/ore))
 		var/obj/item/weapon/ore/O = W
 		user.remove_from_mob(O)
 		src.contents += O
 		(stored_ore[O.name]) ? stored_ore[O.name]++ : (stored_ore[O.name] = 1)
-	if (istype(W, /obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
@@ -24,11 +24,9 @@
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 			(stored_ore[O.name]) ? stored_ore[O.name]++ : (stored_ore[O.name] = 1)
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
-
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user)
-
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
 	for(var/ore in stored_ore)
 		dat += text("[ore]: [stored_ore[ore]]<br>")
