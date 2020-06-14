@@ -144,7 +144,7 @@
 
 	using = new /obj/screen/corgi/stamina_bar()
 	using.icon_state = "stam_bar_[round(((IAN.stamina / 100) * 100), 5)]"
-	using.screen_loc = ui_stamina
+	using.screen_loc = ui_stamina_ian
 	src.adding += using
 	staminadisplay = using
 
