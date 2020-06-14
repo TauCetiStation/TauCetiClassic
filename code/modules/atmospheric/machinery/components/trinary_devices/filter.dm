@@ -18,7 +18,7 @@
 	var/filter_type = NOTHING_FILTER  // or gas id
 	var/list/filtered_out = list()
 	frequency = 0
-	var/subdat
+	var/filters_dat
 
 /obj/machinery/atmospherics/components/trinary/filter/on
 	icon_state = "map_on"
@@ -46,8 +46,7 @@
 
 	for(var/id in gas_data.gases)
 		if(gas_data.gases_knowable[id])
-			subdat += {"
-				<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
+			filters_dat += "<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"
 	
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	..()
@@ -126,7 +125,7 @@
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
 			<h4>Set Filter Type:</h4>"}	
-	dat += subdat
+	dat += filters_dat
 	dat += {"
 			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
 			<HR>
