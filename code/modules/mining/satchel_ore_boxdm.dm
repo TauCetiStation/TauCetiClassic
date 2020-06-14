@@ -14,7 +14,7 @@
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
 		stored_ore[W.name]++
-	if(istype(W, /obj/item/weapon/storage))
+	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
