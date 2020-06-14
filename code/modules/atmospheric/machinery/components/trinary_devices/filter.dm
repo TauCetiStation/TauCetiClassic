@@ -18,6 +18,7 @@
 	var/filter_type = NOTHING_FILTER  // or gas id
 	var/list/filtered_out = list()
 	frequency = 0
+	var/subdat
 
 /obj/machinery/atmospherics/components/trinary/filter/on
 	icon_state = "map_on"
@@ -43,11 +44,10 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
-	var/subdat
 	for(var/id in gas_data.gases)
-	if(gas_data.gases_knowable[id])
-		subdat += {"
-			<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
+		if(gas_data.gases_knowable[id])
+			subdat += {"
+				<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"}
 	
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	..()
