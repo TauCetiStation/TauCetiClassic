@@ -14,6 +14,10 @@
 	var/gang = 0 // For marking territory
 	var/edible = 1
 
+	var/list/actions = list()
+	var/list/arrows = list()
+	var/list/letters = list()
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -65,8 +69,15 @@
 		"graffiti" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "face"),
 		"rune" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "rune1"),
 		"letter" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "a"),
-		"arrow" = image(icon = 'icons/effects/crayondecal.dmi', icon_state = "down")
-		)
+		if(actions.len == 0)
+			var/static/list/action_icon = list(
+			"graffiti" = "face",
+			"rune" = "rune1",
+			"letter" = "a",
+			"arrow" = "up")
+			for(var/action in action_icon)
+				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
+
 		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
 		var/sub = ""
 		if(!drawtype)
@@ -74,10 +85,10 @@
 		switch(drawtype)
 			if("arrow")
 				sub = "an"
-				var/list/directions = list("up", "right", "down", "left")
-				var/list/arrows = list()
-				for(var/dir in directions)
-					arrows[dir] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = dir)
+				if(arrows.len == 0)
+					var/static/list/directions = list("up", "right", "down", "left")
+					for(var/dir in directions)
+						arrows[dir] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = dir)
 
 				drawtype = show_radial_menu(user, target, arrows, require_near = TRUE)
 				if(!drawtype)
@@ -85,10 +96,10 @@
 
 			if("letter")
 				sub = "a letter"
-				var/list/abs = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-				var/list/letters = list()
-				for(var/letter in abs)
-					letters[letter] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = letter)
+				if(letters.len == 0)
+					var/static/list/abs = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+					for(var/letter in abs)
+						letters[letter] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = letter)
 
 				drawtype = show_radial_menu(user, target, letters, require_near = TRUE)
 				if(!drawtype)
