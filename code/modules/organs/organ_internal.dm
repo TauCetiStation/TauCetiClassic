@@ -150,6 +150,24 @@
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
 
+	var/pumping_rate = 5
+	var/bruised_loss = 3
+
+/obj/item/organ/internal/heart/ipc/process()
+	if(is_broken())
+		return
+
+	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
+	if(!lungs)
+		return
+	
+	var/pumping_volume = pumping_rate
+	if(is_bruised())
+		pumping_volume -= bruised_loss
+	
+	if(pumping_volume > 0)
+		lungs.add_refrigerant(pumping_volume)
+
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	organ_tag = O_LUNGS
@@ -167,6 +185,11 @@
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+
+	var/refrigerant_max = 50
+	var/refrigerant = 50
+	var/refrigerant_rate = 5
+	var/bruised_loss = 3
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -211,6 +234,33 @@
 					owner.adjustToxLoss(0.1 * process_accuracy)
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
+
+/obj/item/organ/internal/lungs/ipc/process()
+	var/temp_gain = owner.species.synth_temp_gain
+
+	if((refrigerant > 0) && !is_broken())
+		var/refrigerant_spent = refrigerant_rate
+		refrigerant -= refrigerant_rate
+		if(refrigerant < 0)
+			refrigerant_spent += refrigerant
+			refrigerant = 0
+		
+		if(is_bruised())
+			refrigerant_spent -= bruised_loss
+		
+		if(refrigerant_spent > 0)
+			temp_gain -= refrigerant_spent
+
+	if(temp_gain > 0)
+		owner.bodytemperature += temp_gain
+		if(owner.bodytemperature > owner.species.synth_temp_max)
+			owner.bodytemperature = owner.species.synth_temp_max
+
+/obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
+	if(refrigerant < refrigerant_max)
+		refrigerant += volume
+		if(refrigerant > refrigerant_max)
+			refrigerant = refrigerant_max
 
 /obj/item/organ/internal/liver
 	name = "liver"

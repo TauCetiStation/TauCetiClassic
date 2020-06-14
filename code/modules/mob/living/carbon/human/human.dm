@@ -2202,11 +2202,5 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return TRUE
 
-/mob/living/carbon/human/proc/is_cooling_active()
-	if (!(is_type_organ(O_LUNGS, /obj/item/organ/internal/lungs/ipc) && is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)))
-		return TRUE
-
-	return !(is_bruised_organ(O_LUNGS) || is_bruised_organ(O_HEART))
-
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
