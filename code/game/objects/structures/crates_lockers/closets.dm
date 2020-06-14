@@ -15,6 +15,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
+	var/weight_modifier = 0.6 //percentage of weight of items inside the structure
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
@@ -29,9 +30,9 @@
 	PopulateContents()
 	update_icon()
 	for(var/mob/M in src)
-		weight += 1
+		weight += weight
 	for(var/obj/O in src)
-		weight += O.weight * 0.3
+		weight += O.weight * weight_modifier
 
 	AddComponent(/datum/component/clickplace)
 
@@ -82,7 +83,7 @@
 			break
 		if(!I.anchored)
 			I.forceMove(src)
-			weight += I.weight * 0.3
+			weight += I.weight * weight_modifier
 			itemcount++
 
 	//Cham Projector Exception

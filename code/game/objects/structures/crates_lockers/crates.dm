@@ -8,6 +8,7 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	climbable = 1
+	weight_modifier = 0.3
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 

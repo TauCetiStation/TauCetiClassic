@@ -20,6 +20,7 @@
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
 	var/item_path = /obj/item/bodybag
+	weight_modifier = 1
 	density = 0
 
 
