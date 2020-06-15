@@ -35,7 +35,10 @@
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
 	wires = new(src)
-	if(!CA)
+	if(CA)
+		CA.loc = src
+		assembly = CA
+	else
 		assembly = new(src)
 		assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
