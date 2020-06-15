@@ -33,8 +33,11 @@ var/datum/subsystem/vote/SSvote
 			reset()
 		else
 			var/datum/browser/client_popup
+			var/T = CSS_THEME_DARK
+			if(mode == "restart")
+				T = CSS_THEME_LIGHT
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel")
+				client_popup = new(C, "vote", "Voting Panel", ntheme = T)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
