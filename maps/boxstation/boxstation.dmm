@@ -36959,6 +36959,7 @@
 /area/station/bridge/nuke_storage)
 "bpG" = (
 /obj/machinery/nuclearbomb{
+	nuketype = "NT";
 	r_code = "LOLNO"
 	},
 /obj/effect/landmark/droppod,

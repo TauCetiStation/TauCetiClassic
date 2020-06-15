@@ -54455,6 +54455,7 @@
 /area/station/civilian/dormitories/dormfive)
 "qGe" = (
 /obj/machinery/nuclearbomb{
+	nuketype = "NT";
 	r_code = "LOLNO"
 	},
 /obj/effect/landmark/droppod,
