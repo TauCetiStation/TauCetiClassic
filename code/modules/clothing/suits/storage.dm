@@ -26,7 +26,7 @@
 
 /obj/item/clothing/suit/storage/emp_act(severity)
 	if(pockets)
-		pockets.emp_act(severity)
+		pockets.emplode(severity)
 	..()
 
 /obj/item/clothing/suit/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)

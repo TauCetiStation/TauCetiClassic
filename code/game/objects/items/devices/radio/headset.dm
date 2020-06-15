@@ -46,6 +46,9 @@
 	ks1type = /obj/item/device/encryptionkey/syndicate
 	grid = TRUE
 
+/obj/item/device/radio/headset/ninja
+	grid = TRUE
+
 /obj/item/device/radio/headset/syndicate/alt
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"

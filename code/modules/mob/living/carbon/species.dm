@@ -704,11 +704,11 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	synth_temp_gain = 5 //this should cause IPCs to stabilize at ~52 C in a 20 C environment.
 
 	brute_mod = 1.5
 	burn_mod = 1
@@ -725,6 +725,7 @@
 	,NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
@@ -758,8 +759,8 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
-	                          /obj/item/device/robotanalyzer
+	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
+	                          /obj/item/stack/nanopaste
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
@@ -842,6 +843,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
@@ -1006,6 +1008,7 @@
 
 	flags = list(
 		NO_BLOOD = TRUE,
+		NO_DNA = TRUE,
 		NO_BREATHE = TRUE,
 		NO_SCAN = TRUE,
 		NO_PAIN = TRUE,

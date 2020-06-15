@@ -1444,7 +1444,7 @@
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
-		A.emp_act(severity)
+		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
 	if(istype(target, /mob/living/carbon/human))

@@ -313,5 +313,5 @@
 
 /obj/item/device/paicard/emp_act(severity)
 	for(var/mob/M in src)
-		M.emp_act(severity)
+		M.emplode(severity)
 	..()

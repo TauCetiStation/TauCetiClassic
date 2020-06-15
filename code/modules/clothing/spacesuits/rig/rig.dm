@@ -468,7 +468,7 @@
 /obj/item/clothing/suit/space/rig/emp_act(severity)
 	//drain some charge
 	if(cell)
-		cell.emp_act(severity + 1)
+		cell.emplode(severity + 1)
 
 	//possibly damage some modules
 	take_hit((100/severity), "electrical pulse", is_emp = TRUE)

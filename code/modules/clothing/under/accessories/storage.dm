@@ -33,7 +33,7 @@
 	return TRUE
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
-	hold.emp_act(severity)
+	hold.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)

@@ -184,3 +184,21 @@
 			to_chat(user, "The charge meter reads [round(cell.percent())]%.")
 		else
 			to_chat(user, "It doesn't have a power cell installed.")
+
+/obj/item/device/suit_cooling_unit/miniature
+	name = "Miniature suit cooling device"
+	desc = "Minituarized heat sink that can be hooked up to a space suit's existing temperature controls to cool down the suit's internals. Weaker than it's bigger counterpart."
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/device.dmi'
+	icon_state = "miniaturesuitcooler0"
+	max_cooling = 8
+	charge_consumption = 10
+
+/obj/item/device/suit_cooling_unit/miniature/updateicon()
+	if (cover_open)
+		if (cell)
+			icon_state = "miniaturesuitcooler1"
+		else
+			icon_state = "miniaturesuitcooler2"
+	else
+		icon_state = "miniaturesuitcooler0"
