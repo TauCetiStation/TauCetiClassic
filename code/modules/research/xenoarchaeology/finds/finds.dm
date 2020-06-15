@@ -41,9 +41,9 @@
 	if(severity && prob(30))
 		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
-/obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pickaxe/brush))
-		if(W.use_tool(src, user, 20, volume = 50) && W)
+/obj/item/weapon/ore/strangerock/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pickaxe/brush))
+		if(I.use_tool(src, user, 20, volume = 50))
 			if(inside)
 				inside.forceMove(get_turf(src))
 				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
@@ -53,8 +53,8 @@
 			qdel(src)
 			return
 
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))
 			if(WT.isOn())
@@ -71,13 +71,13 @@
 					WT.use(1)
 		return
 
-	else if(istype(W,/obj/item/device/core_sampler))
-		var/obj/item/device/core_sampler/S = W
+	if(istype(I, /obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/S = I
 		S.sample_item(src, user)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
-	..()
+	. = ..()
 	if(prob(33))
 		src.visible_message("<span class='warning'>[src] crumbles away, leaving some dust and gravel behind.</span>")
 		qdel(src)
