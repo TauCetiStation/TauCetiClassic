@@ -249,6 +249,10 @@
 			update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if(!user.incapacitated() && in_range(user, src))
 		if(state_open)
 			close_machine()

@@ -34,6 +34,9 @@
 	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(in_range(user, src))
 		eject_id()
 

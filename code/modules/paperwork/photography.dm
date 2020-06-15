@@ -421,6 +421,9 @@
 		return
 	if(user.incapacitated())
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	set_zoom()
 
 /obj/item/device/camera/big_photos
