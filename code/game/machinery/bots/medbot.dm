@@ -179,7 +179,7 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/medbot/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked." : "unlocked."]</span>")
