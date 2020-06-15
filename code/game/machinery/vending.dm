@@ -670,7 +670,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 2,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 2,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 2,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 5)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/disposable/tea = 10)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -692,9 +692,9 @@
 	icon_vend = "coffee-vend"
 	light_color = "#b88b2e"
 	vend_delay = 34
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/disposable/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/disposable/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 15, /obj/item/weapon/reagent_containers/food/drinks/tea = 15, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 15)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee = 15, /obj/item/weapon/reagent_containers/food/drinks/disposable/tea = 15, /obj/item/weapon/reagent_containers/food/drinks/disposable/h_chocolate = 15)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
 
 
@@ -706,12 +706,12 @@
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snackred"
 	light_color = "#d00023"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/hell_ramen = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/chips = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen = 25,/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/hell_ramen = 25,
 					/obj/item/weapon/reagent_containers/food/snacks/chips = 10,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 14,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10)

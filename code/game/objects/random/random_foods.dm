@@ -23,8 +23,8 @@
 /obj/random/foods/food_snack/item_to_spawn()
 		return pick(\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,\
-						prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,\
-						prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen,\
+						prob(2);/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen,\
+						prob(2);/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/hell_ramen,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/chips,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/sosjerky,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/no_raisin,\

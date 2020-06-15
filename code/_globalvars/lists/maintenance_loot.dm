@@ -116,7 +116,7 @@ var/global/list/common_loot = list(
 
 	list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/coffee = 1,
+		/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee = 1,
 		) = 1,
 
 	list(

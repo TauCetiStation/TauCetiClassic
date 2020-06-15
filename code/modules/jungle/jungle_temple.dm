@@ -205,8 +205,8 @@
 			var/num = rand(2,6)
 			var/new_type = pick(
 			/obj/item/weapon/reagent_containers/food/drinks/bottle/beer, \
-			/obj/item/weapon/reagent_containers/food/drinks/tea, \
-			/obj/item/weapon/reagent_containers/food/drinks/dry_ramen, \
+			/obj/item/weapon/reagent_containers/food/drinks/disposable/tea, \
+			/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen, \
 			/obj/item/weapon/reagent_containers/food/snacks/candiedapple, \
 			/obj/item/weapon/reagent_containers/food/snacks/chocolatebar, \
 			/obj/item/weapon/reagent_containers/food/snacks/cookie, \

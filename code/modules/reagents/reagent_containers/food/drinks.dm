@@ -224,29 +224,6 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/coffee
-	name = "Robust Coffee"
-	desc = "Careful, the beverage you're about to enjoy is extremely hot."
-	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/coffee/atom_init()
-	. = ..()
-	reagents.add_reagent("coffee", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/tea
-	name = "Duke Purple Tea"
-	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
-	icon_state = "teacup"
-	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/tea/atom_init()
-	. = ..()
-	reagents.add_reagent("tea", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
-
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
@@ -258,51 +235,10 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate
-	name = "Dutch Hot Coco"
-	desc = "Made in Space South America."
-	icon_state = "hot_coco"
-	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/atom_init()
-	. = ..()
-	reagents.add_reagent("hot_coco", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen
-	name = "Dosi Ramen"
-	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
-	icon_state = "ramen"
-	flags = 0 // Default - closed container
-
-	var/ramen_reagent = "dry_ramen"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
-	. = ..()
-	reagents.add_reagent(ramen_reagent, 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
-	if(!is_open_container())
-		icon_state = initial(icon_state)
-	else if(!reagents.total_volume)
-		icon_state = "ramen_empty"
-	else
-		icon_state = "ramen_open"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
-	if (!is_open_container())
-		flags |= OPENCONTAINER
-		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		to_chat(user, "<span class='notice'>You open the [src].</span>")
-		update_icon()
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/disposable/on_reagent_change()
 	// Don't trust total_volume before all reactions end
 	if(!reagents.total_volume && !reagents.is_reaction_in_proccessing())
-		// Ramen can't be refilled. We have only one icon for content of ramen container and it's dohi ramen
+		// Disposable can't be refilled. We have only one icon for content of disposable container
 		// If ramen container empty and no reaction proccessing - remove volume
 		// Locking container return it to initial state and show message to open the container
 		reagents.maximum_volume = 0
@@ -311,7 +247,71 @@
 	update_icon()
 	..()
 
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen
+/obj/item/weapon/reagent_containers/food/drinks/disposable/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "crumpled_cup"
+	else
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee
+	name = "Robust Coffee"
+	desc = "Careful, the beverage you're about to enjoy is extremely hot."
+	icon_state = "coffee"
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee/atom_init()
+	. = ..()
+	reagents.add_reagent("coffee", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/tea
+	name = "Duke Purple Tea"
+	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	icon_state = "teacup"
+	item_state = "coffee"
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/tea/atom_init()
+	. = ..()
+	reagents.add_reagent("tea", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/h_chocolate
+	name = "Dutch Hot Coco"
+	desc = "Made in Space South America."
+	icon_state = "hot_coco"
+	item_state = "coffee"
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/h_chocolate/atom_init()
+	. = ..()
+	reagents.add_reagent("hot_coco", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen
+	name = "Dosi Ramen"
+	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
+	icon_state = "ramen"
+	flags = 0 // Default - closed container
+
+	var/ramen_reagent = "dry_ramen"
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/atom_init()
+	. = ..()
+	reagents.add_reagent(ramen_reagent, 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/update_icon()
+	if(!is_open_container())
+		icon_state = initial(icon_state)
+	else if(!reagents.total_volume)
+		icon_state = "ramen_empty"
+	else
+		icon_state = "ramen_open"
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/attack_self(mob/user)
+	if (!is_open_container())
+		flags |= OPENCONTAINER
+		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+		to_chat(user, "<span class='notice'>You open the [src].</span>")
+		update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/disposable/dry_ramen/hell_ramen
 	name = "Dosi Ramen (Spicy)"
 	desc = "Just add 10ml water, self heats! Unathi's favorite noodle with spicy flavor. DANGER: VERY SPICY! NOT TAJARAN FRIENDLY!"
 	icon_state = "ramen_spicy"
