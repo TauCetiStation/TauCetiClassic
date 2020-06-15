@@ -33,8 +33,11 @@ var/datum/subsystem/vote/SSvote
 			reset()
 		else
 			var/datum/browser/client_popup
+			var/T = CSS_THEME_DARK
+			if(mode == "restart")
+				T = CSS_THEME_LIGHT
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", ntheme = mode == "restart" ? CSS_THEME_LIGHT :  CSS_THEME_DARK)
+				client_popup = new(C, "vote", "Voting Panel", ntheme = T)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
@@ -228,11 +231,11 @@ var/datum/subsystem/vote/SSvote
 		else
 			last_vote_time[timer_mode] = world.time
 		log_vote(text)
-		var/sound = 'sound/misc/notice1.ogg'
+		var/vote_sound = 'sound/misc/notice1.ogg'
 		if(mode == "restart")
-			sound = 'sound/misc/interference.ogg'
+			vote_sound = 'sound/misc/interference.ogg'
 		for(var/mob/M in player_list)
-			M.playsound_local(null, sound, VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, vote_sound, VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
