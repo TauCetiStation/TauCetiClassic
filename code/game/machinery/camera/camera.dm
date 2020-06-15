@@ -35,7 +35,7 @@
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
 	wires = new(src)
-	assembly = new(src)
+	assembly = new()
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -233,7 +233,12 @@
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)
 		assembly.state = state
+		if(state)
+			assembly.anchored = 1
+		else
+			assembly.anchored = 0
 		assembly.loc = loc
+		assembly.update_icon()
 		assembly = null
 
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
