@@ -366,12 +366,12 @@
 /mob/living/proc/adjustStamina(amount)
 	if(status_flags & GODMODE)
 		return
-	stamina = CLAMP(stamina + amount, 0, maxStamina)
+	stamina = CLAMP(stamina + amount, minStamina, maxStamina)
 
 /mob/living/proc/setStamina(amount)
 	if(status_flags & GODMODE)
 		return
-	stamina = CLAMP(amount, 0, maxStamina)
+	stamina = CLAMP(amount, minStamina, maxStamina)
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -828,8 +828,8 @@
 			resisting++
 			size_ratio_resisting = get_size_ratio(G.assailant, G.affecting)
 			size_ratio_grabbing = get_size_ratio(G.affecting, G.assailant)
-			if(L.getStamina() >= resist_cost * size_ratio_grabbing)
-				G.assailant.adjustStamina(-resist_cost * size_ratio_grabbing)
+			if(L.getStamina() >= L.resist_cost * size_ratio_grabbing)
+				G.assailant.adjustStamina(-L.resist_cost * size_ratio_grabbing)
 			switch(G.state)
 				if(GRAB_PASSIVE)
 					if(ishuman(G.assailant))
@@ -839,8 +839,8 @@
 							H.shoving_fingers = FALSE
 					qdel(G)
 		if(resisting)
-			if(L.getStamina() >= resist_cost * size_ratio_resisting)
-				L.adjustStamina(-resist_cost * size_ratio_resisting)
+			if(L.getStamina() >= L.resist_cost * size_ratio_resisting)
+				L.adjustStamina(-L.resist_cost * size_ratio_resisting)
 				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))

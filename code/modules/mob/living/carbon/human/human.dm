@@ -141,8 +141,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	make_blood()
 	regenerate_icons()
 	var/list/damage = get_unarmed_attack()
-	stamina_damage = damage["damage"]
-	stamina_regen *= maxStamina/100
+	stamina_damage *= damage["damage"]
+	stamina_regen *= maxStamina/20
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src

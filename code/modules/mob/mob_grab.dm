@@ -248,7 +248,6 @@
 			if(!BP || BP.is_stump)
 				qdel(src)
 				return PROCESS_KILL
-		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
@@ -368,12 +367,13 @@
 			if(!BP || BP.is_stump)
 				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
+		if(force_down)
+			to_chat(assailant, "<span class='notice'>You can't properly grab [affecting]</span>")
+			return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 
 		affecting.log_combat(assailant, "neck-grabbed")
-
-		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
 		grab_name = "headlock"
 
@@ -383,7 +383,9 @@
 			if(AH.is_in_space_suit())
 				to_chat(assailant, "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>")
 				return
-
+		if(affecting.getStamina() > 0)
+			to_chat(assailant, "<span class='notice'>You can't strangle him, [affecting] is too endured right now.</span>")
+			return
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
 		affecting.log_combat(assailant, "strangled")

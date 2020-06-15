@@ -4,9 +4,10 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 	var/maxStamina = 100	//For grabs only right now
+	var/minStamina = -100
 	var/stamina = 100
-	var/resist_cost = 10 //Cost of grabs resisting
-	var/stamina_damage = 15 //When twisting, headlocking and so on
+	var/resist_cost = 15 //Cost of grabs resisting
+	var/stamina_damage = 10 //When twisting, headlocking and so on
 	var/stamina_regen = 1 //How much stamina to regenerate
 	var/hud_updateflag = 0
 
