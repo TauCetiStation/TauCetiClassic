@@ -53,10 +53,11 @@
 	virus2.makerandom()
 	//growth = 100//rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+/obj/item/weapon/virusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
-	..()
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
@@ -81,9 +82,11 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
-		return ..()
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+		return
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")

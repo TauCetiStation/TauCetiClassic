@@ -100,7 +100,7 @@
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
-	..()
+	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))

@@ -50,21 +50,22 @@
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+/obj/item/weapon/photo/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
-	else if(istype(P, /obj/item/device/occult_scanner))
+	else if(istype(I, /obj/item/weapon/lighter))
+		burnpaper(I, user)
+	else if(istype(I, /obj/item/device/occult_scanner))
 		for(var/A in photographed_names)
 			if(photographed_names[A] == /mob/dead/observer)
-				var/obj/item/device/occult_scanner/OS = P
+				var/obj/item/device/occult_scanner/OS = I
 				OS.scanned_type = /mob/dead/observer
 				to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 				break
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
@@ -190,27 +191,27 @@
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
+/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/camera_film))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [I] into \the [src].</span>")
-		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	..()
+	return ..()
 
-/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
-		OS.scanned_type = src.type
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+		return
+	return ..()
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()

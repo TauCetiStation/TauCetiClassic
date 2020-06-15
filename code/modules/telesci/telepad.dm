@@ -62,6 +62,7 @@
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
+
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -71,7 +72,8 @@
 		else if(!anchored)
 			anchored = 1
 			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
-	if(isscrewdriver(W))
+		return
+	else if(isscrewdriver(W))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
@@ -80,12 +82,16 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
-	if(iswelder(W) && stage == 1)
+		return
+	else if(iswelder(W) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
+		return
+	else
+		return ..()
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon

@@ -129,7 +129,7 @@ var/datum/subsystem/job/SSjob
 		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
-		if(!job.is_species_permitted(player.client))
+		if(!job.is_species_permitted(player.client.prefs.species))
 			continue
 
 		if(!job.map_check())

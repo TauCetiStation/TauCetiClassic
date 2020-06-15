@@ -213,7 +213,7 @@
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
-		O.emp_act(severity)
+		O.emplode(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
