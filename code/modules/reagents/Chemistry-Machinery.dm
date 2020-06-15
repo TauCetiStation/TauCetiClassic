@@ -1128,10 +1128,8 @@
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
 
 		var/obj/item/weapon/storage/bag/plants/P = O
-		P.close(user) //Force close the bag inventory to avoid a bug
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
+			P.remove_from_storage(G, src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				to_chat(user, "You fill the All-In-One grinder to the brim.")
@@ -1148,7 +1146,7 @@
 		return 1
 
 	user.remove_from_mob(O)
-	O.loc = src
+	src.contents += O
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0
