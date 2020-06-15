@@ -786,7 +786,8 @@
 
 /mob/living/carbon/human/proc/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
-		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
+		if (bodytemperature < 550)  // IPCs heat up until ~300C. No more 2000C IPCs
+			bodytemperature += species.synth_temp_gain	//just keep putting out heat.		//just keep putting out heat.
 		return
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature

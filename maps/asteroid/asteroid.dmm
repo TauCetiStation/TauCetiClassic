@@ -10596,10 +10596,10 @@
 /area/asteroid/mine/west_outpost)
 "xc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10657,10 +10657,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -10987,8 +10987,8 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	network = list("MINE");
-	dir = 1
+	dir = 1;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -11351,10 +11351,10 @@
 	pixel_y = -25
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11393,10 +11393,10 @@
 /area/asteroid/mine/eva)
 "zE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
 	frequency = 1379;
 	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent";
-	dir = 8
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -13197,10 +13197,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1379;
 	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent";
-	dir = 1
+	name = "Mining West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -13297,8 +13297,19 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table,
-/obj/item/device/gps/engineering,
-/obj/item/device/gps/engineering,
+/obj/item/weapon/paper_bin{
+	pixel_x = -2
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/weapon/pen{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

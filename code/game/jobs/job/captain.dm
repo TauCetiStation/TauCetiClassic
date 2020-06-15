@@ -13,14 +13,10 @@
 	salary = 300
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
-		~Luduk
-	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+
+// Non-human species can't be captains.
+/datum/job/captain/special_species_check(datum/species/S)
+	return S.name == HUMAN
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -62,7 +58,6 @@
 
 /datum/job/captain/get_access()
 	return get_all_accesses()
-
 
 /datum/job/hop
 	title = "Head of Personnel"

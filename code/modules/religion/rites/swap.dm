@@ -3,6 +3,10 @@
 	var/list/swap_list
 
 /datum/religion_rites/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/obj/O in range(1, AOG.loc))
 		if(swap_list[O.type])
 			var/swapping = swap_list[O.type]
@@ -19,7 +23,6 @@
 		if(prob(20))
 			step(O, pick(alldirs))
 			break
-	return TRUE
 
 /*
  * Devaluation
@@ -28,7 +31,7 @@
 /datum/religion_rites/swap/devaluation
 	name = "Devaluation"
 	desc = "Changes the denomination of banknotes one higher."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Lord, hope and support...",
 							  "...Thy Everlasting Throne, your backwater...",
 							  "...walked through the sky...",
@@ -59,7 +62,7 @@
 /datum/religion_rites/swap/upgrade
 	name = "Upgrade"
 	desc = "Upgrade scientific things."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("The moon was born...",
 							  "...the force was born...",
 							  "...She endowed these things with her power...",

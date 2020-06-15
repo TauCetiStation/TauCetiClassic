@@ -57,10 +57,12 @@
 		if(!instant)
 			qdel(src)
 		return
+	var/obj/item/i = usr.get_active_hand()
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti", "rune", "letter", "arrow", "cancel")
+		var/sub = ""
 		switch(drawtype)
 			if("cancel")
 				return
@@ -68,17 +70,20 @@
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "left", "right", "up", "down")
 				if(drawtype == "cancel")
 					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] an arrow on the [target.name].</span>")
+				sub = "an"
 			if("letter")
+				sub = "a letter"
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 				if(drawtype == "cancel")
 					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			if("graffiti")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
+				sub = ""
 			if("rune")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
+				sub = "a"
 
+		if(!in_range(src, target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
+			return
+		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
 		var/gangID
@@ -136,7 +141,7 @@
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			else
-				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 			if(instant<0)
 				playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 			uses = max(0,uses-1)
@@ -261,7 +266,7 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	if(iscarbon(target) && uses - 10 > 0)
+	if(iscarbon(target) && uses - 10 >= 0)
 		uses -= 10
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
@@ -273,7 +278,7 @@
 			H.lip_style = "spray_face"
 			H.lip_color = colour
 			H.update_body()
-	else if(istype(target, /obj/machinery/nuclearbomb))
+	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
 		if(!choice)
