@@ -124,8 +124,8 @@
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
-	if(O.force)
+/obj/item/clothing/mask/facehugger/attackby(obj/item/I, mob/user, params)
+	if(I.force)
 		Die()
 
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)

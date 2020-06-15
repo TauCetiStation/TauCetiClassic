@@ -445,21 +445,24 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
 
-/obj/item/ammo_box/magazine/borg45/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/weapon/gun/projectile/automatic/borg))
-		var/obj/item/weapon/gun/projectile/automatic/borg/SMG = A
+/obj/item/ammo_box/magazine/borg45/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/gun/projectile/automatic/borg))
+		var/obj/item/weapon/gun/projectile/automatic/borg/SMG = I
 		if (!SMG.magazine)
 			SMG.magazine = src
-			SMG.magazine.loc = SMG
+			SMG.magazine.forceMove(SMG)
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [SMG].</span>")
 			SMG.chamber_round()
-			A.update_icon()
+			I.update_icon()
 			update_icon()
-			return 1
+			return TRUE
+
 		else if (SMG.magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g buckshot)"
@@ -540,17 +543,18 @@
 	QDEL_NULL(power_supply)
 	return ..()
 
-/obj/item/ammo_box/magazine/plasma/attackby(obj/item/A, mob/user, silent = FALSE)
-	if(power_supply && isscrewdriver(A))
+/obj/item/ammo_box/magazine/plasma/attackby(obj/item/I, mob/user, params)
+	if(power_supply && isscrewdriver(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		user.put_in_hands(power_supply)
 		power_supply = null
 		update_icon()
-	else if(istype(A, /obj/item/weapon/stock_parts/cell) && !power_supply && user.drop_from_inventory(A))
+
+	else if(istype(I, /obj/item/weapon/stock_parts/cell) && !power_supply && user.drop_from_inventory(I, src))
 		playsound(src, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
-		A.forceMove(src)
-		power_supply = A
+		power_supply = I
 		update_icon()
+
 	else
 		return ..()
 

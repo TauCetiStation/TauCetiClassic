@@ -16,8 +16,8 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id))
+/obj/item/weapon/storage/lockbox/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id))
 		if(broken)
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
@@ -33,7 +33,8 @@
 				return
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
-	else if(istype(W, /obj/item/weapon/melee/energy/blade) && !broken)
+
+	else if(istype(I, /obj/item/weapon/melee/energy/blade) && !broken)
 		broken = TRUE
 		locked = FALSE
 		desc = "It appears to be broken."
@@ -47,10 +48,9 @@
 		user.visible_message("<span class='warning'>The locker has been sliced open by [user] with an energy blade!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
 	if(!locked)
-		..()
+		return ..()
 	else
 		to_chat(user, "<span class='warning'>Its locked!</span>")
-	return
 
 /obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(broken)
