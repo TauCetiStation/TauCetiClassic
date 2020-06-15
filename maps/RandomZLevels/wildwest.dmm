@@ -1262,7 +1262,7 @@
 /area/awaymission/wildwest/mines)
 "dZ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee,
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ea" = (
@@ -1466,7 +1466,7 @@
 /area/awaymission/wildwest/mines)
 "eG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee,
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly,
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)

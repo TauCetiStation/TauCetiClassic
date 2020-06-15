@@ -103,7 +103,7 @@
 /area/awaymission/academy/headmaster)
 "aq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/weapon/reagent_containers/food/drinks/disposable/coffee,
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ar" = (
@@ -186,7 +186,7 @@
 /area/awaymission/academy/headmaster)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/tea,
+/obj/item/weapon/reagent_containers/food/drinks/disposable/tea,
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aD" = (
@@ -356,7 +356,7 @@
 /area/awaymission/academy/headmaster)
 "bg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/tea,
+/obj/item/weapon/reagent_containers/food/drinks/disposable/tea,
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bh" = (
