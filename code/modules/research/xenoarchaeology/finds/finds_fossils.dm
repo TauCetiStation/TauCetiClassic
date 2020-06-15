@@ -50,15 +50,17 @@
 	. = ..()
 	icon_state = "horned_skull[rand(1, 2)]"
 
-/obj/item/weapon/fossil/skull/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/fossil/bone))
+/obj/item/weapon/fossil/skull/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/fossil/bone))
 		var/obj/o = new /obj/skeleton(get_turf(src))
 		var/a = new /obj/item/weapon/fossil/bone
 		var/b = new src.type
 		o.contents.Add(a)
 		o.contents.Add(b)
-		qdel(W)
+		qdel(I)
 		qdel(src)
+		return
+	return ..()
 
 /obj/skeleton
 	name = "Incomplete skeleton"

@@ -329,27 +329,28 @@
 					fuel += min(round(A.volume*3), 3) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
 					reagents.remove_reagent(A.id, min(A.volume, 1))
 
-/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
-	..()
+/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/I, mob/user, params)
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(iswelder(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(iswelder(I))
+			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.isOn())
 				light(user, "casually lights")
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
+		else if(istype(I, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = I
 			if(L.lit)
 				light(user)
-		else if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
+		else if(istype(I, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = I
 			if(M.lit)
 				light(user)
-		else if(istype(W, /obj/item/candle))
-			var/obj/item/candle/C = W
+		else if(istype(I, /obj/item/candle))
+			var/obj/item/candle/C = I
 			if(C.lit)
 				light(user)
 	else if(!safety)
 		to_chat(user, "<span class='notice'>Put the cap back on.</span>")
+	else
+		return ..()
 
 /obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
 	if(lit) // You can't switch the spray mode, if the thing's burning.

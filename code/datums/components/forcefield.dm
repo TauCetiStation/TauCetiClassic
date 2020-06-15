@@ -363,7 +363,7 @@
 		if(ismob(A))
 			UnregisterSignal(A, list(COMSIG_MOB_CLICK))
 
-	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(FORCEFIELDED_TIP))
+	SEND_SIGNAL(A, COMSIG_TIPS_REMOVE, list(FORCEFIELDED_TIP))
 
 	UnregisterSignal(A, list(COMSIG_LIVING_CHECK_SHIELDS))
 
@@ -382,3 +382,6 @@
 
 	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
 	LAZYREMOVE(protected, A)
+
+#undef FORCEFIELDING_TIP
+#undef FORCEFIELDED_TIP
