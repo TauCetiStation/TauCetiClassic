@@ -264,8 +264,11 @@
 			speak(message)
 			playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
 
-		for (var/mob/living/carbon/C in view(7,src)) //Time to find a patient!
-			if ((C.stat == DEAD) || !istype(C, /mob/living/carbon/human))
+		for (var/mob/living/carbon/human/C in view(7,src)) //Time to find a patient!
+			if (C.stat == DEAD)
+				continue
+
+			if(C.species.flags[NO_BLOOD])	
 				continue
 
 			if ((C == oldpatient) && (world.time < last_found + 100))
