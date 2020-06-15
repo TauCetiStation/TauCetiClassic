@@ -14,9 +14,9 @@
 	var/gang = 0 // For marking territory
 	var/edible = 1
 
-	var/list/actions = list()
-	var/list/arrows = list()
-	var/list/letters = list()
+	var/list/actions
+	var/list/arrows
+	var/list/letters
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
@@ -65,7 +65,8 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		if(actions.len == 0)
+		if(!actions)
+			actions = list()
 			var/static/list/action_icon = list(
 			"graffiti" = "face",
 			"rune" = "rune1",
@@ -81,7 +82,8 @@
 		switch(drawtype)
 			if("arrow")
 				sub = "an"
-				if(arrows.len == 0)
+				if(!arrows)
+					arrows = list()
 					var/static/list/directions = list("up", "right", "down", "left")
 					for(var/dir in directions)
 						arrows[dir] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = dir)
@@ -92,10 +94,10 @@
 
 			if("letter")
 				sub = "a letter"
-				if(letters.len == 0)
-					var/static/list/abs = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-					for(var/letter in abs)
-						letters[letter] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = letter)
+				if(!letters)
+					letters = list()
+					for(var/letter in alphabet_uppercase)
+						letters[lowertext(letter)] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = lowertext(letter))
 
 				drawtype = show_radial_menu(user, target, letters, require_near = TRUE)
 				if(!drawtype)
