@@ -539,6 +539,10 @@ BLIND     // can't see anything
 	if(!istype(usr, /mob/living))
 		return
 
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	var/obj/item/clothing/accessory/A
 	if(accessories.len > 1)
 		A = input("Select an accessory to remove from [src]") as null|anything in accessories

@@ -292,6 +292,9 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(is_cyborg())
 		return
 	else
