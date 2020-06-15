@@ -649,6 +649,11 @@ REAGENT SCANNER
 /obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
 	if(!dropping.Adjacent(user))
 		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	scan(dropping, user)
 
 /obj/item/device/contraband_finder/proc/scan(atom/target, mob/user)

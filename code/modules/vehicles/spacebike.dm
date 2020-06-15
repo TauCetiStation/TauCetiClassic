@@ -63,6 +63,9 @@
 		return
 	if(user.incapacitated() || user.lying)
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(!load(M))
 		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
 		return
