@@ -28,15 +28,16 @@
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
-/obj/machinery/camera/atom_init()
+/obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
 	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
 	wires = new(src)
-	assembly = new()
-	assembly.state = 4
+	if(!CA)
+		assembly = new(src)
+		assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network

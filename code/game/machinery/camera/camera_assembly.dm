@@ -88,7 +88,7 @@
 				input = sanitize_safe(input(usr, "How would you like to name the camera?", "Set Camera Name", input_default(temptag)), MAX_LNAME_LEN)
 
 				state = 4
-				var/obj/machinery/camera/C = new(src.loc)
+				var/obj/machinery/camera/C = new(src.loc, src)
 				src.loc = C
 				C.assembly = src
 
