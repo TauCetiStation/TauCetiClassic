@@ -154,8 +154,8 @@
 	favor_cost = 200
 
 	needed_aspects = list(
-		ASPECT_WEAPON = 1,
 		ASPECT_SPAWN = 1,
+		ASPECT_WEAPON = 1,
 	)
 
 /datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
