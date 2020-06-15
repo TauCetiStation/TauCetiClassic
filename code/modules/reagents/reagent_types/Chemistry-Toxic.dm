@@ -612,21 +612,19 @@
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
-	if(ishuman(H))
-		if(!H.species.flags[NO_BLOOD])	
-			to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
-			H.visible_message("<b>[H]</b> suddenly transforms!")
-			H.gender = pick(MALE, FEMALE)
-			if(H.gender == MALE)
-				H.name = pick(first_names_male)
-			else
-				H.name = pick(first_names_female)
-			H.name += " [pick(last_names)]"
-			H.real_name = H.name
-			var/datum/preferences/A = new()	//Randomize appearance for the human
-			A.randomize_appearance_for(H)
-		else
-			to_chat(H,"<span class='warning'><b>You cannot use mulligan.</b></span>")
+	if(istype(H))
+		return
+	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
+	H.visible_message("<b>[H]</b> suddenly transforms!")
+	H.gender = pick(MALE, FEMALE)
+	if(H.gender == MALE)
+		H.name = pick(first_names_male)
+	else
+		H.name = pick(first_names_female)
+	H.name += " [pick(last_names)]"
+	H.real_name = H.name
+	var/datum/preferences/A = new()	//Randomize appearance for the human
+	A.randomize_appearance_for(H)
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
