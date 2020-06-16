@@ -98,23 +98,22 @@
 					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 					return
 
-/obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		var/obj/item/weapon/reagent_containers/syringe/S = W
+/obj/item/weapon/stock_parts/cell/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = I
 		user.SetNextMove(CLICK_CD_RAPID)
 
 		to_chat(user, "You inject the solution into the power cell.")
 
 		if(S.reagents.has_reagent("phoron", 5))
-
 			rigged = 1
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
 			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 		S.reagents.clear_reagents()
-
+		return
+	return ..()
 
 /obj/item/weapon/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)

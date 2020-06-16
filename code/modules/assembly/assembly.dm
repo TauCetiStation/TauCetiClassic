@@ -104,22 +104,20 @@
 		return 1
 	return 0
 
-
-/obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user)
-	if(isassembly(W))
-		var/obj/item/device/assembly/A = W
-		if((!A.secured) && (!secured))
-			attach_assembly(A,user)
+/obj/item/device/assembly/attackby(obj/item/I, mob/user, params)
+	if(isassembly(I))
+		var/obj/item/device/assembly/A = I
+		if(!A.secured && !secured)
+			attach_assembly(A, user)
 			return
-	if(isscrewdriver(W))
+
+	if(isscrewdriver(I))
 		if(toggle_secure())
 			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
 			to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
 		return
-	..()
-	return
-
+	return ..()
 
 /obj/item/device/assembly/process()
 	STOP_PROCESSING(SSobj, src)
