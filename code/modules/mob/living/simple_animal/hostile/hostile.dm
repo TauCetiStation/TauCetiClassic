@@ -39,7 +39,7 @@
 /mob/living/simple_animal/hostile/examine(mob/user)
 	..()
 	if(stat == DEAD)
-		to_chat(user, "<span class='danger'>Appears to be DEAD.</span>")
+		to_chat(user, "<span class='danger'>Appears to be dead.</span>")
 	else if(health <= maxHealth * 0.2)
 		to_chat(user, "<span class='danger'>Appears to be heavily wounded.</span>")
 	else if(health <= maxHealth * 0.6)
