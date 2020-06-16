@@ -277,6 +277,7 @@
 /datum/aspect/lightbending/light
 	name = ASPECT_LIGHT
 	desc = "Light interaction"
+	icon_state = "aspect_light"
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
 	return (F.get_lumcount() - 0.3) * power * 0.03
