@@ -18,6 +18,7 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/vtheme = CSS_THEME_DARK
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
@@ -33,11 +34,8 @@ var/datum/subsystem/vote/SSvote
 			reset()
 		else
 			var/datum/browser/client_popup
-			var/T = CSS_THEME_DARK
-			if(mode == "restart")
-				T = CSS_THEME_LIGHT
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", ntheme = T)
+				client_popup = new(C, "vote", "Voting Panel", ntheme = vtheme)
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
@@ -239,9 +237,12 @@ var/datum/subsystem/vote/SSvote
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
+		vtheme = CSS_THEME_DARK
+		if(mode == "restart")
+			vtheme = CSS_THEME_LIGHT
 		if(vote_type != "custom")
 			for(var/client/C in clients)
-				var/datum/browser/popup = new(C, "vote", "Voting Panel")
+				var/datum/browser/popup = new(C, "vote", "Voting Panel", ntheme = vtheme)
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
@@ -338,6 +339,7 @@ var/datum/subsystem/vote/SSvote
 		if("restart")
 			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
 				initiate_vote("restart",usr.key)
+				return
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
 				initiate_vote("crew_transfer",usr.key)
