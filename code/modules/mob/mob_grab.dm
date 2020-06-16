@@ -236,7 +236,9 @@
 							AH.eye_blind = 3
 		if(force_down)
 			if(affecting.loc != assailant.loc)
+				flick(hud.icon_state, hud)
 				force_down = 0
+				assailant.SetNextMove(CLICK_CD_ACTION)
 			else
 				affecting.Weaken(2)
 
