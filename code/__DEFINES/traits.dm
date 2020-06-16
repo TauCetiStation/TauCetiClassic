@@ -79,6 +79,7 @@
 #define TRAIT_LIGHT_STEP          "light_step"
 #define TRAIT_FREERUNNING         "freerunning"
 #define TRAIT_AGEUSIA             "ageusia"
+#define TRAIT_COOLED              "external_cooling_device"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention

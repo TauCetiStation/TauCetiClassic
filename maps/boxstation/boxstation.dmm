@@ -12411,6 +12411,13 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/xenobiology)
+"avm" = (
+/obj/machinery/life_assist/external_cooling_device,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/rnd/robotics)
 "avn" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -118742,7 +118749,7 @@ biE
 aiC
 boL
 blu
-blu
+avm
 bxF
 bmL
 bGd

@@ -100,3 +100,16 @@
 	icon_state_detached = "cpb_idle"
 
 	my_trait = TRAIT_CPB
+
+/obj/machinery/life_assist/external_cooling_device
+	name = "External Cooling Device"
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "cooler_idle"
+	desc = "External Cooling Device rapidly cools down any connected machine. There are IPC-compatible jacks."
+
+	density = TRUE
+
+	icon_state_attached = "cooler_pumping"
+	icon_state_detached = "cooler_idle"
+
+	my_trait = TRAIT_COOLED
