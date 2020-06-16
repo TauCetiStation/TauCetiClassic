@@ -172,28 +172,20 @@
 /*
  * Bucher's cleaver
  */
-/obj/item/weapon/butch
+/obj/item/weapon/kitchenknife/butch
 	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
-	flags = CONDUCT
 	force = 15.0
 	w_class = ITEM_SIZE_NORMAL
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
-	origin_tech = "materials=1"
-	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
-	edge = 1
 
-/obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
-	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
-		return
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
+
+
 
 /*
  * Rolling Pins
