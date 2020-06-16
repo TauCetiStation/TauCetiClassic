@@ -177,7 +177,7 @@
 			to_chat(user, "[msg2]")
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -202,10 +202,10 @@
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 		for(var/mob/O in player_list)
-			if (O.client && O.client.eye == src)
+			if(O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
-	else if (istype(W, /obj/item/device/camera_bug))
+	else if(istype(W, /obj/item/device/camera_bug))
 		if(!src.can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
 			return
