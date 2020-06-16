@@ -349,6 +349,7 @@ var/datum/subsystem/vote/SSvote
 				initiate_vote("custom",usr.key)
 		else
 			submit_vote(round(text2num(href_list["vote"])))
+			return
 	usr.vote()
 
 
