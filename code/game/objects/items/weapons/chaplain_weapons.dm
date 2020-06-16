@@ -33,14 +33,15 @@
 			to_chat(user, "<span class='warning'>The stars are not in position for this tribute. Await round start.</span>")
 			return
 
-		tried_replacing = TRUE
-
 		var/list/choices = list()
+		var/list/nullrod_list = list()
 		for(var/null_type in typesof(/obj/item/weapon/nullrod))
 			var/obj/item/weapon/nullrod/N = null_type
 			choices[initial(N.name)] = N
+			nullrod_list[initial(N.name)] = image(icon = initial(N.icon), icon_state = initial(N.icon_state))
 
-		var/choice = input(user, "Choose your nullrod type.", "Nullrod choice") as null|anything in choices
+		var/choice = show_radial_menu(user, src, nullrod_list, require_near = TRUE, tooltips = TRUE)
+
 		if(choice && Adjacent(user))
 			qdel(src)
 			var/chosen_type = choices[choice]

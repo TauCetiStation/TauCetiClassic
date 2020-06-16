@@ -72,8 +72,8 @@
 	favor_cost = 400
 
 	needed_aspects = list(
-		ASPECT_RESCUE = 1,
 		ASPECT_TECH = 1,
+		ASPECT_RESCUE = 1,
 	)
 
 	invoke_spelltype = /obj/effect/proc_holder/spell/targeted/charge/religion
