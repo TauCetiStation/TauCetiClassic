@@ -288,21 +288,21 @@
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_blood_level(mob/living/carbon/human/H)
 	if(!H.should_have_organ(O_HEART))
-		return FALSE
+		return TRUE
 	var/obj/item/organ/internal/heart/heart = H.organs_by_name[O_HEART]
 	if(!heart || H.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SURVIVE)
-		return TRUE
-	return FALSE
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_brain(mob/living/carbon/human/H)
 	if(!H.should_have_organ(O_BRAIN))
-		return FALSE
-	if(!H.organs_by_name[O_BRAIN])
 		return TRUE
+	if(!H.organs_by_name[O_BRAIN])
+		return FALSE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
 	if(!bodypart_head || (bodypart_head.is_stump))
-		return TRUE
-	return FALSE
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_charge(charge_amt)
 	return TRUE
