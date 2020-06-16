@@ -347,12 +347,11 @@
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(user) && !isrobot(user))
-		return
-	if(user.stat)
+	if(user.incapacitated() || user.lying)
 		return
 
-	if(user.incapacitated() || user.lying)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(AM))
@@ -363,12 +362,16 @@
 // mousedrop a crate to load the bot
 // can load anything if emagged
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(usr) && !isrobot(usr))
-		return
 	if(user.incapacitated() || user.lying)
 		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if (!istype(AM))
 		return
+
 	load(AM)
 
 // called to load a crate
