@@ -1,4 +1,5 @@
 #define MOB_SIZE 10
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
