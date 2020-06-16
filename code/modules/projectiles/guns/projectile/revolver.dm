@@ -16,11 +16,11 @@
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
-/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/I, mob/user, params)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
-		A.update_icon()
+		I.update_icon()
 		update_icon()
 		chamber_round()
 
@@ -87,16 +87,15 @@
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
 
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
-	..()
-	if(isscrewdriver(A))
+/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -109,13 +108,16 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && A.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
 				magazine.caliber = "38"
 				desc = initial(desc)
 				to_chat(user, "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>")
+
+	else
+		return ..()
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
@@ -146,7 +148,7 @@
 		chamber_round()
 	spun = 1
 
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = ..()
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(num_loaded)
@@ -156,8 +158,7 @@
 	if(get_ammo() > 0)
 		Spin()
 	update_icon()
-	A.update_icon()
-	return
+	I.update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
 	if(!spun && get_ammo(0,0))

@@ -6,16 +6,15 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	can_be_holstered = FALSE
-	var/alarmed = 0
+	var/alarmed = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
-	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
 	if(..() && chambered)
-		alarmed = 0
+		alarmed = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -68,9 +67,9 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
-		return silencer_attackby(I,user)
+		return silencer_attackby(I, user, params)
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
@@ -191,11 +190,11 @@
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
 		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "thompson SMG"
