@@ -136,6 +136,14 @@
 	tools = list(
 		TOOL_KNIFE = 1
 		)
+	sweep_step = 1.80
+/obj/item/weapon/kitchenknife/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -183,6 +191,7 @@
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
+	sweep_step = 2
 
 
 
