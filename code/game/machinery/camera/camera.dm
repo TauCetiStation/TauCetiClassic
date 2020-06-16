@@ -35,12 +35,12 @@
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
 	wires = new(src)
-	if(CA)
-		CA.forceMove(src)
-		assembly = CA
-	else
-		assembly = new(src)
-		assembly.state = 4
+	if(!CA)
+		CA = new
+	CA.forceMove(src)
+	assembly = CA
+	assembly.state = 4
+	
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
