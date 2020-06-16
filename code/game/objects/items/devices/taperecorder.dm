@@ -25,13 +25,6 @@
 
 	action_button_name = "Toggle Recorder"
 
-/obj/item/device/taperecorder/AltClick(mob/user)
-	. = ..()
-	if(!recording)
-		record()
-	else
-		stop()
-
 /obj/item/device/taperecorder/proc/update_available_icons()
 	icons_available = list()
 	if(recording)
