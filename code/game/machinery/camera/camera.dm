@@ -36,7 +36,7 @@
 		cameranet.addCamera(src)
 	wires = new(src)
 	if(CA)
-		CA.loc = src
+		CA.forceMove(src)
 		assembly = CA
 	else
 		assembly = new(src)
