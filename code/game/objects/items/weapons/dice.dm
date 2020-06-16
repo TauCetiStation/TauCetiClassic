@@ -22,15 +22,19 @@
 	icon_state = "gd6"
 	attack_verb = list("diced", "accursed")
 
-/obj/item/weapon/dice/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+/obj/item/weapon/dice/ghost/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-	if(istype(W, /obj/item/weapon/nullrod))
-		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
+
+	else if(istype(I, /obj/item/weapon/nullrod) && isliving(user))
+		var/mob/living/L = user
+		if(L.getBrainLoss() >= 60 || (L.mind && (L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
+
+	else
+		return ..()
 
 /obj/item/weapon/dice/ghost/proc/poof()
 	loc.visible_message("<span class='warning'>[src] trembles in a scary manner.</span>")
@@ -45,7 +49,7 @@
 		set_light(light_range, 1, "#a2fad1")
 		time--
 		sleep(1)
-	for(var/mob/living/A in viewers(3, loc))
+	for(var/mob/living/A in viewers(3,   loc))
 		A.confused += SLIGHTLY_CONFUSED
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
 	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
@@ -282,12 +286,14 @@
 	new /obj/item/weapon/dice/ghost/d12(src)
 	new /obj/item/weapon/dice/ghost/d20(src)
 
-/obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+
+	else
+		return ..()
 
 #undef AMPLITUDE
 #undef SLIGHTLY_CONFUSED

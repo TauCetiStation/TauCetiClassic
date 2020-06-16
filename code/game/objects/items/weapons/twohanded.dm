@@ -258,10 +258,10 @@
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W))
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I))
 		if(!hacked)
-			hacked = 1
+			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			light_color = ""
