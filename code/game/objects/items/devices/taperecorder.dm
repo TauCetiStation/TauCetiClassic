@@ -1,26 +1,56 @@
 /obj/item/device/taperecorder
-	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
 	name = "universal recorder"
+	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_SMALL
 	m_amt = 60
 	g_amt = 30
-	var/emagged = 0.0
-	var/recording = 0.0
-	var/playing = 0.0
-	var/timerecorded = 0.0
-	var/playsleepseconds = 0.0
+	var/emagged = FALSE
+	var/recording = FALSE
+	var/playing = FALSE
+	var/timerecorded = FALSE
+	var/playsleepseconds = 0
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
-	var/canprint = 1
+	var/canprint = TRUE
 	flags = CONDUCT
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20
 
+	var/list/icons_available
+	var/icon_directory = 'icons/mob/radial.dmi'
+
 	action_button_name = "Toggle Recorder"
+
+/obj/item/device/taperecorder/AltClick(mob/user)
+	. = ..()
+	if(!recording)
+		record()
+	else
+		stop()
+
+/obj/item/device/taperecorder/proc/update_available_icons()
+	icons_available = list()
+	if(recording)
+		icons_available += list("Stop Recording" = image(icon = icon_directory, icon_state = "radial_stop"))
+	else
+		if(!playing)
+			icons_available += list("Record" = image(icon = icon_directory, icon_state = "radial_start"))
+
+	if(playing)
+		icons_available += list("Stop Playback" = image(icon = icon_directory, icon_state = "radial_stop"))
+	else
+		if(!recording)
+			icons_available += list("Playback Memory" = image(icon = icon_directory, icon_state = "radial_sound"))
+
+	if(canprint && !recording && !playing)
+		icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "radial_print"))
+	
+	if(emagged)
+		icons_available += list("Explode" = image(icon = icon_directory, icon_state = "radial_hack"))
 
 /obj/item/device/taperecorder/get_current_temperature()
 	. = 0
@@ -37,12 +67,12 @@
 		if(!msg)
 			return
 
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
+		storedinfo += "\[[time2text(timerecorded * 10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
 
 /obj/item/device/taperecorder/emag_act(mob/user)
-	if(emagged == 0)
-		emagged = 1
-		recording = 0
+	if(!emagged)
+		emagged = TRUE
+		recording = FALSE
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 		icon_state = "taperecorderidle"
 		return TRUE
@@ -56,105 +86,110 @@
 		var/mob/M = loc
 		to_chat(M, "<span class='danger'>\The [src] explodes!</span>")
 	if(T)
-		T.hotspot_expose(700,125)
+		T.hotspot_expose(700, 125)
 		explosion(T, -1, -1, 0, 4)
 	qdel(src)
 	return
 
-/obj/item/device/taperecorder/verb/record()
-	set name = "Start Recording"
-	set category = "Object"
+/obj/item/device/taperecorder/proc/start_exp()
+	var/turf/T = get_turf(src)
+	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
+	sleep(10)
+	T = get_turf(src)
+	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
+	sleep(10)
+	T = get_turf(src)
+	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
+	sleep(10)
+	T = get_turf(src)
+	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
+	sleep(10)
+	T = get_turf(src)
+	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
+	sleep(10)
+	explode()
 
+/obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())
 		return
-	if(emagged == 1)
+	if(emagged)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	icon_state = "taperecorderrecording"
-	if(timerecorded < 3600 && playing == 0)
+	if(timerecorded < 3600 && !playing)
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
-		recording = 1
-		timestamp+= timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
-		for(timerecorded, timerecorded<3600)
-			if(recording == 0)
+		recording = TRUE
+		timestamp += timerecorded
+		storedinfo += "\[[time2text(timerecorded * 10,"mm:ss")]\] Recording started."
+		for(timerecorded, timerecorded < 3600)
+			if(!recording)
 				break
 			timerecorded++
 			sleep(10)
-		recording = 0
+		recording = FALSE
 		icon_state = "taperecorderidle"
 		return
 	else
 		to_chat(usr, "<span class='notice'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
 
-
-/obj/item/device/taperecorder/verb/stop()
-	set name = "Stop"
-	set category = "Object"
-
+/obj/item/device/taperecorder/proc/stop()
 	if(usr.incapacitated())
 		return
-	if(emagged == 1)
+	if(emagged)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
-	if(recording == 1)
-		recording = 0
-		timestamp+= timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
+	if(recording)
+		recording = FALSE
+		timestamp += timerecorded
+		storedinfo += "\[[time2text(timerecorded * 10,"mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 		icon_state = "taperecorderidle"
 		return
-	else if(playing == 1)
-		playing = 0
+	else if(playing)
+		playing = FALSE
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 		icon_state = "taperecorderidle"
 		return
 
-
-/obj/item/device/taperecorder/verb/clear_memory()
-	set name = "Clear Memory"
-	set category = "Object"
-
+/obj/item/device/taperecorder/proc/clear_memory()
 	if(usr.incapacitated())
 		return
-	if(emagged == 1)
+	if(emagged)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
-	if(recording == 1 || playing == 1)
+	if(recording || playing)
 		to_chat(usr, "<span class='notice'>You can't clear the memory while playing or recording!</span>")
 		return
 	else
-		if(storedinfo)	storedinfo.Cut()
-		if(timestamp)	timestamp.Cut()
-		timerecorded = 0
+		if(storedinfo)
+			storedinfo.Cut()
+		if(timestamp)
+			timestamp.Cut()
+		timerecorded = FALSE
 		to_chat(usr, "<span class='notice'>Memory cleared.</span>")
 		return
 
-
-/obj/item/device/taperecorder/verb/playback_memory()
-	set name = "Playback Memory"
-	set category = "Object"
-
+/obj/item/device/taperecorder/proc/playback_memory()
 	if(usr.incapacitated())
 		return
-	if(recording == 1)
+	if(recording)
 		to_chat(usr, "<span class='notice'>You can't playback when recording!</span>")
 		return
-	if(playing == 1)
+	if(playing)
 		to_chat(usr, "<span class='notice'>You're already playing!</span>")
 		return
-	playing = 1
+	playing = TRUE
 	icon_state = "taperecorderplaying"
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
-	for(var/i=1,timerecorded<3600,sleep(10 * (playsleepseconds) ))
-		if(playing == 0)
+	for(var/i = 1 , timerecorded < 3600 , sleep(10 * (playsleepseconds)))
+		if(!playing)
 			break
 		if(storedinfo.len < i)
 			break
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
-		if(storedinfo.len < i+1)
+		if(storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
 			T = get_turf(src)
@@ -168,93 +203,50 @@
 			playsleepseconds = 1
 		i++
 	icon_state = "taperecorderidle"
-	playing = 0
-	if(emagged == 1)
-		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
-		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
-		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
-		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
-		sleep(10)
-		T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
-		sleep(10)
-		explode()
+	playing = FALSE
+	if(emagged)
+		start_exp()
 
-
-/obj/item/device/taperecorder/verb/print_transcript()
-	set name = "Print Transcript"
-	set category = "Object"
-
+/obj/item/device/taperecorder/proc/print_transcript()
 	if(usr.incapacitated())
 		return
-	if(emagged == 1)
+	if(emagged)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
 	if(!canprint)
 		to_chat(usr, "<span class='notice'>The recorder can't print that fast!</span>")
 		return
-	if(recording == 1 || playing == 1)
+	if(recording || playing)
 		to_chat(usr, "<span class='notice'>You can't print the transcript while playing or recording!</span>")
 		return
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i=1,storedinfo.len >= i,i++)
+	for(var/i = 1, storedinfo.len >= i, i++)
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
 	P.update_icon()
-	canprint = 0
+	canprint = FALSE
 	sleep(300)
-	canprint = 1
-
+	canprint = TRUE
 
 /obj/item/device/taperecorder/attack_self(mob/user)
-	if(recording == 0 && playing == 0)
-		if(usr.incapacitated())
+	update_available_icons()
+	if(icons_available)
+		var/selection = show_radial_menu(user, src, icons_available, radius = 38, require_near = TRUE, tooltips = TRUE)
+		if(!selection)
 			return
-		if(emagged == 1)
-			to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
-			return
-		icon_state = "taperecorderrecording"
-		if(timerecorded < 3600 && playing == 0)
-			to_chat(usr, "<span class='notice'>Recording started.</span>")
-			recording = 1
-			timestamp+= timerecorded
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
-			for(timerecorded, timerecorded<3600)
-				if(recording == 0)
-					break
-				timerecorded++
-				sleep(10)
-			recording = 0
-			icon_state = "taperecorderidle"
-			return
-		else
-			to_chat(usr, "<span class='warning'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
-	else
-		if(usr.incapacitated())
-			to_chat(usr, "Not when you're incapacitated.")
-			return
-		if(recording == 1)
-			recording = 0
-			timestamp+= timerecorded
-			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
-			to_chat(usr, "<span class='notice'>Recording stopped.</span>")
-			icon_state = "taperecorderidle"
-			return
-		else if(playing == 1)
-			playing = 0
-			audible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
-			icon_state = "taperecorderidle"
-			return
-		else
-			to_chat(usr, "<span class='warning'>Stop what?</span>")
-			return
+		switch(selection)
+			if("Stop Playback")
+				stop()
+			if("Stop Recording")  // yes we actually need 2 seperate stops for the same proc- Hopek
+				stop()
+			if("Record")
+				record()
+			if("Print Transcript")
+				print_transcript()
+			if("Playback Memory")
+				playback_memory()
+			if("Explode")
+				start_exp()
