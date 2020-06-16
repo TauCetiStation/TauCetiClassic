@@ -132,10 +132,19 @@
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
+	sweep_step = 1
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	tools = list(
 		TOOL_KNIFE = 1
 		)
+
+/obj/item/weapon/kitchenknife/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+	SCB.can_spin = TRUE
+	SCB.can_sweep = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -146,7 +155,9 @@
 /obj/item/weapon/kitchenknife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
 		return
+	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
+
 
 /obj/item/weapon/kitchenknife/plastic
 	name = "plastic knife"
@@ -169,9 +180,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
-/*
- * Bucher's cleaver
- */
+
 /obj/item/weapon/butch
 	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
@@ -188,6 +197,16 @@
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 	edge = 1
+	sweep_step = 1
+
+/obj/item/weapon/butch/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+	SCB.can_spin = TRUE
+	SCB.can_sweep = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 
 /obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
