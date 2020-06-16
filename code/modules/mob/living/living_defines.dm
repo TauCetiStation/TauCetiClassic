@@ -1,5 +1,7 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
+	weight = 1
+	var/size = 10 //currently only used for containers
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -39,8 +41,6 @@
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
 	var/pull_debuff = 0		//Movement debuff when pulling
-	var/weight = 1
-	var/size = 10 //currently only used for containers
 	var/pulling_hardness = 0		//Mob movement debuff when pulling
 
 	var/on_fire = 0 //The "Are we on fire?" var

@@ -161,21 +161,12 @@
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
-	if(pulling)
-		var/tally = 0
-		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		tally += pulling_hardness
-
-		var/atom/movable/AM = pulling
-		//Mob pulling
-		if(ismob(AM))
-			var/mob/living/L = AM
-			tally += L.weight
-		//weight pulling
-		if(istype(AM, /obj))
-			var/obj/structure/O = AM
-			tally += O.weight
-		pull_debuff += tally
+	if(!pulling)
+		return
+	//General pull debuff for playable mobs (playable without shitspawn, yeah)
+	pull_debuff += pulling_hardness
+	var/atom/movable/AM = pulling
+	pull_debuff += AM.weight
 
 /mob/living/proc/add_ingame_age()
 	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.
