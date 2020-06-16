@@ -273,7 +273,7 @@ var/global/combos_cheat_sheet = ""
 	else
 		//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 		for(var/obj/item/weapon/grab/G in GetGrabs())
-			if(getStamina == 100)
+			if(getStamina() == 100)
 				if(G.affecting)
 					visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 				qdel(G)
