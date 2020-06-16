@@ -18,9 +18,6 @@
 		return
 	if(IsAbductor(target))
 		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/allow_drop()

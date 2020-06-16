@@ -317,7 +317,7 @@
 
 			AM.visible_message("<span class='danger'>The field buckles visibly around \the [AM]!</span>")
 			tick_instability += rand(30, 50)
-			AM.emplode(empsev)
+			AM.emp_act(empsev)
 
 		if(radiation)
 			var/rad_power = radiation * 0.001

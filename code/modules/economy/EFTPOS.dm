@@ -101,15 +101,15 @@
 	else
 		user << browse(null,"window=eftpos")
 
-/obj/item/device/eftpos/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card))
+/obj/item/device/eftpos/attackby(O, user)
+	if(istype(O, /obj/item/weapon/card))
 		if(linked_account)
-			var/obj/item/weapon/card/C = I
-			scan_card(C)
+			var/obj/item/weapon/card/I = O
+			scan_card(I)
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to linked account.</span>")
-	else if(istype(I, /obj/item/weapon/spacecash/ewallet))
-		var/obj/item/weapon/spacecash/ewallet/E = I
+	else if (istype(O, /obj/item/weapon/spacecash/ewallet))
+		var/obj/item/weapon/spacecash/ewallet/E = O
 		if (linked_account)
 			if(!linked_account.suspended)
 				if(transaction_locked && !transaction_paid)
@@ -139,7 +139,7 @@
 			to_chat(usr, "[bicon(src)]<span class='warning'>EFTPOS is not connected to an account.</span>")
 
 	else
-		return ..()
+		..()
 
 /obj/item/device/eftpos/Topic(var/href, var/href_list)
 	if(href_list["choice"])

@@ -32,12 +32,12 @@
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emplode(1)
+			T.emp_act(1)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emplode(1)
+				T.emp_act(1)
 			else
-				T.emplode(2)
+				T.emp_act(2)
 		else if(distance <= light_range)
-			T.emplode(2)
+			T.emp_act(2)
 	return 1

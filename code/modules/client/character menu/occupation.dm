@@ -56,7 +56,7 @@
 				var/available_in_days = job.available_in_days(user.client)
 				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
-		if(!job.is_species_permitted(user.client.prefs.species))
+		if(!job.is_species_permitted(user.client))
 			. += "<del>[rank]</del></td><td><b> \[SPECIES RESTRICTED]</b></td></tr>"
 			continue
 		if(job_preferences["Test Subject"] == JP_LOW && (rank != "Test Subject"))

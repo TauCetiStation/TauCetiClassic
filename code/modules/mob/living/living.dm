@@ -79,6 +79,15 @@
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
+		//Fat
+		if(HAS_TRAIT(src, TRAIT_FAT))
+			var/ran = 40
+			if(isrobot(src))
+				ran = 20
+			if(prob(ran))
+				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
+			return 1
+
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
@@ -103,11 +112,6 @@
 
 			now_pushing = 0
 			return 1
-			
-	//Fat
-	if(HAS_TRAIT(M, TRAIT_FAT))
-		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
-		return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -152,7 +156,8 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
-		start_pulling(AM)
+		src.start_pulling(AM)
+	return
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
@@ -372,7 +377,7 @@
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
 	for(var/obj/O in L)
-		O.emplode(severity)
+		O.emp_act(severity)
 	..()
 
 /mob/living/singularity_act()
@@ -669,7 +674,7 @@
 
 
 						pulling.Move(T, get_dir(pulling, T))
-						if(M && AM)
+						if(M)
 							M.start_pulling(AM)
 				else
 					if (pulling)
@@ -944,7 +949,6 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
-/// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/on_lay_down()
 	return
 
@@ -975,8 +979,7 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
-		if(on_lay_down())
-			return
+		on_lay_down()
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 

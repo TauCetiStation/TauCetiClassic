@@ -9,22 +9,22 @@
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
-		return FALSE
+		return
 
 	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
-		return FALSE
+		return
 
 	if (!I.can_be_holstered)
 		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
-		return FALSE
+		return
 
 	holstered = I
-	user.drop_from_inventory(holstered, src)
+	user.drop_from_inventory(holstered)
+	holstered.loc = src
 	holstered.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
 	update_icon()
-	return TRUE
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user)
 	if(!holstered)
@@ -55,12 +55,12 @@
 
 	..(user)
 
-/obj/item/clothing/accessory/holster/attack_accessory(obj/item/I, mob/user, params)
-	return holster(I, user)
+/obj/item/clothing/accessory/holster/attackby(obj/item/W, mob/user)
+	holster(W, user)
 
 /obj/item/clothing/accessory/holster/emp_act(severity)
 	if (holstered)
-		holstered.emplode(severity)
+		holstered.emp_act(severity)
 	..()
 
 /obj/item/clothing/accessory/holster/examine(mob/user)

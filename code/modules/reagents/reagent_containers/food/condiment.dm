@@ -41,6 +41,9 @@
 	volume = 50
 	var/empty_icon = "condiment" // Empty state icon
 
+/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W, mob/user)
+	return
+
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
 
@@ -134,18 +137,17 @@
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
-/obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+/obj/item/weapon/condiment_shelf/attackby(obj/O, mob/user)
+	if(istype(O, /obj/item/weapon/wrench))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/stack/sheet/wood(loc)
+		new /obj/item/stack/sheet/wood(src.loc)
 		qdel(src)
 		return
-
-	if(istype(I, /obj/item/weapon/reagent_containers/food/condiment))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment))
 		to_chat(user, "<span class='rose'>You need to place it onto the wall first!</span>")
 		return
-
-	return ..()
+	else
+		..()
 
 /obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target

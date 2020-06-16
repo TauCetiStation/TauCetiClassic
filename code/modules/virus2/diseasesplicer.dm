@@ -12,25 +12,24 @@
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(isscrewdriver(I))
-		return ..()
+		return ..(I,user)
 
-	else if(istype(I,/obj/item/weapon/virusdish))
+	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		dish = I
-		c.drop_from_inventory(I, src)
-		return
+		c.drop_item()
+		I.loc = src
 
-	else if(istype(I,/obj/item/weapon/diseasedisk))
+	if(istype(I,/obj/item/weapon/diseasedisk))
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
 		qdel(I)
-		return
 
 	src.attack_hand(user)
 

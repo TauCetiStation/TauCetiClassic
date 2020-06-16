@@ -325,7 +325,6 @@
 		shock(user)
 	if (panel_open && cell)
 		to_chat(user, "You take out \the [cell].")
-		cell.updateicon()
 		cell.loc = get_turf(user)
 		component_parts -= cell
 		cell = null

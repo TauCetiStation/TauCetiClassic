@@ -412,9 +412,9 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = I
+/obj/item/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(loc))

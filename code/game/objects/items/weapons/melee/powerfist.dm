@@ -28,18 +28,17 @@
 		to_chat(user,"<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
 
 
-/obj/item/weapon/melee/powerfist/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tank))
+/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/tank))
 		if(!tank)
-			var/obj/item/weapon/tank/IT = I
+			var/obj/item/weapon/tank/IT = W
 			if(IT.volume <= 3)
 				to_chat(user,"<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
-			updateTank(I, 0, user)
+			updateTank(W, 0, user)
 		else
-			updateTank(I, 1, user)
-
-	else if(iswrench(I))
+			updateTank(W, 1, user)
+	else if(iswrench(W))
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -50,12 +49,9 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 		update_icon()
-
-	else if(isscrewdriver(I))
+	else if(isscrewdriver(W))
 		updateTank(tank, 1, user)
 
-	else
-		return ..()
 
 /obj/item/weapon/melee/powerfist/proc/updateTank(obj/item/weapon/tank/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

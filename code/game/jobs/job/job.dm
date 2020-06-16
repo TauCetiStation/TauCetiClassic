@@ -55,10 +55,7 @@
 		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
 		~Luduk
 	*/
-	/// Species that can not be this job.
 	var/list/restricted_species = list()
-	/// Species flags that can not do this job.
-	var/list/restricted_species_flags = list()
 
 	var/list/survival_kit_items = list()
 
@@ -80,25 +77,11 @@
 			return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-/datum/job/proc/is_species_permitted(species)
+
+/datum/job/proc/is_species_permitted(client/C)
 	if(!config.use_alien_job_restriction)
 		return TRUE
-	if(species in restricted_species)
-		return FALSE
-
-	var/datum/species/S = all_species[species]
-	if(S && special_species_check(S))
-		for(var/flag in restricted_species_flags)
-			if(S.flags[flag] == restricted_species_flags[flag])
-				return FALSE
-
-		return TRUE
-
-	return FALSE
-
-/// Return TRUE to allow the species S to be this job.
-/datum/job/proc/special_species_check(datum/species/S)
-	return TRUE
+	return !(C.prefs.species in restricted_species)
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)

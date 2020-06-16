@@ -174,11 +174,6 @@
 /atom/proc/HasProximity(atom/movable/AM)
 	return
 
-/atom/proc/emplode(severity)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity) & COMPONENT_PREVENT_EMP)
-		return FALSE
-	return emp_act(severity)
-
 /atom/proc/emp_act(severity)
 	return
 

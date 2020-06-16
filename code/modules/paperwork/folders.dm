@@ -32,17 +32,17 @@
 		add_overlay("folder_paper")
 	return
 
-/obj/item/weapon/folder/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
-		user.drop_from_inventory(I, src)
-		to_chat(user, "<span class='notice'>You put the [I] into \the [src].</span>")
+/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/weapon/paper_bundle))
+		user.drop_item()
+		W.loc = src
+		to_chat(user, "<span class='notice'>You put the [W] into \the [src].</span>")
 		update_icon()
-	else if(istype(I, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null) as text, MAX_NAME_LEN)
 		if((loc == usr && usr.stat == CONSCIOUS))
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
-	else
-		return ..()
+	return
 
 /obj/item/weapon/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"

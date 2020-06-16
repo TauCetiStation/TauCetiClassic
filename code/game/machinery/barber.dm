@@ -341,7 +341,7 @@ A proc that does all the animations before mix()-ing.
 		return
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
-	if(!user.IsAdvancedToolUser() && target != user)
+	if(isanimal(user) && target != user)
 		return
 	if(isessence(user))
 		return

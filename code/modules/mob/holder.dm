@@ -33,9 +33,10 @@
 	..()
 	user.remove_passemotes_flag()
 
-/obj/item/weapon/holder/attackby(obj/item/I, mob/user, params)
-	for(var/mob/M in contents)
-		M.attackby(I, user, params)
+/obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
+	for(var/mob/M in src.contents)
+		M.attackby(W,user)
 
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type

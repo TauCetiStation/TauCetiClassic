@@ -87,7 +87,7 @@
 		..(severity)
 		return
 	if(cell)
-		cell.emplode(severity)
+		cell.emp_act(severity)
 	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user)

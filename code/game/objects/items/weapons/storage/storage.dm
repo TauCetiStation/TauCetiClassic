@@ -301,36 +301,35 @@
 	update_icon()
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
 	if(isrobot(user))
 		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
 
-	if(!can_be_inserted(I))
+	if(!can_be_inserted(W))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/implanter/compressed))
+	if(istype(W, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = I
+	if(istype(W, /obj/item/weapon/tray))
+		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
 				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
 				return FALSE
 			else
-				I.forceMove(user.loc)
-				if(user.client && user.s_active != src)
-					user.client.screen -= I
-				I.dropped(user)
+				W.loc = user.loc
+				if ((user.client && user.s_active != src))
+					user.client.screen -= W
+				W.dropped(user)
 				to_chat(user, "<span class='warning'>God damnit!</span>")
-			return
 
-	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
+	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
-	I.add_fingerprint(user)
-	handle_item_insertion(I)
+	W.add_fingerprint(user)
+	handle_item_insertion(W)
 	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
@@ -396,7 +395,7 @@
 /obj/item/weapon/storage/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
-			O.emplode(severity)
+			O.emp_act(severity)
 	..()
 
 // BubbleWrap - A box can be folded up to make card

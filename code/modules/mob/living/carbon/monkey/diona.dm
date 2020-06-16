@@ -129,11 +129,7 @@
 		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
 		return
 
-	var/list/langdiff = languages - gestalt.languages
-	if(langdiff.len == 0)
-		to_chat(src, "<span class='notice'>It would appear, that [gestalt] already knows all you could give.</span>")
-		return
-
+	var/langdiff = languages - gestalt.languages
 	var/datum/language/L = pick(langdiff)
 	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
 	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")

@@ -97,21 +97,6 @@
 	// Prevent hitting the thing if we're just putting it.
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/clickplace/proc/jump_out(obj/item/I, atom/target, rec_limit = 3)
-	if(I.loc == target || rec_limit == 0)
-		return
-
-	if(istype(I.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = I.loc
-		S.remove_from_storage(I, target)
-	else if(ismob(I.loc))
-		var/mob/M = I.loc
-		M.drop_from_inventory(I, target)
-	else
-		I.forceMove(target)
-
-	jump_out(I, target, rec_limit - 1)
-
 /datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/living/user)
 	if(!istype(dropping, /obj/item))
 		return
@@ -152,10 +137,14 @@
 	if(spare_slots <= 0)
 		return
 
-	jump_out(I, user.loc)
+	// Just in case.
+	if(I.loc == user)
+		user.drop_from_inventory(I)
+	else if(istype(I.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = I.loc
+		S.remove_from_storage(I, S.loc)
 
-	// Bounding component took over or something.
-	if(I.loc != user.loc)
+	if(!isturf(I.loc))
 		return
 
 	var/atom/A = parent

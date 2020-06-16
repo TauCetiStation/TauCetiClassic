@@ -2089,81 +2089,66 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
 	if(species.flags[NO_BLOOD])
 		return
-
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
-		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
-		return
-
-	if(check_thickmaterial(target_zone = BP_CHEST))
-		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
-		return
-
 	if(user.is_busy(src))
 		return
-
+	var/needed_massages = 12
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
+	if(check_thickmaterial(target_zone = BP_CHEST))
+		to_chat(user, "<span class='warning'>You have to strip [src] to perform CPR!.</span>")
+		return
 
-	var/needed_massages = 12
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
 	if(Lungs && !Lungs.is_bruised())
 		adjustOxyLoss(-1.5)
-
-	if(!Heart || Heart.heart_status == HEART_NORMAL)
-		return
-
-	if(Heart.heart_status == HEART_FAILURE)
-		if(do_mob(user, src, 4 SECONDS))
-			visible_message("<span class='danger'>[user] is trying perform a heart massage on [src]!</span>")
-
-			massages_done_right = 0
-			return_to_body_dialog()
-
-			if(health > config.health_threshold_dead)
-				Heart.heart_fibrillate()
-				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
-			else
-				to_chat(user, "<span class='warning'>[src]'s body seems to be too weak, you do not feel a heart beat.</span>")
-
-			last_massage = world.time
+	if(!Heart)
 		return
 
 	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
-
-	if(massages_done_right > needed_massages)
-		if(health < config.health_threshold_dead)
-			to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
-		else
-			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
-			reanimate_body()
-			stat = UNCONSCIOUS
-			massages_done_right = 0
-			Heart.heart_normalize()
-
-	else if(massages_done_right < -2)
-		to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
-		Heart.damage += 2
+	if((world.time - last_massage) > 5 SECONDS && do_mob(user, src, HUMAN_STRIP_DELAY))
+		visible_message("<span class='warning'>[user] performs CPR on [src]!</span>")
+		to_chat(user, "<span class='warning'>Repeat at least every second.</span>")
 		massages_done_right = 0
-		Heart.heart_stop()
+		return_to_body_dialog()
+		if(health > config.health_threshold_dead)
+			Heart.heart_fibrillate()
+		last_massage = world.time
+		return
+	else if((world.time - timeofdeath) < DEFIB_TIME_LIMIT)
 
-	else if(Heart.damage < 50)
-		if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
-			massages_done_right++
-			to_chat(user, "<span class='notice'>You've hit right to the [src]'s heart beat!</span>")
+		if(massages_done_right > needed_massages)
+			if(health < config.health_threshold_dead)
+				to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+				reanimate_body()
+				stat = UNCONSCIOUS
+				massages_done_right = 0
+				Heart.heart_normalize()
+		else if(massages_done_right < -2)
+			to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+			if(prob(25))
+				Heart.damage += 2
+			massages_done_right = 0
+			Heart.heart_stop()
 		else
-			massages_done_right--
-			to_chat(user, "<span class='warning'>You've skipped a beat.</span>")
+			if(health > config.health_threshold_dead)
+				Heart.heart_fibrillate()
 
-	else
-		to_chat(user, "<span class='warning'>It seems [src]'s [Heart] is too squishy... It doesn't beat at all!</span>")
+			if(Heart.damage < 50)
+				if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
+					massages_done_right++
+					to_chat(user, "<span class='warning'>You've hit right to the beat.</span>")
+				else
+					massages_done_right--
+					to_chat(user, "<span class='warning'>You've skipped the beat.</span>")
+		last_massage = world.time
 
-	last_massage = world.time
-
-	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
-		BP.fracture()
-		to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+		if(op_stage.ribcage != 2 && prob(5))
+			var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?

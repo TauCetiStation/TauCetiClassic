@@ -257,15 +257,15 @@
 	for(var/obj/O in src)
 		if(!O)
 			continue
-		O.emplode(severity)
+		O.emp_act(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		BP.emplode(severity)
+		BP.emp_act(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			if(IO.robotic == 0)
 				continue
-			IO.emplode(severity)
+			IO.emp_act(severity)
 	..()
 
 

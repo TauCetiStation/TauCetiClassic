@@ -344,7 +344,7 @@
 
 /mob/living/carbon/ian/emp_act(severity)
 	if(neck)
-		neck.emplode(severity)
+		neck.emp_act(severity)
 	..()
 
 /mob/living/carbon/ian/ex_act(severity)

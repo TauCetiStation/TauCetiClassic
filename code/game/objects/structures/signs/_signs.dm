@@ -113,14 +113,13 @@
 	else
 		return ..()
 
-/obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
-		if(I.use(0, user))
-			if(I.use_tool(src, user, 20, volume = 50))
+/obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
+	if (iswelder(W))
+		if(W.use(0, user))
+			if(W.use_tool(src, user, 20, volume = 50))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
 				qdel(src)
-				return
-	return ..()
+
 /obj/structure/sign/nanotrasen
 	name = "Nanotrasen Logo"
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"

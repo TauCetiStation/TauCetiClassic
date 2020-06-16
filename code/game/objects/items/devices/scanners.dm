@@ -425,14 +425,13 @@ REAGENT SCANNER
 		STOP_PROCESSING(SSobj, src)
 	active = !active
 
-/obj/item/weapon/occult_pinpointer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = I
+/obj/item/weapon/occult_pinpointer/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
 		target_type = OS.scanned_type
 		target = null // So we ain't looking for the old target
-		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical", "magical", "arcane")] knowledge from [I].</span>")
-	else
-		return ..()
+		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical","magical","arcane")] knowledge from [W]</span>")
 
 /obj/item/weapon/occult_pinpointer/Destroy()
 	active = FALSE
@@ -649,11 +648,6 @@ REAGENT SCANNER
 /obj/item/device/contraband_finder/MouseDrop_T(atom/dropping, mob/user)
 	if(!dropping.Adjacent(user))
 		return
-
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
 	scan(dropping, user)
 
 /obj/item/device/contraband_finder/proc/scan(atom/target, mob/user)

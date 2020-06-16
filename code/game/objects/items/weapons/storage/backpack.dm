@@ -22,8 +22,8 @@
 		close(loc)
 	opened = !opened
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
-	if(length(use_sound))
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
+	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
@@ -44,17 +44,15 @@
 	max_w_class = ITEM_SIZE_LARGE
 	max_storage_space = 56
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
-
-	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
+	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		qdel(I)
+		qdel(W)
 		return
-
-	return ..()
+	..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))

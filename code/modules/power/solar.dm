@@ -212,44 +212,45 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
-	if(!anchored && isturf(loc))
-		if(iswrench(I))
-			anchored = TRUE
-			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			return TRUE
-	else
-		if(iswrench(I))
-			anchored = FALSE
-			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			return TRUE
+/obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user)
 
-		if(istype(I, /obj/item/stack/sheet/glass) || istype(I, /obj/item/stack/sheet/rglass))
-			var/obj/item/stack/sheet/S = I
+	if(!anchored && isturf(loc))
+		if(iswrench(W))
+			anchored = 1
+			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
+			return 1
+	else
+		if(iswrench(W))
+			anchored = 0
+			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
+			return 1
+
+		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+			var/obj/item/stack/sheet/S = W
 			if(S.use(2))
-				glass_type = I.type
+				glass_type = W.type
 				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
 					new /obj/machinery/power/solar(get_turf(src), src)
-			return TRUE
+			return 1
 
 	if(!tracker)
-		if(istype(I, /obj/item/weapon/tracker_electronics))
+		if(istype(W, /obj/item/weapon/tracker_electronics))
 			tracker = 1
-			qdel(I)
+			user.drop_item()
+			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
-			return TRUE
+			return 1
 	else
-		if(iscrowbar(I))
+		if(iscrowbar(W))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
-			return TRUE
-
-	return ..()
+			return 1
+	..()
 
 //
 // Solar Control Computer

@@ -21,7 +21,7 @@
 
 	var/obj/structure/cable/attached		// the attached cable
 
-/obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
+/obj/item/device/powersink/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))
 		if(mode == 0)
 			var/turf/T = loc
@@ -31,7 +31,7 @@
 					to_chat(user, "No exposed cable here to attach to.")
 					return
 				else
-					anchored = TRUE
+					anchored = 1
 					mode = 1
 					to_chat(user, "You attach the device to the cable.")
 					for(var/mob/M in viewers(user))
@@ -44,7 +44,7 @@
 		else
 			if (mode == 2)
 				STOP_PROCESSING(SSobj, src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
-			anchored = FALSE
+			anchored = 0
 			mode = 0
 			to_chat(user, "You detach	the device from the cable.")
 			for(var/mob/M in viewers(user))
@@ -54,9 +54,8 @@
 			icon_state = "powersink0"
 
 			return
-
 	else
-		return ..()
+		..()
 
 
 

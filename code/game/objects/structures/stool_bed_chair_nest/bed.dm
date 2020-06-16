@@ -98,15 +98,15 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/roller/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/roller_holder))
-		var/obj/item/roller_holder/RH = I
+/obj/item/roller/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/roller_holder))
+		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
 			to_chat(user, "<span class='notice'>You collect the roller bed.</span>")
-			forceMove(RH)
+			src.loc = RH
 			RH.held = src
 			return
-	return ..()
+	..()
 
 /obj/item/roller_holder
 	name = "roller bed rack"

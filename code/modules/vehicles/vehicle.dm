@@ -96,14 +96,16 @@
 				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 		else
 			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
-	else
+	else if(hasvar(W,"force") && hasvar(W,"damtype"))
 		switch(W.damtype)
 			if("fire")
 				health -= W.force * fire_dam_coeff
 			if("brute")
 				health -= W.force * brute_dam_coeff
+		..()
 		healthcheck()
-		return ..()
+	else
+		..()
 
 /obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage

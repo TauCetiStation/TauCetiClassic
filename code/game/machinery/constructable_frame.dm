@@ -243,7 +243,7 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
-/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
 	if(isscrewdriver(I))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
@@ -277,8 +277,6 @@ to destroy them and players will be able to make replacements.
 		name = "circuit board ([names[build_path]] Vendor)"
 		to_chat(user, "<span class='notice'>You set the board to [names[build_path]].</span>")
 		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
-		return
-	return ..()
 
 /obj/item/weapon/circuitboard/smes
 	name = "circuit board (SMES)"

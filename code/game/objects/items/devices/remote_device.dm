@@ -28,12 +28,10 @@
 	QDEL_NULL(ID)
 	return ..()
 
-/obj/item/device/remote_device/emag_act(mob/user)
-	if(!emagged)
+/obj/item/device/remote_device/attackby(obj/item/weapon/card/emag/W, mob/user)
+	if(istype(W) && !emagged)
 		emagged = TRUE
-		to_chat(user, "<span class='notice'>You sneakily swipe through [src], and now it can electrify doors.</span>")
-		return TRUE
-	return FALSE
+		to_chat(user, "This device now can electrify doors")
 
 /obj/item/device/remote_device/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())

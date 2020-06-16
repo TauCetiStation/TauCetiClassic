@@ -177,8 +177,9 @@ var/global/list/breach_burn_descriptors = list(
 
 //Handles repairs (and also upgrades).
 
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/mineral/plastic) || istype(I, /obj/item/stack/sheet/metal))
+/obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
+
 		if(isliving(loc))
 			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
@@ -187,7 +188,7 @@ var/global/list/breach_burn_descriptors = list(
 			to_chat(user, "There is no surface damage on \the [src] to repair.")
 			return
 
-		var/obj/item/stack/sheet/P = I
+		var/obj/item/stack/sheet/P = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(P.get_amount() < 3)
 			P.use(P.get_amount())
@@ -197,16 +198,17 @@ var/global/list/breach_burn_descriptors = list(
 			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? 3 : 5), user)
 		return
 
-	else if(iswelder(I))
+	else if(iswelder(W))
+
 		if(isliving(loc))
 			to_chat(user, "<span class='warning'>How do you intend to patch a hardsuit while someone is wearing it?</span>")
 			return
 
-		if(!damage || ! brute_damage)
+		if (!damage || ! brute_damage)
 			to_chat(user, "There is no structural damage on \the [src] to repair.")
 			return
 
-		var/obj/item/weapon/weldingtool/WT = I
+		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.use(5))
 			to_chat(user, "<span class='warning'>You need more welding fuel to repair this suit.</span>")
@@ -215,7 +217,7 @@ var/global/list/breach_burn_descriptors = list(
 		repair_breaches(BRUTE, 3, user)
 		return
 
-	return ..()
+	..()
 
 /obj/item/clothing/suit/space/examine(mob/user)
 	..()

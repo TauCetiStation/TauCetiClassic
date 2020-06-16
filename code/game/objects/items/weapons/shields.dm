@@ -92,14 +92,14 @@
 /obj/item/weapon/shield/riot/Get_shield_chance()
 	return block_chance
 
-/obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/melee/baton))
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
-		return ..()
+		..()
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -253,15 +253,13 @@
 	return block_chance
 
 
-/obj/item/weapon/shield/buckler/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/spear))
+/obj/item/weapon/shield/buckler/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/twohanded/spear))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] hits the buclker with spear!</span>")
 			playsound(user, 'sound/effects/hits_to_w_shield.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 
-	else
-		return ..()
 
 // *(BUCKLER craft in recipes.dm)*
 

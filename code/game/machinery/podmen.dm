@@ -26,14 +26,15 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/obj/machinery/hydroponics/parent = null
 	var/found_player = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers))
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user)
+
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		to_chat(user, "You inject the contents of the syringe into the seeds.")
 
 		var/datum/reagent/blood/B
 
 		//Find a blood sample to inject.
-		var/obj/item/weapon/reagent_containers/RC = I
+		var/obj/item/weapon/reagent_containers/RC = W
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if(istype(R,/datum/reagent/blood))
 				B = R

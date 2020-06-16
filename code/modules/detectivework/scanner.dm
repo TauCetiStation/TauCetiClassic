@@ -12,23 +12,24 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 
-/obj/item/device/detective_scanner/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/f_card))
-		var/obj/item/weapon/f_card/F = I
-		if(F.fingerprints)
+/obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
+	..()
+	if (istype(W, /obj/item/weapon/f_card))
+		if (W.fingerprints)
 			return
-		if(amount == 20)
+		if (src.amount == 20)
 			return
-		if(F.amount + amount > 20)
-			amount = 20
-			F.amount = F.amount + amount - 20
-			F.add_fingerprint(user)
+		if (W.amount + src.amount > 20)
+			src.amount = 20
+			W.amount = W.amount + src.amount - 20
 		else
-			amount += F.amount
-			qdel(F)
+			src.amount += W.amount
+			//W = null
+			qdel(W)
 		add_fingerprint(user)
-		return
-	return ..()
+		if (W)
+			W.add_fingerprint(user)
+	return
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	if (!ishuman(M))

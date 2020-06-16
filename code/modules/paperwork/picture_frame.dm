@@ -26,7 +26,7 @@
 	icon_state = "metal_frame_item"
 	frame_type = /obj/structure/picture_frame/metal
 
-/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
 			var/obj/item/weapon/photo/Photo = I
@@ -68,7 +68,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is no glass to screw out in \the [src].</span>")
 		return
-	return ..()
+	..()
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
 	if(user.r_hand == src || user.l_hand == src)

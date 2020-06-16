@@ -143,7 +143,7 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
+	if(!user.incapacitated() && in_range(user, src))
 		src.togglelock(user)
 	..()
 
@@ -213,7 +213,7 @@
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
-		O.emplode(severity)
+		O.emp_act(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1

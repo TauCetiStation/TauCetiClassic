@@ -39,10 +39,10 @@
 /obj/item/weapon/storage/secure/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)
-			emagged = TRUE
+		if(istype(W, /obj/item/weapon/melee/energy/blade) && (!src.emagged))
+			emagged = 1
 			user.SetNextMove(CLICK_CD_MELEE)
 			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
@@ -57,15 +57,15 @@
 			to_chat(user, "You slice through the lock on [src].")
 			return
 
-		if (isscrewdriver(I))
-			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
-				open = !open
+		if (isscrewdriver(W))
+			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
+				src.open =! src.open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((ismultitool(I)) && (src.open == 1)&& (!src.l_hacking))
+		if ((ismultitool(W)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
-			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
+			if (!user.is_busy(src) && W.use_tool(src, usr, 100, volume = 50))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -82,7 +82,8 @@
 		// ... but it's still locked.
 		return
 
-	return ..()
+	// -> storage/attackby() what with handle insertion, etc
+	..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(!locked || src.emagged)
@@ -184,8 +185,8 @@
 				src.close(M)
 	src.add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
-	. = ..()
+/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/weapon/W, mob/user)
+	..()
 	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/Topic(href, href_list)

@@ -51,17 +51,17 @@
 	else
 		to_chat(usr, "There's no tank in [src].")
 
-/obj/item/weapon/storage/pneumatic/attackby(obj/item/I, mob/user, params)
-	if(!tank && istype(I, /obj/item/weapon/tank))
-		user.remove_from_mob(I)
-		tank = I
+/obj/item/weapon/storage/pneumatic/attackby(obj/item/W, mob/user)
+	if(!tank && istype(W,/obj/item/weapon/tank))
+		user.remove_from_mob(W)
+		tank = W
 		tank.loc = src.tank_container
-		user.visible_message("[user] jams [I] into [src]'s valve and twists it closed.","You jam [I] into [src]'s valve and twist it closed.")
+		user.visible_message("[user] jams [W] into [src]'s valve and twists it closed.","You jam [W] into [src]'s valve and twist it closed.")
 		icon_state = "pneumatic-tank"
 		item_state = "pneumatic-tank"
 		user.update_icons()
 	else
-		return ..()
+		..()
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()

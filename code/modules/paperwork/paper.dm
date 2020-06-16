@@ -438,28 +438,28 @@
 		update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
-	if(istype(I, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = I
+	if(istype(P, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = P
 		if(paper.crumpled)
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 
 	if(crumpled)
-		if(!(istype(I, /obj/item/weapon/lighter)))
+		if(!(istype(P, /obj/item/weapon/lighter)))
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 		else
-			burnpaper(I, user)
+			burnpaper(P, user)
 
-	else if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
-		if (istype(I, /obj/item/weapon/paper/carbon))
-			var/obj/item/weapon/paper/carbon/C = I
+	else if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
+		if (istype(P, /obj/item/weapon/paper/carbon))
+			var/obj/item/weapon/paper/carbon/C = P
 			if (!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
@@ -468,9 +468,9 @@
 		var/obj/item/weapon/paper_bundle/B = new(loc)
 		if (name != "paper")
 			B.name = name
-		else if(I.name != "paper" && I.name != "photo")
-			B.name = I.name
-		user.drop_from_inventory(I)
+		else if (P.name != "paper" && P.name != "photo")
+			B.name = P.name
+		user.drop_from_inventory(P)
 		if (istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
@@ -500,42 +500,44 @@
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
-		forceMove(B)
-		I.forceMove(B)
+		to_chat(user, "<span class='notice'>You clip the [P.name] to [(src.name == "paper") ? "the paper" : src.name].</span>")
+		src.loc = B
+		P.loc = B
 		B.amount++
 		B.update_icon()
 		if (istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
 			s.update_ui_after_item_removal()
 
-	else if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
-		if ( istype(I, /obj/item/weapon/pen/robopen) && I:mode == 2 )
-			I:RenamePaper(user,src)
+	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
+			P:RenamePaper(user,src)
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)
 		//openhelp(user)
 
-	else if(istype(I, /obj/item/weapon/stamp))
+	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, user))
 			return
 
-		if(istype(I, /obj/item/weapon/stamp/clown))
+		if(istype(P, /obj/item/weapon/stamp/clown))
 			if(!clown)
 				to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 				return
 
-		var/obj/item/weapon/stamp/S = I
+		var/obj/item/weapon/stamp/S = P
 		S.stamp_paper(src)
 
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	else if(istype(I, /obj/item/weapon/lighter))
-		burnpaper(I, user)
+	else if(istype(P, /obj/item/weapon/lighter))
+		burnpaper(P, user)
 
 	else
 		return ..()
+
+	add_fingerprint(user)
 
 /*
  * Premade paper

@@ -25,7 +25,6 @@
 /obj/item/clothing/shoes/boots/attackby(obj/item/I, mob/user, params)
 	if(knife)
 		return ..()
-
 	if(I.tools[TOOL_KNIFE] >= 1)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)

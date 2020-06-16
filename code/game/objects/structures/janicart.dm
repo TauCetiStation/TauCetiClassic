@@ -67,10 +67,6 @@
 	if(user.next_move > world.time || user.incapacitated() || !Adjacent(user))
 		return
 
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
 	var/obj/item/I = user.get_active_hand()
 	if(istype(I, /obj/item/weapon/reagent_containers) && mybucket)
 		var/obj/item/weapon/reagent_containers/C = I

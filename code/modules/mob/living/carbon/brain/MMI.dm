@@ -17,13 +17,13 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-/obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		var/obj/item/brain/B = I
+/obj/item/device/mmi/attackby(obj/item/O, mob/user)
+	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
+		var/obj/item/brain/B = O
 		if(!B.brainmob)
 			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
-		visible_message("<span class='notice'>[user] sticks \a [B] into \the [src].</span>")
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		brainmob = B.brainmob
 		B.brainmob = null
@@ -39,13 +39,13 @@
 		locked = TRUE
 
 		feedback_inc("cyborg_mmis_filled", 1)
-		qdel(B)
+		qdel(O)
 		return
 
-	else if(istype(I, /obj/item/weapon/holder/diona) && !brainmob)
-		visible_message("<span class='notice'>[user] sticks \a [I] into \the [src].</span>")
+	else if(istype(O, /obj/item/weapon/holder/diona) && !brainmob)
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
-		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in I
+		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in O
 		if(!D)
 			world.log << "This is seriously really wrong, and I would like to keep a message for this case."
 		if(!D.mind || !D.key)
@@ -54,10 +54,10 @@
 		transfer_nymph(D)
 
 		feedback_inc("cyborg_mmis_filled",1)
-		qdel(D)
+		qdel(O)
 		return
 
-	else if((istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda)) && brainmob)
+	else if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
@@ -66,10 +66,10 @@
 		return
 
 	else if(brainmob)
-		I.attack(brainmob, user)//Oh noooeeeee
+		O.attack(brainmob, user)//Oh noooeeeee
 		return
 
-	return ..()
+	..()
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)

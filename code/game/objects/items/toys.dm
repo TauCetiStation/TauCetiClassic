@@ -48,24 +48,22 @@
 		src.update_icon()
 	return
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(I.reagents)
-			if(I.reagents.total_volume < 1)
-				to_chat(user, "The [I] is empty.")
-			else if(I.reagents.total_volume >= 1)
-				if(I.reagents.has_reagent("pacid", 1))
+/obj/item/toy/balloon/attackby(obj/O, mob/user)
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		if(O.reagents)
+			if(O.reagents.total_volume < 1)
+				to_chat(user, "The [O] is empty.")
+			else if(O.reagents.total_volume >= 1)
+				if(O.reagents.has_reagent("pacid", 1))
 					to_chat(user, "The acid chews through the balloon!")
-					I.reagents.reaction(user)
+					O.reagents.reaction(user)
 					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
-					I.reagents.trans_to(src, 10)
-				update_icon()
-			return
-
-	return ..()
+					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [O].</span>")
+					O.reagents.trans_to(src, 10)
+	src.update_icon()
+	return
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(src.reagents.total_volume >= 1)
@@ -142,27 +140,26 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [bullets] caps\s left.</span>")
 
-/obj/item/toy/gun/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/toy/ammo/gun))
-		var/obj/item/toy/ammo/gun/G = I
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user)
+
+	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='notice'>It's already fully loaded!</span>")
 			return 1
-		if (G.amount_left <= 0)
+		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There is no more caps!</span>")
 			return 1
-		if (G.amount_left < (7 - src.bullets))
-			src.bullets += G.amount_left
-			to_chat(user, "<span class='warning'>You reload [G.amount_left] caps\s!</span>")
-			G.amount_left = 0
+		if (A.amount_left < (7 - src.bullets))
+			src.bullets += A.amount_left
+			to_chat(user, text("<span class='warning'>You reload [] caps\s!</span>", A.amount_left))
+			A.amount_left = 0
 		else
-			to_chat(user, "<span class='warning'>You reload [7 - bullets] caps\s!</span>")
-			G.amount_left -= 7 - bullets
-			bullets = 7
-		G.update_icon()
-		return TRUE
-
-	return ..()
+			to_chat(user, text("<span class='warning'>You reload [] caps\s!</span>", 7 - src.bullets))
+			A.amount_left -= 7 - src.bullets
+			src.bullets = 7
+		A.update_icon()
+		return 1
+	return
 
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
@@ -217,7 +214,7 @@
 	if (bullets && (src in view(2, user)))
 		to_chat(user, "<span class='notice'>It is loaded with [bullets] foam darts!</span>")
 
-/obj/item/toy/crossbow/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/crossbow/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
 			user.drop_item()
@@ -226,8 +223,7 @@
 			to_chat(user, "<span class='notice'>You load the foam dart into the crossbow.</span>")
 		else
 			to_chat(usr, "<span class='warning'>It's already fully loaded.</span>")
-	else
-		return ..()
+
 
 /obj/item/toy/crossbow/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
@@ -944,29 +940,30 @@ Owl & Griffin toys
 	playsound(user, 'sound/items/cardshuffle.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 
-/obj/item/toy/cards/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/C = I
+/obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
+	..()
+	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.cardname
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
 
-	else if(istype(I, /obj/item/toy/cardhand))
-		var/obj/item/toy/cardhand/C = I
+
+/obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
+	..()
+	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.currenthand
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
-
-	else
-		return ..()
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr
@@ -1058,11 +1055,11 @@ Owl & Griffin toys
 				qdel(src)
 		return
 
-/obj/item/toy/cardhand/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/C = I
+/obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
+	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
@@ -1074,8 +1071,8 @@ Owl & Griffin toys
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
-	else
-		return ..()
+
+
 
 
 
@@ -1121,7 +1118,7 @@ Owl & Griffin toys
 		src.name = "card"
 		src.pixel_x = -5
 
-/obj/item/toy/singlecard/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/toy/singlecard))
 		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
@@ -1138,7 +1135,7 @@ Owl & Griffin toys
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 
-	else if(istype(I, /obj/item/toy/cardhand))
+	if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
@@ -1155,8 +1152,6 @@ Owl & Griffin toys
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 
-	else
-		return ..()
 
 /obj/item/toy/singlecard/attack_self(mob/user)
 	if(!ishuman(usr) || usr.incapacitated())

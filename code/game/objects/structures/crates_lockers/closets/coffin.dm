@@ -49,10 +49,6 @@
 	if(!Adjacent(user))
 		return
 
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	toggle(user)

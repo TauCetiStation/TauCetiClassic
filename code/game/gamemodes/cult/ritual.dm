@@ -362,19 +362,20 @@ var/list/cult_datums = list()
 	for(var/w in words)
 		english[words[w]] = w
 	if(user)
-		w1 = input("Write your first rune:", "Rune Scribing") as null|anything in english
+		w1 = input("Write your first rune:", "Rune Scribing") in english
 		if(!w1)
 			return
 		if(w1 in cultwords)
 			w1 = english[w1]
+
 	if(user)
-		w2 = input("Write your second rune:", "Rune Scribing") as null|anything in english
+		w2 = input("Write your second rune:", "Rune Scribing") in english
 		if(!w2)
 			return
 		if(w2 in cultwords)
 			w2 = english[w2]
 	if(user)
-		w3 = input("Write your third rune:", "Rune Scribing") as null|anything in english
+		w3 = input("Write your third rune:", "Rune Scribing") in english
 		if(!w3)
 			return
 		if(w3 in cultwords)
@@ -406,15 +407,14 @@ var/list/cult_datums = list()
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 
-/obj/item/weapon/book/tome/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/book/tome))
-		var/obj/item/weapon/book/tome/T = I
+/obj/item/weapon/book/tome/attackby(obj/item/weapon/book/tome/T, mob/living/user)
+	if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("Cancel")
 				return
 		for(var/w in words)
 			words[w] = T.words[w]
-		to_chat(user, "<span class='notice'>You copy the translation notes from [T].</span>")
+		to_chat(user, "You copy the translation notes from your tome.")
 		return
 	return ..()
 

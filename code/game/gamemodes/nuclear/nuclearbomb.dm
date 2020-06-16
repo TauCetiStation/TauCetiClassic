@@ -28,7 +28,6 @@ var/bomb_set
 	var/detonated = 0 //used for scoreboard.
 	var/lastentered = ""
 	var/spray_icon_state
-	var/nuketype = ""
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()

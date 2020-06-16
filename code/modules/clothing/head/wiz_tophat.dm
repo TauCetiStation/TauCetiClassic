@@ -453,7 +453,7 @@ var/global/list/tophats_list = list()
 			user.drop_from_inventory(AM)
 		drop_into(AM, user)
 
-/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/living/user)
 	if(I.w_class <= w_class)
 		if(!global.tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
@@ -463,7 +463,7 @@ var/global/list/tophats_list = list()
 	if(user.mind && user.mind.special_role == "Wizard")
 		drop_into(I, user)
 		return
-	return ..()
+	..()
 
 /obj/item/clothing/head/wizard/tophat/attack_hand(mob/living/user)
 	if(user.get_active_hand() == src || user.get_inactive_hand() == src)

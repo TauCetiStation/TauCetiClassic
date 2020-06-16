@@ -68,8 +68,8 @@
 	var/aggressiveness = 2
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
+	if(isscrewdriver(W))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
@@ -82,12 +82,12 @@
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
-	else if(iswirecutter(I))
+	else if(iswirecutter(W))
 		if(aggressiveness != 4)
 			to_chat(user, "<span class='warning'>You broke it!</span>")
 			aggressiveness = 4
 	else
-		return ..()
+		..()
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()

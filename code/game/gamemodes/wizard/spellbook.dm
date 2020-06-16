@@ -423,17 +423,15 @@
 
 
 
-/obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = I
+/obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/contract))
+		var/obj/item/weapon/contract/contract = O
 		if(contract.uses != initial(contract.uses))
 			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
 		else
 			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
 			uses += CONTRACT_PRICE
-			qdel(I)
-	else
-		return ..()
+			qdel(O)
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""

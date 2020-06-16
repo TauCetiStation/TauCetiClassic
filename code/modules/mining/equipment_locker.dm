@@ -411,7 +411,7 @@
 	icon_state = "data"
 	var/points = 500
 
-/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
 			var/obj/item/weapon/card/id/C = I
@@ -420,8 +420,7 @@
 			points = 0
 		else
 			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
-		return
-	return ..()
+	..()
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
@@ -468,15 +467,15 @@
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/radio/beacon))
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
+	if(istype(B, /obj/item/device/radio/beacon))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		user.visible_message("<span class='notice'>[user.name] spent [I.name] above [name], scanning the serial code.</span>",
-							"<span class='notice'>You scanned serial code of [I.name], now [name] is locked.</span>")
-		chosen_beacon = I
+		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
+							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
+		src.chosen_beacon = B
 		icon_state = "Jaunter_locked"
 	else
-		return ..()
+		..()
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -751,9 +750,6 @@
 	DropOre()
 
 /mob/living/simple_animal/hostile/mining_drone/AltClick(mob/user)
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
 	if(in_range(user, src))
 		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
 		DropOre()
@@ -799,10 +795,6 @@
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
-
-/obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
-	if(!..())
-		return TRUE
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)

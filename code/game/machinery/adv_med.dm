@@ -71,8 +71,7 @@
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
 		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+	if(!iscarbon(user) && !isrobot(user))
 		return
 	if(!move_inside_checks(target, user))
 		return

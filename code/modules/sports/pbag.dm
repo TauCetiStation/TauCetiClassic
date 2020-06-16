@@ -6,7 +6,7 @@
 	icon_state = "pbag"
 	logs_combat = FALSE
 
-	can_be_pulled = FALSE
+	anchored = TRUE
 	density = FALSE
 
 	maxHealth = 100
@@ -18,6 +18,7 @@
 
 /mob/living/pbag/atom_init()
 	. = ..()
+
 	color = random_color()
 	alive_mob_list -= src
 
@@ -62,7 +63,6 @@
 
 /mob/living/pbag/on_lay_down()
 	drop_down()
-	return TRUE
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(ckey && !incapacitated())
@@ -83,19 +83,8 @@
 	if(incapacitated())
 		hang_up(attacker)
 
-/mob/living/pbag/death(gibbed)
-	if(gibbed)
-		var/list/pos_turfs = RANGE_TURFS(3, src)
-		for(var/i in 1 to 5)
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
-			R.color = color
-			var/turf/target = pick(pos_turfs)
-			R.throw_at(target, 3, 2)
-
-/mob/living/pbag/gib()
-	death()
-	dead_mob_list -= src
-	qdel(src)
+/mob/living/pbag/death()
+	return
 
 /mob/living/pbag/update_canmove()
 	return
@@ -104,7 +93,8 @@
 	handle_combat()
 
 /mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
-	hit(damage, damagetype)
+	if(!incapacitated())
+		hit(damage, damagetype)
 
 	var/flags_mes = ""
 	if(damage_flags & (DAM_SHARP|DAM_EDGE))
@@ -163,7 +153,7 @@
 				T = get_step(T, dir_throw)
 			ghost.throw_at(T, 7, 5, src) // It will say that the bad "thrown" the ghost out. Sounds fun.
 
-	can_be_pulled = TRUE
+	anchored = FALSE
 	resting = TRUE
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
@@ -182,9 +172,7 @@
 
 /mob/living/pbag/rejuvenate()
 	..()
-	if(pulledby)
-		pulledby.stop_pulling()
-	can_be_pulled = FALSE
+	anchored = TRUE
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
@@ -206,8 +194,8 @@
 		else
 			rejuvenate()
 
-		user.visible_message("<span class='notice'>[user] [!resting ? "secures" : "unsecures"] \the [src].</span>",
-			"<span class='notice'>You [!resting ? "secure" : "unsecure"] \the [src].</span>",
+		user.visible_message("<span class='notice'>[user] [anchored ? "secures" : "unsecures"] \the [src].</span>",
+			"<span class='notice'>You [anchored? "secure" : "unsecure"] \the [src].</span>",
 			"<span class='notice'>You hear a ratchet.</span>")
 
 /mob/living/pbag/is_usable_eyes(targetzone = null)

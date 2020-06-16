@@ -22,7 +22,7 @@
 
 /datum/comment_pages
 	var/list/datum/message_comment/comments = list() //stores COMMENTS_ON_PAGE comments
-
+  
 /datum/message_comment
 	var/author = ""
 	var/backup_author = ""
@@ -504,7 +504,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.scanned_user == "Unknown")
 					dat+="<FONT COLOR='maroon'>Invalid name.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Return</A><BR>"
-			if(23)
+			if(23) 
 				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
 				var/datum/feed_message/MESSAGE = src.viewing_message
 				dat+="Number of Comments - [MESSAGE.count_comments]<BR>"
@@ -521,11 +521,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				var/i = 0
 				dat+="<HR>"
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
-					i++
+					i++ 
 					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
 				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[9]'>Return</A>"
-			if(24)
+			if(24) 
 				dat+="<B>Story ([src.viewing_message.body])</B><HR>"
 				var/datum/feed_message/MESSAGE = src.viewing_message
 				dat+="Number of Comments - [MESSAGE.count_comments]<HR>"
@@ -537,13 +537,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[REDACTED\]") ? ("Undo comment censorship") : ("Censor comment")]</A></FONT><BR><HR>"
 				var/i = 0
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
-					i++
+					i++ 
 					dat+="[(src.current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
 				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
-
+		
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
 		assets.register()
 		assets.send(human_or_robot_user)
@@ -807,7 +807,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["setLike"])
 		var/datum/feed_message/FM = locate(href_list["setLike"])
 		FM.voters += src.scanned_user
-		FM.likes += 1
+		FM.likes += 1 
 
 	else if(href_list["setDislike"])
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
@@ -850,7 +850,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			var/lenght = FM.pages.len //find the last page
 			var/size = FM.pages[lenght].comments.len
 
-			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal
+			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal 
 				FM.pages[lenght].comments += COMMENT
 			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
@@ -1080,8 +1080,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.attack_self(src.loc)
 
 
-/obj/item/weapon/newspaper/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+/obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
@@ -1095,7 +1095,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.scribble = s
 			src.attack_self(user)
 		return
-	return ..()
 
 
 ////////////////////////////////////helper procs

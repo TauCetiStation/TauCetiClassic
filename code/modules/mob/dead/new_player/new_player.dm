@@ -292,7 +292,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		return FALSE
 	if(!job.player_old_enough(client))
 		return FALSE
-	if(!job.is_species_permitted(client.prefs.species))
+	if(!job.is_species_permitted(client))
 		return FALSE
 	if(!job.map_check())
 		return FALSE

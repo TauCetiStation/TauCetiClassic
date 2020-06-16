@@ -33,10 +33,7 @@
 
 /obj/structure/morgue/AltClick(mob/user)
 	..()
-	if(!CanUseTopic(user))
-		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+	if(!CanUseTopic(user) || !user.IsAdvancedToolUser())
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")

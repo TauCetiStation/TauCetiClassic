@@ -14,9 +14,9 @@
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
-			O.emplode(severity)
+			O.emp_act(severity)
 	if(emag)
-		emag.emplode(severity)
+		emag.emp_act(severity)
 	..()
 	return
 

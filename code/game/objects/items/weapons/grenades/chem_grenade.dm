@@ -38,9 +38,10 @@
 	if(stage > 1)
 		..()
 
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
-		var/obj/item/device/assembly_holder/det = I
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
+
+	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
+		var/obj/item/device/assembly_holder/det = W
 		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
@@ -48,9 +49,10 @@
 			to_chat(user, "<span class='red'>Assembly must be secured with screwdriver.</span>")
 			return
 		path = 1
-		to_chat(user, "<span class='notice'>You add [I] to the metal casing.</span>")
+		to_chat(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
-		user.drop_from_inventory(det, src)
+		user.remove_from_mob(det)
+		det.loc = src
 		detonator = det
 		if(istimer(det.a_left))
 			var/obj/item/device/assembly/timer/T = det.a_left
@@ -61,8 +63,7 @@
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
-
-	else if(isscrewdriver(I) && path != 2)
+	else if(isscrewdriver(W) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(!detonator)
@@ -89,24 +90,21 @@
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
 				stage = 1
 				active = 0
-
-	else if(is_type_in_list(I, allowed_containers) && (!stage || stage==1) && path != 2)
+	else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
 		if(beakers.len == 2)
 			to_chat(user, "<span class='red'>The grenade can not hold more containers.</span>")
 			return
 		else
-			if(I.reagents && I.reagents.total_volume)
-				to_chat(user, "<span class='notice'>You add \the [I] to the assembly.</span>")
-				user.drop_from_inventory(I, src)
-				beakers += I
+			if(W.reagents.total_volume)
+				to_chat(user, "<span class='notice'>You add \the [W] to the assembly.</span>")
+				user.drop_item()
+				W.loc = src
+				beakers += W
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'>\the [I] is empty.</span>")
-
-	else
-		return ..()
+				to_chat(user, "<span class='red'>\the [W] is empty.</span>")
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()

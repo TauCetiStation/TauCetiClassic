@@ -105,7 +105,7 @@
 		..(severity)
 		return
 	if(occupant)
-		occupant.emplode(severity)
+		occupant.emp_act(severity)
 	open_machine()
 	..(severity)
 

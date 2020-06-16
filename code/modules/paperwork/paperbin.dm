@@ -60,14 +60,17 @@
 	add_fingerprint(user)
 	return
 
-/obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/weapon/paper))
-		return ..()
 
-	user.drop_from_inventory(I, src)
-	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	papers.Add(I)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
+	if(!istype(i))
+		return
+
+	user.drop_item()
+	i.loc = src
+	to_chat(user, "<span class='notice'>You put [i] in [src].</span>")
+	papers.Add(i)
 	amount++
+
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()

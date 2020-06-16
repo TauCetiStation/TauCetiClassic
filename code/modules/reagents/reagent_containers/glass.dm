@@ -146,29 +146,28 @@
 		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 
-/obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize_safe(input(user, "Enter a label for [src.name]","Label", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
 		else
 			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
-			label_text = tmp_label
-			update_name_label()
-
-	else if(istype(I, /obj/item/stack/nanopaste))
-		var/obj/item/stack/nanopaste/N = I
-		if(is_open_container() && reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if(reagents.total_volume >= reagents.maximum_volume)
+			src.label_text = tmp_label
+			src.update_name_label()
+	else if(istype(W, /obj/item/stack/nanopaste))
+		var/obj/item/stack/nanopaste/N = W
+		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
+			if(src.reagents.total_volume >= src.reagents.maximum_volume)
 				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 				return
 
 			if(!N.use(1))
 				return
 
-			reagents.add_reagent("nanites2", 1)
+			src.reagents.add_reagent("nanites2", 1)
 	else
-		return ..()
+		..()
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
 	if(src.label_text == "")
@@ -292,23 +291,21 @@
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
-	if(isprox(I))
-		to_chat(user, "<span class = 'notice'>You add [I] to [src].</span>")
-		qdel(I)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/D, mob/user)
+	if(isprox(D))
+		to_chat(user, "<span class = 'notice'>You add [D] to [src].</span>")
+		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+		user.drop_from_inventory(src)
 		qdel(src)
-		return
-
-	if(iswelder(I))
-		var/obj/item/weapon/weldingtool/WT = I
+	if (iswelder(D))
+		var/obj/item/weapon/weldingtool/WT = D
 		if(WT.use(0,user))
+			user.remove_from_mob(src)
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
 			loc.visible_message("<span class = 'rose'>[src] is shaped into [BBucket] by [user.name] with the weldingtool.</span>", blind_message = "<span class = 'rose'>You hear welding.</span>")
 			qdel(src)
 		return
-
-	return ..()
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
 	cut_overlays()

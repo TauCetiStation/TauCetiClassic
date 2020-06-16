@@ -177,7 +177,7 @@
 	return
 
 /mob/living/carbon/monkey/emp_act(severity)
-	if(wear_id) wear_id.emplode(severity)
+	if(wear_id) wear_id.emp_act(severity)
 	..()
 
 /mob/living/carbon/monkey/ex_act(severity)

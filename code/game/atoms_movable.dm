@@ -12,7 +12,6 @@
 	var/fly_speed = 0  // Used to get throw speed param exposed in proc, so we could use it in hitby reactions.
 	var/moved_recently = 0
 	var/mob/pulledby = null
-	var/can_be_pulled = TRUE
 
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc

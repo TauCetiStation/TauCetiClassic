@@ -236,8 +236,8 @@
 		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 
-/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+/obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
+	if(isscrewdriver(W))
 		if(welding)
 			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return
@@ -249,12 +249,12 @@
 		src.add_fingerprint(user)
 		return
 
-	if((!status) && (istype(I, /obj/item/stack/rods)))
-		var/obj/item/stack/rods/R = I
+	if((!status) && (istype(W,/obj/item/stack/rods)))
+		var/obj/item/stack/rods/R = W
 		if(!R.use(1))
 			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
-		forceMove(F)
+		src.loc = F
 		F.weldtool = src
 		if (user.client)
 			user.client.screen -= src
@@ -271,7 +271,9 @@
 		src.add_fingerprint(user)
 		return
 
-	return ..()
+	..()
+	return
+
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)

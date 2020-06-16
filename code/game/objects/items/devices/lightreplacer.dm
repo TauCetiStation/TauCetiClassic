@@ -71,9 +71,9 @@
 	if(src in view(1, user))
 		to_chat(user, "It has [uses] lights remaining.")
 
-/obj/item/device/lightreplacer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() - decrement >= 0 && uses < max_uses)
 			var/remaining = max(G.get_amount() - decrement, 0)
 			if(!remaining && !(G.get_amount() - decrement) == 0)
@@ -84,8 +84,8 @@
 			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return
 
-	else if(istype(I, /obj/item/weapon/light))
-		var/obj/item/weapon/light/L = I
+	if(istype(W, /obj/item/weapon/light))
+		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
@@ -97,8 +97,6 @@
 			to_chat(user, "You need a working light.")
 			return
 
-	else
-		return ..()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.

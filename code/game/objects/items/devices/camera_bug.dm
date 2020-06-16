@@ -206,7 +206,7 @@
 	if("emp" in href_list)
 		var/obj/machinery/camera/C = locate(href_list["emp"])
 		if(istype(C) && C.bug == src)
-			C.emplode(1)
+			C.emp_act(1)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()

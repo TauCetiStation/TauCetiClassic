@@ -13,7 +13,7 @@
 			qdel(I)
 			add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 			return
-
-	user.drop_from_inventory(I, loc)
+	user.drop_item()
+	I.loc = src.loc
 
 	audible_message("[bicon(src)] <span class='notice'>The [src.name] beeps</span>")

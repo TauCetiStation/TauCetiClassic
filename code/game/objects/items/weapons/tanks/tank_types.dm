@@ -77,9 +77,10 @@
 	. = ..()
 	air_contents.adjust_gas("phoron", (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
 
-/obj/item/weapon/tank/phoron/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/flamethrower))
-		var/obj/item/weapon/flamethrower/F = I
+/obj/item/weapon/tank/phoron/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/flamethrower))
+		var/obj/item/weapon/flamethrower/F = W
 		if (!F.status || F.ptank)
 			return
 
@@ -87,8 +88,6 @@
 		F.ptank = src
 		user.remove_from_mob(src)
 		forceMove(F)
-	else
-		return ..()
 
 /*
  * Emergency Oxygen

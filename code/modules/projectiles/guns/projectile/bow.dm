@@ -58,22 +58,22 @@
 	. = ..()
 	desc = "A [gamestory_start_year+2]AD twist on an old classic. Pick up that can."
 
-/obj/item/weapon/crossbow/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
-		if(istype(I, /obj/item/weapon/arrow))
-			user.drop_from_inventory(I, src)
-			arrow = I
+		if (istype(W,/obj/item/weapon/arrow))
+			user.drop_item()
+			arrow = W
+			arrow.loc = src
 			user.visible_message("[user] slides [arrow] into [src].","You slide [arrow] into [src].")
 			icon_state = "crossbow-nocked"
 			return
-
-		else if(istype(I, /obj/item/stack/rods))
-			var/obj/item/stack/rods/R = I
+		else if(istype(W,/obj/item/stack/rods))
+			var/obj/item/stack/rods/R = W
 			if(!R.use(1))
 				return
 			arrow = new /obj/item/weapon/arrow/rod(src)
 			arrow.fingerprintslast = src.fingerprintslast
-			arrow.forceMove(src)
+			arrow.loc = src
 			icon_state = "crossbow-nocked"
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
 			if(cell)
@@ -84,10 +84,11 @@
 					cell.use(500)
 			return
 
-	if(istype(I, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!cell)
-			user.drop_from_inventory(I, src)
-			cell = I
+			user.drop_item()
+			W.loc = src
+			cell = W
 			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
@@ -98,17 +99,17 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(isscrewdriver(I))
+	else if(isscrewdriver(W))
 		if(cell)
 			var/obj/item/C = cell
-			C.forceMove(get_turf(user))
+			C.loc = get_turf(user)
 			cell = null
-			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [I].</span>")
+			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
 
 	else
-		return ..()
+		..()
 
 /obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)

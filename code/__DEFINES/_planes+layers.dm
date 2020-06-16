@@ -115,5 +115,5 @@ What is the naming convention for planes or layers?
 
 //modifiers for /obj/machinery/door (and subtypes) layers
 #define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
-#define PODDOOR_CLOSED_MOD  0.31
+#define PODDOOR_CLOSED_MOD  0.3
 #define FIREDOOR_CLOSED_MOD 0.31

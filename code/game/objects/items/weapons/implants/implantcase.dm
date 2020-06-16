@@ -18,48 +18,46 @@
 	return
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+/obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if (istype(W, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
 
-		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
+		if (user.get_active_hand() != W || (!in_range(src, usr) && loc != user))
 			return
 
 		name = "Glass Case"
 		if (t)
 			name += " - '[t]'"
 
-	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+	else if (istype(W, /obj/item/weapon/reagent_containers/syringe))
 		if(!imp || !src.imp.allow_reagents)
 			return
 
 		if(imp.reagents.total_volume >= imp.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			I.reagents.trans_to(src.imp, 5)
-			to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>")
+			W.reagents.trans_to(src.imp, 5)
+			to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [W.reagents.total_volume] units.</span>")
 
-	else if(istype(I, /obj/item/weapon/implanter))
-		var/obj/item/weapon/implanter/IMP = I
-		if (IMP.imp)
-			if (imp || IMP.imp.implanted)
+	else if (istype(W, /obj/item/weapon/implanter))
+		var/obj/item/weapon/implanter/I = W
+		if (I.imp)
+			if (imp || I.imp.implanted)
 				return
-			IMP.imp.forceMove(src)
-			imp = IMP.imp
-			IMP.imp = null
+			I.imp.loc = src
+			src.imp = I:imp
+			I.imp = null
 			update()
-			IMP.update()
-		else if(imp)
-			if(IMP.imp)
+			I.update()
+		else if (imp)
+			if (I.imp)
 				return
-			imp.forceMove(IMP)
-			IMP.imp = imp
+			imp.loc = I
+			I.imp = src.imp
 			imp = null
 			update()
-		IMP.update()
-
-	else
-		return ..()
+		I.update()
 
 /obj/item/weapon/implantcase/tracking
 	name = "Glass Case- 'Tracking'"

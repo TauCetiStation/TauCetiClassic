@@ -12,28 +12,29 @@
 	pixel_y = rand(-5, 5)
 	pixel_x = rand(-6, 6)
 
-/obj/item/ashtray/attackby(obj/item/I, mob/user, params)
+/obj/item/ashtray/attackby(obj/item/weapon/W, mob/user)
 	if (health < 1)
 		return
-	if (istype(I, /obj/item/weapon/cigbutt) || istype(I, /obj/item/clothing/mask/cigarette) || istype(I, /obj/item/weapon/match))
+	if (istype(W,/obj/item/weapon/cigbutt) || istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match))
 		if (contents.len >= max_butts)
 			to_chat(user, "This ashtray is full.")
 			return
-		user.drop_from_inventory(I, src)
+		user.remove_from_mob(W)
+		W.loc = src
 
-		if (istype(I, /obj/item/clothing/mask/cigarette))
-			var/obj/item/clothing/mask/cigarette/cig = I
+		if (istype(W,/obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/cig = W
 			if (cig.lit == 1)
 				src.visible_message("[user] crushes [cig] in [src], putting it out.")
 				STOP_PROCESSING(SSobj, cig)
 				var/obj/item/butt = new cig.type_butt(src)
 				cig.transfer_fingerprints_to(butt)
 				qdel(cig)
-				I = butt
+				W = butt
 			else if (cig.lit == 0)
 				to_chat(user, "You place [cig] in [src] without even smoking it. Why would you do that?")
 
-		visible_message("[user] places [I] in [src].")
+		src.visible_message("[user] places [W] in [src].")
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
 		add_fingerprint(user)
@@ -44,10 +45,11 @@
 			icon_state = icon_half
 			desc = empty_desc + " It's half-filled."
 	else
-		. = ..()
-		health = max(0,health - I.force)
+		health = max(0,health - W.force)
+		to_chat(user, "You hit [src] with [W].")
 		if (health < 1)
 			die()
+	return
 
 /obj/item/ashtray/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if (health > 0)

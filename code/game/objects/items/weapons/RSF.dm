@@ -19,19 +19,18 @@ RSF
 	. = ..()
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 
-/obj/item/weapon/rsf/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/rcd_ammo))
-		if(matter + 10 > 30)
+/obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if (istype(W, /obj/item/weapon/rcd_ammo))
+		if ((matter + 10) > 30)
 			to_chat(user, "The RSF cant hold any more matter.")
 			return
-		qdel(I)
+		qdel(W)
 		matter += 10
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
-
-	else
-		return ..()
+		return
 
 /obj/item/weapon/rsf/attack_self(mob/user)
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)

@@ -176,15 +176,12 @@
 					break
 			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
 
-/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = I
-		OS.scanned_type = type
+/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-
-	else
-		return ..()
-
 /*
  * Crayon Box
  */
@@ -229,11 +226,11 @@
 	add_overlay(crayon_overlays)
 	return
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/toy/crayon/chalk) || istype(I, /obj/item/toy/crayon/spraycan))
-		to_chat(user, "\The [I] is too bulky to be contained in [src].")
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
+	if(istype(W, /obj/item/toy/crayon/chalk) || istype(W, /obj/item/toy/crayon/spraycan))
+		to_chat(user, "\The [W] is too bulky to be contained in [src].")
 		return
-	return ..()
+	..()
 
 /*
  * Glowsticks Box
@@ -399,6 +396,6 @@
 		add_overlay(image(icon, src, "ledb"))
 	return
 
-/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/I, mob/user, params)
-	. = ..()
+/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)
+	..()
 	update_icon()

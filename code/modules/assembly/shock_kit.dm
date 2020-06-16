@@ -13,8 +13,8 @@
 	qdel(part2)
 	return ..()
 
-/obj/item/assembly/shock_kit/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I) && !status)
+/obj/item/assembly/shock_kit/attackby(obj/item/weapon/W, mob/user)
+	if(iswrench(W) && !status)
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc
@@ -26,12 +26,11 @@
 		part2 = null
 		qdel(src)
 		return
-	if(isscrewdriver(I))
+	if(isscrewdriver(W))
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "secured" : "unsecured"]!</span>")
-		add_fingerprint(user)
-		return
-	return ..()
+	add_fingerprint(user)
+	return
 
 /obj/item/assembly/shock_kit/attack_self(mob/user)
 	part1.attack_self(user, status)

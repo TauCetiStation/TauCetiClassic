@@ -28,12 +28,11 @@
 	if (hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/accessory/storage/attack_accessory(obj/item/I, mob/user, params)
-	hold.attackby(I, user, params)
-	return TRUE
+/obj/item/clothing/accessory/storage/attackby(obj/item/W, mob/user)
+	return hold.attackby(W, user)
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
-	hold.emplode(severity)
+	hold.emp_act(severity)
 	..()
 
 /obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)

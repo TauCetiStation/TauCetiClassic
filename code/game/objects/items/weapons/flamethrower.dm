@@ -68,52 +68,53 @@
 			var/list/turflist = getline(get_turf(src), target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I) && !status)//Taking this apart
+/obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user)
+	if(iswrench(W) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
-			weldtool.forceMove(T)
+			weldtool.loc = T
 			weldtool = null
 		if(igniter)
-			igniter.forceMove(T)
+			igniter.loc = T
 			igniter = null
 		if(ptank)
-			ptank.forceMove(T)
+			ptank.loc = T
 			ptank = null
 		new /obj/item/stack/rods(T)
 		qdel(src)
 		return
 
-	if(isscrewdriver(I) && igniter && !lit)
+	if(isscrewdriver(W) && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
 		return
 
-	if(isigniter(I))
-		var/obj/item/device/assembly/igniter/IGN = I
-		if(IGN.secured)	return
+	if(isigniter(W))
+		var/obj/item/device/assembly/igniter/I = W
+		if(I.secured)	return
 		if(igniter)		return
-		user.drop_from_inventory(IGN, src)
-		igniter = IGN
+		user.drop_item()
+		I.loc = src
+		igniter = I
 		update_icon()
 		return
 
-	if(istype(I, /obj/item/weapon/tank/phoron))
+	if(istype(W,/obj/item/weapon/tank/phoron))
 		if(ptank)
 			to_chat(user, "<span class='notice'>There appears to already be a phoron tank loaded in [src]!</span>")
 			return
-		user.drop_from_inventory(I, src)
-		ptank = I
+		user.drop_item()
+		ptank = W
+		W.loc = src
 		update_icon()
 		return
 
-	if(istype(I, /obj/item/device/analyzer))
-		var/obj/item/device/analyzer/A = I
+	if(istype(W, /obj/item/device/analyzer))
+		var/obj/item/device/analyzer/A = W
 		A.analyze_gases(src, user)
 		return
-
-	return ..()
+	..()
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
 	user.set_machine(src)

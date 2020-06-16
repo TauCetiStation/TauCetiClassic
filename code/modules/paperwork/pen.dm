@@ -40,24 +40,21 @@
 	                        "Sound the alarms, all of them!", "Are you, [user], any better?", "You can always give up.", "Why even?")
 	to_chat(user, "<span class='bold'>[entity]</span> [pick("moans", "laments", "whines", "blubbers")], \"[pick(phrases)]\"")
 
-/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
+	..()
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
-		return
-
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 			if(entity && istype(I, /obj/item/weapon/nullrod))
 				entity = ""
 				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
-				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
 				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
 				entity = B.deity_name
-				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
 				for(var/A in P.photographed_names)
@@ -65,8 +62,6 @@
 						entity = A
 						to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 						break
-				return
-	return ..()
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."

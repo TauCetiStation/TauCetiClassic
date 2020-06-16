@@ -900,13 +900,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	return ..()
+	..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -1225,13 +1225,13 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = CONDUCT
 
-/obj/item/firealarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
-	return ..()
+	..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr) > 1)

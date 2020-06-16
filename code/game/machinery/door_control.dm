@@ -416,12 +416,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl_assembly0"
 
-/obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+/obj/item/door_control_frame/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
-		return
-	return ..()
 
 /obj/item/door_control_frame/proc/try_build(target)
 	if (get_dist(target, usr) > 1)

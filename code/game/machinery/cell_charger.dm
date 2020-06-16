@@ -88,7 +88,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(charging)
-		charging.emplode(severity)
+		charging.emp_act(severity)
 	..(severity)
 
 

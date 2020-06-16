@@ -70,7 +70,7 @@
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
-		O.emplode(severity)
+		O.emp_act(severity)
 
 /obj/item/weapon/gun/Destroy()
 	qdel(chambered)
