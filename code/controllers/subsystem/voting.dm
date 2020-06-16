@@ -18,7 +18,6 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
-	var/vtheme = CSS_THEME_DARK
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
@@ -35,7 +34,7 @@ var/datum/subsystem/vote/SSvote
 		else
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", ntheme = vtheme)
+				client_popup = new(C, "vote", "Voting Panel")
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
 				client_popup.open(0)
@@ -237,12 +236,9 @@ var/datum/subsystem/vote/SSvote
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
-		vtheme = CSS_THEME_DARK
-		if(mode == "restart")
-			vtheme = CSS_THEME_LIGHT
 		if(vote_type != "custom")
 			for(var/client/C in clients)
-				var/datum/browser/popup = new(C, "vote", "Voting Panel", ntheme = vtheme)
+				var/datum/browser/popup = new(C, "vote", "Voting Panel")
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
@@ -315,7 +311,6 @@ var/datum/subsystem/vote/SSvote
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
 	return .
 
-
 /datum/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
@@ -339,7 +334,6 @@ var/datum/subsystem/vote/SSvote
 		if("restart")
 			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
 				initiate_vote("restart",usr.key)
-				return
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
 				initiate_vote("crew_transfer",usr.key)
@@ -351,7 +345,6 @@ var/datum/subsystem/vote/SSvote
 				initiate_vote("custom",usr.key)
 		else
 			submit_vote(round(text2num(href_list["vote"])))
-			return
 	usr.vote()
 
 
