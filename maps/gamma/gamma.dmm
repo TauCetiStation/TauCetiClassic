@@ -59014,7 +59014,7 @@
 	pixel_x = 9;
 	pixel_y = 8
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "sgM" = (
