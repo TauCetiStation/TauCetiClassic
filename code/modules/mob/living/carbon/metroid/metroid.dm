@@ -18,6 +18,7 @@
 	update_slimes = 0
 
 	ventcrawler = 2
+	pull_debuff = 1.2
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.

@@ -163,17 +163,14 @@
 	pull_debuff = 0
 	if(pulling)
 		var/tally = 0
-
 		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		if(ismonkey(src))
-			tally += 0.7
-		else if(isslime(src))
-			tally += 1.2
+		tally += pulling_hardness
 
 		var/atom/movable/AM = pulling
 		//Mob pulling
 		if(ismob(AM))
-			tally += 1
+			var/mob/living/L = AM
+			tally += L.weight
 		//weight pulling
 		if(istype(AM, /obj))
 			var/obj/structure/O = AM

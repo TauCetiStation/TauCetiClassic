@@ -1,4 +1,3 @@
-#define MOB_SIZE 10
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -29,8 +28,8 @@
 			I.forceMove(src)
 	PopulateContents()
 	update_icon()
-	for(var/mob/M in src)
-		weight += weight
+	for(var/mob/living/L in src)
+		weight += L.weight
 	for(var/obj/O in src)
 		weight += O.weight * weight_modifier
 
@@ -88,24 +87,22 @@
 
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src.loc)
-		if(itemcount + MOB_SIZE > storage_capacity)
+		if(itemcount >= storage_capacity)
 			break
 		AD.forceMove(src)
 		weight += 1
-		itemcount += MOB_SIZE
+		itemcount++
 
-	for(var/mob/M in src.loc)
-		if(itemcount + MOB_SIZE > storage_capacity)
+	for(var/mob/living/L in src.loc)
+		if(itemcount + L.size > storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
-			continue
-		if(M.buckled)
+		if(L.buckled)
 			continue
 
-		M.forceMove(src)
-		M.instant_vision_update(1,src)
-		weight += 1
-		itemcount += MOB_SIZE
+		L.forceMove(src)
+		L.instant_vision_update(1,src)
+		weight += L.weight
+		itemcount += L.size
 
 /obj/structure/closet/proc/open()
 	if(src.opened)
@@ -332,4 +329,3 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
-#undef MOB_SIZE
