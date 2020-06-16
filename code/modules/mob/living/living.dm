@@ -830,14 +830,13 @@
 			size_ratio_grabbing = get_size_ratio(G.affecting, G.assailant)
 			if(L.getStamina() >= L.resist_cost * size_ratio_grabbing)
 				G.assailant.adjustStamina(-L.resist_cost * size_ratio_grabbing)
-			switch(G.state)
-				if(GRAB_PASSIVE)
-					if(ishuman(G.assailant))
-						var/mob/living/carbon/human/H = G.assailant
-						if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
-							H.adjustBruteLoss(5) // We bit them.
-							H.shoving_fingers = FALSE
-					qdel(G)
+			if(G.state ==GRAB_PASSIVE)
+				if(ishuman(G.assailant))
+					var/mob/living/carbon/human/H = G.assailant
+					if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+						H.adjustBruteLoss(5) // We bit them.
+						H.shoving_fingers = FALSE
+				qdel(G)
 		if(resisting)
 			if(L.getStamina() >= L.resist_cost * size_ratio_resisting)
 				L.adjustStamina(-L.resist_cost * size_ratio_resisting)
