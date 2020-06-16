@@ -237,10 +237,7 @@
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)
 		assembly.state = state
-		if(state)
-			assembly.anchored = 1
-		else
-			assembly.anchored = 0
+		assembly.anchored = !!state
 		assembly.loc = loc
 		assembly.update_icon()
 		assembly = null
