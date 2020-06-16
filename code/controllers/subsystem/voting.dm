@@ -172,7 +172,7 @@ var/datum/subsystem/vote/SSvote
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
 	var/timer_mode = "default"
-	if (vote_type == "restart")
+	if(vote_type == "restart")
 		timer_mode = "restart"
 	if(!mode)
 		if(last_vote_time[timer_mode] != null && !is_admin)
@@ -196,12 +196,12 @@ var/datum/subsystem/vote/SSvote
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
-				for (var/M in config.votable_modes)
-					if (config.is_modeset(M))
+				for(var/M in config.votable_modes)
+					if(config.is_modeset(M))
 						var/list/submodes = list()
-						for (var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
+						for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
 							submodes.Add(D.name)
-						if (length(submodes) > 0)
+						if(length(submodes) > 0)
 							description += "<b>[M]</b>: "
 							description += submodes.Join(", ")
 							description += "<br>"
@@ -276,7 +276,7 @@ var/datum/subsystem/vote/SSvote
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
-		if (description)
+		if(description)
 			. += "[description]<hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
