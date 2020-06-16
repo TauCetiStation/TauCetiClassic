@@ -414,7 +414,6 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/hit_zone = assailant.zone_sel.selecting
-			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
 				if(INTENT_HELP)
 					if(force_down)
