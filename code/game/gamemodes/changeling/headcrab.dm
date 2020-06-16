@@ -91,9 +91,6 @@
 		addtimer(CALLBACK(src, .proc/death), 100)
 		egg_lain = TRUE
 
-/mob/living/simple_animal/headcrab/start_pulling(atom/movable/AM)
-	return
-
 /obj/item/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."

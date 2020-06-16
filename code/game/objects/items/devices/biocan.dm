@@ -64,12 +64,12 @@
 		to_chat(usr, "<span class='warning'>You enable commutating device, allowing your prisoner to speak.</span>")
 		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
 
-/obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/organ/external/head))
+/obj/item/device/biocan/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/organ/external/head))
 		if(!headobj)
-			headobj = W
-			user.drop_item()
-			headobj.loc = src
+			headobj = I
+			user.drop_from_inventory(I, src)
+
 			if(headobj.brainmob)
 				brainmob = headobj.brainmob
 				headobj.brainmob = null
@@ -79,7 +79,7 @@
 				dead_mob_list -= brainmob
 				alive_mob_list += brainmob
 			display_headobj = new (src)
-			display_headobj.appearance = W.appearance
+			display_headobj.appearance = I.appearance
 			display_headobj.transform = matrix()
 			display_headobj.dir = SOUTH
 			display_headobj.pixel_y = 0
@@ -88,6 +88,8 @@
 			display_headobj.plane = FLOAT_PLANE
 			underlays.Add(display_headobj)
 			update_icon()
+	else
+		return ..()
 
 /obj/item/device/biocan/attack_self(mob/user)
 	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")

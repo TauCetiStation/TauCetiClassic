@@ -42,12 +42,12 @@
 	cut_overlay(mag)
 	..()
 
-/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
+/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
+		if((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			add_overlay(mag)
-			..()
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
 	..()
@@ -119,10 +119,11 @@
 			silencer_attack_hand(user)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
-	..()
+		silencer_attackby(I, user)
+		return
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()

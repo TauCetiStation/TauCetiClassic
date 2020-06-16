@@ -305,7 +305,7 @@
 		else
 			target.visible_message("<span class='danger'>[user] blinks \the [src] at \the [target].</span>")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		target.emp_act(1)
+		target.emplode(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

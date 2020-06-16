@@ -35,10 +35,10 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/xenoarch_utilizer/attackby(obj/I, mob/user)
+/obj/item/weapon/xenoarch_utilizer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/particles_battery))
 		if(!inserted_battery)
-			if(user.drop_item(I, src))
+			if(user.drop_from_inventory(I, src))
 				to_chat(user, "<span class='notice'>You insert the battery.</span>")
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 				inserted_battery = I
