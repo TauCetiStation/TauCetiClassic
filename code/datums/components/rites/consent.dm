@@ -18,6 +18,9 @@
 
 // Send ask to victim
 /datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+	// revert consent to it's default
+	consent = def_consent
+
 	var/mob/victim = AOG.buckled_mob
 	if(!victim)
 		return
@@ -27,6 +30,7 @@
 	else 
 		if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
 			consent = TRUE
+			to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")
 
 // Checks for a victim
 /datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
@@ -40,6 +44,4 @@
 		var/mob/victim = AOG.buckled_mob
 		to_chat(user, "<span class='warning'>[victim] does not want to give themselves into this ritual!.</span>")
 		return COMPONENT_CHECK_FAILED
-	// revert consent to it's default
-	consent = def_consent
 	return NONE

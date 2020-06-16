@@ -468,10 +468,11 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
-		..()
-		return
+/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/stack/tile/plasteel))
+		return ..()
+	var/obj/item/stack/tile/plasteel/T = I
+
 	if(src.contents.len >= 1)
 		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")
 		return
@@ -481,40 +482,39 @@
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
 	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
-	user.drop_from_inventory(src)
 	qdel(src)
 
-/obj/item/weapon/toolbox_tiles/attackby(obj/item/W, mob/user)
-	..()
-	if(isprox(W))
-		qdel(W)
+/obj/item/weapon/toolbox_tiles/attackby(obj/item/I, mob/user, params)
+	if(isprox(I))
+		qdel(I)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)),MAX_NAME_LEN)
+	else if (istype(I, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)),MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
 			return
 
-		src.created_name = t
+		created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		qdel(W)
+	else
+		return ..()
+
+/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
+		qdel(I)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
-	else if (istype(W, /obj/item/weapon/pen))
+
+	else if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
@@ -522,7 +522,10 @@
 		if (!in_range(src, usr) && src.loc != usr)
 			return
 
-		src.created_name = t
+		created_name = t
+
+	else
+		return ..()
 
 /obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
 	return 1

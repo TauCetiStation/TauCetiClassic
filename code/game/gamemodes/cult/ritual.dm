@@ -406,14 +406,15 @@ var/list/cult_datums = list()
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 
-/obj/item/weapon/book/tome/attackby(obj/item/weapon/book/tome/T, mob/living/user)
-	if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
+/obj/item/weapon/book/tome/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/book/tome))
+		var/obj/item/weapon/book/tome/T = I
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("Cancel")
 				return
 		for(var/w in words)
 			words[w] = T.words[w]
-		to_chat(user, "You copy the translation notes from your tome.")
+		to_chat(user, "<span class='notice'>You copy the translation notes from [T].</span>")
 		return
 	return ..()
 

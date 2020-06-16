@@ -1260,18 +1260,17 @@
 	return
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		cartridge = C
-		user.drop_item()
-		cartridge.loc = src
+/obj/item/device/pda/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/cartridge) && !cartridge)
+		cartridge = I
+		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 
-	else if(istype(C, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = C
+	else if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/idcard = I
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
@@ -1289,27 +1288,26 @@
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
+			if(((src in user.contents) && (idcard in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (idcard in user.contents)) )
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		user.drop_item()
-		C.loc = src
-		pai = C
-		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
+	else if(istype(I, /obj/item/device/paicard) && !src.pai)
+		user.drop_from_inventory(I, src)
+		pai = I
+		to_chat(user, "<span class='notice'>You slot \the [I] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
-	else if(istype(C, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
 			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
-			user.drop_item()
-			C.loc = src
-			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
-	return ..()
+			user.drop_from_inventory(I, src)
+			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
+	else
+		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
 	if (istype(L, /mob/living/carbon))

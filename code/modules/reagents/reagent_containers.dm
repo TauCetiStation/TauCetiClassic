@@ -39,13 +39,6 @@
 	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
 
-// this prevented pills, food, and other things from being picked up by bags.
-// possibly intentional, but removing it allows us to not duplicate functionality.
-// -Sayu (storage conslidation)
-/*
-/obj/item/weapon/reagent_containers/attackby(obj/item/I, mob/user)
-	return
-*/
 /obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
 	return
 
