@@ -1145,8 +1145,7 @@
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.remove_from_mob(O)
-	src.contents += O
+	user.drop_from_inventory(O, src) 
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0

@@ -60,8 +60,7 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src) 
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
@@ -96,8 +95,7 @@
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
 		else
-			user.remove_from_mob(O)
-			src.contents += O
+			user.drop_from_inventory(O, src)
 			to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 
 	if(!processing)
