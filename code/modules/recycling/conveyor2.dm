@@ -306,12 +306,14 @@
 	w_class = ITEM_SIZE_LARGE
 	var/id = "" //inherited by the belt
 
-/obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/conveyor_switch_construct))
 		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
+
+	else
+		return ..()
 
 /obj/item/conveyor_construct/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !istype(target, /turf/simulated/floor) || istype(target, /area/shuttle))

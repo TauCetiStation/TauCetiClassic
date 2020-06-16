@@ -43,7 +43,7 @@
 				user_unbuckle_mob(user)
 				return
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	..()
+	return ..()
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)

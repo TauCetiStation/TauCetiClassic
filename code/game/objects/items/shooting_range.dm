@@ -30,13 +30,15 @@
 
 
 
-/obj/item/target/attackby(obj/item/W, mob/user)
-	if (iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/target/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			cut_overlays()
 			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>")
 			return
+	else
+		return ..()
 
 
 /obj/item/target/attack_hand(mob/user)

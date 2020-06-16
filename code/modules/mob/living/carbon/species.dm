@@ -52,6 +52,7 @@
 
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -704,11 +705,14 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	// This should cause IPCs to stabilize at ~52 C in a 20 C environment with fully functional cooling system
+	synth_temp_gain = 10
+	// IPCs heat up until ~306C. No more 2000C IPCs
+	synth_temp_max = 550
 
 	brute_mod = 1.5
 	burn_mod = 1
@@ -725,6 +729,7 @@
 	,NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
@@ -758,8 +763,8 @@
 	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-	survival_kit_items = list(/obj/item/weapon/stock_parts/cell/crap,
-	                          /obj/item/device/robotanalyzer
+	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
+	                          /obj/item/stack/nanopaste
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
@@ -842,6 +847,7 @@
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
@@ -850,6 +856,7 @@
 	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	has_bodypart = list(
@@ -965,6 +972,7 @@
 	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	burn_mod = 2
@@ -1004,6 +1012,7 @@
 
 	flags = list(
 		NO_BLOOD = TRUE,
+		NO_DNA = TRUE,
 		NO_BREATHE = TRUE,
 		NO_SCAN = TRUE,
 		NO_PAIN = TRUE,
@@ -1013,7 +1022,8 @@
 		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
-		NO_MINORCUTS = TRUE
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE
 		)
 
 	has_organ = list(
@@ -1084,6 +1094,7 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	brute_mod = 2
@@ -1150,6 +1161,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25
@@ -1192,6 +1204,7 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	min_age = 25

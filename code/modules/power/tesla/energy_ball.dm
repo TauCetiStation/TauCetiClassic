@@ -245,7 +245,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
 		if(istype(closest_mob, /mob/living/silicon))
 			var/mob/living/silicon/S = closest_mob
-			S.emp_act(2)
+			S.emplode(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5)

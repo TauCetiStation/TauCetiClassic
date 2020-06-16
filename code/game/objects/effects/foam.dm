@@ -112,6 +112,9 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
+	if(AM.anchored || !AM.density)
+		return
+
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.w_class <= ITEM_SIZE_TINY)

@@ -60,15 +60,13 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src) 
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
 		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/bag/plants/P = O
-		P.close(user) //Принудительно закрываем окно инвентаря сумки, во избежание бага
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -78,7 +76,7 @@
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				if(i >= max_items)
 					break
-				G.loc = src
+				P.remove_from_storage(G, src)
 				i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
@@ -97,8 +95,7 @@
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 
 	if(!processing)

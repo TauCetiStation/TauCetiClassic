@@ -155,8 +155,6 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
-//mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
-
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
 	get_scooped(attacker)
@@ -179,7 +177,7 @@
 	return
 
 /mob/living/carbon/monkey/emp_act(severity)
-	if(wear_id) wear_id.emp_act(severity)
+	if(wear_id) wear_id.emplode(severity)
 	..()
 
 /mob/living/carbon/monkey/ex_act(severity)

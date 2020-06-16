@@ -60,16 +60,8 @@
 /obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
-
-/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		to_chat(user, "It's a holotable!  There are no bolts!")
-		return
-
-	if(isrobot(user))
-		return
-
-	..()
+/obj/structure/table/holotable/attack_tools(obj/item/I, mob/user)
+	return
 
 /obj/structure/table/holotable/wooden
 	name = "table"

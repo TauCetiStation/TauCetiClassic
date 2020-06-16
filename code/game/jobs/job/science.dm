@@ -18,6 +18,13 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -98,6 +105,14 @@
 	access = list(access_research, access_xenoarch)
 	salary = 190
 	minimal_player_ingame_minutes = 1400
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
+	restricted_species = list(IPC)
 
 /datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

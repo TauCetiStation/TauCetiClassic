@@ -352,8 +352,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		icon_state += "_broken"
 	return
 
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/weapon/pickaxe/drill/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -365,18 +365,18 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		else if(state == 2)
 			to_chat(user, "<span class='danger'>[src] is broken!</span>")
 		return
-	else if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(state == 1 || state == 2)
 			if(!power_supply)
-				user.remove_from_mob(W)
-				power_supply = W
-				power_supply.loc = src
+				user.drop_from_inventory(I, src)
+				power_supply = I
 				to_chat(user, "<span class='notice'>You load a powercell into \the [src]!</span>")
 			else
 				to_chat(user, "<span class='notice'>There's already a powercell in \the [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] panel is closed.</span>")
-		return
+	else
+		return ..()
 
 /obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
 	if(loc != user)
@@ -405,17 +405,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
+	item_state = "jackhammer"
 	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-/obj/item/weapon/pickaxe/drill/jackhammer/attackby()
+/obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
+	item_state = "d_drill"
 	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
@@ -430,7 +432,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = ""
 	drill_verb = "drilling"
 
-/obj/item/weapon/pickaxe/drill/borgdrill/attackby()
+/obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)
 	return
 
 
@@ -514,18 +516,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/kinetic_upgrade/speed))
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/kinetic_upgrade/speed))
 		if(already_improved == FALSE)
 			already_improved = TRUE
 			recharge_time -= 8 //We get 1.2 seconds of reload instead.
 			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-			qdel(O)
+			qdel(I)
 		else
 			to_chat(user, "<span class='notice'>Already improved.</span>")
 	else
 		return ..()
+
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
@@ -766,16 +769,17 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	density = 1
 	pixel_y = -32
 
-/obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrench(W) && !(flags&NODECONSTRUCT))
+/obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
-			return ..()
+			return
+	return ..()
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
