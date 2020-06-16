@@ -238,7 +238,7 @@
 	if(assembly)
 		assembly.state = state
 		assembly.anchored = !!state
-		assembly.loc = loc
+		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
 
