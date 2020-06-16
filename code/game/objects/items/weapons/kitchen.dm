@@ -137,6 +137,7 @@
 		TOOL_KNIFE = 1
 		)
 	sweep_step = 2
+
 /obj/item/weapon/kitchenknife/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
