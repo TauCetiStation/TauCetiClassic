@@ -12411,13 +12411,6 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/xenobiology)
-"avm" = (
-/obj/machinery/life_assist/external_cooling_device,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/station/rnd/robotics)
 "avn" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -40570,6 +40563,10 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/item/device/mmi,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = -2
+	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
@@ -45999,15 +45996,10 @@
 	},
 /area/station/rnd/robotics)
 "bIu" = (
-/obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
-	},
-/obj/item/weapon/pen,
+/obj/machinery/life_assist/external_cooling_device,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -118749,7 +118741,7 @@ biE
 aiC
 boL
 blu
-avm
+blu
 bxF
 bmL
 bGd
