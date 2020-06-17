@@ -28,8 +28,7 @@
 	action_button_name = "Toggle Recorder"
 
 /obj/item/device/taperecorder/Destroy()
-	if(timer_to_destruct)
-		qdel(timer_to_destruct)
+	deltimer(timer_to_destruct)
 	return ..()
 
 /obj/item/device/taperecorder/proc/update_available_icons()
@@ -94,20 +93,21 @@
 	return
 
 /obj/item/device/taperecorder/proc/start_exp(sec)
-	if(sec == 5)
-		visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
-	else if(sec == 4)
-		visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
-	else if(sec == 3)
-		visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
-	else if(sec == 2)
-		visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
-	else if(sec == 1)
-		visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
-	else if(sec == 0)
-		explode()
+	switch(sec)
+		if(5)
+			visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
+		if(4)
+			visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
+		if(3)
+			visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
+		if(2)
+			visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
+		if(1)
+			visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: One.</font>")
+		if(0)
+			explode()
 
-	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND)
+	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())
@@ -148,7 +148,7 @@
 	else if(playing)
 		playing = FALSE
 		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
+		T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 		icon_state = "taperecorderidle"
 		return
 
@@ -188,18 +188,18 @@
 		if(storedinfo.len < i)
 			break
 		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
+		T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
 		if(storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
 			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
+			T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>")
 		else
 			playsleepseconds = timestamp[i+1] - timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
 			T = get_turf(src)
-			T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
+			T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
 			playsleepseconds = 1
 		i++
 	icon_state = "taperecorderidle"
