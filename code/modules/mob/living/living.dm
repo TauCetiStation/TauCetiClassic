@@ -367,11 +367,13 @@
 	if(status_flags & GODMODE)
 		return
 	stamina = CLAMP(stamina + amount, minStamina, maxStamina)
+	handle_stamina_bar()
 
 /mob/living/proc/setStamina(amount)
 	if(status_flags & GODMODE)
 		return
 	stamina = CLAMP(amount, minStamina, maxStamina)
+	handle_stamina_bar()
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -820,17 +822,21 @@
 		var/resisting = 0
 		var/size_ratio_resisting
 		var/size_ratio_grabbing
+		var/g_resist_cost
+		var/r_resist_cost
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
-			size_ratio_resisting = get_size_ratio(G.assailant, G.affecting)
-			size_ratio_grabbing = get_size_ratio(G.affecting, G.assailant)
-			if(L.getStamina() >= L.resist_cost * size_ratio_grabbing)
-				G.assailant.adjustStamina(-L.resist_cost * size_ratio_grabbing)
-			if(G.state ==GRAB_PASSIVE)
+			size_ratio_resisting = get_size_ratio(G.assailant, L)
+			size_ratio_grabbing = get_size_ratio(L, G.assailant)	
+			g_resist_cost = L.resist_cost * size_ratio_grabbing
+			r_resist_cost = L.resist_cost * size_ratio_resisting
+			if(L.getStamina() >= g_resist_cost)
+				G.assailant.adjustStamina(-g_resist_cost)
+			if(G.state == GRAB_PASSIVE)
 				if(ishuman(G.assailant))
 					var/mob/living/carbon/human/H = G.assailant
 					if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -838,8 +844,8 @@
 						H.shoving_fingers = FALSE
 				qdel(G)
 		if(resisting)
-			if(L.getStamina() >= L.resist_cost * size_ratio_resisting)
-				L.adjustStamina(-L.resist_cost * size_ratio_resisting)
+			if(L.getStamina() >= r_resist_cost)
+				L.adjustStamina(-r_resist_cost)
 				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))

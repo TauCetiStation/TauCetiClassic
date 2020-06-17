@@ -95,7 +95,6 @@
 
 			handle_pain()
 			handle_stamina()
-			handle_stamina_bar()
 			handle_medical_side_effects()
 
 			handle_heart_beat()

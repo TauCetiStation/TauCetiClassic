@@ -19,7 +19,6 @@
 	var/grab_name
 	var/allow_upgrade = 1
 	var/last_hit_zone = 0
-	var/dropped = FALSE
 	var/force_down //determines if the affecting mob will be pinned to the ground
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
@@ -77,7 +76,7 @@
 	affecting = victim
 	hud = new /obj/screen/grab(src)
 	hud.master = src
-	ADD_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, STAMINA_TRAIT)
+	ADD_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, GRAB_TRAIT)
 	victim.grabbed_by += src
 	victim.LAssailant = assailant
 
@@ -177,7 +176,7 @@
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
-	
+
 	if(assailant.pulling == affecting)
 		assailant.stop_pulling()
 	if(assailant.getStamina() <= 0)
@@ -599,6 +598,7 @@
 			qdel(src)
 
 /obj/item/weapon/grab/Destroy()
+	. = ..()
 	if(affecting)
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
 		affecting.layer = 4
@@ -608,19 +608,14 @@
 	if(assailant)
 		if(assailant.client)
 			assailant.client.screen -= hud
-		delNoStaminaTrait()
+		on_last_grab_del()
 		assailant = null
 	QDEL_NULL(hud)
-	return ..()
 
-/obj/item/weapon/grab/dropped(mob/user)
-	dropped = TRUE
-	..()
-
-/obj/item/weapon/grab/proc/delNoStaminaTrait(mob/living/assailant = src.assailant)
+/obj/item/weapon/grab/proc/on_last_grab_del()
 	var/list/grabs = assailant.GetGrabs()
-	if((grabs.len + dropped) == 1)
-		REMOVE_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, STAMINA_TRAIT)
+	if(grabs.len == 0)
+		REMOVE_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, GRAB_TRAIT)
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 

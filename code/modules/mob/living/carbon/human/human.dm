@@ -140,9 +140,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
-	var/list/damage = get_unarmed_attack()
-	stamina_damage *= damage["damage"]
-	stamina_regen *= maxStamina/20
+	var/list/attack_obj = get_unarmed_attack()
+	stamina_damage *= attack_obj["damage"]
+	stamina_regen *= maxStamina * 0.05
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src

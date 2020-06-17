@@ -84,5 +84,5 @@
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
-#define STAMINA_TRAIT	   "stamina"
+#define GRAB_TRAIT	   "grab"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
