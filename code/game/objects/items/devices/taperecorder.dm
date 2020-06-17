@@ -20,30 +20,39 @@
 	throw_speed = 4
 	throw_range = 20
 
+	var/timer_to_destruct
+
 	var/list/icons_available
 	var/icon_directory = 'icons/mob/radial.dmi'
 
 	action_button_name = "Toggle Recorder"
 
+/obj/item/device/taperecorder/Destroy()
+	if(timer_to_destruct)
+		qdel(timer_to_destruct)
+	return ..()
+
 /obj/item/device/taperecorder/proc/update_available_icons()
 	icons_available = list()
 	if(recording)
-		icons_available += list("Stop Recording" = image(icon = icon_directory, icon_state = "radial_stop"))
+		icons_available["Stop Recording"] = image(icon = icon_directory, icon_state = "radial_stop")
 	else
 		if(!playing)
-			icons_available += list("Record" = image(icon = icon_directory, icon_state = "radial_start"))
+			icons_available["Record"] = image(icon = icon_directory, icon_state = "radial_start")
 
 	if(playing)
-		icons_available += list("Stop Playback" = image(icon = icon_directory, icon_state = "radial_stop"))
+		icons_available["Stop Playback"] = image(icon = icon_directory, icon_state = "radial_stop")
 	else
 		if(!recording)
-			icons_available += list("Playback Memory" = image(icon = icon_directory, icon_state = "radial_sound"))
+			icons_available["Playback Memory"] = image(icon = icon_directory, icon_state = "radial_sound")
 
 	if(canprint && !recording && !playing)
-		icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "radial_print"))
+		icons_available["Print Transcript"] = image(icon = icon_directory, icon_state = "radial_print")
 	
 	if(emagged)
-		icons_available += list("Explode" = image(icon = icon_directory, icon_state = "radial_hack"))
+		icons_available["Explode"] = image(icon = icon_directory, icon_state = "radial_hack")
+	
+	UNSETEMPTY(icons_available)
 
 /obj/item/device/taperecorder/get_current_temperature()
 	. = 0
@@ -84,23 +93,21 @@
 	qdel(src)
 	return
 
-/obj/item/device/taperecorder/proc/start_exp()
-	var/turf/T = get_turf(src)
-	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
-	sleep(10)
-	T = get_turf(src)
-	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
-	sleep(10)
-	T = get_turf(src)
-	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
-	sleep(10)
-	T = get_turf(src)
-	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
-	sleep(10)
-	T = get_turf(src)
-	T.visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
-	sleep(10)
-	explode()
+/obj/item/device/taperecorder/proc/start_exp(sec)
+	if(sec == 5)
+		visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
+	else if(sec == 4)
+		visible_message("<font color=Maroon><B>Tape Recorder</B>: Four.</font>")
+	else if(sec == 3)
+		visible_message("<font color=Maroon><B>Tape Recorder</B>: Three.</font>")
+	else if(sec == 2)
+		visible_message("<font color=Maroon><B>Tape Recorder</B>: Two.</font>")
+	else if(sec == 1)
+		visible_message("<font color=Maroon><B>Tape Recorder</B>: One.</font>")
+	else if(sec == 0)
+		explode()
+
+	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND)
 
 /obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())
@@ -198,7 +205,7 @@
 	icon_state = "taperecorderidle"
 	playing = FALSE
 	if(emagged)
-		start_exp()
+		start_exp(5)
 
 /obj/item/device/taperecorder/proc/print_transcript()
 	if(usr.incapacitated())
@@ -215,7 +222,7 @@
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, storedinfo.len >= i, i++)
+	for(var/i in 1 to storedinfo.len)
 		t1 += "[storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "Transcript"
@@ -242,4 +249,4 @@
 			if("Playback Memory")
 				playback_memory()
 			if("Explode")
-				start_exp()
+				start_exp(5)
