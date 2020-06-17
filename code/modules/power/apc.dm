@@ -605,7 +605,7 @@
 
 	else if(!opened && wiresexposed && is_wire_tool(W))
 		if (istype(user, /mob/living/silicon))
-			return attack_hand(user)
+			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
