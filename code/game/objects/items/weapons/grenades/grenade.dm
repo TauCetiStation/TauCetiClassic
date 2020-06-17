@@ -62,22 +62,6 @@
 	if(T)
 		T.hotspot_expose(700,125)
 
-/obj/item/weapon/grenade/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		switch(det_time)
-			if(1)
-				det_time = 1 SECOND
-			if(1 SECONDS)
-				det_time = 3 SECONDS
-			if(3 SECONDS)
-				det_time = 5 SECONDS
-			if(5 SECONDS)
-				det_time = 1
-		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time * 0.1] second detonation time"].</span>")
-		add_fingerprint(user)
-		return
-	return ..()
-
 /obj/item/weapon/grenade/syndieminibomb
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"
