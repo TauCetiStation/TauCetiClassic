@@ -8,6 +8,11 @@
 	unit_name = "stun baton"
 	export_types = list(/obj/item/weapon/melee/baton)
 
+/datum/export/weapon/taser
+	cost = 250
+	unit_name = "taser"
+	export_types = list(/obj/item/weapon/gun/energy/taser)
+
 /datum/export/weapon/laser
 	cost = 250
 	unit_name = "laser gun"
