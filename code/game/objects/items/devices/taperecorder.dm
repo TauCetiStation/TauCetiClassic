@@ -182,7 +182,7 @@
 	playing = TRUE
 	icon_state = "taperecorderplaying"
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
-	for(var/i = 1 , timerecorded < 3600 , sleep(10 * (playsleepseconds)))
+	for(var/i = 1, timerecorded < 3600, sleep(10 * (playsleepseconds)))
 		if(!playing)
 			break
 		if(storedinfo.len < i)
