@@ -114,8 +114,8 @@
 	tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 27 : -27)
-	pixel_y = (tdir & 3)? (tdir == 1 ? 27 : -27) : 0
+	pixel_x = (tdir & 3) ? 0 : (tdir == 4 ? 27 : -27)
+	pixel_y = (tdir & 3) ? (tdir == 1 ? 27 : -27) : 0
 	if(building == 0)
 		init()
 	else
@@ -133,7 +133,8 @@
 	if(malfai && operating)
 		if(ticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				ticker.mode:apcs--
+				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				gm_malf.apcs--
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -192,7 +193,7 @@
 			return
 		if(opened)
 			if(has_electronics && terminal)
-				to_chat(user, "The cover is [opened == 2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
+				to_chat(user, "The cover is [opened == 2 ? "removed" : "open"] and the power cell is [ cell ? "installed" : "missing"].")
 			else if(!has_electronics && terminal)
 				to_chat(user, "There are some wires but no any electronics.")
 			else if(has_electronics && !terminal)
@@ -290,12 +291,12 @@
 			cut_overlays()
 
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			add_overlay(status_overlays_lock[locked+1])
-			add_overlay(status_overlays_charging[charging+1])
+			add_overlay(status_overlays_lock[locked + 1])
+			add_overlay(status_overlays_charging[charging + 1])
 			if(operating)
-				add_overlay(status_overlays_equipment[equipment+1])
-				add_overlay(status_overlays_lighting[lighting+1])
-				add_overlay(status_overlays_environ[environ+1])
+				add_overlay(status_overlays_equipment[equipment + 1])
+				add_overlay(status_overlays_lighting[lighting + 1])
+				add_overlay(status_overlays_environ[environ + 1])
 
 
 /obj/machinery/power/apc/proc/check_updates()
@@ -403,7 +404,7 @@
 						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
 						"You remove the power control board.")
 					new /obj/item/weapon/module/power_control(loc)
-		else if(opened!=2) //cover isn't removed
+		else if(opened != 2) //cover isn't removed
 			opened = 0
 			update_icon()
 
@@ -481,7 +482,7 @@
 			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
 			to_chat(user, "The interface is broken.")
 		else if(opened)
@@ -519,7 +520,8 @@
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 
 	else if(iscoil(W) && !terminal && opened && has_electronics != 2)
-		if(src.loc:intact)
+		var/turf/TT = get_turf(src)
+		if(TT.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
 			return
 		var/obj/item/stack/cable_coil/C = W
@@ -704,12 +706,12 @@
 	to_chat(user, "You don't want to break these things");
 	return
 
-/obj/machinery/power/apc/proc/get_malf_status(mob/user)
-	if(ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
-		if(src.malfai == (user:parent ? user:parent : user))
-			if(src.occupier == user)
+/obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
+	if(ticker && ticker.mode && (malf.mind in ticker.mode.malf_ai) && istype(malf))
+		if(src.malfai == (malf.parent || malf))
+			if(src.occupier == malf)
 				return 3 // 3 = User is shunted in this APC
-			else if(istype(user.loc, /obj/machinery/power/apc))
+			else if(istype(malf.loc, /obj/machinery/power/apc))
 				return 4 // 4 = User is shunted in another APC
 			else
 				return 2 // 2 = APC hacked by user, and user is in its core.
@@ -784,7 +786,7 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/power/apc/proc/report()
-	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
+	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell ? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
@@ -859,7 +861,8 @@
 		if(malfai)
 			if(ticker.mode.config_tag == "malfunction")
 				if(is_station_level(z))
-					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
+					var/datum/game_mode/malfunction/gm_malf = ticker.mode
+					operating ? gm_malf.apcs++ : gm_malf.apcs--
 
 		src.update()
 		update_icon()
@@ -916,9 +919,10 @@
 					malfai.malfhacking = 0
 					if(ticker.mode.config_tag == "malfunction")
 						if(is_station_level(z))
-							ticker.mode:apcs++
-					if(usr:parent)
-						src.malfai = usr:parent
+							var/datum/game_mode/malfunction/gm_malf = ticker.mode
+							gm_malf.apcs++
+					if(malfai.parent)
+						src.malfai = malfai.parent
 					else
 						src.malfai = usr
 					to_chat(malfai, "Hack complete. The APC is now under your exclusive control.")
@@ -1253,7 +1257,8 @@
 	if(malfai && operating)
 		if(ticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				ticker.mode:apcs--
+				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				gm_malf.apcs--
 	stat |= BROKEN
 	operating = 0
 	/*if(occupier)
