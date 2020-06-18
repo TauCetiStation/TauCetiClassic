@@ -27,7 +27,7 @@
 
 /datum/outfit/nuclear/pre_equip(mob/living/carbon/human/synd_mob)
 	switch(synd_mob.backbag)
-		if(2)
+		if(1, 2)
 			back = /obj/item/weapon/storage/backpack
 		if(3)
 			back = /obj/item/weapon/storage/backpack/alt
