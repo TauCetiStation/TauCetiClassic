@@ -116,10 +116,7 @@
 	var/dat
 	var/current_filter_type
 
-	if(filter_type != NOTHING_FILTER)
-		current_filter_type = filter_type
-	else
-		current_filter_type = NOTHING_FILTER
+	current_filter_type = filter_type
 
 	dat += {"
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
