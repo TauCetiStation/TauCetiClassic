@@ -24,6 +24,10 @@
 	new_player_list -= src
 	return ..()
 
+/mob/dead/new_player/say(msg)
+	if(client)
+		client.ooc(msg)
+
 /mob/dead/new_player/verb/new_player_panel()
 	set src = usr
 	new_player_panel_proc()
@@ -288,7 +292,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		return FALSE
 	if(!job.player_old_enough(client))
 		return FALSE
-	if(!job.is_species_permitted(client))
+	if(!job.is_species_permitted(client.prefs.species))
 		return FALSE
 	if(!job.map_check())
 		return FALSE

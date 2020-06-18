@@ -537,46 +537,44 @@
 	qdel(S)
 	qdel(src)
 
-/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if((istype(W, /obj/item/device/plant_analyzer)) && (!src.build_step))
-		src.build_step++
+/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/I, mob/user, params)
+	if((istype(I, /obj/item/device/plant_analyzer)) && !build_step)
+		build_step++
 		to_chat(user, "You add the plant analyzer to [src]!")
-		src.name = "farmbot assembly"
-		user.remove_from_mob(W)
-		qdel(W)
+		name = "farmbot assembly"
+		qdel(I)
 
-	else if(( istype(W, /obj/item/weapon/reagent_containers/glass/bucket)) && (src.build_step == 1))
-		src.build_step++
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass/bucket) && build_step == 1)
+		build_step++
 		to_chat(user, "You add a bucket to [src]!")
 		src.name = "farmbot assembly with bucket"
-		user.remove_from_mob(W)
-		qdel(W)
+		qdel(I)
 
-	else if(( istype(W, /obj/item/weapon/minihoe)) && (src.build_step == 2))
-		src.build_step++
+	else if(istype(I, /obj/item/weapon/minihoe) && build_step == 2)
+		build_step++
 		to_chat(user, "You add a minihoe to [src]!")
 		src.name = "farmbot assembly with bucket and minihoe"
-		user.remove_from_mob(W)
-		qdel(W)
+		qdel(I)
 
-	else if((isprox(W)) && (src.build_step == 3))
-		src.build_step++
+	else if(isprox(I) && build_step == 3)
+		build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot(get_turf(src))
 		S.name = src.created_name
-		user.remove_from_mob(W)
-		qdel(W)
+		qdel(I)
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)) as text, MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
 			return
 
-		src.created_name = t
+		created_name = t
+
+	else
+		return ..()
 
 /obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user)
 	return //it's a converted watertank, no you cannot pick it up and put it in your backpack

@@ -176,12 +176,15 @@
 					break
 			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
 
-/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
-		OS.scanned_type = src.type
+/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+
+	else
+		return ..()
+
 /*
  * Crayon Box
  */
@@ -226,11 +229,11 @@
 	add_overlay(crayon_overlays)
 	return
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
-	if(istype(W, /obj/item/toy/crayon/chalk) || istype(W, /obj/item/toy/crayon/spraycan))
-		to_chat(user, "\The [W] is too bulky to be contained in [src].")
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon/chalk) || istype(I, /obj/item/toy/crayon/spraycan))
+		to_chat(user, "\The [I] is too bulky to be contained in [src].")
 		return
-	..()
+	return ..()
 
 /*
  * Glowsticks Box
@@ -254,11 +257,11 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/proc/add_stick()
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/orange(src)
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	cut_overlays() //resets list
@@ -396,6 +399,6 @@
 		add_overlay(image(icon, src, "ledb"))
 	return
 
-/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)
-	..()
+/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/I, mob/user, params)
+	. = ..()
 	update_icon()

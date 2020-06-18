@@ -44,19 +44,19 @@ RCD
 	spark_system = null
 	return ..()
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/rcd_ammo))
+/obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/rcd_ammo))
 		if((matter + 10) > 30)
 			to_chat(user, "<span class='notice'>The RCD cant hold any more matter-units.</span>")
 			return
-		user.drop_item()
-		qdel(W)
+		qdel(I)
 		matter += 10
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
 
+	else
+		return ..()
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -84,92 +84,96 @@ RCD
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
 
-/obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/rcd/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(disabled && !isrobot(user))
 		return 0
-	if(istype(A, /area/shuttle))
+	if(istype(target, /area/shuttle))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
+	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock)))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/space))
+			if(istype(target, /turf/space))
+				var/turf/space/S = target
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					A:ChangeTurf(/turf/simulated/floor/plating/airless)
+					S.ChangeTurf(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 
-			if(istype(A, /turf/simulated/floor) && !user.is_busy())
+			if(istype(target, /turf/simulated/floor) && !user.is_busy())
+				var/turf/simulated/floor/F = target
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 20, target = A))
+					if(do_after(user, 20, target = F))
 						if(!useResource(3, user))
 							return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/wall)
+						F.ChangeTurf(/turf/simulated/wall)
 						return 1
 				return 0
 
 		if(2)
-			if(istype(A, /turf/simulated/floor))
-				for(var/atom/AT in A)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 						return 0
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = A))
+					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
 							return 0
 						activate()
-						new /obj/machinery/door/airlock(A)
+						new /obj/machinery/door/airlock(target)
 						return 1
 					return 0
 				return 0
 
 		if(3)
-			if(istype(A, /turf/simulated/wall))
-				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
+			if(istype(target, /turf/simulated/wall))
+				var/turf/simulated/wall/W = target
+				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Wall...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 40, target = A))
+					if(do_after(user, 40, target = W))
 						if(!useResource(5, user))
 							return 0
 						activate()
-						A:ChangeTurf(/turf/simulated/floor/plating/airless)
+						W.ChangeTurf(/turf/simulated/floor/plating/airless)
 						return 1
 				return 0
 
-			if(istype(A, /turf/simulated/floor))
+			if(istype(target, /turf/simulated/floor))
+				var/turf/simulated/floor/F = target
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = A))
+					if(do_after(user, 50, target = F))
 						if(!useResource(5, user))
 							return 0
 						activate()
-						A:BreakToBase()
+						F.BreakToBase()
 						return 1
 				return 0
 
-			if(istype(A, /obj/machinery/door/airlock) && !user.is_busy())
+			if(istype(target, /obj/machinery/door/airlock) && !user.is_busy())
 				if(checkResource(10, user))
 					to_chat(user, "Deconstructing Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = A))
+					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
 							return 0
 						activate()
-						qdel(A)
+						qdel(target)
 						return 1
 				return 0
 			return 0

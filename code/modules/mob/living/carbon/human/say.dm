@@ -47,6 +47,11 @@
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
+	var/has_lang_prefix = !!speaking
+	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
+		var/datum/language/USL = all_languages["Universal Sign Language"]
+		if(can_speak(USL))
+			speaking = USL
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
@@ -61,7 +66,7 @@
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (speaking)
+	if (has_lang_prefix)
 		message = copytext(message,2+length(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
@@ -217,16 +222,20 @@
 		return 1
 
 	//These only pertain to common. Languages are handled by mob/say_understands()
-	if (!speaking)
-		if (istype(other, /mob/living/carbon/monkey/diona))
+	if(!speaking)
+		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
-		if (istype(other, /mob/living/silicon))
+		if(issilicon(other))
 			return 1
-		if (istype(other, /mob/living/carbon/brain))
+		if(isbrain(other))
 			return 1
-		if (istype(other, /mob/living/carbon/slime))
+		if(isslime(other))
 			return 1
+		if(isgod(other))
+			var/mob/living/simple_animal/shade/god/G = other
+			if(l_hand == G.container || r_hand == G.container)
+				return TRUE
 
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))
@@ -248,6 +257,11 @@
 	if(special_voice)
 		return special_voice
 	return real_name
+
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return " (as [get_id_name("Unknown")])"
+	return ""
 
 /*
    ***Deprecated***

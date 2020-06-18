@@ -13,10 +13,18 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
 	log_attack(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
+
+
+	var/require_flags = CHAT_ATTACKLOGS
+	if(!target.client && !ishuman(target))
+		require_flags |= CHAT_NOCLIENT_ATTACK
+
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
-			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
-				to_chat(C, msg)
+		if(!(R_ADMIN & C.holder.rights))
+			continue
+		if((C.prefs.chat_toggles & require_flags) != require_flags)
+			continue
+		to_chat(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -795,6 +803,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
+			<A href='?src=\ref[src];secretsfun=syndstriketeam'>Send in a syndicate strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
@@ -860,6 +869,35 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	usr << browse(dat, "window=secrets")
 	return
 
+/datum/admins/proc/change_crew_salary()
+
+	var/list/crew = my_subordinate_staff("Admin")
+	var/dat
+
+	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
+	dat += "<small>Globally - this is a change in salary for the profession. New players will enter the round with a changed salary. To return the base salary, select 0.</small><hr>"
+	dat += "<div class='statusDisplay'>"
+	if(crew.len)
+		dat += "<table>"
+		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
+		for(var/person in crew)
+			var/color = "silver"
+			var/datum/money_account/acc = person["acc_datum"]
+			if(acc.owner_salary > acc.base_salary)
+				color = "green"
+			else if(acc.owner_salary < acc.base_salary)
+				color = "red"
+			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
+			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+		dat += "</table>"
+	else
+		dat += "<span class='bad'>Crew not found!</span>"
+	dat += "</div>"
+
+	var/datum/browser/popup = new(usr, "window=admin_salary", "Crew Salary")
+	popup.set_content(dat)
+	popup.open()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -944,12 +982,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
-	set desc="Toggle dis bitch"
-	set name="Toggle Dead OOC"
+	set desc="Toggle OOC for people in lobby(and or ghosts for some non-apparent reason)."
+	set name="Toggle Dead/Lobby OOC"
 	dooc_allowed = !( dooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	log_admin("[key_name(usr)] toggled Dead/Lobby OOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead/Lobby OOC.")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggletraitorscaling()

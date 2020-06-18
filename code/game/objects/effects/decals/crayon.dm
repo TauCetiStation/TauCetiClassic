@@ -7,12 +7,17 @@
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
+	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
+	if(istype(loc, /atom/movable))
+		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
+	RegisterSignal(loc, list(COMSIG_PARENT_QDELETED), .proc/destroy_rune)
+	update_plane()
 
 	name = e_name
-	desc = "A [type] drawn in crayon."
-	if(type == "poseur tag")
-		gang_name() //Generate gang names so they get removed from the pool
-		type = pick(gang_name_pool)
+	desc = "It's \a [type]. Somebody's being naughty leaving it here."
+	//if(type == "poseur tag")
+	//	gang_name() //Generate gang names so they get removed from the pool
+	//	type = pick(gang_name_pool)
 
 	icon_state = type
 
@@ -20,7 +25,7 @@
 		if("rune")
 			type = "rune[rand(1,6)]"
 		if("graffiti")
-			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","poseur tag")
+			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa") // (... ,"poseur tag")
 
 	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
@@ -69,3 +74,12 @@
 		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
 	return ..()
+
+/obj/effect/decal/cleanable/crayon/proc/update_plane()
+  if(istype(loc, /turf/simulated/floor))
+    plane = FLOOR_PLANE
+  else
+    plane = GAME_PLANE
+
+/obj/effect/decal/cleanable/crayon/proc/destroy_rune()
+  qdel(src)

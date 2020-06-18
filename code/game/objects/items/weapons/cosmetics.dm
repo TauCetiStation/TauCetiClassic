@@ -106,8 +106,7 @@
 	else
 		H.h_style = "Skinhead"
 	if(AH)
-		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
-		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
+		H.log_combat(AH, "shaved with [name]")
 	H.update_hair()
 	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
@@ -400,7 +399,7 @@
 
 
 /obj/item/weapon/scissors/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		..()
 		return
 

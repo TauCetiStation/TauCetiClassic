@@ -15,9 +15,9 @@
 		var/mob/living/carbon/C = user
 		if(!container)
 			container = I
-			C.drop_item()
-			I.loc = src
+			C.drop_from_inventory(I, src)
 		return
+
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
@@ -33,8 +33,8 @@
 
 		state("The [src.name] Buzzes", "blue")
 		return
-	..()
-	return
+
+	return ..()
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
 	var/dat

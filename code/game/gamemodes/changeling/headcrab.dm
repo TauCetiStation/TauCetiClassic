@@ -53,11 +53,11 @@
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
 	gender = NEUTER
+	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	attacktext = "chomps"
+	melee_damage = 5
+	attacktext = "chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
 	environment_smash = 0
 	speak_emote = list("squeaks")
@@ -90,9 +90,6 @@
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 		addtimer(CALLBACK(src, .proc/death), 100)
 		egg_lain = TRUE
-
-/mob/living/simple_animal/headcrab/start_pulling(atom/movable/AM)
-	return
 
 /obj/item/changeling_egg
 	name = "changeling egg"

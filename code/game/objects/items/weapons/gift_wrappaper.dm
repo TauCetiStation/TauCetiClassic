@@ -42,7 +42,7 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	to_chat(user, "<span class='notice'>You cant move.</span>")
 
@@ -137,29 +137,30 @@
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (!( locate(/obj/structure/table, src.loc) ))
+/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/user, params)
+	if(!locate(/obj/structure/table, loc))
 		to_chat(user, "<span class='notice'>You MUST put the paper on a table!</span>")
-	if (W.w_class < ITEM_SIZE_LARGE)
-		if (iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
+		return
+
+	if(I.w_class < ITEM_SIZE_LARGE)
+		if(iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				to_chat(user, "<span class='notice'>You need more paper!</span>")
 				return
 			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+				if(istype(I, /obj/item/smallDelivery) || istype(I, /obj/item/weapon/gift)) //No gift wrapping gifts!
 					return
 
 				src.amount -= a_used
 				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
-				G.size = W.w_class
+				G.size = I.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				W.loc = G
+				I.forceMove(G)
 				G.add_fingerprint(user)
-				W.add_fingerprint(user)
+				I.add_fingerprint(user)
 				src.add_fingerprint(user)
 				#ifdef NEWYEARCONTENT
 				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
@@ -172,7 +173,6 @@
 			to_chat(user, "<span class='notice'>You need scissors!</span>")
 	else
 		to_chat(user, "<span class='notice'>The object is FAR too large!</span>")
-	return
 
 
 /obj/item/weapon/wrapping_paper/examine(mob/user)
@@ -184,7 +184,7 @@
 	if (!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
+	if (H.incapacitated())
 		if (src.amount > 2)
 			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
@@ -195,9 +195,7 @@
 
 			H.loc = present
 
-			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-			msg_admin_attack("[key_name(user)] used [src] to wrap [key_name(H)]", user)
+			H.log_combat(user, "wrapped with [name]")
 
 		else
 			to_chat(user, "<span class='notice'>You need more paper.</span>")

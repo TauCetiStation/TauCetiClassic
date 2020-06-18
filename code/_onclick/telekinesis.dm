@@ -96,7 +96,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		focus.attack_self_tk(user)
 
-/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)//TODO: go over this
+/obj/item/tk_grab/afterattack(atom/target, mob/user, proximity, params) //TODO: go over this
 	if(!target || !user)	return
 	if(last_throw+3 > world.time)	return
 	if(!host || host != user)

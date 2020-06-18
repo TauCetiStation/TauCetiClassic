@@ -44,7 +44,7 @@
 	/obj/item/weapon/autopsy_scanner,\
 	/obj/item/weapon/bikehorn,\
 	/obj/item/weapon/bonesetter,\
-	/obj/item/weapon/butch,\
+	/obj/item/weapon/kitchenknife/butch,\
 	/obj/item/weapon/caution,\
 	/obj/item/weapon/caution/cone,\
 	/obj/item/weapon/crowbar,\

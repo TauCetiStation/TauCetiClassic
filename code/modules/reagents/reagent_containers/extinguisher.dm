@@ -36,7 +36,7 @@
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/atom_init()
 	. = ..()
-	flags ^= OPENCONTAINER|NOBLUDGEON
+	flags &= ~OPENCONTAINER|NOBLUDGEON
 	if(random_overlay)
 		cut_overlays()
 		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
@@ -49,15 +49,15 @@
 	reagents.clear_reagents()
 	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
 
-/obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
 		if(is_open_container())
-			flags ^= OPENCONTAINER
+			flags &= ~OPENCONTAINER
 		else
 			flags |= OPENCONTAINER
 		to_chat(user, "<span class='notice'>You [is_open_container() ? "open" : "close"] the fill cap.</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/examine(mob/user)
 	..()

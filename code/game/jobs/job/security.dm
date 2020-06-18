@@ -15,8 +15,16 @@
 		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
+	salary = 250
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -30,7 +38,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), SLOT_W_UNIFORM)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), SLOT_S_STORE)
@@ -62,8 +70,16 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
+	salary = 190
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
 
 /datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -77,7 +93,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), SLOT_W_UNIFORM)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), SLOT_GLASSES)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
@@ -109,8 +125,16 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
+	salary = 180
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(DIONA)
 
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -154,8 +178,16 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
+	salary = 130
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
 
 /datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -166,7 +198,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), SLOT_S_STORE)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_L_STORE)
 
@@ -196,8 +228,16 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
+	salary = 150
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -238,8 +278,16 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_maint_tunnels)
+	salary = 50
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
 
 /datum/job/cadet/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -251,7 +299,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), SLOT_BACK)
 		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, SLOT_R_HAND)
 
 	if(visualsOnly)

@@ -60,7 +60,7 @@
 	else
 		item_state = "flamethrower_0"
 
-/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -68,58 +68,54 @@
 			var/list/turflist = getline(get_turf(src), target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user)
-	if(user.stat || user.restrained() || user.lying)	return
-	if(iswrench(W) && !status)//Taking this apart
+/obj/item/weapon/flamethrower/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
-			weldtool.loc = T
+			weldtool.forceMove(T)
 			weldtool = null
 		if(igniter)
-			igniter.loc = T
+			igniter.forceMove(T)
 			igniter = null
 		if(ptank)
-			ptank.loc = T
+			ptank.forceMove(T)
 			ptank = null
 		new /obj/item/stack/rods(T)
 		qdel(src)
 		return
 
-	if(isscrewdriver(W) && igniter && !lit)
+	if(isscrewdriver(I) && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
 		return
 
-	if(isigniter(W))
-		var/obj/item/device/assembly/igniter/I = W
-		if(I.secured)	return
+	if(isigniter(I))
+		var/obj/item/device/assembly/igniter/IGN = I
+		if(IGN.secured)	return
 		if(igniter)		return
-		user.drop_item()
-		I.loc = src
-		igniter = I
+		user.drop_from_inventory(IGN, src)
+		igniter = IGN
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/phoron))
+	if(istype(I, /obj/item/weapon/tank/phoron))
 		if(ptank)
 			to_chat(user, "<span class='notice'>There appears to already be a phoron tank loaded in [src]!</span>")
 			return
-		user.drop_item()
-		ptank = W
-		W.loc = src
+		user.drop_from_inventory(I, src)
+		ptank = I
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/device/analyzer))
-		var/obj/item/device/analyzer/A = W
+	if(istype(I, /obj/item/device/analyzer))
+		var/obj/item/device/analyzer/A = I
 		A.analyze_gases(src, user)
 		return
-	..()
+
+	return ..()
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)
-		return
 	user.set_machine(src)
 	if(!ptank)
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
@@ -273,7 +269,7 @@
 		icon_state = "M2_Flamethrower"
 	return
 
-/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity, params)
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -282,7 +278,6 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower_M2/attack_self(mob/user)
-	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)
 		to_chat(usr, "M2 Flamethrower needs to be connected to fuel backpack first.")
 		return

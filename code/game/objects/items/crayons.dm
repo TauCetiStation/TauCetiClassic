@@ -14,6 +14,10 @@
 	var/gang = 0 // For marking territory
 	var/edible = 1
 
+	var/list/actions
+	var/list/arrows
+	var/list/letters
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -50,35 +54,63 @@
 	return FALSE
 
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(!instant)
 			qdel(src)
 		return
+	var/obj/item/i = usr.get_active_hand()
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti", "rune", "letter", "arrow", "cancel")
-		switch(drawtype)
-			if("cancel")
-				return
-			if("arrow")
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "left", "right", "up", "down")
-				if(drawtype == "cancel")
-					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] an arrow on the [target.name].</span>")
-			if("letter")
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-				if(drawtype == "cancel")
-					return
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
-			if("graffiti")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
-			if("rune")
-				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
+		if(!actions)
+			actions = list()
+			var/static/list/action_icon = list(
+			"graffiti" = "face",
+			"rune" = "rune1",
+			"letter" = "a",
+			"arrow" = "up")
+			for(var/action in action_icon)
+				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
 
+		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
+		var/sub = ""
+		if(!drawtype)
+			return
+		switch(drawtype)
+			if("arrow")
+				sub = "an"
+				if(!arrows)
+					arrows = list()
+					var/static/list/directions = list("up", "right", "down", "left")
+					for(var/dir in directions)
+						arrows[dir] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = dir)
+
+				drawtype = show_radial_menu(user, target, arrows, require_near = TRUE)
+				if(!drawtype)
+					return
+
+			if("letter")
+				sub = "a letter"
+				if(!letters)
+					letters = list()
+					for(var/letter in alphabet_uppercase)
+						letters[lowertext(letter)] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = lowertext(letter))
+
+				drawtype = show_radial_menu(user, target, letters, require_near = TRUE)
+				if(!drawtype)
+					return
+
+			if("graffiti")
+				sub = ""
+			if("rune")
+				sub = "a"
+
+		if(!in_range(src, target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
+			return
+		else to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
 		var/gangID
@@ -136,7 +168,7 @@
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			else
-				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 			if(instant<0)
 				playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 			uses = max(0,uses-1)
@@ -255,13 +287,13 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	if(iscarbon(target) && uses - 10 > 0)
+	if(iscarbon(target) && uses - 10 >= 0)
 		uses -= 10
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
@@ -273,7 +305,7 @@
 			H.lip_style = "spray_face"
 			H.lip_color = colour
 			H.update_body()
-	else if(istype(target, /obj/machinery/nuclearbomb))
+	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
 		if(!choice)

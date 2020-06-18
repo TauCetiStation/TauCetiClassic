@@ -19,7 +19,7 @@
 		set_light(0)
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
-	if(!user.stat)
+	if(!user.incapacitated())
 		open_machine()
 
 /obj/machinery/bodyscanner/verb/eject()
@@ -27,7 +27,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	open_machine()
 	add_fingerprint(usr)
@@ -38,7 +38,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != CONSCIOUS || usr.lying)
+	if (usr.incapacitated())
 		return
 	if(!move_inside_checks(usr, usr))
 		return
@@ -69,9 +69,10 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
 		return
-	if(!iscarbon(user) && !isrobot(user))
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	if(!move_inside_checks(target, user))
 		return
@@ -303,13 +304,21 @@
 						dat += "</tr>"
 						storedinfo += "</tr>"
 					for(var/obj/item/organ/internal/IO in occupant.organs)
-						var/mech = ""
+						var/mech = "Native:"
+						var/organ_status = ""
+						var/infection = ""
 						if(IO.robotic == 1)
 							mech = "Assisted:"
 						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
-						var/infection = "None"
+						if(istype(IO, /obj/item/organ/internal/heart))
+							var/obj/item/organ/internal/heart/Heart = IO
+							if(Heart.heart_status == HEART_FAILURE)
+								organ_status = "Heart Failure:"
+							else if(Heart.heart_status == HEART_FIBR)
+								organ_status = "Heart Fibrillation:"
+
 						switch (IO.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
@@ -326,11 +335,13 @@
 							if (INFECTION_LEVEL_THREE to INFINITY)
 								infection = "Necrotic:"
 
+						if(!organ_status && !infection)
+							infection = "None:"
 						dat += "<tr>"
-						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"

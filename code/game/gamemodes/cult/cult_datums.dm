@@ -13,7 +13,6 @@ var/list/cult_runes = list()
 	if(!holder)
 		qdel(src)
 		CRASH("someone stupid tried to create datum without holder")
-		return
 	src.holder = holder
 
 /datum/cult/Destroy()
@@ -1070,7 +1069,7 @@ var/list/cult_runes = list()
 	"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), SLOT_SHOES)
+	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/cult(user), SLOT_SHOES)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), SLOT_BACK)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)

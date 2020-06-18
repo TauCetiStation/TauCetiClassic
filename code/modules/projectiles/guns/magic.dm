@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-/obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/magic/afterattack(atom/target, mob/user, proximity, params)
 	newshot()
 	..()
 

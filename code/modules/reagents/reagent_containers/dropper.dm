@@ -12,8 +12,8 @@
 	volume = 5
 	var/filled = 0
 
-/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , flag)
-	if(!target.reagents || !flag) return
+/obj/item/weapon/reagent_containers/dropper/afterattack(atom/target, mob/user, proximity, params)
+	if(!target.reagents || !proximity) return
 
 	if(filled)
 
@@ -72,9 +72,7 @@
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
 			var/contained = english_list(injected)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[key_name(user)] squirted [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+			M.log_combat(user, "squirted with [name], reagents: [contained]")
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")

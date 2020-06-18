@@ -65,9 +65,8 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name]</span>")
 
-/obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/dart_cartridge))
-
 		var/obj/item/weapon/dart_cartridge/D = I
 
 		if(!D.darts)
@@ -81,12 +80,12 @@
 				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
 				return 0
 
-		user.drop_item()
+		user.drop_from_inventory(D, src)
 		cartridge = D
-		D.loc = src
 		to_chat(user, "<span class='notice'>You slot [D] into [src].</span>")
 		update_icon()
 		return
+
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!istype(I, container_type))
 			to_chat(user, "<span class='notice'>[I] doesn't seem to fit into [src].</span>")
@@ -95,11 +94,13 @@
 			to_chat(user, "<span class='notice'>[src] already has [max_beakers] beakers in it - another one isn't going to fit!</span>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		beakers += B
 		to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
+		return
+
+	return ..()
 
 /obj/item/weapon/gun/dartgun/can_fire()
 	if(!cartridge)
@@ -178,9 +179,7 @@
 							R += A.id + " ("
 							R += num2text(A.volume) + "),"
 					if (istype(M, /mob))
-						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
-						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
-						msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a dartgun ([R])", user)
+						M.log_combat(user, "shot with a dartgun")
 
 					else
 						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>dartgun</b> ([R])"
@@ -203,7 +202,7 @@
 
 		return
 
-/obj/item/weapon/gun/dartgun/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/dartgun/afterattack(atom/target, mob/user, proximity, params)
 	if(!isturf(target.loc) || target == user) return
 	..()
 

@@ -53,22 +53,24 @@
 				casting_reagents.delete()
 	return
 
-/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
+/obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
 		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
-			user.remove_from_mob(AM)
+			user.drop_from_inventory(AM, src)
 			magazine = AM
-			magazine.loc = src
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
-			A.update_icon()
+			I.update_icon()
 			update_icon()
-			return 1
+			return TRUE
+
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/weapon/gun/projectile/can_fire()
 	if(chambered && chambered.BB)

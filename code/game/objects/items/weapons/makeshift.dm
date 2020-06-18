@@ -13,17 +13,37 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/organ/external/head))
+/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
-		var/obj/structure/headpole/H = new (get_turf(src), W, src)
-		user.drop_from_inventory(W, H)
+		var/obj/structure/headpole/H = new (get_turf(src), I, src)
+		user.drop_from_inventory(I, H)
 
+	else
+		return ..()
 
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'
@@ -49,6 +69,13 @@
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
@@ -93,31 +120,32 @@
 	else
 		icon_state = "[initial(name)]"
 
-/obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		var/obj/item/weapon/stock_parts/cell/C = W
+/obj/item/weapon/melee/cattleprod/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = I
 		if(C.maxcharge < hitcost)
 			to_chat(user, "<span class='notice'>[C]'s maximum capacity seems too small to be useful.</span>")
 			return
 		if(!bcell)
-			user.drop_item()
-			W.loc = src
-			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
+			user.drop_from_inventory(C, src)
+			bcell = C
+			to_chat(user, "<span class='notice'>You install \a [C] in \the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else if(isscrewdriver(W))
+
+	else if(isscrewdriver(I))
 		if(bcell)
+			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
+			bcell.forceMove(get_turf(loc))
 			bcell = null
-			to_chat(user, "<span class='notice'>You remove the cell from the [src].</span>")
 			status = 0
 			update_icon()
 			return
-		..()
-	return
+
+	else
+		return ..()
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
@@ -131,12 +159,11 @@
 		..()
 		return
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Beat [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name]", user)
+
+		H.log_combat(user, "attacked with [name]")
 
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
@@ -158,9 +185,7 @@
 			deductcharge(hitcost)
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]", user)
+		H.log_combat(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)
@@ -212,13 +237,12 @@
 	not_bloody_state = icon_state
 	not_bloody_item_state = item_state
 
-/obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/weapon/transparant/attackby(obj/item/I, mob/user, params)
 	if(icon_state!="blank")
 		to_chat(user, "<span class='notice'>Something allready written on this sign.</span>")
 		return
-	if(istype(I, /obj/item/weapon/pen))
 
+	if(istype(I, /obj/item/weapon/pen))
 		var/defaultText = "FUK NT!1"
 		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
 		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
@@ -235,10 +259,12 @@
 		if(!targName)
 			return
 		var/obj/item/weapon/transparant/W = new targName
-		user.remove_from_mob(src)
-		user.put_in_hands(W)
 		qdel(src)
+		user.put_in_hands(W)
 		to_chat(user, "<span class='notice'>You painted your blank sign as [W.name].</span>")
+		return
+
+	return ..()
 
 /obj/item/weapon/transparant/attack_self(mob/user)
 	user.visible_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>")
@@ -286,8 +312,7 @@
 	name = "text sign"
 	desc = "..."
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		var/list/resources_to_use = list()
@@ -297,7 +322,8 @@
 			return
 
 		var/obj/item/weapon/transparant/W = new /obj/item/weapon/transparant
-		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		to_chat(user, "<span class='notice'>You attached a big cardboard sign to the metal rod, making a blank transparant.</span>")
 
+	else
+		return ..()

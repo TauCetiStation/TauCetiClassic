@@ -25,7 +25,7 @@
 			M.reset_view()
 		qdel(src)
 
-/obj/item/weapon/holder/pickup(mob/user)
+/obj/item/weapon/holder/pickup(mob/living/user)
 	..()
 	user.status_flags |= PASSEMOTES
 
@@ -33,15 +33,16 @@
 	..()
 	user.remove_passemotes_flag()
 
-/obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_RAPID)
-	for(var/mob/M in src.contents)
-		M.attackby(W,user)
+/obj/item/weapon/holder/attackby(obj/item/I, mob/user, params)
+	for(var/mob/M in contents)
+		M.attackby(I, user, params)
 
 // Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
-/mob/living/proc/get_scooped(mob/living/carbon/grabber)
+/mob/living/proc/get_scooped(mob/living/carbon/human/grabber)
+	if(!istype(grabber))
+		return
 	if(!holder_type || buckled || pinned.len)
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)

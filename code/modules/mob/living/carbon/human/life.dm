@@ -59,6 +59,8 @@
 
 	voice = GetVoice()
 
+	handle_combat()
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -168,7 +170,7 @@
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
+	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
@@ -352,7 +354,7 @@
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+	if((handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV))
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath>0) //Suffocating so do not take a breath
@@ -647,15 +649,16 @@
 
 		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 		var/temp_adj = 0
-		if(!on_fire && !(is_type_organ(O_LUNGS, /obj/item/organ/internal/lungs/ipc) && is_bruised_organ(O_LUNGS))) //If you're on fire, you do not heat up or cool down based on surrounding gases. IPC's lungs are the cooling element. If it's broken, IPCs should cool down.
+		//If you're on fire, you do not heat up or cool down based on surrounding gases.
+		if(!on_fire)
 			if(loc_temp < bodytemperature)			//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
 			else if (loc_temp > bodytemperature)			//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
 			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
@@ -784,7 +787,6 @@
 
 /mob/living/carbon/human/proc/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
-		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 		return
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
@@ -1046,7 +1048,7 @@
 			update_inv_wear_suit()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
 				update_mutantrace()
@@ -1734,6 +1736,16 @@
 
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
+
+	if(HAS_TRAIT(src, TRAIT_CPB))
+		return PULSE_NORM
+		
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		return PULSE_NONE
+
+	if(IO.heart_status == HEART_FIBR)
+		return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

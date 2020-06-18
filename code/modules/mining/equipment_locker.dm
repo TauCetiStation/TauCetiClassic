@@ -244,7 +244,7 @@
 		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
 		new /datum/data/mining_equipment("Chili",                    /obj/item/weapon/reagent_containers/food/snacks/hotchili,              100),
 		new /datum/data/mining_equipment("Cigar",                    /obj/item/clothing/mask/cigarette/cigar/havana,                        100),
-		new /datum/data/mining_equipment("Whiskey",                  /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,        150),
+		new /datum/data/mining_equipment("Vodka",                    /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,          150),
 		new /datum/data/mining_equipment("Soap",                     /obj/item/weapon/soap/nanotrasen, 						                150),
 		new /datum/data/mining_equipment("lipozine pill",            /obj/item/weapon/reagent_containers/pill/lipozine,                     200),
 		new /datum/data/mining_equipment("leporazine autoinjector",  /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine, 300),
@@ -252,6 +252,7 @@
 		new /datum/data/mining_equipment("Stimpack Bundle",	         /obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
 		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
 		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
+		new /datum/data/mining_equipment("Accelerator upgrade",      /obj/item/kinetic_upgrade/speed,										2500),
 		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
 		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
 		)
@@ -410,7 +411,7 @@
 	icon_state = "data"
 	var/points = 500
 
-/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user)
+/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
 			var/obj/item/weapon/card/id/C = I
@@ -419,7 +420,8 @@
 			points = 0
 		else
 			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
-	..()
+		return
+	return ..()
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
@@ -466,15 +468,15 @@
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
-	if(istype(B, /obj/item/device/radio/beacon))
+/obj/item/device/wormhole_jaunter/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/radio/beacon))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
-							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
-		src.chosen_beacon = B
+		user.visible_message("<span class='notice'>[user.name] spent [I.name] above [name], scanning the serial code.</span>",
+							"<span class='notice'>You scanned serial code of [I.name], now [name] is locked.</span>")
+		chosen_beacon = I
 		icon_state = "Jaunter_locked"
 	else
-		..()
+		return ..()
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -522,10 +524,10 @@
 	CreateResonance(src, user)
 	..()
 
-/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
 	if(target in user.contents)
 		return
-	if(proximity_flag)
+	if(proximity)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -609,7 +611,6 @@
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
 	faction = "neutral"
-	a_intent = "harm"
 	var/emagged = 0
 	light_power = 2
 	light_range = 4
@@ -629,10 +630,9 @@
 	minimum_distance = 3
 	health = 140
 	maxHealth = 140
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 18
 	environment_smash = 0
-	attacktext = "drills"
+	attacktext = "drill"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
 	ranged = 1
 	ranged_message = "shoots"
@@ -684,17 +684,14 @@
 	. = ..()
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
-		switch(search_objects)
-			if(0)
-				SetCollectBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
-			if(2)
-				SetOffenseBehavior()
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
-		return
-	..()
+/mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	switch(search_objects)
+		if(0)
+			SetCollectBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+		if(2)
+			SetOffenseBehavior()
+			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	stop_automated_movement_when_pulled = 1
@@ -754,6 +751,9 @@
 	DropOre()
 
 /mob/living/simple_animal/hostile/mining_drone/AltClick(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(in_range(user, src))
 		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
 		DropOre()
@@ -800,10 +800,14 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return TRUE
+
+/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(istype(target, /mob/living) && proximity)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.stat == DEAD)
@@ -844,11 +848,11 @@
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/patcher/afterattack(obj/O, mob/user)
+/obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(O, /obj/item/clothing/suit/space))
-		var/obj/item/clothing/suit/space/C = O
+	if(istype(target, /obj/item/clothing/suit/space))
+		var/obj/item/clothing/suit/space/C = target
 		fix_spacesuit(C, user)
 	else
 		..()

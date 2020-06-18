@@ -42,12 +42,12 @@
 	cut_overlay(mag)
 	..()
 
-/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
+/obj/item/weapon/gun/projectile/wjpp/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
+		if((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			add_overlay(mag)
-			..()
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
 	..()
@@ -64,7 +64,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
@@ -90,7 +90,7 @@
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
@@ -119,10 +119,11 @@
 			silencer_attack_hand(user)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
-		silencer_attackby(I,user)
-	..()
+		silencer_attackby(I, user)
+		return
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
@@ -140,7 +141,7 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return

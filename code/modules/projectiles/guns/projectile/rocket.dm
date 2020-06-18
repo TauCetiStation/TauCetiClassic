@@ -40,7 +40,7 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/user)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
@@ -82,7 +82,7 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return

@@ -10,7 +10,7 @@
 	if(choice == "Yes" && get_dist(src, user) <= 1)
 		..()
 
-/obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		src.forceMove(target)
@@ -113,10 +113,9 @@
 		to_chat(user, "<span class='notice'>Looks like there is something stuck between the branches... Have you been a good boy this year?</span>")
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
-/obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/W, mob/user, params)
-	if (!W) return
-	if(istype(W, /obj/item/weapon/gift))
-		var/obj/item/weapon/gift/present = W
+/obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/gift))
+		var/obj/item/weapon/gift/present = I
 		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
 		var/sender = sanitize(input("Enter your name:") as text|null)
 		if(src && recipient && sender && present && get_dist(src, user) <= 1)
@@ -126,22 +125,21 @@
 			present.forceMove(src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
-	if(!(W.flags & ABSTRACT))
+	if(!(I.flags & ABSTRACT))
 		if(user.drop_item())
-			user.visible_message("[user] attaches [W] to \the [src] .", "<span class='notice'>You attach [W] to \the [src].</span>")
-			W.forceMove(loc)
-			W.layer = 5.1 // Item should be on the tree, not under
-			W.anchored = 1 // Make item a part of the tree
-			decals += W
+			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
+			I.forceMove(loc)
+			I.layer = 5.1 // Item should be on the tree, not under
+			I.anchored = TRUE // Make item a part of the tree
+			decals += I
 			var/list/click_params = params2list(params)
 			// Center the icon where the user clicked.
-			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
-			if(istype(W, /obj/item/organ/external/head))
-				W.pixel_y -= 10 // Head always has 10 pixels shift
-				W.dir = 2 // Rotate head face to us
-				W.transform = turn(null, null)	//Turn it to initial angle
-	return
+			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			if(istype(I, /obj/item/organ/external/head))
+				I.pixel_y -= 10 // Head always has 10 pixels shift
+				I.dir = 2 // Rotate head face to us
+				I.transform = turn(null, null)	//Turn it to initial angle
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -208,7 +206,7 @@
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != "help"))
+	if(decals.len && (C.a_intent != INTENT_HELP))
 		for(var/item in decals)
 			var/obj/item/I = item
 			if(!I)

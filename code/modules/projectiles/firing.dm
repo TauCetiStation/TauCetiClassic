@@ -27,7 +27,7 @@
 		return
 	BB.original = target
 	BB.firer = user
-	BB.def_zone = user.zone_sel.selecting
+	BB.def_zone = user.get_targetzone()
 	BB.silenced = quiet
 	return
 

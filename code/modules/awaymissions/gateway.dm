@@ -219,6 +219,7 @@
 /obj/effect/landmark/gateway_transit
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
+	. = ..()
 	if(!AM.freeze_movement)
 		qdel(AM) // THIS IS BLUESPACE FELLAS
 

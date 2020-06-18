@@ -26,15 +26,14 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/obj/machinery/hydroponics/parent = null
 	var/found_player = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user)
-
-	if(istype(W, /obj/item/weapon/reagent_containers))
+/obj/item/seeds/replicapod/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers))
 		to_chat(user, "You inject the contents of the syringe into the seeds.")
 
 		var/datum/reagent/blood/B
 
 		//Find a blood sample to inject.
-		var/obj/item/weapon/reagent_containers/RC = W
+		var/obj/item/weapon/reagent_containers/RC = I
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
 			if(istype(R,/datum/reagent/blood))
 				B = R
@@ -99,7 +98,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if((!C.prefs.ignore_question.Find("diona")) && (ROLE_PLANT in C.prefs.be_role))
+			if((!C.prefs.ignore_question.Find(IGNORE_PLANT)) && (ROLE_GHOSTLY in C.prefs.be_role))
 				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/seeds/replicapod/proc/question(client/C)
@@ -111,7 +110,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(response == "Yes")
 		transfer_personality(C)
 	else if (response == "Never for this round")
-		C.prefs.ignore_question += "diona"
+		C.prefs.ignore_question += IGNORE_PLANT
 
 /obj/item/seeds/replicapod/proc/transfer_personality(client/player)
 

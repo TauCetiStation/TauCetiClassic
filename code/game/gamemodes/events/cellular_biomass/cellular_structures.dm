@@ -67,11 +67,10 @@
 	return attack_hand()
 
 /obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
-	..()
+	. = ..()
 	health -= W.force
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
-	return
 
 ////////////////////////////
 // WALLS GRASS AND CORES////

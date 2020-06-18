@@ -44,12 +44,13 @@
 	. = ..()
 	if (empty)
 		return
-	for (var/i in 1 to 3)
+	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/bruise_pack(src)
 	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+	new /obj/item/stack/medical/suture(src)
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "toxin first aid"
@@ -122,8 +123,8 @@
 	var/wrapper_color
 	var/label
 
-/obj/item/weapon/storage/pill_bottle/afterattack(mob/living/target, mob/living/user, proximity_flag)
-	if(!proximity_flag || !istype(target) || target != user)
+/obj/item/weapon/storage/pill_bottle/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !istype(target) || target != user)
 		return 1
 	if(!contents.len)
 		to_chat(user, "<span class='warning'>It's empty!</span>")

@@ -54,7 +54,7 @@
 	interact(user)
 
 /obj/item/device/camera_bug/check_eye(mob/user)
-	if (user.stat || loc != user || !user.canmove || user.blinded || !current)
+	if (user.incapacitated() || loc != user || user.blinded || !current)
 		user.reset_view(null)
 		user.unset_machine()
 		return 0
@@ -206,7 +206,7 @@
 	if("emp" in href_list)
 		var/obj/machinery/camera/C = locate(href_list["emp"])
 		if(istype(C) && C.bug == src)
-			C.emp_act(1)
+			C.emplode(1)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()

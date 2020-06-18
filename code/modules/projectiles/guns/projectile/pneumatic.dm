@@ -51,17 +51,17 @@
 	else
 		to_chat(usr, "There's no tank in [src].")
 
-/obj/item/weapon/storage/pneumatic/attackby(obj/item/W, mob/user)
-	if(!tank && istype(W,/obj/item/weapon/tank))
-		user.remove_from_mob(W)
-		tank = W
+/obj/item/weapon/storage/pneumatic/attackby(obj/item/I, mob/user, params)
+	if(!tank && istype(I, /obj/item/weapon/tank))
+		user.remove_from_mob(I)
+		tank = I
 		tank.loc = src.tank_container
-		user.visible_message("[user] jams [W] into [src]'s valve and twists it closed.","You jam [W] into [src]'s valve and twist it closed.")
+		user.visible_message("[user] jams [I] into [src]'s valve and twists it closed.","You jam [I] into [src]'s valve and twist it closed.")
 		icon_state = "pneumatic-tank"
 		item_state = "pneumatic-tank"
 		user.update_icons()
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
@@ -72,7 +72,7 @@
 		else
 			to_chat(user, "Nothing is attached to the tank valve!")
 
-/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
 		return
 	else if (locate (/obj/structure/table, src.loc))
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return

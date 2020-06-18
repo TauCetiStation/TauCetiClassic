@@ -70,15 +70,15 @@
 	..()
 	M.eye_blurry = max(M.eye_blurry - 1, 0)
 	M.eye_blind = max(M.eye_blind - 1, 0)
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if(prob(data - 10))
+			if(prob(data["ticks"] - 10))
 				M.disabilities &= ~NEARSIGHTED
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/drink/berryjuice
 	name = "Berry Juice"
@@ -391,9 +391,9 @@
 
 /datum/reagent/consumable/drink/cold/milkshake/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 15)
 			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
@@ -410,7 +410,7 @@
 				M.emote("shiver")
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
 	name = "Chocolate Milkshake"
@@ -516,10 +516,10 @@
 	if(!M.stuttering)
 		M.stuttering = 1
 	M.stuttering += 3
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(51 to 200)
 			M.SetSleeping(20 SECONDS)
 		if(201 to INFINITY)
@@ -537,19 +537,19 @@
 
 /datum/reagent/consumable/gargle_blaster/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
 	M.dizziness += 6
-	if(data >= 15 && data < 45)
+	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data < 55)
+	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
 		M.confused = max(M.confused + 3,0)
-	else if(data >=55)
+	else if(data["ticks"] >=55)
 		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
+	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
 /datum/reagent/consumable/neurotoxin
@@ -564,19 +564,19 @@
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
 	M.weakened = max(M.weakened, 3)
-	if(!data)
-		data = 1
-	data++
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
 	M.dizziness += 6
-	if(data >= 15 && data < 45)
+	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		if (!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data <55)
+	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
 		M.confused = max(M.confused + 3,0)
-	else if(data >=55)
+	else if(data["ticks"] >=55)
 		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
+	else if(data["ticks"] >=200)
 		M.adjustToxLoss(2)
 
 /datum/reagent/consumable/hippies_delight
@@ -592,10 +592,10 @@
 /datum/reagent/consumable/hippies_delight/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 5)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -657,8 +657,9 @@
 	var/pass_out = 400	//amount absorbed after which mob starts passing out
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
+	flags = list(IS_ORGANIC)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
+/datum/reagent/consumable/ethanol/on_general_digest(mob/living/M)
 	if(!..())
 		return
 
@@ -667,19 +668,16 @@
 	if(adj_sleepy)
 		M.SetSleeping(adj_sleepy)
 
-	if(!src.data || (!isnum(src.data) && src.data.len))
-		data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
-	src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+	if(!data["ticks"])
+		data["ticks"] = 1   //if it doesn't exist we set it.
+	data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
 	var/d = 0
 
 	// make all the beverages work together
 	for(var/datum/reagent/consumable/ethanol/A in holder.reagent_list)
-		if(isnum(A.data))
-			d += A.data
-
-	if(M.get_species() == SKRELL) //Skrell get very drunk very quickly.
-		d *= 5
+		if(A.data["ticks"])
+			d += A.data["ticks"]
 
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 		d *= 0.7
@@ -709,6 +707,10 @@
 				IO.take_damage(0.1, 1)
 			H.adjustToxLoss(0.1)
 	return TRUE
+
+/datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
+	..()
+	return !flags[IS_ORGANIC]
 
 /datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
 	if(istype(O,/obj/item/weapon/paper))
@@ -880,6 +882,8 @@
 	confused_start = 145	//amount absorbed after which mob starts confusing directions
 	taste_message = "wine"
 
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
+
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
 	id = "cognac"
@@ -933,13 +937,15 @@
 	confused_start = 1
 	taste_message = "bitter wine"
 
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
+
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 50)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1 to 25)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -1504,15 +1510,15 @@
 
 /datum/reagent/consumable/ethanol/silencer/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
 	M.dizziness += 10
-	if(data >= 55 && data < 115)
+	if(data["ticks"] >= 55 && data["ticks"] < 115)
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 10
-	else if(data >= 115 && prob(33))
+	else if(data["ticks"] >= 115 && prob(33))
 		M.confused = max(M.confused + 15, 15)
 
 /datum/reagent/consumable/ethanol/bacardi

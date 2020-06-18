@@ -247,6 +247,7 @@ ________________________________________________________________________________
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/spider_os)
+	assets.register()
 	assets.send(U)
 
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"
@@ -832,19 +833,18 @@ ________________________________________________________________________________
 
 //=======//GENERAL SUIT PROCS//=======//
 
-/obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/U)
-	if(U==affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
+/obj/item/clothing/suit/space/space_ninja/attackby(obj/item/I, mob/user, params)
+	if(user == affecting)//Safety, in case you try doing this without wearing the suit/being the person with the suit.
 		if(istype(I, /obj/item/device/aicard))//If it's an AI card.
 			if(s_control)
-				I:transfer_ai("NINJASUIT","AICARD",src,U)
+				I:transfer_ai("NINJASUIT","AICARD",src,user)
 			else
-				to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote access channel disabled.")
+				to_chat(user, "<span class='warning'><b>ERROR</b>:</span> Remote access channel disabled.")
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
-			U:drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			pai = I
-			to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
+			to_chat(user, "<span class='notice'>You slot \the [I] into \the [src].</span>")
 			updateUsrDialog()
 			return
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
@@ -857,53 +857,53 @@ ________________________________________________________________________________
 					R.volume -= amount_to_transfer//Remove from reagent volume. Don't want to delete the reagent now since we need to perserve the name.
 					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
 					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
-					to_chat(U, "Added [amount_to_transfer] units of [R.name].")//Reports on the specific reagent added.
+					to_chat(user, "Added [amount_to_transfer] units of [R.name].")//Reports on the specific reagent added.
 					I.reagents.update_total()//Now we manually update the total to make sure everything is properly shoved under the rug.
 
-			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
+			to_chat(user, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			if(I:maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
-				if(U.is_busy(src))
+			var/obj/item/weapon/stock_parts/cell/C = I
+			if(C.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
+				if(user.is_busy(src))
 					return
-				to_chat(U, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
-				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = U))
-					U.drop_item()
-					I.loc = src
-					I:charge = min(I:charge+cell.charge, I:maxcharge)
+				to_chat(user, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
+				if (n_gloves && n_gloves.candrain && do_after(user, s_delay, target = C))
+					user.drop_from_inventory(C, src)
+					C.charge = min(C.charge + cell.charge, C.maxcharge)
 					var/obj/item/weapon/stock_parts/cell/old_cell = cell
 					old_cell.charge = 0
-					U.put_in_hands(old_cell)
-					old_cell.add_fingerprint(U)
+					user.put_in_hands(old_cell)
+					old_cell.add_fingerprint(user)
 					old_cell.corrupt()
 					old_cell.updateicon()
-					cell = I
-					to_chat(U, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>")
+					cell = C
+					to_chat(user, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge / 100)]</b>%</span>")
 				else
-					to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
-				if(U.is_busy(src))
+				if(user.is_busy(src))
 					return
-				to_chat(U, "Research information detected, processing...")
-				if(do_after(U,s_delay,target = U))
+				to_chat(user, "Research information detected, processing...")
+				if(do_after(user, s_delay,target = TD))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==TD.stored.id)
+						if(current_data.id == TD.stored.id)
 							if(current_data.level<TD.stored.level)
 								current_data.level=TD.stored.level
 							break
 					TD.stored = null
-					to_chat(U, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
+					to_chat(user, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
 				else
-					to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Procedure interrupted. Process terminated.")
+					to_chat(user, "<span class='warning'><b>ERROR</b>:</span> Procedure interrupted. Process terminated.")
 			else
-				I.loc = src
+				I.forceMove(src)
 				t_disk = I
-				to_chat(U, "<span class='notice'>You slot \the [I] into \the [src].</span>")
+				to_chat(user, "<span class='notice'>You slot \the [I] into \the [src].</span>")
 			return
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting
@@ -994,7 +994,7 @@ ________________________________________________________________________________
 			else
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
-/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 		return
 
@@ -1589,5 +1589,4 @@ It is possible to destroy the net by the occupant or someone else.
 	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	healthcheck()
-	..()
-	return
+	return ..()

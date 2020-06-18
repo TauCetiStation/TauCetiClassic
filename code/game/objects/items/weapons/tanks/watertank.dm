@@ -84,11 +84,11 @@
 		add_fingerprint(usr)
 		M.put_in_hands(src)
 
-/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/W, mob/user, params)
-	if(W == noz)
+/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/I, mob/user, params)
+	if(I == noz)
 		remove_noz()
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/dropped(mob/user)
 	..()
@@ -133,7 +133,7 @@
 	else
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/spray/mister/afterattack(atom/target, mob/user, proximity, params)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
 		return
 	..()

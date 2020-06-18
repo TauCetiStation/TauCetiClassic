@@ -13,9 +13,7 @@
 	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
 		return ..()
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])", user)
+	M.log_combat(user, "carded via [name]")
 
 	transfer_ai("AICORE", "AICARD", M, user)
 	return

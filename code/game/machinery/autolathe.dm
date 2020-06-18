@@ -57,6 +57,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/minihoe(), \
 		new /obj/item/weapon/hand_labeler(), \
 		new /obj/item/device/destTagger(), \
+		new /obj/item/toy/gun(), \
+		new /obj/item/toy/ammo/gun(), \
 		new /obj/item/weapon/game_kit/random(), \
 		new /obj/item/newscaster_frame(),
 		new /obj/item/device/tabletop_assistant()

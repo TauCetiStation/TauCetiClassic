@@ -38,7 +38,7 @@
 	set name = "Adjust welding mask"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
@@ -68,8 +68,8 @@
 	var/aggressiveness = 2
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
@@ -82,12 +82,12 @@
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
-	else if(iswirecutter(W))
+	else if(iswirecutter(I))
 		if(aggressiveness != 4)
 			to_chat(user, "<span class='warning'>You broke it!</span>")
 			aggressiveness = 4
 	else
-		..()
+		return ..()
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
@@ -97,7 +97,8 @@
 	set name = "HALT"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null

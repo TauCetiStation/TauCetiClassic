@@ -49,14 +49,14 @@
 	. = occupant
 	occupant.throw_at(A, 3, propelled)
 	shake_camera(occupant, 1, 1)
-	occupant.apply_effect(6, STUN, 0)
-	occupant.apply_effect(6, WEAKEN, 0)
-	occupant.apply_effect(12, STUTTER, 0)
+	occupant.apply_effect(2, STUN, 0)
+	occupant.apply_effect(2, WEAKEN, 0)
+	occupant.apply_effect(6, STUTTER, 0)
 	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
 	if(istype(A, /mob/living))
 		var/mob/living/victim = A
-		victim.apply_effect(6, STUN, 0)
-		victim.apply_effect(6, WEAKEN, 0)
+		victim.apply_effect(4, STUN, 0)
+		victim.apply_effect(4, WEAKEN, 0)
 		victim.apply_effect(12, STUTTER, 0)
 		victim.take_bodypart_damage(10)
 	occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
@@ -156,7 +156,7 @@
 		layer = OBJ_LAYER
 
 /obj/structure/stool/bed/chair/proc/can_flip(mob/living/carbon/human/user)
-	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != "hurt"|| !can_flipped)
+	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != INTENT_HARM|| !can_flipped)
 		return 0
 	return 1
 

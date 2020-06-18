@@ -17,12 +17,13 @@
 	volume = 15
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
@@ -48,7 +49,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -56,7 +57,7 @@
 		to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 		return
 
-	if (user.a_intent == "hurt" && ismob(target))
+	if (user.a_intent == INTENT_HARM && ismob(target))
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
 		syringestab(target, user)
@@ -148,9 +149,8 @@
 
 					var/mob/living/M = target
 					infect_limb(user, target)
-					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-					msg_admin_attack("[key_name(user)] injected [key_name(M)] with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+
+					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					src.reagents.reaction(target, INGEST)
 				else
@@ -179,12 +179,11 @@
 				update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target, mob/living/carbon/user)
-
 	if(target.try_inject(user, FALSE, TRUE))
+		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		msg_admin_attack("[key_name(user)] attacked [key_name(target)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+			return
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -195,9 +194,6 @@
 				return
 
 			var/hit_area = BP.name
-
-			if((user != target) && target.check_shields(7, "the [src.name]", get_dir(user,target)))
-				return
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
@@ -270,12 +266,13 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 50
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/ld50_syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
@@ -294,10 +291,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
-	return
-
-/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	switch(mode)

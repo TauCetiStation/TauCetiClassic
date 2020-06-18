@@ -1,5 +1,8 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
+
+	a_intent = INTENT_HARM
+
 	var/stance = HOSTILE_STANCE_IDLE	//Used to determine behavior
 	var/atom/target
 	var/attack_same = 0
@@ -29,6 +32,20 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
+/mob/living/simple_animal/hostile/atom_init()
+	. = ..()
+	gen_modifiers()
+
+/mob/living/simple_animal/hostile/examine(mob/user)
+	..()
+	if(stat == DEAD)
+		to_chat(user, "<span class='danger'>Appears to be dead.</span>")
+	else if(health <= maxHealth * 0.2)
+		to_chat(user, "<span class='danger'>Appears to be heavily wounded.</span>")
+	else if(health <= maxHealth * 0.6)
+		to_chat(user, "<span class='warning'>Appears to be wounded.</span>")
+	else if(health <= maxHealth * 0.9)
+		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -194,6 +211,7 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 	target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -251,6 +269,8 @@
 /mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
 	if(target == start)
 		return
+
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
 
 	var/obj/item/projectile/A = new projectiletype(user:loc)
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)

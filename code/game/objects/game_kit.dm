@@ -92,16 +92,18 @@
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
 
-/obj/item/weapon/game_kit/chaplain/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
-		OS.scanned_type = src.type
+/obj/item/weapon/game_kit/chaplain/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+	else
+		return ..()
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
+	assets.register()
 	assets.send(user)
 	if (!( data ))
 		update()
@@ -110,15 +112,10 @@
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
-	if(!istype(src, /obj/item/weapon/game_kit/chaplain))
-		if(usr.stat)
-			return
-	else
-		if(usr.stat == UNCONSCIOUS)
-			return
 
-	if (usr.restrained())
-		return
+	if (usr.incapacitated())
+		if(!istype(usr, /mob/dead/observer) || !istype(src, /obj/item/weapon/game_kit/chaplain))
+			return
 
 	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
 		if (href_list["s_piece"])

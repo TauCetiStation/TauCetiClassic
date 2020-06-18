@@ -69,7 +69,7 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
@@ -198,16 +198,26 @@
 	attack_verb = list("HONKED")
 	var/cooldown = FALSE
 
+/obj/item/weapon/bikehorn/proc/honk(mob/user)
+	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+	if(user.can_waddle())
+		user.waddle(pick(-14, 0, 14), 4)
+
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+	honk(user)
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
-		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		honk(user)
 		src.add_fingerprint(user)
-	return
+
+/obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM) && cooldown <= world.time)
+		cooldown = world.time + 8
+		honk(AM)
 
 /obj/item/weapon/bikehorn/dogtoy
 	name = "dog toy"

@@ -14,13 +14,11 @@
 	var/page = 1
 	var/screen = 0
 
-
-/obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W, mob/user)
-	..()
+/obj/item/weapon/paper_bundle/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/obj/item/weapon/paper/P
-	if(istype(W, /obj/item/weapon/paper))
-		P = W
+	if(istype(I, /obj/item/weapon/paper))
+		P = I
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything")
 			return
@@ -35,36 +33,34 @@
 		if(screen == 2)
 			screen = 1
 		to_chat(user, "<span class='notice'>You add [(P.name == "paper") ? "the paper" : P.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
-		user.drop_from_inventory(P)
-		P.loc = src
-		if(istype(user,/mob/living/carbon/human))
-			user:update_inv_l_hand()
-			user:update_inv_r_hand()
-	else if(istype(W, /obj/item/weapon/photo))
+		user.drop_from_inventory(P, src)
+
+	else if(istype(I, /obj/item/weapon/photo))
 		amount++
 		if(screen == 2)
 			screen = 1
-		to_chat(user, "<span class='notice'>You add [(W.name == "photo") ? "the photo" : W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
-		user.drop_from_inventory(W)
-		W.loc = src
-	else if(istype(W, /obj/item/weapon/lighter))
-		burnpaper(W, user)
-	else if(istype(W, /obj/item/weapon/paper_bundle))
-		user.drop_from_inventory(W)
-		for(var/obj/O in W)
-			O.loc = src
+		to_chat(user, "<span class='notice'>You add [(I.name == "photo") ? "the photo" : I.name] to [(name == "paper bundle") ? "the paper bundle" : name].</span>")
+		user.drop_from_inventory(I, src)
+
+	else if(istype(I, /obj/item/weapon/lighter))
+		burnpaper(I, user)
+
+	else if(istype(I, /obj/item/weapon/paper_bundle))
+		user.drop_from_inventory(I)
+		for(var/obj/O in I)
+			O.forceMove(src)
 			O.add_fingerprint(usr)
 			src.amount++
 			if(screen == 2)
 				screen = 1
-		to_chat(user, "<span class='notice'>You add \the [W.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
-		qdel(W)
+		to_chat(user, "<span class='notice'>You add \the [I.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
+		qdel(I)
+
 	else
-		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
+		if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 			usr << browse("", "window=[name]") //Closes the dialog
 		P = src[page]
-		P.attackby(W, user)
-
+		P.attackby(I, user, params)
 
 	update_icon()
 	attack_self(usr) //Update the browsed page.
@@ -171,17 +167,25 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.incapacitated())
+		return
+
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == CONSCIOUS))
+	if(usr.incapacitated())
+		return
+
+	if(loc == usr)
 		name = "[(n_name ? text("[n_name]") : "paper")]"
-	add_fingerprint(usr)
-	return
+		add_fingerprint(usr)
 
 
 /obj/item/weapon/paper_bundle/verb/remove_all()
 	set name = "Loose bundle"
 	set category = "Object"
 	set src in usr
+
+	if(usr.incapacitated())
+		return
 
 	to_chat(usr, "<span class='notice'>You loosen the bundle.</span>")
 	for(var/obj/O in src)

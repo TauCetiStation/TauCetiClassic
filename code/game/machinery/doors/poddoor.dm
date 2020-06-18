@@ -30,12 +30,27 @@
 	else
 		return 0
 
+/obj/machinery/door/poddoor/try_open(mob/living/user, obj/item/tool = null)
+	if(!tool)
+		add_fingerprint(user)
+		return
+	..()
+
 /obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
-	if(iscrowbar(C) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
-		if(!hasPower())
+
+	if(!hasPower())
+		var/can_wedge = FALSE
+		if(iscrowbar(C))
+			can_wedge = TRUE
+		else if(istype(C, /obj/item/weapon/twohanded/fireaxe))
+			var/obj/item/weapon/twohanded/fireaxe/F = C
+			can_wedge = F.wielded
+
+		if(can_wedge)
 			open(TRUE)
-	if(ismultitool(C) && hasPower() && !density)
+
+	else if(ismultitool(C) && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))

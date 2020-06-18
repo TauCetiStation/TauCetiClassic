@@ -1,13 +1,12 @@
 /datum/job
-
-	//The name of the job
+	//The name of the job, used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
 	var/list/access = list()
 
-	//Bitflags for the job
-	var/flag = 0
-	var/department_flag = 0
+	//Bitflags for the job  (Ha-ha we no longer use bitflags this is useless)
+	var/flag = 0 // Deprecated (is here only for savefile compatibility)
+	var/department_flag = 0 // Deprecated (is here only for savefile compatibility)
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
@@ -45,7 +44,21 @@
 	//Should we spawn and give him his selected loadout items
 	var/give_loadout_items = TRUE
 
+	var/salary = 0
+	//salary ratio - for global salary changes
+	var/salary_ratio = 1
+
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
+	/// Species that can not be this job.
 	var/list/restricted_species = list()
+	/// Species flags that can not do this job.
+	var/list/restricted_species_flags = list()
 
 	var/list/survival_kit_items = list()
 
@@ -67,11 +80,25 @@
 			return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-
-/datum/job/proc/is_species_permitted(client/C)
+/datum/job/proc/is_species_permitted(species)
 	if(!config.use_alien_job_restriction)
 		return TRUE
-	return !(C.prefs.species in restricted_species)
+	if(species in restricted_species)
+		return FALSE
+
+	var/datum/species/S = all_species[species]
+	if(S && special_species_check(S))
+		for(var/flag in restricted_species_flags)
+			if(S.flags[flag] == restricted_species_flags[flag])
+				return FALSE
+
+		return TRUE
+
+	return FALSE
+
+/// Return TRUE to allow the species S to be this job.
+/datum/job/proc/special_species_check(datum/species/S)
+	return TRUE
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)

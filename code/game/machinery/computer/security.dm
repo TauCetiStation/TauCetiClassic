@@ -381,7 +381,7 @@ What a mess.*/
 				return
 			var/a2 = active2
 			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
-			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
+			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			var/counter = 1
 			while(active2.fields[text("com_[]", counter)])
@@ -570,7 +570,7 @@ What a mess.*/
 	updateUsrDialog()
 
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
-	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
+	return !src.authenticated || user.incapacitated()|| (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
 
 /obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
 	var/icon/I = null

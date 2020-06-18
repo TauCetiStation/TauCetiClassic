@@ -1,14 +1,23 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
+		return
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(.) // Clickplace, no need for attack animation.
+		return
+
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -20,14 +29,7 @@
 	SSdemo.mark_dirty(user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(!istype(I) || !ismob(user))
-		return
 	user.SetNextMove(CLICK_CD_MELEE)
-
-	if(user.zone_sel && user.zone_sel.selecting)
-		I.attack(src, user, user.zone_sel.selecting)
-	else
-		I.attack(src, user)
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
@@ -40,21 +42,31 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(I)
 	SSdemo.mark_dirty(user)
+	return I.attack(src, user, user.get_targetzone())
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
+		return
+
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
 			return 0
+
+	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
 
 	// Knifing
 	if(edge)
@@ -76,9 +88,7 @@
 					flick(G.hud.icon_state, G.hud)
 					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
-					user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-					msg_admin_attack("[key_name(user)] knifed [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", user)
+					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
 	if (istype(M,/mob/living/carbon/brain))
@@ -90,9 +100,7 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", user)
+	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
 	if(HULK in user.mutations)
@@ -185,7 +193,20 @@
 			if(user.client)
 				to_chat(user, "<span class='warning'><B>You attack [M] with [src]. </B></span>")
 
+	// Attacking yourself can't miss
+	if(user == M)
+		def_zone = user.get_targetzone()
+	else
+		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
 
+	if(!def_zone)
+		visible_message("<span class='userdanger'>[user] misses [M] with \the [src]!</span>")
+		return FALSE
+
+	if(user != M)
+		user.do_attack_animation(M)
+		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
+			return FALSE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -212,22 +233,3 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return 1
-
-/*
-[ModifierName]ClickAction procs are called from [ModifierName]Click
-and passed to an item held in user's hand, when he clicks on target.
-
-Return TRUE to prevent any other click logic.
-*/
-
-/obj/item/proc/ShiftClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/CtrlClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/CtrlShiftClickAction(atom/target, mob/user)
-	return FALSE
-
-/obj/item/proc/AltClickAction(atom/target, mob/user)
-	return FALSE

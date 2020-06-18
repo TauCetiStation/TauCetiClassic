@@ -7,11 +7,11 @@
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
-
+	var/painting = FALSE
 	var/lastattacker = null
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
-	if(user.a_intent == "help" || pushed_over)
+	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
@@ -35,24 +35,22 @@
 	icon_state = initial(icon_state)
 	pushed_over = FALSE
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
-	change_appearance(I, user)
-	if(I.flags & NOBLUDGEON)
+/obj/item/cardboard_cutout/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
+		if(painting)
+			return
+		painting = TRUE
+		change_appearance(I, user)
+		painting = FALSE
 		return
+
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
 	else if(length(I.hitsound))
 		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
-
-	user.do_attack_animation(src)
-
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
-		if(prob(I.force))
-			push_over()
+	if(I.force && prob(I.force))
+		push_over()
+	return ..()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
@@ -61,7 +59,7 @@
 		push_over()
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	if(!istype(crayon,/obj/item/toy/crayon) || !user)
+	if(!user)
 		return
 	if(pushed_over)
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
@@ -69,7 +67,9 @@
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon)
 		return
-	if(!do_after(user, 10, FALSE, src, TRUE))
+	if(!user.Adjacent(src))
+		return
+	if(!do_after(user, 10, FALSE, src, FALSE))
 		return
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	alpha = 255

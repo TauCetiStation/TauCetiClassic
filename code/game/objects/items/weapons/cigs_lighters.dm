@@ -93,50 +93,50 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return 0
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/clothing/mask/cigarette/attackby(obj/item/I, mob/user, params)
+	// FML. this copypasta is everywhere somebody call the fucking police please. ~Luduk
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
-			light("<span class='notice'>[user] casually lights the [name] with [W].</span>")
+			light("<span class='notice'>[user] casually lights the [name] with [WT].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter/zippo))
-		var/obj/item/weapon/lighter/zippo/Z = W
+	else if(istype(I, /obj/item/weapon/lighter/zippo))
+		var/obj/item/weapon/lighter/zippo/Z = I
 		if(Z.lit)
-			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [W].</span>")
+			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [Z].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
 		if(L.lit)
-			light("<span class='notice'>[user] manages to light their [name] with [W].</span>")
+			light("<span class='notice'>[user] manages to light their [name] with [L].</span>")
 
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
+	else if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
 		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with their [M].</span>")
 
-	else if(istype(W, /obj/item/weapon/melee/energy/sword))
-		var/obj/item/weapon/melee/energy/sword/S = W
+	else if(istype(I, /obj/item/weapon/melee/energy/sword))
+		var/obj/item/weapon/melee/energy/sword/S = I
 		if(S.active)
-			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
+			light("<span class='warning'>[user] swings their [S], barely missing their nose. They light their [name] in the process.</span>")
 
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
+	else if(istype(I, /obj/item/device/assembly/igniter))
+		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name].</span>")
 
-	else if(istype(W, /obj/item/weapon/pen/edagger))
-		var/obj/item/weapon/pen/edagger/E = W
+	else if(istype(I, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = I
 		if(E.on)
-			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
+			light("<span class='warning'>[user] swings their [E], barely missing their nose. They light their [name] in the process.</span>")
 
-	//can't think of any other way to update the overlays :<
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
-	return
+	else
+		return ..()
 
-
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
+/obj/item/clothing/mask/cigarette/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!proximity) return
+	if(!istype(target, /obj/item/weapon/reagent_containers/glass))
+		return
+	var/obj/item/weapon/reagent_containers/glass/glass = target
 	if(istype(glass))	//you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
@@ -173,9 +173,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
+
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_wear_mask()
+			M.update_inv_item(src)
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -197,7 +198,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		if(src == C.wear_mask)
-			if(C.stat == UNCONSCIOUS || C.paralysis)
+			if(C.incapacitated())
 				if(prob(5))
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
@@ -288,39 +289,42 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigarbutt"
 
 
-/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())
-			light("<span class='notice'>[user] insults [name] by lighting it with [W].</span>")
+			light("<span class='notice'>[user] insults [name] by lighting it with [I].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter/zippo))
-		var/obj/item/weapon/lighter/zippo/Z = W
+	else if(istype(I, /obj/item/weapon/lighter/zippo))
+		var/obj/item/weapon/lighter/zippo/Z = I
 		if(Z.lit)
-			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [W].</span>")
+			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [I].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
 		if(L.lit)
-			light("<span class='notice'>[user] manages to offend their [name] by lighting it with [W].</span>")
+			light("<span class='notice'>[user] manages to offend their [name] by lighting it with [I].</span>")
 
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
+	else if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
 		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with their [I].</span>")
 
-	else if(istype(W, /obj/item/weapon/melee/energy/sword))
-		var/obj/item/weapon/melee/energy/sword/S = W
+	else if(istype(I, /obj/item/weapon/melee/energy/sword))
+		var/obj/item/weapon/melee/energy/sword/S = I
 		if(S.active)
-			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
+			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
 
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
+	else if(istype(I, /obj/item/device/assembly/igniter))
+		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
 
-	else if(istype(W, /obj/item/weapon/pen/edagger))
-		var/obj/item/weapon/pen/edagger/E = W
+	else if(istype(I, /obj/item/weapon/pen/edagger))
+		var/obj/item/weapon/pen/edagger/E = I
 		if(E.on)
-			light("<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>")
+			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
+
+	else
+		return ..()
 
 /////////////////
 //SMOKING PIPES//
@@ -380,29 +384,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		smoketime = initial(smoketime)
 	return
 
-/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())//
-			light("<span class='notice'>[user] recklessly lights [name] with [W].</span>")
+			light("<span class='notice'>[user] recklessly lights [name] with [WT].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter/zippo))
-		var/obj/item/weapon/lighter/zippo/Z = W
+	else if(istype(I, /obj/item/weapon/lighter/zippo))
+		var/obj/item/weapon/lighter/zippo/Z = I
 		if(Z.lit)
-			light("<span class='rose'>With much care, [user] lights their [name] with their [W].</span>")
+			light("<span class='rose'>With much care, [user] lights their [name] with their [Z].</span>")
 
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
 		if(L.lit)
-			light("<span class='notice'>[user] manages to light their [name] with [W].</span>")
+			light("<span class='notice'>[user] manages to light their [name] with [L].</span>")
 
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
+	else if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
 		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [W].</span>")
+			light("<span class='notice'>[user] lights their [name] with their [M].</span>")
 
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
+	else if(istype(I, /obj/item/device/assembly/igniter))
+		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
+
+	else
+		return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"

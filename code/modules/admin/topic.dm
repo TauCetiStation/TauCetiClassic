@@ -605,22 +605,12 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 
-		if(jobban_isbanned(M, "Internal Affairs Agent"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'><font color=red>Internal Affairs Agent</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Internal Affairs Agent;jobban4=\ref[M]'>Internal Affairs Agent</a></td>"
-
-		if(jobban_isbanned(M, ROLE_SURVIVOR))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'><font color=red>[ROLE_SURVIVOR]</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SURVIVOR];jobban4=\ref[M]'>[ROLE_SURVIVOR]</a></td>"
-
 		jobs += "</tr></table>"
 
 	//Non-Human (Green)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)+1]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions) + 4]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in nonhuman_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
@@ -794,12 +784,18 @@
 
 		//Other races  (BLUE, because I have no idea what other color to make this)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccccff'><th colspan='2'>Other Races</th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ccccff'><th colspan='3'>Other Races</th></tr><tr align='center'>"
 
 		if(jobban_isbanned(M, ROLE_PLANT))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'><font color=red>[ROLE_PLANT]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
+
+		//many roles available to ghost after die
+		if(jobban_isbanned(M, ROLE_GHOSTLY))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'><font color=red>[ROLE_GHOSTLY]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
 
 		if(jobban_isbanned(M, "Mouse"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'><font color=red>Mouse</font></a></td>"
@@ -986,7 +982,7 @@
 	else if(href_list["guard"])
 		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-		
+	
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
@@ -2006,6 +2002,10 @@
 				if(usr.client.strike_team())
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","Strike")
+			if("syndstriketeam")
+				if(usr.client.syndicate_strike_team())
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","Syndi Strike")
 			if("tripleAI")
 				usr.client.triple_ai()
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2913,6 +2913,38 @@
 			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
 		else
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
+
+	else if(href_list["salary"])
+		if(!check_rights(R_EVENT))	return
+		var/datum/money_account/account = locate(href_list["salary"])
+		if(!account)
+			to_chat(usr, "<span class='warning'>Account not found!</span>")
+			return
+		account.change_salary(usr, "CentComm", "CentComm", "Admin")
+
+	else if(href_list["global_salary"])
+		if(!check_rights(R_EVENT))	return
+		if(alert(usr, "Are you sure you want to globally change the salary?", "Confirm", "Yes", "No") != "Yes")
+			return
+		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
+		var/input_rate = input(usr, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
+		if(!input_rate)
+			return
+		var/ratio_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
+		var/new_ratio = 1 + (ratio_rate/100)
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
+		for(var/datum/job/J in SSjob.occupations)
+			if(J.title in excluded_rank)
+				continue
+			J.salary_ratio = new_ratio
+		var/list/crew = my_subordinate_staff("Admin")
+		for(var/person in crew)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+		if(new_ratio == 1)	//if 0 was selected
+			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
+		else
+			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b></span>")
 
 	// player info stuff
 

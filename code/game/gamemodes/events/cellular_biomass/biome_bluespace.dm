@@ -73,13 +73,12 @@
 	desc = "It's impossible to deEF*E((F((F(CVP"
 	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
 	speak_emote = list("buzzing")
-	attacktext = "discarges"
+	attacktext = "discharg"
 	attack_sound = list('sound/weapons/blaster.ogg')
 	faction = "bluespace"
 	health = 32
 	maxHealth = 32
-	melee_damage_lower = 1
-	melee_damage_upper = 15
+	melee_damage = 8
 	speed = 1
 
 /mob/living/simple_animal/hostile/cellular/bluespace/meelee
@@ -107,10 +106,9 @@
 	return
 
 /mob/living/simple_animal/hostile/cellular/bluespace/ranged/attackby(obj/item/weapon/W, mob/user)
-	if(health>2)
+	if(health > 2)
 		visible_message("<b>[src]</b> duplicates!")
 		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/ranged(src.loc)
 		health = health / 2
 		newglitch.health = health
 	return
-

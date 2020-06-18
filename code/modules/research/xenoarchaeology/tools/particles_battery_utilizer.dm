@@ -35,10 +35,10 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/xenoarch_utilizer/attackby(obj/I, mob/user)
+/obj/item/weapon/xenoarch_utilizer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/particles_battery))
 		if(!inserted_battery)
-			if(user.drop_item(I, src))
+			if(user.drop_from_inventory(I, src))
 				to_chat(user, "<span class='notice'>You insert the battery.</span>")
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 				inserted_battery = I
@@ -245,6 +245,4 @@
 	M.lastattacker = user
 
 	if(inserted_battery.battery_effect)
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Tapped [M.name] ([M.ckey]) with [name] (EFFECT: [inserted_battery.battery_effect.effect_name])</font>"
-		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Tapped by [user.name] ([user.ckey]) with [name] (EFFECT: [inserted_battery.battery_effect.effect_name])</font>"
-		msg_admin_attack("[key_name(user)] tapped [key_name(M)] with [name] (EFFECT: [inserted_battery.battery_effect.effect_name])", user)
+		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.effect_name]) ")

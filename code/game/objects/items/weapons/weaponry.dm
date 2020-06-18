@@ -14,88 +14,6 @@
 	to_chat(viewers(user), "<span class='warning'><b>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</b></span>")
 	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
-/obj/item/weapon/nullrod
-	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
-	icon_state = "nullrod"
-	item_state = "nullrod"
-	slot_flags = SLOT_FLAGS_BELT
-	force = 15
-	throw_speed = 1
-	throw_range = 4
-	throwforce = 10
-	light_color = "#4c4cff"
-	light_power = 3
-	w_class = ITEM_SIZE_SMALL
-	var/last_process = 0
-	var/datum/cult/reveal/power
-	var/static/list/scum
-
-/obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS|FIRELOSS)
-
-/obj/item/weapon/nullrod/atom_init()
-	. = ..()
-	if(!scum)
-		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
-	power = new(src)
-
-/obj/item/weapon/nullrod/equipped(mob/user, slot)
-	if(user.mind && user.mind.assigned_role == "Chaplain")
-		START_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/nullrod/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(power)
-	return ..()
-
-/obj/item/weapon/nullrod/dropped(mob/user)
-	if(isprocessing)
-		STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/nullrod/process()
-	if(last_process + 60 >= world.time)
-		return
-	last_process = world.time
-	var/turf/turf = get_turf(loc)
-	for(var/A in range(6, turf))
-		if(iscultist(A) || is_type_in_typecache(A, scum))
-			set_light(3)
-			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
-			return
-
-/obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
-		return
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
-
-	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
-		user.adjustBruteLoss(10)
-		user.Paralyse(20)
-		return
-
-	if (M.stat != DEAD)
-		if((M.mind in ticker.mode.cult) && user.mind && user.mind.assigned_role == "Chaplain" && prob(33))
-			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
-			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			ticker.mode.remove_cultist(M.mind)
-		else
-			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
-		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
-
-/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.assigned_role == "Chaplain")
-		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
-		power.action(user, 1)
-
 /obj/item/weapon/sord/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
@@ -182,6 +100,9 @@
 	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")
 	var/extended = FALSE
+	tools = list(
+		TOOL_KNIFE = 1
+		)
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended

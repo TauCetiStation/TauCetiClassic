@@ -40,7 +40,7 @@
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attacktext = "nips"
@@ -170,7 +170,7 @@
 		to_chat(src, "You cannot do that from within a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -206,7 +206,7 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -245,8 +245,9 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot secrete chemicals in your current state.")
+		return
 
 	if(docile)
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
@@ -273,8 +274,9 @@
 		to_chat(src, "You are not inside a host body.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot leave your host in your current state.")
+		return
 
 	if(docile)
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
@@ -291,7 +293,7 @@
 
 		if(!host || !src) return
 
-		if(src.stat)
+		if(incapacitated())
 			to_chat(src, "You cannot infest a target in your current state.")
 			return
 
@@ -341,7 +343,7 @@
 		to_chat(src, "You are already within a host.")
 		return
 
-	if(stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
@@ -375,7 +377,7 @@
 
 	if(!M || !src) return
 
-	if(src.stat)
+	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
@@ -427,7 +429,7 @@
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_BORER) && (ROLE_ALIEN in C.prefs.be_role))
 				question(C)
 
 /mob/living/simple_animal/borer/proc/question(client/C)
@@ -439,7 +441,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.ignore_question += "borer"
+			C.prefs.ignore_question += IGNORE_BORER
 
 /mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 

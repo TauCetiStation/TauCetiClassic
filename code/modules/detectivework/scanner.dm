@@ -12,24 +12,23 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
 
-/obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
-	..()
-	if (istype(W, /obj/item/weapon/f_card))
-		if (W.fingerprints)
+/obj/item/device/detective_scanner/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/f_card))
+		var/obj/item/weapon/f_card/F = I
+		if(F.fingerprints)
 			return
-		if (src.amount == 20)
+		if(amount == 20)
 			return
-		if (W.amount + src.amount > 20)
-			src.amount = 20
-			W.amount = W.amount + src.amount - 20
+		if(F.amount + amount > 20)
+			amount = 20
+			F.amount = F.amount + amount - 20
+			F.add_fingerprint(user)
 		else
-			src.amount += W.amount
-			//W = null
-			qdel(W)
+			amount += F.amount
+			qdel(F)
 		add_fingerprint(user)
-		if (W)
-			W.add_fingerprint(user)
-	return
+		return
+	return ..()
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	if (!ishuman(M))
@@ -64,14 +63,14 @@
 				to_chat(user, "<span class='notice'>Blood type: [M.blood_DNA[blood]]\nDNA: [blood]</span>")
 	return
 
-/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity)
+/obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(loc != user)
 		return
-	if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
+	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
 		return
 
-	if(istype(A,/obj/item/weapon/f_card))
+	if(istype(target, /obj/item/weapon/f_card))
 		to_chat(user, "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\"")
 		flick("forensic0",src)
 		return
@@ -79,37 +78,37 @@
 	add_fingerprint(user)
 
 	//Special case for blood splatters, runes and gibs.
-	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable/blood/gibs))
-		var/obj/effect/OE = A
-		if(!isnull(A.blood_DNA))
+	if (istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
+		var/obj/effect/OE = target
+		if(!isnull(target.blood_DNA))
 			for(var/blood in OE.blood_DNA)
 				to_chat(user, "<span class='notice'>Blood type: [OE.blood_DNA[blood]]\nDNA: [blood]</span>")
 				flick("forensic2",src)
 		return
 
 	//General
-	if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-		"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
+	if ((!target.fingerprints || !target.fingerprints.len) && !target.suit_fibers && !target.blood_DNA)
+		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+		"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target]!</span>",\
 		"You hear a faint hum of electrical equipment.")
 		flick("forensic0",src)
 		return 0
 
-	if(add_data(A))
+	if(add_data(target))
 		to_chat(user, "<span class='notice'>Object already in internal memory. Consolidating data...</span>")
 		flick("forensic2",src)
 		return
 
 
 	//PRINTS
-	if(!A.fingerprints || !A.fingerprints.len)
-		if(A.fingerprints)
-			A.fingerprints = null
+	if(!target.fingerprints || !target.fingerprints.len)
+		if(target.fingerprints)
+			target.fingerprints = null
 	else
-		to_chat(user, "<span class='notice'>Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>")
+		to_chat(user, "<span class='notice'>Isolated [target.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>")
 		var/list/complete_prints = list()
-		for(var/i in A.fingerprints)
-			var/print = A.fingerprints[i]
+		for(var/i in target.fingerprints)
+			var/print = target.fingerprints[i]
 			if(stringpercent(print) <= FINGERPRINT_COMPLETE)
 				complete_prints += print
 		if(complete_prints.len < 1)
@@ -120,29 +119,28 @@
 				to_chat(user, "<span class='notice'>&nbsp;&nbsp;&nbsp;&nbsp;[i]</span>")
 
 	//FIBERS
-	if(A.suit_fibers)
+	if(target.suit_fibers)
 		to_chat(user, "<span class='notice'>Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>")
 		flick("forensic2",src)
 
 	//Blood
-	if (A.blood_DNA)
-		to_chat(user, "<span class='notice'>Blood found on [A]. Analysing...</span>")
+	if (target.blood_DNA)
+		to_chat(user, "<span class='notice'>Blood found on [target]. Analysing...</span>")
 		spawn(15)
-			for(var/blood in A.blood_DNA)
-				to_chat(user, "Blood type: <span class='warning'>[A.blood_DNA[blood]]</span> &emsp; DNA: <span class='warning'>[blood]</span>")
-	if(prob(80) || !A.fingerprints)
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-		"You finish scanning \the [A].",\
+			for(var/blood in target.blood_DNA)
+				to_chat(user, "Blood type: <span class='warning'>[target.blood_DNA[blood]]</span> &emsp; DNA: <span class='warning'>[blood]</span>")
+	if(prob(80) || !target.fingerprints)
+		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+		"You finish scanning \the [target].",\
 		"You hear a faint hum of electrical equipment.")
 		flick("forensic2",src)
 		return 0
 	else
-		user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
+		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
 		"The results of the scan pique your interest.",\
 		"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
 		flick("forensic2",src)
 		return 0
-	return
 
 /obj/item/device/detective_scanner/proc/add_data(atom/A)
 	//I love associative lists.

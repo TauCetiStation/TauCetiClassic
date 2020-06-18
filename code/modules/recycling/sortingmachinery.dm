@@ -62,30 +62,34 @@
 	dump()
 	return ..()
 
-/obj/item/smallDelivery/attack_hand(mob/user)
+/obj/item/smallDelivery/attack_self(mob/user)
 	if(contents.len > 0)
+		user.drop_from_inventory(src)
 		dump(user)
 	else
 		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
-/obj/item/smallDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = W
+/obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/destTagger))
+		var/obj/item/device/destTagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
-			src.sortTag = O.currTag
+			sortTag = O.currTag
 			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(usr, "<span class='warning'>Invalid text.</span>")
 			return
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
-		src.name = "[src.name] ([str])"
+		name = "[name] ([str])"
+
+	else
+		return ..()
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
@@ -95,31 +99,34 @@
 	var/amount = 25.0
 
 
-/obj/item/weapon/packageWrap/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 		return
 	if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
 	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
 		return
-	if(target.anchored)
+	if(!isobj(target))
 		return
-	if(target in user)
+	var/obj/O = target
+	if(O.anchored)
 		return
-	if(user in target) //no wrapping closets that you are inside - it's not physically possible
+	if(O in user)
+		return
+	if(user in O) //no wrapping closets that you are inside - it's not physically possible
 		return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[O]</font>")
 
 
-	if (istype(target, /obj/item))
-		var/obj/item/O = target
+	if (istype(O, /obj/item))
+		var/obj/item/I = target
 		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
-			if(!istype(O.loc, /turf))
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
+			if(!istype(I.loc, /turf))
 				if(user.client)
-					user.client.screen -= O
-			P.w_class = O.w_class
+					user.client.screen -= I
+			P.w_class = I.w_class
 			if(P.w_class <= ITEM_SIZE_TINY)
 				P.icon_state = "deliverycrate1"
 			else if (P.w_class <= ITEM_SIZE_SMALL)
@@ -128,35 +135,35 @@
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
-			O.loc = P
-			var/i = round(O.w_class)
+			I.loc = P
+			var/i = round(I.w_class)
 			if(i in list(1,2,3,4,5))
 				P.icon_state = "deliverycrate[i]"
 			P.add_fingerprint(usr)
-			O.add_fingerprint(usr)
+			I.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.amount -= 1
-	else if (istype(target, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/O = target
-		if (src.amount > 3 && !O.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+	else if (istype(O, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = target
+		if (src.amount > 3 && !C.opened)
+			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate"
-			O.loc = P
+			C.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
-	else if (istype (target, /obj/structure/closet))
-		var/obj/structure/closet/O = target
+	else if (istype (O, /obj/structure/closet))
+		var/obj/structure/closet/C = target
 		if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
 			return
-		else if(O.welded)
+		else if(C.welded)
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
-		else if (!O.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			O.welded = 1
-			O.loc = P
+		else if (!C.opened)
+			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+			C.welded = 1
+			C.loc = P
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")

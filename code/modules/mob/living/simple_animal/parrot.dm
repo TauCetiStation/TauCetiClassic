@@ -50,6 +50,9 @@
 	stop_automated_movement = 1
 	universal_speak = 1
 
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
@@ -118,7 +121,7 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
-	if(user.stat) return
+	if(user.incapacitated()) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(ears)
@@ -133,7 +136,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -212,46 +215,24 @@
 /*
  * Attack responces
  */
-//Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
-	..()
-	if(client) return
-	if(!stat && M.a_intent == "hurt")
-
+/mob/living/simple_animal/parrot/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	. = ..()
+	if(client)
+		return
+	if(!stat)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = M
+		parrot_interest = attacker
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
-		if(M.health < 50) //Weakened mob? Fight back!
+		if(attacker.health < 50) //Weakened mob? Fight back!
 			parrot_state |= PARROT_ATTACK
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	return
-
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-//Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
-	if(client) return
-	if(..())
-		return
-
-	if(parrot_state == PARROT_PERCH)
-		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
-
-	if(M.melee_damage_upper > 0)
-		parrot_interest = M
-		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-		icon_state = "parrot_fly"
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
@@ -269,7 +250,9 @@
 
 //Bullets
 /mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -279,8 +262,6 @@
 		parrot_been_shot += 5
 		icon_state = "parrot_fly"
 		drop_held_item(0)
-	return
-
 
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
@@ -298,8 +279,8 @@
 	if(client || stat)
 		return //Lets not force players or dead/incap parrots to move
 
-	if(!isturf(src.loc) || !canmove || buckled)
-		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
+	if(!isturf(src.loc) || !canmove)
+		return //If it can't move, dont let it move.
 
 
 //-----SPEECH
@@ -583,7 +564,7 @@
 	set category = "Parrot"
 	set desc = "Grabs a nearby item."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -611,7 +592,7 @@
 	set category = "Parrot"
 	set desc = "Steals an item right out of a person's hand!"
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -642,7 +623,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return
 
 	src.drop_held_item()
@@ -654,7 +635,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(!held_item)
@@ -681,7 +662,7 @@
 	set category = "Parrot"
 	set desc = "Sit on a nice comfy perch."
 
-	if(stat || !client)
+	if(incapacitated() || !client)
 		return
 
 	if(icon_state == "parrot_fly")

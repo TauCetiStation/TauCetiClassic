@@ -152,9 +152,11 @@ Nah
 
 //Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
-	if(!iscarbon(usr) && !isrobot(usr))
+	if(usr.incapacitated())
 		return
-	if(!usr.canmove || usr.stat || usr.restrained())
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )

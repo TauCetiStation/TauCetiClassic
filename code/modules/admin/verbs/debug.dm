@@ -32,8 +32,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	if(1) return	//TODO: config option
-
+//	if(1) return	//TODO: config option
+/*
 	spawn(0)
 		var/target = null
 		var/targetselected = 0
@@ -131,6 +131,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		to_chat(usr, "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>")
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+*/
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -651,7 +652,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"test subject",
 		"tourist",
 		"mime",
-		"clown"
+		"clown",
+		"jolly gravedigger",
+		"jolly gravedigger supreme"
 		)
 	var/list/dresspacks_without_money = list(
 		"strip",
@@ -841,7 +844,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("preparation")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(M), SLOT_BACK)
@@ -939,7 +942,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if("velocity officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
@@ -968,7 +971,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if("velocity chief")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/corp(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity/chief(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/hos(M), SLOT_HEAD)
@@ -1056,7 +1059,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if("emergency response team")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), SLOT_BELT)
@@ -1076,7 +1079,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("special ops officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/combat(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat/officer(M), SLOT_WEAR_SUIT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), SLOT_GLASSES)
@@ -1133,7 +1136,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
 		if("soviet admiral")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), SLOT_HEAD)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), SLOT_GLASSES)
@@ -1195,7 +1198,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("hos")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
@@ -1263,7 +1266,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("ce")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
@@ -1285,7 +1288,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("warden")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(M), SLOT_L_EAR)
@@ -1304,7 +1307,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("security officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(M), SLOT_R_STORE)
 			M.equip_to_slot_or_del(new /obj/item/device/flash(M), SLOT_L_STORE)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(M), SLOT_L_EAR)
@@ -1436,7 +1439,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("engineer")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), SLOT_BELT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow(M), SLOT_HEAD)
 
@@ -1455,7 +1458,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("atmos-tech")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(M), SLOT_W_UNIFORM)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(M), SLOT_BELT)
 
 			var/obj/item/device/pda/atmos/pda = new(M)
@@ -1836,6 +1839,34 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("jolly gravedigger")
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/black(M), SLOT_HEAD)
+
+			M.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
+
+			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
+			M.s_tone = -M.s_tone + 35
+
+			M.apply_recolor()
+
+		if("jolly gravedigger supreme")
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/that(M), SLOT_HEAD)
+
+			M.real_name = "Jimbo"
+
+			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
+			M.s_tone = -M.s_tone + 35
+
+			M.apply_recolor()
 
 	if(!(dresscode in dresspacks_without_money) && M.mind)
 		if(M.mind.initial_account)
