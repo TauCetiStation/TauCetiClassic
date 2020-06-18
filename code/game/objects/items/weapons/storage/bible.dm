@@ -82,21 +82,35 @@
 	var/done = FALSE
 	var/changes = FALSE
 
-	var/list/choices = list("Altar", "Pews", "Mat symbol")
+	var/list/choices = list(
+	"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
+	"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
+	"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
+	)
 
+	var/matrix/M = matrix()
+	M.Scale(0.7)
+	for(var/choise in choices)
+		if(choise == "Pews") // Don't need it
+			continue
+		var/image/I = choices[choise]
+		I.transform = M
+
+	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
 	while(!done)
 		if(!choices.len)
 			done = TRUE
 			break
 
-		var/looks = input(user, "Would you like to change something about how your chapel looks?") as null|anything in choices
+		var/looks = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = TRUE)
 		if(!looks)
 			done = TRUE
 			break
 
 		switch(looks)
 			if("Altar")
-				var/new_look = input(user, "Which altar style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
+				global.chaplain_religion.gen_altar_variants()
+				var/new_look = show_radial_menu(user, src, global.chaplain_religion.altar_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -105,7 +119,8 @@
 				choices -= "Altar"
 
 			if("Pews")
-				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
+				global.chaplain_religion.gen_pews_variants()
+				var/new_look = show_radial_menu(user, src, global.chaplain_religion.pews_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -114,7 +129,8 @@
 				choices -= "Pews"
 
 			if("Mat symbol")
-				var/new_mat = input(user, "Which mat symbol would you like?")  as null|anything in global.chaplain_religion.carpet_dir_by_name
+				global.chaplain_religion.gen_carpet_variants()
+				var/new_mat = show_radial_menu(user, src, global.chaplain_religion.carpet_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 
