@@ -248,50 +248,10 @@
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, boss)
-	var/radio_freq = SYND_FREQ
-
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
-	R.set_frequency(radio_freq)
-	synd_mob.equip_to_slot_or_del(R, SLOT_L_EAR)
-
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), SLOT_W_UNIFORM)
-	if(synd_mob.backbag == 2)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), SLOT_BACK)
-	if(synd_mob.backbag == 3)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(synd_mob), SLOT_BACK)
-	if(synd_mob.backbag == 4)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
-	if(synd_mob.backbag == 5)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.species.after_job_equip(synd_mob, SSjob.GetJob("Test Subject"))
+	var/nuclear_outfit = /datum/outfit/nuclear
 	if(boss)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), SLOT_WEAR_ID)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver(synd_mob), SLOT_BELT)
-		synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/a357(synd_mob), SLOT_IN_BACKPACK)
-	else
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), SLOT_WEAR_ID)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), SLOT_BELT)
-		synd_mob.equip_to_slot_or_del(new /datum/uplink_item/ammo/pistol(synd_mob), SLOT_IN_BACKPACK)
-
-	switch(synd_mob.get_species())
-		if(UNATHI)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat/cut(synd_mob), SLOT_SHOES)
-		if(TAJARAN)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat/cut(synd_mob), SLOT_SHOES)
-		if(SKRELL)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
-		if(VOX)
-			synd_mob.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(synd_mob), SLOT_L_HAND)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(synd_mob), SLOT_WEAR_MASK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/vox(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(synd_mob), SLOT_SHOES)
-		else
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(synd_mob), SLOT_SHOES)
+		nuclear_outfit = /datum/outfit/nuclear/leader
+	synd_mob.equipOutfit(nuclear_outfit)
 
 	synd_mob.add_language("Sy-Code")
 

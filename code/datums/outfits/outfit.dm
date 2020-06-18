@@ -14,50 +14,23 @@
   * that can be restored at a later date
   */
 /datum/outfit
-	///Name of the outfit (shows up in the equip admin verb)
-	var/name = "Naked"
-
-	/// Type path of item to go in uniform slot
-	var/uniform = null
-
-	/// Type path of item to go in suit slot
-	var/suit = null
-
-	/// Type path of item to go in back slot
-	var/back = null
-
-	/// Type path of item to go in belt slot
-	var/belt = null
-
-	/// Type path of item to go in gloves slot
-	var/gloves = null
-
-	/// Type path of item to go in shoes slot
-	var/shoes = null
-
-	/// Type path of item to go in head slot
-	var/head = null
-
-	/// Type path of item to go in mask slot
-	var/mask = null
-
-	/// Type path of item to go in neck slot
-	var/neck = null
-
-	/// Type path of item to go in ears slot
-	var/ears = null
-
-	/// Type path of item to go in the glasses slot
-	var/glasses = null
-
-	/// Type path of item to go in the idcard slot
-	var/id = null
-
-	/// Type path of item for left pocket slot
-	var/l_pocket = null
-
-	/// Type path of item for right pocket slot
-	var/r_pocket = null
+	
+	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
+	var/uniform = null  /// Type path of item to go in uniform slot	
+	var/suit = null     /// Type path of item to go in suit slot	
+	var/back = null     /// Type path of item to go in back slot
+	var/belt = null     /// Type path of item to go in belt slot
+	var/gloves = null   /// Type path of item to go in gloves slot
+	var/shoes = null    /// Type path of item to go in shoes slot
+	var/head = null     /// Type path of item to go in head slot
+	var/mask = null     /// Type path of item to go in mask slot
+	var/neck = null     /// Type path of item to go in neck slot
+	var/l_ear = null    /// Type path of item to go in left ear slot
+	var/r_ear = null    /// Type path of item to go in right ear slot
+	var/glasses = null  /// Type path of item to go in the glasses slot
+	var/id = null       /// Type path of item to go in the idcard slot
+	var/l_pocket = null /// Type path of item for left pocket slot
+	var/r_pocket = null /// Type path of item for right pocket slot
 
 	/**
 	  * Type path of item to go in suit storage slot
@@ -66,17 +39,15 @@
 	  */
 	var/suit_store = null
 
-	///Type path of item to go in the right hand
-	var/r_hand = null
+	
+	var/r_hand = null    ///Type path of item to go in the right hand
+	var/l_hand = null    //Type path of item to go in left hand
 
-	//Type path of item to go in left hand
-	var/l_hand = null
+	
+	var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
 
-	/// Should the toggle helmet proc be called on the helmet during equip
-	var/toggle_helmet = TRUE
-
-	///ID of the slot containing a gas tank
-	var/internals_slot = null
+	
+	var/internals_slot = null ///ID of the slot containing a gas tank
 
 	/**
 	  * list of items that should go in the backpack of the user
@@ -85,8 +56,8 @@
 	  */
 	var/list/backpack_contents = null
 
-	/// Internals box. Will be inserted at the start of backpack_contents
-	var/box
+	
+	var/box  /// Internals box. Will be inserted at the start of backpack_contents
 
 	/** 
 	  * Any implants the mob should start implanted with
@@ -97,9 +68,6 @@
 
   /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
-
-	/// Any clothing accessory item
-	var/accessory = null
 
 	/// Set to FALSE if your outfit requires runtime parameters
 	var/can_be_admin_equipped = TRUE
@@ -156,41 +124,36 @@
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H),ITEM_SLOT_ICLOTHING, TRUE)
+		H.equip_to_slot_or_del(new uniform(H), SLOT_W_UNIFORM, TRUE)
 	if(suit)
-		H.equip_to_slot_or_del(new suit(H),ITEM_SLOT_OCLOTHING, TRUE)
+		H.equip_to_slot_or_del(new suit(H), SLOT_WEAR_SUIT, TRUE)
 	if(back)
-		H.equip_to_slot_or_del(new back(H),ITEM_SLOT_BACK, TRUE)
+		H.equip_to_slot_or_del(new back(H), SLOT_BACK, TRUE)
 	if(belt)
-		H.equip_to_slot_or_del(new belt(H),ITEM_SLOT_BELT, TRUE)
+		H.equip_to_slot_or_del(new belt(H), SLOT_BELT, TRUE)
 	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H),ITEM_SLOT_GLOVES, TRUE)
+		H.equip_to_slot_or_del(new gloves(H), SLOT_GLOVES, TRUE)
 	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H),ITEM_SLOT_FEET, TRUE)
+		H.equip_to_slot_or_del(new shoes(H), SLOT_SHOES, TRUE)
 	if(head)
-		H.equip_to_slot_or_del(new head(H),ITEM_SLOT_HEAD, TRUE)
-	if(mask)
-		H.equip_to_slot_or_del(new mask(H),ITEM_SLOT_MASK, TRUE)
+		H.equip_to_slot_or_del(new head(H), SLOT_HEAD, TRUE)
+	if(mask)	
+		H.equip_to_slot_or_del(new mask(H), SLOT_WEAR_MASK, TRUE)
 	if(neck)
-		H.equip_to_slot_or_del(new neck(H),ITEM_SLOT_NECK, TRUE)
-	if(ears)
-		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS, TRUE)
+		H.equip_to_slot_or_del(new neck(H), SLOT_TIE, TRUE)
+	if(l_ear)
+		H.equip_to_slot_or_del(new l_ear(H), SLOT_L_EAR, TRUE)
+	if(r_ear)
+		H.equip_to_slot_or_del(new r_ear(H), SLOT_R_EAR, TRUE)
 	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H),ITEM_SLOT_EYES, TRUE)
+		H.equip_to_slot_or_del(new glasses(H), SLOT_GLASSES, TRUE)
 	if(id)
-		H.equip_to_slot_or_del(new id(H),ITEM_SLOT_ID, TRUE)
+		H.equip_to_slot_or_del(new id(H), SLOT_WEAR_ID, TRUE)
 	if(suit_store)
-		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
+		H.equip_to_slot_or_del(new suit_store(H), SLOT_S_STORE, TRUE)
 
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
-
-	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		if(U)
-			U.attach_accessory(new accessory(H))
-		else
-			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
@@ -199,9 +162,9 @@
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H),ITEM_SLOT_LPOCKET, TRUE)
+			H.equip_to_slot_or_del(new l_pocket(H), SLOT_L_STORE, TRUE)
 		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H),ITEM_SLOT_RPOCKET, TRUE)
+			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 
 		if(box)
 			if(!backpack_contents)
@@ -215,23 +178,9 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H),ITEM_SLOT_BACKPACK, TRUE)
-
-	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
-		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
-		HS.ToggleHelmet()
+					H.equip_to_slot_or_del(new path(H), SLOT_BACK, TRUE)
 
 	post_equip(H, visualsOnly)
-
-	if(!visualsOnly)
-		apply_fingerprints(H)
-		if(internals_slot)
-			H.internal = H.get_item_by_slot(internals_slot)
-			H.update_action_buttons_icon()
-		if(implants)
-			for(var/implant_type in implants)
-				var/obj/item/implant/I = new implant_type(H)
-				I.implant(H, null, TRUE)
 
 	H.update_body()
 	return TRUE
@@ -258,16 +207,12 @@
 		H.wear_suit.add_fingerprint(H,1)
 	if(H.wear_mask)
 		H.wear_mask.add_fingerprint(H,1)
-	if(H.wear_neck)
-		H.wear_neck.add_fingerprint(H,1)
 	if(H.head)
 		H.head.add_fingerprint(H,1)
 	if(H.shoes)
 		H.shoes.add_fingerprint(H,1)
 	if(H.gloves)
 		H.gloves.add_fingerprint(H,1)
-	if(H.ears)
-		H.ears.add_fingerprint(H,1)
 	if(H.glasses)
 		H.glasses.add_fingerprint(H,1)
 	if(H.belt)
@@ -280,91 +225,4 @@
 		H.l_store.add_fingerprint(H,1)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
-	for(var/obj/item/I in H.held_items)
-		I.add_fingerprint(H,1)
 	return 1
-
-/// Return a list of all the types that are required to disguise as this outfit type
-/datum/outfit/proc/get_chameleon_disguise_info()
-	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
-	types += chameleon_extras
-	listclearnulls(types)
-	return types
-
-/// Return a json list of this outfit
-/datum/outfit/proc/get_json_data()
-	. = list()
-	.["outfit_type"] = type
-	.["name"] = name
-	.["uniform"] = uniform
-	.["suit"] = suit
-	.["toggle_helmet"] = toggle_helmet
-	.["back"] = back
-	.["belt"] = belt
-	.["gloves"] = gloves
-	.["shoes"] = shoes
-	.["head"] = head
-	.["mask"] = mask
-	.["neck"] = neck
-	.["ears"] = ears
-	.["glasses"] = glasses
-	.["id"] = id
-	.["l_pocket"] = l_pocket
-	.["r_pocket"] = r_pocket
-	.["suit_store"] = suit_store
-	.["r_hand"] = r_hand
-	.["l_hand"] = l_hand
-	.["internals_slot"] = internals_slot
-	.["backpack_contents"] = backpack_contents
-	.["box"] = box
-	.["implants"] = implants
-	.["accessory"] = accessory
-
-/// Prompt the passed in mob client to download this outfit as a json blob
-/datum/outfit/proc/save_to_file(mob/admin)
-	var/stored_data = get_json_data()
-	var/json = json_encode(stored_data)
-	//Kinda annoying but as far as i can tell you need to make actual file.
-	var/f = file("data/TempOutfitUpload")
-	fdel(f)
-	WRITE_FILE(f,json)
-	admin << ftp(f,"[name].json")
-
-/// Create an outfit datum from a list of json data
-/datum/outfit/proc/load_from(list/outfit_data)
-	//This could probably use more strict validation
-	name = outfit_data["name"]
-	uniform = text2path(outfit_data["uniform"])
-	suit = text2path(outfit_data["suit"])
-	toggle_helmet = outfit_data["toggle_helmet"]
-	back = text2path(outfit_data["back"])
-	belt = text2path(outfit_data["belt"])
-	gloves = text2path(outfit_data["gloves"])
-	shoes = text2path(outfit_data["shoes"])
-	head = text2path(outfit_data["head"])
-	mask = text2path(outfit_data["mask"])
-	neck = text2path(outfit_data["neck"])
-	ears = text2path(outfit_data["ears"])
-	glasses = text2path(outfit_data["glasses"])
-	id = text2path(outfit_data["id"])
-	l_pocket = text2path(outfit_data["l_pocket"])
-	r_pocket = text2path(outfit_data["r_pocket"])
-	suit_store = text2path(outfit_data["suit_store"])
-	r_hand = text2path(outfit_data["r_hand"])
-	l_hand = text2path(outfit_data["l_hand"])
-	internals_slot = outfit_data["internals_slot"]
-	var/list/backpack = outfit_data["backpack_contents"]
-	backpack_contents = list()
-	for(var/item in backpack)
-		var/itype = text2path(item)
-		if(itype)
-			backpack_contents[itype] = backpack[item]
-	box = text2path(outfit_data["box"])
-	var/list/impl = outfit_data["implants"]
-	implants = list()
-	for(var/I in impl)
-		var/imptype = text2path(I)
-		if(imptype)
-			implants += imptype
-	accessory = text2path(outfit_data["accessory"])
-	return TRUE
