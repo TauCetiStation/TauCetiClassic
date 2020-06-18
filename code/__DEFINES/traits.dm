@@ -84,3 +84,21 @@
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
+
+// Skill Traits.
+
+#define SKILLS_ENG_LOW             "skills_eng_low"
+#define SKILLS_ENG_HIGH            "skills_eng_high"
+
+#define SKILLS_MED_LOW             "skills_med_low"
+#define SKILLS_MED_HIGH            "skills_med_high"
+#define SKILLS_MED_SURGERY         "skills_med_surgery"
+
+#define SKILLS_SEC_LOW             "skills_sec_low"
+#define SKILLS_SEC_HIGH            "skills_sec_high"
+
+#define SKILLS_SCI_LOW             "skills_sci_low"
+#define SKILLS_SCI_HIGH            "skill_sci_high"
+
+#define SKILLS_COMMAND             "skills_command"
+
