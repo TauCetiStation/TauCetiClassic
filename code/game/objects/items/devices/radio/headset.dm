@@ -46,9 +46,8 @@
 	ks1type = /obj/item/device/encryptionkey/syndicate
 	grid = TRUE
 
-/obj/item/device/radio/headset/velocity/atom_init()
-	. = ..()
-	set_frequency(SYND_FREQ)
+/obj/item/device/radio/headset/ninja
+	grid = TRUE
 
 /obj/item/device/radio/headset/syndicate/alt
 	icon_state = "syndie_headset"
