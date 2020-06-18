@@ -5,7 +5,7 @@
 		return
 	adjustStamina(stamina_regen)
 
-/mob/living/proc/handle_stamina_bar()
+/mob/living/proc/update_stamina_bar()
 	if(!hud_used || !hud_used.staminadisplay)
 		return
 	if(isnull(maxStamina))

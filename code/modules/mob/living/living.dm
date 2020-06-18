@@ -367,13 +367,13 @@
 	if(status_flags & GODMODE)
 		return
 	stamina = CLAMP(stamina + amount, minStamina, maxStamina)
-	handle_stamina_bar()
+	update_stamina_bar()
 
 /mob/living/proc/setStamina(amount)
 	if(status_flags & GODMODE)
 		return
 	stamina = CLAMP(amount, minStamina, maxStamina)
-	handle_stamina_bar()
+	update_stamina_bar()
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
