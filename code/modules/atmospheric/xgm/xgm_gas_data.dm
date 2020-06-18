@@ -19,6 +19,8 @@
 	var/list/burn_product = list()
 	//Dangerous Gases
 	var/list/gases_dangerous = list()
+	//Knowable Gases
+	var/list/gases_knowable = list()
 
 /datum/xgm_gas
 	var/id = ""
@@ -32,6 +34,8 @@
 	var/flags = 0
 	var/burn_product = "carbon_dioxide"
 	var/dangerous = FALSE // currently used by canisters
+	/// This variable determines whether the crew knows about this gas from the round start.
+	var/knowable = FALSE
 
 /proc/generateGasData()
 	gas_data = new
@@ -53,5 +57,6 @@
 		gas_data.flags[gas.id] = gas.flags
 		gas_data.burn_product[gas.id] = gas.burn_product
 		gas_data.gases_dangerous[gas.id] = gas.dangerous
+		gas_data.gases_knowable[gas.id] = gas.knowable
 
 	return gas_data
