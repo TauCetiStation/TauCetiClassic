@@ -98,6 +98,13 @@
 	QDEL_NULL(base)
 	return ..()
 
+/obj/effect/effect/bell/proc/can_use(mob/user)
+	if(!user.Adjacent(src))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/effect/effect/bell/proc/swing(angle, time, swing_am)
 	if(next_swing > world.time)
 		return
@@ -204,15 +211,21 @@
 
 	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
 		return
+	var/ring_msg = sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text)
+	if(!ring_msg)
+		return
+
+	if(!can_use(user))
+		return
+
+	if(!user.mind || !user.mind.holy_role)
+		ring(user, strength)
+		return
 
 	if(next_global_ring > world.time)
 		to_chat(user, "<span class='warning'>You can't alarm the whole station so often! Please wait [round((next_global_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
 		return
 	next_global_ring = world.time + 10 MINUTES
-
-	var/ring_msg = sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text)
-	if(!ring_msg)
-		return
 
 	visible_message("[bicon(src)] <span class='warning'>[src] rings loudly, strucken by [user]!</span>")
 
