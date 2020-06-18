@@ -612,7 +612,7 @@
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
-	if(istype(H))
+	if(!istype(H) || H.species.flags[NO_DNA])
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")

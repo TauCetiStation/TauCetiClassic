@@ -85,7 +85,7 @@ var/global/raider_tick = 1
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(20)//+10=30
-		S.emp_act(2)
+		S.emplode(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(25)
@@ -99,7 +99,7 @@ var/global/raider_tick = 1
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(10)//+10=20
-		S.emp_act(2)
+		S.emplode(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(15)
