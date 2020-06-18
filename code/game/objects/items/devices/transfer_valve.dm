@@ -43,14 +43,15 @@
 		if(attached_device)
 			to_chat(user, "<span class='warning'>There is already an device attached to the valve, remove it first.</span>")
 			return
-		user.drop_from_inventory(I, src)
-		to_chat(user, "<span class='notice'>You attach the [I] to the valve controls and secure it.</span>")
+		user.drop_from_inventory(A, src)
+		attached_device = A
+		to_chat(user, "<span class='notice'>You attach the [A] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
-		bombers += "[key_name(user)] attached a [I] to a transfer valve."
-		message_admins("[key_name_admin(user)] attached a [I] to a transfer valve. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] attached a [I] to a transfer valve.")
+		bombers += "[key_name(user)] attached a [A] to a transfer valve."
+		message_admins("[key_name_admin(user)] attached a [A] to a transfer valve. [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] attached a [A] to a transfer valve.")
 		attacher = user
 		nanomanager.update_uis(src) // update all UIs attached to src
 
