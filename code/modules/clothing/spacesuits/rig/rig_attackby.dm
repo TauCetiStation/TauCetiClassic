@@ -146,6 +146,7 @@
 				to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
 				boots.forceMove(get_turf(src))
 				boots = null
+		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs
 	// is check if any of the loaded modules want to use the item we've been given.
