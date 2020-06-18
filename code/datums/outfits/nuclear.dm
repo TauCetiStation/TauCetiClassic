@@ -10,6 +10,9 @@
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/datum/uplink_item/ammo/pistol,
 		)
+	implants = list(
+		/obj/item/weapon/implant/dexplosive
+		)
 
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
@@ -49,5 +52,3 @@
 
 /datum/outfit/nuclear/post_equip(mob/living/carbon/human/synd_mob)
 	synd_mob.species.after_job_equip(synd_mob, SSjob.GetJob("Test Subject"))
-
-	
