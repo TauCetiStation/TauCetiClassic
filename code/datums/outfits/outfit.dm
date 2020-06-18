@@ -164,10 +164,11 @@
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 
 		if(box)
-			if(!backpack_contents)
-				backpack_contents = list()
-			backpack_contents.Insert(1, box)
-			backpack_contents[box] = 1
+			if(box == /obj/item/weapon/storage/box/survival)
+				box = new box()
+				for(var/type in H.species.survival_kit_items)
+					new type(box)
+			H.equip_to_slot_or_del(box, SLOT_IN_BACKPACK)
 
 		if(backpack_contents)
 			for(var/path in backpack_contents)

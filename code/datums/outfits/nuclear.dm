@@ -13,6 +13,7 @@
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
 		)
+	box = /obj/item/weapon/storage/box/survival
 
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
@@ -49,6 +50,3 @@
 			l_hand = /obj/item/weapon/tank/nitrogen
 			mask = /obj/item/clothing/mask/gas/vox
 			shoes = /obj/item/clothing/shoes/magboots/vox
-
-/datum/outfit/nuclear/post_equip(mob/living/carbon/human/synd_mob)
-	synd_mob.species.after_job_equip(synd_mob, SSjob.GetJob("Test Subject"))
