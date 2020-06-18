@@ -179,6 +179,18 @@
 
 	post_equip(H, visualsOnly)
 
+	if(!visualsOnly)
+		apply_fingerprints(H)
+		if(internals_slot)
+			H.internal = H.get_item_by_slot(internals_slot)
+			H.update_icons()
+		if(implants)
+			for(var/implant_type in implants)
+				var/obj/item/weapon/implant/I = new implant_type(H)
+				I.imp_in = H
+				I.implanted = 1
+				H.update_icons()
+
 	H.update_body()
 	return TRUE
 
