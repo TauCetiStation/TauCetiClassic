@@ -19,7 +19,7 @@
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type)
+/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tips = TRUE)
 	spawn_type = _spawn_type
 	count_items = _count_items
 	sacrifice_type = _sacrifice_type
@@ -28,16 +28,17 @@
 	change_spawn_type = _change_spawn_type
 
 	var/datum/religion_rites/rite = parent
-	var/list/tips_to_add = list()
-	if(sacrifice_type)
-		var/obj/item/item = sacrifice_type
-		tips_to_add += "This ritual requires a <i>[initial(item.name)]</i>."
+	if(tips)
+		var/list/tips_to_add = list()
+		if(sacrifice_type)
+			var/obj/item/item = sacrifice_type
+			tips_to_add += "This ritual requires a <i>[initial(item.name)]</i>."
 
-	if(spawn_type)
-		var/obj/item/item = spawn_type
-		tips_to_add += "This ritual creates a <i>[initial(item.name)]</i>."
+		if(spawn_type)
+			var/obj/item/item = spawn_type
+			tips_to_add += "This ritual creates a <i>[initial(item.name)]</i>."
 
-	rite.add_tips(tips_to_add)
+		rite.add_tips(tips_to_add)
 
 	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)
