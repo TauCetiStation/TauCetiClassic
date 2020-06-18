@@ -45,8 +45,6 @@
 
 	
 	var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
-
-	
 	var/internals_slot = null ///ID of the slot containing a gas tank
 
 	/**
@@ -56,7 +54,6 @@
 	  */
 	var/list/backpack_contents = null
 
-	
 	var/box  /// Internals box. Will be inserted at the start of backpack_contents
 
 	/** 
@@ -178,7 +175,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H), SLOT_BACK, TRUE)
+					H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
 
 	post_equip(H, visualsOnly)
 
