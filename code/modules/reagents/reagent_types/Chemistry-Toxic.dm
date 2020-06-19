@@ -714,6 +714,49 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //////////////Harmful reagents that are not quite toxins but I diagress/////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
+/datum/reagent/pop_toxin
+	name = "Suspicious liquid"
+	id = "pop_toxin"
+	description = "Liquid of unknown source. Can not analyze."
+	reagent_state = LIQUID
+	taste_message = "upcoming changes"
+	color = "#13e3a9"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/pop_toxin/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+	 var/mob/living/carbon/human/H = M
+	 var/spec = pick(HUMAN , SKRELL, UNATHI , TAJARAN , VOX)
+	 data++
+	 switch(data)
+	  if(1 to 10)
+	   if(prob(25))
+	    H.emote(pick("twitch","drool","moan","giggle"))
+	  if(11 to 20)
+	   if(prob(25))
+	    to_chat(M, "<span class='warning'>You feel something changing inside you.</span>")
+	  if(21 to 29)
+	   if(prob(25))
+	    to_chat(M, "<span class='warning'>You feel unbearable pain!</span>")
+	   H.adjustHalLoss(20)
+	  if(30)
+	   to_chat(M, "<span class='warning'>You feel different.</span>")
+	   H.set_species_soft(spec)
+	  if(31 to 49)
+	   H.adjustFireLoss(2)
+	   H.adjustBruteLoss(2)
+	   H.adjustHalLoss(40)
+	   if(prob(25))
+	    to_chat(M, "<span class='warning'>You flesh rips and tears apart!</span>")
+	  if(50)
+	   H.set_species(spec)
+	   to_chat(M, "<span class='warning'>Your transformation is complete!</span>")
+	else
+	 return
+
 /datum/reagent/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
