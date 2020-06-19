@@ -28,48 +28,27 @@
 	var/l_ear = null    /// Type path of item to go in left ear slot
 	var/r_ear = null    /// Type path of item to go in right ear slot
 	var/glasses = null  /// Type path of item to go in the glasses slot
-	var/id = null       /// Type path of item to go in the idcard slot
-	var/l_pocket = null /// Type path of item for left pocket slot
-	var/r_pocket = null /// Type path of item for right pocket slot
 
-	/**
-	  * Type path of item to go in suit storage slot
-	  *
-	  * (make sure it's valid for that suit)
-	  */
-	var/suit_store = null
+	var/id = null         /// Type path of item to go in the idcard slot
+	var/l_pocket = null   /// Type path of item for left pocket slot
+	var/r_pocket = null   /// Type path of item for right pocket slot
+	var/suit_store = null /// Type path of item to go in suit storage slot (make sure it's valid for that suit)
 
-	
-	var/r_hand = null    ///Type path of item to go in the right hand
-	var/l_hand = null    //Type path of item to go in left hand
+	var/r_hand = null     /// Type path of item to go in the right hand
+	var/l_hand = null     /// Type path of item to go in left hand
 
-	
 	var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
-	var/internals_slot = null ///ID of the slot containing a gas tank
+	var/internals_slot = null /// ID of the slot containing a gas tank
 
-	/**
-	  * list of items that should go in the backpack of the user
-	  *
-	  * Format of this list should be: list(path=count,otherpath=count)
-	  */
-	var/list/backpack_contents = null
-
-	var/box  /// Internals box. Will be inserted at the start of backpack_contents
-	
+	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
+	var/box                           /// Internals box. Will be inserted at the start of backpack_contents
 	var/advanced_survival_kit = FALSE
 
-	/** 
-	  * Any implants the mob should start implanted with
-	  *
-	  * Format of this list is (typepath, typepath, typepath)
-	  */
-	var/list/implants = null
+	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
-  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
-	var/datum/sprite_accessory/undershirt = null
+	var/datum/sprite_accessory/undershirt = null  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 
-	/// Set to FALSE if your outfit requires runtime parameters
-	var/can_be_admin_equipped = TRUE
+	var/can_be_admin_equipped = TRUE   /// Set to FALSE if your outfit requires runtime parameters
 
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
