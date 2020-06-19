@@ -40,7 +40,6 @@
 	var/l_ear = null    /// Type path of item to go in left ear slot
 	var/r_ear = null    /// Type path of item to go in right ear slot
 	var/glasses = null  /// Type path of item to go in the glasses slot
-
 	var/id = null         /// Type path of item to go in the idcard slot
 	var/l_pocket = null   /// Type path of item for left pocket slot
 	var/r_pocket = null   /// Type path of item for right pocket slot
@@ -49,24 +48,26 @@
 	var/r_hand = null     /// Type path of item to go in the right hand
 	var/l_hand = null     /// Type path of item to go in left hand
 
-	var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
+	//var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
 	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
+
 	var/box                           /// Internals box. Will be inserted at the start of backpack_contents
 	var/advanced_survival_kit = FALSE
 
 	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
+	//
 	var/datum/sprite_accessory/undershirt = null  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	
+	//var/accessory = null  /// Any clothing accessory item
 
 	var/can_be_admin_equipped = TRUE   /// Set to FALSE if your outfit requires runtime parameters
 
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
-	  *
 	  * Format of this list is (typepath, typepath, typepath)
-	  *
 	  * These are all added and returns in the list for get_chamelon_diguise_info proc
 	  */
 	var/list/chameleon_extras
@@ -182,6 +183,15 @@
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
 
+	/*
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U)
+			U.attach_accessory(new accessory(H))
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
+	*/
+
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
 	if(r_hand)
@@ -212,6 +222,12 @@
 					number = 1
 				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+
+	/*
+	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
+		HS.ToggleHelmet()
+	*/
 
 	post_equip(H, visualsOnly)
 
@@ -286,7 +302,7 @@
 	.["name"] = name
 	.["uniform"] = uniform
 	.["suit"] = suit
-	.["toggle_helmet"] = toggle_helmet
+	//.["toggle_helmet"] = toggle_helmet
 	.["back"] = back
 	.["belt"] = belt
 	.["gloves"] = gloves
@@ -325,7 +341,7 @@
 	name = outfit_data["name"]
 	uniform = text2path(outfit_data["uniform"])
 	suit = text2path(outfit_data["suit"])
-	toggle_helmet = outfit_data["toggle_helmet"]
+	//toggle_helmet = outfit_data["toggle_helmet"]
 	back = text2path(outfit_data["back"])
 	belt = text2path(outfit_data["belt"])
 	gloves = text2path(outfit_data["gloves"])
