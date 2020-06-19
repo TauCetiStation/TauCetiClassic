@@ -8,7 +8,7 @@
 	flags = NOBLUDGEON
 	hitsound = list('sound/items/oneding.ogg')
 	m_amt = 75
-	var/next_ring
+	var/next_ring = 0
 
 /obj/item/weapon/bell/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB)
