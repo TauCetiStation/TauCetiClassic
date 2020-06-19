@@ -87,7 +87,7 @@
 	item_state = "koran"
 
 /datum/bible_info/scientology
-	pos_names = list("The Biography of L. Ron Hubbard","Dianetics")
+	pos_names = list("The Biography of L. Ron Hubbard", "Dianetics")
 	icon_state = "scientology"
 	item_state = "scientology"
 	laws_type = /datum/ai_laws/faith/scientology

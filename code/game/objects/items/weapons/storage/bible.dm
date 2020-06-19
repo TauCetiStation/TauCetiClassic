@@ -109,7 +109,6 @@
 
 		switch(looks)
 			if("Altar")
-				global.chaplain_religion.gen_altar_variants()
 				var/new_look = show_radial_menu(user, src, global.chaplain_religion.altar_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
@@ -119,7 +118,6 @@
 				choices -= "Altar"
 
 			if("Pews")
-				global.chaplain_religion.gen_pews_variants()
 				var/new_look = show_radial_menu(user, src, global.chaplain_religion.pews_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
@@ -129,7 +127,6 @@
 				choices -= "Pews"
 
 			if("Mat symbol")
-				global.chaplain_religion.gen_carpet_variants()
 				var/new_mat = show_radial_menu(user, src, global.chaplain_religion.carpet_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue

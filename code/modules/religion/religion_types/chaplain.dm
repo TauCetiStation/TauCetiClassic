@@ -3,20 +3,32 @@
 	..()
 	religify_chapel()
 
+	//Radial menu
+	gen_bible_variants()
+	gen_altar_variants()
+	gen_pews_variants()
+	gen_carpet_variants()
+	
 /datum/religion/chaplain/proc/religify_chapel()
 	for(var/chap_area in typesof(/area/station/civilian/chapel))
 		religify(chap_area)
 
 /datum/religion/chaplain/proc/gen_pos_bible_variants()
 	var/list/variants = list()
-	bible_skins = list()
 	for(var/info_type in subtypesof(/datum/bible_info))
 		var/datum/bible_info/BB = new info_type(src)
 		if(!BB.name)
 			continue
 		variants[BB.name] = BB
-		bible_skins[BB.name] = image(icon = initial(BB.icon), icon_state = initial(BB.icon_state))
 	return variants
+
+/datum/religion/chaplain/proc/gen_bible_variants()
+	bible_skins = list()
+	for(var/info_type in subtypesof(/datum/bible_info))
+		var/datum/bible_info/BI = info_type
+		if(!initial(BI.name))
+			continue
+		bible_skins[initial(BI.name)] = image(icon = initial(BI.icon), icon_state = initial(BI.icon_state))
 
 /datum/religion/chaplain/proc/gen_altar_variants()
 	altar_skins = list()
@@ -89,7 +101,7 @@
 
 			chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
 
-		var/like = show_radial_menu(chaplain, chaplain, radial_question)
+		var/like = show_radial_menu(chaplain, chaplain, radial_question, tooltips = TRUE)
 		switch(like)
 			if("Yes")
 				accepted = TRUE
