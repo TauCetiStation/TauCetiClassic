@@ -1409,6 +1409,10 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 
+		if(blinded)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+
 		if(healths)
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
@@ -1561,6 +1565,9 @@
 	sightglassesmod = null
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
+		return
+	if(blinded)
+		set_EyesVision("greyscale")
 		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.active)
@@ -1739,7 +1746,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_CPB))
 		return PULSE_NORM
-		
+
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 	if(IO.heart_status == HEART_FAILURE)
 		return PULSE_NONE
