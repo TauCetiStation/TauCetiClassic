@@ -46,7 +46,8 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		/obj/item/seeds/gelthi,
 		/obj/item/seeds/vale,
 		/obj/item/seeds/surik,
-		/obj/item/seeds/blackberry
+		/obj/item/seeds/blackberry,
+		/obj/item/seeds/popberry
 	)
 
 
