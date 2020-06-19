@@ -52,9 +52,11 @@
 			toppaper = I
 		to_chat(user, "<span class='notice'>You clip the [I] onto \the [src].</span>")
 		update_icon()
+
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr, params)
 		update_icon()
+
 	else
 		return ..()
 
