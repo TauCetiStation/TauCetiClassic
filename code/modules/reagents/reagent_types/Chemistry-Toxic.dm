@@ -730,10 +730,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/spec = pick(HUMAN , SKRELL, UNATHI , TAJARAN)
-		if(!data)
-			data = 1
-		data++
-		switch(data)
+		if(!data["ticks"])
+			data["ticks"] = 1
+		data["ticks"]++
+		switch(data["ticks"])
 			if(1 to 10)
 				if(prob(25))
 					H.emote(pick("twitch","drool","moan","giggle"))
