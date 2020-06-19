@@ -677,11 +677,8 @@ The _flatIcons list is a cache for generated icon files.
 	//Determines if there's directionals.
 	if(!noIcon && curdir != SOUTH)
 		var/exist = FALSE
-		var/static/list/checkdirs = list(NORTH, EAST, WEST)
-		for(var/i in checkdirs)		//Not using GLOB for a reason.
-			if(length(icon_states(icon(curicon, curstate, i))))
-				exist = TRUE
-				break
+		if(length(icon_states(icon(curicon, curstate, curdir))))
+			exist = TRUE
 		if(!exist)
 			base_icon_dir = SOUTH
 
