@@ -23,4 +23,4 @@
 		user.visible_message("<span class='notice'>\The [user] rings \the [src].</span>")
 		playsound(user, 'sound/items/oneding.ogg', VOL_EFFECTS_MASTER, 20)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	next_ring = world.time + 32
+	next_ring = world.time + 3 SECONDS
