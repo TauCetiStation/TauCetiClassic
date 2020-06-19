@@ -8,7 +8,7 @@
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/datum/uplink_item/ammo/pistol,
+		/obj/item/ammo_box/magazine/m9mm,
 		)
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
