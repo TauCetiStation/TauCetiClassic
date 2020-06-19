@@ -37,17 +37,18 @@
 		if(5)
 			back = /obj/item/weapon/storage/backpack/satchel
 	
-	switch(synd_mob.get_species())
-		if(UNATHI)
-			backpack_contents += list(/obj/item/device/modkit/syndie/unathi)
-			shoes = /obj/item/clothing/shoes/boots/combat/cut
-		if(TAJARAN)
-			backpack_contents += list(/obj/item/device/modkit/syndie/tajaran)
-			shoes = /obj/item/clothing/shoes/boots/combat/cut
-		if(SKRELL)
-			backpack_contents += list(/obj/item/device/modkit/syndie/skrell)
-		if(VOX)
-			backpack_contents += list(/obj/item/device/modkit/syndie/vox)
-			l_hand = /obj/item/weapon/tank/nitrogen
-			mask = /obj/item/clothing/mask/gas/vox
-			shoes = /obj/item/clothing/shoes/magboots/vox
+	
+/datum/outfit/nuclear/unathi_equip()
+	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)
+
+/datum/outfit/nuclear/tajaran_equip()
+	backpack_contents += list(/obj/item/device/modkit/syndie/tajaran)
+
+/datum/outfit/nuclear/skrell_equip()
+	backpack_contents += list(/obj/item/device/modkit/syndie/skrell)
+
+/datum/outfit/nuclear/vox_equip()
+	backpack_contents += list(/obj/item/device/modkit/syndie/vox)
+	l_hand = /obj/item/weapon/tank/nitrogen
+	mask = /obj/item/clothing/mask/gas/vox
+	shoes = /obj/item/clothing/shoes/magboots/vox
