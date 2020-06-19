@@ -14,6 +14,7 @@
 		/obj/item/weapon/implant/dexplosive
 		)
 	box = /obj/item/weapon/storage/box/survival
+	advanced_survival_kit = TRUE
 
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"

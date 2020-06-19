@@ -55,6 +55,8 @@
 	var/list/backpack_contents = null
 
 	var/box  /// Internals box. Will be inserted at the start of backpack_contents
+	
+	var/advanced_survival_kit = FALSE
 
 	/** 
 	  * Any implants the mob should start implanted with
@@ -164,9 +166,14 @@
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 
 		if(box)
+			var/list/box_survival_kit_items = H.species.survival_kit_items
 			if(box == /obj/item/weapon/storage/box/survival)
+				if(advanced_survival_kit)
+					for(var/I in 1 to box_survival_kit_items.len)
+						if(box_survival_kit_items[I] == /obj/item/weapon/tank/emergency_oxygen)
+							box_survival_kit_items[I] = /obj/item/weapon/tank/emergency_oxygen/engi
 				box = new box()
-				for(var/type in H.species.survival_kit_items)
+				for(var/type in box_survival_kit_items)
 					new type(box)
 			H.equip_to_slot_or_del(box, SLOT_IN_BACKPACK)
 
