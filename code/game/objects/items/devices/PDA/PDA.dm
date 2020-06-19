@@ -1478,7 +1478,7 @@
 	else
 		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
-			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else

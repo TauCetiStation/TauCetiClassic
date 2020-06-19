@@ -196,9 +196,9 @@
 			if(lowertext(newletter)=="s")	newletter="ch"
 			if(lowertext(newletter)=="a")	newletter="ah"
 			if(lowertext(newletter)=="c")	newletter="k"
-			if(lowertext(newletter)=="ч")	newletter="щ" //247 -> 249
-			if(lowertext(newletter)=="е")	newletter="и" //229 -> 232
-			if(lowertext(newletter)=="з")	newletter="с" //231 -> 241
+			if(lowertext(newletter)=="ч")	newletter="щ"
+			if(lowertext(newletter)=="е")	newletter="и"
+			if(lowertext(newletter)=="з")	newletter="с"
 		switch(rand(1,15))
 			if(1,3,5,8)	newletter="[lowertext(newletter)]"
 			if(2,4,6,15)	newletter="[uppertext(newletter)]"

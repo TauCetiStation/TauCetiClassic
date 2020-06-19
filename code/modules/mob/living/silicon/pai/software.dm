@@ -91,10 +91,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
-		if(config.rus_language)
-			left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"	//This file has to be saved as ANSI or this will not display correctly
-		else
-			left_part = "<b><font color=red>3Rr0R �a�A C0RrU?�ion</font></b>"
+			left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 	else
 		switch(src.screen)							// Determine which interface to show here
@@ -576,7 +573,7 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>�</font>" : "<font color=#55FF55>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>•</font>" : "<font color=#55FF55>•</font>"] <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -595,11 +592,11 @@
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "universal translator")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "interaction module")

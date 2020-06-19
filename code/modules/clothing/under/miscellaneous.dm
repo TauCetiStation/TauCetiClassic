@@ -390,7 +390,7 @@
 
 /obj/item/clothing/under/dress/dress_party
 	name = "party dress"
-	desc = "The party doesn’t start ’til you walk in, so make an entrance no one can ignore."
+	desc = "The party doesn't start 'til you walk in, so make an entrance no one can ignore."
 	icon_state = "dress_party"
 	item_color = "dress_party"
 

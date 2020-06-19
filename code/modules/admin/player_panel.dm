@@ -480,7 +480,7 @@
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.memes.len) //ÃÂÏÂ
+		if(ticker.mode.memes.len) //–ú–µ–º–µ
 			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/meme in ticker.mode.memes)
 				var/mob/living/parasite/meme/M = meme.current
@@ -539,7 +539,7 @@
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/blob)) //¡ÎÓ·
+		if(istype(ticker.mode, /datum/game_mode/blob)) //–ë–ª–æ–±
 			var/datum/game_mode/blob/mode = ticker.mode
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			dat += "<tr><td><i>Progress: [blobs.len]/[mode.blobwincount]</i></td></tr>"

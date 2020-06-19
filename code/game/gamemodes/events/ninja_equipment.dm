@@ -170,7 +170,7 @@ ________________________________________________________________________________
 					to_chat(U, "<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>")
 				if(3)
 					if(U.stat==2||U.health<=0)
-						to_chat(U, "<span class='warning'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>")
+						to_chat(U, "<span class='warning'><B>FÄ†AL ďż˝Rrďż˝R</B>: 344--93#ďż˝&&21 BRďż˝ďż˝N |/|/aVďż˝ PATT$RN <B>RED</B>\nA-A-aBďż˝rTďż˝NG...</span>")
 						unlock_suit()
 						break
 					lock_suit(U, TRUE)//Check for icons.
@@ -701,24 +701,24 @@ ________________________________________________________________________________
 							switch(i)
 								if(0)
 									to_chat(A, "<span class='warning'><b>WARNING</b>:</span> purge procedure detected. \nNow hacking host...")
-									to_chat(U, "<span class='warning'><b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!</span>")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: HACKING ATďż˝ďż˝TEMPďż˝ IN PR0GRESs!</span>")
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									to_chat(A, "Disconnecting neural interface...")
-									to_chat(U, "<span class='warning'><b>WAR�NING</b>: �R�O0�Gr�--S 2&3%</span>")
+									to_chat(U, "<span class='warning'><b>WARďż˝NING</b>: ďż˝Rďż˝O0ďż˝Grďż˝--S 2&3%</span>")
 								if(2)
 									to_chat(A, "Shutting down external protocol...")
-									to_chat(U, "<span class='warning'><b>WARNING</b>: P����RֆGr�5S 677^%</span>")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: Pďż˝ďż˝ďż˝ďż˝RÖ†Grďż˝5S 677^%</span>")
 									cancel_stealth()
 								if(3)
 									to_chat(A, "Connecting to kernel...")
-									to_chat(U, "<span class='warning'><b>WARNING</b>: �R�r�R_404</span>")
+									to_chat(U, "<span class='warning'><b>WARNING</b>: ?R?r?R_404</span>")
 									A.control_disabled = 0
 								if(4)
 									to_chat(A, "Connection established and secured. Menu updated.")
-									to_chat(U, "<span class='warning'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")
+									to_chat(U, "<span class='warning'><b>Wďż˝r#nING</b>: #%@!!WČ†|_4ďż˝54@ \nUnďż˝B88l3 Tďż˝ Lďż˝-ďż˝o-Lďż˝CaT2 ##$!ďż˝RNďż˝0..%..</span>") // Original meaning lost in times, after countless re-encodings. You can rewrite these things as you want
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -992,7 +992,7 @@ ________________________________________________________________________________
 				to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 				to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 			else
-				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
+				to_chat(user, "3Rr0R ??? No-?-? f0?N?")
 
 /obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)

@@ -73,12 +73,12 @@
 	else
 		switch(species.name)
 			if(TAJARAN)
-				message = replacetext(message, "р", pick(list("ррр" , "рр")))
-				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
+				message = replacetext(message, "СЂ", pick(list("СЂСЂСЂ" , "СЂСЂ")))
+				message = replacetext(message, "Р ", pick(list("Р СЂСЂ" , "Р СЂ")))
 			if(UNATHI)
-				message = replacetext(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
+				message = replacetext(message, "СЃ", pick(list("СЃСЃСЃ" , "СЃСЃ")))
+				//Р РґР»СЏ Р·Р°РіР»Р°РІРЅРѕР№... Р¤РёРіРѕРІР° РєРѕРїРёРїР°СЃС‚Р°. РљС‚Рѕ Р·РЅР°РµС‚ СЂРµС€РµРЅРёРµ Р±РµР· РІС‚РѕСЂРѕР№ РѕР±СЂР°Р±РѕС‚РєРё РґР»СЏ Р·Р°РіР»Р°РІРЅРѕР№ Р±СѓРєРІС‹, РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РїРµСЂРµРґРµР»Р°Р№С‚Рµ.
+				message = replacetext(message, "РЎ", pick(list("РЎСЃСЃ" , "РЎСЃ")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
@@ -309,7 +309,7 @@
 			if(prob(80))
 				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
 			else if(config.rus_language)
-				message =  "[message]... Но я ГНОМ!"
+				message =  "[message]... РќРѕ СЏ Р“РќРћРњ!"
 			else
 				message =  "[message]... But i'm A GNOME!"
 			verb = pick("yells like an idiot", "says rather loudly")

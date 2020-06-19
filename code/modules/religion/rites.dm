@@ -7,7 +7,7 @@
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
-	/// Ritе of this religion
+	/// Rite of this religion
 	var/datum/religion/religion
 	/// Just unique tip when examine altar
 	var/list/tips = list()
