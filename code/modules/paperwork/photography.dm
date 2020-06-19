@@ -224,6 +224,7 @@
 						var/mob/dead/observer/O = A
 						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
 							continue
+					else continue
 				else
 					continue
 			atoms.Add(A)
