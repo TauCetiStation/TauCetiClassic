@@ -261,3 +261,35 @@
 	var/nasty_text = pick("Oh god! Tastes horrible!", "Damn, [src] tastes awful!", "Disgusting! Why did I even put it in my mouth?", "Ew! [src] tastes like rubber with liquid trash")
 	to_chat(usr, "<span class='rose'>[nasty_text]</span>")
 	..()
+
+/obj/item/seeds/popberry
+	name = "pack of Popberry seeds"
+	desc = "Almost transparent seeds. Something is moving inside them."
+	icon_state = "seed-alien3"
+	mypath = "/obj/item/seeds/popberry"
+	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
+	species = "popberry"
+	plantname = "Popberry vines"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/popberry"
+	lifespan = 25
+	endurance = 15
+	maturation = 10
+	production = 3
+	yield = 1
+	potency = 3
+	growthstages = 3
+	
+/obj/item/weapon/reagent_containers/food/snacks/grown/popberry
+	name = "transparent berry"
+	desc = "A strange looking fruit. Looks like melon , but transparent."
+	icon = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
+	icon_state = "popberryfruit"
+	
+/obj/item/weapon/reagent_containers/food/snacks/grown/popberry/atom_init(mapload, potency)
+	. = ..()
+	reagents.add_reagent("pop_toxin", potency + 5)
+	reagents.add_reagent("nutriment", potency)
+	bitesize = 10
+	
+/obj/item/weapon/reagent_containers/food/snacks/grown/popberry/On_Consume(usr)
+	to_chat(usr, "<span class='rose'>The fruit pops, and something slides down your throat.</span>")
