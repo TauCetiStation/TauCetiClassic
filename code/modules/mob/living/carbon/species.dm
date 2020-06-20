@@ -165,6 +165,40 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+// Species Outfit
+
+/datum/outfit/proc/species_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	switch(H.get_species())
+		if(HUMAN)
+			return
+		if(UNATHI)
+			species_replace_outfit(UNATHI_REPLACE_OUTFIT)
+			unathi_equip(H)
+		if(TAJARAN)
+			species_replace_outfit(TAJARAN_REPLACE_OUTFIT)
+			tajaran_equip(H)
+		if(SKRELL)
+			species_replace_outfit(SKRELL_REPLACE_OUTFIT)
+			skrell_equip(H)
+		if(VOX)
+			species_replace_outfit(VOX_REPLACE_OUTFIT)
+			vox_equip(H)
+	return
+
+/datum/outfit/proc/unathi_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/tajaran_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/skrell_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+//
+
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
