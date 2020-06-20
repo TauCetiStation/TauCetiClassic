@@ -13,26 +13,27 @@
 	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
-	if(!usr)	return
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, mob/user)
+	if(!user)
+		return
 	if(isliving(M))
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
 
 	if(!reagents.total_volume)
-		if(M == usr)
-			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
+		if(M == user)
+			to_chat(user, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		score["foodeaten"]++
-		usr.drop_from_inventory(src)	//so icons update :[
+		user.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
-				usr.put_in_hands(TrashItem)
+				var/obj/item/TrashItem = new trash(user)
+				user.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))
-				usr.put_in_hands(trash)
+				user.put_in_hands(trash)
 		qdel(src)
 	return
 
@@ -133,12 +134,12 @@
 		return ..() // -> item/attackby()
 
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/kitchen/utensil))
-		var/obj/item/weapon/kitchen/utensil/U = I
+	if(istype(I, /obj/item/weapon/storage/visuals/utensil))
+		var/obj/item/weapon/storage/visuals/utensil/U = I
 
-		if(U.contents.len >= U.max_contents)
+		if(U.can_be_inserted(src, TRUE))
 			to_chat(user, "<span class='warning'>You cannot fit anything else on your [U].")
-			return
+			return FALSE
 
 		user.visible_message( \
 			"[user] scoops up some [src] with \the [U]!", \
@@ -146,15 +147,14 @@
 		)
 
 		bitecount++
-		U.cut_overlays()
-		var/image/IM = new(U.icon, "loadedfood")
-		IM.color = filling_color
-		U.add_overlay(IM)
 
-		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
-		collected.loc = U
+		var/obj/item/weapon/reagent_containers/food/snacks/ball/collected = new (U)
 		collected.reagents.remove_any(collected.reagents.total_volume)
-		collected.trash = null
+		collected.bitesize = collected.reagents.total_volume
+		collected.name = "[src] food ball"
+		collected.desc = "You recognize pieces of [src] in the [collected]"
+		collected.color = filling_color
+
 		if(reagents.total_volume > bitesize)
 			reagents.trans_to(collected, bitesize)
 		else
@@ -167,15 +167,11 @@
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
+
+		U.add_item(collected)
 		return
 
 	try_slice(I, user)
-
-/obj/item/weapon/reagent_containers/food/snacks/Destroy()
-	if(contents)
-		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
-	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
@@ -199,7 +195,12 @@
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 
-
+/obj/item/weapon/reagent_containers/food/snacks/ball
+	name = "food ball"
+	desc = "Food of some kind"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = 'loadedfood'
+	w_class = ITEM_SIZE_TINY
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END

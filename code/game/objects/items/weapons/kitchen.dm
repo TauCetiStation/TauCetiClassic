@@ -16,7 +16,8 @@
 /*
  * Utensils
  */
-/obj/item/weapon/kitchen/utensil
+/obj/item/weapon/storage/visuals/utensil
+	icon = 'icons/obj/kitchen.dmi'
 	force = 0
 	w_class = ITEM_SIZE_TINY
 	throwforce = 0
@@ -25,14 +26,28 @@
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
-	var/max_contents = 1
+	opened = TRUE
+	max_storage_space = 3
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/ball/)
 
-/obj/item/weapon/kitchen/utensil/atom_init()
-	. = ..()
-	if (prob(60))
-		pixel_y = rand(0, 4)
 
-/obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/storage/visuals/utensil/gen_item_overlay(obj/item/I)
+	var/image/IO = image(I.icon, I.icon_state)
+	IO.pixel_x = rand(-1, 1)
+	IO.pixel_y = 5 + rand(-1, 1)
+	IO.loc = src
+	return IO
+
+/obj/item/weapon/storage/visuals/utensil/update_overlays()
+	cut_overlays()
+	for(var/obj/item/I in contents)
+		var/image/IO = item_overlays[I]
+		IO.plane = plane
+		IO.layer = layer + 0.05
+		add_overlay(IO)
+
+
+/obj/item/weapon/storage/visuals/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 
@@ -45,34 +60,40 @@
 			return ..()
 
 	if(contents.len)
-		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
-		if(istype(toEat))
-			if(CanEat(user, M, toEat, "eat"))
-				toEat.On_Consume(M, user)
-				if(toEat)
-					qdel(toEat)
-				cut_overlays()
+		var/obj/item/weapon/reagent_containers/food/snacks/ball/toEat = contents[contents.len]
+		if(!istype(toEat))
+			return ..()
+
+		if(user != M)
+			user.visible_message("<span class='info'>[user] attempts to feed [M] from [name].</span>")
+			if(!do_after(user, 3 SECONDS, target = M))
 				return
+			user.visible_message("<span class='info'>[user] feeds [M] with [name].</span>")
+		else
+			user.visible_message("<span class='info'>[user] eats [toEat] from [name].</span>")
+		toEat.reagents.trans_to_ingest(M, toEat.bitesize)
+
+		remove_from_storage(toEat)
+		qdel(toEat)
 
 /*
  * Spoons
  */
-/obj/item/weapon/kitchen/utensil/spoon
+/obj/item/weapon/storage/visuals/utensil/spoon
 	name = "spoon"
 	desc = "SPOON!"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 
-/obj/item/weapon/kitchen/utensil/pspoon
+/obj/item/weapon/storage/visuals/utensil/spoon/plastic
 	name = "plastic spoon"
 	desc = "Super dull action!"
 	icon_state = "pspoon"
-	attack_verb = list("attacked", "poked")
 
 /*
  * Forks
  */
-/obj/item/weapon/kitchen/utensil/fork
+/obj/item/weapon/storage/visuals/utensil/fork
 	name = "fork"
 	desc = "Pointy."
 	force = 3
@@ -90,29 +111,17 @@
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 
-/obj/item/weapon/kitchen/utensil/fork/sticks
+/obj/item/weapon/storage/visuals/utensil/sticks
 	name = "wooden chopsticks"
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
 
-/obj/item/weapon/kitchen/utensil/pfork
+/obj/item/weapon/storage/visuals/utensil/fork/plastic
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	force = 0
-
-
-/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
-	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
-	if(!proximity) return
-	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
-		if(do_after(user, 60, target = target))
-			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
-			qdel(target)
 
 /*
  * Kitchen knives

@@ -429,7 +429,7 @@
 /obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = I
-		if(!M.lit && !M.burnt)
+		if(M.lit || M.burnt)
 			return
 
 		if(prob(20))

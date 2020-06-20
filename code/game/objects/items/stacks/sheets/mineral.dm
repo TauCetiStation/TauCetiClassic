@@ -39,8 +39,8 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic crate", /obj/structure/closet/crate/plastic, 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("plastic ashtray", /obj/item/ashtray/plastic, 2, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("plastic fork", /obj/item/weapon/kitchen/utensil/pfork, 1, on_floor = TRUE), \
-	new/datum/stack_recipe("plastic spoon", /obj/item/weapon/kitchen/utensil/pspoon, 1, on_floor = TRUE), \
+	new/datum/stack_recipe("plastic fork", /obj/item/weapon/storage/visuals/utensil/fork/plastic, 1, on_floor = TRUE), \
+	new/datum/stack_recipe("plastic spoon", /obj/item/weapon/storage/visuals/utensil/spoon/plastic, 1, on_floor = TRUE), \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchenknife/plastic, 1, on_floor = TRUE), \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, on_floor = TRUE), \
 	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, on_floor = TRUE)
