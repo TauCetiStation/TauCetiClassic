@@ -26,9 +26,6 @@ var/datum/subsystem/quirks/SSquirks
 	if(!quirks.len)
 		SetupQuirks()
 
-	for(var/client/C in clients)
-		C.prefs.UpdateAllowedQuirks()
-
 	quirk_blacklist = list(
 		list(QUIRK_LIGHT_DRINKER, QUIRK_ALCOHOL_TOLERANCE),
 		list(QUIRK_STRONG_MIND, QUIRK_TOURETTE),
@@ -37,6 +34,10 @@ var/datum/subsystem/quirks/SSquirks
 		)
 
 	..()
+
+/datum/subsystem/quirks/PostInitialize()
+	for(var/client/C in clients)
+		C.prefs.UpdateAllowedQuirks()
 
 /datum/subsystem/quirks/stat_entry()
 	..("P:[processing.len]")
