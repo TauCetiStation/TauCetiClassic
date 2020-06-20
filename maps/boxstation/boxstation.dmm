@@ -32038,9 +32038,6 @@
 /obj/item/weapon/cane,
 /obj/item/weapon/cane,
 /obj/item/clothing/mask/muzzle,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -66406,6 +66403,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"dhx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "dib" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -67369,6 +67372,9 @@
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -67829,12 +67835,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/warden)
-"fvf" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "fwb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
@@ -68631,6 +68631,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/incinerator)
+"gGl" = (
+/obj/item/trash/chips,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "gGO" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall,
@@ -69615,6 +69619,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"hWq" = (
+/obj/item/weapon/broken_bottle,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "hXb" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -70093,6 +70101,13 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"iIv" = (
+/obj/item/weapon/shard,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/medbay)
 "iJb" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "toxin_test_airlock";
@@ -70278,6 +70293,16 @@
 	icon_state = "blue"
 	},
 /area/station/hallway/primary/central)
+"iYw" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreenfull"
+	},
+/area/station/maintenance/medbay)
 "iZb" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -71204,10 +71229,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/reception)
-"ktX" = (
-/obj/item/weapon/table_parts/wood,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "kub" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
@@ -71326,6 +71347,10 @@
 	dir = 1
 	},
 /turf/simulated/floor,
+/area/station/maintenance/medbay)
+"kCL" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kDf" = (
 /obj/machinery/door/morgue{
@@ -73499,6 +73524,13 @@
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
+"nXq" = (
+/obj/structure/table/woodentable,
+/obj/item/stack/sheet/wood{
+	amount = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "nYb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -74739,6 +74771,11 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
+"pDJ" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/station/maintenance/medbay)
 "pEt" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/status_display{
@@ -74919,10 +74956,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
-"pYY" = (
-/obj/item/weapon/broken_bottle,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "qab" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -74974,11 +75007,6 @@
 	icon_state = "blue"
 	},
 /area/station/bridge/hop_office)
-"qef" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
-/area/station/maintenance/medbay)
 "qex" = (
 /obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
@@ -75180,13 +75208,6 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
-"qpX" = (
-/obj/item/weapon/shard,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
 /area/station/maintenance/medbay)
 "qrb" = (
 /turf/simulated/floor{
@@ -75727,6 +75748,10 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rjg" = (
+/obj/item/weapon/table_parts/wood,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "rjR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -76377,12 +76402,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"scH" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "sdb" = (
 /obj/machinery/disease2/diseaseanalyser,
 /turf/simulated/floor{
@@ -76657,16 +76676,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
-"ssk" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitegreenfull"
-	},
-/area/station/maintenance/medbay)
 "stb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 1;
@@ -77067,10 +77076,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
-"sVm" = (
-/obj/item/trash/chips,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "sVF" = (
 /obj/effect/landmark/start{
 	name = "Recycler"
@@ -77541,10 +77546,6 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/exit)
-"tJp" = (
-/obj/random/materials/metal_scrap,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "tKb" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -77939,13 +77940,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"usC" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -77996,6 +77990,10 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"uxQ" = (
+/obj/random/materials/metal_scrap,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "uBz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
@@ -78191,6 +78189,13 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"vtE" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "vwv" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -78274,10 +78279,6 @@
 	icon_state = "green"
 	},
 /area/station/hallway/primary/port)
-"vXe" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "vYc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -78344,13 +78345,6 @@
 	icon_state = "floorgrime"
 	},
 /area/station/cargo/storage)
-"whu" = (
-/obj/structure/table/woodentable,
-/obj/item/stack/sheet/wood{
-	amount = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "wjJ" = (
 /obj/machinery/door/firedoor,
 /obj/item/device/radio/intercom{
@@ -78498,6 +78492,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
+"wDN" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "wEg" = (
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor{
@@ -122032,9 +122032,9 @@ bHY
 bFo
 bFo
 bFo
-ssk
-whu
-scH
+iYw
+nXq
+wDN
 bFo
 wIg
 ucv
@@ -122289,9 +122289,9 @@ bHY
 eDb
 cak
 jCb
-vXe
+kCL
 cHy
-tJp
+uxQ
 bFo
 cKZ
 cLp
@@ -122546,9 +122546,9 @@ bHY
 jCb
 cak
 cak
-qpX
-ktX
-scH
+iIv
+rjg
+wDN
 bFo
 kYA
 cLo
@@ -122801,11 +122801,11 @@ bVa
 crE
 cAx
 knb
-qef
-fvf
-usC
-ktX
-sVm
+pDJ
+dhx
+vtE
+rjg
+gGl
 bFo
 yfc
 bFo
@@ -123058,7 +123058,7 @@ lCb
 ctJ
 cHy
 cak
-pYY
+hWq
 bFo
 bFo
 bFo
