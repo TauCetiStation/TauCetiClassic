@@ -35,9 +35,7 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		tally += hungry / 50
+	tally += (400 - get_nutrition()) / 200 // 600 - 0 (tally -1 - 2)
 
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
