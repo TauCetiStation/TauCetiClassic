@@ -14,8 +14,8 @@
   * that can be restored at a later date
   */
 /datum/outfit
-	
 	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
+
 	var/uniform = null  /// Type path of item to go in uniform slot	
 	var/suit = null     /// Type path of item to go in suit slot	
 	var/back = null     /// Type path of item to go in back slot
@@ -36,11 +36,9 @@
 	var/r_hand = null     /// Type path of item to go in the right hand
 	var/l_hand = null     /// Type path of item to go in left hand
 
-	//var/toggle_helmet = TRUE  /// Should the toggle helmet proc be called on the helmet during equip
-	var/internals_slot = null /// ID of the slot containing a gas tank
-
 	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
 
+	var/internals_slot = null /// ID of the slot containing a gas tank
 
 	/**
 	  * Survival box. 
@@ -58,23 +56,9 @@
 				/obj/item/weapon/tank/emergency_oxygen = /obj/item/weapon/tank/emergency_oxygen/engi
 			)
 
-
 	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
-	//
 	var/datum/sprite_accessory/undershirt = null  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
-	
-	//var/accessory = null  /// Any clothing accessory item
-
-	var/can_be_admin_equipped = TRUE   /// Set to FALSE if your outfit requires runtime parameters
-
-	/**
-	  * extra types for chameleon outfit changes, mostly guns
-	  * Format of this list is (typepath, typepath, typepath)
-	  * These are all added and returns in the list for get_chamelon_diguise_info proc
-	  */
-	var/list/chameleon_extras
-
 // replaces default human outfit in [slot] on [item_type] from replace_outfit
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
 	switch(slot)
@@ -201,15 +185,6 @@
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
 
-	/*
-	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		if(U)
-			U.attach_accessory(new accessory(H))
-		else
-			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
-	*/
-
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
 	if(r_hand)
@@ -245,12 +220,6 @@
 					number = 1
 				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
-
-	/*
-	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
-		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
-		HS.ToggleHelmet()
-	*/
 
 	post_equip(H, visualsOnly)
 
@@ -309,13 +278,6 @@
 		H.r_store.add_fingerprint(H,1)
 	return TRUE
 
-/// Return a list of all the types that are required to disguise as this outfit type
-/datum/outfit/proc/get_chameleon_disguise_info()
-	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, l_ear, r_ear, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
-	types += chameleon_extras
-	listclearnulls(types)
-	return types
-
 /// Return a json list of this outfit
 /datum/outfit/proc/get_json_data()
 	. = list()
@@ -323,7 +285,6 @@
 	.["name"] = name
 	.["uniform"] = uniform
 	.["suit"] = suit
-	//.["toggle_helmet"] = toggle_helmet
 	.["back"] = back
 	.["belt"] = belt
 	.["gloves"] = gloves
@@ -344,7 +305,6 @@
 	.["backpack_contents"] = backpack_contents
 	.["survival_box"] = survival_box
 	.["implants"] = implants
-	//.["accessory"] = accessory
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
@@ -362,7 +322,6 @@
 	name = outfit_data["name"]
 	uniform = text2path(outfit_data["uniform"])
 	suit = text2path(outfit_data["suit"])
-	//toggle_helmet = outfit_data["toggle_helmet"]
 	back = text2path(outfit_data["back"])
 	belt = text2path(outfit_data["belt"])
 	gloves = text2path(outfit_data["gloves"])
@@ -393,5 +352,4 @@
 		var/imptype = text2path(I)
 		if(imptype)
 			implants += imptype
-	//accessory = text2path(outfit_data["accessory"])
 	return TRUE
