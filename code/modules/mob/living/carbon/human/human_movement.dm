@@ -35,7 +35,7 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	tally += (400 - get_nutrition()) / 200 // 600 - 0 (tally -1 - 2)
+	tally += (400 - get_nutrition()) * 0.005 // if get_nutrition == 600 |=> -1 to tally, if == 0 |=> 2 tally
 
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
