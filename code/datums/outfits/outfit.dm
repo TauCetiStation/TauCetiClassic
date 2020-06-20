@@ -90,11 +90,62 @@
 			vox_equip(H)
 	return
 
+/datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
+	if(slot == uniform)
+		uniform = item_type
+		return
+	if(slot == suit)
+		suit = item_type
+		return
+	if(slot == back)
+		back = item_type
+		return
+	if(slot == belt)
+		belt = item_type
+		return
+	if(slot == gloves)
+		gloves = item_type
+		return
+	if(slot == shoes)
+		shoes = item_type
+		return
+	if(slot == head)
+		head = item_type
+		return
+	if(slot == mask)	
+		mask = item_type
+		return
+	if(slot == neck)
+		neck = item_type
+		return
+	if(slot == l_ear)
+		l_ear = item_type
+		return
+	if(slot == r_ear)
+		r_ear = item_type
+		return
+	if(slot == glasses)
+		glasses = item_type
+		return
+	if(slot == l_pocket)
+		l_pocket = item_type
+		return
+	if(slot == r_pocket)
+		r_pocket = item_type
+		return
+	if(slot == r_hand)
+		r_hand = item_type
+		return
+	if(slot == l_hand)
+		l_hand = item_type
+		return
+	return
+
 /datum/outfit/proc/species_replace_outfit(var/list/replace_outfit = null)
 	var/list/outfit_types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, l_ear, r_ear, glasses, l_pocket, r_pocket, r_hand, l_hand)
 	for(var/outfit_type in outfit_types)
 		if(replace_outfit[outfit_type])
-			shoes = replace_outfit[outfit_type]
+			change_slot_equip(outfit_type, replace_outfit[outfit_type])
 
 /datum/outfit/proc/unathi_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
