@@ -51,4 +51,3 @@
 	backpack_contents += list(/obj/item/device/modkit/syndie/vox)
 	l_hand = /obj/item/weapon/tank/nitrogen
 	mask = /obj/item/clothing/mask/gas/vox
-	shoes = /obj/item/clothing/shoes/magboots/vox

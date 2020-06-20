@@ -504,6 +504,10 @@
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
+			)
+
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	if(H.wear_mask)
