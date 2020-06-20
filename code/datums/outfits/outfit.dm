@@ -242,8 +242,6 @@
   *
   */
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
-	if(!istype(H))
-		return
 	if(H.back)
 		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)
@@ -274,7 +272,7 @@
 		H.l_store.add_fingerprint(H,1)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
-	return 1
+	return TRUE
 
 /// Return a list of all the types that are required to disguise as this outfit type
 /datum/outfit/proc/get_chameleon_disguise_info()
