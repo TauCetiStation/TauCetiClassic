@@ -162,7 +162,7 @@
 		if ( get_total_ferts() >= Max_Fertilizers )
 			to_chat(user, "The fertilizer storage is full!")
 			return
-		to_chat(user, "<span class='notice>You insert [W] into [src]</span>.")
+		to_chat(user, "<span class='notice'>You insert [W] into [src]</span>.")
 		user.drop_from_inventory(W, src)
 		flick("farmbot_hatch",src)
 		updateUsrDialog()
