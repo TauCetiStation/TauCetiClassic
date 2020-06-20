@@ -1157,7 +1157,7 @@
 	mobname = "Nathaniel Waters";
 	name = "Nathaniel Waters"
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "bar"

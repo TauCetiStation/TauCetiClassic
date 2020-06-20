@@ -9,6 +9,9 @@
 /obj/machinery/fusion_fuel_compressor/MouseDrop_T(atom/movable/target, mob/user)
 	if(user.incapacitated() || !user.Adjacent(src))
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	return do_fuel_compression(target, user)
 
 /obj/machinery/fusion_fuel_compressor/attackby(obj/item/thing, mob/user)

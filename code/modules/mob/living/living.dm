@@ -79,15 +79,6 @@
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
-		//Fat
-		if(HAS_TRAIT(src, TRAIT_FAT))
-			var/ran = 40
-			if(isrobot(src))
-				ran = 20
-			if(prob(ran))
-				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
-			return 1
-
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
@@ -112,6 +103,11 @@
 
 			now_pushing = 0
 			return 1
+			
+	//Fat
+	if(HAS_TRAIT(M, TRAIT_FAT))
+		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
+		return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course

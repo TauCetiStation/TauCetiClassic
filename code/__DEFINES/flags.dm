@@ -83,8 +83,8 @@
 #define NO_BLOOD_TRAILS    "no_blood_trails"
 #define FACEHUGGABLE       "facehuggable"
 #define NO_EMOTION         "no_emotion"
+#define NO_DNA             "no_dna"
 #define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
-#define NO_MUTATION        "no_mutation"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

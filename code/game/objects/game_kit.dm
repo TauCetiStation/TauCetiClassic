@@ -92,12 +92,13 @@
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
 
-/obj/item/weapon/game_kit/chaplain/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
-		OS.scanned_type = src.type
+/obj/item/weapon/game_kit/chaplain/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+	else
+		return ..()
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
