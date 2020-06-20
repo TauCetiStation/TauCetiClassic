@@ -129,6 +129,8 @@
 
 	var/list/prevent_survival_kit_items = list()
 
+	var/list/replace_outfit = list()
+	
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
@@ -168,20 +170,17 @@
 // Species Outfit
 
 /datum/outfit/proc/species_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	species_replace_outfit(H.species.replace_outfit)
 	switch(H.get_species())
 		if(HUMAN)
 			return
 		if(UNATHI)
-			species_replace_outfit(UNATHI_REPLACE_OUTFIT)
 			unathi_equip(H)
 		if(TAJARAN)
-			species_replace_outfit(TAJARAN_REPLACE_OUTFIT)
 			tajaran_equip(H)
 		if(SKRELL)
-			species_replace_outfit(SKRELL_REPLACE_OUTFIT)
 			skrell_equip(H)
 		if(VOX)
-			species_replace_outfit(VOX_REPLACE_OUTFIT)
 			vox_equip(H)
 	return
 
@@ -197,7 +196,7 @@
 /datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
-//
+// Species Outfit.
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
@@ -328,6 +327,10 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
+	
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -390,6 +393,10 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
+	
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			)
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()

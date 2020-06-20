@@ -13,18 +13,6 @@
   * by that user to recreate the outfit, this is used by admins to allow for custom event outfits
   * that can be restored at a later date
   */
-#define UNATHI_REPLACE_OUTFIT list( \
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut \
-			)
-
-#define TAJARAN_REPLACE_OUTFIT list( \
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut \
-			)
-
-#define SKRELL_REPLACE_OUTFIT list()
-
-#define VOX_REPLACE_OUTFIT list()
-
 /datum/outfit
 	
 	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
@@ -101,11 +89,12 @@
 	return
 
 /datum/outfit/proc/species_replace_outfit(var/list/replace_outfit = null)
-	var/list/outfit_types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, l_ear, r_ear, glasses)
-	var/list/outfit_slot_types = list(SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_BACK, SLOT_BELT, SLOT_GLOVES, SLOT_SHOES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_TIE, SLOT_L_EAR, SLOT_R_EAR, SLOT_GLASSES)
-	for(var/I in 1 to outfit_types.len)
-		if(replace_outfit[outfit_types[I]])
-			change_slot_equip(outfit_slot_types[I], replace_outfit[outfit_types[I]])
+	if(replace_outfit)
+		var/list/outfit_types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, l_ear, r_ear, glasses)
+		var/list/outfit_slot_types = list(SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_BACK, SLOT_BELT, SLOT_GLOVES, SLOT_SHOES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_TIE, SLOT_L_EAR, SLOT_R_EAR, SLOT_GLASSES)
+		for(var/I in 1 to outfit_types.len)
+			if(replace_outfit[outfit_types[I]])
+				change_slot_equip(outfit_slot_types[I], replace_outfit[outfit_types[I]])
 
 /**
   * Called at the start of the equip proc
