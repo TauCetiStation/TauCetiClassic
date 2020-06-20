@@ -102,7 +102,7 @@
 
 	if (slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
 		user.visible_message("<span class='danger'>[user] tries to put [name] on the [M]'s head!</span>")
-		if(user.is_busy(src) || !do_after(user, 8, target = M))
+		if(user.is_busy(src) || !do_after(user, 0.8 SECONDS, target = M))
 			return
 		user.remove_from_mob(src)
 		M.equip_to_slot_if_possible(src, SLOT_HEAD, disable_warning = TRUE)
