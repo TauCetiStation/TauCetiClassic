@@ -89,7 +89,7 @@
 	return
 
 /datum/outfit/proc/species_replace_outfit(var/list/replace_outfit = null)
-	if(replace_outfit)
+	if(replace_outfit.len)
 		var/list/outfit_types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, l_ear, r_ear, glasses)
 		var/list/outfit_slot_types = list(SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_BACK, SLOT_BELT, SLOT_GLOVES, SLOT_SHOES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_TIE, SLOT_L_EAR, SLOT_R_EAR, SLOT_GLASSES)
 		for(var/I in 1 to outfit_types.len)
