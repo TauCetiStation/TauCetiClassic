@@ -363,7 +363,6 @@
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 
 	else if (istype(I, /obj/item/weapon/pen))

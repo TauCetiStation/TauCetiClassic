@@ -150,11 +150,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/bot/farmbot/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			src.updateUsrDialog()
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(allowed(user))
+			locked = !locked
+			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
+			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -162,11 +162,10 @@
 		if ( get_total_ferts() >= Max_Fertilizers )
 			to_chat(user, "The fertilizer storage is full!")
 			return
-		user.drop_item()
-		W.loc = src
-		to_chat(user, "You insert [W].")
+		to_chat(user, "<span class='notice>You insert [W] into [src]</span>.")
+		user.drop_from_inventory(W, src)
 		flick("farmbot_hatch",src)
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
 	else
@@ -521,20 +520,16 @@
 		new /obj/structure/reagent_dispensers/watertank(src)
 
 
-/obj/structure/reagent_dispensers/watertank/attackby(obj/item/robot_parts/S, mob/user)
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/I, mob/user)
 
-	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
-		..()
-		return
+	if(!istype(I, /obj/item/robot_parts/l_arm) && !istype(I, /obj/item/robot_parts/r_arm))
+		return ..()
 
-	//Making a farmbot!
+	to_chat(user, "<span class='notice'>You add \the [I] to the [src]</span>")
 
-	var/obj/item/weapon/farmbot_arm_assembly/A = new /obj/item/weapon/farmbot_arm_assembly
+	new /obj/item/weapon/farmbot_arm_assembly(loc)
 
-	A.loc = src.loc
-	to_chat(user, "You add the robot arm to the [src]")
-	user.remove_from_mob(S)
-	qdel(S)
+	qdel(I)
 	qdel(src)
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/I, mob/user, params)
