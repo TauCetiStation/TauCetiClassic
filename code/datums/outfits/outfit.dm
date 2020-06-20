@@ -24,7 +24,7 @@
 	var/shoes = null    /// Type path of item to go in shoes slot
 	var/head = null     /// Type path of item to go in head slot
 	var/mask = null     /// Type path of item to go in mask slot
-	var/neck = null     /// Type path of item to go in neck slot
+	var/neck = null     /// Type path of item to go in neck slot (webbing, ties...)
 	var/l_ear = null    /// Type path of item to go in left ear slot
 	var/r_ear = null    /// Type path of item to go in right ear slot
 	var/glasses = null  /// Type path of item to go in the glasses slot
