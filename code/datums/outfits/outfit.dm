@@ -1,7 +1,7 @@
 /**
   * # Outfit datums
   *
-  * This is a clean system of applying outfits to mobs, if you need to equip someone in a uniform
+  * This is a clean system of applying outfits to humans, if you need to equip someone in a uniform
   * this is the way to do it cleanly and properly.
   *
   * You can also specify an outfit datum on a job to have it auto equipped to the mob on join
@@ -75,6 +75,7 @@
 	  */
 	var/list/chameleon_extras
 
+// replaces default human outfit in [slot] on [item_type] from replace_outfit
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
 	switch(slot)
 		if(SLOT_W_UNIFORM)
@@ -102,6 +103,9 @@
 		if(SLOT_GLASSES)
 			glasses = item_type
 
+
+// Called before the pre_equip() proc
+// replaces default outfit (human outfit) on outfit from replace_outfit
 /datum/outfit/proc/species_replace_outfit(var/list/replace_outfit = null)
 	if(replace_outfit.len)
 		var/list/outfit_types = list(
