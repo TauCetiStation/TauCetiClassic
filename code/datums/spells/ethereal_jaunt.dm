@@ -80,32 +80,8 @@
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
-		if(!mobloc.is_mob_placeable(target))
-			var/found_ground = FALSE // this is to give priority to non-space tiles
-			var/to_gib = TRUE // this is a small feature i considered funny.
-			                  // chances of this occuring are very small
-			                  // as it requires 9x9 grid of impassable tiles ~getup1
-			for(var/turf/newloc in orange(1, mobloc))
-				if(newloc.is_mob_placeable(target) && !istype(newloc, /turf/space))
-					found_ground = TRUE
-					to_gib = FALSE
-					target.forceMove(newloc)
-					if(companions)
-						for(var/mob/M in companions)
-							M.forceMove(newloc)
-			if(!found_ground)
-				for(var/turf/newloc in orange(1, mobloc))
-					if(newloc.is_mob_placeable(target))
-						to_gib = FALSE
-						target.forceMove(newloc)
-						if(companions)
-							for(var/mob/M in companions)
-								M.forceMove(newloc)
-			if(to_gib)
-				target.gib()
-				if(companions)
-					for(var/mob/M in companions)
-						M.gib()
+		target.eject_from_wall(gib = TRUE, companions = companions)
+
 
 		qdel(holder)
 
@@ -152,3 +128,33 @@
 	return ..()
 
 #undef FLICK_OVERLAY_JAUNT_DURATION
+
+/mob/proc/eject_from_wall(gib = FALSE, prioritize_ground = TRUE, list/companions = null)
+	var/turf/mobloc = get_turf(src.loc)
+	if(mobloc.is_mob_placeable(src))
+		return
+	var/found_ground = !prioritize_ground // this is to give priority to non-space tiles
+	var/to_gib = gib // this is a small feature i considered funny.
+	                  // chances of this occuring are very small
+	                  // as it requires 9x9 grid of impassable tiles ~getup1
+	for(var/turf/newloc in orange(1, mobloc))
+		if(newloc.is_mob_placeable(src) && !istype(newloc, /turf/space))
+			found_ground = TRUE
+			to_gib = FALSE
+			src.forceMove(newloc)
+			if(companions)
+				for(var/mob/M in companions)
+					M.forceMove(newloc)
+	if(!found_ground)
+		for(var/turf/newloc in orange(1, mobloc))
+			if(newloc.is_mob_placeable(src))
+				to_gib = FALSE
+				src.forceMove(newloc)
+				if(companions)
+					for(var/mob/M in companions)
+						M.forceMove(newloc)
+	if(to_gib)
+		src.gib()
+		if(companions)
+			for(var/mob/M in companions)
+				M.gib()
