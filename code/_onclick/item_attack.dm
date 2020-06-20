@@ -109,7 +109,8 @@
 		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!</span>")
 		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		var/list/data = user.get_unarmed_attack()
-		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD) // if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
+		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
+		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
 		playsound(src, data["sound"], VOL_EFFECTS_MASTER)
 		return TRUE
 
