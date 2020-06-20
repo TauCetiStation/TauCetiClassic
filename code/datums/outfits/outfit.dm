@@ -41,8 +41,23 @@
 
 	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
 
-	var/box                           /// Internals box. Will be inserted at the start of backpack_contents
-	var/advanced_survival_kit = FALSE
+
+	/**
+	  * Survival box. 
+	  *
+	  * Will be inserted at the start of backpack_contents. 
+	  * Other boxes must be in backpack_contents 
+	  *
+	  * NO_SURVIVAL_KIT       - no survival box
+	  * STANDARD_SURVIVAL_KIT - species.survival_kit_items
+	  * ADVANCED_SURVIVAL_KIT - replaces species.survival_kit_items on advanced 
+	  */
+	var/survival_box = NO_SURVIVAL_KIT
+	// list of replaceable items in a survival box
+	var/list/adv_survkkit = list(
+				/obj/item/weapon/tank/emergency_oxygen = /obj/item/weapon/tank/emergency_oxygen/engi
+			)
+
 
 	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
@@ -202,16 +217,21 @@
 		if(r_pocket)
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 
-		if(box)
-			var/list/box_survival_kit_items = H.species.survival_kit_items
-			if(box == /obj/item/weapon/storage/box/survival)
-				if(advanced_survival_kit)
-					for(var/I in 1 to box_survival_kit_items.len)
-						if(box_survival_kit_items[I] == /obj/item/weapon/tank/emergency_oxygen)
-							box_survival_kit_items[I] = /obj/item/weapon/tank/emergency_oxygen/engi
-				box = new box()
-				for(var/type in box_survival_kit_items)
-					new type(box)
+		if(survival_box)
+			var/box = new /obj/item/weapon/storage/box/survival
+			var/list/survkit = H.species.survival_kit_items
+			if(survival_box == ADVANCED_SURVIVAL_KIT)
+				for(var/A in adv_survkkit)	
+					survkit[adv_survkkit[A]] = survkit[A]
+					survkit[A] = 0
+			for(var/item_path in survkit)
+				var/item_number = survkit[item_path]
+				if(!isnum(item_number))//if null => 1 item in box
+					new item_path(box)
+					continue
+				for(var/i in 1 to item_number)
+					new item_path(box)
+
 			H.equip_to_slot_or_del(box, SLOT_IN_BACKPACK)
 
 		if(backpack_contents)
@@ -318,7 +338,7 @@
 	.["l_hand"] = l_hand
 	.["internals_slot"] = internals_slot
 	.["backpack_contents"] = backpack_contents
-	.["box"] = box
+	.["survival_box"] = survival_box
 	.["implants"] = implants
 	//.["accessory"] = accessory
 
@@ -362,7 +382,7 @@
 		var/itype = text2path(item)
 		if(itype)
 			backpack_contents[itype] = backpack[item]
-	box = text2path(outfit_data["box"])
+	survival_box = outfit_data["survival_box"]
 	var/list/impl = outfit_data["implants"]
 	implants = list()
 	for(var/I in impl)

@@ -13,8 +13,7 @@
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
 		)
-	box = /obj/item/weapon/storage/box/survival
-	advanced_survival_kit = TRUE
+	survival_box = ADVANCED_SURVIVAL_KIT
 
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
