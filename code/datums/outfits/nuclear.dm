@@ -5,6 +5,7 @@
 	l_ear = /obj/item/device/radio/headset/syndicate
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
+	back = PREFERANCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
@@ -24,17 +25,6 @@
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/a357,
 		)
-
-/datum/outfit/nuclear/pre_equip(mob/living/carbon/human/synd_mob)
-	switch(synd_mob.backbag)
-		if(1, 2)
-			back = /obj/item/weapon/storage/backpack
-		if(3)
-			back = /obj/item/weapon/storage/backpack/alt
-		if(4)
-			back = /obj/item/weapon/storage/backpack/satchel/norm
-		if(5)
-			back = /obj/item/weapon/storage/backpack/satchel
 
 /datum/outfit/nuclear/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)

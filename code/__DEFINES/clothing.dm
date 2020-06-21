@@ -147,3 +147,7 @@
 #define NO_SURVIVAL_KIT 0
 #define STANDARD_SURVIVAL_KIT 1
 #define ADVANCED_SURVIVAL_KIT 2
+
+// Backpack style
+#define PREFERANCE_BACKPACK 1
+#define PREFERANCE_BACKPACK_FORCE 2 // if select "Nothing" => give backpack

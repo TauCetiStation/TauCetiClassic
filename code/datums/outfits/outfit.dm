@@ -41,6 +41,8 @@
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
+	var/list/backpack_style = BACKPACK_STYLE_COMMON
+
 	/**
 	  * Survival box. 
 	  *
@@ -62,7 +64,13 @@
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
-// replaces default human outfit in [slot] on [item_type] from replace_outfit
+/datum/outfit/proc/preferance_back(mob/living/carbon/human/H)
+	if(back == PREFERANCE_BACKPACK_FORCE)
+		back = backpack_style[2]
+	else
+		back = backpack_style[H.backbag]
+
+// replaces default human outfit in [slot] on [item_type]
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
 	switch(slot)
 		if(SLOT_W_UNIFORM)
@@ -152,6 +160,7 @@
   * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
   */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	preferance_back(H)
 	species_equip(H, visualsOnly)
 	pre_equip(H, visualsOnly)
 
@@ -211,31 +220,32 @@
 			H.equip_to_slot_or_del(new l_pocket(H), SLOT_L_STORE, TRUE)
 		if(r_pocket)
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
+		
+		if(back)
+			if(survival_box)
+				var/box = new /obj/item/weapon/storage/box/survival
+				var/list/survkit = H.species.survival_kit_items
+				if(survival_box == ADVANCED_SURVIVAL_KIT)
+					for(var/A in adv_survkkit)
+						survkit[adv_survkkit[A]] = survkit[A]
+						survkit[A] = 0
+				for(var/item_path in survkit)
+					var/item_number = survkit[item_path]
+					if(!isnum(item_number))//if null => 1 item in box
+						new item_path(box)
+						continue
+					for(var/i in 1 to item_number)
+						new item_path(box)
 
-		if(survival_box)
-			var/box = new /obj/item/weapon/storage/box/survival
-			var/list/survkit = H.species.survival_kit_items
-			if(survival_box == ADVANCED_SURVIVAL_KIT)
-				for(var/A in adv_survkkit)
-					survkit[adv_survkkit[A]] = survkit[A]
-					survkit[A] = 0
-			for(var/item_path in survkit)
-				var/item_number = survkit[item_path]
-				if(!isnum(item_number))//if null => 1 item in box
-					new item_path(box)
-					continue
-				for(var/i in 1 to item_number)
-					new item_path(box)
+				H.equip_to_slot_or_del(box, SLOT_IN_BACKPACK)
 
-			H.equip_to_slot_or_del(box, SLOT_IN_BACKPACK)
-
-		if(backpack_contents)
-			for(var/path in backpack_contents)
-				var/number = backpack_contents[path]
-				if(!isnum(number))//Default to 1
-					number = 1
-				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+			if(backpack_contents)
+				for(var/path in backpack_contents)
+					var/number = backpack_contents[path]
+					if(!isnum(number))//Default to 1
+						number = 1
+					for(var/i in 1 to number)
+						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
 
 	post_equip(H, visualsOnly)
 
