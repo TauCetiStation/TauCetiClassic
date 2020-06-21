@@ -16,7 +16,7 @@
 
 /atom/movable/attack_robot(mob/living/user)
 	. = ..()
-	if(in_range(user, src))
+	if(Adjacent(user))
 		if(can_buckle && buckled_mob && istype(user))
 			user_unbuckle_mob(user)
 	
