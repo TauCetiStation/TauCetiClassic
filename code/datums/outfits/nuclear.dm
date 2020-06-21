@@ -6,6 +6,7 @@
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	back = PREFERANCE_BACKPACK_FORCE
+	accessory = /obj/item/clothing/accessory/medal/gold/captain
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
 		/obj/item/weapon/reagent_containers/pill/cyanide,

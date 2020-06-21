@@ -16,18 +16,19 @@
 /datum/outfit
 	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
 
-	var/uniform = null  /// Type path of item to go in uniform slot	
-	var/suit = null     /// Type path of item to go in suit slot	
-	var/back = null     /// Type path of item to go in back slot
-	var/belt = null     /// Type path of item to go in belt slot
-	var/gloves = null   /// Type path of item to go in gloves slot
-	var/shoes = null    /// Type path of item to go in shoes slot
-	var/head = null     /// Type path of item to go in head slot
-	var/mask = null     /// Type path of item to go in mask slot
-	var/neck = null     /// Type path of item to go in neck slot (webbing, ties...)
-	var/l_ear = null    /// Type path of item to go in left ear slot
-	var/r_ear = null    /// Type path of item to go in right ear slot
-	var/glasses = null  /// Type path of item to go in the glasses slot
+	var/uniform = null    /// Type path of item to go in uniform slot	
+	var/suit = null       /// Type path of item to go in suit slot	
+	var/back = null       /// Type path of item to go in back slot
+	var/belt = null       /// Type path of item to go in belt slot
+	var/gloves = null     /// Type path of item to go in gloves slot
+	var/shoes = null      /// Type path of item to go in shoes slot
+	var/head = null       /// Type path of item to go in head slot
+	var/mask = null       /// Type path of item to go in mask slot
+	var/neck = null       /// Type path of item to go in neck slot
+	var/accessory = null  /// Any clothing accessory item
+	var/l_ear = null      /// Type path of item to go in left ear slot
+	var/r_ear = null      /// Type path of item to go in right ear slot
+	var/glasses = null    /// Type path of item to go in the glasses slot
 	var/id = null         /// Type path of item to go in the idcard slot
 	var/l_pocket = null   /// Type path of item for left pocket slot
 	var/r_pocket = null   /// Type path of item for right pocket slot
@@ -209,6 +210,15 @@
 			outfit_underwear = outfit_underwear_f
 		H.underwear = underwear_options.Find(outfit_underwear)
 		H.update_body()
+
+	if(accessory)
+		var/obj/item/clothing/accessory/A = new accessory
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U.can_attach_accessory(A))
+			U.accessories += A
+			A.on_attached(U, H, TRUE)
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
