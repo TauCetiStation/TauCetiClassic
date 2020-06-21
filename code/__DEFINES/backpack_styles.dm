@@ -1,3 +1,9 @@
+// Backpack styles for jobs, factions...
+
+#define PREFERANCE_BACKPACK 1
+#define PREFERANCE_BACKPACK_FORCE 2 // if select "Nothing" => give backpack
+
+// default style
 #define BACKPACK_STYLE_COMMON list( \
 	null, \
 	/obj/item/weapon/storage/backpack, \
