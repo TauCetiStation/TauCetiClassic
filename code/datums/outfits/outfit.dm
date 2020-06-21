@@ -16,7 +16,8 @@
 /datum/outfit
 	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
 
-	var/uniform = null    /// Type path of item to go in uniform slot	
+	var/uniform = null    /// Type path of item to go in uniform slot
+	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
 	var/suit = null       /// Type path of item to go in suit slot	
 	var/back = null       /// Type path of item to go in back slot
 	var/belt = null       /// Type path of item to go in belt slot
@@ -168,7 +169,9 @@
 	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
-	if(uniform)
+	if(H.gender == FEMALE && uniform_f)
+		H.equip_to_slot_or_del(new uniform_f(H), SLOT_W_UNIFORM, TRUE)
+	else if(uniform)
 		H.equip_to_slot_or_del(new uniform(H), SLOT_W_UNIFORM, TRUE)
 	if(suit)
 		H.equip_to_slot_or_del(new suit(H), SLOT_WEAR_SUIT, TRUE)
