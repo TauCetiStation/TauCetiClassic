@@ -41,7 +41,7 @@
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
-	var/list/backpack_style = BACKPACK_STYLE_COMMON
+	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	/**
 	  * Survival box. 
@@ -66,9 +66,9 @@
 
 /datum/outfit/proc/preferance_back(mob/living/carbon/human/H)
 	if(back == PREFERANCE_BACKPACK_FORCE)
-		back = backpack_style[2]
+		back = back_style[2]
 	else
-		back = backpack_style[H.backbag]
+		back = back_style[H.backbag]
 
 // replaces default human outfit in [slot] on [item_type]
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
