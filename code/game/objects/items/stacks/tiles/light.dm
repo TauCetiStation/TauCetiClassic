@@ -26,11 +26,12 @@
 	else
 		state = 0 //fine
 
-/obj/item/stack/tile/light/attackby(obj/item/O, mob/user)
-	..()
-	if(iscrowbar(O))
+/obj/item/stack/tile/light/attackby(obj/item/I, mob/user, params)
+	if(iscrowbar(I))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)
 		new/obj/item/stack/light_w(user.loc)
 
+	else
+		return ..()

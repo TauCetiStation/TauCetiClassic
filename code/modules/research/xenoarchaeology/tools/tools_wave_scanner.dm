@@ -132,11 +132,11 @@
 		add_fingerprint(usr)
 		M.put_in_hands(src)
 
-/obj/item/device/wave_scanner_backpack/attackby(obj/item/W, mob/user, params)
-	if(W == processor)
+/obj/item/device/wave_scanner_backpack/attackby(obj/item/I, mob/user, params)
+	if(I == processor)
 		remove_processor()
 	else
-		..()
+		return ..()
 
 /obj/item/device/wave_scanner_backpack/dropped(mob/user)
 	..()

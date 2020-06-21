@@ -43,6 +43,15 @@
 		return // we aren't an object on the ground so don't call parent
 	..()
 
+/obj/item/clothing/accessory/attackby(obj/item/I, mob/user, params)
+	if(attack_accessory(I, user, params))
+		return
+	return ..()
+
+/// Return TRUE if accessory should block attackby.
+/obj/item/clothing/accessory/proc/attack_accessory(obj/item/I, mob/user, params)
+	return FALSE
+
 /obj/item/clothing/accessory/tie
 	layer_priority = 0.1
 
@@ -234,17 +243,15 @@
 			"<span class='warning'>[user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>",
 			"<span class='warning'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
 
-/obj/item/clothing/accessory/holobadge/attackby(obj/item/O, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-
-	if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
-
+/obj/item/clothing/accessory/holobadge/attack_accessory(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		var/obj/item/weapon/card/id/id_card = null
+		user.SetNextMove(CLICK_CD_INTERACT)
 
-		if(istype(O, /obj/item/weapon/card/id))
-			id_card = O
+		if(istype(I, /obj/item/weapon/card/id))
+			id_card = I
 		else
-			var/obj/item/device/pda/pda = O
+			var/obj/item/device/pda/pda = I
 			id_card = pda.id
 
 		if(access_security in id_card.access || emagged)
@@ -254,8 +261,8 @@
 			desc = "This glowing blue badge marks [stored_name] as THE LAW."
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
-		return
-	..()
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/accessory/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
