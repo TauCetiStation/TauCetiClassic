@@ -65,11 +65,13 @@
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
+// select backpack type from preferances
 /datum/outfit/proc/preferance_back(mob/living/carbon/human/H)
-	if(back == PREFERANCE_BACKPACK_FORCE)
-		back = back_style[2]
-	else
-		back = back_style[H.backbag]
+	switch(back)
+		if(PREFERANCE_BACKPACK)
+			back = back_style[H.backbag]
+		if(PREFERANCE_BACKPACK_FORCE)
+			back = back_style[2]
 
 // replaces default human outfit in [slot] on [item_type]
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
