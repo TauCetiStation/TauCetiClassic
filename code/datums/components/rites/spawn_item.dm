@@ -27,6 +27,8 @@
 	invoke_effect = _invoke_effect
 	change_spawn_type = _change_spawn_type
 
+	src.tips = tips
+
 	var/datum/religion_rites/rite = parent
 	if(tips)
 		var/list/tips_to_add = list()

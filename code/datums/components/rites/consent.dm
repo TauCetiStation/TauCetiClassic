@@ -8,7 +8,8 @@
 
 	tip_text = "This ritual is performed only if the victim consents."
 
-/datum/component/rite/consent/Initialize(msg)
+/datum/component/rite/consent/Initialize(msg, tips = TRUE)
+	src.tips = tips
 	..()
 	consent_msg = msg
 	consent = def_consent
