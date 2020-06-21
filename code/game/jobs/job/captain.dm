@@ -20,7 +20,7 @@
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/chaplain, visualsOnly)
+	H.equipOutfit(/datum/outfit/job/captain, visualsOnly)
 
 	if(visualsOnly)
 		return
@@ -68,7 +68,7 @@
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/chaplain, visualsOnly)
+	H.equipOutfit(/datum/outfit/job/hop, visualsOnly)
 	if(visualsOnly)
 		return
 	return TRUE
