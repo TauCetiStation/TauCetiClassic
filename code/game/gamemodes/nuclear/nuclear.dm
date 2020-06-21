@@ -152,11 +152,10 @@
 		if(!leader_selected)
 			log_debug("Leader - [synd_mind]")
 			synd_mind.current.loc = synd_comm_spawn
+			equip_syndicate(synd_mind.current, 1)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
 			greet_syndicate(synd_mind, 0, 1)
-			equip_syndicate(synd_mind.current, 1)
-
 		else
 			log_debug("[synd_mind] - not a leader")
 			greet_syndicate(synd_mind)
