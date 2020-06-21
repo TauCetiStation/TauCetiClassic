@@ -271,6 +271,7 @@
 #include "code\datums\outfits\_defines.dm"
 #include "code\datums\outfits\nuclear.dm"
 #include "code\datums\outfits\outfit.dm"
+#include "code\datums\outfits\jobs\assistant.dm"
 #include "code\datums\outfits\jobs\cargo.dm"
 #include "code\datums\outfits\jobs\civilian.dm"
 #include "code\datums\outfits\jobs\command.dm"
