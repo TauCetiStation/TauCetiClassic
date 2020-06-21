@@ -167,8 +167,11 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+//---------------------------
 // Species Outfit
-
+// 
+// replace human clothes in [outfit] on species clothes
+//
 // called before pre_equip()
 // replaces default human outfit on species outfit
 /datum/outfit/proc/species_equip(mob/living/carbon/human/H, var/datum/outfit/O)
@@ -207,6 +210,7 @@
 	return
 
 // Species Outfit.
+//---------------------------
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
