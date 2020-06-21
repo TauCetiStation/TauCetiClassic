@@ -37,6 +37,7 @@
 	var/l_hand = null     /// Type path of item to go in left hand
 
 	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
+	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
@@ -56,9 +57,11 @@
 				/obj/item/weapon/tank/emergency_oxygen = /obj/item/weapon/tank/emergency_oxygen/engi
 			)
 
-	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
+	// (flavor_misc.dm)
+	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths... 
+	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
+	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
-	var/datum/sprite_accessory/undershirt = null  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 // replaces default human outfit in [slot] on [item_type] from replace_outfit
 /datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
 	switch(slot)
@@ -182,8 +185,21 @@
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H), SLOT_S_STORE, TRUE)
 
-	if(undershirt)
-		H.undershirt = initial(undershirt.name)
+	if(outfit_undershirt)
+		H.undershirt = undershirt_t.Find(outfit_undershirt)
+		H.update_body()
+	
+	if(outfit_underwear_m || outfit_underwear_f)
+		var/list/underwear_options
+		var/outfit_underwear
+		if(H.gender == MALE)
+			underwear_options = underwear_m
+			outfit_underwear = outfit_underwear_m
+		else
+			underwear_options = underwear_f
+			outfit_underwear = outfit_underwear_f
+		H.underwear = underwear_options.Find(outfit_underwear)
+		H.update_body()
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
