@@ -480,6 +480,7 @@
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/secbot/ed209(T, created_name, lasertag_color)
 				qdel(I)
+				qdel(src)
 				did_something = TRUE
 
 	if(!did_something)

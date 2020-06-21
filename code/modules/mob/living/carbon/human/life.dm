@@ -1583,14 +1583,12 @@
 			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
-		if(sightglassesmod)
-			sightglassesmod = "nightsight_glasses"
-		else
-			var/light_amount = 0
-			var/turf/T = get_turf(src)
-			light_amount = round(T.get_lumcount()*10)
-			if(light_amount > 1)
-				sightglassesmod = null
+		var/light_amount = 0
+		var/turf/T = get_turf(src)
+		light_amount = round(T.get_lumcount()*10)
+		if(light_amount < 1)
+			if(sightglassesmod)
+				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)

@@ -171,7 +171,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /* General ai_law functions */
 
-/datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
+/datum/ai_laws/proc/set_zeroth_law(law, law_borg = law)
 	src.zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg
