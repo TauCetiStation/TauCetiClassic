@@ -19,8 +19,6 @@
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
 	var/suit = null       /// Type path of item to go in suit slot	
-	var/back = null       /// Type path of item to go in back slot
-	var/belt = null       /// Type path of item to go in belt slot
 	var/gloves = null     /// Type path of item to go in gloves slot
 	var/shoes = null      /// Type path of item to go in shoes slot
 	var/head = null       /// Type path of item to go in head slot
@@ -30,20 +28,28 @@
 	var/l_ear = null      /// Type path of item to go in left ear slot
 	var/r_ear = null      /// Type path of item to go in right ear slot
 	var/glasses = null    /// Type path of item to go in the glasses slot
+
+	var/suit_store = null /// Type path of item to go in suit storage slot (make sure it's valid for that suit)
 	var/id = null         /// Type path of item to go in the idcard slot
+	var/belt = null       /// Type path of item to go in belt slot
+
+	var/l_hand = null     /// Type path of item to go in left hand
+	var/r_hand = null     /// Type path of item to go in the right hand
 	var/l_pocket = null   /// Type path of item for left pocket slot
 	var/r_pocket = null   /// Type path of item for right pocket slot
-	var/suit_store = null /// Type path of item to go in suit storage slot (make sure it's valid for that suit)
 
-	var/r_hand = null     /// Type path of item to go in the right hand
-	var/l_hand = null     /// Type path of item to go in left hand
+	var/l_hand_back = null     /// Type path of item to go in the backpack or in left hand, if no backpack
+	var/r_hand_back = null     /// Type path of item to go in the backpack or in right hand, if no backpack
+	var/l_pocket_back = null   /// Type path of item in the backpack or for left pocket slot
+	var/r_pocket_back = null   /// Type path of item in the backpack or for right pocket slot
+
+	var/back = null       /// Type path of item to go in back slot
+	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
 	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
-
-	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	/**
 	  * Survival box. 
@@ -237,6 +243,7 @@
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 		
 		if(back)
+			backpack_contents += list(l_pocket_back, r_pocket_back, l_hand_back, r_hand_back)
 			if(survival_box)
 				var/box = new /obj/item/weapon/storage/box/survival
 				var/list/survkit = H.species.survival_kit_items
@@ -261,6 +268,15 @@
 						number = 1
 					for(var/i in 1 to number)
 						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+			else
+				if(l_pocket_back)
+					H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
+				if(r_pocket_back)
+					H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
+				if(l_hand_back)
+					H.put_in_l_hand(new l_hand_back(H))
+				if(r_hand_back)
+					H.put_in_r_hand(new r_hand_back(H))
 
 	post_equip(H, visualsOnly)
 
@@ -272,9 +288,9 @@
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.imp_in = H
-				I.implanted = 1
-				H.update_icons()
+				I.inject(H)
+				if(istype(I, /obj/item/weapon/implant/mindshield/loyalty))
+					START_PROCESSING(SSobj, I)
 
 	H.update_body()
 	return TRUE
