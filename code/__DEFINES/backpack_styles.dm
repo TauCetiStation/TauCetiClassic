@@ -29,14 +29,6 @@
 	/obj/item/weapon/storage/backpack/satchel \
 )
 
-#define BACKPACK_STYLE_CARGO list( \
-	null, \
-	/obj/item/weapon/storage/backpack/industrial, \
-	/obj/item/weapon/storage/backpack/alt, \
-	/obj/item/weapon/storage/backpack/satchel/eng, \
-	/obj/item/weapon/storage/backpack/satchel \
-)
-
 #define BACKPACK_STYLE_RESEARCH list( \
 	null, \
 	/obj/item/weapon/storage/backpack/backpack_tox, \

@@ -17,8 +17,7 @@
 /datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
 		return FALSE
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
+	H.equipOutfit(/datum/outfit/job/chaplain, visualsOnly)
 
 	if(visualsOnly)
 		return
@@ -28,5 +27,4 @@
 
 	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), SLOT_BELT)
 	return TRUE

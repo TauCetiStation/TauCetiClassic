@@ -23,19 +23,7 @@
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/quartermaster(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/qm, visualsOnly)
 	return TRUE
 
 
@@ -55,15 +43,7 @@
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/cargo_tech, visualsOnly)
 	return TRUE
 
 
@@ -83,22 +63,7 @@
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/miner(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), SLOT_IN_BACKPACK)
-
+	H.equipOutfit(/datum/outfit/job/mining, visualsOnly)
 	return TRUE
 
 
@@ -126,16 +91,7 @@
 
 /datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/recycler(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/recyclervest/(H), SLOT_WEAR_SUIT)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/recycler, visualsOnly)
 	return TRUE
 
 //Food
@@ -169,22 +125,7 @@
 
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender(H), SLOT_W_UNIFORM)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/bar(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/bartender, visualsOnly)
 	return TRUE
 
 
@@ -213,14 +154,9 @@
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
+	H.equipOutfit(/datum/outfit/job/chef, visualsOnly)
 	if(visualsOnly)
 		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/chef(H), SLOT_BELT)
-
 	return TRUE
 
 
@@ -241,22 +177,7 @@
 
 /datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_hyd(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt/hyd(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/hyd(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics_fem(H), SLOT_W_UNIFORM)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics(H), SLOT_W_UNIFORM)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/botanist(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/hydro, visualsOnly)
 	return TRUE
 
 
@@ -276,14 +197,7 @@
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/janitor, visualsOnly)
 	return TRUE
 
 
@@ -306,22 +220,7 @@
 /datum/job/barber/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
 		return FALSE
-
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(H), SLOT_W_UNIFORM)
-		return
-
-	if(H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Barber")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(H), SLOT_W_UNIFORM)
-			if("Stylist")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), SLOT_W_UNIFORM)
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda/barber(H), SLOT_BELT)
-
+	H.equipOutfit(/datum/outfit/job/barber, visualsOnly)
 	return TRUE
 
 /datum/job/librarian
@@ -341,16 +240,7 @@
 
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), SLOT_L_HAND)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), SLOT_R_STORE)
-
+	H.equipOutfit(/datum/outfit/job/librarian, visualsOnly)
 	return TRUE
 
 
@@ -379,27 +269,7 @@
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/internalaffairs(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/internalaffairs(H), SLOT_WEAR_SUIT)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/big(H), SLOT_GLASSES)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase/centcomm(H), SLOT_L_HAND)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), SLOT_R_STORE)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_int(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), SLOT_BELT)
-
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
-	L.inject(H)
-	START_PROCESSING(SSobj, L)
+	H.equipOutfit(/datum/outfit/job/lawyer, visualsOnly)
 	return TRUE
 
 
@@ -419,21 +289,11 @@
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
+	H.equipOutfit(/datum/outfit/job/clown, visualsOnly)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), SLOT_IN_BACKPACK)
 	H.mutations.Add(CLUMSY)
 	return TRUE
 
@@ -453,28 +313,11 @@
 
 /datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/mime(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(H), SLOT_GLOVES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H), SLOT_WEAR_MASK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/red(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(H), SLOT_WEAR_SUIT)
+	H.equipOutfit(/datum/outfit/job/mime, visualsOnly)
 
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda/mime(H), SLOT_BELT)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), SLOT_L_STORE)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), SLOT_L_HAND)
-	else
-		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), SLOT_IN_BACKPACK)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), SLOT_IN_BACKPACK)
 	H.verbs += /client/proc/mimespeak
 	H.verbs += /client/proc/mimewall
 	H.mind.special_verbs += /client/proc/mimespeak
