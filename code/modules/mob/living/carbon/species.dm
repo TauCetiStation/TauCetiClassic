@@ -171,21 +171,29 @@
 
 // called before pre_equip()
 // replaces default human outfit on species outfit
-/datum/outfit/proc/species_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/proc/species_equip(mob/living/carbon/human/H, var/datum/outfit/O)
 	species_replace_outfit(H.species.replace_outfit)
-	switch(H.get_species())
-		if(HUMAN)
-			return
-		if(UNATHI)
-			unathi_equip(H)
-		if(TAJARAN)
-			tajaran_equip(H)
-		if(SKRELL)
-			skrell_equip(H)
-		if(VOX)
-			vox_equip(H)
+	H.species.call_species_equip_proc(H, O)
 	return
 
+
+// CALL_SPECIES_EQUIP_PROC PROCS
+/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return TRUE
+
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.unathi_equip(H)
+
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.tajaran_equip(H)
+
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.skrell_equip(H)
+
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.vox_equip(H)
+
+// SPECIES_EQUIP PROCS
 /datum/outfit/proc/unathi_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 

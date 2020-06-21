@@ -164,7 +164,7 @@
   */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	preferance_back(H)
-	species_equip(H, visualsOnly)
+	species_equip(H, src)
 	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
