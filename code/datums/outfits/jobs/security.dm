@@ -64,7 +64,6 @@
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/headset_sec
 
-	suit_store = /obj/item/weapon/handcuffs
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
 	

@@ -46,7 +46,7 @@
 	var/back = null       /// Type path of item to go in back slot
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
-	var/list/backpack_contents = null /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
+	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
 	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
@@ -243,7 +243,15 @@
 			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
 		
 		if(back)
-			backpack_contents += list(l_pocket_back, r_pocket_back, l_hand_back, r_hand_back)
+			if(l_pocket_back)
+				backpack_contents += l_pocket_back
+			if(r_pocket_back)
+				backpack_contents += r_pocket_back
+			if(l_hand_back)
+				backpack_contents += l_hand_back
+			if(r_hand_back)
+				backpack_contents += r_hand_back
+
 			if(survival_box)
 				var/box = new /obj/item/weapon/storage/box/survival
 				var/list/survkit = H.species.survival_kit_items
@@ -268,15 +276,15 @@
 						number = 1
 					for(var/i in 1 to number)
 						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
-			else
-				if(l_pocket_back)
-					H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
-				if(r_pocket_back)
-					H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
-				if(l_hand_back)
-					H.put_in_l_hand(new l_hand_back(H))
-				if(r_hand_back)
-					H.put_in_r_hand(new r_hand_back(H))
+		else
+			if(l_pocket_back)
+				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
+			if(r_pocket_back)
+				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
+			if(l_hand_back)
+				H.put_in_l_hand(new l_hand_back(H))
+			if(r_hand_back)
+				H.put_in_r_hand(new r_hand_back(H))
 
 	post_equip(H, visualsOnly)
 
