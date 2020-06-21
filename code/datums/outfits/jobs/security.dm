@@ -67,9 +67,9 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
 	
-	list/implants = list(/obj/item/weapon/implant/mindshield)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
-	list/back_style = BACKPACK_STYLE_SECURITY
+	back_style = BACKPACK_STYLE_SECURITY
 
 // FORENSIC OUTFIT
 /datum/outfit/job/forensic
@@ -98,6 +98,6 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	r_hand = /obj/item/weapon/book/manual/wiki/security_space_law
 
-	list/implants = list(/obj/item/weapon/implant/mindshield)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
-	list/back_style = BACKPACK_STYLE_SECURITY
+	back_style = BACKPACK_STYLE_SECURITY

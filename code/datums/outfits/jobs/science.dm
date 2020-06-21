@@ -9,7 +9,7 @@
 	belt = /obj/item/device/pda/heads/rd
 	l_ear = /obj/item/device/radio/headset/heads/rd
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH
 
 // SCIENTIST OUTFIT
 /datum/outfit/job/scientist
@@ -22,7 +22,7 @@
 	belt = /obj/item/device/pda/science
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH
 
 // XENOARCHAEOLOGIST OUTFIT
 /datum/outfit/job/xenoarchaeologist
@@ -35,7 +35,7 @@
 	belt = /obj/item/device/pda/science
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH
 
 // XENOBIOLOGIST OUTFIT
 /datum/outfit/job/xenobiologist
@@ -48,7 +48,7 @@
 	belt = /obj/item/device/pda/science
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH
 
 // ROBOTICIST OUTFIT
 /datum/outfit/job/roboticist
@@ -62,7 +62,7 @@
 	belt = /obj/item/device/pda/roboticist
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH
 
 // RESEARCH ASSISTANT OUTFIT
 /datum/outfit/job/research_assistant
@@ -74,4 +74,4 @@
 	belt = /obj/item/device/pda
 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	list/back_style = BACKPACK_STYLE_RESEARCH
+	back_style = BACKPACK_STYLE_RESEARCH

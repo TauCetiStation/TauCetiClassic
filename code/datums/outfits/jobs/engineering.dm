@@ -11,7 +11,7 @@
 
 	l_pocket = /obj/item/device/pda/heads/ce
 
-	list/back_style = BACKPACK_STYLE_ENGINEERING
+	back_style = BACKPACK_STYLE_ENGINEERING
 
 // ENGINEER OUTFIT
 /datum/outfit/job/engineer
@@ -26,7 +26,7 @@
 	l_pocket = /obj/item/device/pda/engineering
 	r_pocket = /obj/item/device/t_scanner
 
-	list/back_style = BACKPACK_STYLE_ENGINEERING
+	back_style = BACKPACK_STYLE_ENGINEERING
 
 /datum/outfit/job/engineer/pre_equip()
 	if(prob(75))
@@ -45,7 +45,7 @@
 
 	l_pocket = /obj/item/device/pda/atmos
 
-	list/back_style = BACKPACK_STYLE_ENGINEERING
+	back_style = BACKPACK_STYLE_ENGINEERING
 
 // TECHNICAL_ASSISTANT OUTFIT
 /datum/outfit/job/technical_assistant
@@ -56,4 +56,4 @@
 	belt = /obj/item/device/pda
 	l_ear = /obj/item/device/radio/headset/headset_eng
 
-	list/back_style = BACKPACK_STYLE_ENGINEERING
+	back_style = BACKPACK_STYLE_ENGINEERING
