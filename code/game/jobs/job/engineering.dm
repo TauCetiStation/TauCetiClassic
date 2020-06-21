@@ -33,23 +33,7 @@
 
 /datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), SLOT_GLOVES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/ce(H), SLOT_L_EAR)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/ce(H), SLOT_L_STORE)
-
+	H.equipOutfit(/datum/outfit/job/chief_engineer, visualsOnly)
 	return TRUE
 
 
@@ -75,25 +59,7 @@
 
 /datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), SLOT_BELT)
-	if(prob(75))
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow(H), SLOT_HEAD)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow/visor(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), SLOT_R_STORE)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/engineering(H), SLOT_L_STORE)
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
-
+	H.equipOutfit(/datum/outfit/job/engineer, visualsOnly)
 	return TRUE
 
 
@@ -118,21 +84,7 @@
 
 /datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/atmos(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(H), SLOT_BELT)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
-
+	H.equipOutfit(/datum/outfit/job/atmos, visualsOnly)
 	return TRUE
 
 
@@ -152,20 +104,7 @@
 /datum/job/technical_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
 		return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), SLOT_SHOES)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/pda, SLOT_BELT)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
-
+	H.equipOutfit(/datum/outfit/job/technical_assistant, visualsOnly)
 	return TRUE
 
 
