@@ -77,3 +77,27 @@
 	/obj/item/weapon/storage/backpack/satchel/norm, \
 	/obj/item/weapon/storage/backpack/satchel \
 )
+
+#define BACKPACK_STYLE_CHEMIST list( \
+	null, \
+	/obj/item/weapon/storage/backpack/backpack_chem, \
+	/obj/item/weapon/storage/backpack/alt/chem, \
+	/obj/item/weapon/storage/backpack/satchel/chem, \
+	/obj/item/weapon/storage/backpack/satchel \
+)
+
+#define BACKPACK_STYLE_GENETICIST list( \
+	null, \
+	/obj/item/weapon/storage/backpack/backpack_gen, \
+	/obj/item/weapon/storage/backpack/alt/gen, \
+	/obj/item/weapon/storage/backpack/satchel/gen, \
+	/obj/item/weapon/storage/backpack/satchel \
+)
+
+#define BACKPACK_STYLE_VIROLOGIST list( \
+	null, \
+	/obj/item/weapon/storage/backpack/backpack_vir, \
+	/obj/item/weapon/storage/backpack/alt/vir, \
+	/obj/item/weapon/storage/backpack/satchel/vir, \
+	/obj/item/weapon/storage/backpack/satchel \
+)

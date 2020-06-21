@@ -273,6 +273,7 @@
 #include "code\datums\outfits\outfit.dm"
 #include "code\datums\outfits\jobs\engineering.dm"
 #include "code\datums\outfits\jobs\job.dm"
+#include "code\datums\outfits\jobs\medical.dm"
 #include "code\datums\outfits\jobs\science.dm"
 #include "code\datums\outfits\jobs\security.dm"
 #include "code\datums\spells\area_teleport.dm"
