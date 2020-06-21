@@ -216,7 +216,7 @@
 			var/box = new /obj/item/weapon/storage/box/survival
 			var/list/survkit = H.species.survival_kit_items
 			if(survival_box == ADVANCED_SURVIVAL_KIT)
-				for(var/A in adv_survkkit)	
+				for(var/A in adv_survkkit)
 					survkit[adv_survkkit[A]] = survkit[A]
 					survkit[A] = 0
 			for(var/item_path in survkit)
@@ -274,6 +274,8 @@
 		H.wear_suit.add_fingerprint(H,1)
 	if(H.wear_mask)
 		H.wear_mask.add_fingerprint(H,1)
+	if(H.neck)
+		H.neck.add_fingerprint(H,1)
 	if(H.head)
 		H.head.add_fingerprint(H,1)
 	if(H.shoes)

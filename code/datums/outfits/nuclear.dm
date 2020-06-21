@@ -35,8 +35,7 @@
 			back = /obj/item/weapon/storage/backpack/satchel/norm
 		if(5)
 			back = /obj/item/weapon/storage/backpack/satchel
-	
-	
+
 /datum/outfit/nuclear/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)
 
