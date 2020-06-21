@@ -175,10 +175,19 @@
 	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
+	var/obj/item/clothing/under/U
 	if(H.gender == FEMALE && uniform_f)
-		H.equip_to_slot_or_del(new uniform_f(H), SLOT_W_UNIFORM, TRUE)
+		U = new uniform_f(H)
 	else if(uniform)
-		H.equip_to_slot_or_del(new uniform(H), SLOT_W_UNIFORM, TRUE)
+		U = new uniform(H)
+		if(accessory)
+			var/obj/item/clothing/accessory/A = new accessory
+			if(U.can_attach_accessory(A))
+				U.accessories += A
+				A.on_attached(U, H, TRUE)
+			else
+				qdel(A)
+		H.equip_to_slot_or_del(U, SLOT_W_UNIFORM, TRUE)
 	if(suit)
 		H.equip_to_slot_or_del(new suit(H), SLOT_WEAR_SUIT, TRUE)
 	if(back)
@@ -221,15 +230,6 @@
 			outfit_underwear = outfit_underwear_f
 		H.underwear = underwear_options.Find(outfit_underwear)
 		H.update_body()
-
-	if(accessory)
-		var/obj/item/clothing/accessory/A = new accessory
-		var/obj/item/clothing/under/U = H.w_uniform
-		if(U.can_attach_accessory(A))
-			U.accessories += A
-			A.on_attached(U, H, TRUE)
-		else
-			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
