@@ -9,8 +9,11 @@
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
 		return FALSE
-	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
-		return FALSE
+	if(ishuman(mind.current))
+		if((mind.assigned_role in list("Captain", "Chaplain")))
+			return FALSE
+		if(mind.current.get_species() == GOLEM)
+			return FALSE
 	if(ismindshielded(mind.current))
 		return FALSE
 	return TRUE
