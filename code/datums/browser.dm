@@ -1,5 +1,5 @@
 /datum/browser
-	var/mob/user
+	var/client/user
 	var/title
 	var/window_id // window_id is used as the window name for browse and onclose
 	var/width = 0
@@ -16,8 +16,12 @@
 	var/content = ""
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
+	if(ismob(nuser))
+		var/mob/M = nuser
+		nuser = M.client
 
 	user = nuser
+	LAZYSET(user.browsers, nwindow_id, src)
 	window_id = nwindow_id
 	if (ntitle)
 		title = ntitle
@@ -31,6 +35,11 @@
 		theme = ntheme
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
+
+/datum/browser/Destroy()
+	user.browsers -= window_id
+	UNSETEMPTY(user.browsers)
+	return ..()
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -68,7 +77,7 @@
 
 	//should be first
 	head_content += "<script type='text/javascript' src='error_handler.js'></script>"
-	head_content += "<script type='text/javascript'>var triggerError = attachErrorHandler('browser', true);</script>"	
+	head_content += "<script type='text/javascript'>var triggerError = attachErrorHandler('browser', true);</script>"
 
 	for (var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
@@ -204,7 +213,7 @@
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href, href_list)
-	if (href_list["close"] || !user || !user.client)
+	if (href_list["close"] || !user)
 		opentime = 0
 		return
 	if (href_list["button"])
@@ -220,21 +229,20 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(mob/User, Message, Title, Button1 = "Ok", Button2, Button3, StealFocus = TRUE, Timeout = 6000, list/values, inputtype = "checkbox", width, height, slidecolor)
-	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
-			User = C.mob
-		else
-			return
+/proc/popup(user, message, title)
+	var/datum/browser/P = new(user, title, title)
+	P.set_content(message)
+	P.open()
+
+/proc/presentpicker(User, Message, Title, Button1 = "Ok", Button2, Button3, StealFocus = TRUE, Timeout = 6000, list/values, inputtype = "checkbox", width, height, slidecolor)
 	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype, width, height, slidecolor)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
-	if (!User || !(bitfield in global.bitfields))
+/proc/input_bitfield(User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
+	if(!(bitfield in global.bitfields))
 		return
 	var/list/pickerlist = list()
 	for (var/i in global.bitfields[bitfield])
@@ -245,6 +253,7 @@
 			pickerlist += list(list("checked" = 1, "value" = global.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
 			pickerlist += list(list("checked" = 0, "value" = global.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
+
 	var/list/result = presentpicker(User, "", title, Button1 = "Save", Button2 = "Cancel", Timeout = FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
@@ -288,8 +297,14 @@
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
 // Otherwise, the user mob's machine var will be reset directly.
 //
-/proc/onclose(mob/user, windowid, atom/ref=null)
-	if(!user.client) return
+/proc/onclose(user, windowid, atom/ref=null)
+	if(ismob(user))
+		var/mob/M = user
+		user = M.client
+
+	if(!user)
+		return
+
 	var/param = "null"
 	if(ref)
 		param = "\ref[ref]"
