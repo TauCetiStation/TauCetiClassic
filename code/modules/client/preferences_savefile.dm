@@ -4,6 +4,12 @@
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 #define SAVEFILE_VERSION_MAX 30
 
+// !!!
+//For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
+//When change bump also SAVEFILE_VERSION_MAX
+#define SAVEFILE_VERSION_SPECIES_JOBS 30
+#define SAVEFILE_VERSION_QUIRKS 30
+
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -180,14 +186,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-	if(current_version < 30)
+/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
+
+	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
 		if(species != HUMAN)
 			for(var/datum/job/job in SSjob.occupations)
 				if(!job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
 
-	if(current_version < 30)
+	if(current_version < SAVEFILE_VERSION_QUIRKS)
 		for(var/quirk_name in all_quirks)
 			// If the quirk isn't even hypothetically allowed, pref can't have it.
 			// If IsAllowedQuirk() for some reason ever becomes more computationally
@@ -404,6 +412,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+		repetitive_updates_character(current_version, S)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
