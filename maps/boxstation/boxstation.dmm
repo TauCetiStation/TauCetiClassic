@@ -64078,7 +64078,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
