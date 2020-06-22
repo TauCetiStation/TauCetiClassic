@@ -77,6 +77,8 @@ Made by Xhuis
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
+	restricted_species_flags = list(IS_SYNTHETIC)
+
 /datum/game_mode/shadowling/announce()
 	to_chat(world, "<b>The current game mode is - Shadowling!</b>")
 	to_chat(world, "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>")
