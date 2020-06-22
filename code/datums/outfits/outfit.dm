@@ -180,6 +180,7 @@
 		U = new uniform_f(H)
 	else if(uniform)
 		U = new uniform(H)
+	if(U)
 		if(accessory)
 			var/obj/item/clothing/accessory/A = new accessory
 			if(U.can_attach_accessory(A))
