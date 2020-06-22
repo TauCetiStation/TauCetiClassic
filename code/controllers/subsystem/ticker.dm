@@ -306,7 +306,7 @@ var/datum/subsystem/ticker/ticker
 			M.client.screen += cinematic	//show every client the cinematic
 		if(isliving(M))
 			var/mob/living/L = M
-			L.SetSleeping(10, TRUE, TRUE)
+			L.SetSleeping(1 MINUTE, TRUE, TRUE)
 
 	switch(station_missed)
 		if(0)	//station was destroyed
@@ -346,16 +346,17 @@ var/datum/subsystem/ticker/ticker
 		flick(explosion,cinematic)
 	if(summary)
 		cinematic.icon_state = summary
-	spawn(10 SECONDS)
-		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.screen -= cinematic
-			if(isliving(M))
-				var/mob/living/L = M
-				L.SetSleeping(0, TRUE, TRUE)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
+	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
 
+/datum/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
+	for(var/mob/M in mob_list)
+		if(M.client)
+			M.client.screen -= cinematic
+		if(isliving(M))
+			var/mob/living/L = M
+			L.SetSleeping(0, TRUE, TRUE)
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
