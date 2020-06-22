@@ -113,6 +113,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/list/all_quirks = list()
 	var/list/character_quirks = list()
 
+	var/list/allowed_quirks = list()
+
 	// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
