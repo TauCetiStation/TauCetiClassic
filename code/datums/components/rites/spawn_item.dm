@@ -19,7 +19,7 @@
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tips = TRUE)
+/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tip_text)
 	spawn_type = _spawn_type
 	count_items = _count_items
 	sacrifice_type = _sacrifice_type
@@ -27,10 +27,11 @@
 	invoke_effect = _invoke_effect
 	change_spawn_type = _change_spawn_type
 
-	src.tips = tips
-
-	var/datum/religion_rites/rite = parent
-	if(tips)
+	if(tip_text && tip_text != "")
+		src.tip_text = tip_text
+		..()
+	else
+		var/datum/religion_rites/rite = parent
 		var/list/tips_to_add = list()
 		if(sacrifice_type)
 			var/obj/item/item = sacrifice_type
