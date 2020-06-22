@@ -170,7 +170,8 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target) || target.get_species() == IPC)
+		var/datum/species/S = all_species[target.get_species()]
+		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -582,7 +583,8 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target) || target.get_species() == IPC)
+		var/datum/species/S = all_species[target.get_species()]
+		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return

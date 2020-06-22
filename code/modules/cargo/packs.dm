@@ -116,11 +116,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/melee/baton,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
-	cost = 3000
+	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Weapons crate"
 	access = access_brig
@@ -128,9 +126,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp)
+	contains = list(/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -288,8 +286,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/r4046
 	name = "40x46mm rubber grenades"
-	contains = list(/obj/item/weapon/storage/box/r4046,
-					/obj/item/weapon/storage/box/r4046)
+	contains = list(/obj/item/weapon/storage/box/r4046/rubber,
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "40x46mm rubber grenades"
@@ -299,7 +297,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/m79,
-					/obj/item/weapon/storage/box/r4046)
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "m79 grenade launcher"

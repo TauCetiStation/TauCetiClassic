@@ -270,7 +270,7 @@
 	icon_state = "aspect_obscure"
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.7 - F.get_lumcount()) * power * 0.05
+	return (0.6 - F.get_lumcount()) * power * 0.05
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
@@ -280,7 +280,7 @@
 	icon_state = "aspect_light"
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.3) * power * 0.03
+	return (F.get_lumcount() - 0.4) * power * 0.03
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
