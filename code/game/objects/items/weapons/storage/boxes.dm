@@ -453,18 +453,30 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
-	if(istype(W) && !W.lit && !W.burnt)
-		if (prob (20))
+/obj/item/weapon/storage/box/matches/atom_init()
+	. = ..()
+	for(var/i in 1 to storage_slots)
+		new /obj/item/weapon/match(src)
+
+/obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
+		if(M.lit || M.burnt)
+			return
+
+		if(prob(20))
 			playsound(src, 'sound/items/matchstick_hit.ogg', VOL_EFFECTS_MASTER, 20)
 			return
+
 		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
-		W.lit = 1
-		W.damtype = "burn"
-		W.icon_state = "match_lit"
-		START_PROCESSING(SSobj, W)
-	W.update_icon()
-	return
+		M.lit = TRUE
+		M.damtype = "burn"
+		M.icon_state = "match_lit"
+		START_PROCESSING(SSobj, M)
+		M.update_icon()
+
+	else
+		return ..()
 
 //Autoinjectors
 /obj/item/weapon/storage/box/autoinjectors
