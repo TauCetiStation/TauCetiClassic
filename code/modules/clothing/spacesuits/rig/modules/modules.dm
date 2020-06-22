@@ -126,6 +126,7 @@
 			damage = MODULE_NO_DAMAGE
 			to_chat(user, "You mend the damage to [src] with [cable].")
 		return
+
 	return ..()
 
 // Called when the module is installed into a suit.

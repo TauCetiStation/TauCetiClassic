@@ -1409,6 +1409,10 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 
+		if(blinded)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+
 		if(healths)
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
@@ -1562,6 +1566,9 @@
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
+	if(blinded)
+		set_EyesVision("greyscale")
+		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.active)
 		if(istype(glasses, /obj/item/clothing/glasses/meson))
@@ -1576,14 +1583,12 @@
 			sightglassesmod = "greyscale"
 
 	if(species.nighteyes)
-		if(sightglassesmod)
-			sightglassesmod = "nightsight_glasses"
-		else
-			var/light_amount = 0
-			var/turf/T = get_turf(src)
-			light_amount = round(T.get_lumcount()*10)
-			if(light_amount > 1)
-				sightglassesmod = null
+		var/light_amount = 0
+		var/turf/T = get_turf(src)
+		light_amount = round(T.get_lumcount()*10)
+		if(light_amount < 1)
+			if(sightglassesmod)
+				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
@@ -1739,7 +1744,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_CPB))
 		return PULSE_NORM
-		
+
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
 	if(IO.heart_status == HEART_FAILURE)
 		return PULSE_NONE

@@ -113,7 +113,6 @@
 	return TRUE
 
 /mob/living/carbon/xenomorph/facehugger/Grab(atom/movable/target, force_state, show_warnings = TRUE)
-	to_chat(world, "Grabbing and shit")
 	// See facehugger/canGrab()
 	var/mob/living/carbon/C = target
 
