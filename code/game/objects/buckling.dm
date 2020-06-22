@@ -15,9 +15,8 @@
 		user_unbuckle_mob(user)
 
 /atom/movable/attack_robot(mob/living/user)
-	if(Adjacent(user))
-		if(user_unbuckle_mob(user))
-			return
+	if(Adjacent(user) && user_unbuckle_mob(user))
+		return
 	return ..()
 	
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
