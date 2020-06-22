@@ -350,7 +350,7 @@ var/datum/subsystem/ticker/ticker
 		for(var/mob/M in mob_list)
 			if(M.client)
 				M.client.screen -= cinematic
-			if(istype(M, /mob/living))
+			if(isliving(M))
 				var/mob/living/L = M
 				L.SetSleeping(0, TRUE, TRUE)
 		if(cinematic)
