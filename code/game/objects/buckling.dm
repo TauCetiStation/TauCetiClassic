@@ -15,7 +15,7 @@
 		user_unbuckle_mob(user)
 
 /atom/movable/attack_robot(mob/living/user)
-	if(Adjacent(user) && can_buckle && buckled_mob)
+	if(Adjacent(user) && buckled_mob)
 		if(user_unbuckle_mob(user))
 			return
 	. = ..()
