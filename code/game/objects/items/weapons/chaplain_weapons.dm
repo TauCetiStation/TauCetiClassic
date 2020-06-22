@@ -33,14 +33,15 @@
 			to_chat(user, "<span class='warning'>The stars are not in position for this tribute. Await round start.</span>")
 			return
 
-		tried_replacing = TRUE
-
 		var/list/choices = list()
+		var/list/nullrod_list = list()
 		for(var/null_type in typesof(/obj/item/weapon/nullrod))
 			var/obj/item/weapon/nullrod/N = null_type
 			choices[initial(N.name)] = N
+			nullrod_list[initial(N.name)] = image(icon = initial(N.icon), icon_state = initial(N.icon_state))
 
-		var/choice = input(user, "Choose your nullrod type.", "Nullrod choice") as null|anything in choices
+		var/choice = show_radial_menu(user, src, nullrod_list, require_near = TRUE, tooltips = TRUE)
+
 		if(choice && Adjacent(user))
 			qdel(src)
 			var/chosen_type = choices[choice]
@@ -163,20 +164,24 @@
 	if(user)
 		hide_god(user)
 
-/obj/item/weapon/nullrod/staff/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
+/obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(istype(W, /obj/item/device/soulstone)) //mb, the only way to pull out god
-			var/obj/item/device/soulstone/S = W
+		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
+			var/obj/item/device/soulstone/S = I
 			if(S.imprinted == "empty")
 				S.imprinted = brainmob.name
 				S.transfer_soul("SHADE", brainmob, user)
-		else if(istype(W, /obj/item/weapon/storage/bible)) //force kick god from staff
+
+		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
 				next_apply[brainmob.ckey] = world.time + 10 MINUTES
 				qdel(brainmob)
 				searching = FALSE
 				icon_state = "talking_staff"
 				visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
+
+	else
+		return ..()
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)

@@ -132,8 +132,9 @@
 	else
 		return FALSE
 
-/obj/item/tape/attackby(obj/item/weapon/W, mob/user)
-	breaktape(W, user, FALSE)
+/obj/item/tape/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	breaktape(I, user, FALSE)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 /obj/item/tape/attack_hand(mob/user)

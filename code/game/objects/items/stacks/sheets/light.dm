@@ -11,19 +11,21 @@
 	flags = CONDUCT
 	max_amount = 60
 
-/obj/item/stack/light_w/attackby(obj/item/O, mob/user)
-	..()
-	if(iswirecutter(O))
+/obj/item/stack/light_w/attackby(obj/item/I, mob/user, params)
+	if(iswirecutter(I))
 		if(!use(1))
 			return
 		new/obj/item/stack/cable_coil/random(user.loc, 5)
 		new/obj/item/stack/sheet/glass(user.loc)
 
-	if(istype(O,/obj/item/stack/sheet/metal))
+	else if(istype(I,/obj/item/stack/sheet/metal))
 		var/list/resources_to_use = list()
-		resources_to_use[O] = 1
+		resources_to_use[I] = 1
 		resources_to_use[src] = 1
 		if(!use_multi(user, resources_to_use))
 			return
 
 		new/obj/item/stack/tile/light(user.loc)
+
+	else
+		return ..()

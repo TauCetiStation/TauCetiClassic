@@ -299,3 +299,8 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
+
+/proc/popup(user, message, title)
+	var/datum/browser/P = new(user, title, title)
+	P.set_content(message)
+	P.open()

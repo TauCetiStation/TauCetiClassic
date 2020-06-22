@@ -213,10 +213,9 @@
 	m_amt = 100
 	w_amt = 2000
 
-/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(ismultitool(I) && istype(src.loc,/turf))
-		new/obj/machinery/am_shielding(src.loc)
+/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I) && istype(loc, /turf))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return
-	..()
-	return
+	return ..()

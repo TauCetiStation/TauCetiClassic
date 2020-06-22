@@ -17,10 +17,9 @@
 	var/datum/construction/construct
 	flags = CONDUCT
 
-/obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user)
-	if(!construct || !construct.action(W, user))
-		..()
-	return
+/obj/item/mecha_parts/chassis/attackby(obj/item/I, mob/user, params)
+	if(!construct || !construct.action(I, user))
+		return ..()
 
 /obj/item/mecha_parts/chassis/attack_hand()
 	return

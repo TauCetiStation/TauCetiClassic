@@ -66,7 +66,7 @@
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(buckled_mob)
-			user_unbuckle_mob()
+			user_unbuckle_mob(user)
 		else
 			visible_message("[user] collapses \the [src.name].")
 			new type_roller(get_turf(src))
@@ -98,15 +98,15 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/roller/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/roller_holder))
-		var/obj/item/roller_holder/RH = W
+/obj/item/roller/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/roller_holder))
+		var/obj/item/roller_holder/RH = I
 		if(!RH.held)
 			to_chat(user, "<span class='notice'>You collect the roller bed.</span>")
-			src.loc = RH
+			forceMove(RH)
 			RH.held = src
 			return
-	..()
+	return ..()
 
 /obj/item/roller_holder
 	name = "roller bed rack"
