@@ -7,7 +7,7 @@
 
 	back_style = BACKPACK_STYLE_COMMON
 
-/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Lawyer")
