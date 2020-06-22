@@ -136,18 +136,17 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 8
+	max_ammo = 12
 
 /obj/item/ammo_box/magazine/m9mm_2/rubber
 	name = "magazine (9mm rubber)"
+	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
+	caliber = "9mmr"
 
 /obj/item/ammo_box/magazine/m9mm_2/update_icon()
 	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),max_ammo*0.5)]"
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
@@ -243,18 +242,18 @@
 
 /obj/item/ammo_box/magazine/c45m/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/c45r
 	name = "magazine (.45 rubber)"
-	icon_state = "45"
+	icon_state = "45r"
 	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45"
+	caliber = ".45r"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "Mac-10 magazine (9mm)"
