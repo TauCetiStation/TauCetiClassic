@@ -63,6 +63,7 @@
 	domutation(gene, M, connected, flags)
 
 
+// This proc is highly unsafe. It contains nochecks concerning whether M can have a gene activated. Please don't use directly.
 /proc/domutation(datum/dna/gene/gene, mob/living/M, connected=null, flags=0, forced=1)
 	if(!gene || !istype(gene))
 		return FALSE
