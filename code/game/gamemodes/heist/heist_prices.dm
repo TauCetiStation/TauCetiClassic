@@ -50,7 +50,7 @@
 /obj/item/projectile/bullet/price = 50
 /obj/item/projectile/bullet/a762/price = 211
 /obj/item/projectile/bullet/chameleon/price = 4
-/obj/item/projectile/bullet/grenade/r4046/price = 427
+/obj/item/projectile/bullet/grenade/r4046/rubber/price = 427
 /obj/item/projectile/bullet/gyro/price = 175
 /obj/item/projectile/bullet/heavy/a145/price = 708
 /obj/item/projectile/bullet/incendiary/price = 522
