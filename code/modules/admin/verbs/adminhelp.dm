@@ -130,7 +130,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help
 	var/id
 	var/name
-	var/stat_name // name that is displayed in stat panel (because of byond until 513 unicode).
 	var/state = AHELP_ACTIVE
 
 	var/opened_at // ticks
@@ -153,8 +152,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 //msg is the title of the ticket: usually the ahelp text
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
-	//clean the input msg
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -164,7 +161,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	opened_at_server = world.timeofday
 
 	name = msg
-	stat_name = sanitize_stat(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -435,19 +431,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	popup.set_content(dat.Join())
 	popup.open()
 
-//takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
-/datum/admin_help/proc/sanitize_stat(msg)//todo: 513
-	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
-	var/string = ""
-	for (var/i in 1 to length(msg))
-		string += "&#[text2ascii(copytext(msg,i,i+1))];"
-	return string
-
 /datum/admin_help/proc/Retitle()
 	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null)
 	if(new_title)
 		name = new_title
-		stat_name = sanitize_stat(new_title)
 		//not saying the original name cause it could be a long ass message
 		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_admin(usr)]"
 		message_admins(msg)
@@ -486,7 +473,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	. = ..()
 
 /obj/effect/statclick/ahelp/update()
-	return ..(ahelp_datum.stat_name)
+	return ..(ahelp_datum.name)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()

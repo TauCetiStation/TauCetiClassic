@@ -2949,7 +2949,7 @@
 	// player info stuff
 
 	if(href_list["add_player_info"])
-		var/key = href_list["add_player_info"]
+		var/key = ckey(href_list["add_player_info"])
 		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
 		if(!add) return
 
@@ -2957,14 +2957,14 @@
 		show_player_info(key)
 
 	if(href_list["remove_player_info"])
-		var/key = href_list["remove_player_info"]
+		var/key = ckey(href_list["remove_player_info"])
 		var/index = text2num(href_list["remove_index"])
 
 		notes_del(key, index, usr.client)
 		show_player_info(key)
 
 	if(href_list["notes"])
-		var/ckey = href_list["ckey"]
+		var/ckey = ckey(href_list["ckey"])
 		if(!ckey)
 			var/mob/M = locate(href_list["mob"])
 			if(ismob(M))

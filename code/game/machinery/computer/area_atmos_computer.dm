@@ -153,7 +153,7 @@
 		if(A2 && A2 == A)
 			connectedscrubbers += scrubber
 
-	if(!LAZYLEN(connectedscrubbers))
+	if(!length(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
 	src.updateUsrDialog()

@@ -1197,21 +1197,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
 	if(new_facial)
-		r_facial = hex2num(copytext(new_facial, 2, 4))
-		g_facial = hex2num(copytext(new_facial, 4, 6))
-		b_facial = hex2num(copytext(new_facial, 6, 8))
+		r_facial = HEX_VAL_RED(new_facial)
+		g_facial = HEX_VAL_GREEN(new_facial)
+		b_facial = HEX_VAL_BLUE(new_facial)
 
 	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
 	if(new_facial)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
+		r_hair = HEX_VAL_RED(new_hair)
+		g_hair = HEX_VAL_GREEN(new_hair)
+		b_hair = HEX_VAL_BLUE(new_hair)
 
 	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
 	if(new_eyes)
-		r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		r_eyes = HEX_VAL_RED(new_eyes)
+		g_eyes = HEX_VAL_GREEN(new_eyes)
+		b_eyes = HEX_VAL_BLUE(new_eyes)
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
 
@@ -1299,11 +1299,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(isnull(target))
 		return
 
-	var/say = input ("What do you wish to say")
+	var/say = sanitize(input("What do you wish to say"))
 	if(!say)
 		return
-	else
-		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(REMOTE_TALK in T.mutations)
 		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
@@ -1534,9 +1532,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species.base_color && default_colour)
 		//Apply colour.
-		r_skin = hex2num(copytext(species.base_color,2,4))
-		g_skin = hex2num(copytext(species.base_color,4,6))
-		b_skin = hex2num(copytext(species.base_color,6,8))
+		r_skin = HEX_VAL_RED(species.base_color)
+		g_skin = HEX_VAL_GREEN(species.base_color)
+		b_skin = HEX_VAL_BLUE(species.base_color)
 	else
 		r_skin = 0
 		g_skin = 0
@@ -1619,14 +1617,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/max_length = bloody_hands * 30 //tweeter style
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), MAX_MESSAGE_LEN)
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 		var/used_blood_amount = round(length(message) / 30, 1)
 		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
 
-		if (length(message) > max_length)
-			message += "-"//Should crop any letters? No?
+		if (length_char(message) > max_length)
+			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
@@ -1917,9 +1915,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(SA.do_colouration)
 			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 			if(new_hair)
-				r_hair = hex2num(copytext(new_hair, 2, 4))
-				g_hair = hex2num(copytext(new_hair, 4, 6))
-				b_hair = hex2num(copytext(new_hair, 6, 8))
+				r_hair = HEX_VAL_RED(new_hair)
+				g_hair = HEX_VAL_GREEN(new_hair)
+				b_hair = HEX_VAL_BLUE(new_hair)
 
 		h_style = new_h_style
 	if(h_style == "IPC off screen")

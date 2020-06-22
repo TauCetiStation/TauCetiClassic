@@ -122,10 +122,10 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (copytext(message, 1, 2) == "*")
+	if (message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)

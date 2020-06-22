@@ -292,7 +292,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(mind && mind.current && can_reenter_corpse))
 		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
-	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
 	mind.current.key = key
@@ -627,12 +627,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_length = 50
 
-	var/message = sanitize_safe(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 
-		if (length(message) > max_length)
-			message += "-"//Should crop any letters? No?
+		if (length_char(message) > max_length)
+			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)

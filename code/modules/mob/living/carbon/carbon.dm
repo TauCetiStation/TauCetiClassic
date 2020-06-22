@@ -858,7 +858,7 @@
 							internalsound = 'sound/misc/riginternalon.ogg'
 					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 
-					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
+					if(ITEM.air_contents && length(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"
 						for(var/G in ITEM.air_contents.gas)
 							gas_log_string += " - [G]=[ITEM.air_contents.gas[G]]"

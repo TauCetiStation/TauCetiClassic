@@ -502,7 +502,7 @@
 
 	else if (href_list["memory_edit"])
 		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
-		if (new_memo)
+		if (!new_memo)
 			return
 		memory = new_memo
 
@@ -530,9 +530,7 @@
 		switch (new_obj_type)
 			if ("assassinate","protect","debrain", "dehead", "harm", "brig")
 				//To determine what to name the objective in explanation text.
-				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-				var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+				var/objective_type = "[capitalize(new_obj_type)]"
 
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)

@@ -17,6 +17,9 @@
 
 	message =  sanitize(message)
 
+	if(!message)
+		return
+
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return
@@ -27,7 +30,7 @@
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
@@ -67,7 +70,7 @@
 			return
 
 	if (has_lang_prefix)
-		message = copytext(message,2+length(speaking.key))
+		message = copytext(message,2+length_char(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
@@ -98,7 +101,7 @@
 	if(iszombie(src))
 		message = zombie_talk(message)
 
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 	if (speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
@@ -274,7 +277,7 @@
 
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)

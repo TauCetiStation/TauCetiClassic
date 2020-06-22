@@ -248,28 +248,6 @@
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
 
-/proc/zombie_talk(var/message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len)
-		message_list.Insert(insertpos, "[pick("МОЗГИ", "Мозги", "Моозгиии", "МОООЗГИИИИ", "БОЛЬНО", "БОЛЬ", "ПОМОГИ", "РАААА", "АААА", "АРРХ", "ОТКРОЙТЕ", "ОТКРОЙ")]...")
-
-	for(var/i = 1, i <= message_list.len, i++)
-		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
-			message_list[i] = message_list[i] + "..."
-
-		if(prob(60))
-			message_list[i] = stutter(message_list[i])
-
-		message_list[i] = stars(message_list[i], 80)
-
-		if(prob(60))
-			message_list[i] = slur(message_list[i])
-
-	return jointext(message_list, " ")
-
 /mob/living/carbon/human/proc/zombie_movement_delay()
 	if(!has_gravity(src))
 		return -1

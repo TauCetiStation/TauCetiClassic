@@ -783,7 +783,7 @@
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
+//#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )

@@ -550,21 +550,21 @@ Quantity of target color is taken into consideration.
 Returns 0 if nothing can be made from mixing the three given colors, otherwise returns a list of quantities of each of three colors needed to be mixed.
 */
 /proc/do_mix_color_from_three(target_col, target_quan, col_1 = "#000000", col_2 = "#000000", col_3 = "#000000")
-	var/r_1 = hex2num(copytext(col_1, 2, 4))
-	var/g_1 = hex2num(copytext(col_1, 4, 6))
-	var/b_1 = hex2num(copytext(col_1, 6, 8))
+	var/r_1 = HEX_VAL_RED(col_1)
+	var/g_1 = HEX_VAL_GREEN(col_1)
+	var/b_1 = HEX_VAL_BLUE(col_1)
 
-	var/r_2 = hex2num(copytext(col_2, 2, 4))
-	var/g_2 = hex2num(copytext(col_2, 4, 6))
-	var/b_2 = hex2num(copytext(col_2, 6, 8))
+	var/r_2 = HEX_VAL_RED(col_2)
+	var/g_2 = HEX_VAL_GREEN(col_2)
+	var/b_2 = HEX_VAL_BLUE(col_2)
 
-	var/r_3 = hex2num(copytext(col_3, 2, 4))
-	var/g_3 = hex2num(copytext(col_3, 4, 6))
-	var/b_3 = hex2num(copytext(col_3, 6, 8))
+	var/r_3 = HEX_VAL_RED(col_3)
+	var/g_3 = HEX_VAL_GREEN(col_3)
+	var/b_3 = HEX_VAL_BLUE(col_3)
 
-	var/r_t = hex2num(copytext(target_col, 2, 4))
-	var/g_t = hex2num(copytext(target_col, 4, 6))
-	var/b_t = hex2num(copytext(target_col, 6, 8))
+	var/r_t = HEX_VAL_RED(target_col)
+	var/g_t = HEX_VAL_GREEN(target_col)
+	var/b_t = HEX_VAL_BLUE(target_col)
 	// We are going to be using Cramer's method of solving a system of equations.
 	// Determ.
 	var/delta = determinant_3_x_3(list(r_1, r_2, r_3, g_1, g_2, g_3, b_1, b_2, b_3))

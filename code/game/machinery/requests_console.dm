@@ -222,8 +222,11 @@ var/req_console_information = list()
 	if(!.)
 		return
 
-	if(reject_bad_text(href_list["write"]))
+	if(href_list["write"])
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+
+		if(!dpt)
+			return
 
 		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)

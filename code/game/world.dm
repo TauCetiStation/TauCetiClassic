@@ -338,7 +338,7 @@ var/shutdown_processed = FALSE
 		for(var/line in L)
 			if(!length(line))
 				continue
-			if(copytext(line,1,2) == "#")
+			if(line[1] == "#")
 				continue
 			donators.Add(ckey(line))
 

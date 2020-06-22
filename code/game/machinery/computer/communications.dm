@@ -213,10 +213,10 @@
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = sanitize_safe(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
+			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = sanitize_safe(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
+			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD

@@ -222,7 +222,7 @@ What a mess.*/
 					screen = SKILLS_MODE_MAIN_SCREEN
 		// RECORD FUNCTIONS
 		if("Search Records")
-			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
+			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text, ascii_only = TRUE)
 			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))))
 				return FALSE
 			Perp = new/list()

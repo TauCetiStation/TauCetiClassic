@@ -135,9 +135,9 @@
 				// Then next ban drop from Config after limit
 				// When ban not in DB clearing matches too
 				// DB restore after sometime rouge bans
-				if (LAZYLEN(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + LAZYLEN(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
+				if (length(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + length(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
+					length(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+					length(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
 					if (byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE

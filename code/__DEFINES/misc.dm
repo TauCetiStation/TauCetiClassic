@@ -222,11 +222,11 @@
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
-		if(LAZYLEN(rm)){\
+		if(length(rm)){\
 			A.overlays -= rm;\
 			rm.Cut();\
 		}\
-		if(LAZYLEN(ad)){\
+		if(length(ad)){\
 			A.overlays |= ad;\
 			ad.Cut();\
 		}\

@@ -5,7 +5,10 @@
 
 	message = sanitize(message)
 
-	if(copytext(message, 1, 2) == "*")
+	if(!message)
+		return
+
+	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
 	if (length(message) >= 1)

@@ -31,30 +31,24 @@
 	if(!syllables || !syllables.len)
 		return stars(input)
 
-	var/input_size = length(input)
+	var/input_size = length_char(input)
 	var/scrambled_text = ""
-	var/capitalize = 1
 
-	while(length(scrambled_text) < input_size)
-		var/next = pick(syllables)
-		if(capitalize)
-			next = capitalize(next)
-			capitalize = 0
-		scrambled_text += next
-		var/chance = rand(100)
-		if(chance <= 5)
-			scrambled_text += ". "
-			capitalize = 1
-		else if(chance > 5 && chance <= space_chance)
-			scrambled_text += " "
+	for(var/i in 1 to input_size)
+		scrambled_text += pick(syllables)
+		
+		if(i != input_size)
+			if(prob(5))
+				scrambled_text += ", "
+			else if(prob(space_chance))
+				scrambled_text += " "
+	
+	scrambled_text = capitalize(trim(scrambled_text))
 
-	scrambled_text = trim(scrambled_text)
-	var/ending = copytext(scrambled_text, length(scrambled_text))
-	if(ending == ".")
-		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
-	var/input_ending = copytext(input, input_size)
+	var/input_ending = copytext(input, -1)
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
+	
 	return scrambled_text
 
 /datum/language/proc/get_spoken_verb(msg_end)

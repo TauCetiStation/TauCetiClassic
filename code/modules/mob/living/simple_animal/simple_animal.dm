@@ -356,15 +356,18 @@
 
 	message = sanitize(message)
 
-	if(copytext(message,1,2) == "*")
+	if(!message)
+		return
+
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message,2 + length(speaking.key))
+		message = copytext(message, 2 + length_char(speaking.key))
 	else
 		verb = pick(speak_emote)
 

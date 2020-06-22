@@ -14,31 +14,6 @@
 //Checks if all high bits in req_mask are set in bitfield
 #define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
 
-//Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
-		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
-	return text("#[][][]", textr, textg, textb)
-
 //Returns the middle-most value
 /proc/dd_range(low, high, num)
 	return max(low,min(high,num))
@@ -193,16 +168,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
-
-	var/i, ch, len = length(key)
-
-	for (i = 7, i <= len, ++i)
-		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+	return findtext(key, "Guest-", 1, 7) == 1
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)

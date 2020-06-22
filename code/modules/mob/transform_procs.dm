@@ -207,7 +207,7 @@
 	else
 		O.dna = dna.Clone(transfer_SE = FALSE)
 
-	if(ismonkey(src) && cmptext(initial(name), copytext(O.dna.real_name, 1, length(initial(name)) + 1))) // simple "monkey" name check is not enough with species.
+	if(ismonkey(src) && cmptext(initial(name), copytext(O.dna.real_name, 1, length_char(initial(name)) + 1))) // simple "monkey" name check is not enough with species.
 		O.real_name = random_unique_name(O.gender)
 		O.dna.generate_unique_enzymes(O)
 	else

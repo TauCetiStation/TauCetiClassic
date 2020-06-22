@@ -1,4 +1,13 @@
-// For proc which normalize something
+#define HEX_VAL_RED(col)   hex2num(copytext(col, 2, 4))
+#define HEX_VAL_GREEN(col) hex2num(copytext(col, 4, 6))
+#define HEX_VAL_BLUE(col)  hex2num(copytext(col, 6, 8))
+#define HEX_VAL_ALPHA(col) hex2num(copytext(col, 8, 10))
+
+/proc/random_short_color()
+	return "#" + random_string(3, global.hex_characters)
+
+/proc/random_color()
+	return "#" + random_string(6, global.hex_characters)
 
 /proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 

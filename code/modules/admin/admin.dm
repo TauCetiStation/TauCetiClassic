@@ -283,7 +283,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 #undef PLAYER_NOTES_ENTRIES_PER_PAGE
 
 /datum/admins/proc/player_has_info(key)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/savefile/info = new("data/player_saves/[key[1]]/[key]/info.sav")
 	var/list/infos
 	info >> infos
 	return (length(infos))
@@ -353,7 +353,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /datum/admins/proc/load_info_player_data(player_ckey)
 	if(!player_ckey)
 		return
-	var/savefile/info_file = new("data/player_saves/[copytext(player_ckey, 1, 2)]/[player_ckey]/info.sav")
+	var/savefile/info_file = new("data/player_saves/[player_ckey[1]]/[player_ckey]/info.sav")
 	var/list/data
 	info_file >> data
 	if(!length(data))

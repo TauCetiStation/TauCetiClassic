@@ -366,7 +366,7 @@ nanoui is used to open and update nano browser uis
 	return {"
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<head>
 		<script type="text/javascript" src="error_handler.js"></script>
 		<script type='text/javascript'>
@@ -469,7 +469,7 @@ nanoui is used to open and update nano browser uis
 
 	//user << json_encode(data) // used for debugging
 
-	var/send_json = list2json(send_data,cached_data)
+	var/send_json = json_decode(send_data)
 	if(cached_data)
 		send_json = copytext(send_json, 1, -1) + ",\"cached\":[cached_data]}"
 

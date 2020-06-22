@@ -275,7 +275,7 @@ What a mess.*/
 					screen = 1
 //RECORD FUNCTIONS
 		if("Search Records")
-			var/t1 = sanitize(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
+			var/t1 = sanitize(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text, ascii_only = TRUE)
 			if(!t1 || is_not_allowed(usr))
 				return
 			Perp = new/list()

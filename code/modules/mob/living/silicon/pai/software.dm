@@ -91,7 +91,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
-			left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
+		left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 	else
 		switch(src.screen)							// Determine which interface to show here

@@ -1,5 +1,3 @@
-//edit this file ONLY in win-1251!
-
 //more work on TODO:CYRILLIC
 
 //ja problem
@@ -11,7 +9,8 @@
 #define JA_ENTITY_ASCII     "&#255;"  //for old text and histoty, we don't need this anymore because goonchat (God bless goonchat)
                                       //todo: clean saves/bd from this
 
-//thats not compile options, but it's good safe place for things like this
+// todo: translations framework
+// watch also config.rus_language
 #define CYRILLIC_BRAINDAMAGE_1 \
 	list("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!")
 #define CYRILLIC_BRAINDAMAGE_2 \
