@@ -40563,6 +40563,10 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/item/device/mmi,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = -2
+	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
@@ -45992,15 +45996,10 @@
 	},
 /area/station/rnd/robotics)
 "bIu" = (
-/obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
-	},
-/obj/item/weapon/pen,
+/obj/machinery/life_assist/external_cooling_device,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
