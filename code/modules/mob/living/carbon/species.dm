@@ -800,6 +800,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
@@ -918,6 +919,7 @@
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
@@ -1034,6 +1036,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -1084,7 +1087,8 @@
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
-		NO_EMOTION = TRUE
+		NO_EMOTION = TRUE,
+		NO_MUTATION = TRUE
 		)
 
 	has_organ = list(
