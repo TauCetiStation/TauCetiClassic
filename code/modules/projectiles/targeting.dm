@@ -313,17 +313,9 @@
 					to_chat(M, "Your character may now <b>walk</b> at the discretion of their targeter.")
 					if(!target_can_run)
 						to_chat(M, "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>")
-						M.set_m_intent("walk")
+						M.set_m_intent(MOVE_INTENT_WALK)
 				else
 					to_chat(M, "<span class='warning'><b>Your character will now be shot if they move.</b></span>")
-
-/mob/living/proc/set_m_intent(intent)
-	if (intent != "walk" && intent != "run")
-		return 0
-	m_intent = intent
-	if(hud_used)
-		if (hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == "walk" ? "walking" : "running"
 
 /client/verb/AllowTargetRun()
 	set hidden=1
