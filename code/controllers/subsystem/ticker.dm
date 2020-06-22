@@ -304,7 +304,7 @@ var/datum/subsystem/ticker/ticker
 	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			L.SetSleeping(10, TRUE, TRUE)
 
