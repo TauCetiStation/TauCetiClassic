@@ -339,7 +339,9 @@ var/datum/subsystem/ticker/ticker
 
 	if(screen)
 		flick(screen, cinematic)
+
 	sleep(screen_time)
+
 	for(var/mob/M in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	if(explosion)
