@@ -21,10 +21,9 @@
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W, mob/user)
-	..()
-	if (iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/stack/rods/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
@@ -36,12 +35,14 @@
 				"[user.name] shaped [src] into metal with the welding tool.",
 				"<span class='notice'>You shape [src] into metal with the welding tool.</span>",
 				"<span class='italics'>You hear welding.</span>")
-			var/obj/item/stack/rods/R = src
-			src = null
-			var/replace = (user.get_inactive_hand() == R)
-			R.use(2)
-			if (!R && replace)
+
+			var/replace = (user.get_inactive_hand() == src)
+			use(2)
+			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
+
+	else
+		return ..()
 
 /obj/item/stack/rods/attack_self(mob/user)
 	src.add_fingerprint(user)

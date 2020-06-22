@@ -132,9 +132,8 @@
 	..()
 	return
 
-
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/device/assembly_holder/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
@@ -147,12 +146,10 @@
 			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
-	else if(W.IsSpecialAssembly())
-		attach_special(W, user)
+	else if(I.IsSpecialAssembly())
+		attach_special(I, user)
 	else
-		..()
-	return
-
+		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)

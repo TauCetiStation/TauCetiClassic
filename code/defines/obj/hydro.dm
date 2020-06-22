@@ -61,8 +61,8 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/plant_analyzer))
+/obj/item/seeds/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")
 		to_chat(user, "-Plant Lifespan: <span class='notice'>[lifespan]</span>")
@@ -1243,8 +1243,8 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+/obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
+	if(I.sharp && I.edge && I.force > 10)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)

@@ -14,6 +14,10 @@
 	var/gang = 0 // For marking territory
 	var/edible = 1
 
+	var/list/actions
+	var/list/arrows
+	var/list/letters
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -61,21 +65,44 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti", "rune", "letter", "arrow", "cancel")
+		if(!actions)
+			actions = list()
+			var/static/list/action_icon = list(
+			"graffiti" = "face",
+			"rune" = "rune1",
+			"letter" = "a",
+			"arrow" = "up")
+			for(var/action in action_icon)
+				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
+
+		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
 		var/sub = ""
+		if(!drawtype)
+			return
 		switch(drawtype)
-			if("cancel")
-				return
 			if("arrow")
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "left", "right", "up", "down")
-				if(drawtype == "cancel")
-					return
 				sub = "an"
+				if(!arrows)
+					arrows = list()
+					var/static/list/directions = list("up", "right", "down", "left")
+					for(var/dir in directions)
+						arrows[dir] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = dir)
+
+				drawtype = show_radial_menu(user, target, arrows, require_near = TRUE)
+				if(!drawtype)
+					return
+
 			if("letter")
 				sub = "a letter"
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("cancel", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-				if(drawtype == "cancel")
+				if(!letters)
+					letters = list()
+					for(var/letter in alphabet_uppercase)
+						letters[lowertext(letter)] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = lowertext(letter))
+
+				drawtype = show_radial_menu(user, target, letters, require_near = TRUE)
+				if(!drawtype)
 					return
+
 			if("graffiti")
 				sub = ""
 			if("rune")

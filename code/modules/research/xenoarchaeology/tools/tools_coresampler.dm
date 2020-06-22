@@ -31,14 +31,14 @@
 	if(src in view(1, user))
 		to_chat(user, "<span class='notice'>\The [src] is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] bag\s remaining.</span>")
 
-/obj/item/device/core_sampler/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/evidencebag))
-		if(W.contents.len)
+/obj/item/device/core_sampler/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/evidencebag))
+		if(I.contents.len)
 			to_chat(user, "<span class='warning'>This bag has something inside it!</span>")
 		else if(num_stored_bags < 10)
-			qdel(W)
+			qdel(I)
 			num_stored_bags += 1
-			to_chat(user, "<span class='notice'>You insert the [W] into the core sampler.</span>")
+			to_chat(user, "<span class='notice'>You insert the [I] into the core sampler.</span>")
 		else
 			to_chat(user, "<span class='warning'>The core sampler can not fit any more bags!</span>")
 	else
