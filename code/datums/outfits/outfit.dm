@@ -338,43 +338,20 @@
   *
   */
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
-	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
-		for(var/obj/item/I in H.back.contents)
-			I.add_fingerprint(H,1)
-	if(H.wear_id)
-		H.wear_id.add_fingerprint(H,1)
-	if(H.w_uniform)
-		H.w_uniform.add_fingerprint(H,1)
-	if(H.wear_suit)
-		H.wear_suit.add_fingerprint(H,1)
-	if(H.wear_mask)
-		H.wear_mask.add_fingerprint(H,1)
-	if(H.neck)
-		H.neck.add_fingerprint(H,1)
-	if(H.head)
-		H.head.add_fingerprint(H,1)
-	if(H.shoes)
-		H.shoes.add_fingerprint(H,1)
-	if(H.gloves)
-		H.gloves.add_fingerprint(H,1)
-	if(H.l_ear)
-		H.l_ear.add_fingerprint(H,1)
-	if(H.r_ear)
-		H.r_ear.add_fingerprint(H,1)
-	if(H.glasses)
-		H.glasses.add_fingerprint(H,1)
-	if(H.belt)
-		H.belt.add_fingerprint(H,1)
-		for(var/obj/item/I in H.belt.contents)
-			I.add_fingerprint(H,1)
-	if(H.s_store)
-		H.s_store.add_fingerprint(H,1)
-	if(H.l_store)
-		H.l_store.add_fingerprint(H,1)
-	if(H.r_store)
-		H.r_store.add_fingerprint(H,1)
+
+	var/list/slots_fingerprints = list(H.back, H.belt, H.w_uniform, H.wear_suit, H.neck, H.shoes, H.wear_id, H.wear_mask, H.head, H.gloves, H.l_ear, H.r_ear, H.glasses, H.belt, H.s_store, H.l_store, H.r_store)
+	for(var/i in slots_fingerprints)
+		if(i)
+			recursive_add_fingerprints(H, i)
+
 	return TRUE
+
+/datum/outfit/proc/recursive_add_fingerprints(mob/living/carbon/human/H, obj/item/I)
+	to_chat(world, "[I].add_fingerprints()")
+	I.add_fingerprint(H, 1) //The 1 sets a flag to ignore gloves
+	if(I.contents.len)
+		for(var/obj/item/contained in I.contents)
+			recursive_add_fingerprints(H, contained)
 
 /// Return a json list of this outfit
 /datum/outfit/proc/get_json_data()
