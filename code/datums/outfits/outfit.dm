@@ -59,7 +59,7 @@
 	  * Other boxes must be in backpack_contents 
 	  *
 	  */
-	var/survival_box = TRUE
+	var/survival_box = FALSE
 	// list of replaceable items in a survival box
 	var/list/survival_kit_items = list()
 

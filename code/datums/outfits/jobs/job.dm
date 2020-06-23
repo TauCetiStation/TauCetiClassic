@@ -3,3 +3,5 @@
 
 	back = PREFERANCE_BACKPACK
 	back_style = BACKPACK_STYLE_COMMON
+	
+	survival_box = TRUE
