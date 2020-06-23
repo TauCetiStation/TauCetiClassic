@@ -60,9 +60,9 @@
 	  *
 	  */
 	var/survival_box = FALSE
-	// list of replaceable items in a survival box
+	// list of outfit items to add to survival box
 	var/list/survival_kit_items = list()
-
+	// list of items to be removed from survival box
 	var/list/prevent_survival_kit_items = list()
 
 	// (flavor_misc.dm)
