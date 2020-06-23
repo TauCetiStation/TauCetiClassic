@@ -194,7 +194,7 @@
 		to_chat(user, "Something is already loaded into the machine.")
 		return
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
-		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && (!istype(B,/obj/item/weapon/reagent_containers/glass/beaker) || istype(B,/obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone)))
 			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
 			return
 		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
@@ -1145,7 +1145,7 @@
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.drop_from_inventory(O, src) 
+	user.drop_from_inventory(O, src)
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0
