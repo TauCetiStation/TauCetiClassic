@@ -20,7 +20,8 @@
 
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/white
-	
+	suit = /obj/item/clothing/suit/storage/labcoat
+
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
@@ -29,23 +30,29 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
-/datum/outfit/job/doctor/pre_equip(mob/living/carbon/human/H)
-	if(H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Surgeon")
-				uniform = /obj/item/clothing/under/rank/medical/blue
-				head = /obj/item/clothing/head/surgery/blue
-			if("Nurse")
-				if(H.gender == FEMALE)
-					if(prob(50))
-						uniform = /obj/item/clothing/under/rank/nursesuit
-					else
-						uniform = /obj/item/clothing/under/rank/nurse
-					head = /obj/item/clothing/head/nursehat
-				else
-					uniform = /obj/item/clothing/under/rank/medical/purple
+
+// SURGEON OUTFIT
+/datum/outfit/job/surgeon
+	name = OUTFIT_JOB_NAME("Surgeon")
+
+	uniform = /obj/item/clothing/under/rank/medical/blue
+	head = /obj/item/clothing/head/surgery/blue
+
+// NURSE OUTFIT
+/datum/outfit/job/nurse
+	name = OUTFIT_JOB_NAME("Nurse")
+
+/datum/outfit/job/nurse/pre_equip((mob/living/carbon/human/H))
+	if(H.gender == FEMALE)
+		if(prob(50))
+			uniform = /obj/item/clothing/under/rank/nursesuit
+		else
+			uniform = /obj/item/clothing/under/rank/nurse
+		head = /obj/item/clothing/head/nursehat
 	else
-		suit = /obj/item/clothing/suit/storage/labcoat
+		uniform = /obj/item/clothing/under/rank/medical/purple
+
+	
 
 // PARAMEDIC OUTFIT
 /datum/outfit/job/paramedic
@@ -107,22 +114,25 @@
 /datum/outfit/job/psychiatrist
 	name = OUTFIT_JOB_NAME("Psychiatrist")
 
-	uniform = /obj/item/clothing/under/rank/medical
+	uniform = /obj/item/clothing/under/rank/psych
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/storage/labcoat
 
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-/datum/outfit/job/psychiatrist/pre_equip(mob/living/carbon/human/H)
-	if(H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Psychiatrist")
-				uniform = /obj/item/clothing/under/rank/psych
-			if("Psychologist")
-				uniform = /obj/item/clothing/under/rank/psych/turtleneck
+// PSYCHOLOGIST OUTFIT
+/datum/outfit/job/psychologist/pre_equip(mob/living/carbon/human/H)
+	name = OUTFIT_JOB_NAME("Psychologist")
 
-// Medical Intern OUTFIT
+	uniform = /obj/item/clothing/under/rank/psych/turtleneck
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/storage/labcoat
+
+	belt = /obj/item/device/pda/medical
+	l_ear = /obj/item/device/radio/headset/headset_med
+
+// MEDICAL INTERN OUTFIT
 /datum/outfit/job/intern
 	name = OUTFIT_JOB_NAME("Medical Intern")
 

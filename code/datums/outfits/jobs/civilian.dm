@@ -47,13 +47,14 @@
 
 	belt = /obj/item/device/pda/barber
 
-/datum/outfit/job/barber/pre_equip(mob/living/carbon/human/H)
-	if(H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Barber")
-				uniform = /obj/item/clothing/under/rank/barber
-			if("Stylist")
-				uniform = /obj/item/clothing/under/lawyer/purpsuit
+// STYLIST OUTFIT
+/datum/outfit/job/stylist
+	name = OUTFIT_JOB_NAME("Stylist")
+
+	uniform = /obj/item/clothing/under/lawyer/purpsuit
+	shoes = /obj/item/clothing/shoes/laceup
+
+	belt = /obj/item/device/pda/barber
 
 // LIBRARIAN OUTFIT
 /datum/outfit/job/librarian

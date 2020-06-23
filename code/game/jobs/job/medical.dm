@@ -41,7 +41,10 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	salary = 160
-	alt_titles = list("Surgeon", "Nurse")
+	alt_titles = list(
+		"Surgeon" = /datum/outfit/job/surgeon, 
+		"Nurse" = /datum/outfit/job/nurse
+		)
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/doctor
 	/*

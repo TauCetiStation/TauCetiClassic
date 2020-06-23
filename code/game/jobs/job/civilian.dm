@@ -181,7 +181,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	salary = 40
-	alt_titles = list("Stylist")
+	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
 
