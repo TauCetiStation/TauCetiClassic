@@ -5,7 +5,7 @@
 	l_ear = /obj/item/device/radio/headset/syndicate
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
-	back = PREFERANCE_BACKPACK_FORCE
+	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
 		/obj/item/weapon/reagent_containers/pill/cyanide,

@@ -70,12 +70,12 @@
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
-// select backpack type from preferances
-/datum/outfit/proc/preferance_back(mob/living/carbon/human/H)
+// select backpack type from preferences
+/datum/outfit/proc/preference_back(mob/living/carbon/human/H)
 	switch(back)
-		if(PREFERANCE_BACKPACK)
+		if(PREFERENCE_BACKPACK)
 			back = back_style[H.backbag]
-		if(PREFERANCE_BACKPACK_FORCE)
+		if(PREFERENCE_BACKPACK_FORCE)
 			back = back_style[2]
 
 // replaces default human outfit in [slot] on [item_type]
@@ -168,7 +168,7 @@
   * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
   */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	preferance_back(H)
+	preference_back(H)
 	pre_equip(H, visualsOnly)
 	species_equip(H, src)	// replaces human outfit on species outfit
 
