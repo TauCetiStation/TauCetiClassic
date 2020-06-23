@@ -81,7 +81,7 @@
 
 /datum/job/proc/get_outfit(var/mob/living/carbon/human/H, var/alt_title)
 	if(H.mind)
-		if(H.mind.role_alt_title)
+		if(alt_titles && H.mind.role_alt_title)
 			return alt_titles[H.mind.role_alt_title] || outfit
 	if(alt_title && alt_titles)
 		return alt_titles[alt_title]
