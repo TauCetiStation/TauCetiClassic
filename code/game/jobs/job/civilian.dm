@@ -238,8 +238,9 @@
 	outfit = /datum/outfit/job/clown
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	H.mutations.Add(CLUMSY)
-	return TRUE
+	if(!visualsOnly)
+		H.mutations.Add(CLUMSY)
+		return TRUE
 
 
 /datum/job/mime
