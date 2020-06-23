@@ -37,10 +37,10 @@
 	var/l_pocket = null   /// Type path of item for left pocket slot
 	var/r_pocket = null   /// Type path of item for right pocket slot
 
-	var/l_hand_back = null     /// Type path of item to go in the backpack or in left hand, if no backpack
-	var/r_hand_back = null     /// Type path of item to go in the backpack or in right hand, if no backpack
-	var/l_pocket_back = null   /// Type path of item in the backpack or for left pocket slot
-	var/r_pocket_back = null   /// Type path of item in the backpack or for right pocket slot
+	var/l_hand_back = null     /// Type path of item to go in the backpack. Otherwise in left hand
+	var/r_hand_back = null     /// Type path of item to go in the backpack. Otherwise in right hand
+	var/l_pocket_back = null   /// Type path of item in the backpack. Otherwise in the left pocket
+	var/r_pocket_back = null   /// Type path of item in the backpack. Otherwise for right pocket slot
 
 	var/back = null       /// Type path of item to go in back slot
 
@@ -331,7 +331,6 @@
 	return TRUE
 
 /datum/outfit/proc/recursive_add_fingerprints(mob/living/carbon/human/H, obj/item/I)
-	to_chat(world, "[I].add_fingerprints()")
 	I.add_fingerprint(H, 1) //The 1 sets a flag to ignore gloves
 	if(I.contents.len)
 		for(var/obj/item/contained in I.contents)
