@@ -155,7 +155,7 @@
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_psychiatrist, access_medbay_storage)
-	alt_titles = list("Psychologist")
+	alt_titles = list("Psychologist" = /datum/outfit/job/psychologist)
 	salary = 140
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/psychiatrist

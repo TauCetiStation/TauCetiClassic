@@ -122,7 +122,7 @@
 	l_ear = /obj/item/device/radio/headset/headset_med
 
 // PSYCHOLOGIST OUTFIT
-/datum/outfit/job/psychologist/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/psychologist
 	name = OUTFIT_JOB_NAME("Psychologist")
 
 	uniform = /obj/item/clothing/under/rank/psych/turtleneck
