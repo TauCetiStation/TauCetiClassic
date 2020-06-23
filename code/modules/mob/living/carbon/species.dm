@@ -486,7 +486,7 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
 	                          )
 
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen, /obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 
 	min_age = 12
