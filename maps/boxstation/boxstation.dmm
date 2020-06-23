@@ -25868,14 +25868,12 @@
 	},
 /area/station/civilian/chapel/crematorium)
 "aUM" = (
-/obj/machinery/camera{
-	c_tag = "Chapel Mass Driver";
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
 "aUN" = (
 /obj/machinery/door/firedoor,
@@ -30476,18 +30474,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/port)
-"bdp" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/mass_driver)
 "bdr" = (
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
@@ -35385,15 +35371,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
-"bmP" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/mass_driver)
 "bmR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -66313,10 +66290,6 @@
 	icon_state = "white"
 	},
 /area/station/security/forensic_office)
-"cYH" = (
-/obj/structure/barricade/wooden,
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel/mass_driver)
 "cZb" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -66836,14 +66809,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "dQH" = (
-/obj/machinery/door/morgue{
-	dir = 1;
-	name = "Belfry";
-	req_access = list(22)
-	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "wood_stairs2"
+	icon_state = "vault"
 	},
 /area/station/civilian/chapel/mass_driver)
 "dRb" = (
@@ -66983,11 +66952,8 @@
 	},
 /area/station/medical/genetics)
 "dYV" = (
-/obj/machinery/camera{
-	c_tag = "Chapel Belfry";
-	dir = 1
-	},
-/turf/simulated/floor/wood,
+/obj/structure/lattice,
+/turf/space,
 /area/station/civilian/chapel/mass_driver)
 "dZb" = (
 /obj/structure/table/woodentable,
@@ -68770,6 +68736,10 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/camera{
+	c_tag = "Chapel Mass Driver";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -71393,16 +71363,6 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"kDf" = (
-/obj/machinery/door/morgue{
-	name = "Belfry";
-	req_access = list(22)
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "wood_stairs2"
-	},
-/area/station/civilian/chapel/mass_driver)
 "kEb" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -72105,13 +72065,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
-"lFZ" = (
-/obj/structure/stool/bed/chair/wood/normal,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/station/civilian/chapel/mass_driver)
 "lGb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -72255,7 +72208,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lOr" = (
-/obj/machinery/hologram/holopad,
+/obj/structure/big_bell,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -75531,10 +75484,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
-"qMW" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel/mass_driver)
 "qNb" = (
 /obj/machinery/smartfridge/chemistry,
 /obj/machinery/door/window/eastright{
@@ -75717,13 +75666,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"qZT" = (
-/obj/structure/stool/bed/chair/wood/normal,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/station/civilian/chapel/mass_driver)
 "rbb" = (
 /obj/structure/table/glass,
 /turf/simulated/floor,
@@ -75771,9 +75713,6 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
-"rfc" = (
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel/mass_driver)
 "rgb" = (
 /obj/machinery/embedded_controller/radio/access_controller{
 	id_tag = "virology_airlock_control";
@@ -76531,15 +76470,6 @@
 	icon_state = "vault"
 	},
 /area/station/medical/virology)
-"sdN" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
-/area/station/civilian/chapel/mass_driver)
 "seb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white,
@@ -77100,12 +77030,8 @@
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
 "sQb" = (
@@ -78201,11 +78127,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "uIC" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/simulated/floor/wood,
+/turf/space,
 /area/station/civilian/chapel/mass_driver)
 "uMv" = (
 /obj/structure/grille,
@@ -128057,11 +127979,11 @@ wLi
 aVD
 bCN
 bsF
-aUM
+woc
 xGY
 cWL
 woc
-qZT
+xGY
 bdg
 dex
 nDR
@@ -128318,7 +128240,7 @@ bQy
 bQy
 kNR
 lOr
-pNk
+dQH
 pNk
 aPZ
 biG
@@ -128575,7 +128497,7 @@ bCM
 vwv
 jpD
 woc
-lFZ
+vwv
 cPY
 umE
 oyN
@@ -129089,8 +129011,8 @@ wLi
 wjJ
 gMY
 wLi
-kDf
-dQH
+wLi
+wLi
 aQa
 aQa
 kAR
@@ -129345,9 +129267,9 @@ oRh
 bCY
 wAu
 bHc
-bdp
-rfc
-rfc
+sPv
+uIC
+dYV
 dYV
 wLi
 aaa
@@ -129602,10 +129524,10 @@ oRh
 bHd
 pBZ
 csp
-bmP
-rfc
-cYH
-qMW
+sPv
+uIC
+uIC
+uIC
 wLi
 aaa
 aaa
@@ -129860,9 +129782,9 @@ bIx
 aXK
 wOM
 sPv
-rfc
 uIC
-sdN
+uIC
+uIC
 wLi
 aaa
 aaa
@@ -130116,10 +130038,10 @@ oRh
 bJD
 wAu
 bjs
-wLi
-wLi
-wLi
-wLi
+aUM
+uIC
+uIC
+uIC
 wLi
 aah
 aah
@@ -130374,8 +130296,8 @@ oRh
 oRh
 oRh
 wLi
-aaa
 aah
+aaa
 aaa
 aaa
 aaa
