@@ -24,7 +24,6 @@
 	var/head = null       /// Type path of item to go in head slot
 	var/mask = null       /// Type path of item to go in mask slot
 	var/neck = null       /// Type path of item to go in neck slot
-	var/accessory = null  /// Any clothing accessory item
 	var/l_ear = null      /// Type path of item to go in left ear slot
 	var/r_ear = null      /// Type path of item to go in right ear slot
 	var/glasses = null    /// Type path of item to go in the glasses slot
@@ -186,22 +185,8 @@
 	species_equip(H, src)	// replaces human outfit on species outfit
 
 	//Start with uniform,suit,backpack for additional slots
-	/*var/obj/item/clothing/under/U*/
 	if(H.gender == FEMALE && uniform_f)
 		uniform = uniform_f
-	/*
-	else if(uniform)
-		U = new uniform(H)
-	if(U)
-		if(accessory)
-			var/obj/item/clothing/accessory/A = new accessory
-			if(U.can_attach_accessory(A))
-				U.accessories += A
-				A.on_attached(U, H, TRUE)
-			else
-				qdel(A)
-		H.equip_to_slot_or_del(U, SLOT_W_UNIFORM, TRUE)
-	*/
 
 	var/list/slot2type = list(
 		"[SLOT_BACK]"        = back,
@@ -220,7 +205,6 @@
 		if(!slot_type)
 			continue
 		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
-
 
 
 	if(outfit_undershirt)
