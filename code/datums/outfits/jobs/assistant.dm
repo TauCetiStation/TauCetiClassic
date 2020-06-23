@@ -37,12 +37,6 @@
 	belt = /obj/item/device/pda/reporter
 	l_pocket = /obj/item/device/camera
 
-/datum/outfit/job/assistant/security_cadet
-	name = OUTFIT_JOB_NAME("Security Cadet")
-
-	uniform = /obj/item/clothing/under/rank/cadet
-	shoes = /obj/item/clothing/shoes/boots
-
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")
 
