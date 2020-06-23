@@ -73,6 +73,7 @@
 	if(outfit_type)
 		H.equipOutfit(outfit_type, visualsOnly)
 
+	post_equip(H, visualsOnly)
 	return TRUE
 
 /datum/job/proc/get_outfit(var/mob/living/carbon/human/H, var/alt_title)
