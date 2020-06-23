@@ -76,7 +76,7 @@
 		if(PREFERENCE_BACKPACK)
 			back = back_style[H.backbag]
 		if(PREFERENCE_BACKPACK_FORCE)
-			back = back_style[2]
+			back = back_style[DEFAULT_FORCED_BACKPACK]
 
 // replaces default human outfit in [slot] on [item_type]
 /datum/outfit/proc/change_slot_equip(slot, item_type)
