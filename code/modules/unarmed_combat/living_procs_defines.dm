@@ -232,9 +232,6 @@ var/global/combos_cheat_sheet = ""
 			return helpReaction(attacker)
 
 		if(INTENT_PUSH)
-			if((get_active_hand() in attacker.grabbed_by) || (get_inactive_hand() in attacker.grabbed_by))
-				return disarmReaction(attacker, FALSE)
-
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
@@ -269,7 +266,6 @@ var/global/combos_cheat_sheet = ""
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
 			adjustHalLoss(4)
-
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
 		stop_pulling()
@@ -277,18 +273,24 @@ var/global/combos_cheat_sheet = ""
 		//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 		for(var/obj/item/weapon/grab/G in GetGrabs())
 			if(G.affecting)
-				var/diff = G.affecting.getStamina() - G.assailant.getStamina()
 				if(G.affecting == attacker)
+					var/diff = G.affecting.getStamina() - G.assailant.getStamina()
 					if(G.state < GRAB_AGGRESSIVE)
 						qdel(G)
-						return attack_unarmed(attacker)
+						return
 					if(diff >= 0 && G.state > GRAB_PASSIVE)
 						G.affecting.setStamina(diff)
 						visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 						qdel(G)
+					else
+						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to do that</span>")
 					return
 				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 				qdel(G)
+
+	if(pulling)
+		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
+		stop_pulling()
 		//End BubbleWrap
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)

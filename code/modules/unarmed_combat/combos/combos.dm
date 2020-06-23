@@ -8,6 +8,7 @@
 	ignore_size = TRUE
 
 	allowed_target_zones = TARGET_ZONE_ALL
+	require_canmove = TRUE
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
@@ -74,6 +75,7 @@
 	check_bodyarmor = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
+	require_canmove = TRUE
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	apply_effect(3, WEAKEN, victim, attacker, min_value=1)
@@ -197,6 +199,7 @@
 	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
 
 	require_arm = TRUE
+	require_canmove = TRUE
 
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
 	victim.Stun(2)

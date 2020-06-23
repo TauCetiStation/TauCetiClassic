@@ -59,6 +59,8 @@ var/global/list/combat_combos_by_name = list()
 	var/heavy_animation = FALSE
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
+	// Mob must have possibility to move
+	var/require_canmove = FALSE
 
 /datum/combat_combo/proc/get_hash()
 	. = list()
@@ -148,6 +150,11 @@ var/global/list/combat_combos_by_name = list()
 	if(require_leg_to_perform && !CS.attacker.is_usable_leg())
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have a leg...</span>")
+		return FALSE
+
+	if(require_canmove && !CS.attacker.canmove)
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 		return FALSE
 
 	return TRUE
