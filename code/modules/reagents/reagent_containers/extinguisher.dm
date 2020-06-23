@@ -49,15 +49,15 @@
 	reagents.clear_reagents()
 	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
 
-/obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
 		if(is_open_container())
 			flags &= ~OPENCONTAINER
 		else
 			flags |= OPENCONTAINER
 		to_chat(user, "<span class='notice'>You [is_open_container() ? "open" : "close"] the fill cap.</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/examine(mob/user)
 	..()

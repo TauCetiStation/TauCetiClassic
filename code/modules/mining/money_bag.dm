@@ -61,19 +61,20 @@
 		dat += text("Mythril coins: [amt_hydrogen] <A href='?src=\ref[src];remove=hydrogen'>Remove one</A><br>")
 	user << browse("[entity_ja(dat)]", "window=moneybag")
 
-/obj/item/weapon/moneybag/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (istype(W, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = W
+/obj/item/weapon/moneybag/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/coin))
+		var/obj/item/weapon/coin/C = I
 		to_chat(user, "<span class='notice'>You add the [C.name] into the bag.</span>")
-		user.drop_item()
+		user.drop_from_inventory(C)
 		contents += C
-	if (istype(W, /obj/item/weapon/moneybag))
-		var/obj/item/weapon/moneybag/C = W
+		return
+	if(istype(I, /obj/item/weapon/moneybag))
+		var/obj/item/weapon/moneybag/C = I
 		for (var/obj/O in C.contents)
-			contents += O;
+			contents += O
 		to_chat(user, "<span class='notice'>You empty the [C.name] into the bag.</span>")
-	return
+		return
+	return ..()
 
 /obj/item/weapon/moneybag/Topic(href, href_list)
 	if(..())

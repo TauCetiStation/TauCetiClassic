@@ -44,19 +44,19 @@ RCD
 	spark_system = null
 	return ..()
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/rcd_ammo))
+/obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/rcd_ammo))
 		if((matter + 10) > 30)
 			to_chat(user, "<span class='notice'>The RCD cant hold any more matter-units.</span>")
 			return
-		user.drop_item()
-		qdel(W)
+		qdel(I)
 		matter += 10
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
 
+	else
+		return ..()
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode

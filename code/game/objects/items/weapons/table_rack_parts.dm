@@ -33,8 +33,8 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/attackby(obj/item/W, mob/user)
-	if(attack_tools(W, user))
+/obj/item/weapon/table_parts/attackby(obj/item/I, mob/user, params)
+	if(attack_tools(I, user))
 		return
 
 	return ..()
@@ -148,13 +148,12 @@
 /*
  * Rack Parts
  */
-/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (iswrench(W))
+/obj/item/weapon/rack_parts/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
 		new /obj/item/stack/sheet/metal( user.loc )
 		qdel(src)
 		return
-	return
+	return ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
 	var/obj/structure/rack/R = new /obj/structure/rack( user.loc )

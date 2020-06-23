@@ -35128,15 +35128,15 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -54455,6 +54455,7 @@
 /area/station/civilian/dormitories/dormfive)
 "qGe" = (
 /obj/machinery/nuclearbomb{
+	nuketype = "NT";
 	r_code = "LOLNO"
 	},
 /obj/effect/landmark/droppod,
@@ -59013,7 +59014,7 @@
 	pixel_x = 9;
 	pixel_y = 8
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "sgM" = (
@@ -77147,6 +77148,7 @@
 /area/station/maintenance/bridge)
 "xWI" = (
 /obj/effect/decal/cleanable/dirt,
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
