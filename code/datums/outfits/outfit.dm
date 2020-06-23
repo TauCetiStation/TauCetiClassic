@@ -18,7 +18,7 @@
 
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
-	var/suit = null       /// Type path of item to go in suit slot	
+	var/suit = null       /// Type path of item to go in suit slot
 	var/gloves = null     /// Type path of item to go in gloves slot
 	var/shoes = null      /// Type path of item to go in shoes slot
 	var/head = null       /// Type path of item to go in head slot
@@ -44,6 +44,7 @@
 	var/r_pocket_back = null   /// Type path of item in the backpack or for right pocket slot
 
 	var/back = null       /// Type path of item to go in back slot
+
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
@@ -95,7 +96,7 @@
 			shoes = item_type
 		if(SLOT_HEAD)
 			head = item_type
-		if(SLOT_WEAR_MASK)	
+		if(SLOT_WEAR_MASK)
 			mask = item_type
 		if(SLOT_TIE)
 			neck = item_type
@@ -185,9 +186,10 @@
 	species_equip(H, src)	// replaces human outfit on species outfit
 
 	//Start with uniform,suit,backpack for additional slots
-	var/obj/item/clothing/under/U
+	/*var/obj/item/clothing/under/U*/
 	if(H.gender == FEMALE && uniform_f)
-		U = new uniform_f(H)
+		uniform = uniform_f
+	/*
 	else if(uniform)
 		U = new uniform(H)
 	if(U)
@@ -199,33 +201,27 @@
 			else
 				qdel(A)
 		H.equip_to_slot_or_del(U, SLOT_W_UNIFORM, TRUE)
-	if(suit)
-		H.equip_to_slot_or_del(new suit(H), SLOT_WEAR_SUIT, TRUE)
-	if(back)
-		H.equip_to_slot_or_del(new back(H), SLOT_BACK, TRUE)
-	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H), SLOT_GLOVES, TRUE)
-	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H), SLOT_SHOES, TRUE)
-	if(head)
-		H.equip_to_slot_or_del(new head(H), SLOT_HEAD, TRUE)
-	if(mask)	
-		H.equip_to_slot_or_del(new mask(H), SLOT_WEAR_MASK, TRUE)
-	if(neck)
-		H.equip_to_slot_or_del(new neck(H), SLOT_TIE, TRUE)
-	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H), SLOT_GLASSES, TRUE)
-	if(!visualsOnly)
-		if(l_ear)
-			H.equip_to_slot_or_del(new l_ear(H), SLOT_L_EAR, TRUE)
-		if(r_ear)
-			H.equip_to_slot_or_del(new r_ear(H), SLOT_R_EAR, TRUE)
-		if(id)
-			H.equip_to_slot_or_del(new id(H), SLOT_WEAR_ID, TRUE)
-		if(suit_store)
-			H.equip_to_slot_or_del(new suit_store(H), SLOT_S_STORE, TRUE)
-		if(belt)
-			H.equip_to_slot_or_del(new belt(H), SLOT_BELT, TRUE)
+	*/
+
+	var/list/slot2type = list(
+		"[SLOT_BACK]"        = back,
+		"[SLOT_WEAR_MASK]"   = mask,
+		"[SLOT_GLASSES]"     = glasses,
+		"[SLOT_GLOVES]"      = gloves,
+		"[SLOT_HEAD]"        = head,
+		"[SLOT_SHOES]"       = shoes,
+		"[SLOT_WEAR_SUIT]"   = suit,
+		"[SLOT_W_UNIFORM]"   = uniform,
+		"[SLOT_TIE]"         = neck
+	)
+
+	for(var/slot in slot2type)
+		var/slot_type = slot2type[slot]
+		if(!slot_type)
+			continue
+		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
+
+
 
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
@@ -248,15 +244,26 @@
 	if(r_hand)
 		H.put_in_r_hand(new r_hand(H))
 
-	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
-		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H), SLOT_L_STORE, TRUE)
-		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H), SLOT_R_STORE, TRUE)
+	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon. 
+	
+		slot2type = list(
+			"[SLOT_BELT]"    = belt,
+			"[SLOT_WEAR_ID]" = id,
+			"[SLOT_L_EAR]"   = l_ear,
+			"[SLOT_R_EAR]"   = r_ear,
+			"[SLOT_S_STORE]" = suit_store,
+			"[SLOT_L_STORE]" = l_pocket,
+			"[SLOT_R_STORE]" = r_pocket
+		)
 
+		for(var/slot in slot2type)
+			var/slot_type = slot2type[slot]
+			if(!slot_type)
+				continue
+			H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
 
 		if(survival_box)
-			
+
 			var/obj/item/weapon/storage/box/survival/SK = new(H)
 
 			species_survival_kit_items:
@@ -280,7 +287,7 @@
 				H.equip_to_slot_or_del(SK, SLOT_R_HAND)
 			else
 				H.equip_to_slot_or_del(SK, SLOT_IN_BACKPACK)
-		
+
 		if(back)
 			if(l_pocket_back)
 				backpack_contents += l_pocket_back
