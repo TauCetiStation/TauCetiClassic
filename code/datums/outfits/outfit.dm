@@ -109,7 +109,7 @@
 
 // Called before the pre_equip() proc
 // replaces default outfit (human outfit) on outfit from replace_outfit
-/datum/outfit/proc/species_replace_outfit(var/list/replace_outfit = null)
+/datum/outfit/proc/species_replace_outfit(list/replace_outfit = null)
 	if(replace_outfit.len)
 		var/list/outfit_types = list(
 			"[SLOT_W_UNIFORM]" = uniform,
