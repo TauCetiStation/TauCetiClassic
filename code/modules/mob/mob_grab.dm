@@ -466,8 +466,8 @@
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						var/list/attack_obj = assailant.get_unarmed_attack()
-						assailant.stamina_damage *= attack_obj["damage"]
-						H.adjustStamina(-H.stamina_damage)
+						assailant.stamina_damage = attack_obj["damage"] * initial(assailant.stamina_damage)
+						H.adjustStamina(-assailant.stamina_damage)
 						H.adjustHalLoss(CLAMP(0, 10 - H.halloss, 10)) //up to 10 halloss
 					return
 				if(INTENT_HARM)

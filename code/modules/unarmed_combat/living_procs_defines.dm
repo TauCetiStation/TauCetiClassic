@@ -232,6 +232,9 @@ var/global/combos_cheat_sheet = ""
 			return helpReaction(attacker)
 
 		if(INTENT_PUSH)
+			if((get_active_hand() in attacker.grabbed_by) || (get_inactive_hand() in attacker.grabbed_by))
+				return disarmReaction(attacker, FALSE)
+
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
@@ -259,9 +262,9 @@ var/global/combos_cheat_sheet = ""
 	return TRUE
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker && !(get_active_hand() in attacker.grabbed_by) && !(get_inactive_hand() in attacker.grabbed_by)) // maxHealth is the current best size estimate.
+		attacker.do_attack_animation(src)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
@@ -273,11 +276,18 @@ var/global/combos_cheat_sheet = ""
 	else
 		//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 		for(var/obj/item/weapon/grab/G in GetGrabs())
-			var/diff = G.affecting.getStamina() - G.assailant.getStamina()
 			if(G.affecting)
+				var/diff = G.affecting.getStamina() - G.assailant.getStamina()
+				if(G.affecting == attacker)
+					if(G.state < GRAB_AGGRESSIVE)
+						qdel(G)
+						return attack_unarmed(attacker)
+					if(diff >= 0 && G.state > GRAB_PASSIVE)
+						G.affecting.setStamina(diff)
+						visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
+						qdel(G)
+					return
 				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
-				if(G.affecting == attacker && diff >= 0 && G.state > GRAB_PASSIVE)
-					G.affecting.setStamina(diff)
 				qdel(G)
 		//End BubbleWrap
 

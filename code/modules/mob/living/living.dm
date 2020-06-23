@@ -826,12 +826,6 @@
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
-			size_ratio_resisting = get_size_ratio(G.assailant, L)
-			size_ratio_grabbing = get_size_ratio(L, G.assailant)	
-			g_resist_cost = L.resist_cost * size_ratio_grabbing
-			r_resist_cost = L.resist_cost * size_ratio_resisting
-			if(L.getStamina() >= g_resist_cost)
-				G.assailant.adjustStamina(-g_resist_cost)
 			if(G.state == GRAB_PASSIVE)
 				if(ishuman(G.assailant))
 					var/mob/living/carbon/human/H = G.assailant
@@ -839,10 +833,15 @@
 						H.adjustBruteLoss(5) // We bit them.
 						H.shoving_fingers = FALSE
 				qdel(G)
-		if(resisting)
-			if(L.getStamina() >= r_resist_cost)
+			size_ratio_resisting = get_size_ratio(G.assailant, L)
+			size_ratio_grabbing = get_size_ratio(L, G.assailant)	
+			g_resist_cost = L.resist_cost * size_ratio_grabbing
+			r_resist_cost = L.resist_cost * size_ratio_resisting
+			if(L.getStamina() >= g_resist_cost)
+				G.assailant.adjustStamina(-g_resist_cost)
 				L.adjustStamina(-r_resist_cost)
-				L.visible_message("<span class='danger'>[L] resists!</span>")
+		if(resisting)
+			L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
