@@ -79,7 +79,7 @@
 			back = back_style[2]
 
 // replaces default human outfit in [slot] on [item_type]
-/datum/outfit/proc/change_slot_equip(var/slot, var/item_type)
+/datum/outfit/proc/change_slot_equip(slot, item_type)
 	switch(slot)
 		if(SLOT_W_UNIFORM)
 			uniform = item_type
