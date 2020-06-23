@@ -106,6 +106,18 @@
 		if(SLOT_GLASSES)
 			glasses = item_type
 
+// SPECIES_EQUIP PROCS
+/datum/outfit/proc/unathi_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/tajaran_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/skrell_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
 
 // Called before the pre_equip() proc
 // replaces default outfit (human outfit) on outfit from replace_outfit

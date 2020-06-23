@@ -197,18 +197,6 @@
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
 	return O.vox_equip(H)
 
-// SPECIES_EQUIP PROCS
-/datum/outfit/proc/unathi_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	return
-
-/datum/outfit/proc/tajaran_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	return
-
-/datum/outfit/proc/skrell_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	return
-
-/datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	return
 
 // Species Outfit.
 //---------------------------
