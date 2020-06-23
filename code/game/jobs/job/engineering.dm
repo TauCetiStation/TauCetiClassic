@@ -28,10 +28,6 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
-
 
 /datum/job/engineer
 	title = "Station Engineer"
@@ -50,10 +46,6 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
-
 
 /datum/job/atmos
 	title = "Atmospheric Technician"
@@ -70,10 +62,6 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
-
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 
 /datum/job/technical_assistant

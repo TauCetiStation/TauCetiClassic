@@ -8,6 +8,12 @@
 
 	belt = /obj/item/device/pda/bar
 
+	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag,
+	                          /obj/item/ammo_casing/shotgun/beanbag
+	                          )
+
 // CHEF OUTFIT
 /datum/outfit/job/chef
 	name = OUTFIT_JOB_NAME("Chef")

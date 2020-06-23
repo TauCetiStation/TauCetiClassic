@@ -13,6 +13,9 @@
 
 	back_style = BACKPACK_STYLE_ENGINEERING
 
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
 // ENGINEER OUTFIT
 /datum/outfit/job/engineer
 	name = OUTFIT_JOB_NAME("Station Engineer")
@@ -27,6 +30,9 @@
 	r_pocket = /obj/item/device/t_scanner
 
 	back_style = BACKPACK_STYLE_ENGINEERING
+
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
 /datum/outfit/job/engineer/pre_equip()
 	if(prob(75))
@@ -46,6 +52,10 @@
 	l_pocket = /obj/item/device/pda/atmos
 
 	back_style = BACKPACK_STYLE_ENGINEERING
+
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
 
 // TECHNICAL_ASSISTANT OUTFIT
 /datum/outfit/job/technical_assistant

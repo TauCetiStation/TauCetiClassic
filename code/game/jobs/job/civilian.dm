@@ -103,12 +103,6 @@
 	*/
 	restricted_species = list(TAJARAN)
 
-	survival_kit_items = list(/obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag,
-	                          /obj/item/ammo_casing/shotgun/beanbag
-	                          )
-
 
 /datum/job/chef
 	title = "Chef"
