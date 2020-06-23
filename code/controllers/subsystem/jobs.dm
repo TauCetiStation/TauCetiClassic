@@ -420,7 +420,6 @@ var/datum/subsystem/job/SSjob
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
-		job.apply_fingerprints(H)
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
