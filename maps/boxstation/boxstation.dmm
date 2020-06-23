@@ -66951,10 +66951,6 @@
 	icon_state = "blue"
 	},
 /area/station/medical/genetics)
-"dYV" = (
-/obj/structure/lattice,
-/turf/space,
-/area/station/civilian/chapel/mass_driver)
 "dZb" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
@@ -78126,9 +78122,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"uIC" = (
-/turf/space,
-/area/station/civilian/chapel/mass_driver)
 "uMv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -129268,10 +129261,10 @@ bCY
 wAu
 bHc
 sPv
-uIC
-dYV
-dYV
-wLi
+aaa
+aah
+aah
+aah
 aaa
 aaa
 aaa
@@ -129525,10 +129518,10 @@ bHd
 pBZ
 csp
 sPv
-uIC
-uIC
-uIC
-wLi
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -129782,10 +129775,10 @@ bIx
 aXK
 wOM
 sPv
-uIC
-uIC
-uIC
-wLi
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -130039,12 +130032,12 @@ bJD
 wAu
 bjs
 aUM
-uIC
-uIC
-uIC
-wLi
-aah
-aah
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
