@@ -8,8 +8,6 @@
 
 	belt = /obj/item/device/pda/bar
 
-	back_style = BACKPACK_STYLE_COMMON
-
 // CHEF OUTFIT
 /datum/outfit/job/chef
 	name = OUTFIT_JOB_NAME("Chef")
@@ -18,8 +16,6 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chef
-
-	back_style = BACKPACK_STYLE_COMMON
 
 // BOTANIST OUTFIT
 /datum/outfit/job/hydro
@@ -42,8 +38,6 @@
 
 	belt = /obj/item/device/pda/janitor
 
-	back_style = BACKPACK_STYLE_COMMON
-
 // BARBER OUTFIT
 /datum/outfit/job/barber
 	name = OUTFIT_JOB_NAME("Barber")
@@ -52,8 +46,6 @@
 	shoes = /obj/item/clothing/shoes/laceup
 
 	belt = /obj/item/device/pda/barber
-
-	back_style = BACKPACK_STYLE_COMMON
 
 /datum/outfit/job/barber/pre_equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title)
@@ -74,8 +66,6 @@
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
 
-	back_style = BACKPACK_STYLE_COMMON
-
 // LAWYER OUTFIT
 /datum/outfit/job/lawyer
 	name = OUTFIT_JOB_NAME("Internal Affairs Agent")
@@ -91,8 +81,6 @@
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
 	
 	r_pocket = /obj/item/device/flash
-
-	back_style = BACKPACK_STYLE_COMMON
 	
 	implants = list(
 		/obj/item/weapon/implant/mindshield/loyalty
@@ -145,5 +133,3 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
-
-	back_style = BACKPACK_STYLE_COMMON

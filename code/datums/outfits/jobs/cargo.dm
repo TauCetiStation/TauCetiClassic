@@ -10,8 +10,6 @@
 	l_ear =  /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/quartermaster
 
-	back_style = BACKPACK_STYLE_COMMON
-
 // CARGOTECH OUTFIT
 /datum/outfit/job/cargo_tech
 	name = OUTFIT_JOB_NAME("Cargo Technician")
@@ -21,8 +19,6 @@
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
-
-	back_style = BACKPACK_STYLE_COMMON
 
 // MINER OUTFIT
 /datum/outfit/job/mining
@@ -51,5 +47,3 @@
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
-
-	back_style = BACKPACK_STYLE_COMMON

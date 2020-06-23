@@ -32,5 +32,3 @@
 	belt = /obj/item/device/pda/heads/hop
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
-
-	back_style = BACKPACK_STYLE_COMMON

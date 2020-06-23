@@ -114,8 +114,6 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
-	back_style = BACKPACK_STYLE_COMMON
-
 /datum/outfit/job/psychiatrist/pre_equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
@@ -133,5 +131,3 @@
 
 	belt = /obj/item/device/pda
 	l_ear = /obj/item/device/radio/headset/headset_med
-
-	back_style = BACKPACK_STYLE_COMMON
