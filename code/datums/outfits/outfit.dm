@@ -319,8 +319,6 @@
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
 				I.inject(H)
-				if(istype(I, /obj/item/weapon/implant/mindshield/loyalty))
-					START_PROCESSING(SSobj, I)
 
 	H.update_body()
 	return TRUE
