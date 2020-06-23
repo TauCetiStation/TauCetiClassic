@@ -42,7 +42,7 @@
 /datum/outfit/job/nurse
 	name = OUTFIT_JOB_NAME("Nurse")
 
-/datum/outfit/job/nurse/pre_equip((mob/living/carbon/human/H))
+/datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
 	if(H.gender == FEMALE)
 		if(prob(50))
 			uniform = /obj/item/clothing/under/rank/nursesuit
