@@ -66,7 +66,7 @@
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(buckled_mob)
-			user_unbuckle_mob()
+			user_unbuckle_mob(user)
 		else
 			visible_message("[user] collapses \the [src.name].")
 			new type_roller(get_turf(src))

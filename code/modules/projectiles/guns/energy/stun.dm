@@ -12,6 +12,7 @@
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
+	ammo_type = list(/obj/item/ammo_casing/energy/stun)
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	var/charge_tick = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
@@ -48,7 +49,7 @@
 	icon_state = "stunrevolver"
 	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
-	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
+	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
 /obj/item/weapon/gun/energy/crossbow

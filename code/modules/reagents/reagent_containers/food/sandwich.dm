@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='notice'>You layer [I] over \the [src].</span>")
 		var/obj/item/weapon/reagent_containers/F = I
 		F.reagents.trans_to(src, F.reagents.total_volume)
-		user.drop_from_inventory(F, loc)
+		user.drop_from_inventory(F, src)
 		ingredients += F
 		update()
 		return

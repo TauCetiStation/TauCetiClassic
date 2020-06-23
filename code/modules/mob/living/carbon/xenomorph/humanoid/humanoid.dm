@@ -43,3 +43,8 @@
 
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
 	return ..() && istype(O, /obj/item/clothing/mask/facehugger)
+
+/mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)
+	. = ..()
+	if(.)
+		update_icons()

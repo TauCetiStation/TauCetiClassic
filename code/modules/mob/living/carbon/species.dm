@@ -433,7 +433,7 @@
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,HAS_SKIN_COLOR = TRUE
-		,NO_FAT=  TRUE
+		,NO_FAT = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -602,11 +602,12 @@
 	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
 	,NO_SCAN = TRUE
-	,IS_PLANT = TRUE
-	,RAD_ABSORB = TRUE
+	,NO_EMOTION = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
 	)
 
 	has_bodypart = list(
@@ -731,6 +732,7 @@
 	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
+	,NO_EMOTION = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
@@ -739,6 +741,7 @@
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
@@ -772,7 +775,7 @@
 	min_age = 1
 	max_age = 125
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_BLOB)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -857,6 +860,7 @@
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
@@ -973,6 +977,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -1023,7 +1028,8 @@
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
-		NO_EMOTION = TRUE
+		NO_EMOTION = TRUE,
+		NO_MUTATION = TRUE
 		)
 
 	has_organ = list(

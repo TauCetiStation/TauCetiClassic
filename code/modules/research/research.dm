@@ -1029,7 +1029,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 5000
 
-	unlocks_designs = list("nuclear_gun", "plasma_10_gun", "plasma_104_gun", "plasma_mag", "lasercannon")
+	unlocks_designs = list("nuclear_gun", "plasma_10_gun", "plasma_104_gun", "plasma_mag", "lasercannon", "laserrifle")
 
 // Powerstorage
 
