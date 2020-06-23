@@ -175,7 +175,7 @@ var/datum/subsystem/vote/SSvote
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
-				to_chat(usr, "<font color='purple'>Next [vote_type] vote is avaible after [round((next_allowed_time-world.time)/600)] minutes</font>")
+				to_chat(usr, "<span class='vote'>Next [vote_type] vote is avaible after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()
@@ -188,7 +188,7 @@ var/datum/subsystem/vote/SSvote
 							if(!C.holder.fakekey && !C.is_afk())
 								num_admins_online++
 					if(num_admins_online)
-						to_chat(usr, "<font color='purple'>Admins online. Restart vote canceled</font>")
+						to_chat(usr, "<span class='vote'>Admins online. Restart vote canceled</span>")
 						return 0
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
@@ -205,7 +205,7 @@ var/datum/subsystem/vote/SSvote
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
-						to_chat(usr, "<font color='purple'>Security level is red or delta. Crew transfer vote canceled</font>")
+						to_chat(usr, "<span class='vote'>Security level is red or delta. Crew transfer vote canceled</span>")
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
