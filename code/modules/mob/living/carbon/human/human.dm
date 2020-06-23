@@ -880,7 +880,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					for (var/datum/data/record/R in data_core.security)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"security"))
-								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message)
+								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message, usr)
 								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"security")) )
 									return
 								var/counter = 1
@@ -1009,7 +1009,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					for (var/datum/data/record/R in data_core.medical)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"medical"))
-								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message)
+								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message, usr)
 								if ( !(t1) || usr.incapacitated() || !(hasHUD(usr,"medical")) )
 									return
 								var/counter = 1
@@ -1307,7 +1307,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!say)
 		return
 	else
-		say = sanitize(say)
+		say = sanitize(say, usr)
 	var/mob/T = creatures[target]
 	if(REMOTE_TALK in T.mutations)
 		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
@@ -1623,7 +1623,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/max_length = bloody_hands * 30 //tweeter style
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), MAX_MESSAGE_LEN)
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), src, MAX_MESSAGE_LEN)
 
 	if (message)
 		var/used_blood_amount = round(length(message) / 30, 1)

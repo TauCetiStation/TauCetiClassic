@@ -147,7 +147,7 @@
 					return
 				else
 					last_announcement = world.time + 1 MINUTE
-				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, usr, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -225,7 +225,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
-				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""), usr)
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -240,7 +240,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
-				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""), usr)
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)

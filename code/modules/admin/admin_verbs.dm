@@ -542,7 +542,7 @@ var/list/admin_verbs_hideable = list(
 	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
 
 	var/client/C = directory[warned_ckey]
-	reason = sanitize(reason)
+	reason = sanitize(reason, usr)
 
 	if(C)
 		to_chat(C, "<span class='alert'><span class='reallybig bold'>You have been formally warned by an administrator.</span><br>Reason: [reason].</span>")
@@ -694,7 +694,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target."
 	if(O)
-		var/message = sanitize(input("What do you want the message to be?", "Make Sound") as text|null)
+		var/message = sanitize(input("What do you want the message to be?", "Make Sound") as text|null, usr)
 		if(!message)
 			return
 		for (var/mob/V in hearers(O))
@@ -971,8 +971,8 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
-	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
-	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
+	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"), usr)
+	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"), usr)
 
 	if(istype(winner, /mob/living))
 		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
@@ -1008,7 +1008,7 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = sanitize(input(usr, "", "Antag OOC") as text)
+	var/msg = sanitize(input(usr, "", "Antag OOC") as text, usr)
 	if(!msg)	return
 
 	var/display_name = src.key

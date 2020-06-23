@@ -233,11 +233,11 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	if(!target)
 		return
 
-	var/speaker = sanitize(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, MAX_NAME_LEN)
+	var/speaker = sanitize(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, usr, MAX_NAME_LEN)
 	if(!speaker)
 		return
 
-	var/message = sanitize(input("What would you like to say?", "Message") as null|text)
+	var/message = sanitize(input("What would you like to say?", "Message") as null|text, usr)
 	if(!message)
 		return
 

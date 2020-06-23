@@ -206,11 +206,11 @@ var/datum/subsystem/vote/SSvote
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
-				question = capitalize(sanitize(input(usr,"What is the vote for?")))
+				question = capitalize(sanitize(input(usr,"What is the vote for?"), usr))
 				if(!question)
 					return 0
 				for(var/i=1,i<=10,i++)
-					var/option = capitalize(sanitize(input(usr,"Please enter an option or hit cancel to finish")))
+					var/option = capitalize(sanitize(input(usr,"Please enter an option or hit cancel to finish"), usr))
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)

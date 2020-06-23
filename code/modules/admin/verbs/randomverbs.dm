@@ -53,7 +53,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text)
+	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text, usr)
 
 	if (!msg)
 		return
@@ -111,7 +111,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to everyone:")) as text)
+	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to everyone:")) as text, usr)
 
 	if (!msg)
 		return
@@ -134,7 +134,7 @@
 	if(!M)
 		return
 
-	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to your target:")) as text)
+	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to your target:")) as text, usr)
 
 	if( !msg )
 		return
@@ -225,7 +225,7 @@
 				M.client.prefs.save_preferences()
 				M.client.prefs.muted |= mute_type
 				notes_add(M.key, "Permamute from [mute_string]: [permmutreason]", usr.client)
-				permmutreason = sanitize(permmutreason)
+				permmutreason = sanitize(permmutreason, usr)
 				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
 			else
 				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
@@ -235,7 +235,7 @@
 			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
 				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
-				mutereason = sanitize(mutereason)
+				mutereason = sanitize(mutereason, usr)
 				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
 			else
 				return
@@ -620,7 +620,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = sanitize(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null)
+	var/input = sanitize(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null, usr)
 	if(!input)
 		return
 	for(var/mob/living/silicon/ai/M in ai_list)
@@ -668,7 +668,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/input = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, usr, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
 	if(!input)
 		return
@@ -1105,7 +1105,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, usr, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	if(!sent_text)
 		return
 
@@ -1132,7 +1132,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/stamp_text = null
 	if(stamp_type)
-		stamp_text = sanitize(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay). In case of empty field there will be default stamp text.") as text)
+		stamp_text = sanitize(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay). In case of empty field there will be default stamp text.") as text, usr)
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name

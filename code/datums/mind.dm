@@ -501,7 +501,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
+		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, usr, extra = FALSE)
 		if (new_memo)
 			return
 		memory = new_memo
@@ -612,7 +612,7 @@
 				new_objective.target_amount = target_number
 
 			if ("custom")
-				var/expl = sanitize(input("Custom objective:", "Objective", objective ? input_default(objective.explanation_text) : "") as text|null)
+				var/expl = sanitize(input("Custom objective:", "Objective", objective ? input_default(objective.explanation_text) : "") as text|null, usr)
 				if (!expl) return
 				new_objective = new /datum/objective
 				new_objective.owner = src

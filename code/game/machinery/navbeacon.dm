@@ -214,11 +214,11 @@
 		codes.Remove(codekey)
 
 	else if(href_list["add"])
-		var/newkey = sanitize(input("Enter New Transponder Code Key", "Navigation Beacon") as text|null)
+		var/newkey = sanitize(input("Enter New Transponder Code Key", "Navigation Beacon") as text|null, usr)
 		if(!newkey)
 			return FALSE
 
-		var/newval = sanitize(input("Enter New Transponder Code Value", "Navigation Beacon") as text|null)
+		var/newval = sanitize(input("Enter New Transponder Code Value", "Navigation Beacon") as text|null, usr)
 		if(!newval)
 			return FALSE
 

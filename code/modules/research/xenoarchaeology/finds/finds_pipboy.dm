@@ -228,7 +228,7 @@
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
-	var/t = sanitize(input(U, "Please enter your name", name, null) as text)
+	var/t = sanitize(input(U, "Please enter your name", name, null) as text, U)
 	t = replacetext(t, "&#34;", "\"")
 
 	if (!t)
@@ -250,7 +250,7 @@
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
 	U.last_target_click = world.time
-	var/alarm = sanitize(input(U, "Please time for the alarm to ring(e.g. 12:00)", name, null) as text)
+	var/alarm = sanitize(input(U, "Please time for the alarm to ring(e.g. 12:00)", name, null) as text, U)
 	switch(numb_of_alarm)
 		if(1)
 			alarm_1 = "[alarm]"

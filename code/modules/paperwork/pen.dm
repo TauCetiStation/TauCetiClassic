@@ -187,7 +187,7 @@
 	var/signature = ""
 
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
-	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)), usr)
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
 	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))

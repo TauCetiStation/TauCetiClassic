@@ -730,7 +730,7 @@
 //MESSENGER/NOTE FUNCTIONS===================================
 
 		if ("Edit")
-			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
+			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, U, extra = FALSE)
 			if (in_range(src, U) && loc == U && mode == 1)
 				note = html_decode(n)
 				notehtml = note
@@ -758,7 +758,7 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
+			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, U, 20)
 			if (t && in_range(src, U) && loc == U)
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
@@ -844,7 +844,7 @@
 		if("funds_amount")
 			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
-			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, U, 20)
 		if("make_transfer")
 			if(owner_account.suspended)
 				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
@@ -1083,7 +1083,7 @@
 	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
-	var/t = sanitize(input(U, "Please enter message", name, null) as text)
+	var/t = sanitize(input(U, "Please enter message", name, null) as text, U)
 	t = replacetext(t, "&#34;", "\"")
 
 	if (!t || !istype(P))

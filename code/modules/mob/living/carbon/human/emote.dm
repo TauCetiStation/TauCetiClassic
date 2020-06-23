@@ -306,7 +306,7 @@
 // ========== SPECIAL ==========
 
 		if ("custom")
-			var/input = sanitize(input("Choose an emote to display.") as text|null)
+			var/input = sanitize(input("Choose an emote to display.") as text|null, usr)
 			if (!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
@@ -408,11 +408,11 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose =  sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text)
+	pose =  sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text, usr)
 
 /mob/living/carbon/human/verb/set_flavor()
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text)
+	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text, usr)

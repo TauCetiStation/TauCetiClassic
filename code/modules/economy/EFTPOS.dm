@@ -170,7 +170,7 @@
 					linked_account = null
 					to_chat(usr, "[bicon(src)]<span class='warning'>Account has been suspended.</span>")
 			if("trans_purpose")
-				transaction_purpose = sanitize(input("Enter reason for EFTPOS transaction", "Transaction purpose"))
+				transaction_purpose = sanitize(input("Enter reason for EFTPOS transaction", "Transaction purpose"), usr)
 			if("trans_value")
 				var/try_num = input("Enter amount for EFTPOS transaction", "Transaction amount") as num
 				if(try_num < 0)

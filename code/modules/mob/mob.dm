@@ -259,7 +259,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 
 	if(msg && mind)
 		mind.store_memory(msg)
@@ -267,7 +267,7 @@
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/proc/store_memory(msg, popup)
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 
 	if(length(memory) == 0)
 		memory += msg
@@ -281,7 +281,7 @@
 	set src in usr
 	if(usr != src)
 		to_chat(usr, "No.")
-	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",input_default(flavor_text)) as message|null)
+	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",input_default(flavor_text)) as message|null, usr)
 
 	if(msg)
 		flavor_text = msg

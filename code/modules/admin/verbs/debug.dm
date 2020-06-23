@@ -85,7 +85,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					return
 
 				if("text")
-					lst[i] = sanitize(input("Enter new text:","Text",null) as text)
+					lst[i] = sanitize(input("Enter new text:","Text",null) as text, usr)
 
 				if("num")
 					lst[i] = input("Enter new number:","Num",0) as num

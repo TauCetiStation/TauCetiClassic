@@ -116,7 +116,7 @@
 		if(!istype(P))
 			return FALSE
 		var/timeout = world.time + 600
-		var/reason = sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text)
+		var/reason = sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text, usr)
 		if(world.time > timeout)
 			return FALSE
 		if(!reason)

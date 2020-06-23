@@ -1114,14 +1114,14 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose = sanitize(input(usr, "This is [src]. It is...", "Pose", input_default(pose)) as text)
+	pose = sanitize(input(usr, "This is [src]. It is...", "Pose", input_default(pose)) as text, usr)
 
 /mob/living/silicon/robot/verb/set_flavor()
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
+	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text, usr)
 
 /mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 

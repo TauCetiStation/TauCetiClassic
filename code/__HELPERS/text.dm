@@ -22,12 +22,24 @@
  */
 
 //Used for preprocessing entered text
-/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
+/proc/sanitize(input, client_source = null, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
 	if(!input)
 		return
 
 	if(max_length)
 		input = copytext(input,1,max_length)
+
+	if(client_source)
+		var/client/C
+		if(isclient(client_source))
+			C = client_source
+		if(ismob(client_source))
+			var/mob/M = client_source
+			C = M.client
+		if(C && C.byond_version >= 513)
+			// they need utf8 conversion
+			input = utf8_to_cp1251(input)
+
 
 	input = replacetext(input, JA_CHARACTER, JA_PLACEHOLDER)
 
@@ -167,6 +179,36 @@
 /proc/initial_ja(text)
 	return replace_characters(text, list(JA_ENTITY=JA_CHARACTER, JA_ENTITY_ASCII=JA_CHARACTER, JA_PLACEHOLDER=JA_CHARACTER))
 
+/proc/utf8_to_cp1251(text)
+	var/text_len = length(text)
+	// Creating a list and then joining it afterwards is faster than string concatenation according to my benchmarks
+	var/list/parts = list()
+	var/pointer = 1
+	// dont worry this is O(n) not O(n^2) as it may appear at first glance
+	while(pointer <= text_len)
+		var/reached_end = TRUE
+		for(var/I in pointer to text_len)
+			var/c1 = text2ascii(text, I)
+			if(c1 == 0xD0 || c1 == 0xD1) // only really care about russian characters
+				var/c2 = text2ascii(text, I+1)
+				reached_end = FALSE
+				if(I != pointer)
+					parts += copytext(text, pointer, I)
+				pointer = I + 2
+				var/code_point = ((c1 & 31) << 6) + (c2 & 63)
+				if(code_point >= 0x410 && code_point <= 0x44F)
+					parts += ascii2text(code_point - 0x350)
+				else if(code_point == 0x451)
+					parts += JO_CHARACTER
+				else if(code_point == 0x401)
+					parts += JO_UPPERCHARACTER
+				else
+					parts += copytext(text, I, I+1)
+				break
+		if(reached_end)
+			parts += copytext(text, pointer)
+			break
+	return jointext(parts, "")
 
 /proc/input_default(text)
 	return html_decode(reset_ja(text))//replace br with \n?

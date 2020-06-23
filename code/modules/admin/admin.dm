@@ -934,7 +934,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!check_rights(0))
 		return
 
-	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, usr, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
 		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")

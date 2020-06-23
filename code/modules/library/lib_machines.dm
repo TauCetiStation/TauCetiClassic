@@ -108,7 +108,7 @@
 			category = "Any"
 		category = sanitize_sql(category)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize(input("Enter an author to search for:") as text|null)
+		var/newauthor = sanitize(input("Enter an author to search for:") as text|null, usr)
 		if(newauthor)
 			author = newauthor
 		else
@@ -345,7 +345,7 @@
 	if(href_list["editbook"])
 		buffer_book = sanitize_safe(input("Enter the book's title:") as text|null, MAX_NAME_LEN)
 	if(href_list["editmob"])
-		buffer_mob = sanitize(input("Enter the recipient's name:") as text|null, MAX_NAME_LEN)
+		buffer_mob = sanitize(input("Enter the recipient's name:") as text|null, usr, MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = buffer_book
@@ -360,7 +360,7 @@
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)
+		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, usr, MAX_NAME_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -446,7 +446,7 @@
 			if(query.item[2] != null)
 				return
 
-		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
+		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text, usr))
 		if(length(reason) > 60)
 			alert("The reason is more than 60 characters long")
 			return

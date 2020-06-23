@@ -33,7 +33,7 @@
 
 		edit_path = "[folder][name].htm"
 
-	var/announcement = sanitize(input("Edit announcement [edit_path] (leave blank to cancel or delete).\nNo HTML allowed from ingame edit.", "Edit Host Announcement", file2text(edit_path)) as null|message, max_length = 10000, extra = FALSE)
+	var/announcement = sanitize(input("Edit announcement [edit_path] (leave blank to cancel or delete).\nNo HTML allowed from ingame edit.", "Edit Host Announcement", file2text(edit_path)) as null|message, usr, max_length = 10000, extra = FALSE)
 
 	if(!announcement)
 		choice = alert("Empty text. Cancel edit or delete announcement?", "Host Announcement", "Cancel", "Delete")

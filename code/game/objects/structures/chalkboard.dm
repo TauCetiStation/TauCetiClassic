@@ -59,7 +59,7 @@
 		to_chat(usr, "<span class='notice'>You can't post it all on board!</span>")
 		return
 
-	t = sanitize(replacetext(t, "\n", "\[br\]"))
+	t = sanitize(replacetext(t, "\n", "\[br\]"), usr)
 
 	// check for exploits
 	for(var/bad in paper_blacklist)

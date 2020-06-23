@@ -314,19 +314,19 @@ What a mess.*/
 			switch(href_list["field"])
 				if("name")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, MAX_NAME_LEN)
+						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, usr, MAX_NAME_LEN)
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
 				if("id")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
+						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text, usr)
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["id"] = t1
 				if("fingerprint")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
+						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text, usr)
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["fingerprint"] = t1
@@ -355,7 +355,7 @@ What a mess.*/
 						alert(usr, "You do not have the required rank to do this!")
 				if("species")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please enter race:", "General records", input_default(active1.fields["species"]), null) as message)
+						var/t1 = sanitize(input("Please enter race:", "General records", input_default(active1.fields["species"]), null) as message, usr)
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1

@@ -19,7 +19,7 @@
 	switch(class)
 
 		if("text")
-			var_value = sanitize(input("Enter new text:","Text") as null|text)
+			var_value = sanitize(input("Enter new text:","Text") as null|text, usr)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as null|num
@@ -68,7 +68,7 @@
 	switch(class)
 
 		if("text")
-			var_value = sanitize(input("Enter new text:","Text") as text)
+			var_value = sanitize(input("Enter new text:","Text") as text, usr)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as num
@@ -223,7 +223,7 @@
 			return
 
 		if("text")
-			L[L.Find(variable)] = sanitize(input("Enter new text:","Text") as text)
+			L[L.Find(variable)] = sanitize(input("Enter new text:","Text") as text, usr)
 
 		if("num")
 			L[L.Find(variable)] = input("Enter new number:","Num") as num
@@ -461,7 +461,7 @@
 						return
 					O.set_light(l_color = var_new)
 				else
-					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable]) as null|text)
+					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable]) as null|text, usr)
 					if(isnull(var_new))
 						return
 					O.vars[variable] = var_new

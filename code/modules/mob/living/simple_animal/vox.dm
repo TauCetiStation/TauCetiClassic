@@ -81,7 +81,7 @@
 
 	targets += getmobs() //Fill list, prompt user with list
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
-	text = sanitize(input("What would you like to say?", "Speak to creature", null, null))
+	text = sanitize(input("What would you like to say?", "Speak to creature", null, null), usr)
 
 	if (!target || !text)
 		return

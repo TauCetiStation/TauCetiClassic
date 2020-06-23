@@ -84,7 +84,7 @@
 			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["warn"])
-		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
+		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""), usr)
 		if(!warning) return
 		var/obj/item/weapon/implant/I = locate(href_list["warn"])
 		if((I)&&(I.imp_in))

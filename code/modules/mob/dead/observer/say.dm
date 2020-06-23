@@ -1,5 +1,5 @@
 /mob/dead/observer/say(var/message)
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if (!message)
 		return
@@ -18,7 +18,7 @@
 
 
 /mob/dead/observer/emote(act, type, message, auto)
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if(!message)
 		return

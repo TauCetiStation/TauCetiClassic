@@ -108,7 +108,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if (stat == DEAD)
 		return say_dead(message)

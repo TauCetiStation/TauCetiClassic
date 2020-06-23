@@ -7,7 +7,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/input = sanitize(input(usr, "Enter the description of the custom event. Be descriptive. To cancel the event, make this blank or hit cancel.", "Custom Event", input_default(custom_event_msg)) as message|null, MAX_BOOK_MESSAGE_LEN, extra = FALSE)
+	var/input = sanitize(input(usr, "Enter the description of the custom event. Be descriptive. To cancel the event, make this blank or hit cancel.", "Custom Event", input_default(custom_event_msg)) as message|null, usr, MAX_BOOK_MESSAGE_LEN, extra = FALSE)
 	if(!input || input == "")
 		custom_event_msg = null
 		log_admin("[key_name(usr)] has cleared the custom event text.")

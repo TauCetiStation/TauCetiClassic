@@ -155,9 +155,9 @@ var/global/vs_control/vsc = new
 		if("Toggle")
 			newvar = !newvar
 		if("Text")
-			newvar = sanitize(input(user,"Enter a string:","Settings",newvar) as text)
+			newvar = sanitize(input(user,"Enter a string:","Settings",newvar) as text, user)
 		if("Long Text")
-			newvar = sanitize(input(user,"Enter text:","Settings",newvar) as message)
+			newvar = sanitize(input(user,"Enter text:","Settings",newvar) as message, user)
 	vw = newvar
 	if(ch in plc.settings)
 		plc.vars[ch] = vw

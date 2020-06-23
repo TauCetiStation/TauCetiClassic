@@ -241,7 +241,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	//message = entity_ja(message)//moved to js
 
 	if(islist(target))
-		var/encoded = url_encode(message)
+		var/encoded = url_encode(url_encode(message))
 		for(var/I in target)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
@@ -277,4 +277,4 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			C.chatOutput.messageQueue += message
 			return
 
-		C << output(url_encode(message), "browseroutput:output")
+		C << output(url_encode(url_encode(message)), "browseroutput:output")

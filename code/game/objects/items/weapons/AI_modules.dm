@@ -100,7 +100,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", input_default(user.name)))
+	targetName = sanitize(input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", input_default(user.name)), usr)
 	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
@@ -128,7 +128,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Please enter the name of the person who is the only human.", "Who?", input_default(user.real_name)))
+	targetName = sanitize(input(usr, "Please enter the name of the person who is the only human.", "Who?", input_default(user.real_name)), usr)
 	desc = text("A 'one human' AI module: 'Only [] is human.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
@@ -372,7 +372,7 @@ AI MODULES
 		return
 
 	lawpos = min(new_lawpos, 50)
-	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"))
+	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"), user)
 	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -403,7 +403,7 @@ AI MODULES
 	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/freeform/core/attack_self(mob/user)
-	newFreeFormLaw = sanitize(input(user, "Please enter a new core law for the AI.", "Freeform Law Entry"))
+	newFreeFormLaw = sanitize(input(user, "Please enter a new core law for the AI.", "Freeform Law Entry"), user)
 	desc = "A 'freeform' Core AI module: '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/core/add_freeform_law(mob/living/silicon/ai/target)
@@ -418,7 +418,7 @@ AI MODULES
 	report_AI = FALSE
 
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
-	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"))
+	newFreeFormLaw = sanitize(input(user, "Please enter a new law for the AI.", "Freeform Law Entry"), user)
 	desc = "A hacked AI law module: '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)

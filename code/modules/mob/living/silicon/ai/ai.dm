@@ -360,7 +360,7 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message, usr)
 	if(!input)
 		return
 
@@ -416,7 +416,7 @@ var/list/ai_verbs_default = list(
 	if(world.time < next_emergency_message_time)
 		to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 		return
-	var/input = sanitize(input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+	var/input = sanitize(input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""), usr)
 	if(!input)
 		return
 	Centcomm_announce(input, usr)

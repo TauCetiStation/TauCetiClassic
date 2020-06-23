@@ -23,7 +23,7 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = sanitize(message)
+	message = sanitize(message, usr)
 
 	if(me_verb_allowed)
 		usr.emote("me", usr.emote_type, message, FALSE)

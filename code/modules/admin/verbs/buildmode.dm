@@ -162,7 +162,7 @@
 					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet
 			if(3)
-				master.buildmode.varholder = sanitize(input(usr,"Enter variable name:" ,"Name", "name"))
+				master.buildmode.varholder = sanitize(input(usr,"Enter variable name:" ,"Name", "name"), usr)
 				if(master.buildmode.varholder in VE_MASS_FULLY_LOCKED)
 					to_chat(usr, "<span class='warning'>It is forbidden to edit this variable.</span>")
 					return
@@ -174,7 +174,7 @@
 				if(!thetype) return 1
 				switch(thetype)
 					if("text")
-						master.buildmode.valueholder = sanitize(input(usr,"Enter variable value:" ,"Value", "value") as text)
+						master.buildmode.valueholder = sanitize(input(usr,"Enter variable value:" ,"Value", "value") as text, usr)
 					if("number")
 						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
 					if("mob-reference")

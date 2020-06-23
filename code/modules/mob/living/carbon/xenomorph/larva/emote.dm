@@ -84,7 +84,7 @@
 //  ========== SPECIAL ==========
 
 		if ("custom")
-			var/input = sanitize(input("Choose an emote to display.") as text|null)
+			var/input = sanitize(input("Choose an emote to display.") as text|null, usr)
 			if (!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")

@@ -89,7 +89,7 @@
 	switch(href_list["task"])
 		if("input")
 			if(href_list["preference"] == "metadata")
-				var/new_metadata = sanitize(input(user, "Enter any OOC information you'd like others to see:", "Game Preference", input_default(metadata)) as message|null)
+				var/new_metadata = sanitize(input(user, "Enter any OOC information you'd like others to see:", "Game Preference", input_default(metadata)) as message|null, user)
 				if(new_metadata)
 					metadata = new_metadata
 

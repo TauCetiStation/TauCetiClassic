@@ -11,7 +11,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/borer/say(var/message)
 
-	message = capitalize(sanitize(message))
+	message = capitalize(sanitize(message, src))
 
 	if(!message)
 		return

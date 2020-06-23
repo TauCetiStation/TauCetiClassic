@@ -201,7 +201,7 @@
 	switch(param)
 		if("reason")
 			if(!value)
-				value = sanitize(input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text)
+				value = sanitize(input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text, usr)
 				value = sanitize_sql(value)
 				if(!value)
 					to_chat(usr, "Cancelled")

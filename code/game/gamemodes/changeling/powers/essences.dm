@@ -88,7 +88,7 @@
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
 		message = copytext(message, 3) // deleting prefix
-		var/n_message = sanitize(message)
+		var/n_message = sanitize(message, src)
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
 		for(var/datum/orbit/O in host.orbiters)
@@ -102,7 +102,7 @@
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking in hivemind</span>")
 			return
 		message = copytext(message, 3) // deleting prefix
-		var/n_message = sanitize(message)
+		var/n_message = sanitize(message, src)
 		for(var/mob/M in mob_list)
 			if(M.mind && M.mind.changeling)
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")

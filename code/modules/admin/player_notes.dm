@@ -89,7 +89,7 @@
 	if (!key || !note)
 		return
 
-	note = sanitize(note)
+	note = sanitize(note, admin)
 
 	//Loading list of notes for this key
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")

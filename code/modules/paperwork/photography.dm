@@ -52,7 +52,7 @@
 
 /obj/item/weapon/photo/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
+		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, user, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
 	else if(istype(I, /obj/item/weapon/lighter))

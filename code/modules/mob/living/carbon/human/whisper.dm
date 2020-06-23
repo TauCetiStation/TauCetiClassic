@@ -29,7 +29,7 @@
 	if(src.stat)
 		return FALSE
 
-	message = sanitize(message)	//made consistent with say
+	message = sanitize(message, src)	//made consistent with say
 	if(iszombie(src))
 		message = zombie_talk(message)
 

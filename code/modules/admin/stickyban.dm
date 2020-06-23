@@ -46,7 +46,7 @@
 	if (istext(reason) && length(reason))
 		ban[BANKEY_MSG] = reason
 	else
-		reason = sanitize(input(usr, "Reason", "Reason", "Ban Evasion") as text|null)
+		reason = sanitize(input(usr, "Reason", "Reason", "Ban Evasion") as text|null, usr)
 		if (!reason)
 			return
 		ban[BANKEY_MSG] = "[reason]"
@@ -123,7 +123,7 @@
 		to_chat(usr, "<span class='adminnotice'>This user was stickybanned by the host, and can not be edited from this panel</span>")
 		return
 	var/oldreason = ban[BANKEY_MSG]
-	var/reason = sanitize(input(usr, "Reason", "Reason", "[ban[BANKEY_MSG]]") as text|null)
+	var/reason = sanitize(input(usr, "Reason", "Reason", "[ban[BANKEY_MSG]]") as text|null, usr)
 	if (!reason || reason == oldreason)
 		return
 	// We have to do this again incase something changed while we waited for input

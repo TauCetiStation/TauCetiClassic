@@ -8,7 +8,7 @@
 		to_chat(src, "<font color='red'>Error: ASAY: You cannot use asay (Muted).</font>")
 		return
 
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 	if(!msg)
 		return
 

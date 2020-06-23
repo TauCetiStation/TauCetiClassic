@@ -54,7 +54,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(10))
 		adjustToxLoss(-10)
-		var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
+		var/msg = sanitize(input("Message:", "Alien Whisper") as text|null, usr)
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[key_name(M)] : [msg]")
 			to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head... <I>[msg]</I></span>")

@@ -36,7 +36,7 @@
 		if(!newname)
 			return
 		else
-			name = ("bookcase ([sanitize(newname)])")
+			name = ("bookcase ([sanitize(newname, usr)])")
 	else
 		..()
 
@@ -206,14 +206,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, usr, MAX_BOOK_MESSAGE_LEN)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
 					src.dat += content//infiniti books?
 			if("Author")
-				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
+				var/newauthor = sanitize(input(usr, "Write the author's name:"), usr, MAX_NAME_LEN)
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return

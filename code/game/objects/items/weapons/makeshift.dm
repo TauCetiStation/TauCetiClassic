@@ -244,7 +244,7 @@
 
 	if(istype(I, /obj/item/weapon/pen))
 		var/defaultText = "FUK NT!1"
-		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
+		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)), usr)
 		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
 		W.desc = targName
 		user.remove_from_mob(src)

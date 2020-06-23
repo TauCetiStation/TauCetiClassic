@@ -3,7 +3,7 @@
 	if (silent)
 		return
 
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if(copytext(message, 1, 2) == "*")
 		return emote(copytext(message, 2))
@@ -26,7 +26,7 @@
 	if (silent)
 		return
 
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if (length(message) >= 1)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")

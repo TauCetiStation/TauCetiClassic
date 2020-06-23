@@ -44,7 +44,7 @@ var/global/war_device_activation_forbidden
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = sanitize(input(user, "Insert your custom declaration", "Declaration"))
+		war_declaration = sanitize(input(user, "Insert your custom declaration", "Declaration"), user)
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)

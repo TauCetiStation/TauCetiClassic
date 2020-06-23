@@ -11,7 +11,7 @@
 		to_chat(usr, "<span class='warning'>There's nobody that can save you now.</span>")
 		return
 
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 	if(!msg)
 		return
 

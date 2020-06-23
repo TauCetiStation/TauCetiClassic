@@ -20,7 +20,7 @@
 	if(handle_spam_prevention(msg, MUTE_MENTORHELP))
 		return
 
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 	if(!msg)
 		return
 

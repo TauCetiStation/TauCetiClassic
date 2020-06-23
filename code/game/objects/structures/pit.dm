@@ -212,7 +212,7 @@
 			qdel(src)
 			return
 	if(istype(W,/obj/item/weapon/pen))
-		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null)
+		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null, user)
 		add_fingerprint(user)
 		if(msg)
 			message = msg

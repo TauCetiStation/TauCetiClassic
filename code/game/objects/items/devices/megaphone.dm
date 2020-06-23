@@ -29,7 +29,7 @@
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', VOL_EFFECTS_MASTER)
-	var/message = sanitize(input(user, "Shout a message?", "Megaphone", null)  as text)
+	var/message = sanitize(input(user, "Shout a message?", "Megaphone", null)  as text, user)
 	if(!message)
 		return
 	message = (capitalize(message))

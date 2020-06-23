@@ -444,7 +444,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	return string
 
 /datum/admin_help/proc/Retitle()
-	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null)
+	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null, usr)
 	if(new_title)
 		name = new_title
 		stat_name = sanitize_stat(new_title)
@@ -526,7 +526,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(is_ahelp_cooldown())
 		return
 
-	var/msg = sanitize(input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null)
+	var/msg = sanitize(input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null, src)
 	if(!msg)
 		return
 

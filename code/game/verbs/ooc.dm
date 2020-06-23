@@ -60,7 +60,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	)
 
 /proc/send2ooc(msg, name, colour, client/sender)
-	msg = sanitize(msg)
+	msg = sanitize(msg, sender)
 
 	if(!msg)
 		return
@@ -122,7 +122,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	if(!mob)	return
 
-	msg = sanitize(msg)
+	msg = sanitize(msg, usr)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))

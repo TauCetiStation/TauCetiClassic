@@ -37,7 +37,7 @@ var/datum/subsystem/chat/SSchat
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)
 
-	var/encoded = url_encode(message)
+	var/encoded = url_encode(url_encode(message))
 
 	SSdemo.write_chat(target, message)
 

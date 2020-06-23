@@ -116,8 +116,8 @@
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/gift))
 		var/obj/item/weapon/gift/present = I
-		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
-		var/sender = sanitize(input("Enter your name:") as text|null)
+		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null, usr)
+		var/sender = sanitize(input("Enter your name:") as text|null, usr)
 		if(src && recipient && sender && present && get_dist(src, user) <= 1)
 			present.recipient = recipient
 			present.sender = sender

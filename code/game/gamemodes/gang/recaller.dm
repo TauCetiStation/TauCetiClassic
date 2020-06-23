@@ -274,7 +274,7 @@
 /obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
-	var/message = sanitize(input(user,"Discreetly send a gang-wide message.","Send Message") as null|text)
+	var/message = sanitize(input(user,"Discreetly send a gang-wide message.","Send Message") as null|text, user)
 	if(!message || (message == "") || !can_use(user))
 		return
 	if(!is_centcom_level(user.z) && !is_station_level(user.z))

@@ -54,7 +54,7 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	log_say("[key_name(src)] : [message]")
 

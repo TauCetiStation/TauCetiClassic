@@ -180,7 +180,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_desc"])
-		var/new_item_desc = sanitize(input("Enter item desc:", "Text")  as text|null)
+		var/new_item_desc = sanitize(input("Enter item desc:", "Text")  as text|null, usr)
 		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 500)
 			return
 		editing_item.desc = new_item_desc
@@ -190,7 +190,7 @@ var/list/editing_item_oldname_list = list()
 	if(href_list["change_iconname"])
 		if(!editing_item.icon || !length(icon_states(editing_item.icon)))
 			return
-		var/new_iconname = sanitize(input("Select Main icon name", "Text")  as null|anything in icon_states(editing_item.icon))
+		var/new_iconname = sanitize(input("Select Main icon name", "Text")  as null|anything in icon_states(editing_item.icon), usr)
 		if(!editing_item || !new_iconname)
 			return
 		editing_item.icon_state = new_iconname
@@ -198,7 +198,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"), usr)
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -210,7 +210,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_author"])
-		var/new_sprite_author = sanitize(input("Enter sprite author:", "Text")  as text|null)
+		var/new_sprite_author = sanitize(input("Enter sprite author:", "Text")  as text|null, usr)
 		if(!editing_item)
 			return
 
@@ -229,7 +229,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_oocinfo"])
-		var/new_ooc_info = sanitize(input("Enter item ooc information:", "Text")  as text|null)
+		var/new_ooc_info = sanitize(input("Enter item ooc information:", "Text")  as text|null, usr)
 		if(!editing_item)
 			return
 

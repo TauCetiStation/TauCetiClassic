@@ -15,7 +15,7 @@
 		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
 		return
 
-	message =  sanitize(message)
+	message =  sanitize(message, src)
 
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
@@ -81,7 +81,7 @@
 				message = replacetext(message, "Ñ", pick(list("Ñññ" , "Ññ")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
-				var/sm = sanitize(message)
+				var/sm = sanitize(message, src)
 				for(var/mob/living/carbon/human/H in human_list)
 					if(H.species.name != ABDUCTOR)
 						continue

@@ -611,7 +611,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(src.msg)), extra = FALSE)
+		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(src.msg)), usr, extra = FALSE)
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
@@ -668,10 +668,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(channel_name)), MAX_LNAME_LEN)
+		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(channel_name)), usr, MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", input_default(msg)), extra = FALSE)
+		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", input_default(msg)), usr, extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
@@ -838,7 +838,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), extra = FALSE)
+		src.comment_msg = sanitize(input(usr, "Write your comment", "Network Channel Handler", input_default(src.comment_msg)), usr, extra = FALSE)
 		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
 			src.screen = 22
 		else
@@ -1085,7 +1085,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
-			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
+			var/s = sanitize(input(user, "Write something", "Newspaper", ""), user)
 //			s = copytext(sanitize_u(s), 1, MAX_MESSAGE_LEN)
 			if (!s)
 				return

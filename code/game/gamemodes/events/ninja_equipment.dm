@@ -536,7 +536,7 @@ ________________________________________________________________________________
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			var/t = sanitize(input(U, "Please enter untraceable message.") as text)
+			var/t = sanitize(input(U, "Please enter untraceable message.") as text, U)
 			if(!t||U.stat||U.wear_suit!=src||!s_initialized)//Wow, another one of these. Man...
 				display_to << browse(null, "window=spideros")
 				return

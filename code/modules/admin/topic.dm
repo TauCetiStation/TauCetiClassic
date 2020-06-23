@@ -110,7 +110,7 @@
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = sanitize(href_list["dbbanreason"])
+		var/banreason = sanitize(href_list["dbbanreason"], usr)
 
 		banckey = ckey(banckey)
 
@@ -247,7 +247,7 @@
 			if("moderation_reject")
 				var/itemname = href_list["itemname"]
 
-				var/reason = sanitize(input("Write reason for item rejection or leave empty for no reason","Text") as null|text)
+				var/reason = sanitize(input("Write reason for item rejection or leave empty for no reason","Text") as null|text, usr)
 
 				custom_item_premoderation_reject(target_ckey, itemname, reason)
 				if(href_list["viewthis"])
@@ -432,12 +432,12 @@
 				mins = min(525599,mins)
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
+				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null, usr)
 				if(!reason)	return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
+				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null, usr)
 				if(!reason)	return
 
 		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
@@ -901,7 +901,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null)
+					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null, usr)
 					if(!reason)
 						return
 
@@ -928,7 +928,7 @@
 				if("No")
 					if(!check_rights(R_BAN))
 						return
-					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null)
+					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null, usr)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1039,7 +1039,7 @@
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
 				return
-			var/reason = sanitize(input("Please enter reason"))
+			var/reason = sanitize(input("Please enter reason"), usr)
 			if(!reason)
 				to_chat(M, "<span class='warning'>You have been kicked from the server</span>")
 			else
@@ -1082,7 +1082,7 @@
 				if(!mins)
 					return
 				if(mins >= 525600) mins = 525599
-				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
+				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null, usr)
 				if(!reason)
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
@@ -1103,7 +1103,7 @@
 				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
-				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
+				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null, usr)
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1239,7 +1239,7 @@
 		var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)	return
 		M.say(speech)
-		speech = sanitize(speech) // Nah, we don't trust them
+		speech = sanitize(speech, usr) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='notice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")
 
@@ -1656,7 +1656,7 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
 
-		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
+		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""), src.owner)
 		if(!input)	return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
@@ -1680,7 +1680,7 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
 
-		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
+		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""), src.owner)
 		if(!input)	return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
@@ -1704,7 +1704,7 @@
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
-		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, src.owner, extra = FALSE)
 		if(!input)
 			return
 
@@ -1865,7 +1865,7 @@
 		var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
 		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
 			obj_dir = 2
-		var/obj_name = sanitize(href_list["object_name"])
+		var/obj_name = sanitize(href_list["object_name"], usr)
 		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
 		if (!( where in list("onfloor","inhand","inmarked","dropped") ))
@@ -2112,7 +2112,7 @@
 				if(!ticker)
 					alert("The game hasn't started yet!")
 					return
-				var/objective = sanitize(input("Enter an objective"))
+				var/objective = sanitize(input("Enter an objective"), usr)
 				if(!objective)
 					return
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2611,7 +2611,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
-		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
+		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)), usr)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -2648,7 +2648,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
-		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
+		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), usr, extra = FALSE)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -2700,11 +2700,11 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
-		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
+		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)), usr)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
-		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
+		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""), usr)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -2809,7 +2809,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""), usr)
 		src.access_news_network()
 
 	else if(href_list["readbook"])

@@ -354,7 +354,7 @@
 	if(stat)
 		return
 
-	message = sanitize(message)
+	message = sanitize(message, src)
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))

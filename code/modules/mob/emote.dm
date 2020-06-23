@@ -9,7 +9,7 @@
 		return
 
 	if(!message)
-		message = sanitize(input(src,"Choose an emote to display.") as text|null)
+		message = sanitize(input(src,"Choose an emote to display.") as text|null, src)
 
 	if(message)
 		message = "<B>[src]</B> [message]"
@@ -64,7 +64,7 @@
 
 
 	if(!message)
-		message = sanitize(input(src, "Choose an emote to display.") as text|null)
+		message = sanitize(input(src, "Choose an emote to display.") as text|null, src)
 
 	if(message)
 		message = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[src]</span> <span class='message'>[message]</span></span>"

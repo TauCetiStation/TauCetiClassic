@@ -10,6 +10,8 @@
 #define JA_ENTITY           "&#1103;"
 #define JA_ENTITY_ASCII     "&#255;"  //for old text and histoty, we don't need this anymore because goonchat (God bless goonchat)
                                       //todo: clean saves/bd from this
+#define JO_CHARACTER        "¸"
+#define JO_UPPERCHARACTER   "¨"
 
 //thats not compile options, but it's good safe place for things like this
 #define CYRILLIC_BRAINDAMAGE_1 \

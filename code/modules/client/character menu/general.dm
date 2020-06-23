@@ -175,19 +175,19 @@
 		if("records")
 			switch(href_list["task"])
 				if("med_record")
-					var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",input_default(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",input_default(med_record)) as message, usr, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(medmsg != null)
 						med_record = medmsg
 
 				if("sec_record")
-					var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",input_default(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",input_default(sec_record)) as message, usr, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(secmsg != null)
 						sec_record = secmsg
 
 				if("gen_record")
-					var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",input_default(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",input_default(gen_record)) as message, usr, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(genmsg != null)
 						gen_record = genmsg
@@ -414,7 +414,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a home system.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a home system.")  as text|null, usr)
 						if(raw_choice)
 							home_system = raw_choice
 						return
@@ -425,7 +425,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Character Preference") as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Character Preference") as text|null, usr)
 						if(raw_choice)
 							citizenship = raw_choice
 						return
@@ -436,7 +436,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a faction.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a faction.")  as text|null, usr)
 						if(raw_choice)
 							faction = raw_choice
 						return
@@ -447,14 +447,14 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a religion.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a religion.")  as text|null, usr)
 						if(raw_choice)
 							religion = raw_choice
 						return
 					religion = choice
 
 				if("flavor_text")
-					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message)
+					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message, usr)
 
 					if(msg != null)
 						flavor_text = msg

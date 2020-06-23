@@ -115,7 +115,7 @@ var/list/department_radio_keys = list(
 			return
 
 	if(sanitize)
-		message = sanitize(message)
+		message = sanitize(message, src)
 
 	var/turf/T = get_turf(src)
 

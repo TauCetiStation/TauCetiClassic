@@ -243,7 +243,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""), user)
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
@@ -671,7 +671,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""), user)
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
@@ -691,7 +691,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""))
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""), user)
 		if(!text)
 			return
 		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

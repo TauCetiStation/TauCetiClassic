@@ -211,7 +211,7 @@
 
 	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
 		return
-	var/ring_msg = sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text)
+	var/ring_msg = sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text, user)
 	if(!ring_msg)
 		return
 

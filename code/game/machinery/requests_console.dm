@@ -225,7 +225,7 @@ var/req_console_information = list()
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""), usr)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -242,7 +242,7 @@ var/req_console_information = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message, usr)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])

@@ -570,7 +570,7 @@
 
 /obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
 	if(ismultitool(W))
-		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
+		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), user, MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return
@@ -578,7 +578,7 @@
 
 /obj/structure/window/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
 	if(ismultitool(W) && !anchored) // Only allow programming if unanchored!
-		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
+		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), user, MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
