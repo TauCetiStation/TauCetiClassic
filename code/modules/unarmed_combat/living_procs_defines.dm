@@ -287,10 +287,6 @@ var/global/combos_cheat_sheet = ""
 					return
 				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 				qdel(G)
-
-	if(pulling)
-		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
-		stop_pulling()
 		//End BubbleWrap
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
