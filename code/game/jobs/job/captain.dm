@@ -13,22 +13,16 @@
 	salary = 300
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
+	outfit = /datum/outfit/job/captain
 
 // Non-human species can't be captains.
 /datum/job/captain/special_species_check(datum/species/S)
 	return S.name == HUMAN
 
-/datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/captain, visualsOnly)
-
-	if(visualsOnly)
-		return
-
+/datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
 
 	score["captain"] += H.real_name
-
 	return TRUE
 
 /datum/job/captain/get_access()

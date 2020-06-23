@@ -18,6 +18,7 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
+	outfit = /datum/outfit/job/rd
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -26,11 +27,6 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-
-/datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/rd, visualsOnly)
-	return TRUE
 
 
 /datum/job/scientist
@@ -47,11 +43,8 @@
 	alt_titles = list("Phoron Researcher")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/scientist
 
-/datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/scientist, visualsOnly)
-	return TRUE
 
 /datum/job/xenoarchaeologist
 	title = "Xenoarchaeologist"
@@ -66,6 +59,7 @@
 	access = list(access_research, access_xenoarch)
 	salary = 190
 	minimal_player_ingame_minutes = 1400
+	outfit = /datum/outfit/job/xenoarchaeologist
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -75,10 +69,6 @@
 	*/
 	restricted_species = list(IPC)
 
-/datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/xenoarchaeologist, visualsOnly)
-	return TRUE
 
 /datum/job/xenobiologist
 	title = "Xenobiologist"
@@ -93,11 +83,7 @@
 	access = list(access_research, access_xenobiology)
 	salary = 190
 	minimal_player_ingame_minutes = 1560
-
-/datum/job/xenobiologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H) return 0
-	H.equipOutfit(/datum/outfit/job/xenobiologist, visualsOnly)
-	return TRUE
+	outfit = /datum/outfit/job/xenobiologist
 
 
 /datum/job/roboticist
@@ -114,11 +100,7 @@
 	salary = 180
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
-
-/datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/roboticist, visualsOnly)
-	return TRUE
+	outfit = /datum/outfit/job/roboticist
 
 
 /datum/job/research_assistant
@@ -133,9 +115,5 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
 	salary = 50
+	outfit = /datum/outfit/job/research_assistant
 
-/datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return 0
-	H.equipOutfit(/datum/outfit/job/research_assistant, visualsOnly)
-	return TRUE

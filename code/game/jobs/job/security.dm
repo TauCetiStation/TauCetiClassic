@@ -18,6 +18,7 @@
 	salary = 250
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
+	outfit = /datum/outfit/job/hos
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -26,11 +27,6 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-
-/datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/hos, visualsOnly)
-	return TRUE
 
 
 /datum/job/warden
@@ -47,6 +43,7 @@
 	salary = 190
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
+	outfit = /datum/outfit/job/warden
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -55,11 +52,6 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
-
-/datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/warden, visualsOnly)
-	return TRUE
 
 
 /datum/job/detective
@@ -76,6 +68,7 @@
 	salary = 180
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/detective
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -84,11 +77,6 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA)
-
-/datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/detective, visualsOnly)
-	return TRUE
 
 
 /datum/job/officer
@@ -105,6 +93,7 @@
 	salary = 130
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/officer
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -114,10 +103,6 @@
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
 
-/datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/officer, visualsOnly)
-	return TRUE
 
 /datum/job/forensic
 	title = "Forensic Technician"
@@ -133,6 +118,7 @@
 	salary = 150
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	outfit = /datum/outfit/job/forensic
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -141,11 +127,6 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
-
-/datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/forensic, visualsOnly)
-	return TRUE
 
 
 /datum/job/cadet
@@ -162,6 +143,7 @@
 	salary = 50
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
+	outfit = /datum/outfit/job/cadet
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -170,9 +152,3 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
-
-/datum/job/cadet/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return 0
-	H.equipOutfit(/datum/outfit/job/cadet, visualsOnly)
-	return TRUE
