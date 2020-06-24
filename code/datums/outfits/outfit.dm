@@ -200,12 +200,7 @@
 		"[SLOT_TIE]"         = neck
 	)
 
-	for(var/slot in slot2type)
-		var/slot_type = slot2type[slot]
-		if(!slot_type)
-			continue
-		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
-
+	slot2type(H, slot2type)
 
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
@@ -229,7 +224,7 @@
 		H.put_in_r_hand(new r_hand(H))
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon. 
-	
+
 		slot2type = list(
 			"[SLOT_BELT]"    = belt,
 			"[SLOT_WEAR_ID]" = id,
@@ -240,12 +235,8 @@
 			"[SLOT_R_STORE]" = r_pocket
 		)
 
-		for(var/slot in slot2type)
-			var/slot_type = slot2type[slot]
-			if(!slot_type)
-				continue
-			H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
-
+		slot2type(H, slot2type)
+		
 		if(survival_box)
 
 			var/obj/item/weapon/storage/box/survival/SK = new(H)
@@ -313,6 +304,14 @@
 
 	H.update_body()
 	return TRUE
+
+// equip type in slot from slot2type list
+/datum/outfit/proc/slot2type(mob/living/carbon/human/H, list/slot2type)
+	for(var/slot in slot2type)
+		var/slot_type = slot2type[slot]
+		if(!slot_type)
+			continue
+		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
 
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit
