@@ -260,7 +260,7 @@ var/global/combos_cheat_sheet = ""
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker && !(get_active_hand() in attacker.grabbed_by) && !(get_inactive_hand() in attacker.grabbed_by)) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
 		attacker.do_attack_animation(src)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))

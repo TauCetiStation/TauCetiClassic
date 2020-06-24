@@ -316,6 +316,11 @@
 
 	return ..()
 
+/mob/Moved(atom/OldLoc, Dir)
+	for(var/obj/item/weapon/grab/G in GetGrabs())
+		G.affecting.Move(OldLoc)
+	return ..()
+
 ///Process_Incorpmove
 ///Called by client/Move()
 ///Allows mobs to run though walls

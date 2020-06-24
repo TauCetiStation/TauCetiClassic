@@ -11,7 +11,7 @@
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	flags = DROPDEL|NOBLUDGEON|ABSTRACT
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
