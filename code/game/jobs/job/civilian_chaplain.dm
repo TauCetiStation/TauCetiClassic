@@ -16,10 +16,6 @@
 	outfit = /datum/outfit/job/chaplain
 
 /datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!visualsOnly)
-		if(H.mind)
-			H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
-
+	if(!visualsOnly && H.mind)
+		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 		INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
-
-		return TRUE

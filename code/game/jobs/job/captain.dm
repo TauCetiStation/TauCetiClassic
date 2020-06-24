@@ -23,7 +23,6 @@
 	if(!visualsOnly)
 		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
 		score["captain"] += H.real_name
-		return TRUE
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

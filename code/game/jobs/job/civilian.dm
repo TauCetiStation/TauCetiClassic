@@ -240,8 +240,6 @@
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		H.mutations.Add(CLUMSY)
-		return TRUE
-
 
 /datum/job/mime
 	title = "Mime"
@@ -258,9 +256,9 @@
 	outfit = /datum/outfit/job/mime
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	H.verbs += /client/proc/mimespeak
-	H.verbs += /client/proc/mimewall
-	H.mind.special_verbs += /client/proc/mimespeak
-	H.mind.special_verbs += /client/proc/mimewall
-	H.miming = 1
-	return TRUE
+	if(!visualsOnly)
+		H.verbs += /client/proc/mimespeak
+		H.verbs += /client/proc/mimewall
+		H.mind.special_verbs += /client/proc/mimespeak
+		H.mind.special_verbs += /client/proc/mimewall
+		H.miming = 1
