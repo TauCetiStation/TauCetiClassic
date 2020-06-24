@@ -392,7 +392,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
 	. = ..()
-	implanted(C)
+	START_PROCESSING(SSobj, C)
 
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"

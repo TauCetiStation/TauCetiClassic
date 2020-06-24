@@ -51,7 +51,7 @@
 
 /obj/item/weapon/implant/mindshield/loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
-	implanted(C)
+	START_PROCESSING(SSobj, C)
 
 /obj/item/weapon/implant/mindshield/loyalty/get_data()
 	var/dat = {"
