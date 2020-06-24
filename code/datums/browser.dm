@@ -132,6 +132,24 @@
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
 
+/// A proc for all the required Topic() checks here.
+/datum/browser/proc/can_interact(client/C)
+	// Somebody else is trying to access our browser!
+	return C == user
+
+/// Basically, a Topic call, but with can_interact checks done beforehand.
+/datum/browser/proc/on_interact(href, list/href_list)
+	return
+
+/// A wrapper to perform interaction checks.
+/datum/browser/Topic(href, list/href_list)
+	if(!can_interact(usr.client))
+		return
+
+	return on_interact(href, href_list)
+
+
+
 /datum/browser/modal
 	var/opentime = 0
 	var/timeout
@@ -175,6 +193,8 @@
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag()
 
+
+
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
@@ -212,22 +232,26 @@
 	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, width, height, src, StealFocus, Timeout)
 	set_content(output)
 
-/datum/browser/modal/listpicker/Topic(href, href_list)
-	if (href_list["close"] || !user)
+/datum/browser/modal/listpicker/on_interact(href, href_list)
+	if(href_list["close"] || !user)
 		opentime = 0
 		return
-	if (href_list["button"])
+
+	if(href_list["button"])
 		var/button = text2num(href_list["button"])
 		if (button <= 3 && button >= 1)
 			selectedbutton = button
-	for (var/item in href_list)
+	for(var/item in href_list)
 		switch(item)
 			if ("close", "button", "src")
 				continue
 			else
 				valueslist[item] = href_list[item]
+
 	opentime = 0
 	close()
+
+
 
 /proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)
