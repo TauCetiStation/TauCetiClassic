@@ -182,7 +182,7 @@
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	preference_back(H)
 	pre_equip(H, visualsOnly)
-	species_equip(H, src)	// replaces human outfit on species outfit
+	H.species.species_equip(H, src)	// replaces human outfit on species outfit
 
 	//Start with uniform,suit,backpack for additional slots
 	if(H.gender == FEMALE && uniform_f)

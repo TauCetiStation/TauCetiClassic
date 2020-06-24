@@ -174,9 +174,9 @@
   *
   * Called after pre_equip()
   */
-/datum/outfit/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
-	species_replace_outfit(H.species.replace_outfit)
-	H.species.call_species_equip_proc(H, O)
+/datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
+	O.species_replace_outfit(replace_outfit)
+	call_species_equip_proc(H, O)
 	return
 
 /datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
