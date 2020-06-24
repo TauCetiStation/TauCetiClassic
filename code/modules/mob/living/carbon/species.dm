@@ -182,7 +182,6 @@
 /datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return
 
-
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
