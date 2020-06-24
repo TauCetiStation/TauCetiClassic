@@ -318,7 +318,8 @@
 
 /mob/Moved(atom/OldLoc, Dir)
 	for(var/obj/item/weapon/grab/G in GetGrabs())
-		G.affecting.Move(OldLoc)
+		if(!G.affecting.lying)
+			G.affecting.Move(OldLoc)
 	return ..()
 
 ///Process_Incorpmove
