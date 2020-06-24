@@ -175,7 +175,7 @@
 //
 // called before pre_equip()
 // replaces default human outfit on species outfit
-/datum/outfit/proc/species_equip(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/outfit/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
 	species_replace_outfit(H.species.replace_outfit)
 	H.species.call_species_equip_proc(H, O)
 	return
