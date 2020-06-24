@@ -3,7 +3,7 @@
 	set name = "Give"
 
 
-	if(!iscarbon(M)) //something is bypassing the give arguments, no clue what, adding a sanity check JIC
+	if(!iscarbon(M))
 		to_chat(usr, "<span class='danger'>Wait a second... \the [M] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
 		return
 
