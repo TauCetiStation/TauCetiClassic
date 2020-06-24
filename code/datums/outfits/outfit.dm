@@ -331,7 +331,7 @@
 
 /datum/outfit/proc/recursive_add_fingerprints(mob/living/carbon/human/H, obj/item/I)
 	I.add_fingerprint(H, 1) //The 1 sets a flag to ignore gloves
-	if(I.contents.len)
+	if(findtext( "[I.type]/", "/storage/") && I.contents.len)
 		for(var/obj/item/contained in I.contents)
 			recursive_add_fingerprints(H, contained)
 
