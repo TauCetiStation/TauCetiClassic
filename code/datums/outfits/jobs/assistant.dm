@@ -56,7 +56,7 @@
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/paranormal_investigator
-	name = OUTFIT_JOB_NAME("Test Subject")
+	name = OUTFIT_JOB_NAME("Paranormal Investigator")
 
 	uniform = /obj/item/clothing/under/fluff/indiana
 	shoes = /obj/item/clothing/shoes/brown

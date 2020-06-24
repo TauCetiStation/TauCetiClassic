@@ -50,6 +50,7 @@
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
+	outfit = /datum/outfit/job/hop
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -58,11 +59,3 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-
-
-/datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	H.equipOutfit(/datum/outfit/job/hop, visualsOnly)
-	if(visualsOnly)
-		return
-	return TRUE

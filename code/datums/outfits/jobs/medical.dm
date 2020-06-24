@@ -36,23 +36,41 @@
 	name = OUTFIT_JOB_NAME("Surgeon")
 
 	uniform = /obj/item/clothing/under/rank/medical/blue
+	shoes = /obj/item/clothing/shoes/white
+	suit = /obj/item/clothing/suit/storage/labcoat
 	head = /obj/item/clothing/head/surgery/blue
+
+	belt = /obj/item/device/pda/medical
+	l_ear = /obj/item/device/radio/headset/headset_med
+
+	l_hand = /obj/item/weapon/storage/firstaid/adv
+	suit_store = /obj/item/device/flashlight/pen
+
+	back_style = BACKPACK_STYLE_MEDICAL
 
 // NURSE OUTFIT
 /datum/outfit/job/nurse
 	name = OUTFIT_JOB_NAME("Nurse")
 
+	uniform = /obj/item/clothing/under/rank/medical/purple
+	shoes = /obj/item/clothing/shoes/white
+
+	belt = /obj/item/device/pda/medical
+	l_ear = /obj/item/device/radio/headset/headset_med
+
+	l_hand = /obj/item/weapon/storage/firstaid/adv
+	suit_store = /obj/item/device/flashlight/pen
+
+	back_style = BACKPACK_STYLE_MEDICAL
+
 /datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
 	if(H.gender == FEMALE)
 		if(prob(50))
-			uniform = /obj/item/clothing/under/rank/nursesuit
+			uniform_f = /obj/item/clothing/under/rank/nursesuit
 		else
-			uniform = /obj/item/clothing/under/rank/nurse
-		head = /obj/item/clothing/head/nursehat
-	else
-		uniform = /obj/item/clothing/under/rank/medical/purple
+			uniform_f = /obj/item/clothing/under/rank/nurse
+		head = /obj/item/clothing/head/nursehat	
 
-	
 
 // PARAMEDIC OUTFIT
 /datum/outfit/job/paramedic
