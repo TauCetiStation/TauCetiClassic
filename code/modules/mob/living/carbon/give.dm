@@ -9,7 +9,7 @@
 
 	if(target.stat == DEAD || usr.incapacitated() || target.client == null)
 		return
-	if(target == usr || isxeno(target) || isslime(target))
+	if(isxeno(target) || isslime(target))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
 		return
 	if(ishuman(target))
