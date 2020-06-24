@@ -37,7 +37,7 @@
 					return
 				if(!I)
 					return
-				if(!Adjacent(usr))
+				if(!Adjacent(target))
 					to_chat(usr, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
 					to_chat(target, "<span class='red'>[usr.name] moved too far away.</span>")
 					return
