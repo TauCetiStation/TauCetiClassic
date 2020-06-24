@@ -168,38 +168,20 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
-//---------------------------
-// Species Outfit
-// 
-// replace human clothes in [outfit] on species clothes
-//
-// called before pre_equip()
-// replaces default human outfit on species outfit
+
+/**
+  * Replace human clothes in [outfit] on species clothes
+  *
+  * Called after pre_equip()
+  */
 /datum/outfit/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
 	species_replace_outfit(H.species.replace_outfit)
 	H.species.call_species_equip_proc(H, O)
 	return
 
-
-// CALL_SPECIES_EQUIP_PROC PROCS
 /datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
-	return TRUE
+	return
 
-/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
-	return O.unathi_equip(H)
-
-/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
-	return O.tajaran_equip(H)
-
-/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
-	return O.skrell_equip(H)
-
-/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
-	return O.vox_equip(H)
-
-
-// Species Outfit.
-//---------------------------
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
@@ -317,6 +299,9 @@
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.unathi_equip(H)
+
 /datum/species/unathi/on_gain(mob/living/M)
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
@@ -383,6 +368,9 @@
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
 
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.tajaran_equip(H)
+
 /datum/species/skrell
 	name = SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
@@ -422,6 +410,9 @@
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
+
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.skrell_equip(H)
 
 /datum/species/vox
 	name = VOX
@@ -509,6 +500,9 @@
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
+
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.vox_equip(H)
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
