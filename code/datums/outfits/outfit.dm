@@ -119,28 +119,6 @@
 /datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
-// Called before the pre_equip() proc
-// replaces default outfit (human outfit) on outfit from replace_outfit
-/datum/outfit/proc/species_replace_outfit(list/replace_outfit = null)
-	if(replace_outfit.len)
-		var/list/outfit_types = list(
-			"[SLOT_W_UNIFORM]" = uniform,
-			"[SLOT_WEAR_SUIT]" = suit,
-			"[SLOT_BACK]" = back,
-			"[SLOT_BELT]" = belt,
-			"[SLOT_GLOVES]" = gloves,
-			"[SLOT_SHOES]" = shoes,
-			"[SLOT_HEAD]" = head,
-			"[SLOT_WEAR_MASK]" = mask,
-			"[SLOT_TIE]" = neck,
-			"[SLOT_L_EAR]" = l_ear,
-			"[SLOT_R_EAR]" = r_ear,
-			"[SLOT_GLASSES]" = glasses
-		)
-		for(var/I in outfit_types)
-			if(replace_outfit[outfit_types[I]])
-				change_slot_equip(text2num(I), replace_outfit[outfit_types[I]])
-
 /**
   * Called at the start of the equip proc
   *

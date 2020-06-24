@@ -175,9 +175,30 @@
   * Called after pre_equip()
   */
 /datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
-	O.species_replace_outfit(replace_outfit)
+	species_replace_outfit(O, replace_outfit)
 	call_species_equip_proc(H, O)
 	return
+
+// replaces default outfit (human outfit) on outfit from replace_outfit
+/datum/species/proc/species_replace_outfit(datum/outfit/O, list/replace_outfit = null)
+	if(replace_outfit.len)
+		var/list/outfit_types = list(
+			"[SLOT_W_UNIFORM]" = O.uniform,
+			"[SLOT_WEAR_SUIT]" = O.suit,
+			"[SLOT_BACK]" = O.back,
+			"[SLOT_BELT]" = O.belt,
+			"[SLOT_GLOVES]" = O.gloves,
+			"[SLOT_SHOES]" = O.shoes,
+			"[SLOT_HEAD]" = O.head,
+			"[SLOT_WEAR_MASK]" = O.mask,
+			"[SLOT_TIE]" = O.neck,
+			"[SLOT_L_EAR]" = O.l_ear,
+			"[SLOT_R_EAR]" = O.r_ear,
+			"[SLOT_GLASSES]" = O.glasses
+			)
+		for(var/I in outfit_types)
+			if(replace_outfit[outfit_types[I]])
+				O.change_slot_equip(text2num(I), replace_outfit[outfit_types[I]])
 
 /datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return
