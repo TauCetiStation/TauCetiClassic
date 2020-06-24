@@ -2,6 +2,11 @@
 	set category = "IC"
 	set name = "Give"
 
+
+	if(!iscarbon(target)) //something is bypassing the give arguments, no clue what, adding a sanity check JIC
+		to_chat(usr, "<span class='danger'>Wait a second... \the [target] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
+		return
+
 	if(target.stat == DEAD || usr.incapacitated() || target.client == null)
 		return
 	if(target == usr || isxeno(target) || isslime(target))
