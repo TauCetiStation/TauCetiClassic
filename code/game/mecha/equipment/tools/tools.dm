@@ -916,15 +916,14 @@
 			return 0
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user)
-	var/result = load_fuel(weapon)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/I, mob/user, params)
+	var/result = load_fuel(I)
 	if(isnull(result))
-		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [weapon] cannot be used as fuel.</font>")
+		user.visible_message("[user] tries to shove [I] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [I] cannot be used as fuel.</font>")
 	else if(!result)
 		to_chat(user, "Unit is full.")
 	else
 		user.visible_message("[user] loads [src] with [fuel].","[result] unit\s of [fuel] successfully loaded.")
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/critfail()
 	..()

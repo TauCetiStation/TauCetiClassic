@@ -89,12 +89,14 @@
 		W.loc = null
 		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
 		updateDialog()
+		return
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
+		return
 	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
@@ -105,8 +107,9 @@
 			telepad.computer = src
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/ui_interact(mob/user)
 	var/t
