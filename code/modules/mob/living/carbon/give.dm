@@ -7,7 +7,7 @@
 		to_chat(usr, "<span class='danger'>Wait a second... \the [target] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
 		return
 
-	if(target.stat == DEAD || usr.incapacitated() || target.client == null)
+	if(!can_give(target) || target.client == null)
 		return
 	if(isxeno(target) || isslime(target))
 		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
@@ -29,8 +29,12 @@
 			to_chat(usr, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
 	if(!target.get_active_hand() || !target.get_inactive_hand())
+		if(!can_give(target))
+			return
 		switch(alert(target,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")
+				if(!can_give(target))
+					return
 				if(!I)
 					return
 				if(!Adjacent(usr))
@@ -54,3 +58,6 @@
 				target.visible_message("<span class='red'>[usr.name] tried to hand [I.name] to [target.name] but [target.name] didn't want it.</span>")
 	else
 		to_chat(usr, "<span class='red'>[target.name]'s hands are full.</span>")
+
+/mob/living/carbon/proc/can_give(mob/target)
+	return !(target.incapacitated() || usr.incapacitated())
