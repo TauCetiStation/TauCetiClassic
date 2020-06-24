@@ -179,7 +179,7 @@
 	call_species_equip_proc(H, O)
 	return
 
-/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return
 
 
