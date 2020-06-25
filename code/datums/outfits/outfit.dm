@@ -180,7 +180,7 @@
 		"[SLOT_WEAR_ID]"     = id
 	)
 
-	slot2type_equip(H, slot2type)
+	equip_slots(H, slot2type)
 
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
@@ -213,7 +213,7 @@
 			"[SLOT_R_STORE]" = r_pocket
 		)
 
-		slot2type_equip(H, slot2type)
+		equip_slots(H, slot2type)
 		
 		if(survival_box)
 
@@ -284,7 +284,7 @@
 	return TRUE
 
 // equip type in slot from slot2type list
-/datum/outfit/proc/slot2type_equip(mob/living/carbon/human/H, list/slot2type)
+/datum/outfit/proc/equip_slots(mob/living/carbon/human/H, list/slot2type)
 	for(var/slot in slot2type)
 		var/slot_type = slot2type[slot]
 		if(!slot_type)
