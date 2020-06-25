@@ -28,7 +28,7 @@
 		if(I.w_class < ITEM_SIZE_LARGE)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
-	if(!M.get_active_hand() || !M.get_inactive_hand())
+	if(M.get_active_hand() && M.get_inactive_hand())
 		to_chat(src, "<span class='red'>[M.name]'s hands are full.</span>")
 		return
 	if(!can_give(M))
