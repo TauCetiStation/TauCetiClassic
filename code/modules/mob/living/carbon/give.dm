@@ -59,5 +59,5 @@
 
 /mob/living/carbon/proc/can_accept_gives(mob/M)
 	if(isxeno(M) || isslime(M))
-		return
+		return FALSE
 	return TRUE
