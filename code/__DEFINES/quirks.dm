@@ -25,3 +25,15 @@
 #define QUIRK_MUTE "Mute"
 #define QUIRK_LIGHT_DRINKER "Light Drinker"
 #define QUIRK_NYCTOPHOBIA "Nyctophobia"
+
+#define QUIRK_INEFFICIENT_SYSTEMS "Inefficient Systems"
+#define QUIRK_BAD_VOICE_MODULATOR "Bad Voice Modulator"
+#define QUIRK_MORE_COOLANT        "More Coolant"
+#define QUIRK_RUSTY_JOINTS        "Rusty Joints"
+#define QUIRK_PLASTEEL_PLATED     "Plasteel Plated"
+#define QUIRK_EMP_SHIELDED        "Emp Shielded"
+#define QUIRK_PLASTIC_BODY        "Plastic Body"
+
+#define QUIRK_STRONG_BONES        "Strong Bones"
+#define QUIRK_ADAMANTIUM_BONES    "Adamantium Bones"
+#define QUIRK_BRITTLE_BONES       "Brittle Bones"

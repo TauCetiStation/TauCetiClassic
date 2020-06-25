@@ -24,6 +24,8 @@
 				var/pain = getHalLoss()
 				if(pain > 0)
 					nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+			if(HAS_TRAIT(src, TRAIT_INEFFICIENT_SYSTEMS))
+				nutrition -= met_factor * (m_intent == "run" ? 0.02 : 0.01)
 			if(m_intent == "run")
 				nutrition -= met_factor * 0.01
 		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)

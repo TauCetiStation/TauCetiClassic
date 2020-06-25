@@ -82,6 +82,18 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 
+#define TRAIT_INEFFICIENT_SYSTEMS "inefficient_systems"
+#define TRAIT_MORE_COOLANT        "more_coolant"
+#define TRAIT_RUSTY_JOINTS        "rusty_joints"
+#define TRAIT_PLASTEEL_PLATED     "plasteel_plated"
+#define TRAIT_EMP_SHIELDED        "emp_shielded"
+#define TRAIT_PLASTIC_BODY        "plastic_body"
+
+#define TRAIT_STRONG_BONES        "strong_bones"
+#define TRAIT_ADAMANTIUM_BONES    "adamantium_bones"
+#define TRAIT_BRITTLE_BONES       "brittle_bones"
+
+
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"

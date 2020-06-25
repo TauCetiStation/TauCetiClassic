@@ -8,13 +8,18 @@
 
 /datum/bodypart_controller/robot/emp_act(severity)
 	var/burn_damage = 0
+	var/trait_emp_shield = 1
+
+	if (HAS_TRAIT(BP.owner, TRAIT_EMP_SHIELDED))
+		trait_emp_shield = 0.5
+
 	switch(severity)
 		if(1)
-			burn_damage = 15
+			burn_damage = 15 * trait_emp_shield
 		if(2)
-			burn_damage = 7
+			burn_damage = 7 * trait_emp_shield
 		if(3)
-			burn_damage = 3
+			burn_damage = 3 * trait_emp_shield
 
 	if(burn_damage)
 		BP.take_damage(null, burn_damage)

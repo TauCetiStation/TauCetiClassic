@@ -80,3 +80,64 @@
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
+
+
+
+/datum/quirk/strong_bones
+	name = QUIRK_STRONG_BONES
+	desc = "You feel your steel bones. It is harder to break them."
+	value = 2
+	mob_trait = TRAIT_STRONG_BONES
+	gain_text = "<span class='danger'>You feel your steel bones.</span>"
+	lose_text = "<span class='notice'>You are nervous as your bones are no longer that durable.</span>"
+
+	incompatible_species = list(DIONA)
+
+	req_species_flags = list(
+		IS_SYNTHETIC = FALSE,
+	)
+
+
+
+/datum/quirk/adamantium_bones
+	name = QUIRK_ADAMANTIUM_BONES
+	desc = "Your bones are so strong that they will never break."
+	value = 4
+	mob_trait = TRAIT_ADAMANTIUM_BONES
+	gain_text = "<span class='danger'>You feel your adamantium bones.</span>"
+	lose_text = "<span class='notice'>You are nervous as your bones are no longer that durable.</span>"
+
+	incompatible_species = list(DIONA)
+
+	req_species_flags = list(
+		IS_SYNTHETIC = FALSE,
+	)
+
+
+
+
+/datum/quirk/more_coolant
+	name = QUIRK_MORE_COOLANT
+	desc = "You have an efficient cooling system. You cool down faster."
+	value = 2
+	mob_trait = TRAIT_MORE_COOLANT
+	gain_text = "<span class='notice'>%COOLING SYSTEM% POWER AT 125%.</span>"
+	lose_text = "<span class='danger'>%COOLING SYSTEM% POWER AT 100%.</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)
+
+
+
+/datum/quirk/emp_shielded
+	name = QUIRK_EMP_SHIELDED
+	desc = "You have installed a registered Nanotrasen EMP Shielding Module(TM). You take half damage from EMP."
+	value = 2
+	mob_trait = TRAIT_EMP_SHIELDED
+	gain_text = "<span class='notice'>EMP SHIELDING MODULE DETECTED. WE WISH YOU PRODUCTIVE WORK.</span>"
+	lose_text = "<span class='danger'>EMP SHIELDING MODULE DISABLED. CONTACTING LICENSED TECH ASSISANCE IS RECOMMENDED.</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)

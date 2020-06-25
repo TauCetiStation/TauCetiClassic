@@ -87,30 +87,35 @@
 		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
 /obj/item/organ/internal/emp_act(severity)
+	var/trait_emp_shield = 1
+
+	if (HAS_TRAIT(owner, TRAIT_EMP_SHIELDED))
+		trait_emp_shield = 0.5
+
 	switch(robotic)
 		if(0)
 			return
 		if(1)
 			switch (severity)
 				if (1.0)
-					take_damage(20,0)
+					take_damage(20,0 * trait_emp_shield)
 					return
 				if (2.0)
-					take_damage(7,0)
+					take_damage(7,0 * trait_emp_shield)
 					return
 				if(3.0)
-					take_damage(3,0)
+					take_damage(3,0 * trait_emp_shield)
 					return
 		if(2)
 			switch (severity)
 				if (1.0)
-					take_damage(40,0)
+					take_damage(40,0 * trait_emp_shield)
 					return
 				if (2.0)
-					take_damage(15,0)
+					take_damage(15,0 * trait_emp_shield)
 					return
 				if(3.0)
-					take_damage(10,0)
+					take_damage(10,0 * trait_emp_shield)
 					return
 
 /obj/item/organ/internal/proc/mechanize() //Being used to make robutt hearts, etc
@@ -237,6 +242,9 @@
 
 /obj/item/organ/internal/lungs/ipc/process()
 	var/temp_gain = owner.species.synth_temp_gain
+
+	if(HAS_TRAIT(owner, TRAIT_MORE_COOLANT))
+		temp_gain -= 2
 
 	if(refrigerant > 0 && !is_broken())
 		var/refrigerant_spent = refrigerant_rate

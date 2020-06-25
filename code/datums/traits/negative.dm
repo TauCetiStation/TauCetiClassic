@@ -122,6 +122,20 @@
 
 
 
+/datum/quirk/nervous/synthetic
+	name = QUIRK_BAD_VOICE_MODULATOR
+	desc = "You have damaged voice modulator, it makes your voice stutter."
+	value = -1
+	mob_trait = TRAIT_NERVOUS
+	gain_text = "<span class='danger'>INCOMPATIBLE %VOICE MODULATOR% SOFTWARE DETECTED. REQUEST LICENSED TECH ASSISTANCE. </span>"
+	lose_text = "<span class='notice'>DETECTED NEW %VOICE MODULATOR% SOFTWARE. INITIALIZATION COMPLETE</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)
+
+
+
 /datum/quirk/stress_eater
 	name = QUIRK_STRESS_EATER
 	desc = "You eat more when in pain."
@@ -221,3 +235,61 @@
 		become_afraid()
 	else
 		chill()
+
+
+
+/datum/quirk/inefficient_systems
+	name = QUIRK_INEFFICIENT_SYSTEMS
+	desc = "Your systems deplete more power that normal. Your battery discharges faster."
+	value = -1
+	mob_trait = TRAIT_INEFFICIENT_SYSTEMS
+	gain_text = "<span class='danger'>%POWER SYSTEM% FAILURE. HIGH VOLTAGE. REQUEST LICENSED TECH ASSISTANCE.</span>"
+	lose_text = "<span class='notice'>%POWER SYSTEM% CHECKS COMPLETE. NO ERRORS DETECTED.</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)
+
+
+
+/datum/quirk/rusty_joints
+	name = QUIRK_RUSTY_JOINTS
+	desc = "Your joints require more force to rotate. Climbing speed decreased."
+	value = -1
+	mob_trait = TRAIT_RUSTY_JOINTS
+	gain_text = "<span class='danger'>%SERVOS% OVERCHARGE. CEASE USAGE. REQUEST LICENSED TECH ASSISTANCE.</span>"
+	lose_text = "<span class='notice'>%SERVOS% CHECKS COMPLETE. NO ERRORS DETECTED.</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)
+
+
+
+/datum/quirk/plastic_body
+	name = QUIRK_PLASTIC_BODY
+	desc = "Your body is made of plastic. It's more susceptible to damage."
+	value = -1
+	mob_trait = TRAIT_PLASTIC_BODY
+	gain_text = "<span class='danger'>HIGH %INTERNAL DAMAGE% DANGER. HANDLING WITH CARE IS RECOMMENDED.</span>"
+	lose_text = "<span class='notice'>%INTERNAL DAMAGE% RISKS DECREASED. HANDLING WITH CARE IS STILL RECOMMENDED.</span>"
+
+	req_species_flags = list(
+		IS_SYNTHETIC = TRUE,
+	)
+
+
+
+/datum/quirk/brittle_bones
+	name = QUIRK_BRITTLE_BONES
+	desc = "Your bones tend to break easily."
+	value = -1
+	mob_trait = TRAIT_BRITTLE_BONES
+	gain_text = "<span class='danger'>You hear your bones cracking already...</span>"
+	lose_text = "<span class='notice'>Bones won't break from everything... Finally..</span>"
+
+	incompatible_species = list(DIONA)
+
+	req_species_flags = list(
+		IS_SYNTHETIC = FALSE,
+	)
