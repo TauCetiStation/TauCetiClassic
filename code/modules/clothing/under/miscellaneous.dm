@@ -737,6 +737,7 @@
 	name = "bath towel"
 	icon_state = "bathtowel"
 	item_color = "bathtowel"
+	has_sensor = 0
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_ICLOTHING
 
 /obj/item/clothing/under/bathtowel/equipped(mob/living/carbon/human/user, slot)
