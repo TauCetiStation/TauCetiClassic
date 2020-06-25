@@ -81,8 +81,6 @@
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
 		target.eject_from_wall(gib = TRUE, companions = companions)
-
-
 		qdel(holder)
 
 /obj/effect/dummy/spell_jaunt
@@ -130,7 +128,7 @@
 #undef FLICK_OVERLAY_JAUNT_DURATION
 
 /mob/proc/eject_from_wall(gib = FALSE, prioritize_ground = TRUE, list/companions = null)
-	var/turf/mobloc = get_turf(src.loc)
+	var/turf/mobloc = get_turf(loc)
 	if(mobloc.is_mob_placeable(src))
 		return
 	var/found_ground = !prioritize_ground // this is to give priority to non-space tiles
@@ -145,6 +143,7 @@
 			if(companions)
 				for(var/mob/M in companions)
 					M.forceMove(newloc)
+			return
 	if(!found_ground)
 		for(var/turf/newloc in orange(1, mobloc))
 			if(newloc.is_mob_placeable(src))
@@ -153,6 +152,7 @@
 				if(companions)
 					for(var/mob/M in companions)
 						M.forceMove(newloc)
+				return
 	if(to_gib)
 		src.gib()
 		if(companions)
