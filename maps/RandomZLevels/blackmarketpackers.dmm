@@ -876,7 +876,7 @@
 /area/awaymission/BMPship2)
 "cL" = (
 /obj/structure/table,
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/item/weapon/reagent_containers/food/snacks/meat,
 /turf/simulated/floor{
 	icon_state = "barber"
@@ -1473,16 +1473,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/turf/simulated/floor{
-	icon_state = "bar"
-	},
-/area/awaymission/BMPship2)
-"el" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -2490,16 +2480,6 @@
 	icon_state = "showroomfloor"
 	},
 /area/awaymission/BMPship1)
-"gG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/BMPship1)
 "gH" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2995,14 +2975,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/BMPship1)
-"ii" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/awaymission/BMPship1)
 "ij" = (
 /obj/structure/cable{
@@ -10492,7 +10464,7 @@ cJ
 cJ
 cJ
 ej
-el
+dS
 cJ
 cJ
 cJ
@@ -10751,7 +10723,7 @@ cE
 cE
 cE
 dM
-el
+dS
 eo
 eo
 eo
@@ -10881,7 +10853,7 @@ cF
 cZ
 cZ
 dN
-el
+dS
 eo
 eZ
 eZ
@@ -11011,7 +10983,7 @@ cG
 cZ
 dt
 dN
-el
+dS
 eo
 fa
 eZ
@@ -11141,7 +11113,7 @@ cH
 cZ
 cZ
 dO
-el
+dS
 eo
 eZ
 fc
@@ -11271,7 +11243,7 @@ cF
 cZ
 cZ
 dN
-el
+dS
 eo
 fb
 fb
@@ -11401,7 +11373,7 @@ cI
 cI
 cI
 dP
-el
+dS
 eC
 fc
 fc
@@ -11664,7 +11636,7 @@ cJ
 cJ
 cJ
 fd
-el
+dS
 cJ
 cJ
 gk
@@ -11924,7 +11896,7 @@ cJ
 cJ
 cJ
 cJ
-el
+dS
 cJ
 cJ
 cJ
@@ -12180,7 +12152,7 @@ aw
 cN
 db
 dx
-el
+dS
 cJ
 eF
 cJ
@@ -12189,7 +12161,7 @@ cJ
 cJ
 gl
 cJ
-el
+dS
 cJ
 cj
 hD
@@ -12310,7 +12282,7 @@ aw
 cO
 dc
 dy
-el
+dS
 en
 eG
 fe
@@ -12319,7 +12291,7 @@ cJ
 en
 gm
 gE
-el
+dS
 cJ
 cj
 hE
@@ -12440,7 +12412,7 @@ az
 cJ
 cJ
 cJ
-el
+dS
 eo
 eH
 eo
@@ -12449,7 +12421,7 @@ fL
 eo
 gn
 eo
-el
+dS
 cJ
 cj
 ac
@@ -12570,7 +12542,7 @@ cm
 cJ
 cJ
 cJ
-el
+dS
 eo
 eG
 eo
@@ -12579,7 +12551,7 @@ cJ
 eo
 go
 eo
-el
+dS
 gZ
 cj
 hF
@@ -12700,7 +12672,7 @@ cm
 cJ
 cJ
 cJ
-el
+dS
 eo
 eG
 eo
@@ -12709,7 +12681,7 @@ cJ
 eo
 go
 eo
-el
+dS
 cJ
 cj
 hD
@@ -12830,7 +12802,7 @@ cm
 cJ
 cJ
 cJ
-el
+dS
 eo
 eG
 eo
@@ -12839,7 +12811,7 @@ cJ
 eo
 go
 eo
-el
+dS
 cJ
 cj
 ac
@@ -12960,7 +12932,7 @@ aB
 cP
 dd
 cJ
-el
+dS
 eo
 eG
 eo
@@ -12969,7 +12941,7 @@ cJ
 eo
 go
 eo
-el
+dS
 cJ
 cj
 hG
@@ -13090,7 +13062,7 @@ aw
 cQ
 dd
 cJ
-el
+dS
 eo
 eI
 eo
@@ -13099,7 +13071,7 @@ cJ
 eo
 eI
 eo
-el
+dS
 cJ
 cj
 hH
@@ -13220,7 +13192,7 @@ aw
 cR
 cJ
 cJ
-el
+dS
 eo
 eJ
 eo
@@ -13229,7 +13201,7 @@ cJ
 eo
 eJ
 eo
-el
+dS
 gZ
 cj
 hI
@@ -13485,7 +13457,7 @@ cJ
 eL
 ff
 cJ
-el
+dS
 ga
 gp
 cJ
@@ -13745,7 +13717,7 @@ dg
 dg
 fh
 dg
-gG
+fO
 fh
 dg
 dg
@@ -13754,7 +13726,7 @@ aw
 dn
 hL
 hq
-ii
+hN
 dn
 iv
 aw
@@ -13884,7 +13856,7 @@ az
 dn
 dn
 dn
-ii
+hN
 dn
 iw
 aw
@@ -14008,13 +13980,13 @@ fA
 fA
 fj
 gq
-gG
+fO
 dg
 hc
 dn
 bc
 dn
-ii
+hN
 io
 dn
 aw
@@ -14138,13 +14110,13 @@ fk
 fQ
 gc
 gr
-gG
+fO
 dg
 aB
 dn
 dn
 hZ
-ii
+hN
 ip
 bc
 ax
@@ -14268,13 +14240,13 @@ fk
 fk
 fk
 gr
-gG
+fO
 dg
 az
 hp
 dn
 dn
-ii
+hN
 dn
 dn
 az
@@ -14532,7 +14504,7 @@ dg
 gS
 aB
 hq
-ii
+hN
 dn
 dn
 dn
@@ -14662,7 +14634,7 @@ gI
 gT
 aw
 hr
-ii
+hN
 hZ
 dn
 hZ
@@ -14792,7 +14764,7 @@ aO
 aO
 ay
 hs
-ii
+hN
 dn
 dn
 dn
@@ -14922,7 +14894,7 @@ dE
 dE
 az
 hp
-ii
+hN
 dn
 aB
 iq

@@ -13,7 +13,10 @@
 	salary = 300
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+
+// Non-human species can't be captains.
+/datum/job/captain/special_species_check(datum/species/S)
+	return S.name == HUMAN
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -56,7 +59,6 @@
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
-
 /datum/job/hop
 	title = "Head of Personnel"
 	flag = HOP
@@ -79,6 +81,13 @@
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
 

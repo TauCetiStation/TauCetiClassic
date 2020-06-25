@@ -212,45 +212,44 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user)
-
+/obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
 	if(!anchored && isturf(loc))
-		if(iswrench(W))
-			anchored = 1
+		if(iswrench(I))
+			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			return 1
+			return TRUE
 	else
-		if(iswrench(W))
-			anchored = 0
+		if(iswrench(I))
+			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			return 1
+			return TRUE
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
-			var/obj/item/stack/sheet/S = W
+		if(istype(I, /obj/item/stack/sheet/glass) || istype(I, /obj/item/stack/sheet/rglass))
+			var/obj/item/stack/sheet/S = I
 			if(S.use(2))
-				glass_type = W.type
+				glass_type = I.type
 				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
 					new /obj/machinery/power/solar(get_turf(src), src)
-			return 1
+			return TRUE
 
 	if(!tracker)
-		if(istype(W, /obj/item/weapon/tracker_electronics))
+		if(istype(I, /obj/item/weapon/tracker_electronics))
 			tracker = 1
-			user.drop_item()
-			qdel(W)
+			qdel(I)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
-		if(iscrowbar(W))
+		if(iscrowbar(I))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
-			return 1
-	..()
+			return TRUE
+
+	return ..()
 
 //
 // Solar Control Computer

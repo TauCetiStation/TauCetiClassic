@@ -48,6 +48,10 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
+/obj/item/projectile/bullet/weakbullet/rubber45 //to manage .45 pain damage
+	name = "rubber bullet"
+	agony = 55
+
 /obj/item/projectile/bullet/smg //.45 ACP
 	name = "submachinegun bullet"
 	damage = 20
@@ -104,6 +108,9 @@
 /obj/item/projectile/bullet/grenade/r4046/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
+
+/obj/item/projectile/bullet/grenade/r4046/rubber
+	name = "rubber grenade"
 
 /obj/item/projectile/bullet/chem
 	damage = 5

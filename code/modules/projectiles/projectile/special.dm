@@ -401,7 +401,7 @@
 	if(display_fahrenheit)
 		temp_string += " [(temp_celsium * 1.8) + 32]&deg;F"
 	if(display_kelvin)
-		temp_string += " [temp_celsium + T0C]&deg;K"
+		temp_string += " [temp_celsium + T0C] K"
 	temp_string += "</span>\""
 
 	firer.visible_message(temp_string)

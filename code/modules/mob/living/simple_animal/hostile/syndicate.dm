@@ -79,13 +79,11 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)	return
 	if(prob(65))
-		src.health -= Proj.damage
+		return ..()
 	else
 		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
-	return 0
-
+		return PROJECTILE_ABSORBED
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	min_oxy = 0

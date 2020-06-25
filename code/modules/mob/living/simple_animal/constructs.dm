@@ -37,6 +37,10 @@
 	for(var/spell in construct_spells)
 		spell_list += new spell(src)
 
+	var/obj/effect/effect/forcefield/rune/R = new
+	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
+
 /mob/living/simple_animal/construct/death()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm (src.loc)
@@ -64,18 +68,6 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(O.force)
-		var/damage = O.force
-		if (O.damtype == HALLOSS)
-			damage = 0
-		adjustBruteLoss(damage)
-		visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
-	else
-		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
-		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
-
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
@@ -96,20 +88,11 @@
 	status_flags = 0
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
-/mob/living/simple_animal/construct/armoured/attackby(obj/item/O, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(O.force)
-		if(O.force >= 11)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
-		else
-			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
-	else
-		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
-		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
+/mob/living/simple_animal/construct/armoured/atom_init()
+	. = ..()
+	var/obj/effect/effect/forcefield/rune/R = new
+	AddComponent(/datum/component/forcefield, "strong blood aura", 40, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /mob/living/simple_animal/construct/armoured/Life()
 	weakened = 0
@@ -132,9 +115,9 @@
 				// redirect the projectile
 				P.redirect(new_x, new_y, curloc, src)
 
-			return -1 // complete projectile permutation
+			return PROJECTILE_FORCE_MISS // complete projectile permutation
 
-	return (..(P))
+	return ..()
 
 
 ////////////////////////Wraith/////////////////////////////////////////////
@@ -199,20 +182,11 @@
 	var/energy = 0
 	var/max_energy = 1000
 
-/mob/living/simple_animal/construct/behemoth/attackby(obj/item/O, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(O.force)
-		if(O.force >= 11)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
-		else
-			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
-	else
-		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
-		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
+/mob/living/simple_animal/construct/behemoth/atom_init()
+	. = ..()
+	var/obj/effect/effect/forcefield/rune/R = new
+	AddComponent(/datum/component/forcefield, "strong blood aura", 40, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 
 /////////////////////////////////////Harvester construct/////////////////////////////////

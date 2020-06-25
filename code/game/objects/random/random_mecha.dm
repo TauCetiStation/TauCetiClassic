@@ -4,7 +4,7 @@
 	name = "Random Mecha Wreckage"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "9mm_wjpp"
+	icon_state = "9mm_glock"
 /obj/random/mecha/wreckage/item_to_spawn()
 		return pick(\
 						prob(45);/obj/effect/decal/mecha_wreckage/ripley,\
@@ -20,7 +20,7 @@
 	name = "Random Working Mecha"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "9mm_wjpp"
+	icon_state = "9mm_glock"
 /obj/random/mecha/working/item_to_spawn()
 		return pick(\
 						prob(60);/obj/mecha/working/hoverpod,\

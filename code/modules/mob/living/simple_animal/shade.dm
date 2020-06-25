@@ -77,7 +77,6 @@
 	max_co2 = 0
 	unsuitable_atoms_damage = 0
 
-	var/islam = FALSE
 	var/obj/item/weapon/nullrod/staff/container
 
 	var/datum/religion/my_religion
