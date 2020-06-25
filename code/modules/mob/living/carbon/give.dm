@@ -32,7 +32,7 @@
 		if("Yes")
 			if(!can_give(M))
 				return
-			if(!I)
+			if(QDELETED(I))
 				return
 			if(!Adjacent(M))
 				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
