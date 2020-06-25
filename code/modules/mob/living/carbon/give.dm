@@ -30,7 +30,7 @@
 		return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
-			if(!can_give(M))
+			if(!can_give(M) || !can_accept_gives(M))
 				return
 			if(QDELETED(I))
 				return
@@ -57,7 +57,11 @@
 /mob/living/carbon/proc/can_give(mob/M)
 	return !M.incapacitated() && !incapacitated()
 
-/mob/living/carbon/proc/can_accept_gives(mob/M)
-	if(isxeno(M) || isslime(M))
-		return FALSE
-	return TRUE
+/mob/living/proc/can_accept_gives(mob/giver)
+  return !giver.get_active_hand() || !giver.get_inactive_hand()
+
+/mob/living/carbon/slime/can_accept_gives(mob/giver)
+  return FALSE
+
+/mob/living/carbon/blahblahlbahl/xeno/can_accept_gives(mob/giver)
+  return FALSE
