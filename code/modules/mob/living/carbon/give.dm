@@ -7,10 +7,7 @@
 		to_chat(src, "<span class='danger'>Wait a second... \the [M] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
 		return
 
-	if(!can_give(M) || M.client == null)
-		return
-	if(isxeno(M) || isslime(M))
-		to_chat(src, "<span class='red'>I feel stupider, suddenly.</span>")
+	if(!can_give(M) || !can_accept_gives(M) || M.client == null)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -59,3 +56,8 @@
 
 /mob/living/carbon/proc/can_give(mob/M)
 	return !M.incapacitated() && !incapacitated()
+
+/mob/living/carbon/proc/can_accept_gives(mob/M)
+	if(isxeno(M) || isslime(M))
+		return
+	return TRUE
