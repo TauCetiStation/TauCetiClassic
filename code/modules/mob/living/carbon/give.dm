@@ -38,7 +38,7 @@
 				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
 				to_chat(M, "<span class='red'>[src.name] moved too far away.</span>")
 				return
-			if(src.get_active_hand() != I)
+			if(get_active_hand() != I)
 				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
 				to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
 				return
@@ -47,7 +47,7 @@
 				to_chat(src, "<span class='red'>Their hands are full.</span>")
 				return
 			else
-				src.drop_item()
+				drop_from_inventory(I)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src.name] handed \the [I.name] to [M.name].</span>")
