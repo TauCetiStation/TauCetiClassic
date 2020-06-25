@@ -41,7 +41,7 @@
 				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
 				to_chat(M, "<span class='red'>[src.name] moved too far away.</span>")
 				return
-			if(src.get_active_hand() != I)
+			if(get_active_hand() != I)
 				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
 				to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
 				return
