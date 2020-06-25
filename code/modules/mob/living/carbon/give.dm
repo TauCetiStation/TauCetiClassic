@@ -31,8 +31,6 @@
 	if(M.get_active_hand() && M.get_inactive_hand())
 		to_chat(src, "<span class='red'>[M.name]'s hands are full.</span>")
 		return
-	if(!can_give(M))
-		return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
 			if(!I)
