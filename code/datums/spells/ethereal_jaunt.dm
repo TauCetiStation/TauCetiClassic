@@ -139,7 +139,7 @@
 		if(newloc.is_mob_placeable(src) && !istype(newloc, /turf/space))
 			found_ground = TRUE
 			to_gib = FALSE
-			src.forceMove(newloc)
+			forceMove(newloc)
 			if(companions)
 				for(var/mob/M in companions)
 					M.forceMove(newloc)
@@ -148,13 +148,13 @@
 		for(var/turf/newloc in orange(1, mobloc))
 			if(newloc.is_mob_placeable(src))
 				to_gib = FALSE
-				src.forceMove(newloc)
+				forceMove(newloc)
 				if(companions)
 					for(var/mob/M in companions)
 						M.forceMove(newloc)
 				return
 	if(to_gib)
-		src.gib()
+		gib()
 		if(companions)
 			for(var/mob/M in companions)
 				M.gib()
