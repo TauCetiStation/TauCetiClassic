@@ -33,6 +33,8 @@
 		return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
+			if(!can_give(M))
+				return
 			if(!I)
 				return
 			if(!Adjacent(M))
