@@ -216,7 +216,6 @@
 		equip_slots(H, slot2type)
 		
 		if(survival_box)
-
 			var/obj/item/weapon/storage/box/survival/SK = new(H)
 
 			species_survival_kit_items:
