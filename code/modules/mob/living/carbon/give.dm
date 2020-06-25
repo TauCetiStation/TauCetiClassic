@@ -60,4 +60,4 @@
 		to_chat(usr, "<span class='red'>[M.name]'s hands are full.</span>")
 
 /mob/living/carbon/proc/can_give(mob/M)
-	return !(M.incapacitated() || usr.incapacitated())
+	return !M.incapacitated() && !incapacitated()
