@@ -13389,6 +13389,7 @@
 /area/station/maintenance/dormitory)
 "axp" = (
 /obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -14195,10 +14196,13 @@
 	},
 /area/station/rnd/xenobiology)
 "ayT" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -20329,15 +20333,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	desc = "“This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.” Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
-	dir = 4;
-	icon_state = "plaque";
-	name = "Comemmorative Plaque";
-	nitrogen = 30;
-	oxygen = 70;
-	temperature = 80
-	},
+/turf/simulated/floor/goonplaque,
 /area/station/hallway/secondary/entry)
 "aKc" = (
 /obj/structure/toilet{
@@ -29041,6 +29037,10 @@
 	c_tag = "Xenobiology Module SW";
 	dir = 4;
 	network = list("SS13","Research")
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -57493,6 +57493,9 @@
 /area/station/aisat/antechamber)
 "cnk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -58263,6 +58266,9 @@
 /area/station/maintenance/engineering)
 "coY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -60786,6 +60792,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -75459,6 +75468,14 @@
 /obj/item/seeds/tomatoseed,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"piY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/xenobiology)
 "pjb" = (
 /obj/item/seeds/watermelonseed,
 /obj/machinery/seed_extractor,
@@ -122533,7 +122550,7 @@ cbD
 cbD
 cbD
 axq
-cey
+piY
 cey
 cey
 cey
@@ -122790,7 +122807,7 @@ aZq
 ckC
 cjv
 cgq
-cey
+piY
 czY
 bda
 ayM
@@ -123047,7 +123064,7 @@ ckD
 ckC
 cjv
 axv
-cey
+piY
 fLb
 bkN
 dUb
@@ -123561,7 +123578,7 @@ avZ
 aWr
 cjv
 avL
-cey
+piY
 bSl
 cey
 cxZ
@@ -124075,7 +124092,7 @@ atm
 awf
 awR
 axs
-cey
+piY
 ayG
 cey
 czW
@@ -124589,7 +124606,7 @@ atz
 awf
 awR
 axs
-cey
+piY
 cey
 bkO
 bcG
@@ -124846,7 +124863,7 @@ atM
 awy
 cjv
 cpR
-cey
+piY
 bdd
 cbD
 cbD
@@ -125103,7 +125120,7 @@ awa
 aWM
 cjv
 ayj
-cey
+piY
 cMz
 cbD
 aaa
@@ -125360,7 +125377,7 @@ ckC
 ckC
 cjv
 cpT
-cey
+piY
 aqF
 cbD
 aaa
@@ -125617,7 +125634,7 @@ ckC
 ckC
 cjv
 cuL
-cey
+piY
 bkG
 cbD
 aah
