@@ -29,35 +29,33 @@
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
 	if(!M.get_active_hand() || !M.get_inactive_hand())
-		if(!can_give(M))
-			return
-		switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
-			if("Yes")
-				if(!can_give(M))
-					return
-				if(!I)
-					return
-				if(!Adjacent(M))
-					to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
-					to_chat(M, "<span class='red'>[src.name] moved too far away.</span>")
-					return
-				if(src.get_active_hand() != I)
-					to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
-					to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
-					return
-				if(M.get_active_hand() && M.get_inactive_hand())
-					to_chat(M, "<span class='red'>Your hands are full.</span>")
-					to_chat(src, "<span class='red'>Their hands are full.</span>")
-					return
-				else
-					src.drop_item()
-					M.put_in_hands(I)
-				I.add_fingerprint(M)
-				M.visible_message("<span class='notice'>[src.name] handed \the [I.name] to [M.name].</span>")
-			if("No")
-				M.visible_message("<span class='red'>[src.name] tried to hand [I.name] to [M.name] but [M.name] didn't want it.</span>")
-	else
 		to_chat(src, "<span class='red'>[M.name]'s hands are full.</span>")
+		return
+	if(!can_give(M))
+		return
+	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
+		if("Yes")
+			if(!I)
+				return
+			if(!Adjacent(M))
+				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
+				to_chat(M, "<span class='red'>[src.name] moved too far away.</span>")
+				return
+			if(src.get_active_hand() != I)
+				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
+				to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
+				return
+			if(M.get_active_hand() && M.get_inactive_hand())
+				to_chat(M, "<span class='red'>Your hands are full.</span>")
+				to_chat(src, "<span class='red'>Their hands are full.</span>")
+				return
+			else
+				src.drop_item()
+				M.put_in_hands(I)
+			I.add_fingerprint(M)
+			M.visible_message("<span class='notice'>[src.name] handed \the [I.name] to [M.name].</span>")
+		if("No")
+			M.visible_message("<span class='red'>[src.name] tried to hand [I.name] to [M.name] but [M.name] didn't want it.</span>")
 
 /mob/living/carbon/proc/can_give(mob/M)
 	return !M.incapacitated() && !incapacitated()
