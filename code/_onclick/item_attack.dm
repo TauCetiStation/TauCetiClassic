@@ -100,7 +100,7 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
-	if (slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
+	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
 		user.visible_message("<span class='danger'>[user] tries to put [name] on the [M]'s head!</span>")
 		if(user.is_busy(src) || !do_after(user, 0.8 SECONDS, target = M))
 			return
