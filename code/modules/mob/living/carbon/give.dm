@@ -50,7 +50,7 @@
 				to_chat(src, "<span class='red'>Their hands are full.</span>")
 				return
 			else
-				src.drop_item()
+				drop_from_inventory(I)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src.name] handed \the [I.name] to [M.name].</span>")
