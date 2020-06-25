@@ -17,6 +17,9 @@
 		return
 	if(user.incapacitated())
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	transfer_from = !transfer_from
 	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 

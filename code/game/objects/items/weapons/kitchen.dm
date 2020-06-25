@@ -136,6 +136,15 @@
 	tools = list(
 		TOOL_KNIFE = 1
 		)
+	sweep_step = 2
+
+/obj/item/weapon/kitchenknife/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -172,28 +181,21 @@
 /*
  * Bucher's cleaver
  */
-/obj/item/weapon/butch
+/obj/item/weapon/kitchenknife/butch
 	name = "butcher's cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
-	flags = CONDUCT
 	force = 15.0
 	w_class = ITEM_SIZE_NORMAL
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
-	origin_tech = "materials=1"
-	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
-	edge = 1
+	sweep_step = 2
 
-/obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
-	if(user.a_intent == INTENT_HELP && M.attempt_harvest(src, user))
-		return
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
+
+
 
 /*
  * Rolling Pins
@@ -384,14 +386,14 @@
 
 /obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
 
-/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
+/obj/item/weapon/tray/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
 			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
-		..()
+		return ..()
 
 /*
 ===============~~~~~================================~~~~~====================
@@ -511,42 +513,3 @@
 	name = "sucker mould"
 	desc = "It has the shape of a sucker imprinted into it."
 	icon_state = "mould_loli"
-
-/////////////////////////////////////////////////////////////////////////////////////////
-//Enough with the violent stuff, here's what happens if you try putting food on it
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-/*/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if (W.icon_state == "forkloaded")
-			to_chat(user, "<span class='warning'>You already have omelette on your fork.</span>")
-			return
-		W.icon = 'icons/obj/kitchen.dmi'
-		W.icon_state = "forkloaded"
-		to_chat(viewers(3,user), "[user] takes a piece of omelette with his fork!")
-		reagents.remove_reagent("nutriment", 1)
-		if (reagents.total_volume <= 0)
-			qdel(src)*/
-
-
-/*			if (prob(33))
-						var/turf/location = H.loc
-						if (istype(location, /turf/simulated))
-							location.add_blood(H)
-					if (H.wear_mask)
-						H.wear_mask.add_blood(H)
-					if (H.head)
-						H.head.add_blood(H)
-					if (H.glasses && prob(33))
-						H.glasses.add_blood(H)
-					if (istype(user, /mob/living/carbon/human))
-						var/mob/living/carbon/human/user2 = user
-						if (user2.gloves)
-							user2.gloves.add_blood(H)
-						else
-							user2.add_blood(H)
-						if (prob(15))
-							if (user2.wear_suit)
-								user2.wear_suit.add_blood(H)
-							else if (user2.w_uniform)
-								user2.w_uniform.add_blood(H)*/

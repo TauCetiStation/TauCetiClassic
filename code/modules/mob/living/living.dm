@@ -79,15 +79,6 @@
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
-		//Fat
-		if(HAS_TRAIT(src, TRAIT_FAT))
-			var/ran = 40
-			if(isrobot(src))
-				ran = 20
-			if(prob(ran))
-				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
-			return 1
-
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == INTENT_HELP || M.restrained()) && (a_intent == INTENT_HELP || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
@@ -112,6 +103,11 @@
 
 			now_pushing = 0
 			return 1
+			
+	//Fat
+	if(HAS_TRAIT(M, TRAIT_FAT))
+		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
+		return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -156,8 +152,7 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
 	pull_debuff = 0
@@ -674,7 +669,7 @@
 
 
 						pulling.Move(T, get_dir(pulling, T))
-						if(M)
+						if(M && AM)
 							M.start_pulling(AM)
 				else
 					if (pulling)
@@ -949,6 +944,7 @@
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 						CM.drop_from_inventory(CM.legcuffed)
 
+/// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/on_lay_down()
 	return
 
@@ -979,7 +975,8 @@
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
-		on_lay_down()
+		if(on_lay_down())
+			return
 		resting = !resting
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
@@ -1267,4 +1264,20 @@
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return TRUE
+
+/// Try changing move intent. Return success.
+/mob/living/proc/set_m_intent(intent)
+	if(m_intent == intent)
+		return FALSE
+
+	if(intent == MOVE_INTENT_RUN && HAS_TRAIT(src, TRAIT_NO_RUN))
+		to_chat(src, "<span class='notice'>Something prevents you from running!</span>")
+		return FALSE
+
+	m_intent = intent
+	if(hud_used)
+		if(hud_used.move_intent)
+			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
+
 	return TRUE

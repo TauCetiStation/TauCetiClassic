@@ -33,8 +33,8 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)
@@ -52,7 +52,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
 	else
-		..()
+		return ..()
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -100,10 +100,10 @@
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
+/obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
+	if(istype(I, /obj/item/ammo_box))
+		var/obj/item/ammo_box/AM = I
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			var/did_load = give_round(AC)
 			if(did_load)
@@ -111,19 +111,17 @@
 				num_loaded++
 			if(!did_load || !multiload)
 				break
-	if(istype(A, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/AC = A
+	if(istype(I, /obj/item/ammo_casing))
+		var/obj/item/ammo_casing/AC = I
 		if(give_round(AC))
-			user.drop_item()
-			AC.loc = src
+			user.drop_from_inventory(AC, src)
 			num_loaded++
 	if(num_loaded)
-		if (!silent)
-			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-		A.update_icon()
+		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		I.update_icon()
 		update_icon()
 		return num_loaded
-	return 0
+	return ..()
 
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
