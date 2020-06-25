@@ -175,7 +175,9 @@
 		"[SLOT_SHOES]"       = shoes,
 		"[SLOT_WEAR_SUIT]"   = suit,
 		"[SLOT_W_UNIFORM]"   = uniform,
-		"[SLOT_TIE]"         = neck
+		"[SLOT_TIE]"         = neck,
+		"[SLOT_BELT]"        = belt,
+		"[SLOT_WEAR_ID]"     = id
 	)
 
 	slot2type_equip(H, slot2type)
@@ -204,8 +206,6 @@
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon. 
 
 		slot2type = list(
-			"[SLOT_BELT]"    = belt,
-			"[SLOT_WEAR_ID]" = id,
 			"[SLOT_L_EAR]"   = l_ear,
 			"[SLOT_R_EAR]"   = r_ear,
 			"[SLOT_S_STORE]" = suit_store,
