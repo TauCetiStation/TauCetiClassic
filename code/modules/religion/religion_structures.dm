@@ -28,6 +28,9 @@
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
+	if(!global.chaplain_religion || global.chaplain_religion.aspects.len == 0)
+		return
+
 	var/can_i_see = FALSE
 	var/msg = ""
 	if(isobserver(user))
@@ -37,7 +40,7 @@
 		if(L.mind && L.mind.holy_role)
 			can_i_see = TRUE
 
-	if(!can_i_see || global.chaplain_religion.aspects.len == 0)
+	if(!can_i_see)
 		return
 
 	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"

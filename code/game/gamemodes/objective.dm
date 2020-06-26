@@ -828,7 +828,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/heist/loot/choose_target()
 	var/loot = "an object"
-	switch(rand(1, 8))
+	switch(rand(1, 7))
 		if(1)
 			target = /obj/structure/particle_accelerator
 			target_amount = 6
@@ -854,10 +854,6 @@ var/global/list/all_objectives = list()
 			target_amount = 4
 			loot = "four energy guns"
 		if(7)
-			target = /obj/item/weapon/gun/energy/laser
-			target_amount = 2
-			loot = "two laser guns"
-		if(8)
 			target = /obj/item/weapon/gun/energy/ionrifle
 			target_amount = 1
 			loot = "an ion rifle"

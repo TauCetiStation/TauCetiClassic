@@ -639,7 +639,7 @@
 	canremove = 0
 	siemens_coefficient = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 
 /obj/item/clothing/suit/space/golem
@@ -664,7 +664,7 @@
 	siemens_coefficient = 0
 	can_breach = 0
 
-	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
 	anchored = 1
@@ -721,22 +721,22 @@
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
 	check_spirit()
 
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	if(!check_spirit())
-		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
+/obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
+	if(H.my_golem || !H.get_species() == GOLEM)
 		return
-	user.SetNextMove(CLICK_CD_INTERACT)
+	if(!check_spirit())
+		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
+		return
+	H.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
-	G.my_master = user
+	G.my_master = H
 	G.update_golem_hud_icons()
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.my_golems += G
-		H.update_golem_hud_icons()
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+	H.my_golem = G
+	H.update_golem_hud_icons()
+	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
@@ -766,10 +766,9 @@
 				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
 				client.images += I
 		else
-			if(my_golems)
-				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
-					client.images += I
+			if(my_golem)
+				var/I = image('icons/mob/hud.dmi', loc = my_golem, icon_state = "agolem_master")
+				client.images += I
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

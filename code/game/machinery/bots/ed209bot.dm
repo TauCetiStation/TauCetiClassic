@@ -449,7 +449,7 @@
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(I, /obj/item/weapon/gun/energy/taser))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
 						return
 					name = "taser ED-209 assembly"
 				else
@@ -480,6 +480,7 @@
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/secbot/ed209(T, created_name, lasertag_color)
 				qdel(I)
+				qdel(src)
 				did_something = TRUE
 
 	if(!did_something)
