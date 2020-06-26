@@ -73147,9 +73147,7 @@
 /area/station/medical/cmo)
 "lTb" = (
 /obj/effect/spider/stickyweb,
-/obj/machinery/chem_dispenser{
-	name = "old chem dispenser"
-	},
+/obj/machinery/chem_dispenser/old,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lUb" = (
