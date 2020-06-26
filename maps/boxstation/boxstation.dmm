@@ -52423,7 +52423,7 @@
 "bYY" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 1;
-	filter_type = 4;
+	filter_type = "sleeping_agent";
 	name = "Gas filter (N2O tank)"
 	},
 /turf/simulated/floor,
@@ -53083,7 +53083,7 @@
 "cbj" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 1;
-	filter_type = 0;
+	filter_type = "phoron";
 	name = "Gas filter (Toxins tank)"
 	},
 /turf/simulated/floor,
@@ -53960,7 +53960,7 @@
 "cep" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 1;
-	filter_type = 3;
+	filter_type = "carbon_dioxide";
 	name = "Gas filter (CO2 tank)"
 	},
 /turf/simulated/floor,
@@ -54543,7 +54543,7 @@
 "cfO" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor,
@@ -54619,7 +54619,7 @@
 "cgd" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor,
