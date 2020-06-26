@@ -260,6 +260,10 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
+	if(assailant.lying)
+		set_state(GRAB_PASSIVE)
+		allow_upgrade = 0
+
 	adjust_position()
 
 
@@ -408,6 +412,9 @@
 		if(!isturf(assailant.loc) || ( !isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
 			qdel(src)
 			return 0
+	if(assailant.incapacitated())
+		qdel(src)
+		return 0
 
 	return 1
 

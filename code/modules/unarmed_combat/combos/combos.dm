@@ -19,8 +19,9 @@
 
 	victim.add_my_combo_value(-20)
 	for(var/obj/item/I in to_drop)
-		if(!(I.flags && I.flags & ABSTRACT))
-			victim.drop_from_inventory(I)
+		if(I.flags & ABSTRACT)
+			continue
+		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
