@@ -72,7 +72,6 @@
 		else
 			user.visible_message("<span class='info'>[user] eats [toEat] from [name].</span>")
 		toEat.reagents.trans_to_ingest(M, toEat.bitesize)
-
 		remove_from_storage(toEat)
 		qdel(toEat)
 
@@ -116,6 +115,7 @@
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
+	max_storage_space = 1
 
 /obj/item/weapon/storage/visuals/utensil/fork/plastic
 	name = "plastic fork"

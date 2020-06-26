@@ -108,7 +108,6 @@ var/const/INGEST = 2
 	var/datum/reagents/R = target.reagents
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
-
 	src.trans_to(B, amount)
 
 	digest_with_delay(BR, target, B)

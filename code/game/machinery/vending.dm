@@ -748,9 +748,9 @@
 	icon_state = "chang"
 	light_color = "#d00023"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/storage/visuals/utensil/sticks = 18)
 	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 25, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 25,
-					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 25, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 25, /obj/item/weapon/storage/visuals/utensil/sticks = 1)
 	refill_canister = /obj/item/weapon/vending_refill/chinese
 
 /obj/machinery/vending/cola
@@ -1055,7 +1055,7 @@
 		/obj/item/weapon/kitchen/mould/coin = 1,
 		/obj/item/weapon/kitchen/mould/loli = 1
 	)
-	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchenknife/butch = 2)
+	contraband = list(/obj/item/weapon/storage/visuals/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/kitchenknife/butch = 2)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 
 /obj/machinery/vending/sovietsoda

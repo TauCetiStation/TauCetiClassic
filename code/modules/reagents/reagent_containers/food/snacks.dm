@@ -130,14 +130,12 @@
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage))
-		return ..() // -> item/attackby()
 
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/storage/visuals/utensil))
 		var/obj/item/weapon/storage/visuals/utensil/U = I
 
-		if(U.can_be_inserted(src, TRUE))
+		if(U.contents.len >= U.max_storage_space)
 			to_chat(user, "<span class='warning'>You cannot fit anything else on your [U].")
 			return FALSE
 
@@ -150,9 +148,10 @@
 
 		var/obj/item/weapon/reagent_containers/food/snacks/ball/collected = new (U)
 		collected.reagents.remove_any(collected.reagents.total_volume)
+		collected.reagents.total_volume = bitesize
 		collected.bitesize = collected.reagents.total_volume
 		collected.name = "[src] food ball"
-		collected.desc = "You recognize pieces of [src] in the [collected]"
+		collected.desc = "You recognize pieces of [src] in the food ball."
 		collected.color = filling_color
 
 		if(reagents.total_volume > bitesize)
@@ -171,7 +170,9 @@
 		U.add_item(collected)
 		return
 
-	try_slice(I, user)
+	else if(try_slice(I, user))
+		return
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
@@ -199,7 +200,7 @@
 	name = "food ball"
 	desc = "Food of some kind"
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = 'loadedfood'
+	icon_state = "loadedfood"
 	w_class = ITEM_SIZE_TINY
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1819,6 +1820,7 @@
 			var/obj/slice = new slice_path (src.loc)
 			reagents.trans_to(slice,reagents_per_slice)
 		qdel(src)
+		return TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
