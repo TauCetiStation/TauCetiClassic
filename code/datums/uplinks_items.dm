@@ -152,16 +152,16 @@
 	cost = 20
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/dangerous/bazooka
-	name = "Goliath missile launcher"
-	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
-	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
-	cost = 35
+/datum/uplink_item/dangerous/grenadelauncher
+	name = "M79 grenade launcher"
+	desc = "M79 is old but still reliable weapon, proven by the Space-Vietnam war. Uses 40x46 ammunition"
+	item = /obj/item/weapon/gun/projectile/m79
+	cost = 25
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/a74
 	name = "A74 Assault Rifle"
-	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
+	desc = "Automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
 	uplink_types = list("nuclear")
@@ -365,18 +365,25 @@
 	cost = 2
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/rocket
-	name = "HE missile"
-	desc = "A high explosive missile for Goliath launcher."
-	item = /obj/item/ammo_casing/caseless/rocket
-	cost = 10
+/datum/uplink_item/ammo/rubbergrenade
+	name = "Rubber 40x46 grenade"
+	desc = "A 40x46 rubber grenade for use with M79 grenade launcher. When you need to take someone alive."
+	item = /obj/item/ammo_casing/r4046/rubber
+	cost = 1
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/rocket_emp
-	name = "EMP missile"
-	desc = "A EMP missile for Goliath launcher."
-	item = /obj/item/ammo_casing/caseless/rocket/emp
-	cost = 10
+/datum/uplink_item/ammo/HEgrenade
+	name = "HE 40x46 grenade"
+	desc = "A 40x46 HE grenade for use with M79 grenade launcher. For silent takedowns."
+	item = /obj/item/ammo_casing/r4046/chem/Exp
+	cost = 7
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/EMPgrenade
+	name = "EMP 40x46 grenade"
+	desc = "A 40x46 EMP grenade for use with M79 grenade launcher."
+	item = /obj/item/ammo_casing/r4046/chem/EMP
+	cost = 5
 	uplink_types = list("nuclear")
 
 // STEALTHY WEAPONS
