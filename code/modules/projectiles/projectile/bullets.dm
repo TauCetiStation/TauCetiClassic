@@ -150,8 +150,8 @@
 	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
-	B1.reagents.add_reagent("uranium", 15)
-	B2.reagents.add_reagent("iron", 15)
+	B1.reagents.add_reagent("uranium", 30)
+	B2.reagents.add_reagent("iron", 30)
 
 	beakers = list()
 	beakers += B1
