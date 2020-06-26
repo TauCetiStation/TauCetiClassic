@@ -2,7 +2,7 @@
 //TG-stuff
 /obj/effect/anomaly
 	name = "anomaly"
-	icon = 'code/modules/anomaly/anomalies.dmi'
+	icon = 'code/modules/events/anomaly/anomalies.dmi'
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "vortex"
 	unacidable = 1
