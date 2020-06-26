@@ -40,7 +40,6 @@
 
 /obj/machinery/chem_dispenser/make_old()
 	..()
-	stat = 0 //work, but...
 	var/to_delete_amount = rand(1, dispensable_reagents.len)
 	for(var/i in 1 to to_delete_amount)
 		pick_n_take(dispensable_reagents)
