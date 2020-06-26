@@ -934,3 +934,11 @@
 
 	return list("damage" = retDam, "type" = retDamType, "flags" = retFlags, "verb" = retVerb, "sound" = retSound,
 				"miss_sound" = retMissSound)
+
+/mob/living/carbon/set_m_intent(intent)
+	if(intent == MOVE_INTENT_RUN)
+		if(legcuffed)
+			to_chat(src, "<span class='notice'>You are legcuffed! You cannot run until you get [legcuffed] removed!</span>")
+			return FALSE
+
+	return ..()

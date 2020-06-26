@@ -66,7 +66,7 @@
 			to_chat(user, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
 			return
 	if(istype(M, /mob/living/carbon/slime))
-		to_chat(user, "This creature does not seem to have a mouth!</span>")
+		to_chat(user, "<span class='rose'>This creature does not seem to have a mouth!</span>")
 		return
 
 	if(contents.len)

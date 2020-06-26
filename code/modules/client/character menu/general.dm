@@ -277,6 +277,7 @@
 						else
 							h_style = random_hair_style(gender, species)
 						ResetJobs()
+						UpdateAllowedQuirks()
 						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]

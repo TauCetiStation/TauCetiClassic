@@ -1606,7 +1606,7 @@
 /area/awaymission/spacebattle/syndicate4)
 "eP" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/spoon,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -1671,7 +1671,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/kitchen/utensil/fork,
+/obj/item/weapon/storage/visuals/utensil/fork,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},

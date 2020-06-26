@@ -152,6 +152,10 @@
 	initialized = TRUE
 	return time
 
+// Is called after all this subsystem is initialized.
+/datum/subsystem/proc/PostInitialize()
+	return
+
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
 	if(!statclick)
