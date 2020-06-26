@@ -155,6 +155,7 @@ var/list/admin_verbs_server = list(
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
+	/client/proc/debug_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
