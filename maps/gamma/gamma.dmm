@@ -50552,9 +50552,7 @@
 	},
 /area/station/medical/virology)
 "pvL" = (
-/obj/machinery/chem_dispenser{
-	name = "old chem dispenser"
-	},
+/obj/machinery/chem_dispenser/old,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "pwf" = (
