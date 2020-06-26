@@ -84,6 +84,10 @@ var/global/list/combat_combos_by_name = list()
 			if(show_warning)
 				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 			return FALSE
+	else if(require_canmove && !CS.attacker.canmove)
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
+		return FALSE
 
 	if(CS.attacker.incapacitated())
 		if(show_warning)
@@ -150,11 +154,6 @@ var/global/list/combat_combos_by_name = list()
 	if(require_leg_to_perform && !CS.attacker.is_usable_leg())
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>, since you don't have a leg...</span>")
-		return FALSE
-
-	if(require_canmove && !CS.attacker.canmove)
-		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 		return FALSE
 
 	return TRUE

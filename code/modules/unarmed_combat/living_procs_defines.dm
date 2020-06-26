@@ -261,7 +261,8 @@ var/global/combos_cheat_sheet = ""
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 
 	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
-		attacker.do_attack_animation(src)
+		if(!attacker.grabbed_by.len)
+			attacker.do_attack_animation(src)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
@@ -284,6 +285,8 @@ var/global/combos_cheat_sheet = ""
 						qdel(G)
 					else
 						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to do that</span>")
+					return
+				else if(G.assailant == attacker)
 					return
 				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 				qdel(G)

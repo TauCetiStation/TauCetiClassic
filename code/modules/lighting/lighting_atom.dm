@@ -73,6 +73,7 @@
 	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
 		L = thing
 		L.source_atom.update_light()
+	return TRUE
 
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
 	return

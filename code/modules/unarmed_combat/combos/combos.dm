@@ -8,7 +8,6 @@
 	ignore_size = TRUE
 
 	allowed_target_zones = TARGET_ZONE_ALL
-	require_canmove = TRUE
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
@@ -20,7 +19,8 @@
 
 	victim.add_my_combo_value(-20)
 	for(var/obj/item/I in to_drop)
-		victim.drop_from_inventory(I)
+		if(!(I.flags && I.flags & ABSTRACT))
+			victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
@@ -75,7 +75,6 @@
 	check_bodyarmor = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
-	require_canmove = TRUE
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	apply_effect(3, WEAKEN, victim, attacker, min_value=1)

@@ -310,17 +310,50 @@
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
 		return FALSE
-
-	if (pinned.len)
+	if(locate(/obj/item/weapon/grab, src))
+		var/list/L = GetGrabs()
+		if(L.len == 1)
+			for(var/obj/item/weapon/grab/G in GetGrabs())
+				var/mob/M = G.affecting
+				if(M)
+					if((get_dist(src, M) <= 1 || M.loc == src.loc))
+						var/turf/T = src.loc
+						. = ..()
+						if(isturf(M.loc))
+							var/diag = get_dir(src, M)
+							if((diag - 1) & diag)
+							else
+								diag = null
+							if((get_dist(src, M) > 1 || diag))
+								step(M, get_dir(M.loc, T))
+		else
+			for(var/obj/item/weapon/grab/G in L)
+				G.affecting.other_mobs = 1
+				G.assailant.other_mobs = 1
+				if(src != G.affecting)
+					G.affecting.animate_movement = 3
+			for(var/obj/item/weapon/grab/G in L)
+				spawn( 0 )
+					if(!G.affecting.Moved())
+						step(G.affecting, Dir)
+					return
+				spawn( 1 )
+					G.affecting.other_mobs = null
+					G.assailant.other_mobs = null
+					G.affecting.animate_movement = 2
+					G.assailant.animate_movement = 2
+					return
+	for(var/obj/item/weapon/grab/G in src.GetGrabs())
+		if(G.state == GRAB_NECK)
+			src.set_dir(reverse_dir[Dir])
+		G.adjust_position()
+	for(var/obj/item/weapon/grab/G in src.grabbed_by)
+		G.adjust_position()
+	if(pinned.len)
 		return FALSE
 
 	return ..()
 
-/mob/Moved(atom/OldLoc, Dir)
-	for(var/obj/item/weapon/grab/G in GetGrabs())
-		if(!G.affecting.lying)
-			G.affecting.Move(OldLoc)
-	return ..()
 
 ///Process_Incorpmove
 ///Called by client/Move()

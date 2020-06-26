@@ -26,7 +26,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_NO_CONTAINER
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
@@ -457,7 +457,7 @@
 						inspect_organ(affecting, assailant, hit_zone)
 				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
-						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
+						to_chat(assailant, "<span class='warning'>You require a better gr	ab to do this.</span>")
 						return
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
 					if(!BP)
@@ -467,8 +467,7 @@
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						var/list/attack_obj = assailant.get_unarmed_attack()
-						assailant.stamina_damage = attack_obj["damage"] * initial(assailant.stamina_damage)
-						H.adjustStamina(-assailant.stamina_damage)
+						H.adjustStamina(-assailant.stamina_damage * attack_obj["damage"])
 						H.adjustHalLoss(CLAMP(0, 10 - H.halloss, 10)) //up to 10 halloss
 					return
 				if(INTENT_HARM)

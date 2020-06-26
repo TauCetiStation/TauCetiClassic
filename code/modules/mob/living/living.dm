@@ -834,7 +834,7 @@
 						H.shoving_fingers = FALSE
 				qdel(G)
 			size_ratio_resisting = get_size_ratio(G.assailant, L)
-			size_ratio_grabbing = get_size_ratio(L, G.assailant)	
+			size_ratio_grabbing = 1 / size_ratio_resisting
 			g_resist_cost = L.resist_cost * size_ratio_grabbing
 			r_resist_cost = L.resist_cost * size_ratio_resisting
 			if(L.getStamina() >= g_resist_cost)
