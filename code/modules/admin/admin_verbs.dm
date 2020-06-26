@@ -158,6 +158,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debug_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
+	/client/proc/forceEvent,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_load_junkyard,
@@ -208,7 +209,8 @@ var/list/admin_verbs_whitelist = list(
 	)
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
-	/client/proc/admin_crew_salary
+	/client/proc/admin_crew_salary,
+	/client/proc/event_manager_panel
 	)
 
 //verbs which can be hidden - needs work
