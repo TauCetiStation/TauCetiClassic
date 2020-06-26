@@ -128,19 +128,19 @@
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
 /obj/item/ammo_casing/r4046/rubber
-	desc = "A 40x46mm grenade (rubber)."
+	desc = "A 40x46mm rubber grenade."
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046/rubber
 
 /obj/item/ammo_casing/r4046/chem/teargas
-	desc = "A 40x46mm grenade (teargas)."
+	desc = "A 40x46mm teargas grenade."
 	projectile_type = /obj/item/projectile/bullet/chem/teargas
 
 /obj/item/ammo_casing/r4046/chem/EMP
-	desc = "A 40x46mm grenade (EMP)."
+	desc = "A 40x46mm EMP grenade."
 	projectile_type = /obj/item/projectile/bullet/chem/EMP
 
 /obj/item/ammo_casing/r4046/chem/Exp
-	desc = "A 40x46mm grenade (Exp)."
+	desc = "A 40x46mm HE grenade."
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
 
 
