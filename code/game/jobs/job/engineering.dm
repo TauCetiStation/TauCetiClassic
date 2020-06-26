@@ -58,13 +58,12 @@
 	flag = ENGINEER
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 8
+	spawn_positions = 8
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_atmospherics, access_engine, access_emergency_storage, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
-	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
@@ -95,46 +94,6 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
 
 	return TRUE
-
-
-/datum/job/atmos
-	title = "Atmospheric Technician"
-	flag = ATMOSTECH
-	department_flag = ENGSEC
-	faction = "Station"
-	total_positions = 3
-	spawn_positions = 2
-	supervisors = "the chief engineer"
-	selection_color = "#fff5cc"
-	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_atmospherics, access_engine, access_emergency_storage, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
-	salary = 160
-	minimal_player_age = 3
-	minimal_player_ingame_minutes = 600
-
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
-
-/datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), SLOT_BACK)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(H), SLOT_BACK)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), SLOT_BACK)
-		if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), SLOT_BACK)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(H), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/atmos(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(H), SLOT_BELT)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), SLOT_L_EAR)
-
-	return TRUE
-
 
 /datum/job/technical_assistant
 	title = "Technical Assistant"

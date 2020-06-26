@@ -51867,7 +51867,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start{
-	name = "Atmospheric Technician"
+	name = "Station Engineer"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -51891,7 +51891,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start{
-	name = "Atmospheric Technician"
+	name = "Station Engineer"
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -52166,15 +52166,6 @@
 	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/engineering/break_room)
-"bYt" = (
-/obj/effect/landmark/start{
-	name = "Atmospheric Technician"
-	},
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -112347,7 +112338,7 @@ cih
 bVK
 bUd
 bXC
-bYt
+bXC
 bYP
 nBb
 bZR

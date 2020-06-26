@@ -12,6 +12,12 @@
 	sort_category = "Suits and Overwear"
 	cost = 1
 
+/datum/gear/under/atmostech
+	display_name = "Atmospheric jumpsuit"
+	path = /obj/item/clothing/under/rank/atmospheric_technician
+	cost = 0
+	allowed_roles = list("Station Engineer")
+
 /datum/gear/suit/leather_coat
 	display_name = "Leather coat"
 	path = /obj/item/clothing/suit/leathercoat

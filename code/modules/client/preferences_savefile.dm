@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 30
+#define SAVEFILE_VERSION_MAX 31
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -186,8 +186,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(!job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
-
-	if(current_version < 30)
 		for(var/quirk_name in all_quirks)
 			// If the quirk isn't even hypothetically allowed, pref can't have it.
 			// If IsAllowedQuirk() for some reason ever becomes more computationally
@@ -196,6 +194,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				popup(parent.mob, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
 				ResetQuirks()
 				break
+
+	if(current_version < 31)
+		popup(parent.mob, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
+		ResetJobs()
+		S["job_preferences"]	<< job_preferences
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)

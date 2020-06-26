@@ -128,7 +128,7 @@ var/list/gear_datums = list()
 		if(!use_name)
 			error("Loadout - Missing display name: [G]")
 			continue
-		if(!initial(G.cost))
+		if(initial(G.cost) == null)
 			error("Loadout - Missing cost: [G]")
 			continue
 		if(!initial(G.path))
