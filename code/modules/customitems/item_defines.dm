@@ -10,25 +10,6 @@
 ////////// Fluff Items ///////////
 //////////////////////////////////
 
-/obj/item/weapon/paper/fluff/sue_donem // aikasan: Sue Donem
-	name = "cyborgification waiver"
-	desc = "It's some kind of official-looking contract."
-
-/obj/item/weapon/paper/fluff/sue_donem/atom_init()
-	. = ..()
-
-	info = "<B>Organic Carrier AIA and Standard Cyborgification Agreement</B><BR>\n<BR>\nUnder the authority of Nanotrasen Synthetic Intelligence Division, this document hereby authorizes an accredited Roboticist of the NSS Exodus or a deputized authority to perform a regulation lobotomisation upon the person of one '<I>Sue Donem</I>' (hereafter referred to as the Subject) with intent to enact a live Artificial Intelligence Assimilation (AIA) or live Cyborgification proceedure.<BR>\n<BR>\nNo further station authorization is required, and the Subject waives all rights as a human under Nanotrasen internal and external legal protocol. This document is subject to amendment under Nanotrasen internal protocol \[REDACTED\].<BR>\n<BR>\nSigned: <I>Sue Donem</I><BR>\n"
-
-	stamp_text = (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
-
-	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-	stampoverlay.pixel_x = rand(-2, 2)
-	stampoverlay.pixel_y = rand(-3, 2)
-	stampoverlay.icon_state = "paper_stamp-rd"
-	add_overlay(stampoverlay)
-
-	update_icon()
-
 /obj/item/fluff/wes_solari_1 //tzefa: Wes Solari
 	name = "family photograph"
 	desc = "A family photograph of a couple and a young child, Written on the back it says \"See you soon Dad -Roy\"."
@@ -106,10 +87,6 @@
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
 	. = ..()
 	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
-
-/obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
-	name = "multicolor pen"
-	desc = "It's a cool looking pen. Lots of colors!"
 
 /obj/item/weapon/pen/fluff/fancypen //orangebottle: Lillian Levett, Lilliana Reade
 	name = "fancy pen"
@@ -482,11 +459,6 @@
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "uzenwa_sissra_1"
-
-////// Medical eyepatch - Thysse Ezinwa - Jadepython
-/obj/item/clothing/glasses/eyepatch/fluff/thysse_1
-	name = "medical eyepatch"
-	desc = "On the strap, EZINWA is written in white block letters."
 
 ////// Safety Goggles - Arjun Chopra - MindPhyre - APPROVED
 /obj/item/clothing/glasses/fluff/arjun_chopra_1
@@ -948,14 +920,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulders and rolled up sleeves."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "labcoat_red_open"
-
-//////////// Weapons ////////////
-
-///// Well-used baton - Oen'g Issek - Donofnyc3
-
-/obj/item/weapon/melee/baton/fluff/oeng_baton
-	name = "well-used stun baton"
-	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
 
 ///// Custom Items coded by Iamgoofball are Below /////
 /obj/item/weapon/storage/belt/medical/fluff/nashi_belt
