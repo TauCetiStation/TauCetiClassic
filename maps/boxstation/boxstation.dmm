@@ -13154,8 +13154,8 @@
 "awK" = (
 /obj/structure/table,
 /obj/item/trash/snack_bowl,
-/obj/item/weapon/kitchen/utensil/spoon,
-/obj/item/weapon/kitchen/utensil/fork{
+/obj/item/weapon/storage/visuals/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/fork{
 	pixel_x = 4
 	},
 /obj/machinery/newscaster{
@@ -13523,10 +13523,10 @@
 	},
 /area/station/civilian/dormitories/female)
 "axC" = (
-/obj/item/weapon/kitchen/utensil/fork{
+/obj/item/weapon/storage/visuals/utensil/fork{
 	pixel_x = 4
 	},
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/spoon,
 /obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor{
 	dir = 5;
@@ -20345,7 +20345,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	desc = "“This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.” Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
+	desc = "ï¿½This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.ï¿½ Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
 	dir = 4;
 	icon_state = "plaque";
 	name = "Comemmorative Plaque";
@@ -22253,7 +22253,7 @@
 /area/station/maintenance/engineering)
 "aNI" = (
 /obj/item/weapon/table_parts,
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/spoon,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -28
@@ -33940,7 +33940,7 @@
 "bjJ" = (
 /obj/item/trash/sosjerky,
 /obj/structure/table,
-/obj/item/weapon/kitchen/utensil/fork,
+/obj/item/weapon/storage/visuals/utensil/fork,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bjK" = (

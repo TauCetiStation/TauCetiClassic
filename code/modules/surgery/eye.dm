@@ -50,7 +50,7 @@
 /datum/surgery_step/eye/lift_eyes
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,	        \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/storage/visuals/utensil/fork = 75,	\
 	/obj/item/weapon/screwdriver = 50
 	)
 
@@ -83,7 +83,7 @@
 	/obj/item/weapon/hemostat = 100,             \
 	/obj/item/stack/cable_coil = 75,            \
 	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
+	/obj/item/weapon/storage/visuals/utensil/fork = 50,  \
 	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
 	)
 

@@ -1042,7 +1042,7 @@
 	icon_state = "dinnerware"
 	products = list(
 		/obj/item/weapon/tray = 8,
-		/obj/item/weapon/kitchen/utensil/fork = 6,
+		/obj/item/weapon/storage/visuals/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
 		/obj/item/clothing/suit/chef/classic = 2,

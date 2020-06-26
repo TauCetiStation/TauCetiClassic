@@ -36,6 +36,7 @@
 	IO.pixel_x = rand(-1, 1)
 	IO.pixel_y = 5 + rand(-1, 1)
 	IO.loc = src
+	IO.color = I.color
 	return IO
 
 /obj/item/weapon/storage/visuals/utensil/update_overlays()
@@ -59,11 +60,23 @@
 		else
 			return ..()
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			to_chat(user, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
+			return
+	if(istype(M, /mob/living/carbon/slime))
+		to_chat(user, "This creature does not seem to have a mouth!</span>")
+		return
+
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/snacks/ball/toEat = contents[contents.len]
 		if(!istype(toEat))
 			return ..()
-
+		/*var/fullness = M.getNutrition() //first define this for all mobs (for simple mobs let it return 0)
+		if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			to_chat(user, "<span class='rose'>You cannot force any more of [toEat] to go down [user == M ? "your" : "[M]'s"] throat.</span>")
+			return*/
 		if(user != M)
 			user.visible_message("<span class='info'>[user] attempts to feed [M] from [name].</span>")
 			if(!do_after(user, 3 SECONDS, target = M))
@@ -74,6 +87,9 @@
 		toEat.reagents.trans_to_ingest(M, toEat.bitesize)
 		remove_from_storage(toEat)
 		qdel(toEat)
+		return
+
+	return ..()
 
 /*
  * Spoons
@@ -99,7 +115,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/storage/visuals/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.

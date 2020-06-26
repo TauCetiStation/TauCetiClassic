@@ -131,7 +131,7 @@
 	sweep_step = 2
 
 /obj/effect/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/kitchen/utensil/fork))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/storage/visuals/utensil/fork))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	return ..()

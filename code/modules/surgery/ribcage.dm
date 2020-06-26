@@ -50,7 +50,7 @@
 /datum/surgery_step/ribcage/retract_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/storage/visuals/utensil/fork = 75,	\
 	/obj/item/weapon/screwdriver = 50
 	)
 
@@ -93,7 +93,7 @@
 /datum/surgery_step/ribcage/close_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/storage/visuals/utensil/fork = 75,	\
 	/obj/item/weapon/screwdriver = 50
 	)
 
@@ -166,7 +166,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,
 	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	/obj/item/weapon/storage/visuals/utensil/fork = 50
 	)
 	blood_level = 2
 

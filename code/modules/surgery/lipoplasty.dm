@@ -62,7 +62,7 @@
 /datum/surgery_step/lipoplasty/remove_fat
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/storage/visuals/utensil/fork = 75,	\
 	/obj/item/weapon/screwdriver = 50
 	)
 

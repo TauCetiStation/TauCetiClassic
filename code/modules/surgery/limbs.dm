@@ -52,7 +52,7 @@
 /datum/surgery_step/limb/mend
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/storage/visuals/utensil/fork = 75,	\
 	/obj/item/weapon/screwdriver = 50
 	)
 

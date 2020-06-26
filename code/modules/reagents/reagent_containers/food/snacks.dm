@@ -20,8 +20,7 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-
-	if(!reagents.total_volume)
+	if(reagents.total_volume <= 0)
 		if(M == user)
 			to_chat(user, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
@@ -94,7 +93,6 @@
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
 				return
 
-
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M, eat_sound, VOL_EFFECTS_MASTER, rand(20, 50))
 			if(reagents.total_volume)
@@ -109,7 +107,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
-				On_Consume(M)
+				On_Consume(M, user)
 			return 1
 
 	return 0

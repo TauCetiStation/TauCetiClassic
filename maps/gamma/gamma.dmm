@@ -9078,7 +9078,7 @@
 /area/station/maintenance/eva)
 "bYg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/kitchen/utensil/fork,
+/obj/item/weapon/storage/visuals/utensil/fork,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -23403,7 +23403,7 @@
 /area/station/engineering/atmos)
 "gCD" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/kitchen/utensil/fork,
+/obj/item/weapon/storage/visuals/utensil/fork,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57017,7 +57017,7 @@
 /area/station/hallway/primary/bridgehall)
 "ryx" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/spoon,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
@@ -59760,7 +59760,7 @@
 /area/station/maintenance/eva)
 "srk" = (
 /turf/simulated/floor{
-	desc = "“This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.” Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
+	desc = "ï¿½This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.ï¿½ Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
 	dir = 4;
 	icon_state = "plaque";
 	name = "Comemmorative Plaque";
@@ -76538,7 +76538,7 @@
 /area/station/maintenance/medbay)
 "xLH" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/storage/visuals/utensil/spoon,
 /obj/machinery/light/small{
 	dir = 8
 	},
