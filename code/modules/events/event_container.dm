@@ -8,8 +8,8 @@
 #define ASSIGNMENT_SCIENTIST "Scientist"
 #define ASSIGNMENT_SECURITY "Security"
 
-GLOBAL_LIST_INIT(severity_to_string, list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major"))
-GLOBAL_LIST_EMPTY(event_last_fired)
+var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
+var/list/event_last_fired = list()
 
 /datum/event_container
 	var/severity = -1
@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(event_last_fired)
 
 		new next_event.event_type(next_event)	// Events are added and removed from the processing queue in their New/kill procs
 
-		log_debug("Starting event '[next_event.name]' of severity [GLOB.severity_to_string[severity]].")
+		log_debug("Starting event '[next_event.name]' of severity [severity_to_string[severity]].")
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(event_last_fired)
 	// Otherwise, follow the standard setup process
 	else
 		var/playercount_modifier = 1
-		switch(GLOB.player_list.len)
+		switch(player_list.len)
 			if(0 to 10)
 				playercount_modifier = 1.2
 			if(11 to 15)
@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(event_last_fired)
 		var/event_delay = rand(config.event_delay_lower[severity], config.event_delay_upper[severity]) * playercount_modifier
 		next_event_time = world.time + event_delay
 
-	log_debug("Next event of severity [GLOB.severity_to_string[severity]] in [(next_event_time - world.time)/600] minutes.")
+	log_debug("Next event of severity [severity_to_string[severity]] in [(next_event_time - world.time)/600] minutes.")
 
 /datum/event_container/proc/SelectEvent()
 	var/datum/event_meta/EM = input("Select an event to queue up.", "Event Selection", null) as null|anything in available_events

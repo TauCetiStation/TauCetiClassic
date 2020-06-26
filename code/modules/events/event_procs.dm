@@ -74,9 +74,9 @@
 	active_with_role["Cyborg"] = 0
 	active_with_role["Janitor"] = 0
 	active_with_role["Botanist"] = 0
-	active_with_role["Any"] = GLOB.player_list.len
+	active_with_role["Any"] = player_list.len
 
-	for(var/mob/M in GLOB.player_list)
+	for(var/mob/M in player_list)
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
 
@@ -97,7 +97,7 @@
 		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
 			active_with_role["Medical"]++
 
-		if(M.mind.assigned_role in GLOB.security_positions)
+		if(M.mind.assigned_role in security_positions)
 			active_with_role["Security"]++
 
 		if(M.mind.assigned_role in list("Research Director", "Scientist"))
@@ -119,7 +119,7 @@
 
 /datum/event/proc/num_players()
 	var/players = 0
-	for(var/mob/living/carbon/human/P in GLOB.player_list)
+	for(var/mob/living/carbon/human/P in player_list)
 		if(P.client)
 			players++
 	return players

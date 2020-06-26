@@ -149,6 +149,19 @@ var/list/net_announcer_secret = list()
 	var/slime_delay = 0
 	var/animal_delay = 0
 
+	var/const/minutes_to_ticks = 60 * 10
+	// Event settings
+	var/expected_round_length = 60 * 2 * minutes_to_ticks // 2 hours
+	// If the first delay has a custom start time
+	// No custom time, no custom time, between 80 to 100 minutes respectively.
+	var/list/event_first_run   = list(EVENT_LEVEL_MUNDANE = null, 	EVENT_LEVEL_MODERATE = null,	EVENT_LEVEL_MAJOR = list("lower" = 48000, "upper" = 60000))
+	// The lowest delay until next event
+	// 10, 30, 50 minutes respectively
+	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE = 6000,	EVENT_LEVEL_MODERATE = 18000,	EVENT_LEVEL_MAJOR = 30000)
+	// The upper delay until next event
+	// 15, 45, 70 minutes respectively
+	var/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE = 9000,	EVENT_LEVEL_MODERATE = 27000,	EVENT_LEVEL_MAJOR = 42000)
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database

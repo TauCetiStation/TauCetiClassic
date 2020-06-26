@@ -98,3 +98,6 @@ var/list/ignore_vision_inside = list(
 
 // Is initiated in setup_religions(). Used to save all info about chaplain's religion.
 var/global/datum/religion/chaplain/chaplain_religion
+
+var/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
+var/gametime_offset = 432000 // 12:00 in seconds

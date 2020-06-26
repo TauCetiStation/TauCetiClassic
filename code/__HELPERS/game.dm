@@ -298,6 +298,12 @@
 		mobs_found += M
 	return mobs_found
 
+/proc/MinutesToTicks(var/minutes as num)
+	return minutes * 60 * 10
+
+/proc/SecondsToTicks(var/seconds)
+	return seconds * 10
+
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
 	var/dx = finish.x - start.x

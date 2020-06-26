@@ -10,6 +10,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if(C.holder.rights & reg_flag)
 			to_chat(C, msg)
 
+/proc/admin_log_and_message_admins(var/message as text)
+	log_admin("[key_name(usr)] " + message)
+	message_admins("[key_name_admin(usr)] " + message, 1)
+
 /proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
 	log_attack(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
