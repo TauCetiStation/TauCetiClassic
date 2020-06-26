@@ -457,7 +457,7 @@
 						inspect_organ(affecting, assailant, hit_zone)
 				if(INTENT_GRAB)
 					if(state < GRAB_AGGRESSIVE)
-						to_chat(assailant, "<span class='warning'>You require a better gr	ab to do this.</span>")
+						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
 					if(!BP)
