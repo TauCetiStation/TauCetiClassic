@@ -12,6 +12,24 @@
 
 	var/religify_next = list()
 
+	var/list/rad_choices
+
+/obj/item/weapon/storage/bible/atom_init()
+	. = ..()
+	rad_choices = list(
+		"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
+		"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
+		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
+	)
+
+	var/matrix/M = matrix()
+	M.Scale(0.7)
+	for(var/choise in rad_choices)
+		if(choise == "Pews") // Don't need it
+			continue
+		var/image/I = rad_choices[choise]
+		I.transform = M
+
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."
@@ -81,20 +99,7 @@
 /obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
 	var/done = FALSE
 	var/changes = FALSE
-
-	var/list/choices = list(
-	"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
-	"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
-	"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
-	)
-
-	var/matrix/M = matrix()
-	M.Scale(0.7)
-	for(var/choise in choices)
-		if(choise == "Pews") // Don't need it
-			continue
-		var/image/I = choices[choise]
-		I.transform = M
+	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
 	while(!done)
@@ -102,7 +107,11 @@
 			done = TRUE
 			break
 
-		var/looks = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = TRUE)
+		var/list/temp_images = list()
+		for(var/choose in choices)
+			temp_images[choose] += rad_choices[choose]
+
+		var/looks = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
 		if(!looks)
 			done = TRUE
 			break
