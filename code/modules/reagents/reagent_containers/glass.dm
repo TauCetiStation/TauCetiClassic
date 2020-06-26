@@ -291,6 +291,8 @@
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
+	force = 5
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))

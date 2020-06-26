@@ -169,12 +169,13 @@ var/datum/subsystem/vote/SSvote
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
 	var/timer_mode = "default"
-	if (vote_type == "restart")
+	if(vote_type == "restart")
 		timer_mode = "restart"
 	if(!mode)
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
+				to_chat(usr, "<span class='vote'>Next [vote_type] vote is avaible after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()
@@ -187,22 +188,24 @@ var/datum/subsystem/vote/SSvote
 							if(!C.holder.fakekey && !C.is_afk())
 								num_admins_online++
 					if(num_admins_online)
+						to_chat(usr, "<span class='vote'>Admins online. Restart vote canceled</span>")
 						return 0
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
-				for (var/M in config.votable_modes)
-					if (config.is_modeset(M))
+				for(var/M in config.votable_modes)
+					if(config.is_modeset(M))
 						var/list/submodes = list()
-						for (var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
+						for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
 							submodes.Add(D.name)
-						if (length(submodes) > 0)
+						if(length(submodes) > 0)
 							description += "<b>[M]</b>: "
 							description += submodes.Join(", ")
 							description += "<br>"
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
+						to_chat(usr, "<span class='vote'>Security level is red or delta. Crew transfer vote canceled</span>")
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
@@ -225,8 +228,11 @@ var/datum/subsystem/vote/SSvote
 		else
 			last_vote_time[timer_mode] = world.time
 		log_vote(text)
+		var/vote_sound = 'sound/misc/notice1.ogg'
+		if(mode == "restart")
+			vote_sound = 'sound/misc/interference.ogg'
 		for(var/mob/M in player_list)
-			M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, vote_sound, VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
@@ -248,10 +254,13 @@ var/datum/subsystem/vote/SSvote
 	voting |= C
 
 	if(mode)
-		if(question)
-			. += "<h2>Vote: '[sanitize(question)]'</h2>"
-		else
-			. += "<h2>Vote: [capitalize(mode)]</h2>"
+		switch(mode)
+			if("custom")
+				. += "<h2>Vote: '[sanitize(question)]'</h2>"
+			if("restart")
+				. += "<h2 style='color:red'>Vote: /!!!\\ Restart /!!!\\</h2>"
+			else
+				. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
@@ -264,7 +273,7 @@ var/datum/subsystem/vote/SSvote
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
-		if (description)
+		if(description)
 			. += "[description]<hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
@@ -301,7 +310,6 @@ var/datum/subsystem/vote/SSvote
 		. += "</ul><hr>"
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
 	return .
-
 
 /datum/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)

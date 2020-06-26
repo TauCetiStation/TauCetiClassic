@@ -100,6 +100,20 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
+	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
+		user.visible_message("<span class='danger'>[user] tries to put [name] on the [M]'s head!</span>")
+		if(user.is_busy(src) || !do_after(user, 0.8 SECONDS, target = M))
+			return
+		user.remove_from_mob(src)
+		M.equip_to_slot_if_possible(src, SLOT_HEAD, disable_warning = TRUE)
+		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!</span>")
+		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
+		var/list/data = user.get_unarmed_attack()
+		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
+		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
+		playsound(src, data["sound"], VOL_EFFECTS_MASTER)
+		return TRUE
+
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
