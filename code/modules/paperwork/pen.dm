@@ -26,8 +26,7 @@
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "fountainpen" //paththegreat: Eli Stevens
+	icon_state = "pen_fountain"
 	var/entity = ""
 
 /obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
