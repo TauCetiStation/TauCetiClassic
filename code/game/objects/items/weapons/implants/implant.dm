@@ -44,7 +44,7 @@
 	implanted = TRUE
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[def_zone ? def_zone : BP_HEAD]
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.bodyparts_by_name[def_zone] ? def_zone : BP_HEAD]
 		BP.implants += src
 		part = BP
 		H.hud_updateflag |= 1 << IMPLOYAL_HUD
