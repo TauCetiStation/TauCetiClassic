@@ -392,6 +392,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
 
+/obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	implanted(C)
+
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"
 <b>Implant Specifications:</b><BR>
