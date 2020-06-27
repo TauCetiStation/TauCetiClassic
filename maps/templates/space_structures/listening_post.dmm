@@ -399,7 +399,7 @@
 /area/space_structures/listening_post)
 "bc" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1,
+/obj/item/clothing/head/welding/white,
 /obj/item/weapon/weldingtool/largetank,
 /obj/structure/cable{
 	d1 = 1;
