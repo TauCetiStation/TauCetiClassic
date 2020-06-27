@@ -21,6 +21,27 @@
 	wielded = 1
 	update_icon()
 
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
