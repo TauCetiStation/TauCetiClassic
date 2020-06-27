@@ -1,12 +1,12 @@
-#define ASSIGNMENT_ANY "Any"
-#define ASSIGNMENT_AI "AI"
-#define ASSIGNMENT_CYBORG "Cyborg"
-#define ASSIGNMENT_ENGINEER "Engineer"
-#define ASSIGNMENT_BOTANIST "Botanist"
-#define ASSIGNMENT_JANITOR "Janitor"
-#define ASSIGNMENT_MEDICAL "Medical"
+#define ASSIGNMENT_ANY       "Any"
+#define ASSIGNMENT_AI        "AI"
+#define ASSIGNMENT_CYBORG    "Cyborg"
+#define ASSIGNMENT_ENGINEER  "Engineer"
+#define ASSIGNMENT_BOTANIST  "Botanist"
+#define ASSIGNMENT_JANITOR   "Janitor"
+#define ASSIGNMENT_MEDICAL   "Medical"
 #define ASSIGNMENT_SCIENTIST "Scientist"
-#define ASSIGNMENT_SECURITY "Security"
+#define ASSIGNMENT_SECURITY  "Security"
 
 var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
 var/list/event_last_fired = list()

@@ -1,4 +1,3 @@
-
 /client/proc/forceEvent(var/type in SSevents.allEvents)
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
@@ -83,19 +82,22 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = M
-			if(R.module && (R.module.name == "engineering robot module"))
+			if(R.module && (R.modtype == "Engineering"))
 				active_with_role["Engineer"]++
 
-			if(R.module && (R.module.name == "medical robot module"))
+			if(R.module && (R.modtype == "Surgeon" || R.modtype == "Crisis"))
 				active_with_role["Medical"]++
 
-			if(R.module && (R.module.name == "security robot module"))
+			if(R.module && (R.modtype == "Security"))
 				active_with_role["Security"]++
+			
+			if(R.module && (R.modtype == "Janitor"))
+				active_with_role["Janitor"]++
 
-		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
+		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer", "Maintenance Technician", "Engine Technician", "Electrician"))
 			active_with_role["Engineer"]++
 
-		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
+		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor", "Surgeon", "Nurse"))
 			active_with_role["Medical"]++
 
 		if(M.mind.assigned_role in security_positions)
@@ -107,7 +109,7 @@
 		if(M.mind.assigned_role == "AI")
 			active_with_role["AI"]++
 
-		if(M.mind.assigned_role == "Cyborg")
+		if(M.mind.assigned_role in list("Cyborg", "Android", "Robot"))
 			active_with_role["Cyborg"]++
 
 		if(M.mind.assigned_role == "Janitor")
