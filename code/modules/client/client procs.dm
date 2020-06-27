@@ -264,7 +264,8 @@ var/list/blacklisted_builds = list(
 	//DISCONNECT//
 	//////////////
 /client/Del()
-	QDEL_LIST_ASSOC_VAL(browsers)
+	for(var/window_id in browsers)
+		qdel(browsers[window_id])
 
 	log_client_ingame_age_to_db()
 	if(cob && cob.in_building_mode)
