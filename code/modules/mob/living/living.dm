@@ -840,8 +840,7 @@
 			if(L.getStamina() >= g_resist_cost)
 				G.assailant.adjustStamina(-g_resist_cost)
 				L.adjustStamina(-r_resist_cost)
-		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+				L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc

@@ -236,7 +236,7 @@ var/global/combos_cheat_sheet = ""
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
 				var/atom/A = get_step_away(src, get_turf(attacker))
-				if(A != to_move && (loc != attacker.loc && attacker.grabbed_by.len > 0))
+				if(A != to_move)
 					combo_value *= 2
 
 			if(attacker.engage_combat(src, INTENT_PUSH, combo_value)) // We did a combo-wombo of some sort.
@@ -264,8 +264,17 @@ var/global/combos_cheat_sheet = ""
 		if(!attacker.grabbed_by.len)
 			attacker.do_attack_animation(src)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
-		step_away(src, get_turf(attacker))
-		if(loc != to_move && loc != attacker.loc)
+		if(attacker.grabbed_by.len == 1)
+			var/obj/item/weapon/grab/G = locate(/obj/item/weapon/grab) in src
+			var/new_dir = attacker.dir
+			if(G.state == GRAB_NECK)
+				new_dir = Revert_Dir(attacker.dir)
+			to_move = get_step(src, new_dir)
+			step(src, new_dir, 1)
+		else
+			to_move = get_step(src, get_dir(attacker, src))
+			step_away(src, get_turf(attacker))
+		if(loc != to_move)
 			adjustHalLoss(4)
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
