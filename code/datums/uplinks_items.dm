@@ -372,14 +372,14 @@
 	cost = 1
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/HEgrenade
+/datum/uplink_item/ammo/hegrenade
 	name = "HE 40x46 grenade"
 	desc = "A 40x46 HE grenade for use with M79 grenade launcher. For silent takedowns."
 	item = /obj/item/ammo_casing/r4046/chem/Exp
 	cost = 7
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/ammo/EMPgrenade
+/datum/uplink_item/ammo/empgrenade
 	name = "EMP 40x46 grenade"
 	desc = "A 40x46 EMP grenade for use with M79 grenade launcher."
 	item = /obj/item/ammo_casing/r4046/chem/EMP
