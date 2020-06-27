@@ -450,42 +450,42 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "zippoon"
 	icon_off = "zippo"
 
-/obj/item/weapon/lighter/zippo/blue //li_matsuda_1
+/obj/item/weapon/lighter/zippo/blue
 	name = "Blue zippo lighter"
 	desc = "A zippo lighter made of some blue metal."
 	icon_state = "zippo_blue"
 	icon_on = "zippo_blue_on"
 	icon_off = "zippo_blue"
 
-/obj/item/weapon/lighter/zippo/gold //Dragor23: Michael Guess
+/obj/item/weapon/lighter/zippo/gold
 	name = "Gold zippo lighter"
 	desc = "A golden lighter, engraved with some ornaments and a G."
 	icon_state = "zippo_gold"
 	icon_on = "zippo_gold_on"
 	icon_off = "zippo_gold"
 
-/obj/item/weapon/lighter/zippo/black //rawrtaicho: Riley Rohtin
+/obj/item/weapon/lighter/zippo/black
 	name = "Black zippo lighter"
 	desc = "A black zippo lighter, which holds some form of bless value."
 	icon_state = "zippo_black"
 	icon_on = "zippo_black_on"
 	icon_off = "zippo_black"
 
-/obj/item/weapon/lighter/zippo/silver //furohman: Fay Sullivan
+/obj/item/weapon/lighter/zippo/silver
 	name = "Silver zippo lighter"
 	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other."
 	icon_state = "zippo_silver"
 	icon_on = "zippo_silver_on"
 	icon_off = "zippo_silver"
 
-/obj/item/weapon/lighter/zippo/gonzo //executivekill: Hunter Duke
+/obj/item/weapon/lighter/zippo/gonzo
 	name = "Gonzo Fist zippo lighter"
 	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
 	icon_state = "zippo_gonzo"
 	icon_on = "zippo_gonzo_on"
 	icon_off = "zippo_gonzo"
 
-/obj/item/weapon/lighter/zippo/engraved //naples: Russell Vierson
+/obj/item/weapon/lighter/zippo/engraved
 	name = "Engraved zippo lighter"
 	desc = "A intricately engraved Zippo lighter."
 	icon_state = "zippo_engraved"
