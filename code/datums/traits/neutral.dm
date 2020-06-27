@@ -42,3 +42,50 @@
 		var/datum/species/S = all_species[specie_name]
 		if(S.taste_sensitivity == TASTE_SENSITIVITY_NO_TASTE)
 			. |= specie_name
+
+
+
+/datum/quirk/daltonism
+	name = QUIRK_DALTONISM
+	desc = "You stop feeling the colors of objects."
+	value = 0
+	mob_trait = TRAIT_DALTONISM
+	gain_text = "<span class='notice'>You don't distinguish colors!</span>"
+	lose_text = "<span class='notice'>You see the colors!</span>"
+
+	var/curret_type = "greyscale"
+
+/datum/quirk/daltonism/post_add()
+	var/list/types = list(
+		"Grey"            = "greyscale",
+		"Red"             = "thermal",
+		"Dark Green"      = "nvg_military",
+		"Green"           = "meson",
+		"Purple"          = "sci",
+		"Orange"          = "sepia",
+		"Polaroid"        = "polaroid",
+		"Yellow-Blue"     = "bgr_d",
+		"Purple-Blue"     = "brg_d",
+		"Green-Blue"      = "gbr_d",
+		"Purple-Red"      = "grb_d",
+		"Blue"            = "rbg_d",
+		)
+
+	var/list/color_types = list(
+		"Polaroid",
+		"Grey",
+		"Red",
+		"Green",
+		"Blue",
+		"Purple",
+		"Orange",
+		"Dark Green",
+		"Yellow-Blue",
+		"Purple-Blue",
+		"Green-Blue",
+		"Purple-Red",
+		)
+
+	var/mob/living/carbon/human/H = quirk_holder
+	var/choice = input(H, "Choose the type of color blindness", "Color") in color_types
+	curret_type = types[choice]
