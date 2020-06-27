@@ -1569,10 +1569,8 @@
 	if(blinded)
 		set_EyesVision("greyscale")
 		return
-	if(HAS_TRAIT(src, TRAIT_DALTONISM))
-		for(var/datum/quirk/daltonism/M in roundstart_quirks)
-			set_EyesVision(M.curret_type)
-			break
+	if(inherent_sighttype)
+		set_EyesVision(inherent_sighttype)
 		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))

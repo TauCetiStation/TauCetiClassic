@@ -59,6 +59,7 @@
 	var/list/types = list(
 		"Grey"            = "greyscale",
 		"Red"             = "thermal",
+		"Blue"            = "rbg_d",
 		"Dark Green"      = "nvg_military",
 		"Green"           = "meson",
 		"Orange"          = "sepia",
@@ -66,22 +67,9 @@
 		"Purple-Blue"     = "brg_d",
 		"Green-Blue"      = "gbr_d",
 		"Purple-Red"      = "grb_d",
-		"Blue"            = "rbg_d",
-		)
-
-	var/list/color_types = list(
-		"Grey",
-		"Red",
-		"Green",
-		"Blue",
-		"Orange",
-		"Dark Green",
-		"Yellow-Blue",
-		"Purple-Blue",
-		"Green-Blue",
-		"Purple-Red",
 		)
 
 	var/mob/living/carbon/human/H = quirk_holder
-	var/choice = input(H, "Choose the type of color blindness", "Color") in color_types
+	var/choice = input(H, "Choose the type of color blindness", "Color") in types
 	curret_type = types[choice]
+	H.inherent_sighttype = curret_type

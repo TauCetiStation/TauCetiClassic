@@ -73,6 +73,7 @@
 	var/sec_record = ""
 	var/gen_record = ""
 	var/blinded = null
+	var/inherent_sighttype = null //Custom sight
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
