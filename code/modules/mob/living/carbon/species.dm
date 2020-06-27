@@ -130,6 +130,8 @@
 
 	var/list/prevent_survival_kit_items = list()
 
+	var/list/replace_outfit = list()
+	
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
@@ -166,6 +168,41 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+
+/**
+  * Replace human clothes in [outfit] on species clothes
+  *
+  * Called after pre_equip()
+  */
+/datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
+	species_replace_outfit(O, replace_outfit)
+	call_species_equip_proc(H, O)
+	return
+
+// replaces default outfit (human outfit) on outfit from replace_outfit
+/datum/species/proc/species_replace_outfit(datum/outfit/O, list/replace_outfit = null)
+	if(replace_outfit.len)
+		var/list/outfit_types = list(
+			"[SLOT_W_UNIFORM]" = O.uniform,
+			"[SLOT_WEAR_SUIT]" = O.suit,
+			"[SLOT_BACK]" = O.back,
+			"[SLOT_BELT]" = O.belt,
+			"[SLOT_GLOVES]" = O.gloves,
+			"[SLOT_SHOES]" = O.shoes,
+			"[SLOT_HEAD]" = O.head,
+			"[SLOT_WEAR_MASK]" = O.mask,
+			"[SLOT_TIE]" = O.neck,
+			"[SLOT_L_EAR]" = O.l_ear,
+			"[SLOT_R_EAR]" = O.r_ear,
+			"[SLOT_GLASSES]" = O.glasses
+			)
+		for(var/I in outfit_types)
+			if(replace_outfit[outfit_types[I]])
+				O.change_slot_equip(text2num(I), replace_outfit[outfit_types[I]])
+
+/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return
+
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
@@ -199,32 +236,7 @@
 	return
 
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/storage/box/survival/SK = new(H)
-
-	species_survival_kit_items:
-		for(var/type in survival_kit_items)
-			/*
-			is_type_in_list only work on instantinated objects.
-			*/
-			for(var/type_to_check in J.prevent_survival_kit_items) // So engineers don't spawn with two oxy tanks.
-				if(ispath(type, type_to_check))
-					continue species_survival_kit_items
-			new type(SK)
-
-	job_survival_kit_items:
-		for(var/type in J.survival_kit_items)
-			for(var/type_to_check in prevent_survival_kit_items) // So IPCs don't spawn with oxy tanks from engi kits
-				if(ispath(type, type_to_check))
-					continue job_survival_kit_items
-			new type(SK)
-
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(SK, SLOT_R_HAND)
-	else
-		H.equip_to_slot_or_del(SK, SLOT_IN_BACKPACK)
+	return
 
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
@@ -295,6 +307,10 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
+	
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
 
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -302,6 +318,9 @@
 
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
+
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.unathi_equip(H)
 
 /datum/species/unathi/on_gain(mob/living/M)
 	M.verbs += /mob/living/carbon/human/proc/air_sample
@@ -357,6 +376,10 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
+	
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			)
 
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -364,6 +387,9 @@
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
+
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.tajaran_equip(H)
 
 /datum/species/skrell
 	name = SKRELL
@@ -404,6 +430,9 @@
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
+
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.skrell_equip(H)
 
 /datum/species/vox
 	name = VOX
@@ -456,13 +485,17 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
 	                          )
 
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/nitrogen) // So they don't get the big engi oxy tank, since they need no tank.
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 
 	min_age = 12
 	max_age = 20
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
+			)
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -487,6 +520,9 @@
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
+
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+	return O.vox_equip(H)
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)

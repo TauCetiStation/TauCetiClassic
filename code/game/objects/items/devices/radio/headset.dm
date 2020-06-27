@@ -46,6 +46,10 @@
 	ks1type = /obj/item/device/encryptionkey/syndicate
 	grid = TRUE
 
+/obj/item/device/radio/headset/syndicate/atom_init()
+	. = ..()
+	set_frequency(SYND_FREQ)
+
 /obj/item/device/radio/headset/ninja
 	grid = TRUE
 
