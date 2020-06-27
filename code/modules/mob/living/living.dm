@@ -815,7 +815,6 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
-		var/resisting = 0
 		var/size_ratio_resisting
 		var/size_ratio_grabbing
 		var/g_resist_cost
@@ -823,9 +822,7 @@
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
-			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-			resisting++
 			if(G.state == GRAB_PASSIVE)
 				if(ishuman(G.assailant))
 					var/mob/living/carbon/human/H = G.assailant
