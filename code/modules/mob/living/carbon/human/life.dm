@@ -1566,13 +1566,13 @@
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
+	if(blinded)
+		set_EyesVision("greyscale")
+		return
 	if(HAS_TRAIT(src, TRAIT_DALTONISM))
 		for(var/datum/quirk/daltonism/M in roundstart_quirks)
 			set_EyesVision(M.curret_type)
 			break
-		return
-	if(blinded)
-		set_EyesVision("greyscale")
 		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
