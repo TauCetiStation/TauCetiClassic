@@ -63,7 +63,6 @@
 		"Green"           = "meson",
 		"Purple"          = "sci",
 		"Orange"          = "sepia",
-		"Polaroid"        = "polaroid",
 		"Yellow-Blue"     = "bgr_d",
 		"Purple-Blue"     = "brg_d",
 		"Green-Blue"      = "gbr_d",
@@ -72,7 +71,6 @@
 		)
 
 	var/list/color_types = list(
-		"Polaroid",
 		"Grey",
 		"Red",
 		"Green",
