@@ -268,7 +268,7 @@ var/global/combos_cheat_sheet = ""
 			var/obj/item/weapon/grab/G = locate(/obj/item/weapon/grab) in src
 			var/new_dir = attacker.dir
 			if(G.state == GRAB_NECK)
-				new_dir = Revert_Dir(attacker.dir)
+				new_dir = reverse_direction(attacker.dir)
 			to_move = get_step(src, new_dir)
 			step(src, new_dir, 1)
 		else

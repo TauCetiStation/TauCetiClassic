@@ -373,7 +373,7 @@
 			if(!BP || BP.is_stump)
 				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
-		if(force_down)
+		if(force_down && G.affecting.getStamina() > 0)
 			to_chat(assailant, "<span class='notice'>You can't properly grab [affecting]</span>")
 			return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")

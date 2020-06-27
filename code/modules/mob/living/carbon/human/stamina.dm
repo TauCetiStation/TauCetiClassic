@@ -1,6 +1,9 @@
 /mob/living/proc/handle_stamina()
 	if(isnull(maxStamina))
 		return
+	if(stat == DEAD)
+		setStamina(minStamina)
+		return	
 	if(HAS_TRAIT(src, TRAIT_NOSTAMINAREGEN))
 		return
 	adjustStamina(stamina_regen)

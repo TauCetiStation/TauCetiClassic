@@ -94,7 +94,6 @@
 			handle_shock()
 
 			handle_pain()
-			handle_stamina()
 			handle_medical_side_effects()
 
 			handle_heart_beat()
@@ -115,7 +114,7 @@
 
 	//Check if we're on fire
 	handle_fire()
-
+	
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
 	update_canmove()
@@ -128,6 +127,7 @@
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
+	handle_stamina()
 	//Species-specific update.
 	if(species)
 		species.on_life(src)

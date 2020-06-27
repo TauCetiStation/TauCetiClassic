@@ -511,28 +511,5 @@
 		step(pulling, get_dir(pulling.loc, A))
 	return
 
-/mob/proc/Random_Dir(var/dir)
-	var/new_dir
-	switch(dir)
-		if(NORTH)
-			new_dir = dir + pick(EAST, WEST)
-		if(SOUTH)
-			new_dir = dir + pick(EAST, WEST)
-		if(EAST)
-			new_dir = dir + pick(NORTH, SOUTH)
-		if(WEST)
-			new_dir = dir + pick(NORTH, SOUTH)
-	return new_dir
-
-/mob/proc/Revert_Dir(var/dir)
-	var/new_dir
-	switch(dir)
-		if(NORTH)
-			new_dir = SOUTH
-		if(SOUTH)
-			new_dir = NORTH
-		if(EAST)
-			new_dir = WEST
-		if(WEST)
-			new_dir = EAST
-	return new_dir	
+/proc/random_side_dir(var/dir)
+	return pick(turn(dir, 90),turn(dir, -90))
