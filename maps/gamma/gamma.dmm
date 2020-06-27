@@ -19333,7 +19333,7 @@
 	req_access = list(64)
 	},
 /obj/item/weapon/storage/box/cups,
-/obj/item/weapon/fluff/farwadoll,
+/obj/item/toy/plushie/farwadoll,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -20862,7 +20862,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "fLy" = (
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
+/obj/item/clothing/head/welding/blue,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "fLz" = (
@@ -34083,7 +34083,7 @@
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/clothing/under/fluff/terezi_suit,
+/obj/item/clothing/under/legislacerator,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
@@ -59946,7 +59946,7 @@
 "stP" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
-/obj/item/weapon/fluff/farwadoll,
+/obj/item/toy/plushie/farwadoll,
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/dormfive)
 "suc" = (
@@ -60495,7 +60495,7 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
+/obj/item/clothing/head/welding/blue,
 /obj/item/weapon/wrench,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -72207,7 +72207,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "wjL" = (
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1,
+/obj/item/weapon/crowbar/pink,
 /obj/item/clothing/head/festive,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,

@@ -1322,6 +1322,12 @@ Owl & Griffin toys
 /obj/random/plushie/item_to_spawn()
 	return pick(subtypesof(/obj/item/toy/plushie)) // exclude the base type.
 
+/obj/item/toy/plushie/farwadoll
+	name = "Farwa plush doll"
+	desc = "A Farwa plush doll. It's soft and comforting!"
+	item_state = "farwaplush"
+	icon_state = "farwa"
+
 /obj/item/toy/plushie/corgi // dogs are basically the best
 	name = "corgi plushie"
 	icon_state = "corgi"

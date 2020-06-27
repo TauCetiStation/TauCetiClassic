@@ -22523,7 +22523,7 @@
 	pixel_y = 24
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1{
+/obj/item/weapon/lighter/zippo/black{
 	pixel_x = 15;
 	pixel_y = 8
 	},
@@ -30532,7 +30532,7 @@
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/clothing/under/fluff/terezi_suit,
+/obj/item/clothing/under/legislacerator,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -55737,7 +55737,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "ciJ" = (
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1,
+/obj/item/weapon/crowbar/pink,
 /obj/item/clothing/head/festive,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -58562,7 +58562,7 @@
 "cpA" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
+/obj/item/clothing/head/welding/blue,
 /obj/item/weapon/wrench,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -73204,7 +73204,7 @@
 "lYb" = (
 /obj/structure/rack,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/pen/fluff/fancypen,
+/obj/item/weapon/pen/fancypen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lZb" = (

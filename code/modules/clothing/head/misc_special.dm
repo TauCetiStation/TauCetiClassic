@@ -51,6 +51,20 @@
 			to_chat(usr, "You push the [src] up out of your face.")
 		usr.update_inv_head()	//so our mob-overlays update
 
+/obj/item/clothing/head/welding/flame
+	name = "flame decal welding helmet"
+	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility."
+	icon_state = "welding_flame"
+
+/obj/item/clothing/head/welding/white
+	name = "white decal welding helmet"
+	desc = "A white welding helmet with a character written across it."
+	icon_state = "welding_white"
+
+/obj/item/clothing/head/welding/blue
+	name = "blue flame decal welding helmet"
+	desc = "A welding helmet with blue flame decals on it."
+	icon_state = "welding_blue"
 
 /*
  * Cakehat

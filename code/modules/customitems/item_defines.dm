@@ -88,12 +88,6 @@
 	. = ..()
 	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
 
-/obj/item/weapon/pen/fluff/fancypen //orangebottle: Lillian Levett, Lilliana Reade
-	name = "fancy pen"
-	desc = "A fancy metal pen. It uses blue ink. An inscription on one side reads,\"L.L. - L.R.\""
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "fancypen"
-
 /obj/item/weapon/pen/fluff/eugene_bissegger_1 //metamorp: eugene bisseger
 	name = "Gilded Pen"
 	desc = "A golden pen that is gilded with a meager amount of gold material. The word 'NanoTrasen' is etched on the clip of the pen."
@@ -162,54 +156,6 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "johann_erzatz_1"
 	volume = 50
-
-/obj/item/weapon/lighter/zippo/fluff/li_matsuda_1 //mangled: Li Matsuda
-	name = "blue zippo lighter"
-	desc = "A zippo lighter made of some blue metal."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "bluezippo"
-	icon_on = "bluezippoon"
-	icon_off = "bluezippo"
-
-/obj/item/weapon/lighter/zippo/fluff/michael_guess_1 //Dragor23: Michael Guess
-	name = "engraved lighter"
-	desc = "A golden lighter, engraved with some ornaments and a G."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "guessip"
-	icon_on = "guessipon"
-	icon_off = "guessip"
-
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1 //rawrtaicho: Riley Rohtin
-	name = "Riley's black zippo"
-	desc = "A black zippo lighter, which holds some form of sentimental value."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "blackzippo"
-	icon_on = "blackzippoon"
-	icon_off = "blackzippo"
-
-/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1 //furohman: Fay Sullivan
-	name = "Graduation Lighter"
-	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "gradzippo"
-	icon_on = "gradzippoon"
-	icon_off = "gradzippo"
-
-/obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
-	name = "Gonzo Fist zippo"
-	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "gonzozippo"
-	icon_on = "gonzozippoon"
-	icon_off = "gonzozippo"
-
-/obj/item/weapon/lighter/zippo/fluff/naples_1 //naples: Russell Vierson
-	name = "Engraved zippo"
-	desc = "A intricately engraved Zippo lighter."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "engravedzippo"
-	icon_on = "engravedzippoon"
-	icon_off = "engravedzippo"
 
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
@@ -376,12 +322,6 @@
 	icon_state = "wolfflight"
 	item_state = "wolfflight"
 
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
-	name = "Zelda's Crowbar"
-	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'."
-	icon_state = "zeldacrowbar"
-	item_state = "zeldacrowbar"
-
 ////// Ripley customisation kit - Butchery Royce - MayeDay
 
 /obj/item/weapon/paintkit/fluff/butcher_royce_1
@@ -469,24 +409,6 @@
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
 	icon_state = "swatcap"
 	body_parts_covered = 0
-
-/obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
-	name = "flame decal welding helmet"
-	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "alice_mccrea_1"
-
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
-	name = "white decal welding helmet"
-	desc = "A white welding helmet with a character written across it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "yuki_matsuda_1"
-
-/obj/item/clothing/head/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
-	name = "blue flame decal welding helmet"
-	desc = "A welding helmet with blue flame decals on it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "norah_briggs_1"
 
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
@@ -974,18 +896,3 @@
 	icon = 'icons/obj/custom_items.dmi'
 	item_state = "foldcane"
 	icon_state = "foldcane"
-
-
-//////////////////////////// Footman - Farwa  Plush Doll //////////////////////////////////
-
-/obj/item/weapon/fluff/farwadoll
-	name = "Farwa plush doll"
-	desc = "A Farwa plush doll. It's soft and comforting!"
-	w_class = ITEM_SIZE_TINY
-	icon = 'icons/obj/custom_items.dmi'
-	item_state = "farwaplush"
-	icon_state = "farwaplush"
-
-/obj/item/weapon/fluff/farwadoll/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
-						 "<span class='notice'>You hug [src]. Dawwww... </span>")

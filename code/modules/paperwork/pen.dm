@@ -23,6 +23,11 @@
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/fancypen
+	name = "fancy pen"
+	desc = "A fancy metal pen. It uses blue ink."
+	icon_state = "pen_fancy"
+
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"

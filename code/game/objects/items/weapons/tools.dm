@@ -559,6 +559,12 @@
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
+/obj/item/weapon/crowbar/pink
+	name = "Pink Crowbar"
+	desc = "A pink crowbar that has an engraving that reads, 'It's dangerous to go alone! Take this'."
+	icon_state = "pink_crowbar"
+	item_state = "pink_crowbar"
+
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"

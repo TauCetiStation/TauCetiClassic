@@ -1,3 +1,10 @@
+/obj/item/clothing/under/legislacerator
+	name = "legislacerator suit"
+	desc = "A very classy coat."
+	icon_state = "legislacerator"
+	item_state = "legislacerator"
+	item_color = "legislacerator"
+
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
