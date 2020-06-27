@@ -470,6 +470,7 @@
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
+					assailant.adjustStamina(-2)
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
@@ -572,6 +573,7 @@
 						assailant.set_dir(EAST) //face the victim
 						affecting.set_dir(SOUTH) //face up
 						affecting.layer = 3.9
+						assailant.adjustStamina(-affecting.resist_cost * get_size_ratio(affecting, assailant))
 						return
 					else
 						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
