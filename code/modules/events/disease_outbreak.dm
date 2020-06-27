@@ -1,7 +1,5 @@
 /datum/event/disease_outbreak
 	announceWhen	= 15
-	oneShot			= 1
-
 
 /datum/event/disease_outbreak/announce()
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")

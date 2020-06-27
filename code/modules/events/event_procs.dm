@@ -22,30 +22,31 @@
 	var/area/candidate = null
 
 	var/list/safe_areas = list(
-	/area/turret_protected/ai,
-	/area/turret_protected/ai_upload,
-	/area/engine,
-	/area/solar,
-	/area/holodeck,
+	/area/station/aisat,
+	/area/station/bridge/ai_upload,
+	/area/station/engineering,
+	/area/station/solar,
+	/area/station/civilian/holodeck,
 	/area/shuttle/arrival,
-	/area/shuttle/escape,
-	/area/shuttle/escape_pod1/station,
-	/area/shuttle/escape_pod2/station,
-	/area/shuttle/escape_pod3/station,
-	/area/shuttle/escape_pod5/station,
-	/area/shuttle/specops/station,
-	/area/shuttle/prison/station,
-	/area/shuttle/administration/station
+	/area/station/hallway/primary/fore,
+	/area/station/hallway/primary/starboard,
+	/area/station/hallway/primary/aft,
+	/area/station/hallway/primary/port,
+	/area/station/hallway/primary/central,
+	/area/station/hallway/secondary/exit,
+	/area/station/hallway/secondary/entry,
+	/area/station/hallway/secondary/Podbay,
+	/area/station/security/prison,
 	)
 
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/station/engineering/break_room,
+	/area/station/engineering/chiefs_office)
 
 	var/list/event_areas = list()
 
-	for(var/areapath in GLOB.the_station_areas)
+	for(var/areapath in the_station_areas)
 		event_areas += typesof(areapath)
 	for(var/areapath in safe_areas)
 		event_areas -= typesof(areapath)

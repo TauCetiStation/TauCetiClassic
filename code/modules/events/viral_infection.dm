@@ -1,5 +1,5 @@
 /datum/event/viral_infection
-	var/severity = 1
+	severity = 1
 
 /datum/event/viral_infection/setup()
 	announceWhen = rand(0, 3000)

@@ -29,7 +29,7 @@ var/datum/subsystem/events/SSevents
 
 	var/datum/event_meta/new_event = new
 
-/datum/subsystem/shuttle/New()
+/datum/subsystem/events/New()
 	NEW_SS_GLOBAL(SSevents)
 
 /datum/subsystem/events/Initialize()
