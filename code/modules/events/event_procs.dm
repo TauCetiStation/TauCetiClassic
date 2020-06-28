@@ -80,12 +80,12 @@
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
 
-		if(istype(M, /mob/living/silicon/robot))
+		if(isrobot(M))
 			var/mob/living/silicon/robot/R = M
 			if(R.module && (R.modtype == "Engineering"))
 				active_with_role["Engineer"]++
 
-			if(R.module && (R.modtype == "Surgeon" || R.modtype == "Crisis"))
+			if(R.module && (R.modtype in list("Surgeon", "Crisis")))
 				active_with_role["Medical"]++
 
 			if(R.module && (R.modtype == "Security"))
@@ -94,10 +94,10 @@
 			if(R.module && (R.modtype == "Janitor"))
 				active_with_role["Janitor"]++
 
-		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer", "Maintenance Technician", "Engine Technician", "Electrician"))
+		if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
 			active_with_role["Engineer"]++
 
-		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor", "Surgeon", "Nurse"))
+		if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
 			active_with_role["Medical"]++
 
 		if(M.mind.assigned_role in security_positions)
@@ -109,7 +109,7 @@
 		if(M.mind.assigned_role == "AI")
 			active_with_role["AI"]++
 
-		if(M.mind.assigned_role in list("Cyborg", "Android", "Robot"))
+		if(M.mind.assigned_role == "Cyborg")
 			active_with_role["Cyborg"]++
 
 		if(M.mind.assigned_role == "Janitor")

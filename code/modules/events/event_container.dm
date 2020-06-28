@@ -64,15 +64,16 @@ var/list/event_last_fired = list()
 		if(EM.enabled && event_weight)
 			possible_events[EM] = event_weight
 
-	for(var/event_meta in last_event_time) if(possible_events[event_meta])
-		var/time_passed = world.time - event_last_fired[event_meta]
-		var/weight_modifier = max(0, (config.expected_round_length - time_passed) / 300)
-		var/new_weight = max(possible_events[event_meta] - weight_modifier, 0)
+	for(var/event_meta in last_event_time)
+		if(possible_events[event_meta])
+			var/time_passed = world.time - event_last_fired[event_meta]
+			var/weight_modifier = max(0, (config.expected_round_length - time_passed) / 300)
+			var/new_weight = max(possible_events[event_meta] - weight_modifier, 0)
 
-		if(new_weight)
-			possible_events[event_meta] = new_weight
-		else
-			possible_events -= event_meta
+			if(new_weight)
+				possible_events[event_meta] = new_weight
+			else
+				possible_events -= event_meta
 
 	if(possible_events.len == 0)
 		return null
