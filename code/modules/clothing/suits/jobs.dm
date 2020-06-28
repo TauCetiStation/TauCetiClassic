@@ -81,11 +81,11 @@
 
 	if(sleeves)
 		icon_state = "nun_rolled"
-		to_chat(usr, "You roll up your sleaves.")
+		to_chat(usr, "You roll up your sleeves.")
 		sleeves = FALSE
 	else
 		icon_state = "nun"
-		to_chat(usr, "You let off your sleaves.")
+		to_chat(usr, "You let off your sleeves.")
 		sleeves = TRUE
 	usr.update_inv_wear_suit()
 
