@@ -47,7 +47,7 @@
 
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
-	desc = "A religion female hood commonly worn by monastery sisters."
+	desc = "A religious female hood commonly worn by monastery sisters."
 	icon_state = "nun_hood"
 	flags = BLOCKHAIR
 	siemens_coefficient = 0.9
