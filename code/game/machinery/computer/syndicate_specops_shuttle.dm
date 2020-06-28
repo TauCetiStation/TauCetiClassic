@@ -38,7 +38,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		syndicate_elite_shuttle_timeleft = (ticksleft / 10)
 
 		//All this does is announce the time before launch.
-		if(announcer )
+		if(announcer)
 			if(departpos == "station")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 				if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
