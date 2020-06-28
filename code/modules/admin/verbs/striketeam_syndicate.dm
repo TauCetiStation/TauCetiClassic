@@ -107,7 +107,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		var/obj/item/weapon/paper/paper_mission = new(SCP.loc)
 		var/parsedtext = parsebbcode(paper_text)
 		paper_mission.info = parsedtext
-		var/var/obj/item/weapon/stamp/syndicate/SS = new
+		var/obj/item/weapon/stamp/syndicate/SS = new
 		SS.stamp_paper(paper_mission)
 		paper_mission.update_icon()
 		qdel(SS)
