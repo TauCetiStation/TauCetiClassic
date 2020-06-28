@@ -39,7 +39,7 @@
 
 /obj/item/clothing/head/skhima_hood
 	name = "skhima hood"
-	desc = "That's a hood from religion skhima decorated with white runes and symbols. Commonly worn by monks."
+	desc = "That's a religion skhima hood decorated with white runes and symbols. Commonly worn by monks."
 	icon_state = "skhima_hood"
 	item_state = "skhima_hood"
 	flags = HEADCOVERSEYES
