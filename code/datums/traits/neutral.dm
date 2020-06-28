@@ -45,31 +45,16 @@
 
 
 
-/datum/quirk/daltonism
-	name = QUIRK_DALTONISM
+/datum/quirk/monochromy
+	name = QUIRK_MONOCHROMY
 	desc = "You stop feeling the colors of objects."
 	value = 0
-	mob_trait = TRAIT_DALTONISM
+	mob_trait = TRAIT_MONOCHROMY
 	gain_text = "<span class='notice'>You don't distinguish colors!</span>"
 	lose_text = "<span class='notice'>You see the colors!</span>"
 
-	var/curret_type = "greyscale"
+	var/current_type = "greyscale"
 
-/datum/quirk/daltonism/post_add()
-	var/list/types = list(
-		"Grey"            = "greyscale",
-		"Red"             = "thermal",
-		"Blue"            = "rbg_d",
-		"Dark Green"      = "nvg_military",
-		"Green"           = "meson",
-		"Orange"          = "sepia",
-		"Yellow-Blue"     = "bgr_d",
-		"Purple-Blue"     = "brg_d",
-		"Green-Blue"      = "gbr_d",
-		"Purple-Red"      = "grb_d",
-		)
-
+/datum/quirk/monochromy/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/choice = input(H, "Choose the type of color blindness", "Color") in types
-	curret_type = types[choice]
-	H.inherent_sighttype = curret_type
+	H.inherent_sighttype = current_type
