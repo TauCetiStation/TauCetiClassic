@@ -15709,7 +15709,7 @@
 "efE" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 3;
+	filter_type = "carbon_dioxide";
 	name = "Gas filter (CO2 tank)"
 	},
 /turf/simulated/floor,
@@ -18817,7 +18817,7 @@
 /area/station/engineering/engine)
 "fdb" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor,
@@ -29122,7 +29122,7 @@
 "ixJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 4;
+	filter_type = "sleeping_agent";
 	name = "Gas filter (N2O tank)"
 	},
 /turf/simulated/floor,
@@ -30938,7 +30938,7 @@
 /area/station/maintenance/science)
 "jfB" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 0;
+	filter_type = "phoron";
 	name = "Gas filter (Toxins tank)"
 	},
 /turf/simulated/floor,
@@ -50552,9 +50552,7 @@
 	},
 /area/station/medical/virology)
 "pvL" = (
-/obj/machinery/chem_dispenser{
-	name = "old chem dispenser"
-	},
+/obj/machinery/chem_dispenser/old,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "pwf" = (
@@ -58963,7 +58961,7 @@
 /area/station/rnd/mixing)
 "sgg" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor,
@@ -59759,15 +59757,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "srk" = (
-/turf/simulated/floor{
-	desc = "“This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.” Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
-	dir = 4;
-	icon_state = "plaque";
-	name = "Comemmorative Plaque";
-	nitrogen = 30;
-	oxygen = 70;
-	temperature = 80
-	},
+/turf/simulated/floor/goonplaque,
 /area/station/hallway/secondary/entry)
 "srx" = (
 /obj/structure/grille,
