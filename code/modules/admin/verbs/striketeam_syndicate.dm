@@ -79,7 +79,7 @@ var/global/sent_syndicate_strike_team = FALSE
 			SCP = L
 
 	for(var/i = 1; i <= commandos.len; i++)
-		var/mob/living/carbon/human/new_syndicate_commando = new(landmarkpos[i].loc)
+		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
 		new_syndicate_commando.key = commandos[i]
 		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader, mission)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
