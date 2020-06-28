@@ -39,7 +39,7 @@
 
 /obj/item/clothing/head/skhima_hood
 	name = "skhima hood"
-	desc = "That's a hood from religion skhima decorated with white runes and symbols. Commonly weared by monks."
+	desc = "That's a hood from religion skhima decorated with white runes and symbols. Commonly worn by monks."
 	icon_state = "skhima_hood"
 	item_state = "skhima_hood"
 	flags = HEADCOVERSEYES
@@ -47,7 +47,7 @@
 
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
-	desc = "A religion female hood commonly weared by monastery sisters."
+	desc = "A religion female hood commonly worn by monastery sisters."
 	icon_state = "nun_hood"
 	flags = BLOCKHAIR
 	siemens_coefficient = 0.9
