@@ -385,6 +385,11 @@
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/internal/brain/process()
+	if(iszombie(owner))
+		return
+	..()
+
 /obj/item/organ/internal/eyes
 	name = "eyes"
 	organ_tag = O_EYES
@@ -395,6 +400,8 @@
 	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
+	if(iszombie(owner))
+		return
 	..()
 	if(is_bruised())
 		owner.eye_blurry = 20
