@@ -21,12 +21,17 @@
 	var/taste_strength = 1 //how easy it is to taste - the more the easier
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
+	var/list/flags = list()
 
 	var/overdose = 0
 	var/overdose_dam = 1
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
+
+	// Is used to determine which religion could find this reagent "holy".
+	// "holy" means that this reagent will convert turfs into holy turfs,
+	var/list/needed_aspects
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
@@ -68,7 +73,7 @@
 	return
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
-	src = null
+	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
 /datum/reagent/proc/on_mob_life(mob/living/M)
@@ -89,6 +94,7 @@
 
 // Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
+	handle_religions()
 	return
 
 // Called when two reagents of the same are mixing.
@@ -146,6 +152,15 @@
 
 /datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE
+
+// Handles holy reagents.
+/datum/reagent/proc/handle_religions()
+	if(!global.chaplain_religion)
+		return
+	if(!global.chaplain_religion.holy_reagents[name])
+		return
+
+	global.chaplain_religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

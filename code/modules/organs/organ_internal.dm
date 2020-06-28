@@ -129,9 +129,44 @@
 	name = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
+	var/heart_status = HEART_NORMAL
+	var/fibrillation_timer_id = null
+
+/obj/item/organ/internal/heart/proc/heart_stop()
+	heart_status = HEART_FAILURE
+
+/obj/item/organ/internal/heart/proc/heart_fibrillate()
+	var/failing_interval = 1 MINUTE
+	heart_status = HEART_FIBR
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		failing_interval = 30 SECONDS
+	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/organ/internal/heart/proc/heart_normalize()
+	heart_status = HEART_NORMAL
+	deltimer(fibrillation_timer_id)
+	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
-	name = "servomotor"
+	name = "cooling pump"
+
+	var/pumping_rate = 5
+	var/bruised_loss = 3
+
+/obj/item/organ/internal/heart/ipc/process()
+	if(is_broken())
+		return
+
+	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
+	if(!istype(lungs))
+		return
+
+	var/pumping_volume = pumping_rate
+	if(is_bruised())
+		pumping_volume -= bruised_loss
+
+	if(pumping_volume > 0)
+		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
@@ -151,6 +186,11 @@
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
 
+	var/refrigerant_max = 50
+	var/refrigerant = 50
+	var/refrigerant_rate = 5
+	var/bruised_loss = 3
+
 /obj/item/organ/internal/lungs/process()
 	..()
 	if (owner.species && owner.species.flags[NO_BREATHE])
@@ -163,7 +203,7 @@
 		if(prob(2))
 			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
-		if(prob(4))
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
 			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 
@@ -194,6 +234,36 @@
 					owner.adjustToxLoss(0.1 * process_accuracy)
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
+
+/obj/item/organ/internal/lungs/ipc/process()
+	var/temp_gain = owner.species.synth_temp_gain
+
+	if(refrigerant > 0 && !is_broken())
+		var/refrigerant_spent = refrigerant_rate
+		refrigerant -= refrigerant_rate
+		if(refrigerant < 0)
+			refrigerant_spent += refrigerant
+			refrigerant = 0
+
+		if(is_bruised())
+			refrigerant_spent -= bruised_loss
+
+		if(refrigerant_spent > 0)
+			temp_gain -= refrigerant_spent
+
+	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
+		owner.bodytemperature -= 50
+
+	if(temp_gain > 0)
+		owner.bodytemperature += temp_gain
+		if(owner.bodytemperature > owner.species.synth_temp_max)
+			owner.bodytemperature = owner.species.synth_temp_max
+
+/obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
+	if(refrigerant < refrigerant_max)
+		refrigerant += volume
+		if(refrigerant > refrigerant_max)
+			refrigerant = refrigerant_max
 
 /obj/item/organ/internal/liver
 	name = "liver"

@@ -43,12 +43,8 @@
 	new /obj/item/device/radio/headset(src)
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
-	if (src.opened)
-		if (istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
-		user.drop_item()
-		if (W) W.forceMove(src.loc)
+	if(opened  || istype(W, /obj/item/weapon/grab))
+		return ..()
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		var/user_registered_name = null
 		if(src.broken)
@@ -100,7 +96,7 @@
 	set src in oview(1) // One square distance
 	set category = "Object"
 	set name = "Reset Lock"
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 	if(ishuman(usr))
 		src.add_fingerprint(usr)

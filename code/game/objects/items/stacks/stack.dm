@@ -140,7 +140,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
 	if (href_list["sublist"] && !href_list["make"])
@@ -292,6 +292,9 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(is_cyborg())
 		return
 	else
@@ -316,9 +319,9 @@
 	F.add_fingerprint(user)
 	use(amount, TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user)
-	if(istype(W, merge_type))
-		var/obj/item/stack/S = W
+/obj/item/stack/attackby(obj/item/I, mob/user, params)
+	if(istype(I, merge_type))
+		var/obj/item/stack/S = I
 		merge(S)
 		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 		if(!QDELETED(S) && usr.machine == S)
@@ -326,7 +329,7 @@
 		if(!QDELETED(src) && usr.machine == src)
 			INVOKE_ASYNC(src, .proc/interact, usr)
 	else
-		..()
+		return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	src.blood_DNA = from.blood_DNA

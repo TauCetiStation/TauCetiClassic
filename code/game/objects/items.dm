@@ -59,7 +59,6 @@
 	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
-
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
@@ -68,6 +67,17 @@
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
 	*/
 	var/list/sprite_sheets_obj = null
+
+    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
+	var/list/tools = list()
+	// This thing can be used to stab eyes out.
+	var/stab_eyes = FALSE
+
+	// Determines whether any religious activity has been carried out on the item.
+	var/blessed = FALSE
+
+	// Whether this item is currently being swiped.
+	var/swiping = FALSE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -190,6 +200,12 @@
 				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		switch(Heart.heart_status)
+			if(HEART_FAILURE)
+				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+			if(HEART_FIBR)
+				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)
@@ -385,7 +401,6 @@
 	user.put_in_active_hand(src)
 	return
 
-
 /obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
@@ -397,16 +412,17 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+/obj/item/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(loc))
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	return FALSE
+			return FALSE
+	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
@@ -719,12 +735,9 @@
 
 	if(!(usr)) //BS12 EDIT
 		return
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
-		return
-	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -854,9 +867,7 @@
 	user.do_attack_animation(M)
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
-	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user) //BS12 EDIT ALG
+	M.log_combat(user, "eyestabbed with [name]")
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))
@@ -879,12 +890,12 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(3,4)
+		IO.damage += rand(force * 0.5, force)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
-			if(prob(50))
+			if(prob(10 * force))
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
@@ -895,13 +906,11 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.take_damage(7)
+		BP.take_damage(force)
 	else
-		M.take_bodypart_damage(7)
+		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(3,4)
-
-	return
+	M.eye_blurry += rand(force * 0.5, force)
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`

@@ -124,7 +124,7 @@ var/global/list/scrap_base_cache = list()
 
 //stupid shard copypaste
 /obj/structure/scrap/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) &&  !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
 		if(ishuman(M) && !M.buckled)
@@ -140,7 +140,7 @@ var/global/list/scrap_base_cache = list()
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
-	..()
+	. = ..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	try_make_loot()

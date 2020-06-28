@@ -78,20 +78,20 @@
 					var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
 					occupant.heal_bodypart_damage(heal_brute, heal_fire)
 
-			var/has_cryo_medicine = FALSE
+			var/occupant_has_cryo_medicine = FALSE
 			for(var/M in cryo_medicine)
 				if(occupant.reagents.get_reagent_amount(M) >= 1)
-					has_cryo_medicine = TRUE
+					occupant_has_cryo_medicine = TRUE
 					break
-			if(beaker && beaker.reagents)
-				var/reagent_count = length(beaker.reagents.reagent_list)
-				if(beaker && !has_cryo_medicine && reagent_count > 0)
-					for(var/datum/reagent/R in beaker.reagents.reagent_list)
-						if(R.id in cryo_medicine)
-							beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count, 10)
-						else
-							beaker.reagents.trans_id_to(occupant, R.id, 1 / reagent_count)
-					beaker.reagents.reaction(occupant)
+			if(beaker && beaker.reagents && !occupant_has_cryo_medicine)
+				var/initial_volume = beaker.reagents.total_volume
+				for(var/datum/reagent/R in beaker.reagents.reagent_list)
+					var/transfer_amt = 1 * R.volume / initial_volume
+					if(R.id in cryo_medicine)
+						beaker.reagents.trans_id_to(occupant, R.id, transfer_amt, 10)
+					else
+						beaker.reagents.trans_id_to(occupant, R.id, transfer_amt)
+				beaker.reagents.reaction(occupant)
 
 	updateUsrDialog()
 	return 1
@@ -125,7 +125,10 @@
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	close_machine(target)
 
@@ -243,12 +246,20 @@
 		return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if(!user.incapacitated() && in_range(user, src))
 		if(!state_open)
 			on = !on
 			update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if(!user.incapacitated() && in_range(user, src))
 		if(state_open)
 			close_machine()

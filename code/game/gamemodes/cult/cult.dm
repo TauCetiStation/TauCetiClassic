@@ -9,8 +9,11 @@
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
 		return FALSE
-	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
-		return FALSE
+	if(ishuman(mind.current))
+		if((mind.assigned_role in list("Captain", "Chaplain")))
+			return FALSE
+		if(mind.current.get_species() == GOLEM)
+			return FALSE
 	if(ismindshielded(mind.current))
 		return FALSE
 	return TRUE
@@ -32,6 +35,8 @@
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 20
+
+	restricted_species_flags = list(NO_BLOOD)
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0

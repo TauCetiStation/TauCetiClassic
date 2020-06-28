@@ -78,8 +78,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/det5/attack_hand(mob/living/user)
-	det5controll(user)
+/mob/living/simple_animal/det5/helpReaction(mob/living/carbon/human/attacker)
+	det5controll(attacker)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(searchfortarget == 1)

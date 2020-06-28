@@ -334,5 +334,5 @@ Des: Removes all infected images from the alien.
 		src.hands.dir = SOUTH*/
 	return
 
-/mob/living/carbon/xenomorph/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)

@@ -20,8 +20,7 @@
 		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -74,30 +73,13 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (user.incapacitated())
-		return
-
 	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
 		take_victim(M, user)
 		return
-	
-	if(isrobot(user) || isessence(user))
-		return
-
-	if ((!( istype(A, /obj/item/weapon) ) || user.get_active_hand() != A))
-		return
-
-	var/obj/item/weapon/W = A
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if (A.loc != src.loc)
-		step(A, get_dir(A, src))
-	return
+	return ..()
 
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
@@ -138,7 +120,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
 	if(src.victim)
@@ -159,10 +141,4 @@
 			qdel(G)
 			return
 
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
-	return
+	return ..()

@@ -16,36 +16,6 @@
 	item_color = "mime"
 	clipped_status = CLIPPABLE
 
-/obj/item/clothing/shoes/swat
-	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
-	name = "combat boots"
-	desc = "When you REALLY want to turn up the heat"
-	icon_state = "swat"
-	item_state = "wjboots"
-	flags = NOSLIP
-	siemens_coefficient = 0.6
-	clipped_status = CLIPPABLE
-
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-
-/obj/item/clothing/shoes/combat/cut // Basically combat shoes but for xenos.
-	name = "mangled combat boots"
-	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
-	icon_state = "swat_cut"
-	clipped_status = CLIPPED
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
-
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -93,15 +63,6 @@
 	icon_state = "black"
 	body_parts_covered = LEGS
 
-/obj/item/clothing/shoes/galoshes
-	desc = "Rubber boots."
-	name = "galoshes"
-	icon_state = "galoshes"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
-	species_restricted = null
-
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
 	name = "clown shoes"
@@ -111,38 +72,80 @@
 	item_color = "clown"
 	species_restricted = null
 
+/obj/item/clothing/shoes/clown_shoes/Destroy()
+	if(slot_equipped == SLOT_SHOES)
+		// Since slot_equipped is changed only when item is worn
+		// it's safe to assume loc is a mob.
+		stop_waddling(loc)
+	return ..()
+
+/obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
+	if(CLUMSY in user.mutations)
+		slowdown = SHOES_SLOWDOWN
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
+
+/obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
+	slowdown = SHOES_SLOWDOWN + 1.0
+	qdel(user.GetComponent(/datum/component/waddle))
+
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
-	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED))
+	if(slot == SLOT_SHOES)
+		start_waddling(user)
+	else if(slot_equipped == SLOT_SHOES)
+		stop_waddling(user)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
-	qdel(user.GetComponent(/datum/component/waddle))
+	if(slot_equipped == SLOT_SHOES)
+		stop_waddling(user)
 
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
 	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "wjboots"
-	item_state = "wjboots"
-	item_color = "hosred"
-	siemens_coefficient = 0.7
+/obj/item/clothing/shoes/jolly_gravedigger
+	name = "jolly gravedigger shoes"
+	desc = "Traditional funereal ceremony shoes originating from poor areas."
+	icon_state = "laceups"
 	clipped_status = CLIPPABLE
 
-/obj/item/clothing/shoes/cult
-	name = "boots"
-	desc = "A pair of boots worn by the followers of Nar-Sie."
-	icon_state = "cult"
-	item_state = "cult"
-	item_color = "cult"
-	siemens_coefficient = 0.7
+	var/waddling = FALSE
 
-	cold_protection = LEGS
-	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = LEGS
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = null
+/obj/item/clothing/shoes/jolly_gravedigger/Destroy()
+	if(waddling)
+		stop_waddling(loc)
+	return ..()
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/start_waddling(mob/user)
+	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
+	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
+
+	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
+	waddling = TRUE
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
+	UnregisterSignal(user, list(COMSIG_LIVING_STOP_PULL))
+	if(slot_equipped == SLOT_SHOES)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+	qdel(user.GetComponent(/datum/component/waddle))
+	waddling = FALSE
+
+/obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
+	if(slot == SLOT_SHOES)
+		if(user.pulling)
+			check_coffin(user, user.pulling)
+		else
+			RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+	else if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/dropped(mob/user)
+	if(waddling)
+		stop_waddling(user)
+
+/obj/item/clothing/shoes/jolly_gravedigger/proc/check_coffin(datum/source, atom/movable/target)
+	if(!istype(target, /obj/structure/closet/coffin))
+		return
+	start_waddling(source)
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
@@ -202,13 +205,6 @@
 	magboot_state = "syndiemag"
 	slowdown_off = 1
 
-/obj/item/clothing/shoes/workboots
-	name = "work boots"
-	icon_state = "workboots"
-	item_color = "workboots"
-	item_state = "b_shoes"  // need sprites for this
-	clipped_status = CLIPPABLE
-
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
@@ -235,6 +231,13 @@
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
+	slowdown = SHOES_SLOWDOWN + 0.5
+	force = 3.5
+	attack_verb = list("stabbed")
+	// It's a stab sound.
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
+
+	stab_eyes = TRUE
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
@@ -259,3 +262,11 @@
 	icon_state = "footwraps"
 	item_color = "footwraps"
 	species_restricted = null
+
+/obj/item/clothing/shoes/holoboots
+	name = "jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "wjboots"
+	item_state = "wjboots"
+	item_color = "hosred"
+	clipped_status = CLIPPABLE

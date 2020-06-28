@@ -988,7 +988,7 @@
 "cq" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor/plating,
@@ -1072,7 +1072,7 @@
 "cz" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor/plating,
@@ -8152,8 +8152,13 @@
 	},
 /area/asteroid/mine/explored)
 "rd" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/simulated/wall,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
 /area/asteroid/mine/living_quarters)
 "re" = (
 /obj/structure/window/reinforced,
@@ -8878,7 +8883,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ti" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/computer/mech_bay_power_console,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -9260,7 +9265,7 @@
 "ue" = (
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_x = -2;
-	pixel_y = -1
+	pixel_y = 5
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -9522,7 +9527,7 @@
 /area/asteroid/mine/eva)
 "uJ" = (
 /obj/machinery/mech_bay_recharge_port{
-	dir = 2
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
@@ -9619,13 +9624,18 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "uX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
@@ -9658,9 +9668,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "vc" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/turf/simulated/floor,
 /area/asteroid/mine/eva)
 "vd" = (
 /obj/structure/disposalpipe/segment,
@@ -9688,6 +9696,11 @@
 /area/asteroid/mine/west_outpost)
 "vf" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "vg" = (
@@ -9791,12 +9804,14 @@
 /area/asteroid/mine/living_quarters)
 "vr" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/item/weapon/storage/box/lights/mixed,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vs" = (
 /obj/machinery/door/airlock/maintenance{
@@ -9818,6 +9833,11 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vu" = (
@@ -9908,22 +9928,15 @@
 /area/asteroid/mine/eva)
 "vE" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
@@ -9993,12 +10006,14 @@
 /turf/simulated/floor,
 /area/asteroid/mine/west_outpost)
 "vN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vO" = (
@@ -10007,15 +10022,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vP" = (
@@ -10119,7 +10126,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/mech_bay_recharge_floor,
+/turf/simulated/floor,
 /area/asteroid/mine/eva)
 "wb" = (
 /obj/structure/flora/pottedplant{
@@ -10142,18 +10149,6 @@
 	icon_state = "asteroidwarning"
 	},
 /area/asteroid/mine/explored)
-"wd" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	dir = 4;
-	icon_state = "warnplate"
-	},
-/area/asteroid/mine/eva)
 "we" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor{
@@ -10378,16 +10373,20 @@
 /area/asteroid/mine/west_outpost)
 "wG" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Mining Station Maintenance";
-	req_access = list(48)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "wH" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -10438,15 +10437,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "wM" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -10481,19 +10476,22 @@
 	},
 /area/asteroid/mine/living_quarters)
 "wQ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/valve/open,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "wR" = (
-/turf/simulated/floor,
+/turf/simulated/floor/mech_bay_recharge_floor,
 /area/asteroid/mine/eva)
 "wS" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "wT" = (
@@ -10521,11 +10519,6 @@
 /obj/random/tools/tech_supply,
 /obj/random/tools/tech_supply,
 /obj/random/tools/tech_supply,
-/obj/machinery/camera{
-	c_tag = "Storage Room";
-	dir = 1;
-	network = list("MINE")
-	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -10534,10 +10527,15 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 8
+/obj/machinery/recharge_station,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bot"
+	},
 /area/asteroid/mine/eva)
 "wX" = (
 /turf/simulated/floor{
@@ -10597,11 +10595,15 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xc" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1379;
+	id_tag = "mining_west_pump";
+	name = "Mining West Large Air Vent"
 	},
-/obj/machinery/meter,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
 /area/asteroid/mine/living_quarters)
 "xd" = (
 /obj/machinery/alarm{
@@ -10649,8 +10651,20 @@
 	},
 /area/asteroid/mine/west_outpost)
 "xi" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden,
-/turf/simulated/floor/plating,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1379;
+	id_tag = "mining_west_pump";
+	name = "Mining West Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
 /area/asteroid/mine/living_quarters)
 "xj" = (
 /obj/structure/toilet{
@@ -10672,27 +10686,39 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "xn" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "mining_west_airlock";
+	name = "interior access button";
+	pixel_x = -25;
+	pixel_y = -25
+	},
+/obj/machinery/atmospherics/components/binary/valve/open,
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "xo" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Station Port Wing APC";
@@ -10701,7 +10727,8 @@
 	},
 /obj/structure/cable{
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -10715,15 +10742,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xq" = (
-/obj/machinery/status_display{
-	layer = 4;
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/sign/xeno_warning_mining{
 	pixel_y = 32
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/asteroid/mine/living_quarters)
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "xr" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -10737,10 +10763,16 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance";
+	req_access = list(48)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xu" = (
@@ -10768,15 +10800,29 @@
 /turf/space,
 /area/asteroid/mine/production)
 "xx" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "door_locked";
+	id_tag = "mining_west_outer";
+	locked = 1;
+	name = "Mining External Access"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -10816,11 +10862,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "mining_east_pump";
-	name = "Mining East Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "xE" = (
@@ -10859,14 +10904,22 @@
 /turf/simulated/floor,
 /area/asteroid/mine/west_outpost)
 "xZ" = (
-/obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "door_locked";
+	id_tag = "mining_west_inner";
+	locked = 1;
+	name = "Mining External Access"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/explored)
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "yb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -10893,21 +10946,8 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "yd" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	icon_state = "door_locked";
-	id_tag = "mining_west_inner";
-	locked = 1;
-	name = "Mining External Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/plating,
+/obj/structure/sign/departments/medbay/alt,
+/turf/simulated/wall,
 /area/asteroid/mine/living_quarters)
 "ye" = (
 /obj/structure/cable{
@@ -10945,10 +10985,14 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yi" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway East";
+	dir = 1;
+	network = list("MINE")
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
 /area/asteroid/mine/living_quarters)
 "ym" = (
 /obj/structure/cable{
@@ -10975,18 +11019,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "yr" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "brown"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
+/area/asteroid/mine/living_quarters)
 "ys" = (
 /obj/structure/sign/xeno_warning_mining{
 	pixel_y = 32
@@ -11072,13 +11109,12 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "yX" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/wall,
 /area/asteroid/mine/living_quarters)
 "zb" = (
 /obj/structure/grille,
@@ -11114,16 +11150,13 @@
 	},
 /area/asteroid/mine/production)
 "ze" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/stool/bed/roller,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/turf/simulated/floor{
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "zf" = (
@@ -11249,8 +11282,14 @@
 	pixel_x = 1;
 	pixel_y = -23
 	},
+/obj/structure/rack,
+/obj/item/device/suit_cooling_unit{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
 /obj/structure/cable,
-/obj/machinery/recharge_station,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bot"
@@ -11270,7 +11309,6 @@
 /obj/item/clothing/suit/space/globose/mining,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/mining,
-/obj/item/device/suit_cooling_unit,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
@@ -11281,13 +11319,7 @@
 	},
 /area/asteroid/mine/eva)
 "zs" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zt" = (
@@ -11299,23 +11331,30 @@
 	tag_exterior_door = "mining_east_outer";
 	tag_interior_door = "mining_east_inner"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "zv" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway East";
-	network = list("MINE")
+/obj/machinery/conveyor_switch{
+	id = "mining_external"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 1;
-	icon_state = "brown"
+	icon_state = "asteroidwarning"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/explored)
 "zz" = (
-/obj/structure/ore_box,
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
 	pixel_y = -25
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "mining_east_pump";
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11349,12 +11388,15 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "zD" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "zE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "mining_east_pump";
+	name = "Mining East Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -11398,17 +11440,33 @@
 	},
 /area/asteroid/mine/explored)
 "zL" = (
-/obj/item/weapon/wrench,
+/obj/machinery/airlock_sensor{
+	id_tag = "mining_west_sensor";
+	pixel_x = 25;
+	pixel_y = -5
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "mining_west_airlock";
+	pixel_x = 25;
+	pixel_y = 5;
+	tag_airpump = "mining_west_pump";
+	tag_chamber_sensor = "mining_west_sensor";
+	tag_exterior_door = "mining_west_outer";
+	tag_interior_door = "mining_west_inner"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11486,26 +11544,34 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored)
 "zY" = (
-/obj/structure/cable,
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zZ" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Sleeper Room";
+	dir = 8;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/asteroid/mine/living_quarters)
 "Ab" = (
 /obj/structure/disposalpipe/segment{
@@ -11553,19 +11619,7 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Ag" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	icon_state = "door_locked";
-	id_tag = "mining_west_outer";
-	locked = 1;
-	name = "Mining External Access"
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Ah" = (
@@ -11575,18 +11629,13 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Ai" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/rack,
+/obj/item/weapon/pickaxe{
+	pixel_y = 3
 	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "mining_west_airlock";
-	name = "exterior access button";
-	pixel_x = 25;
-	pixel_y = 25
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe{
+	pixel_y = -3
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -11685,53 +11734,42 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "Av" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station External APC";
-	pixel_x = 1;
-	pixel_y = 25
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
+/area/asteroid/mine/living_quarters)
 "Aw" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
-"Ax" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
-"Ay" = (
 /obj/structure/cable{
 	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
+"Ax" = (
+/obj/structure/cable{
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
-/area/asteroid/mine/explored)
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
+"Ay" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Az" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
@@ -12056,21 +12094,9 @@
 	},
 /area/asteroid/mine/production)
 "Ce" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+/turf/simulated/floor{
 	dir = 8;
-	frequency = 1379;
-	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+	icon_state = "warnwhite"
 	},
 /area/asteroid/mine/living_quarters)
 "Cf" = (
@@ -12102,6 +12128,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
+"Cr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor,
+/area/asteroid/mine/eva)
 "Db" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12175,9 +12205,10 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
 "DT" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Eb" = (
@@ -12460,21 +12491,35 @@
 	},
 /area/asteroid/research_outpost/anomaly)
 "Jc" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "mining_west_airlock";
+	name = "exterior access button";
+	pixel_x = 25;
+	pixel_y = 25
 	},
-/turf/simulated/wall,
-/area/asteroid/mine/living_quarters)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Jd" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "warnwhite"
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/explored)
 "Je" = (
 /obj/machinery/conveyor{
 	id = "mining_internal"
@@ -12488,7 +12533,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12523,21 +12568,19 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "Kd" = (
-/turf/simulated/floor{
-	icon_state = "warnwhite"
+/obj/machinery/power/smes{
+	charge = 5e+006
 	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Ke" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "browncorner"
-	},
-/area/asteroid/mine/production)
-"Kf" = (
-/obj/structure/closet/crate,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Kg" = (
@@ -12573,13 +12616,13 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Ld" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warnwhitecorner"
-	},
+/obj/item/weapon/storage/box/lights/mixed,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Le" = (
 /obj/structure/noticeboard{
@@ -12591,6 +12634,7 @@
 	},
 /area/asteroid/mine/production)
 "Lf" = (
+/obj/structure/closet/crate/secure/miningsec,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12634,23 +12678,13 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Md" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/obj/machinery/atmospherics/components/binary/valve/open,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Me" = (
 /obj/structure/extinguisher_cabinet{
@@ -12709,8 +12743,12 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Nd" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
 /area/asteroid/mine/living_quarters)
 "Ne" = (
 /obj/structure/window/reinforced{
@@ -12762,15 +12800,12 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Od" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 8
+/turf/simulated/floor{
+	icon_state = "warnwhite"
 	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Oe" = (
 /obj/machinery/power/port_gen/pacman/scrap,
@@ -12805,33 +12840,20 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Pd" = (
-/obj/machinery/airlock_sensor{
-	id_tag = "mining_west_sensor";
-	pixel_x = 25;
-	pixel_y = -5
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "mining_west_airlock";
-	pixel_x = 25;
-	pixel_y = 5;
-	tag_airpump = "mining_west_pump";
-	tag_chamber_sensor = "mining_west_sensor";
-	tag_exterior_door = "mining_west_outer";
-	tag_interior_door = "mining_west_inner"
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+/turf/simulated/floor{
 	dir = 8;
-	frequency = 1379;
-	id_tag = "mining_west_pump";
-	name = "Mining West Large Air Vent"
+	icon_state = "warnwhitecorner"
 	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Pe" = (
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/machinery/power/port_gen/pacman/scrap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12840,6 +12862,13 @@
 "Pf" = (
 /turf/simulated/floor{
 	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
+"Py" = (
+/obj/structure/closet/crate,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/asteroid/mine/production)
 "Qb" = (
@@ -12852,9 +12881,12 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "Qc" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	icon_state = "brown"
+	icon_state = "white"
 	},
 /area/asteroid/mine/living_quarters)
 "Qd" = (
@@ -12886,21 +12918,35 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
+"Qz" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/asteroid/mine/production)
 "Rb" = (
 /obj/structure/sign/departments/science,
 /turf/simulated/wall,
 /area/asteroid/research_outpost/entry)
 "Rc" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Mining Station External APC";
+	pixel_x = 1;
+	pixel_y = 25
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "brown"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/area/asteroid/mine/living_quarters)
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Rd" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -12931,6 +12977,14 @@
 	oxygen = 0.01
 	},
 /area/asteroid/mine/production)
+"Ri" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/asteroid/mine/eva)
 "Sb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12947,15 +13001,19 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Sc" = (
-/obj/machinery/alarm{
-	dir = 1;
-	locked = 0;
-	pixel_y = -24
+/obj/structure/rack,
+/obj/item/weapon/storage/bag/ore{
+	pixel_y = 3
 	},
-/turf/simulated/floor{
-	icon_state = "brown"
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore{
+	pixel_y = -3
 	},
-/area/asteroid/mine/living_quarters)
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Sd" = (
 /obj/machinery/conveyor{
 	id = "mining_internal"
@@ -13002,6 +13060,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	dir = 1;
+	locked = 0;
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -13041,24 +13104,12 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "Uc" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/ore_box,
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "mining_west_airlock";
-	name = "interior access button";
-	pixel_x = -25;
-	pixel_y = -25
-	},
-/obj/machinery/atmospherics/components/binary/valve/open,
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/explored)
 "Ud" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -13087,6 +13138,16 @@
 	oxygen = 0.01
 	},
 /area/asteroid/mine/production)
+"UP" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/asteroid/mine/eva)
 "Vb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -13100,13 +13161,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Vd" = (
-/obj/machinery/sleeper{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "delivery"
+/turf/simulated/floor/airless{
+	dir = 4;
+	icon_state = "asteroidwarning"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/explored)
 "Ve" = (
 /obj/machinery/mineral/input,
 /obj/machinery/conveyor{
@@ -13127,13 +13189,22 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "VK" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 4
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 32
 	},
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1379;
+	id_tag = "mining_west_pump";
+	name = "Mining West Large Air Vent"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
 /area/asteroid/mine/living_quarters)
 "Wb" = (
 /obj/structure/sign/warning/nosmoking{
@@ -13165,14 +13236,17 @@
 	},
 /area/asteroid/mine/production)
 "Wd" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/machinery/power/terminal{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "delivery"
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "We" = (
 /turf/simulated/floor{
@@ -13207,15 +13281,8 @@
 	},
 /area/asteroid/mine/production)
 "Xd" = (
-/obj/machinery/camera{
-	c_tag = "Sleeper Room";
-	dir = 1;
-	network = list("MINE")
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warnwhite"
-	},
+/obj/item/weapon/wrench,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Xe" = (
 /turf/simulated/floor{
@@ -13230,8 +13297,19 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table,
-/obj/item/device/gps/engineering,
-/obj/item/device/gps/engineering,
+/obj/item/weapon/paper_bin{
+	pixel_x = -2
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/device/gps/engineering{
+	pixel_x = 5
+	},
+/obj/item/weapon/pen{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -13268,12 +13346,11 @@
 	},
 /area/asteroid/mine/explored)
 "Yd" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/toxin,
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
 	},
+/obj/machinery/meter,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Ye" = (
 /obj/machinery/door/firedoor,
@@ -13302,22 +13379,12 @@
 	icon_state = "barber"
 	},
 /area/asteroid/research_outpost/hallway)
-"Zc" = (
-/obj/machinery/conveyor_switch{
-	id = "mining_external"
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
 "Zd" = (
-/obj/structure/ore_box,
-/obj/structure/sign/xeno_warning_mining{
-	pixel_x = -32
+/obj/machinery/sleeper{
+	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/turf/simulated/floor{
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "Ze" = (
@@ -44613,7 +44680,7 @@ ac
 ac
 kO
 jS
-uP
+xq
 lA
 rH
 lA
@@ -46413,9 +46480,9 @@ wn
 yv
 Pc
 uo
-uo
-uo
-uo
+kO
+kO
+lA
 lA
 lA
 lA
@@ -46669,11 +46736,11 @@ uo
 wv
 yh
 Pc
-rd
-Jd
-Vd
 uo
-ys
+uo
+uo
+uo
+uo
 lA
 lA
 rH
@@ -46926,11 +46993,11 @@ uo
 ww
 yv
 Pc
-zb
+uo
 Kd
 Wd
+Aw
 uo
-lA
 lA
 lA
 rH
@@ -47181,13 +47248,13 @@ pj
 qb
 uo
 wx
-yi
-Qc
+yv
+Pc
 yX
 Ld
 Xd
+Ax
 uo
-lA
 lA
 lA
 rH
@@ -47438,13 +47505,13 @@ uo
 qc
 uo
 wn
-yv
-Pc
-zb
+vr
+xm
+xt
 Md
 Yd
+Ay
 uo
-lA
 lA
 lA
 rH
@@ -47695,12 +47762,12 @@ pX
 qG
 vx
 wy
-yv
+vN
 Pc
 uo
-uo
-uo
-uo
+zs
+Ag
+DT
 uo
 lA
 lA
@@ -47959,7 +48026,7 @@ zs
 wM
 zY
 uo
-xZ
+lA
 lA
 rH
 lA
@@ -48209,14 +48276,14 @@ vY
 uo
 uo
 ww
-tp
-Pc
-Jc
-vr
-zL
-zZ
+vN
+yi
 uo
-qX
+uo
+uo
+uo
+uo
+ys
 lA
 rH
 lA
@@ -48467,13 +48534,13 @@ wp
 uo
 xo
 vE
-Rc
-wG
+Pc
+ia
 wQ
 xc
-xt
-uo
-Av
+ia
+vG
+qX
 lA
 rH
 lA
@@ -48722,15 +48789,15 @@ tD
 tD
 vp
 zb
-wn
-tp
-Pc
-uo
+rd
+wG
+xn
+xZ
 wS
 xi
 xx
-uo
-Aw
+Jc
+tL
 lA
 rH
 lA
@@ -48979,15 +49046,15 @@ Au
 Au
 vq
 uo
-xq
+wn
 tp
-Sc
-uo
-wS
+Pc
+ia
+zL
 VK
-DT
-uo
-yr
+ia
+Jd
+tL
 lA
 rH
 lA
@@ -49243,8 +49310,8 @@ uo
 uo
 uo
 uo
-uo
-Ax
+Rc
+tL
 lA
 rH
 lA
@@ -49493,15 +49560,15 @@ tS
 vX
 wr
 uo
-xm
+ww
 vN
 Pc
-ia
+yd
 Nd
 Zd
-ia
-oC
-Aw
+uo
+Sc
+tL
 lA
 rH
 lA
@@ -49750,15 +49817,15 @@ uA
 uy
 wT
 vy
-xn
+wm
 vO
-Uc
-yd
+yr
+Qc
 Od
 ze
-Ag
+uo
 Ai
-Ay
+tL
 lA
 rH
 lA
@@ -50007,15 +50074,15 @@ tb
 xr
 wU
 uo
-zv
-tp
+wn
+vN
 Pc
-ia
+zb
 Pd
 Ce
-ia
-Aj
-qZ
+uo
+Uc
+tL
 lA
 rH
 lA
@@ -50268,11 +50335,11 @@ xp
 zN
 Vc
 uo
+zZ
+Av
 uo
-uo
-uo
-uP
-lA
+Uc
+tL
 lA
 rH
 lA
@@ -50525,11 +50592,11 @@ ia
 zT
 ia
 uo
-lA
-lA
-lA
-lA
-lA
+uo
+uo
+uo
+Vd
+qZ
 lA
 rG
 rp
@@ -51823,7 +51890,7 @@ rH
 lA
 lA
 kO
-ac
+kO
 ac
 ad
 ad
@@ -52079,8 +52146,8 @@ lA
 rH
 lA
 lA
+lA
 kO
-ac
 ac
 ac
 ad
@@ -52335,10 +52402,10 @@ aa
 lA
 zK
 lA
+lA
 rt
 jS
-ac
-ac
+kO
 ac
 ad
 ad
@@ -52593,9 +52660,9 @@ qh
 zJ
 qh
 lA
+lA
+lA
 kO
-kO
-ac
 ac
 ad
 ad
@@ -52850,9 +52917,9 @@ qh
 zJ
 qh
 lA
+lA
+lA
 kO
-kO
-ac
 ac
 ac
 ad
@@ -53105,12 +53172,12 @@ ar
 ar
 ar
 Be
-ar
-lA
-lA
+aa
+oE
+oE
+oE
 kO
-ac
-ac
+kO
 ac
 ad
 ad
@@ -53362,12 +53429,12 @@ aa
 aa
 aa
 Be
+aa
+ar
+rN
 ar
 aa
-aa
 kO
-ac
-ac
 ac
 ac
 ac
@@ -53619,10 +53686,10 @@ aa
 aa
 aa
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -53876,10 +53943,10 @@ aa
 aa
 aa
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -54133,10 +54200,10 @@ kc
 kc
 kc
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -54390,10 +54457,10 @@ Gf
 Nf
 kc
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -54647,10 +54714,10 @@ wN
 Nf
 kc
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -54904,10 +54971,10 @@ wN
 Nf
 kc
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -55161,10 +55228,10 @@ Ye
 kc
 kc
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -55418,10 +55485,10 @@ Bu
 kc
 aa
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -55675,10 +55742,10 @@ AU
 kc
 aa
 Be
+aa
 ar
-aa
-aa
-aa
+rN
+ar
 aa
 aa
 aa
@@ -55933,9 +56000,9 @@ kc
 ws
 BA
 Bh
-Bh
-aa
-aa
+oE
+oE
+oE
 aa
 aa
 aa
@@ -56190,10 +56257,10 @@ Ze
 Wc
 Wf
 Bh
-Bh
-aa
-aa
-aa
+lA
+lA
+lA
+lA
 aa
 aa
 aa
@@ -57457,7 +57524,7 @@ lA
 lA
 jT
 ti
-xE
+Cr
 xE
 xC
 vf
@@ -57715,8 +57782,8 @@ lA
 jT
 wR
 vc
-wR
-vc
+Ri
+UP
 xy
 zq
 ws
@@ -57724,10 +57791,10 @@ Dd
 ws
 Dd
 ws
-Oe
+Py
 Te
 Df
-Kf
+Lf
 Bs
 Rf
 ws
@@ -58241,7 +58308,7 @@ ws
 Oe
 Ue
 Ef
-Kf
+Qz
 AV
 Tf
 ws
@@ -58744,7 +58811,7 @@ lA
 lA
 lA
 vD
-wd
+zE
 zE
 zz
 ws
@@ -59018,7 +59085,7 @@ ws
 ws
 lA
 lA
-nG
+rI
 lA
 kO
 kO
@@ -59518,7 +59585,7 @@ lA
 lA
 lA
 lA
-uS
+zv
 Id
 tL
 lA
@@ -59531,7 +59598,7 @@ lA
 lA
 lA
 lA
-kO
+lA
 kO
 ac
 ac
@@ -59775,9 +59842,10 @@ lA
 lA
 lA
 lA
-Zc
-Id
-tL
+oE
+oE
+oE
+lA
 lA
 lA
 lA
@@ -59789,7 +59857,6 @@ kO
 kO
 kO
 kO
-ac
 ac
 px
 px
@@ -60032,9 +60099,9 @@ lA
 lA
 lA
 lA
-uS
-Id
-tL
+lA
+lA
+lA
 lA
 lA
 lA
@@ -60043,7 +60110,7 @@ rI
 lA
 lA
 kO
-ac
+kO
 ac
 ac
 ac
@@ -60289,9 +60356,9 @@ nd
 lA
 nG
 lA
-oE
-oE
-oE
+lA
+lA
+lA
 lA
 lA
 kO

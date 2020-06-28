@@ -159,7 +159,9 @@
 		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O,/obj/effect/decal/cleanable/crayon))
+			qdel(O)
+		else if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
@@ -282,7 +284,7 @@
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 			Hulk.health -= rand(4,10)
-		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))
@@ -302,7 +304,7 @@
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(15, 50))

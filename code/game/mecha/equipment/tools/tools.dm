@@ -72,16 +72,14 @@
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat>1) return
-		if(chassis.occupant.a_intent == "hurt")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
 			occupant_message("<span class='warning'>You squeeze [target] with [src.name]. Something cracks.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] squeezes [target].</span>")
 
-			chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+			M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -142,9 +140,7 @@
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
-					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
 				target.ex_act(2)
@@ -207,9 +203,7 @@
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
-					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
 				target.ex_act(2)
 	return 1
@@ -922,15 +916,14 @@
 			return 0
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user)
-	var/result = load_fuel(weapon)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/I, mob/user, params)
+	var/result = load_fuel(I)
 	if(isnull(result))
-		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [weapon] cannot be used as fuel.</font>")
+		user.visible_message("[user] tries to shove [I] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [I] cannot be used as fuel.</font>")
 	else if(!result)
 		to_chat(user, "Unit is full.")
 	else
 		user.visible_message("[user] loads [src] with [fuel].","[result] unit\s of [fuel] successfully loaded.")
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/critfail()
 	..()
@@ -1063,10 +1056,10 @@
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat>1) return
-		if(chassis.occupant.a_intent == "hurt")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			chassis.occupant_message("<span class='warning'>You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == "disarm")
+		else if(chassis.occupant.a_intent == INTENT_PUSH)
 			chassis.occupant_message("<span class='warning'>You tear [target]'s limbs off with [src.name].</span>")
 			chassis.visible_message("<span class='warning'>[chassis] rips [target]'s arms off.</span>")
 		else

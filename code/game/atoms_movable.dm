@@ -12,6 +12,7 @@
 	var/fly_speed = 0  // Used to get throw speed param exposed in proc, so we could use it in hitby reactions.
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/can_be_pulled = TRUE
 
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -49,7 +50,7 @@
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
-/atom/movable/Crossed(atom/movable/AM, oldloc)
+/atom/movable/Crossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

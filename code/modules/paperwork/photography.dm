@@ -50,21 +50,22 @@
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+/obj/item/weapon/photo/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
-	else if(istype(P, /obj/item/device/occult_scanner))
+	else if(istype(I, /obj/item/weapon/lighter))
+		burnpaper(I, user)
+	else if(istype(I, /obj/item/device/occult_scanner))
 		for(var/A in photographed_names)
 			if(photographed_names[A] == /mob/dead/observer)
-				var/obj/item/device/occult_scanner/OS = P
+				var/obj/item/device/occult_scanner/OS = I
 				OS.scanned_type = /mob/dead/observer
 				to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 				break
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
@@ -89,10 +90,15 @@
 	set category = "Object"
 	set src in usr
 
+	if(usr.incapacitated())
+		return
+
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the photo?", "Photo Labelling", null) as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
-		name = "[(n_name ? text("[n_name]") : "photo")]"
+	if(usr.incapacitated())
+		return
+
+	name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
 	return
 
@@ -120,7 +126,7 @@
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if(!M.incapacitated() && M.back == src)
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -185,42 +191,35 @@
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
+/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/camera_film))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [I] into \the [src].</span>")
-		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	..()
+	return ..()
 
-/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
-		OS.scanned_type = src.type
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+		return
+	return ..()
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility)
-				if(see_ghosts)
-					if(istype(A, /mob/dead/observer))
-						var/mob/dead/observer/O = A
-						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
-							continue
-				else
-					continue
-			atoms.Add(A)
+			if(!A.invisibility || (see_ghosts && isobserver(A)))
+				atoms.Add(A)
 
 	var/list/sorted = list()
 	var/j
@@ -410,7 +409,14 @@
 		photo_size = 1
 		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
 
-/obj/item/device/camera/AltClick()
+/obj/item/device/camera/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	set_zoom()
 
 /obj/item/device/camera/big_photos

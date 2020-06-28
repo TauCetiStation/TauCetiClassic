@@ -168,15 +168,19 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	return 0
 
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
-/obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
-		var/obj/item/weapon/antag_spawner/borg_tele/S = W
+/obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/antag_spawner/borg_tele))
+		var/obj/item/weapon/antag_spawner/borg_tele/S = I
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
 			qdel(S)
 			to_chat(user, "<span class='notice'>Teleporter refunded.</span>")
 		else
 			to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
+
+	else
+		return ..()
+
 // PRESET UPLINKS
 // A collection of preset uplinks.
 //

@@ -44,9 +44,7 @@
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])", user)
+	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
 	if(broken)
@@ -76,7 +74,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.confused = max(rand(6, 10), M.confused)
 			M.flash_eyes()
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
@@ -177,10 +175,7 @@
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
-				var/power = rand(3,5)
 				M.flash_eyes()
-				if (M.confused < power)
-					M.confused += power
 
 	return
 

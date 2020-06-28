@@ -4,28 +4,20 @@
 	if(!client)
 		return
 
-
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in viewers(src)))
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
-		if(isanimal(speaker))
-			var/mob/living/simple_animal/S = speaker
-			message = pick(S.speak)
-		else if(isIAN(speaker))
-			var/mob/living/carbon/ian/IAN = speaker
-			message = pick(IAN.speak)
-		else
-			if(language)
-				message = language.scramble(message)
-			else
-				message = stars(message)
+		var/scrambled_msg = speaker.get_scrambled_message(message, language)
+		if(!scrambled_msg)
+			return
+		message = scrambled_msg
 
 	var/speaker_name = speaker.name
 	if(istype(speaker, /mob/living/carbon/human))
@@ -53,7 +45,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
+		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -74,9 +66,9 @@
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
 		if(language)
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
+			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
@@ -186,7 +178,7 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "[speaker_name] <a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
 
 	var/formatted
 	if(language)

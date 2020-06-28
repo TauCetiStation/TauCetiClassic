@@ -35,7 +35,7 @@
 /obj/structure/reagent_dispensers/coolanttank/ex_act()
 	explode()
 
-/obj/structure/reagent_dispensers/coolanttank/proc/explode()
+/obj/structure/reagent_dispensers/coolanttank/explode()
 	var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)

@@ -200,13 +200,8 @@
 
 /obj/item/weapon/bikehorn/proc/honk(mob/user)
 	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-	if(!user.notransform)
-		return
-
-	animate(user, pixel_z = rand(2, 6), time = 0)
-	var/matrix/old_transform = user.transform
-	animate(pixel_z = 0, transform = turn(old_transform, pick(-8, 0, 8)), time=2)
-	animate(pixel_z = 0, transform = old_transform, time = 0)
+	if(user.can_waddle())
+		user.waddle(pick(-14, 0, 14), 4)
 
 /obj/item/weapon/bikehorn/attack(mob/target, mob/user, def_zone)
 	. = ..()
@@ -218,10 +213,11 @@
 		honk(user)
 		src.add_fingerprint(user)
 
-/obj/item/weapon/bikehorn/Crossed(mob/living/carbon/C)
-	if(cooldown <= world.time)
+/obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM) && cooldown <= world.time)
 		cooldown = world.time + 8
-		honk(C)
+		honk(AM)
 
 /obj/item/weapon/bikehorn/dogtoy
 	name = "dog toy"

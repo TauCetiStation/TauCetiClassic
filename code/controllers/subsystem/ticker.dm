@@ -22,12 +22,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
-	//These bible variables should be a preference
-	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
-	var/Bible_item_state					//item_state the chaplain has chosen for his bible
-	var/Bible_name							//name of the bible
-	var/Bible_deity_name					//name of chaplin's deity
-
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
 	var/list/syndicate_coalition = list()	// list of traitor-compatible factions
@@ -168,6 +162,12 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+
+	// Discuss your stuff after the round ends.
+	if(config.ooc_round_only)
+		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</span>")
+		ooc_allowed = FALSE
+
 	var/init_start = world.timeofday
 	//Create and announce mode
 	if(config.is_hidden_gamemode(master_mode))
@@ -237,6 +237,7 @@ var/datum/subsystem/ticker/ticker
 		query_round_game_mode.Execute()
 
 	setup_economy()
+	setup_religions()
 
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
@@ -419,6 +420,11 @@ var/datum/subsystem/ticker/ticker
 
 //cursed code
 /datum/subsystem/ticker/proc/declare_completion()
+	// Now you all can discuss the game.
+	if(config.ooc_round_only)
+		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
+		ooc_allowed = TRUE
+
 	var/station_evacuated
 	if(SSshuttle.location > 0)
 		station_evacuated = 1
@@ -471,15 +477,15 @@ var/datum/subsystem/ticker/ticker
 			end_icons += flat
 			var/tempstate = end_icons.len
 			if (aiPlayer.stat != DEAD)
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the game were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</B>"}
 			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
 			if (aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 				ai_completions += "[robolist]"
 
 		var/dronecount = 0
@@ -495,11 +501,11 @@ var/datum/subsystem/ticker/ticker
 			var/tempstate = end_icons.len
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</B>"}
 				else
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)

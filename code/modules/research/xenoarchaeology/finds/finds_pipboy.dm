@@ -53,10 +53,10 @@
 	alarm_playing = 0
 	return
 
-/obj/item/clothing/gloves/pipboy/attackby(obj/item/weapon/W, mob/user)
-	if(iscoil(W) || istype(W, /obj/item/weapon/stock_parts/cell) || iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
+/obj/item/clothing/gloves/pipboy/attackby(obj/item/I, mob/user, params)
+	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iswirecutter(I) || istype(I, /obj/item/weapon/scalpel))
 		return
-	..()
+	return ..()
 
 /obj/item/clothing/gloves/pipboy/ui_action_click()
 	open_interface()
@@ -240,7 +240,7 @@
 	if (!(on))
 		return
 
-	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
+	if(U.incapacitated())
 		return
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

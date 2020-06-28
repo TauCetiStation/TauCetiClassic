@@ -198,7 +198,7 @@
 	set category = "Object"
 	set name = "Adjust bandana"
 	set src in usr
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		flags ^= MASKCOVERSMOUTH
 		if(flags & MASKCOVERSMOUTH)
 			src.icon_state = initial(icon_state)

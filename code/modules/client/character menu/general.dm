@@ -277,6 +277,7 @@
 						else
 							h_style = random_hair_style(gender, species)
 						ResetJobs()
+						UpdateAllowedQuirks()
 						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
@@ -446,7 +447,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a religon.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a religion.")  as text|null)
 						if(raw_choice)
 							religion = raw_choice
 						return
@@ -512,7 +513,7 @@
 									organ_data[organ] = "mechanical"
 				// Choosing a head for an IPC
 				if("ipc_head")
-					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar")
+					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
 					h_style = random_ipc_monitor(ipc_head)
 

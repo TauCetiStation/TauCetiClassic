@@ -39,12 +39,22 @@
 /obj/item/clothing/suit/storage/labcoat/mad,
 /obj/item/clothing/glasses/gglasses,
 /obj/item/clothing/mask/cigarette/cigar/havana,
-/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/holoboots,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},
 /area/station/civilian/holodeck/source_theatre)
 "e" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/soviet,
+/obj/item/clothing/head/ushanka,
+/obj/item/clothing/suit/imperium_monk,
+/obj/item/clothing/mask/gas/cyborg,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"f" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/schoolgirl,
 /obj/item/clothing/head/kitty,
@@ -57,7 +67,7 @@
 	icon_state = "cult"
 	},
 /area/station/civilian/holodeck/source_theatre)
-"f" = (
+"g" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/under/suit_jacket,
@@ -68,16 +78,6 @@
 /obj/item/weapon/cane,
 /obj/item/clothing/under/sl_suit,
 /obj/item/clothing/mask/fakemoustache,
-/turf/simulated/floor/holofloor{
-	icon_state = "cult"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"g" = (
-/obj/structure/rack/holorack,
-/obj/item/clothing/under/soviet,
-/obj/item/clothing/head/ushanka,
-/obj/item/clothing/suit/imperium_monk,
-/obj/item/clothing/mask/gas/cyborg,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},
@@ -213,8 +213,8 @@
 
 (1,1,1) = {"
 a
-k
-k
+d
+f
 k
 l
 n
@@ -248,7 +248,7 @@ x
 n
 "}
 (4,1,1) = {"
-d
+k
 k
 k
 k
@@ -260,7 +260,7 @@ x
 n
 "}
 (5,1,1) = {"
-e
+k
 k
 k
 k
@@ -272,7 +272,7 @@ x
 n
 "}
 (6,1,1) = {"
-f
+k
 k
 k
 k
@@ -284,7 +284,7 @@ x
 n
 "}
 (7,1,1) = {"
-g
+k
 k
 k
 k
@@ -321,8 +321,8 @@ n
 "}
 (10,1,1) = {"
 j
-k
-k
+e
+g
 k
 m
 n

@@ -132,13 +132,14 @@
 	else
 		return FALSE
 
-/obj/item/tape/attackby(obj/item/weapon/W, mob/user)
-	breaktape(W, user, FALSE)
+/obj/item/tape/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	breaktape(I, user, FALSE)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 /obj/item/tape/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (user.a_intent == "help" && allowed(user))
+	if (user.a_intent == INTENT_HELP && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		density = 0
 		addtimer(VARSET_CALLBACK(src, density, TRUE), 20 SECONDS)
@@ -165,11 +166,11 @@
 		breaktape(W = null, user = null, forced = TRUE)
 	else if(isliving(AM))
 		var/mob/living/L = AM
-		if(L.a_intent == I_HURT)
+		if(L.a_intent == INTENT_HARM)
 			breaktape(W = null, user = L, forced = FALSE)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
-	if((user && user.a_intent == "help") && (W && !W.can_puncture() && allowed(user)) && !forced)
+	if((user && user.a_intent == INTENT_HELP) && (W && !W.can_puncture() && allowed(user)) && !forced)
 		to_chat(user, "<span class='warning'>You can't break the [src] with that!</span>")
 		return
 	if(user)

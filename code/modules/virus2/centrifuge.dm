@@ -11,9 +11,9 @@
 
 /obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(isscrewdriver(O))
-		return ..(O,user)
+		return ..()
 
-	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
+	else if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
@@ -24,6 +24,7 @@
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
+		return
 
 	src.attack_hand(user)
 

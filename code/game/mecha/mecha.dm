@@ -443,26 +443,25 @@
 	return
 
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user)
-	src.log_message("Attack by simple animal. Attacker - [user].",1)
+/obj/mecha/attack_animal(mob/living/simple_animal/attacker)
+	src.log_message("Attack by simple animal. Attacker - [attacker].",1)
 	..()
 
-	if(user.melee_damage_upper == 0)
-		user.emote("[user.friendly] [src]")
+	if(attacker.melee_damage == 0)
+		attacker.emote("[attacker.friendly] [src]")
 	else
 		if(!prob(src.deflect_chance))
-			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+			var/damage = attacker.melee_damage
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			visible_message("<span class='warning'><B>[user]</B> [user.attacktext] [src]!</span>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+			visible_message("<span class='warning'><B>[attacker]</B> [attacker.attacktext] [src]!</span>")
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-			src.occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
-			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-	return
+			src.occupant_message("<span class='notice'>The [attacker]'s attack is stopped by the armor.</span>")
+			visible_message("<span class='notice'>The [attacker] rebounds off [src.name]'s armor!</span>")
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
 
 /obj/mecha/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //wrapper
 	..()
@@ -710,7 +709,7 @@
 				to_chat(user, "There's already a powercell installed.")
 		return
 
-	else if(iswelder(W) && user.a_intent != "hurt")
+	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))
@@ -958,7 +957,7 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.stat || !ishuman(usr))
+	if (usr.incapacitated() || !ishuman(usr))
 		return
 	if (usr.buckled)
 		to_chat(usr,"<span class='warning'>You can't climb into the exosuit while buckled!</span>")
@@ -1300,9 +1299,9 @@
 						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>Airtank pressure: </b>[tank_pressure]kPa<br>
-						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
+						<b>Airtank temperature: </b>[tank_temperature] K|[tank_temperature - T0C]&deg;C<br>
 						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
-						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
+						<b>Cabin temperature: </b> [return_temperature()] K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
@@ -1459,7 +1458,7 @@
 	if(href_list["close"])
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	if(usr.stat > 0)
+	if(usr.incapacitated())
 		return
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])

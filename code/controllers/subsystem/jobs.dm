@@ -8,6 +8,8 @@ var/datum/subsystem/job/SSjob
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
+	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
+	var/list/type_occupations = list()	//Dict of al jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/obj/effect/landmark/start/fallback_landmark
@@ -38,6 +40,8 @@ var/datum/subsystem/job/SSjob
 		if(job.faction != faction)
 			continue
 		occupations += job
+		name_occupations[job.title] = job
+		type_occupations[J] = job
 
 	return 1
 
@@ -48,16 +52,15 @@ var/datum/subsystem/job/SSjob
 	job_debug.Add(text)
 	return 1
 
-
 /datum/subsystem/job/proc/GetJob(rank)
-	if(!rank)
-		return null
-	for(var/datum/job/J in occupations)
-		if(!J)
-			continue
-		if(J.title == rank)
-			return J
-	return null
+	if(!occupations.len)
+		SetupOccupations()
+	return name_occupations[rank]
+
+/datum/subsystem/job/proc/GetJobType(jobtype)
+	if(!occupations.len)
+		SetupOccupations()
+	return type_occupations[jobtype]
 
 /datum/subsystem/job/proc/GetPlayerAltTitle(mob/dead/new_player/player, rank)
 	return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
@@ -109,7 +112,7 @@ var/datum/subsystem/job/SSjob
 		if(flag && (!(flag in player.client.prefs.be_role)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
-		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+		if(player.client.prefs.job_preferences[job.title] == level)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
 	return candidates
@@ -126,7 +129,7 @@ var/datum/subsystem/job/SSjob
 		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
-		if(!job.is_species_permitted(player.client))
+		if(!job.is_species_permitted(player.client.prefs.species))
 			continue
 
 		if(!job.map_check())
@@ -166,7 +169,7 @@ var/datum/subsystem/job/SSjob
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/subsystem/job/proc/FillHeadPosition()
-	for(var/level = 1 to 3)
+	for(var/level in JP_LEVELS)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
@@ -211,7 +214,7 @@ var/datum/subsystem/job/SSjob
 		job.total_positions = job.spawn_positions
 		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
-		for(var/level = 1 to 3)
+		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
 			if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
 				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
@@ -270,7 +273,7 @@ var/datum/subsystem/job/SSjob
 	//People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
 	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
+	var/list/assistant_candidates = FindOccupationCandidates(assist, JP_LOW)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/dead/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
@@ -288,7 +291,7 @@ var/datum/subsystem/job/SSjob
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
-	
+
 	//Check for an AI
 	if(!(ticker.mode.name == "AI malfunction"))
 		Debug("DO, Running AI Check")
@@ -305,7 +308,7 @@ var/datum/subsystem/job/SSjob
 
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
-	for(var/level = 1 to 3)
+	for(var/level in JP_LEVELS)
 		//Check the head jobs first each level
 		CheckHeadPositions(level)
 
@@ -330,7 +333,7 @@ var/datum/subsystem/job/SSjob
 
 
 				// If the player wants that job on this level, then try give it to him.
-				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+				if(player.client.prefs.job_preferences[job.title] == level)
 
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
@@ -417,7 +420,6 @@ var/datum/subsystem/job/SSjob
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
-		job.apply_fingerprints(H)
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -461,7 +463,7 @@ var/datum/subsystem/job/SSjob
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H)
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -544,7 +546,6 @@ var/datum/subsystem/job/SSjob
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), SLOT_L_EAR)
 
 //		H.update_icons()
 
@@ -580,7 +581,7 @@ var/datum/subsystem/job/SSjob
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
-			H.mind.initial_account.owner_PDA = locate(/obj/item/device/pda,H)	//add PDA in /datum/money_account
+			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
 		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
@@ -590,9 +591,11 @@ var/datum/subsystem/job/SSjob
 		pda.owner = H.real_name
 		pda.ownjob = C.assignment
 		pda.ownrank = C.rank
-		pda.owner_account = get_account(C.associated_account_number)	//bind the account to the pda
+		pda.check_rank(C.rank)
+		pda.owner_account = H.mind.initial_account		//bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
 	return 1
 
@@ -634,29 +637,29 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/job in occupations)
 		var/tmp_str = "|[job.title]|"
 
-		var/level1 = 0 //high
-		var/level2 = 0 //medium
-		var/level3 = 0 //low
-		var/level4 = 0 //never
-		var/level5 = 0 //banned
-		var/level6 = 0 //account too young
+		var/high = 0
+		var/medium = 0
+		var/low = 0
+		var/never = 0
+		var/banned = 0
+		var/young = 0
 		for(var/mob/dead/new_player/player in player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
-				level5++
+				banned++
 				continue
 			if(!job.player_old_enough(player.client))
-				level6++
+				young++
 				continue
-			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-				level1++
-			else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-				level2++
-			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-				level3++
-			else
-				level4++ //not selected
-
-		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
+			switch(player.client.prefs.job_preferences[job.title])
+				if(JP_HIGH)
+					high++
+				if(JP_MEDIUM)
+					medium++
+				if(JP_LOW)
+					low++
+				else
+					never++
+		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)

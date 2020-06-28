@@ -15,7 +15,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -71,9 +71,7 @@
 				tile.break_tile()
 		for(var/mob/living/M in usr.loc.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump", usr)
+				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -150,7 +148,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
@@ -235,9 +233,7 @@
 				usr.density = 0
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
-						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
-						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
-						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash", usr)
+						M.log_combat(usr, "hulk_dashed")
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
 						playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -322,7 +318,7 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		return
 
-	if (usr.lying || usr.stunned || usr.stat)
+	if (usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -358,9 +354,7 @@
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
-				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
-				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
-				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash", usr)
+				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -444,7 +438,7 @@
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			if (prob(75))
 				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))

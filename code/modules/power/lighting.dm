@@ -21,13 +21,13 @@
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+/obj/item/light_fixture_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
+		new /obj/item/stack/sheet/metal(get_turf(loc), sheets_refunded)
 		user.SetNextMove(CLICK_CD_RAPID)
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -514,14 +514,15 @@
 		broken()
 	return
 
-/obj/machinery/light/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
+/obj/machinery/light/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage == 0)
+		return
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
-		to_chat(M, "<span class='warning'>That object is useless to you.</span>")
+		to_chat(attacker, "<span class='warning'>That object is useless to you.</span>")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		..()
-		visible_message("<span class='warning'>[M.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
+		visible_message("<span class='warning'>[attacker] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
@@ -768,8 +769,7 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject phoron to make it explode
-/obj/item/weapon/light/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/weapon/light/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -777,16 +777,15 @@
 		to_chat(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("phoron", 5))
-
 			log_admin("LOG: [key_name(user)] injected a light with phoron, rigging it to explode.")
 			message_admins("LOG: [key_name_admin(user)] injected a light with phoron, rigging it to explode. [ADMIN_JMP(user)]")
 
 			rigged = 1
 
 		S.reagents.clear_reagents()
+
 	else
-		..()
-	return
+		return ..()
 
 // called after an attack with a light item
 // shatter light, unless it was an attempt to put it in a light socket
@@ -796,7 +795,7 @@
 	if(!proximity) return
 	if(istype(target, /obj/machinery/light))
 		return
-	if(user.a_intent != "hurt")
+	if(user.a_intent != INTENT_HARM)
 		return
 
 	shatter()

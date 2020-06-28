@@ -17,31 +17,31 @@
 		return
 	..()
 
-/obj/item/device/radio/electropack/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/clothing/head/helmet))
+/obj/item/device/radio/electropack/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/head/helmet))
 		if(!b_stat)
 			to_chat(user, "<span class='notice'>[src] is not ready to be attached!</span>")
 			return
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		user.drop_from_inventory(W)
-		W.loc = A
-		W.master = A
-		A.part1 = W
+		user.drop_from_inventory(I, A)
+		I.master = A
+		A.part1 = I
 
-		user.drop_from_inventory(src)
-		loc = A
+		user.drop_from_inventory(src, A)
 		master = A
 		A.part2 = src
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
 
+	else
+		return ..()
+
 /obj/item/device/radio/electropack/Topic(href, href_list)
 	//..()
-	if(usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)

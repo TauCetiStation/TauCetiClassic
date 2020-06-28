@@ -783,7 +783,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")
@@ -862,17 +862,16 @@
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/paper))
+/obj/item/clothing/accessory/fluff/konaa_hirano/attack_accessory(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
 		if(held)
 			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(user, "You slip [O] into [src].")
-			user.drop_item()
-			O.loc = src
-			src.held = O
-	else
-		..()
+			to_chat(user, "You slip [I] into [src].")
+			user.drop_from_inventory(I, src)
+			held = I
+		return TRUE
+	return FALSE
 
 //////  Medallion - Nasir Khayyam - Jamini
 
@@ -957,29 +956,7 @@
 /obj/item/weapon/melee/baton/fluff/oeng_baton
 	name = "well-used stun baton"
 	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
-/*
-///// Deckard .44 - Callum Leamas - Roaper
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas
-	name = "Deckard .44"
-	desc = "A custom built revolver, based off the semi-popular Detective Special model."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas/update_icon()
-
-	..()
-	if(loaded.len)
-		icon_state = "leamas-loaded"
-	else
-		icon_state = "leamas-empty"
-
-/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-
-	if(istype(A, /obj/item/ammo_magazine))
-		flick("leamas-reloading",src)
-	..()
-
-*/
 ///// Custom Items coded by Iamgoofball are Below /////
 /obj/item/weapon/storage/belt/medical/fluff/nashi_belt
 	name = "rainbow medical belt"

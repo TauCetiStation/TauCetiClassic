@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = I_HURT
+		M.a_intent = INTENT_HARM
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -160,6 +160,7 @@ var/global/list/tophats_list = list()
 	tp_to_tophat(I)
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM.throwing)
 		tp_to_tophat(AM)
 
@@ -288,7 +289,7 @@ var/global/list/tophats_list = list()
 			return TRUE
 	return FALSE
 
-/obj/item/clothing/head/wizard/tophat/pickup()
+/obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
 	..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)
@@ -452,7 +453,7 @@ var/global/list/tophats_list = list()
 			user.drop_from_inventory(AM)
 		drop_into(AM, user)
 
-/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/living/user)
+/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/user, params)
 	if(I.w_class <= w_class)
 		if(!global.tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
@@ -462,7 +463,7 @@ var/global/list/tophats_list = list()
 	if(user.mind && user.mind.special_role == "Wizard")
 		drop_into(I, user)
 		return
-	..()
+	return ..()
 
 /obj/item/clothing/head/wizard/tophat/attack_hand(mob/living/user)
 	if(user.get_active_hand() == src || user.get_inactive_hand() == src)

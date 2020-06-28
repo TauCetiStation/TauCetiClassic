@@ -34,8 +34,5 @@
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Actual picking-up event.
-/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/M)
-
-	if(M.a_intent == "help")
-		get_scooped(M)
-	..()
+/mob/living/silicon/robot/drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)

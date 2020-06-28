@@ -116,11 +116,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/melee/baton,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
-	cost = 3000
+	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Weapons crate"
 	access = access_brig
@@ -128,9 +126,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp,
-					/obj/item/weapon/gun/projectile/wjpp)
+	contains = list(/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -288,8 +286,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/r4046
 	name = "40x46mm rubber grenades"
-	contains = list(/obj/item/weapon/storage/box/r4046,
-					/obj/item/weapon/storage/box/r4046)
+	contains = list(/obj/item/weapon/storage/box/r4046/rubber,
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "40x46mm rubber grenades"
@@ -299,7 +297,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/m79,
-					/obj/item/weapon/storage/box/r4046)
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "m79 grenade launcher"
@@ -750,7 +748,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/aqueous_foam_tank
 	name = "AFFF crate"
-	contains = list(/obj/structure/reagent_dispensers/watertank/aqueous_foam_tank)
+	contains = list(/obj/structure/reagent_dispensers/aqueous_foam_tank)
 	cost = 800
 	crate_type = /obj/structure/largecrate
 	crate_name = "AFFF crate"
@@ -997,6 +995,15 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Medical crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/roller_beds
+	name = "Roller beds crate"
+	cost = 1000
+	contains = list(/obj/item/roller, /obj/item/roller,
+					/obj/item/roller, /obj/item/roller)
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Roller beds crate"
+	group = "Medical / Science"
+
 /datum/supply_pack/virus
 	name = "Virus sample crate"
 	contains = list(/obj/item/weapon/virusdish/random,
@@ -1039,17 +1046,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/surgery
 	name = "Surgery crate"
-	contains = list(/obj/item/weapon/cautery,
-					/obj/item/weapon/surgicaldrill,
-					/obj/item/clothing/mask/breath/medical,
+	contains = list(/obj/item/clothing/mask/breath/medical,
 					/obj/item/weapon/tank/anesthetic,
-					/obj/item/weapon/FixOVein,
-					/obj/item/weapon/hemostat,
-					/obj/item/weapon/scalpel,
-					/obj/item/weapon/bonegel,
-					/obj/item/weapon/retractor,
-					/obj/item/weapon/bonesetter,
-					/obj/item/weapon/circular_saw)
+					/obj/item/weapon/storage/visuals/surgery/full)
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Surgery crate"

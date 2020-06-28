@@ -17,13 +17,13 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-/obj/item/device/mmi/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		var/obj/item/brain/B = O
+/obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
+		var/obj/item/brain/B = I
 		if(!B.brainmob)
 			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
+		visible_message("<span class='notice'>[user] sticks \a [B] into \the [src].</span>")
 
 		brainmob = B.brainmob
 		B.brainmob = null
@@ -39,13 +39,13 @@
 		locked = TRUE
 
 		feedback_inc("cyborg_mmis_filled", 1)
-		qdel(O)
+		qdel(B)
 		return
 
-	else if(istype(O, /obj/item/weapon/holder/diona) && !brainmob)
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
+	else if(istype(I, /obj/item/weapon/holder/diona) && !brainmob)
+		visible_message("<span class='notice'>[user] sticks \a [I] into \the [src].</span>")
 
-		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in O
+		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in I
 		if(!D)
 			world.log << "This is seriously really wrong, and I would like to keep a message for this case."
 		if(!D.mind || !D.key)
@@ -54,10 +54,10 @@
 		transfer_nymph(D)
 
 		feedback_inc("cyborg_mmis_filled",1)
-		qdel(O)
+		qdel(D)
 		return
 
-	else if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+	else if((istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
@@ -66,10 +66,10 @@
 		return
 
 	else if(brainmob)
-		O.attack(brainmob, user)//Oh noooeeeee
+		I.attack(brainmob, user)//Oh noooeeeee
 		return
 
-	..()
+	return ..()
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
@@ -167,8 +167,9 @@
 	set src = usr.loc//In user location, or in MMI in this case.
 	set popup_menu = 0//Will not appear when right clicking.
 
-	if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
+	if(brainmob.incapacitated())//Only the brainmob will trigger these so no further check is necessary.
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
+		return
 
 	radio.broadcasting = radio.broadcasting==1 ? 0 : 1
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>")
@@ -180,8 +181,9 @@
 	set src = usr.loc
 	set popup_menu = 0
 
-	if(brainmob.stat)
+	if(brainmob.incapacitated())
 		to_chat(brainmob, "Can't do that while incapacitated or dead.")
+		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")

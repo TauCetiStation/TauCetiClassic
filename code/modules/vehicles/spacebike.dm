@@ -63,6 +63,9 @@
 		return
 	if(user.incapacitated() || user.lying)
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(!load(M))
 		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
 		return
@@ -100,7 +103,7 @@
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
-	..()
+	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
@@ -120,9 +123,7 @@
 				unload(Driver)
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
-			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")
-			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
-			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike", Driver)
+			L.log_combat(Driver, "driven over with [src]")
 
 			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()

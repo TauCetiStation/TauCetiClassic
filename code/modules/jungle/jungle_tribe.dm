@@ -57,8 +57,7 @@
 	speak_emote = list("chatters")
 	emote_hear = list("chatters to themselves","chatters away at something","whistles")
 	emote_see = list("bends down to examine something")
-	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage = 10
 	turns_per_move = 1
 	stop_automated_movement_when_pulled = 0
 	var/my_type = 1

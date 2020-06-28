@@ -93,7 +93,7 @@
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || open || !locked)
+		if(!user || user.incapacitated() || user.loc != src || open || !locked)
 			return
 
 		locked = 0
@@ -164,7 +164,7 @@
 		return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open(user)
 	return
@@ -209,6 +209,9 @@
 		var/mob/M = G.affecting
 		M.forceMove(loc)
 		qdel(G)
+		return
+
+	return ..()
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..())
@@ -287,7 +290,7 @@
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()
@@ -531,7 +534,7 @@
 	else if (href_list["selectUIBlock"] && href_list["selectUISubblock"]) // This chunk of code updates selected block / sub-block based on click
 		var/select_block = text2num(href_list["selectUIBlock"])
 		var/select_subblock = text2num(href_list["selectUISubblock"])
-		if ((select_block <= 13) && (select_block >= 1))
+		if ((select_block <= DNA_UI_LENGTH) && (select_block >= 1))
 			selected_ui_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			selected_ui_subblock = select_subblock

@@ -2,13 +2,13 @@
 #define SANDWICH_GROWTH_BY_SLICE 4
 #define MAX_SANDWICH_LIMIT 124 //30 breadslices + 4 base size
 
-/obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W, mob/user)
-
-	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/shard) || istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/csandwich/S = new(get_turf(src))
-		S.attackby(W,user)
+		S.attackby(I, user)
 		qdel(src)
-	..()
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich
 	name = "sandwich"
@@ -19,33 +19,33 @@
 
 	var/list/ingredients = list()
 
-/obj/item/weapon/reagent_containers/food/snacks/csandwich/attackby(obj/item/W, mob/user)
-
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/attackby(obj/item/I, mob/user, params)
 	var/sandwich_limit = MIN_SANDWICH_LIMIT
 	for(var/obj/item/O in ingredients)
 		if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/breadslice))
 			sandwich_limit += SANDWICH_GROWTH_BY_SLICE
 	sandwich_limit = min(sandwich_limit, MAX_SANDWICH_LIMIT)
 
-	if(src.contents.len > sandwich_limit)
+	if(contents.len > sandwich_limit)
 		to_chat(user, "<span class='red'>If you put anything else on \the [src] it's going to collapse.</span>")
 		return
-	else if(istype(W,/obj/item/weapon/shard))
-		to_chat(user, "<span class='notice'>You hide [W] in \the [src].</span>")
-		user.drop_item()
-		W.loc = src
+
+	if(istype(I, /obj/item/weapon/shard))
+		to_chat(user, "<span class='notice'>You hide [I] in \the [src].</span>")
+		user.drop_from_inventory(I, src)
 		update()
 		return
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
-		to_chat(user, "<span class='notice'>You layer [W] over \the [src].</span>")
-		var/obj/item/weapon/reagent_containers/F = W
+
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+		to_chat(user, "<span class='notice'>You layer [I] over \the [src].</span>")
+		var/obj/item/weapon/reagent_containers/F = I
 		F.reagents.trans_to(src, F.reagents.total_volume)
-		user.drop_item()
-		W.loc = src
-		ingredients += W
+		user.drop_from_inventory(F, src)
+		ingredients += F
 		update()
 		return
-	..()
+
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/update()
 	var/fullname = "" //We need to build this from the contents of the var.
@@ -84,6 +84,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/examine(mob/user)
 	..()
+	if(contents.len == 0)
+		return
 	var/obj/item/O = pick(contents)
 	to_chat(user, "<span class='notice'>You think you can see [O.name] in there.</span>")
 

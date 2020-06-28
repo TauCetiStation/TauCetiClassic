@@ -68,14 +68,9 @@
 	return 1
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
-	if(opened)
-		if(isrobot(user))
-			return
-		if(!W.canremove || W.flags & NODROP)
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+	if(opened || istype(W, /obj/item/weapon/grab))
+		return ..()
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
 	else if(iscoil(W))
@@ -148,7 +143,7 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!user.incapacitated() && in_range(user, src))
+	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
 		src.togglelock(user)
 	..()
 
@@ -174,7 +169,7 @@
 	set category = "Object"
 	set name = "Toggle Lock"
 
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(ishuman(usr))
@@ -218,7 +213,7 @@
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
-		O.emp_act(severity)
+		O.emplode(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
@@ -413,6 +408,14 @@
 	icon_state = "hydrosecurecrate"
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
+
+/obj/structure/closet/crate/secure/miningsec
+	desc = "Crate for incredulous miners."
+	name = "secure mining crate"
+	icon_state = "miningsecurecrate"
+	icon_opened = "miningsecurecrateopen"
+	icon_closed = "miningsecurecrate"
+	req_access = list(access_mining)
 
 /obj/structure/closet/crate/secure/woodseccrate
 	desc = "A secure wooden crate."

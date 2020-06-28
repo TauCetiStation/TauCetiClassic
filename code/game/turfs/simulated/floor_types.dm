@@ -45,6 +45,11 @@
 	heat_capacity = 325000
 	footstep = FOOTSTEP_PLATING
 
+/turf/simulated/floor/goonplaque
+	name = "Comemmorative Plaque";
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
+	icon_state = "plaque";
+
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrench(C))
 		if(user.is_busy(src))

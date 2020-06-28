@@ -61,24 +61,25 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 			if(H.r_hand == src)
 				M.update_inv_r_hand()
 
-/obj/item/candle/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/candle/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
-			light("<span class='warning'>[user] casually lights the [name] with [W].</span>")
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
+			light("<span class='warning'>[user] casually lights the [name] with [I].</span>")
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
 		if(L.lit)
 			light()
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
+	else if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = I
 		if(M.lit)
 			light()
-	else if(istype(W, /obj/item/candle))
-		var/obj/item/candle/C = W
+	else if(istype(I, /obj/item/candle))
+		var/obj/item/candle/C = I
 		if(C.lit)
 			light()
+	else
+		return ..()
 
 /obj/item/candle/get_current_temperature()
 	if(lit)
@@ -152,22 +153,35 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		if(!iscultist(M))
 			M.confused += 10
 			M.make_jittery(150)
-	for(var/obj/machinery/light/L in range(4, get_turf(src)))
-		L.on = TRUE
-		L.broken()
 
-/obj/item/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
+	var/list/targets = list()
+	for(var/turf/T in range(4))
+		targets += T
+	light_off_range(targets, src)
+
+/obj/item/candle/ghost/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-	if(istype(W, /obj/item/weapon/book/tome))
+		return
+
+	if(istype(I, /obj/item/weapon/book/tome))
 		spook()
 		light()
-	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
-		if(!lit && istype(W, /obj/item/weapon/storage/bible))
-			var/obj/item/weapon/storage/bible/B = W
+		return
+
+	var/chaplain_check = FALSE
+
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.getBrainLoss() >= 60 || L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")
+			chaplain_check = TRUE
+
+	if(chaplain_check)
+		var/mob/living/L = user
+		if(!lit && istype(I, /obj/item/weapon/storage/bible))
+			var/obj/item/weapon/storage/bible/B = I
 			if(B.icon_state == "necronomicon")
 				spook()
 				light()
@@ -176,22 +190,29 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 					to_chat(M, "<span class='notice'>You feel slight delight, as all curses pass away...</span>")
 					M.apply_damages(-1,-1,-1,-1,0,0)
 					light()
-		if(istype(W, /obj/item/weapon/nullrod))
+			return
+
+		if(istype(I, /obj/item/weapon/nullrod))
 			var/obj/item/candle/C = new /obj/item/candle(loc)
 			if(lit)
 				C.light("")
 			C.wax = wax
 			if(istype(loc, /mob))
-				user.put_in_hands(C)
+				L.put_in_hands(C)
 			qdel(src)
-		if(istype(W, /obj/item/trash/candle))
+			return
+
+		if(istype(I, /obj/item/trash/candle))
 			to_chat(user, "<span class='warning'>The wax begins to corrupt and pulse like veins as it merges itself with the [src], impressive.</span>")
 			user.confused += 10 // Sights of this are not pleasant.
-			if(prob(10))
-				user.invoke_vomit_async()
+			if(ishuman(L) && prob(10))
+				var/mob/living/carbon/human/H = L
+				H.invoke_vomit_async()
 			wax += 50
-			user.drop_item()
-			qdel(W)
+			qdel(I)
+			return
+
+	return ..()
 
 /obj/item/candle/red
 	name = "red candle"

@@ -119,6 +119,10 @@ var/list/department_radio_keys = list(
 
 	var/turf/T = get_turf(src)
 
+	//log
+	var/area/A = get_area(src)
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
@@ -181,6 +185,7 @@ var/list/department_radio_keys = list(
 	var/speech_bubble_test = say_test(message)
 	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
@@ -191,8 +196,6 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	var/area/A = get_area(src)
-	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
@@ -201,6 +204,3 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
-/mob/living/proc/GetVoice()
-	return name

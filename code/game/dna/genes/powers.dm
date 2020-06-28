@@ -182,7 +182,7 @@
 		return 0
 	return ..(M,flags)
 
-/datum/dna/gene/basic/midget/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/activate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags |= 1
 	if(ishuman(M))
@@ -194,8 +194,9 @@
 	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 	Mx.Translate(0,-2)
 	M.transform = Mx
+	M.default_transform = Mx
 
-/datum/dna/gene/basic/midget/deactivate(mob/M, connected, flags)
+/datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
 	M.pass_flags &= ~1
 	if(ishuman(M))
@@ -203,15 +204,14 @@
 		H.ventcrawler = 0
 
 	var/matrix/Mx = matrix()
-	Mx.Scale(1) ////Reset size of our halfling
-	Mx.Translate(0,0)
 	M.transform = Mx
+	M.default_transform = Mx
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Your muscles hurt.")
+	activation_messages = list("Your muscles hurt and feel strange..")
 	mutation            = HULK
-	activation_prob     = 15
+	activation_prob     = 20
 
 /datum/dna/gene/basic/hulk/New()
 	block=HULKBLOCK
@@ -222,47 +222,47 @@
 		return 0
 	return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/hulk/activate(mob/living/M, connected, flags)
 	if(!M.mind)
 		return
 	if(M.mind.hulkizing)
 		return
-	M.mind.hulkizing = 1
 
 	..(M,connected,flags)
 
-	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
-
-/datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
-	if(!M)
+/mob/living/carbon/human/proc/try_mutate_to_hulk()
+	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
+		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
-	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
-		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
+	if(mind.hulkizing)
+		to_chat(src, "<span class='warning'>You no longer strength to transform!</span>") // Hulk transformation at most 1 time.
 		return
 
-	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> [ADMIN_JMP(M)]")
-	if(istype(M.loc, /obj/machinery/dna_scannernew))
-		var/obj/machinery/dna_scannernew/DSN = M.loc
+	mind.hulkizing = TRUE
+	message_admins("[key_name(src)] is a <span class='warning'>Monster</span> [ADMIN_JMP(src)]")
+	to_chat(src, "<span class='bold notice'>You can feel real POWER.</span>")
+	if(istype(loc, /obj/machinery/dna_scannernew))
+		var/obj/machinery/dna_scannernew/DSN = loc
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
 	var/mob/living/simple_animal/hulk/Monster
-	if(CLUMSY in M.mutations)
-		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(M))
-	else if(M.get_species() == UNATHI || prob(19))
-		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
+	if(CLUMSY in mutations)
+		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(src))
+	else if(get_species() == UNATHI || prob(23))
+		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(src))
 	else
-		Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+		Monster = new /mob/living/simple_animal/hulk/human(get_turf(src))
 
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-	smoke.set_up(10, 0, M.loc)
+	smoke.set_up(10, 0, loc)
 	smoke.start()
-	playsound(M, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
-	Monster.original_body = M
-	M.forceMove(Monster)
-	M.mind.transfer_to(Monster)
+	Monster.original_body = src
+	forceMove(Monster)
+	mind.transfer_to(Monster)
 
-	Monster.attack_log = M.attack_log
+	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 	return

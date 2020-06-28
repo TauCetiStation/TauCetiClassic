@@ -1,3 +1,20 @@
+#define BOUNDED_TIP "Is bounded."
+#define BOUNDS_TIP(B) "Is bounding [B.parent]."
+
+/datum/mechanic_tip/bounded
+	tip_name = BOUNDED_TIP
+
+/datum/mechanic_tip/bounded/New(datum/component/bounded/B)
+	description = "Appears to not be able to get too far away from [B.bound_to]."
+
+/datum/mechanic_tip/bound
+
+/datum/mechanic_tip/bound/New(datum/component/B)
+	tip_name = BOUNDS_TIP(B)
+	description = "Appears to not allow [B.parent] to get too far away from itself."
+
+
+
 // A component you put on things you want to be bounded to other things.
 // Warning! Can only be bounded to one thing at once.
 /datum/component/bounded
@@ -17,17 +34,28 @@
 
 	resolve_callback = _resolve_callback
 
-	bound_to.AddComponent(/datum/component/bound, list(parent))
-
-	RegisterSignal(parent, list(COMSIG_BOUND_MOVED), .proc/check_bounds)
+	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
+	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETED), .proc/on_bound_destroyed)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
+
+	var/datum/mechanic_tip/bounded/bounded_tip = new(src)
+	var/datum/mechanic_tip/bound/bound_tip = new(src)
+
+	parent.AddComponent(/datum/component/mechanic_desc, list(bounded_tip))
+	bound_to.AddComponent(/datum/component/mechanic_desc, list(bound_tip))
 
 	// First bounds update.
 	check_bounds()
 
-/datum/component/bounded/_RemoveFromParent()
-	SEND_SIGNAL(parent, COMSIG_BOUND_UNBOUND, parent)
+/datum/component/bounded/Destroy()
+	UnregisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED))
+
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(BOUNDED_TIP))
+	SEND_SIGNAL(bound_to, COMSIG_TIPS_REMOVE, list(BOUNDS_TIP(src)))
+
+	bound_to = null
+	return ..()
 
 // This proc is called when we are for some reason out of bounds.
 // The default bounds resolution does not take in count density, or etc.
@@ -35,19 +63,20 @@
 	if(resolve_callback && resolve_callback.Invoke(src))
 		return
 
-	var/atom/movable/P = parent
+	var/atom/movable/AM = parent
+	var/turf/parent_turf = get_turf(AM)
 	var/turf/T = get_turf(bound_to)
 
-	var/new_x = P.x
-	var/new_y = P.y
+	var/new_x = parent_turf.x
+	var/new_y = parent_turf.y
 
 	// A very exotic case of item being in inventory, or some bull like that.
 	var/did_jump = FALSE
-	if(bound_to in parent)
-		jump_out_of(parent, bound_to)
+	if(bound_to in AM)
+		jump_out_of(AM, bound_to)
 		did_jump = TRUE
-	else if(parent in bound_to)
-		jump_out_of(bound_to, parent)
+	else if(AM.loc != parent_turf)
+		jump_out_of(AM.loc, AM)
 		did_jump = TRUE
 
 	if(did_jump)
@@ -60,28 +89,28 @@
 
 		new_x = T.x + min_dist * pick(opts_x)
 		new_y = T.y + min_dist * pick(opts_y)
-		P.forceMove(locate(new_x, new_y, T.z))
+		AM.forceMove(locate(new_x, new_y, T.z))
 		return
 
-	if(P.x > T.x + max_dist)
+	if(parent_turf.x > T.x + max_dist)
 		new_x = T.x + max_dist
-	else if(P.x < T.x - max_dist)
+	else if(parent_turf.x < T.x - max_dist)
 		new_x = T.x - max_dist
-	else if(P.x <= T.x + min_dist)
+	else if(parent_turf.x <= T.x + min_dist)
 		new_x = T.x + min_dist
-	else if(P.x >= T.x - min_dist)
+	else if(parent_turf.x >= T.x - min_dist)
 		new_x = T.x - min_dist
 
-	if(P.y > T.y + max_dist)
+	if(parent_turf.y > T.y + max_dist)
 		new_y = T.y + max_dist
-	else if(P.y < T.y - max_dist)
+	else if(parent_turf.y < T.y - max_dist)
 		new_y = T.y - max_dist
-	else if(P.y <= T.y + min_dist)
+	else if(parent_turf.y <= T.y + min_dist)
 		new_y = T.y + min_dist
-	else if(P.y >= T.y - min_dist)
+	else if(parent_turf.y >= T.y - min_dist)
 		new_y = T.y - min_dist
 
-	P.forceMove(locate(new_x, new_y, T.z))
+	AM.forceMove(locate(new_x, new_y, T.z))
 
 // Is called when bounds are inside bounded(or vice-versa), yet they shouldn't be.
 /datum/component/bounded/proc/jump_out_of(atom/container, atom/movable/escapee)
@@ -101,39 +130,17 @@
 
 // This proc is called when bound thing tries to move.
 /datum/component/bounded/proc/on_try_move(datum/source, atom/newLoc, dir)
-	var/dist = get_dist(newLoc, get_turf(bound_to))
+	var/turf/T = get_turf(bound_to)
+	var/dist = get_dist(newLoc, T)
+	if(dist == -1 && newLoc == T)
+		dist = 0
 	if(dist < min_dist || dist > max_dist)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
 
+/datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
+	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk
+	qdel(src)
 
-
-// A component that keeps track of what's bound to us.
-/datum/component/bound
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/list/bounded
-
-/datum/component/bound/Initialize(list/_bounded)
-	bounded = list()
-	add_bounded_things(_bounded)
-
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/on_move)
-
-/datum/component/bound/InheritComponent(datum/component/C, i_am_original, list/new_bounded)
-	add_bounded_things(new_bounded)
-
-/datum/component/bound/proc/add_bounded_things(list/_bounded)
-	for(var/atom/bounded_thing in _bounded)
-		RegisterSignal(bounded_thing, list(COMSIG_BOUND_UNBOUND), .proc/release)
-		bounded += bounded_thing
-
-/datum/component/bound/proc/release(datum/source, atom/bounded_thing)
-	bounded -= bounded_thing
-	UnregisterSignal(bounded_thing, list(COMSIG_BOUND_UNBOUND))
-
-	if(bounded.len == 0)
-		qdel(src)
-
-/datum/component/bound/proc/on_move(datum/source, atom/oldLoc, dir)
-	for(var/atom/bounded_thing in bounded)
-		SEND_SIGNAL(bounded_thing, COMSIG_BOUND_MOVED, oldLoc, dir)
+#undef BOUNDED_TIP
+#undef BOUNDS_TIP

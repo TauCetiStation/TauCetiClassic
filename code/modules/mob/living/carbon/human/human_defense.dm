@@ -39,10 +39,6 @@
 
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, def_zone, 100)
-		return 2 // i have no idea what is 2 and in projectile.dm it seems unused, haven't checked any other places in code.
-
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(BP))
@@ -225,7 +221,11 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
+/mob/living/carbon/human/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	. = ..()
+	if(.)
+		return
+
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
@@ -252,21 +252,20 @@
 			if(!isturf(picked)) return
 			src.loc = picked
 			return 1
-	return 0
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
 		if(!O)
 			continue
-		O.emp_act(severity)
+		O.emplode(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		BP.emp_act(severity)
+		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			if(IO.robotic == 0)
 				continue
-			IO.emp_act(severity)
+			IO.emplode(severity)
 	..()
 
 
@@ -274,24 +273,11 @@
 	if(!I || !user)
 		return FALSE
 
-	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
-
-	if(user == src) // Attacking yourself can't miss
-		target_zone = user.zone_sel.selecting
-	if(!target_zone)
-		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
-		return FALSE
-
-	var/obj/item/organ/external/BP = get_bodypart(target_zone)
+	var/obj/item/organ/external/BP = get_bodypart(def_zone)
 	if (!BP)
-		to_chat(user, "What [parse_zone(target_zone)]?")
+		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
-
-	if(user != src)
-		user.do_attack_animation(src)
-		if(check_shields(I.force, "the [I.name]", get_dir(user,src) ))
-			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!BP.is_robotic())
@@ -359,7 +345,7 @@
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
-					if(src != user && I.damtype == BRUTE)
+					if(src != user && I.damtype == BRUTE && mind)
 						ticker.mode.remove_revolutionary(mind)
 						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
@@ -474,3 +460,41 @@
 		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+// Does not check whether a targetzone's bodypart is actually a head :shrug:
+// Make var/is_head for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_head(targetzone = null)
+	if(isnull(targetzone))
+		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
+		if(head && head.is_usable())
+			return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually an arm :shrug:
+// Make var/is_arm for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_arm(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_arms = list(get_bodypart(BP_L_ARM), get_bodypart(BP_R_ARM))
+		for(var/obj/item/organ/external/arm in pos_arms)
+			if(arm && arm.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually a leg :shrug:
+// Make var/is_leg for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_leg(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_legs = list(get_bodypart(BP_L_LEG), get_bodypart(BP_R_LEG))
+		for(var/obj/item/organ/external/leg in pos_legs)
+			if(leg && leg.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE

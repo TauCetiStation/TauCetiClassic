@@ -40,10 +40,11 @@ var/global/sent_strike_team = 0
 	var/nuke_code
 	var/temp_code
 	for(var/obj/machinery/nuclearbomb/N in poi_list)
-		temp_code = text2num(N.r_code)
-		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
-			nuke_code = N.r_code
-			break
+		if(N.nuketype == "NT")
+			temp_code = text2num(N.r_code)
+			if(temp_code)//if it's actually a number. It won't convert any non-numericals.
+				nuke_code = N.r_code
+				break
 
 //Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 	var/list/candidates = list()	//candidates for being a commando out of all the active ghosts in world.
@@ -75,6 +76,8 @@ var/global/sent_strike_team = 0
 			create_random_account_and_store_in_mind(new_commando)
 			if(nuke_code)
 				new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.")
+			else
+				new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>NT bomb not found???</span>.")
 			new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input]</span>.")
 
 			to_chat(new_commando, "<span class='notice'>You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='warning'><B>[input]</B></span></span>")
@@ -130,7 +133,7 @@ var/global/sent_strike_team = 0
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), SLOT_W_UNIFORM)
 	else
 		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), SLOT_W_UNIFORM)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
 	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), SLOT_WEAR_SUIT)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
 	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), SLOT_HEAD)
@@ -164,11 +167,9 @@ var/global/sent_strike_team = 0
 
 
 
-	var/obj/item/weapon/card/id/W = new(src)
+	var/obj/item/weapon/card/id/centcom/W = new(src)
 	W.name = "[real_name]'s ID Card"
-	W.icon_state = "centcom"
 	W.access = get_all_accesses()//They get full station access.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, SLOT_WEAR_ID)

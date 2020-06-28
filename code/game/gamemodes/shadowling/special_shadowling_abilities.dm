@@ -4,7 +4,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
 	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
@@ -86,7 +86,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	set category = "Shadowling Evolution"
 	set name = "Ascendance"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))

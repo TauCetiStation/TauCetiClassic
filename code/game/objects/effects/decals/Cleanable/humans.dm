@@ -52,9 +52,11 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
 
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
-	if(!istype(perp))
+/obj/effect/decal/cleanable/blood/Crossed(atom/movable/AM)
+	. = ..()
+	if(!iscarbon(AM) || HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		return
+	var/mob/living/carbon/perp = AM
 	if(amount < 1)
 		return
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
@@ -233,8 +235,8 @@ var/global/list/image/splatter_cache=list()
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
-/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
-	if(istype(L) && has_gravity(loc))
+/obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)
+	if(isliving(AM) && has_gravity(loc))
 		playsound(src, 'sound/effects/gib_step.ogg', VOL_EFFECTS_MASTER)
 	. = ..()
 

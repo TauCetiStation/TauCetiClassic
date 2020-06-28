@@ -44,7 +44,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(usr.incapacitated() || !in_range(loc, usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
@@ -176,22 +176,22 @@
 	else
 		to_chat(user, "This book is completely blank!")
 
-/obj/item/weapon/book/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
 		if(!store)
-			if(W.w_class < ITEM_SIZE_NORMAL)
-				user.drop_item()
-				W.loc = src
-				store = W
-				to_chat(user, "<span class='notice'>You put [W] in [title].</span>")
+			if(I.w_class < ITEM_SIZE_NORMAL)
+				user.drop_from_inventory(I, src)
+				store = I
+				to_chat(user, "<span class='notice'>You put [I] in [title].</span>")
 				return
 			else
-				to_chat(user, "<span class='notice'>[W] won't fit in [title].</span>")
+				to_chat(user, "<span class='notice'>[I] won't fit in [title].</span>")
 				return
 		else
 			to_chat(user, "<span class='notice'>There's already something in [title]!</span>")
 			return
-	if(istype(W, /obj/item/weapon/pen))
+
+	if(istype(I, /obj/item/weapon/pen))
 		if(unique)
 			to_chat(user, "These pages don't seem to take the ink well. Looks like you can't modify it.")
 			return
@@ -221,47 +221,48 @@
 					src.author = newauthor
 			else
 				return
-	else if(istype(W, /obj/item/weapon/barcodescanner))
-		var/obj/item/weapon/barcodescanner/scanner = W
+
+	else if(istype(I, /obj/item/weapon/barcodescanner))
+		var/obj/item/weapon/barcodescanner/scanner = I
 		if(!scanner.computer)
-			to_chat(user, "[W]'s screen flashes: 'No associated computer found!'")
+			to_chat(user, "[I]'s screen flashes: 'No associated computer found!'")
 		else
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer.'")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer.'")
 				if(1)
 					scanner.book = src
 					scanner.computer.buffer_book = src.name
-					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'")
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
 						if(b.bookname == src.name)
 							scanner.computer.checkouts.Remove(b)
-							to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Book has been checked in.'")
+							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'")
 							return
-					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
 				if(3)
 					scanner.book = src
 					for(var/obj/item/weapon/book in scanner.computer.inventory)
 						if(book == src)
-							to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
+							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
 							return
 					scanner.computer.inventory.Add(src)
-					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
-	else if(istype(W, /obj/item/weapon/kitchenknife) || iswirecutter(W))
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
+	else if(istype(I, /obj/item/weapon/kitchenknife) || iswirecutter(I))
 		if(carved)
 			return
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin to carve out [title].</span>")
-		if(W.use_tool(user, user, 30, volume = 50))
+		if(I.use_tool(user, user, 30, volume = 50))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
 			carved = 1
 			return
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(def_zone == O_EYES)
