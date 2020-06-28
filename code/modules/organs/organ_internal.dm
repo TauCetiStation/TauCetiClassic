@@ -403,6 +403,8 @@
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	if(iszombie(owner))
 		damage = 0
+		owner.eye_blurry = 0
+		owner.eye_blind = 0
 		return
 	..()
 	if(is_bruised())

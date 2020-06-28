@@ -172,13 +172,6 @@
 	H.nutrition = 400
 	H.SetSleeping(0)
 	H.radiation = 0
-
-	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-	if(istype(IO))
-		IO.damage = 0
-		H.eye_blurry = 0
-		H.eye_blind = 0
-
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
 	H.restore_blood()
 
@@ -254,7 +247,7 @@
 
 	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
 		var/insertpos = rand(1, message_list.len)
-		message_list.Insert(insertpos, "[pick("лнгцх", "лНГЦХ", "лННГЦХХХ", "лнннгцхххх", "анкэмн", "анкэ", "онлнцх", "пюююю", "юююю", "юппу", "нрйпнире", "нрйпни")]...")
+		message_list.Insert(insertpos, "[pick("О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫")]...")
 
 	for(var/i = 1, i <= message_list.len, i++)
 		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
