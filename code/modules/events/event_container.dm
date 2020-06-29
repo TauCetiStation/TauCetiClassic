@@ -133,38 +133,38 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",			/datum/event/nothing,			1100),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",			/datum/event/pda_spam, 			0, 		list(ASSIGNMENT_ANY = 4), 0, 25, 50),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",		/datum/event/money_lotto, 		0, 		list(ASSIGNMENT_ANY = 1), 1, 5,  15),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",		/datum/event/money_hacker, 		0, 		list(ASSIGNMENT_ANY = 4), 1, 10, 25), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",		/datum/event/money_hacker, 		0, 		list(ASSIGNMENT_ANY = 4), 1, 10, 25), //BROKEN
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Economic News",		/datum/event/economic_event,	300),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Trivial News",		/datum/event/trivial_news, 		400),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Mundane News", 		/datum/event/mundane_news, 		300),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation",/datum/event/infestation, 		100,	list(ASSIGNMENT_JANITOR = 100)),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",			/datum/event/wallrot, 			0,		list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",			/datum/event/wallrot, 			0,		list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 	)
 
 /datum/event_container/moderate
 	severity = EVENT_LEVEL_MODERATE
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Nothing",					/datum/event/nothing,					1230),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Appendicitis", 			/datum/event/spontaneous_appendicitis, 	0,		list(ASSIGNMENT_MEDICAL = 10), 1), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Appendicitis", 			/datum/event/spontaneous_appendicitis, 	0,		list(ASSIGNMENT_MEDICAL = 10), 1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Carp Migration",			/datum/event/carp_migration,			200, 	list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_SECURITY = 20), 1),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Rogue Drones",				/datum/event/rogue_drone, 				0,		list(ASSIGNMENT_SECURITY = 20)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Vines",				/datum/event/spacevine, 				250,	list(ASSIGNMENT_ENGINEER = 10)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Meteor Shower",			/datum/event/meteor_shower,				0,		list(ASSIGNMENT_ENGINEER = 25)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Communication Blackout",	/datum/event/communications_blackout,	500,	list(ASSIGNMENT_AI = 150, ASSIGNMENT_SECURITY = 120)), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Rogue Drones",				/datum/event/rogue_drone, 				0,		list(ASSIGNMENT_SECURITY = 20)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Vines",				/datum/event/spacevine, 				250,	list(ASSIGNMENT_ENGINEER = 10)), //BROKEN?
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Meteor Shower",			/datum/event/meteor_shower,				0,		list(ASSIGNMENT_ENGINEER = 25)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Communication Blackout",	/datum/event/communications_blackout,	500,	list(ASSIGNMENT_AI = 150, ASSIGNMENT_SECURITY = 120)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Prison Break",				/datum/event/prison_break,				0,		list(ASSIGNMENT_SECURITY = 100)),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "APC Damage",				/datum/event/apc_damage, 				200,	list(ASSIGNMENT_ENGINEER = 60)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Electrical Storm",			/datum/event/electrical_storm, 			250,	list(ASSIGNMENT_ENGINEER = 20, ASSIGNMENT_JANITOR = 150)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Radiation Storm",			/datum/event/radiation_storm, 			25,		list(ASSIGNMENT_MEDICAL = 50), 1), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Spider Infestation",		/datum/event/spider_infestation, 		100,	list(ASSIGNMENT_SECURITY = 30), 1), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "APC Damage",				/datum/event/apc_damage, 				200,	list(ASSIGNMENT_ENGINEER = 60)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Electrical Storm",			/datum/event/electrical_storm, 			250,	list(ASSIGNMENT_ENGINEER = 20, ASSIGNMENT_JANITOR = 150)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Radiation Storm",			/datum/event/radiation_storm, 			25,		list(ASSIGNMENT_MEDICAL = 50), 1),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Spider Infestation",		/datum/event/spider_infestation, 		100,	list(ASSIGNMENT_SECURITY = 30), 1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Ion Storm",				/datum/event/ionstorm, 					0,		list(ASSIGNMENT_AI = 50, ASSIGNMENT_CYBORG = 50, ASSIGNMENT_ENGINEER = 15, ASSIGNMENT_SCIENTIST = 5)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Borer Infestation",		/datum/event/borer_infestation, 		40,		list(ASSIGNMENT_SECURITY = 30), 1), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence",		/datum/event/brand_intelligence,		50, 	list(ASSIGNMENT_ENGINEER = 25),	1), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",				/datum/event/anomaly/anomaly_pyro,		75,		list(ASSIGNMENT_ENGINEER = 60)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",			/datum/event/anomaly/anomaly_vortex,	75,		list(ASSIGNMENT_ENGINEER = 25)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Bluespace Anomaly",		/datum/event/anomaly/anomaly_bluespace,	75,		list(ASSIGNMENT_ENGINEER = 25)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Flux Anomaly",				/datum/event/anomaly/anomaly_flux,		75,		list(ASSIGNMENT_ENGINEER = 50)), //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravitational Anomaly",	/datum/event/anomaly/anomaly_grav,		200),  //BROKEN OR NOT?
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Disease Outbreak",			/datum/event/disease_outbreak, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1), //BROKEN OR NOT?
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Borer Infestation",		/datum/event/borer_infestation, 		40,		list(ASSIGNMENT_SECURITY = 30), 1), //BROKEN
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence",		/datum/event/brand_intelligence,		50, 	list(ASSIGNMENT_ENGINEER = 25),	1),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",				/datum/event/anomaly/anomaly_pyro,		75,		list(ASSIGNMENT_ENGINEER = 60)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",			/datum/event/anomaly/anomaly_vortex,	75,		list(ASSIGNMENT_ENGINEER = 25)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Bluespace Anomaly",		/datum/event/anomaly/anomaly_bluespace,	75,		list(ASSIGNMENT_ENGINEER = 25)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Flux Anomaly",				/datum/event/anomaly/anomaly_flux,		75,		list(ASSIGNMENT_ENGINEER = 50)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravitational Anomaly",	/datum/event/anomaly/anomaly_grav,		200),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Disease Outbreak",			/datum/event/disease_outbreak, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
 	)
 
 /datum/event_container/major
