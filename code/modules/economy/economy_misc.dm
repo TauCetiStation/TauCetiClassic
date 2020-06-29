@@ -70,7 +70,7 @@ var/global/datum/money_account/station_account
 var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
-var/global/list/all_money_accounts = list()
+var/global/list/datum/money_account/all_money_accounts = list()
 var/global/economy_init = FALSE
 var/global/initial_station_money = 7500
 
@@ -152,6 +152,6 @@ var/global/initial_station_money = 7500
 
 	//add the account
 	department_account.transaction_log.Add(T)
-	all_money_accounts.Add(department_account)
+	all_money_accounts[department] = department_account
 
 	department_accounts[department] = department_account
