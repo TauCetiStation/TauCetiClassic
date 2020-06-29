@@ -847,7 +847,6 @@
 	icon_state = "rig-syndie_elitcom-space"
 	item_state = "syndicate-commander"
 	item_color = "rig-syndie_elitcom"
-	//rig_type = "syndielitcommander"
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
