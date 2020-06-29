@@ -102,14 +102,13 @@
 			switch(priority)
 				if(2)
 					if(!Console.silent)
-						playsound(Console.loc, 'sound/machines/twobeep.ogg', 80, 1)
 						Console.audible_message("\icon[Console]<span class='warning'>\The [Console] announces: 'High priority message received from [sender]!'</span>", hearing_distance = 8)
 					Console.messages += "<FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></FONT><BR>[authmsg]"
 				else
 					if(!Console.silent)
-						playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 						Console.audible_message("\icon[Console]<span class='notice'>\The [Console] announces: 'Message received from [sender].'</span>", hearing_distance = 5)
 					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></B><BR>[authmsg]"
+			playsound(Console.loc, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)
