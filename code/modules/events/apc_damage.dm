@@ -9,6 +9,7 @@
 	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
 		if(is_valid_apc(apc))
 			apc.emagged = 1
+			apc.locked = 0
 			apc.update_icon()
 
 /datum/event/apc_damage/proc/acquire_random_apc()
