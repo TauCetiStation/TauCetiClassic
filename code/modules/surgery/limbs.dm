@@ -131,11 +131,9 @@
 			if (target_zone != p.part)
 				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
-			if(istype(tool, /obj/item/robot_parts/head))
-				var/obj/item/robot_parts/head/H = tool
-				if(!(H.flash2 && H.flash1))
-					to_chat(user, "<span class='userdanger'>You need to attach a flash to [H] first!</span>")
-					return FALSE
+			if(!p.can_attach())
+				to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
+				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 		if(istype(tool, /obj/item/organ/external))
 			var/obj/item/organ/external/p = tool
@@ -156,15 +154,9 @@
 
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
-		if(istype(L, /obj/item/robot_parts/head))
-			var/obj/item/robot_parts/head/H = L
-			if(H.flash2 && H.flash1)
-				BP = new /obj/item/organ/external/head/robot
-			else
-				return
-		else
-			var/bodypart_type = L.bodypart_type
-			BP = new bodypart_type()
+		if(!L.can_attach())
+			return
+		BP = new L.bodypart_type()
 		target.remove_from_mob(tool)
 		qdel(tool)
 
