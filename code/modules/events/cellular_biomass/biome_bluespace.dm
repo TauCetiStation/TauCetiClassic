@@ -16,27 +16,27 @@
 /obj/structure/cellular_biomass/wall/bluespace
 	health = 100
 	name = "Glitch"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/grass/bluespace
 	health = 100
 	name = "Glitch"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/lair/bluespace
 	health = 100
 	name = "Glitch"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/core/bluespace
 	name = "Glitch"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	light_color = "#00ffff"
 
 /obj/effect/decal/cleanable/cellular/bluespace
 	name = "Glitch"
 	desc = "Absolutely ma+(AUSC++)AS)ICJQWDP"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "decal_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
@@ -64,14 +64,14 @@
 /obj/effect/decal/cleanable/bluespace
 	name = "Glitch"
 	desc = "(W#_F(AWI_+AIGgggg"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "creep_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
 /mob/living/simple_animal/hostile/cellular/bluespace
 	name = "Moving Glitch"
 	desc = "It's impossible to deEF*E((F((F(CVP"
-	icon = 'code/game/gamemodes/events/cellular_biomass/bluespace_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	speak_emote = list("buzzing")
 	attacktext = "discharg"
 	attack_sound = list('sound/weapons/blaster.ogg')

@@ -10,28 +10,28 @@
 	name = "Cellular horror"
 	desc = "You don't whant to know what is this..."
 	desc = "Monstrum from another dimension. It just keeps spreading!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/grass/meat
 	name = "Cellular horror surface"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/lair/meat
 	name = "Cellular horror lair"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/core/meat
 	name = "Cellular horror"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 	light_color = "#710f8c"
 
 /obj/effect/decal/cleanable/cellular/meat
 	name = "horror"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 	icon_state = "creep_1"
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
 
@@ -54,7 +54,7 @@
 /mob/living/simple_animal/hostile/cellular/meat
 	name = "insane creature"
 	desc = "A sanity-destroying otherthing."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
 	attacktext = "brutally chomp"
 	attack_sound = list('sound/weapons/bite.ogg')

@@ -125,6 +125,6 @@
 /obj/effect/decal/cleanable/cellular
 	name = "horror"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/meatland_cellular.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/meatland_cellular.dmi'
 	icon_state = "creep_1"
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")

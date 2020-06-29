@@ -10,19 +10,19 @@
 /obj/structure/cellular_biomass/wall/mine
 	name = "Cellular horror"
 	desc = "Monstrum from another dimension. It just keeps spreading!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 
 /obj/structure/cellular_biomass/grass/mine
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 
 /obj/structure/cellular_biomass/lair/mine
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 
 /obj/effect/decal/cleanable/cellular/mine
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 
 /obj/structure/cellular_biomass/core/mine
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 	light_color = "#710f8c"
 
 /obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
@@ -35,7 +35,7 @@
 /obj/effect/decal/cleanable/cellular/mine
 	name = "gibs"
 	desc = "Pieces of some kind of alien lifeform."
-	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 	icon_state = "xeno_1"
 	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
 

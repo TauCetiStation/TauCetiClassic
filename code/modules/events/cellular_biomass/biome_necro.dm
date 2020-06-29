@@ -13,33 +13,33 @@
 /obj/structure/cellular_biomass/wall/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/grass/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/lair/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 
 /obj/effect/decal/cleanable/cellular/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/core/necro
 	name = "Living mass"
 	desc = "Smells like rotten flesh. Disgusting!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	light_color = "#996600"
 
 /obj/effect/decal/cleanable/cellular/necro
 	name = "horror"
 	desc = "You don't whant to know what is this..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	icon_state = "xeno_1"
 	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
 
@@ -63,7 +63,7 @@
 /mob/living/simple_animal/hostile/cellular/necro
 	name = "Twisted creature"
 	desc = "This thing is fast!"
-	icon = 'code/game/gamemodes/events/cellular_biomass/necromorphs.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	faction = "necro"
 	health = 60
 	maxHealth = 60

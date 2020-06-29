@@ -12,24 +12,24 @@
 /obj/structure/cellular_biomass/wall/nanite
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 
 /obj/structure/cellular_biomass/grass/nanite
 	name = "Wave of nanomachines"
 	desc = "it pulsates..."
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 	plane = FLOOR_PLANE
 
 /obj/structure/cellular_biomass/lair/nanite
 	name = "Wave of nanomachines lair"
 	desc = "They look so ... hungry"
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 	plane = FLOOR_PLANE
 
 /obj/structure/cellular_biomass/core/nanite
 	name = "Nanomachine cluster"
 	desc = "They look so ... hungry"
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 	plane = FLOOR_PLANE
 	light_color = "#8ae6ff"
 	light_range = 3
@@ -37,7 +37,7 @@
 /obj/structure/cellular_biomass/cleanable/nanite
 	name = "Wave of nanomachines lair"
 	desc = "They look so ... hungry"
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 
 /obj/structure/cellular_biomass/wall/nanite/atom_init()
 	. = ..()
@@ -64,7 +64,7 @@
 /mob/living/simple_animal/hostile/cellular/nanite
 	name = "Nanite hivebot"
 	desc = "A sanity-destroying otherthing."
-	icon = 'code/game/gamemodes/events/cellular_biomass/nanite.dmi'
+	icon = 'icons/obj/structures/cellular_biomass/nanite.dmi'
 	speak_emote = list("gibbers")
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
