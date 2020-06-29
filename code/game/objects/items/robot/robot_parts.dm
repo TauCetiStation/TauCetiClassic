@@ -94,13 +94,13 @@
 	return 0
 
 /obj/item/robot_parts/proc/can_attach()
-	return 1
+	return TRUE
 
 /obj/item/robot_parts/head/can_attach()
-	return src.flash2 && src.flash1
+	return flash1 && flash2
 
 /obj/item/robot_parts/chest/can_attach()
-	return src.cell && src.wires
+	return cell && wires
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
