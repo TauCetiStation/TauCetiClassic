@@ -1839,7 +1839,7 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /obj/effect/bhole))
+			else if(ispath(path, /obj/effect/anomaly/bhole))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
