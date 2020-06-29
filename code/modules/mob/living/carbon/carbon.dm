@@ -548,10 +548,11 @@
 	set category = "IC"
 
 	if(IsSleeping())
-		to_chat(src, "<span class='rose'>You are already sleeping</span>")
+		SetSleeping(0 SECONDS)
+		// to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		SetSleeping(40 SECONDS) //Short nap
+	// if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+	SetSleeping(6000 SECONDS)
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
