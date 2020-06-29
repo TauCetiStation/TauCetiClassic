@@ -7,7 +7,7 @@
 	severity = rand(1, 3)
 
 /datum/event/viral_infection/announce()
-	command_alert("Confirmed outbreak of level five biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
+	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
 
 /datum/event/viral_infection/start()
 	var/list/candidates = list()	//list of candidate keys

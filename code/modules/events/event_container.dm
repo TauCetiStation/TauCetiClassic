@@ -46,7 +46,6 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new next_event.event_type(next_event)	// Events are added and removed from the processing queue in their New/kill procs
 
 		log_debug("Starting event '[next_event.name]' of severity [severity_to_string[severity]].")
-		to_chat(world, "Starting event '[next_event.name]' of severity [severity_to_string[severity]].") //debug
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
@@ -163,7 +162,6 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence",		/datum/event/brand_intelligence,		50, 	list(ASSIGNMENT_ENGINEER = 25),	1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",				/datum/event/grid_check,				0,		list(ASSIGNMENT_ENGINEER = 25),	1),
 		//new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Ninja",			/datum/event/space_ninja, 				0,		list(ASSIGNMENT_SECURITY = 15), 1),
-		//new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal Storm",			/datum/event/anomaly/portalstorm,		75,		list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Organ Failure",			/datum/event/organ_failure, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",				/datum/event/anomaly/anomaly_pyro,		75,		list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",			/datum/event/anomaly/anomaly_vortex,	75,		list(ASSIGNMENT_ENGINEER = 25)),
@@ -173,7 +171,6 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Disease Outbreak",			/datum/event/disease_outbreak, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Outbreak",			/datum/event/viral_outbreak, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Infection",			/datum/event/viral_infection, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
-		//new /datum/event_meta(EVENT_LEVEL_MODERATE, "ViralInfection",			/datum/event/viralinfection, 			0,		list(ASSIGNMENT_MEDICAL = 150), 1),
 	)
 
 /datum/event_container/major
