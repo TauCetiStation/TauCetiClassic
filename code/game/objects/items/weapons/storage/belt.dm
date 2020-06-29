@@ -31,7 +31,8 @@
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
 		/obj/item/taperoll/engineering,
-		/obj/item/weapon/gun/energy/pyrometer)
+		/obj/item/weapon/gun/energy/pyrometer,
+		/obj/item/device/science_tool)
 
 
 /obj/item/weapon/storage/belt/utility/full/atom_init()
