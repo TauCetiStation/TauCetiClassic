@@ -78,7 +78,7 @@ var/global/list/same_wire_colors_monochromy = list()
 
 	// All possible wires colors are here.
 	var/static/list/wire_colors = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
-	// Colors for Color blind
+	// Colors for Color blind in hex
 	var/list/wire_colors_monochromy
 
 /datum/wires/New(atom/holder)
@@ -129,8 +129,25 @@ var/global/list/same_wire_colors_monochromy = list()
 		var/index = pick_n_take(indexes_to_pick)
 		wires[color] = index
 
-	for(var/i in 1 to wire_count)
-		wire_colors_monochromy += pick("black", "gray", "white")
+	for(var/i in wires)
+		var/color_hex = color_by_hex[i]
+
+		if(!color_hex)
+			var/color = pick("#000000", "#dcdcdc", "#ffffff", "#808080")
+			wire_colors_monochromy += color
+			continue
+
+		var/r = hex2num(copytext(color_hex, 2, 4))
+		var/g = hex2num(copytext(color_hex, 4, 6))
+		var/b = hex2num(copytext(color_hex, 6, 8))
+		var/new_color = (0.58 * r) + (0.17 * g) + (0.8 * b)
+
+		if(0 <= new_color && new_color <= 30)
+			wire_colors_monochromy += "#000000"
+		else if(221 <= new_color && new_color <= 255) // 221 becauce we have name of color for 220
+			wire_colors_monochromy += "#ffffff"
+		else
+			wire_colors_monochromy += rgb(new_color, new_color, new_color)
 
 /**
  * Will return TRUE if wires menu successful opened.
@@ -180,7 +197,8 @@ var/global/list/same_wire_colors_monochromy = list()
 		html += "<tr>"
 		switch(see_effect)
 			if(MONOCHROMY)
-				html += "<td[row_options1]><font color='[wire_colors_monochromy[i]]'><b>[capitalize(wire_colors_monochromy[i])]</b></font></td>"
+				var/mcolor = hex2color(wire_colors_monochromy[i]) ? hex2color(wire_colors_monochromy[i]) : "Gray"
+				html += "<td[row_options1]><font color='[wire_colors_monochromy[i]]'><b>[capitalize(mcolor)]</b></font></td>"
 			if(BLINDED)
 				html += "<td[row_options1]><font color='gray'><b>Wire</b></font></td>"
 			else

@@ -96,6 +96,11 @@
 		num_list += text2num(x)
 	return num_list
 
+/proc/hex2color(hex)
+	for(var/color in color_by_hex)
+		if(color_by_hex[color] == hex)
+			return color
+
 //Splits the text of a file at seperator and returns them in a list.
 /proc/file2list(filename, seperator="\n")
 	return splittext(trim(return_file_text(filename)),seperator)
