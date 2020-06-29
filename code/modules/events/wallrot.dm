@@ -1,6 +1,3 @@
-/turf/simulated/wall
-
-
 /datum/event/wallrot
 	severity = 1
 

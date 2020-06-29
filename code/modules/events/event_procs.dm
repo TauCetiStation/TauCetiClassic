@@ -80,6 +80,7 @@
 		if(!M.mind || !M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
 			continue
 
+		to_chat(world, "[M].mind.assigned_role=[M.mind.assigned_role]")
 		if(isrobot(M))
 			var/mob/living/silicon/robot/R = M
 			if(R.module && (R.modtype == "Engineering"))
