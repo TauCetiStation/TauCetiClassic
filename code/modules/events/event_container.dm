@@ -50,7 +50,7 @@ var/list/event_last_fired = list()
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
-		next_event_time += (60 * 10)
+		next_event_time =  world.time + 60 SECONDS
 
 
 /datum/event_container/proc/acquire_event()
