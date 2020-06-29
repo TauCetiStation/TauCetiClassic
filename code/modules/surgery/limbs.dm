@@ -151,8 +151,16 @@
 
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
-		var/bodypart_type = L.bodypart_type
-		BP = new bodypart_type()
+		if(istype(L,obj/item/robot_parts/head))
+			var/obj/item/robot_parts/head/H = L
+			if(H.flash2 && H.flash1)
+				BP = new /obj/item/organ/external/head/robot
+			else
+				to_chat(user, "<span class='info'>You need to attach a flash to [H] first!</span>")
+				return
+		else
+			var/bodypart_type = L.bodypart_type
+			BP = new bodypart_type()
 		target.remove_from_mob(tool)
 		qdel(tool)
 
