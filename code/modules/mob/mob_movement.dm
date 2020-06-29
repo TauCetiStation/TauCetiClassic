@@ -510,6 +510,3 @@
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return
-
-/proc/random_side_dir(var/dir)
-	return pick(turn(dir, 90),turn(dir, -90))

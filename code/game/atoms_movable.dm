@@ -355,3 +355,25 @@
 	if(buckled_mob == mover)
 		return 1
 	return ..()
+
+/proc/random_side_dir(dir)
+	return pick(dir, turn(dir, 90), turn(dir, -90))
+
+/proc/get_force_step_away(atom/movable/Ref, atom/Trg, Max = 5, Rand = FALSE)
+	var/new_dir = force_get_dir(Trg, Ref)
+	if(Rand)
+		new_dir = random_side_dir(new_dir)
+	var/atom/A = get_step(Ref, new_dir)
+	if(A.density)
+		return get_step_away(Ref, Trg)
+	else
+		return get_step(Ref, new_dir)
+
+/proc/force_get_dir(atom/Loc1, atom/Loc2, reverse = FALSE)
+	var/new_dir = get_dir(Loc1, Loc2)
+	if(!new_dir)
+		if(Loc1.loc == Loc2.loc && reverse)
+			new_dir = get_dir(get_step(Loc1, reverse_direction(Loc1.dir)), Loc2)
+		else
+			new_dir = get_dir(get_step(Loc1, Loc1.dir), Loc2)
+	return new_dir
