@@ -91,34 +91,37 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 	//Burn skin if exposed.
 	if(vsc.plc.SKIN_BURNS)
-		if(!pl_head_protected() || !pl_suit_protected())
-			burn_skin(0.75)
-			if(prob(20))
-				to_chat(src, "<span class='danger'>Your skin burns!</span>")
-			updatehealth()
+		if(get_species() != IPC)
+			if(!pl_head_protected() || !pl_suit_protected())
+				burn_skin(0.75)
+				if(prob(20))
+					to_chat(src, "<span class='danger'>Your skin burns!</span>")
+				updatehealth()
 
 	//Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
-		if(!head)
-			if(!wear_mask)
-				burn_eyes()
-			else
-				if(!(wear_mask.body_parts_covered & EYES))
-					burn_eyes()
-		else
-			if(!(head.body_parts_covered & EYES))
+		if(get_species() != IPC)
+			if(!head)
 				if(!wear_mask)
 					burn_eyes()
 				else
 					if(!(wear_mask.body_parts_covered & EYES))
 						burn_eyes()
+			else
+				if(!(head.body_parts_covered & EYES))
+					if(!wear_mask)
+						burn_eyes()
+					else
+						if(!(wear_mask.body_parts_covered & EYES))
+							burn_eyes()
 
 	//Genetic Corruption
 	if(vsc.plc.GENETIC_CORRUPTION)
-		if(rand(1, 10000) < vsc.plc.GENETIC_CORRUPTION)
-			randmutb(src)
-			to_chat(src, "<span class='danger'>High levels of toxins cause you to spontaneously mutate!</span>")
-			domutcheck(src, null)
+		if(get_species() != IPC)
+			if(rand(1, 10000) < vsc.plc.GENETIC_CORRUPTION)
+				randmutb(src)
+				to_chat(src, "<span class='danger'>High levels of toxins cause you to spontaneously mutate!</span>")
+				domutcheck(src, null)
 
 
 /mob/living/carbon/human/proc/burn_eyes()
