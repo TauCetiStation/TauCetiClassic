@@ -9,7 +9,6 @@
 #define ASSIGNMENT_SECURITY  "Security"
 
 var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
-var/list/event_last_fired = list()
 
 /datum/event_container
 	var/severity = -1
@@ -66,7 +65,7 @@ var/list/event_last_fired = list()
 
 	for(var/event_meta in last_event_time)
 		if(possible_events[event_meta])
-			var/time_passed = world.time - event_last_fired[event_meta]
+			var/time_passed = world.time - last_event_time[event_meta]
 			var/weight_modifier = max(0, (config.expected_round_length - time_passed) / 300)
 			var/new_weight = max(possible_events[event_meta] - weight_modifier, 0)
 
