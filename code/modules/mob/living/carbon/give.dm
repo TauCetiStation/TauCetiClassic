@@ -1,4 +1,4 @@
-/mob/living/carbon/verb/give(mob/M in oview(1))
+/mob/living/carbon/verb/give(mob/living/M in oview(1))
 	set category = "IC"
 	set name = "Give"
 
@@ -7,7 +7,7 @@
 		to_chat(src, "<span class='danger'>Wait a second... \the [M] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
 		return
 
-	if(!can_give(M) || !can_accept_gives(M) || M.client == null)
+	if(!can_give(M) || M.client == null)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -25,12 +25,16 @@
 		if(I.w_class < ITEM_SIZE_LARGE)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
-	if(M.get_active_hand() && M.get_inactive_hand())
+	if(!M.can_accept_gives(src))
 		to_chat(src, "<span class='red'>[M.name]'s hands are full.</span>")
 		return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
-			if(!can_give(M) || !can_accept_gives(M))
+			if(!can_give(M))
+				return
+			if(!M.can_accept_gives(src))
+				to_chat(M, "<span class='red'>Your hands are full.</span>")
+				to_chat(src, "<span class='red'>Their hands are full.</span>")
 				return
 			if(QDELETED(I))
 				return
@@ -41,10 +45,6 @@
 			if(get_active_hand() != I)
 				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
 				to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
-				return
-			if(M.get_active_hand() && M.get_inactive_hand())
-				to_chat(M, "<span class='red'>Your hands are full.</span>")
-				to_chat(src, "<span class='red'>Their hands are full.</span>")
 				return
 			else
 				drop_from_inventory(I)
@@ -58,10 +58,10 @@
 	return !M.incapacitated() && !incapacitated()
 
 /mob/living/proc/can_accept_gives(mob/giver)
-  return !giver.get_active_hand() || !giver.get_inactive_hand()
+  return !get_active_hand() || !get_inactive_hand()
 
 /mob/living/carbon/slime/can_accept_gives(mob/giver)
   return FALSE
 
-/mob/living/carbon/blahblahlbahl/xeno/can_accept_gives(mob/giver)
+/mob/living/carbon/xenomorph/can_accept_gives(mob/giver)
   return FALSE
