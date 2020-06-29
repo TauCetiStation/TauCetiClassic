@@ -151,7 +151,7 @@
 
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
-		if(istype(L,obj/item/robot_parts/head))
+		if(istype(L, /obj/item/robot_parts/head))
 			var/obj/item/robot_parts/head/H = L
 			if(H.flash2 && H.flash1)
 				BP = new /obj/item/organ/external/head/robot
