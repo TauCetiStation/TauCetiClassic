@@ -481,7 +481,7 @@
 	var/prev_pix_y = attacker.pixel_y
 
 	animate(attacker, pixel_y = attacker.pixel_y - 4, time = 5)
-	if(!do_after(attacker, 5, target = victim, progress = FALSE))
+	if(!do_combo(victim, attacker, 5))
 		return
 
 	var/prev_anchored = attacker.anchored
