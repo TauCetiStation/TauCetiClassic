@@ -2,7 +2,7 @@
 //TG-stuff
 /obj/effect/anomaly
 	name = "anomaly"
-	icon = 'code/modules/events/anomaly/anomalies.dmi'
+	icon = 'icons/effects/anomalies.dmi'
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "vortex"
 	unacidable = 1
@@ -21,6 +21,9 @@
 	if(IS_MULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+/obj/effect/anomaly/Destroy()
+	poi_list -= src
+	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
