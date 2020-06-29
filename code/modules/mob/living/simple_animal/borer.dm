@@ -55,7 +55,8 @@
 	var/truename                            // Name used for brainworm-speak.
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
-	var/docile = 0                          // Sugar can stop borers from acting.
+	var/docile = FALSE                      // Sugar can stop borers from acting.
+	var/leaving = FALSE
 
 /mob/living/simple_animal/borer/atom_init()
 	. = ..()
@@ -158,7 +159,7 @@
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Dominate Victim"
 	set desc = "Freeze the limbs of a potential host with supernatural fear."
 
@@ -198,7 +199,7 @@
 	used_dominate = world.time
 
 /mob/living/simple_animal/borer/verb/bond_brain()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host."
 
@@ -237,7 +238,7 @@
 			host.verbs += /mob/living/carbon/proc/spawn_larvae
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
 
@@ -266,7 +267,7 @@
 	chemicals -= 50
 
 /mob/living/simple_animal/borer/verb/release_host()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Release Host"
 	set desc = "Slither out of your host."
 
@@ -284,24 +285,39 @@
 
 	if(!host || !src) return
 
+	if(leaving)
+		leaving = FALSE
+		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
+		return
+
 	to_chat(src, "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.")
+
+	leaving = TRUE
+
+	addtimer(CALLBACK(src, .proc/let_go), 200)
+
+
+/mob/living/simple_animal/borer/proc/let_go()
 
 	if(!host.stat)
 		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
+	if(!host || !src || QDELETED(host) || QDELETED(src))
+		return
+	if(!leaving)
+		return
+	if(controlling)
+		return
+	if(incapacitated())
+		to_chat(src, "You cannot infest a target in your current state.")
+		return
+	to_chat(src, "You wiggle out of [host]'s ear and plop to the ground.")
 
-	spawn(200)
+	leaving = FALSE
 
-		if(!host || !src) return
+	if(!host.stat)
+		to_chat(host, "Something slimy wiggles out of your ear and plops to the ground!")
 
-		if(incapacitated())
-			to_chat(src, "You cannot infest a target in your current state.")
-			return
-
-		to_chat(src, "You wiggle out of [host]'s ear and plop to the ground.")
-		if(!host.stat)
-			to_chat(host, "Something slimy wiggles out of your ear and plops to the ground!")
-
-		detatch()
+	detatch()
 
 /mob/living/simple_animal/borer/proc/detatch()
 
@@ -335,7 +351,7 @@
 	host = null
 
 /mob/living/simple_animal/borer/verb/infest()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Infest"
 	set desc = "Infest a suitable humanoid host."
 
@@ -411,7 +427,7 @@
 /mob/living/simple_animal/borer/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
+	set category = "Borer"
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -433,15 +449,15 @@
 				question(C)
 
 /mob/living/simple_animal/borer/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += IGNORE_BORER
+	if(!C)
+		return
+	var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
+	if(!C || ckey)
+		return
+	if(response == "Yes")
+		transfer_personality(C)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += IGNORE_BORER
 
 /mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 
