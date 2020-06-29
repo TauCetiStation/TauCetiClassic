@@ -60,7 +60,7 @@ var/last_round_duration = 0
  - You can use this, for example, to do "This will expire at [station_time_at(world.time + 500)]" to display a "station time" expiration date
    which is much more useful for a player)*/
 /proc/station_time(time=world.time, display_only=FALSE)
-	return ((((time - round_start_time)) + gametime_offset) % 864000) - (display_only ? timezoneOffset : 0)
+	return ((time - round_start_time + gametime_offset) % 864000) - (display_only ? timezoneOffset : 0)
 
 /proc/station_time_timestamp(format = "hh:mm:ss", time=world.time)
 	return time2text(station_time(time, TRUE), format)

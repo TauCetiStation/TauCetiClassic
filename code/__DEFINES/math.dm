@@ -42,7 +42,8 @@
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
 
 /proc/RaiseToPower(num, power)
-    if(!power) return 1
+    if(!power)
+		return 1
     return (power-- > 1 ? num * RaiseToPower(num, power) : num)
 
 // Tangent
