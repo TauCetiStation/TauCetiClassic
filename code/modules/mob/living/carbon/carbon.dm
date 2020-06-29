@@ -546,7 +546,8 @@
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
-
+	if(weakened || paralysis || stunned)
+		return
 	if(IsSleeping())
 		SetSleeping(0 SECONDS)
 		// to_chat(src, "<span class='rose'>You are already sleeping</span>")
