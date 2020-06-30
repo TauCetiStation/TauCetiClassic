@@ -5,11 +5,6 @@
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-		if(BP && !BP.is_usable())
-			return
 	var/obj/item/I = src.get_active_hand()
 	if(!I)
 		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
@@ -66,6 +61,14 @@
 	if(get_active_hand() && get_inactive_hand())
 		if(show_warnings)
 			to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/can_accept_gives(mob/giver, show_warnings = FALSE)
+	var/obj/item/organ/external/left_hand = bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/right_hand = bodyparts_by_name[BP_R_ARM]
+	if((!left_hand || !left_hand.is_usable() || l_hand) && (!right_hand || !right_hand.is_usable() || r_hand))
+		to_chat(giver, "<span class='red'>[src] can't take</span>")
 		return FALSE
 	return TRUE
 
