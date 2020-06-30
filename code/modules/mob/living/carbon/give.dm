@@ -26,7 +26,6 @@
 			if(!can_give(M, TRUE))
 				return
 			if(!M.can_accept_gives(src, TRUE))
-				to_chat(M, "<span class='red'>Your hands are full.</span>")
 				return
 			if(QDELETED(I))
 				return
