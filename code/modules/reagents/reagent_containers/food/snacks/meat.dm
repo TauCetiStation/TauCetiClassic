@@ -51,4 +51,4 @@
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
-	list_reagents = list("nutriment" = 3,"vitamin" = 2,"blood" = 5)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)
