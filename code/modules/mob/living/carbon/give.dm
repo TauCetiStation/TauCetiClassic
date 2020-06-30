@@ -12,7 +12,7 @@
 			return
 	var/obj/item/I = src.get_active_hand()
 	if(!I)
-		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M.name]</span>")
+		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
 		return
 	if(I.flags & (ABSTRACT | DROPDEL))
 		to_chat(src, "<span class='red'>You can't give this to [name]</span>")
@@ -32,19 +32,19 @@
 				return
 			if(!Adjacent(M))
 				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
-				to_chat(M, "<span class='red'>[src.name] moved too far away.</span>")
+				to_chat(M, "<span class='red'>[src] moved too far away.</span>")
 				return
 			if(get_active_hand() != I)
 				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
-				to_chat(M, "<span class='red'>[src.name] seem to have given up on giving \the [I.name] to you.</span>")
+				to_chat(M, "<span class='red'>[src] seem to have given up on giving \the [I] to you.</span>")
 				return
 			else
 				drop_from_inventory(I)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
-			M.visible_message("<span class='notice'>[src.name] handed \the [I.name] to [M.name].</span>")
+			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")
 		if("No")
-			M.visible_message("<span class='red'>[src.name] tried to hand [I.name] to [M.name] but [M.name] didn't want it.</span>")
+			M.visible_message("<span class='red'>[src] tried to hand [I] to [M] but [M] didn't want it.</span>")
 
 
 /mob/living/carbon/proc/can_give(mob/M)
