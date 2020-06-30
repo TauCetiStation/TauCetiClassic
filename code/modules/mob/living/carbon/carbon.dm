@@ -550,12 +550,12 @@
 	set category = "IC"
 	if(weakened || paralysis || stunned || (status_flags & FAKEDEATH))
 		return
-	if(IsSleeping())
-		SetSleeping(0 SECONDS)
-		// to_chat(src, "<span class='rose'>You are already sleeping</span>")
-		return
-	// if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 	if(!sleep_delay)
+		if(IsSleeping())
+			SetSleeping(0 SECONDS)
+			// to_chat(src, "<span class='rose'>You are already sleeping</span>")
+			return
+	// if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleep_delay = 1
 		SetSleeping(6000 SECONDS)
 		sleep(60)
