@@ -53,7 +53,7 @@
 		return FALSE
 	if(incapacitated())
 		if(show_warnings)
-			to_chat(src, "<span class='red'>You are incapable.</span>")
+			to_chat(src, "<span class='warning'>You are of giving anything.</span>")
 		return FALSE
 	return TRUE
 
