@@ -1,13 +1,9 @@
-/mob/living/carbon/verb/give(mob/living/M in oview(1))
+/mob/living/carbon/verb/give(mob/M in oview(1))
 	set category = "IC"
 	set name = "Give"
 
 
-	if(!iscarbon(M))
-		to_chat(src, "<span class='danger'>Wait a second... \the [M] HAS NO HANDS! AHH!</span>")//cheesy messages ftw
-		return
-
-	if(!can_give(M) || M.client == null)
+	if(!M.can_accept_gives(src, TRUE) || !can_give(M) || M.client == null)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -25,16 +21,12 @@
 		if(I.w_class < ITEM_SIZE_LARGE)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
-	if(!M.can_accept_gives(src))
-		to_chat(src, "<span class='red'>[M.name]'s hands are full.</span>")
-		return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
 			if(!can_give(M))
 				return
-			if(!M.can_accept_gives(src))
+			if(!M.can_accept_gives(src, TRUE))
 				to_chat(M, "<span class='red'>Your hands are full.</span>")
-				to_chat(src, "<span class='red'>Their hands are full.</span>")
 				return
 			if(QDELETED(I))
 				return
@@ -54,14 +46,24 @@
 		if("No")
 			M.visible_message("<span class='red'>[src.name] tried to hand [I.name] to [M.name] but [M.name] didn't want it.</span>")
 
+
 /mob/living/carbon/proc/can_give(mob/M)
 	return !M.incapacitated() && !incapacitated()
 
-/mob/living/proc/can_accept_gives(mob/giver)
-  return !get_active_hand() || !get_inactive_hand()
+/mob/proc/can_accept_gives(mob/giver, show_warnings = FALSE)
+	return FALSE
 
-/mob/living/carbon/slime/can_accept_gives(mob/giver)
-  return FALSE
+/mob/living/carbon/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(!get_active_hand() || !get_inactive_hand())
+		return TRUE
+	if(show_warnings)
+		to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
+	return FALSE
 
-/mob/living/carbon/xenomorph/can_accept_gives(mob/giver)
-  return FALSE
+/mob/living/carbon/slime/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(show_warnings)
+		to_chat(giver, "<span class='notice'>[src] doesn't have hands for you to give them anything.</span>")
+	return FALSE
+
+/mob/living/carbon/xenomorph/can_accept_gives(mob/giver, show_warnings = FALSE)
+	return FALSE
