@@ -543,17 +543,23 @@
 			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
 //			output for machines^	^^^^^^^output for people^^^^^^^^^
 
+/mob/living/carbon/var/sleep_delay
+
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
-	if(weakened || paralysis || stunned)
+	if(weakened || paralysis || stunned || (status_flags & FAKEDEATH))
 		return
 	if(IsSleeping())
 		SetSleeping(0 SECONDS)
 		// to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
 	// if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-	SetSleeping(6000 SECONDS)
+	if(!sleep_delay)
+		sleep_delay = 1
+		SetSleeping(6000 SECONDS)
+		sleep(60)
+		sleep_delay = 0
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
