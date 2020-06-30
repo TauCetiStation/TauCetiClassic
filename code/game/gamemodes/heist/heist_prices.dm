@@ -221,6 +221,7 @@
 /obj/item/weapon/stock_parts/cell/super/price = 3800
 /obj/item/weapon/circular_saw/price = 1250
 /obj/item/weapon/claymore/price = 5000
+/obj/item/weapon/claymore/religion/price = 2000
 /obj/item/weapon/coin/price = 15
 /obj/item/weapon/coin/bananium/price = 3000
 /obj/item/weapon/coin/diamond/price = 20000

@@ -12,6 +12,24 @@
 
 	var/religify_next = list()
 
+	var/list/rad_choices
+
+/obj/item/weapon/storage/bible/atom_init()
+	. = ..()
+	rad_choices = list(
+		"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
+		"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
+		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
+	)
+
+	var/matrix/M = matrix()
+	M.Scale(0.7)
+	for(var/choise in rad_choices)
+		if(choise == "Pews") // Don't need it
+			continue
+		var/image/I = rad_choices[choise]
+		I.transform = M
+
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."
@@ -81,22 +99,26 @@
 /obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
 	var/done = FALSE
 	var/changes = FALSE
-
 	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
+	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
 	while(!done)
 		if(!choices.len)
 			done = TRUE
 			break
 
-		var/looks = input(user, "Would you like to change something about how your chapel looks?") as null|anything in choices
+		var/list/temp_images = list()
+		for(var/choose in choices)
+			temp_images[choose] += rad_choices[choose]
+
+		var/looks = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
 		if(!looks)
 			done = TRUE
 			break
 
 		switch(looks)
 			if("Altar")
-				var/new_look = input(user, "Which altar style would you like?")  as null|anything in global.chaplain_religion.altar_info_by_name
+				var/new_look = show_radial_menu(user, src, global.chaplain_religion.altar_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -105,7 +127,7 @@
 				choices -= "Altar"
 
 			if("Pews")
-				var/new_look = input(user, "Which pews style would you like?")  as null|anything in global.chaplain_religion.pews_info_by_name
+				var/new_look = show_radial_menu(user, src, global.chaplain_religion.pews_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -114,7 +136,7 @@
 				choices -= "Pews"
 
 			if("Mat symbol")
-				var/new_mat = input(user, "Which mat symbol would you like?")  as null|anything in global.chaplain_religion.carpet_dir_by_name
+				var/new_mat = show_radial_menu(user, src, global.chaplain_religion.carpet_skins, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 

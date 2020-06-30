@@ -72,7 +72,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				S["organ_data"] -= organ_name
 
 	if(current_version < 18)
-		popup(parent.mob, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
+		popup(parent, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
 		ResetJobs()
 		S["job_preferences"]	<< job_preferences
 
@@ -193,7 +193,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			// If IsAllowedQuirk() for some reason ever becomes more computationally
 			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
 			if(!IsAllowedQuirk(quirk_name))
-				popup(parent.mob, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
+				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
 				ResetQuirks()
 				break
 
