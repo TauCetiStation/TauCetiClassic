@@ -3,7 +3,7 @@
 	set name = "Give"
 
 
-	if(!M.can_accept_gives(src, TRUE) || !can_give(M) || M.client == null)
+	if(!M.can_accept_gives(src, TRUE) || !can_give(M, TRUE) || M.client == null)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -23,7 +23,7 @@
 			return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
-			if(!can_give(M))
+			if(!can_give(M, TRUE))
 				return
 			if(!M.can_accept_gives(src, TRUE))
 				to_chat(M, "<span class='red'>Your hands are full.</span>")
@@ -47,8 +47,16 @@
 			M.visible_message("<span class='red'>[src] tried to hand [I] to [M] but [M] didn't want it.</span>")
 
 
-/mob/living/carbon/proc/can_give(mob/M)
-	return !M.incapacitated() && !incapacitated()
+/mob/living/carbon/proc/can_give(mob/M, show_warnings = FALSE)
+	if(M.incapacitated())
+		if(show_warnings)
+			to_chat(src, "<span class='red'>[M] is incapable.</span>")
+		return FALSE
+	if(incapacitated())
+		if(show_warnings)
+			to_chat(src, "<span class='red'>You are incapable.</span>")
+		return FALSE
+	return TRUE
 
 /mob/proc/can_accept_gives(mob/giver, show_warnings = FALSE)
 	if(show_warnings)
