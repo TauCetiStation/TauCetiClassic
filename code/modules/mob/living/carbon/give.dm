@@ -64,6 +64,13 @@
 		return FALSE
 	return TRUE
 
+/mob/living/carbon/ian/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(get_active_hand() && get_inactive_hand())
+		if(show_warnings)
+			to_chat(giver, "<span class='red'>[src]'s mouth is full.</span>")
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/can_accept_gives(mob/giver, show_warnings = FALSE)
 	var/obj/item/organ/external/left_hand = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/right_hand = bodyparts_by_name[BP_R_ARM]
