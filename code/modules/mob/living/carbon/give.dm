@@ -3,7 +3,7 @@
 	set name = "Give"
 
 
-	if(!M.can_accept_gives(src, TRUE) || !can_give(M, TRUE) || M.client == null)
+	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -23,9 +23,9 @@
 			return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
 		if("Yes")
-			if(!can_give(M, TRUE))
+			if(!can_give(M, show_warnings = TRUE))
 				return
-			if(!M.can_accept_gives(src, TRUE))
+			if(!M.can_accept_gives(src, show_warnings = TRUE))
 				return
 			if(QDELETED(I))
 				return
