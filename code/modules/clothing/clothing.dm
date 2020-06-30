@@ -431,6 +431,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
@@ -460,6 +461,9 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/space/dropped()
 	check_limb_support()
 	..()
+
+/obj/item/clothing/suit/space/MouseDrop(obj/over_object)
+	return
 
 // Some space suits are equipped with reactive membranes that support
 // broken limbs - at the time of writing, only the ninja suit, but
