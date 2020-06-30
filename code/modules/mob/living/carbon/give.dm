@@ -54,11 +54,11 @@
 	return FALSE
 
 /mob/living/carbon/can_accept_gives(mob/giver, show_warnings = FALSE)
-	if(!get_active_hand() || !get_inactive_hand())
-		return TRUE
-	if(show_warnings)
-		to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
-	return FALSE
+	if(get_active_hand() && get_inactive_hand())
+		if(show_warnings)
+			to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/slime/can_accept_gives(mob/giver, show_warnings = FALSE)
 	if(show_warnings)
