@@ -49,7 +49,7 @@
 /mob/living/carbon/proc/can_give(mob/M, show_warnings = FALSE)
 	if(M.incapacitated())
 		if(show_warnings)
-			to_chat(src, "<span class='red'>[M] is incapable.</span>")
+			to_chat(src, "<span class='warning'>[M] is incapable of being given anything to.</span>")
 		return FALSE
 	if(incapacitated())
 		if(show_warnings)
