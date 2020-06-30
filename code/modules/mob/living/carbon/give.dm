@@ -60,7 +60,7 @@
 
 /mob/proc/can_accept_gives(mob/giver, show_warnings = FALSE)
 	if(show_warnings)
-		to_chat(giver, "<span class='notice'>[src] doesn't have hands for you to give them anything.</span>")
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
 	return FALSE
 
 /mob/living/carbon/can_accept_gives(mob/giver, show_warnings = FALSE)
@@ -72,10 +72,10 @@
 
 /mob/living/carbon/slime/can_accept_gives(mob/giver, show_warnings = FALSE)
 	if(show_warnings)
-		to_chat(giver, "<span class='notice'>[src] doesn't have hands for you to give them anything.</span>")
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
 	return FALSE
 
 /mob/living/carbon/xenomorph/can_accept_gives(mob/giver, show_warnings = FALSE)
 	if(show_warnings)
-		to_chat(giver, "<span class='notice'>[src] doesn't have hands for you to give them anything.</span>")
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
 	return FALSE
