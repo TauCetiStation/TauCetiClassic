@@ -143,24 +143,6 @@
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 	pr_mecha_light = new /datum/global_iterator/mecha_light(list(src))
 
-/obj/mecha/proc/do_after(delay)
-	sleep(delay)
-	if(src)
-		return 1
-	return 0
-
-/obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
-	var/delayfraction = delay/numticks
-
-	var/turf/T = user.loc
-
-	for(var/i = 0, i<numticks, i++)
-		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
-
-	return 1
-
 /obj/mecha/examine(mob/user)
 	..()
 	var/integrity = health/initial(health)*100
@@ -260,7 +242,7 @@
 		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
 	return ..()
 
-/obj/mecha/relaymove(mob/user,direction)
+/obj/mecha/relaymove(mob/user, direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		to_chat(user, "You climb out from [src]")
@@ -273,12 +255,12 @@
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
-	return domove(direction)
+	return domove(user, direction)
 
-/obj/mecha/proc/domove(direction)
-	return call((proc_res["dyndomove"]||src), "dyndomove")(direction)
+/obj/mecha/proc/domove(mob/user, direction)
+	return call((proc_res["dyndomove"]||src), "dyndomove")(user, direction)
 
-/obj/mecha/proc/dyndomove(direction)
+/obj/mecha/proc/dyndomove(mob/user, direction)
 	if(!can_move)
 		return 0
 	if(!Process_Spacemove(direction))
@@ -294,7 +276,7 @@
 		move_result	= mechstep(direction)
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in))
+		if(do_after(user, step_in, src, progress = FALSE))
 			can_move = 1
 		return 1
 	return 0
@@ -712,15 +694,17 @@
 	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		if (WT.use(0,user))
-			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+		to_chat(user, "<span class='notice'>You start repairing [src].</span>")
+		if(user.is_busy(src) || !do_after(user, 5 SECONDS, src))
+			return
+		if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+			if (WT.use(0,user))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
 				to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
-		else
-			return
 		if(src.health<initial(src.health))
-			to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
-			src.health += min(10, initial(src.health)-src.health)
+			if(WT.use(0,user))
+				to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
+				src.health += min(10, initial(src.health)-src.health)
 		else
 			to_chat(user, "The [src.name] is at full integrity")
 		return
@@ -995,7 +979,7 @@
 
 	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
-	if(enter_after(40,usr))
+	if(do_after(usr, 4 SECONDS, src, progress = TRUE))
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
@@ -1044,7 +1028,7 @@
 
 	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
 
-	if(enter_after(40,user))
+	if(do_after(user, 4 SECONDS, src))
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
@@ -1606,7 +1590,7 @@
 		src.log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		var/T = src.loc
-		if(do_after(100))
+		if(do_after(usr, 10 SECONDS, src))
 			if(T == src.loc)
 				src.clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -1734,7 +1718,8 @@
 	if(mecha.internal_tank)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
-
+		if(!tank_air)
+			return
 		var/release_pressure = mecha.internal_tank_valve
 		var/cabin_pressure = cabin_air.return_pressure()
 		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
