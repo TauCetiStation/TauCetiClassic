@@ -1220,8 +1220,8 @@
 		/obj/item/weapon/storage/fancy/candle_box/red = 25,
 		/obj/item/clothing/accessory/metal_cross = 10,
 		/obj/item/clothing/accessory/bronze_cross = 10,
-		/obj/item/clothing/mask/tie/pectoral_silver_cross = 5,
-		/obj/item/clothing/mask/tie/pectoral_golden_cross = 5,
+		/obj/item/clothing/mask/tie/silver_cross = 5,
+		/obj/item/clothing/mask/tie/golden_cross = 5,
 		/obj/item/clothing/shoes/jolly_gravedigger = 4)
 	contraband = list(/obj/item/weapon/nullrod = 1)
 	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 40,
@@ -1230,8 +1230,8 @@
 					/obj/item/weapon/nullrod = 400,
 					/obj/item/clothing/accessory/metal_cross = 40,
 					/obj/item/clothing/accessory/bronze_cross = 80,
-					/obj/item/clothing/mask/tie/pectoral_silver_cross = 400,
-					/obj/item/clothing/mask/tie/pectoral_golden_cross = 1000,
+					/obj/item/clothing/mask/tie/silver_cross = 400,
+					/obj/item/clothing/mask/tie/golden_cross = 1000,
 					/obj/item/clothing/shoes/jolly_gravedigger = 200)
 
 /obj/machinery/vending/eva
