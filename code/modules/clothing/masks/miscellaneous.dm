@@ -255,13 +255,13 @@
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 
-/obj/item/clothing/mask/tie/pectoral_silver_cross
+/obj/item/clothing/mask/tie/silver_cross
 	name = "pectoral silver cross"
 	desc = "That's a big pectoral silver cross for big religion figures."
 	icon_state = "pectoral_silver_cross"
 	item_state = "pectoral_silver_cross"
 
-/obj/item/clothing/mask/tie/pectoral_golden_cross
+/obj/item/clothing/mask/tie/golden_cross
 	name = "pectoral golden cross"
 	desc = "That's a big pectoral golden cross for the biggest religion figure."
 	icon_state = "pectoral_golden_cross"
