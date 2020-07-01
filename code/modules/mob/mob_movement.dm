@@ -254,7 +254,10 @@
 		moving = FALSE
 		if(mob && .)
 			mob.throwing = FALSE
-
+		for(var/obj/item/weapon/grab/G in mob.GetGrabs())
+			G.adjust_position()
+		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
+			G.adjust_position()
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
@@ -277,15 +280,13 @@
 			for(var/obj/item/weapon/grab/G in GetGrabs())
 				var/mob/M = G.affecting
 				if(M)
-					if((get_dist(src, M) <= 1 || M.loc == src.loc))
+					if(G.state == GRAB_NECK)
+						Dir = reverse_direction(Dir)
+					if(get_dist(src, M) <= 1 || M.loc == src.loc)
 						var/turf/T = src.loc
 						. = ..()
 						if(isturf(M.loc))
-							var/diag = get_dir(src, M)
-							if((diag - 1) & diag)
-							else
-								diag = null
-							if((get_dist(src, M) > 0 || diag))
+							if(get_dist(src, M) > 0)
 								step(M, get_dir(M.loc, T))
 		else
 			for(var/obj/item/weapon/grab/G in L)
@@ -304,12 +305,6 @@
 					G.affecting.animate_movement = 2
 					G.assailant.animate_movement = 2
 					return
-	for(var/obj/item/weapon/grab/G in src.GetGrabs())
-		if(G.state == GRAB_NECK)
-			src.set_dir(reverse_dir[Dir])
-		G.adjust_position()
-	for(var/obj/item/weapon/grab/G in src.grabbed_by)
-		G.adjust_position()
 	if(pinned.len)
 		return FALSE
 

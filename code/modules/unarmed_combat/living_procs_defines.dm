@@ -275,6 +275,7 @@ var/global/combos_cheat_sheet = ""
 		for(var/obj/item/weapon/grab/G in GetGrabs())
 			if(G.affecting)
 				if(G.affecting == attacker)
+					G.adjust_position()
 					var/diff = G.affecting.getStamina() - G.assailant.getStamina()
 					if(G.state < GRAB_AGGRESSIVE)
 						qdel(G)
@@ -284,7 +285,7 @@ var/global/combos_cheat_sheet = ""
 						visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 						qdel(G)
 					else
-						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to do that</span>")
+						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to break up the grab.</span>")
 					return
 				else if(G.assailant == attacker)
 					return
