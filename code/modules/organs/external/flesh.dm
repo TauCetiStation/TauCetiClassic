@@ -9,7 +9,7 @@
 	BP = B
 
 	if(BP.species && BP.species.bodypart_butcher_results)
-		BP.butcher_results = BP.species.bodypart_butcher_results
+		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
 		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
 	else if(bodypart_type == BODYPART_ROBOTIC)
