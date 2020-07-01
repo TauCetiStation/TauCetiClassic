@@ -75,7 +75,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/weapon/rcd/mounted/attackby()
+/obj/item/weapon/rcd/mounted/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/rig_module/device/rcd

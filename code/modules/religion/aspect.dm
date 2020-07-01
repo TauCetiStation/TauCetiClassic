@@ -1,12 +1,15 @@
 /datum/aspect
 	var/name
 	var/desc = "This aspect not used in game"
-	//used for give a god the information about aspect and desire items
+	// Used for give a god the information about aspect and desire items
 	var/god_desc
 	//can only be increased if you select one aspect twice and more times
 	var/power = 1
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
+	// Used in the radial menu when choosing a ritual
+	var/icon = 'icons/mob/radial.dmi'
+	var/icon_state = "radial_magic"
 
 	// List of holy turfs blessed with this aspect.
 	var/list/holy_turfs
@@ -42,6 +45,7 @@
 /datum/aspect/death
 	name = ASPECT_DEATH
 	desc = "You can consider it necromancy"
+	icon_state = "aspect_death"
 
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
@@ -65,6 +69,7 @@
 /datum/aspect/science
 	name = ASPECT_SCIENCE
 	desc = "Sci-fi items and other science"
+	icon_state = "aspect_science"
 
 	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things to gain your favour."
 
@@ -77,6 +82,7 @@
 /datum/aspect/food
 	name = ASPECT_FOOD
 	desc = "Can be considered it greed"
+	icon_state = "aspect_food"
 
 	god_desc = "Peasants are required to pay you food."
 
@@ -94,12 +100,14 @@
 /datum/aspect/weapon
 	name = ASPECT_WEAPON //with armor
 	desc = "Weapons and related things, war"
+	icon_state = "aspect_weapon"
 
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
 /datum/aspect/resources
 	name = ASPECT_RESOURCES
 	desc = "Manipulated on minerals, metallic, glass and others"
+	icon_state = "ascept_resources"
 
 	god_desc = "May the workers bring diverse resources to your mercy."
 
@@ -114,6 +122,7 @@
 /datum/aspect/conjure
 	name = ASPECT_SPAWN
 	desc = "Create any bio-materials"
+	icon_state = "aspect_spawn"
 
 //Gives mana from: allows you to accumulate mana when you beat yourself near the altar
 //Needed for: any spell in which there is damage to the chaplain or people around the altar should have this aspect.
@@ -126,18 +135,21 @@
 /datum/aspect/rescue
 	name = ASPECT_RESCUE
 	desc = "Any heal, buff"
+	icon_state = "aspect_rescue"
 
 //Gives mana from: ghosts staying near the altar
 //Needed for: spells and rituals related to the theme of ghosts
 /datum/aspect/mystic
 	name = ASPECT_MYSTIC
 	desc = "Any interaction with ghosts"
+	icon_state = "aspect_mystic"
 
 //Gives mana from: sacrificed charge, tech parts
 //Needed for: spells and rituals related to the theme of electrical equipment, electrical energy
 /datum/aspect/technology
 	name = ASPECT_TECH
 	desc = "Accepts electrical energy and tech parts, also manipulates any electrical equipment"
+	icon_state = "aspect_tech"
 
 	god_desc = "Accept electrical energy and quality tech parts."
 
@@ -163,12 +175,14 @@
 /datum/aspect/chaos
 	name = ASPECT_CHAOS
 	desc = "The meaning of the aspect is that its rituals and spells are random"
+	icon_state = "aspect_chaos"
 
 //Gives mana from: fools, how clowns
 //Needed for: spells and rituals related to the theme of clown equipments, items
 /datum/aspect/wacky
 	name = ASPECT_WACKY
 	desc = "Clownism"
+	icon_state = "aspect_wacky"
 
 	god_desc = "The Family urgently needs a lot of BANANAS and BANANIUM!!!"
 
@@ -253,24 +267,27 @@
 /datum/aspect/lightbending/darkness
 	name = ASPECT_OBSCURE
 	desc = "Dark, darkness, obcurse, evil"
+	icon_state = "aspect_obscure"
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.7 - F.get_lumcount()) * power * 0.05
+	return (0.6 - F.get_lumcount()) * power * 0.05
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
 /datum/aspect/lightbending/light
 	name = ASPECT_LIGHT
 	desc = "Light interaction"
+	icon_state = "aspect_light"
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.3) * power * 0.03
+	return (F.get_lumcount() - 0.4) * power * 0.03
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
 /datum/aspect/greed
 	name = ASPECT_GREED
 	desc = "Greed"
+	icon_state = "aspect_greed"
 
 	god_desc = "Not everything that shines is gold, sometimes dollar bills break the mold. You wish for wealth."
 
@@ -282,3 +299,4 @@
 /datum/aspect/herd
 	name = ASPECT_HERD
 	desc = "Herd, consure"
+	icon_state = "aspect_herd"

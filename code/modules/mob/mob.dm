@@ -1047,7 +1047,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
-	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
+	if(mind)
+		mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
 		spell.action.target = spell

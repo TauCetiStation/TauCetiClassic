@@ -71,27 +71,35 @@
 	edge = 1
 	var/hacked
 
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
-	if(istype(W, /obj/item/weapon/melee/energy/sword) && !istype(W, /obj/item/weapon/melee/energy/sword/pirate))
+	var/can_combine = TRUE
+
+/obj/item/weapon/melee/energy/sword/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/melee/energy/sword))
+		var/obj/item/weapon/melee/energy/sword/S = I
+		if(!S.can_combine || !can_combine)
+			return
+
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
 		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		user.unEquip(W)
+		user.unEquip(I)
 		user.unEquip(src)
-		qdel(W)
+		qdel(I)
 		qdel(src)
 		user.put_in_hands(newSaber)
-	if(ismultitool(W))
+
+	else if(ismultitool(I))
 		if(!hacked)
-			hacked = 1
+			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			if (active)
-				active = 0
+				active = FALSE
 				icon_state = "sword0"
 		else
 			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+
 	else
 		return ..()
 
@@ -100,8 +108,7 @@
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 
-/obj/item/weapon/melee/energy/sword/pirate/attackby()
-	return
+	can_combine = FALSE
 
 /obj/item/weapon/melee/energy/sword/traitor
 	name = "toy sword"

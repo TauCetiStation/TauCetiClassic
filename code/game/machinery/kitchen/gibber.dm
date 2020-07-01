@@ -114,10 +114,13 @@
 
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
-	if(!iscarbon(user) && !isrobot(user))
-		return
 	if(user.incapacitated())
 		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	move_into_gibber(user,target)
 
 /obj/machinery/gibber/proc/move_into_gibber(mob/user,mob/living/victim)
@@ -194,12 +197,7 @@
 
 	occupant.ghostize(bancheck = TRUE)
 
-	if(occupant.butcher_results.len)
-		for(var/path in occupant.butcher_results)
-			for(var/i = 1 to occupant.butcher_results[path])
-				new path(src)
-
-	occupant.gib()
+	occupant.harvest()
 	if(!QDELING(occupant))
 		qdel(occupant)
 	occupant = null
