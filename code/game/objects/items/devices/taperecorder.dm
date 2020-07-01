@@ -45,6 +45,9 @@
 		if(!recording)
 			icons_available["Playback Memory"] = image(icon = icon_directory, icon_state = "radial_sound")
 
+	if(!recording && !playing)
+		icons_available["Clear Memory"] = image(icon = icon_directory, icon_state = "radial_delet")
+
 	if(canprint && !recording && !playing)
 		icons_available["Print Transcript"] = image(icon = icon_directory, icon_state = "radial_print")
 	
@@ -248,5 +251,7 @@
 				print_transcript()
 			if("Playback Memory")
 				playback_memory()
+			if("Clear Memory")
+				clear_memory()
 			if("Explode")
 				start_exp(5)
