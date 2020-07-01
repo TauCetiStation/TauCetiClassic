@@ -48,7 +48,7 @@
 		add_overlay(IO)
 
 
-/obj/item/weapon/storage/visuals/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/storage/visuals/utensil/attack(mob/living/M, mob/user, def_zone)
 	if(!istype(M))
 		return ..()
 
@@ -60,33 +60,14 @@
 		else
 			return ..()
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC])
-			to_chat(user, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
-			return
-	if(istype(M, /mob/living/carbon/slime))
-		to_chat(user, "<span class='rose'>This creature does not seem to have a mouth!</span>")
-		return
-
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/snacks/ball/toEat = contents[contents.len]
 		if(!istype(toEat))
 			return ..()
-		/*var/fullness = M.getNutrition() //first define this for all mobs (for simple mobs let it return 0)
-		if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-			to_chat(user, "<span class='rose'>You cannot force any more of [toEat] to go down [user == M ? "your" : "[M]'s"] throat.</span>")
-			return*/
-		if(user != M)
-			user.visible_message("<span class='info'>[user] attempts to feed [M] from [name].</span>")
-			if(!do_after(user, 3 SECONDS, target = M))
-				return
-			user.visible_message("<span class='info'>[user] feeds [M] with [name].</span>")
-		else
-			user.visible_message("<span class='info'>[user] eats [toEat] from [name].</span>")
-		toEat.reagents.trans_to_ingest(M, toEat.bitesize)
-		remove_from_storage(toEat)
-		qdel(toEat)
+
+		toEat.attack(M, user, def_zone)
+		if(toEat.reagents <= 0)
+			remove_from_storage(toEat)
 		return
 
 	return ..()

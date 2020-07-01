@@ -75,7 +75,7 @@
 					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!isslime(M))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
@@ -200,6 +200,25 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "loadedfood"
 	w_class = ITEM_SIZE_TINY
+
+/obj/item/weapon/reagent_containers/food/snacks/On_Consume(mob/M, mob/user)
+	if(!istype(loc, /obj/item/weapon/storage))
+		return ..()
+
+	if(!user)
+		return
+	if(isliving(M))
+		var/mob/living/L = M
+		if(taste)
+			L.taste_reagents(reagents)
+	if(reagents.total_volume <= 0)
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = loc
+			S.remove_from_storage(src)
+		else if(loc == user)
+			user.drop_from_inventory(src)	//so icons update :[
+		qdel(src)
+	return
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
