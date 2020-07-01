@@ -3095,7 +3095,7 @@
 /area/awaymission/stationcollision/midblock)
 "hT" = (
 /obj/effect/decal/remains/human,
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/item/weapon/kitchenknife,
 /obj/item/clothing/head/chefhat,
 /obj/effect/decal/cleanable/blood/splatter,

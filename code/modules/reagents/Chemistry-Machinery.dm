@@ -210,6 +210,10 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
+/obj/machinery/chem_dispenser/old/atom_init()
+	. = ..()
+	make_old()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_dispenser/constructable
@@ -1127,9 +1131,9 @@
 	//Fill machine with the plantbag!
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
 
+		var/obj/item/weapon/storage/bag/plants/P = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
+			P.remove_from_storage(G, src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				to_chat(user, "You fill the All-In-One grinder to the brim.")
@@ -1145,8 +1149,7 @@
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.remove_from_mob(O)
-	O.loc = src
+	user.drop_from_inventory(O, src)
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0

@@ -223,4 +223,5 @@ var/normal_next
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
-#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP((x - minx) * (maxy - miny) / (maxx - minx), miny, maxy)
+// Linear conversion from range of [minx, maxx] to [miny, maxy] regarding the value x. Clamps excesses.
+#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)

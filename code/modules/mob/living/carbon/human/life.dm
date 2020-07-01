@@ -649,15 +649,16 @@
 
 		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 		var/temp_adj = 0
-		if(!on_fire && !(is_type_organ(O_LUNGS, /obj/item/organ/internal/lungs/ipc) && is_bruised_organ(O_LUNGS))) //If you're on fire, you do not heat up or cool down based on surrounding gases. IPC's lungs are the cooling element. If it's broken, IPCs should cool down.
+		//If you're on fire, you do not heat up or cool down based on surrounding gases.
+		if(!on_fire)
 			if(loc_temp < bodytemperature)			//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
 			else if (loc_temp > bodytemperature)			//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
 			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
@@ -786,7 +787,6 @@
 
 /mob/living/carbon/human/proc/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
-		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 		return
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
@@ -1409,6 +1409,10 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 
+		if(blinded)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+
 		if(healths)
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
@@ -1562,28 +1566,20 @@
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
+	if(blinded)
+		set_EyesVision("greyscale")
+		return
 	var/obj/item/clothing/glasses/G = glasses
-	if(istype(G) && G.active)
-		if(istype(glasses, /obj/item/clothing/glasses/meson))
-			sightglassesmod = "meson"
-		else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-			sightglassesmod = "nvg"
-		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			sightglassesmod = "thermal"
-		else if(istype(glasses, /obj/item/clothing/glasses/science))
-			sightglassesmod = "sci"
-		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
-			sightglassesmod = "greyscale"
+	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
+		sightglassesmod = G.sightglassesmod
 
 	if(species.nighteyes)
-		if(sightglassesmod)
-			sightglassesmod = "nightsight_glasses"
-		else
-			var/light_amount = 0
-			var/turf/T = get_turf(src)
-			light_amount = round(T.get_lumcount()*10)
-			if(light_amount > 1)
-				sightglassesmod = null
+		var/light_amount = 0
+		var/turf/T = get_turf(src)
+		light_amount = round(T.get_lumcount()*10)
+		if(light_amount < 1)
+			if(sightglassesmod)
+				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
@@ -1736,6 +1732,16 @@
 
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
+
+	if(HAS_TRAIT(src, TRAIT_CPB))
+		return PULSE_NORM
+
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		return PULSE_NONE
+
+	if(IO.heart_status == HEART_FIBR)
+		return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

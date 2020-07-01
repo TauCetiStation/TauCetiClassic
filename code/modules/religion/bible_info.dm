@@ -22,10 +22,12 @@
 	B.item_state = item_state
 
 // The go-to "default".
-/datum/bible_info/custom/New(datum/religion/R)
-	name = "The Holy Book of [R.name]"
+/datum/bible_info/custom
 	icon_state = "bible"
 	item_state = "bible"
+
+/datum/bible_info/custom/New(datum/religion/R)
+	name = "The Holy Book of [R.name]"
 
 /datum/bible_info/bible
 	// why is The Dead Sea Scrolls here? somebody make a seperate religion please. ~Luduk
@@ -85,7 +87,7 @@
 	item_state = "koran"
 
 /datum/bible_info/scientology
-	pos_names = list("The Biography of L. Ron Hubbard","Dianetics")
+	pos_names = list("The Biography of L. Ron Hubbard", "Dianetics")
 	icon_state = "scientology"
 	item_state = "scientology"
 	laws_type = /datum/ai_laws/faith/scientology

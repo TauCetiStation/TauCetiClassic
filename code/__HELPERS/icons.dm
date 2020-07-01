@@ -665,12 +665,22 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 	if(!exact && (!A.dir || A.dir == SOUTH))
 		curdir = defdir
 	else if(exact)
 		curdir = SOUTH
 	else
 		curdir = A.dir
+
+	//Try to remove/optimize this section ASAP, CPU hog.
+	//Determines if there's directionals.
+	if(!noIcon && curdir != SOUTH)
+		if(!length(icon_states(icon(curicon, curstate, curdir))))
+			base_icon_dir = SOUTH
+
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -683,7 +693,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend

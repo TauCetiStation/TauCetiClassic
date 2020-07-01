@@ -40,7 +40,7 @@
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
+		if(istype(H.shoes, /obj/item/clothing/shoes/boots/galoshes))
 			. *= 0.5
 
 /obj/structure/stool/bed/chair/janitorialcart/on_propelled_bump(atom/A)
@@ -65,6 +65,10 @@
 //Altclick the cart with a reagent container to pour things into the bucket without putting the bottle in trash
 /obj/structure/stool/bed/chair/janitorialcart/AltClick(mob/living/user)
 	if(user.next_move > world.time || user.incapacitated() || !Adjacent(user))
+		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	var/obj/item/I = user.get_active_hand()

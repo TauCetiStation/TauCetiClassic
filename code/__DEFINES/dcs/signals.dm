@@ -21,6 +21,21 @@
 /// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
+// /datum/religion_rites signals
+/// from base of religion_rites/on_chosen(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
+/// from base of religion_rites/required_checks(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
+/// from base of religion_rites/before_perform_rite(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
+/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
+/// from base of religion_rites/on_invocation(): (/mob, /obj/structure/altar_of_gods, stage)
+#define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
+/// from base of religion_rites: (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
+	#define COMPONENT_CHECK_FAILED 1
+
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
 #define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"
@@ -37,6 +52,9 @@
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 
 // /atom signals
+/// emp_act() : severity
+#define COMSIG_ATOM_EMP_ACT "atom_emp_act"
+	#define COMPONENT_PREVENT_EMP 1
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
@@ -115,6 +133,9 @@
 	// #define COMPONENT_NO_MOUSEDROP 1
 
 // mob signals
+/// from  base of mob/ClickOn(): (atom/target, params)
+#define COMSIG_MOB_CLICK "mob_click"
+	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
@@ -138,7 +159,6 @@
 #define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"
 /// from base of mob/CtrlShiftClickOn(): (atom/target)
 #define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"
-	#define COMPONENT_CANCEL_CLICK 1
 /// from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"
 /// from slime ShiftClickOn(): (/mob)
@@ -149,6 +169,9 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 /// from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+/// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
+#define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
+	#define COMPONENT_ATTACK_SHIELDED 1
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -159,6 +182,11 @@
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)
 #define COMSIG_TIPS_REMOVE "comsig_tip_remove"
+
+/// send this signal to cause all forcefield components to protect a thing: (atom/to_protect)
+#define COMSIG_FORCEFIELD_PROTECT "comsig_forcefield_protect"
+/// send this signal to cause all forcefield components to unprotect a thing: (atom/to_unprotect)
+#define COMSIG_FORCEFIELD_UNPROTECT "comsig_forcefield_unprotect"
 
 /// send this signal to add /datum/name_modifier to a mob: (name_modifier_type, strength)
 #define COMSIG_NAME_MOD_ADD "comsig_mob_mod_add"

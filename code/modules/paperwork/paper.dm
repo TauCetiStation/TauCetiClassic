@@ -438,29 +438,28 @@
 		update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
-	..()
+/obj/item/weapon/paper/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
-	if(istype(P, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = P
+	if(istype(I, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = I
 		if(paper.crumpled)
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 
 	if(crumpled)
-		if(!(istype(P, /obj/item/weapon/lighter)))
+		if(!(istype(I, /obj/item/weapon/lighter)))
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 		else
-			burnpaper(P, user)
+			burnpaper(I, user)
 
-	else if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
-		if (istype(P, /obj/item/weapon/paper/carbon))
-			var/obj/item/weapon/paper/carbon/C = P
+	else if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
+		if (istype(I, /obj/item/weapon/paper/carbon))
+			var/obj/item/weapon/paper/carbon/C = I
 			if (!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
@@ -469,9 +468,9 @@
 		var/obj/item/weapon/paper_bundle/B = new(loc)
 		if (name != "paper")
 			B.name = name
-		else if (P.name != "paper" && P.name != "photo")
-			B.name = P.name
-		user.drop_from_inventory(P)
+		else if(I.name != "paper" && I.name != "photo")
+			B.name = I.name
+		user.drop_from_inventory(I)
 		if (istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
@@ -501,44 +500,42 @@
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You clip the [P.name] to [(src.name == "paper") ? "the paper" : src.name].</span>")
-		src.loc = B
-		P.loc = B
+		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
+		forceMove(B)
+		I.forceMove(B)
 		B.amount++
 		B.update_icon()
 		if (istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
 			s.update_ui_after_item_removal()
 
-	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
-			P:RenamePaper(user,src)
+	else if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
+		if ( istype(I, /obj/item/weapon/pen/robopen) && I:mode == 2 )
+			I:RenamePaper(user,src)
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)
 		//openhelp(user)
-		add_fingerprint(user)
-		return
 
-	else if(istype(P, /obj/item/weapon/stamp))
+	else if(istype(I, /obj/item/weapon/stamp))
 		if(!in_range(src, user))
 			return
 
-		if(istype(P, /obj/item/weapon/stamp/clown))
+		if(istype(I, /obj/item/weapon/stamp/clown))
 			if(!clown)
 				to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 				return
 
-		var/obj/item/weapon/stamp/S = P
+		var/obj/item/weapon/stamp/S = I
 		S.stamp_paper(src)
 
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	else if(istype(P, /obj/item/weapon/lighter))
-		burnpaper(P, user)
+	else if(istype(I, /obj/item/weapon/lighter))
+		burnpaper(I, user)
 
-	add_fingerprint(user)
-	return
+	else
+		return ..()
 
 /*
  * Premade paper
@@ -609,7 +606,7 @@
 
 /obj/item/weapon/paper/brig_arsenal
 	name = "Armory Inventory"
-	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Shield<li>Stun Baton</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>3 W&J PP Pistols<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>3 Laser Rifles<br>2 Ion Rifles<br>2 L10-c Carbines<br>1 Grenade Launcher<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
+	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>1 Riot Set:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>4 Energy Guns<br>1 Ion Rifle<br>1 L10-c Carbine<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
 
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"

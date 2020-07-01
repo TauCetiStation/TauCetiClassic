@@ -30,7 +30,9 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/taperoll/engineering)
+		/obj/item/taperoll/engineering,
+		/obj/item/weapon/gun/energy/pyrometer,
+		/obj/item/device/science_tool)
 
 
 /obj/item/weapon/storage/belt/utility/full/atom_init()
@@ -160,7 +162,7 @@
 		/obj/item/device/pda,
 		/obj/item/weapon/melee,
 		/obj/item/taperoll/police,
-		/obj/item/weapon/gun/energy/taser,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/shield/riot/tele,
 		/obj/item/device/flashlight/seclite
 		)
@@ -225,7 +227,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/gun/energy/taser,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
 		/obj/item/clothing/glasses/hud/security,

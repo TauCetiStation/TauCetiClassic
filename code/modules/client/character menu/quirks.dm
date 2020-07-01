@@ -3,8 +3,9 @@
 		to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
 		return
 
-	if(!SSquirks.quirks.len)
-		return "The quirk subsystem hasn't finished initializing, please hold..."
+	if(!SSquirks.initialized)
+		to_chat(user, "The quirk subsystem hasn't finished initializing, please hold...")
+		return
 
 	. += "<center><b>Choose quirk setup</b></center>"
 	. += "<div align='center'>Left-click to add or remove quirks. You need one negative quirk for every positive quirk.<br>"
@@ -15,13 +16,14 @@
 	. += "<b>Quirk balance remaining:</b> [GetQuirkBalance()]<br>"
 	. += "<a href='?_src_=prefs;preference=quirk;task=reset'>Reset Quirks</a></center>"
 	. += "<table bgcolor='#ffeef0' align='center' width='570px' cellspacing='0'>"
-	for(var/V in SSquirks.quirks)
-		var/datum/quirk/T = SSquirks.quirks[V]
+	for(var/Q in allowed_quirks)
+		var/datum/quirk/T = SSquirks.quirks[Q]
 		var/quirk_name = initial(T.name)
 		var/has_quirk
 		var/quirk_cost = initial(T.value) * -1
 		var/lock_reason = "This quirk is unavailable."
 		var/quirk_conflict = FALSE
+
 		for(var/_V in all_quirks)
 			if(_V == quirk_name)
 				has_quirk = TRUE
@@ -31,6 +33,7 @@
 				has_quirk = FALSE
 			else
 				quirk_cost *= -1 //invert it back, since we'd be regaining this amount
+
 		if(quirk_cost > 0)
 			quirk_cost = "+[quirk_cost]"
 		var/font_color = "#4949b5"
@@ -46,6 +49,57 @@
 			. += "<td><font size=2><i>[initial(T.desc)]</i></font></td>"
 			. += "</tr>"
 	. += "</table>"
+
+/// Is the quirk even hypothetically allowed for this pref. Checks for species blacklist.
+/// This proc is "low-level", don't pass user input quirk in it, use CanHaveQuirk.
+/datum/preferences/proc/IsAllowedQuirk(quirk_name)
+	if(SSquirks.quirk_blacklist_species[quirk_name] && (species in SSquirks.quirk_blacklist_species[quirk_name]))
+		return FALSE
+
+	return TRUE
+
+/// Is the quirk allowed for the pref with some number of quirks.
+/// This proc also does quirk-subsystem related checks to ensure that user input isn't bullshit.
+/datum/preferences/proc/CanHaveQuirk(mob/user, quirk_name, show_warning = TRUE)
+	if(!SSquirks)
+		if(show_warning)
+			to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
+		return FALSE
+
+	if(!SSquirks.initialized)
+		if(show_warning)
+			to_chat(user, "The quirk subsystem hasn't finished initializing, please hold...")
+		return FALSE
+
+	if(!SSquirks.quirks[quirk_name])
+		return FALSE
+
+	for(var/V in SSquirks.quirk_blacklist) //V is a list
+		var/list/L = V
+		for(var/Q in all_quirks)
+			//two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+			if((quirk_name in L) && (Q in L) && !(Q == quirk_name))
+				if(user && show_warning)
+					to_chat(user, "<span class='danger'>[quirk_name] is incompatible with [Q].</span>")
+				return FALSE
+
+	// If the quirk isn't even hypothetically allowed, pref can't have it.
+	// If IsAllowedQuirk() for some reason ever becomes more computationally
+	// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+	return IsAllowedQuirk(quirk_name)
+
+/datum/preferences/proc/UpdateAllowedQuirks()
+	if(!SSquirks)
+		return
+
+	if(!SSquirks.initialized)
+		return
+
+	allowed_quirks = list()
+
+	for(var/quirk_name in SSquirks.quirks)
+		if(IsAllowedQuirk(quirk_name))
+			allowed_quirks += quirk_name
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
@@ -64,19 +118,8 @@
 	switch(href_list["task"])
 		if("update")
 			var/quirk = href_list["quirk"]
-			if(!SSquirks.quirks[quirk])
+			if(!CanHaveQuirk(user, quirk))
 				return
-
-			if(SSquirks.quirk_blacklist_species[quirk] && (species in SSquirks.quirk_blacklist_species[quirk]))
-				to_chat(user, "<span class='danger'>[quirk] is incompatible with [species].</span>")
-				return
-
-			for(var/V in SSquirks.quirk_blacklist) //V is a list
-				var/list/L = V
-				for(var/Q in all_quirks)
-					if((quirk in L) && (Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-						to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
-						return
 
 			var/value = SSquirks.quirk_points[quirk]
 			if(value == 0)

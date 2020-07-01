@@ -73,22 +73,21 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user)
-	..()
-	//var/obj/icon = src
-
-	//if (istype(src.loc, /obj/item/assembly))
-	//	icon = src.loc // wtf is this?
-
-	if (istype(W, /obj/item/device/analyzer))
+/obj/item/weapon/tank/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/analyzer))
 		return
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
+
+	else if (istype(I,/obj/item/latexballon))
+		var/obj/item/latexballon/LB = I
 		LB.blow(src)
 		add_fingerprint(user)
 
-	if(istype(W, /obj/item/device/assembly_holder))
-		bomb_assemble(W,user)
+	else if(istype(I, /obj/item/device/assembly_holder))
+		bomb_assemble(I, user)
+		return
+
+	else
+		return ..()
 
 /obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))

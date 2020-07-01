@@ -576,9 +576,11 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
-	..(Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
 	updatehealth()
-	return 2
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if(camera)

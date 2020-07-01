@@ -59,7 +59,6 @@
 	var/can_be_holstered = FALSE
 	var/uncleanable = 0
 	var/toolspeed = 1
-
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
@@ -69,6 +68,8 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
+	var/list/tools = list()
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -400,7 +401,6 @@
 	user.put_in_active_hand(src)
 	return
 
-
 /obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
@@ -412,16 +412,17 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+/obj/item/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(loc))
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	return FALSE
+			return FALSE
+	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.

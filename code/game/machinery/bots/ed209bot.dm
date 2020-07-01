@@ -357,10 +357,8 @@
 
 
 
-/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W, mob/user)
-	..()
-
-	if(istype(W, /obj/item/weapon/pen))
+/obj/item/weapon/ed209_assembly/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
@@ -369,11 +367,12 @@
 		created_name = t
 		return
 
+	var/did_something = FALSE
+
 	switch(build_step)
 		if(0, 1)
-			if(istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg))
-				user.drop_item()
-				qdel(W)
+			if(istype(I, /obj/item/robot_parts/l_leg) || istype(I, /obj/item/robot_parts/r_leg))
+				qdel(I)
 				build_step++
 				to_chat(user, "<span class='notice'>You add the robot leg to [src].</span>")
 				name = "legs/frame assembly"
@@ -383,102 +382,109 @@
 				else
 					item_state = "ed209_legs"
 					icon_state = "ed209_legs"
+				did_something = TRUE
 
 		if(2)
-			if(istype(W, /obj/item/clothing/suit/lasertag/redtag))
+			if(istype(I, /obj/item/clothing/suit/lasertag/redtag))
 				lasertag_color = "red"
-			else if(istype(W, /obj/item/clothing/suit/lasertag/bluetag))
+			else if(istype(I, /obj/item/clothing/suit/lasertag/bluetag))
 				lasertag_color = "blue"
-			if(lasertag_color || istype(W, /obj/item/clothing/suit/storage/flak))
-				user.drop_item()
-				qdel(W)
+			if(lasertag_color || istype(I, /obj/item/clothing/suit/storage/flak))
+				qdel(I)
 				build_step++
 				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
 				name = "vest/legs/frame assembly"
 				item_state = "[lasertag_color]ed209_shell"
 				icon_state = "[lasertag_color]ed209_shell"
+				did_something = TRUE
 
 		if(3)
-			if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
+			if(iswelder(I))
+				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 					build_step++
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You welded the vest to [src].</span>")
+				did_something = TRUE
 		if(4)
-			if(istype(W, /obj/item/clothing/head/helmet))
-				user.drop_item()
-				qdel(W)
+			if(istype(I, /obj/item/clothing/head/helmet))
+				qdel(I)
 				build_step++
 				to_chat(user, "<span class='notice'>You add the helmet to [src].</span>")
 				name = "covered and shielded frame assembly"
 				item_state = "[lasertag_color]ed209_hat"
 				icon_state = "[lasertag_color]ed209_hat"
+				did_something = TRUE
 
 		if(5)
-			if(isprox(W))
-				user.drop_item()
-				qdel(W)
+			if(isprox(I))
+				qdel(I)
 				build_step++
 				to_chat(user, "<span class='notice'>You add the prox sensor to [src].</span>")
 				name = "covered, shielded and sensored frame assembly"
 				item_state = "[lasertag_color]ed209_prox"
 				icon_state = "[lasertag_color]ed209_prox"
+				did_something = TRUE
 
 		if(6)
-			if(iscoil(W))
-				if(user.is_busy(src)) return
+			if(iscoil(I))
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
-				if(W.use_tool(src, user, 40, amount = 1, volume = 50))
+				if(I.use_tool(src, user, 40, amount = 1, volume = 50))
 					if(build_step == 6)
 						build_step++
 						to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
 						name = "wired ED-209 assembly"
+				did_something = TRUE
 
 		if(7)
 			switch(lasertag_color)
 				if("blue")
-					if(!istype(W, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("red")
-					if(!istype(W, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(W, /obj/item/weapon/gun/energy/taser))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
 						return
 					name = "taser ED-209 assembly"
 				else
 					return
 			build_step++
-			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
+			to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 			item_state = "[lasertag_color]ed209_taser"
 			icon_state = "[lasertag_color]ed209_taser"
-			user.drop_item()
-			qdel(W)
+			qdel(I)
+			did_something = TRUE
 
 		if(8)
-			if(isscrewdriver(W))
-				if(user.is_busy(src)) return
+			if(isscrewdriver(I))
+				if(user.is_busy(src))
+					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100))
 					if(build_step == 8)
 						build_step++
 						name = "armed [name]"
 						to_chat(user, "<span class='notice'>Taser gun attached.</span>")
+				did_something = TRUE
 
 		if(9)
-			if(istype(W, /obj/item/weapon/stock_parts/cell))
+			if(istype(I, /obj/item/weapon/stock_parts/cell))
 				build_step++
 				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/secbot/ed209(T, created_name, lasertag_color)
-				user.drop_item()
-				qdel(W)
-				user.drop_from_inventory(src)
+				qdel(I)
 				qdel(src)
+				did_something = TRUE
 
+	if(!did_something)
+		return ..()
 
 /obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(!disabled && istype(Proj, /obj/item/projectile/beam/lasertag))
@@ -487,7 +493,8 @@
 			disabled = TRUE
 			qdel(Proj)
 			addtimer(VARSET_CALLBACK(src, disabled, FALSE), 100)
-	..()
+		return
+	return ..()
 
 /obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
 	..()

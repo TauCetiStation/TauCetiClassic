@@ -1,11 +1,10 @@
-
-
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
 	volume = 25
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
@@ -558,15 +557,7 @@
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda/atom_init()
-	. = ..()
-	reagents.add_reagent("sodawater", volume)
-	on_reagent_change()
+	list_reagents = list("sodawater" = 25)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola/atom_init()
-	. = ..()
-	reagents.add_reagent("cola", volume)
-	on_reagent_change()
+	list_reagents = list("cola" = 25)

@@ -65,7 +65,6 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
-	..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
@@ -82,12 +81,11 @@
 			user.drop_from_inventory(O)
 		return
 
-	else //Trying to wield it
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name), wieldsound)
-			if(W)
-				wield()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/W = H.wield(src, initial(name), wieldsound)
+		if(W)
+			wield()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -222,14 +220,14 @@
 /obj/item/weapon/twohanded/dualsaber/proc/can_spin(mob/user)
 	return wielded
 
-/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, obj/effect/effect/weapon_sweep/sweep_image)
+/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	var/list/directions_opposite = list()
 	for(var/dir_ in directions)
 		directions_opposite += turn(dir_, 180)
 
 	var/list/sweep_objects = list()
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_image)
-	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_image)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
 	return sweep_objects
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
@@ -260,10 +258,10 @@
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W))
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I))
 		if(!hacked)
-			hacked = 1
+			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			light_color = ""
