@@ -60500,7 +60500,6 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
 /obj/item/weapon/wrench,
 /turf/simulated/floor{
 	icon_state = "dark"
