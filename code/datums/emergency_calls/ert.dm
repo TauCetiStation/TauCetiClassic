@@ -34,7 +34,7 @@
 
 	if(!leader)
 		leader = H
-		H.equipOutfit(/datum/outfit/ert/leader)
+		H.equipOutfit(/datum/outfit/ert/nt/leader)
 		to_chat(H, "<span class='notice'>You are the leader of this Nanotrasen contractor team in responding to the distress signal sent out nearby. Address the situation and get your team to safety!</span>")
 		return
 
