@@ -20,6 +20,9 @@
 
 	return h_style
 
+/proc/random_gradient_style()
+	return pick(hair_gradients)
+
 /proc/random_ipc_monitor(ipc_head)
 	var/h_style = "Bald"
 	var/list/valid_hairstyles = list()
