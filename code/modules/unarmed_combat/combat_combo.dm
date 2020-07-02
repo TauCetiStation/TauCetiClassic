@@ -177,7 +177,7 @@ var/global/list/combat_combos_by_name = list()
 
 // effect - effect to apply, duration - base duration to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
 // Returns TRUE if effect was applied.
-/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, min_value = -1)
+/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, zone = null, min_value = -1)
 	var/val = duration
 	if(scale_size_exponent != 0.0)
 		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
@@ -188,22 +188,30 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : attacker.get_targetzone(), "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
 		return victim.apply_effect(duration, effect, blocked = armor_check)
 	return FALSE
 
 /datum/combat_combo/proc/do_combo(mob/living/victim, mob/living/attacker, delay)
 	var/endtime = world.time + delay
+
 	while(world.time < endtime)
 		stoplag()
 		if(QDELETED(victim))
 			return FALSE
 		if(QDELETED(attacker))
 			return FALSE
+
 		if(victim.notransform || attacker.notransform)
 			return FALSE
 		if(!attacker.combo_animation)
 			return FALSE
+
+		// Since victim or attacker can suddenly get into something, we need to check both ways
+		// (since Adjacent does turf-level checks, and isturf(loc) checks only on side of the one issuing the proc)
+		if(!attacker.Adjacent(victim) || !victim.Adjacent(attacker))
+			return FALSE
+
 		if(additional_checks(victim, attacker))
 			return FALSE
 	return TRUE
