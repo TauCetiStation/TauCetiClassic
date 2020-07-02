@@ -173,8 +173,8 @@
 	. += 	"</tr>"
 	. += "</table>"	//Main body table end
 
-/datum/preferences/proc/color_square(red, green, blue)
-	var/color = "#[num2hex(red, 2)][num2hex(green, 2)][num2hex(blue)]"
+/proc/color_square(red, green, blue, hex)
+	var/color = hex ? hex : "#[num2hex(red, 2)][num2hex(green, 2)][num2hex(blue, 2)]"
 	return "<font face='fixedsys' size='3' color='[color]'><table border cellspacing='0' style='display:inline;' bgcolor='[color]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
