@@ -63,7 +63,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	set name = "Debug Controller"
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
 
-	if(!holder)	return
+	if(!holder || !check_rights(R_DEBUG))
+		return
 	switch(controller)
 		if("failsafe")
 			debug_variables(Failsafe)
