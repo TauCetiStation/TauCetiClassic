@@ -21,12 +21,6 @@
  * Text sanitization
  */
 
-// Can be used almost the same way as normal input for text
-/proc/clean_input(Message, Title, Default, mob/user=usr)
-	var/txt = input(user, Message, Title, Default) as text | null
-	if(txt)
-		return html_encode(txt)
-
 //Used for preprocessing entered text
 /proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
 	if(!input)
