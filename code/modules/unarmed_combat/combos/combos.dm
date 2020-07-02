@@ -76,7 +76,8 @@
 	allowed_target_zones = list(BP_CHEST)
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
-	apply_effect(3, WEAKEN, victim, attacker, min_value=1)
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
 
@@ -101,6 +102,9 @@
 /datum/combat_combo/slide_kick/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
 	var/slide_dir = get_dir(attacker, victim)
 
@@ -135,7 +139,7 @@
 				if(L.is_bigger_than(attacker))
 					continue slide_kick_loop
 
-				if(!apply_effect(2, WEAKEN, L, attacker, min_value=1))
+				if(!apply_effect(2, WEAKEN, L, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1))
 					continue slide_kick_loop
 
 				var/end_string = "to the ground!"
@@ -199,6 +203,9 @@
 	require_arm = TRUE
 
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
+
 	victim.Stun(2)
 
 	if(victim.buckled)
@@ -206,34 +213,28 @@
 	if(attacker.buckled)
 		attacker.buckled.unbuckle_mob()
 
-	attacker.Grab(victim, GRAB_AGGRESSIVE)
-	var/obj/item/weapon/grab/victim_G
-	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-		if(G.affecting == victim)
-			if(G.state != GRAB_AGGRESSIVE)
-				G.set_state(GRAB_AGGRESSIVE)
-			victim_G = G
-			break
+	var/obj/item/weapon/grab/victim_G = prepare_grab(victim, attacker, GRAB_AGGRESSIVE)
+	if(!istype(victim_G))
+		return
 
-	if(victim_G)
-		var/target_zone = attacker.get_targetzone()
-		var/armor_check = victim.run_armor_check(target_zone, "melee")
+	var/target_zone = attacker.get_targetzone()
+	var/armor_check = victim.run_armor_check(target_zone, "melee")
 
-		if(ishuman(victim))
-			var/mob/living/carbon/human/H = victim
-			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
-			victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
-			if(armor_check < 30)
-				to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
-				victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+		victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
+		if(armor_check < 30)
+			to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
+			victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
 
-		victim_G.force_down = TRUE
-		apply_effect(3, WEAKEN, victim, attacker, min_value=1)
-		victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
+	victim_G.force_down = TRUE
+	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
-		step_to(attacker, victim)
-		attacker.set_dir(EAST) //face the victim
-		victim.set_dir(SOUTH) //face up
+	step_to(attacker, victim)
+	attacker.set_dir(EAST) //face the victim
+	victim.set_dir(SOUTH) //face up
 
 
 
@@ -261,6 +262,9 @@
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
 	attacker.set_dir(pick(NORTH, SOUTH)) // So they will appear sideways, as if they are actually knocking with their fist.
 
@@ -331,8 +335,8 @@
 
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
-	apply_effect(1, WEAKEN,  victim, attacker, min_value=1)
-	apply_damage(18, victim, attacker, zone=BP_HEAD)
+	apply_effect(1, WEAKEN,  victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	apply_damage(18, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/C = victim
@@ -371,6 +375,9 @@
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
 	var/DTM = get_dir(attacker, victim)
 	var/victim_dir = get_dir(victim, attacker)
@@ -430,8 +437,8 @@
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
 
-	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
-	apply_damage(23, victim, attacker)
+	apply_effect(4, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	apply_damage(23, victim, attacker, attack_obj=attack_obj)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/suplex/execute(mob/living/victim, mob/living/attacker)
@@ -462,6 +469,8 @@
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
 	var/DTM = get_dir(attacker, victim)
 	var/shift_x = 0
@@ -518,8 +527,8 @@
 		if(L == attacker)
 			continue
 		if(L.lying || L.resting || L.crawling)
-			apply_damage(28, L, attacker)
-		apply_effect(6, WEAKEN, L, attacker, min_value = 1)
+			apply_damage(28, L, attacker, attack_obj=attack_obj)
+		apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value = 1)
 
 		event_log(L, attacker, "Diving Elbow Drop bypasser.")
 
@@ -555,6 +564,8 @@
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
 	var/dropkick_dir = get_dir(attacker, victim)
 	var/face_dir = get_dir(victim, attacker)
@@ -658,7 +669,7 @@
 					L.pixel_x = prev_info_el["pix_x"]
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
-					apply_effect(4, WEAKEN, L, attacker, min_value=1)
+					apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
 				return
 
 	for(var/j in 1 to i)
@@ -667,7 +678,7 @@
 		L.pixel_x = prev_info_el["pix_x"]
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
-		apply_effect(4, WEAKEN, L, attacker, min_value=1)
+		apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
@@ -694,66 +705,52 @@
 	if(!do_combo(victim, attacker, 3))
 		return
 
-	attacker.Grab(victim, GRAB_NECK)
-	var/success = FALSE
-	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-		if(G.affecting == victim)
-			if(G.state != GRAB_NECK)
-				G.set_state(GRAB_NECK)
-			success = TRUE
-			break
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
-	if(success)
-		var/try_steps = 6
-		var/charge_dir = attacker.dir
+	var/obj/item/weapon/grab/victim_G = prepare_grab(victim, attacker, GRAB_NECK)
+	if(!istype(victim_G))
+		return
 
-		try_steps_loop:
-			for(var/try_to_step in 1 to try_steps)
-				var/obj/item/weapon/grab/victim_G
-				grab_search:
-					for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-						if(G.affecting == victim)
-							victim_G = G
-							break grab_search
+	var/try_steps = 6
+	var/charge_dir = attacker.dir
 
-				if(!victim_G) // Somebody disarmed us, stop this.
-					break
+	try_steps_loop:
+		for(var/try_to_step in 1 to try_steps)
+			if(QDELETED(victim_G)) // Somebody disarmed us, stop this.
+				break
 
-				var/turf/T = get_step(attacker, charge_dir)
-				if(attacker.client)
-					attacker.client.Move(T, charge_dir, forced=TRUE)
-				else
-					attacker.Move(T, charge_dir)
+			var/turf/T = get_step(attacker, charge_dir)
+			if(attacker.client)
+				attacker.client.Move(T, charge_dir, forced=TRUE)
+			else
+				attacker.Move(T, charge_dir)
 
-				attacker.set_dir(charge_dir)
-				victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
+			attacker.set_dir(charge_dir)
+			victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = charge_dir)
 
-				if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
-					var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
-					for(var/mob/living/L in to_check)
-						if(L.is_bigger_than(victim))
-							continue
+			if(T != attacker.loc) // We bumped into something, so we bumped our victim into it...
+				var/list/to_check = T.contents + attacker.loc.contents - list(attacker)
+				for(var/mob/living/L in to_check)
+					if(L.is_bigger_than(victim))
+						continue
 
-						var/obj/structure/table/facetable = locate() in T
-						if(facetable && facetable.Adjacent(attacker))
-							facetable.attackby(victim_G, attacker)
-							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
-						else
-							playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-							victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
+					var/obj/structure/table/facetable = locate() in T
+					if(facetable && facetable.Adjacent(attacker))
+						facetable.attackby(victim_G, attacker)
+						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
+					else
+						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
 
-						apply_effect(6, WEAKEN, L, attacker, min_value=1)
-						apply_damage(33, L, attacker)
-					break try_steps_loop
+					apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+					apply_damage(33, L, attacker, attack_obj=attack_obj)
+				break try_steps_loop
 
-				if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
-					break try_steps_loop
+			if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
+				break try_steps_loop
 
-	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-		if(G.affecting == victim)
-			attacker.drop_from_inventory(G)
-			break
+	destroy_grabs(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/charge/execute(mob/living/victim, mob/living/attacker)
@@ -783,86 +780,72 @@
 	if(!do_combo(victim, attacker, 3))
 		return
 
-	attacker.Grab(victim, GRAB_AGGRESSIVE)
-	var/success = FALSE
-	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-		if(G.affecting == victim)
-			if(G.state != GRAB_AGGRESSIVE)
-				G.set_state(GRAB_AGGRESSIVE)
-			success = TRUE
-			break
+	var/list/attack_obj = attacker.get_unarmed_attack()
 
-	if(success)
-		victim.forceMove(attacker.loc)
-		var/cur_spin_time = 3
-		grab_stages_loop:
-			for(var/grab_stages in list(GRAB_AGGRESSIVE, GRAB_NECK, GRAB_NECK, GRAB_KILL))
-				var/obj/item/weapon/grab/victim_G
-				for(var/i in 1 to 4)
-					attacker.set_dir(turn(attacker.dir, 90))
-					grab_search:
-						for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-							if(G.affecting == victim)
-								victim_G = G
-								break grab_search
+	var/obj/item/weapon/grab/victim_G = prepare_grab(victim, attacker, GRAB_AGGRESSIVE)
+	if(!istype(victim_G))
+		return
 
-					if(!victim_G)
-						break grab_stages_loop
+	victim.forceMove(attacker.loc)
+	var/cur_spin_time = 3
+	grab_stages_loop:
+		for(var/grab_stages in list(GRAB_AGGRESSIVE, GRAB_NECK, GRAB_NECK, GRAB_KILL))
+			for(var/i in 1 to 4)
+				attacker.set_dir(turn(attacker.dir, 90))
 
-					victim_G.adjust_position(adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
+				if(QDELETED(victim_G))
+					break grab_stages_loop
 
-					victim.Stun(max(0, 2 - victim.stunned))
+				victim_G.adjust_position(adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
+				victim.Stun(max(0, 2 - victim.stunned))
 
-					if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
-						break grab_stages_loop
+				if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
+					break grab_stages_loop
 
-				if(grab_stages != victim_G.state)
-					victim_G.set_state(grab_stages, adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
-					cur_spin_time -= 1
+			if(grab_stages != victim_G.state)
+				victim_G.set_state(grab_stages, adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
+				cur_spin_time -= 1
 
-				if(grab_stages == GRAB_KILL)
-					var/turf/target = get_turf(attacker)
+			if(grab_stages == GRAB_KILL)
+				var/turf/target = get_turf(attacker)
 
-					var/turf/start_T = target
-					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
+				var/turf/start_T = target
+				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 
-					target_search:
-						for(var/i in 1 to 7)
-							target = get_step(target, attacker.dir)
-							if(istype(target, /turf/simulated/wall))
-								break target_search
+				target_search:
+					for(var/i in 1 to 7)
+						target = get_step(target, attacker.dir)
+						if(istype(target, /turf/simulated/wall))
+							break target_search
 
-					if(!target || !victim_G)
-						break grab_stages_loop
+				if(!target || !victim_G)
+					break grab_stages_loop
 
-					var/mob/living/M = victim_G.throw_held()
-					qdel(victim_G)
-					if(!istype(M))
-						break grab_stages_loop
+				var/mob/living/M = victim_G.throw_held()
+				qdel(victim_G)
+				if(!istype(M))
+					break grab_stages_loop
 
-					M.visible_message("<span class='rose'>[attacker] has thrown [M] with immense force!</span>")
+				M.visible_message("<span class='rose'>[attacker] has thrown [M] with immense force!</span>")
 
-					attacker.newtonian_move(get_dir(target, attacker))
+				attacker.newtonian_move(get_dir(target, attacker))
 
-					var/turf/end_T = target
-					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+				var/turf/end_T = target
+				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-					M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
+				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
-					M.throw_at(target, 6, 8, attacker)
-					apply_effect(7, WEAKEN, M, attacker, min_value=1)
+				M.throw_at(target, 6, 8, attacker)
+				apply_effect(7, WEAKEN, M, attacker, attack_obj=attack_obj, min_value=1)
 
-					if(ishuman(src))
-						var/mob/living/carbon/human/H = src
-						if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-							var/obj/item/clothing/suit/V = H.wear_suit
-							V.attack_reaction(H, REACTION_THROWITEM)
-					return
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+						var/obj/item/clothing/suit/V = H.wear_suit
+						V.attack_reaction(H, REACTION_THROWITEM)
+				return
 
-	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
-		if(G.affecting == victim)
-			attacker.drop_from_inventory(G)
-			break
+	destroy_grabs()
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/spin_throw/execute(mob/living/victim, mob/living/attacker)

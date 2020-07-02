@@ -63,6 +63,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
+	var/use_skirt = FALSE				//using skirt uniform version
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
@@ -398,6 +399,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
+	character.use_skirt = use_skirt
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(character.gender in list(PLURAL, NEUTER))
