@@ -155,12 +155,13 @@ var/global/list/combat_combos_by_name = list()
 // This proc scales damage/stun based on size/damage/whatever relevant to this combo.
 // base_dam - base damage to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
 // Returns TRUE if damage was dealt.
-/datum/combat_combo/proc/apply_damage(base_dam, mob/living/victim, mob/living/attacker, zone = null, min_value = -1)
+/datum/combat_combo/proc/apply_damage(base_dam, mob/living/victim, mob/living/attacker, zone = null, list/attack_obj = null, min_value = -1)
 	var/val = base_dam
 	if(scale_size_exponent != 0.0)
 		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
 
-	var/list/attack_obj = attacker.get_unarmed_attack()
+	if(!attack_obj)
+		attack_obj = attacker.get_unarmed_attack()
 	val += attack_obj["damage"] * scale_damage_coeff
 
 	if(min_value < 0 || val >= min_value)
@@ -175,14 +176,24 @@ var/global/list/combat_combos_by_name = list()
 		)
 	return FALSE
 
-// effect - effect to apply, duration - base duration to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
-// Returns TRUE if effect was applied.
-/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, zone = null, min_value = -1)
+/**
+	This proc handles effect scaling based on all the combo factors specified in class.
+
+	* effect - effect to apply
+	* duration - base duration to scale
+	* zone - zone where a hit should occur
+	* attack_obk - all the stats of an attack that provoked the combo
+	* min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+
+	* Returns TRUE if effect was applied succesfully.
+**/
+/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, zone = null, list/attack_obj = null, min_value = -1)
 	var/val = duration
 	if(scale_size_exponent != 0.0)
 		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
 
-	var/list/attack_obj = attacker.get_unarmed_attack()
+	if(!attack_obj)
+		attack_obj = attacker.get_unarmed_attack()
 	val += attack_obj["damage"] * scale_effect_coeff
 
 	if(min_value < 0 || val >= min_value)
@@ -283,3 +294,33 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/// A lot of combos currently have such mechanic, so it's somewhat reasonable to abstract it here.
+/datum/combat_combo/proc/prepare_grab(mob/living/victim, mob/living/attacker, state)
+	var/obj/item/weapon/grab/victim_G
+
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		if(G.affecting == victim)
+			if(G.state != state)
+				G.set_state(state)
+			victim_G = G
+			break
+
+	if(!victim_G)
+		victim_G = attacker.Grab(victim, state)
+
+	if(!istype(victim_G))
+		return
+
+	// To prevent bugs with multiple grabs, some of which are of different state.
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		if(G == victim_G)
+			continue
+		attacker.drop_from_inventory(G)
+
+	return victim_G
+
+/// For combos that prepare grabs, at the end of the combo - destory them.
+/datum/combat_combo/proc/destroy_grabs(mob/living/victim, mob/living/attacker)
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		attacker.drop_from_inventory(G)
