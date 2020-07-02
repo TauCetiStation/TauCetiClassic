@@ -123,8 +123,7 @@
 				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
 				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
-			if(gender == FEMALE)
-				. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a>"
+			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a>"
 
 	. += 								"</td>"
 	. += 							"</tr>"
@@ -527,8 +526,10 @@
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE
+						use_skirt = TRUE
 					else
 						gender = MALE
+						use_skirt = FALSE
 
 					f_style = random_facial_hair_style(gender, species)
 					if(species == IPC)

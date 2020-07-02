@@ -67,7 +67,7 @@
 	back_style = BACKPACK_STYLE_MEDICAL
 
 /datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
-	if(H.gender == FEMALE)
+	if(H.use_skirt)
 		if(prob(50))
 			uniform_f = /obj/item/clothing/under/rank/nursesuit
 		head = /obj/item/clothing/head/nursehat
