@@ -548,7 +548,7 @@
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
-	if(weakened || paralysis || stunned || (status_flags & FAKEDEATH))
+	if(incapacitated())
 		return
 	if(IsSleeping() && notForceSleep)
 		SetSleeping(0 SECONDS)
