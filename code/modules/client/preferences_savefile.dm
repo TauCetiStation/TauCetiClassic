@@ -372,7 +372,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
-	to_chat(world, "grad_style")
+
 	//Load prefs
 	S["job_preferences"] >> job_preferences
 
@@ -450,7 +450,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
-	to_chat(world, "grad_style")
+
 	all_quirks = SANITIZE_LIST(all_quirks)
 	positive_quirks = SANITIZE_LIST(positive_quirks)
 	negative_quirks = SANITIZE_LIST(negative_quirks)
