@@ -238,6 +238,8 @@
 					b_skin = rand(0,255)
 				if("bag")
 					backbag = rand(1, backbaglist.len)
+				if("use_skirt")
+					use_skirt = pick(TRUE, FALSE)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -526,8 +528,10 @@
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE
+						use_skirt = TRUE
 					else
 						gender = MALE
+						use_skirt = FALSE
 
 					f_style = random_facial_hair_style(gender, species)
 					if(species == IPC)
