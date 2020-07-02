@@ -526,7 +526,6 @@
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE
-						use_skirt = TRUE
 					else
 						gender = MALE
 						use_skirt = FALSE
