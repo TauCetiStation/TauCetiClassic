@@ -109,7 +109,7 @@
 	uniform = /obj/item/clothing/under/rank/geneticist
 	uniform_f = /obj/item/clothing/under/rank/geneticist/skirt
 	shoes = /obj/item/clothing/shoes/white
-	suit =/obj/item/clothing/suit/storage/labcoat/genetics
+	suit = /obj/item/clothing/suit/storage/labcoat/genetics
 	suit_store = /obj/item/device/flashlight/pen
 
 	belt = /obj/item/device/pda/geneticist
