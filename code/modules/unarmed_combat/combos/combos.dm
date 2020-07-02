@@ -102,6 +102,8 @@
 	if(!do_combo(victim, attacker, 3))
 		return
 
+	var/saved_targetzone = attacker.get_targetzone()
+
 	var/slide_dir = get_dir(attacker, victim)
 
 	// AFTER ALEXOFP'S PR USE WHATEVER HE DID FOR CRAWLING AND UNCRAWLING, BUT DON'T ACTUALLY UNCRAWL AFTER THIS MOVE
@@ -135,7 +137,7 @@
 				if(L.is_bigger_than(attacker))
 					continue slide_kick_loop
 
-				if(!apply_effect(2, WEAKEN, L, attacker, min_value=1))
+				if(!apply_effect(2, WEAKEN, L, attacker, zone=saved_targetzone, min_value=1))
 					continue slide_kick_loop
 
 				var/end_string = "to the ground!"
@@ -199,6 +201,8 @@
 	require_arm = TRUE
 
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
+	var/saved_targetzone = attacker.get_targetzone()
+
 	victim.Stun(2)
 
 	if(victim.buckled)
@@ -228,7 +232,7 @@
 				victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
 
 		victim_G.force_down = TRUE
-		apply_effect(3, WEAKEN, victim, attacker, min_value=1)
+		apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, min_value=1)
 		victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 		step_to(attacker, victim)
@@ -261,6 +265,8 @@
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/saved_targetzone = attacker.get_targetzone()
 
 	attacker.set_dir(pick(NORTH, SOUTH)) // So they will appear sideways, as if they are actually knocking with their fist.
 
@@ -331,7 +337,7 @@
 
 	victim.visible_message("<span class='danger'>[attacker] has performed an uppercut on [victim]!</span>")
 
-	apply_effect(1, WEAKEN,  victim, attacker, min_value=1)
+	apply_effect(1, WEAKEN,  victim, attacker, zone=saved_targetzone, min_value=1)
 	apply_damage(18, victim, attacker, zone=BP_HEAD)
 
 	if(iscarbon(victim))
@@ -371,6 +377,8 @@
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	if(!do_combo(victim, attacker, 3))
 		return
+
+	var/saved_targetzone = attacker.get_targetzone()
 
 	var/DTM = get_dir(attacker, victim)
 	var/victim_dir = get_dir(victim, attacker)
@@ -430,7 +438,7 @@
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
 
-	apply_effect(4, WEAKEN, victim, attacker, min_value=1)
+	apply_effect(4, WEAKEN, victim, attacker, zone=saved_targetzone, min_value=1)
 	apply_damage(23, victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
