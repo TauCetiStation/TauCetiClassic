@@ -613,13 +613,14 @@
 	if(affecting)
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
 		affecting.layer = 4
-		if(affecting)
-			affecting.grabbed_by -= src
-			affecting = null
+		affecting.grabbed_by -= src
+		affecting.other_mobs = null
+		affecting = null
 	if(assailant)
 		if(assailant.client)
 			assailant.client.screen -= hud
 		on_last_grab_del()
+		assailant.other_mobs = null
 		assailant = null
 	QDEL_NULL(hud)
 

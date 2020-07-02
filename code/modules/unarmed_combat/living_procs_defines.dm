@@ -286,9 +286,9 @@ var/global/combos_cheat_sheet = ""
 						qdel(G)
 					else
 						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to break up the grab.</span>")
-					return
+					continue
 				else if(G.assailant == attacker)
-					return
+					continue
 				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
 				qdel(G)
 		//End BubbleWrap

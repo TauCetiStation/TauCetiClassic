@@ -296,8 +296,11 @@
 					G.affecting.animate_movement = 3
 			for(var/obj/item/weapon/grab/G in L)
 				spawn( 0 )
-					if(!G.affecting.Moved())
-						step(G.affecting, Dir)
+					var/list/grabs = G.affecting.GetGrabs()
+					for(var/obj/item/weapon/grab/G1 in grabs)
+						if(G1.affecting == G.assailant)
+							return
+					step(G.affecting, Dir)
 					return
 				spawn( 1 )
 					G.affecting.other_mobs = null
