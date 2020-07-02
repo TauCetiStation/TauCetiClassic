@@ -706,7 +706,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tcomsatcomp"
 
 //SPACE STATION 13
-var/list/the_station_areas = list(
+var/global/list/the_station_areas = list(
 	/area/station/engineering/atmos,
 	/area/station/maintenance,
 	/area/station/hallway,
@@ -732,4 +732,3 @@ var/list/the_station_areas = list(
 	/area/station/bridge/ai_upload,
 	/area/station/aisat,
 )
-
