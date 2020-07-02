@@ -176,8 +176,17 @@ var/global/list/combat_combos_by_name = list()
 		)
 	return FALSE
 
-// effect - effect to apply, duration - base duration to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
-// Returns TRUE if effect was applied.
+/**
+	This proc handles effect scaling based on all the combo factors specified in class.
+
+	* effect - effect to apply
+	* duration - base duration to scale
+	* zone - zone where a hit should occur
+	* attack_obk - all the stats of an attack that provoked the combo
+	* min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+
+	* Returns TRUE if effect was applied succesfully.
+**/
 /datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, zone = null, list/attack_obj = null, min_value = -1)
 	var/val = duration
 	if(scale_size_exponent != 0.0)

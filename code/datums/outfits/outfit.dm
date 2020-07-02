@@ -52,11 +52,11 @@
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
 	/**
-	  * Survival box. 
+	  * Survival box.
 	  *
-	  * Will be inserted at the start of backpack_contents. 
+	  * Will be inserted at the start of backpack_contents.
 	  * Contents = species_survival_kit_items + advanced_kit_items
-	  * Other boxes must be in backpack_contents 
+	  * Other boxes must be in backpack_contents
 	  *
 	  */
 	var/survival_box = FALSE
@@ -66,7 +66,7 @@
 	var/list/prevent_survival_kit_items = list()
 
 	// (flavor_misc.dm)
-	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths... 
+	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths...
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
@@ -163,7 +163,7 @@
 	H.species.species_equip(H, src)	// replaces human outfit on species outfit
 
 	//Start with uniform,suit,backpack for additional slots
-	if(H.gender == FEMALE && uniform_f)
+	if(uniform_f && H.use_skirt)
 		uniform = uniform_f
 
 	var/list/slot2type = list(
@@ -185,7 +185,7 @@
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
 		H.update_body()
-	
+
 	if(outfit_underwear_m || outfit_underwear_f)
 		var/list/underwear_options
 		var/outfit_underwear
@@ -203,7 +203,7 @@
 	if(r_hand)
 		H.put_in_r_hand(new r_hand(H))
 
-	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon. 
+	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 
 		slot2type = list(
 			"[SLOT_L_EAR]"   = l_ear,
@@ -214,7 +214,7 @@
 		)
 
 		equip_slots(H, slot2type)
-		
+
 		if(survival_box)
 			var/obj/item/weapon/storage/box/survival/SK = new(H)
 
