@@ -545,11 +545,10 @@
 
 
 /mob/living/carbon/var/notForceSleep = FALSE
-/mob/living/carbon/var/sleepDelay = FALSE
 /mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
-	if(weakened || paralysis || stunned || (status_flags & FAKEDEATH) || sleepDelay)
+	if(weakened || paralysis || stunned || (status_flags & FAKEDEATH))
 		return
 	if(IsSleeping() && notForceSleep)
 		SetSleeping(0 SECONDS)
@@ -558,11 +557,9 @@
 		return
 // if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 	if(!IsSleeping())
-		notForceSleep = TRUE
-		sleepDelay = TRUE
 		SetSleeping(6000 SECONDS)
 		sleep(200)
-		sleepDelay = FALSE
+		notForceSleep = TRUE
 
 
 //Brain slug proc for voluntary removal of control.
