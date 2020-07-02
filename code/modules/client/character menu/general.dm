@@ -528,10 +528,8 @@
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE
-						use_skirt = TRUE
 					else
 						gender = MALE
-						use_skirt = FALSE
 
 					f_style = random_facial_hair_style(gender, species)
 					if(species == IPC)
