@@ -1,16 +1,21 @@
 /datum/event/pda_spam
 	endWhen = 6000
-	var/time_failed = 0
+	var/last_spam_time = 0
 	var/obj/machinery/message_server/useMS
 
 /datum/event/pda_spam/setup()
-	time_failed = world.time
+	last_spam_time = world.time
 	for (var/obj/machinery/message_server/MS in message_servers)
 		if(MS.active)
 			useMS = MS
 			break
 
 /datum/event/pda_spam/tick()
+	if(world.time > last_spam_time + 1200)
+		//if there's no server active for two minutes, give up
+		kill()
+		return
+
 	if(!useMS || !useMS.active)
 		useMS = null
 		if(message_servers)
@@ -20,7 +25,7 @@
 					break
 
 	if(useMS)
-		time_failed = world.time
+		last_spam_time = world.time
 		if(prob(2))
 			// /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
 			var/obj/item/device/pda/P
@@ -111,6 +116,3 @@
 
 			if(L)
 				to_chat(L, "[bicon(P)] <b>Message from [sender] (Unknown / spam?), </b>\"[message]\" (Unable to Reply)")
-	else if(world.time > time_failed + 1200)
-		//if there's no server active for two minutes, give up
-		kill()
