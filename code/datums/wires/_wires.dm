@@ -58,7 +58,8 @@
 	return
 
 var/global/list/same_wires = list()
-var/global/list/same_wire_colors_monochromy = list()
+// Colors for Color blind in color = #hex
+var/global/list/wire_monochromy_colors
 
 /datum/wires
 	var/random = FALSE     // Will the wires be different for every single instance.
@@ -78,8 +79,6 @@ var/global/list/same_wire_colors_monochromy = list()
 
 	// All possible wires colors are here.
 	var/static/list/wire_colors = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
-	// Colors for Color blind in hex
-	var/list/wire_colors_monochromy
 
 /datum/wires/New(atom/holder)
 	..()
@@ -87,7 +86,6 @@ var/global/list/same_wire_colors_monochromy = list()
 
 	wires = list()
 	signallers = list()
-	wire_colors_monochromy = list()
 
 	if(!istype(holder, holder_type))
 		CRASH("Our holder is null/the wrong type!")
@@ -102,10 +100,31 @@ var/global/list/same_wire_colors_monochromy = list()
 		if(!same_wires[holder_type])
 			randomize_wires()
 			same_wires[holder_type] = wires.Copy()
-			same_wire_colors_monochromy[holder_type] = wire_colors_monochromy.Copy()
 		else
 			wires = same_wires[holder_type] // Reference the wires list.
-			wire_colors_monochromy = same_wire_colors_monochromy[holder_type]
+
+	if(!wire_monochromy_colors)
+		wire_monochromy_colors = list()
+		for(var/i in wire_colors)
+			var/color_hex = color_by_hex[i]
+
+			if(!color_hex)
+				var/color = pick("#000000", "#dcdcdc", "#ffffff", "#808080")
+				wire_monochromy_colors[i] += color
+				continue
+
+			var/r = hex2num(copytext(color_hex, 2, 4))
+			var/g = hex2num(copytext(color_hex, 4, 6))
+			var/b = hex2num(copytext(color_hex, 6, 8))
+			var/new_color = (0.58 * r) + (0.17 * g) + (0.8 * b) //color to grey
+
+			if(0 <= new_color && new_color <= 30)
+				wire_monochromy_colors[i] += "#000000"
+			else if(221 <= new_color && new_color <= 255) // 221 becauce we have name of color for 220
+				wire_monochromy_colors[i] += "#ffffff"
+			else
+				wire_monochromy_colors[i] += rgb(new_color, new_color, new_color)
+
 
 /datum/wires/Destroy()
 	wires = null
@@ -128,26 +147,6 @@ var/global/list/same_wire_colors_monochromy = list()
 		// Pick and remove an index
 		var/index = pick_n_take(indexes_to_pick)
 		wires[color] = index
-
-	for(var/i in wires)
-		var/color_hex = color_by_hex[i]
-
-		if(!color_hex)
-			var/color = pick("#000000", "#dcdcdc", "#ffffff", "#808080")
-			wire_colors_monochromy += color
-			continue
-
-		var/r = hex2num(copytext(color_hex, 2, 4))
-		var/g = hex2num(copytext(color_hex, 4, 6))
-		var/b = hex2num(copytext(color_hex, 6, 8))
-		var/new_color = (0.58 * r) + (0.17 * g) + (0.8 * b)
-
-		if(0 <= new_color && new_color <= 30)
-			wire_colors_monochromy += "#000000"
-		else if(221 <= new_color && new_color <= 255) // 221 becauce we have name of color for 220
-			wire_colors_monochromy += "#ffffff"
-		else
-			wire_colors_monochromy += rgb(new_color, new_color, new_color)
 
 /**
  * Will return TRUE if wires menu successful opened.
@@ -191,14 +190,12 @@ var/global/list/same_wire_colors_monochromy = list()
 	html += "<legend><h3>Exposed Wires</h3></legend>"
 	html += "<table[table_options]>"
 
-	var/i = 0
 	for(var/color in wires)
-		i += 1
 		html += "<tr>"
 		switch(see_effect)
 			if(MONOCHROMY)
-				var/mcolor = hex2color(wire_colors_monochromy[i]) ? hex2color(wire_colors_monochromy[i]) : "Gray"
-				html += "<td[row_options1]><font color='[wire_colors_monochromy[i]]'><b>[capitalize(mcolor)]</b></font></td>"
+				var/mcolor = hex2color(wire_monochromy_colors[color]) ? hex2color(wire_monochromy_colors[color]) : "Gray"
+				html += "<td[row_options1]><font color='[wire_monochromy_colors[color]]'><b>[capitalize(mcolor)]</b></font></td>"
 			if(BLINDED)
 				html += "<td[row_options1]><font color='gray'><b>Wire</b></font></td>"
 			else
