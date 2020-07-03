@@ -368,6 +368,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
+	S["use_skirt"]			>> use_skirt
 
 	//Load prefs
 	S["job_preferences"] >> job_preferences
@@ -540,7 +541,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
-
+	S["use_skirt"]			<< use_skirt
 	//Write prefs
 	S["alternate_option"]	<< alternate_option
 	S["job_preferences"]	<< job_preferences
