@@ -45,9 +45,6 @@
 					dat += "<b>Bomb cap: </b><A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
 					dat += "<BR>"
 
-				if(check_rights(R_VAREDIT, 0))
-					dat += "<b>MASS SLEEP: </b> <A href='?src=\ref[src];secretsadmin=mass_sleep'>Put everyone to sleep</A><BR>"
-					dat += "<BR>"
 			if(check_rights(R_DEBUG,0))
 				dat += {"
 					<B>Security Level Elevated</B><BR>
@@ -92,6 +89,10 @@
 					<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
 					<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 					<A href='?src=\ref[src];secretsfun=advanceddarkness'>Advanced darkness! (DANGEROUS: extremely dark)</A><BR>
+					"}
+				if(check_rights(R_VAREDIT, 0))
+					dat += "<A href='?src=\ref[src];secretsadmin=mass_sleep'>Put everyone to sleep</A><BR>"
+				dat += {"
 					<b>AI</b><br>
 					<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 					<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
@@ -111,7 +112,7 @@
 					"}
 	dat += "</body></html>"
 
-	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 735)
+	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 750)
 	popup.set_content(dat)
 	popup.open(0)
 
