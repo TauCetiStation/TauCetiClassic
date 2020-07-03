@@ -20861,10 +20861,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
-"fLy" = (
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
-/turf/simulated/floor/plating,
-/area/station/maintenance/bridge)
 "fLz" = (
 /obj/item/weapon/storage/fancy/cigarettes/menthol,
 /obj/item/candle,
@@ -60495,7 +60491,6 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
 /obj/item/weapon/wrench,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -120496,7 +120491,7 @@ eSZ
 dgo
 wrR
 jIl
-fLy
+vOc
 rRo
 kdr
 cjq

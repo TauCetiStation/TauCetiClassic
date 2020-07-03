@@ -58562,7 +58562,6 @@
 "cpA" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
 /obj/item/weapon/wrench,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
