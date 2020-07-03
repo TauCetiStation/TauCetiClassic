@@ -262,7 +262,7 @@
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
-
+/mob/var/move = FALSE
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
@@ -291,16 +291,15 @@
 		else
 			for(var/obj/item/weapon/grab/G in L)
 				G.affecting.other_mobs = 1
+				G.affecting.move = TRUE
 				G.assailant.other_mobs = 1
 				if(src != G.affecting)
 					G.affecting.animate_movement = 3
 			for(var/obj/item/weapon/grab/G in L)
 				spawn( 0 )
-					var/list/grabs = G.affecting.GetGrabs()
-					for(var/obj/item/weapon/grab/G1 in grabs)
-						if(G1.affecting == G.assailant)
-							return
-					step(G.affecting, Dir)
+					if(G.affecting.move)
+						step(G.affecting, Dir)
+						G.affecting.move = FALSE
 					return
 				spawn( 1 )
 					G.affecting.other_mobs = null
