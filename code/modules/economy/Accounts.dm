@@ -140,7 +140,7 @@
 
 	//add the account
 	M.transaction_log.Add(T)
-	all_money_accounts[new_owner_name] = M
+	all_money_accounts.Add(M)
 
 	return M
 
