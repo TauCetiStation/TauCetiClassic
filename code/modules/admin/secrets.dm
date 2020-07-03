@@ -108,11 +108,10 @@
 					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 					<A href='?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
 					<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
-					<BR>
 					"}
 	dat += "</body></html>"
 
-	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 530, 750)
+	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 735)
 	popup.set_content(dat)
 	popup.open(0)
 
@@ -396,14 +395,12 @@
 			feedback_inc("admin_secrets_fun_used", 1)
 			feedback_add_details("admin_secrets_fun_used", "SP")
 			rightandwrong(1, usr)
-		/*
 		// Break all lights
 		if("blackout")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			lightsout(0,0)
-		*/
 		// Fix all lights
 		if("whiteout")
 			feedback_inc("admin_secrets_fun_used",1)
