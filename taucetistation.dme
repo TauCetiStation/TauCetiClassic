@@ -983,7 +983,6 @@
 #include "code\modules\admin\player_notes.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"
-#include "code\modules\admin\secrets_topic.dm"
 #include "code\modules\admin\server_whitelist.dm"
 #include "code\modules\admin\stickyban.dm"
 #include "code\modules\admin\topic.dm"
