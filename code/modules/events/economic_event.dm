@@ -1,4 +1,4 @@
-/datum/event/economic_news
+/datum/event/economic_event
 	endWhen = 50			//this will be set randomly, later
 	announceWhen = 15
 	var/event_type = 0
@@ -6,7 +6,7 @@
 	var/list/dearer_goods = list()
 	var/datum/trade_destination/affected_dest
 
-/datum/event/economic_news/start()
+/datum/event/economic_event/start()
 	affected_dest = pickweight(weighted_randomevent_locations)
 	if(affected_dest.viable_random_events.len)
 		endWhen = rand(60,300)
@@ -50,7 +50,7 @@
 		for(var/good_type in cheaper_goods)
 			affected_dest.temp_price_change[good_type] = rand(1,100) / 100
 
-/datum/event/economic_news/announce()
+/datum/event/economic_event/announce()
 	//copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = "[system_name()] Daily"
@@ -97,7 +97,7 @@
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 		NEWSCASTER.newsAlert("[system_name()] Daily")
 
-/datum/event/economic_news/end()
+/datum/event/economic_event/end()
 	for(var/good_type in dearer_goods)
 		affected_dest.temp_price_change[good_type] = 1
 	for(var/good_type in cheaper_goods)
