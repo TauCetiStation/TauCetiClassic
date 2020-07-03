@@ -49194,7 +49194,8 @@
 	pixel_x = -22
 	},
 /obj/structure/closet/secure_closet/medical3{
-	req_access = list(45, 70)
+	req_access = list();
+	req_one_access = list(45, 70)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -49982,7 +49983,8 @@
 	pixel_x = -28
 	},
 /obj/structure/closet/secure_closet/medical3{
-	req_access = list(45, 70)
+	req_access = list();
+	req_one_access = list(45, 70)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
