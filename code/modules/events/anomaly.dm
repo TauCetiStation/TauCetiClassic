@@ -2,17 +2,13 @@
 	var/obj/effect/anomaly/newAnomaly
 	announceWhen = 1
 
-/datum/event/anomaly/setup(loop=0)
-	var/safety_loop = loop + 1
-	if(safety_loop > 50)
-		kill()
-		end()
+/datum/event/anomaly/setup()
 	impact_area = findEventArea()
 	if(!impact_area)
-		setup(safety_loop)
+		CRASH("No valid areas for anomaly found.")
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
-		setup(safety_loop)
+		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/event/anomaly/announce()
 	command_alert("Localized hyper-energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert", sound = "fluxanom")

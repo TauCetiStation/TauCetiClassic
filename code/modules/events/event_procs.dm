@@ -18,8 +18,8 @@
 	return
 
 /proc/findEventArea()
-	var/area/candidate = null
-	var/static/list/allowed_areas = list()
+	var/static/list/allowed_areas
+	var/static/list/world_areas
 	if(!allowed_areas)
 		//Places that shouldn't explode
 		var/list/safe_areas = list(
@@ -48,14 +48,13 @@
 
 		allowed_areas = subtypesof(/area/station) - safe_areas + unsafe_areas
 
-	while(allowed_areas.len > 0)
-		var/list/event_turfs = null
-		candidate = locate(typesof(pick_n_take(allowed_areas)))
-		event_turfs = get_area_turfs(candidate)
-		if(event_turfs.len > 0)
-			break
+		world_areas = list()
+		for(var/area/A in world)
+			world_areas.Add(A.type)
 
-	return candidate
+		allowed_areas &= world_areas
+
+	return locate(pick(allowed_areas))
 
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
 // with a specific role.
