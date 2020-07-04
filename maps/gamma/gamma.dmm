@@ -77404,6 +77404,7 @@
 /area/station/maintenance/bridge)
 "xWI" = (
 /obj/effect/decal/cleanable/dirt,
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
