@@ -250,6 +250,14 @@
 
 /datum/quirk/rusty_joints
 	name = QUIRK_RUSTY_JOINTS
+	desc = "Your joints need more force to move. You can't bend much."
+	value = -1
+	mob_trait = TRAIT_RUSTY_JOINTS
+	gain_text = "<span class='danger'>You feel pain in your ankles and shoulders.</span>"
+	lose_text = "<span class='notice'>You feel pain in your ankles and shoulders no more.</span>"
+
+/datum/quirk/rusty_joints/synthetic
+	name = QUIRK_RUSTY_JOINTS
 	desc = "Your joints require more force to rotate. Climbing speed decreased."
 	value = -1
 	mob_trait = TRAIT_RUSTY_JOINTS
