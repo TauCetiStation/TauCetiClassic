@@ -17,44 +17,40 @@
 	feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
+/proc/findEventArea()
 	var/area/candidate = null
+	var/static/list/allowed_areas = list()
+	if(!allowed_areas)
+		//Places that shouldn't explode
+		var/list/safe_areas = list(
+			/area/station/aisat,
+			/area/station/bridge/ai_upload,
+			/area/station/engineering,
+			/area/station/solar,
+			/area/station/civilian/holodeck,
+			/area/shuttle/arrival,
+			/area/station/hallway/primary/fore,
+			/area/station/hallway/primary/starboard,
+			/area/station/hallway/primary/aft,
+			/area/station/hallway/primary/port,
+			/area/station/hallway/primary/central,
+			/area/station/hallway/secondary/exit,
+			/area/station/hallway/secondary/entry,
+			/area/station/hallway/secondary/Podbay,
+			/area/station/security/prison
+			)
 
-	var/list/safe_areas = list(
-	/area/station/aisat,
-	/area/station/bridge/ai_upload,
-	/area/station/engineering,
-	/area/station/solar,
-	/area/station/civilian/holodeck,
-	/area/shuttle/arrival,
-	/area/station/hallway/primary/fore,
-	/area/station/hallway/primary/starboard,
-	/area/station/hallway/primary/aft,
-	/area/station/hallway/primary/port,
-	/area/station/hallway/primary/central,
-	/area/station/hallway/secondary/exit,
-	/area/station/hallway/secondary/entry,
-	/area/station/hallway/secondary/Podbay,
-	/area/station/security/prison,
-	)
+		//Subtypes from the above that actually should explode.
+		var/list/unsafe_areas = list(
+			/area/station/engineering/break_room,
+			/area/station/engineering/chiefs_office
+			)
 
-	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
-	var/list/danger_areas = list(
-	/area/station/engineering/break_room,
-	/area/station/engineering/chiefs_office)
+		allowed_areas = subtypesof(/area/station) - safe_areas + unsafe_areas
 
-	var/list/event_areas = list()
-
-	for(var/areapath in the_station_areas)
-		event_areas += typesof(areapath)
-	for(var/areapath in safe_areas)
-		event_areas -= typesof(areapath)
-	for(var/areapath in danger_areas)
-		event_areas += typesof(areapath)
-
-	while(event_areas.len > 0)
+	while(allowed_areas.len > 0)
 		var/list/event_turfs = null
-		candidate = locate(pick_n_take(event_areas))
+		candidate = locate(typesof(pick_n_take(allowed_areas)))
 		event_turfs = get_area_turfs(candidate)
 		if(event_turfs.len > 0)
 			break

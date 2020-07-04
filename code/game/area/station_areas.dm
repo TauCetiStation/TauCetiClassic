@@ -704,31 +704,3 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
 	icon_state = "tcomsatcomp"
-
-//SPACE STATION 13
-var/global/list/the_station_areas = list(
-	/area/station/engineering/atmos,
-	/area/station/maintenance,
-	/area/station/hallway,
-	/area/station/hallway/primary/fore,
-	/area/station/hallway/primary/starboard,
-	/area/station/hallway/primary/aft,
-	/area/station/hallway/primary/port,
-	/area/station/hallway/primary/central,
-	/area/station/bridge,
-	/area/station/civilian/holodeck,
-	/area/station/civilian,
-	/area/station/hallway/secondary/Podbay,
-	/area/station/engineering,
-	/area/station/solar,
-	/area/station/bridge/teleporter,
-	/area/station/medical,
-	/area/station/security,
-	/area/station/cargo,
-	/area/station/rnd,
-	/area/station/storage,
-	/area/station/construction,
-	/area/station/ai_monitored/storage_secure,
-	/area/station/bridge/ai_upload,
-	/area/station/aisat,
-)
