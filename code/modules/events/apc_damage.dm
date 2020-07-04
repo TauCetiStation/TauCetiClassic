@@ -1,10 +1,10 @@
 /datum/event/apc_damage
-	var/apcSelectionRange	= 25
+	var/apcSelectionRange = 25
 
 /datum/event/apc_damage/start()
 	var/obj/machinery/power/apc/A = acquire_random_apc()
 
-	var/severity_range = rand(0,15)
+	var/severity_range = (severity-1) * rand(0,15)
 
 	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
 		if(is_valid_apc(apc))
