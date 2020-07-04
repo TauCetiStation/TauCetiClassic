@@ -10,7 +10,7 @@
 	var/burn_damage = 0
 	var/trait_emp_shield = 1
 
-	if (HAS_TRAIT(BP.owner, TRAIT_EMP_SHIELDED))
+	if(HAS_TRAIT(BP.owner, TRAIT_EMP_SHIELDED))
 		trait_emp_shield = 0.5
 
 	switch(severity)

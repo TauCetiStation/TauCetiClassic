@@ -89,7 +89,7 @@
 /obj/item/organ/internal/emp_act(severity)
 	var/trait_emp_shield = 1
 
-	if (HAS_TRAIT(owner, TRAIT_EMP_SHIELDED))
+	if(HAS_TRAIT(owner, TRAIT_EMP_SHIELDED))
 		trait_emp_shield = 0.5
 
 	switch(robotic)
@@ -158,6 +158,11 @@
 	var/pumping_rate = 5
 	var/bruised_loss = 3
 
+/obj/item/organ/internal/heart/ipc/atom_init()
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_MORE_COOLANT))
+		pumping_rate += 2
+
 /obj/item/organ/internal/heart/ipc/process()
 	if(is_broken())
 		return
@@ -195,6 +200,11 @@
 	var/refrigerant = 50
 	var/refrigerant_rate = 5
 	var/bruised_loss = 3
+
+/obj/item/organ/internal/lungs/ipc/atom_init()
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_MORE_COOLANT))
+		refrigerant_rate += 2
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -242,9 +252,6 @@
 
 /obj/item/organ/internal/lungs/ipc/process()
 	var/temp_gain = owner.species.synth_temp_gain
-
-	if(HAS_TRAIT(owner, TRAIT_MORE_COOLANT))
-		temp_gain -= 2
 
 	if(refrigerant > 0 && !is_broken())
 		var/refrigerant_spent = refrigerant_rate

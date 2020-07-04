@@ -93,7 +93,6 @@
 #define TRAIT_ADAMANTIUM_BONES    "adamantium_bones"
 #define TRAIT_BRITTLE_BONES       "brittle_bones"
 
-
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"

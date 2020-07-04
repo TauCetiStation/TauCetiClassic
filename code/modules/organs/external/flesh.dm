@@ -29,9 +29,9 @@
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
 /datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	if (HAS_TRAIT(BP.owner, TRAIT_PLASTEEL_PLATED))
+	if(HAS_TRAIT(BP.owner, TRAIT_PLASTEEL_PLATED))
 		brute = round(brute * (BP.owner.species.brute_mod - 0.2), 0.1)
-	else if (HAS_TRAIT(BP.owner, TRAIT_PLASTIC_BODY))
+	else if(HAS_TRAIT(BP.owner, TRAIT_PLASTIC_BODY))
 		brute = round(brute * (BP.owner.species.brute_mod + 0.1), 0.1)
 	else
 		brute = round(brute * BP.owner.species.brute_mod, 0.1)
@@ -553,9 +553,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//Bone fractures
 	var/trait_coef = 1
 
-	if (HAS_TRAIT(BP.owner, TRAIT_STRONG_BONES))
+	if(HAS_TRAIT(BP.owner, TRAIT_STRONG_BONES))
 		trait_coef = 1.5
-	else if (HAS_TRAIT(BP.owner, TRAIT_BRITTLE_BONES))
+	else if(HAS_TRAIT(BP.owner, TRAIT_BRITTLE_BONES))
 		trait_coef = 0.7
 
 	if(BP.brute_dam > BP.min_broken_damage * config.organ_health_multiplier * trait_coef)
@@ -576,7 +576,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(BP.status & ORGAN_BROKEN)
 		return
-	if (HAS_TRAIT(BP.owner, TRAIT_ADAMANTIUM_BONES))
+	if(HAS_TRAIT(BP.owner, TRAIT_ADAMANTIUM_BONES))
 		return
 
 	BP.owner.visible_message(

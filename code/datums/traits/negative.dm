@@ -246,10 +246,6 @@
 	gain_text = "<span class='danger'>%POWER SYSTEM% FAILURE. HIGH VOLTAGE. REQUEST LICENSED TECH ASSISTANCE.</span>"
 	lose_text = "<span class='notice'>%POWER SYSTEM% CHECKS COMPLETE. NO ERRORS DETECTED.</span>"
 
-	req_species_flags = list(
-		IS_SYNTHETIC = TRUE,
-	)
-
 
 
 /datum/quirk/rusty_joints
@@ -260,16 +256,12 @@
 	gain_text = "<span class='danger'>%SERVOS% OVERCHARGE. CEASE USAGE. REQUEST LICENSED TECH ASSISTANCE.</span>"
 	lose_text = "<span class='notice'>%SERVOS% CHECKS COMPLETE. NO ERRORS DETECTED.</span>"
 
-	req_species_flags = list(
-		IS_SYNTHETIC = TRUE,
-	)
-
 
 
 /datum/quirk/plastic_body
 	name = QUIRK_PLASTIC_BODY
 	desc = "Your body is made of plastic. It's more susceptible to damage."
-	value = -1
+	value = -2
 	mob_trait = TRAIT_PLASTIC_BODY
 	gain_text = "<span class='danger'>HIGH %INTERNAL DAMAGE% DANGER. HANDLING WITH CARE IS RECOMMENDED.</span>"
 	lose_text = "<span class='notice'>%INTERNAL DAMAGE% RISKS DECREASED. HANDLING WITH CARE IS STILL RECOMMENDED.</span>"
@@ -283,7 +275,7 @@
 /datum/quirk/brittle_bones
 	name = QUIRK_BRITTLE_BONES
 	desc = "Your bones tend to break easily."
-	value = -1
+	value = -2
 	mob_trait = TRAIT_BRITTLE_BONES
 	gain_text = "<span class='danger'>You hear your bones cracking already...</span>"
 	lose_text = "<span class='notice'>Bones won't break from everything... Finally..</span>"
