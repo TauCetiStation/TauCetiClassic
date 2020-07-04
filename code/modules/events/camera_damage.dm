@@ -3,12 +3,12 @@
 	if(!C)
 		return
 
-	var/severity_range = rand(0,15)
+	var/severity_range = (severity-1) * rand(0,15)
 
 	for(var/obj/machinery/camera/cam in range(severity_range,C))
 		if(is_valid_camera(cam))
 			cam.toggle_cam(TRUE)
-			if(prob(5))
+			if(prob(5*severity))
 				cam.triggerCameraAlarm()
 
 /datum/event/camera_damage/proc/acquire_random_camera(remaining_attempts = 5)
