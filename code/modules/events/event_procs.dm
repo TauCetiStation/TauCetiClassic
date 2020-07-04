@@ -6,7 +6,7 @@
 		return
 
 	if(ispath(type))
-		new type(new /datum/event_meta(EVENT_LEVEL_MAJOR))
+		new type(new /datum/event_meta(EVENT_LEVEL_MAJOR, "[type]"))
 		message_admins("[key_name_admin(usr)] has triggered an event. ([type])", 1)
 
 /client/proc/event_manager_panel()
