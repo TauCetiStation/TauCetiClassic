@@ -1,8 +1,6 @@
 /datum/event/anomaly
-	startWhen = 3
-	announceWhen = 20
-	endWhen = 120
 	var/obj/effect/anomaly/newAnomaly
+	announceWhen = 1
 
 /datum/event/anomaly/setup()
 	impact_area = findEventArea()
