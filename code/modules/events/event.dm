@@ -140,16 +140,17 @@
 	SSevents.active_events -= src
 	SSevents.event_complete(src)
 
+//Sets up the event then adds the event to the the list of active events
 /datum/event/New(var/datum/event_meta/EM)
-	// event needs to be responsible for this, as stuff like APLUs currently make their own events for curious reasons
-
 	if(!EM)
 		EM = new /datum/event_meta(EVENT_LEVEL_MAJOR, "Unknown, Most likely admin called", src.type)
 
 	event_meta = EM
 	severity = event_meta.severity
-	if(severity < EVENT_LEVEL_MUNDANE) severity = EVENT_LEVEL_MUNDANE
-	if(severity > EVENT_LEVEL_MAJOR) severity = EVENT_LEVEL_MAJOR
+	if(severity < EVENT_LEVEL_MUNDANE)
+		severity = EVENT_LEVEL_MUNDANE
+	if(severity > EVENT_LEVEL_MAJOR)
+		severity = EVENT_LEVEL_MAJOR
 
 	startedAt = world.time
 
