@@ -3,9 +3,6 @@
 	announceWhen = 20
 	endWhen = 120
 
-/datum/event/anomaly/anomaly_grav/setup()
-	impact_area = findEventArea()
-
 /datum/event/anomaly/anomaly_grav/announce()
 	command_alert("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "gravanom")
 
