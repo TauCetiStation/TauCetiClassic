@@ -40,7 +40,6 @@
 
 /obj/structure/closet/secure_closet/medical3
 	name = "Medical Doctor's Locker"
-	req_access = list()
 	req_one_access = list(access_surgery, access_paramedic)
 	icon_state = "securemed1"
 	icon_closed = "securemed"
