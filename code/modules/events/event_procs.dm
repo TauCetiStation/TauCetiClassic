@@ -17,49 +17,35 @@
 	feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
-	var/area/candidate = null
+/datum/event/proc/findEventArea()
+	var/static/list/allowed_areas
+	if(!allowed_areas)
+		//Places that shouldn't explode
+		var/list/safe_area_types = list(
+			/area/station/ai_monitored/storage_secure,
+			/area/station/aisat/ai_chamber,
+			/area/station/bridge/ai_upload,
+			/area/station/engineering/engine,
+			/area/station/engineering/singularity,
+			/area/station/engineering/atmos) + typesof(/area/station/solar) + typesof(/area/station/civilian/holodeck)
 
-	var/list/safe_areas = list(
-	/area/station/aisat,
-	/area/station/bridge/ai_upload,
-	/area/station/engineering,
-	/area/station/solar,
-	/area/station/civilian/holodeck,
-	/area/shuttle/arrival,
-	/area/station/hallway/primary/fore,
-	/area/station/hallway/primary/starboard,
-	/area/station/hallway/primary/aft,
-	/area/station/hallway/primary/port,
-	/area/station/hallway/primary/central,
-	/area/station/hallway/secondary/exit,
-	/area/station/hallway/secondary/entry,
-	/area/station/hallway/secondary/Podbay,
-	/area/station/security/prison,
-	)
+		//Subtypes from the above that actually should explode.
+		var/list/unsafe_area_subtypes = list(
+			/area/station/engineering/break_room
+			)
 
-	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
-	var/list/danger_areas = list(
-	/area/station/engineering/break_room,
-	/area/station/engineering/chiefs_office)
+		allowed_areas = subtypesof(/area/station) - safe_area_types + unsafe_area_subtypes
 
-	var/list/event_areas = list()
+	var/list/world_areas = list()
+	var/list/possible_areas = list()
+	for(var/area/A in world)
+		world_areas.Add(A)
 
-	for(var/areapath in the_station_areas)
-		event_areas += typesof(areapath)
-	for(var/areapath in safe_areas)
-		event_areas -= typesof(areapath)
-	for(var/areapath in danger_areas)
-		event_areas += typesof(areapath)
-
-	while(event_areas.len > 0)
-		var/list/event_turfs = null
-		candidate = locate(pick_n_take(event_areas))
-		event_turfs = get_area_turfs(candidate)
-		if(event_turfs.len > 0)
-			break
-
-	return candidate
+	for(var/area/A in allowed_areas)
+		if(world_areas[A])
+			possible_areas.Add(A)
+	if(length(possible_areas))
+		return pick(possible_areas)
 
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
 // with a specific role.
