@@ -35287,14 +35287,22 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -59198,6 +59206,7 @@
 	pixel_x = 9;
 	pixel_y = 8
 	},
+/obj/item/weapon/kitchenknife/butch,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "sgM" = (
