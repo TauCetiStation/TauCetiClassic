@@ -3,6 +3,9 @@
 	announceWhen = 3
 	endWhen = 95
 
+/datum/event/anomaly/anomaly_vortex/setup()
+	impact_area = findEventArea()
+
 /datum/event/anomaly/anomaly_vortex/announce()
 	command_alert("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert", sound = "vortexanom")
 
