@@ -142,7 +142,6 @@
 
 /datum/event/New(var/datum/event_meta/EM)
 	// event needs to be responsible for this, as stuff like APLUs currently make their own events for curious reasons
-	SSevents.active_events += src
 
 	if(!EM)
 		EM = new /datum/event_meta(EVENT_LEVEL_MAJOR, "Unknown, Most likely admin called", src.type)
@@ -155,4 +154,5 @@
 	startedAt = world.time
 
 	setup()
+	SSevents.active_events += src
 	..()
