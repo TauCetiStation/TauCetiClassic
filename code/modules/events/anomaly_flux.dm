@@ -12,6 +12,6 @@
 		newAnomaly = new /obj/effect/anomaly/flux(T)
 
 /datum/event/anomaly/anomaly_flux/end()
-	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.
-		explosion(newAnomaly.loc, 3, 5, 5)
+	if(newAnomaly)//If it hasn't been neutralized, it's time to blow up.
+		explosion(newAnomaly, 3, 5, 5)
 		qdel(newAnomaly)

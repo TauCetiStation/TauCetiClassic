@@ -19,7 +19,7 @@
 		newAnomaly.anomalyEffect()
 
 /datum/event/anomaly/anomaly_pyro/end()
-	if(newAnomaly.loc)//Kill the anomaly if it still exists at the end.
+	if(newAnomaly)//Kill the anomaly if it still exists at the end.
 		var/turf/simulated/T = get_turf(newAnomaly)
 		if(istype(T))
 			T.assume_gas("phoron", 200)
