@@ -86,7 +86,7 @@
 
 	//check if assailant is grabbed by victim as well
 	if(assailant.grabbed_by)
-		for (var/obj/item/weapon/grab/G in assailant.grabbed_by)
+		for(var/obj/item/weapon/grab/G in assailant.grabbed_by)
 			if(G.assailant == affecting && G.affecting == assailant)
 				G.dancing = 1
 				G.adjust_position()
@@ -184,7 +184,16 @@
 		visible_message("<span class='danger'>[affecting] broken free of [assailant]'s [grab_name]!</span>")
 		qdel(src)
 		return
-
+	if(state <= GRAB_PASSIVE)
+		if(dancing)
+			var/list/grabs_as = assailant.GetGrabs()
+			var/list/grabs_af = affecting.GetGrabs()
+			if(grabs_as.len > 1 || grabs_af.len > 1)
+				for(var/obj/item/weapon/grab/G in assailant.grabbed_by)
+					if(G.assailant == affecting && G.affecting == assailant)
+						G.dancing = 0
+						G.adjust_position()
+						dancing = 0
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
 		//disallow upgrading if we're grabbing more than one person

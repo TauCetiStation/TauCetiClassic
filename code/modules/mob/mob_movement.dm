@@ -262,7 +262,7 @@
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
-/mob/var/move = FALSE
+
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
@@ -279,6 +279,9 @@
 		if(L.len == 1)
 			for(var/obj/item/weapon/grab/G in GetGrabs())
 				var/mob/M = G.affecting
+				if(is_moving)
+					continue
+				G.affecting.is_moving = TRUE
 				if(M)
 					if(G.state == GRAB_NECK)
 						Dir = reverse_direction(Dir)
@@ -288,18 +291,20 @@
 						if(isturf(M.loc))
 							if(get_dist(src, M) > 0)
 								step(M, get_dir(M.loc, T))
+								if(G.affecting.is_moving)
+									G.affecting.is_moving = FALSE
 		else
 			for(var/obj/item/weapon/grab/G in L)
 				G.affecting.other_mobs = 1
-				G.affecting.move = TRUE
+				G.affecting.is_moving = TRUE
 				G.assailant.other_mobs = 1
 				if(src != G.affecting)
 					G.affecting.animate_movement = 3
 			for(var/obj/item/weapon/grab/G in L)
 				spawn( 0 )
-					if(G.affecting.move)
+					if(G.affecting.is_moving)
 						step(G.affecting, Dir)
-						G.affecting.move = FALSE
+						G.affecting.is_moving = FALSE
 					return
 				spawn( 1 )
 					G.affecting.other_mobs = null

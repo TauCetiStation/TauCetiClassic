@@ -232,3 +232,4 @@
 	var/list/weather_immunities = list()
 
 	var/list/progressbars = null //for stacking do_after bars
+	var/is_moving = FALSE
