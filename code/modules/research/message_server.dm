@@ -96,19 +96,23 @@
 		authmsg += "[stamp]<br>"
 	for(var/obj/machinery/requests_console/Console in requests_console_list)
 		if(ckey(Console.department) == ckey(recipient))
-			if(Console.newmessagepriority < priority)
-				Console.newmessagepriority = priority
-				Console.icon_state = "req_comp[priority]"
 			switch(priority)
-				if(2)
+				if(2)		//High priority
+					if(Console.newmessagepriority < 2)
+						Console.newmessagepriority = 2
+						Console.icon_state = "req_comp2"
 					if(!Console.silent)
-						Console.audible_message("\icon[Console]<span class='warning'>\The [Console] announces: 'High priority message received from [sender]!'</span>", hearing_distance = 8)
-					Console.messages += "<FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></FONT><BR>[authmsg]"
-				else
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [sender]'")
+					Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></FONT></B><BR>[authmsg]"
+				else		// Normal priority
+					if(Console.newmessagepriority < 1)
+						Console.newmessagepriority = 1
+						Console.icon_state = "req_comp1"
 					if(!Console.silent)
-						Console.audible_message("\icon[Console]<span class='notice'>\The [Console] announces: 'Message received from [sender].'</span>", hearing_distance = 5)
-					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></B><BR>[authmsg]"
-			playsound(Console.loc, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'Message from [sender]'")
+					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></B><BR>[message]"
 			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)
