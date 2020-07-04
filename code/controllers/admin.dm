@@ -57,53 +57,43 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 
-/client/proc/debug_controller(controller in list("failsafe", "Master", "Air", "Sun", "Configuration", "pAI",
-	"Cameras", "Garbage", "Event", "Vote", "Shuttle", "Timer", "Weather"))
+/proc/get_end_section_of_type(type)
+	var/strtype = "[type]"
+	var/delim_pos = findlasttext(strtype, "/")
+	if(delim_pos == 0)
+		return strtype
+	return copytext(strtype, delim_pos)
+
+/client/proc/debug_controller()
 	set category = "Debug"
 	set name = "Debug Controller"
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
 
 	if(!holder || !check_rights(R_DEBUG))
 		return
-	switch(controller)
-		if("failsafe")
-			debug_variables(Failsafe)
-			feedback_add_details("admin_verb", "dfailsafe")
-		if("Master")
-			debug_variables(Master)
-			feedback_add_details("admin_verb","Dsmc")
-		if("Air")
-			debug_variables(SSair)
-			feedback_add_details("admin_verb","DAir")
-		if("Sun")
-			debug_variables(SSsun)
-			feedback_add_details("admin_verb","DSun")
-		if("Configuration")
-			debug_variables(config)
-			feedback_add_details("admin_verb","DConf")
-		if("pAI")
-			debug_variables(paiController)
-			feedback_add_details("admin_verb","DpAI")
-		if("Cameras")
-			debug_variables(cameranet)
-			feedback_add_details("admin_verb","DCameras")
-		if("Garbage")
-			debug_variables(SSgarbage)
-			feedback_add_details("admin_verb","DGarbage")
-		if("Event")
-			debug_variables(SSevents)
-			feedback_add_details("admin_verb","DEvent")
-		if("Vote")
-			debug_variables(SSvote)
-			feedback_add_details("admin_verb","DVote")
-		if("Shuttle")
-			debug_variables(SSshuttle)
-			feedback_add_details("admin_verb","DShuttle")
-		if("Timer")
-			debug_variables(SStimer)
-			feedback_add_details("admin_verb","DTimer")
-		if("Weather")
-			debug_variables(SSweather)
-			feedback_add_details("admin_verb","DWeather")
+	var/list/options = list()
+	options["Master"] = Master
+	options["Failsafe"] = Failsafe
+	options["Configuration"] = config
+	for(var/i in Master.subsystems)
+		var/datum/subsystem/S = i
+		if(!istype(S))		//Eh, we're a debug verb, let's have typechecking.
+			continue
+		var/strtype = "SS[get_end_section_of_type(S.type)]"
+		if(options[strtype])
+			var/offset = 2
+			while(istype(options["[strtype]_[offset] - DUPE ERROR"], /datum/subsystem))
+				offset++
+			options["[strtype]_[offset] - DUPE ERROR"] = S		//Something is very, very wrong.
+		else
+			options[strtype] = S
 
-	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
+	var/pick = input(mob, "Choose a controller to debug/view variables of.", "VV controller:") as null|anything in options
+	if(!pick)
+		return
+	var/datum/D = options[pick]
+	if(!istype(D))
+		return
+	feedback_add_details("admin_verb", "DebugController")
+	message_admins("Admin [key_name_admin(mob)] is debugging the [pick] controller.")
+	debug_variables(D)
