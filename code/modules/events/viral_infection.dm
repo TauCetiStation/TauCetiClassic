@@ -1,10 +1,12 @@
 /datum/event/viral_infection
-	severity = 1
+	var/infected = 2
+	var/chance = 33
 
 /datum/event/viral_infection/setup()
 	announceWhen = rand(0, 3000)
 	endWhen = announceWhen + 1
-	severity = rand(1, 3)
+	infected = severity * rand(1, 2)
+	chance = (severity - 1) * 33
 
 /datum/event/viral_infection/announce()
 	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
@@ -14,10 +16,17 @@
 	for(var/mob/living/carbon/human/G in player_list)
 		if(G.client && G.stat != DEAD)
 			candidates += G
-	if(!candidates.len)	return
+	if(!candidates.len)
+		return
 	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
 
-	while(severity > 0 && candidates.len)
-		infect_mob_random_lesser(candidates[1])
+	while(infected > 0 && candidates.len)
+		if(prob(chance))
+			infect_mob_random_greater(candidates[1])
+			to_chat(world, "greater[chance]")
+		else
+			infect_mob_random_lesser(candidates[1])
+			to_chat(world, "lesser[chance]")
+
 		candidates.Remove(candidates[1])
-		severity--
+		infected--
