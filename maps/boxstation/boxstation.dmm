@@ -58562,7 +58562,6 @@
 "cpA" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
-/obj/item/clothing/head/welding/fluff/norah_briggs_1,
 /obj/item/weapon/wrench,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -75526,10 +75525,10 @@
 /area/station/security/brig)
 "plH" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/accessory/holy,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/item/clothing/accessory/metal_cross,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
