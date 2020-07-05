@@ -509,28 +509,28 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		qdel(shoes)
 		qdel(gloves)
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/ninja(src)
-	equip_to_slot_or_del(R, SLOT_L_EAR)
-	if(gender==FEMALE)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), SLOT_W_UNIFORM)
-	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), SLOT_W_UNIFORM)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), SLOT_SHOES)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), SLOT_WEAR_SUIT)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), SLOT_GLOVES)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), SLOT_WEAR_MASK)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_BELT)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_R_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_L_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen(src), SLOT_S_STORE)
-	var/obj/item/weapon/implant/dexplosive/L = new(src)
-	L.imp_in = src
-	L.implanted = TRUE
-	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
+	equipOutfit(/datum/outfit/space_ninja)
 	return 1
+
+/datum/outfit/space_ninja
+	name = "Space Ninja"
+
+	uniform = /obj/item/clothing/under/color/black
+	uniform_f = /obj/item/clothing/under/color/blackf
+	shoes = /obj/item/clothing/shoes/space_ninja
+	suit = /obj/item/clothing/suit/space/space_ninja
+	gloves = /obj/item/clothing/gloves/space_ninja
+	head = /obj/item/clothing/head/helmet/space/space_ninja
+	mask = /obj/item/clothing/mask/gas/voice/space_ninja
+	belt = /obj/item/device/flashlight
+
+	r_pocket = /obj/item/weapon/plastique
+	l_pocket = /obj/item/weapon/plastique
+	suit_store = /obj/item/weapon/tank/oxygen
+	
+	l_ear = /obj/item/device/radio/headset/ninja
+	
+	implants = list(/obj/item/weapon/implant/dexplosive)
 
 //=======//HELPER PROCS//=======//
 
