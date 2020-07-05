@@ -401,7 +401,8 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
-			lightsout(0,0)
+			for(var/obj/machinery/light/L in machines)
+				L.broken()
 		// Fix all lights
 		if("whiteout")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -479,9 +480,9 @@
 		if("dorf")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
-			for(var/mob/living/carbon/human/B in human_list)
-				B.f_style = "Dward Beard"
-				B.update_hair()
+			for(var/mob/living/carbon/human/H in human_list)
+				H.f_style = "Dwarf Beard"
+				H.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 		// Battle to the death (only one)
 		if("onlyone")
