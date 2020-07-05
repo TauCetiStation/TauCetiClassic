@@ -7,7 +7,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 --NEOFite
 */
 
-/obj/effect/immovablerod
+/obj/effect/immovable_rod
 	name = "Immovable Rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
@@ -16,11 +16,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	density = 1
 	anchored = 1
 
-/obj/effect/immovablerod/atom_init(mapload, turf/end)
+/obj/effect/immovable_rod/atom_init(mapload, turf/end)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/check_location, end)
 
-/obj/effect/immovablerod/proc/check_location(turf/end)
+/obj/effect/immovable_rod/proc/check_location(turf/end)
 	var/z_original = z
 	if(end && end.z == z_original)
 		walk_towards(src, end, 1)
@@ -30,7 +30,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			return
 		sleep(1)
 
-/obj/effect/immovablerod/Bump(atom/clong)
+/obj/effect/immovable_rod/Bump(atom/clong)
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
 	audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
@@ -45,20 +45,20 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	else
 		qdel(src)
 
-/obj/effect/immovablerod/ex_act(severity, target)
+/obj/effect/immovable_rod/ex_act(severity, target)
 	return 0
 
-/obj/effect/immovablerod/Destroy()
+/obj/effect/immovable_rod/Destroy()
 	walk(src, 0) // Because we might have called walk_towards, we must stop the walk loop or BYOND keeps an internal reference to us forever.
 	return ..()
 
-/datum/event/immovablerod
+/datum/event/immovable_rod
 	announceWhen = 5
 
-/datum/event/immovablerod/announce()
+/datum/event/immovable_rod/announce()
 	command_alert("What the fuck was that?!", "General Alert")
 
-/datum/event/immovablerod/start()
+/datum/event/immovable_rod/start()
 	var/turf/start
 	var/turf/end
 	var/startside = pick(cardinal)
@@ -76,5 +76,5 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			start = locate(41, rand(38, 205), 1)
 			end = locate(199, rand(38, 205), 1)
 	//rod time!
-	var/obj/effect/immovablerod/Imm = new(start, end)
+	var/obj/effect/immovable_rod/Imm = new(start, end)
 	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
