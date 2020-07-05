@@ -121,9 +121,7 @@ var/global/list/obj/effect/meteor/meteortypes = list(
 
 		// Prevent meteors from blowing up the singularity's containment.
 		// Changing emitter and generator ex_act would result in them being bomb and C4 proof.
-		if(!istype(A,/obj/machinery/power/emitter) && \
-			!istype(A,/obj/machinery/field_generator) && \
-			prob(15))
+		if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator) && prob(15))
 			explosion(src.loc, 4, 5, 6, 7, 0)
 		qdel(src)
 	return
@@ -145,8 +143,7 @@ var/global/list/obj/effect/meteor/meteortypes = list(
 /obj/effect/meteor/big/Bump(atom/A)
 	// Prevent meteors from blowing up the singularity's containment.
 	// Changing emitter and generator ex_act would result in them being bomb and C4 proof
-	if(!istype(A, /obj/machinery/power/emitter) && \
-		!istype(A, /obj/machinery/field_generator))
+	if(!istype(A, /obj/machinery/power/emitter) && !istype(A, /obj/machinery/field_generator))
 		if(--src.hits <= 0)
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 			qdel(src) // Dont blow up singularity containment if we get stuck there.
