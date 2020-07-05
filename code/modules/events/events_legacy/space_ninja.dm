@@ -392,46 +392,28 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive(side)
 	var/directive = "[side=="face"?"Nanotrasen":"The Syndicate"] is your employer. "//Let them know which side they're on.
-	switch(rand(1,19))
-		if(1)
-			directive += "The Spider Clan must not be linked to this operation. Remain hidden and covert when possible."
-		if(2)
-			directive += "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as desired."
-		if(3)
-			directive += "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
-		if(4)
-			directive += "The Spider Clan absolutely cannot be linked to this operation. Eliminate witnesses at your discretion."
-		if(5)
-			directive += "We are currently negotiating with NanoTrasen Central Command. Prioritize saving human lives over ending them."
-		if(6)
-			directive += "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
-		if(7)
-			directive += "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
-		if(8)
-			directive += "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
-		if(9)
-			directive += "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
-		if(10)
-			directive += "Our reputation is on the line. Harm as few civilians and innocents as possible."
-		if(11)
-			directive += "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
-		if(12)
-			directive += "We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or other natural causes."
-		if(13)
-			directive += "Some disgruntled NanoTrasen employees have been supportive of our operations. Be wary of any mistreatment by command staff."
-		if(14)
-			var/xenorace = pick("Unathi","Tajaran", "Skrellian")
-			directive += "A group of [xenorace] radicals have been loyal supporters of the Spider Clan. Favor [xenorace] crew whenever possible."
-		if(15)
-			directive += "The Spider Clan has recently been accused of religious insensitivity. Attempt to speak with the Chaplain and prove these accusations false."
-		if(16)
-			directive += "The Spider Clan has been bargaining with a competing prosthetics manufacturer. Try to shine NanoTrasen prosthetics in a bad light."
-		if(17)
-			directive += "The Spider Clan has recently begun recruiting outsiders. Consider suitable candidates and assess their behavior amongst the crew."
-		if(18)
-			directive += "A cyborg liberation group has expressed interest in our serves. Prove the Spider Clan merciful towards law-bound synthetics."
-		else
-			directive += "There are no special supplemental instructions at this time."
+	var/xenorace = pick("Unathi","Tajaran", "Skrellian")
+	directive += pick(list(
+		"The Spider Clan must not be linked to this operation. Remain hidden and covert when possible.",
+		"[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as desired.",
+		"A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible.",
+		"The Spider Clan absolutely cannot be linked to this operation. Eliminate witnesses at your discretion.",
+		"We are currently negotiating with NanoTrasen Central Command. Prioritize saving human lives over ending them.",
+		"We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter.",
+		"A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation.",
+		"Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter.",
+		"A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation.",
+		"Our reputation is on the line. Harm as few civilians and innocents as possible.",
+		"Our honor is on the line. Utilize only honorable tactics when dealing with opponents.",
+		"We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or other natural causes.",
+		"Some disgruntled NanoTrasen employees have been supportive of our operations. Be wary of any mistreatment by command staff.",
+		"A group of [xenorace] radicals have been loyal supporters of the Spider Clan. Favor [xenorace] crew whenever possible.",
+		"The Spider Clan has recently been accused of religious insensitivity. Attempt to speak with the Chaplain and prove these accusations false.",
+		"The Spider Clan has been bargaining with a competing prosthetics manufacturer. Try to shine NanoTrasen prosthetics in a bad light.",
+		"The Spider Clan has recently begun recruiting outsiders. Consider suitable candidates and assess their behavior amongst the crew.",
+		"A cyborg liberation group has expressed interest in our serves. Prove the Spider Clan merciful towards law-bound synthetics.",
+		"There are no special supplemental instructions at this time."
+		))
 	return directive
 
 //=======//CURRENT PLAYER VERB//=======//
