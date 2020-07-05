@@ -4,6 +4,15 @@
 /var/const/meteors_in_wave = 50
 /var/const/meteors_in_small_wave = 10
 
+var/const/list/obj/effect/meteor/meteortypes = list(
+	/obj/effect/meteor/small = 25,
+	/obj/effect/meteor       = 65,
+	/obj/effect/meteor/big   = 10
+	)
+
+///////////////////////////////
+//Meteor spawning global procs
+///////////////////////////////
 /proc/meteor_wave(number = meteors_in_wave)
 	if(!ticker || wavesecret)
 		return
@@ -21,61 +30,65 @@
 			spawn_meteor()
 
 /proc/spawn_meteor()
-	var/startx
-	var/starty
-	var/endx
-	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10 // number of tries to spawn meteor.
-
-	do
-		switch(pick(1, 2, 3, 4))
-			if(1) // NORTH
-				starty = world.maxy - (TRANSITIONEDGE + 1)
-				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
-				endy = TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
-			if(2) // EAST
-				starty = rand((TRANSITIONEDGE + 1),world.maxy - (TRANSITIONEDGE + 1))
-				startx = world.maxx - (TRANSITIONEDGE + 1)
-				endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
-				endx = TRANSITIONEDGE
-			if(3) // SOUTH
-				starty = (TRANSITIONEDGE + 1)
-				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE+1))
-				endy = world.maxy - TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
-			if(4) // WEST
-				starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
-				startx = (TRANSITIONEDGE + 1)
-				endy = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
-				endx = world.maxx - TRANSITIONEDGE
-
-		var/picked_zlevel = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		pickedstart = locate(startx, starty, picked_zlevel)
-		pickedgoal = locate(endx, endy, picked_zlevel)
+	while(!istype(pickedstart, /turf/space))
+		var/startSide = pick(cardinal)
+		pickedstart = spaceDebrisStartLoc(startSide, 1)
+		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
 		max_i--
-		if(max_i <= 0)
+		if(max_i<=0)
 			return
-
-	while (!istype(pickedstart, /turf/space) || !istype(pickedstart.loc, /area/space))
-
-	var/obj/effect/meteor/M
-	switch(rand(1, 100))
-
-		if(1 to 10)
-			M = new /obj/effect/meteor/big( pickedstart )
-		if(11 to 75)
-			M = new /obj/effect/meteor( pickedstart )
-		if(76 to 100)
-			M = new /obj/effect/meteor/small( pickedstart )
-
+	var/Me = pickweight(meteortypes)
+	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
+	M.z_original = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	spawn(0)
 		walk_towards(M, M.dest, 1)
-
 	return
+
+/proc/spaceDebrisStartLoc(startSide, Z)
+	var/starty
+	var/startx
+	switch(startSide)
+		if(NORTH)
+			starty = world.maxy-(TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+		if(EAST)
+			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			startx = world.maxx-(TRANSITIONEDGE+1)
+		if(SOUTH)
+			starty = (TRANSITIONEDGE+1)
+			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+		if(WEST)
+			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			startx = (TRANSITIONEDGE+1)
+	var/turf/T = locate(startx, starty, Z)
+	return T
+
+/proc/spaceDebrisFinishLoc(startSide, Z)
+	var/endy
+	var/endx
+	switch(startSide)
+		if(NORTH)
+			endy = TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		if(EAST)
+			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+			endx = TRANSITIONEDGE
+		if(SOUTH)
+			endy = world.maxy-TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+		if(WEST)
+			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+			endx = world.maxx-TRANSITIONEDGE
+	var/turf/T = locate(endx, endy, Z)
+	return T
+
+///////////////////////
+//The meteor effect
+//////////////////////
 
 /obj/effect/meteor
 	name = "meteor"
