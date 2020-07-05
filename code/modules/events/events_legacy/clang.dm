@@ -52,7 +52,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk(src, 0) // Because we might have called walk_towards, we must stop the walk loop or BYOND keeps an internal reference to us forever.
 	return ..()
 
-/proc/immovablerod()
+/datum/event/immovablerod/start()
 	var/turf/start
 	var/turf/end
 	var/startside = pick(cardinal)
