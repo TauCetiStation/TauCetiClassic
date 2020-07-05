@@ -13,6 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
+	var/sightglassesmod = null
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 	sprite_sheet_slot = SPRITE_SHEET_EYES
@@ -43,6 +44,7 @@
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = 1
+	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/meson/prescription
@@ -57,6 +59,7 @@
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	toggleable = 1
+	sightglassesmod = "sci"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -68,6 +71,7 @@
 //	vision_flags = SEE_SELF
 	darkness_view = 7
 	toggleable = 1
+	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "night"
@@ -253,6 +257,7 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 	toggleable = 1
+	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
@@ -315,6 +320,11 @@
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	darkness_view = 7
+	toggleable = TRUE
+	sightglassesmod = "nvg"
+	action_button_name = "Toggle Goggles"
+	active = 1
+	off_state = "healthhudnight"
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
@@ -358,6 +368,8 @@
 	name = "noir sunglasses"
 	desc = "Somehow these seem even more out-of-date than normal sunglasses."
 	action_button_name = "Toggle Noir"
+	sightglassesmod = "greyscale"
+	toggleable = TRUE
 
 /obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
 	toggle_noir()
