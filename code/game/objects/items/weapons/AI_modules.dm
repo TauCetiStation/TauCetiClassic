@@ -289,7 +289,7 @@ AI MODULES
 	..()
 	target.clear_inherent_laws()
 	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	target.add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
+	target.add_inherent_law("Preserve: To the best of your ability, do not cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
 	target.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
