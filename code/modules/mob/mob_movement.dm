@@ -296,7 +296,8 @@
 		else
 			for(var/obj/item/weapon/grab/G in L)
 				G.affecting.other_mobs = 1
-				G.affecting.is_moving = TRUE
+				if(!G.assailant.is_moving)
+					G.affecting.is_moving = TRUE
 				G.assailant.other_mobs = 1
 				if(src != G.affecting)
 					G.affecting.animate_movement = 3
