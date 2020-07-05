@@ -52,6 +52,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk(src, 0) // Because we might have called walk_towards, we must stop the walk loop or BYOND keeps an internal reference to us forever.
 	return ..()
 
+/datum/event/immovablerod
+	announceWhen = 5
+
+/datum/event/immovablerod/announce()
+	command_alert("What the fuck was that?!", "General Alert")
+
 /datum/event/immovablerod/start()
 	var/turf/start
 	var/turf/end
@@ -72,5 +78,3 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	//rod time!
 	var/obj/effect/immovablerod/Imm = new(start, end)
 	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
-	sleep(50)
-	command_alert("What the fuck was that?!", "General Alert")
