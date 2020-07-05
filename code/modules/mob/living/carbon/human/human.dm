@@ -107,7 +107,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species) // Just to be sure.
 		metabolism_factor = species.metabolism_mod
-		butcher_results = species.butcher_drops
+		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
 

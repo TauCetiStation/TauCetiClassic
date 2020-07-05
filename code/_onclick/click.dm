@@ -289,7 +289,7 @@
 	/*
 	Handling combat activation after **item swipes** and changeling stings.
 	*/
-	if(istype(user) && in_range(src, user) && user.try_combo(src))
+	if(istype(user) && user.Adjacent(src) && user.try_combo(src))
 		return FALSE
 	return ..()
 
