@@ -4,7 +4,7 @@
 /var/const/meteors_in_wave = 50
 /var/const/meteors_in_small_wave = 10
 
-var/const/list/obj/effect/meteor/meteortypes = list(
+var/global/list/obj/effect/meteor/meteortypes = list(
 	/obj/effect/meteor/small = 25,
 	/obj/effect/meteor       = 65,
 	/obj/effect/meteor/big   = 10
@@ -32,18 +32,18 @@ var/const/list/obj/effect/meteor/meteortypes = list(
 /proc/spawn_meteor()
 	var/turf/pickedstart
 	var/turf/pickedgoal
+	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/max_i = 10 // number of tries to spawn meteor.
 	while(!istype(pickedstart, /turf/space))
 		var/startSide = pick(cardinal)
-		pickedstart = spaceDebrisStartLoc(startSide, 1)
-		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
+		pickedstart = spaceDebrisStartLoc(startSide, z)
+		pickedgoal = spaceDebrisFinishLoc(startSide, z)
 		max_i--
 		if(max_i<=0)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 	return

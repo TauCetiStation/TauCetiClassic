@@ -62,19 +62,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/start
 	var/turf/end
 	var/startside = pick(cardinal)
-	switch(startside)
-		if(NORTH)
-			start = locate(rand(41, 199), 205, 1)
-			end = locate(rand(41, 199), 38, 1)
-		if(EAST)
-			start = locate(199, rand(38, 205), 1)
-			end = locate(41, rand(38, 205), 1)
-		if(SOUTH)
-			start = locate(rand(41, 199), 38, 1)
-			end = locate(rand(41, 199), 205, 1)
-		if(WEST)
-			start = locate(41, rand(38, 205), 1)
-			end = locate(199, rand(38, 205), 1)
+	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+	start = spaceDebrisStartLoc(startside, z)
+	end = spaceDebrisFinishLoc(startside, z)
 	//rod time!
 	var/obj/effect/immovable_rod/Imm = new(start, end)
 	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")

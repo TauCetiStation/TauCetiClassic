@@ -296,7 +296,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 		if(!BP)
 			return
-		if (istype(O, /obj/effect/immovablerod))
+		if (istype(O, /obj/effect/immovable_rod))
 			BP.take_damage(101, 0)
 		else
 			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
