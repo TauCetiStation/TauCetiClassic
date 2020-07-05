@@ -1,4 +1,4 @@
-/proc/wormhole_event()
+/datum/event/wormholes/start()
 	spawn()
 		var/list/pick_turfs = list()
 		for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
