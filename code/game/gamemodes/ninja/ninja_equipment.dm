@@ -1,19 +1,11 @@
 //For the love of god,space out your code! This is a nightmare to read.
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
-===================================SPACE NINJA EQUIPMENT===================================
-___________________________________________________________________________________________
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ==SPACE NINJA EQUIPMENT==
 */
 
 /*
-===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA SUIT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-===================================================================================
+ * SPACE NINJA SUIT
 */
 
 //=======//NEW AND DEL//=======//
@@ -1408,6 +1400,7 @@ ________________________________________________________________________________
 	to_chat(user, "<B>[mode]</B> is active.")
 	to_chat(user, "Voice mimicking algorithm is set <B>[vchange ? "active" : "inactive"]</B>.")
 
+
 /*
 ===================================================================================
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA NET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1472,50 +1465,6 @@ It is possible to destroy the net by the occupant or someone else.
 		M.anchored = initial(M.anchored)
 		qdel(src)
 	return
-
-	/*if(!isnull(src))//As long as both net and person exist.
-		//No need to check for countdown here since while() broke, it's implicit that it finished.
-
-		density = 0//Make the net pass-through.
-		invisibility = 101//Make the net invisible so all the animations can play out.
-		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-		for(var/obj/item/W in M)
-			if(istype(M,/mob/living/carbon/human))
-				if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
-				if(W==M:shoes)	continue
-			M.drop_from_inventory(W)
-
-		spawn(0)
-			playsound(M, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
-
-		if(holdingfacility.len)
-			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
-			spawn(0)
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, M.loc)
-				spark_system.start()
-				playsound(M, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER, 25)
-				playsound(M, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
-				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-				qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
-		else
-			M.loc = null
-
-		to_chat(M, "<span class='warning'>You appear in a strange place!</span>")
-
-		for(var/mob/O in viewers(src, 3))
-			O.oldshow_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
-
-		if(!isnull(master))//As long as they still exist.
-			to_chat(master, "<span class='notice'><b>SUCCESS</b>:</span> transport procedure of \the [affecting] complete.")
-
-		M.captured = 0 //Important.
-		M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
-
-	else//And they are free.
-		to_chat(M, "<span class='notice'>You are free of the net!</span>")
-	return*/
 
 /obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
