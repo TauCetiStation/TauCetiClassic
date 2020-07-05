@@ -23,10 +23,8 @@
 	while(infected > 0 && candidates.len)
 		if(prob(chance))
 			infect_mob_random_greater(candidates[1])
-			to_chat(world, "greater[chance]")
 		else
 			infect_mob_random_lesser(candidates[1])
-			to_chat(world, "lesser[chance]")
 
 		candidates.Remove(candidates[1])
 		infected--
