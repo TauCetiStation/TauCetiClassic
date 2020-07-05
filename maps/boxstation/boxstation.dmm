@@ -75525,10 +75525,10 @@
 /area/station/security/brig)
 "plH" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/accessory/holy,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/item/clothing/accessory/metal_cross,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
