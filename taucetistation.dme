@@ -1281,7 +1281,6 @@
 #include "code\modules\events\cellular_biomass\cellular_lair.dm"
 #include "code\modules\events\cellular_biomass\cellular_structures.dm"
 #include "code\modules\events\cellular_biomass\spacevines.dm"
-#include "code\modules\events\events_legacy\power_failure.dm"
 #include "code\modules\events\events_legacy\space_ninja.dm"
 #include "code\modules\events\events_legacy\wormholes.dm"
 #include "code\modules\events\holidays\Christmas.dm"
