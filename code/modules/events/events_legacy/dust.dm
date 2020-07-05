@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
 Space dust
 Commonish random event that causes small clumps of "space dust" to hit the station at high speeds.
@@ -7,26 +5,26 @@ No command report on the common version of this event.
 The "dust" will damage the hull of the station causin minor hull breaches.
 */
 
-/proc/dust_swarm(strength = "weak")
+/datum/event/dust/start()
 	var/numbers = 1
-	switch(strength)
-		if("weak")
-		 numbers = rand(2,4)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/weak()
-		if("norm")
-		 numbers = rand(5,10)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust()
-		if("strong")
-		 numbers = rand(10,15)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/strong()
-		if("super")
-		 numbers = rand(15,25)
-		 for(var/i = 0 to numbers)
-		 	new/obj/effect/space_dust/super()
-	return
+	switch(severity)
+		if(EVENT_LEVEL_MUNDANE)
+			numbers = rand(2,4)
+			for(var/i = 0 to numbers)
+				new/obj/effect/space_dust/weak()
+		if(EVENT_LEVEL_MODERATE)
+			if(prob(80))
+				numbers = rand(5,10)
+				for(var/i = 0 to numbers)
+					new/obj/effect/space_dust()
+			else
+				numbers = rand(10,15)
+				for(var/i = 0 to numbers)
+					new/obj/effect/space_dust/strong()
+		if(EVENT_LEVEL_MAJOR)
+			numbers = rand(15,25)
+			for(var/i = 0 to numbers)
+				new/obj/effect/space_dust/super()
 
 
 /obj/effect/space_dust
