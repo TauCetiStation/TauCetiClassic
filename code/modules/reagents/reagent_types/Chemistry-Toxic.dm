@@ -736,13 +736,6 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 	data = list("ticks","spec")
-	var/list/changed_bodyparts = list(
-		BP_GROIN  = /obj/item/organ/external/groin,
-		BP_L_ARM  = /obj/item/organ/external/l_arm,
-		BP_R_ARM  = /obj/item/organ/external/r_arm,
-		BP_L_LEG  = /obj/item/organ/external/l_leg,
-		BP_R_LEG  = /obj/item/organ/external/r_leg
-		)
 
 /datum/reagent/charged_pop_toxin/on_general_digest(mob/living/M)
 	..()
