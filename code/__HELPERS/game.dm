@@ -584,7 +584,7 @@
 
 
 // Procs for grabbing players.
-// get candidates from ghosts for antag role
+// get candidates from ghosts for special role
 proc/pollCandidates(Question = "Would you like to be a special role?", jobbanType, Ignore_Role, poll_time = 300)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
