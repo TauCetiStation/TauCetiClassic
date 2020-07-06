@@ -91,7 +91,6 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 */
 
 /var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
-/var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
 var/ninja_selection_id = 1
 var/ninja_selection_active = 0
@@ -382,7 +381,6 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-		sent_ninja_to_station = 1//And we're done.
 		return new_ninja//Return the ninja in case we need to reference them later.
 
 /*
