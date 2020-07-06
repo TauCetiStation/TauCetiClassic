@@ -313,8 +313,8 @@
 	return TRUE
 
 /datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
-	return 1
+	new /datum/event/space_ninja()
+	return TRUE
 
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
