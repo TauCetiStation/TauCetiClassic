@@ -474,6 +474,7 @@
 #include "code\game\gamemodes\ninja\suit\gloves.dm"
 #include "code\game\gamemodes\ninja\suit\mask.dm"
 #include "code\game\gamemodes\ninja\suit\ninja_equipment.dm"
+#include "code\game\gamemodes\ninja\suit\ninjaDrainAct.dm"
 #include "code\game\gamemodes\ninja\suit\suit_attackby.dm"
 #include "code\game\gamemodes\ninja\suit\suit_initialisation.dm"
 #include "code\game\gamemodes\ninja\suit\suit_process.dm"
