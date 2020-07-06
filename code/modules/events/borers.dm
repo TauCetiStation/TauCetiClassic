@@ -22,8 +22,14 @@
 		kill()
 		return
 
-	while(spawncount >= 1 && vents.len)
-		var/obj/vent = pick_n_take(vents)
-		new /mob/living/simple_animal/borer(vent.loc)
-		successSpawn = TRUE
-		spawncount--
+	spawn()
+		var/list/candidates = pollCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER)
+
+		for(var/mob/M in candidates)
+			if(!spawncount)
+				break
+			var/obj/vent = pick_n_take(vents)
+			var/mob/living/simple_animal/borer/B = new(vent.loc)
+			B.transfer_personality(M.client)
+			successSpawn = TRUE
+			spawncount--
