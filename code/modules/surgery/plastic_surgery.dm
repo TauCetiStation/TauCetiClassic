@@ -108,7 +108,9 @@
 /datum/surgery_step/plastic_surgery/reshape_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] alters [target]'s appearance with \the [tool].</span>",		\
 	"<span class='notice'>You alter [target]'s appearance with \the [tool].</span>")
-	target.real_name = random_unique_name(target.gender)
+	var/new_name = sanitize_name(input(user, "Choose your character's name:", "Changing")  as text|null)
+	if(new_name)
+		target.real_name = new_name
 
 /datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -152,4 +154,3 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>")
 	BP.take_damage(0, 4, used_weapon = tool)
-	
