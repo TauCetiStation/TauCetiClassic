@@ -120,7 +120,7 @@
 
 /datum/religion_rites/spawn_item/call_animal/New()
 	spawn_type = choose_spawn_type()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item), CALLBACK(src, .proc/choose_spawn_type))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item), CALLBACK(src, .proc/choose_spawn_type), "This ritual creates a <i>random friendly animal</i>.")
 
 /datum/religion_rites/spawn_item/call_animal/proc/choose_spawn_type()
 	return pick(summon_type)
@@ -153,7 +153,7 @@
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
 		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
-		M.real_name = name
+		M.real_name = M.name
 		candidate.cancel_camera()
 		candidate.reset_view()
 	else if (response == "Never for this round")
