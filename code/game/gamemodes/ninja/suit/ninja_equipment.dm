@@ -1,7 +1,6 @@
 //For the love of god,space out your code! This is a nightmare to read.
 
 // SPACE NINJA SUIT
-
 /obj/item/clothing/suit/space/space_ninja/atom_init()
 	. = ..()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
@@ -48,17 +47,6 @@
 	AI = null
 	A.death(1)//Kill, deleting mob.
 	qdel(A)
-	return
-
-/obj/item/clothing/suit/space/space_ninja/proc/spideros()
-	set name = "Display SpiderOS"
-	set desc = "Utilize built-in computer system."
-	set category = "Ninja Equip"
-
-	if(s_control&&!s_busy&&!kamikaze)
-		display_spideros()
-	else
-		to_chat(affecting, "<span class='warning'>The interface is locked!</span>")
 	return
 
 // GENERAL SUIT PROCS

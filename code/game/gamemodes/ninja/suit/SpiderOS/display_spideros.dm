@@ -1,5 +1,15 @@
-// SPIDEROS PROC
+/obj/item/clothing/suit/space/space_ninja/proc/spideros()
+	set name = "Display SpiderOS"
+	set desc = "Utilize built-in computer system."
+	set category = "Ninja Equip"
 
+	if(s_control&&!s_busy&&!kamikaze)
+		display_spideros()
+	else
+		to_chat(affecting, "<span class='warning'>The interface is locked!</span>")
+	return
+
+// SPIDEROS PROC
 /obj/item/clothing/suit/space/space_ninja/proc/display_spideros()
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
 	var/mob/living/carbon/human/U = affecting
