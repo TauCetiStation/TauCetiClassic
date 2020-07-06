@@ -1,13 +1,13 @@
 /datum/event/alien_infestation
 	announceWhen	= 400
 
-	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	var/spawncount = 2
 
 
 /datum/event/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(1, 2)
+	spawncount = rand(2,3)
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
