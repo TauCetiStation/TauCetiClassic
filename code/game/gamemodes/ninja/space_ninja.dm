@@ -1,3 +1,5 @@
+// For the love of god,space out your code! This is a nightmare to read.
+
 /var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
 
 // CURRENT PLAYER VERB
