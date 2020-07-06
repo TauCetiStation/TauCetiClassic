@@ -1,12 +1,6 @@
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
-==================================SPACE NINJA ABILITIES====================================
-___________________________________________________________________________________________
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
+// SPACE NINJA ABILITIES
 
-//=======//SAFETY CHECK//=======//
+// SAFETY CHECK
 /*
 X is optional, tells the proc to check for specific stuff. C is also optional.
 All the procs here assume that the character is wearing the ninja suit if they are using the procs.
@@ -35,7 +29,7 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
-//=======//SMOKE//=======//
+// SMOKE
 /*Summons smoke in radius of user.
 Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke()
@@ -56,7 +50,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	return
 
 
-//=======//RIGHT CLICK TELEPORT//=======//
+// RIGHT CLICK TELEPORT
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjashift(turf/T in oview())
 	set name = "Phase Shift (400E)"
@@ -86,7 +80,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			to_chat(U, "<span class='warning'>You cannot teleport into solid walls or from solid matter.</span>")
 	return
 
-//=======//EM PULSE//=======//
+// EM PULSE
 //Disables nearby tech equipment.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
 	set name = "EM Burst (2,000E)"
@@ -103,7 +97,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		cell.use(C*10)
 	return
 
-//=======//ENERGY BLADE//=======//
+// ENERGY BLADE
 //Summons a blade of energy in active hand.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjablade()
 	set name = "Energy Blade (500E)"
@@ -136,7 +130,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 			s_coold = 1
 	return
 
-//=======//NINJA STARS//=======//
+// NINJA STARS
 /*Shoots ninja stars at random people.
 This could be a lot better but I'm too tired atm.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
@@ -174,7 +168,7 @@ This could be a lot better but I'm too tired atm.*/
 			to_chat(U, "<span class='warning'>There are no targets in view.</span>")
 	return
 
-//=======//ENERGY NET//=======//
+// ENERGY NET
 /*Allows the ninja to capture people, I guess.
 Must right click on a mob to activate.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/M in oview())//Only living carbon mobs.
@@ -212,7 +206,7 @@ Must right click on a mob to activate.*/
 			to_chat(U, "They will bring no honor to your Clan!")
 	return
 
-//=======//ADRENALINE BOOST//=======//
+// ADRENALINE BOOST
 /*Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
 Movement impairing would indicate drugs and the like.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
@@ -245,13 +239,11 @@ Movement impairing would indicate drugs and the like.*/
 	return
 
 /*
-===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<KAMIKAZE MODE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-===================================================================================
-Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
+  * KAMIKAZE MODE
+  * Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
 */
 
-//=======//NINJA MOVEMENT//=======//
+// NINJA MOVEMENT
 //Also makes you move like you're on crack.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk()
 	set name = "Shadow Walk"
@@ -307,7 +299,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 			to_chat(U, "<span class='warning'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
 	return
 
-//=======//TELEPORT BEHIND MOB//=======//
+// TELEPORT BEHIND MOB
 /*Appear behind a randomly chosen mob while a few decoy teleports appear.
 This is so anime it hurts. But that's the point.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage()

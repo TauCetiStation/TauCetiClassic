@@ -94,7 +94,7 @@
 		to_chat(affecting, "<span class='warning'>Stealth does not appear to work!</span>")
 	return
 
-//=======//PROCESS PROCS//=======//
+// PROCESS PROCS
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
 	//set background = 1
@@ -136,7 +136,7 @@
 			cancel_stealth()
 		sleep(10)//Checks every second.
 
-//=======//INITIALIZE//=======//
+// INITIALIZE
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(U.mind && U.mind.assigned_role=="MODE" && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
@@ -179,7 +179,7 @@
 			to_chat(U, "<span class='warning'><B>ERROR</B>:</span> You cannot use this function at this time.")
 	return
 
-//=======//DEINITIALIZE//=======//
+// DEINITIALIZE
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize(delay = s_delay)
 	if(affecting==loc&&!s_busy)
@@ -221,7 +221,7 @@
 		s_busy = 0
 	return
 
-//=======//SPIDEROS PROC//=======//
+// SPIDEROS PROC
 
 /obj/item/clothing/suit/space/space_ninja/proc/display_spideros()
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
@@ -468,7 +468,7 @@
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
 	display_to << browse(entity_ja(dat),"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 
-//=======//SPIDEROS TOPIC PROC//=======//
+// SPIDEROS TOPIC PROC
 
 /obj/item/clothing/suit/space/space_ninja/Topic(href, href_list)
 	..()
@@ -731,7 +731,7 @@
 	display_spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 	return
 
-//=======//SPECIAL AI FUNCTIONS//=======//
+// SPECIAL AI FUNCTIONS
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo(turf/T in oview(3,affecting))//To have an internal AI display a hologram to the AI and ninja only.
 	set name = "Display Hologram"
@@ -814,7 +814,7 @@
 	remove_AI_verbs()
 	return
 
-//=======//GENERAL SUIT PROCS//=======//
+// GENERAL SUIT PROCS
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting

@@ -1,10 +1,6 @@
-/*
-===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA GLOVES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-===================================================================================
-*/
+// SPACE NINJA GLOVES
 
-//=======//ENERGY DRAIN PROCS//=======//
+// ENERGY DRAIN PROCS
 
 /obj/item/clothing/gloves/space_ninja/proc/drain(target, obj/suit)
 	var/obj/item/clothing/suit/space/space_ninja/S = suit
@@ -272,7 +268,7 @@
 
 		to_chat(U, "<span class='notice'>Gained <B>[totaldrain]</B> energy from the power network.</span>")
 
-//=======//GENERAL PROCS//=======//
+// GENERAL PROCS
 
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
 	set name = "Toggle Interaction"

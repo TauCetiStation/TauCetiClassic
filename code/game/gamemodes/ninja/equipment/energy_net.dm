@@ -1,8 +1,4 @@
-/*
-===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA NET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-===================================================================================
-*/
+// SPACE NINJA NET
 
 /*
 It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
