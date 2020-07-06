@@ -69,6 +69,8 @@
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ambient Occlusion:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Parallax theme:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
 	. += 				"</tr>"
