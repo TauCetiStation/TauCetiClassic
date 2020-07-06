@@ -769,7 +769,7 @@
 				if(prob(25))
 					to_chat(H, "<span class='warning'>Your flesh rips and tears apart!</span>")
 			if(50)
-				if(data["spec"] == null )
+				if(!data["spec"])
 					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
 					return
 				H.set_species_soft(data["spec"])
