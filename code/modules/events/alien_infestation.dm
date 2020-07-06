@@ -1,8 +1,8 @@
 /datum/event/alien_infestation
 	announceWhen	= 400
 
-	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
 	var/spawncount = 2
+	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
 
 
 /datum/event/alien_infestation/setup()
@@ -12,7 +12,6 @@
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
-
 
 /datum/event/alien_infestation/start()
 	var/list/vents = get_vents()
@@ -33,7 +32,7 @@
 		candidates -= candidate
 		vents -= vent
 		spawncount--
-		successSpawn = 1
+		successSpawn = TRUE
 
 
 /proc/get_vents()
