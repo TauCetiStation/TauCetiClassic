@@ -2,7 +2,7 @@
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
 
-	if(!holder)
+	if(!holder || !check_rights(R_DEBUG))
 		return
 
 	if(ispath(type))
