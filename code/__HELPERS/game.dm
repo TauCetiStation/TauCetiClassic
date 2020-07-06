@@ -593,7 +593,6 @@ proc/pollCandidates(Question = "Would you like to be a special role?", jobbanTyp
 		if(!O.key || !O.client)
 			continue
 		if(jobban_isbanned(O, list(jobbanType, "Syndicate")))
-			to_chat(world, "[O.key] is banned on [jobbanType]/["Syndicate"] ")
 			continue
 		spawn(0)
 			O.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
