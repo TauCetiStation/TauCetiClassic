@@ -302,7 +302,39 @@ Please contact me on #coderbus IRC. ~Carn x
 			overlays_standing[HAIR_LAYER]   = null
 
 	apply_overlay(HAIR_LAYER)
+//OVERRIDE HAIR LAYER, USED IN POP_TOXIN
+/mob/living/carbon/human/proc/override_update_hair()
+	remove_overlay(HAIR_LAYER)
+	var/list/standing = list()
+	if(f_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
+		var/mutable_appearance/facial_s = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
+		if(facial_hair_style.do_colouration)
+			if(!facial_painted)
+				facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+			else
+				facial_s.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
+		standing += facial_s
 
+	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
+		var/mutable_appearance/hair_s = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -HAIR_LAYER)
+		if(hair_style.do_colouration)
+			if(!hair_painted)
+				hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+			else
+				hair_s.color = RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair)
+		standing += hair_s
+
+	if(standing.len)
+		overlays_standing[HAIR_LAYER]	= standing
+
+	if(istype(wear_suit, /obj/item/clothing/suit/wintercoat))
+		var/obj/item/clothing/suit/wintercoat/W = wear_suit
+		if(W.hooded) // used for coat hood due to hair layer viewed over the suit
+			overlays_standing[HAIR_LAYER]   = null
+
+	apply_overlay(HAIR_LAYER)
 
 /mob/living/carbon/human/update_mutations()
 	remove_overlay(MUTATIONS_LAYER)
