@@ -486,6 +486,7 @@
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_slayer.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_smoke.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_stars.dm"
+#include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_stealth.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_walk.dm"
 #include "code\game\gamemodes\nuclear\nuclear.dm"
 #include "code\game\gamemodes\nuclear\nuclear_challenge.dm"
