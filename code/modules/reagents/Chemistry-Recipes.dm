@@ -2265,6 +2265,21 @@
 	result = "dioxin"
 	required_reagents = list("silver" = 2, "diethylamine" = 1)
 	result_amount = 3
+	
+/datum/chemical_reaction/pop_toxin
+	name = "Suspicious liquid"
+	id = "charged_pop_toxin"
+	result = "charged_pop_toxin"
+	required_reagents = list("ryetalyn" = 5, "pop_toxin" = 5)
+	required_catalysts = list("blood" = 1)
+	result_amount= 5
+
+/datum/chemical_reaction/pop_toxin/on_reaction(datum/reagents/holder, var/atom/my_atom)
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	var/datum/reagent/charged_pop_toxin/P = locate(/datum/reagent/charged_pop_toxin) in holder.reagent_list
+	var/mob/living/carbon/human/D = B.data["donor"]
+	P.data["spec"] = D.get_species()
+	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
