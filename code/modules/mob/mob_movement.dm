@@ -240,7 +240,26 @@
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
-		if(mob.confused)
+		var/list/L = mob.ret_grab()
+		if(istype(L, /list) && L.len > 2)
+			if(locate(/obj/item/weapon/grab, mob))
+				move_delay = max(move_delay, world.time + 7)
+				for(var/mob/M in L)
+					M.other_mobs = 1
+					if(mob != M)
+						M.animate_movement = 3
+				for(var/mob/M in L)
+					spawn( 0 )
+						step(M, direct)
+						message_admins(M.name)
+						return
+					spawn( 1 )
+						M.other_mobs = null
+						M.animate_movement = 2
+						return
+						
+
+		else if(mob.confused)
 			var/newdir = direct
 			if(mob.confused > 40)
 				newdir = pick(alldirs)
@@ -261,6 +280,7 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
+	message_admins("AA")
 	return Move(n, direct)
 
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -273,8 +293,7 @@
 		console.jump_on_click(src, T)
 		return FALSE
 	if(locate(/obj/item/weapon/grab, src))
-		if(client)
-			client.move_delay = max(client.move_delay, world.time + 7)
+		client.move_delay = max(client.move_delay, world.time + 7)
 		var/list/L = GetGrabs()
 		if(L.len == 1)
 			for(var/obj/item/weapon/grab/G in GetGrabs())
@@ -293,28 +312,6 @@
 								step(M, get_dir(M.loc, T))
 								if(G.affecting.is_moving)
 									G.affecting.is_moving = FALSE
-		else
-			for(var/obj/item/weapon/grab/G in L)
-				G.affecting.other_mobs = 1
-				if(!G.assailant.is_moving)
-					G.affecting.is_moving = TRUE
-				G.assailant.other_mobs = 1
-				if(src != G.affecting)
-					G.affecting.animate_movement = 3
-			for(var/obj/item/weapon/grab/G in L)
-				spawn( 0 )
-					if(G.affecting.is_moving)
-						step(G.affecting, Dir)
-						G.affecting.is_moving = FALSE
-					return
-				spawn( 1 )
-					G.affecting.other_mobs = null
-					G.assailant.other_mobs = null
-					G.affecting.animate_movement = 2
-					G.assailant.animate_movement = 2
-					return
-	if(pinned.len)
-		return FALSE
 
 	return ..()
 
