@@ -719,19 +719,35 @@
 	id = "pop_toxin"
 	description = "Liquid of unknown source. Can not analyze."
 	reagent_state = LIQUID
-	taste_message = "upcoming changes"
+	taste_message = "nothing"
 	color = "#13e3a9"
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/pop_toxin/on_general_digest(mob/living/M)
+/datum/reagent/charged_pop_toxin
+	name = "Suspicious liquid"
+	id = "charged_pop_toxin"
+	description = "Liquid of unknown source. Can not analyze. Looks shiny."
+	reagent_state = LIQUID
+	taste_message = "upcoming changes"
+	color = "#13e3a9"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+	data = list("ticks","spec")
+	var/list/changed_bodyparts = list(
+		BP_GROIN  = /obj/item/organ/external/groin,
+		BP_L_ARM  = /obj/item/organ/external/l_arm,
+		BP_R_ARM  = /obj/item/organ/external/r_arm,
+		BP_L_LEG  = /obj/item/organ/external/l_leg,
+		BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+/datum/reagent/charged_pop_toxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/spec = pick(HUMAN , SKRELL, UNATHI , TAJARAN)
-		if(!data["ticks"])
-			data["ticks"] = 1
 		data["ticks"]++
 		switch(data["ticks"])
 			if(1 to 10)
@@ -739,23 +755,38 @@
 					H.emote(pick("twitch","drool","moan","giggle"))
 			if(11 to 20)
 				if(prob(25))
-					to_chat(M, "<span class='warning'>You feel something changing inside you.</span>")
+					to_chat(H, "<span class='warning'>You feel something changing inside you.</span>")
 			if(21 to 29)
 				if(prob(25))
-					to_chat(M, "<span class='warning'>You feel unbearable pain!</span>")
+					to_chat(H, "<span class='warning'>You feel unbearable pain!</span>")
 				H.adjustHalLoss(20)
 			if(30)
-				to_chat(M, "<span class='warning'>You feel different.</span>")
-				H.set_species_soft(spec)
+				to_chat(H, "<span class='warning'>You feel different.</span>")
 			if(31 to 49)
 				H.adjustFireLoss(2)
 				H.adjustBruteLoss(2)
 				H.adjustHalLoss(40)
 				if(prob(25))
-					to_chat(M, "<span class='warning'>Your flesh rips and tears apart!</span>")
+					to_chat(H, "<span class='warning'>Your flesh rips and tears apart!</span>")
 			if(50)
-				H.set_species(spec)
-				to_chat(M, "<span class='warning'>Your transformation is complete!</span>")
+				if(data["spec"] == null )
+					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
+					return
+				H.set_species_soft(data["spec"])
+				switch(data["spec"])
+					if(HUMAN)
+						to_chat(H, "<span class='rose'>You've turned into a human! Wow!</span>")
+					if(SKRELL)
+						to_chat(H, "<span class='rose'>Your skin turns gelatinious, and is this a slime on your head?</span>")
+						H.h_style = "Skrell Male Tentacles"
+					if(UNATHI)
+						to_chat(H, "<span class='rose'>You grow a meaty tail, your skin turns scalie, your tongue turns black and claws start to grow too.</span>")
+						H.h_style = "Unathi Horns"
+						H.f_style = "Hood"
+					if(TAJARAN)
+						to_chat(H, "<span class='rose'>You suddenly grow fur, long tail, claws and kitty ears!</span>")
+						H.h_style = "Toxin tajaran ears"
+				H.override_update_hair()
 	else
 		return
 
