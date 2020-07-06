@@ -287,9 +287,9 @@
 	
 /obj/item/weapon/reagent_containers/food/snacks/grown/popberry/atom_init(mapload, potency)
 	. = ..()
-	reagents.add_reagent("pop_toxin", potency + 5)
+	reagents.add_reagent("pop_toxin", potency + 3)
 	reagents.add_reagent("nutriment", potency)
-	bitesize = 10
+	bitesize = 3
 	
 /obj/item/weapon/reagent_containers/food/snacks/grown/popberry/On_Consume(usr)
 	to_chat(usr, "<span class='rose'>The fruit pops, and something slides down your throat.</span>")
