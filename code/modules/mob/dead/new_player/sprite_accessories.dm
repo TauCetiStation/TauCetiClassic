@@ -970,6 +970,12 @@
 /  =---------------------------=  /
 ///////////////////////////////////
 */
+/datum/sprite_accessory/hair/toxin_tajaran_ears //used in pop_toxin
+	name = "Toxin tajaran ears"
+	icon_state = "hair_tarajan_ears"
+	species_allowed = list()
+	do_colouration = 0
+
 /datum/sprite_accessory/hair/ipc_screen_off
 	name = "IPC off screen"
 	icon_state = "ipc_off"
