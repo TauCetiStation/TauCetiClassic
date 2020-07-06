@@ -592,7 +592,7 @@ proc/pollCandidates(Question = "Would you like to be a special role?", jobbanTyp
 	for(var/mob/dead/observer/O in player_list)
 		if(!O.key || !O.client)
 			continue
-		if(jobban_isbanned(O, list(jobbanType, "Syndicate")))
+		if(jobban_isbanned(O, jobbanType) || jobban_isbanned(O, "Syndicate"))
 			continue
 		spawn(0)
 			O.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
