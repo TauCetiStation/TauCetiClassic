@@ -476,7 +476,6 @@
 #include "code\game\gamemodes\ninja\suit\suit_attackby.dm"
 #include "code\game\gamemodes\ninja\suit\suit_initialisation.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\energy_net.dm"
-#include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_abilities.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_adrenaline.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_blade.dm"
 #include "code\game\gamemodes\ninja\suit\n_suit_verbs\ninja_cost_check.dm"
