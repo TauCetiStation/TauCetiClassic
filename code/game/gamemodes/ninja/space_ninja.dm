@@ -1,92 +1,6 @@
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+++++++++++++++++++++++++++++++++++++//                //++++++++++++++++++++++++++++++++++
-======================================SPACE NINJA SETUP====================================
-___________________________________________________________________________________________
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-/*
-	README:
-
-	Data:
-
-	>> space_ninja.dm << is this file. It contains a variety of procs related to either spawning space ninjas,
-	modifying their verbs, various help procs, testing debug-related content, or storing unused procs for later.
-	Similar functions should go into this file, along with anything else that may not have an explicit category.
-	IMPORTANT: actual ninja suit, gloves, etc, are stored under the appropriate clothing files. If you need to change
-	variables or look them up, look there. Easiest way is through the map file browser.
-
-	>> ninja_abilities.dm << contains all the ninja-related powers. Spawning energy swords, teleporting, and the like.
-	If more powers are added, or perhaps something related to powers, it should go there. Make sure to describe
-	what an ability/power does so it's easier to reference later without looking at the code.
-	IMPORTANT: verbs are still somewhat funky to work with. If an argument is specified but is not referenced in a way
-	BYOND likes, in the code content, the verb will fail to trigger. Nothing will happen, literally, when clicked.
-	This can be bypassed by either referencing the argument properly, or linking to another proc with the argument
-	attached. The latter is what I like to do for certain cases--sometimes it's necessary to do that regardless.
-
-	>> ninja_equipment.dm << deals with all the equipment-related procs for a ninja. Primarily it has the suit, gloves,
-	and mask. The suit is by far the largest section of code out of the three and includes a lot of code that ties in
-	to other functions. This file has gotten kind of large so breaking it up may be in order. I use section hearders.
-	IMPORTANT: not much to say here. Follow along with the comments and adding new functions should be a breeze. Also
-	know that certain equipment pieces are linked in other files. The energy blade, for example, has special
-	functions defined in the appropriate files (airlock, securestorage, etc).
-
-	General Notes:
-
-	I created space ninjas with the expressed purpose of spicing up boring rounds. That is, ninjas are to xenos as marauders are to
-	death squads. Ninjas are stealthy, tech-savvy, and powerful. Not to say marauders are all of those things, but a clever ninja
-	should have little problem murderampaging their way through just about anything. Short of admin wizards maybe.
-	HOWEVER!
-	Ninjas also have a fairly great weakness as they require energy to use abilities. If, theoretically, there is a game
-	mode based around space ninjas, make sure to account for their energy needs.
-
-	Admin Notes:
-
-	Ninjas are not admin PCs--please do not use them for that purpose. They are another way to participate in the game post-death,
-	like pais, xenos, death squads, and cyborgs.
-	I'm currently looking for feedback from regular players since beta testing is largely done. I would appreciate if
-	you spawned regular players as ninjas when rounds are boring. Or exciting, it's all good as long as there is feedback.
-	You can also spawn ninja gear manually if you want to.
-
-	How to do that:
-	Make sure your character has a mind.
-	Change their assigned_role to "MODE", no quotes. Otherwise, the suit won't initialize.
-	Change their special_role to "Ninja", no quotes. Otherwise, the character will be gibbed.
-	Spawn ninja gear, put it on, hit initialize. Let the suit do the rest. You are now a space ninja.
-	I don't recommend messing with suit variables unless you really know what you're doing.
-
-	Miscellaneous Notes:
-
-	Potential Upgrade Tree:
-		Energy Shield:
-			Extra Ability
-			Syndicate Shield device?
-				Works like the force wall spell, except can be kept indefinitely as long as energy remains. Toggled on or off.
-				Would block bullets and the like.
-		Phase Shift
-			Extra Ability
-			Advanced Sensors?
-				Instead of being unlocked at the start, Phase Shieft would become available once requirements are met.
-		Uranium-based Recharger:
-			Suit Upgrade
-			Unsure
-				Instead of losing energy each second, the suit would regain the same amount of energy.
-				This would not count in activating stealth and similar.
-		Extended Battery Life:
-			Suit Upgrade
-			Battery of higher capacity
-				Already implemented. Replace current battery with one of higher capacity.
-		Advanced Cloak-Tech device.
-			Suit Upgrade
-			Syndicate Cloaking Device?
-				Remove cloak failure rate.
-*/
-
-
 /var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
 
-//=======//CURRENT PLAYER VERB//=======//
+// CURRENT PLAYER VERB
 
 /client/proc/cmd_admin_ninjafy(mob/M in player_list)
 	set category = null
@@ -114,7 +28,7 @@ ________________________________________________________________________________
 	else
 		alert("Invalid mob")
 
-//=======//CURRENT GHOST VERB//=======//
+// CURRENT GHOST VERB
 
 /client/proc/send_space_ninja()
 	set category = "Fun"
@@ -152,7 +66,7 @@ ________________________________________________________________________________
 
 	return
 
-//=======//NINJA CREATION PROCS//=======//
+// NINJA CREATION PROCS
 
 /proc/create_space_ninja(obj/spawn_point)
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
@@ -189,7 +103,7 @@ ________________________________________________________________________________
 	return 1
 
 
-//=======//HELPER PROCS//=======//
+// HELPER PROCS
 
 //Randomizes suit parameters.
 /obj/item/clothing/suit/space/space_ninja/proc/randomize_param()
@@ -287,7 +201,7 @@ ________________________________________________________________________________
 	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 
-//=======//GENERIC VERB MODIFIERS//=======//
+// GENERIC VERB MODIFIERS
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_equip_verbs()
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
@@ -372,7 +286,7 @@ ________________________________________________________________________________
 		k_unlock = 0
 		to_chat(U, "<span class='notice'>Disengaging mode...\n</span><b>CODE NAME</b>: <span class='warning'><b>KAMIKAZE</b></span>")
 
-//=======//AI VERBS//=======//
+// AI VERBS
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
