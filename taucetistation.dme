@@ -1283,7 +1283,6 @@
 #include "code\modules\events\cellular_biomass\cellular_lair.dm"
 #include "code\modules\events\cellular_biomass\cellular_structures.dm"
 #include "code\modules\events\cellular_biomass\spacevines.dm"
-#include "code\modules\events\events_legacy\alien_infestation.dm"
 #include "code\modules\events\holidays\Christmas.dm"
 #include "code\modules\events\holidays\Holidays.dm"
 #include "code\modules\events\holidays\Other.dm"

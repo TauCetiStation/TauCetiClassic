@@ -309,8 +309,8 @@
 
 
 /datum/admins/proc/makeAliens()
-	alien_infestation(3)
-	return 1
+	new /datum/event/alien_infestation()
+	return TRUE
 
 /datum/admins/proc/makeSpaceNinja()
 	space_ninja_arrival()
