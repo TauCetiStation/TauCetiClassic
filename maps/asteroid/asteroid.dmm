@@ -988,7 +988,7 @@
 "cq" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor/plating,
@@ -1072,7 +1072,7 @@
 "cz" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor/plating,

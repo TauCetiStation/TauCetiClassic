@@ -49,6 +49,7 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	part = BP_HEAD
+	bodypart_type = /obj/item/organ/external/head/robot
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
@@ -91,6 +92,15 @@
 				feedback_inc("cyborg_frames_built",1)
 				return 1
 	return 0
+
+/obj/item/robot_parts/proc/can_attach()
+	return TRUE
+
+/obj/item/robot_parts/head/can_attach()
+	return flash1 && flash2
+
+/obj/item/robot_parts/chest/can_attach()
+	return cell && wires
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
@@ -160,7 +170,7 @@
 		if(chest)
 			return
 		var/obj/item/robot_parts/chest/C = I
-		if(C.wires && C.cell)
+		if(C.can_attach())
 			user.drop_from_inventory(C, src)
 			chest = C
 			w_class = ITEM_SIZE_LARGE
@@ -174,7 +184,7 @@
 		if(head)
 			return
 		var/obj/item/robot_parts/head/H = I
-		if(H.flash2 && H.flash1)
+		if(H.can_attach())
 			user.drop_from_inventory(H, src)
 			head = H
 			w_class = ITEM_SIZE_LARGE

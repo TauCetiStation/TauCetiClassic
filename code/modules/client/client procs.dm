@@ -149,7 +149,7 @@ var/list/blacklisted_builds = list(
 
 	if(!guard)
 		guard = new(src)
-	
+
 	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 
 	// Change the way they should download resources.
@@ -264,6 +264,9 @@ var/list/blacklisted_builds = list(
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	for(var/window_id in browsers)
+		qdel(browsers[window_id])
+
 	log_client_ingame_age_to_db()
 	if(cob && cob.in_building_mode)
 		cob.remove_build_overlay(src)
@@ -595,7 +598,7 @@ var/list/blacklisted_builds = list(
 		return byond_registration
 
 	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
-	
+
 	if (!user_page)
 		return
 

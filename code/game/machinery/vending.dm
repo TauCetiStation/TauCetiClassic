@@ -39,6 +39,7 @@
 	var/slogan_delay = 6000 //How long until we can pitch again?
 	var/icon_vend //Icon_state when vending!
 	var/icon_deny //Icon_state when vending!
+	var/icon_hacked //Passive hacked icon_state
 	//var/emagged = 0 //Ignores if somebody doesn't have card access to that machine.
 	var/electrified_until = 0 //Shock customers like an airlock.
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
@@ -336,6 +337,13 @@
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
+
+/obj/machinery/vending/proc/set_extended_inventory(state)
+	extended_inventory = state
+	if(state && icon_hacked)
+		icon_state = icon_hacked
+	else
+		icon_state = initial(icon_state)
 
 /obj/machinery/vending/ui_interact(mob/user)
 	if((world.time < electrified_until || electrified_until < 0) && !issilicon(user) && !isobserver(user))
@@ -1203,17 +1211,28 @@
 	name = "HolyVend"
 	desc = "Special items to prayers, sacrifices, rites and other methods to tell your God: I remember you!"
 	icon_state = "holy"
+	icon_hacked = "holy-hacked"
 	product_slogans = "HolyVend: Select your Religion today"
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25, /obj/item/weapon/storage/fancy/candle_box/red = 25, /obj/item/clothing/accessory/holy = 5, /obj/item/clothing/shoes/jolly_gravedigger = 4)
-	contraband = list(/obj/item/weapon/nullrod = 2)
-	prices = list(
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10,
+	products = list(
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 5,
 		/obj/item/weapon/storage/fancy/candle_box = 20,
-		/obj/item/weapon/storage/fancy/candle_box/red = 20,
-		/obj/item/weapon/nullrod = 60,
-		/obj/item/clothing/accessory/holy = 80,
-		/obj/item/clothing/shoes/jolly_gravedigger = 200)
+		/obj/item/weapon/storage/fancy/candle_box/red = 25,
+		/obj/item/clothing/accessory/metal_cross = 10,
+		/obj/item/clothing/accessory/bronze_cross = 10,
+		/obj/item/clothing/mask/tie/silver_cross = 5,
+		/obj/item/clothing/mask/tie/golden_cross = 5,
+		/obj/item/clothing/shoes/jolly_gravedigger = 4)
+	contraband = list(/obj/item/weapon/nullrod = 1)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 40,
+					/obj/item/weapon/storage/fancy/candle_box = 20,
+					/obj/item/weapon/storage/fancy/candle_box/red = 20,
+					/obj/item/weapon/nullrod = 400,
+					/obj/item/clothing/accessory/metal_cross = 40,
+					/obj/item/clothing/accessory/bronze_cross = 80,
+					/obj/item/clothing/mask/tie/silver_cross = 400,
+					/obj/item/clothing/mask/tie/golden_cross = 1000,
+					/obj/item/clothing/shoes/jolly_gravedigger = 200)
 
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"

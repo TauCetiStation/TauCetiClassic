@@ -305,6 +305,7 @@
 
 	sweep_push(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored && user.buckled != target)
@@ -396,6 +397,7 @@
 
 	sweep_pull(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(WS.Adjacent(target))
@@ -434,10 +436,11 @@
 
 // A proc called each new tile we're swiping across, before all the possible checks.
 /datum/component/swiping/proc/sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/user)
+	user.face_atom(current_turf)
+
 	if(on_sweep_move)
 		on_sweep_move.Invoke(current_turf, sweep_image, user)
 		return
-	user.face_atom(current_turf)
 
 // A proc that checks whether the sweep will hit target.
 /datum/component/swiping/proc/can_sweep_hit(atom/target, mob/user)
