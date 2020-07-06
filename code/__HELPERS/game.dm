@@ -581,3 +581,46 @@
 					rstats[i] = environment.vars[stats[i]]
 		temps[direction] = rstats
 	return temps
+
+
+// get candidates from ghosts for antag_role
+proc/pollCandidates(Question = "Would you like to be a special role?", jobbanType, Ignore_Role, poll_time = 300)
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
+
+	for(var/mob/dead/observer/O in player_list)
+		if(!O.key || !O.client)
+			continue
+		if(jobban_isbanned(O, list(jobbanType, "Syndicate")))
+			to_chat(world, "[O.key] is banned on [jobbanType]/["Syndicate"] ")
+			continue
+		spawn(0)
+			O.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+			window_flash(O.client)
+			var/ans = alert(O, Question,"Please answer in [poll_time/10] seconds!","No","Yes","Not This Round")
+			switch(ans)
+				if("Yes")
+					to_chat(O, "<span class='notice'>Choice registered: Yes.</span>")
+					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+						to_chat(O, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+						O.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+						return
+					candidates += O
+				if("No")
+					to_chat(O, "<span class='danger'>Choice registered: No.</span>")
+					return
+				if("Not This Round")
+					to_chat(O, "<span class='danger'>Choice registered: No.</span>")
+					to_chat(O, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
+					O.client.prefs.ignore_question -= Ignore_Role
+					return
+				else
+					return
+	sleep(poll_time)
+
+	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	for(var/mob/dead/observer/O in candidates)
+		if(!O.key || !O.client)
+			candidates.Remove(O)
+
+	return candidates
