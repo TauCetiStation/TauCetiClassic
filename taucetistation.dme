@@ -1252,6 +1252,7 @@
 #include "code\modules\events\event.dm"
 #include "code\modules\events\event_container.dm"
 #include "code\modules\events\event_procs.dm"
+#include "code\modules\events\gravity.dm"
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\immovable_rod.dm"
 #include "code\modules\events\infestation.dm"
