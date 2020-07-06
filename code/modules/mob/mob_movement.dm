@@ -251,7 +251,6 @@
 				for(var/mob/M in L)
 					spawn( 0 )
 						step(M, direct)
-						message_admins(M.name)
 						return
 					spawn( 1 )
 						M.other_mobs = null
@@ -280,7 +279,6 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
-	message_admins("AA")
 	return Move(n, direct)
 
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
