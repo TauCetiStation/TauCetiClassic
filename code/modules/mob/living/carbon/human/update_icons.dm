@@ -297,6 +297,8 @@ Please contact me on #coderbus IRC. ~Carn x
 				else
 					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
 					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
+					head.recolor()
 			if(!isnull(grad_s))
 				hair_s.Blend(grad_s, ICON_OVERLAY)
 
