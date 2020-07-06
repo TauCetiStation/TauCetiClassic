@@ -37,6 +37,9 @@
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return FALSE
 
+/datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return TRUE
+
 // does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -126,6 +129,9 @@
 
 		//check if tool is right or close enough and if this step is possible
 		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
+				return TRUE
+
 			S.begin_step(user, M, target_zone, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.zone_sel.selecting && target_zone == user.zone_sel.selecting)
@@ -158,6 +164,7 @@
 				swapped = 1
 
 /datum/surgery_status
+	var/plastic_new_name = null
 	var/plasticsur = 0
 	var/eyes = 0
 	var/face = 0
