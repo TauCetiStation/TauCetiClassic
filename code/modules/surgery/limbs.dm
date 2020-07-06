@@ -188,6 +188,10 @@
 		target.r_facial = B.r_facial
 		target.g_facial = B.g_facial
 		target.b_facial = B.b_facial
+		target.dyed_r_facial = B.dyed_r_facial
+		target.dyed_g_facial = B.dyed_g_facial
+		target.dyed_b_facial = B.dyed_b_facial
+		target.facial_painted = B.facial_painted
 		target.r_hair = B.r_hair
 		target.g_hair = B.g_hair
 		target.b_hair = B.b_hair

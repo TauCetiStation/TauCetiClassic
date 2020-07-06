@@ -711,6 +711,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/r_facial
 	var/g_facial
 	var/b_facial
+	var/dyed_r_facial
+	var/dyed_g_facial
+	var/dyed_b_facial
+	var/facial_painted
 	var/r_hair
 	var/g_hair
 	var/b_hair
@@ -751,9 +755,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 			r_facial = owner.r_facial
 			g_facial = owner.g_facial
 			b_facial = owner.b_facial
+			dyed_r_facial = owner.dyed_r_facial
+			dyed_g_facial = owner.dyed_g_facial
+			dyed_b_facial = owner.dyed_b_facial
+			facial_painted = owner.facial_painted
 			var/mutable_appearance/facial = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.color = RGB_CONTRAST(owner.r_facial, owner.g_facial, owner.b_facial)
+				if(!facial_painted)
+					facial.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				else
+					facial.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
 
 			add_overlay(facial)
 

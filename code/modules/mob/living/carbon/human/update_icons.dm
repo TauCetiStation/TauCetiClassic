@@ -280,6 +280,8 @@ Please contact me on #coderbus IRC. ~Carn x
 					facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
 				else
 					facial_s.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
+					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
+					head.recolor()
 			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
