@@ -368,7 +368,7 @@
 /obj/effect/decal/cleanable/cellular/meat,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/accessory/holy,
+/obj/item/clothing/accessory/metal_cross,
 /obj/item/clothing/under/det/max_payne,
 /obj/item/weapon/switchblade,
 /turf/simulated/floor/wood,
