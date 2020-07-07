@@ -106,7 +106,7 @@
 			if(specie_obj.flags[HAS_HAIR_COLOR])
 				. += "<b>Gradient</b>"
 				. += "<br><a href='?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
-				. += " Style: <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
+				. += " Style: <a class='white' href='?_src_=prefs;preference=grad_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=grad_style_right;task=input'>></a> <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
 			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
@@ -358,6 +358,22 @@
 					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Preference")  as null|anything in valid_gradients
 					if(new_grad_style)
 						grad_style = new_grad_style
+
+				if("grad_style_left")
+					var/list/valid_gradients = hair_gradients
+					var/start = valid_gradients.Find(grad_style)
+					if(start != 1 && start != 0)
+						grad_style = valid_gradients[start-1]
+					else
+						grad_style = valid_gradients[valid_gradients.len]
+
+				if("grad_style_right")
+					var/list/valid_gradients = hair_gradients
+					var/start = valid_gradients.Find(grad_style)
+					if(start != valid_gradients.len)
+						grad_style = valid_gradients[start+1]
+					else
+						grad_style = valid_gradients[1]
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character facial-hair colour", rgb(r_facial, g_facial, b_facial)) as color|null
