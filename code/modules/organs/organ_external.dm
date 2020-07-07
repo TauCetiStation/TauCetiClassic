@@ -784,8 +784,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			b_grad = owner.b_grad
 			hair_painted = owner.hair_painted
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-			var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
 			if(hair_style.do_colouration)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
 				grad_s.Blend(hair_s, ICON_AND)
 				if(!hair_painted)
 					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
@@ -793,7 +793,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				else
 					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
 					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
-			hair_s.Blend(grad_s, ICON_OVERLAY)
+				hair_s.Blend(grad_s, ICON_OVERLAY)
 
 			add_overlay(mutable_appearance(hair_s, "[hair_style.icon_state]_s"))
 
