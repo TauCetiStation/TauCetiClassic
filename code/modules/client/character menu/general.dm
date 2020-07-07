@@ -102,10 +102,10 @@
 			. += "<br>"
 			if(specie_obj.flags[HAS_HAIR_COLOR])
 				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
-			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+			. += " Style: <a href='?_src_=prefs;preference=h_style_left;task=input'><</a> <a href='?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font>"
-			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+			. += " Style: <a href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
 			if(specie_obj.flags[HAS_SKIN_COLOR])
@@ -330,6 +330,46 @@
 					if(new_h_style)
 						h_style = new_h_style
 
+				if("h_style_left")
+					var/list/valid_hairstyles = list()
+					for(var/hairstyle in hair_styles_list)
+						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
+						if(species == IPC && ipc_head != S.ipc_head_compatible )
+							continue
+
+						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
+					var/start = valid_hairstyles.Find(h_style)
+
+					if(start != 1 && start != 0)
+						h_style = valid_hairstyles[start-1]
+					else
+						h_style = valid_hairstyles[valid_hairstyles.len]
+
+				if("h_style_right")
+					var/list/valid_hairstyles = list()
+					for(var/hairstyle in hair_styles_list)
+						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
+						if(species == IPC && ipc_head != S.ipc_head_compatible )
+							continue
+
+						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+					
+					var/start = valid_hairstyles.Find(h_style)
+
+					if(start != valid_hairstyles.len)
+						h_style = valid_hairstyles[start+1]
+					else
+						h_style = valid_hairstyles[1]
+
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character facial-hair colour", rgb(r_facial, g_facial, b_facial)) as color|null
 					if(new_facial)
@@ -351,6 +391,42 @@
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style)  as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
+
+				if("f_style_left")
+					var/list/valid_facialhairstyles = list()
+					for(var/facialhairstyle in facial_hair_styles_list)
+						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
+
+						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+
+					var/start = valid_facialhairstyles.Find(h_style)
+
+					if(start != 1 && start != 0)
+						f_style = valid_facialhairstyles[start-1]
+					else
+						f_style = valid_facialhairstyles[valid_facialhairstyles.len]
+
+				if("f_style_right")
+					var/list/valid_facialhairstyles = list()
+					for(var/facialhairstyle in facial_hair_styles_list)
+						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
+						if(S.gender != NEUTER && gender != S.gender)
+							continue
+						if(!(species in S.species_allowed))
+							continue
+
+						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+
+					var/start = valid_facialhairstyles.Find(h_style)
+
+					if(start != valid_facialhairstyles.len)
+						f_style = valid_facialhairstyles[start+1]
+					else
+						f_style = valid_facialhairstyles[1]
 
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
