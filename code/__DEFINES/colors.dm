@@ -99,3 +99,8 @@
 #define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
 #define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
 #define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
+
+// Codex category colours.
+#define CODEX_COLOR_LORE      "#abdb9b"
+#define CODEX_COLOR_MECHANICS "#9ebcd8"
+#define CODEX_COLOR_ANTAG     "#e5a2a2"
