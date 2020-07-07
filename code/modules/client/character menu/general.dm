@@ -331,7 +331,7 @@
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/start = valid_hairstyles.Find(h_style)
-					if(start != 1 && start != 0)
+					if(start != 1)
 						h_style = valid_hairstyles[start-1]
 					else
 						h_style = valid_hairstyles[valid_hairstyles.len]
@@ -362,7 +362,7 @@
 				if("grad_style_left")
 					var/list/valid_gradients = hair_gradients
 					var/start = valid_gradients.Find(grad_style)
-					if(start != 1 && start != 0)
+					if(start != 1)
 						grad_style = valid_gradients[start-1]
 					else
 						grad_style = valid_gradients[valid_gradients.len]
@@ -616,8 +616,11 @@
 			continue
 		if(!(species in S.species_allowed))
 			continue
-		if(species == IPC && ipc_head != S.ipc_head_compatible )
+		if(species == IPC && ipc_head != S.ipc_head_compatible)
 			continue
 
 		valid_styles[hairstyle] = styles_list[hairstyle]
+
+	if(length(valid_styles) == 0)
+		valid_styles["Shaved"] = /datum/sprite_accessory/facial_hair/shaved
 	return valid_styles
