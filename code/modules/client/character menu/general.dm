@@ -101,16 +101,20 @@
 				. += "<b>Hair</b>"
 			. += "<br>"
 			if(specie_obj.flags[HAS_HAIR_COLOR])
-				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
+				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> [color_square(r_hair, g_hair, b_hair)]"
 			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+			. += "<b>Gradient</b>"
+			. += "<br><a href='?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
+			. += " Style: <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
 			. += "<b>Facial</b>"
-			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font>"
+			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
 			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
-			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
+			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
+			
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
+				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]"
 
 		//Gear
 		if("gear")
@@ -170,6 +174,9 @@
 	. += 	"</tr>"
 	. += "</table>"	//Main body table end
 
+/proc/color_square(red, green, blue, hex)
+	var/color = hex ? hex : "#[num2hex(red, 2)][num2hex(green, 2)][num2hex(blue, 2)]"
+	return "<font face='fixedsys' size='3' color='[color]'><table border cellspacing='0' style='display:inline;' bgcolor='[color]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
 	switch(href_list["preference"])
@@ -313,6 +320,15 @@
 						g_hair = hex2num(copytext(new_hair, 4, 6))
 						b_hair = hex2num(copytext(new_hair, 6, 8))
 
+				if("grad_color")
+					if(!specie_obj.flags[HAS_HAIR_COLOR])
+						return
+					var/new_grad = input(user, "Choose your character's secondary hair color:", "Character Preference") as color|null
+					if(new_grad)
+						r_grad = hex2num(copytext(new_grad, 2, 4))
+						g_grad = hex2num(copytext(new_grad, 4, 6))
+						b_grad = hex2num(copytext(new_grad, 6, 8))
+
 				if("h_style")
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
@@ -329,6 +345,13 @@
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
+
+				if("grad_style")
+					var/list/valid_gradients = hair_gradients
+
+					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Preference")  as null|anything in valid_gradients
+					if(new_grad_style)
+						grad_style = new_grad_style
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null

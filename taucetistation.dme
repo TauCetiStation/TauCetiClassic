@@ -1462,6 +1462,7 @@
 #include "code\modules\mob\living\carbon\human\death.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"
 #include "code\modules\mob\living\carbon\human\examine.dm"
+#include "code\modules\mob\living\carbon\human\gradient.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
 #include "code\modules\mob\living\carbon\human\human_attackhand.dm"
 #include "code\modules\mob\living\carbon\human\human_damage.dm"
