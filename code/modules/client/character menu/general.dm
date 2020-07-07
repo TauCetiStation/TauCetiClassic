@@ -105,7 +105,7 @@
 			. += " Style: <a class='white' href='?_src_=prefs;preference=h_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font>"
-			. += " Style: <a class='white tilda' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
 			if(specie_obj.flags[HAS_SKIN_COLOR])
