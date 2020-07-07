@@ -271,6 +271,10 @@
 
 /datum/guard/proc/process_autoban()
 
+	if(!dbcon.IsConnected())
+		message_admins("GUARD: autoban for [holder.ckey] not processed due to database connection problem.")
+		return
+
 	var/reason = config.guard_autoban_reason
 
 	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
