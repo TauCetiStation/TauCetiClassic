@@ -322,13 +322,13 @@
 						b_hair = hex2num(copytext(new_hair, 6, 8))
 
 				if("h_style")
-					var/list/valid_hairstyles = get_valid_hairstyles()
+					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style)  as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
 				if("h_style_left")
-					var/list/valid_hairstyles = get_valid_hairstyles()
+					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/start = valid_hairstyles.Find(h_style)
 					if(start != 1 && start != 0)
 						h_style = valid_hairstyles[start-1]
@@ -336,7 +336,7 @@
 						h_style = valid_hairstyles[valid_hairstyles.len]
 
 				if("h_style_right")
-					var/list/valid_hairstyles = get_valid_hairstyles()	
+					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/start = valid_hairstyles.Find(h_style)
 					if(start != valid_hairstyles.len)
 						h_style = valid_hairstyles[start+1]
@@ -383,13 +383,13 @@
 						b_facial = hex2num(copytext(new_facial, 6, 8))
 
 				if("f_style")
-					var/list/valid_facialhairstyles = get_valid_facialhairstyles()
+					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style)  as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
 				if("f_style_left")
-					var/list/valid_facialhairstyles = get_valid_facialhairstyles()
+					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
 					var/start = valid_facialhairstyles.Find(h_style)
 					if(start != 1 && start != 0)
 						f_style = valid_facialhairstyles[start-1]
@@ -397,7 +397,7 @@
 						f_style = valid_facialhairstyles[valid_facialhairstyles.len]
 
 				if("f_style_right")
-					var/list/valid_facialhairstyles = get_valid_facialhairstyles()
+					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
 					var/start = valid_facialhairstyles.Find(h_style)
 					if(start != valid_facialhairstyles.len)
 						f_style = valid_facialhairstyles[start+1]
@@ -608,10 +608,10 @@
 				if("gear")
 					submenu_type = "gear"
 
-/datum/preferences/proc/get_valid_hairstyles()
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+/datum/preferences/proc/get_valid_styles_from_styles_list(list/styles_list)
+	var/list/valid_styles = list()
+	for(var/hairstyle in styles_list)
+		var/datum/sprite_accessory/S = styles_list[hairstyle]
 		if(S.gender != NEUTER && gender != S.gender)
 			continue
 		if(!(species in S.species_allowed))
@@ -619,17 +619,5 @@
 		if(species == IPC && ipc_head != S.ipc_head_compatible )
 			continue
 
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-	return valid_hairstyles
-
-/datum/preferences/proc/get_valid_facialhairstyles()
-	var/list/valid_facialhairstyles = list()
-	for(var/facialhairstyle in facial_hair_styles_list)
-		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-		if(S.gender != NEUTER && gender != S.gender)
-			continue
-		if(!(species in S.species_allowed))
-			continue
-
-		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-	return valid_facialhairstyles
+		valid_styles[hairstyle] = styles_list[hairstyle]
+	return valid_styles
