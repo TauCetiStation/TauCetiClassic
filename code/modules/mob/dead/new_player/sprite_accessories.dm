@@ -865,6 +865,7 @@
 	icon_state = "bald"
 	gender = NEUTER
 	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA)
+	ipc_head_compatible = "universal"
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"

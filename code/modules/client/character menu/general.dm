@@ -616,8 +616,7 @@
 			continue
 		if(!(species in S.species_allowed))
 			continue
-		if(species == IPC && ipc_head != S.ipc_head_compatible )
+		if(species == IPC && ipc_head != S.ipc_head_compatible && S.ipc_head_compatible != "universal")
 			continue
-
 		valid_styles[hairstyle] = styles_list[hairstyle]
 	return valid_styles
