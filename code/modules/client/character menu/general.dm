@@ -103,9 +103,10 @@
 			if(specie_obj.flags[HAS_HAIR_COLOR])
 				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> [color_square(r_hair, g_hair, b_hair)]"
 			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
-			. += "<b>Gradient</b>"
-			. += "<br><a href='?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
-			. += " Style: <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
+			if(specie_obj.flags[HAS_HAIR_COLOR])
+				. += "<b>Gradient</b>"
+				. += "<br><a href='?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
+				. += " Style: <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
 			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
