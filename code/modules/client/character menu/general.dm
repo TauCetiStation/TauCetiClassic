@@ -245,14 +245,14 @@
 		if("input")
 			switch(href_list["preference"])
 				if("name")
-					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Preference")  as text|null)
+					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Name", real_name)  as text|null)
 					if(new_name)
 						real_name = new_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's age:\n([specie_obj.min_age]-[specie_obj.max_age])", "Character Age", age) as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
@@ -271,7 +271,7 @@
 					else //Not using the whitelist? Aliens for everyone!
 						new_species = whitelisted_species
 
-					species = input("Please select a species", "Character Generation", null) in new_species
+					species = input("Please select a species", "Character Generation", prev_species) in new_species
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
@@ -295,19 +295,19 @@
 						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_species))
 							new_languages += lang.name
 
-					language = input("Please select a secondary language", "Character Generation", null) in new_languages
+					language = input("Please select a secondary language", "Character Generation", language) in new_languages
 
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
 						return
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Blood-type", b_type) as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
 					if(new_b_type)
 						b_type = new_b_type
 
 				if("hair")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
 						return
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+					var/new_hair = input(user, "Choose your character's hair colour:", "Character Hair Colour", rgb(r_hair, g_hair, b_hair)) as color|null
 					if(new_hair)
 						r_hair = hex2num(copytext(new_hair, 2, 4))
 						g_hair = hex2num(copytext(new_hair, 4, 6))
@@ -326,12 +326,12 @@
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
-					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
+					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style)  as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
+					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character facial-hair colour", rgb(r_facial, g_facial, b_facial)) as color|null
 					if(new_facial)
 						r_facial = hex2num(copytext(new_facial, 2, 4))
 						g_facial = hex2num(copytext(new_facial, 4, 6))
@@ -348,7 +348,7 @@
 
 						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
 
-					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
+					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style)  as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
@@ -361,7 +361,7 @@
 					else
 						underwear_options = underwear_f
 
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear])  as null|anything in underwear_options
 					if(new_underwear)
 						underwear = underwear_options.Find(new_underwear)
 
@@ -369,18 +369,18 @@
 					var/list/undershirt_options
 					undershirt_options = undershirt_t
 
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
 					if (new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
 				if("socks")
 					var/list/socks_options
 					socks_options = socks_t
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
 					if(new_socks)
 						socks = socks_options.Find(new_socks)
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null
 					if(new_eyes)
 						r_eyes = hex2num(copytext(new_eyes, 2, 4))
 						g_eyes = hex2num(copytext(new_eyes, 4, 6))
@@ -389,21 +389,21 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", s_tone+35 )  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
 					if(!specie_obj.flags[HAS_SKIN_COLOR])
 						return
-					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
+					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", rgb(r_skin, g_skin, b_skin)) as color|null
 					if(new_skin)
 						r_skin = hex2num(copytext(new_skin, 2, 4))
 						g_skin = hex2num(copytext(new_skin, 4, 6))
 						b_skin = hex2num(copytext(new_skin, 6, 8))
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag])  as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
 
@@ -411,49 +411,49 @@
 					use_skirt = !use_skirt
 
 				if("nt_relation")
-					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation)  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
 					if(new_relation)
 						nanotrasen_relation = new_relation
 
 				if("home_system")
-					var/choice = input(user, "Please choose a home system.") as null|anything in home_system_choices + list("None","Other")
+					var/choice = input(user, "Please choose a home system.", "Home System", home_system) as null|anything in home_system_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a home system.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a home system.", "Home System")  as text|null)
 						if(raw_choice)
 							home_system = raw_choice
 						return
 					home_system = choice
 
 				if("citizenship")
-					var/choice = input(user, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None","Other")
+					var/choice = input(user, "Please choose your current citizenship.", "Citizenship", citizenship) as null|anything in citizenship_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Character Preference") as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Citizenship") as text|null)
 						if(raw_choice)
 							citizenship = raw_choice
 						return
 					citizenship = choice
 
 				if("faction")
-					var/choice = input(user, "Please choose a faction to work for.") as null|anything in faction_choices + list("None","Other")
+					var/choice = input(user, "Please choose a faction to work for.", "Faction", faction) as null|anything in faction_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a faction.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a faction.",  "Faction")  as text|null)
 						if(raw_choice)
 							faction = raw_choice
 						return
 					faction = choice
 
 				if("religion")
-					var/choice = input(user, "Please choose a religion.") as null|anything in religion_choices + list("None","Other")
+					var/choice = input(user, "Please choose a religion.", "Religion", religion) as null|anything in religion_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a religion.")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a religion.", "Religion")  as text|null)
 						if(raw_choice)
 							religion = raw_choice
 						return
