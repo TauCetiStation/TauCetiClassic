@@ -401,7 +401,7 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35-s_tone )  as num|null
+					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone )  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
