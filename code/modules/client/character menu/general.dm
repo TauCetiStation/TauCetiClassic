@@ -347,7 +347,7 @@
 				if("grad_color")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
 						return
-					var/new_grad = input(user, "Choose your character's secondary hair color:", "Character Preference") as color|null
+					var/new_grad = input(user, "Choose your character's secondary hair color:", "Character Gradient Color", rgb(r_grad, g_grad, b_grad)) as color|null
 					if(new_grad)
 						r_grad = hex2num(copytext(new_grad, 2, 4))
 						g_grad = hex2num(copytext(new_grad, 4, 6))
@@ -355,8 +355,7 @@
 
 				if("grad_style")
 					var/list/valid_gradients = hair_gradients
-
-					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Preference")  as null|anything in valid_gradients
+					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Gradient Style", grad_style)  as null|anything in valid_gradients
 					if(new_grad_style)
 						grad_style = new_grad_style
 
