@@ -10,9 +10,11 @@
 		h_style = random_ipc_monitor(ipc_head)
 	else
 		h_style = random_hair_style(gender, species)
+		grad_style = random_gradient_style()
 	f_style = random_facial_hair_style(gender, species)
 	randomize_hair_color("hair")
 	randomize_hair_color("facial")
+	randomize_hair_color("gradient")
 	randomize_eyes_color()
 	randomize_skin_color()
 	underwear = rand(1,underwear_m.len)
@@ -85,6 +87,10 @@
 			r_facial = red
 			g_facial = green
 			b_facial = blue
+		if("gradient")
+			r_grad = red
+			g_grad = green
+			b_grad = blue
 
 /datum/preferences/proc/randomize_eyes_color()
 	var/red
