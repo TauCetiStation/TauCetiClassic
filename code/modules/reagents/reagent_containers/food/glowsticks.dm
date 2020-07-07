@@ -157,9 +157,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(atom/target, mob/user, proximity, params)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W, mob/user)
-	return
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
 	liquid_fuel = null // as long as this is in reagent_list, no need to qdel, will be handled by parent's reagent cleaning process.
 	return ..()

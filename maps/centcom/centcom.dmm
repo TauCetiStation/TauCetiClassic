@@ -1749,14 +1749,12 @@
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Bomb"
 	},
+/obj/structure/table,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
 /area/shuttle/syndicate_elite/mothership)
 "aia" = (
-/obj/effect/landmark{
-	name = "Syndicate-Commando-Bomb"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2162,14 +2160,7 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "ajo" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
-	req_access = list(150)
-	},
-/obj/machinery/door/poddoor{
-	id = "syndicate_elite_mech_room";
-	name = "Mech Room Door"
-	},
+/obj/machinery/door/poddoor/shutters/syndi,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -5960,11 +5951,6 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
-"avv" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall12"
-	},
-/area/space)
 "avw" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -7786,8 +7772,8 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
 /obj/item/device/remote_device/ERT,
+/obj/item/weapon/gun/projectile/glock/spec,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -8577,6 +8563,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/weapon/storage/firstaid/tactical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -8974,7 +8962,7 @@
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
-/obj/item/weapon/gun/projectile/wjpp/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
@@ -9009,10 +8997,18 @@
 /area/centcom/living)
 "aFv" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/rglass,
-/obj/item/stack/sheet/plasteel,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/plasteel{
+	amount = 50
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -10308,11 +10304,6 @@
 	},
 /turf/space,
 /area/shuttle/supply/velocity)
-"aKj" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
-	},
-/area/space)
 "aKl" = (
 /turf/space,
 /area/shuttle/escape_pod4/centcom)
@@ -13625,11 +13616,6 @@
 /obj/effect/overlay/palmtree_r,
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
-"aWF" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
-	},
-/area/space)
 "aWG" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -13637,11 +13623,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/vox/arkship)
-"aWH" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
-	},
-/area/space)
 "aWI" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -13649,16 +13630,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/vox/arkship)
-"aWJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall14"
-	},
-/area/space)
-"aWK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
-	},
-/area/space)
 "aWL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -13725,11 +13696,6 @@
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
-"aWP" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s5"
-	},
-/area/space)
 "aWQ" = (
 /obj/machinery/computer/vox_station,
 /turf/simulated/shuttle/floor4{
@@ -14550,11 +14516,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/tdome)
-"aYY" = (
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
-	},
-/area/custom/beach)
 "aZa" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -15883,7 +15844,7 @@
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
-/obj/item/weapon/gun/projectile/wjpp/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
@@ -15967,7 +15928,7 @@
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
-/obj/item/weapon/gun/projectile/wjpp/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
@@ -16092,7 +16053,7 @@
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
 /obj/item/weapon/handcuffs,
-/obj/item/weapon/gun/projectile/wjpp/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
@@ -16161,6 +16122,9 @@
 "bgb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/electrical,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16194,6 +16158,9 @@
 /area/centcom/specops)
 "blb" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -22053,6 +22020,12 @@
 /obj/structure/plasticflaps/explosion_proof,
 /turf/unsimulated/floor,
 /area/centcom/control)
+"obW" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/shuttle/syndicate_elite/mothership)
 "ocb" = (
 /turf/space,
 /area/shuttle/escape_pod3/transit)
@@ -31518,7 +31491,7 @@ aaM
 aaM
 aaM
 ahG
-ahG
+aaM
 ahG
 ahG
 ahG
@@ -31775,8 +31748,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -32032,8 +32005,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -32289,8 +32262,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -32546,8 +32519,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -32803,8 +32776,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -33060,8 +33033,8 @@ aaM
 aaM
 aaM
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -33317,8 +33290,8 @@ ahG
 ahG
 ahG
 ahG
-ahG
 aaM
+ahG
 aaM
 aaM
 aaM
@@ -33549,33 +33522,33 @@ aaM
 "}
 (42,1,1) = {"
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 ahG
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -33832,7 +33805,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -34089,7 +34062,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -34346,7 +34319,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -34603,7 +34576,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -34860,7 +34833,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -35117,7 +35090,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -35374,7 +35347,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -35631,7 +35604,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -35888,7 +35861,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -36145,7 +36118,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -36402,7 +36375,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -36659,7 +36632,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -36916,7 +36889,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37173,7 +37146,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37430,7 +37403,7 @@ aaM
 aaM
 aaM
 ahG
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37687,25 +37660,25 @@ aaM
 aaM
 aaM
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 ahG
 aaM
 aaM
@@ -38979,7 +38952,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -39236,7 +39209,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -39459,32 +39432,32 @@ aaM
 aaM
 "}
 (65,1,1) = {"
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 ahG
 ahG
 aaM
@@ -39752,8 +39725,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+odb
+odb
 ofb
 ofb
 ofb
@@ -40776,7 +40749,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -41033,7 +41006,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -41290,7 +41263,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -42322,8 +42295,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+odb
+odb
 ofb
 ofb
 ofb
@@ -42834,7 +42807,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -43091,7 +43064,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+odb
 ofb
 ofb
 ofb
@@ -64165,7 +64138,7 @@ aaM
 aaw
 ahP
 ahO
-ahZ
+obW
 ait
 ait
 ait
@@ -80044,7 +80017,7 @@ aaM
 aaM
 aaM
 aaM
-aKj
+aaM
 bbD
 aXc
 anF
@@ -80301,7 +80274,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aWI
 bbS
 bbS
@@ -80558,9 +80531,9 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
+aaM
+aaM
+aaM
 bbD
 bbD
 bbS
@@ -80815,7 +80788,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aaM
 aWG
 aXD
@@ -81070,9 +81043,9 @@ aaM
 aaM
 aaM
 aaM
-aKj
-aWH
-aWK
+aaM
+aaM
+aaM
 aWG
 bbS
 aXm
@@ -81327,7 +81300,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aWG
 bbS
 bbS
@@ -81584,7 +81557,7 @@ aaM
 aaM
 aaM
 aaM
-aWF
+aaM
 bbD
 aWM
 aWS
@@ -82098,7 +82071,7 @@ aaM
 aaM
 aaM
 aaM
-aKj
+aaM
 bbD
 aWO
 aXa
@@ -82355,7 +82328,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aWI
 bbS
 bbS
@@ -82612,9 +82585,9 @@ aaM
 aaM
 aaM
 aaM
-aWF
-aWH
-aWP
+aaM
+aaM
+aaM
 aWI
 bbS
 aXm
@@ -82871,7 +82844,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aaM
 aWI
 aXD
@@ -83128,9 +83101,9 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
+aaM
+aaM
+aaM
 bbD
 bbD
 bbS
@@ -83385,7 +83358,7 @@ aaM
 aaM
 aaM
 aaM
-avv
+aaM
 aWG
 bbS
 bbS
@@ -83605,7 +83578,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -83642,7 +83615,7 @@ aaM
 aaM
 aaM
 aaM
-aWF
+aaM
 bbD
 aXi
 anI
@@ -83862,7 +83835,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -84119,7 +84092,7 @@ aWp
 aWE
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -84376,7 +84349,7 @@ aVH
 aWp
 aVH
 aYS
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -84633,7 +84606,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -84890,7 +84863,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -85147,7 +85120,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -85404,7 +85377,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -85661,7 +85634,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -85918,7 +85891,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -86175,7 +86148,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -86432,7 +86405,7 @@ aVH
 aVH
 aYL
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -86689,7 +86662,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -86946,7 +86919,7 @@ aVH
 aVH
 aYM
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -87203,7 +87176,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -87460,7 +87433,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -87717,7 +87690,7 @@ aVZ
 aWp
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -87974,7 +87947,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz
@@ -88231,7 +88204,7 @@ aVH
 aVH
 aVH
 aVH
-aYY
+aVH
 aZm
 aZz
 aZz

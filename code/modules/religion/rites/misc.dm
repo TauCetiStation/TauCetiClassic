@@ -5,7 +5,7 @@
 /datum/religion_rites/food
 	name = "Create food"
 	desc = "Create more and more food!"
-	ritual_length = (2.2 MINUTES)
+	ritual_length = (2.1 MINUTES)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
@@ -39,10 +39,14 @@
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	spawn_food(AOG.loc, 4 + rand(2, 5))
@@ -53,7 +57,6 @@
 /datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
 		spawn_food(AOG.loc, 1)
-	return TRUE
 
 /*
  * Prayer
@@ -82,6 +85,10 @@
 	)
 
 /datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/heal_num = -15
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
@@ -94,7 +101,6 @@
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
-	return TRUE
 
 /*
  * Honk
@@ -103,7 +109,7 @@
 /datum/religion_rites/honk
 	name = "Clown shriek"
 	desc = "Spread honks throughout the station."
-	ritual_length = (2 MINUTES)
+	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
@@ -118,6 +124,10 @@
 	)
 
 /datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER, null, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
@@ -127,7 +137,6 @@
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
-	return TRUE
 
 /*
  * Revitalizing items.
@@ -136,7 +145,7 @@
 /datum/religion_rites/animation
 	name = "Animation"
 	desc = "Revives a things on the altar."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
 							  "...They endowed Animation with human passions and feelings...",
@@ -145,8 +154,8 @@
 	favor_cost = 200
 
 	needed_aspects = list(
-		ASPECT_WEAPON = 1,
 		ASPECT_SPAWN = 1,
+		ASPECT_WEAPON = 1,
 	)
 
 /datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -179,7 +188,7 @@
 /datum/religion_rites/spook
 	name = "Spook"
 	desc = "Distributes a jerky sound."
-	ritual_length = (30 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
 							  "...Let Evil take you and lock you up...",
 							  "...torment you, torture you, torture you all, exhaust you, destroy you...",
@@ -195,6 +204,10 @@
 	)
 
 /datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
@@ -220,7 +233,7 @@
 /datum/religion_rites/illuminate
 	name = "Illuminate"
 	desc = "Create wisp of light and turns on the light."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
 							  "...to whom they turn for help!..",
@@ -238,6 +251,10 @@
 	)
 
 /datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/mob/living/carbon/human/H in range(3, get_turf(AOG)))
 		for(var/obj/item/device/flashlight/F in H.contents)
@@ -275,7 +292,7 @@
 /datum/religion_rites/revive_animal
 	name = "Revive"
 	desc = "The animal revives from the better world."
-	ritual_length = (1 MINUTES)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",
 							  "...You will not know that you are in torment, pain and suffering...",
@@ -318,106 +335,4 @@
 
 	animal.rejuvenate()
 
-	return TRUE
-
-/*
- * Create random friendly animal
- * AoE relocor items
- */
-/datum/religion_rites/call_animal
-	name = "Call animal"
-	desc = "Create random friendly animal."
-	ritual_length = (1.5 MINUTES)
-	ritual_invocations = list("As these complex nodules of the world are interconnected...",
-						"...so even my animal will be connected with this place...",
-						"...My will has allowed me to create and call you to life...",
-						"...Your existence is limited to fulfilling your goal...",
-						"...Let you come here...")
-	invoke_msg = "...Let it be so!"
-	favor_cost = 150
-
-	needed_aspects = list(
-		ASPECT_SPAWN = 1,
-	)
-
-	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
-
-/datum/religion_rites/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
-			M.flash_eyes()
-
-	var/type = pick(summon_type)
-	var/mob/M = new type(AOG.loc)
-
-	for(var/mob/dead/observer/O in observer_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
-			continue
-		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_FAMILIAR) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, M)
-	return TRUE
-
-/datum/religion_rites/call_animal/proc/question(client/C, mob/M)
-	if(!C)
-		return
-	var/response = alert(C, "Do you want to become the Familiar of religion?", "Familiar request", "No", "Yes", "Never for this round")
-	if(!C || M.ckey)
-		return //handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yes")
-		var/mob/candidate = C.mob
-		var/god_name
-		if(global.chaplain_religion.active_deities.len == 0)
-			god_name = pick(global.chaplain_religion.deity_names)
-		else
-			var/mob/god = pick(global.chaplain_religion.active_deities)
-			god_name = god.name
-		M.mind = candidate.mind
-		M.ckey = candidate.ckey
-		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
-		M.real_name = name
-		candidate.cancel_camera()
-		candidate.reset_view()
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += IGNORE_FAMILIAR
-
-/*
- * Create religious sword
- * Just create claymore with reduced damage.
- */
-/datum/religion_rites/create_sword
-	name = "Create sword"
-	desc = "Creates a religious sword in the name of God."
-	ritual_length = (1 MINUTES)
-	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
-						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
-						"...who abides with all the storms of life...",
-						"...In this prayer, I want to thank you for everything...",
-						"...looking for time to prove that I will never part with you...",
-						"...despite any illusory matter...",
-						"...I want to abide with you in your eternal glory...",
-						"...I thank you for all your blessings to me and my neighbors...",)
-	invoke_msg = "...Let it be so!"
-	favor_cost = 100
-
-	needed_aspects = list(
-		ASPECT_WEAPON = 1
-	)
-
-/datum/religion_rites/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
-		if(!M.mind.holy_role && M.eyecheck() <= 0)
-			M.flash_eyes()
-
-	var/obj/item/weapon/claymore/religion/R = new (AOG.loc)
-	var/god_name
-	if(global.chaplain_religion.active_deities.len == 0)
-		god_name = pick(global.chaplain_religion.deity_names)
-	else
-		var/mob/god = pick(global.chaplain_religion.active_deities)
-		god_name = god.name
-	R.name = "[R.name] of [god_name]"
 	return TRUE

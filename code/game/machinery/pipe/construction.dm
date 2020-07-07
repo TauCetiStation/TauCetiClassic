@@ -285,19 +285,16 @@ Buildable meters
 	icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
-
-//called when a turf is attacked with a pipe item
 /obj/item/pipe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
-	if(istype(target))
+	if(istype(target, /turf/simulated/floor))
 		user.drop_from_inventory(src, target)
 	else
 		return ..()
 
 // rotate the pipe item clockwise
-
 /obj/item/pipe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate Pipe"
@@ -415,12 +412,11 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
-	//*
-	if (isscrewdriver(W))
+/obj/item/pipe/attackby(obj/item/I, mob/user, params)
+	if (isscrewdriver(I))
 		mirror()
 		return
-	if (!iswrench(W))
+	if (!iswrench(I))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
@@ -793,7 +789,6 @@ Buildable meters
 		"You hear ratchet.")
 	qdel(src)	// remove the pipe item
 
-	return
 	 //TODO: DEFERRED
 
 // ensure that setterm() is called for a newly connected pipeline
@@ -808,11 +803,9 @@ Buildable meters
 	item_state = "buildpipe"
 	w_class = ITEM_SIZE_LARGE
 
-/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-
-	if (!iswrench(W))
-		return
+/obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
+	if (!iswrench(I))
+		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")
 		return TRUE

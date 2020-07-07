@@ -35,7 +35,7 @@
 	icon_state = initial(icon_state)
 	pushed_over = FALSE
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
+/obj/item/cardboard_cutout/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/crayon))
 		if(painting)
 			return
@@ -43,6 +43,7 @@
 		change_appearance(I, user)
 		painting = FALSE
 		return
+
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
 	else if(length(I.hitsound))

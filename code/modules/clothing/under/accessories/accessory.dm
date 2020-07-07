@@ -43,6 +43,15 @@
 		return // we aren't an object on the ground so don't call parent
 	..()
 
+/obj/item/clothing/accessory/attackby(obj/item/I, mob/user, params)
+	if(attack_accessory(I, user, params))
+		return
+	return ..()
+
+/// Return TRUE if accessory should block attackby.
+/obj/item/clothing/accessory/proc/attack_accessory(obj/item/I, mob/user, params)
+	return FALSE
+
 /obj/item/clothing/accessory/tie
 	layer_priority = 0.1
 
@@ -146,6 +155,19 @@
 				return
 	return ..(M, user)
 
+/obj/item/clothing/accessory/bronze_cross
+    name = "bronze cross"
+    desc = "That's a little bronze cross for wearing under the clothes."
+    icon_state = "bronze_cross"
+    item_state = "bronze_cross"
+    item_color = "bronze_cross"
+
+/obj/item/clothing/accessory/metal_cross
+    name = "metal cross"
+    desc = "That's a little metal cross for wearing under the clothes."
+    icon_state = "metal_cross"
+    item_state = "metal_cross"
+    item_color = "metal_cross"
 
 //Medals
 /obj/item/clothing/accessory/medal
@@ -154,12 +176,6 @@
 	icon_state = "bronze"
 	item_color = "bronze"
 	layer_priority = 0.1
-
-/obj/item/clothing/accessory/holy
-    name = "holy cross"
-    desc = "Time to take the Jerusalem!"
-    icon_state = "holycross"
-    item_color = "holycross"
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
@@ -234,17 +250,15 @@
 			"<span class='warning'>[user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>",
 			"<span class='warning'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
 
-/obj/item/clothing/accessory/holobadge/attackby(obj/item/O, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-
-	if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
-
+/obj/item/clothing/accessory/holobadge/attack_accessory(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		var/obj/item/weapon/card/id/id_card = null
+		user.SetNextMove(CLICK_CD_INTERACT)
 
-		if(istype(O, /obj/item/weapon/card/id))
-			id_card = O
+		if(istype(I, /obj/item/weapon/card/id))
+			id_card = I
 		else
-			var/obj/item/device/pda/pda = O
+			var/obj/item/device/pda/pda = I
 			id_card = pda.id
 
 		if(access_security in id_card.access || emagged)
@@ -254,8 +268,8 @@
 			desc = "This glowing blue badge marks [stored_name] as THE LAW."
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
-		return
-	..()
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/accessory/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))

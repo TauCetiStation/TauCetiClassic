@@ -24,15 +24,29 @@
 /proc/randmutb(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
-	M.dna.SetSEState(block, 1)
+	var/list/b_blocks = list(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK,EPILEPSYBLOCK)
+	var/list/possible_blocks = list()
+	for(var/block in b_blocks)
+		if(!M.dna.GetSEState(block))
+			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
+	var/block_pick = pick(possible_blocks)
+	M.dna.SetSEState(block_pick, 1)
 
 // Give Random Good Mutation to M
 /proc/randmutg(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
-	M.dna.SetSEState(block, 1)
+	var/list/g_blocks = list(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK,COLDBLOCK)
+	var/list/possible_blocks = list()
+	for(var/block in g_blocks)
+		if(!M.dna.GetSEState(block))
+			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
+	var/block_pick = pick(possible_blocks)
+	M.dna.SetSEState(block_pick, 1)
 
 // Random Appearance Mutation
 /proc/randmuti(mob/living/M)

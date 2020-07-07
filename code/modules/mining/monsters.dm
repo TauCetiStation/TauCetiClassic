@@ -36,7 +36,7 @@
 		P.damage = (P.damage / 3)
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(istype(AM, /obj/item))
@@ -221,7 +221,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
 	alerted = 0

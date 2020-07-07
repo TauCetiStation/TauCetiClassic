@@ -243,42 +243,12 @@
 		if("mov_intent")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
-				if(C.legcuffed)
-					to_chat(C, "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>")
-					C.m_intent = "walk"	//Just incase
-					C.hud_used.move_intent.icon_state = "walking"
-					return 1
-				switch(usr.m_intent)
-					if("run")
-						usr.m_intent = "walk"
-						usr.hud_used.move_intent.icon_state = "walking"
-					if("walk")
-						usr.m_intent = "run"
-						usr.hud_used.move_intent.icon_state = "running"
-				if(istype(usr,/mob/living/carbon/xenomorph/humanoid))
-					usr.update_icons()
-		if("m_intent")
-			if(!usr.m_int)
-				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
-		if("walk")
-			usr.m_intent = "walk"
-			usr.m_int = "14,14"
-		if("face")
-			usr.m_intent = "face"
-			usr.m_int = "15,14"
-		if("run")
-			usr.m_intent = "run"
-			usr.m_int = "13,14"
+
+				C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
+
 		if("Reset Machine")
 			usr.unset_machine()
+
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr

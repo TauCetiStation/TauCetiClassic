@@ -22,15 +22,10 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
-	// COPYPASTE, somewhat unavoidable atm.
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(attacker, "No attacking people at spawn, you jackass.")
-		return FALSE
+	. = ..()
 
-	if((attacker != src) && check_shields(0, attacker.name, get_dir(attacker, src)))
-		visible_message("<span class='warning'><B>[attacker] attempted to touch [src]!</B></span>")
-		return FALSE
-	// /COPYPASTE
+	if(!.)
+		return
 
 	if(attacker.wear_suit && istype(attacker.wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = attacker.wear_suit
@@ -39,8 +34,6 @@
 	if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = src.wear_suit
 		V.attack_reaction(src, REACTION_ATACKED, attacker)
-
-	return ..()
 
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()

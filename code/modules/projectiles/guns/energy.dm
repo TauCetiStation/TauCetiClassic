@@ -122,6 +122,9 @@
 		return
 	if(user.incapacitated())
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/attack_self(mob/living/user)

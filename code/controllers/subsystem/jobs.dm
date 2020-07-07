@@ -129,7 +129,7 @@ var/datum/subsystem/job/SSjob
 		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
-		if(!job.is_species_permitted(player.client))
+		if(!job.is_species_permitted(player.client.prefs.species))
 			continue
 
 		if(!job.map_check())
@@ -420,7 +420,6 @@ var/datum/subsystem/job/SSjob
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
-		job.apply_fingerprints(H)
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -547,7 +546,6 @@ var/datum/subsystem/job/SSjob
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 
 	spawnId(H, rank, alt_title)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), SLOT_L_EAR)
 
 //		H.update_icons()
 

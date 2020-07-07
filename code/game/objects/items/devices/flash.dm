@@ -74,7 +74,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.confused = max(rand(6, 10), M.confused)
 			M.flash_eyes()
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
@@ -175,10 +175,7 @@
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
-				var/power = rand(3,5)
 				M.flash_eyes()
-				if (M.confused < power)
-					M.confused += power
 
 	return
 

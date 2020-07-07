@@ -45,6 +45,11 @@
 	add_overlay(image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1))
 	icon_state = "[bike_icon]_off"
 
+/obj/vehicle/space/spacebike/Destroy()
+	QDEL_NULL(ion)
+	QDEL_NULL(key)
+	return ..()
+
 /obj/vehicle/space/spacebike/examine(mob/user)
 	..()
 	to_chat(user, "It has number [id].")
@@ -62,6 +67,9 @@
 	if(isessence(user))
 		return
 	if(user.incapacitated() || user.lying)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	if(!load(M))
 		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
@@ -100,7 +108,7 @@
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
-	..()
+	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
@@ -258,7 +266,3 @@
 		icon_state = "[bike_icon]_off"
 
 	..()
-
-/obj/vehicle/space/spacebike/Destroy()
-	qdel(ion)
-	return ..()

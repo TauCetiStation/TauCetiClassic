@@ -158,6 +158,7 @@ var/global/list/tophats_list = list()
 
 /obj/effect/overlay/tophat_portal/attackby(obj/item/I, mob/user)
 	tp_to_tophat(I)
+	return TRUE
 
 /obj/effect/overlay/tophat_portal/Crossed(atom/movable/AM)
 	. = ..()
@@ -453,17 +454,17 @@ var/global/list/tophats_list = list()
 			user.drop_from_inventory(AM)
 		drop_into(AM, user)
 
-/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/living/user)
+/obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/user, params)
 	if(I.w_class <= w_class)
 		if(!global.tophat_portal)
 			to_chat(user, "<span class='warning'>Are you crazy? This hat could never fit [I] in...</span>")
 			return
 		drop_into(I, user)
-		return
+		return TRUE
 	if(user.mind && user.mind.special_role == "Wizard")
 		drop_into(I, user)
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/clothing/head/wizard/tophat/attack_hand(mob/living/user)
 	if(user.get_active_hand() == src || user.get_inactive_hand() == src)

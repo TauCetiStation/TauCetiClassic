@@ -579,13 +579,6 @@
 	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
-"bO" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/taser,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/derelict_lab)
 "bP" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
@@ -1528,7 +1521,7 @@ ae
 ae
 bG
 bL
-bO
+bL
 ar
 aR
 ae

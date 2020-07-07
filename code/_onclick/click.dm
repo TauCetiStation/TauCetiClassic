@@ -68,6 +68,9 @@
 		cob_click(client, modifiers)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
+		return
+
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -286,7 +289,7 @@
 	/*
 	Handling combat activation after **item swipes** and changeling stings.
 	*/
-	if(istype(user) && in_range(src, user) && user.try_combo(src))
+	if(istype(user) && user.Adjacent(src) && user.try_combo(src))
 		return FALSE
 	return ..()
 

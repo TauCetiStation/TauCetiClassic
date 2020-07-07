@@ -356,22 +356,22 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		user.drop_item()
-		qdel(W)
+/obj/item/weapon/bucket_sensor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
+		qdel(I)
 		var/turf/T = get_turf(loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
-		user.drop_from_inventory(src)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
+
+	else
+		return ..()

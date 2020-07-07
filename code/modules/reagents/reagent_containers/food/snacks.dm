@@ -128,16 +128,13 @@
 		else
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
 
-/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/storage))
+		return ..() // -> item/attackby()
 
-	if (user.is_busy(src))
-		return
-
-	if(istype(W,/obj/item/weapon/storage))
-		..() // -> item/attackby()
-	if(istype(W,/obj/item/weapon/kitchen/utensil))
-
-		var/obj/item/weapon/kitchen/utensil/U = W
+	add_fingerprint(user)
+	if(istype(I, /obj/item/weapon/kitchen/utensil))
+		var/obj/item/weapon/kitchen/utensil/U = I
 
 		if(U.contents.len >= U.max_contents)
 			to_chat(user, "<span class='warning'>You cannot fit anything else on your [U].")
@@ -150,9 +147,9 @@
 
 		bitecount++
 		U.cut_overlays()
-		var/image/I = new(U.icon, "loadedfood")
-		I.color = filling_color
-		U.add_overlay(I)
+		var/image/IM = new(U.icon, "loadedfood")
+		IM.color = filling_color
+		U.add_overlay(IM)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -170,62 +167,9 @@
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
-		return 1
-	if((slices_num <= 0 || !slices_num) || !slice_path)
-		return 0
-	var/inaccurate = 0
-	if( \
-			istype(W, /obj/item/weapon/kitchenknife) || \
-			istype(W, /obj/item/weapon/butch) || \
-			istype(W, /obj/item/weapon/scalpel) \
-		)
-	else if( \
-			istype(W, /obj/item/weapon/circular_saw) || \
-			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
-			istype(W, /obj/item/weapon/melee/energy/blade) || \
-			istype(W, /obj/item/weapon/shovel) || \
-			istype(W, /obj/item/weapon/hatchet) || \
-			istype(W, /obj/item/weapon/shard) \
-		)
-		inaccurate = 1
-	else if(W.w_class <= ITEM_SIZE_SMALL && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
-		if(!iscarbon(user))
-			return 1
-		to_chat(user, "<span class='rose'>You slip [W] inside [src].</span>")
-		user.remove_from_mob(W)
-		add_fingerprint(user)
-		contents += W
 		return
-	else
-		return 1
-	if ( \
-			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/machinery/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/tray) in src.loc) \
-		)
-		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
-		return 1
-	var/slices_lost = 0
-	if (inaccurate)
-		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
-		if (istype(W, /obj/item/weapon/melee/energy/sword))
-			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else
-			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	else
-		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
-	if (do_after(user, 35, target = src))
-		if (!inaccurate)
-			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
-		else
-			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
-		var/reagents_per_slice = reagents.total_volume/slices_num
-		for(var/i=1 to (slices_num-slices_lost))
-			var/obj/slice = new slice_path (src.loc)
-			reagents.trans_to(slice,reagents_per_slice)
-		qdel(src)
-		return
+
+	try_slice(I, user)
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
@@ -479,9 +423,9 @@
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
-	if(istype( W, /obj/item/toy/crayon ))
-		var/obj/item/toy/crayon/C = W
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C = I
 		var/clr = C.colourName
 
 		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
@@ -492,7 +436,7 @@
 		icon_state = "egg-[clr]"
 		item_color = clr
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
@@ -1812,7 +1756,85 @@
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
-// sliceable is just an organization type path, it doesn't have any additional code or variables tied to it.
+/obj/item/weapon/reagent_containers/food/snacks/sliceable
+	w_class = ITEM_SIZE_NORMAL
+	var/obj/item/weapon/storage/internal/sliceable/storage
+
+/obj/item/weapon/storage/internal/sliceable
+	name = "sliceable inventory"
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/atom_init()
+	. = ..()
+	storage = new /obj/item/weapon/storage/internal/sliceable(src)
+	storage.set_slots(5, w_class - 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
+	if (!storage.handle_mousedrop(usr, over_object))
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
+	if((slices_num <= 0 || !slices_num) || !slice_path)
+		return FALSE
+	var/inaccurate = 0
+	if( \
+			istype(W, /obj/item/weapon/kitchenknife) || \
+			istype(W, /obj/item/weapon/scalpel) \
+		)
+	else if( \
+			istype(W, /obj/item/weapon/circular_saw) || \
+			istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
+			istype(W, /obj/item/weapon/melee/energy/blade) || \
+			istype(W, /obj/item/weapon/shovel) || \
+			istype(W, /obj/item/weapon/hatchet) || \
+			istype(W, /obj/item/weapon/shard) \
+		)
+		inaccurate = 1
+	else
+		return FALSE
+	if ( \
+			!isturf(src.loc) || \
+			!(locate(/obj/structure/table) in src.loc) && \
+			!(locate(/obj/machinery/optable) in src.loc) && \
+			!(locate(/obj/item/weapon/tray) in src.loc) \
+		)
+		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
+		return FALSE
+	var/slices_lost = 0
+	if (inaccurate)
+		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
+		if (istype(W, /obj/item/weapon/melee/energy/sword))
+			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	else
+		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
+	if (do_after(user, 35, target = src, can_move = FALSE))
+		if (!inaccurate)
+			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+		else
+			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to(slice,reagents_per_slice)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/attackby(obj/item/I, mob/user, params)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
+	var/holding = user.get_active_hand()
+	if(!holding)
+		return
+	if(storage.can_be_inserted(holding))
+		storage.handle_item_insertion(holding)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/Destroy()
+	storage.close_all()
+	for(var/obj/item/I in storage)
+		storage.remove_from_storage(I, get_turf(src))
+	QDEL_NULL(storage)
+	return ..()
 
 // === BREAD ===
 
@@ -1825,6 +1847,8 @@
 	filling_color = "#ffe396"
 	bitesize = 2
 	list_reagents = list("nutriment" = 10, "bread" = 10)
+
+
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	name = "Bread slice"
@@ -2237,7 +2261,7 @@
 
 	update_icon()
 
-/obj/item/pizzabox/attackby( obj/item/I, mob/user )
+/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
 	if( istype(I, /obj/item/pizzabox) )
 		var/obj/item/pizzabox/box = I
 
@@ -2295,7 +2319,7 @@
 
 		update_icon()
 		return
-	..()
+	return ..()
 
 /obj/item/pizzabox/margherita/atom_init()
 	. = ..()
@@ -2394,20 +2418,19 @@
 	list_reagents = list("nutriment" = 6)
 
 // Dough + rolling pin = flat dough
-/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
-
-	if (user.is_busy(src))
-		return
-
-	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		if (locate(/obj/structure/table) in src.loc)
+/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
+		if(locate(/obj/structure/table) in loc)
 			playsound(user, 'sound/items/rolling_pin.ogg', VOL_EFFECTS_MASTER, , FALSE)
-			if (do_after(user, 35, target = src))
+			if(!user.is_busy(src) && do_after(user, 35, target = src))
 				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
 				to_chat(user, "<span class='notice'>You flatten the dough.</span>")
 				qdel(src)
 		else
 			to_chat(user, "<span class='rose'>You cannot roll out the dough here! You need a table to do it.</span>")
+
+	else
+		return ..()
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
@@ -2435,43 +2458,46 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/I, mob/user, params)
 	// Bun + cutlet = hamburger
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/cutlet))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/cutlet))
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
 		to_chat(user, "<span class='notice'>You make a burger.</span>")
-		qdel(W)
+		qdel(I)
 		qdel(src)
 
 	// Bun + sausage = hotdog
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/sausage))
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/sausage))
 		new /obj/item/weapon/reagent_containers/food/snacks/hotdog(src)
 		to_chat(user, "<span class='notice'>You make a hotdog.</span>")
-		qdel(W)
+		qdel(I)
 		qdel(src)
+
+	else
+		return ..()
 
 // Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))// && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
+/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
 		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
 		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
+		qdel(I)
 		qdel(src)
-		return
+
 	else
-		..()
+		return ..()
 
 // Human Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))
+/obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
 		var/obj/item/weapon/reagent_containers/food/snacks/cheeseburger/C = new (src)
 		C.name = name
 		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
+		qdel(I)
 		qdel(src)
 		return
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"
@@ -2496,11 +2522,13 @@
 	bitesize = 2
 	list_reagents = list("protein" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
 		to_chat(user, "<span class='notice'>You make a bacon.</span>")
 		qdel(src)
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
@@ -2534,13 +2562,13 @@
 	list_reagents = list("plantmatter" = 3, "vitamin" = 1)
 
 // potato + knife = raw sticks
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
 		to_chat(user, "You cut the potato.")
 		qdel(src)
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/rawsticks
 	name = "raw potato sticks"

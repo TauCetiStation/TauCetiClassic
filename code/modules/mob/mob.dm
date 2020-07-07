@@ -500,7 +500,7 @@
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM.can_be_pulled || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if(!AM.anchored)
 		if(ismob(AM))
@@ -1047,7 +1047,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
-	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
+	if(mind)
+		mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
 		spell.action.target = spell
