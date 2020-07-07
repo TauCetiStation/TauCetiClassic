@@ -321,15 +321,6 @@
 						g_hair = hex2num(copytext(new_hair, 4, 6))
 						b_hair = hex2num(copytext(new_hair, 6, 8))
 
-				if("grad_color")
-					if(!specie_obj.flags[HAS_HAIR_COLOR])
-						return
-					var/new_grad = input(user, "Choose your character's secondary hair color:", "Character Preference") as color|null
-					if(new_grad)
-						r_grad = hex2num(copytext(new_grad, 2, 4))
-						g_grad = hex2num(copytext(new_grad, 4, 6))
-						b_grad = hex2num(copytext(new_grad, 6, 8))
-
 				if("h_style")
 					var/list/valid_hairstyles = get_valid_hairstyles()
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style)  as null|anything in valid_hairstyles
@@ -351,6 +342,15 @@
 						h_style = valid_hairstyles[start+1]
 					else
 						h_style = valid_hairstyles[1]
+
+				if("grad_color")
+					if(!specie_obj.flags[HAS_HAIR_COLOR])
+						return
+					var/new_grad = input(user, "Choose your character's secondary hair color:", "Character Preference") as color|null
+					if(new_grad)
+						r_grad = hex2num(copytext(new_grad, 2, 4))
+						g_grad = hex2num(copytext(new_grad, 4, 6))
+						b_grad = hex2num(copytext(new_grad, 6, 8))
 
 				if("grad_style")
 					var/list/valid_gradients = hair_gradients
