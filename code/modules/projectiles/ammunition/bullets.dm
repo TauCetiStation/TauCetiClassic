@@ -31,7 +31,7 @@
 /obj/item/ammo_casing/c9mmr
 	desc = "A 9mm rubber bullet casing."
 	icon_state = "st-casing"
-	caliber = "9mmr"
+	caliber = "9mm"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber"
 
 /obj/item/ammo_casing/c45
@@ -57,7 +57,7 @@
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
 	icon_state = "st-casing"
-	caliber = ".45r"
+	caliber = ".45"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber45"
 
 /obj/item/ammo_casing/a12mm
