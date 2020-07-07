@@ -49,6 +49,10 @@
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
 
+/obj/item/weapon/implant/mindshield/loyalty/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	START_PROCESSING(SSobj, C)
+
 /obj/item/weapon/implant/mindshield/loyalty/get_data()
 	var/dat = {"
 	<b>Implant Specifications:</b><BR>

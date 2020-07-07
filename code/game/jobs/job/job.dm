@@ -29,7 +29,7 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
-	//List of alternate titles, if any
+	//List of alternate titles, if any. outfits as assoc values.
 	var/list/alt_titles
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
@@ -37,6 +37,8 @@
 
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
+
+	var/outfit = null
 
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_ingame_minutes ingame minutes old. (meaning they must play a game.)
 	var/minimal_player_ingame_minutes = 0
@@ -60,12 +62,27 @@
 	/// Species flags that can not do this job.
 	var/list/restricted_species_flags = list()
 
-	var/list/survival_kit_items = list()
+/datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
 
-	var/list/prevent_survival_kit_items = list()
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, var/alt_title)
+	if(!H)
+		return FALSE
 
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/outfit_type = get_outfit(H, alt_title)
+	if(outfit_type)
+		H.equipOutfit(outfit_type, visualsOnly)
+
+	post_equip(H, visualsOnly)
 	return TRUE
+
+/datum/job/proc/get_outfit(var/mob/living/carbon/human/H, var/alt_title)
+	if(H.mind)
+		if(alt_titles && H.mind.role_alt_title)
+			return alt_titles[H.mind.role_alt_title] || outfit
+	if(alt_title && alt_titles)
+		return alt_titles[alt_title]
+	return outfit
 
 /datum/job/proc/get_access()
 	return access.Copy()
@@ -145,45 +162,6 @@
 		return 0
 
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
-
-/datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
-	if(!istype(H))
-		return
-	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
-		for(var/obj/item/I in H.back.contents)
-			I.add_fingerprint(H,1)
-	if(H.wear_id)
-		H.wear_id.add_fingerprint(H,1)
-	if(H.w_uniform)
-		H.w_uniform.add_fingerprint(H,1)
-	if(H.wear_suit)
-		H.wear_suit.add_fingerprint(H,1)
-	if(H.wear_mask)
-		H.wear_mask.add_fingerprint(H,1)
-	if(H.head)
-		H.head.add_fingerprint(H,1)
-	if(H.shoes)
-		H.shoes.add_fingerprint(H,1)
-	if(H.gloves)
-		H.gloves.add_fingerprint(H,1)
-	if(H.l_ear)
-		H.l_ear.add_fingerprint(H,1)
-	if(H.r_ear)
-		H.r_ear.add_fingerprint(H,1)
-	if(H.glasses)
-		H.glasses.add_fingerprint(H,1)
-	if(H.belt)
-		H.belt.add_fingerprint(H,1)
-		for(var/obj/item/I in H.belt.contents)
-			I.add_fingerprint(H,1)
-	if(H.s_store)
-		H.s_store.add_fingerprint(H,1)
-	if(H.l_store)
-		H.l_store.add_fingerprint(H,1)
-	if(H.r_store)
-		H.r_store.add_fingerprint(H,1)
-	return 1
 
 /datum/job/proc/is_position_available()
 	return (current_positions < total_positions) || (total_positions == -1)

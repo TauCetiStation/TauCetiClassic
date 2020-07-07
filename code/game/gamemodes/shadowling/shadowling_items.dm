@@ -83,6 +83,7 @@
 	icon_state = null
 	item_state = null
 	origin_tech = null
+	sightglassesmod = null
 	vision_flags = SEE_MOBS
 	alpha = 0
 	darkness_view = 3
