@@ -62,6 +62,11 @@
 		if(!istype(item, spawn_type))
 			continue
 		sacrifice_items += item
+	if(sacrifice_items.len == 0)
+		for(var/obj/item/item in AOG)
+			if(!istype(item, spawn_type))
+				continue
+			sacrifice_items += item
 	return sacrifice_items
 
 /datum/component/rite/spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/structure/altar_of_gods/AOG)

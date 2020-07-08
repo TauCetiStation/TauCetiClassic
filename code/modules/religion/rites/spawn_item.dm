@@ -39,7 +39,7 @@
 		ASPECT_CHAOS = 1,
 	)
 
-/datum/religion_rites/spawn_item/modify_item(atom/item)
+/datum/religion_rites/spawn_item/banana/modify_item(atom/item)
 	if(prob(20))
 		var/atom/before_item_loc = item.loc
 		qdel(item)
@@ -95,6 +95,10 @@
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
+
+/datum/religion_rites/spawn_item/banana_ore/modify_item(atom/item)
+	if(prob(20))
+		new item(item.loc)
 
 /*
  * Create random friendly animal.
