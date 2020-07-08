@@ -468,44 +468,44 @@
 						nanotrasen_relation = new_relation
 
 				if("home_system")
-					var/choice = input(user, "Please choose a home system.", "Home System", home_system) as null|anything in home_system_choices + list("None","Other")
-					if(!choice)
+					var/choice = input(user, "Please choose a home system.", "Home System", input_default(home_system)) as null|anything in home_system_choices + list("None","Other") + input_default(home_system)
+					if(!choice || choice == input_default(home_system))
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a home system.", "Home System")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a home system.", "Home System", input_default(home_system))  as text|null)
 						if(raw_choice)
 							home_system = raw_choice
 						return
 					home_system = choice
 
 				if("citizenship")
-					var/choice = input(user, "Please choose your current citizenship.", "Citizenship", citizenship) as null|anything in citizenship_choices + list("None","Other")
-					if(!choice)
+					var/choice = input(user, "Please choose your current citizenship.", "Citizenship", input_default(citizenship)) as null|anything in citizenship_choices + list("None","Other") + input_default(citizenship)
+					if(!choice || choice == input_default(citizenship))
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Citizenship") as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Citizenship", input_default(citizenship)) as text|null)
 						if(raw_choice)
 							citizenship = raw_choice
 						return
 					citizenship = choice
 
 				if("faction")
-					var/choice = input(user, "Please choose a faction to work for.", "Faction", faction) as null|anything in faction_choices + list("None","Other")
-					if(!choice)
+					var/choice = input(user, "Please choose a faction to work for.", "Faction", input_default(faction)) as null|anything in faction_choices + list("None","Other") + input_default(faction)
+					if(!choice || choice == input_default(faction))
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a faction.",  "Faction")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a faction.",  "Faction", input_default(faction))  as text|null)
 						if(raw_choice)
 							faction = raw_choice
 						return
 					faction = choice
 
 				if("religion")
-					var/choice = input(user, "Please choose a religion.", "Religion", religion) as null|anything in religion_choices + list("None","Other")
-					if(!choice)
+					var/choice = input(user, "Please choose a religion.", "Religion", input_default(religion)) as null|anything in religion_choices + list("None","Other") + input_default(religion)
+					if(!choice || choice == input_default(religion))
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize(input(user, "Please enter a religion.", "Religion")  as text|null)
+						var/raw_choice = sanitize(input(user, "Please enter a religion.", "Religion", input_default(religion))  as text|null)
 						if(raw_choice)
 							religion = raw_choice
 						return
