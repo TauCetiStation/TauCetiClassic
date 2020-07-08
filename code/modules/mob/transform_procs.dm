@@ -335,14 +335,6 @@
 		for(var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
-	to_chat(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	to_chat(O, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-	to_chat(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	to_chat(O, "To use something, simply click on it.")
-	to_chat(O, "Use say \":b to speak to your cyborgs through binary.")
-	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
-		O.show_laws()
-		to_chat(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 
@@ -351,6 +343,8 @@
 		O.mind.original = O
 	else
 		O.key = key
+
+	O.on_mob_init()
 
 	O.add_ai_verbs()
 	O.job = "AI"
