@@ -85,12 +85,7 @@
 /obj/structure/reagent_dispensers/proc/leak(amount)
 	if(reagents.total_volume == 0)
 		return
-	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	D.name = reagents.get_master_reagent_name()
-	D.create_reagents(amount)
-	D.icon = 'icons/obj/chempuff.dmi'
-	reagents.trans_to(D, amount)
-	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
 	D.reagents.reaction(get_turf(D))
 	for(var/atom/A in get_turf(D))
 		D.reagents.reaction(A)
