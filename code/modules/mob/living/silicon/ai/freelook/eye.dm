@@ -142,11 +142,6 @@
 
 // Return to the Core.
 
-/mob/living/silicon/ai/proc/core()
-
-	view_core()
-
-
 /mob/living/silicon/ai/proc/view_core()
 	camera = null
 	cameraFollow = null
