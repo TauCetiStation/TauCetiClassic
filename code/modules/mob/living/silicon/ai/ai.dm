@@ -77,6 +77,12 @@ var/list/ai_verbs_default = list(
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
 
+	var/mob/camera/Eye/ai/eyeobj
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+	var/obj/machinery/hologram/holopad/holo = null
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
 
@@ -165,6 +171,8 @@ var/list/ai_verbs_default = list(
 
 			job = "AI"
 
+	create_eye()
+	
 	new /obj/machinery/ai_powersupply(src)
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")

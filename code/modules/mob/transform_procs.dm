@@ -305,16 +305,8 @@
 /mob/proc/AIize(move=1)
 	if(client)
 		playsound_stop(CHANNEL_MUSIC) // stop the jams for AIs
-	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
-	O.invisibility = 0
-	O.aiRestorePowerRoutine = 0
 
-	if(mind)
-		mind.transfer_to(O)
-		O.mind.original = O
-	else
-		O.key = key
-
+	var/newloc = loc
 	if(move)
 		var/obj/loc_landmark
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -330,13 +322,17 @@
 						continue
 					loc_landmark = tripai
 		if (!loc_landmark)
-			to_chat(O, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
 				if (sloc.name == "AI")
 					loc_landmark = sloc
 
-		O.loc = loc_landmark.loc
-		for (var/obj/item/device/radio/intercom/comm in O.loc)
+		newloc = loc_landmark.loc
+
+	var/mob/living/silicon/ai/O = new (newloc, base_law_type,,1)//No MMI but safety is in effect.
+
+	if(move)
+		for(var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
 	to_chat(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -347,6 +343,14 @@
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		to_chat(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	O.invisibility = 0
+	O.aiRestorePowerRoutine = 0
+
+	if(mind)
+		mind.transfer_to(O)
+		O.mind.original = O
+	else
+		O.key = key
 
 	O.add_ai_verbs()
 	O.job = "AI"
