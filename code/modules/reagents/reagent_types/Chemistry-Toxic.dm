@@ -721,9 +721,78 @@
 	reagent_state = LIQUID
 	taste_message = "nothing"
 	color = "#13e3a9"
+	var/random_species
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
+	data = list("ticks")
+	var/list/changed_bodyparts = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+/datum/reagent/pop_toxin/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		random_species = pick(UNATHI,SKRELL,HUMAN,TAJARAN)
+		var/mob/living/carbon/human/H = M
+		data["ticks"]++
+		H.adjustBruteLoss(3)
+		H.adjustFireLoss(3)
+		H.adjustHalLoss(10)
+		switch(data["ticks"])
+			if(1 to 9)
+				if(prob(25))
+					H.emote(pick("twitch","drool","moan","giggle"))
+			if(10)
+				to_chat(H, "<span class='warning'>Your left arm feels unusual.</span>")
+				H.set_species_soft(random_species)
+				qdel(H.bodyparts_by_name[BP_L_ARM])
+				var/path = changed_bodyparts[BP_L_ARM]
+				new path(null, H)
+				H.regenerate_icons()
+			if(20)
+				to_chat(H, "<span class='warning'>Your right arm feels unusual.</span>")
+				H.set_species_soft(random_species)
+				qdel(H.bodyparts_by_name[BP_R_ARM])
+				var/path = changed_bodyparts[BP_R_ARM]
+				new path(null, H)
+				H.regenerate_icons()
+			if(30)
+				to_chat(H, "<span class='warning'>Your legs hurt.</span>")
+				H.set_species_soft(random_species)
+				qdel(H.bodyparts_by_name[BP_L_LEG])
+				qdel(H.bodyparts_by_name[BP_R_LEG])
+				qdel(H.bodyparts_by_name[BP_GROIN])
+				var/path = changed_bodyparts[BP_L_LEG]
+				new path(null, H)
+				path = changed_bodyparts[BP_R_LEG]
+				new path(null, H)
+				path = changed_bodyparts[BP_GROIN]
+				new path(null, H)
+				H.regenerate_icons()
+			if(40)
+				to_chat(H, "<span class='warning'>Your torso feels different.</span>")
+				H.set_species_soft(random_species)
+				qdel(H.bodyparts_by_name[BP_CHEST])
+				var/path = changed_bodyparts[BP_CHEST]
+				new path(null, H)
+				H.regenerate_icons()
+			if(50)
+				to_chat(H, "<span class='warning'>Suddenly your head burst in a wave of pain</span>")
+				H.adjustHalLoss(50)
+				H.set_species_soft(random_species)
+				qdel(H.bodyparts_by_name[BP_HEAD])
+				var/path = changed_bodyparts[BP_HEAD]
+				new path(null, H)
+				H.regenerate_icons()
+	else
+		return
 
 /datum/reagent/charged_pop_toxin
 	name = "Suspicious liquid"
@@ -736,6 +805,13 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 	data = list("ticks","spec")
+	var/list/changed_bodyparts = list(
+		 BP_GROIN  = /obj/item/organ/external/groin,
+		 BP_L_ARM  = /obj/item/organ/external/l_arm,
+		 BP_R_ARM  = /obj/item/organ/external/r_arm,
+		 BP_L_LEG  = /obj/item/organ/external/l_leg,
+		 BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
 
 /datum/reagent/charged_pop_toxin/on_general_digest(mob/living/M)
 	..()
@@ -766,6 +842,14 @@
 					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
 					return
 				H.set_species_soft(data["spec"])
+				qdel(H.bodyparts_by_name[BP_L_ARM])
+				qdel(H.bodyparts_by_name[BP_R_ARM])
+				qdel(H.bodyparts_by_name[BP_L_LEG])
+				qdel(H.bodyparts_by_name[BP_R_LEG])
+				qdel(H.bodyparts_by_name[BP_GROIN])
+				for(var/type in changed_bodyparts)
+					var/path = changed_bodyparts[type]
+					new path(null, H)
 				switch(data["spec"])
 					if(HUMAN)
 						to_chat(H, "<span class='rose'>You've turned into a human! Wow!</span>")
@@ -779,6 +863,7 @@
 					if(TAJARAN)
 						to_chat(H, "<span class='rose'>You suddenly grow fur, long tail, claws and kitty ears!</span>")
 						H.h_style = "Toxin tajaran ears"
+				H.regenerate_icons()
 				H.override_update_hair()
 	else
 		return
