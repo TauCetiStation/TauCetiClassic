@@ -78,7 +78,6 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 /proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
-	var/mission_set = FALSE//To determine if we need to do further processing.
 	//Xenos and deathsquads take precedence over everything else.
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
@@ -139,7 +138,6 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				ninja_objective.target = xeno_queen.mind
 				ninja_objective.explanation_text = "Kill \the [xeno_queen]."
 				ninja_mind.objectives += ninja_objective
-			mission_set = 1
 
 	if(sent_strike_team && side == SYNDICATE_SIDE && antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
@@ -151,14 +149,13 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				ninja_objective.owner = ninja_mind
 				ninja_objective.find_target_by_role(commando.mind.special_role,1)
 				ninja_mind.objectives += ninja_objective
-			mission_set = 1
 	/*
 	If there are no antogonists left it could mean one of two things:
 		A) The round is about to end. No harm in spawning the ninja here.
 		B) The round is still going and ghosts are probably rioting for something to happen.
 	In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
 	*/
-	if(!mission_set)//If mission was not set.
+	if(!ninja_mind.objectives.len)//If mission was not set.
 
 		var/list/current_minds//List being looked on in the following code.
 		var/side_list = SIDE_LISTS[side] //For logic gating.
@@ -249,10 +246,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 					objective_list -= CAPTURE
 
-		if(ninja_mind.objectives.len)//If they got some objectives out of that.
-			mission_set = 1
-
-	if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
+	if(!ninja_mind.objectives.len)//If they somehow did not get an objective at this point, time to destroy the station.
 		var/nuke_code
 		var/temp_code
 		for(var/obj/machinery/nuclearbomb/N in poi_list)
