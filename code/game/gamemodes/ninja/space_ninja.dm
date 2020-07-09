@@ -1,6 +1,6 @@
 // For the love of god,space out your code! This is a nightmare to read.
 
-/var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
+/var/global/toggle_space_ninja = TRUE  //TRUE, If ninjas can spawn by admins and as random event or not.
 
 // CURRENT PLAYER VERB
 
@@ -51,20 +51,21 @@
 		return
 
 	var/mission
+
+	var/input = ckey(input("Pick ckey to spawn as the Space Ninja", "Key", ""))
+	if(!input)
+		return
+
 	while(!mission)
 		mission = sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""))
 		if(!mission)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
 
-	var/input = ckey(input("Pick ckey to spawn as the Space Ninja", "Key", ""))
-	if(!input)
-		return
-
-	space_ninja_arrival(input, mission)
-
-	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
 	log_admin("[key_name(usr)] used Spawn Space Ninja.")
+
+	if(space_ninja_arrival(input, mission))
+		message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
 
 	return
 

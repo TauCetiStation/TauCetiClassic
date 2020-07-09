@@ -584,47 +584,58 @@
 
 
 // Procs for grabbing players.
-// get candidates from ghosts for role
-proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300)
+
+/proc/pollGhostCandidates(Question, role, Ignore_Role, poll_time = 300)
+	var/list/candidates = list()
+
+	for(var/mob/dead/observer/O in player_list)
+		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			continue
+		candidates += O
+
+	return pollCandidates(Question, role, Ignore_Role, poll_time, candidates)
+
+proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300, list/group = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 
-	for(var/mob/dead/observer/O in player_list)
-		if(!O.key || !O.client)
+	if(!Ignore_Role)
+		Ignore_Role = role
+
+	for(var/mob/M in group)
+		if(!M.key || !M.client)
 			continue
-		if(jobban_isbanned(O, role) || jobban_isbanned(O, "Syndicate") || !O.client.prefs.be_role.Find(role))
+		if(jobban_isbanned(M, role) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(role))
 			continue
-		if(O.client.prefs.ignore_question.Find(Ignore_Role))
-			continue
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
 		spawn(0)
-			O.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
-			window_flash(O.client)
-			var/ans = alert(O, Question,"Please answer in [poll_time/10] seconds!","No","Yes","Not This Round")
+			M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+			window_flash(M.client)
+			var/ans = alert(M, Question,"Please answer in [poll_time/10] seconds!","No","Yes","Not This Round")
 			switch(ans)
 				if("Yes")
-					to_chat(O, "<span class='notice'>Choice registered: Yes.</span>")
+					to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
-						to_chat(O, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-						O.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+						to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+						M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 						return
-					candidates += O
+					candidates += M
 				if("No")
-					to_chat(O, "<span class='danger'>Choice registered: No.</span>")
+					to_chat(M, "<span class='danger'>Choice registered: No.</span>")
 					return
 				if("Not This Round")
-					to_chat(O, "<span class='danger'>Choice registered: No.</span>")
-					to_chat(O, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
-					O.client.prefs.ignore_question += Ignore_Role
+					to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+					to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
+					M.client.prefs.ignore_question += Ignore_Role
 					return
 				else
 					return
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
-	for(var/mob/dead/observer/O in candidates)
-		if(!O.key || !O.client)
-			candidates.Remove(O)
+	for(var/mob/M in group)
+		if(!M.key || !M.client)
+			candidates.Remove(M)
 
 	return candidates
