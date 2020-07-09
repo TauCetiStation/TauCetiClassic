@@ -71,9 +71,10 @@
 		dat += "<li><A href='?src=\ref[src];triggerevent=Red alert'>Red alert</A></li>"
 		if(!config.ert_admin_call_only)
 			dat += "<li><A href='?src=\ref[src];triggerevent=Emergency Response Team'>Emergency Response Team</A></li>"
-
 		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Block All Maintenance'>Block All Maintenance</A></li>"
+		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Block All Maintenance'>Revoke Block All Maintenance</A></li>"
 		dat += "</ul>"
 		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
 	if(screen == 2)
@@ -154,14 +155,20 @@
 				timer_maint_revoke_id = 0
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
+		if("Block All Maintenance")
+			make_bolt_all_maintenance(TRUE)
+			feedback_inc("alert_keycard_auth_maintGrant",1)
+		if("Revoke Block All Maintenance")
+			revoke_bolt_all_maintenance(TRUE)
+			feedback_inc("alert_keycard_auth_maintGrant",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
 				to_chat(usr, "<span class='warning'>All emergency response teams are dispatched and can not be called at this time.</span>")
 				return
-
 			trigger_armed_response_team(1)
 			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
+
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
 	if(config.ert_admin_call_only) return 1
@@ -174,7 +181,6 @@ var/global/timer_maint_revoke_id = 0
 /proc/make_maint_all_access(var/priority = FALSE)
 	if(priority)
 		maint_all_access_priority = TRUE
-
 	change_maintenance_access(TRUE)
 	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
 
@@ -183,7 +189,6 @@ var/global/timer_maint_revoke_id = 0
 		maint_all_access_priority = FALSE
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
-
 	change_maintenance_access(FALSE)
 	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
 
@@ -191,4 +196,26 @@ var/global/timer_maint_revoke_id = 0
 	for(var/area/station/maintenance/M in all_areas)
 		for(var/obj/machinery/door/airlock/A in M)
 			A.emergency = allow_state
+			A.update_icon()
+
+/proc/make_bolt_all_maintenance(var/priority = FALSE)
+	if(priority)
+		bolt_maintenance()
+	captain_announce("The maintenance has been blocked on all airlocks.")
+
+/proc/revoke_bolt_all_maintenance(var/priority = FALSE)
+	if(priority)
+		unbolt_maintenance()
+	captain_announce("The maintenance airlocks block was lifted.")
+
+/proc/bolt_maintenance()
+	for(var/area/station/maintenance/M in all_areas)
+		for(var/obj/machinery/door/airlock/A in M)
+			A.bolt()
+			A.update_icon()
+
+/proc/unbolt_maintenance()
+	for(var/area/station/maintenance/M in all_areas)
+		for(var/obj/machinery/door/airlock/A in M)
+			A.unbolt()
 			A.update_icon()
