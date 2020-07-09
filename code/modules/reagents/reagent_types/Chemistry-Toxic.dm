@@ -756,7 +756,7 @@
 			BP_HEAD = 50)
 		while(data["ticks"] > 0 && cost_by_parts.len > 0)
 			var/transform_part = pick(cost_by_parts)
-			if(data["ticks"] != cost_by_parts[transform_part])
+			if(data["ticks"] < cost_by_parts[transform_part])
 				cost_by_parts -= transform_part
 			if(data["ticks"] == cost_by_parts[transform_part])
 				if(!(H.bodyparts_by_name[transform_part].is_robotic()))
