@@ -158,15 +158,18 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.
 
-		for(var/i in SYNDICATE_ENEMIES_LIST to NANOTRASEN_ENEMIES_LIST)//Two lists.
-			current_minds = (i == NANOTRASEN_ENEMIES_LIST) ? antagonist_list : protagonist_list//Which list are we looking at?
+		for(var/enemies_list in SYNDICATE_ENEMIES_LIST to NANOTRASEN_ENEMIES_LIST)//Two lists.
+			if(enemies_list == NANOTRASEN_ENEMIES_LIST) //Which list are we looking at?
+				current_minds = antagonist_list
+			else 
+				current_minds = protagonist_list
 			for(var/t = 3, (current_minds.len && t > 0), t--)//While the list is not empty and targets remain. Also, 3 targets is good.
 				current_mind = pick(current_minds)//Pick a random person.
 				/*I'm creating a logic gate here based on the ninja affiliation that compares the list being
 				looked at to the affiliation. Affiliation is just a number used to compare. Meaning comes from the logic involved.
 				If the list being looked at is equal to the ninja's affiliation, add the mind to hostiles.
 				If not, add the mind to friendlies. Since it can't be both, it will be added only to one or the other.*/
-				if(i == side_list)
+				if(enemies_list == side_list)
 					hostile_targets += current_mind
 					friendly_targets += null
 				else
