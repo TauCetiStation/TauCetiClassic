@@ -103,6 +103,16 @@ var/datum/subsystem/events/SSevents
 
 /datum/subsystem/events/proc/GetInteractWindow()
 	var/html = "<A align='right' href='?src=\ref[src];refresh=1'>Refresh</A>"
+	if(!config.allow_random_events)
+		html = "<span class='alert'>Random events has been disabled by SERVER!</span><br>" + html
+	else 
+		var/pause_all = FALSE
+		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
+			var/datum/event_container/EC = event_containers[severity]
+			if(!EC.delayed)
+				pause_all = TRUE
+				break
+		html += "<A align='right' href='?src=\ref[src];pause_all=[pause_all ? "Pause" : "Resume"]'>[pause_all ? "Pause" : "Resume"] All</A><br>"
 
 	if(selected_event_container)
 		var/event_time = max(0, selected_event_container.next_event_time - world.time)
@@ -236,6 +246,17 @@ var/datum/subsystem/events/SSevents
 		var/datum/event_container/EC = locate(href_list["pause"])
 		EC.delayed = !EC.delayed
 		admin_log_and_message_admins("has [EC.delayed ? "paused" : "resumed"] countdown for [severity_to_string[EC.severity]] events.")
+	else if(href_list["pause_all"])
+		var/pause_all
+		switch(href_list["pause_all"])
+			if("Pause")
+				pause_all = TRUE
+			if("Resume")
+				pause_all = FALSE
+		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
+			var/datum/event_container/EC = event_containers[severity]
+			EC.delayed = pause_all
+		admin_log_and_message_admins("has [pause_all ? "paused" : "resumed"] countdown for all events.")
 	else if(href_list["interval"])
 		var/delay = input("Enter delay modifier. A value less than one means events fire more often, higher than one less often.", "Set Interval Modifier") as num|null
 		if(delay && delay > 0)
