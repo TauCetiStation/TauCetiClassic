@@ -1,14 +1,11 @@
 /datum/event/space_ninja/start()
 	space_ninja_arrival()
 
-
-//=======//RANDOM EVENT//=======//
 /*
 Also a dynamic ninja mission generator.
 I decided to scrap round-specific objectives since keeping track of them would require some form of tracking.
 When I already created about 4 new objectives, this doesn't seem terribly important or needed.
 */
-
 /proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	var/ninja_key = null
@@ -59,6 +56,11 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	return new_ninja//Return the ninja in case we need to reference them later.
 
+
+
+/*
+ *  DYNAMIC NINJA MISSION GENERATOR.
+ */
 /proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
 	var/mission_set = 0//To determine if we need to do further processing.
