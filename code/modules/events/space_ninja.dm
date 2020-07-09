@@ -154,7 +154,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	if(!ninja_mind.objectives.len)//If mission was not set.
 
 		var/list/current_minds//List being looked on in the following code.
-		var/side_list = side == NANOTRASEN_SIDE ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
+		var/side_list = (side == NANOTRASEN_SIDE) ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.
 
