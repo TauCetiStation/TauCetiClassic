@@ -65,6 +65,10 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 #define SYNDICATE_SIDE   "The Syndicate"
 #define SYNDICATE_ENEMIES_LIST 1
 #define NANOTRASEN_ENEMIES_LIST  2
+#define SIDE_LISTS list(\
+	NANOTRASEN_SIDE = SYNDICATE_ENEMIES_LIST,\
+	SYNDICATE_SIDE = NANOTRASEN_ENEMIES_LIST \
+	)
 #define KILL              1
 #define STEAL             2
 #define PROTECT           3
@@ -79,7 +83,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
 	Their directives also influence behavior. At least in theory.*/
-	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
+	var/side = pick(SIDE_LISTS)
 
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
@@ -157,7 +161,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	if(!mission_set)//If mission was not set.
 
 		var/list/current_minds//List being looked on in the following code.
-		var/side_list = side == NANOTRASEN_SIDE ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
+		var/side_list = SIDE_LISTS[side] //For logic gating.
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.
 
@@ -317,3 +321,4 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 #undef DEBRAIN
 #undef DOWNLOAD_RESEARCH
 #undef CAPTURE
+#undef SIDE_LISTS
