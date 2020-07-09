@@ -783,6 +783,7 @@
 	reagent_state = LIQUID
 	taste_message = "upcoming changes"
 	color = "#13e3a9"
+	var/species
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
