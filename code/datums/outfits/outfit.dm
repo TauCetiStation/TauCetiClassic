@@ -47,7 +47,7 @@
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
-	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
+	var/list/implants = null  /// asoc_list implant - bodypart. Any implants the mob should start implanted with. Format of this list is (typepath = bodypart, typepath = bodypart, typepath = bodypart)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
@@ -277,7 +277,7 @@
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.inject(H, BP_HEAD)
+				I.inject(H, implants[implant_type])
 
 	H.update_body()
 	return TRUE

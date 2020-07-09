@@ -16,4 +16,4 @@
 	
 	l_ear = /obj/item/device/radio/headset/ninja
 	
-	implants = list(/obj/item/weapon/implant/dexplosive)
+	implants = list(/obj/item/weapon/implant/dexplosive = BP_HEAD)
