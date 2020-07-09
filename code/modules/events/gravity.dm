@@ -1,9 +1,10 @@
 /datum/event/gravity
 	announceWhen = 5
+	endWhen = 100
 	var/affecting_z = 2
 
 /datum/event/gravity/setup()
-	endWhen = rand(30, 150)
+	endWhen = rand(50, 300)
 	affecting_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 
 /datum/event/gravity/announce()
