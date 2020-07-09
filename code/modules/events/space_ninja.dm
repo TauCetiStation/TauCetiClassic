@@ -61,6 +61,9 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 /*
  *  DYNAMIC NINJA MISSION GENERATOR.
  */
+#define NANOTRASEN_SIDE "Nanotrasen"
+#define SYNDICATE_SIDE "The Syndicate"
+
 /proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
 	var/mission_set = 0//To determine if we need to do further processing.
@@ -68,7 +71,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
 	Their directives also influence behavior. At least in theory.*/
-	var/side = pick("face", "heel")
+	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
 
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
@@ -116,7 +119,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_list)
 			if(xeno_queen.mind && xeno_queen.stat != 2)
 				xeno_queen_list += xeno_queen
-		if(xeno_queen_list.len && side=="face")//If there are queen about and the probability is 50.
+		if(xeno_queen_list.len && side == NANOTRASEN_SIDE)//If there are queen about and the probability is 50.
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
 				var/datum/objective/assassinate/ninja_objective = new
 				ninja_objective.owner = ninja_mind
@@ -126,7 +129,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				ninja_mind.objectives += ninja_objective
 			mission_set = 1
 
-	if(sent_strike_team && side == "heel" && antagonist_list.len)//If a strike team was sent, murder them all like a champ.
+	if(sent_strike_team && side == SYNDICATE_SIDE && antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
 			if(current_mind && current_mind.special_role == "Death Commando")
 				commando_list += current_mind
@@ -146,7 +149,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	if(!mission_set)//If mission was not set.
 
 		var/current_minds[]//List being looked on in the following code.
-		var/side_list = side == "face" ? 2 : 1//For logic gating.
+		var/side_list = side == NANOTRASEN_SIDE ? 2 : 1//For logic gating.
 		var/hostile_targets[] = list()//The guys actually picked for the assassination or whatever.
 		var/friendly_targets[] = list()//The guys the ninja must protect.
 
@@ -271,7 +274,7 @@ Making this random or semi-random will probably not work without it also being i
 As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive(side)
-	var/directive = "[side=="face" ? "Nanotrasen" : "The Syndicate"] is your employer. "//Let them know which side they're on.
+	var/directive = "[side] is your employer. "//Let them know which side they're on.
 	var/xenorace = pick("Unathi","Tajaran", "Skrellian")
 	directive += pick(list(
 		"The Spider Clan must not be linked to this operation. Remain hidden and covert when possible.",
@@ -295,3 +298,6 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		"There are no special supplemental instructions at this time."
 		))
 	return directive
+
+#undef NANOTRASEN_SIDE "Nanotrasen"
+#undef SYNDICATE_SIDE "The Syndicate"
