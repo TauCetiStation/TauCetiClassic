@@ -748,7 +748,7 @@
 		H.nutrition -= 5
 		var/list/cost_by_parts = list(
 			BP_L_ARM = 10,
-			BP_R_ARM = 15,
+			BP_R_ARM = 10,
 			BP_L_LEG = 20,
 			BP_R_LEG = 20,
 			BP_GROIN = 30,
