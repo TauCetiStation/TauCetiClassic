@@ -64,13 +64,16 @@
 			update_icon()
 		return
 
-	var/mob/living/carbon/human/H = M
 	if(isrobot(M))
-		..()
-		return
+		return ..()
+
+	var/mob/living/carbon/human/H = M
 
 	if(user.a_intent == INTENT_HARM)
-		if(!..()) return
+		. = ..()
+		// A mob can be deleted after the attack, so we gotta be wary of that.
+		if(!. || QDELETED(H))
+			return
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
