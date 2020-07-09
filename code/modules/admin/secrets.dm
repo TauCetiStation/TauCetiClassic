@@ -106,13 +106,14 @@
 					<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 					<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 					<b>Misc</b><br>
-					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
+					<A href='?src=\ref[src];secretsfun=gravity'>Toggle Gravity</A><BR>
 					<A href='?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
+					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 					<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
 					"}
 	dat += "</body></html>"
 
-	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 750)
+	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 775)
 	popup.set_content(dat)
 	popup.open(0)
 
