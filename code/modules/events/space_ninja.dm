@@ -37,10 +37,6 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		candidate_mob = pick(candidates)
 		ninja_key = candidate_mob.ckey
 
-	return assign_space_ninja(ninja_key, assign_mission = null)
-
-/proc/assign_space_ninja(ninja_key, assign_mission = null)
-
 	//Here we pick a location and spawn the ninja.
 	if(ninjastart.len == 0)
 		for(var/obj/effect/landmark/L in landmarks_list)
