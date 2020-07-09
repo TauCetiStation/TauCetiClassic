@@ -739,7 +739,7 @@
 /datum/reagent/pop_toxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
-		random_species = pick(UNATHI,SKRELL,HUMAN,TAJARAN,SLIME)
+		random_species = pick(UNATHI, SKRELL, HUMAN, TAJARAN, SLIME, DIONA)
 		var/mob/living/carbon/human/H = M
 		data["ticks"]++
 		H.adjustBruteLoss(3)
