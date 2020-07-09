@@ -756,16 +756,21 @@
 			BP_HEAD = 50)
 		while(data["ticks"] > 0 && cost_by_parts.len > 0)
 			var/transform_part = pick(cost_by_parts)
-			if(data["ticks"] < cost_by_parts[transform_part])
+			if(data["ticks"] != cost_by_parts[transform_part])
 				cost_by_parts -= transform_part
 			if(data["ticks"] == cost_by_parts[transform_part])
 				if(!(H.bodyparts_by_name[transform_part].is_robotic()))
+					var/obj/item/organ/external/BP = H.get_bodypart(transform_part)
+					if(!BP || BP.is_robotic())
+						cost_by_parts -= transform_part
+						break
 					to_chat(H, "<span class='warning'>[H.bodyparts_by_name[transform_part]]... It feels unusual.</span>")
 					H.set_species_soft(random_species)
 					qdel(H.bodyparts_by_name[transform_part])
 					var/path = changed_bodyparts[transform_part]
 					new path(null, H)
-					H.regenerate_icons()
+					H.update_body()
+					break
 				cost_by_parts -= transform_part
 		data["ticks"]++
 	else
