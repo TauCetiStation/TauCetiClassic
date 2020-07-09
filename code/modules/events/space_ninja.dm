@@ -166,8 +166,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				looked at to the affiliation. Affiliation is just a number used to compare. Meaning comes from the logic involved.
 				If the list being looked at is equal to the ninja's affiliation, add the mind to hostiles.
 				If not, add the mind to friendlies. Since it can't be both, it will be added only to one or the other.*/
-				hostile_targets += (i == side_list) ? current_mind : null//Adding null doesn't add anything.
-				friendly_targets += (i != side_list) ? current_mind : null
+				if(i == side_list)
+					hostile_targets += current_mind
+					friendly_targets += null
+				else
+					hostile_targets += null
+					friendly_targets += current_mind
 				current_minds -= current_mind//Remove the mind so it's not picked again.
 
 		var/list/objective_list = list(KILL, STEAL, PROTECT, DEBRAIN, DOWNLOAD_RESEARCH, CAPTURE)//To remove later.
