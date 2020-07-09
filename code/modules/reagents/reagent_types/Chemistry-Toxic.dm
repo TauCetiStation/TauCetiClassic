@@ -823,7 +823,8 @@
 				if(!data["spec"])
 					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
 					return
-				H.set_species_soft(data["spec"])
+				species = pick(data["spec"])
+				H.set_species_soft(pick(species))
 				qdel(H.bodyparts_by_name[BP_L_ARM])
 				qdel(H.bodyparts_by_name[BP_R_ARM])
 				qdel(H.bodyparts_by_name[BP_L_LEG])
@@ -831,8 +832,9 @@
 				qdel(H.bodyparts_by_name[BP_GROIN])
 				for(var/type in changed_bodyparts)
 					var/path = changed_bodyparts[type]
+					H.set_species_soft(pick(species))
 					new path(null, H)
-				switch(data["spec"])
+				switch(species)
 					if(HUMAN)
 						to_chat(H, "<span class='rose'>You've turned into a human! Wow!</span>")
 					if(SKRELL)
