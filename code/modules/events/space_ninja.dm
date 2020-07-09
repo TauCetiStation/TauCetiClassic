@@ -54,7 +54,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	else
 		set_ninja_missions(new_ninja)
 
-	return new_ninja//Return the ninja in case we need to reference them later.
+	return TRUE
 
 
 
