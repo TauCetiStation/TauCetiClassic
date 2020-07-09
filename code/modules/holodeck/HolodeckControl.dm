@@ -311,9 +311,9 @@
 	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
-		A.gravitychange(0,A)
+		A.gravitychange(FALSE)
 	else
-		A.gravitychange(1,A)
+		A.gravitychange(TRUE)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
 	//Get rid of any items
@@ -326,7 +326,7 @@
 	loadIdProgram()
 
 	if(!linkedholodeck.has_gravity)
-		linkedholodeck.gravitychange(1,linkedholodeck)
+		linkedholodeck.gravitychange(TRUE)
 
 	active = 0
 	set_power_use(IDLE_POWER_USE)
