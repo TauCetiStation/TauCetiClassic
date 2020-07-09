@@ -61,8 +61,16 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 /*
  *  DYNAMIC NINJA MISSION GENERATOR.
  */
-#define NANOTRASEN_SIDE "Nanotrasen"
-#define SYNDICATE_SIDE "The Syndicate"
+#define NANOTRASEN_SIDE  "Nanotrasen"
+#define SYNDICATE_SIDE   "The Syndicate"
+#define PROTAGONIST_SIDE_LIST 1
+#define ANTAGONIST_SIDE_LIST  2
+#define KILL              1
+#define STEAL             2
+#define PROTECT           3
+#define DEBRAIN           4
+#define DOWNLOAD_RESEARCH 5
+#define CAPTURE           6
 
 /proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
@@ -148,13 +156,13 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	*/
 	if(!mission_set)//If mission was not set.
 
-		var/current_minds[]//List being looked on in the following code.
-		var/side_list = side == NANOTRASEN_SIDE ? 2 : 1//For logic gating.
-		var/hostile_targets[] = list()//The guys actually picked for the assassination or whatever.
-		var/friendly_targets[] = list()//The guys the ninja must protect.
+		var/list/current_minds//List being looked on in the following code.
+		var/side_list = side == NANOTRASEN_SIDE ? ANTAGONIST_SIDE_LIST : PROTAGONIST_SIDE_LIST//For logic gating.
+		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
+		var/list/friendly_targets = list()//The guys the ninja must protect.
 
-		for(var/i = 2, i > 0, i--)//Two lists.
-			current_minds = i == 2 ? antagonist_list : protagonist_list//Which list are we looking at?
+		for(var/i in PROTAGONIST_SIDE_LIST to ANTAGONIST_SIDE_LIST)//Two lists.
+			current_minds = i == ANTAGONIST_SIDE_LIST ? antagonist_list : protagonist_list//Which list are we looking at?
 			for(var/t = 3, (current_minds.len && t > 0), t--)//While the list is not empty and targets remain. Also, 3 targets is good.
 				current_mind = pick(current_minds)//Pick a random person.
 				/*I'm creating a logic gate here based on the ninja affiliation that compares the list being
@@ -165,15 +173,15 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				friendly_targets += i != side_list ? current_mind : null
 				current_minds -= current_mind//Remove the mind so it's not picked again.
 
-		var/objective_list[] = list(1, 2, 3, 4, 5, 6)//To remove later.
-		for(var/i = rand(1, 3), i > 0, i--)//Want to get a few random objectives. Currently up to 3.
+		var/list/objective_list = list(KILL, STEAL, PROTECT, DEBRAIN, DOWNLOAD_RESEARCH, CAPTURE)//To remove later.
+		for(var/i in 1 to rand(1, 3))//Want to get a few random objectives. Currently up to 3.
 			if(!hostile_targets.len)//Remove appropriate choices from switch list if the target lists are empty.
-				objective_list -= 1
-				objective_list -= 4
+				objective_list -= KILL
+				objective_list -= DEBRAIN
 			if(!friendly_targets.len)
-				objective_list -= 3
+				objective_list -= PROTECT
 			switch(pick(objective_list))
-				if(1)//kill
+				if(KILL)
 					current_mind = pick(hostile_targets)
 
 					if(current_mind)
@@ -186,15 +194,15 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
-				if(2)//Steal
+				if(STEAL)
 					var/datum/objective/steal/ninja_objective = new
 					ninja_objective.owner = ninja_mind
 					var/target_item = pick(ninja_objective.possible_items_special)
 					ninja_objective.set_target(target_item)
 					ninja_mind.objectives += ninja_objective
 
-					objective_list -= 2
-				if(3)//Protect. Keeping people alive can be pretty difficult.
+					objective_list -= STEAL
+				if(PROTECT)
 					current_mind = pick(friendly_targets)
 
 					if(current_mind)
@@ -208,7 +216,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 						i++
 
 					friendly_targets -= current_mind
-				if(4)//Debrain
+				if(DEBRAIN)
 					current_mind = pick(hostile_targets)
 
 					if(current_mind)
@@ -222,20 +230,20 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
-				if(5)//Download research
+				if(DOWNLOAD_RESEARCH)
 					var/datum/objective/download/ninja_objective = new
 					ninja_objective.owner = ninja_mind
 					ninja_objective.gen_amount_goal()
 					ninja_mind.objectives += ninja_objective
 
-					objective_list -= 5
-				if(6)//Capture
+					objective_list -= DOWNLOAD_RESEARCH
+				if(CAPTURE)
 					var/datum/objective/capture/ninja_objective = new
 					ninja_objective.owner = ninja_mind
 					ninja_objective.gen_amount_goal()
 					ninja_mind.objectives += ninja_objective
 
-					objective_list -= 6
+					objective_list -= CAPTURE
 
 		if(ninja_mind.objectives.len)//If they got some objectives out of that.
 			mission_set = 1
@@ -301,3 +309,11 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 #undef NANOTRASEN_SIDE
 #undef SYNDICATE_SIDE
+#undef PROTAGONIST_SIDE_LIST
+#undef ANTAGONIST_SIDE_LIST
+#undef KILL
+#undef STEAL
+#undef PROTECT
+#undef DEBRAIN
+#undef DOWNLOAD_RESEARCH
+#undef CAPTURE
