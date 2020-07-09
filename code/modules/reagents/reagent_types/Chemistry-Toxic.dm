@@ -787,7 +787,10 @@
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	data = list("ticks","spec")
+	data = list(
+		"ticks" = 0,
+		"spec" = null
+	)
 	var/list/changed_bodyparts = list(
 		 BP_GROIN  = /obj/item/organ/external/groin,
 		 BP_L_ARM  = /obj/item/organ/external/l_arm,
