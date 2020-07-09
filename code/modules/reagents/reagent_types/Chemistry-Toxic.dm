@@ -745,52 +745,29 @@
 		H.adjustBruteLoss(3)
 		H.adjustFireLoss(3)
 		H.adjustHalLoss(10)
-		switch(data["ticks"])
-			if(1 to 9)
-				if(prob(25))
-					H.emote(pick("twitch","drool","moan","giggle"))
-			if(10)
-				to_chat(H, "<span class='warning'>Your left arm feels unusual.</span>")
-				H.set_species_soft(random_species)
-				qdel(H.bodyparts_by_name[BP_L_ARM])
-				var/path = changed_bodyparts[BP_L_ARM]
-				new path(null, H)
-				H.regenerate_icons()
-			if(20)
-				to_chat(H, "<span class='warning'>Your right arm feels unusual.</span>")
-				H.set_species_soft(random_species)
-				qdel(H.bodyparts_by_name[BP_R_ARM])
-				var/path = changed_bodyparts[BP_R_ARM]
-				new path(null, H)
-				H.regenerate_icons()
-			if(30)
-				to_chat(H, "<span class='warning'>Your legs hurt.</span>")
-				H.set_species_soft(random_species)
-				qdel(H.bodyparts_by_name[BP_L_LEG])
-				qdel(H.bodyparts_by_name[BP_R_LEG])
-				qdel(H.bodyparts_by_name[BP_GROIN])
-				var/path = changed_bodyparts[BP_L_LEG]
-				new path(null, H)
-				path = changed_bodyparts[BP_R_LEG]
-				new path(null, H)
-				path = changed_bodyparts[BP_GROIN]
-				new path(null, H)
-				H.regenerate_icons()
-			if(40)
-				to_chat(H, "<span class='warning'>Your torso feels different.</span>")
-				H.set_species_soft(random_species)
-				qdel(H.bodyparts_by_name[BP_CHEST])
-				var/path = changed_bodyparts[BP_CHEST]
-				new path(null, H)
-				H.regenerate_icons()
-			if(50)
-				to_chat(H, "<span class='warning'>Suddenly your head burst in a wave of pain</span>")
-				H.adjustHalLoss(50)
-				H.set_species_soft(random_species)
-				qdel(H.bodyparts_by_name[BP_HEAD])
-				var/path = changed_bodyparts[BP_HEAD]
-				new path(null, H)
-				H.regenerate_icons()
+		H.nutrition -= 5
+		var/list/cost_by_parts = list(
+			BP_L_ARM = 10,
+			BP_R_ARM = 15,
+			BP_L_LEG = 20,
+			BP_R_LEG = 25,
+			BP_GROIN = 30,
+			BP_CHEST = 40,
+			BP_HEAD = 50)
+		while(data["ticks"] > 0 && cost_by_parts.len > 0)
+			var/transform_part = pick(cost_by_parts)
+			if(data["ticks"] != cost_by_parts[transform_part])
+				cost_by_parts -= transform_part
+			if(data["ticks"] == cost_by_parts[transform_part])
+				if(!(H.bodyparts_by_name[transform_part].is_robotic()))
+					to_chat(H, "<span class='warning'>[H.bodyparts_by_name[transform_part]]... It feels unusual.</span>")
+					H.set_species_soft(random_species)
+					qdel(H.bodyparts_by_name[transform_part])
+					var/path = changed_bodyparts[transform_part]
+					new path(null, H)
+					H.regenerate_icons()
+				cost_by_parts -= transform_part
+		data["ticks"]++
 	else
 		return
 
