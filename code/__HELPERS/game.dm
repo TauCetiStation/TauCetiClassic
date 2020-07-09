@@ -584,15 +584,19 @@
 
 
 // Procs for grabbing players.
-// get candidates from ghosts for special role
-proc/pollCandidates(Question = "Would you like to be a special role?", jobbanType, Ignore_Role, poll_time = 300)
+// get candidates from ghosts for role
+proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 
 	for(var/mob/dead/observer/O in player_list)
 		if(!O.key || !O.client)
 			continue
-		if(jobban_isbanned(O, jobbanType) || jobban_isbanned(O, "Syndicate"))
+		if(jobban_isbanned(O, role) || jobban_isbanned(O, "Syndicate") || !O.client.prefs.be_role.Find(role))
+			continue
+		if(O.client.prefs.ignore_question.Find(Ignore_Role))
+			continue
+		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		spawn(0)
 			O.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
@@ -612,7 +616,7 @@ proc/pollCandidates(Question = "Would you like to be a special role?", jobbanTyp
 				if("Not This Round")
 					to_chat(O, "<span class='danger'>Choice registered: No.</span>")
 					to_chat(O, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
-					O.client.prefs.ignore_question -= Ignore_Role
+					O.client.prefs.ignore_question += Ignore_Role
 					return
 				else
 					return
