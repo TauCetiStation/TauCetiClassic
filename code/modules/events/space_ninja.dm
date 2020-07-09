@@ -52,7 +52,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
 		to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 	else
-		set_ninja_missions(new_ninja)
+		set_ninja_objectives(new_ninja)
 
 	return TRUE
 
@@ -72,7 +72,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 #define DOWNLOAD_RESEARCH 5
 #define CAPTURE           6
 
-/proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
+/proc/set_ninja_objectives(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
 	//Xenos and deathsquads take precedence over everything else.
 
