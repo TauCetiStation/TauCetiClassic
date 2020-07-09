@@ -103,7 +103,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		)
 	for(var/list in possible_bad_dudes)//For every possible antagonist type.
 		for(current_mind in list)//For each mind in that list.
-			if(current_mind.current&&current_mind.current.stat != 2)//If they are not destroyed and not dead.
+			if(current_mind.current && current_mind.current.stat != DEAD)//If they are not destroyed and not dead.
 				antagonist_list += current_mind//Add them.
 
 	if(protagonist_list.len)//If the mind is both a protagonist and antagonist.
@@ -124,7 +124,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		//Here we want the ninja to murder all the queens. The other aliens don't really matter.
 		var/list/xeno_queen_list = list()
 		for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_list)
-			if(xeno_queen.mind && xeno_queen.stat != 2)
+			if(xeno_queen.mind && xeno_queen.stat != DEAD)
 				xeno_queen_list += xeno_queen
 		if(xeno_queen_list.len && side == NANOTRASEN_SIDE)//If there are queen about and the probability is 50.
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
