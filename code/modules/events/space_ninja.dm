@@ -78,7 +78,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 /proc/set_ninja_missions(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
-	var/mission_set = 0//To determine if we need to do further processing.
+	var/mission_set = FALSE//To determine if we need to do further processing.
 	//Xenos and deathsquads take precedence over everything else.
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
@@ -87,10 +87,10 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
-	var/xeno_list[] = list()//Aliens.
-	var/commando_list[] = list()//Commandos.
-	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
-	var/protagonist_list[] = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/list/xeno_list = list()//Aliens.
+	var/list/commando_list = list()//Commandos.
+	var/list/antagonist_list = list()//The main bad guys. Evil minds that plot destruction.
+	var/list/protagonist_list = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
 	//We want the ninja to appear only in certain modes.
 	//	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")  // Commented out for both testing and ninjas
@@ -100,7 +100,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
-	var/possible_bad_dudes[] = list(
+	var/list/possible_bad_dudes = list(
 		current_mode.traitors,current_mode.head_revolutionaries,
 		current_mode.head_revolutionaries,
 		current_mode.cult,current_mode.wizards,
@@ -127,7 +127,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	if(xeno_list.len > 3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 		//Here we want the ninja to murder all the queens. The other aliens don't really matter.
-		var/xeno_queen_list[] = list()
+		var/list/xeno_queen_list = list()
 		for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_list)
 			if(xeno_queen.mind && xeno_queen.stat != 2)
 				xeno_queen_list += xeno_queen
