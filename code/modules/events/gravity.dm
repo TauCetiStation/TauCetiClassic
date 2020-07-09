@@ -12,12 +12,12 @@
 
 /datum/event/gravity/start()
 	for(var/area/A in world)
-		if(A.z in affecting_z)
+		if(A.z == affecting_z)
 			A.gravitychange(FALSE)
 
 /datum/event/gravity/end()
 	for(var/area/A in world)
-		if((A.z in affecting_z) && initial(A.has_gravity))
+		if((A.z == affecting_z) && initial(A.has_gravity))
 			A.gravitychange(TRUE)
 
 	command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.", "[station_name()] Gravity Subsystem", "gravon")
