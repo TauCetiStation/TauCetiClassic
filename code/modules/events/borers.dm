@@ -23,7 +23,7 @@
 		return
 
 	spawn()
-		var/list/candidates = pollCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER)
+		var/list/candidates = pollGhostCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER)
 
 		for(var/mob/M in candidates)
 			if(!spawncount)
