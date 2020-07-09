@@ -160,7 +160,7 @@ var/list/ai_verbs_default = list(
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
-			on_mob_init()
+			announce_role()
 
 			job = "AI"
 
@@ -179,7 +179,7 @@ var/list/ai_verbs_default = list(
 
 	ai_list += src
 
-/mob/living/silicon/ai/proc/on_mob_init()
+/mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")

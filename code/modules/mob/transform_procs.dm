@@ -344,7 +344,7 @@
 	else
 		O.key = key
 
-	O.on_mob_init()
+	O.announce_role()
 
 	O.add_ai_verbs()
 	O.job = "AI"
