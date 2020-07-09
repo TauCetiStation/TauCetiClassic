@@ -533,6 +533,9 @@ var/datum/subsystem/ticker/ticker
 
 	scoreboard(ai_completions)
 
+	//Ask the event manager to print round end information
+	SSevents.RoundEnd()
+
 	return 1
 
 /datum/subsystem/ticker/proc/achievement_declare_completion()
