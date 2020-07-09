@@ -750,7 +750,7 @@
 			BP_L_ARM = 10,
 			BP_R_ARM = 15,
 			BP_L_LEG = 20,
-			BP_R_LEG = 25,
+			BP_R_LEG = 20,
 			BP_GROIN = 30,
 			BP_CHEST = 40,
 			BP_HEAD = 50)
