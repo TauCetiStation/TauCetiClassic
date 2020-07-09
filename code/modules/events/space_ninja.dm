@@ -299,5 +299,5 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		))
 	return directive
 
-#undef NANOTRASEN_SIDE "Nanotrasen"
-#undef SYNDICATE_SIDE "The Syndicate"
+#undef NANOTRASEN_SIDE
+#undef SYNDICATE_SIDE
