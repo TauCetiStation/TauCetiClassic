@@ -2278,7 +2278,9 @@
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	var/datum/reagent/charged_pop_toxin/P = locate(/datum/reagent/charged_pop_toxin) in holder.reagent_list
 	var/mob/living/carbon/human/D = B.data["donor"]
-	P.data["spec"] = D.get_species()
+	if(!P.data["spec"])
+		P.data["spec"] = list()
+	P.data["spec"] += D.get_species()
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
