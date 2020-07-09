@@ -46,7 +46,8 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
-	new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
+	var/obj/item/clothing/suit/space/space_ninja/ninja_suit = new_ninja.wear_suit
+	ninja_suit.randomize_param()//Give them a random set of suit parameters.
 	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 	new_ninja.internals.icon_state = "internal1"
 
