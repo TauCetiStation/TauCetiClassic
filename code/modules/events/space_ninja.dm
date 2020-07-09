@@ -63,8 +63,8 @@ When I already created about 4 new objectives, this doesn't seem terribly import
  */
 #define NANOTRASEN_SIDE  "Nanotrasen"
 #define SYNDICATE_SIDE   "The Syndicate"
-#define PROTAGONIST_SIDE_LIST 1
-#define ANTAGONIST_SIDE_LIST  2
+#define SYNDICATE_ENEMIES_LIST 1
+#define NANOTRASEN_ENEMIES_LIST  2
 #define KILL              1
 #define STEAL             2
 #define PROTECT           3
@@ -157,12 +157,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	if(!mission_set)//If mission was not set.
 
 		var/list/current_minds//List being looked on in the following code.
-		var/side_list = side == NANOTRASEN_SIDE ? ANTAGONIST_SIDE_LIST : PROTAGONIST_SIDE_LIST//For logic gating.
+		var/side_list = side == NANOTRASEN_SIDE ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.
 
-		for(var/i in PROTAGONIST_SIDE_LIST to ANTAGONIST_SIDE_LIST)//Two lists.
-			current_minds = i == ANTAGONIST_SIDE_LIST ? antagonist_list : protagonist_list//Which list are we looking at?
+		for(var/i in SYNDICATE_ENEMIES_LIST to NANOTRASEN_ENEMIES_LIST)//Two lists.
+			current_minds = i == NANOTRASEN_ENEMIES_LIST ? antagonist_list : protagonist_list//Which list are we looking at?
 			for(var/t = 3, (current_minds.len && t > 0), t--)//While the list is not empty and targets remain. Also, 3 targets is good.
 				current_mind = pick(current_minds)//Pick a random person.
 				/*I'm creating a logic gate here based on the ninja affiliation that compares the list being
@@ -309,8 +309,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 #undef NANOTRASEN_SIDE
 #undef SYNDICATE_SIDE
-#undef PROTAGONIST_SIDE_LIST
-#undef ANTAGONIST_SIDE_LIST
+#undef SYNDICATE_ENEMIES_LIST
+#undef NANOTRASEN_ENEMIES_LIST
 #undef KILL
 #undef STEAL
 #undef PROTECT
