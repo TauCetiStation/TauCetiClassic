@@ -100,4 +100,4 @@ var/list/ignore_vision_inside = list(
 var/global/datum/religion/chaplain/chaplain_religion
 
 var/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
-var/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
+var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
