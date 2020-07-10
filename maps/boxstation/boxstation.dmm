@@ -25986,7 +25986,6 @@
 /area/station/gateway)
 "aUy" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/rnd/misc_lab)
 "aUz" = (
