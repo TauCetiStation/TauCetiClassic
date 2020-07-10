@@ -486,7 +486,6 @@
 
 	codex_description = "Vox are the nomad omnivore bird-like race that live on large moon-sized ships. There is not much information known about them, other than they breathe \
 	nitrogen, they are light-fingered and are known for being pirates and looters."
-
 	ooc_codex_information = "Oxygen and oxygencontaining substances are toxic to vox in any form. They can't be resuscitated and cloned due to their not-fully-organic nature.\
 	Vox are resistant to low pressures, but they still cannot walk in space much due to space radiation. Vox cannot wear unmodified hardsuits and gloves. They also use\
 	claws in battle and can leap on enemies to stun them for a moment, but leaping on other object will stun them for a while. "
@@ -610,6 +609,8 @@
 	language = "Vox-pidgin"
 	unarmed_type = /datum/unarmed_attack/claws/armalis
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
+
+	hidden_from_codex = TRUE
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
