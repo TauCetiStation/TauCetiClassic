@@ -17,3 +17,9 @@
 	l_ear = /obj/item/device/radio/headset/ninja
 	
 	implants = list(/obj/item/weapon/implant/dexplosive = BP_HEAD)
+
+	internals_slot = SLOT_S_STORE
+
+/datum/outfit/space_ninja/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/obj/item/clothing/suit/space/space_ninja/ninja_suit = H.wear_suit
+	ninja_suit.randomize_param()//Give them a random set of suit parameters.
