@@ -89,6 +89,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			options[strtype] = S
 
 	var/pick = input(mob, "Choose a controller to debug/view variables of.", "VV controller:") as null|anything in options
+	if(!holder || !check_rights(R_DEBUG))
+		return
 	if(!pick)
 		return
 	var/datum/D = options[pick]
