@@ -156,8 +156,11 @@
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Block All Maintenance")
-			make_bolt_all_maintenance(TRUE)
-			feedback_inc("alert_keycard_auth_maintGrant",1)
+			if(security_level >= SEC_LEVEL_RED)
+				make_bolt_all_maintenance(TRUE)
+				feedback_inc("alert_keycard_auth_maintGrant",1)
+			else
+				to_chat(usr, "Elevated security level to red first.")
 		if("Revoke Block All Maintenance")
 			revoke_bolt_all_maintenance(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
