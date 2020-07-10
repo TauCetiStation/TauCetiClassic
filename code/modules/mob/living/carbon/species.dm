@@ -257,7 +257,6 @@
 	of high military officers and captains of space stations. Humans are omnivore mammals and are mostly not allergic to known food \
 	and drugs. Their original homeworld, Earth, is currently abandoned due to excessive radioactivity and high temperatures, \
 	making it unhabitable. Mars in Solar System is their current capital world. "
-	ooc_codex_information = "Humans are a generic race. You probably know everything already. "
 	hidden_from_codex = FALSE
 
 	flags = list(
@@ -291,10 +290,6 @@
 	, but they don't gain any nutrition from it. Unathi are valued on Security positions for their combat abilities.  \
 	It's not recommended to annoy them because they are mostly quite agressive and hot-tempered and you don't want to have your skin scratched \
 	by large unathi claws. Their main language is Sinta'unathi. "
-	ooc_codex_information = "Unathi fight with their claws, but deal the same amount of damage. Their skin has some protective properties. They \
-	are more susceptible to cold, but more resistant to heat. They are quite slow too. To talk on their language add :o before the text \
-	that you want to say. Unathi cannot wear unmodified hardsuits, shoes and gloves. To make shoes and gloves compatible with unathi \
-	morphology use wirecutters."
 	hidden_from_codex = FALSE
 
 	cold_level_1 = 280 //Default 260 - Lower is better
@@ -365,11 +360,7 @@
 	nighteyes = 1
 
 	codex_description = "Tajaran are the omnivore cat-like humanoid race that come from Ahdomay. They are known for their friendliness and compliance due to \
-	the half-mythical stories of their slavery to an unknown race, that has suddenly dissapeared. Tajaran are behind humans and skrell in technological advancement.\
-	 "
-	ooc_codex_information = "Tajaran are susceptible to heat, but they are quite resistant to cold. Spicy food can be lethal. They can't wear unmodified hardsuits, \
-	shoes and gloves, like Unathi. Tajaran have an unique mechanic that allows them to see in darkness, that triggers automathically. Tajaran use their claws in combat.\
-	To talk on Silk'tajr add :j before the text you want to say. They are also quite agile and fast, but are quite susceptible to damage."
+	the half-mythical stories of their slavery to an unknown race, that has suddenly dissapeared. Tajaran are behind humans and skrell in technological advancement.\"
 	hidden_from_codex = FALSE
 
 	cold_level_1 = 200 //Default 260
@@ -436,10 +427,6 @@
 	Skrell were the first race to be encountered by humanity. Since then humans and skrell maintain their friendly and cooperative relationship up to mutual technological support.\
 	This species has achieved their technological peak and suffer from scientific stagnation, but they are still more advanced than humans. Their technology and biology allow them \
 	to live up until around 200 years."
-
-	ooc_codex_information = "Skrells are similar to humans in morphology, but their head tentacles make wearing unmodified hard helmets uncomfortable. It's still best to \
-	wear hardsuits modified for skrell body. Skrell are also capable to breathe underwater, Skrell are also immune to organic poisons, such as alchohol, which doesn't intoxicate them.\
-	They can't eat animal protein though.T o talk on Skrellian language add :k before the text you want to say."
 	hidden_from_codex = FALSE
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
@@ -486,11 +473,6 @@
 
 	codex_description = "Vox are the nomad omnivore bird-like race that live on large moon-sized ships. There is not much information known about them, other than they breathe \
 	nitrogen, they are light-fingered and are known for being pirates and looters."
-	ooc_codex_information = "Oxygen and oxygencontaining substances are toxic to vox in any form. They can't be resuscitated and cloned due to their not-fully-organic nature.\
-	Vox are resistant to low pressures, but they still cannot walk in space much due to space radiation. Vox cannot wear unmodified hardsuits and gloves. They also use\
-	claws in battle and can leap on enemies to stun them for a moment, but leaping on other object will stun them for a while. "
-	hidden_from_codex = FALSE
-
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
@@ -663,9 +645,6 @@
 	primitive = /mob/living/carbon/monkey/diona
 
 	codex_description = "Dionaea are plant-like creatures known for their philosofical worldview and desire to know everything. "
-
-	ooc_codex_information = "Dionaea are resistant to space's dangers - radiation and low pressure. They are also very slow. Dionaea need light to live. To use Rootspeak language add :q \
-	before the text you want to say."
 	hidden_from_codex = FALSE
 
 
@@ -795,11 +774,6 @@
 	to support them. Today almost quarter of all positronic brains are independent due to Positronic Union and other synthetic sympathizers support. Despite their powerful intellect, \
 	IPCs are very specialized. It takes much time for them to learn something new outside their specialization.\
 	Due to their differentiation from organics, they are mostly considered second-rate species - they are treated like simple robots "
-
-	ooc_codex_information = "IPCs don't feel pain - holodamage doesn't affect them in any way. IPCs can't eat, but they can drain power from APCs, on grab intent clicking on APC will initiate\
-	draining process. If you click on an APC with disarm intent you can give some power to the APC. IPCs can't be cloned or resuscitated, but can have their positronic brains retrieved from \
-	damaged bodies. IPCs, due to their synthetic nature, are susceptible to EMP. Their cooling system is not as effective as androids', they need air to cool themselves down. Dwelling in \
-	space doesn't inflict damage on them, other than heating them. They are also resistant to low temperatures.and to high temperatures to some degree. "
 	hidden_from_codex = FALSE
 
 	eyes = null
