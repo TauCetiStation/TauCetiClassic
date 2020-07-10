@@ -77,6 +77,12 @@ var/list/ai_verbs_default = list(
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
 
+	var/mob/camera/Eye/ai/eyeobj
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+	var/obj/machinery/hologram/holopad/holo = null
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
 
@@ -154,17 +160,12 @@ var/list/ai_verbs_default = list(
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
-			to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-			to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-			to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-			to_chat(src, "To use something, simply click on it.")
-			to_chat(src, "Use say :b to speak to your cyborgs through binary.")
-			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-				show_laws()
-				to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+			announce_role()
 
 			job = "AI"
 
+	create_eye()
+	
 	new /obj/machinery/ai_powersupply(src)
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
@@ -177,6 +178,16 @@ var/list/ai_verbs_default = list(
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
 	ai_list += src
+
+/mob/living/silicon/ai/proc/announce_role()
+	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(src, "To use something, simply click on it.")
+	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
+	if (!(ticker && ticker.mode && (src.mind in ticker.mode.malf_ai)))
+		src.show_laws()
+		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
 	connected_robots.Cut()
