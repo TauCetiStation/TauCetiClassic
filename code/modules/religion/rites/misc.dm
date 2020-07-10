@@ -178,7 +178,7 @@
 		for(var/obj/item/O in anim_items)
 			new /mob/living/simple_animal/hostile/mimic/copy/religion(O.loc, O)
 
-	user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
+		user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
 	return TRUE
 
 /*

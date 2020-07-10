@@ -131,7 +131,7 @@
 
 /datum/religion_rites/spawn_item/call_animal/modify_item(atom/animal)
 	for(var/mob/dead/observer/O in observer_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
 		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
