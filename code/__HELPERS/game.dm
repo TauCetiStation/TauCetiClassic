@@ -595,7 +595,7 @@
 
 	return pollCandidates(Question, role, Ignore_Role, poll_time, candidates)
 
-proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300, list/group = null)
+/proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300, list/group = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 
