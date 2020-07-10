@@ -1200,6 +1200,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "This player already has more minutes than [value]!")
 
 /client/proc/grand_guard_pass()
+	set category = "Server"
 	set name = "Guard pass"
 	set desc = "Allow a new player to skip the guard checks"
 
