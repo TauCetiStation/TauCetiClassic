@@ -18,6 +18,9 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/ai_emergency_message
 )
 
+// Radial menu for choose skin of core
+var/global/list/chooses_ai_cores
+
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = FALSE
@@ -31,7 +34,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = TRUE // -- TLE
 	density = TRUE
@@ -77,11 +80,58 @@ var/list/ai_verbs_default = list(
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
 
+<<<<<<< Updated upstream
 	var/mob/camera/Eye/ai/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
 	var/obj/machinery/hologram/holopad/holo = null
+=======
+	// Radila menu.
+	var/static/list/name_by_state = list(
+		"Standard" = "ai",
+		"Rainbow" = "ai-clown",
+		"Clown" = "ai-clown2",
+		"Monochrome" = "ai-mono",
+		"Inverted" = "ai-u",
+		"Firewall" = "ai-magma",
+		"Green" = "ai-wierd",
+		"Red" = "ai-red",
+		"Static" = "ai-static",
+		"Text" = "ai-text",
+		"Smiley" = "ai-smiley",
+		"Matrix" = "ai-matrix",
+		"Angry" = "ai-angryface",
+		"Dorf" = "ai-dorf",
+		"Bliss" = "ai-bliss",
+		"Triumvirate" = "ai-triumvirate",
+		"Triumvirate Static" = "ai-triumvirate-malf",
+		"Soviet" = "ai-redoctober",
+		"Trapped" = "ai-hades",
+		"Heartline" = "ai-heartline",
+		"No Pulse" = "ai-heartline_dead",
+		"President" = "ai-president",
+		"BANNED" = "ai-banned",
+		"Helios" = "ai-helios",
+		"House" = "ai-house",
+		"Gigyas" = "ai-gigyas",
+		"Yuki" = "ai-yuki",
+		"SyndiCat" = "ai-syndicatmeow",
+		"Yuki" = "ai-yuki",
+		"Hiss!" = "ai-alien",
+		"Alter Ego" = "ai-alterego",
+		"Urist" = "ai-toodeep",
+		"Totally Not A Malf" = "ai-malf",
+		"Fuzz" = "ai-fuzz",
+		"Goon" = "ai-goon",
+		"Database" = "ai-database",
+		"Glitchman" = "ai-glitchman",
+		"AmericAI" = "ai-murica",
+		"NT" = "ai-nanotrasen",
+		"Gentoo" = "ai-gentoo",
+		"Hal 9000" = "ai-hal",
+)
+>>>>>>> Stashed changes
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
@@ -257,56 +307,16 @@ var/list/ai_verbs_default = list(
 				icon = 'icons/mob/custom-synthetic.dmi'
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = ""
-	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo","Hal 9000")
-	switch(icontype)
-		if("Custom") icon_state = "[src.ckey]-ai"
-		if("Rainbow") icon_state = "ai-clown"
-		if("Clown") icon_state = "ai-clown2"
-		if("Monochrome") icon_state = "ai-mono"
-		if("Inverted") icon_state = "ai-u"
-		if("Firewall") icon_state = "ai-magma"
-		if("Green") icon_state = "ai-wierd"
-		if("Red") icon_state = "ai-red"
-		if("Static") icon_state = "ai-static"
-		if("Text") icon_state = "ai-text"
-		if("Smiley") icon_state = "ai-smiley"
-		if("Matrix") icon_state = "ai-matrix"
-		if("Angry") icon_state = "ai-angryface"
-		if("Dorf") icon_state = "ai-dorf"
-		if("Bliss") icon_state = "ai-bliss"
-		if("Triumvirate") icon_state = "ai-triumvirate"
-		if("Triumvirate Static") icon_state = "ai-triumvirate-malf"
-		if("Soviet") icon_state = "ai-redoctober"
-		if("Trapped") icon_state = "ai-hades"
-		if("Heartline") icon_state = "ai-heartline"
-		if("No Pulse") icon_state = "ai-heartline_dead"
-		if("President") icon_state = "ai-president"
-		if("BANNED") icon_state = "ai-banned"
-		if("Helios") icon_state = "ai-helios"
-		if("House") icon_state = "ai-house"
-		if("Gigyas") icon_state = "ai-gigyas"
-		if("Yuki") icon_state = "ai-yuki"
-		if("SyndiCat") icon_state = "ai-syndicatmeow"
-		if("Yuki") icon_state = "ai-yuki"
-		if("Hiss!") icon_state = "ai-alien"
-		if("Alter Ego") icon_state = "ai-alterego"
-		if("Urist") icon_state = "ai-toodeep"
-		if("Totally Not A Malf") icon_state = "ai-malf"
-		if("Fuzz") icon_state = "ai-fuzz"
-		if("Goon") icon_state = "ai-goon"
-		if("Database") icon_state = "ai-database"
-		if("Glitchman") icon_state = "ai-glitchman"
-		if("AmericAI") icon_state = "ai-murica"
-		if("NT") icon_state = "ai-nanotrasen"
-		if("Gentoo") icon_state = "ai-gentoo"
-		if("Hal 9000") icon_state = "ai-hal"
-		else icon_state = "ai"
-	//else
-			//usr <<"You can only change your display once!"
-			//return
+	if(!chooses_ai_cores)
+		chooses_ai_cores = list()
+		for(var/name in name_by_state)
+			chooses_ai_cores[name] = image(icon = 'icons/mob/AI.dmi', icon_state = name_by_state[name])
 
+	if(custom_sprite == 1) 
+		icon_state = "[src.ckey]-ai"
+	else 
+		var/state = show_radial_menu(usr, usr, chooses_ai_cores, require_near = TRUE, tooltips = TRUE)
+		icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
