@@ -45,6 +45,11 @@
 	add_overlay(image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1))
 	icon_state = "[bike_icon]_off"
 
+/obj/vehicle/space/spacebike/Destroy()
+	QDEL_NULL(ion)
+	QDEL_NULL(key)
+	return ..()
+
 /obj/vehicle/space/spacebike/examine(mob/user)
 	..()
 	to_chat(user, "It has number [id].")
@@ -261,7 +266,3 @@
 		icon_state = "[bike_icon]_off"
 
 	..()
-
-/obj/vehicle/space/spacebike/Destroy()
-	qdel(ion)
-	return ..()
