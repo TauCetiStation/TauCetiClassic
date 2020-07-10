@@ -547,6 +547,9 @@ commented cause polls are kinda broken now, needs refactoring */
 /mob/dead/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
+	src << browse(null, "window=preferences_window")
+	if(client)
+		client.clear_character_previews()
 
 /mob/dead/new_player/proc/has_admin_rights()
 	return (client && client.holder && (client.holder.rights & R_ADMIN))
