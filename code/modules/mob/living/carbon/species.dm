@@ -360,7 +360,8 @@
 	nighteyes = 1
 
 	codex_description = "Tajaran are the omnivore cat-like humanoid race that come from Ahdomay. They are known for their friendliness and compliance due to \
-	the half-mythical stories of their slavery to an unknown race, that has suddenly dissapeared. Tajaran are behind humans and skrell in technological advancement.\"
+	the half-mythical stories of their slavery to an unknown race, that has suddenly dissapeared. Tajaran are behind humans and skrell in technological advancement."
+
 	hidden_from_codex = FALSE
 
 	cold_level_1 = 200 //Default 260
@@ -473,6 +474,8 @@
 
 	codex_description = "Vox are the nomad omnivore bird-like race that live on large moon-sized ships. There is not much information known about them, other than they breathe \
 	nitrogen, they are light-fingered and are known for being pirates and looters."
+	hidden_from_codex = FALSE
+
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
