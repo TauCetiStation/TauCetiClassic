@@ -42,10 +42,13 @@
 	spawn_locations = shuffle(spawn_locations)
 	num_groups = min(num_groups, spawn_locations.len)
 
-	var/i = 1
-	while(i <= num_groups)
+	for(var/i in 1 to num_groups)
 		var/group_size = rand(group_size_min, group_size_max)
-		for(var/j = 1, j <= group_size, j++)
+		var/list/turfs = circlerangeturfs(spawn_locations[i], 2)
+		for(var/turf/T in turfs)
+			if(!istype(T, /turf/space) && isturf(T.loc)) // no spawn in Grille
+				turfs -= T
+		group_size = min(group_size, turfs.len)
+		for(var/j in 1 to group_size)
 			var/carptype = pickweight(spawned_mobs)
-			spawned_carp.Add(new carptype(spawn_locations[i]))
-		i++
+			spawned_carp.Add(new carptype(pick_n_take(turfs)))
