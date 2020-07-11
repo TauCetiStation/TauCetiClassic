@@ -217,12 +217,12 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units."
+	desc = "A large beaker. Can hold up to 150 units."
 	icon_state = "beakerlarge"
 	g_amt = 5000
-	volume = 100
+	volume = 150
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
@@ -291,6 +291,8 @@
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
+	force = 5
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))

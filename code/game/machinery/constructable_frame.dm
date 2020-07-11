@@ -414,7 +414,6 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=2;materials=2"
 	board_type = "machine"
 	req_components = list(
-							/obj/item/weapon/circuitboard/color_mixer = 1,
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1)
 

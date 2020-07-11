@@ -190,12 +190,7 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/milk/atom_init()
-	. = ..()
-	reagents.add_reagent("milk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("milk" = 50)
 
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
@@ -217,72 +212,44 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk/atom_init()
-	. = ..()
-	reagents.add_reagent("soymilk", 50)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("soymilk" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/coffee/atom_init()
-	. = ..()
-	reagents.add_reagent("coffee", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("coffee" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "teacup"
 	item_state = "coffee"
+	list_reagents = list("tea" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea/atom_init()
 	. = ..()
-	reagents.add_reagent("tea", 30)
-	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/ice/atom_init()
-	. = ..()
-	reagents.add_reagent("ice", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("ice" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "hot_coco"
 	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/atom_init()
-	. = ..()
-	reagents.add_reagent("hot_coco", 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	list_reagents = list("hot_coco" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Dosi Ramen"
 	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
 	icon_state = "ramen"
+	list_reagents = list("dry_ramen" = 30)
 	flags = 0 // Default - closed container
-
-	var/ramen_reagent = "dry_ramen"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
-	. = ..()
-	reagents.add_reagent(ramen_reagent, 30)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
 	if(!is_open_container())
@@ -315,7 +282,7 @@
 	name = "Dosi Ramen (Spicy)"
 	desc = "Just add 10ml water, self heats! Unathi's favorite noodle with spicy flavor. DANGER: VERY SPICY! NOT TAJARAN FRIENDLY!"
 	icon_state = "ramen_spicy"
-	ramen_reagent = "hell_ramen"
+	list_reagents = list("hell_ramen" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
@@ -323,11 +290,6 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = null
 	volume = 10
-
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/atom_init()
-	. = ..()
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)

@@ -210,6 +210,10 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
+/obj/machinery/chem_dispenser/old/atom_init()
+	. = ..()
+	make_old()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_dispenser/constructable
@@ -1145,7 +1149,7 @@
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.drop_from_inventory(O, src) 
+	user.drop_from_inventory(O, src)
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0

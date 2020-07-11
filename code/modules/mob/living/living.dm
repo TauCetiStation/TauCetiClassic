@@ -103,7 +103,7 @@
 
 			now_pushing = 0
 			return 1
-			
+
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
@@ -1119,7 +1119,8 @@
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)
-			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+			butcher_results.Remove(path)
 		visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
@@ -1264,4 +1265,20 @@
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return TRUE
+
+/// Try changing move intent. Return success.
+/mob/living/proc/set_m_intent(intent)
+	if(m_intent == intent)
+		return FALSE
+
+	if(intent == MOVE_INTENT_RUN && HAS_TRAIT(src, TRAIT_NO_RUN))
+		to_chat(src, "<span class='notice'>Something prevents you from running!</span>")
+		return FALSE
+
+	m_intent = intent
+	if(hud_used)
+		if(hud_used.move_intent)
+			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
+
 	return TRUE

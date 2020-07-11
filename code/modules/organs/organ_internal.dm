@@ -160,11 +160,11 @@
 	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
 	if(!istype(lungs))
 		return
-	
+
 	var/pumping_volume = pumping_rate
 	if(is_bruised())
 		pumping_volume -= bruised_loss
-	
+
 	if(pumping_volume > 0)
 		lungs.add_refrigerant(pumping_volume)
 
@@ -244,12 +244,15 @@
 		if(refrigerant < 0)
 			refrigerant_spent += refrigerant
 			refrigerant = 0
-		
+
 		if(is_bruised())
 			refrigerant_spent -= bruised_loss
-		
+
 		if(refrigerant_spent > 0)
 			temp_gain -= refrigerant_spent
+
+	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
+		owner.bodytemperature -= 50
 
 	if(temp_gain > 0)
 		owner.bodytemperature += temp_gain
