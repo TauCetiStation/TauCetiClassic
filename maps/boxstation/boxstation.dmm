@@ -13881,17 +13881,7 @@
 /area/station/maintenance/eva)
 "ayv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	dir = 4;
@@ -13899,6 +13889,21 @@
 	id = "kitchen";
 	name = "Kitchen Shutters";
 	opacity = 0
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "kitchen"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "kitchen"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "kitchen"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "kitchen"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
@@ -43344,10 +43349,6 @@
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
 "bDP" = (
-/obj/machinery/camera{
-	c_tag = "Cargo Bay Entrance";
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -77585,6 +77586,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Bay Entrance";
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -79765,9 +79770,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -106000,10 +106002,10 @@ bdu
 bfn
 bmS
 aGn
-wJo
-wJo
-wJo
-wJo
+aDz
+aDQ
+aDQ
+aDQ
 wJo
 aGn
 aGn
@@ -106268,8 +106270,8 @@ bgZ
 aIR
 bht
 sqc
-fxb
 aIR
+fxb
 bDP
 aIR
 aIR
