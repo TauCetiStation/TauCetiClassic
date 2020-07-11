@@ -339,9 +339,9 @@ var/datum/subsystem/ticker/ticker
 
 	if(screen)
 		flick(screen, cinematic)
+	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
-	sleep(screen_time)
-
+/datum/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
 	for(var/mob/M in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	if(explosion)
