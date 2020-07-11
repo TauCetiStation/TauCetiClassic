@@ -339,10 +339,13 @@
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
 /obj/item/stack/sheet/metal{
+	amount = 30;
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass{
+	amount = 30
+	},
 /obj/item/stack/cable_coil/random,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
