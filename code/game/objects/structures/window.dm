@@ -289,7 +289,7 @@
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
@@ -299,7 +299,7 @@
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
+		return ..()
 
 /obj/structure/window/proc/fastened_change()
 	return
@@ -582,4 +582,4 @@
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
-	. = ..()
+	return ..()
