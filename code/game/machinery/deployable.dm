@@ -66,9 +66,9 @@ for reference:
 	var/maxhealth = 100.0
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/stack/sheet/wood))
+	if(istype(W, /obj/item/stack/sheet/wood))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (src.health < src.maxhealth)
+		if(src.health < src.maxhealth)
 			if(user.is_busy()) return
 			visible_message("<span class='warning'>[user] begins to repair \the [src]!</span>")
 			if(W.use_tool(src, user, 20, volume = 50))
@@ -76,24 +76,21 @@ for reference:
 				W:use(1)
 				visible_message("<span class='warning'>[user] repairs \the [src]!</span>")
 				return
-		else
-			return
-		return
-	else
-		user.SetNextMove(CLICK_CD_MELEE)
+
+	else if(user.a_intent == INTENT_HARM)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 1
 			if("brute")
 				src.health -= W.force * 0.75
 			else
-		if (src.health <= 0)
+		if(src.health <= 0)
 			visible_message("<span class='warning'><B>The barricade is smashed apart!</B></span>")
 			new /obj/item/stack/sheet/wood(get_turf(src))
 			new /obj/item/stack/sheet/wood(get_turf(src))
 			new /obj/item/stack/sheet/wood(get_turf(src))
 			qdel(src)
-		..()
+		return ..()
 
 /obj/structure/barricade/wooden/ex_act(severity)
 	switch(severity)

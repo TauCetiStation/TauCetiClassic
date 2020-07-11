@@ -723,7 +723,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.
