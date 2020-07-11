@@ -6,16 +6,19 @@
 	density = TRUE
 	unacidable = TRUE // Can't destroy energy portals.
 	var/failchance = 5
-	var/destroy_after_init = TRUE
 	var/obj/item/target = null
 	var/creator = null
 	anchored = TRUE
 
-/obj/effect/portal/atom_init()
+/obj/effect/portal/atom_init(mapload, turf/target, creator = null, lifespan = 300)
 	. = ..()
 	portal_list += src
-	if(destroy_after_init)
-		QDEL_IN(src, 300)
+	
+	src.target = target
+	src.creator = creator
+
+	if(lifespan > 0)
+		QDEL_IN(src, lifespan)
 
 /obj/effect/portal/Destroy()
 	portal_list -= src
@@ -52,16 +55,15 @@
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
-	destroy_after_init = FALSE
 	failchance = 0
 
 	var/obj/effect/portal/tsci_wormhole/linked_portal = null
 	var/obj/machinery/computer/telescience/linked_console = null
 
-/obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/exit, other_side_portal = FALSE)
+/obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/target, creator = null, lifespan = 0, other_side_portal = FALSE)
 	. = ..()
 	if(!other_side_portal)
-		linked_portal = new(exit, get_turf(src), TRUE)
+		linked_portal = new(target, get_turf(src), other_side_portal = TRUE)
 		linked_portal.linked_portal = src
 		target = linked_portal
 		linked_portal.target = src

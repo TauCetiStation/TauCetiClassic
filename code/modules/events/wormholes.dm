@@ -28,17 +28,11 @@
 	if(!exit || !istype(exit)) //sanity
 		return	
 
-	create_wormhole(enter, exit)
+	new/obj/effect/portal/wormhole(enter, exit, null, rand(300, 600))
 
-
-//maybe this proc can even be used as an admin tool for teleporting players without ruining immulsions?
-/proc/create_wormhole(turf/enter, turf/exit)
-	var/obj/effect/portal/P = new /obj/effect/portal(enter)
-	P.target = exit
-	P.creator = null
-	P.icon = 'icons/obj/objects.dmi'
-	P.failchance = 0
-	P.icon_state = "anom"
-	P.name = "wormhole"
-	spawn(rand(300,600))
-		qdel(P)
+/obj/effect/portal/wormhole
+	name = "wormhole"
+	desc = "It looks highly unstable; It could close at any moment."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	failchance = 0	
