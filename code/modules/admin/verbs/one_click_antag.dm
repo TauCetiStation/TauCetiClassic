@@ -307,7 +307,7 @@
 
 
 
-
+/*
 /datum/admins/proc/makeAliens()
 	new /datum/event/alien_infestation()
 	return TRUE
@@ -315,7 +315,7 @@
 /datum/admins/proc/makeSpaceNinja()
 	new /datum/event/space_ninja()
 	return TRUE
-
+*/
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
