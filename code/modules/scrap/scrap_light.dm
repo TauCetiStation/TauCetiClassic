@@ -119,8 +119,10 @@
 			//	add_overlay(image('icons/obj/structures/scrap/bonfire.dmi', "bonfire_grill"))
 			//else
 			//	return ..()
+		return
 	if(W.get_current_temperature())
 		StartBurning()
+		return
 /*	if(grill)
 		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
 			if(user.temporarilyRemoveItemFromInventory(W))

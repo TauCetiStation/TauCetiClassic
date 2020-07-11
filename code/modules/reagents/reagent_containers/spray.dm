@@ -145,10 +145,7 @@
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
-	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
-	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount_per_transfer_from_this, 1/spray_size, name_from_reagents = FALSE)
 
 	if(!chempuff_dense)
 		D.pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
