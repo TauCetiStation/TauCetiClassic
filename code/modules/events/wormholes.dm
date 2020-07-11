@@ -1,6 +1,6 @@
 /datum/event/wormholes
-	announceWhen 			= 10
-	endWhen 				= 120
+	announceWhen = 10
+	endWhen      = 120
 
 	var/list/pick_turfs = list()
 
@@ -19,14 +19,14 @@
 
 	//get our enter and exit locations
 	var/turf/simulated/floor/enter = pick(pick_turfs)
-	pick_turfs -= enter							//remove it from pickable turfs list
+	pick_turfs -= enter //remove it from pickable turfs list
 	if(!enter || !istype(enter)) //sanity
-		return	
+		return
 
 	var/turf/simulated/floor/exit = pick(pick_turfs)
 	pick_turfs -= exit
 	if(!exit || !istype(exit)) //sanity
-		return	
+		return
 
 	new/obj/effect/portal/wormhole(enter, exit, null, rand(300, 600))
 
@@ -35,4 +35,4 @@
 	desc = "It looks highly unstable; It could close at any moment."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
-	failchance = 0	
+	failchance = 0
