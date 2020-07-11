@@ -454,7 +454,7 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(aiPlayer)
 			end_icons += flat
 			var/tempstate = end_icons.len
-			var/aikey = aiPlayer.mind ? key_name(aiPlayer.mind) : key_name(aiPlayer)
+			var/aikey = aiPlayer.mind ? key_name(aiPlayer.mind) : aiPlayer.key
 			if (aiPlayer.stat != DEAD)
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws at the end of the game were:</B>"}
 			else
@@ -464,7 +464,7 @@ var/datum/subsystem/ticker/ticker
 			if (aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-					var/robokey = robo.mind ? key_name(robo.mind) : key_name(robo)
+					var/robokey = robo.mind ? key_name(robo.mind) : robo.key
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [key_name(robo.mind)]), "]"
 				ai_completions += "[robolist]"
 
@@ -479,7 +479,7 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(robo,exact=1)
 			end_icons += flat
 			var/tempstate = end_icons.len
-			var/robokey = robo.mind ? key_name(robo.mind) : key_name(robo)
+			var/robokey = robo.mind ? key_name(robo.mind) : robo.key
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) survived as an AI-less borg! Its laws were:</B>"}
