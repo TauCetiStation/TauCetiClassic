@@ -454,16 +454,18 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(aiPlayer)
 			end_icons += flat
 			var/tempstate = end_icons.len
+			var/aikey = aiPlayer.mind ? key_name(aiPlayer.mind) : key_name(aiPlayer)
 			if (aiPlayer.stat != DEAD)
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [key_name(aiPlayer.mind)])'s laws at the end of the game were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws at the end of the game were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [key_name(aiPlayer.mind)])'s laws when it was deactivated were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws when it was deactivated were:</B>"}
 			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
 			if (aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [key_name(robo.mind)]), ":" (Played by: [key_name(robo.mind)]), "]"
+					var/robokey = robo.mind ? key_name(robo.mind) : key_name(robo)
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [key_name(robo.mind)]), "]"
 				ai_completions += "[robolist]"
 
 		var/dronecount = 0
@@ -477,13 +479,14 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(robo,exact=1)
 			end_icons += flat
 			var/tempstate = end_icons.len
+			var/robokey = robo.mind ? key_name(robo.mind) : key_name(robo)
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [key_name(robo.mind)]) survived as an AI-less borg! Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) survived as an AI-less borg! Its laws were:</B>"}
 				else
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [key_name(robo.mind)]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [key_name(robo.mind)]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
