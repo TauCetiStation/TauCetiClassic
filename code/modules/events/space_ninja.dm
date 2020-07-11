@@ -1,4 +1,4 @@
-/datum/event/space_ninja/start()
+/datum/event/space_ninja/setup()
 	space_ninja_arrival()
 
 /*
