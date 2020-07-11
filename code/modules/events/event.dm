@@ -48,19 +48,20 @@
 	return 0
 
 /datum/event	//NOTE: Times are measured in master controller ticks!
-	var/processing = 1
+	var/processing = TRUE
+	var/datum/event_meta/event_meta = null
+	
 	var/startWhen		= 0	//When in the lifetime to call start().
 	var/announceWhen	= 0	//When in the lifetime to call announce().
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/severity		= 0 //Severity. Lower means less severe, higher means more severe. Does not have to be supported. Is set on New().
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
-	var/isRunning		= 1 //If this event is currently running. You should not change this.
+	var/isRunning		= FALSE //If this event is currently running. You should not change this. //its used for RoundEnd report
 	var/startedAt		= 0 //When this event started.
 	var/endedAt			= 0 //When this event ended.
 	var/noAutoEnd       = 0 //Does the event end automatically after endWhen passes?
 	var/area/impact_area    //The area the event will hit
-	var/datum/event_meta/event_meta = null
 
 /datum/event/nothing
 
@@ -109,36 +110,43 @@
 	if(!processing)
 		return
 
-	if(activeFor > startWhen && activeFor < endWhen || noAutoEnd)
-		tick()
-
 	if(activeFor == startWhen)
-		isRunning = 1
+		isRunning = TRUE
+		processing = FALSE
 		start()
+		processing = TRUE
 
 	if(activeFor == announceWhen)
+		processing = FALSE
 		announce()
+		processing = TRUE
+
+	if(activeFor > startWhen && activeFor < endWhen || noAutoEnd)
+		processing = FALSE
+		tick()
+		processing = TRUE
 
 	if(activeFor == endWhen && !noAutoEnd)
-		isRunning = 0
+		processing = FALSE
+		isRunning = FALSE
 		end()
+		processing = TRUE
 
 	// Everything is done, let's clean up.
 	if(activeFor >= lastProcessAt() && !noAutoEnd)
+		processing = FALSE
 		kill()
 
 	activeFor++
 
+//Called when click "Stop" in Even Manager Panel
 //Called when start(), announce() and end() has all been called.
 /datum/event/proc/kill()
-	// If this event was forcefully killed run end() for individual cleanup
-	if(isRunning)
-		isRunning = 0
-		end()
-
-	endedAt = world.time
 	SSevents.active_events -= src
 	SSevents.event_complete(src)
+	endedAt = world.time
+	isRunning = FALSE
+	end()
 
 //Sets up the event then adds the event to the the list of active events
 /datum/event/New(var/datum/event_meta/EM)
