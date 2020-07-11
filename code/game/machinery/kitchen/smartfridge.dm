@@ -212,6 +212,11 @@
 			nanomanager.update_uis(src)
 
 	else if(istype(O, /obj/item/weapon/storage)) // fastload from userstorage
+		if(istype(O, /obj/item/weapon/storage/lockbox))
+			var/obj/item/weapon/storage/lockbox/L = O
+			if(L.locked)
+				to_chat(user, "<span class='notice'>\The [L] is locked.</span>")
+				return
 		var/obj/item/weapon/storage/S = O
 		var/item_loaded = 0
 		for(var/obj/I in S.contents)
