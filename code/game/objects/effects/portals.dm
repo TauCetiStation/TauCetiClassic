@@ -66,7 +66,7 @@
 /obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/target, creator = null, lifespan = 0, other_side_portal = FALSE)
 	. = ..()
 	if(!other_side_portal)
-		linked_portal = new(target, get_turf(src), other_side_portal = TRUE)
+		linked_portal = new(target, get_turf(src), null, 0, TRUE)
 		linked_portal.linked_portal = src
 		target = linked_portal
 		linked_portal.target = src
