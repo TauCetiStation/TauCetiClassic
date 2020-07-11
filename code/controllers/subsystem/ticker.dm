@@ -465,7 +465,7 @@ var/datum/subsystem/ticker/ticker
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 					var/robokey = robo.mind ? robo.mind.key : robo.key
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [key_name(robo.mind)]), "]"
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [robokey]), "]"
 				ai_completions += "[robolist]"
 
 		var/dronecount = 0
