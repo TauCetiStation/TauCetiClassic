@@ -191,7 +191,7 @@ var/datum/subsystem/vote/SSvote
 						to_chat(usr, "<span class='vote'>Admins online. Restart vote canceled</span>")
 						return 0
 				choices.Add("Restart Round","Continue Playing")
-			if("GameMode")
+			if("Gamemode")
 				choices.Add(config.votable_modes)
 				for(var/M in config.votable_modes)
 					if(config.is_modeset(M))
@@ -339,7 +339,7 @@ var/datum/subsystem/vote/SSvote
 				initiate_vote("Crew Transfer",usr.key)
 		if("gamemode")
 			if((config.allow_vote_mode || usr.client.holder) && world.is_round_preparing())
-				initiate_vote("GameMode",usr.key)
+				initiate_vote("Gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("Custom",usr.key)
