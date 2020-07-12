@@ -58,27 +58,25 @@ var/global/list/obj/effect/meteor/meteors_catastrophic = list(
 		if(WEST)
 			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 			startx = (TRANSITIONEDGE+1)
-	var/turf/T = locate(startx, starty, Z)
-	return T
+	return locate(startx, starty, Z)
 
 /proc/spaceDebrisFinishLoc(startSide, Z)
 	var/endy
 	var/endx
 	switch(startSide)
 		if(NORTH)
-			endy = TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = (TRANSITIONEDGE+1)
+			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(EAST)
-			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-			endx = TRANSITIONEDGE
+			endy = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			endx = (TRANSITIONEDGE+1)
 		if(SOUTH)
-			endy = world.maxy-TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = world.maxy-(TRANSITIONEDGE+1)
+			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(WEST)
-			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-			endx = world.maxx-TRANSITIONEDGE
-	var/turf/T = locate(endx, endy, Z)
-	return T
+			endy = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			endx = world.maxx-(TRANSITIONEDGE+1)
+	return locate(endx, endy, Z)
 
 ///////////////////////
 //The meteor effect
