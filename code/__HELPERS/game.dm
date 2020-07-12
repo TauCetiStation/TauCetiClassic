@@ -585,27 +585,27 @@
 
 // Procs for grabbing players.
 
-/proc/pollGhostCandidates(Question, role, Ignore_Role, poll_time = 300)
+/proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/candidates = list()
 
-	for(var/mob/dead/observer/O in player_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+	for(var/mob/dead/observer/O in observer_list)
+		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
 
-	return pollCandidates(Question, role, Ignore_Role, poll_time, candidates)
+	return pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
 
-/proc/pollCandidates(Question = "Would you like to be a special role?", role, Ignore_Role, poll_time = 300, list/group = null)
+/proc/pollCandidates(Question = "Would you like to be a special role?", be_special_type, Ignore_Role, poll_time = 300, list/group = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 
 	if(!Ignore_Role)
-		Ignore_Role = role
+		Ignore_Role = be_special_type
 
 	for(var/mob/M in group)
 		if(!M.key || !M.client)
 			continue
-		if(jobban_isbanned(M, role) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(role))
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
