@@ -205,7 +205,7 @@
 
 	if(previewJob)
 		if(istype(previewJob, /datum/job/ai))
-			parent.show_character_previews(image('icons/mob/AI.dmi', "AI", dir = SOUTH))
+			parent.show_character_previews(image('icons/mob/AI.dmi', "ai", dir = SOUTH))
 			return
 		if(istype(previewJob, /datum/job/cyborg))
 			parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
