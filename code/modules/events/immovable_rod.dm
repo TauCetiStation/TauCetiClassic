@@ -19,8 +19,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	//rod time!
-	var/obj/effect/immovable_rod/Imm = new(startT, endT)
-	message_admins("[Imm] has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
+	new /obj/effect/immovable_rod(startT, endT)
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"
@@ -30,9 +29,16 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	throwforce = 100
 	density = 1
 	anchored = 1
+	var/z_original = 0
+	var/destination
+	var/notify = TRUE
+	var/bumped = FALSE
 
 /obj/effect/immovable_rod/atom_init(mapload, turf/end)
 	. = ..()
+	if(notify)
+		message_admins("[src] has spawned at [src.x],[src.y],[src.z] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
+	poi_list += src
 	INVOKE_ASYNC(src, .proc/check_location, end)
 
 /obj/effect/immovable_rod/proc/check_location(turf/end)
@@ -45,28 +51,44 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			return
 		sleep(1)
 
+/obj/effect/immovable_rod/Destroy()
+	poi_list -= src
+	return ..()
+
 /obj/effect/immovable_rod/Bump(atom/clong)
-	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
-		return
-	var/turf/T = get_turf(clong)
-	var/area/T_area = get_area(T)
-	message_admins("<span class='warning'>[src] hit [clong] in [T_area] [ADMIN_JMP(T)].</span>")
-	log_game("[src] hit [clong] ([T.x], [T.y], [T.z]) in [T_area].")
-	audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+	if(!bumped)
+		bumped = TRUE
+		var/turf/T = get_turf(clong)
+		var/area/T_area = get_area(T)
+		message_admins("<span class='warning'>[src] hit [clong] in [T_area] [ADMIN_JMP(T)] [ADMIN_FLW(src)].</span>")
+
+	if(prob(10))
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+		audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
+
+	if(clong && prob(25))
+		x = clong.x
+		y = clong.y
+
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
 		clong.ex_act(2)
-	else if(isliving(clong))
-		var/mob/living/M = clong
-		M.adjustBruteLoss(rand(10,40))
-		if(prob(60))
-			step(src, get_dir(src, M))
-	else
-		qdel(src)
 
-/obj/effect/immovable_rod/ex_act(severity, target)
+	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
+		return
+
+	else if(ismob(clong))
+		if(ishuman(clong))
+			var/mob/living/carbon/human/H = clong
+			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+			H.adjustBruteLoss(160)
+		if(clong.density || prob(10))
+			clong.ex_act(2)
+
+/obj/effect/immovable_rod/ex_act(severity)
 	return 0
 
-/obj/effect/immovable_rod/Destroy()
-	walk(src, 0) // Because we might have called walk_towards, we must stop the walk loop or BYOND keeps an internal reference to us forever.
-	return ..()
+/obj/effect/immovablerod/singularity_act()
+	return
+
+/obj/effect/immovablerod/singularity_pull()
+	return
