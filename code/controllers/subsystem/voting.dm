@@ -1,4 +1,10 @@
 var/datum/subsystem/vote/SSvote
+#define mode2text list(\
+	"restart" = "Restart",\
+	"crew_transfer" = "Crew Transfer",\
+	"gamemode" = "GameMode",\
+	"custom" = "Custom"\
+	)
 
 /datum/subsystem/vote
 	name = "Vote"
@@ -175,7 +181,7 @@ var/datum/subsystem/vote/SSvote
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
-				to_chat(usr, "<span class='vote'>Next [vote_type] vote is available after [round((next_allowed_time-world.time)/600)] minutes</span>")
+				to_chat(usr, "<span class='vote'>Next [mode2text[vote_type]] vote is available after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()
@@ -359,3 +365,5 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote/proc/crew_transfer_available()
 	return (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)
+
+#undef mode2text
