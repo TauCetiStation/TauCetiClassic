@@ -53,7 +53,7 @@
 	var/mission
 
 	var/input = ckey(input("Pick ckey to spawn as the Space Ninja", "Key", ""))
-	if(!input)
+	if(!input || !get_mob_by_key(input))
 		return
 
 	while(!mission)
