@@ -75,7 +75,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(ROLE_BLOB)
+		candidates = pollGhostCandidates("Would you like to be a BLOB!?", ROLE_BLOB)
 		if(candidates.len)
 			C = pick(candidates)
 	else
