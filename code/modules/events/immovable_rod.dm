@@ -20,7 +20,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	//rod time!
 	var/obj/effect/immovable_rod/Imm = new(startT, endT)
-	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
+	message_admins("[Imm] has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"
@@ -48,6 +48,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovable_rod/Bump(atom/clong)
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
+	var/turf/T = get_turf(clong)
+	var/area/T_area = get_area(T)
+	message_admins("<span class='warning'>[src] hit [clong] in [T_area] [ADMIN_JMP(T)].</span>")
+	log_game("[src] hit [clong] ([T.x], [T.y], [T.z]) in [T_area].")
 	audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
