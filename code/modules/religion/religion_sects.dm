@@ -43,6 +43,16 @@
 		/datum/aspect/mystic = 1,
 	)
 
+/datum/religion_sect/preset/bloodgods
+    name = "The Slaves of "
+	desc = "Anything you need, little demon."
+	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	aspect_present = list(
+	    /datum/aspect/death = 2,
+		/datum/aspect/darkness = 2,
+		/datum/aspect/chaos = 2
+    )
+		
 /datum/religion_sect/preset/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
