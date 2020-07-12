@@ -14,16 +14,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	command_alert("What the fuck was that?!", "General Alert")
 
 /datum/event/immovable_rod/start()
-	var/turf/start
-	var/turf/end
 	var/startside = pick(cardinal)
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-	start = spaceDebrisStartLoc(startside, z)
-	end = spaceDebrisFinishLoc(startside, z)
+	var/turf/startT = spaceDebrisStartLoc(startside, z)
+	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	//rod time!
-	var/obj/effect/immovable_rod/Imm = new(start, end)
+	var/obj/effect/immovable_rod/Imm = new(startT, endT)
 	message_admins("Immovable Rod has spawned at [Imm.x],[Imm.y],[Imm.z] [ADMIN_JMP(Imm)] [ADMIN_FLW(Imm)].")
-
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"
