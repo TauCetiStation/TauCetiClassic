@@ -81,8 +81,16 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			H.adjustBruteLoss(160)
 		if(clong.density || prob(10))
 			clong.ex_act(2)
+	else if(istype(clong, type))
+		var/obj/effect/immovablerod/other = clong
+		visible_message("<span class='danger'>[src] collides with [other]!</span>")
+		var/datum/effect/effect/system/smoke_spread/smoke = new
+		smoke.set_up(2, get_turf(src))
+		smoke.start()
+		qdel(src)
+		qdel(other)
 
-/obj/effect/immovable_rod/ex_act(severity)
+/obj/effect/immovable_rod/ex_act(severity, target)
 	return 0
 
 /obj/effect/immovablerod/singularity_act()
