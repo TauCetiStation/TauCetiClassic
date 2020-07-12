@@ -39,17 +39,15 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(notify)
 		message_admins("[src] has spawned at [src.x],[src.y],[src.z] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
 	poi_list += src
-	INVOKE_ASYNC(src, .proc/check_location, end)
-
-/obj/effect/immovable_rod/proc/check_location(turf/end)
-	var/z_original = z
+	z_original = z
+	destination = end
 	if(end && end.z == z_original)
-		walk_towards(src, end, 1)
-	while(!QDELETED(src))
-		if(loc == end || z != z_original)
-			qdel(src)
-			return
-		sleep(1)
+		walk_towards(src, destination, 1)
+
+/obj/effect/immovable_rod/Moved()
+	if(z != z_original || loc == destination)
+		qdel(src)
+	return ..()
 
 /obj/effect/immovable_rod/Destroy()
 	poi_list -= src
