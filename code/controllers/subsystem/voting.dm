@@ -202,7 +202,7 @@ var/datum/subsystem/vote/SSvote
 							description += "<b>[M]</b>: "
 							description += submodes.Join(", ")
 							description += "<br>"
-			if("crew transfer")
+			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
 						to_chat(usr, "<span class='vote'>Security level is red or delta. Crew transfer vote canceled</span>")
@@ -336,7 +336,7 @@ var/datum/subsystem/vote/SSvote
 				initiate_vote("restart",usr.key)
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
-				initiate_vote("crew transfer",usr.key)
+				initiate_vote("crew_transfer",usr.key)
 		if("gamemode")
 			if((config.allow_vote_mode || usr.client.holder) && world.is_round_preparing())
 				initiate_vote("gamemode",usr.key)
