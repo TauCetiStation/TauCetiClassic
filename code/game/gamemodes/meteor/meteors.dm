@@ -1,17 +1,29 @@
-var/global/list/obj/effect/meteor/meteortypes = list(
-	/obj/effect/meteor/small = 25,
-	/obj/effect/meteor       = 65,
-	/obj/effect/meteor/big   = 10
+//Meteors probability of spawning during a given wave
+//for normal meteor event
+var/global/list/obj/effect/meteor/meteors_normal = list(
+	/obj/effect/meteor/small = 4,
+	/obj/effect/meteor       = 8,
+	/obj/effect/meteor/big   = 3
+	)
+//for threatening meteor event
+var/global/list/obj/effect/meteor/meteors_threatening = list(
+	/obj/effect/meteor     = 4, 
+	/obj/effect/meteor/big = 8,
+	)
+//for catastrophic meteor event
+var/global/list/obj/effect/meteor/meteors_catastrophic = list(
+	/obj/effect/meteor     = 1,
+	/obj/effect/meteor/big = 4,
 	)
 
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
-/proc/spawn_meteors(number = 10)
+/proc/spawn_meteors(number = 10, list/meteortypes)
 	for(var/i in 1 to number)
-		spawn_meteor()
+		spawn_meteor(meteortypes)
 
-/proc/spawn_meteor()
+/proc/spawn_meteor(list/meteortypes)
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
