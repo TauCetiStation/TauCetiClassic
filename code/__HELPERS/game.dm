@@ -582,28 +582,7 @@
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
-		spawn(0)
-			M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
-			window_flash(M.client)
-			var/ans = alert(M, Question,"Please answer in [poll_time/10] seconds!","No","Yes","Not This Round")
-			switch(ans)
-				if("Yes")
-					to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
-					if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
-						to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-						M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-						return
-					candidates += M
-				if("No")
-					to_chat(M, "<span class='danger'>Choice registered: No.</span>")
-					return
-				if("Not This Round")
-					to_chat(M, "<span class='danger'>Choice registered: No.</span>")
-					to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
-					M.client.prefs.ignore_question += Ignore_Role
-					return
-				else
-					return
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/requestCandidate, M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
@@ -612,3 +591,26 @@
 			candidates.Remove(M)
 
 	return candidates
+
+/proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
+	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
+	window_flash(M.client)
+	var/ans = alert(M, Question,"Please answer in [poll_time/10] seconds!","No","Yes","Not This Round")
+	switch(ans)
+		if("Yes")
+			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
+				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+				return
+			candidates += M
+		if("No")
+			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			return
+		if("Not This Round")
+			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
+			M.client.prefs.ignore_question += Ignore_Role
+			return
+		else
+			return
