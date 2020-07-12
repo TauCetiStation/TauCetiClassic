@@ -255,9 +255,9 @@ var/datum/subsystem/vote/SSvote
 
 	if(mode)
 		switch(mode)
-			if("custom")
+			if("Custom")
 				. += "<h2>Vote: '[sanitize(question)]'</h2>"
-			if("restart")
+			if("Restart")
 				. += "<h2 style='color:red'>Vote: /!!!\\ Restart /!!!\\</h2>"
 			else
 				. += "<h2>Vote: [capitalize(mode)]</h2>"
@@ -267,7 +267,7 @@ var/datum/subsystem/vote/SSvote
 			if(!votes)
 				votes = 0
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize(choices[i])]</a>"
-			if(mode == "custom" || admin)
+			if(mode == "Custom" || admin)
 				. += "([votes] votes)"
 			if(choices[i] == voted[C.ckey])
 				. += " [html_decode("&#10003")]" // Checkmark
