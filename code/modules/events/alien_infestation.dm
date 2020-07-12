@@ -20,7 +20,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	var/list/candidates = get_larva_candidates()
+	var/list/candidates = pollGhostCandidates("Would you like \a larva", ROLE_ALIEN)
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)

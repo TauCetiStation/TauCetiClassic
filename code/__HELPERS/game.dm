@@ -325,20 +325,6 @@
 			return M
 	return null
 
-/proc/get_larva_candidates()
-	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-	var/afk_time = 0
-	var/afk_threesold = 3000
-	while(!candidates.len && afk_time <= afk_threesold)
-		for(var/mob/dead/observer/G in player_list)
-			if(!G.client)
-				continue
-			if((ROLE_ALIEN in G.client.prefs.be_role) && !jobban_isbanned(G, ROLE_ALIEN))
-				if(!G.client.is_afk(afk_time)) // the most active players are more likely to become an alien
-					candidates += G.key
-		afk_time += 600
-	return candidates
-
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext
