@@ -603,7 +603,7 @@
 			switch(ans)
 				if("Yes")
 					to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
-					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+					if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
 						to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
 						M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 						return
