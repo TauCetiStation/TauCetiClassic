@@ -63,15 +63,15 @@ var/datum/subsystem/vote/SSvote
 	if(!config.vote_no_default && choices.len)
 		var/non_voters = (clients.len - total_votes)
 		if(non_voters > 0)
-			if(mode == "Restart")
+			if(mode == "restart")
 				choices["Continue Playing"] += non_voters
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
-			else if(mode == "Crew Transfer")
+			else if(mode == "crew_transfer")
 				choices["Continue Playing"] += non_voters
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
-			else if(mode == "GameMode")
+			else if(mode == "gamemode")
 				if(master_mode in choices)
 					choices[master_mode] += non_voters
 					if(choices[master_mode] >= greatest_votes)
@@ -118,13 +118,13 @@ var/datum/subsystem/vote/SSvote
 	var/crewtransfer = 0
 	if(.)
 		switch(mode)
-			if("Restart")
+			if("restart")
 				if(. == "Restart Round")
 					restart = 1
-			if("Crew Transfer")
+			if("crew_transfer")
 				if(. == "End Shift")
 					crewtransfer = 1
-			if("GameMode")
+			if("gamemode")
 				if(master_mode != .)
 					world.save_mode(.)
 					if(ticker && ticker.mode)
