@@ -51,6 +51,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovable_rod/Destroy()
 	poi_list -= src
+	walk(src,0) //this cancels the walk_towards() proc
 	return ..()
 
 /obj/effect/immovable_rod/Bump(atom/clong)
