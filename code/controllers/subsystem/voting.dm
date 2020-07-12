@@ -169,7 +169,7 @@ var/datum/subsystem/vote/SSvote
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
 	var/timer_mode = "default"
-	if(vote_type == "Restart")
+	if(vote_type == "restart")
 		timer_mode = "restart"
 	if(!mode)
 		if(last_vote_time[timer_mode] != null && !is_admin)
@@ -180,7 +180,7 @@ var/datum/subsystem/vote/SSvote
 
 		reset()
 		switch(vote_type)
-			if("Restart")
+			if("restart")
 				if(!is_admin)
 					var/num_admins_online = 0
 					for(var/client/C in admins)
@@ -191,7 +191,7 @@ var/datum/subsystem/vote/SSvote
 						to_chat(usr, "<span class='vote'>Admins online. Restart vote canceled</span>")
 						return 0
 				choices.Add("Restart Round","Continue Playing")
-			if("Gamemode")
+			if("gamemode")
 				choices.Add(config.votable_modes)
 				for(var/M in config.votable_modes)
 					if(config.is_modeset(M))
@@ -202,13 +202,13 @@ var/datum/subsystem/vote/SSvote
 							description += "<b>[M]</b>: "
 							description += submodes.Join(", ")
 							description += "<br>"
-			if("Crew Transfer")
+			if("crew transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
 						to_chat(usr, "<span class='vote'>Security level is red or delta. Crew transfer vote canceled</span>")
 						return 0
 				choices.Add("End Shift","Continue Playing")
-			if("Custom")
+			if("custom")
 				question = capitalize(sanitize(input(usr,"What is the vote for?")))
 				if(!question)
 					return 0
@@ -223,20 +223,20 @@ var/datum/subsystem/vote/SSvote
 		initiator = initiator_key
 		voting_started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
-		if(mode == "Custom")
+		if(mode == "custom")
 			text += "\n[question]"
 		else
 			last_vote_time[timer_mode] = world.time
 		log_vote(text)
 		var/vote_sound = 'sound/misc/notice1.ogg'
-		if(mode == "Restart")
+		if(mode == "restart")
 			vote_sound = 'sound/misc/interference.ogg'
 		for(var/mob/M in player_list)
 			M.playsound_local(null, vote_sound, VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
-		if(vote_type != "Custom")
+		if(vote_type != "custom")
 			for(var/client/C in clients)
 				var/datum/browser/popup = new(C, "vote", "Voting Panel")
 				popup.set_window_options("can_close=0")
@@ -333,16 +333,16 @@ var/datum/subsystem/vote/SSvote
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("restart")
 			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
-				initiate_vote("Restart",usr.key)
+				initiate_vote("restart",usr.key)
 		if("crew_transfer")
 			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
-				initiate_vote("Crew Transfer",usr.key)
+				initiate_vote("crew transfer",usr.key)
 		if("gamemode")
 			if((config.allow_vote_mode || usr.client.holder) && world.is_round_preparing())
-				initiate_vote("Gamemode",usr.key)
+				initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
-				initiate_vote("Custom",usr.key)
+				initiate_vote("custom",usr.key)
 		else
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()
