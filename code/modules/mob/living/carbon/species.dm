@@ -131,7 +131,7 @@
 	var/list/prevent_survival_kit_items = list()
 
 	var/list/replace_outfit = list()
-	
+
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
@@ -307,7 +307,7 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
-	
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
 			)
@@ -324,9 +324,11 @@
 
 /datum/species/unathi/on_gain(mob/living/M)
 	M.verbs += /mob/living/carbon/human/proc/air_sample
+	M.verbs += /mob/living/carbon/human/proc/stop_tail_anim
 
 /datum/species/unathi/on_loose(mob/living/M)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
+	M.verbs -= /mob/living/carbon/human/proc/stop_tail_anim
 
 /datum/species/tajaran
 	name = TAJARAN
@@ -376,7 +378,7 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
-	
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
@@ -390,6 +392,12 @@
 
 /datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
 	return O.tajaran_equip(H)
+
+/datum/species/tajaran/on_gain(mob/living/M)
+	M.verbs += /mob/living/carbon/human/proc/stop_tail_anim
+
+/datum/species/tajaran/on_loose(mob/living/M)
+	M.verbs -= /mob/living/carbon/human/proc/stop_tail_anim
 
 /datum/species/skrell
 	name = SKRELL

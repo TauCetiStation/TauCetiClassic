@@ -1848,6 +1848,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(M.stat == DEAD)
 			M.gib()
 
+/mob/living/carbon/human/proc/stop_tail_anim()
+	set category = "IC"
+	set name = "Stop moving tail"
+	set desc = "Stop moving your tail" //might need better name and desc
+
+	if(!incapacitated())
+		hide_tail_movement = !hide_tail_movement
+		update_tail_showing()
+
 /mob/living/carbon/human/proc/air_sample()
 	set category = "IC"
 	set name = "Air sample"

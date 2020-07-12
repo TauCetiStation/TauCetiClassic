@@ -111,6 +111,8 @@
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
 
+	var/hide_tail_movement = FALSE //tajara and unathi tail movements.
+
 	var/shoving_fingers = FALSE // For force_vomit mechanic.
 
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.

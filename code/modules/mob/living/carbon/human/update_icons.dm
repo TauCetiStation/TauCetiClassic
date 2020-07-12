@@ -795,7 +795,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 
 			var/image/tail_s
-			if(BP.status & ORGAN_DEAD || stat == DEAD)
+			if(BP.status & ORGAN_DEAD || stat == DEAD || hide_tail_movement)
 				tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = species.tail)
 			else
 				tail_s = image("icon" = 'icons/mob/species/tail_moving.dmi', "icon_state" = species.tail)
