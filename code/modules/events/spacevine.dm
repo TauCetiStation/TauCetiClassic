@@ -3,7 +3,7 @@
 /datum/event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
-	for(var/area/A in hallway_areas)
+	for(var/area/A in typesof(/area/station/hallway))
 		for(var/turf/simulated/floor/F in A.contents)
 			if(!F.check_density())
 				turfs += F

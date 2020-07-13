@@ -152,7 +152,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "SolarcontrolA"
 
 //Hallway
-var/global/list/hallway_areas = list()
 
 /area/station/hallway/primary/fore
 	name = "Fore Primary Hallway"
@@ -185,9 +184,6 @@ var/global/list/hallway_areas = list()
 /area/station/hallway/secondary/Podbay
 	name = "Pod bay"
 	icon_state = "escape"
-
-/area/station/hallway/atom_init()
-	hallway_areas += src
 
 //Command
 
