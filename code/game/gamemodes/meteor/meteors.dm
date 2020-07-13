@@ -171,7 +171,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 			playsound(src, meteorsound, VOL_EFFECTS_MASTER)
 
 /obj/effect/meteor/proc/make_debris()
-	for(var/throws = dropamt, throws > 0, throws--)
+	for(var/throws in 1 to dropamt)
 		var/obj/item/O = new meteordrop(get_turf(src))
 		O.throw_at(dest, 5, 10)
 
@@ -190,14 +190,14 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
+	
 	meteordrop = /obj/item/weapon/ore/glass
+	dropamt = 2
 
 /obj/effect/meteor/dust/make_debris()
-	for(var/throws = dropamt, throws > 0, throws--)
-		if(prob(33))
-			continue
-		var/obj/item/O = new meteordrop(get_turf(src))
-		O.throw_at(dest, 5, 10)
+	if(prob(33))
+		dropamt = 1
+	..()
 
 //Medium-sized
 /obj/effect/meteor/small
