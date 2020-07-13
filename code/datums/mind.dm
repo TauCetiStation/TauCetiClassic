@@ -707,7 +707,6 @@
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
 					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
-					current.verbs -= /mob/living/carbon/human/proc/RevConvert
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 
 			if("rev")
@@ -746,7 +745,6 @@
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
 							objectives += rev_obj
 						ticker.mode.greet_revolutionary(src,0)
-				current.verbs += /mob/living/carbon/human/proc/RevConvert
 				ticker.mode.head_revolutionaries += src
 				ticker.mode.update_all_rev_icons()
 				special_role = "Head Revolutionary"
