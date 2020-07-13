@@ -47,7 +47,7 @@
     name = "The Slaves of "
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
-	aspect_present = list(
+	aspect_preset = list(
 	    /datum/aspect/death = 1,
 		/datum/aspect/darkness = 1,
 		/datum/aspect/chaos = 1,
