@@ -48,9 +48,9 @@
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_present = list(
-	    /datum/aspect/death = 2,
-		/datum/aspect/darkness = 2,
-		/datum/aspect/chaos = 2
+	    /datum/aspect/death = 1,
+		/datum/aspect/darkness = 1,
+		/datum/aspect/chaos = 1,
     )
 		
 /datum/religion_sect/preset/technophile
