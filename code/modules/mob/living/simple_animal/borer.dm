@@ -55,12 +55,14 @@
 	var/truename                            // Name used for brainworm-speak.
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
+	var/has_reproduced                      // Whether or not the borer has reproduced, for objective purposes.
 	var/docile = FALSE                      // Sugar can stop borers from acting.
 	var/leaving = FALSE
 
 /mob/living/simple_animal/borer/atom_init()
 	. = ..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	real_name = truename
 	host_brain = new/mob/living/captive_brain(src)
 
 /mob/living/simple_animal/borer/Life()
@@ -434,12 +436,68 @@
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
+var/global/list/datum/mind/borers = list()
+
 /mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return
 
-	src.mind = candidate.mob.mind
-	src.ckey = candidate.ckey
-	if(src.mind)
-		src.mind.assigned_role = "Cortical Borer"
+	mind = candidate.mob.mind
+	ckey = candidate.ckey
+	if(mind)
+		mind.assigned_role = "Cortical Borer"
+		mind.special_role = "Cortical Borer"
+	borers += mind
+
+	to_chat(src, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
+	to_chat(src, "You can only take control temporarily, and at risk of hurting your host, so be clever and careful; your host is encouraged to help you however they can.")
+	to_chat(src, "Talk to your fellow borers with ;")
+	var/list/datum/objective/objectives = list()
+	objectives += new /datum/objective/borer_survive()
+	objectives += new /datum/objective/borer_reproduce()
+	objectives += new /datum/objective/escape()
+	for(var/datum/objective/O in objectives)
+		O.owner = mind
+		mind.objectives += O
+
+	var/obj_count = 1
+	to_chat(src, "<span class = 'info'><B>Your current objectives:</B></span>")
+	for(var/datum/objective/objective in mind.objectives)
+		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
+
+/datum/game_mode/proc/auto_declare_completion_borer()
+	var/text = ""
+	if(borers.len)
+
+		for(var/datum/mind/borer in borers)
+			text += printplayerwithicon(borer)
+
+			var/count = 1
+			var/borerwin = 1
+			if(!config.objectives_disabled)
+				for(var/datum/objective/objective in borer.objectives)
+					if(objective.check_completion())
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+						feedback_add_details("borer_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+						feedback_add_details("borer_objective","[objective.type]|FAIL")
+						borerwin = 0
+					count++
+
+				if(borer.current && borer.current.stat!=2 && borerwin)
+					text += "<br><FONT color='green'><b>The borer was successful!</b></FONT>"
+					feedback_add_details("borer_success","SUCCESS")
+					score["roleswon"]++
+				else
+					text += "<br><FONT color='red'><b>The borer has failed!</b></FONT>"
+					feedback_add_details("borer_success","FAIL")
+				text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "borer", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
+	return text
