@@ -26,11 +26,13 @@
 	. = ..()
 	for(var/atom/A in loc)
 		A.blob_act()
+	update_nearby_tiles()
 
 /obj/effect/blob/Destroy()
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+	update_nearby_tiles()
 	return ..()
 
 
