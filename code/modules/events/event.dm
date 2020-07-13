@@ -1,15 +1,16 @@
 /datum/event_meta
-	var/name 		= ""
-	var/enabled 	= 1	// Whether or not the event is available for random selection at all
-	var/weight 		= 0 // The base weight of this event. A zero means it may never fire, but see get_weight()
-	var/min_weight	= 0 // The minimum weight that this event will have. Only used if non-zero.
-	var/max_weight	= 0 // The maximum weight that this event will have. Only use if non-zero.
-	var/severity 	= 0 // The current severity of this event
-	var/one_shot	= 0	//If true, then the event will not be re-added to the list of available events
+	var/name        = ""
+	var/enabled     = 1 // Whether or not the event is available for random selection at all
+	var/weight      = 0 // The base weight of this event. A zero means it may never fire, but see get_weight()
+	var/min_weight  = 0 // The minimum weight that this event will have. Only used if non-zero.
+	var/max_weight  = 0 // The maximum weight that this event will have. Only use if non-zero.
+	var/severity    = 0 // The current severity of this event
+	var/one_shot    = 0 //If true, then the event will not be re-added to the list of available events
 	var/list/role_weights = list()
 	var/datum/event/event_type
+	var/min_players = 0
 
-/datum/event_meta/New(var/event_severity, var/event_name, var/datum/event/type, var/event_weight, var/list/job_weights, var/is_one_shot = 0, var/min_event_weight = 0, var/max_event_weight = 0)
+/datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, min_event_weight = 0, max_event_weight = 0, min_event_players = 0, event_enabled = 1)
 	name = event_name
 	severity = event_severity
 	event_type = type
@@ -19,8 +20,10 @@
 	max_weight = max_event_weight
 	if(job_weights)
 		role_weights = job_weights
+	min_players = min_event_players
+	enabled = event_enabled
 
-/datum/event_meta/proc/get_weight(var/list/active_with_role)
+/datum/event_meta/proc/get_weight(list/active_with_role)
 	if(!enabled)
 		return 0
 
@@ -37,12 +40,12 @@
 
 	return total_weight
 
-/datum/event_meta/alien/get_weight(var/list/active_with_role)
+/datum/event_meta/alien/get_weight(list/active_with_role)
 	if(aliens_allowed)
 		return ..(active_with_role)
 	return 0
 
-/datum/event_meta/ninja/get_weight(var/list/active_with_role)
+/datum/event_meta/ninja/get_weight(list/active_with_role)
 	if(toggle_space_ninja)
 		return ..(active_with_role)
 	return 0
@@ -50,7 +53,7 @@
 /datum/event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/event_meta/event_meta = null
-	
+
 	var/startWhen		= 0	//When in the lifetime to call start().
 	var/announceWhen	= 0	//When in the lifetime to call announce().
 	var/endWhen			= 0	//When in the lifetime the event should end.
@@ -152,7 +155,7 @@
 	SSevents.event_complete(src)
 
 //Sets up the event then adds the event to the the list of active events
-/datum/event/New(var/datum/event_meta/EM)
+/datum/event/New(datum/event_meta/EM)
 	if(!EM)
 		EM = new /datum/event_meta(EVENT_LEVEL_MAJOR, "Unknown, Most likely admin called", src.type)
 
