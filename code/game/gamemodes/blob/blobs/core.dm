@@ -50,6 +50,8 @@
 		last_resource_collection = world.time
 
 	health = min(initial(health), health + 1)
+	if(overmind)
+		overmind.update_health_hud()
 	for(var/dir in cardinal)
 		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)

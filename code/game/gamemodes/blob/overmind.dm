@@ -25,6 +25,11 @@
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
+	blob_help()
+	update_health_hud()
+	update_pwr_hud()
+
+/mob/camera/blob/proc/blob_help()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as...")
 	to_chat(src, "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions.")
@@ -34,9 +39,19 @@
 	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores.")
 	to_chat(src, "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
 
+/mob/camera/blob/proc/update_health_hud()
+	if(blob_core && hud_used)
+		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+
+/mob/camera/blob/proc/update_pwr_hud()
+	if(hud_used)
+		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+		update_pwr_hud()
+
 /mob/camera/blob/say(var/message)
 	if (!message)
 		return
