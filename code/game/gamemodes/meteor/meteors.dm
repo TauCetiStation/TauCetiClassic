@@ -192,6 +192,13 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	hitpwr = 3
 	meteordrop = /obj/item/weapon/ore/glass
 
+/obj/effect/meteor/dust/make_debris()
+	for(var/throws = dropamt, throws > 0, throws--)
+		if(prob(33))
+			continue
+		var/obj/item/O = new meteordrop(get_turf(src))
+		O.throw_at(dest, 5, 10)
+
 //Medium-sized
 /obj/effect/meteor/small
 	name = "meteor"
