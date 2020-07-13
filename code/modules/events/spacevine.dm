@@ -3,13 +3,10 @@
 /datum/event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
-	var/obj/effect/spacevine/SV = new()
 	for(var/area/A in hallway_areas)
-		for(var/turf/F in A)
-			if(F.Enter(SV))
+		for(var/turf/simulated/floor/F in A.contents)
+			if(!F.check_density())
 				turfs += F
-
-	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/floor/T = pick(turfs)
