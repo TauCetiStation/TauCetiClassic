@@ -470,7 +470,7 @@ var/global/list/datum/mind/borers = list()
 /datum/game_mode/proc/auto_declare_completion_borer()
 	var/text = ""
 	if(borers.len)
-
+		text += "The borers were:"
 		for(var/datum/mind/borer in borers)
 			text += printplayerwithicon(borer)
 
