@@ -8,7 +8,8 @@
 #define ASSIGNMENT_SCIENTIST "Scientist"
 #define ASSIGNMENT_SECURITY  "Security"
 
-#define ONESHOT 1
+#define ONESHOT  1
+#define DISABLED 0
 
 var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
 
@@ -132,11 +133,11 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 /datum/event_container/mundane
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
-		// Severity level, event name, event type, base weight, role weights, one shot, min weight, max weight. Last two only used if set and non-zero
+		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",           /datum/event/nothing,           1100),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",          /datum/event/pda_spam,          0,    list(ASSIGNMENT_ANY = 4), 0,       25, 50),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",       /datum/event/money_lotto,       0,    list(ASSIGNMENT_ANY = 1), ONESHOT,  5, 15),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",      /datum/event/money_hacker,      0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 10, 25),
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",          /datum/event/pda_spam,          0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",       /datum/event/money_lotto,       0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",      /datum/event/money_hacker,      0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Economic Event",    /datum/event/economic_event,    300),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Trivial News",      /datum/event/trivial_news,      400),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Mundane News",      /datum/event/mundane_news,      300),
@@ -183,12 +184,11 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Nothing",                 /datum/event/nothing,           1320),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Sandstorm",               /datum/event/sandstorm,         0, list(ASSIGNMENT_ENGINEER =  5), ONESHOT),
-		new /datum/event_meta/alien(EVENT_LEVEL_MAJOR, "Alien Infestation", /datum/event/alien_infestation, 0, list(ASSIGNMENT_SECURITY =  2), ONESHOT),
+		new /datum/event_meta/alien(EVENT_LEVEL_MAJOR, "Alien Infestation", /datum/event/alien_infestation, 0, list(ASSIGNMENT_SECURITY =  2), ONESHOT, DISABLED, 25), // Admins only
 	)
-
 
 #undef ASSIGNMENT_ANY
 #undef ASSIGNMENT_AI
@@ -201,3 +201,4 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 #undef ASSIGNMENT_SECURITY
 
 #undef ONESHOT
+#undef DISABLED

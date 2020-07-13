@@ -10,7 +10,7 @@
 	var/datum/event/event_type
 	var/min_players = 0
 
-/datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, min_event_weight = 0, max_event_weight = 0, min_event_players = 0, event_enabled = 1)
+/datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
 	name = event_name
 	severity = event_severity
 	event_type = type
@@ -25,6 +25,8 @@
 
 /datum/event_meta/proc/get_weight(list/active_with_role)
 	if(!enabled)
+		return 0
+	if(player_list.len < min_players)
 		return 0
 
 	var/job_weight = 0
