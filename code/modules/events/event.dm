@@ -142,11 +142,14 @@
 //Called when click "Stop" in Even Manager Panel
 //Called when start(), announce() and end() has all been called.
 /datum/event/proc/kill()
+	// If this event was forcefully killed run end() for individual cleanup
+	if(isRunning)
+		isRunning = FALSE
+		end()
+
+	endedAt = world.time
 	SSevents.active_events -= src
 	SSevents.event_complete(src)
-	endedAt = world.time
-	isRunning = FALSE
-	end()
 
 //Sets up the event then adds the event to the the list of active events
 /datum/event/New(var/datum/event_meta/EM)
