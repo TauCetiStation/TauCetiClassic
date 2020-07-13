@@ -44,7 +44,7 @@
 	)
 
 /datum/religion_sect/preset/bloodgods
-    name = "The Slaves of "
+	name = "The Slaves of "
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
