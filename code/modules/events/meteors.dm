@@ -30,7 +30,7 @@
 			command_alert("The station has cleared the meteor shower", "Meteor Alert", "meteorcleared")
 
 /datum/event/meteor_wave/proc/get_meteors()
-	if(EVENT_LEVEL_MAJOR)
+	if(severity == EVENT_LEVEL_MAJOR)
 		return meteors_catastrophic
 	else
 		if(prob(50))
