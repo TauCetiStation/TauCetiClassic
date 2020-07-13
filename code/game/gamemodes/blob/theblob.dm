@@ -9,15 +9,12 @@
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = 0
-	opacity = 0
+	opacity = TRUE
 	anchored = 1
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
-
-	density = TRUE
-	opacity = TRUE
 
 /obj/effect/blob/atom_init()
 	blobs += src
