@@ -1,19 +1,23 @@
-//Meteors probability of spawning during a given wave
-//for normal meteor event
+// Meteors probability of spawning during a given wave
+// for normal meteor event
 var/global/list/obj/effect/meteor/meteors_normal = list(
 	/obj/effect/meteor/dust = 3,
 	/obj/effect/meteor/small = 8,
 	/obj/effect/meteor/big   = 3
 	)
-//for threatening meteor event
+// for threatening meteor event
 var/global/list/obj/effect/meteor/meteors_threatening = list(
 	/obj/effect/meteor/small = 4, 
 	/obj/effect/meteor/big = 8,
 	)
-//for catastrophic meteor event
+// for catastrophic meteor event
 var/global/list/obj/effect/meteor/meteors_catastrophic = list(
 	/obj/effect/meteor/small = 1,
 	/obj/effect/meteor/big = 4,
+	)
+// for space dust event
+var/global/list/obj/effect/meteor/meteors_dust = list(
+	/obj/effect/meteor/dust = 1
 	)
 
 ///////////////////////////////
@@ -181,7 +185,8 @@ var/global/list/obj/effect/meteor/meteors_catastrophic = list(
 //Dust
 /obj/effect/meteor/dust
 	name = "space dust"
-	icon_state = "dust"
+	desc = "Dust in space."
+	icon_state = "space_dust"
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
