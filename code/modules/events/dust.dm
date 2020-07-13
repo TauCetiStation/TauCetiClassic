@@ -5,7 +5,7 @@
 
 /datum/event/sandstorm
 	startWhen = 1
-	endWhen = 150 // ~5 min
+	endWhen = 90
 	announceWhen = 0
 
 /datum/event/dust/announce()
