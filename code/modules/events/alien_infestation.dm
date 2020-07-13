@@ -14,6 +14,9 @@
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
 
 /datum/event/alien_infestation/start()
+	if(!aliens_allowed)
+		kill()
+		return
 	var/list/vents = get_vents()
 
 	if(!vents.len)
