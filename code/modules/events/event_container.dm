@@ -49,7 +49,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new next_event.event_type(next_event)	// Events are added and removed from the processing queue in their New/kill procs
 
 		log_debug("Starting event '[next_event.name]' of severity [severity_to_string[severity]].")
-		//message_admins("Starting event '[next_event.name]' of severity [severity_to_string[severity]].") //debug
+		message_admins("Starting event '[next_event.name]' of severity [severity_to_string[severity]].")
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
