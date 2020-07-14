@@ -11,6 +11,7 @@
 	density = 0
 	opacity = TRUE
 	anchored = 1
+	layer = BELOW_MOB_LAYER
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
