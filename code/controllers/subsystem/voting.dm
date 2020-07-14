@@ -365,5 +365,3 @@ var/global/list/votemode2text = list(
 
 /datum/subsystem/vote/proc/crew_transfer_available()
 	return (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)
-
-#undef mode2text
