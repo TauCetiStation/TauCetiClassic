@@ -18,7 +18,7 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
-	var/list/votemode2text = list(
+	var/static/list/votemode2text = list(
 		"restart" = "Restart",
 		"crew_transfer" = "Crew Transfer",
 		"gamemode" = "GameMode",
