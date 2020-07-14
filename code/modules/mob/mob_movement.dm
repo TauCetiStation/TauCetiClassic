@@ -319,8 +319,6 @@
 					M.other_mobs = null
 					M.animate_movement = 2
 					is_moving = FALSE
-					//message_admins(M.name)
-					//message_admins(M.is_moving)
 					return
 
 ///Process_Incorpmove
