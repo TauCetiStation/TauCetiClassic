@@ -59,11 +59,17 @@
 	var/docile = FALSE                      // Sugar can stop borers from acting.
 	var/leaving = FALSE
 
-/mob/living/simple_animal/borer/atom_init()
+/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = TRUE)
 	. = ..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	real_name = truename
 	host_brain = new/mob/living/captive_brain(src)
+	if(request_ghosts)
+		var/list/candidates = pollGhostCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER, 150)
+		if(candidates.len)
+			var/mob/M = pick(candidates)
+			transfer_personality(M.client)
+
 
 /mob/living/simple_animal/borer/Life()
 

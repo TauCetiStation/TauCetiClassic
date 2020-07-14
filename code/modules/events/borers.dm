@@ -29,7 +29,7 @@
 			if(!spawncount)
 				break
 			var/obj/vent = pick_n_take(vents)
-			var/mob/living/simple_animal/borer/B = new(vent.loc)
+			var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE)
 			B.transfer_personality(M.client)
 			successSpawn = TRUE
 			spawncount--
