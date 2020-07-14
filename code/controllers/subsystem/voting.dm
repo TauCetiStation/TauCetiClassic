@@ -1,10 +1,4 @@
 var/datum/subsystem/vote/SSvote
-var/global/list/votemode2text = list(
-	"restart" = "Restart",
-	"crew_transfer" = "Crew Transfer",
-	"gamemode" = "GameMode",
-	"custom" = "Custom"
-	)
 
 /datum/subsystem/vote
 	name = "Vote"
@@ -24,6 +18,12 @@ var/global/list/votemode2text = list(
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/list/votemode2text = list(
+		"restart" = "Restart",
+		"crew_transfer" = "Crew Transfer",
+		"gamemode" = "GameMode",
+		"custom" = "Custom"
+		)
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
