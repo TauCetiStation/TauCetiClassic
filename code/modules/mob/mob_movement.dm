@@ -240,25 +240,7 @@
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
-		var/list/L = mob.ret_grab()
-		if(istype(L, /list) && L.len > 2)
-			if(locate(/obj/item/weapon/grab, mob))
-				move_delay = max(move_delay, world.time + 7)
-				for(var/mob/M in L)
-					M.other_mobs = 1
-					if(mob != M)
-						M.animate_movement = 3
-				for(var/mob/M in L)
-					spawn( 0 )
-						step(M, direct)
-						return
-					spawn( 1 )
-						M.other_mobs = null
-						M.animate_movement = 2
-						return
-						
-
-		else if(mob.confused)
+		if(mob.confused)
 			var/newdir = direct
 			if(mob.confused > 40)
 				newdir = pick(alldirs)
@@ -291,7 +273,8 @@
 		console.jump_on_click(src, T)
 		return FALSE
 	if(locate(/obj/item/weapon/grab, src))
-		client.move_delay = max(client.move_delay, world.time + 7)
+		if(client)
+			client.move_delay = max(client.move_delay, world.time + 7)
 		var/list/L = GetGrabs()
 		if(L.len == 1)
 			for(var/obj/item/weapon/grab/G in GetGrabs())
@@ -310,9 +293,35 @@
 								step(M, get_dir(M.loc, T))
 								if(G.affecting.is_moving)
 									G.affecting.is_moving = FALSE
-
+		else
+			move_grabs(Dir)
 	return ..()
 
+/mob/proc/move_grabs(Dir)
+	if(is_moving)
+		return
+	is_moving = TRUE
+	var/list/L = src.ret_grab()
+	if(istype(L, /list) && L.len > 2)
+		if(locate(/obj/item/weapon/grab, src))
+			for(var/mob/M in L)
+				M.other_mobs = 1
+				if(src != M)
+					M.animate_movement = 3
+			for(var/mob/M in L)
+				spawn( 0 )
+					if(M != src && is_moving)
+						step(M, Dir)
+						M.is_moving = FALSE
+					return
+			for(var/mob/M in L)
+				spawn( 1 )
+					M.other_mobs = null
+					M.animate_movement = 2
+					is_moving = FALSE
+					//message_admins(M.name)
+					//message_admins(M.is_moving)
+					return
 
 ///Process_Incorpmove
 ///Called by client/Move()
