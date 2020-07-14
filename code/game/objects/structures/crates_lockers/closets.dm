@@ -179,10 +179,9 @@
 		open()
 		qdel(src)
 
-// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		open()
+		dump_contents()
 		qdel(src)
 
 /obj/structure/closet/meteorhit(obj/O)
