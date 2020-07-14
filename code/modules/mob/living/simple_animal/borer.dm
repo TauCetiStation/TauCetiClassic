@@ -70,6 +70,28 @@
 			var/mob/M = pick(candidates)
 			transfer_personality(M.client)
 
+/mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
+	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+		to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
+		return
+	if(jobban_isbanned(O, "Syndicate"))
+		to_chat(O, "<span class='warning'>You are banned from antagonists!</span>")
+		return
+	if(jobban_isbanned(O, "ROLE_ALIEN"))
+		to_chat(O, "<span class='warning'>You are banned from aliens!</span>")
+		return
+	if(key)
+		return
+	if(stat != CONSCIOUS)
+		return
+	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"No","Yes")
+	if(be_borer == "No" || !src || QDELETED(src))
+		return
+	if(key)
+		return
+	if(!isobserver(O))
+		return
+	transfer_personality(O.client)
 
 /mob/living/simple_animal/borer/Life()
 
