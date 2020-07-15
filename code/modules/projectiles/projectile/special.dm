@@ -177,11 +177,8 @@
 	edge = 0
 
 /obj/item/projectile/missile/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	target.ex_act(1)
 	explosion(target, 1,2,4,5)
 	return 1
-
-
 
 /obj/item/projectile/missile/emp
 	damage = 10

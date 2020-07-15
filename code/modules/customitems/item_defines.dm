@@ -504,24 +504,6 @@
 	icon_state = "swatcap"
 	body_parts_covered = 0
 
-/obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
-	name = "flame decal welding helmet"
-	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "alice_mccrea_1"
-
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
-	name = "white decal welding helmet"
-	desc = "A white welding helmet with a character written across it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "yuki_matsuda_1"
-
-/obj/item/clothing/head/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
-	name = "blue flame decal welding helmet"
-	desc = "A welding helmet with blue flame decals on it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "norah_briggs_1"
-
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
 	desc = "Hey, I think we're missing a hazard vest..."

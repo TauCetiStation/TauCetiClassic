@@ -150,8 +150,10 @@ var/list/ventcrawl_machinery = list(
 	var/list/totalMembers = list()
 
 	for(var/datum/pipeline/P in starting_machine.returnPipenets())
-		totalMembers += P.members
-		totalMembers += P.other_atmosmch
+		if(P.members)
+			totalMembers += P.members
+		if(P.other_atmosmch)
+			totalMembers += P.other_atmosmch
 
 	if(!totalMembers.len)
 		return

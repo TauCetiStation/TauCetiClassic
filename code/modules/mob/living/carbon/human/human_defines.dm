@@ -10,6 +10,11 @@
 	var/dyed_b_hair = 0
 	var/hair_painted = FALSE
 
+	var/r_grad = 0
+	var/g_grad = 0
+	var/b_grad = 0
+	var/grad_style = "none"
+
 	//Facial hair colour and style
 	var/r_facial = 0
 	var/g_facial = 0
@@ -43,7 +48,7 @@
 	var/undershirt = 0	//Which undershirt the player wants.
 	var/socks = 0	//Which socks the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-
+	var/use_skirt = FALSE
 	// General information
 	var/home_system = ""
 	var/citizenship = ""

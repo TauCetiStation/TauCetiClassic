@@ -660,8 +660,7 @@ steam.start() -- spawns the effect
 
 
 /obj/structure/foamedmetal/attackby(obj/item/I, mob/user)
-
-	if (istype(I, /obj/item/weapon/grab))
+	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))

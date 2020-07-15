@@ -18,12 +18,24 @@
 	if(.) // Clickplace, no need for attack animation.
 		return
 
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	var/had_effect = FALSE
 	if(!(W.flags & NOATTACKANIMATION))
 		user.do_attack_animation(src)
+		had_effect = TRUE
+
+	if(!(W.flags & NOBLUDGEON))
+		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+		had_effect = TRUE
+
+	if(!had_effect)
+		return
+
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	if(W && !(W.flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(W)
 	SSdemo.mark_dirty(user)
@@ -211,7 +223,7 @@
 	if(user == M)
 		def_zone = user.get_targetzone()
 	else
-		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), src)
+		def_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.get_targetzone(), M)
 
 	if(!def_zone)
 		visible_message("<span class='userdanger'>[user] misses [M] with \the [src]!</span>")
