@@ -783,7 +783,6 @@
 	reagent_state = LIQUID
 	taste_message = "upcoming changes"
 	color = "#13e3a9"
-	var/species
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
@@ -797,6 +796,14 @@
 		 BP_R_ARM  = /obj/item/organ/external/r_arm,
 		 BP_L_LEG  = /obj/item/organ/external/l_leg,
 		 BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+	var/list/changed_organs = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
 /datum/reagent/charged_pop_toxin/on_general_digest(mob/living/M)
@@ -827,8 +834,7 @@
 				if(!data["spec"])
 					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
 					return
-				species = pick(data["spec"])
-				H.set_species_soft(pick(species))
+				H.set_species_soft(pick(data["spec"]))
 				qdel(H.bodyparts_by_name[BP_L_ARM])
 				qdel(H.bodyparts_by_name[BP_R_ARM])
 				qdel(H.bodyparts_by_name[BP_L_LEG])
@@ -836,9 +842,14 @@
 				qdel(H.bodyparts_by_name[BP_GROIN])
 				for(var/type in changed_bodyparts)
 					var/path = changed_bodyparts[type]
-					H.set_species_soft(pick(species))
+					H.set_species_soft(pick(data["spec"])
 					new path(null, H)
-				switch(species)
+				for(var/obj/item/organ/internal/IO in H.organs)
+					qdel(IO)
+				for(var/type in changed_organs)
+					var/path = changed_organs[type]
+					new path(null, H)
+				switch(pick(data["spec"]))
 					if(HUMAN)
 						to_chat(H, "<span class='rose'>You've turned into a human! Wow!</span>")
 					if(SKRELL)
