@@ -340,7 +340,7 @@
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/start = valid_hairstyles.Find(h_style)
 					if(start != valid_hairstyles.len)
-						h_style = valid_hairstyles[start+1]
+						h_style = valid_hairstyles[start + 1]
 					else
 						h_style = valid_hairstyles[1]
 
@@ -363,7 +363,7 @@
 					var/list/valid_gradients = hair_gradients
 					var/start = valid_gradients.Find(grad_style)
 					if(start != 1)
-						grad_style = valid_gradients[start-1]
+						grad_style = valid_gradients[start - 1]
 					else
 						grad_style = valid_gradients[valid_gradients.len]
 
@@ -371,7 +371,7 @@
 					var/list/valid_gradients = hair_gradients
 					var/start = valid_gradients.Find(grad_style)
 					if(start != valid_gradients.len)
-						grad_style = valid_gradients[start+1]
+						grad_style = valid_gradients[start + 1]
 					else
 						grad_style = valid_gradients[1]
 
@@ -392,7 +392,7 @@
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
 					var/start = valid_facialhairstyles.Find(h_style)
 					if(start != 1 && start != 0)
-						f_style = valid_facialhairstyles[start-1]
+						f_style = valid_facialhairstyles[start - 1]
 					else
 						f_style = valid_facialhairstyles[valid_facialhairstyles.len]
 
@@ -400,7 +400,7 @@
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
 					var/start = valid_facialhairstyles.Find(h_style)
 					if(start != valid_facialhairstyles.len)
-						f_style = valid_facialhairstyles[start+1]
+						f_style = valid_facialhairstyles[start + 1]
 					else
 						f_style = valid_facialhairstyles[1]
 
