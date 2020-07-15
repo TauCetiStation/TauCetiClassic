@@ -22,6 +22,8 @@
 
 /obj/effect/portal/Destroy()
 	portal_list -= src
+	creator = null
+	target = null
 	return ..()
 
 /obj/effect/portal/Bumped(mob/M)
