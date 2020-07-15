@@ -761,7 +761,7 @@
 			if(data["ticks"] == cost_by_parts[transform_part])
 				if(!(H.bodyparts_by_name[transform_part].is_robotic()))
 					var/obj/item/organ/external/BP = H.get_bodypart(transform_part)
-					if(!BP || BP.is_robotic())
+					if(!BP || BP.is_robotic() || BP.is_stump)
 						cost_by_parts -= transform_part
 						break
 					to_chat(H, "<span class='warning'>[H.bodyparts_by_name[transform_part]]... It feels unusual.</span>")
@@ -835,15 +835,16 @@
 					to_chat(H, "<span class='rose'>You suddenly feel nothing.</span>")
 					return
 				H.set_species_soft(pick(data["spec"]))
-				qdel(H.bodyparts_by_name[BP_L_ARM])
-				qdel(H.bodyparts_by_name[BP_R_ARM])
-				qdel(H.bodyparts_by_name[BP_L_LEG])
-				qdel(H.bodyparts_by_name[BP_R_LEG])
-				qdel(H.bodyparts_by_name[BP_GROIN])
 				for(var/type in changed_bodyparts)
-					var/path = changed_bodyparts[type]
-					H.set_species_soft(pick(data["spec"])
-					new path(null, H)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[changed_bodyparts[type]]
+					if(!BP || BP.is_robotic() || BP.is_stump)
+						qdel(H.bodyparts_by_name[changed_bodyparts[type]])
+				for(var/type in changed_bodyparts)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[changed_bodyparts[type]]
+					if(!BP || BP.is_robotic() || BP.is_stump)
+						var/path = changed_bodyparts[type]
+						H.set_species_soft(pick(data["spec"]))
+						new path(null, H)
 				for(var/obj/item/organ/internal/IO in H.organs)
 					qdel(IO)
 				for(var/type in changed_organs)
