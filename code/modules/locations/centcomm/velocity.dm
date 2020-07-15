@@ -123,7 +123,7 @@
 	new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/weapon/storage/backpack/satchel/sec(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/gloves/fluff/chal_appara_1(src)
+	new /obj/item/clothing/gloves/chal_appara_1(src)
 	new /obj/item/clothing/shoes/boots/combat(src)
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/shoes/sandal(src)

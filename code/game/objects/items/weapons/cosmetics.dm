@@ -177,6 +177,17 @@
 	else
 		..()
 
+/obj/item/weapon/reagent_containers/glass/beaker/eleanor_stone //Rkf45: Eleanor Stone
+	name = "teapot"
+	desc = "An elegant teapot."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "eleanorstone"
+	item_state = "eleanorstone"
+
+	volume = 150
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,150)
+
 /obj/item/weapon/haircomb //sparklysheep's comb
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic."

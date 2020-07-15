@@ -103,7 +103,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, ))
 
 /obj/random/cloth/glasses
 	name = "random glasses"
@@ -241,4 +241,3 @@
 				prob(1);/obj/item/clothing/suit/wintercoat/captain,\
 				prob(12);/obj/item/weapon/storage/backpack/santabag,\
 			)
-

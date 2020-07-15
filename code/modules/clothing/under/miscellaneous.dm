@@ -1,3 +1,110 @@
+/obj/item/weapon/id_wallet/reese_mackenzie  //Reese MacKenzie - ThoseDernSquirrels
+	name = "ID wallet"
+	desc = "A wallet made of black leather, holding an ID and a gold badge that reads 'NT.' The ID has a small picture of a man, with the caption Reese James MacKenzie, with other pieces of information to the right of the picture."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "reesemackenzie"
+
+/obj/item/weapon/lighter/zippo/naples_1 //naples: Russell Vierson
+	name = "Engraved zippo"
+	desc = "A intricately engraved Zippo lighter."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "engravedzippo"
+	icon_on = "engravedzippoon"
+	icon_off = "engravedzippo"
+
+/obj/item/weapon/lighter/zippo/executivekill_1 //executivekill: Hunter Duke
+	name = "Gonzo Fist zippo"
+	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "gonzozippo"
+	icon_on = "gonzozippoon"
+	icon_off = "gonzozippo"
+
+/obj/item/weapon/lighter/zippo/fay_sullivan_1 //furohman: Fay Sullivan
+	name = "Graduation Lighter"
+	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "gradzippo"
+	icon_on = "gradzippoon"
+	icon_off = "gradzippo"
+
+/obj/item/weapon/lighter/zippo/riley_rohtin_1 //rawrtaicho: Riley Rohtin
+	name = "Riley's black zippo"
+	desc = "A black zippo lighter, which holds some form of sentimental value."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "blackzippo"
+	icon_on = "blackzippoon"
+	icon_off = "blackzippo"
+
+/obj/item/weapon/lighter/zippo/michael_guess_1 //Dragor23: Michael Guess
+	name = "engraved lighter"
+	desc = "A golden lighter, engraved with some ornaments and a G."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "guessip"
+	icon_on = "guessipon"
+	icon_off = "guessip"
+
+/obj/item/weapon/lighter/zippo/li_matsuda_1 //mangled: Li Matsuda
+	name = "blue zippo lighter"
+	desc = "A zippo lighter made of some blue metal."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "bluezippo"
+	icon_on = "bluezippoon"
+	icon_off = "bluezippo"
+
+/obj/item/clothing/gloves/chal_appara_1 //furlucis: Chal Appara
+	name = "Left Black Glove"
+	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "chal_appara_1"
+
+/obj/item/weapon/pen/fancypen //orangebottle: Lillian Levett, Lilliana Reade
+	name = "fancy pen"
+	desc = "A fancy metal pen. It uses blue ink. An inscription on one side reads,\"L.L. - L.R.\""
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "fancypen"
+
+/obj/item/clothing/under/assistant/indiana
+	name = "leather suit"
+	icon_state = "indiana"
+	item_state = "indiana"
+	item_color = "indiana"
+	flags = ONESIZEFITSALL
+
+/////// NT-SID Suit
+
+/obj/item/clothing/under/assistant/jane_sidsuit
+	name = "NT-SID jumpsuit"
+	desc = "A NanoTrasen Synthetic Intelligence Division jumpsuit, issued to 'volunteers'. On other people it looks fine, but right here a scientist has noted: on you it looks stupid."
+
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "jane_sid_suit"
+	item_state = "jane_sid_suit"
+	item_color = "jane_sid_suit"
+	has_sensor = 2
+	sensor_mode = 3
+	flags = ONESIZEFITSALL
+
+//Suit roll-down toggle.
+/obj/item/clothing/under/assistant/jane_sidsuit/verb/toggle_zipper()
+	set name = "Toggle Jumpsuit Zipper"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return 0
+
+	if(src.icon_state == "jane_sid_suit_down")
+		src.item_color = "jane_sid_suit"
+		to_chat(usr, "You zip up the [src].")
+	else
+		src.item_color = "jane_sid_suit_down"
+		to_chat(usr, "You unzip and roll down the [src].")
+
+	src.icon_state = "[item_color]"
+	src.item_state = "[item_color]"
+	usr.update_inv_w_uniform()
+
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
@@ -390,7 +497,7 @@
 
 /obj/item/clothing/under/dress/dress_party
 	name = "party dress"
-	desc = "The party doesn’t start ’til you walk in, so make an entrance no one can ignore."
+	desc = "The party doesnï¿½t start ï¿½til you walk in, so make an entrance no one can ignore."
 	icon_state = "dress_party"
 	item_color = "dress_party"
 
