@@ -18,7 +18,7 @@
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
 	enter_host(host)
-	copy_overlays(victim.overlays, TRUE)
+	copy_overlays(victim, TRUE)
 	phantom = new(src, src)
 	phantom.create_overlay(src)
 
