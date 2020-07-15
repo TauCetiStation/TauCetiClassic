@@ -174,8 +174,6 @@
 	try_open(user, I)
 
 /obj/machinery/door/emag_act(mob/user)
-	if(istype(src, /obj/machinery/door/poddoor/shutters/syndi))
-		return FALSE
 	if(src.density && hasPower())
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
