@@ -71,11 +71,12 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	src.health -= W.force
-	src.healthcheck()
-	..()
-	return
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	. = ..()
+	health -= W.force
+	healthcheck()
 
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
