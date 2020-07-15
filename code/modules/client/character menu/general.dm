@@ -332,7 +332,7 @@
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
 					var/start = valid_hairstyles.Find(h_style)
 					if(start != 1)
-						h_style = valid_hairstyles[start-1]
+						h_style = valid_hairstyles[start - 1]
 					else
 						h_style = valid_hairstyles[valid_hairstyles.len]
 
