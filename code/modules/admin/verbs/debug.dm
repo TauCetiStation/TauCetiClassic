@@ -1767,7 +1767,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("test subject")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/assistant/jane_sidsuit(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)
 
