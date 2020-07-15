@@ -254,7 +254,7 @@
 		if("input")
 			switch(href_list["preference"])
 				if("name")
-					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Name", real_name)  as text|null)
+					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Name", real_name) as text|null)
 					if(new_name)
 						real_name = new_name
 					else
@@ -324,7 +324,7 @@
 
 				if("h_style")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style)  as null|anything in valid_hairstyles
+					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style) as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
@@ -355,7 +355,7 @@
 
 				if("grad_style")
 					var/list/valid_gradients = hair_gradients
-					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Gradient Style", grad_style)  as null|anything in valid_gradients
+					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Gradient Style", grad_style) as null|anything in valid_gradients
 					if(new_grad_style)
 						grad_style = new_grad_style
 
@@ -384,7 +384,7 @@
 
 				if("f_style")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style)  as null|anything in valid_facialhairstyles
+					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style) as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
@@ -413,7 +413,7 @@
 					else
 						underwear_options = underwear_f
 
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear])  as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
 					if(new_underwear)
 						underwear = underwear_options.Find(new_underwear)
 
@@ -441,7 +441,7 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone )  as num|null
+					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone ) as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
@@ -455,7 +455,7 @@
 						b_skin = hex2num(copytext(new_skin, 6, 8))
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag])  as null|anything in backbaglist
+					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
 
@@ -463,7 +463,7 @@
 					use_skirt = !use_skirt
 
 				if("nt_relation")
-					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation)  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
 					if(new_relation)
 						nanotrasen_relation = new_relation
 
@@ -472,7 +472,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize_name(input(user, "Please enter a home system.", "Home System", home_system)  as text|null)
+						var/raw_choice = sanitize_name(input(user, "Please enter a home system.", "Home System", home_system) as text|null)
 						if(raw_choice)
 							home_system = raw_choice
 						else
@@ -498,7 +498,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize_name(input(user, "Please enter a faction.",  "Faction", faction)  as text|null)
+						var/raw_choice = sanitize_name(input(user, "Please enter a faction.", "Faction", faction) as text|null)
 						if(raw_choice)
 							faction = raw_choice
 						else
@@ -511,7 +511,7 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = sanitize_name(input(user, "Please enter a religion.", "Religion", religion)  as text|null)
+						var/raw_choice = sanitize_name(input(user, "Please enter a religion.", "Religion", religion) as text|null)
 						if(raw_choice)
 							religion = raw_choice
 						else
