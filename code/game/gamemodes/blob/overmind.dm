@@ -96,6 +96,9 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		stat(null, "Blob Total Size: [blobs.len]")
+		stat(null, "Total Nodes: [blob_nodes.len]")
+		stat(null, "Total Cores: [blob_cores.len]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE
