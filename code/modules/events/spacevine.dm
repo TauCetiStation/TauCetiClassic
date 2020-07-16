@@ -3,7 +3,7 @@
 /datum/event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
-	var/obj/effect/spacevine/SV = new()
+	var/obj/structure/spacevine/SV = new()
 
 	for(var/area/A in typesof(/area/station/hallway))
 		for(var/turf/simulated/floor/F in A.contents)
