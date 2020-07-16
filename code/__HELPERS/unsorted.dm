@@ -1562,18 +1562,3 @@ var/list/WALLITEMS = typecacheof(list(
 		return -1
 	else
 		return 0
-
-//Returns 1 if the turf is dense, or if there's dense objects/mobs on it, unless told to ignore them.
-/turf/proc/check_density(var/ignore_objs = FALSE, var/ignore_mobs = FALSE)
-	if(density)
-		return TRUE
-	if(!ignore_objs || !ignore_mobs)
-		for(var/atom/movable/stuff in contents)
-			if(stuff.density)
-				if(ignore_objs && isobj(stuff))
-					continue
-				else if(ignore_mobs && isliving(stuff)) // Ghosts aren't dense but keeping this limited to living type will probably save headaches in the future.
-					continue
-				else
-					return TRUE
-	return FALSE
