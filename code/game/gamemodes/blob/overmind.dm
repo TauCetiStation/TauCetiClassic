@@ -30,6 +30,8 @@ var/global/list/datum/mind/blobminds = list()
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
+	update_health_hud()
+	add_points(0)
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
@@ -46,9 +48,6 @@ var/global/list/datum/mind/blobminds = list()
 		for(var/datum/objective/objective in mind.objectives)
 			to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
-		
-	update_health_hud()
-	add_points(0)
 
 /mob/camera/blob/proc/blob_help()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
