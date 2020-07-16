@@ -23,22 +23,10 @@
 	if(!allowed_areas)
 		//Places that shouldn't explode
 		var/list/safe_areas = list(
-			/area/station/aisat,
+			/area/station/ai_monitored/storage_secure,
+			/area/station/aisat/ai_chamber,
 			/area/station/bridge/ai_upload,
-			/area/station/engineering,
-			/area/station/solar,
-			/area/station/civilian/holodeck,
-			/area/shuttle/arrival,
-			/area/station/hallway/primary/fore,
-			/area/station/hallway/primary/starboard,
-			/area/station/hallway/primary/aft,
-			/area/station/hallway/primary/port,
-			/area/station/hallway/primary/central,
-			/area/station/hallway/secondary/exit,
-			/area/station/hallway/secondary/entry,
-			/area/station/hallway/secondary/Podbay,
-			/area/station/security/prison
-			)
+			) + typesof(/area/station/engineering) + typesof(/area/station/solar) + typesof(/area/station/civilian/holodeck)
 
 		//Subtypes from the above that actually should explode.
 		var/list/unsafe_areas = list(
