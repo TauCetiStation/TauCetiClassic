@@ -612,5 +612,3 @@
 			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
 			M.client.prefs.ignore_question += Ignore_Role
 			return
-		else
-			return
