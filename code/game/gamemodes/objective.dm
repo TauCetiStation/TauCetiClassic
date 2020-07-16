@@ -1005,3 +1005,8 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/blob_takeover
 	explanation_text = "Reach critical mass!"
+
+/datum/objective/blob_takeover/check_completion()
+	if(blobs.len >= blobwincount)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

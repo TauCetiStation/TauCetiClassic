@@ -76,8 +76,6 @@ var/global/list/datum/mind/blobminds = list()
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		for(var/datum/objective/blob_takeover/main_objective in mind.objectives)
-			main_objective.completed = TRUE
 		if(!istype(ticker.mode,/datum/game_mode/blob))
 			addtimer(CALLBACK(src, .proc/victory), 450)
 
