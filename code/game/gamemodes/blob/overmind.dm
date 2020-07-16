@@ -144,7 +144,7 @@ var/global/list/datum/mind/blobminds = list()
 /datum/game_mode/proc/auto_declare_completion_event_blob()
 	var/text = ""
 	if(blobs.len)
-		text += "The blobs were:"
+		text += "<b>The blobs were:</b>"
 		for(var/datum/mind/blob in blobminds)
 			var/icon/logo = icon('icons/mob/blob.dmi', "blob_core")
 			end_icons += logo
