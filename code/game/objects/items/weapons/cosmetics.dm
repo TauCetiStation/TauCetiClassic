@@ -177,12 +177,12 @@
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/glass/beaker/eleanor_stone //Rkf45: Eleanor Stone
+/obj/item/weapon/reagent_containers/glass/beaker/teapot 
 	name = "teapot"
 	desc = "An elegant teapot."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "eleanorstone"
-	item_state = "eleanorstone"
+	icon_state = "teapot"
+	item_state = "teapot"
 
 	volume = 150
 	amount_per_transfer_from_this = 10

@@ -54,11 +54,6 @@
 	path = /obj/item/clothing/suit/wcoat
 	cost = 1
 
-/datum/gear/suit/kung
-	display_name = "Kung jacket"
-	path = /obj/item/clothing/suit/fluff/kung
-	cost = 1
-
 /datum/gear/suit/serifcoat
 	display_name = "Serif coat"
 	path = /obj/item/clothing/suit/serifcoat
@@ -81,11 +76,11 @@
 	gear_tweaks += new/datum/gear_tweak/path(labcoat)
 
 /datum/gear/under/purpledress
-	path = /obj/item/clothing/under/fluff/tian_dress
+	path = /obj/item/clothing/under/ppurple_dress
 	display_name = "Purple dress"
 
 /datum/gear/under/cheongsam
-	path = /obj/item/clothing/under/fluff/mai_yang_dress
+	path = /obj/item/clothing/under/white_cheongsam
 	display_name = "White Cheongsam"
 
 /datum/gear/under/directordress
@@ -110,14 +105,14 @@
 
 /datum/gear/under/maid_suit
 	display_name = "Maid dress selection"
-	path = /obj/item/clothing/under/fluff/maid_suit
+	path = /obj/item/clothing/under/maid_suit
 	cost = 2
 
 /datum/gear/under/maid_suit/New()
 	..()
 	var/suits = list()
-	suits["black"] = /obj/item/clothing/under/fluff/maid_suit
-	suits["blue"] = /obj/item/clothing/under/fluff/maid_suit/sakuya
+	suits["black"] = /obj/item/clothing/under/maid_suit
+	suits["blue"] = /obj/item/clothing/under/maid_suit/sakuya
 	gear_tweaks += new/datum/gear_tweak/path(suits)
 
 /datum/gear/under/suit_jacket
@@ -161,11 +156,6 @@
 /datum/gear/under/kilt
 	display_name = "Kilt"
 	path = /obj/item/clothing/under/kilt
-
-/datum/gear/under/kung
-	display_name = "Kung under"
-	path = /obj/item/clothing/under/fluff/kung
-	cost = 1
 
 /datum/gear/suit/m65
 	display_name = "M65 Jacket Selection"

@@ -82,12 +82,7 @@
 						prob(100);/obj/item/weapon/storage/box/matches,\
 						prob(30);/obj/item/weapon/lighter/random,\
 						prob(10);/obj/item/weapon/lighter/zippo,\
-						prob(1);/obj/item/weapon/lighter/zippo/li_matsuda_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/michael_guess_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/riley_rohtin_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fay_sullivan_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/executivekill_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/naples_1\
+						
 					)
 
 

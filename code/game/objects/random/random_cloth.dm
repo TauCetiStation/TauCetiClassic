@@ -29,7 +29,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "miljacket_ranger"
 /obj/random/cloth/storagesuit/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/storage) - list(/obj/item/clothing/suit/storage/lawyer, /obj/item/clothing/suit/storage/labcoat/fluff/pink ))
+	return pick(subtypesof(/obj/item/clothing/suit/storage) - list(/obj/item/clothing/suit/storage/lawyer ))
 
 /obj/random/cloth/hazmatsuit
 	name = "random hazmatsuit"

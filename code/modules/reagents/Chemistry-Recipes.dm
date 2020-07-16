@@ -1489,7 +1489,7 @@
 	result = "tea"
 	required_reagents = list("water" = 1)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/glass/beaker/eleanor_stone
+	required_container = /obj/item/weapon/reagent_containers/glass/beaker/teapot
 
 /datum/chemical_reaction/tofu
 	name = "Tofu"

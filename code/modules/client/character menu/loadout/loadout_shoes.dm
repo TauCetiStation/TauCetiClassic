@@ -36,10 +36,6 @@
 	boots["workboots"] = /obj/item/clothing/shoes/boots/work
 	gear_tweaks += new/datum/gear_tweak/path(boots)
 
-/datum/gear/shoes/kung
-	display_name = "Kung shoes"
-	path = /obj/item/clothing/shoes/fluff/kung
-
 /datum/gear/shoes/heels
 	display_name = "Red Heels"
 	path = /obj/item/clothing/shoes/heels

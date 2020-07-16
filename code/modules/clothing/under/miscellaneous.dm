@@ -1,62 +1,88 @@
+/obj/item/clothing/under/ppurple_dress //phaux: Tian Yinhu
+	name = "purple dress"
+	desc = "A nicely tailored purple dress made for the taller woman."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "ppurple_dress"
+	item_state = "ppurple_dress"
+	item_color = "ppurple_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/olddressuniform //desiderium: Momiji Inubashiri
+	name = "retired dress uniform"
+	desc = "A retired Station Head of Staff uniform, phased out twenty years ago for the newer jumpsuit design, but still acceptable dress. Lovingly maintained."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "olddressuniform"
+	item_state = "olddressuniform"
+	item_color = "olddressuniform"
+
+/obj/item/clothing/under/white_cheongsam // Mai Yang's pretty pretty dress.
+	name = "White Cheongsam"
+	desc = "It is a white cheongsam dress."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "white_cheongsam"
+	item_state = "white_cheongsam"
+	item_color = "white_cheongsam"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+
+////// Wyatt's Ex-Commander Jumpsuit - RawrTaicho
+/obj/item/clothing/under/excommand_uniform
+
+	name = "ex-commander jumpsuit"
+	desc = "A standard Central Command Engineering Commander jumpsuit tailored to fight the wearer tightly. It has a Medal of Service pinned onto the left side of it."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "excommand_uniform"
+	item_state = "excommand_uniform"
+	item_color = "excommand_uniform"
+
+/obj/item/clothing/under/maid_suit/sakuya
+	name = "maid suit"
+	desc = "For a women who like to throw knifes"
+	icon_state = "sakuya"
+	item_state = "sakuya"
+	item_color = "sakuya"
+
+/obj/item/clothing/under/maid_suit
+	name = "maid suit"
+	desc = "For your dirty needs."
+	icon_state = "maid"
+	item_state = "maid"
+	item_color = "maid"
+
+/obj/item/clothing/under/jumpsuitdown //searif: Yuki Matsuda
+	name = "rolled down jumpsuit"
+	desc = "A rolled down jumpsuit. Great for mechanics."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "jumpsuitdown"
+	item_state = "jumpsuitdown"
+	item_color = "jumpsuitdown"
+
+/obj/item/clothing/suit/storage/det_suit/leatherjack //atomicdog92: Seth Sealis
+	name = "leather jacket"
+	desc = "A black leather coat, popular amongst punks, greasers, and other galactic scum."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "leatherjack"
+	item_state = "leatherjack"
+	item_color = "leatherjack"
+
+/obj/item/clothing/head/helmet/greenbandana/orange_bandana //themij: Taryn Kifer
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "orange_bandana"
+	body_parts_covered = 0
+
 /obj/item/weapon/id_wallet/reese_mackenzie  //Reese MacKenzie - ThoseDernSquirrels
 	name = "ID wallet"
 	desc = "A wallet made of black leather, holding an ID and a gold badge that reads 'NT.' The ID has a small picture of a man, with the caption Reese James MacKenzie, with other pieces of information to the right of the picture."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "reesemackenzie"
 
-/obj/item/weapon/lighter/zippo/naples_1 //naples: Russell Vierson
-	name = "Engraved zippo"
-	desc = "A intricately engraved Zippo lighter."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "engravedzippo"
-	icon_on = "engravedzippoon"
-	icon_off = "engravedzippo"
-
-/obj/item/weapon/lighter/zippo/executivekill_1 //executivekill: Hunter Duke
-	name = "Gonzo Fist zippo"
-	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "gonzozippo"
-	icon_on = "gonzozippoon"
-	icon_off = "gonzozippo"
-
-/obj/item/weapon/lighter/zippo/fay_sullivan_1 //furohman: Fay Sullivan
-	name = "Graduation Lighter"
-	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "gradzippo"
-	icon_on = "gradzippoon"
-	icon_off = "gradzippo"
-
-/obj/item/weapon/lighter/zippo/riley_rohtin_1 //rawrtaicho: Riley Rohtin
-	name = "Riley's black zippo"
-	desc = "A black zippo lighter, which holds some form of sentimental value."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "blackzippo"
-	icon_on = "blackzippoon"
-	icon_off = "blackzippo"
-
-/obj/item/weapon/lighter/zippo/michael_guess_1 //Dragor23: Michael Guess
-	name = "engraved lighter"
-	desc = "A golden lighter, engraved with some ornaments and a G."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "guessip"
-	icon_on = "guessipon"
-	icon_off = "guessip"
-
-/obj/item/weapon/lighter/zippo/li_matsuda_1 //mangled: Li Matsuda
-	name = "blue zippo lighter"
-	desc = "A zippo lighter made of some blue metal."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "bluezippo"
-	icon_on = "bluezippoon"
-	icon_off = "bluezippo"
-
-/obj/item/clothing/gloves/chal_appara_1 //furlucis: Chal Appara
+/obj/item/clothing/gloves/left_glove //furlucis: Chal Appara
 	name = "Left Black Glove"
 	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "chal_appara_1"
+	icon_state = "left_glove"
 
 /obj/item/weapon/pen/fancypen //orangebottle: Lillian Levett, Lilliana Reade
 	name = "fancy pen"
@@ -497,7 +523,7 @@
 
 /obj/item/clothing/under/dress/dress_party
 	name = "party dress"
-	desc = "The party doesn�t start �til you walk in, so make an entrance no one can ignore."
+	desc = "The party doesn't start 'til you walk in, so make an entrance no one can ignore."
 	icon_state = "dress_party"
 	item_color = "dress_party"
 
