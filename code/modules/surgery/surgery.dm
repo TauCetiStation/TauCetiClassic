@@ -81,51 +81,70 @@
 	if(BP.germ_level)
 		BP.owner.bad_bodyparts |= BP
 
-/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
+/proc/checks_for_surgery(mob/living/carbon/M, mob/living/user)
+	if(!user.Adjacent(M))
+		return FALSE
+	if(!can_operate(M))
+		return FALSE
 	if(!istype(M))
 		return FALSE
 	if(user.a_intent == INTENT_HARM)	//check for Hippocratic Oath
 		return FALSE
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE
+	if(ishuman(M))
+		check_human_covering(M, user)
 
+/proc/get_human_covering(mob/living/carbon/human/T)
+	var/covered
+	for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+		if(I && I.body_parts_covered)
+			covered |= I.body_parts_covered
+	return covered
+
+/proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
+	if(!covered)
+		covered = get_human_covering(T)
+	switch(user.zone_sel.selecting)
+		if(BP_CHEST)
+			if(covered & UPPER_TORSO)
+				return FALSE
+		if(BP_GROIN)
+			if(covered & LOWER_TORSO)
+				return FALSE
+		if(BP_L_LEG)
+			if(covered & LEG_LEFT)
+				return FALSE
+		if(BP_R_LEG)
+			if(covered & LEG_RIGHT)
+				return FALSE
+		if(BP_L_ARM)
+			if(covered & ARM_LEFT)
+				return FALSE
+		if(BP_R_ARM)
+			if(covered & ARM_RIGHT)
+				return FALSE
+		if(BP_HEAD)
+			if(covered & HEAD)
+				return FALSE
+		if(O_MOUTH)
+			if(covered & FACE)
+				return FALSE
+		if(O_EYES)
+			if(covered & EYES)
+				return FALSE
+	return TRUE
+
+/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
+	checks_for_surgery(M, user)
 	var/target_zone = user.zone_sel.selecting
+	var/covered
+	if(ishuman(M))
+		covered = get_human_covering(M)
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
-		if(S.clothless && ishuman(M))
-			var/mob/living/carbon/human/T = M
-			var/covered
-			for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
-				if(I && I.body_parts_covered)
-					covered |= I.body_parts_covered
-			switch(target_zone)
-				if(BP_CHEST)
-					if(covered & UPPER_TORSO)
-						return FALSE
-				if(BP_GROIN)
-					if(covered & LOWER_TORSO)
-						return FALSE
-				if(BP_L_LEG)
-					if(covered & LEG_LEFT)
-						return FALSE
-				if(BP_R_LEG)
-					if(covered & LEG_RIGHT)
-						return FALSE
-				if(BP_L_ARM)
-					if(covered & ARM_LEFT)
-						return FALSE
-				if(BP_R_ARM)
-					if(covered & ARM_RIGHT)
-						return FALSE
-				if(BP_HEAD)
-					if(covered & HEAD)
-						return FALSE
-				if(O_MOUTH)
-					if(covered & FACE)
-						return FALSE
-				if(O_EYES)
-					if(covered & EYES)
-						return FALSE
+		if(S.clothless && ishuman(M) && !check_human_covering(M, user, covered))
+			return FALSE
 
 		//check if tool is right or close enough and if this step is possible
 		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
