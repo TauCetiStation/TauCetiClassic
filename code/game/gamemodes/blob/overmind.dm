@@ -27,7 +27,7 @@
 	sync_mind()
 	blob_help()
 	update_health_hud()
-	update_pwr_hud()
+	add_points(0)
 
 /mob/camera/blob/proc/blob_help()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
@@ -43,14 +43,9 @@
 	if(blob_core && hud_used)
 		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
-/mob/camera/blob/proc/update_pwr_hud()
-	if(hud_used)
-		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
-
 /mob/camera/blob/proc/add_points(points)
-	if(points != 0)
-		blob_points = CLAMP(blob_points + points, 0, max_blob_points)
-		update_pwr_hud()
+	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
 
 /mob/camera/blob/say(var/message)
 	if (!message)
