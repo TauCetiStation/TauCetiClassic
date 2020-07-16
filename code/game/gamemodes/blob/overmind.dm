@@ -91,7 +91,7 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-		stat(null, "Blob Total Size: [blobs.len]")
+		stat(null, "Progress: [blobs.len]/[blobwincount]")
 		stat(null, "Total Nodes: [blob_nodes.len]")
 		stat(null, "Total Cores: [blob_cores.len]")
 
