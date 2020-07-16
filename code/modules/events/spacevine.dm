@@ -3,7 +3,8 @@
 /datum/event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
-	for(var/area/A in typesof(/area/station/hallway))
+	for(var/areapath in typesof(/area/station/hallway))
+		var/area/A = locate(areapath)
 		for(var/turf/simulated/floor/F in A.contents)
 			if(!is_blocked_turf(F))
 				turfs += F
