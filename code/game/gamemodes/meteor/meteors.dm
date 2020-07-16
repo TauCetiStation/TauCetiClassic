@@ -23,7 +23,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
-/proc/spawn_meteors(number = 10, list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteortypes = meteors_normal)
 	for(var/i in 1 to number)
 		spawn_meteor(meteortypes)
 
@@ -190,7 +190,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
-	
+
 	meteordrop = /obj/item/weapon/ore/glass
 	dropamt = 2
 
