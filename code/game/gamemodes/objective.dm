@@ -1002,3 +1002,6 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(vox_kills > MAX_VOX_KILLS)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"

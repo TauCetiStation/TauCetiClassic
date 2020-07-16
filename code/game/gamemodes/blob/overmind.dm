@@ -1,3 +1,5 @@
+var/global/list/datum/mind/blobminds = list()
+
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -15,16 +17,35 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/victory_in_progress = FALSE
+	var/static/added_to_blobminds = FALSE
 
 /mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
 	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
+	if(added_to_blobminds)
+		added_to_blobminds = TRUE
+		blobminds += mind
+		
+		var/list/datum/objective/objectives = list()
+		objectives += new /datum/objective/blob_takeover()
+		for(var/datum/objective/O in objectives)
+			O.owner = mind
+			mind.objectives += O
+
+		var/obj_count = 1
+		to_chat(src, "<span class = 'info'><B>Your current objectives:</B></span>")
+		for(var/datum/objective/objective in mind.objectives)
+			to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			obj_count++
+		
 	blob_help()
 	update_health_hud()
 	add_points(0)
@@ -46,6 +67,26 @@
 /mob/camera/blob/proc/add_points(points)
 	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+
+
+/mob/camera/blob/process()
+	if(blob_core && !victory_in_progress && (blobs.len >= blobwincount))
+		victory_in_progress = TRUE
+		command_alert("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		set_security_level("delta")
+		max_blob_points = INFINITY
+		blob_points = INFINITY
+		for(var/datum/objective/blob_takeover/main_objective in mind.objectives)
+			main_objective.completed = TRUE
+		if(!istype(ticker.mode,/datum/game_mode/blob))
+			addtimer(CALLBACK(src, .proc/victory), 450)
+
+/mob/camera/blob/proc/victory()
+	ticker.force_ending = TRUE
+
+/mob/camera/blob/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /mob/camera/blob/say(var/message)
 	if (!message)
@@ -101,3 +142,38 @@
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
+
+/datum/game_mode/proc/auto_declare_completion_event_blob()
+	var/text = ""
+	if(blobs.len)
+		text += "The blobs were:"
+		for(var/datum/mind/blob in blobminds)
+			text += printplayerwithicon(blob)
+
+			var/count = 1
+			var/blobwin = 1
+			if(!config.objectives_disabled)
+				for(var/datum/objective/objective in blob.objectives)
+					if(objective.check_completion())
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+						feedback_add_details("blob_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+						feedback_add_details("blob_objective","[objective.type]|FAIL")
+						blobwin = 0
+					count++
+
+				if(blob.current && blob.current.stat!=2 && blobwin)
+					text += "<br><FONT color='green'><b>The blob was successful!</b></FONT>"
+					feedback_add_details("blob_success","SUCCESS")
+					score["roleswon"]++
+				else
+					text += "<br><FONT color='red'><b>The blob has failed!</b></FONT>"
+					feedback_add_details("blob_success","FAIL")
+				text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "blob", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
+	return text

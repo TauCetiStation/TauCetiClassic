@@ -41,6 +41,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null
 
+	var/force_ending = FALSE
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -104,7 +105,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1) || force_ending
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
