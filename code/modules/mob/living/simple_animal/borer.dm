@@ -13,6 +13,8 @@
 
 	message = sanitize(message)
 
+	log_say("[key_name(src)] : [message]")
+
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
 		to_chat(src, "You whisper silently, \"[message]\"")
@@ -137,6 +139,8 @@
 
 	if(!message)
 		return
+
+	log_say("[key_name(src)] : [message]")
 
 	if (stat == DEAD)
 		return say_dead(message)
