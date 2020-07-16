@@ -148,7 +148,10 @@ var/global/list/datum/mind/blobminds = list()
 	if(blobs.len)
 		text += "The blobs were:"
 		for(var/datum/mind/blob in blobminds)
-			text += printplayerwithicon(blob)
+			var/icon/logo = icon('icons/mob/blob.dmi', "blob_core")
+			end_icons += logo
+			var/tempstate = end_icons.len
+			text += {"<br><img src="logo_[tempstate].png"> <b>[blob.key]</b> was <b>[blob.name]</b>"}
 
 			var/count = 1
 			var/blobwin = 1
