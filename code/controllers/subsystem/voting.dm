@@ -18,6 +18,12 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/static/list/votemode2text = list(
+		"restart" = "Restart",
+		"crew_transfer" = "Crew Transfer",
+		"gamemode" = "GameMode",
+		"custom" = "Custom"
+		)
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
@@ -175,7 +181,7 @@ var/datum/subsystem/vote/SSvote
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
-				to_chat(usr, "<span class='vote'>Next [vote_type] vote is avaible after [round((next_allowed_time-world.time)/600)] minutes</span>")
+				to_chat(usr, "<span class='vote'>Next [votemode2text[vote_type]] vote is available after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()

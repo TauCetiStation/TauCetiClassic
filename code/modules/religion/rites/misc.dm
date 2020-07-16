@@ -178,7 +178,7 @@
 		for(var/obj/item/O in anim_items)
 			new /mob/living/simple_animal/hostile/mimic/copy/religion(O.loc, O)
 
-	user.visible_message("<span class='notice'>[user] has been finished the rite of [name]!</span>")
+		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
 /*
@@ -318,10 +318,18 @@
 		return FALSE
 
 	if(!isanimal(AOG.buckled_mob))
-		var/mob/living/simple_animal/S = AOG.buckled_mob
-		if(!S.animalistic)
-			to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
-			return FALSE
+		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+		return FALSE
+ 
+	var/mob/living/simple_animal/S = AOG.buckled_mob
+	if(!S.animalistic)
+		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
+		return FALSE
+
+	if(!S.stat == DEAD)
+		to_chat(user, "<span class='warning'>Only a ritual is performed on dead animals.</span>")
+		return FALSE
+
 	return TRUE
 
 /datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -331,6 +339,7 @@
 
 	var/mob/living/simple_animal/animal = AOG.buckled_mob
 	if(!istype(animal))
+		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
 
 	animal.rejuvenate()
