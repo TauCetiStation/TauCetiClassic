@@ -398,7 +398,7 @@
 			if(AH.is_in_space_suit())
 				to_chat(assailant, "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>")
 				return
-		if(affecting.getStamina() > 0 && affecting.stat)
+		if(affecting.getStamina() > 0 && !affecting.incapacitated())
 			to_chat(assailant, "<span class='notice'>You can't strangle him, [affecting] is too endured right now.</span>")
 			return
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
