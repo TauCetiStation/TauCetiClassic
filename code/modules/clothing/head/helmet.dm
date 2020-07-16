@@ -13,6 +13,12 @@
 	siemens_coefficient = 0.3
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/clothing/head/helmet/clown_hell
+	name = "Devil's helmet"
+	desc = "HELMET FROM HELL"
+	icon_state = "devils_helmet"
+	item_color = "devils_helmet"
+
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."

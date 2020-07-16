@@ -37,3 +37,4 @@ Commits with a git authorship date prior to `1417392000 +0000` (2014/12/01 00:00
 All commits whose authorship dates are not prior to `1417392000 +0000` are assumed to be licensed under AGPL v3, if you wish to license under GPL v3 please make this clear in the commit message and any added files.
 
 If you wish to develop and host this codebase in a closed source manner you may use all commits prior to `1417392000 +0000`, which are licensed under GPL v3.  The major change here is that if you host a server using any code licensed under AGPLv3 you are required to provide full source code for your servers users as well including addons and modifications you have made.
+# TauCetiClassic_withadd
