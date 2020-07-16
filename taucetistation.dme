@@ -1237,7 +1237,6 @@
 #include "code\modules\clothing\under\jobs\security.dm"
 #include "code\modules\crafting\craft.dm"
 #include "code\modules\crafting\recipes.dm"
-#include "code\modules\customitems\item_defines.dm"
 #include "code\modules\demo\hooks.dm"
 #include "code\modules\destilery\main.dm"
 #include "code\modules\detectivework\autopsy.dm"
