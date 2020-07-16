@@ -494,7 +494,7 @@ var/global/list/datum/mind/borers = list()
 		mind.objectives += O
 
 	var/obj_count = 1
-	to_chat(src, "<span class = 'info'><B>Your current objectives:</B></span>")
+	to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
 	for(var/datum/objective/objective in mind.objectives)
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
