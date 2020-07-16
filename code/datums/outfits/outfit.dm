@@ -272,9 +272,8 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			if(istype(H.get_equipped_item(internals_slot), /obj/item/weapon/tank))
-				H.internal = H.get_equipped_item(internals_slot)
-				H.internals.icon_state = "internal1"
+			H.internal = H.get_equipped_item(internals_slot)
+			H.internals.icon_state = "internal1"
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
