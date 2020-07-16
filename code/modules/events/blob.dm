@@ -11,11 +11,11 @@
 		kill()
 		return
 
-	var/list/candidates = pollCandidates("Do you want to play as a BLOB?", ROLE_BLOB, 15)
+	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, 15)
 	if(!candidates.len)
 		kill()
 		return
 
 	var/mob/candidate = pick(candidates)
 
-	new /obj/effect/blob/core(T, 120, candidate.mind)
+	new /obj/effect/blob/core(T, 120, candidate.client)

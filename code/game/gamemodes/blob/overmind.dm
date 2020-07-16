@@ -30,7 +30,7 @@ var/global/list/datum/mind/blobminds = list()
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
-	if(added_to_blobminds)
+	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
 		blobminds += mind
 		
