@@ -5,7 +5,7 @@
 
 	for(var/area/A in typesof(/area/station/hallway))
 		for(var/turf/simulated/floor/F in A.contents)
-			if(!F.is_mob_placeable())
+			if(!F.check_density())
 				turfs += F
 
 	if(turfs.len) //Pick a turf to spawn at if we can
