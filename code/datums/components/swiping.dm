@@ -529,7 +529,8 @@
 			return SWEEP_INTERUPT
 
 		sweep_to_check(current_turf, next_turf, sweep_image, A, user)
-		user.SetNextMove(sweep_image.sweep_delay + 1)
+		// Just in case of some delaying/async bull.
+		user.AdjustNextMove(sweep_image.sweep_delay + 1)
 
 	if(sweep_image.next_dir == sweep_image.dirs_to_move.len)
 		return SWEEP_END
@@ -551,6 +552,8 @@
 		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 			var/dir_ = sweep_image.dirs_to_move[sweep_image.next_dir]
 			var/turf/current_turf = get_step(W, dir_)
+
+			user.SetNextMove(sweep_image.sweep_delay * directions.len + 1)
 
 			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
 

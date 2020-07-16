@@ -148,32 +148,33 @@
 	transform = old_transform
 	pixel_y = old_pixel_y
 
-/obj/effect/effect/bell/proc/stun_insides(mob/living/L, force)
-	if(L.crawling || L.resting)
-		return
+/obj/effect/effect/bell/proc/stun_insides(force)
+	for(var/mob/living/L in get_turf(src))
+		if(L.crawling || L.resting)
+			return
 
-	var/ear_safety = 0
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-			ear_safety += 2
-		if(HULK in H.mutations)
-			ear_safety += 1
-		if(istype(H.head, /obj/item/clothing/head/helmet))
-			ear_safety += 1
+		var/ear_safety = 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				ear_safety += 2
+			if(HULK in H.mutations)
+				ear_safety += 1
+			if(istype(H.head, /obj/item/clothing/head/helmet))
+				ear_safety += 1
 
-	to_chat(L, "<span class='danger'>[name] rings all throughout your mind!</span>")
+		to_chat(L, "<span class='danger'>[name] rings all throughout your mind!</span>")
 
-	ear_safety *= 1 / force
+		ear_safety *= 1 / force
 
-	if(ear_safety > 1)
-		L.Stun(1)
-	else if(ear_safety > 0)
-		L.Weaken(1)
-	else
-		L.Weaken(3)
-		L.ear_damage += rand(0, 5)
-		L.ear_deaf = max(L.ear_deaf, 15)
+		if(ear_safety > 1)
+			L.Stun(1)
+		else if(ear_safety > 0)
+			L.Weaken(1)
+		else
+			L.Weaken(3)
+			L.ear_damage += rand(0, 5)
+			L.ear_deaf = max(L.ear_deaf, 15)
 
 /obj/effect/effect/bell/proc/adjust_strength(def_val, strength, strength_coeff, max_val)
 	return min(round(def_val + strength * strength_coeff), max_val)
@@ -195,8 +196,7 @@
 
 	var/swing_angle = adjust_strength(6, strength, 0.25, 16)
 
-	for(var/mob/living/L in get_turf(src))
-		stun_insides(L, 1)
+	stun_insides(1)
 
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 2 SECONDS, 2)
 
@@ -211,7 +211,7 @@
 
 	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
 		return
-	var/ring_msg = sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text)
+	var/ring_msg = capitalize(sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text))
 	if(!ring_msg)
 		return
 
@@ -232,16 +232,18 @@
 	var/shake_duration = adjust_strength(4, strength, 0.25, 16)
 	var/shake_strength = adjust_strength(1, strength, 0.1, 5)
 
+	if(shake_strength > 0)
+		shake_camera(user, shake_duration, shake_strength)
+
 	for(var/mob/M in player_list)
 		if(M.z == z)
-			shake_camera(M, shake_duration, shake_strength)
-			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_NOTIFICATIONS, 75)
+			// Why do they call them voice announcements if it's just global announcements?
+			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 75)
 			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[ring_msg]\"</span>")
 
 	var/swing_angle = adjust_strength(12, strength, 0.25, 32)
 
-	for(var/mob/living/L in get_turf(src))
-		stun_insides(L, 2)
+	stun_insides(2)
 
 	INVOKE_ASYNC(src, .proc/swing, swing_angle, 9 SECONDS, 6)
 
