@@ -10,7 +10,7 @@
 	if(!T)
 		kill()
 		return
-	
+
 	var/list/candidates = pollCandidates("Do you want to play as a BLOB?", ROLE_BLOB, 15)
 	if(!candidates.len)
 		kill()
