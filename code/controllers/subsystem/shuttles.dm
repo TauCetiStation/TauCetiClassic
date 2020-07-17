@@ -374,7 +374,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
-			if(M.buckled)
+			if(M.buckled || issilicon(M))
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
