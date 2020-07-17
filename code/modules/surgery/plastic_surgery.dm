@@ -112,8 +112,9 @@
 /datum/surgery_step/plastic_surgery/reshape_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] alters [target]'s appearance with \the [tool].</span>",		\
 	"<span class='notice'>You alter [target]'s appearance with \the [tool].</span>")
-	target.real_name = target.op_stage.plastic_new_name
-	target.op_stage.plastic_new_name = null
+	if(target.op_stage.plastic_new_name)
+		target.real_name = target.op_stage.plastic_new_name
+		target.op_stage.plastic_new_name = null
 
 /datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
