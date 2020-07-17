@@ -111,7 +111,6 @@
 		if (9)
 			new /obj/item/clothing/under/kilt(src)
 			new /obj/item/clothing/head/beret/red(src)
-			new /obj/item/clothing/head/helmet/clown_hell(src)
 		if (10)
 			new /obj/item/clothing/suit/wcoat(src)
 			new /obj/item/clothing/glasses/monocle(src)
