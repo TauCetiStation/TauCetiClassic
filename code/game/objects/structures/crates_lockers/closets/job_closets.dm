@@ -93,7 +93,6 @@
 		if (5)
 			new /obj/item/clothing/under/schoolgirl(src)
 			new /obj/item/clothing/head/kitty(src)
-			new /obj/item/clothing/head/helmet/clown_hell(src)
 		if (6)
 			new /obj/item/clothing/under/blackskirt(src)
 			var/choice = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
