@@ -17,7 +17,7 @@
 	name = "Devil's helmet"
 	desc = "HELMET FROM HELL"
 	icon_state = "devils_helmet"
-	item_color = "devils_helmet"
+	item_state = "devils_helmet"
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
