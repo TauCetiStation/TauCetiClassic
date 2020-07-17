@@ -93,7 +93,8 @@
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE
 	if(ishuman(M) && check_covering)
-		check_human_covering(M, user)
+		return check_human_covering(M, user)
+	return TRUE
 
 /proc/get_human_covering(mob/living/carbon/human/T)
 	var/covered
