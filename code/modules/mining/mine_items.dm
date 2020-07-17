@@ -164,7 +164,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "lantern"
 	desc = "A mining lantern."
 	button_sound = 'sound/items/lantern.ogg'
-	brightness_on = 4			// luminosity when on
+	light_power = 2
+	brightness_on = 5			// luminosity when on
 
 /*****************************Pickaxe********************************/
 /obj/item/weapon/pickaxe

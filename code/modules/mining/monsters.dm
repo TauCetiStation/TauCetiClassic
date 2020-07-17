@@ -71,8 +71,8 @@
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
-	maxHealth = 200
-	health = 200
+	maxHealth = 160
+	health = 160
 	harm_intent_damage = 5
 	melee_damage = 12
 	attacktext = "gnaw"
