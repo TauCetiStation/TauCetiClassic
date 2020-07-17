@@ -26,8 +26,8 @@
 	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE)
 	if(borg_candicates.len)
 		used = TRUE
-		var/client/C = pick(borg_candicates)
-		spawn_antag(C, get_turf(src.loc), "syndieborg")
+		var/mob/M = pick(borg_candicates)
+		spawn_antag(M.client, get_turf(src.loc), "syndieborg")
 	else
 		used = FALSE
 		visible_message("<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")

@@ -27,10 +27,10 @@
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)
-		var/candidate = pick(candidates)
+		var/mob/candidate = pick(candidates)
 
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new(vent.loc)
-		new_xeno.key = candidate
+		new_xeno.key = candidate.key
 
 		candidates -= candidate
 		vents -= vent

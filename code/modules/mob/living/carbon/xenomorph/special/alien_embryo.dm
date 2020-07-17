@@ -131,7 +131,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 		var/client/larva_candidate
 		if(candidates.len)
-			larva_candidate = pick(candidates)
+			var/mob/candidate = pick(candidates)
+			larva_candidate = candidate.client
 		else if(affected_mob.client)
 			if((ROLE_ALIEN in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, ROLE_ALIEN))
 				larva_candidate = affected_mob.key

@@ -79,7 +79,8 @@
 	if(!new_overmind)
 		candidates = pollGhostCandidates("Would you like to be a BLOB?!", ROLE_BLOB)
 		if(candidates.len)
-			C = pick(candidates)
+			var/mob/M = pick(candidates)
+			C = M.client
 	else
 		C = new_overmind
 
