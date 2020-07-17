@@ -102,7 +102,7 @@
 
 /datum/surgery_step/plastic_surgery/reshape_face/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	target.op_stage.plastic_new_name = sanitize_name(input(user, "Choose your character's name:", "Changing")  as text|null)
-	return target.op_stage.plastic_new_name && checks_for_surgery(target) && check_human_covering(target, user)
+	return target.op_stage.plastic_new_name && checks_for_surgery(target, user)
 
 /datum/surgery_step/plastic_surgery/reshape_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to alter [target]'s appearance with \the [tool].", \

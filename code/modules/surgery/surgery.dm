@@ -81,7 +81,7 @@
 	if(BP.germ_level)
 		BP.owner.bad_bodyparts |= BP
 
-/proc/checks_for_surgery(mob/living/carbon/M, mob/living/user)
+/proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)
 	if(!user.Adjacent(M))
 		return FALSE
 	if(!can_operate(M))
@@ -92,7 +92,7 @@
 		return FALSE
 	if(user.is_busy(null)) // No target so we allow multiple players to do surgeries on one pawn.
 		return FALSE
-	if(ishuman(M))
+	if(ishuman(M) && check_covering)
 		check_human_covering(M, user)
 
 /proc/get_human_covering(mob/living/carbon/human/T)
@@ -136,7 +136,7 @@
 	return TRUE
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
-	checks_for_surgery(M, user)
+	checks_for_surgery(M, user, FALSE)
 	var/target_zone = user.zone_sel.selecting
 	var/covered
 	if(ishuman(M))
