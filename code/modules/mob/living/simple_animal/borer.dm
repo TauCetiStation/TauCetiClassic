@@ -67,33 +67,11 @@
 	real_name = truename
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		var/list/candidates = pollGhostCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER, 150)
-		if(candidates.len)
-			var/mob/M = pick(candidates)
-			transfer_personality(M.client)
+		for(var/mob/dead/observer/O in observer_list)
+			request_n_transfer_ghost(O)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
-		to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
-		return
-	if(jobban_isbanned(O, "Syndicate"))
-		to_chat(O, "<span class='warning'>You are banned from antagonists!</span>")
-		return
-	if(jobban_isbanned(O, "ROLE_ALIEN"))
-		to_chat(O, "<span class='warning'>You are banned from aliens!</span>")
-		return
-	if(key)
-		return
-	if(stat != CONSCIOUS)
-		return
-	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"No","Yes")
-	if(be_borer == "No" || !src || QDELETED(src))
-		return
-	if(key)
-		return
-	if(!isobserver(O))
-		return
-	transfer_personality(O.client)
+	request_n_transfer_ghost(O)
 
 /mob/living/simple_animal/borer/Life()
 
@@ -499,6 +477,29 @@ var/global/list/datum/mind/borers = list()
 	for(var/datum/objective/objective in mind.objectives)
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
+
+/mob/living/simple_animal/borer/proc/request_n_transfer_ghost(mob/dead/observer/O)
+	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+		to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
+		return
+	if(jobban_isbanned(O, "Syndicate"))
+		to_chat(O, "<span class='warning'>You are banned from antagonists!</span>")
+		return
+	if(jobban_isbanned(O, "ROLE_ALIEN") || role_available_in_minutes(O, ROLE_ALIEN))
+		to_chat(O, "<span class='warning'>You are banned from aliens!</span>")
+		return
+	if(key || mind)
+		return
+	if(stat != CONSCIOUS)
+		return
+	var/be_borer = alert(O, "Do you want to play as a cortical borer?",,"No","Yes")
+	if(be_borer == "No" || !src || QDELETED(src))
+		return
+	if(key || mind)
+		return
+	if(!isobserver(O))
+		return
+	transfer_personality(O.client)
 
 /datum/game_mode/proc/auto_declare_completion_borer()
 	var/text = ""
