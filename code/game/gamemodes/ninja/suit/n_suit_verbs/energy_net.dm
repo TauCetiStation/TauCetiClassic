@@ -78,11 +78,6 @@
 	healthcheck()
 	return
 
-/obj/effect/energy_net/meteorhit()
-	health-=50
-	healthcheck()
-	return
-
 /obj/effect/energy_net/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	src.visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")

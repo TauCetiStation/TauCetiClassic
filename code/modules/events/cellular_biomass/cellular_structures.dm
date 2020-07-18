@@ -49,11 +49,6 @@
 	healthcheck()
 	return
 
-/obj/structure/cellular_biomass/meteorhit()
-	health -= 100
-	healthcheck()
-	return
-
 /obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
 	user.SetNextMove(CLICK_CD_MELEE)

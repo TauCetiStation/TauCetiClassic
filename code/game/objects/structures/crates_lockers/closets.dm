@@ -184,13 +184,6 @@
 		dump_contents()
 		qdel(src)
 
-/obj/structure/closet/meteorhit(obj/O)
-	if(O.icon_state == "flaming")
-		for(var/mob/M in src)
-			M.meteorhit(O)
-		src.dump_contents()
-		qdel(src)
-
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
 		add_fingerprint(user)

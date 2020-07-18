@@ -111,10 +111,6 @@
 	shatter()
 
 
-/obj/structure/window/meteorhit()
-	shatter()
-
-
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1

@@ -150,11 +150,6 @@
 	emergencyShutdown()
 	return ..()
 
-/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
-	emergencyShutdown()
-	..()
-
-
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
 	..()

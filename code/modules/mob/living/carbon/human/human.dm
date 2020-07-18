@@ -290,19 +290,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
-/mob/living/carbon/human/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
-		if(!BP)
-			return
-		if (istype(O, /obj/effect/immovable_rod))
-			BP.take_damage(101, 0)
-		else
-			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
-		updatehealth()
-	return
-
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
 	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
