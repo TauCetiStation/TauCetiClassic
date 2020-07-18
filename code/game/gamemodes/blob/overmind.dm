@@ -37,11 +37,12 @@ var/global/list/datum/mind/blobminds = list()
 		added_to_blobminds = TRUE
 		blobminds += mind
 		
-		var/list/datum/objective/objectives = list()
-		objectives += new /datum/objective/blob_takeover()
+		var/list/datum/objective/objectives = list(
+			new /datum/objective/blob_takeover()
+			)
 		for(var/datum/objective/O in objectives)
 			O.owner = mind
-			mind.objectives += O
+		mind.objectives = objectives
 
 		var/obj_count = 1
 		to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")

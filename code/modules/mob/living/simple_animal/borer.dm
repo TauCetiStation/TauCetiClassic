@@ -485,13 +485,14 @@ var/global/list/datum/mind/borers = list()
 	to_chat(src, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
 	to_chat(src, "You can only take control temporarily, and at risk of hurting your host, so be clever and careful; your host is encouraged to help you however they can.")
 	to_chat(src, "Talk to your fellow borers with ;")
-	var/list/datum/objective/objectives = list()
-	objectives += new /datum/objective/borer_survive()
-	objectives += new /datum/objective/borer_reproduce()
-	objectives += new /datum/objective/escape()
+	var/list/datum/objective/objectives = list(
+		new /datum/objective/borer_survive(),
+		new /datum/objective/borer_reproduce(),
+		new /datum/objective/escape()
+		)
 	for(var/datum/objective/O in objectives)
 		O.owner = mind
-		mind.objectives += O
+	mind.objectives = objectives
 
 	var/obj_count = 1
 	to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
