@@ -43,6 +43,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
+	message_admins("[new_ninja] has spawned at [new_ninja.x],[new_ninja.y],[new_ninja.z] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
 		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
