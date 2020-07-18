@@ -499,6 +499,8 @@ var/global/list/datum/mind/borers = list()
 		return
 	if(!isobserver(O))
 		return
+	if(stat != CONSCIOUS)
+		return
 	transfer_personality(O.client)
 
 /datum/game_mode/proc/auto_declare_completion_borer()
