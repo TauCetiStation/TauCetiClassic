@@ -11,15 +11,18 @@
 	var/virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
-		var/foundAlready = 0	// don't infect someone that already has the virus
+		if(H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
+			continue
+
 		var/turf/T = get_turf(H)
-		if(!T)
+		if(!T || !is_station_level(T.z))
 			continue
-		if(!is_station_level(T.z))
-			continue
+
+		var/foundAlready = FALSE // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
-			foundAlready = 1
-		if(H.stat == DEAD || foundAlready)
+			foundAlready = TRUE
+			break
+		if(!foundAlready)
 			continue
 
 		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
