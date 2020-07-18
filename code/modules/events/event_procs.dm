@@ -109,3 +109,14 @@
 		if(P.client)
 			players++
 	return players
+
+/proc/get_vents()
+	var/list/vents = list()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			//Stops Aliens getting stuck in small networks.
+			//See: Security, Virology
+			if(temp_vent_parent.other_atmosmch.len > 50)
+				vents += temp_vent
+	return vents
