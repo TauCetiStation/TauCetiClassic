@@ -177,6 +177,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravitational Anomaly",   /datum/event/anomaly/anomaly_grav,      200),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Disease Outbreak",        /datum/event/disease_outbreak,          0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Infection",         /datum/event/viral_infection,           0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Sandstorm",               /datum/event/sandstorm,                 0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 	)
 
 /datum/event_container/major
@@ -186,7 +187,6 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Sandstorm",               /datum/event/sandstorm,         0, list(ASSIGNMENT_ENGINEER =  5), ONESHOT),
 		new /datum/event_meta/alien(EVENT_LEVEL_MAJOR, "Alien Infestation", /datum/event/alien_infestation, 0, list(ASSIGNMENT_SECURITY =  2), ONESHOT, DISABLED, 25), // Admins only
 	)
 
