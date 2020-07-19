@@ -178,8 +178,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws in 1 to dropamt)
-		var/obj/item/O = new meteordrop(get_turf(src))
-		O.throw_at(dest, 5, 10)
+		new meteordrop(get_turf(src))
 
 /obj/effect/meteor/ex_act()
 	return
