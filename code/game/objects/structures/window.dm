@@ -96,10 +96,10 @@
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			take_damage(rand(100, 250))
+			qdel(src)
 			return
 		if(2.0)
-			take_damage(rand(20, 50))
+			take_damage(rand(30, 50))
 			return
 		if(3.0)
 			take_damage(rand(5, 15))
