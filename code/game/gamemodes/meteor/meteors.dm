@@ -115,6 +115,12 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 	if(.)//.. if did move, ram the turf we get in
 		var/turf/T = get_turf(loc)
+
+		if(istype(T, /turf/space)) // if spaceturf, but e.g. grille > Bump()
+			for(var/atom/A in T.contents - src)
+				if(A.density)
+					Bump(A)
+					return
 		ram_turf(T)
 
 		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
