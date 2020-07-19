@@ -1366,7 +1366,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			var/mob/living/silicon/robot/R = S
 			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
 		else if (ispAI(S))
+			var/mob/living/silicon/pai/P = S
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
+			to_chat(usr, "Prime directive: <b>[P.pai_law0]</b>" )
+			to_chat(usr, "Additional directives: <b>[P.pai_laws ? P.pai_laws : "N/A"]</b>")
+			to_chat(usr, "pAI's master: <b>[P.master ? P.master : "N/A"]</b>" )
+			continue
 		else
 			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
