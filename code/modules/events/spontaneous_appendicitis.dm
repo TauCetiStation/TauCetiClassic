@@ -1,6 +1,6 @@
 /datum/event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
-		if(H.client && H.stat != DEAD)
+		if(H.client && H.stat != DEAD && !H.species.flags[VIRUS_IMMUNE])
 			var/foundAlready = FALSE	//don't infect someone that already has the virus
 			for(var/datum/disease/D in H.viruses)
 				foundAlready = TRUE
