@@ -286,6 +286,13 @@ div.notice
 	padding: 0;
 }
 
+.blockCargo
+{
+	overflow: auto;
+	height: 470px;
+	padding: 2px;
+}
+
 .progressBar
 {
 	width: 240px;
