@@ -2,17 +2,17 @@
 // for normal meteor event
 var/global/list/obj/effect/meteor/meteors_normal = list(
 	/obj/effect/meteor/dust = 3,
-	/obj/effect/meteor/small = 8,
+	/obj/effect/meteor/medium = 8,
 	/obj/effect/meteor/big   = 3
 	)
 // for threatening meteor event
 var/global/list/obj/effect/meteor/meteors_threatening = list(
-	/obj/effect/meteor/small = 4, 
+	/obj/effect/meteor/medium = 4, 
 	/obj/effect/meteor/big = 8,
 	)
 // for catastrophic meteor event
 var/global/list/obj/effect/meteor/meteors_catastrophic = list(
-	/obj/effect/meteor/small = 1,
+	/obj/effect/meteor/medium = 1,
 	/obj/effect/meteor/big = 4,
 	)
 // for space dust event
@@ -206,7 +206,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	..()
 
 //Medium-sized
-/obj/effect/meteor/small
+/obj/effect/meteor/medium
 	name = "meteor"
 	dropamt = 3
 
