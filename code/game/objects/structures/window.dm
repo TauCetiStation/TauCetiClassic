@@ -96,20 +96,17 @@
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			take_damage(rand(100, 250))
 			return
 		if(2.0)
-			shatter(0)
+			take_damage(rand(20, 50))
 			return
 		if(3.0)
-			if(prob(50))
-				shatter(0)
-				return
-
+			take_damage(rand(5, 15))
+			return
 
 /obj/structure/window/blob_act()
-	shatter()
-
+	take_damage(rand(30, 50))
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
