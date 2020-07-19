@@ -145,6 +145,11 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/ram_turf(var/turf/T)
 	//first bust whatever is in the turf
+	for(var/obj/structure/window/W in T)	// window protects grille 
+		W.ex_act(hitpwr)
+		if(!QDELETED(W))
+			return
+		break
 	for(var/atom/A in T.contents - src)
 		if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
 			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
