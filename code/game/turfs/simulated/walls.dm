@@ -186,17 +186,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ChangeTurf(basetype)
-			return
-		if(2.0)
+		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3.0)
-			take_damage(rand(0, 250))
-		else
+		if(3)
+			take_damage(rand(0, 55))
 	return
 
 /turf/simulated/wall/blob_act()
