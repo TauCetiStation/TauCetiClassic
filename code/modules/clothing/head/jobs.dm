@@ -37,14 +37,22 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|EYES
 
-//Chaplain
-/obj/item/clothing/head/nun_hood
-	name = "nun hood"
-	desc = "Maximum piety in this star system."
-	icon_state = "nun_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+/obj/item/clothing/head/skhima_hood
+	name = "skhima hood"
+	desc = "That's a religion skhima hood decorated with white runes and symbols. Commonly worn by monks."
+	icon_state = "skhima_hood"
+	item_state = "skhima_hood"
+	flags = HEADCOVERSEYES
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/head/nun_hood
+	name = "nun hood"
+	desc = "A religious female hood commonly worn by monastery sisters."
+	icon_state = "nun_hood"
+	flags = BLOCKHAIR
+	siemens_coefficient = 0.9
+
+//HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"
 	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."

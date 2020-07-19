@@ -197,12 +197,7 @@
 
 	occupant.ghostize(bancheck = TRUE)
 
-	if(occupant.butcher_results.len)
-		for(var/path in occupant.butcher_results)
-			for(var/i = 1 to occupant.butcher_results[path])
-				new path(src)
-
-	occupant.gib()
+	occupant.harvest()
 	if(!QDELING(occupant))
 		qdel(occupant)
 	occupant = null

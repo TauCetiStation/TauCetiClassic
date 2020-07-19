@@ -142,7 +142,7 @@
 	name = "magazine (9mm rubber)"
 	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mmr"
+	caliber = "9mm"
 
 /obj/item/ammo_box/magazine/m9mm_2/update_icon()
 	..()
@@ -248,7 +248,7 @@
 	name = "magazine (.45 rubber)"
 	icon_state = "45r"
 	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45r"
+	caliber = ".45"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
