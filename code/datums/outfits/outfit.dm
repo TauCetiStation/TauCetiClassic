@@ -256,12 +256,12 @@
 					if(!isnum(number))//Default to 1
 						number = 1
 					for(var/i in 1 to number)
-						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
+				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
+				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -289,7 +289,7 @@
 		var/slot_type = slot2type[slot]
 		if(!slot_type)
 			continue
-		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
+		H.equip_to_slot_or_del(new slot_type(H), text2num(slot))
 
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit
