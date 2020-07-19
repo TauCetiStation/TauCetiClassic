@@ -559,17 +559,19 @@
 // Procs for grabbing players.
 
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
-	var/list/candidates = list()
+	var/list/mob/dead/observer/candidates = list()
 
 	for(var/mob/dead/observer/O in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
 
-	return pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
+	candidates = pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
+	candidates &= observer_list
+	return candidates
 
 /proc/pollCandidates(Question = "Would you like to be a special role?", be_special_type, Ignore_Role, poll_time = 300, list/group = null)
-	var/list/mob/dead/observer/candidates = list()
+	var/list/mob/candidates = list()
 	var/time_passed = world.time
 
 	if(!Ignore_Role)
