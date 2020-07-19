@@ -144,9 +144,9 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/ram_turf(var/turf/T)
 	//first bust whatever is in the turf
-	for(var/atom/A in T)
-		if(A != src)
-			A.ex_act(hitpwr)
+	for(var/atom/A in T.contents - src)
+		if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
+			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
 
 	//then, ram the turf if it still exists
 	if(T)
