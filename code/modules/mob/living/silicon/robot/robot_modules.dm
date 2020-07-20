@@ -276,6 +276,8 @@
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1
+	L.icon_state = L.icon_on
+	L.item_state = L.icon_on
 	modules += L
 
 	modules += new /obj/item/weapon/tray/robotray(src)
