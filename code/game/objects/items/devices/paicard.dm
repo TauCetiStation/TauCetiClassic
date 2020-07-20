@@ -275,7 +275,7 @@
 	if(href_list["setlaws"])
 		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration") as message|null)
 		if(newlaws)
-			pai.laws.add_supplied_law(1, newlaws)
+			pai.laws.add_supplied_law(0, newlaws)
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
 			to_chat(pai, "Prime Directive: <br>[pai.laws.zeroth]")
 			to_chat(pai, "Supplemental Directives: <br>[pai.laws.write_supplied_laws()]")
