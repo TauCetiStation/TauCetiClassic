@@ -206,10 +206,8 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/write_supplied_laws()
 	var/text = ""
-	var/number = 1
 	for(var/law in src.supplied)
-		text += "<br>[number]. [law]"
-		number++
+		text += "[law]<br>"
 	return text
 
 /datum/ai_laws/proc/show_laws(who)
