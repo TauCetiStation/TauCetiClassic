@@ -466,8 +466,10 @@
 					targetPersonality.laws.set_zeroth_law(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text)
 					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.laws.zeroth]")
 				if(INTERACTION_PAI_MODIFY_SEC_LAW)
-					targetPersonality.laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.write_supplied_laws()) as text
-					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.laws.write_supplied_laws()]")
+					var/newlaws = sanitize(("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.write_supplied_laws()) as text|null)
+					if(newlaws)
+						targetPersonality.laws.add_supplied_law(0, newlaws)
+						to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.laws.write_supplied_laws()]")
 				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
 					while(markedobjselected != "Cancel")
