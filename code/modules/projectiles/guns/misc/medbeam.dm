@@ -10,8 +10,6 @@
 	var/active = 0
 	var/datum/beam/current_beam = null
 
-
-
 /obj/item/weapon/gun/medbeam/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
