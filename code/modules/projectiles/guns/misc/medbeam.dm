@@ -9,7 +9,7 @@
 	var/max_range = 8
 	var/active = 0
 	var/datum/beam/current_beam = null
-	var/mounted = 0 //Denotes if this is a handheld or mounted version
+
 
 
 /obj/item/weapon/gun/medbeam/atom_init()
@@ -56,7 +56,7 @@
 /obj/item/weapon/gun/medbeam/process()
 
 	var/source = loc
-	if(!mounted && !isliving(source))
+	if(!isliving(source))
 		LoseTarget()
 		return
 
@@ -80,15 +80,11 @@
 
 /obj/item/weapon/gun/medbeam/proc/los_check(atom/movable/user, mob/target)
 	var/turf/user_turf = user.loc
-	if(mounted)
-		user_turf = get_turf(user)
-	else if(!istype(user_turf))
+	if(!istype(user_turf))
 		return 0
 	var/obj/dummy = new(user_turf)
 	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
 	for(var/turf/turf in getline(user_turf,target))
-		if(mounted && turf == user_turf)
-			continue //Mechs are dense and thus fail the check
 		if(turf.density)
 			qdel(dummy)
 			return 0
