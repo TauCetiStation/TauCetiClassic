@@ -234,8 +234,8 @@ var/global/combos_cheat_sheet = ""
 		if(INTENT_PUSH)
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
-				var/turf/to_move = get_step(src, force_get_dir(attacker, src))
-				var/atom/A = get_force_step_away(src, attacker)
+				var/turf/to_move = get_step(src, get_dir(attacker, src))
+				var/atom/A = get_force_push(attacker, src)
 				if(A != to_move)
 					combo_value *= 2
 
@@ -263,9 +263,9 @@ var/global/combos_cheat_sheet = ""
 	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
 		if(!attacker.grabbed_by.len)
 			attacker.do_attack_animation(src)
-		var/turf/to_move = get_step(src, force_get_dir(attacker, src))
-		step_to(src, get_force_step_away(src, attacker))
-		if(loc != to_move)
+		//var/turf/to_move = get_step(src, force_get_dir(attacker, src))
+		//step_to(src, get_force_step_away(src, attacker))
+		if(!force_push(attacker, src))
 			adjustHalLoss(4)
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")

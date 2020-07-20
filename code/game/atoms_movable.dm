@@ -359,21 +359,24 @@
 /proc/random_side_dir(dir)
 	return pick(dir, turn(dir, 90), turn(dir, -90))
 
-/proc/get_force_step_away(atom/movable/Ref, atom/Trg, Max = 5, Rand = FALSE)
-	var/new_dir = force_get_dir(Trg, Ref)
-	if(Rand)
-		new_dir = random_side_dir(new_dir)
-	var/atom/A = get_step(Ref, new_dir)
-	if(A.density)
-		return get_step_away(Ref, Trg)
-	else
-		return get_step(Ref, new_dir)
+// Get a turf in which to place target after a push by center.
+/proc/get_force_push(atom/center, atom/target)
+	var/atom/oldLoc = target.loc
+	var/atom/A = get_step(target, center.dir)
 
-/proc/force_get_dir(atom/Loc1, atom/Loc2, reverse = FALSE)
-	var/new_dir = get_dir(Loc1, Loc2)
-	if(!new_dir)
-		if(Loc1.loc == Loc2.loc && reverse)
-			new_dir = get_dir(get_step(Loc1, reverse_direction(Loc1.dir)), Loc2)
-		else
-			new_dir = get_dir(get_step(Loc1, Loc1.dir), Loc2)
-	return new_dir
+	if(A != oldLoc)
+		return A
+	return get_step_away(target, center)
+
+// Push target either in dir center is looking, or if unavailable just somewhere away from center. Return TRUE if a push occured in center's dir. Return FALSE otherwise.
+/proc/force_push(atom/center, atom/target)
+	var/atom/oldLoc = target.loc
+	var/obj/item/weapon/grab/G = locate() in target
+	if(G && G.state == GRAB_NECK)
+		step(target, reverse_direction(center.dir))
+	else
+		step(target, center.dir)
+	if(target.loc != oldLoc)
+		return TRUE
+	step_away(target, center)
+	return FALSE
