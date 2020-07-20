@@ -148,11 +148,11 @@
 				</tr>
 				<tr>
 					<td class="request">Prime directive:</td>
-					<td>[pai.pai_law0]</td>
+					<td>[pai.laws.zeroth]</td>
 				</tr>
 				<tr>
 					<td class="request">Additional directives:</td>
-					<td>[pai.pai_laws]</td>
+					<td>[pai.laws.supplied[1]]</td>
 				</tr>
 			</table>
 			<br>
@@ -273,12 +273,12 @@
 		var/t1 = text2num(href_list["wires"])
 		radio.wires.cut_wire_index(t1)
 	if(href_list["setlaws"])
-		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", input_default(pai.pai_laws)) as message)
+		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", input_default(pai.laws.supplied[1])) as message)
 		if(newlaws)
-			pai.pai_laws = newlaws
+			pai.laws.supplied[1] = newlaws
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
-			to_chat(pai, "Prime Directive: <br>[pai.pai_law0]")
-			to_chat(pai, "Supplemental Directives: <br>[pai.pai_laws]")
+			to_chat(pai, "Prime Directive: <br>[pai.laws.zeroth]")
+			to_chat(pai, "Supplemental Directives: <br>[pai.laws.supplied[1]]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
