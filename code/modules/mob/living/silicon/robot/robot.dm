@@ -51,7 +51,6 @@
 	var/has_power = 1
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
-	//var/list/laws = list()
 	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0

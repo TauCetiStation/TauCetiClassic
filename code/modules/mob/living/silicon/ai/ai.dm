@@ -42,7 +42,6 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	//var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE

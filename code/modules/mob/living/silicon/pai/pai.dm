@@ -13,7 +13,6 @@
 	var/maxram = 100					// We will reset ram to this value in the future.
 	var/ram = 100						// Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA							// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 	var/obj/item/device/radio/radio		// Our primary radio
 
@@ -25,7 +24,6 @@
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-							// Keeping this separate from the laws var, it should be much more difficult to modify
 
 	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
