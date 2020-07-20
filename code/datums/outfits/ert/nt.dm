@@ -1,22 +1,23 @@
 /datum/outfit/ert/nt
-	w_uniform = /obj/item/clothing/under/ert
+	uniform = /obj/item/clothing/under/ert
 	shoes = /obj/item/clothing/shoes/swat
 	mask = /obj/item/clothing/mask/gas/sechailer
 	id = /obj/item/weapon/card/id/ert
 	l_ear = /obj/item/device/radio/headset/ert
-	r_store = /obj/item/weapon/tank/emergency_oxygen/double
+	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
 	accessory = /obj/item/clothing/accessory/storage/black_vest
+	survival_box = FALSE
 
 /datum/outfit/ert/nt/leader
 	name = "NT ERT Leader"
 
-	wear_suit = /obj/item/clothing/suit/space/rig/ert/commander
+	suit = /obj/item/clothing/suit/space/rig/ert/commander
 	back = /obj/item/weapon/storage/backpack/ert/commander
 	belt = /obj/item/weapon/storage/belt/security/full
 	gloves = /obj/item/clothing/gloves/swat
 	head = /obj/item/clothing/head/helmet/space/rig/ert/commander
 	glasses = /obj/item/clothing/glasses/night
-	l_store = /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
+	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
 	suit_store = /obj/item/weapon/gun/energy/gun/nuclear
 	title = "Emergency Response Team Leader"
 
@@ -43,7 +44,7 @@
 	gloves = /obj/item/clothing/gloves/swat
 	head = /obj/item/clothing/head/helmet/space/rig/ert/security
 	glasses = /obj/item/clothing/glasses/night
-	l_store = /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
+	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
 	suit_store = /obj/item/weapon/gun/energy/gun/nuclear
 	title = "Emergency Response Team Security"
 
@@ -86,7 +87,7 @@
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/helmet/space/rig/ert/medical
 	glasses = /obj/item/clothing/glasses/hud/health
-	l_store = /obj/item/weapon/reagent_containers/hypospray
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray
 	suit_store = /obj/item/weapon/gun/energy/gun/nuclear //doesn't really have space for ammo or sidearm
 	r_hand = /obj/item/roller/roller_holder_surg
 	title = "Emergency Response Team Medic"
@@ -112,7 +113,7 @@
 	gloves = /obj/item/clothing/gloves/yellow
 	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	glasses = /obj/item/clothing/glasses/meson
-	l_store = /obj/item/device/multitool
+	l_pocket = /obj/item/device/multitool
 	suit_store = /obj/item/weapon/gun/energy/ionrifle
 	r_hand = /obj/item/weapon/storage/briefcase/inflatable
 	title = "Emergency Response Team Engineer"
