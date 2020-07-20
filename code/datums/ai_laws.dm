@@ -207,7 +207,8 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/write_supplied_laws()
 	var/text = ""
 	for(var/law in src.supplied)
-		text += "[law]<br>"
+		if(length(law) > 0)
+			text += "[law]<br>"
 	return text
 
 /datum/ai_laws/proc/show_laws(who)
@@ -221,8 +222,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 	var/number = 1
 	for(var/law in src.inherent + src.supplied)
-		to_chat(who, "[number]. [law]")
-		number++
+		if(length(law) > 0)
+			to_chat(who, "[number]. [law]")
+			number++
 
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
@@ -235,7 +237,8 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 	var/number = 1
 	for(var/law in src.inherent + src.supplied)
-		text += "<br>[number]. [law]"
-		number++
+		if(length(law) > 0)
+			text += "<br>[number]. [law]"
+			number++
 
 	return text
