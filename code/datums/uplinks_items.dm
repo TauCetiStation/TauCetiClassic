@@ -701,6 +701,12 @@
 	cost = 55
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/medigun
+	name = "Medigun"
+	desc = "Prototype medigun, which heals target at decent speed of all damage types."
+	item = /obj/item/weapon/gun/medbeam
+	cost = 15
+	uplink_types = list("nuclear")
 // IMPLANTS
 
 /datum/uplink_item/implants
