@@ -174,7 +174,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/pai/New()
 	set_zeroth_law("Serve your master.")
-	add_supplied_law(1, "")
 
 /* General ai_law functions */
 
@@ -204,6 +203,14 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/clear_ion_laws()
 	src.ion = list()
+
+/datum/ai_laws/proc/write_supplied_laws()
+	var/text = ""
+	var/number = 1
+	for(var/law in src.supplied)
+		text += "<br>[number]. [law]"
+		number++
+	return text
 
 /datum/ai_laws/proc/show_laws(who)
 
