@@ -214,49 +214,30 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/show_laws(who)
 
-	if (src.zeroth)
+	if(src.zeroth)
 		to_chat(who, "0. [src.zeroth]")
 
-	for (var/index = 1, index <= src.ion.len, index++)
-		var/law = src.ion[index]
+	for(var/law in src.ion)
 		var/num = ionnum()
 		to_chat(who, "[num]. [law]")
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
-
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
-
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
+	for(var/law in src.inherent + src.supplied)
+		to_chat(who, "[number]. [law]")
+		number++
 
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
-	if (src.zeroth)
+	if(src.zeroth)
 		text += "0. [src.zeroth]"
 
-	for (var/index = 1, index <= src.ion.len, index++)
-		var/law = src.ion[index]
+	for(var/law in src.ion)
 		var/num = ionnum()
 		text += "<br>[num]. [law]"
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
+	for(var/law in src.inherent + src.supplied)
+		text += "<br>[number]. [law]"
+		number++
 
-		if (length(law) > 0)
-			text += "<br>[number]. [law]"
-			number++
-
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
-		if (length(law) > 0)
-			text += "<br>[number]. [law]"
-			number++
 	return text
