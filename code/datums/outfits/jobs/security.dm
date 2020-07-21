@@ -60,6 +60,7 @@
 	name = OUTFIT_JOB_NAME("Security Officer")
 
 	uniform = /obj/item/clothing/under/rank/security
+	uniform_f = /obj/item/clothing/under/rank/security/skirt
 	belt = /obj/item/device/pda/security
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/headset_sec
@@ -90,6 +91,7 @@
 	name = OUTFIT_JOB_NAME("Security Cadet")
 	
 	uniform = /obj/item/clothing/under/rank/cadet
+	uniform_f = /obj/item/clothing/under/rank/cadet/skirt
 	belt = /obj/item/device/pda
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/headset_sec
