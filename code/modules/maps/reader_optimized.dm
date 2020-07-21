@@ -320,7 +320,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
 	if(TICK_CHECK)
 		SSatoms.map_loader_stop()
-		stoplag(1)
+		stoplag()
 		SSatoms.map_loader_begin()
 
 /dmm_suite/proc/create_atom(path, crds)

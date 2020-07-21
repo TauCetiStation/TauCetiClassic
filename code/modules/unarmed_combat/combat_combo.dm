@@ -207,7 +207,7 @@ var/global/list/combat_combos_by_name = list()
 	var/endtime = world.time + delay
 
 	while(world.time < endtime)
-		stoplag(1)
+		stoplag()
 		if(QDELETED(victim))
 			return FALSE
 		if(QDELETED(attacker))

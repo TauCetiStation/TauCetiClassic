@@ -210,7 +210,7 @@
 	var/step = A.alpha / frames
 	for(var/i = 0, i < frames, i++)
 		A.alpha -= step
-		stoplag(1)
+		stoplag()
 	return
 
 //------------------------------------------
