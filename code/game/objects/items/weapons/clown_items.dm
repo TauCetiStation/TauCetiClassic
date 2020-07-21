@@ -261,3 +261,55 @@
 	cooldown = FALSE
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	return
+
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+//                   Devils helmet                            \\
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+
+/obj/item/clothing/head/helmet/devils_helmet/attack_self()
+	demonic_laugh()
+
+/obj/item/clothing/head/helmet/devils_helmet/emag_act(mob/user)
+	if(devil_emagged)
+		to_chat(user, "<span class='warning'>[src] is already cracked.</span>")
+		return FALSE
+	devil_emagged = TRUE
+	to_chat(user, "<span class='warning'>You swipe card and crack the devils helmet.</span>")
+	return TRUE
+
+/obj/item/clothing/head/helmet/devils_helmet/verb/demonic_laugh()
+	set name = "Press black button"
+	if(!istype(usr, /mob/living)) return
+	if(usr.incapacitated())
+		return
+	var/phrase = 0
+	var/phrase_text = null
+	var/phrase_sound = null
+	if(!cooldown)
+		phrase = prob(60)
+		playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
+		switch(phrase)
+			if(TRUE)
+				if(!devil_emagged)
+					phrase_text = "Ah-ha-ha."
+					phrase_sound = 'sound/voice/hell/demonic_voice_1.ogg'
+				else
+					phrase_text = "A$H-%%HA-H^A."
+					phrase_sound = 'sound/voice/hell/demonic voice_emag_1.ogg'
+			if(FALSE)
+				if(!devil_emagged)
+					phrase_text = "Ha-ha-ha."
+					phrase_sound = 'sound/voice/hell/demonic_voice_2.ogg'
+				else
+					phrase_text = "??$aH-%%HA-H^A."
+					phrase_sound = 'sound/voice/hell/demonic_voice_emag_2.ogg'
+		usr.visible_message("[usr]'s helmet dynamic: <font color='red' size='3'><b>[phrase_text]</b></font>")
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = TRUE)
+		cooldown = TRUE
+		addtimer(CALLBACK(src, .proc/release_cooldown), 50)
+
+/obj/item/clothing/head/helmet/devils_helmet/proc/release_cooldown()
+	cooldown = FALSE
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
+	return

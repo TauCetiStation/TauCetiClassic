@@ -13,6 +13,18 @@
 	siemens_coefficient = 0.3
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/clothing/head/helmet/devils_helmet
+	name = "Devil's helmet"
+	desc = "HELMET FROM HELL"
+	icon_state = "devils_helmet"
+	item_state = "devils_helmet"
+	armor = list(melee = 10, bullet = 0, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
+	var/devil_volume = 30
+	var/devil_emagged = 0
+	var/cooldown = 0
+	action_button_name = "Devils laugh"
+
+
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
