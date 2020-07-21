@@ -512,7 +512,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions
 	while(map_loading)
-		stoplag()
+		stoplag(1)
 	for(var/S in subsystems)
 		var/datum/subsystem/SS = S
 		SS.StartLoadingMap()

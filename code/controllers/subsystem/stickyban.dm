@@ -422,7 +422,7 @@ var/datum/subsystem/stickyban/SSstickyban
 		world.SetConfig("ban", ckey, null)
 		// Revert is mostly used when shit goes rouge, so we have to set it to null
 		//	and wait a byond tick before assigning it to ensure byond clears its shit.
-		stoplag()
+		stoplag(1)
 		world.SetConfig("ban", ckey, list2stickyban(cached_ban))
 
 /datum/subsystem/stickyban/proc/update_matches(ckey, matched_ckey, matched_address, matched_computer_id)

@@ -196,7 +196,7 @@
 		return
 	global.stickyban_admin_exemptions[admin_ckey] = world.time
 	// Get time for Config update
-	stoplag()
+	stoplag(1)
 	// Restore on 5 seconds
 	global.stickyban_admin_exemption_timer_id = addtimer( \
 		CALLBACK(GLOBAL_PROC, /proc/restore_stickybans),  \

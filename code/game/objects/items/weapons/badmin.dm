@@ -97,7 +97,7 @@
 	var/atom/movable/entity
 
 	while(attempt++ < 100)
-		stoplag()
+		stoplag(1)
 
 		entity = pick(world.contents)
 

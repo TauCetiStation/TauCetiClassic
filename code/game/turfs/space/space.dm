@@ -158,7 +158,7 @@
 					M.pulling.forceMove(get_turf(M), TRUE)
 
 
-			stoplag()//Let a diagonal move finish, if necessary
+			stoplag(1)//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)

@@ -279,7 +279,7 @@ var/global/list/radial_menus = list()
 				return
 			else
 				next_check = world.time + check_delay
-		stoplag()
+		stoplag(1)
 
 /*
 	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen)
