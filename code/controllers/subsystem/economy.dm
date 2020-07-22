@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/economy/SSeconomy
-
-/datum/controller/subsystem/economy
+SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 15 MINUTES
 	init_order = SS_INIT_DEFAULT
@@ -8,9 +6,6 @@ var/datum/controller/subsystem/economy/SSeconomy
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
 	var/payment_counter = 0 
-
-/datum/controller/subsystem/economy/New()
-	NEW_SS_GLOBAL(SSeconomy)
 
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()
