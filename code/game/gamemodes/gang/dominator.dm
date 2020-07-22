@@ -112,7 +112,7 @@
 	set_light(0)
 	icon_state = "dominator-broken"
 	operating = -1
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -202,7 +202,7 @@
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

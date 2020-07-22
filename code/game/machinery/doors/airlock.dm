@@ -835,7 +835,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
-						START_PROCESSING(SSmachine, src)
+						START_PROCESSING(SSmachines, src)
 
 				if(6)
 					// Electrify door indefinitely

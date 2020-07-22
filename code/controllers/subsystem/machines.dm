@@ -1,5 +1,4 @@
-var/datum/controller/subsystem/machines/SSmachine
-
+SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines
 	name = "Machines"
 
@@ -11,7 +10,6 @@ var/datum/controller/subsystem/machines/SSmachine
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets  = list()
-
 
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
@@ -28,9 +26,6 @@ var/datum/controller/subsystem/machines/SSmachine
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
-
-/datum/controller/subsystem/machines/New()
-	NEW_SS_GLOBAL(SSmachine)
 
 
 /datum/controller/subsystem/machines/stat_entry()
@@ -65,7 +60,7 @@ var/datum/controller/subsystem/machines/SSmachine
 			propagate_network(PC,PC.powernet)
 
 /datum/controller/subsystem/machines/Recover()
-	if (istype(SSmachine.processing))
-		processing = SSmachine.processing
-	if (istype(SSmachine.powernets))
-		powernets = SSmachine.powernets
+	if (istype(SSmachines.processing))
+		processing = SSmachines.processing
+	if (istype(SSmachines.powernets))
+		powernets = SSmachines.powernets
