@@ -16,6 +16,8 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
+	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
+
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -221,7 +223,7 @@
 			O.layer = 5
 			O.mouse_opacity = 0
 
-/turf/simulated/wall/proc/thermitemelt(mob/user)
+/turf/simulated/wall/proc/thermitemelt(mob/user, var/seconds_to_melt)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -240,7 +242,7 @@
 	F.icon_state = "wall_thermite"
 	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
 
-	spawn(100)
+	spawn(seconds_to_melt * 10)
 		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
@@ -353,11 +355,11 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				thermitemelt(user)
+				thermitemelt(user, seconds_to_melt)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -368,7 +370,7 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
