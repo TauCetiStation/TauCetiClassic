@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/sun/SSsun
-
-/datum/controller/subsystem/sun
+SUBSYSTEM_DEF(sun)
 	name = "Sun"
 
 	init_order = SS_INIT_SUN
@@ -16,9 +14,7 @@ var/datum/controller/subsystem/sun/SSsun
 	var/nexttime = 3600		// Replacement for var/counter to force the sun to move every X IC minutes
 	var/lastAngleUpdate
 
-/datum/controller/subsystem/sun/New()
-	NEW_SS_GLOBAL(SSsun)
-
+/datum/controller/subsystem/sun/PreInit()
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(500,2000)/1000			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
