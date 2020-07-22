@@ -138,6 +138,49 @@
 	w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 100
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
+	var/mob/listeningTo	= null
+	var/spam_protection = FALSE
+
+/obj/item/weapon/storage/bag/ore/equipped(mob/user)
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, list(COMSIG_MOVABLE_MOVED))
+	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/Pickup_ores)
+	listeningTo = user
+
+/obj/item/weapon/storage/bag/ore/dropped()
+	if(listeningTo)
+		UnregisterSignal(listeningTo, list(COMSIG_MOVABLE_MOVED))
+		listeningTo = null
+
+/obj/item/weapon/storage/bag/ore/proc/Pickup_ores(mob/living/user)
+	var/show_message = TRUE
+	var/obj/structure/ore_box/box
+	var/turf/tile = user.loc
+	if (istype(user.pulling, /obj/structure/ore_box))
+		box = user.pulling
+	for(var/A in tile)
+		if(!is_type_in_list(A, can_hold))
+			continue
+		if(box && istype(A, /obj/item/weapon/ore))
+			var/obj/item/weapon/ore/O = A
+			remove_from_storage(O, box)
+			box.stored_ore[O.name]++
+			if(show_message)
+				show_message = FALSE
+				to_chat(user, "<span class='notice'>You offload the ores beneath you into your [box].</span>")
+		else if(can_be_inserted(A, TRUE))
+			handle_item_insertion(A, TRUE, FALSE)
+			if(show_message)
+				show_message = FALSE
+				to_chat(user, "<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
+		else
+			if(!spam_protection)
+				to_chat(user, "<span class='warning'>Your [name] is full and can't hold any more!</span>")
+				spam_protection = TRUE
+	spam_protection = FALSE
+
 
 /obj/item/weapon/storage/bag/ore/holding
 	name = "Mining satchel of holding"
