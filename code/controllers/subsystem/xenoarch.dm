@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/xenoarch/SSxenoarch
-
-/datum/controller/subsystem/xenoarch
+SUBSYSTEM_DEF(xenoarch)
 	name = "Xenoarch"
 
 	init_order = SS_INIT_XENOARCH
@@ -48,10 +46,6 @@ var/datum/controller/subsystem/xenoarch/SSxenoarch
 		/obj/item/seeds/surik,
 		/obj/item/seeds/blackberry
 	)
-
-
-/datum/controller/subsystem/xenoarch/New()
-	NEW_SS_GLOBAL(SSxenoarch)
 
 /datum/controller/subsystem/xenoarch/Initialize(timeofday)
 	// Local lists for sonic speed.
