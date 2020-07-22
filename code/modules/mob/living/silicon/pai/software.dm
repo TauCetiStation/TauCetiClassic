@@ -463,10 +463,10 @@
 			var/mob/living/silicon/pai/targetPersonality = target.pai
 			switch(interaction_type)
 				if(INTERACTION_PAI_MODIFY_MAIN_LAW)
-					targetPersonality.laws.set_zeroth_law(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text)
+					targetPersonality.laws.set_zeroth_law(sanitize(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text))
 					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.laws.zeroth]")
 				if(INTERACTION_PAI_MODIFY_SEC_LAW)
-					targetPersonality.laws.add_supplied_law(0, input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.supplied.len ? targetPersonality.laws.supplied[1] : "") as text)
+					targetPersonality.laws.add_supplied_law(0, sanitize(input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.supplied.len ? targetPersonality.laws.supplied[1] : "") as text))
 					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [jointext(targetPersonality.laws.supplied, "<br>")]")
 				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
