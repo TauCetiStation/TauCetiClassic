@@ -138,21 +138,16 @@
 	w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 100
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
-	var/mob/listeningTo	= null
 	var/spam_protection = FALSE
 
-/obj/item/weapon/storage/bag/ore/equipped(mob/user)
-	if(listeningTo == user)
-		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, list(COMSIG_MOVABLE_MOVED))
-	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/Pickup_ores)
-	listeningTo = user
 
-/obj/item/weapon/storage/bag/ore/dropped()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, list(COMSIG_MOVABLE_MOVED))
-		listeningTo = null
+/obj/item/weapon/storage/bag/ore/equipped(mob/user)
+	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/Pickup_ores)
+
+
+/obj/item/weapon/storage/bag/ore/dropped(mob/user)
+	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+
 
 /obj/item/weapon/storage/bag/ore/proc/Pickup_ores(mob/living/user)
 	var/show_message = TRUE
