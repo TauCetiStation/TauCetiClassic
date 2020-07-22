@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/drying/SSdry
-
-/datum/controller/subsystem/drying
+SUBSYSTEM_DEF(drying)
 	name = "Drying"
 
 	priority = SS_PRIORITY_OBJECTS // yes, objects.
@@ -9,9 +7,6 @@ var/datum/controller/subsystem/drying/SSdry
 
 	var/list/drying = list()
 	var/list/currentrun = list()
-
-/datum/controller/subsystem/drying/New()
-	NEW_SS_GLOBAL(SSdry)
 
 /datum/controller/subsystem/drying/stat_entry()
 	..("P:[drying.len]")
@@ -35,5 +30,5 @@ var/datum/controller/subsystem/drying/SSdry
 			return
 
 /datum/controller/subsystem/drying/Recover()
-	if (istype(SSdry.drying))
-		drying = SSdry.drying
+	if (istype(SSdrying.drying))
+		drying = SSdrying.drying
