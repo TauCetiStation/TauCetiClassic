@@ -1,8 +1,6 @@
 var/global/list/baked_smooth_icons = list()
 
-var/datum/controller/subsystem/icon_smooth/SSicon_smooth
-
-/datum/controller/subsystem/icon_smooth
+SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = SS_INIT_ICON_SMOOTH
 	wait = SS_WAIT_ICON_SMOOTH
@@ -11,9 +9,6 @@ var/datum/controller/subsystem/icon_smooth/SSicon_smooth
 
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
-
-/datum/controller/subsystem/icon_smooth/New()
-	NEW_SS_GLOBAL(SSicon_smooth)
 
 /datum/controller/subsystem/icon_smooth/fire()
 	var/list/cached = smooth_queue
