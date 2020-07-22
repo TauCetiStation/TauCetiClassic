@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/overlays/SSoverlays
-
-/datum/controller/subsystem/overlays
+SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
 	wait = SS_WAIT_OVERLAYS
@@ -11,9 +9,6 @@ var/datum/controller/subsystem/overlays/SSoverlays
 	var/list/stats = list()
 	var/list/overlay_icon_state_caches = list()
 	var/list/overlay_icon_cache = list()
-
-/datum/controller/subsystem/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
 
 /datum/controller/subsystem/overlays/Initialize()
 	fire(mc_check = FALSE)
