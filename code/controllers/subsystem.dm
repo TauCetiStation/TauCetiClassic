@@ -31,8 +31,14 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
+//Do not override
+///datum/controller/subsystem/New()
+
 // Used to initialize the subsystem BEFORE the map has loaded
-/datum/controller/subsystem/New()
+// Called AFTER Recover if that is called
+// Prefer to use Initialize if possible
+/datum/controller/subsystem/proc/PreInit()
+	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = 0)
