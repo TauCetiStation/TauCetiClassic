@@ -1,7 +1,5 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-var/datum/controller/subsystem/junkyard/SSjunkyard
-
-/datum/controller/subsystem/junkyard
+SUBSYSTEM_DEF(junkyard)
 	name = "Junkyard"
 	flags = SS_NO_FIRE
 	var/list/junk = list()
@@ -9,8 +7,6 @@ var/datum/controller/subsystem/junkyard/SSjunkyard
 
 /datum/controller/subsystem/junkyard/Initialize(timeofday)
 	..()
-
-	NEW_SS_GLOBAL(SSjunkyard)
 	load_stats()
 
 /datum/controller/subsystem/junkyard/proc/save_stats()
