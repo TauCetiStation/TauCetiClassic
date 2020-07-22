@@ -1,6 +1,6 @@
-var/datum/subsystem/drying/SSdry
+var/datum/controller/subsystem/drying/SSdry
 
-/datum/subsystem/drying
+/datum/controller/subsystem/drying
 	name = "Drying"
 
 	priority = SS_PRIORITY_OBJECTS // yes, objects.
@@ -10,13 +10,13 @@ var/datum/subsystem/drying/SSdry
 	var/list/drying = list()
 	var/list/currentrun = list()
 
-/datum/subsystem/drying/New()
+/datum/controller/subsystem/drying/New()
 	NEW_SS_GLOBAL(SSdry)
 
-/datum/subsystem/drying/stat_entry()
+/datum/controller/subsystem/drying/stat_entry()
 	..("P:[drying.len]")
 
-/datum/subsystem/drying/fire(resumed = 0)
+/datum/controller/subsystem/drying/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = drying.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -34,6 +34,6 @@ var/datum/subsystem/drying/SSdry
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/drying/Recover()
+/datum/controller/subsystem/drying/Recover()
 	if (istype(SSdry.drying))
 		drying = SSdry.drying

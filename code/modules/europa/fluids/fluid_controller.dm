@@ -1,6 +1,6 @@
-var/datum/subsystem/fluids/SSfluids
+var/datum/controller/subsystem/fluids/SSfluids
 
-/datum/subsystem/fluids
+/datum/controller/subsystem/fluids
 	name = "Fluids"
 
 	init_order    = SS_INIT_FLUIDS
@@ -15,13 +15,13 @@ var/datum/subsystem/fluids/SSfluids
 	var/next_water_act = 0
 	var/water_act_delay = 15 // A bit longer than machines.
 
-/datum/subsystem/fluids/New()
+/datum/controller/subsystem/fluids/New()
 	NEW_SS_GLOBAL(SSfluids)
 
-/datum/subsystem/fluids/stat_entry()
+/datum/controller/subsystem/fluids/stat_entry()
 	..("AF:[active_fluids.len]|FS:[water_sources.len]")
 
-/datum/subsystem/fluids/fire(resumed = 0)
+/datum/controller/subsystem/fluids/fire(resumed = 0)
 	// Process water sources.
 	for(var/thing in water_sources)
 		var/turf/T = thing
@@ -72,18 +72,18 @@ var/datum/subsystem/fluids/SSfluids
 					A.water_act(F.fluid_amount)
 		CHECK_TICK
 
-/datum/subsystem/fluids/proc/add_active_source(turf/T)
+/datum/controller/subsystem/fluids/proc/add_active_source(turf/T)
 	if(istype(T) && !(T in water_sources))
 		water_sources += T
 
-/datum/subsystem/fluids/proc/remove_active_source(turf/T)
+/datum/controller/subsystem/fluids/proc/remove_active_source(turf/T)
 	if(istype(T) && (T in water_sources))
 		water_sources -= T
 
-/datum/subsystem/fluids/proc/add_active_fluid(obj/effect/fluid/F)
+/datum/controller/subsystem/fluids/proc/add_active_fluid(obj/effect/fluid/F)
 	if(istype(F) && !(F in active_fluids))
 		active_fluids += F
 
-/datum/subsystem/fluids/proc/remove_active_fluid(obj/effect/fluid/F)
+/datum/controller/subsystem/fluids/proc/remove_active_fluid(obj/effect/fluid/F)
 	if(istype(F) && (F in active_fluids))
 		active_fluids -= F

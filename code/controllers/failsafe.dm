@@ -92,7 +92,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/defcon_pretty()
 	return Failsafe.defcon
 
-/datum/controller/failsafe/proc/stat_entry()
+/datum/controller/failsafe/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 

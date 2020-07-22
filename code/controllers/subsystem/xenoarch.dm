@@ -1,6 +1,6 @@
-var/datum/subsystem/xenoarch/SSxenoarch
+var/datum/controller/subsystem/xenoarch/SSxenoarch
 
-/datum/subsystem/xenoarch
+/datum/controller/subsystem/xenoarch
 	name = "Xenoarch"
 
 	init_order = SS_INIT_XENOARCH
@@ -50,10 +50,10 @@ var/datum/subsystem/xenoarch/SSxenoarch
 	)
 
 
-/datum/subsystem/xenoarch/New()
+/datum/controller/subsystem/xenoarch/New()
 	NEW_SS_GLOBAL(SSxenoarch)
 
-/datum/subsystem/xenoarch/Initialize(timeofday)
+/datum/controller/subsystem/xenoarch/Initialize(timeofday)
 	// Local lists for sonic speed.
 	var/list/turfs_to_process        = list()
 	var/list/artifact_spawning_turfs = list()
@@ -156,5 +156,5 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	..()
 
-/datum/subsystem/xenoarch/Recover()
+/datum/controller/subsystem/xenoarch/Recover()
 	flags |= SS_NO_INIT

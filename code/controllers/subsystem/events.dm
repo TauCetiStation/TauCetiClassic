@@ -1,9 +1,9 @@
-var/datum/subsystem/events/SSevent
+var/datum/controller/subsystem/events/SSevent
 
 var/list/allEvents = subtypesof(/datum/event)
 var/list/potentialRandomEvents = subtypesof(/datum/event)
 
-/datum/subsystem/events
+/datum/controller/subsystem/events
 	name = "Events"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
@@ -17,10 +17,10 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 	var/scheduledEvent = null
 
 
-/datum/subsystem/events/New()
+/datum/controller/subsystem/events/New()
 	NEW_SS_GLOBAL(SSevent)
 
-/datum/subsystem/events/fire(resumed = 0)
+/datum/controller/subsystem/events/fire(resumed = 0)
 	if (!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
@@ -40,7 +40,7 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 			return
 
 //checks if we should select a random event yet, and reschedules if necessary
-/datum/subsystem/events/proc/checkEvent()
+/datum/controller/subsystem/events/proc/checkEvent()
 	if(!scheduledEvent)
 		//more players = more time between events, less players = less time between events
 		var/playercount_modifier = 1

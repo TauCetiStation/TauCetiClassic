@@ -1,9 +1,9 @@
 var/round_start_time = 0
 var/round_start_realtime = 0
 
-var/datum/subsystem/ticker/ticker
+var/datum/controller/subsystem/ticker/ticker
 
-/datum/subsystem/ticker
+/datum/controller/subsystem/ticker
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
@@ -42,7 +42,7 @@ var/datum/subsystem/ticker/ticker
 	var/obj/screen/cinematic = null
 
 
-/datum/subsystem/ticker/New()
+/datum/controller/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
 	login_music = pick(\
@@ -61,7 +61,7 @@ var/datum/subsystem/ticker/ticker
 	'sound/lobby/robocop_gb_intro.ogg')
 
 
-/datum/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -69,7 +69,7 @@ var/datum/subsystem/ticker/ticker
 	setupFactions()
 	..()
 
-/datum/subsystem/ticker/fire()
+/datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = initial(timeLeft)
@@ -160,7 +160,7 @@ var/datum/subsystem/ticker/ticker
 							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 						)
 
-/datum/subsystem/ticker/proc/setup()
+/datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 
 	// Discuss your stuff after the round ends.
@@ -290,7 +290,7 @@ var/datum/subsystem/ticker/ticker
 
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+/datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if(cinematic)
 		return
 
@@ -341,7 +341,7 @@ var/datum/subsystem/ticker/ticker
 		flick(screen, cinematic)
 	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
-/datum/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
+/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
 	for(var/mob/M in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	if(explosion)
@@ -350,7 +350,7 @@ var/datum/subsystem/ticker/ticker
 		cinematic.icon_state = summary
 	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
 
-/datum/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
+/datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
 	for(var/mob/M in mob_list)
 		if(M.client)
 			M.client.screen -= cinematic
@@ -360,7 +360,7 @@ var/datum/subsystem/ticker/ticker
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 
-/datum/subsystem/ticker/proc/create_characters()
+/datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
 		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
@@ -375,13 +375,13 @@ var/datum/subsystem/ticker/ticker
 				qdel(player)
 		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
-/datum/subsystem/ticker/proc/collect_minds()
+/datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			ticker.minds += player.mind
 
 
-/datum/subsystem/ticker/proc/equip_characters()
+/datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
@@ -397,7 +397,7 @@ var/datum/subsystem/ticker/ticker
 				to_chat(M, "Captainship not forced on anyone.")
 
 //cursed code
-/datum/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
 	if(config.ooc_round_only)
 		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
@@ -516,7 +516,7 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
-/datum/subsystem/ticker/proc/achievement_declare_completion()
+/datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup
@@ -527,7 +527,7 @@ var/datum/subsystem/ticker/ticker
 
 	return text
 
-/datum/subsystem/ticker/proc/start_now()
+/datum/controller/subsystem/ticker/proc/start_now()
 	if(ticker.current_state != GAME_STATE_PREGAME)
 		return FALSE
 	ticker.can_fire = TRUE

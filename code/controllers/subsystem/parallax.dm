@@ -1,6 +1,6 @@
-var/datum/subsystem/parallax/SSparallax
+var/datum/controller/subsystem/parallax/SSparallax
 
-/datum/subsystem/parallax
+/datum/controller/subsystem/parallax
 	name = "Parallax"
 
 	priority = SS_PRIORITY_PARALAX
@@ -12,15 +12,15 @@ var/datum/subsystem/parallax/SSparallax
 	var/planet_x_offset = 128
 	var/planet_y_offset = 128
 
-/datum/subsystem/parallax/New()
+/datum/controller/subsystem/parallax/New()
 	NEW_SS_GLOBAL(SSparallax)
 
-/datum/subsystem/parallax/Initialize(timeofday)
+/datum/controller/subsystem/parallax/Initialize(timeofday)
 	planet_y_offset = rand(100, 160)
 	planet_x_offset = rand(100, 160)
 	..()
 
-/datum/subsystem/parallax/fire(resumed = 0)
+/datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = clients.Copy()
 

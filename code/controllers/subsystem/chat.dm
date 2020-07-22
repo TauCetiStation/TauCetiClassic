@@ -1,6 +1,6 @@
-var/datum/subsystem/chat/SSchat
+var/datum/controller/subsystem/chat/SSchat
 
-/datum/subsystem/chat
+/datum/controller/subsystem/chat
 	name = "Chat"
 	init_order = SS_INIT_CHAT
 	wait = SS_WAIT_CHAT
@@ -9,10 +9,10 @@ var/datum/subsystem/chat/SSchat
 
 	var/list/payload = list()
 
-/datum/subsystem/chat/New()
+/datum/controller/subsystem/chat/New()
 	NEW_SS_GLOBAL(SSchat)
 
-/datum/subsystem/chat/fire()
+/datum/controller/subsystem/chat/fire()
 	for(var/i in payload)
 		var/client/C = i
 		C << output(payload[C], "browseroutput:output")
@@ -21,7 +21,7 @@ var/datum/subsystem/chat/SSchat
 		if(MC_TICK_CHECK)
 			return
 
-/datum/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
 	if(!target || !message)
 		return
 

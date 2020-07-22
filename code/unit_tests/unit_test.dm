@@ -153,9 +153,9 @@ var/global/ascii_reset = "[global.ascii_esc]\[0m"
 
 #ifdef UNIT_TEST
 
-var/datum/subsystem/unit_tests/SSunit_tests
+var/datum/controller/subsystem/unit_tests/SSunit_tests
 
-/datum/subsystem/unit_tests
+/datum/controller/subsystem/unit_tests
 	name = "Unit Tests"
 	wait = SS_WAIT_UNIT_TESTS
 	init_order = SS_INIT_UNIT_TESTS
@@ -168,10 +168,10 @@ var/datum/subsystem/unit_tests/SSunit_tests
 	var/end_unit_tests
 	var/tests_start_time = 0
 
-/datum/subsystem/unit_tests/New()
+/datum/controller/subsystem/unit_tests/New()
 	NEW_SS_GLOBAL(SSunit_tests)
 
-/datum/subsystem/unit_tests/Initialize(timeofday)
+/datum/controller/subsystem/unit_tests/Initialize(timeofday)
 	#ifndef UNIT_TEST_COLOURED
 	if(world.system_type != UNIX) // Not a Unix/Linux/etc system, we probably don't want to print color escapes (unless UNIT_TEST_COLOURED was defined to force escapes)
 		global.ascii_esc = ""
@@ -190,7 +190,7 @@ var/datum/subsystem/unit_tests/SSunit_tests
 	log_unit_test("[queue.len] unit tests loaded.")
 	..()
 
-/datum/subsystem/unit_tests/proc/start_game()
+/datum/controller/subsystem/unit_tests/proc/start_game()
 	if (ticker.current_state >= GAME_STATE_FINISHED)
 		log_unit_test("Unable to start testing - game is finished!")
 		del world
@@ -205,7 +205,7 @@ var/datum/subsystem/unit_tests/SSunit_tests
 	log_unit_test("Round has been started.  Waiting 10 seconds to start tests.")
 	tests_start_time = world.time + 10 SECONDS
 
-/datum/subsystem/unit_tests/proc/handle_tests()
+/datum/controller/subsystem/unit_tests/proc/handle_tests()
 	var/list/curr = queue
 	while (curr.len)
 		var/datum/unit_test/test = curr[curr.len]
@@ -218,7 +218,7 @@ var/datum/subsystem/unit_tests/SSunit_tests
 	if (!curr.len)
 		stage++
 
-/datum/subsystem/unit_tests/proc/handle_async(resumed = 0)
+/datum/controller/subsystem/unit_tests/proc/handle_async(resumed = 0)
 	if (!resumed)
 		current_async = async_tests.Copy()
 
@@ -233,7 +233,7 @@ var/datum/subsystem/unit_tests/SSunit_tests
 	if (!async_tests.len)
 		stage++
 
-/datum/subsystem/unit_tests/fire(resumed = 0)
+/datum/controller/subsystem/unit_tests/fire(resumed = 0)
 	switch (stage)
 		if (1)
 			start_game()

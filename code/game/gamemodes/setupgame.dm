@@ -16,7 +16,7 @@
 //	testing("[name] assigned to block #[assigned].")
 	return assigned
 
-/datum/subsystem/atoms/proc/setupGenetics()
+/datum/controller/subsystem/atoms/proc/setupGenetics()
 
 	if (prob(50))
 		// Currently unused.  Will revisit. - N3X

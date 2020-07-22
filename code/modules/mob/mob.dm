@@ -695,7 +695,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 						stat("Failsafe Controller:", "ERROR")
 					if(Master)
 						stat(null)
-						for(var/datum/subsystem/SS in Master.subsystems)
+						for(var/datum/controller/subsystem/SS in Master.subsystems)
 							SS.stat_entry()
 					cameranet.stat_entry()
 

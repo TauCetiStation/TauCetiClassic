@@ -1,4 +1,4 @@
-/datum/subsystem/ticker/proc/scoreboard(completions)
+/datum/controller/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
 		completions += "<div class='block'>[achievement_declare_completion()]</div>"
 
