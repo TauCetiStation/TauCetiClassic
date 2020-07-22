@@ -1,8 +1,7 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
-var/datum/controller/subsystem/timer/SStimer
 
-/datum/controller/subsystem/timer
+SUBSYSTEM_DEF(timer)
 	name = "Timer"
 
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
@@ -25,13 +24,12 @@ var/datum/controller/subsystem/timer/SStimer
 	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
 
 
-/datum/controller/subsystem/timer/New()
+/datum/controller/subsystem/timer/PreInit()
 	processing        = list()
 	hashes            = list()
 	bucket_list       = list()
 	timer_id_dict     = list()
 	clienttime_timers = list()
-	NEW_SS_GLOBAL(SStimer)
 
 
 /datum/controller/subsystem/timer/stat_entry(msg)
