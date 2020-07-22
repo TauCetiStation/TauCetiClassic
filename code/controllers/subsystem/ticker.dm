@@ -1,9 +1,7 @@
 var/round_start_time = 0
 var/round_start_realtime = 0
 
-var/datum/controller/subsystem/ticker/ticker
-
-/datum/controller/subsystem/ticker
+SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
@@ -42,9 +40,7 @@ var/datum/controller/subsystem/ticker/ticker
 	var/obj/screen/cinematic = null
 
 
-/datum/controller/subsystem/ticker/New()
-	NEW_SS_GLOBAL(ticker)
-
+/datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
 	/*
 	'sound/music/space.ogg',\
@@ -111,7 +107,7 @@ var/datum/controller/subsystem/ticker/ticker
 				spawn(50)
 					for(var/client/C in clients)
 						C.log_client_ingame_age_to_db()
-					world.save_last_mode(ticker.mode.name)
+					world.save_last_mode(SSticker.mode.name)
 
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
@@ -378,7 +374,7 @@ var/datum/controller/subsystem/ticker/ticker
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
-			ticker.minds += player.mind
+			SSticker.minds += player.mind
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
@@ -528,17 +524,17 @@ var/datum/controller/subsystem/ticker/ticker
 	return text
 
 /datum/controller/subsystem/ticker/proc/start_now()
-	if(ticker.current_state != GAME_STATE_PREGAME)
+	if(SSticker.current_state != GAME_STATE_PREGAME)
 		return FALSE
-	ticker.can_fire = TRUE
-	ticker.timeLeft = 0
+	SSticker.can_fire = TRUE
+	SSticker.timeLeft = 0
 	return TRUE
 
 /world/proc/has_round_started()
-	return (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+	return (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 
 /world/proc/has_round_finished()
-	return (ticker && ticker.current_state >= GAME_STATE_FINISHED)
+	return (SSticker && SSticker.current_state >= GAME_STATE_FINISHED)
 
 /world/proc/is_round_preparing()
-	return (ticker && ticker.current_state == GAME_STATE_PREGAME)
+	return (SSticker && SSticker.current_state == GAME_STATE_PREGAME)

@@ -103,7 +103,7 @@ var/ninja_confirmed_selection = 0
 		to_chat(usr, "<span class='warning'>Ninja selection already in progress. Please wait until it ends.</span>")
 		return
 
-	var/datum/game_mode/current_mode = ticker.mode
+	var/datum/game_mode/current_mode = SSticker.mode
 	var/datum/mind/current_mind
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
@@ -440,7 +440,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	set category = null
 	set name = "Make Space Ninja"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(!toggle_space_ninja)
@@ -473,7 +473,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(!ticker.mode)
+	if(!SSticker.mode)
 		alert("The game hasn't started yet!")
 		return
 	if(!toggle_space_ninja)
@@ -521,7 +521,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	mind.assigned_role = "MODE"
 	mind.special_role = "Ninja"
 
-	//ticker.mode.ninjas |= mind
+	//SSticker.mode.ninjas |= mind
 	return 1
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.

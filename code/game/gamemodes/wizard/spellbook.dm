@@ -384,7 +384,7 @@
 	return dat
 
 /datum/spellbook_entry/summon/IsAvailible()
-	return ticker.mode // In case spellbook is placed on map
+	return SSticker.mode // In case spellbook is placed on map
 
 /obj/item/weapon/spellbook
 	name = "spell book"

@@ -18,9 +18,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/atom_init()
 	. = ..()
-	if(ticker && ticker.mode)
-		welcome = ticker.mode.uplink_welcome
-		uses = ticker.mode.uplink_uses
+	if(SSticker && SSticker.mode)
+		welcome = SSticker.mode.uplink_welcome
+		uses = SSticker.mode.uplink_uses
 	else
 		welcome = "Syndicate Uplink Console:"
 		uses = 20

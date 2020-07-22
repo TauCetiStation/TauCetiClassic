@@ -198,7 +198,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		P.update_icon()
-		if (ticker.mode.config_tag=="nuclear")
+		if (SSticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
@@ -349,7 +349,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayerwithicon(syndicate)

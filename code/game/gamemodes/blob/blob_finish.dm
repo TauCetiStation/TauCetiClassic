@@ -40,7 +40,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_blob()
 	var/text = ""
-	if(istype(ticker.mode,/datum/game_mode/blob) )
+	if(istype(SSticker.mode,/datum/game_mode/blob) )
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.infected_crew.len)
 			text += "<b>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</b>"

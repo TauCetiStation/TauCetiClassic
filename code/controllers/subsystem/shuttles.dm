@@ -596,7 +596,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
-	if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
+	if(SSticker && istype(SSticker.mode,/datum/game_mode/mutiny))
 		return SHUTTLEARRIVETIME * 2
 
 	return SHUTTLEARRIVETIME

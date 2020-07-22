@@ -191,12 +191,12 @@ var/datum/controller/subsystem/unit_tests/SSunit_tests
 	..()
 
 /datum/controller/subsystem/unit_tests/proc/start_game()
-	if (ticker.current_state >= GAME_STATE_FINISHED)
+	if (SSticker.current_state >= GAME_STATE_FINISHED)
 		log_unit_test("Unable to start testing - game is finished!")
 		del world
 		return
 
-	if ((ticker.current_state == GAME_STATE_PREGAME) && !ticker.start_now())
+	if ((SSticker.current_state == GAME_STATE_PREGAME) && !SSticker.start_now())
 		log_unit_test("Unable to start testing - SSticker failed to start the game!")
 		del world
 		return

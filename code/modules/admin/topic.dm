@@ -6,7 +6,7 @@
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
-	if(ticker.mode && ticker.mode.check_antagonists_topic(href, href_list))
+	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
 		check_antagonists()
 		return
 
@@ -265,13 +265,13 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if( ticker.mode.name == "blob" )
+		if( SSticker.mode.name == "blob" )
 			alert("You can't call the shuttle during blob!")
 			return
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if ((!( ticker ) || SSshuttle.location))
+				if ((!( SSticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
@@ -280,7 +280,7 @@
 				make_maint_all_access(FALSE)
 
 			if("2")
-				if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
+				if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 					return
 				switch(SSshuttle.direction)
 					if(-1)
@@ -312,12 +312,12 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
-		ticker.delay_end = !ticker.delay_end
-		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		SSticker.delay_end = !SSticker.delay_end
+		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 		href_list["secretsadmin"] = "check_antagonist"
@@ -380,7 +380,7 @@
 					newmeme.mind.transfer_to(M)
 					message_admins("Failed to find host for meme [M.key]. Aborting.")
 
-				ticker.mode.memes += newmeme
+				SSticker.mode.memes += newmeme
 
 				if(delmob)
 					qdel(M)
@@ -1151,7 +1151,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
@@ -1165,7 +1165,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1180,7 +1180,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (ticker && ticker.mode)
+		if (SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [master_mode].")
@@ -1194,7 +1194,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(ticker && ticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1778,7 +1778,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!ticker || !ticker.mode)
+		if(!SSticker || !SSticker.mode)
 			alert("The game hasn't started yet!")
 			return
 
@@ -2011,7 +2011,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TriAI")
 			if("gravity")
-				if(!(ticker && ticker.mode))
+				if(!(SSticker && SSticker.mode))
 					to_chat(usr, "Please wait until the game starts!  Not sure how it will work otherwise.")
 					return
 				gravity_is_on = !gravity_is_on
@@ -2075,7 +2075,7 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] made all SMESs powered</span>")
 				power_restore_quick()
 			if("prisonwarp")
-				if(!ticker)
+				if(!SSticker)
 					alert("The game hasn't started yet!", null, null, null, null, null)
 					return
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2109,7 +2109,7 @@
 						H.loc = pick(prisonsecuritywarp)
 					prisonwarped += H
 			if("traitor_all")
-				if(!ticker)
+				if(!SSticker)
 					alert("The game hasn't started yet!")
 					return
 				var/objective = sanitize(input("Enter an objective"))
@@ -2121,24 +2121,24 @@
 					if(H.stat == DEAD || !H.client || !H.mind) continue
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
-					ticker.mode.traitors += H.mind
+					SSticker.mode.traitors += H.mind
 					H.mind.special_role = "traitor"
 					var/datum/objective/new_objective = new
 					new_objective.owner = H
 					new_objective.explanation_text = objective
 					H.mind.objectives += new_objective
-					ticker.mode.greet_traitor(H.mind)
-					//ticker.mode.forge_traitor_objectives(H.mind)
-					ticker.mode.finalize_traitor(H.mind)
+					SSticker.mode.greet_traitor(H.mind)
+					//SSticker.mode.forge_traitor_objectives(H.mind)
+					SSticker.mode.finalize_traitor(H.mind)
 				for(var/mob/living/silicon/A in player_list)
-					ticker.mode.traitors += A.mind
+					SSticker.mode.traitors += A.mind
 					A.mind.special_role = "traitor"
 					var/datum/objective/new_objective = new
 					new_objective.owner = A
 					new_objective.explanation_text = objective
 					A.mind.objectives += new_objective
-					ticker.mode.greet_traitor(A.mind)
-					ticker.mode.finalize_traitor(A.mind)
+					SSticker.mode.greet_traitor(A.mind)
+					SSticker.mode.finalize_traitor(A.mind)
 				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 				log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
@@ -2519,10 +2519,10 @@
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
-				if(!ticker)
+				if(!SSticker)
 					alert("The game hasn't started yet!")
-				else if (ticker.mode)
-					alert("The game mode is [ticker.mode.name]")
+				else if (SSticker.mode)
+					alert("The game mode is [SSticker.mode.name]")
 				else alert("For some reason there's a ticker, but not a game mode")
 			if("manifest")
 				var/dat = "<B>Showing Crew Manifest.</B><HR>"

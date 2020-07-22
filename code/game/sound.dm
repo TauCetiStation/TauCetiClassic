@@ -111,9 +111,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	return ..()
 
 /mob/proc/playsound_lobbymusic()
-	if(!ticker || !ticker.login_music || !client)
+	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(ticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!isfile(soundin))

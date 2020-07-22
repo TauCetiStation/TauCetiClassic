@@ -204,13 +204,13 @@ SUBSYSTEM_DEF(job)
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return 0
 
-	if(ticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
+	if(SSticker.mode.name == "AI malfunction" && job.spawn_positions)//no additional AIs with malf
 		job.total_positions = job.spawn_positions
 		job.spawn_positions = 0
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
-			if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+			if(SSticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
 				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(job)
 					ai_selected++
 					break
 		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-		if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
+		if((SSticker.mode.name == "AI malfunction")&&(!ai_selected))
 			unassigned = shuffle(unassigned)
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
@@ -244,9 +244,9 @@ SUBSYSTEM_DEF(job)
 	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
-	if(ticker)
+	if(SSticker)
 		for(var/datum/job/ai/A in occupations)
-			if(ticker.triai)
+			if(SSticker.triai)
 				A.spawn_positions = 3
 
 	//Get the players who are ready
@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, AC1 end")
 
 	//Check for an AI
-	if(ticker.mode.name == "AI malfunction")
+	if(SSticker.mode.name == "AI malfunction")
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -287,7 +287,7 @@ SUBSYSTEM_DEF(job)
 	Debug("DO, Head Check end")
 
 	//Check for an AI
-	if(!(ticker.mode.name == "AI malfunction"))
+	if(!(SSticker.mode.name == "AI malfunction"))
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")
@@ -359,7 +359,7 @@ SUBSYSTEM_DEF(job)
 			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
 			unassigned -= player
-			ticker.mode.antag_candidates -= player.mind
+			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
 
