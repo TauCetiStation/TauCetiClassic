@@ -1,15 +1,10 @@
-var/datum/controller/subsystem/religion/SSreligion
-
-/datum/controller/subsystem/religion
+SUBSYSTEM_DEF(religion)
 	name = "Religion"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-
-/datum/controller/subsystem/religion/New()
-	NEW_SS_GLOBAL(SSreligion)
 
 /datum/controller/subsystem/religion/stat_entry()
 	..("P:[processing.len]")
