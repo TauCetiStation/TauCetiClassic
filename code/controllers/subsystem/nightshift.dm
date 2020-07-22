@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/nightshift/SSnightshift
-
-/datum/controller/subsystem/nightshift
+SUBSYSTEM_DEF(nightshift)
 	name = "Night shift"
 	init_order = SS_INIT_NIGHTSHIFT
 	wait = SS_WAIT_NIGHTSHIFT
@@ -11,10 +9,6 @@ var/datum/controller/subsystem/nightshift/SSnightshift
 	var/nightshift_start_time = 23
 	var/nightshift_end_time = 8
 	var/high_security_mode = FALSE
-
-
-/datum/controller/subsystem/nightshift/New()
-	NEW_SS_GLOBAL(SSnightshift)
 
 /datum/controller/subsystem/nightshift/Initialize(timeofday)
 	if(config.nightshift)
