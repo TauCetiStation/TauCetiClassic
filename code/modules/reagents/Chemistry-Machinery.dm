@@ -905,7 +905,7 @@
 		if(archive_diseases[id])
 			var/datum/disease/advance/A = archive_diseases[id]
 			A.AssignName(new_name)
-			for(var/datum/disease/advance/AD in SSdisease.processing)
+			for(var/datum/disease/advance/AD in SSdiseases.processing)
 				AD.Refresh()
 	else
 		usr << browse(null, "window=pandemic")

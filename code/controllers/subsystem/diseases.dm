@@ -1,15 +1,10 @@
-var/datum/controller/subsystem/diseases/SSdisease
-
-/datum/controller/subsystem/diseases
+SUBSYSTEM_DEF(diseases)
 	name = "Diseases"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/diseases/New()
-	NEW_SS_GLOBAL(SSdisease)
 
 /datum/controller/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")
