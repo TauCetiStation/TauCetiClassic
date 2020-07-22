@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/vote/SSvote
-
-/datum/controller/subsystem/vote
+SUBSYSTEM_DEF(vote)
 	name = "Vote"
 
 	wait = SS_WAIT_VOTE
@@ -24,9 +22,6 @@ var/datum/controller/subsystem/vote/SSvote
 		"gamemode" = "GameMode",
 		"custom" = "Custom"
 		)
-
-/datum/controller/subsystem/vote/New()
-	NEW_SS_GLOBAL(SSvote)
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
