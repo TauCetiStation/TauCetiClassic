@@ -12,7 +12,8 @@
 
 /obj/effect/anomaly/atom_init()
 	. = ..()
-	set_light(3,5,light_color)
+	poi_list += src
+	set_light(3, 5, light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
