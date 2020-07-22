@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/chat/SSchat
-
-/datum/controller/subsystem/chat
+SUBSYSTEM_DEF(chat)
 	name = "Chat"
 	init_order = SS_INIT_CHAT
 	wait = SS_WAIT_CHAT
@@ -8,9 +6,6 @@ var/datum/controller/subsystem/chat/SSchat
 	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/payload = list()
-
-/datum/controller/subsystem/chat/New()
-	NEW_SS_GLOBAL(SSchat)
 
 /datum/controller/subsystem/chat/fire()
 	for(var/i in payload)
