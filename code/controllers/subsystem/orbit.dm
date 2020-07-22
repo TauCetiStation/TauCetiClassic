@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/orbit/SSorbit
-
-/datum/controller/subsystem/orbit
+SUBSYSTEM_DEF(orbit)
 	name = "Orbit"
 
 	priority = SS_PRIORITY_ORBIT
@@ -10,10 +8,6 @@ var/datum/controller/subsystem/orbit/SSorbit
 
 	var/list/currentrun = list()
 	var/list/orbits     = list()
-
-/datum/controller/subsystem/orbit/New()
-	NEW_SS_GLOBAL(SSorbit)
-
 
 /datum/controller/subsystem/orbit/stat_entry()
 	..("P:[orbits.len]")
