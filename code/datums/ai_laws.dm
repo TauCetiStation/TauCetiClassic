@@ -204,13 +204,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/clear_ion_laws()
 	src.ion = list()
 
-/datum/ai_laws/proc/write_supplied_laws()
-	var/text = ""
-	for(var/law in src.supplied)
-		if(length(law) > 0)
-			text += "[law]<br>"
-	return text
-
 /datum/ai_laws/proc/show_laws(who)
 
 	if (src.zeroth)

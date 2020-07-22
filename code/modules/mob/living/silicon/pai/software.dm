@@ -466,10 +466,10 @@
 					targetPersonality.laws.set_zeroth_law(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text)
 					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.laws.zeroth]")
 				if(INTERACTION_PAI_MODIFY_SEC_LAW)
-					var/newlaws = sanitize(input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.write_supplied_laws()) as text|null)
+					var/newlaws = sanitize(input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.supplied.len ? targetPersonality.laws.supplied[1] : "") as text|null)
 					if(newlaws)
 						targetPersonality.laws.add_supplied_law(0, newlaws)
-						to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.laws.write_supplied_laws()]")
+						to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [jointext(targetPersonality.laws.supplied, "<br>")]")
 				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
 					while(markedobjselected != "Cancel")
@@ -642,7 +642,7 @@
 	dat += "<b>Prime Directive</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.write_supplied_laws()]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(src.laws.supplied, "<br>")]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
@@ -925,7 +925,7 @@
 				if(Temp.pai)
 					var/mob/living/silicon/pai/Temppai = Temp.pai
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.laws.zeroth]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [Temppai.laws.write_supplied_laws()]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [jointext(Temppai.laws.supplied, "<br>")]) <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MANAGE_MARKED];sub=0'>Get Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_RESET_MARKED];sub=0'>Clear Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_CLEAR_SOFTWARE];sub=0'>Delete All Installed Software</a> <br>"

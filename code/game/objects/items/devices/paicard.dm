@@ -152,7 +152,7 @@
 				</tr>
 				<tr>
 					<td class="request">Additional directives:</td>
-					<td>[pai.laws.write_supplied_laws()]</td>
+					<td>[jointext(pai.laws.supplied, "<br>")]</td>
 				</tr>
 			</table>
 			<br>
@@ -278,7 +278,7 @@
 			pai.laws.add_supplied_law(0, newlaws)
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
 			to_chat(pai, "Prime Directive: <br>[pai.laws.zeroth]")
-			to_chat(pai, "Supplemental Directives: <br>[pai.laws.write_supplied_laws()]")
+			to_chat(pai, "Supplemental Directives: <br>[jointext(pai.laws.supplied, "<br>")]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
