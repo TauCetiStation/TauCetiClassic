@@ -1,15 +1,10 @@
-var/datum/controller/subsystem/mob_modifier/SSmob_modifier
-
-/datum/controller/subsystem/mob_modifier
+SUBSYSTEM_DEF(mob_modifier)
 	name = "Mob Modifiers"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-
-/datum/controller/subsystem/mob_modifier/New()
-	NEW_SS_GLOBAL(SSmob_modifier)
 
 /datum/controller/subsystem/mob_modifier/stat_entry()
 	..("P:[processing.len]")
