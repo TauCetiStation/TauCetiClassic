@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/parallax/SSparallax
-
-/datum/controller/subsystem/parallax
+SUBSYSTEM_DEF(parallax)
 	name = "Parallax"
 
 	priority = SS_PRIORITY_PARALAX
@@ -11,9 +9,6 @@ var/datum/controller/subsystem/parallax/SSparallax
 	var/list/currentrun
 	var/planet_x_offset = 128
 	var/planet_y_offset = 128
-
-/datum/controller/subsystem/parallax/New()
-	NEW_SS_GLOBAL(SSparallax)
 
 /datum/controller/subsystem/parallax/Initialize(timeofday)
 	planet_y_offset = rand(100, 160)
