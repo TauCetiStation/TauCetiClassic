@@ -68,9 +68,10 @@
 
 /obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
-	health -= W.force
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
+	if(user.a_intent == INTENT_HARM)
+		health -= W.force
+		playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		healthcheck()
 
 ////////////////////////////
 // WALLS GRASS AND CORES////

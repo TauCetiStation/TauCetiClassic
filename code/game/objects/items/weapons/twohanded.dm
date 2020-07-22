@@ -212,12 +212,13 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
 	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/get_sweep_objs)
 
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/dualsaber/proc/can_spin(mob/user)
+/obj/item/weapon/twohanded/dualsaber/proc/can_swipe(mob/user)
 	return wielded
 
 /obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)

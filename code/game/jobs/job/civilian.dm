@@ -156,7 +156,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_janitor, access_maint_tunnels)
+	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
 	salary = 50
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
