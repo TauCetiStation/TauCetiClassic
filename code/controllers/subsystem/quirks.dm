@@ -1,9 +1,7 @@
 //Used to process and handle roundstart quirks
 // - quirk strings are used for faster checking in code
 // - quirk datums are stored and hold different effects, as well as being a vector for applying quirk string
-var/datum/controller/subsystem/quirks/SSquirks
-
-/datum/controller/subsystem/quirks
+SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
 	init_order = SS_INIT_QUIRKS
 	priority   = SS_PRIORITY_QUIRKS
@@ -18,9 +16,6 @@ var/datum/controller/subsystem/quirks/SSquirks
 	var/list/quirk_objects = list()	//A list of all quirk objects in the game, since some may process
 	var/list/quirk_blacklist = list() //A list a list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	var/list/quirk_blacklist_species = list() // Contains quirks and their list of blacklisted species.
-
-/datum/controller/subsystem/quirks/New()
-	NEW_SS_GLOBAL(SSquirks)
 
 /datum/controller/subsystem/quirks/Initialize(timeofday)
 	if(!quirks.len)
