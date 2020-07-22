@@ -49,6 +49,7 @@
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
 	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
+	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/item/weapon/gun/medbeam/process()
