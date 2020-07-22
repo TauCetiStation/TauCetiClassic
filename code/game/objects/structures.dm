@@ -70,6 +70,10 @@
 	if(climber.loc == loc)
 		return FALSE
 
+	if(user.incapacitated())
+		to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src] while being incapacitated.</span>")
+		return FALSE
+
 	if(user != climber)
 		if(!can_touch(climber))
 			return FALSE
