@@ -155,7 +155,10 @@
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	..()
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	. = ..()
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	var/damage = 0
 	switch(W.damtype)
@@ -168,7 +171,6 @@
 
 	health -= damage
 	update_icon()
-	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
