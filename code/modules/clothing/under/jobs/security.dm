@@ -28,6 +28,11 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security officer's jumpskirt"
+	icon_state = "skirt_security"
+	item_color = "secskirtred"
+
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
 	desc = "A dress shirt and khakis with a security patch sewn on."
