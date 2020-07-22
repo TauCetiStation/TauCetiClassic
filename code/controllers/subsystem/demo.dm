@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/demo/SSdemo
-
-/datum/controller/subsystem/demo
+SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	flags = SS_TICKER
 	wait = SS_WAIT_DEMO
@@ -24,9 +22,6 @@ var/datum/controller/subsystem/demo/SSdemo
 	// stats stuff
 	var/last_queued = 0
 	var/last_completed = 0
-
-/datum/controller/subsystem/demo/New()
-	NEW_SS_GLOBAL(SSdemo)
 
 /datum/controller/subsystem/demo/proc/write_time()
 	if(!config.record_replays)
