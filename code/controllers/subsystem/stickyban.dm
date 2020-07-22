@@ -3,9 +3,7 @@
 #define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
 #define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
 
-var/datum/controller/subsystem/stickyban/SSstickyban
-
-/datum/controller/subsystem/stickyban
+SUBSYSTEM_DEF(stickyban)
 	name = "PRISM"
 
 	init_order = SS_INIT_STICKY_BAN
@@ -19,9 +17,6 @@ var/datum/controller/subsystem/stickyban/SSstickyban
 	var/list/dbcache = list()
 	// Next world.time to update DB cache
 	var/dbcache_expire = 0
-
-/datum/controller/subsystem/stickyban/New()
-	NEW_SS_GLOBAL(SSstickyban)
 
 /datum/controller/subsystem/stickyban/Initialize(start_timeofday)
 	if (length(global.stickyban_admin_exemptions))
