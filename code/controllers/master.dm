@@ -104,12 +104,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		StartProcessing(10)
 	else
 		to_chat(world, "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>")
-		Setup(20, TRUE)
+		Initialize(20, TRUE)
 
 
 // Please don't stuff random bullshit here,
 // Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
-/datum/controller/master/proc/Setup(delay, init_sss)
+/datum/controller/master/Initialize(delay, init_sss)
 	set waitfor = 0
 
 	if(delay)
