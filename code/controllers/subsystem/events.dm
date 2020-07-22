@@ -1,9 +1,7 @@
-var/datum/controller/subsystem/events/SSevent
-
 var/list/allEvents = subtypesof(/datum/event)
 var/list/potentialRandomEvents = subtypesof(/datum/event)
 
-/datum/controller/subsystem/events
+SUBSYSTEM_DEF(events)
 	name = "Events"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
@@ -15,10 +13,6 @@ var/list/potentialRandomEvents = subtypesof(/datum/event)
 	var/eventTimeLower = 12000	//20 minutes
 	var/eventTimeUpper = 24000	//40 minutes
 	var/scheduledEvent = null
-
-
-/datum/controller/subsystem/events/New()
-	NEW_SS_GLOBAL(SSevent)
 
 /datum/controller/subsystem/events/fire(resumed = 0)
 	if (!resumed)

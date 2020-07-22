@@ -70,14 +70,14 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/event/proc/kill()
-	SSevent.running -= src
+	SSevents.running -= src
 
 
 //Adds the event to the global events list, and removes it from the list
 //of potential events.
 /datum/event/New()
 	setup()
-	SSevent.running += src
+	SSevents.running += src
 	/*if(oneShot)
 		potentialRandomEvents.Remove(type)*/
 	..()
