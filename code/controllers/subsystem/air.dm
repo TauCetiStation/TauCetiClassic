@@ -9,9 +9,7 @@
 
 #define SSAIR_TICK_MULTIPLIER 2
 
-var/datum/controller/subsystem/air/SSair
-
-/datum/controller/subsystem/air
+SUBSYSTEM_DEF(air)
 	name = "Air"
 
 	init_order    = SS_INIT_AIR
@@ -53,9 +51,6 @@ var/datum/controller/subsystem/air/SSair
 	var/map_loading = TRUE
 	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
-
-/datum/controller/subsystem/air/New()
-	NEW_SS_GLOBAL(SSair)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
