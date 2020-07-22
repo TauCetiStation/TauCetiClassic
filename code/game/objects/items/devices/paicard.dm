@@ -273,7 +273,7 @@
 		var/t1 = text2num(href_list["wires"])
 		radio.wires.cut_wire_index(t1)
 	if(href_list["setlaws"])
-		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration") as message|null)
+		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied.len ? pai.laws.supplied[1] : "") as message)
 		if(newlaws)
 			pai.laws.add_supplied_law(0, newlaws)
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
