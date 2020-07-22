@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/spacedrift/SSspacedrift
-
-/datum/controller/subsystem/spacedrift
+SUBSYSTEM_DEF(spacedrift)
 	name = "Space Drift"
 
 	priority = SS_PRIORITY_SPACEDRIFT
@@ -10,10 +8,6 @@ var/datum/controller/subsystem/spacedrift/SSspacedrift
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/spacedrift/New()
-	NEW_SS_GLOBAL(SSspacedrift)
-
 
 /datum/controller/subsystem/spacedrift/stat_entry()
 	..("P:[processing.len]")
