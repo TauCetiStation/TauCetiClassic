@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/fastprocess/SSfastprocess
-
-/datum/controller/subsystem/fastprocess
+PROCESSING_SUBSYSTEM_DEF(fastprocess)
 	name = "Fast Process"
 	priority = SS_PRIORITY_FASTPROCESS
 	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
@@ -9,13 +7,10 @@ var/datum/controller/subsystem/fastprocess/SSfastprocess
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/fastprocess/New()
-	NEW_SS_GLOBAL(SSfastprocess)
-
-/datum/controller/subsystem/fastprocess/stat_entry()
+/datum/controller/subsystem/processing/fastprocess/stat_entry()
 	..("FP:[processing.len]")
 
-/datum/controller/subsystem/fastprocess/fire(resumed = 0)
+/datum/controller/subsystem/processing/fastprocess/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -33,6 +28,6 @@ var/datum/controller/subsystem/fastprocess/SSfastprocess
 		if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/fastprocess/Recover()
+/datum/controller/subsystem/processing/fastprocess/Recover()
 	if (istype(SSfastprocess.processing))
 		processing = SSfastprocess.processing
