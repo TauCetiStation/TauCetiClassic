@@ -640,7 +640,7 @@
 	dat += "<b>Prime Directive</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(src.laws.supplied, "<br>")]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(laws.supplied, "<br>")]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
