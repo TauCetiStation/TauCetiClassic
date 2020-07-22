@@ -638,7 +638,7 @@
 	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(src.laws.supplied, "<br>")]<br>"
 	dat += "<br>"
