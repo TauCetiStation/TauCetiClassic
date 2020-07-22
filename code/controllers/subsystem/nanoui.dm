@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/nanoui/SSnano
-
-/datum/controller/subsystem/nanoui
+SUBSYSTEM_DEF(nanoui)
 	name = "NanoUI"
 
 	priority      = SS_PRIORITY_NANOUI
@@ -12,9 +10,6 @@ var/datum/controller/subsystem/nanoui/SSnano
 	var/list/currentrun = list()
 	var/list/open_uis   = list() // A list of open UIs, grouped by src_object and ui_key.
 	var/list/processing = list() // A list of processing UIs, ungrouped.
-
-/datum/controller/subsystem/nanoui/New()
-	NEW_SS_GLOBAL(SSnano)
 
 /datum/controller/subsystem/nanoui/stat_entry()
 	..("P:[processing.len]")
