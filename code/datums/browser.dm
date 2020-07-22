@@ -57,7 +57,7 @@
 	else
 		var/asset_name = "[name].css"
 		stylesheets[asset_name] = file
-		if(!SSasset.cache[asset_name])
+		if(!SSassets.cache[asset_name])
 			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
