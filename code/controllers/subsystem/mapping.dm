@@ -1,11 +1,9 @@
-var/datum/controller/subsystem/mapping/SSmapping
-
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMMOUNT 7
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
-/datum/controller/subsystem/mapping
+SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
@@ -23,9 +21,6 @@ var/datum/controller/subsystem/mapping/SSmapping
 	var/list/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
-
-/datum/controller/subsystem/mapping/New()
-	NEW_SS_GLOBAL(SSmapping)
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
