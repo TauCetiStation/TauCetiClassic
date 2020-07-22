@@ -1,7 +1,5 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-var/datum/controller/subsystem/weather/SSweather
-
-/datum/controller/subsystem/weather
+SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
@@ -33,7 +31,6 @@ var/datum/controller/subsystem/weather/SSweather
 
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()
-	NEW_SS_GLOBAL(SSweather)
 	for(var/V in subtypesof(/datum/weather))
 		var/datum/weather/W = V
 		new W	//weather->New will handle adding itself to the list
