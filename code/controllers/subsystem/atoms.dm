@@ -3,9 +3,7 @@
 #define BAD_INIT_SLEPT       4
 #define BAD_INIT_NO_HINT     8
 
-var/datum/controller/subsystem/atoms/SSatoms
-
-/datum/controller/subsystem/atoms
+SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE
@@ -17,9 +15,6 @@ var/datum/controller/subsystem/atoms/SSatoms
 	var/list/created_atoms
 
 	var/list/BadInitializeCalls = list()
-
-/datum/controller/subsystem/atoms/New()
-	NEW_SS_GLOBAL(SSatoms)
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	global_announcer = new(null) // Doh...
