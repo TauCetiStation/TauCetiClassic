@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/mobs/SSmob
-
-/datum/controller/subsystem/mobs
+SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 
 	priority      = SS_PRIORITY_MOBS
@@ -9,10 +7,6 @@ var/datum/controller/subsystem/mobs/SSmob
 	flags = SS_KEEP_TIMING | SS_NO_INIT
 
 	var/list/currentrun = list()
-
-/datum/controller/subsystem/mobs/New()
-	NEW_SS_GLOBAL(SSmob)
-
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[mob_list.len]")
