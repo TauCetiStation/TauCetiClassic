@@ -793,8 +793,8 @@ var/global/list/all_objectives = list()
 	if(owner && owner.current)
 		var/mob/living/simple_animal/borer/B = owner.current
 		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD)
-			return 1
-	return 0
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/borer_reproduce
 	explanation_text = "Reproduce at least once."
@@ -803,8 +803,8 @@ var/global/list/all_objectives = list()
 	if(owner && owner.current)
 		var/mob/living/simple_animal/borer/B = owner.current
 		if(istype(B) && B.has_reproduced)
-			return 1
-	return 0
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 //Vox heist objectives.
 
