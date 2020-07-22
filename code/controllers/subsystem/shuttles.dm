@@ -1,5 +1,3 @@
-var/datum/controller/subsystem/shuttle/SSshuttle
-
 #define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
@@ -13,7 +11,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 #define SUPPLY_STATION_AREATYPE /area/shuttle/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/shuttle/supply/velocity	//Type of the supply shuttle area for dock
 
-/datum/controller/subsystem/shuttle
+SUBSYSTEM_DEF(shuttle)
 	name = "Shuttles"
 
 	init_order = SS_INIT_SHUTTLES
@@ -57,9 +55,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	var/status_display_last_mode
 
 	//var/datum/round_event/shuttle_loan/shuttle_loan
-
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
