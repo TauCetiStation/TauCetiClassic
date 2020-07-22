@@ -50,7 +50,7 @@ var/base_commit_sha = 0
 	ahelp_tickets = new
 
 	spawn(10)
-		Master.Setup()
+		Master.Initialize()
 
 	if(!setup_old_database_connection())
 		log_sql("Your server failed to establish a connection with the SQL database.")
