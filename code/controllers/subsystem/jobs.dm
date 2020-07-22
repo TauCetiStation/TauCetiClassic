@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/job/SSjob
-
-/datum/controller/subsystem/job
+SUBSYSTEM_DEF(job)
 	name = "Jobs"
 
 	init_order = SS_INIT_JOBS
@@ -13,10 +11,6 @@ var/datum/controller/subsystem/job/SSjob
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/obj/effect/landmark/start/fallback_landmark
-
-/datum/controller/subsystem/job/New()
-	NEW_SS_GLOBAL(SSjob)
-
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
