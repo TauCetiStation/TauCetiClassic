@@ -63,39 +63,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	if(delim_pos == 0)
 		return strtype
 	return copytext(strtype, delim_pos)
-
-/client/proc/debug_controller()
-	set category = "Debug"
-	set name = "Debug Controller"
-	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
-
-	if(!holder || !check_rights(R_DEBUG))
-		return
-	var/list/options = list()
-	options["Master"] = Master
-	options["Failsafe"] = Failsafe
-	options["Configuration"] = config
-	for(var/i in Master.subsystems)
-		var/datum/subsystem/S = i
-		if(!istype(S))		//Eh, we're a debug verb, let's have typechecking.
-			continue
-		var/strtype = "SS[get_end_section_of_type(S.type)]"
-		if(options[strtype])
-			var/offset = 2
-			while(istype(options["[strtype]_[offset] - DUPE ERROR"], /datum/subsystem))
-				offset++
-			options["[strtype]_[offset] - DUPE ERROR"] = S		//Something is very, very wrong.
-		else
-			options[strtype] = S
-
-	var/pick = input(mob, "Choose a controller to debug/view variables of.", "VV controller:") as null|anything in options
-	if(!holder || !check_rights(R_DEBUG))
-		return
-	if(!pick)
-		return
-	var/datum/D = options[pick]
-	if(!istype(D))
-		return
-	feedback_add_details("admin_verb", "DebugController")
-	message_admins("Admin [key_name_admin(mob)] is debugging the [pick] controller.")
-	debug_variables(D)
