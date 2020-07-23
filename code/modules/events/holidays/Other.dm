@@ -5,6 +5,7 @@
 		spawn(600)
 			if(!config.allow_random_events)	return
 			Show2Group4Delay(ScreenText(null,"<center><font color='red' size='8'>GAME OVER</font></center>"),null,150)
-			for(var/i=1,i<=4,i++)
-				//spawn_dynamic_event()
+			var/datum/event_container/apocalypse_events = new/datum/event_container/major
+			for(var/datum/event_meta/E in apocalypse_events.available_events)
+				new E.event_type(E)
 				sleep(50)
