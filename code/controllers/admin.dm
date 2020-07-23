@@ -56,10 +56,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			feedback_add_details("admin_verb","RFailsafe")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
-
-/proc/get_end_section_of_type(type)
-	var/strtype = "[type]"
-	var/delim_pos = findlasttext(strtype, "/")
-	if(delim_pos == 0)
-		return strtype
-	return copytext(strtype, delim_pos)
