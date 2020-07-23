@@ -727,11 +727,14 @@
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
+			var/obj/item/weapon/storage/bag/ore/module = null
+			if(istype(R.module_state_1, /obj/item/weapon/storage/bag/ore))
+				module = R.module_state_1
+			else if(istype(R.module_state_2, /obj/item/weapon/storage/bag/ore))
+				module = R.module_state_2
+			else if(istype(R.module_state_3, /obj/item/weapon/storage/bag/ore))
+				module = R.module_state_3
+			if(module)
+				module.Pickup_ores(R)
 			else
 				return
