@@ -58,7 +58,7 @@
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
 	var/has_reproduced                      // Whether or not the borer has reproduced, for objective purposes.
-	var/docile = FALSE                      // Sugar can stop borers from acting.
+	var/docile = 0                          // Sugar can stop borers from acting.
 	var/leaving = FALSE
 
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = TRUE)
