@@ -119,11 +119,15 @@
 			else	T = null
 
 	if(!T)	return 0
-
-	if(!is_blocked_turf(T))//Attempt to move into the tile
-		new /obj/effect/blob/normal(T, min(src.health, 30))
+	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	B.density = 1
+	if(T.Enter(B,src))//Attempt to move into the tile
+		B.density = initial(B.density)
+		B.loc = T
 	else
 		T.blob_act()//If we cant move in hit the turf
+		B.loc = null //So we don't play the splat sound, see Destroy()
+		qdel(B)
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
