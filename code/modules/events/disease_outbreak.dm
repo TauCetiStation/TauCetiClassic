@@ -11,7 +11,7 @@
 	var/virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
-		if(H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
+		if(!H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
 			continue
 
 		if(H.viruses.len) //don't infect someone that already has the virus
