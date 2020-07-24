@@ -16,7 +16,7 @@
 	for(var/mob/living/silicon/ai/target in ai_list)
 		if(target.mind.special_role == "traitor")
 			continue
-		target.get_and_add_ion_law()
+		target.overload_ai_system()
 	
 	// Emag bots.
 	if(botEmagChance)
@@ -24,17 +24,13 @@
 			if(prob(botEmagChance))
 				bot.emag_act()
 
-/mob/living/silicon/ai/proc/get_and_add_ion_law()
-	var/static/last_istorm_sound = 0
+/mob/living/silicon/ai/proc/overload_ai_system()
 	var/ion_law = get_ion_law()
-	if(last_istorm_sound < world.time)
-		to_chat(src, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
-		src.playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		last_istorm_sound = world.time + 100
+	to_chat(src, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
+	playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	to_chat(src, "<span class='warning'><b>You have detected a change in your laws information:</b></span><br>")
 	to_chat(src, "<span class='warning'>[ionnum()]. [ion_law]</span>")
-	to_chat(src, "<br>")
-	src.add_ion_law(ion_law)
+	add_ion_law(ion_law)
 
 /mob/living/silicon/ai/proc/get_ion_law()
 	var/list/players = list()
