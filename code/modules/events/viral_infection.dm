@@ -13,7 +13,7 @@
 
 /datum/event/viral_infection/start()
 	var/list/candidates = list()	//list of candidate keys
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(H.client || H.stat != DEAD || H.species.flags[VIRUS_IMMUNE])
 			continue
 		candidates += H
