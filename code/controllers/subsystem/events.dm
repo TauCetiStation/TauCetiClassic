@@ -3,7 +3,6 @@ var/datum/subsystem/events/SSevents
 /datum/subsystem/events
 	name = "Events"
 	init_order = SS_INIT_EVENTS
-	offline_implications = "Random events will no longer happen. No immediate action is needed."
 	// Report events at the end of the rouund
 	var/report_at_round_end = 0
 

@@ -34,8 +34,6 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/offline_implications = "None" // What are the implications of this SS being offlined?
-
 // Used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
 
