@@ -32,7 +32,7 @@
 		src.playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		last_istorm_sound = world.time + 100
 	to_chat(src, "<span class='warning'><b>You have detected a change in your laws information:</b></span><br>")
-	to_chat(src, "<span class='warning'>#^$@. [ion_law]</span>")
+	to_chat(src, "<span class='warning'>[ionnum()]. [ion_law]</span>")
 	to_chat(src, "<br>")
 	src.add_ion_law(ion_law)
 
