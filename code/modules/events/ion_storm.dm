@@ -25,14 +25,14 @@
 				bot.emag_act()
 
 /mob/living/silicon/ai/proc/overload_ai_system()
-	var/ion_law = get_ion_law()
+	var/ion_law = generate_ion_law()
 	to_chat(src, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
 	playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	to_chat(src, "<span class='warning'><b>You have detected a change in your laws information:</b></span><br>")
 	to_chat(src, "<span class='warning'>[ionnum()]. [ion_law]</span>")
 	add_ion_law(ion_law)
 
-/mob/living/silicon/ai/proc/get_ion_law()
+/mob/living/silicon/ai/proc/generate_ion_law()
 	var/list/players = list()
 	for(var/mob/living/carbon/human/H in human_list)
 		if(!H.mind || !H.client || H.client.inactivity > 10 MINUTES)
