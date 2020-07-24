@@ -1,8 +1,8 @@
 /datum/event/alien_infestation
 	announceWhen	= 400
 
-	var/spawncount = 2
-	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
+	var/spawncount = 1
+	var/successSpawn = 0  //So we don't make a command report if nothing gets spawned.
 
 
 /datum/event/alien_infestation/setup()
@@ -37,4 +37,4 @@
 		candidates -= candidate
 		vents -= vent
 		spawncount--
-		successSpawn = TRUE
+		successSpawn = 1
