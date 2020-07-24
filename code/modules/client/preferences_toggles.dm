@@ -100,7 +100,6 @@
 	var/role = input(usr, "Ignored Qustions for Roles in current Round:") as null|anything in prefs.ignore_question
 	if(!role)
 		return
-	prefs.save_preferences()
 	prefs.ignore_question -= role
 	to_chat(src, "You will receive requests for \"[role]\" again")
 	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
