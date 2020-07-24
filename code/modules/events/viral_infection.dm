@@ -12,20 +12,13 @@
 	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak5")
 
 /datum/event/viral_infection/start()
-	var/list/candidates = list()	//list of candidate humans
-	for(var/mob/living/carbon/human/H in human_list)
-		if(H.client || H.stat != DEAD || H.species.flags[VIRUS_IMMUNE])
+	for(var/mob/living/carbon/human/H in shuffle(human_list))
+		if(!infected)
+			break
+		if(!H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
 			continue
-		candidates += H
-	if(!candidates.len)
-		return
-	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
-
-	while(infected > 0 && candidates.len)
 		if(prob(chance))
-			infect_mob_random_greater(candidates[1])
+			infect_mob_random_greater(H)
 		else
-			infect_mob_random_lesser(candidates[1])
-
-		candidates.Remove(candidates[1])
+			infect_mob_random_lesser(H)
 		infected--
