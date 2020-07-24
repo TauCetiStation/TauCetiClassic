@@ -7,8 +7,7 @@
 	winner_sum = pick(5000, 10000, 50000, 100000, 500000, 1000000, 1500000)
 	var/list/employee_accounts = all_money_accounts
 	for(var/i in department_accounts)
-		if(department_accounts[i] in employee_accounts)
-			employee_accounts.Remove(department_accounts[i])
+		employee_accounts.Remove(department_accounts[i])
 	employee_accounts.Remove(station_account)
 
 	if(employee_accounts.len)
