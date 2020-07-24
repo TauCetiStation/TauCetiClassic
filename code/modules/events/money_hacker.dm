@@ -1,6 +1,3 @@
-#define MINIMUM_PERCENTAGE_LOSS 0.5
-#define VARIABLE_LOSS 2 // Invariant: 1 - VARIABLE_LOSS/10 >= MINIMUM_PERCENTAGE_LOSS
-
 /datum/event/money_hacker
 	var/datum/money_account/affected_account
 	endWhen = 100
@@ -36,7 +33,7 @@
 		message = "The hack attempt has succeeded."
 
 		//subtract the money
-		var/lost = affected_account.money * (MINIMUM_PERCENTAGE_LOSS + rand(0,VARIABLE_LOSS) / 10)
+		var/lost = affected_account.money * 0.8 + (rand(2,4) - 2) / 10
 		affected_account.adjust_money(-lost)
 
 		//create a taunting log entry
