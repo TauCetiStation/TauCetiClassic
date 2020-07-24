@@ -14,15 +14,11 @@
 		if(H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
 			continue
 
-		var/turf/T = get_turf(H)
-		if(!T || !is_station_level(T.z))
+		if(H.viruses.len) //don't infect someone that already has the virus
 			continue
 
-		var/foundAlready = FALSE // don't infect someone that already has the virus
-		for(var/datum/disease/D in H.viruses)
-			foundAlready = TRUE
-			break
-		if(!foundAlready)
+		var/turf/T = get_turf(H)
+		if(!T || !is_station_level(T.z))
 			continue
 
 		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
