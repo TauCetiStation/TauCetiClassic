@@ -160,7 +160,7 @@
 				make_bolt_all_maintenance(TRUE)
 				feedback_inc("alert_keycard_auth_maintGrant",1)
 			else
-				to_chat(usr, "Elevated security level to red first.")
+				to_chat(usr, "[bicon(src)] <span class='warning'>Elevating the security level to red is required to block all maintenance entrances.</span>")
 		if("Revoke Block All Maintenance")
 			revoke_bolt_all_maintenance(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
