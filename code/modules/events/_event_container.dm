@@ -70,7 +70,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 	for(var/event_meta in last_event_time)
 		if(possible_events[event_meta])
 			var/time_passed = world.time - last_event_time[event_meta]
-			var/full_recharge_after = config.expected_round_length // 2 hours
+			var/full_recharge_after = config.expected_round_length
 			var/weight_modifier = max(0, (full_recharge_after - time_passed) / 300)
 			var/new_weight = max(possible_events[event_meta] - weight_modifier, 0)
 
