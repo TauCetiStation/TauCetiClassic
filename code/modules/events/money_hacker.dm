@@ -60,6 +60,3 @@
 	for(var/obj/machinery/message_server/MS in message_servers)
 		if(!MS.active) continue
 		MS.send_rc_message("Head of Personnel's Desk", my_department, message, "", "", 2)
-
-#undef MINIMUM_PERCENTAGE_LOSS
-#undef VARIABLE_LOSS
