@@ -96,12 +96,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	kill_objective.owner = changeling
 	kill_objective.find_target()
 	changeling.objectives += kill_objective
-
+/*
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = changeling
 	steal_objective.find_target()
 	changeling.objectives += steal_objective
-
+*/
 
 	switch(rand(1,100))
 		if(1 to 80)
