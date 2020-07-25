@@ -578,7 +578,7 @@
 		Ignore_Role = be_special_type
 
 	for(var/mob/M in group)
-		if(!M.key || !M.client)
+		if(!M.client)
 			continue
 		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
 			continue
@@ -589,7 +589,7 @@
 
 	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
 	for(var/mob/M in group)
-		if(!M.key || !M.client)
+		if(!M.client)
 			candidates.Remove(M)
 
 	return candidates
