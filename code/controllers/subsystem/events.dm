@@ -19,7 +19,7 @@ var/datum/subsystem/events/SSevents
 	var/datum/event_container/selected_event_container = null
 	var/list/active_events = list()
 	var/list/finished_events = list()
-	var/list/allEvents
+	var/list/allEvents = list()
 	var/list/event_containers = list(
 			EVENT_LEVEL_MUNDANE 	= new/datum/event_container/mundane,
 			EVENT_LEVEL_MODERATE	= new/datum/event_container/moderate,
@@ -32,7 +32,10 @@ var/datum/subsystem/events/SSevents
 	NEW_SS_GLOBAL(SSevents)
 
 /datum/subsystem/events/Initialize()
-	allEvents = subtypesof(/datum/event)
+	for(var/E in subtypesof(/datum/event))
+		if(IS_ABSTRACT(E))
+			continue
+		allEvents += E
 	return ..()
 
 /datum/subsystem/events/fire()
