@@ -181,6 +181,9 @@
 	return "<font face='fixedsys' size='3' color='[color]'><table border cellspacing='0' style='display:inline;' bgcolor='[color]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
+	var/static/h_style_num
+	var/static/grad_style_num
+	var/static/f_style_num
 	switch(href_list["preference"])
 		if("records")
 			switch(href_list["task"])
@@ -327,22 +330,21 @@
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style) as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
+						h_style_num = null
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					var/start = valid_hairstyles.Find(h_style)
-					if(start != 1)
-						h_style = valid_hairstyles[start - 1]
-					else
-						h_style = valid_hairstyles[valid_hairstyles.len]
+					if(!h_style_num)
+						h_style_num = valid_hairstyles.Find(h_style)
+					h_style_num = (h_style_num != 1) ? h_style_num - 1 : valid_hairstyles.len
+					h_style = valid_hairstyles[h_style_num]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					var/start = valid_hairstyles.Find(h_style)
-					if(start != valid_hairstyles.len)
-						h_style = valid_hairstyles[start + 1]
-					else
-						h_style = valid_hairstyles[1]
+					if(!h_style_num)
+						h_style_num = valid_hairstyles.Find(h_style)
+					h_style_num = (h_style_num != valid_hairstyles.len) ? h_style_num + 1 : 1
+					h_style = valid_hairstyles[h_style_num]
 
 				if("grad_color")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
@@ -358,22 +360,21 @@
 					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Gradient Style", grad_style) as null|anything in valid_gradients
 					if(new_grad_style)
 						grad_style = new_grad_style
+						grad_style_num = null
 
 				if("grad_style_left")
 					var/list/valid_gradients = hair_gradients
-					var/start = valid_gradients.Find(grad_style)
-					if(start != 1)
-						grad_style = valid_gradients[start - 1]
-					else
-						grad_style = valid_gradients[valid_gradients.len]
+					if(!grad_style_num)
+						grad_style_num = valid_gradients.Find(grad_style)
+					grad_style_num = (grad_style_num != 1) ? grad_style_num - 1 : valid_gradients.len
+					grad_style = valid_gradients[grad_style_num]
 
 				if("grad_style_right")
 					var/list/valid_gradients = hair_gradients
-					var/start = valid_gradients.Find(grad_style)
-					if(start != valid_gradients.len)
-						grad_style = valid_gradients[start + 1]
-					else
-						grad_style = valid_gradients[1]
+					if(!grad_style_num)
+						grad_style_num = valid_gradients.Find(grad_style)
+					grad_style_num = (grad_style_num != valid_gradients.len) ? grad_style_num + 1 : 1
+					grad_style = valid_gradients[grad_style_num]
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character facial-hair colour", rgb(r_facial, g_facial, b_facial)) as color|null
@@ -390,19 +391,17 @@
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					var/start = valid_facialhairstyles.Find(f_style)
-					if(start != 1 && start != 0)
-						f_style = valid_facialhairstyles[start - 1]
-					else
-						f_style = valid_facialhairstyles[valid_facialhairstyles.len]
+					if(!f_style_num)
+						f_style_num = valid_facialhairstyles.Find(f_style)
+					f_style_num = (f_style_num != 1) ? f_style - 1 : valid_facialhairstyles.len
+					f_style = valid_facialhairstyles[f_style_num]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					var/start = valid_facialhairstyles.Find(f_style)
-					if(start != valid_facialhairstyles.len)
-						f_style = valid_facialhairstyles[start + 1]
-					else
-						f_style = valid_facialhairstyles[1]
+					if(!f_style_num)
+						f_style_num = valid_facialhairstyles.Find(f_style)
+					f_style_num = (f_style_num != valid_facialhairstyles.len) ? f_style_num + 1 : 1
+					f_style = valid_facialhairstyles[f_style_num]
 
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
