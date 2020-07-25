@@ -66,7 +66,6 @@
 	var/startedAt		= 0 //When this event started.
 	var/endedAt			= 0 //When this event ended.
 	var/noAutoEnd       = 0 //Does the event end automatically after endWhen passes?
-	var/area/impact_area    //The area the event will hit
 
 /datum/event/nothing
 

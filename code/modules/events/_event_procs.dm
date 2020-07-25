@@ -17,33 +17,6 @@
 	feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/findEventArea()
-	var/static/list/allowed_areas
-	var/static/list/world_areas
-	if(!allowed_areas)
-		//Places that shouldn't explode
-		var/list/safe_areas = list(
-			/area/station/ai_monitored/storage_secure,
-			/area/station/aisat/ai_chamber,
-			/area/station/bridge/ai_upload,
-			) + typesof(/area/station/engineering) + typesof(/area/station/solar) + typesof(/area/station/civilian/holodeck)
-
-		//Subtypes from the above that actually should explode.
-		var/list/unsafe_areas = list(
-			/area/station/engineering/break_room,
-			/area/station/engineering/chiefs_office
-			)
-
-		allowed_areas = subtypesof(/area/station) - safe_areas + unsafe_areas
-
-		world_areas = list()
-		for(var/area/A in world)
-			world_areas.Add(A.type)
-
-		allowed_areas &= world_areas
-
-	return locate(pick(allowed_areas))
-
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
 // with a specific role.
 // Note that this isn't sorted by department, because e.g. having a roboticist shouldn't make meteors spawn.
