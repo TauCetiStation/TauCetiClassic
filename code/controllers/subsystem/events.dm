@@ -21,9 +21,9 @@ var/datum/subsystem/events/SSevents
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_MUNDANE 	= new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE	= new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR 		= new/datum/event_container/major
+			EVENT_LEVEL_MUNDANE  = new/datum/event_container/mundane,
+			EVENT_LEVEL_MODERATE = new/datum/event_container/moderate,
+			EVENT_LEVEL_MAJOR    = new/datum/event_container/major
 		)
 
 	var/datum/event_meta/new_event = new
