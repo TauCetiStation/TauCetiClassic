@@ -390,7 +390,7 @@
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					var/start = valid_facialhairstyles.Find(h_style)
+					var/start = valid_facialhairstyles.Find(f_style)
 					if(start != 1 && start != 0)
 						f_style = valid_facialhairstyles[start - 1]
 					else
@@ -398,7 +398,7 @@
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					var/start = valid_facialhairstyles.Find(h_style)
+					var/start = valid_facialhairstyles.Find(f_style)
 					if(start != valid_facialhairstyles.len)
 						f_style = valid_facialhairstyles[start + 1]
 					else
