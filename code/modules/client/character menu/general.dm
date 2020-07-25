@@ -180,17 +180,6 @@
 	var/color = hex ? hex : "#[num2hex(red, 2)][num2hex(green, 2)][num2hex(blue, 2)]"
 	return "<font face='fixedsys' size='3' color='[color]'><table border cellspacing='0' style='display:inline;' bgcolor='[color]'><tr><td width='20' height='15'></td></tr></table></font>"
 
-#define LEFT_RIGHT_STYLE(direction, styles_list, style_num, style) \
-if(!style_num) { \
-	style_num = styles_list.Find(style) } \
-switch(direction) { \
-	if(LEFT)  { \
-		style_num = (style_num != 1) ? style_num - 1 : styles_list.len } \
-	if(RIGHT) { \
-		style_num = (style_num != styles_list.len) ? style_num + 1 : 1 } \
-	} \
-style = styles_list[style_num]
-
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
 	var/static/h_style_num
 	var/static/grad_style_num
@@ -345,11 +334,17 @@ style = styles_list[style_num]
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					LEFT_RIGHT_STYLE(LEFT, valid_hairstyles, h_style_num, h_style)
+					if(!h_style_num)
+						h_style_num = valid_hairstyles.Find(h_style)
+					h_style_num = (h_style_num != 1) ? h_style_num - 1 : valid_hairstyles.len
+					h_style = valid_hairstyles[h_style_num]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					LEFT_RIGHT_STYLE(RIGHT, valid_hairstyles, h_style_num, h_style)
+					if(!h_style_num)
+						h_style_num = valid_hairstyles.Find(h_style)
+					h_style_num = (h_style_num != valid_hairstyles.len) ? h_style_num + 1 : 1
+					h_style = valid_hairstyles[h_style_num]
 
 				if("grad_color")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
@@ -368,10 +363,18 @@ style = styles_list[style_num]
 						grad_style_num = null
 
 				if("grad_style_left")
-					LEFT_RIGHT_STYLE(LEFT, hair_gradients, grad_style_num, grad_style)
+					var/list/valid_gradients = hair_gradients
+					if(!grad_style_num)
+						grad_style_num = valid_gradients.Find(grad_style)
+					grad_style_num = (grad_style_num != 1) ? grad_style_num - 1 : valid_gradients.len
+					grad_style = valid_gradients[grad_style_num]
 
 				if("grad_style_right")
-					LEFT_RIGHT_STYLE(RIGHT, hair_gradients, grad_style_num, grad_style)
+					var/list/valid_gradients = hair_gradients
+					if(!grad_style_num)
+						grad_style_num = valid_gradients.Find(grad_style)
+					grad_style_num = (grad_style_num != valid_gradients.len) ? grad_style_num + 1 : 1
+					grad_style = valid_gradients[grad_style_num]
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character facial-hair colour", rgb(r_facial, g_facial, b_facial)) as color|null
@@ -389,11 +392,17 @@ style = styles_list[style_num]
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					LEFT_RIGHT_STYLE(LEFT, valid_facialhairstyles, f_style_num, f_style)
+					if(!f_style_num)
+						f_style_num = valid_facialhairstyles.Find(f_style)
+					f_style_num = (f_style_num != 1) ? f_style - 1 : valid_facialhairstyles.len
+					f_style = valid_facialhairstyles[f_style_num]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					LEFT_RIGHT_STYLE(RIGHT, valid_facialhairstyles, f_style_num, f_style)
+					if(!f_style_num)
+						f_style_num = valid_facialhairstyles.Find(f_style)
+					f_style_num = (f_style_num != valid_facialhairstyles.len) ? f_style_num + 1 : 1
+					f_style = valid_facialhairstyles[f_style_num]
 
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
@@ -623,5 +632,3 @@ style = styles_list[style_num]
 	if(length(valid_styles) == 0)
 		valid_styles["Shaved"] = /datum/sprite_accessory/facial_hair/shaved
 	return valid_styles
-
-#undef LEFT_RIGHT_STYLE
