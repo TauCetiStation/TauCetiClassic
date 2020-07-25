@@ -388,6 +388,7 @@
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style) as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
+						f_style_num = null
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
