@@ -567,7 +567,7 @@
 		candidates += O
 
 	candidates = pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
-	candidates &= observer_list
+
 	return candidates
 
 /proc/pollCandidates(Question = "Would you like to be a special role?", be_special_type, Ignore_Role, poll_time = 300, list/group = null)
@@ -588,9 +588,11 @@
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
-	for(var/mob/M in group)
+	for(var/mob/M in candidates)
 		if(!M.client)
-			candidates.Remove(M)
+			candidates -= M
+
+	listclearnulls(candidates)
 
 	return candidates
 
