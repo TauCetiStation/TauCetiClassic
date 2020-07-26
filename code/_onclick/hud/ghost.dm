@@ -37,6 +37,9 @@
 	G.dead_tele()
 
 /datum/hud/proc/ghost_hud()
+	if(!mymob.client.prefs.ghost_hud)
+		mymob.client.screen -= adding
+		return
 
 	adding = list()
 
