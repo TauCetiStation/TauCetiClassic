@@ -36,10 +36,8 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/datum/hud/proc/ghost_hud()
-
+/datum/hud/ghost/New()
 	adding = list()
-
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
@@ -58,5 +56,23 @@
 	using.screen_loc = ui_ghost_teleport
 	adding += using
 
-	mymob.client.screen += adding
-	return
+	..()
+
+/datum/hud/ghost/show_hud(version = 0)
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+
+	if(version)
+		hud_version = version
+	else
+		hud_version = (hud_version == HUD_STYLE_STANDARD) ? HUD_STYLE_NOHUD : HUD_STYLE_STANDARD
+
+	switch(hud_version)
+		if(HUD_STYLE_STANDARD)
+			hud_shown = TRUE
+			mymob.client.screen += adding
+		else
+			hud_shown = FALSE
+			mymob.client.screen -= adding
