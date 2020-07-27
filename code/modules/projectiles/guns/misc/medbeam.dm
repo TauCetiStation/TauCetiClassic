@@ -14,8 +14,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/gun/medbeam/Destroy(mob/user)
-	STOP_PROCESSING(SSobj, src)
+/obj/item/weapon/gun/medbeam/Destroy()
 	LoseTarget()
 	return ..()
 
