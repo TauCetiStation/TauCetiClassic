@@ -25,7 +25,7 @@
 		to_chat(src, "<span class='notice'>You will no longer interact with machines you click on.</span>")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
-	if(client.buildmode || istype(A, /obj/effect/statclick) || istype(A, /obj/screen)) // handled in normal click. // need port check_click_intercept() from tg
+	if(client.buildmode || istype(A, /obj/effect/statclick) || istype(A, /obj/screen)) // handled in normal click. // need think about port check_click_intercept() from tg
 		return
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
