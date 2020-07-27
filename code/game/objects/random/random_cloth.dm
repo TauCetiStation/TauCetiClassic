@@ -48,7 +48,8 @@
 	return pick(\
 				/obj/item/clothing/suit/tajaran/furs,\
 				/obj/item/clothing/suit/unathi/robe ,\
-				/obj/item/clothing/suit/nun,\
+				/obj/item/clothing/suit/hooded/skhima,\
+				/obj/item/clothing/suit/hooded/nun,\
 				/obj/item/clothing/suit/chef/classic,\
 				/obj/item/clothing/suit/suspenders,\
 				/obj/item/clothing/suit/pirate,\

@@ -28,4 +28,4 @@
 					to_chat(src, "<span class='danger'>Grabbing \the [H] in their current condition would probably be a bad idea.</span>")
 		M.inertia_dir = 0
 
-	new /obj/item/weapon/grab(src, target, force_state)
+	return new /obj/item/weapon/grab(src, target, force_state)

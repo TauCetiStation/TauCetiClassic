@@ -117,7 +117,7 @@
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else if(iswrench(W) && !anchored && (!state || !reinf))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
@@ -126,8 +126,7 @@
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
-	return
+		return ..()
 
 /obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
