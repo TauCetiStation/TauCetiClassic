@@ -231,7 +231,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
-	S["ghost_hud"]			>> ghost_hud
 	S["randomslot"]			>> randomslot
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
@@ -311,7 +310,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
-	S["ghost_hud"]			<< ghost_hud
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
 	S["parallax"]			<< parallax

@@ -167,18 +167,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 
-/client/verb/toggle_ghost_hud_pref()
-	set name = "Toggle Ghost HUD"
-	set category = "Preferences"
-	set desc = "Hide/Show Ghost HUD"
-
-	prefs.ghost_hud = !prefs.ghost_hud
-	to_chat(src, "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"].")
-	prefs.save_preferences()
-	if(isobserver(mob))
-		mob.hud_used.ghost_hud()
-	feedback_add_details("admin_verb","TGHUD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/set_ckey_show()
 	set name = "Show/Hide Ckey"
 	set desc = "Toggle between showing your Ckey in LOOC and dead chat."

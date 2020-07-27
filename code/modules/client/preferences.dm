@@ -36,7 +36,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
-	var/ghost_hud = TRUE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
 	//sound volume preferences
