@@ -123,6 +123,10 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
 			get_hit()
 
+// (build_mode > throw)
+/obj/effect/meteor/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
+	walk_towards(src, target, 1)
+
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe))
 		make_debris()
@@ -158,7 +162,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
 
 	//then, ram the turf if it still exists
-	if(T && !is_blocked_turf(T))
+	if(T)
 		T.ex_act(hitpwr)
 
 //process getting 'hit' by colliding with a dense object
