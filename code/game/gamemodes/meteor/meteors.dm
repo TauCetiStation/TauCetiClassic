@@ -1,9 +1,9 @@
 // Meteors probability of spawning during a given wave
 // for normal meteor event
 var/global/list/obj/effect/meteor/meteors_normal = list(
-	/obj/effect/meteor/dust = 3,
-	/obj/effect/meteor/medium = 8,
-	/obj/effect/meteor/big   = 3
+	/obj/effect/meteor/dust = 25,
+	/obj/effect/meteor/medium = 65,
+	/obj/effect/meteor/big   = 10
 	)
 // for threatening meteor event
 var/global/list/obj/effect/meteor/meteors_threatening = list(
@@ -42,7 +42,6 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = z
 	//message_admins("[M] has spawned at [M.x],[M.y],[M.z] [ADMIN_JMP(M)] [ADMIN_FLW(M)].")
 	spawn(0)
 		walk_towards(M, M.dest, 1)
@@ -93,18 +92,21 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/hits = 1
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
 	pass_flags = PASSTABLE
-	var/heavy = 0
+	var/heavy = FALSE
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original = 1
+	var/z_original
 
 	var/meteordrop = /obj/item/weapon/ore/iron
 	var/dropamt = 2
+
+/obj/effect/meteor/atom_init()
+	z_original = loc.z
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
@@ -116,11 +118,6 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	if(.)//.. if did move, ram the turf we get in
 		var/turf/T = get_turf(loc)
 
-		if(istype(T, /turf/space)) // if spaceturf, but e.g. grille > Bump()
-			for(var/atom/A in T.contents - src)
-				if(A.density)
-					Bump(A)
-					return
 		ram_turf(T)
 
 		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
@@ -157,11 +154,11 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 			return
 		break
 	for(var/atom/A in T.contents - src)
-		if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
+		if(!istype(A, /obj/machinery/power/emitter) && !istype(A, /obj/machinery/field_generator)) //Protect the singularity from getting released every round!
 			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
 
 	//then, ram the turf if it still exists
-	if(T)
+	if(T && !is_blocked_turf(T))
 		T.ex_act(hitpwr)
 
 //process getting 'hit' by colliding with a dense object
@@ -224,7 +221,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	name = "big meteor"
 	icon_state = "flaming"
 	hits = 6
-	heavy = 1
+	heavy = TRUE
 	dropamt = 4
 
 /obj/effect/meteor/big/meteor_effect()
