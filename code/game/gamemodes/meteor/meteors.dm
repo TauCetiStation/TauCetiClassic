@@ -167,7 +167,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	hits--
 	if(hits <= 0)
 		make_debris()
-		meteor_effect(heavy)
+		meteor_effect()
 		qdel(src)
 
 /obj/effect/meteor/proc/meteor_effect()
