@@ -18,14 +18,14 @@
 	var/list/vents = get_vents()
 
 	if(!vents.len)
-		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
+		message_admins("An event attempted to spawn a borers but no suitable vents were found. Shutting down.")
 		kill()
 		return
 
 	var/list/candidates = pollGhostCandidates("Do you want to play as a cortical borer?", ROLE_ALIEN, IGNORE_BORER)
 
 	for(var/mob/M in candidates)
-		if(!spawncount)
+		if(spawncount <= 0)
 			break
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE)
@@ -33,3 +33,8 @@
 		message_admins("[B] has spawned at [B.x],[B.y],[B.z] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
 		successSpawn = TRUE
 		spawncount--
+
+	if(!successSpawn)
+		message_admins("An event attempted to spawn a borers but no candidates found. Shutting down.")
+		kill()
+		return
