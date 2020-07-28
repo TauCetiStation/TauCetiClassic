@@ -25,7 +25,7 @@
 	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_ALIEN, IGNORE_BORER)
 
 	for(var/mob/M in candidates)
-		if(spawncount <= 0)
+		if(spawncount <= 0 || !vents.len)
 			break
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/simple_animal/borer/B = new(vent.loc)
