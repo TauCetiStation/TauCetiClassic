@@ -18,7 +18,7 @@
 	var/list/vents = get_vents()
 
 	if(!vents.len)
-		message_admins("An event attempted to spawn a borers but no suitable vents were found. Shutting down.")
+		message_admins("An event attempted to spawn a borers, but no suitable vents were found. Shutting down.")
 		kill()
 		return
 
@@ -35,6 +35,6 @@
 		spawncount--
 
 	if(!successSpawn)
-		message_admins("An event attempted to spawn a borers but no candidates found. Shutting down.")
+		message_admins("An event attempted to spawn a borers, but no candidates found. Shutting down.")
 		kill()
 		return
