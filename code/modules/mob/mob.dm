@@ -259,7 +259,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = sanitize(msg)
+	msg = replace_characters(html_encode(msg), list("\n" = "<BR>"))
 
 	if(msg && mind)
 		mind.store_memory(msg)
