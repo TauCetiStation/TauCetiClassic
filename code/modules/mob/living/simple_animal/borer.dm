@@ -479,7 +479,7 @@ var/global/list/datum/mind/borers = list()
 		obj_count++
 
 /mob/living/simple_animal/borer/proc/request_n_transfer_ghost(mob/dead/observer/O, show_warnings = FALSE, force = FALSE)
-	if(!force && O.client.prefs.ignore_question.Find(Ignore_Role))
+	if(!force && O.client.prefs.ignore_question.Find(IGNORE_BORER))
 		return
 	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 		if(show_warnings)
