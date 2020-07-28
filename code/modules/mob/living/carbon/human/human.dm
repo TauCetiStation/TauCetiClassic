@@ -1,6 +1,6 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
-#define STAMINA_REGEN_RATE = 0.05
+#define STAMINA_REGEN_RATE 0.05
 
 /mob/living/carbon/human
 	name = "unknown"
