@@ -4,7 +4,7 @@
 	announceWhen = 400
 
 	var/spawncount = 1
-	var/successSpawn = 0        //So we don't make a command report if nothing gets spawned.
+	var/successSpawn = FALSE //So we don't make a command report if nothing gets spawned.
 
 /datum/event/borer_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
