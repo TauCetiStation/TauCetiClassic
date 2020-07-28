@@ -68,10 +68,10 @@
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
 		for(var/mob/dead/observer/O in observer_list)
-			request_n_transfer_ghost(O)
+			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER, show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	request_n_transfer_ghost(O, show_warnings = TRUE, force = TRUE)
+	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 
@@ -448,7 +448,7 @@
 
 var/global/list/datum/mind/borers = list()
 
-/mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
+/mob/living/simple_animal/borer/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return
@@ -477,43 +477,6 @@ var/global/list/datum/mind/borers = list()
 	for(var/datum/objective/objective in mind.objectives)
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
-
-/mob/living/simple_animal/borer/proc/request_n_transfer_ghost(mob/dead/observer/O, show_warnings = FALSE, force = FALSE)
-	if(!force && O.client.prefs.ignore_question.Find(IGNORE_BORER))
-		return
-	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
-		if(show_warnings)
-			to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
-		return
-	if(jobban_isbanned(O, "Syndicate"))
-		if(show_warnings)
-			to_chat(O, "<span class='warning'>You are banned from antagonists!</span>")
-		return
-	if(jobban_isbanned(O, "ROLE_ALIEN") || role_available_in_minutes(O, ROLE_ALIEN))
-		if(show_warnings)
-			to_chat(O, "<span class='warning'>You are banned from aliens!</span>")
-		return
-	if(key || mind)
-		return
-	if(stat != CONSCIOUS)
-		return
-	var/be_borer
-	if(force)
-		be_borer = alert(O, "Do you want to play as a Cortical Borer?", "Borer Request", "No", "Yes")
-	else
-		be_borer = alert(O, "Do you want to play as a Cortical Borer?", "Borer Request", "No", "Yes", "Not This Round")
-	if(be_borer == "No" || !src || QDELETED(src))
-		return
-	if(be_borer == "Not This Round")
-		O.client.prefs.ignore_question += IGNORE_BORER
-		return
-	if(key || mind)
-		return
-	if(!isobserver(O))
-		return
-	if(stat != CONSCIOUS)
-		return
-	transfer_personality(O.client)
 
 /datum/game_mode/proc/auto_declare_completion_borer()
 	var/text = ""

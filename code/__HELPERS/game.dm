@@ -558,6 +558,7 @@
 
 // Procs for grabbing players.
 
+// grab random ghost from candidates after poll_time
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
@@ -616,3 +617,50 @@
 			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
 			M.client.prefs.ignore_question += Ignore_Role
 			return
+
+// first answer "Yes" > transfer
+/mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
+	if(key || mind || stat != CONSCIOUS)
+		return
+
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+		return
+
+	if(isobserver(M))
+		var/mob/dead/observer/O = M
+		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			if(show_warnings)
+				to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
+			return
+
+	if(jobban_isbanned(M, "Syndicate"))
+		if(show_warnings)
+			to_chat(M, "<span class='warning'>You are banned from antagonists!</span>")
+		return
+
+	if(jobban_isbanned(M, be_special_type) || role_available_in_minutes(M, be_special_type))
+		if(show_warnings)
+			to_chat(M, "<span class='warning'>You are banned from [be_special_type]!</span>")
+		return
+
+	INVOKE_ASYNC(src, .proc/request_n_transfer, M, Question, be_special_type, Ignore_Role, show_warnings)
+
+/mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
+	var/ans
+	if(Ignore_Role)
+		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes", "Not This Round")
+	else
+		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes")
+	if(ans == "No")
+		return
+	if(ans == "Not This Round")
+		M.client.prefs.ignore_question += IGNORE_BORER
+		return
+
+	if(key || mind || stat != CONSCIOUS)
+		return
+
+	transfer_personality(M.client)
+
+/mob/proc/transfer_personality(client/C)
+	return
