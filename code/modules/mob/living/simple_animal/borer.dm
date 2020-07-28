@@ -61,7 +61,7 @@
 	var/docile = 0                          // Sugar can stop borers from acting.
 	var/leaving = FALSE
 
-/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = TRUE)
+/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE)
 	. = ..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	real_name = truename
@@ -71,7 +71,7 @@
 			request_n_transfer_ghost(O)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	request_n_transfer_ghost(O, show_warnings = TRUE)
+	request_n_transfer_ghost(O, show_warnings = TRUE, force = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 
@@ -478,7 +478,9 @@ var/global/list/datum/mind/borers = list()
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/mob/living/simple_animal/borer/proc/request_n_transfer_ghost(mob/dead/observer/O, show_warnings = FALSE)
+/mob/living/simple_animal/borer/proc/request_n_transfer_ghost(mob/dead/observer/O, show_warnings = FALSE, force = FALSE)
+	if(!force && O.client.prefs.ignore_question.Find(Ignore_Role))
+		return
 	if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 		if(show_warnings)
 			to_chat(O, "<span class='boldnotice'>Upon using the antagHUD you forfeited the ability to join the round.</span>")
@@ -495,8 +497,15 @@ var/global/list/datum/mind/borers = list()
 		return
 	if(stat != CONSCIOUS)
 		return
-	var/be_borer = alert(O, "Do you want to play as a cortical borer?",,"No","Yes")
+	var/be_borer
+	if(force)
+		be_borer = alert(O, "Do you want to play as a cortical borer?", "Borer Request", "No", "Yes")
+	else
+		be_borer = alert(O, "Do you want to play as a cortical borer?", "Borer Request", "No", "Yes", "Not This Round")
 	if(be_borer == "No" || !src || QDELETED(src))
+		return
+	if(be_borer == "Not This Round")
+		O.client.prefs.ignore_question += IGNORE_BORER
 		return
 	if(key || mind)
 		return
