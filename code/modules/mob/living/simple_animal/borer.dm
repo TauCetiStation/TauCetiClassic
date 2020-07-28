@@ -499,9 +499,9 @@ var/global/list/datum/mind/borers = list()
 		return
 	var/be_borer
 	if(force)
-		be_borer = alert(O, "Do you want to play as a cortical borer?", "Borer Request", "No", "Yes")
+		be_borer = alert(O, "Do you want to play as a Cortical Borer?", "Borer Request", "No", "Yes")
 	else
-		be_borer = alert(O, "Do you want to play as a cortical borer?", "Borer Request", "No", "Yes", "Not This Round")
+		be_borer = alert(O, "Do you want to play as a Cortical Borer?", "Borer Request", "No", "Yes", "Not This Round")
 	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(be_borer == "Not This Round")
