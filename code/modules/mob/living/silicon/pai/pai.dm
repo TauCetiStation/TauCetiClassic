@@ -77,6 +77,8 @@
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
+	verbs -= /mob/living/verb/ghost
+
 	//PDA
 	pda = new(src)
 	spawn(5)
