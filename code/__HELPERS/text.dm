@@ -156,13 +156,8 @@
 	while(bad_chars)
 	. = scrubbed_url
 
-//todo: 513
-//reset to placeholder for inputs, logs
-/proc/reset_ja(text)
-	return replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-
 /proc/input_default(text)
-	return html_decode(reset_ja(text))//replace br with \n?
+	return html_decode(text)
 
 /*
  * Text searches
@@ -379,3 +374,40 @@
 	t = replacetext(t, "\[time\]", "[worldtime2text()]")
 
 	return t
+
+// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as 
+// ISO-8859-5 -> utf-8 instead of Windows-1252 -> utf-8
+// Byond choises first encoding based on server locale, this fix for ru_RU
+// On you locale this fix may not work and you should change or 
+// drop this proc completly if you not have any pre-513 cyrillics
+// Does nothing with standart latin
+/proc/fix_cyrillic(text)
+
+	var/char = ""
+	var/new_text = ""
+	var/new_char
+	var/bytes_length = length(text)
+	var/ascii_char
+
+	for(var/i = 1, i <= bytes_length, i += length(char))
+		char = text[i]
+		new_char = char
+		ascii_char = text2ascii(char)
+
+		switch(ascii_char)
+			if(167)
+				new_char = "э"
+			if(1032)
+				new_char = "Ё"
+			if(1048)
+				new_char = "ё"
+			if(1046) // ¶ (Ж in ISO)
+				new_char = "я"
+			if(8470)
+				new_char = "р"
+			if(1056 to 1119)
+				new_char = ascii2text(ascii_char - 16)
+
+		new_text += new_char
+
+	return new_text

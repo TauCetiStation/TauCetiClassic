@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 29
+#define SAVEFILE_VERSION_MAX 30
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -184,6 +184,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
 
+	if(current_version < 30)
+		flavor_text = fix_cyrillic(flavor_text)
+		med_record  = fix_cyrillic(med_record)
+		sec_record  = fix_cyrillic(sec_record)
+		gen_record  = fix_cyrillic(gen_record)
+		metadata    = fix_cyrillic(metadata)
+		home_system = fix_cyrillic(home_system)
+		citizenship = fix_cyrillic(citizenship)
+		faction     = fix_cyrillic(faction)
+		religion    = fix_cyrillic(religion)
+
+		S["flavor_text"] << flavor_text
+		S["med_record"]  << med_record
+		S["sec_record"]  << sec_record
+		S["gen_record"]  << gen_record
+		S["OOC_Notes"]   << metadata
+		S["home_system"] << home_system
+		S["citizenship"] << citizenship
+		S["faction"]     << faction
+		S["religion"]    << religion
+		
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
