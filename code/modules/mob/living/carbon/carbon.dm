@@ -620,7 +620,7 @@
 		B.has_reproduced = 1
 
 		vomit()
-		new /mob/living/simple_animal/borer(get_turf(src), request_ghosts = TRUE)
+		new /mob/living/simple_animal/borer(get_turf(src))
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
