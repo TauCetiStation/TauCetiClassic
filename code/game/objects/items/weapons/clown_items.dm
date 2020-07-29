@@ -395,7 +395,6 @@
 	icon_state = "sound_button_off"
 	cooldown = TRUE
 	addtimer(CALLBACK(src, .proc/release_cooldown), cooldown_duration)
-	return
 	..()
 
 /obj/item/toy/sound_button/proc/release_cooldown()
