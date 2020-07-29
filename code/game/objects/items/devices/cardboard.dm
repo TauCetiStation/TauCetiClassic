@@ -81,7 +81,7 @@
 	for(var/name in cardboard_icon)
 		coloring[name] = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = cardboard_icon[name])
 
-	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = TRUE)
+	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = FALSE)
 	if(!new_appearance || !crayon)
 		return
 	if(!user.Adjacent(src))
