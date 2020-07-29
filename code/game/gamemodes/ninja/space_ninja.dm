@@ -20,7 +20,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
+		log_admin("[key_name(src)] turned [H.key] into a Space Ninja.")
 		spawn(10)
 			H.create_mind_space_ninja()
 			H.equip_space_ninja(1)
