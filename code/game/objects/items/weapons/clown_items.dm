@@ -237,36 +237,13 @@
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
 	var/list/sound
-	var/cooldown_duration = 50
 	w_class = ITEM_SIZE_SMALL
-
-/obj/item/toy/sound_button/attack_self(mob/user)
-	if(cooldown)
-		return
-
-	var/static/list/actions = list(
-		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
-		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
-		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
-		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
-		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
-		)
-
-	if(!actions)
-		actions = list()
-
-	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
-	if(!soundtype)
-		return
-	switch(soundtype)
-		if("Laugh")
-			cooldown_duration = 35
-			sound = list('sound/voice/fake_laugh/laugh1.ogg',
+	var/static/list/pos_sounds = list(
+		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
 						'sound/voice/fake_laugh/laugh2.ogg',
-						'sound/voice/fake_laugh/laugh3.ogg')
-		if("Weapon shot")
-			cooldown_duration = 60
-			sound = list('sound/weapons/blaster.ogg',
+						'sound/voice/fake_laugh/laugh3.ogg'),
+
+		"Weapon shot" = list('sound/weapons/blaster.ogg',
 						'sound/weapons/pyrometr_shot.ogg',
 						'sound/weapons/guns/gunpulse.ogg',
 						'sound/weapons/guns/gunpulse2.ogg',
@@ -297,10 +274,9 @@
 						'sound/weapons/guns/marauder.ogg',
 						'sound/weapons/guns/plasma10_hit.ogg',
 						'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg',
-						'sound/weapons/guns/resonator_blast.ogg')
-		if("Melee weapon")
-			cooldown_duration = 35
-			sound = list('sound/items/drill_hit.ogg',
+						'sound/weapons/guns/resonator_blast.ogg'),
+
+		"Melee weapon" = list('sound/items/drill_hit.ogg',
 						'sound/items/sledgehammer_hit.ogg',
 						'sound/items/trayhit1.ogg',
 						'sound/items/trayhit2.ogg',
@@ -324,10 +300,9 @@
 						'sound/weapons/punch1.ogg',
 						'sound/weapons/punch2.ogg',
 						'sound/weapons/smash.ogg',
-						'sound/weapons/slash.ogg')
-		if("Effects")
-			cooldown_duration = 40
-			sound = list('sound/effects/air_release.ogg',
+						'sound/weapons/slash.ogg'),
+
+		"Effects" = list('sound/effects/air_release.ogg',
 						'sound/effects/ArterialBleed.ogg',
 						'sound/effects/bamf.ogg',
 						'sound/effects/bang.ogg',
@@ -366,10 +341,9 @@
 						'sound/effects/refill.ogg',
 						'sound/effects/scary_honk.ogg',
 						'sound/effects/shieldbash.ogg',
-						'sound/effects/supermatter.ogg')
-		if("Screams of pain")
-			cooldown_duration = 120
-			sound = list('sound/voice/mob/pain/male/heavy_1.ogg',
+						'sound/effects/supermatter.ogg'),
+
+		"Screams of pain" = list('sound/voice/mob/pain/male/heavy_1.ogg',
 						'sound/voice/mob/pain/male/heavy_2.ogg',
 						'sound/voice/mob/pain/male/heavy_3.ogg',
 						'sound/voice/mob/pain/male/heavy_4.ogg',
@@ -389,12 +363,33 @@
 						'sound/voice/mob/pain/male/passive_whiner_2.ogg',
 						'sound/voice/mob/pain/male/passive_whiner_3.ogg',
 						'sound/voice/mob/pain/male/passive_whiner_4.ogg')
+						)
 
-	playsound(src, pick(sound), VOL_EFFECTS_MISC, 85, FALSE)
+
+/obj/item/toy/sound_button/attack_self(mob/user)
+	if(cooldown)
+		return
+
+	var/static/list/actions = list(
+		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
+		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
+		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
+		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
+		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
+		)
+
+	if(!actions)
+		actions = list()
+
+	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
+	if(!soundtype)
+		return
+
+	playsound(src, pick(pos_sounds[soundtype]), VOL_EFFECTS_MISC, 85, FALSE)
 	flick("sound_button_down", src)
 	icon_state = "sound_button_off"
 	cooldown = TRUE
-	addtimer(CALLBACK(src, .proc/release_cooldown), cooldown_duration)
+	addtimer(CALLBACK(src, .proc/release_cooldown), 60)
 	..()
 
 /obj/item/toy/sound_button/proc/release_cooldown()
