@@ -181,9 +181,6 @@
 	return "<font face='fixedsys' size='3' color='[color]'><table border cellspacing='0' style='display:inline;' bgcolor='[color]'><tr><td width='20' height='15'></td></tr></table></font>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
-	var/static/h_style_num
-	var/static/grad_style_num
-	var/static/f_style_num
 	switch(href_list["preference"])
 		if("records")
 			switch(href_list["task"])
@@ -330,16 +327,15 @@
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style) as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
-						h_style_num = null
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					h_style_num = get_left_right_style_num(LEFT, valid_hairstyles, h_style_num, h_style)
+					var/h_style_num = get_left_right_style_num(LEFT, valid_hairstyles, h_style)
 					h_style = valid_hairstyles[h_style_num]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_styles_list(hair_styles_list)
-					h_style_num = get_left_right_style_num(RIGHT, valid_hairstyles, h_style_num, h_style)
+					var/h_style_num = get_left_right_style_num(RIGHT, valid_hairstyles, h_style)
 					h_style = valid_hairstyles[h_style_num]
 
 				if("grad_color")
@@ -356,16 +352,15 @@
 					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Gradient Style", grad_style) as null|anything in valid_gradients
 					if(new_grad_style)
 						grad_style = new_grad_style
-						grad_style_num = null
 
 				if("grad_style_left")
 					var/list/valid_gradients = hair_gradients
-					grad_style_num = get_left_right_style_num(LEFT, valid_gradients, grad_style_num, grad_style)
+					var/grad_style_num = get_left_right_style_num(LEFT, valid_gradients, grad_style)
 					grad_style = valid_gradients[grad_style_num]
 
 				if("grad_style_right")
 					var/list/valid_gradients = hair_gradients
-					grad_style_num = get_left_right_style_num(RIGHT, valid_gradients, grad_style_num, grad_style)
+					var/grad_style_num = get_left_right_style_num(RIGHT, valid_gradients, grad_style)
 					grad_style = valid_gradients[grad_style_num]
 
 				if("facial")
@@ -380,16 +375,15 @@
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style) as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
-						f_style_num = null
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					f_style_num = get_left_right_style_num(LEFT, valid_facialhairstyles, f_style_num, f_style)
+					var/f_style_num = get_left_right_style_num(LEFT, valid_facialhairstyles, f_style)
 					f_style = valid_facialhairstyles[f_style_num]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_styles_list(facial_hair_styles_list)
-					f_style_num = get_left_right_style_num(RIGHT, valid_facialhairstyles, f_style_num, f_style)
+					var/f_style_num = get_left_right_style_num(RIGHT, valid_facialhairstyles, f_style)
 					f_style = valid_facialhairstyles[f_style_num]
 
 				if("underwear")
@@ -621,9 +615,8 @@
 		valid_styles["Shaved"] = /datum/sprite_accessory/facial_hair/shaved
 	return valid_styles
 
-/datum/preferences/proc/get_left_right_style_num(direction, list/styles_list, style_num, style)
-	if(!style_num)
-		style_num = styles_list.Find(style)
+/datum/preferences/proc/get_left_right_style_num(direction, list/styles_list, style)
+	var/style_num = styles_list.Find(style)
 	switch(direction)
 		if(LEFT)
 			style_num = (style_num != 1) ? style_num - 1 : styles_list.len
