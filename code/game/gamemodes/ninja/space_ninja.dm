@@ -18,16 +18,17 @@
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
 
-	if(istype(M))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
 		spawn(10)
-			M.create_mind_space_ninja()
-			M.equip_space_ninja(1)
-			if(istype(M.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-				var/obj/item/clothing/suit/space/space_ninja/S = M.wear_suit
+			H.create_mind_space_ninja()
+			H.equip_space_ninja(1)
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
 				S.randomize_param()
 				spawn(0)
-					S.ninitialize(10,M)
+					S.ninitialize(10, H)
 	else
 		alert("Invalid mob")
 
