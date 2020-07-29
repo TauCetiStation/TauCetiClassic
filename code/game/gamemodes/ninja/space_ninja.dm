@@ -18,15 +18,16 @@
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
 
-	if(ishuman(M))
+	if(istype(M))
 		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
 		spawn(10)
-			M:create_mind_space_ninja()
-			M:equip_space_ninja(1)
-			if(istype(M:wear_suit, /obj/item/clothing/suit/space/space_ninja))
-				M:wear_suit:randomize_param()
+			M.create_mind_space_ninja()
+			M.equip_space_ninja(1)
+			if(istype(M.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				var/obj/item/clothing/suit/space/space_ninja/S = M.wear_suit
+				S.randomize_param()
 				spawn(0)
-					M:wear_suit:ninitialize(10,M)
+					S.ninitialize(10,M)
 	else
 		alert("Invalid mob")
 
@@ -131,7 +132,7 @@
 			U.gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
-			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
+			to_chat(U, "<span class='warning'><B>fÃ„TaL ÃˆÃˆRRoR</B>: 382200-*#00CÃ–DE <B>RED</B>\nUNAU?HORIZED USÃˆ DETÃˆC???eD\nCoMMÃˆNCING SUB-R0U?IN3 13...\nTÃˆRMInATING U-U-USÃˆR...</span>")
 			U.gib()
 			return 0
 		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
