@@ -191,7 +191,7 @@
 
 /datum/browser/modal/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
-		stoplag()
+		stoplag(1)
 
 
 
