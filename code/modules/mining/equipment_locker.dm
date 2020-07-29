@@ -362,7 +362,13 @@
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
+	var/static/list/items = list(
+		"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+		"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
+		"Mining Drone" = image(icon = 'icons/obj/aibots.dmi', icon_state = "mining_drone"),
+		"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining"),
+		)
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = 0
 		return
