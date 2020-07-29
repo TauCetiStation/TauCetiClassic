@@ -7040,6 +7040,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "BrigFoyer";
+	name = "Brig Foyer Doors";
+	pixel_x = -25;
+	pixel_y = -18;
+	range = 10
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "alC" = (
@@ -7198,13 +7206,15 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "alN" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/machinery/door/window/southright{
+	dir = 8;
+	name = "Security lobby"
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/westleft{
-	dir = 4;
-	name = "Security lobby";
-	req_access = list(63)
-	},
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
 "alO" = (
@@ -7290,10 +7300,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Security lobby";
-	req_access = list(63)
+/obj/machinery/door/window/westleft{
+	name = "Security lobby"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
@@ -7414,14 +7422,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
-	id = "BrigFoyer";
-	name = "Brig Foyer Doors";
-	pixel_y = -24;
-	range = 10;
-	req_access = list(63)
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -8900,10 +8900,6 @@
 	},
 /obj/machinery/light{
 	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -26235,11 +26231,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUU" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Break Room";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -26248,6 +26239,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "";
+	name = "Break Room";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
