@@ -225,6 +225,9 @@ var/datum/subsystem/events/SSevents
 	if(..())
 		return
 
+	if(!check_rights(R_ADMIN))
+		return
+		
 
 	if(href_list["toggle_report"])
 		report_at_round_end = !report_at_round_end
