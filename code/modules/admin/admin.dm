@@ -1367,6 +1367,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
 		else if (ispAI(S))
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
+			var/mob/living/silicon/pai/P = S
+			to_chat(usr, "pAI's master: <b>[P.master ? P.master : "N/A"]</b>" )
 		else
 			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
