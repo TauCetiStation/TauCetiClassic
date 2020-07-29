@@ -236,7 +236,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
-	var/list/sound
 	w_class = ITEM_SIZE_SMALL
 	var/static/list/pos_sounds = list(
 		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
@@ -377,9 +376,6 @@
 		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
 		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
 		)
-
-	if(!actions)
-		actions = list()
 
 	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
 	if(!soundtype)
