@@ -4,7 +4,7 @@
 
 // CURRENT PLAYER VERB
 
-/client/proc/cmd_admin_ninjafy(mob/M in player_list)
+/client/proc/cmd_admin_ninjafy(mob/living/carbon/human/M in player_list)
 	set category = null
 	set name = "Make Space Ninja"
 
