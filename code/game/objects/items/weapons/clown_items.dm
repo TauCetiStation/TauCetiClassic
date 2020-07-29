@@ -237,6 +237,13 @@
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
 	w_class = ITEM_SIZE_SMALL
+	var/static/list/actions = list(
+		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
+		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
+		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
+		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
+		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
+		)
 	var/static/list/pos_sounds = list(
 		"Laugh" = list('sound/voice/fake_laugh/laugh1.ogg',
 						'sound/voice/fake_laugh/laugh2.ogg',
@@ -368,14 +375,6 @@
 /obj/item/toy/sound_button/attack_self(mob/user)
 	if(cooldown)
 		return
-
-	var/static/list/actions = list(
-		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
-		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),
-		"Melee weapon" = image(icon = 'icons/obj/items.dmi', icon_state = "fire_extinguisher0"),
-		"Effects" = image(icon = 'icons/obj/drinks.dmi', icon_state = "ice_tea_can"),
-		"Screams of pain" = image(icon = 'icons/obj/objects.dmi', icon_state = "monkey")
-		)
 
 	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
 	if(!soundtype)
