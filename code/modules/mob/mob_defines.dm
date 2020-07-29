@@ -128,6 +128,7 @@
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
 
+	var/datum/hud/hud_type = /datum/hud
 	var/datum/hud/hud_used = null
 
 	var/list/grabbed_by = list(  )
