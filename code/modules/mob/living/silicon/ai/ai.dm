@@ -80,13 +80,11 @@ var/global/list/chooses_ai_cores
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
 
-<<<<<<< Updated upstream
 	var/mob/camera/Eye/ai/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
 	var/obj/machinery/hologram/holopad/holo = null
-=======
 	// Radila menu.
 	var/static/list/name_by_state = list(
 		"Standard" = "ai",
@@ -131,7 +129,6 @@ var/global/list/chooses_ai_cores
 		"Gentoo" = "ai-gentoo",
 		"Hal 9000" = "ai-hal",
 )
->>>>>>> Stashed changes
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
