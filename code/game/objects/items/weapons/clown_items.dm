@@ -255,7 +255,7 @@
 	if(!actions)
 		actions = list()
 
-	var/soundtype = show_radial_menu(user, src, actions, require_near = FALSE, tooltips = TRUE)
+	var/soundtype = show_radial_menu(user, src, actions, require_near = TRUE, tooltips = TRUE)
 	if(!soundtype)
 		return
 	switch(soundtype)
