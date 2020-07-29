@@ -64,20 +64,23 @@
 	if(pushed_over)
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
 		return
-	var/static/list/coloring = list(
-									"Assistant" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_greytide"),
-									"Clown" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_clown"),
-									"Mime" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_mime"),
-									"Traitor" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_traitor"),
-									"Nuke Op" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "[pick("cutout_flukecombat", "cutout_flukespace")]"),
-									"Cultist" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_cultist"),
-									"Revolutionary" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_viva"),
-									"Wizard" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_wizard"),
-									"Shadowling" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling"),
-									"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
-									"Deathsquad Officer" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_deathsquad"),
-									"Ian" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_ian")
-									)
+	var/list/cardboard_icon = list(
+				"Assistant" = "cutout_greytide",
+				"Clown" = "cutout_clown",
+				"Mime" = "cutout_mime",
+				"Traitor" = "cutout_traitor",
+				"Nuke Op" = "[pick("cutout_flukecombat", "cutout_flukespace")]",
+				"Cultist" = "cutout_cultist",
+				"Revolutionary" = "cutout_viva",
+				"Wizard" = "cutout_wizard",
+				"Shadowling" = "cutout_shadowling",
+				"Xenomorph" = "cutout_fukken_xeno",
+				"Deathsquad Officer" = "cutout_deathsquad",
+				"Ian" = "cutout_ian")
+	var/static/list/coloring = list()
+	for(var/name in cardboard_icon)
+		coloring[name] = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = cardboard_icon[name])
+
 	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!new_appearance || !crayon)
 		return
