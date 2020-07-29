@@ -268,6 +268,8 @@
 		to_chat(src, "You don't have enough chemicals!")
 
 	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	if(!chem)
+		return
 
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
