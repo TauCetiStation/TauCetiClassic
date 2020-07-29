@@ -259,7 +259,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = sanitize(msg)
+	msg = replacetext(sanitize(msg, extra = FALSE), "\n", "<br>")
 
 	if(msg && mind)
 		mind.store_memory(msg)
