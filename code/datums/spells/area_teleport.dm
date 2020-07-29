@@ -25,6 +25,8 @@
 	else
 		A = pick(teleportlocs)
 
+	if(!A)
+		return FALSE
 	var/area/thearea = teleportlocs[A]
 	usr.say("SCYAR NILA [thearea.name]")
 	if(do_after(usr, 50, target = usr))

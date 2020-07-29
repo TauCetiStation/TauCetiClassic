@@ -2,9 +2,6 @@
 /datum/hud/proc/unplayer_hud()
 	return
 
-/datum/hud/proc/ghost_hud()
-	return
-
 /datum/hud/proc/brain_hud()
 	mymob.client.screen = list()
 	mymob.client.screen += mymob.client.void
