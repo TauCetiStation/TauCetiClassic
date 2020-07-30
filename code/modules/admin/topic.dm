@@ -918,7 +918,6 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
 					to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
@@ -941,7 +940,6 @@
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
 						to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
@@ -1048,25 +1046,6 @@
 			message_admins("<span class='notice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
 			del(M.client)
-/*
-	//Player Notes
-	else if(href_list["notes"])
-		var/ckey = href_list["ckey"]
-		if(!ckey)
-			var/mob/M = locate(href_list["mob"])
-			if(ismob(M))
-				ckey = M.ckey
-
-		switch(href_list["notes"])
-			if("show")
-				notes_show(ckey)
-			if("add")
-				notes_add(ckey,href_list["text"])
-				notes_show(ckey)
-			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
-				notes_show(ckey)
-*/
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
@@ -2954,14 +2933,15 @@
 		if(!add) return
 
 		notes_add(key, add, usr.client)
-		show_player_info(key)
+		show_player_notes(key)
 
+	/* unimplemented
 	if(href_list["remove_player_info"])
 		var/key = ckey(href_list["remove_player_info"])
 		var/index = text2num(href_list["remove_index"])
 
 		notes_del(key, index, usr.client)
-		show_player_info(key)
+		show_player_notes(key)*/
 
 	if(href_list["notes"])
 		var/ckey = ckey(href_list["ckey"])
@@ -2972,7 +2952,5 @@
 
 		switch(href_list["notes"])
 			if("show")
-				show_player_info(ckey)
-			if("list")
-				PlayerNotesPage(text2num(href_list["index"]))
+				show_player_notes(ckey)
 		return

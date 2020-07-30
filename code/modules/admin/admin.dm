@@ -202,104 +202,27 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 #define PLAYER_INFO_MISSING_JOB_TEXT        "N/A"
 
 /datum/player_info
-	var/author     // admin who authored the information
-	var/rank       // rank of admin who made the notes
-	var/content    // text content of the information
-	var/timestamp  // Because this is bloody annoying
-
-/datum/player_info/proc/get_days_timestamp()
-	if (!timestamp || timestamp == PLAYER_INFO_MISSING_TIMESTAMP_TEXT)
-		return 0
-	return parse_notes_date_timestamp(timestamp)
-
-/datum/player_info/proc/get_remove_index()
-	return 0
-
-/datum/player_info/indexed
-	var/remove_index
-
-/datum/player_info/indexed/get_remove_index()
-	return remove_index
-
-/datum/player_info/outside
-	author = PLAYER_INFO_MISSING_AUTHOR_TEXT
-	rank = PLAYER_INFO_MISSING_RANK_TEXT
-	content = PLAYER_INFO_MISSING_CONTENT_TEXT
-	timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT
+	var/author = PLAYER_INFO_MISSING_AUTHOR_TEXT        // admin who authored the information
+	var/content = PLAYER_INFO_MISSING_CONTENT_TEXT      // text content of the information
+	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
 
-/datum/player_info/outside/get_days_timestamp()
+/datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
 
-#define PLAYER_NOTES_ENTRIES_PER_PAGE 50
-/datum/admins/proc/PlayerNotes()
-	set category = "Admin"
-	set name = "Player Notes"
-	if (!istype(src,/datum/admins))
-		src = usr.client.holder
-	if (!istype(src,/datum/admins))
-		to_chat(usr, "Error: you are not an admin!")
-		return
-	PlayerNotesPage(1)
-
-/datum/admins/proc/PlayerNotesPage(page)
-	var/dat = "<B>Player notes</B><HR>"
-	var/savefile/S=new("data/player_notes.sav")
-	var/list/note_keys
-	S >> note_keys
-	if(!length(note_keys))
-		dat += "No notes found."
-	else
-		dat += "<table>"
-		note_keys = sortList(note_keys)
-
-		// Display the notes on the current page
-		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
-		// Emulate ceil(why does BYOND not have ceil)
-		if(number_pages != round(number_pages))
-			number_pages = round(number_pages) + 1
-		var/page_index = page - 1
-		if(page_index < 0 || page_index >= number_pages)
-			return
-
-		var/lower_bound = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1
-		var/upper_bound = (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE
-		upper_bound = min(upper_bound, note_keys.len)
-		for(var/index = lower_bound, index <= upper_bound, index++)
-			var/t = note_keys[index]
-			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
-
-		dat += "</table><br>"
-
-		// Display a footer to select different pages
-		for(var/index = 1, index <= number_pages, index++)
-			if(index == page)
-				dat += "<b>"
-			dat += "<a href='?src=\ref[src];notes=list;index=[index]'>[index]</a> "
-			if(index == page)
-				dat += "</b>"
-
-	usr << browse(dat, "window=player_notes;size=400x400")
-#undef PLAYER_NOTES_ENTRIES_PER_PAGE
-
-/datum/admins/proc/player_has_info(key)
-	var/savefile/info = new("data/player_saves/[key[1]]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	return (length(infos))
-
-/datum/admins/proc/show_player_info(key as text)
-	set category = "Admin"
-	set name = "Show Player Info"
-
-	// Check admin rights
-	if(!istype(src,/datum/admins))
-		src = usr.client.holder
-	if(!istype(src,/datum/admins))
-		to_chat(usr, "Error: you are not an admin!")
+/datum/admins/proc/show_player_notes(key as text)
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 
 	key = ckey(key)
+
+	if(!key || !config.sql_enabled)
+		return
+
+	if(!establish_db_connection())
+		usr.show_message("Notes [key] from DB don't available.")
+		return
+
 	//Display player age and player warn bans
 	var/p_age
 	var/p_ingame_age
@@ -309,21 +232,19 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			p_ingame_age = C.player_ingame_age
 
 	// Gather data
-	var/list/savefile_info = load_info_player_data(key)
-	var/list/db_info = load_info_player_data_db(key)
+	var/list/db_messages = load_info_player_db_messages(key)
+	var/list/db_bans = load_info_player_db_bans(key)
 	// Start render info page
 	var/dat = "<html><head><title>Info on [key]</title></head>"
 	dat += "<body>"
 	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><hr>"
 
-	if(!length(savefile_info) && !length(db_info))
+	if(!length(db_messages) && !length(db_bans))
 		dat += "No information found on the given key.<br>"
 	else
-		var/list/infos = generalized_players_info(savefile_info, db_info)
+		var/list/infos = generalized_players_info(db_messages, db_bans)
 		for(var/datum/player_info/I in infos)
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.get_remove_index() && (I.author == usr.key || I.author == "Adminbot" || check_rights(R_PERMISSIONS, FALSE)))
-				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[I.get_remove_index()]'>Remove</A>"
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>[I.timestamp]</i></font> "
 			dat += "<br><br>"
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
@@ -332,16 +253,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /datum/admins/proc/generalized_players_info(list/file_notes, list/db_notes)
 	var/list/datum/player_info/merged = list()
-	var/index = 0
-	for(var/datum/player_info/P in file_notes)
-		var/datum/player_info/indexed/I = new()
-		index += 1
-		I.author = P.author
-		I.rank = P.rank
-		I.content = P.content
-		I.timestamp = P.timestamp
-		I.remove_index = index
-		merged += I
+	if(length(file_notes))
+		merged += file_notes
 	if(length(db_notes))
 		merged += db_notes
 	merged = sortMerge(merged, /proc/cmp_days_timestamp, FALSE)
@@ -350,34 +263,47 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)
 	return a.get_days_timestamp() - b.get_days_timestamp()
 
-/datum/admins/proc/load_info_player_data(player_ckey)
-	if(!player_ckey)
-		return
-	var/savefile/info_file = new("data/player_saves/[player_ckey[1]]/[player_ckey]/info.sav")
-	var/list/data
-	info_file >> data
-	if(!length(data))
-		return
-	var/missing_fixed = FALSE
-	for(var/datum/player_info/I in data)
-		if(!I.timestamp)
-			I.timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT
-			missing_fixed = TRUE
-		if(!I.rank)
-			I.rank = PLAYER_INFO_MISSING_RANK_TEXT
-			missing_fixed = TRUE
-	if(missing_fixed)
-		info_file << data
-	return data
-
-/datum/admins/proc/load_info_player_data_db(player_ckey)
+/datum/admins/proc/load_info_player_db_messages(player_ckey)
 	// Get player ckey and generate list of players_notes
 	// Return null if errors
 	var/list/db_player_notes = list()
-	if(!player_ckey || config.ban_legacy_system || !config.sql_enabled)
+	var/timestamp_format = "%a, %M %D of %Y" // we don't really need it now because both bans and notes use normal timestamp, but i'm little tired
+	var/days_ago_start_date = "1999-12-31"   // to make changes here ang test, and anyway we will rewrite it completely
+	var/list/sql_fields = list(
+		"adminckey",
+		"text",
+		"DATE_FORMAT(timestamp, '[timestamp_format]')",
+		"DATEDIFF(timestamp, '[days_ago_start_date]')",
+	 )
+	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
+	if(!query.Execute())
 		return
-	if(!establish_db_connection())
-		usr.show_message("Notes [player_ckey] from DB don't available.")
+	while(query.NextRow())
+		var/datum/player_info/notes_record = new()
+
+		var/a_ckey = query.item[1]
+		var/text = query.item[2]
+		var/timestamp = query.item[3]
+		var/days_ago = text2num(query.item[4])
+
+		if(length(a_ckey))
+			notes_record.author = a_ckey
+		if(length(text))
+			notes_record.content = text
+		if(length(timestamp))
+			notes_record.timestamp = timestamp
+		if(days_ago)
+			notes_record.days_timestamp = days_ago
+
+		db_player_notes += notes_record
+
+	return db_player_notes
+
+/datum/admins/proc/load_info_player_db_bans(player_ckey)
+	// Get player ckey and generate list of players_notes
+	// Return null if errors
+	var/list/db_player_notes = list()
+	if(config.ban_legacy_system)
 		return
 	var/timestamp_format = "%a, %M %D of %Y"
 	var/days_ago_start_date = "1999-12-31"
@@ -397,12 +323,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		"unbanned_ckey",
 		"rounds"
 	 )
-	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[player_ckey]') ORDER BY id LIMIT 100")
+	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
 	if(!query.Execute())
 		return
 	while(query.NextRow())
-		var/datum/player_info/outside/notes_record = new()
-		var/datum/player_info/outside/unban_notes_record
+		var/datum/player_info/notes_record = new()
+		var/datum/player_info/unban_notes_record
 		var/list/ip_cid = list()
 		var/a_ckey = query.item[1]
 		var/bantype = query.item[2]

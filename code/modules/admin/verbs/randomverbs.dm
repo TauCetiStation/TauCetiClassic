@@ -1190,7 +1190,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")

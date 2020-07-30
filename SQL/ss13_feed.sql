@@ -179,3 +179,21 @@ CREATE TABLE `erro_stickyban_matched_cid` (
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `erro_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('note') NOT NULL,
+  `targetckey` varchar(32) NOT NULL,
+  `adminckey` varchar(32) NOT NULL,
+  `text` varchar(2048) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `secret` tinyint(1) unsigned NOT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `deleted_ckey` VARCHAR(32) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;

@@ -57,8 +57,6 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggledsay,		//toggles dsay on/off for everyone,
 	/client/proc/game_panel,			//game panel, allows to change game-mode etc,
 	/client/proc/cmd_admin_say,			//admin-only ooc chat,
-	/datum/admins/proc/PlayerNotes,
-	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/toggleattacklogs,
@@ -79,6 +77,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	)
 var/list/admin_verbs_log = list(
+	/client/proc/show_player_notes,
 	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
 	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
@@ -539,7 +538,7 @@ var/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
@@ -851,11 +850,11 @@ var/list/admin_verbs_hideable = list(
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/playernotes()
-	set name = "Show Player Info"
+/client/proc/show_player_notes()
+	set name = "Show Player Notes"
 	set category = "Admin"
 	if(holder)
-		holder.PlayerNotes()
+		holder.show_player_notes()
 	return
 
 /client/proc/free_slot()
