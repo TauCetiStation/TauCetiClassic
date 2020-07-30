@@ -38,9 +38,6 @@
 		if(3.0)
 			return
 
-/obj/structure/meteorhit(obj/O)
-	qdel(src)
-
 /obj/structure/proc/climb_on()
 
 	set name = "Climb structure"

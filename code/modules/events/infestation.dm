@@ -1,14 +1,14 @@
-#define LOC_KITCHEN 0
-#define LOC_ATMOS 1
-#define LOC_INCIN 2
-#define LOC_CHAPEL 3
-#define LOC_LIBRARY 4
-#define LOC_HYDRO 5
-#define LOC_VAULT 6
-#define LOC_CONSTR 7
-#define LOC_TECH 8
-
-#define LOC_LATEST 8
+#define INFESTATION_LOCATIONS list( \
+	"the kitchen"           = /area/station/civilian/kitchen, \
+	"atmospherics"          = /area/station/engineering/atmos, \
+	"the incinerator"       = /area/station/maintenance/incinerator, \
+	"the chapel"            = /area/station/civilian/chapel, \
+	"the library"           = /area/station/civilian/library, \
+	"hydroponics"           = /area/station/civilian/hydroponics, \
+	"the vault"             = /area/station/bridge/nuke_storage, \
+	"the construction area" = /area/station/construction, \
+	"technical storage"     = /area/station/storage/tech \
+	)
 
 #define VERM_MICE 0
 #define VERM_LIZARDS 1
@@ -22,45 +22,17 @@
 	var/vermin
 	var/vermstring
 
-/datum/event/infestation/start()
+/datum/event/infestation/announce()
+	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
 
-	location = rand(0, LOC_LATEST)
+/datum/event/infestation/start()	
+	locstring = pick(INFESTATION_LOCATIONS)
+	location = INFESTATION_LOCATIONS[locstring]
+
 	var/list/turf/simulated/floor/turfs = list()
-	var/spawn_area_type
-	switch(location)
-		if(LOC_KITCHEN)
-			spawn_area_type = /area/station/civilian/kitchen
-			locstring = "the kitchen"
-		if(LOC_ATMOS)
-			spawn_area_type = /area/station/engineering/atmos
-			locstring = "atmospherics"
-		if(LOC_INCIN)
-			spawn_area_type = /area/station/maintenance/incinerator
-			locstring = "the incinerator"
-		if(LOC_CHAPEL)
-			spawn_area_type = /area/station/civilian/chapel
-			locstring = "the chapel"
-		if(LOC_LIBRARY)
-			spawn_area_type = /area/station/civilian/library
-			locstring = "the library"
-		if(LOC_HYDRO)
-			spawn_area_type = /area/station/civilian/hydroponics
-			locstring = "hydroponics"
-		if(LOC_VAULT)
-			spawn_area_type = /area/station/bridge/nuke_storage
-			locstring = "the vault"
-		if(LOC_CONSTR)
-			spawn_area_type = /area/station/construction
-			locstring = "the construction area"
-		if(LOC_TECH)
-			spawn_area_type = /area/station/storage/tech
-			locstring = "technical storage"
 
-	//world << "looking for [spawn_area_type]"
-	for(var/areapath in typesof(spawn_area_type))
-		//world << "	checking [areapath]"
+	for(var/areapath in typesof(location))
 		var/area/A = locate(areapath)
-		//world << "	A: [A], contents.len: [A.contents.len]"
 		for(var/turf/simulated/floor/F in A.contents)
 			var/is_available = TRUE
 			for(var/atom/F_A in F)
@@ -101,20 +73,7 @@
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)
 
-
-/datum/event/infestation/announce()
-	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
-
-#undef LOC_KITCHEN
-#undef LOC_ATMOS
-#undef LOC_INCIN
-#undef LOC_CHAPEL
-#undef LOC_LIBRARY
-#undef LOC_HYDRO
-#undef LOC_VAULT
-#undef LOC_TECH
-
-#undef LOC_LATEST
+#undef INFESTATION_LOCATIONS
 
 #undef VERM_MICE
 #undef VERM_LIZARDS

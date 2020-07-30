@@ -556,7 +556,7 @@
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
 
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
@@ -582,7 +582,7 @@
 
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Torment host"
 	set desc = "Punish your host with agony."
 
@@ -605,7 +605,7 @@
 	return 0
 
 /mob/living/carbon/proc/spawn_larvae()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Reproduce"
 	set desc = "Spawn several young."
 
@@ -617,9 +617,10 @@
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		B.chemicals -= 100
+		B.has_reproduced = 1
 
 		vomit()
-		new /mob/living/simple_animal/borer(get_turf(src))
+		new/mob/living/simple_animal/borer(get_turf(src), TRUE)
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return

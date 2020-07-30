@@ -461,7 +461,7 @@
 			return
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
-		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon)
+		var/obj/effect/portal/jaunt_tunnel/J = new /obj/effect/portal/jaunt_tunnel(get_turf(src), chosen_beacon)
 		spawn(100) qdel(J)	//Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
@@ -478,13 +478,13 @@
 	else
 		return ..()
 
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
 		return
 	if(istype(M, /atom/movable))

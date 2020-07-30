@@ -374,6 +374,8 @@
 	mymob.internals = new /obj/screen()
 	mymob.internals.icon = ui_style
 	mymob.internals.icon_state = "internal0"
+	if(istype(mymob.internal, /obj/item/weapon/tank))
+		mymob.internals.icon_state = "internal1"
 	mymob.internals.name = "internal"
 	mymob.internals.screen_loc = ui_internal
 

@@ -399,11 +399,11 @@ var/list/ghostteleportlocs = list()
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
 
-/area/proc/gravitychange(gravitystate = 0, area/A)
-	A.has_gravity = gravitystate
+/area/proc/gravitychange(gravitystate = FALSE)
+	has_gravity = gravitystate
 	if(gravitystate)
-		for(var/mob/living/carbon/human/M in A)
-			thunk(M)
+		for(var/mob/living/carbon/human/H in src)
+			thunk(H)
 
 /area/proc/thunk(mob)
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.

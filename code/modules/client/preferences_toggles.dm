@@ -92,6 +92,18 @@
 	to_chat(src, "You will [(role_type in prefs.be_role) ? "now" : "no longer"] be considered for [role] events (where possible).")
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ignored_role()
+	set name = "Toggle Ignore Roles"
+	set category = "Preferences"
+	set desc = "Toggles ignore questions"
+
+	var/role = input(usr, "Ignored Qustions for Roles in current Round:") as null|anything in prefs.ignore_question
+	if(!role)
+		return
+	prefs.ignore_question -= role
+	to_chat(src, "You will receive requests for \"[role]\" again")
+	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/change_ui()
 	set name = "Change UI"
 	set category = "Preferences"
