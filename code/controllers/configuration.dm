@@ -607,6 +607,34 @@ var/list/net_announcer_secret = list()
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
+
+				if("expected_round_length")
+					config.expected_round_length = text2num(value) MINUTES
+
+				if("event_delay_lower")
+					var/values = text2numlist(value, ";")
+					config.event_delay_lower[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_delay_upper")
+					var/values = text2numlist(value, ";")
+					config.event_delay_upper[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_custom_start_mundane")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MUNDANE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_moderate")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MODERATE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_major")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MAJOR] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
 				// Bay new things are below
 				if("use_overmap")
 					config.use_overmap = 1
