@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/datum/event/anomaly)
 /datum/event/anomaly
 	var/area/impact_area    //The area the event will hit
 	var/obj/effect/anomaly/newAnomaly

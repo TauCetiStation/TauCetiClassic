@@ -19,7 +19,6 @@
 #include "code\__DEFINES\_logging.dm"
 #include "code\__DEFINES\_planes+layers.dm"
 #include "code\__DEFINES\_readme.dm"
-#include "code\__DEFINES\_types.dm"
 #include "code\__DEFINES\_util.dm"
 #include "code\__DEFINES\admin.dm"
 #include "code\__DEFINES\atmos.dm"

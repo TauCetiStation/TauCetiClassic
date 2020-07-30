@@ -32,10 +32,7 @@ var/datum/subsystem/events/SSevents
 	NEW_SS_GLOBAL(SSevents)
 
 /datum/subsystem/events/Initialize()
-	for(var/E in subtypesof(/datum/event))
-		if(IS_ABSTRACT(E))
-			continue
-		allEvents += E
+	allEvents = subtypesof(/datum/event) - /datum/event/anomaly
 	return ..()
 
 /datum/subsystem/events/fire()
