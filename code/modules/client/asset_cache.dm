@@ -402,3 +402,34 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
+
+/datum/asset/spritesheet/cargo
+	name = "cargo"
+
+/datum/asset/spritesheet/cargo/register()
+	var/all_objects = list()
+	for(var/supply_name in SSshuttle.supply_packs)
+		var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
+		for(var/supp in N.contains)
+			if(supp in all_objects)
+				continue
+			all_objects += supp
+		if(N.crate_type in all_objects)
+			continue
+		all_objects += N.crate_type
+		if(ispath(N.crate_type, /obj/structure/closet/critter))
+			var/obj/structure/closet/critter/C = N.crate_type
+			all_objects += initial(C.content_mob)
+	for(var/content in all_objects)
+		var/imgid = null
+		var/icon/sprite = null
+		if(ispath(content, /mob))
+			var/mob/M = content
+			sprite = icon(initial(M.icon), initial(M.icon_state))
+			imgid = replacetext(replacetext("[content]", "/mob/", ""), "/", "-")
+		else
+			var/obj/supply = new content
+			sprite = getFlatIcon(supply)
+			imgid = replacetext(replacetext("[content]", "/obj/", ""), "/", "-")
+		insert_icon_in_list(imgid, sprite)
+	return ..()
