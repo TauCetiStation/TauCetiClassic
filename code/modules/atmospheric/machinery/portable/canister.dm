@@ -270,9 +270,6 @@ update_flag
 		take_damage(round(Proj.damage / 2))
 	..()
 
-/obj/machinery/portable_atmospherics/canister/meteorhit(obj/O)
-	take_damage(health)
-
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!(stat & BROKEN))

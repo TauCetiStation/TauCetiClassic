@@ -337,11 +337,6 @@
 		return
 	INVOKE_ASYNC(src, .proc/perform_av, attacker)
 
-/mob/living/carbon/ian/meteorhit(obj/O)
-	visible_message("<span class='red'>[src] has been hit by [O].</span>")
-	adjustBruteLoss(30)
-	updatehealth()
-
 /mob/living/carbon/ian/emp_act(severity)
 	if(neck)
 		neck.emplode(severity)

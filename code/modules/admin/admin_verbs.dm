@@ -73,7 +73,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,	// Allows a ghost to respawn,
 	/client/proc/aooc,
-	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
@@ -158,6 +157,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
+	/client/proc/forceEvent,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_load_junkyard,
@@ -208,7 +208,9 @@ var/list/admin_verbs_whitelist = list(
 	)
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
-	/client/proc/admin_crew_salary
+	/client/proc/admin_crew_salary,
+	/client/proc/event_manager_panel,
+	/client/proc/change_blobwincount
 	)
 
 //verbs which can be hidden - needs work
@@ -764,19 +766,6 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		src.holder.output_ai_laws()
 
-/client/proc/change_security_level()
-	set name = "Set security level"
-	set desc = "Sets the station security level."
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
-	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
-		set_security_level(sec_level)
-		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
-
-
 //---- bs12 verbs ----
 
 /client/proc/mod_panel()
@@ -1037,6 +1026,18 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		holder.change_crew_salary()
 	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/change_blobwincount()
+	set name = "Change Blobs to Win"
+	set category = "Event"
+	if(holder)
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		if(new_count)
+			blobwincount = new_count
+	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //////////////////////////////
