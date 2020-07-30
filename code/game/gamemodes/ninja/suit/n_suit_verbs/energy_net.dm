@@ -21,6 +21,7 @@
 /obj/effect/energy_net/Destroy()
 	affecting = null
 	master = null
+	return ..()
 
 /obj/effect/energy_net/proc/healthcheck()
 	if(health <=0)
