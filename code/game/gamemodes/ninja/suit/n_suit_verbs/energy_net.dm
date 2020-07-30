@@ -18,6 +18,10 @@
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
+/obj/effect/energy_net/Destroy()
+	affecting = null
+	master = null
+
 /obj/effect/energy_net/proc/healthcheck()
 	if(health <=0)
 		density = 0
