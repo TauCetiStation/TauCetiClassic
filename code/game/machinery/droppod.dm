@@ -77,11 +77,6 @@
 		return
 	return ..()
 
-/obj/structure/droppod/meteorhit()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
 /********Moving camera Eye********/
 
 /obj/structure/droppod/relaymove(mob/user, direction)

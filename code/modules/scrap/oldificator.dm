@@ -153,7 +153,7 @@
 
 /obj/item/weapon/aiModule/broken/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	IonStorm(0)
+	target.overload_ai_system()
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)

@@ -188,17 +188,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ChangeTurf(basetype)
-			return
-		if(2.0)
+		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3.0)
-			take_damage(rand(0, 250))
-		else
+		if(3)
+			take_damage(rand(0, 55))
 	return
 
 /turf/simulated/wall/blob_act()
@@ -212,16 +210,7 @@
 
 		var/number_rots = rand(2,3)
 		for(var/i=0, i<number_rots, i++)
-			var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-			O.name = "Wallrot"
-			O.desc = "Ick..."
-			O.icon = 'icons/effects/wallrot.dmi'
-			O.pixel_x += rand(-10, 10)
-			O.pixel_y += rand(-10, 10)
-			O.anchored = 1
-			O.density = 1
-			O.layer = 5
-			O.mouse_opacity = 0
+			new /obj/effect/overlay/wall_rot(src)
 
 /turf/simulated/wall/proc/thermitemelt(mob/user, var/seconds_to_melt)
 	if(mineral == "diamond")
@@ -247,14 +236,6 @@
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M)
-	if (prob(15) && !rotting)
-		dismantle_wall()
-	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
 
 //Interactions
 

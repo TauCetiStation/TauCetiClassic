@@ -439,3 +439,7 @@ ul.sparse {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.alert {
+	color: #FF0000;
+}
