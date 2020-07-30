@@ -209,7 +209,8 @@ var/list/admin_verbs_whitelist = list(
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/admin_crew_salary,
-	/client/proc/event_manager_panel
+	/client/proc/event_manager_panel,
+	/client/proc/change_blobwincount
 	)
 
 //verbs which can be hidden - needs work
@@ -1025,6 +1026,18 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		holder.change_crew_salary()
 	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/change_blobwincount()
+	set name = "Change Blobs to Win"
+	set category = "Event"
+	if(holder)
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		if(new_count)
+			blobwincount = new_count
+	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //////////////////////////////
