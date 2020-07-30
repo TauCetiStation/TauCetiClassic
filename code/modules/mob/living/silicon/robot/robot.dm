@@ -53,7 +53,7 @@
 	var/ident = 0
 	//var/list/laws = list()
 	var/viewalerts = 0
-	var/modtype = "Default module"
+	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
