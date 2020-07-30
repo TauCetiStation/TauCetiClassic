@@ -153,9 +153,7 @@ var/global/ascii_reset = "[global.ascii_esc]\[0m"
 
 #ifdef UNIT_TEST
 
-var/datum/controller/subsystem/unit_tests/SSunit_tests
-
-/datum/controller/subsystem/unit_tests
+SUBSYSTEM_DEF(unit_tests)
 	name = "Unit Tests"
 	wait = SS_WAIT_UNIT_TESTS
 	init_order = SS_INIT_UNIT_TESTS
@@ -167,9 +165,6 @@ var/datum/controller/subsystem/unit_tests/SSunit_tests
 	var/stage = 1
 	var/end_unit_tests
 	var/tests_start_time = 0
-
-/datum/controller/subsystem/unit_tests/New()
-	NEW_SS_GLOBAL(SSunit_tests)
 
 /datum/controller/subsystem/unit_tests/Initialize(timeofday)
 	#ifndef UNIT_TEST_COLOURED
