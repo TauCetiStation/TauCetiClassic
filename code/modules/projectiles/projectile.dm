@@ -266,7 +266,7 @@
 
 	spawn while(src && src.loc)
 		if(paused)
-			sleep(1)
+			stoplag(1)
 			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours

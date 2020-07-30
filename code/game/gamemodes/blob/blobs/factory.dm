@@ -32,7 +32,7 @@
 
 
 /mob/living/simple_animal/hostile/blobspore
-	name = "blob"
+	name = "blob spore"
 	desc = "Some blob thing."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"

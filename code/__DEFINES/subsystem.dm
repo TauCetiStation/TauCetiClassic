@@ -19,6 +19,7 @@
 // Subsystem init_order, from highest priority to lowest priority
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define SS_INIT_EVENTS        12
 #define SS_INIT_FLUIDS        11
 #define SS_INIT_JOBS          10
 #define SS_INIT_QUIRKS         9

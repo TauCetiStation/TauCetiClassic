@@ -657,10 +657,6 @@
 	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 	destroy()
 
-/obj/structure/rack/meteorhit(obj/O)
-	qdel(src)
-
-
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)

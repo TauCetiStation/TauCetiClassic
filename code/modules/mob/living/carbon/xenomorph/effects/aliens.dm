@@ -103,11 +103,6 @@
 	healthcheck()
 	return
 
-/obj/structure/alien/resin/meteorhit()
-	health-=50
-	healthcheck()
-	return
-
 /obj/structure/alien/resin/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
