@@ -44276,7 +44276,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/lipstick/jade,
-/obj/item/toy/laugh_button,
+/obj/item/toy/sound_button,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bEP" = (
