@@ -785,6 +785,27 @@ var/global/list/all_objectives = list()
 				return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
+//Borer objective(s).
+/datum/objective/borer_survive
+	explanation_text = "Survive in a host until the end of the round."
+
+/datum/objective/borer_survive/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/borer_reproduce
+	explanation_text = "Reproduce at least once."
+
+/datum/objective/borer_reproduce/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.has_reproduced)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
 //Vox heist objectives.
 
 /datum/objective/heist/proc/choose_target()
@@ -981,3 +1002,11 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(vox_kills > MAX_VOX_KILLS)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"
+
+/datum/objective/blob_takeover/check_completion()
+	if(blobs.len >= blobwincount)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

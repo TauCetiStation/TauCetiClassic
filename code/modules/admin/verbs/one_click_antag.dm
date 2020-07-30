@@ -26,8 +26,6 @@
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
@@ -302,18 +300,6 @@
 		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
-	return 1
-
-
-
-
-
-/datum/admins/proc/makeAliens()
-	alien_infestation(3)
-	return 1
-
-/datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
 	return 1
 
 /datum/admins/proc/makeDeathsquad()

@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/obj/screen/cinematic = null
 
+	var/force_ending = FALSE
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -100,7 +101,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1) || force_ending
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
@@ -509,6 +510,9 @@ SUBSYSTEM_DEF(ticker)
 		SSjunkyard.save_stats()
 
 	scoreboard(ai_completions)
+
+	//Ask the event manager to print round end information
+	SSevents.RoundEnd()
 
 	return 1
 

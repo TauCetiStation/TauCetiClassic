@@ -302,7 +302,7 @@
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += IGNORE_DRONE
 
-/mob/living/silicon/robot/drone/proc/transfer_personality(client/player)
+/mob/living/silicon/robot/drone/transfer_personality(client/player)
 
 	if(!player) return
 

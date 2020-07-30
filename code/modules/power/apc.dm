@@ -1203,12 +1203,6 @@
 	return val
 
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(obj/O)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	flick("apc-spark", src)
 	if(cell)

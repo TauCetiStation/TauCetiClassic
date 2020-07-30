@@ -15,6 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	anchored = 1	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
+	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -339,7 +340,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
-/mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
@@ -349,6 +350,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
+	
+	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	if(!A)
+		return
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)
 		return

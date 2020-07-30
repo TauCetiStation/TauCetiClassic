@@ -169,10 +169,6 @@ FLOOR SAFES
 	return
 
 
-/obj/structure/safe/meteorhit(obj/O)
-	return
-
-
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
