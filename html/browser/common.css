@@ -25,7 +25,7 @@ hr
 	height: 1px;
 }
 
-a, button, a:link, a:visited, a:active, .linkOn, .linkOff
+a, button, a:link, a:visited, a:active, .linkOn, .linkOff, .spoiler b
 {
 	color: #ffffff;
 	text-decoration: none;
@@ -36,7 +36,7 @@ a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 	cursor:default;
 }
 
-a:hover
+a:hover, .spoiler b:hover
 {
 	color: #40628a;
 	background: #ffffff;
@@ -285,6 +285,25 @@ div.notice
 {
 	padding: 0;
 }
+
+.blockCargo
+{
+	overflow: auto;
+	height: 470px;
+	padding: 2px;
+}
+
+.spoiler input, .spoiler div  
+{ 
+	display: none; /* Скрываем содержимое */
+}
+   /* Открытый спойлер */
+.spoiler :checked ~ div 
+{
+	display: block; /* Показываем спойлер */
+	margin-left: 35px
+}
+
 
 .progressBar
 {
