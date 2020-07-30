@@ -77,7 +77,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
 
-	var/datum/game_mode/current_mode = ticker.mode
+	var/datum/game_mode/current_mode = SSticker.mode
 	var/datum/mind/current_mind
 	var/list/xeno_list = list()//Aliens.
 	var/list/commando_list = list()//Commandos.
