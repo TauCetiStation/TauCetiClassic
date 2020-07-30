@@ -53,7 +53,7 @@
 	var/ident = 0
 	//var/list/laws = list()
 	var/viewalerts = 0
-	var/modtype = "Default"
+	var/modtype = "Default module"
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
@@ -72,6 +72,9 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+
+	// Radial menu for choose module
+	var/list/choose_module
 
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -160,14 +163,31 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
+
+	if(!choose_module)
+		var/list/modules = list(
+				"Standard" = "robot_old",
+				"Engineering" = "Engineering",
+				"Surgeon" = "medicalrobot",
+				"Crisis" = "Medbot",
+				"Miner" = "Miner",
+				"Janitor" = "JanBot2",
+				"Service" = "Service",
+				"Security" = "secborg",
+				"Science" = "toxbot",
+				)
+
+		choose_module = list()
+		for(var/mod in modules)
+			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
+
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
-		modules+="Combat"
-	modtype = input("Please, select a module!", "Robot", null, null) in modules
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
+		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
+
+	modtype = show_radial_menu(usr, usr, choose_module, radius = 38, tooltips = TRUE)
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-
 	if(module)
 		return
 
@@ -293,7 +313,14 @@
 	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
-	choose_icon(6,module_sprites)
+	// Radial menu for choose icon_state
+	var/choose_icon = list()
+
+	for(var/name in module_sprites)
+		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
+
+	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
+	icon_state = module_sprites[new_icon_state]
 	radio.config(module.channels)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
@@ -1122,41 +1149,6 @@
 	set category = "IC"
 
 	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
-
-/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
-
-	if(triesleft<1 || !module_sprites.len)
-		return
-	else
-		triesleft--
-
-	var/icontype
-
-	if (custom_sprite == 1)
-		icontype = "Custom"
-		triesleft = 0
-	else
-		icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
-
-	if(icontype)
-		icon_state = module_sprites[icontype]
-	else
-		to_chat(src, "Something is badly wrong with the sprite selection. Harass a coder.")
-		icon_state = module_sprites[1]
-		return
-
-	cut_overlay("eyes")
-	updateicon()
-
-	if (triesleft >= 1)
-		var/choice = input("Look at your icon - is this what you want?") in list("Yes","No")
-		if(choice=="No")
-			choose_icon(triesleft, module_sprites)
-		else
-			triesleft = 0
-			return
-	else
-		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
