@@ -18,9 +18,6 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/ai_emergency_message
 )
 
-// Radial menu for choose skin of core
-var/global/list/chooses_ai_cores
-
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = FALSE
@@ -52,7 +49,7 @@ var/global/list/chooses_ai_cores
 	var/datum/AI_Module/active_module = null
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
@@ -85,6 +82,10 @@ var/global/list/chooses_ai_cores
 	var/cooldown = 0
 	var/acceleration = 1
 	var/obj/machinery/hologram/holopad/holo = null
+	// Radial menu for choose skin of core
+	var/list/chooses_ai_cores
+	// Radial menu for choose skin of hologram
+	var/list/chooses_ai_holo
 	// Radila menu.
 	var/static/list/name_by_state = list(
 		"Standard" = "ai",
@@ -303,7 +304,6 @@ var/global/list/chooses_ai_cores
 				custom_sprite = 1 //They're in the list? Custom sprite time
 				icon = 'icons/mob/custom-synthetic.dmi'
 
-		//if(icon_state == initial(icon_state))
 	if(!chooses_ai_cores)
 		chooses_ai_cores = list()
 		for(var/name in name_by_state)
@@ -312,7 +312,7 @@ var/global/list/chooses_ai_cores
 	if(custom_sprite == 1) 
 		icon_state = "[src.ckey]-ai"
 	else 
-		var/state = show_radial_menu(usr, usr, chooses_ai_cores, require_near = TRUE, tooltips = TRUE)
+		var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
 		icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
@@ -753,45 +753,35 @@ var/global/list/chooses_ai_cores
 			input = input("Select a crew member:") as null|anything in personnel_list
 			var/icon/character_icon = personnel_list[input]
 			if(character_icon)
-				qdel(holo_icon)//Clear old icon so we're not storing it in memory.
+				qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 				holo_icon = getHologramIcon(icon(character_icon))
 		else
 			alert("No suitable records found. Aborting.")
 
 	else
-		var/icon_list[] = list(
-		"default",
-		"floating face",
-		"alien",
-		"carp",
-		"queen",
-		"rommie",
-		"sonny",
-		"miku",
-		"medbot"
+		var/icon_list=list(
+			"Default",
+			"Floatingface",
+			"Alien",
+			"Carp",
+			"Queen",
+			"Rommie",
+			"Sonny",
+			"Miku",
+			"Medbot",
 		)
-		input = input("Please select a hologram:") as null|anything in icon_list
-		if(input)
+
+		if(!chooses_ai_holo)
+			chooses_ai_holo = list()
+			var/i = 1
+			for(var/name_holo in icon_list)
+				chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
+				i++
+
+		var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
+		if(state)
 			qdel(holo_icon)
-			switch(input)
-				if("default")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-				if("floating face")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
-				if("alien")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
-				if("carp")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
-				if("queen")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
-				if("rommie")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo6"))
-				if("sonny")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo7"))
-				if("miku")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo8"))
-				if("medbot")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo9"))
+			holo_icon = chooses_ai_holo[state]
 	return
 
 /*/mob/living/silicon/ai/proc/corereturn()
