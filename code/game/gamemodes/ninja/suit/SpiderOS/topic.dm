@@ -4,6 +4,9 @@
 	var/mob/living/silicon/ai/A = AI
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
+	if(usr != U && usr != A)
+		return
+
 	if(s_control)
 		if(!affecting||U.stat||!s_initialized)//Check to make sure the guy is wearing the suit after clicking and it's on.
 			to_chat(U, "<span class='warning'>Your suit must be worn and active to use this function.</span>")
