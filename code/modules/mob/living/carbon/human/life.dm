@@ -1562,19 +1562,20 @@
 	return 1
 
 /mob/living/carbon/human/update_sight()
-	sightglassesmod = null
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
 	if(blinded)
 		set_EyesVision("greyscale")
 		return
-	if(inherent_sighttype)
-		set_EyesVision(inherent_sighttype)
+	if(daltonism)
+		set_EyesVision(sightglassesmod)
 		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
 		sightglassesmod = G.sightglassesmod
+	else
+		sightglassesmod = null
 
 	if(species.nighteyes)
 		var/light_amount = 0

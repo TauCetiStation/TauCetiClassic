@@ -195,5 +195,7 @@ var/global/static/list/color_by_hex = list(
 	"dimgray" = "#696969",
 	"darkgray" = "#a9a9a9",
 	"lightgray" = "#d3d3d3",
-	"gainsboro" = "#dcdcdc"
+	"gainsboro" = "#dcdcdc",
+	"navy" = "#000080",
+	"gold" = "#ffd700",
 )
