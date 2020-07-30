@@ -50,6 +50,8 @@
 		last_resource_collection = world.time
 
 	health = min(initial(health), health + 1)
+	if(overmind)
+		overmind.update_health_hud()
 	for(var/dir in cardinal)
 		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)
@@ -75,9 +77,10 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(ROLE_BLOB)
+		candidates = pollGhostCandidates("Would you like to be a BLOB?!", ROLE_BLOB)
 		if(candidates.len)
-			C = pick(candidates)
+			var/mob/M = pick(candidates)
+			C = M.client
 	else
 		C = new_overmind
 

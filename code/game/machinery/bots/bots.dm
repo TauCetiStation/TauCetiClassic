@@ -132,10 +132,6 @@
 	..()
 	healthcheck()
 
-/obj/machinery/bot/meteorhit()
-	src.explode()
-	return
-
 /obj/machinery/bot/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff
 	healthcheck()
