@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/fluids/SSfluids
-
-/datum/controller/subsystem/fluids
+SUBSYSTEM_DEF(fluids)
 	name = "Fluids"
 
 	init_order    = SS_INIT_FLUIDS
@@ -14,9 +12,6 @@ var/datum/controller/subsystem/fluids/SSfluids
 	var/list/water_sources = list()
 	var/next_water_act = 0
 	var/water_act_delay = 15 // A bit longer than machines.
-
-/datum/controller/subsystem/fluids/New()
-	NEW_SS_GLOBAL(SSfluids)
 
 /datum/controller/subsystem/fluids/stat_entry()
 	..("AF:[active_fluids.len]|FS:[water_sources.len]")
