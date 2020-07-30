@@ -14,12 +14,6 @@
 /proc/time_stamp(format = "hh:mm:ss", wtime = world.timeofday)
 	return time2text(wtime, format)
 
-/proc/station_time(time = world.time, display_only = FALSE)
-	return ((time - round_start_time + gametime_offset) % MIDNIGHT_ROLLOVER) - (display_only ? timezoneOffset : 0)
-
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(wtime, TRUE), format)
-
 /proc/shuttleeta2text()
 	var/timeleft = SSshuttle.timeleft()
 	if(timeleft < 0)
