@@ -42,7 +42,6 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	//var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
@@ -82,11 +81,14 @@ var/list/ai_verbs_default = list(
 	var/cooldown = 0
 	var/acceleration = 1
 	var/obj/machinery/hologram/holopad/holo = null
+
 	// Radial menu for choose skin of core
 	var/list/chooses_ai_cores
-	// Radial menu for choose skin of hologram
+	// Radial menu for choose skin of standart hologram
 	var/list/chooses_ai_holo
-	// Radila menu.
+	// Radial menu for choose skin of staff hologram
+	var/list/chooses_ai_staff
+	// Radilal menu.
 	var/static/list/name_by_state = list(
 		"Standard" = "ai",
 		"Rainbow" = "ai-clown",
@@ -741,25 +743,26 @@ var/list/ai_verbs_default = list(
 	if(check_unable())
 		return
 
-	var/input
-	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
+	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member", "Unique") == "Crew Member")
+		if(!chooses_ai_staff)
+			chooses_ai_staff = list()
 
-		var/personnel_list[] = list()
+		for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
+			if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
+				continue
 
-		for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
-			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+			chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
 
-		if(personnel_list.len)
-			input = input("Select a crew member:") as null|anything in personnel_list
-			var/icon/character_icon = personnel_list[input]
-			if(character_icon)
+		if(chooses_ai_staff.len)
+			var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
+			if(chooses_ai_staff[state])
 				qdel(holo_icon) //Clear old icon so we're not storing it in memory.
-				holo_icon = getHologramIcon(icon(character_icon))
+				holo_icon = chooses_ai_staff[state]
 		else
 			alert("No suitable records found. Aborting.")
 
 	else
-		var/icon_list=list(
+		var/icon_list = list(
 			"Default",
 			"Floatingface",
 			"Alien",
