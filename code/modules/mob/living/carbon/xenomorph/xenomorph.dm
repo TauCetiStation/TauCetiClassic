@@ -264,15 +264,6 @@ Hit Procs
 	updatehealth()
 	return
 
-/mob/living/carbon/xenomorph/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-
-		updatehealth()
-	return
-
 /mob/living/carbon/xenomorph/emp_act(severity)
 	return
 

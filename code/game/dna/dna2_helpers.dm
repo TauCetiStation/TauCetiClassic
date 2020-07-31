@@ -19,6 +19,8 @@
 	for(var/block in b_blocks)
 		if(!M.dna.GetSEState(block))
 			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
 	var/block_pick = pick(possible_blocks)
 	M.dna.SetSEState(block_pick, 1)
 
@@ -31,6 +33,8 @@
 	for(var/block in g_blocks)
 		if(!M.dna.GetSEState(block))
 			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
 	var/block_pick = pick(possible_blocks)
 	M.dna.SetSEState(block_pick, 1)
 

@@ -50,7 +50,7 @@
 /obj/item/projectile/bullet/price = 50
 /obj/item/projectile/bullet/a762/price = 211
 /obj/item/projectile/bullet/chameleon/price = 4
-/obj/item/projectile/bullet/grenade/r4046/price = 427
+/obj/item/projectile/bullet/grenade/r4046/rubber/price = 427
 /obj/item/projectile/bullet/gyro/price = 175
 /obj/item/projectile/bullet/heavy/a145/price = 708
 /obj/item/projectile/bullet/incendiary/price = 522
@@ -221,6 +221,7 @@
 /obj/item/weapon/stock_parts/cell/super/price = 3800
 /obj/item/weapon/circular_saw/price = 1250
 /obj/item/weapon/claymore/price = 5000
+/obj/item/weapon/claymore/religion/price = 2000
 /obj/item/weapon/coin/price = 15
 /obj/item/weapon/coin/bananium/price = 3000
 /obj/item/weapon/coin/diamond/price = 20000

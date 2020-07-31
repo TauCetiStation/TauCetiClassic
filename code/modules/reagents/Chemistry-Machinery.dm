@@ -77,10 +77,6 @@
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/chem_dispenser/meteorhit()
-	qdel(src)
-	return
-
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly
@@ -209,6 +205,10 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
+
+/obj/machinery/chem_dispenser/old/atom_init()
+	. = ..()
+	make_old()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -377,10 +377,6 @@
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))
 		qdel(src)
-
-/obj/machinery/chem_master/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/chem_master/power_change()
 	if(anchored && powered())
@@ -1145,7 +1141,7 @@
 		to_chat(user, "Cannot refine into a reagent.")
 		return 1
 
-	user.drop_from_inventory(O, src) 
+	user.drop_from_inventory(O, src)
 	holdingitems += O
 	src.updateUsrDialog()
 	return 0

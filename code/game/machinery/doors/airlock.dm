@@ -1201,9 +1201,6 @@ var/list/airlock_overlays = list()
 			if(prob(10))
 				to_chat(user,"<span=userdanger>You accidentally drop your wrench in the flame</span>")
 				qdel(O)
-	else
-		return
-
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()

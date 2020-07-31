@@ -133,7 +133,7 @@
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 
-/mob/living/simple_animal/spiderbot/proc/transfer_personality(obj/item/device/mmi/M)
+/mob/living/simple_animal/spiderbot/transfer_personality(obj/item/device/mmi/M)
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key

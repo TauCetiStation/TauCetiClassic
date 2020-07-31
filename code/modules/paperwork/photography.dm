@@ -218,15 +218,8 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility)
-				if(see_ghosts)
-					if(istype(A, /mob/dead/observer))
-						var/mob/dead/observer/O = A
-						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
-							continue
-				else
-					continue
-			atoms.Add(A)
+			if(!A.invisibility || (see_ghosts && isobserver(A)))
+				atoms.Add(A)
 
 	var/list/sorted = list()
 	var/j

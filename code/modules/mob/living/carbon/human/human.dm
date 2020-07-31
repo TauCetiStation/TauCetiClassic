@@ -107,7 +107,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species) // Just to be sure.
 		metabolism_factor = species.metabolism_mod
-		butcher_results = species.butcher_drops
+		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
 
@@ -143,6 +143,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
+	my_master = null
+	if(my_golem)
+		my_golem.death()
+	my_golem = null
 	return ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -280,23 +284,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
-	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
+	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
-	return
-
-/mob/living/carbon/human/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
-		if(!BP)
-			return
-		if (istype(O, /obj/effect/immovablerod))
-			BP.take_damage(101, 0)
-		else
-			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
-		updatehealth()
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.

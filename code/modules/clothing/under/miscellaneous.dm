@@ -504,6 +504,11 @@
 	item_color = "officertanclothes"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/cadet/skirt
+	name = "security cadet's jumpskirt"
+	icon_state = "officertanskirt"
+	item_color = "officertanskirt"
+
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
 	name = "forensics jumpsuit"
@@ -737,6 +742,7 @@
 	name = "bath towel"
 	icon_state = "bathtowel"
 	item_color = "bathtowel"
+	has_sensor = 0
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_ICLOTHING
 
 /obj/item/clothing/under/bathtowel/equipped(mob/living/carbon/human/user, slot)

@@ -128,3 +128,8 @@ var/global/static/list/stock_parts_increase_list = list(
 	/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
 	/obj/item/weapon/stock_parts/matter_bin/bluespace = /obj/item/weapon/stock_parts/matter_bin,
 )
+
+var/global/static/list/radial_question = list(
+	"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_confirm"),
+	"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_cancel")
+)

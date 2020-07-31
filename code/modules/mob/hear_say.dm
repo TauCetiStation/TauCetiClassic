@@ -45,7 +45,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
+		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -66,9 +66,9 @@
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
 		if(language)
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
+			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
@@ -178,7 +178,7 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "[speaker_name] <a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
 
 	var/formatted
 	if(language)

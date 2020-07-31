@@ -494,17 +494,6 @@
 
 	updatehealth()
 
-
-/mob/living/silicon/robot/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
-
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)

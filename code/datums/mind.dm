@@ -118,7 +118,7 @@
 
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			output += "<br><B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
 	recipient << browse(output,"window=memory")

@@ -845,7 +845,25 @@
 			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
 			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+
 		if("make_transfer")
+		//============check telecoms and message server=================
+			var/obj/machinery/message_server/useMS = FALSE
+			var/useTC = FALSE
+			if(message_servers)
+				for(var/obj/machinery/message_server/MS in message_servers)
+					if(MS.active)
+						useMS = TRUE
+						break
+
+			var/datum/signal/signal = src.telecomms_process()
+			
+			if(signal && signal.data["done"])
+				useTC = TRUE
+			if(!useMS || !useTC)
+				to_chat(U, "[bicon(src)]<span class='warning'>Communication Error</span>")
+				return
+		//==============================================================
 			if(owner_account.suspended)
 				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
 				return

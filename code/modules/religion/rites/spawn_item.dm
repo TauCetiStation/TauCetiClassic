@@ -39,7 +39,7 @@
 		ASPECT_CHAOS = 1,
 	)
 
-/datum/religion_rites/spawn_item/modify_item(atom/item)
+/datum/religion_rites/spawn_item/banana/modify_item(atom/item)
 	if(prob(20))
 		var/atom/before_item_loc = item.loc
 		qdel(item)
@@ -96,6 +96,10 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
+/datum/religion_rites/spawn_item/banana_ore/modify_item(atom/item)
+	if(prob(20))
+		new item(item.loc)
+
 /*
  * Create random friendly animal.
  * Any ghost with preference can become animal.
@@ -120,14 +124,14 @@
 
 /datum/religion_rites/spawn_item/call_animal/New()
 	spawn_type = choose_spawn_type()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item), CALLBACK(src, .proc/choose_spawn_type))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item), CALLBACK(src, .proc/choose_spawn_type), "This ritual creates a <i>random friendly animal</i>.")
 
 /datum/religion_rites/spawn_item/call_animal/proc/choose_spawn_type()
 	return pick(summon_type)
 
 /datum/religion_rites/spawn_item/call_animal/modify_item(atom/animal)
 	for(var/mob/dead/observer/O in observer_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
 			continue
 		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
 			continue
@@ -153,7 +157,7 @@
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
 		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
-		M.real_name = name
+		M.real_name = M.name
 		candidate.cancel_camera()
 		candidate.reset_view()
 	else if (response == "Never for this round")

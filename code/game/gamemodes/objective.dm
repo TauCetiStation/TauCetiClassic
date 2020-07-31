@@ -785,6 +785,27 @@ var/global/list/all_objectives = list()
 				return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
+//Borer objective(s).
+/datum/objective/borer_survive
+	explanation_text = "Survive in a host until the end of the round."
+
+/datum/objective/borer_survive/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/borer_reproduce
+	explanation_text = "Reproduce at least once."
+
+/datum/objective/borer_reproduce/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.has_reproduced)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
 //Vox heist objectives.
 
 /datum/objective/heist/proc/choose_target()
@@ -828,7 +849,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/heist/loot/choose_target()
 	var/loot = "an object"
-	switch(rand(1, 8))
+	switch(rand(1, 7))
 		if(1)
 			target = /obj/structure/particle_accelerator
 			target_amount = 6
@@ -854,10 +875,6 @@ var/global/list/all_objectives = list()
 			target_amount = 4
 			loot = "four energy guns"
 		if(7)
-			target = /obj/item/weapon/gun/energy/laser
-			target_amount = 2
-			loot = "two laser guns"
-		if(8)
 			target = /obj/item/weapon/gun/energy/ionrifle
 			target_amount = 1
 			loot = "an ion rifle"
@@ -985,3 +1002,11 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(vox_kills > MAX_VOX_KILLS)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"
+
+/datum/objective/blob_takeover/check_completion()
+	if(blobs.len >= blobwincount)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

@@ -20,6 +20,7 @@
 	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
+	var/gibs = /obj/effect/gibspawner/human
 	min_oxy = 5
 	max_oxy = 0
 	min_tox = 0
@@ -42,12 +43,16 @@
 
 /mob/living/simple_animal/hostile/syndicate/death()
 	..()
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
-	if(weapon2)
-		new weapon2 (src.loc)
+	if(gibs)
+		new gibs (src.loc)
+		visible_message("<span class='warning'><b>[src]</b> is blown apart along with their equipment by their self-destruct mechanism!</span>")
+	else
+		if(corpse)
+			new corpse (src.loc)
+		if(weapon1)
+			new weapon1 (src.loc)
+		if(weapon2)
+			new weapon2 (src.loc)
 	qdel(src)
 	return
 

@@ -109,6 +109,7 @@ VOX HEIST ROUNDTYPE
 			vox.add_language("Sol Common")
 		vox.h_style = "Short Vox Quills"
 		vox.f_style = "Shaved"
+		vox.grad_style = "none"
 		for(var/obj/item/organ/external/BP in vox.bodyparts)
 			BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
 			BP.rejuvenate()

@@ -125,6 +125,7 @@
 		total_alert_weight += cookie_weight
 
 	/* ru-specific, not sure about it. 513/post-IE should be removed */
+	/*
 	if(length(config.guard_whitelisted_country_codes) && chat_processed)
 		var/charset_weight = 0
 		if(!(geoip_data["countryCode"] in config.guard_whitelisted_country_codes) && chat_data["charset"] == "windows1251")
@@ -139,6 +140,7 @@
 			new_short_report += "Charset test failed(tw: [charset_weight]); "
 
 		total_alert_weight += charset_weight
+	*/
 
 	/* database related accounts */
 	if((length(holder.related_accounts_cid) && holder.related_accounts_cid != "Requires database") || (length(holder.related_accounts_ip) && holder.related_accounts_ip != "Requires database"))
@@ -270,6 +272,10 @@
 	return
 
 /datum/guard/proc/process_autoban()
+
+	if(!dbcon.IsConnected())
+		message_admins("GUARD: autoban for [holder.ckey] not processed due to database connection problem.")
+		return
 
 	var/reason = config.guard_autoban_reason
 

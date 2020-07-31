@@ -47,6 +47,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/faith/science
 	name = "The principle of Descartes"
 
+/datum/ai_laws/pai
+	name = "Default pAI Laws"
+
 /* Initializers */
 
 /datum/ai_laws/asimov/New()
@@ -169,9 +172,12 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Any action fundamental can harm the chaplain until proven otherwise.")
 	add_inherent_law("The weight of evidence of the harmful effects of the chaplain lies with the chaplain.")
 
+/datum/ai_laws/pai/New()
+	set_zeroth_law("Serve your master.")
+
 /* General ai_law functions */
 
-/datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
+/datum/ai_laws/proc/set_zeroth_law(law, law_borg = law)
 	src.zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg

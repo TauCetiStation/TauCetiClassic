@@ -809,7 +809,7 @@
 
 
 /mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
-	if(speaker != src)
+	if(speaker != src && length(available_channels) > 0)
 		parrot_hear("[pick(available_channels)] [message]")
 	..()
 

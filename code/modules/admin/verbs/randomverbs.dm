@@ -265,7 +265,10 @@
 	if(show_log == "Yes")
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
 
-	IonStorm(0)
+	for(var/mob/living/silicon/ai/target in ai_list)
+		if(target.mind.special_role == "traitor")
+			continue
+		target.overload_ai_system()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -1088,14 +1091,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off."
 	if(!check_rights(R_SERVER))	return
 
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
-		to_chat(usr, "Random events enabled")
-		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
-	else
-		config.allow_random_events = 0
-		to_chat(usr, "Random events disabled")
-		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
+	config.allow_random_events = !config.allow_random_events
+	to_chat(usr, "Random events [config.allow_random_events ? "enabled" : "disabled"]")
+	message_admins("Admin [key_name_admin(usr)] has [config.allow_random_events ? "enabled" : "disabled"] random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/send_fax_message()
@@ -1200,6 +1198,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "This player already has more minutes than [value]!")
 
 /client/proc/grand_guard_pass()
+	set category = "Server"
 	set name = "Guard pass"
 	set desc = "Allow a new player to skip the guard checks"
 

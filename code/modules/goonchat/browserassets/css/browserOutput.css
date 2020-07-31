@@ -313,6 +313,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminnotice			{color: #0000ff;}
 .boldannounce			{color: #ff0000; font-weight: bold;}
 .success				{color: #00BF36; font-weight: bold;}
+.vote					{color: purple;}
 
 /* Miscellaneous */
 .say					{}

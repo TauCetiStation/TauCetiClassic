@@ -158,7 +158,7 @@
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
 	else
-		..()
+		. = ..()
 		beingAttacked(W, user)
 
 

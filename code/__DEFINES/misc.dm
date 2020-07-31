@@ -84,6 +84,10 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
+#define EVENT_LEVEL_MUNDANE 1
+#define EVENT_LEVEL_MODERATE 2
+#define EVENT_LEVEL_MAJOR 3
+
 //defines
 #define RESIZE_DEFAULT_SIZE 1
 

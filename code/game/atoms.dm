@@ -162,9 +162,6 @@
 			return FALSE
 	return TRUE
 
-/atom/proc/meteorhit(obj/meteor)
-	return
-
 /atom/proc/allow_drop()
 	return 1
 

@@ -137,8 +137,7 @@
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked

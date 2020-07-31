@@ -1,96 +1,134 @@
-/var/const/meteor_wave_delay = 625 // minimum wait between waves in tenths of seconds
- // set to at least 100 unless you want evarr ruining every round
+// Meteors probability of spawning during a given wave
+// for normal meteor event
+var/global/list/obj/effect/meteor/meteors_normal = list(
+	/obj/effect/meteor/dust = 25,
+	/obj/effect/meteor/medium = 65,
+	/obj/effect/meteor/big   = 10
+	)
+// for threatening meteor event
+var/global/list/obj/effect/meteor/meteors_threatening = list(
+	/obj/effect/meteor/medium = 4, 
+	/obj/effect/meteor/big = 8,
+	)
+// for catastrophic meteor event
+var/global/list/obj/effect/meteor/meteors_catastrophic = list(
+	/obj/effect/meteor/medium = 1,
+	/obj/effect/meteor/big = 4,
+	)
+// for space dust event
+var/global/list/obj/effect/meteor/meteors_dust = list(
+	/obj/effect/meteor/dust = 1
+	)
 
-/var/const/meteors_in_wave = 50
-/var/const/meteors_in_small_wave = 10
+///////////////////////////////
+//Meteor spawning global procs
+///////////////////////////////
+/proc/spawn_meteors(number = 10, list/meteortypes = meteors_normal)
+	for(var/i in 1 to number)
+		spawn_meteor(meteortypes)
 
-/proc/meteor_wave(number = meteors_in_wave)
-	if(!ticker || wavesecret)
-		return
-
-	wavesecret = 1
-	for(var/i = 0 to number)
-		spawn(rand(10, 100))
-			spawn_meteor()
-	spawn(meteor_wave_delay)
-		wavesecret = 0
-
-/proc/spawn_meteors(number = meteors_in_small_wave)
-	for(var/i = 0; i < number; i++)
-		spawn(0)
-			spawn_meteor()
-
-/proc/spawn_meteor()
-	var/startx
-	var/starty
-	var/endx
-	var/endy
+/proc/spawn_meteor(list/meteortypes)
 	var/turf/pickedstart
 	var/turf/pickedgoal
+	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/max_i = 10 // number of tries to spawn meteor.
-
-	do
-		switch(pick(1, 2, 3, 4))
-			if(1) // NORTH
-				starty = world.maxy - (TRANSITIONEDGE + 1)
-				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
-				endy = TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
-			if(2) // EAST
-				starty = rand((TRANSITIONEDGE + 1),world.maxy - (TRANSITIONEDGE + 1))
-				startx = world.maxx - (TRANSITIONEDGE + 1)
-				endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
-				endx = TRANSITIONEDGE
-			if(3) // SOUTH
-				starty = (TRANSITIONEDGE + 1)
-				startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE+1))
-				endy = world.maxy - TRANSITIONEDGE
-				endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
-			if(4) // WEST
-				starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
-				startx = (TRANSITIONEDGE + 1)
-				endy = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
-				endx = world.maxx - TRANSITIONEDGE
-
-		var/picked_zlevel = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		pickedstart = locate(startx, starty, picked_zlevel)
-		pickedgoal = locate(endx, endy, picked_zlevel)
+	while(!istype(pickedstart, /turf/space))
+		var/startSide = pick(cardinal)
+		pickedstart = spaceDebrisStartLoc(startSide, z)
+		pickedgoal = spaceDebrisFinishLoc(startSide, z)
 		max_i--
 		if(max_i <= 0)
 			return
-
-	while (!istype(pickedstart, /turf/space) || !istype(pickedstart.loc, /area/space))
-
-	var/obj/effect/meteor/M
-	switch(rand(1, 100))
-
-		if(1 to 10)
-			M = new /obj/effect/meteor/big( pickedstart )
-		if(11 to 75)
-			M = new /obj/effect/meteor( pickedstart )
-		if(76 to 100)
-			M = new /obj/effect/meteor/small( pickedstart )
-
+	var/Me = pickweight(meteortypes)
+	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
+	//message_admins("[M] has spawned at [M.x],[M.y],[M.z] [ADMIN_JMP(M)] [ADMIN_FLW(M)].")
 	spawn(0)
 		walk_towards(M, M.dest, 1)
-
 	return
 
+/proc/spaceDebrisStartLoc(startSide, Z)
+	var/starty
+	var/startx
+	switch(startSide)
+		if(NORTH)
+			starty = world.maxy - (TRANSITIONEDGE + 1)
+			startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
+		if(EAST)
+			starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
+			startx = world.maxx - (TRANSITIONEDGE + 1)
+		if(SOUTH)
+			starty = (TRANSITIONEDGE + 1)
+			startx = rand((TRANSITIONEDGE + 1), world.maxx - (TRANSITIONEDGE + 1))
+		if(WEST)
+			starty = rand((TRANSITIONEDGE + 1), world.maxy - (TRANSITIONEDGE + 1))
+			startx = (TRANSITIONEDGE + 1)
+	return locate(startx, starty, Z)
+
+/proc/spaceDebrisFinishLoc(startSide, Z)
+	var/endy
+	var/endx
+	switch(startSide)
+		if(NORTH)
+			endy = TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+		if(EAST)
+			endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
+			endx = TRANSITIONEDGE
+		if(SOUTH)
+			endy = world.maxy - TRANSITIONEDGE
+			endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+		if(WEST)
+			endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
+			endx = world.maxx - TRANSITIONEDGE
+	return locate(endx, endy, Z)
+
+///////////////////////
+//The meteor effect
+//////////////////////
+
 /obj/effect/meteor
-	name = "meteor"
+	name = "the concept of meteor"
+	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
-	icon_state = "flaming"
+	icon_state = "smallf"
 	density = TRUE
 	anchored = TRUE
 	var/hits = 1
+	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
 	pass_flags = PASSTABLE
+	var/heavy = FALSE
+	var/meteorsound = 'sound/effects/meteorimpact.ogg'
+	var/z_original
 
-/obj/effect/meteor/small
-	name = "small meteor"
-	icon_state = "smallf"
-	pass_flags = PASSTABLE | PASSGRILLE
+	var/meteordrop = /obj/item/weapon/ore/iron
+	var/dropamt = 2
+
+/obj/effect/meteor/atom_init()
+	z_original = loc.z
+
+/obj/effect/meteor/Move()
+	if(z != z_original || loc == dest)
+		qdel(src)
+		return
+
+	. = ..() //process movement...
+
+	if(.)//.. if did move, ram the turf we get in
+		var/turf/T = get_turf(loc)
+
+		ram_turf(T)
+
+		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
+			get_hit()
+
+/obj/effect/meteor/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/pickaxe))
+		make_debris()
+		qdel(src)
+		return
+	return ..()
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) // this cancels the walk_towards() proc
@@ -100,65 +138,92 @@
 	if(A)
 		var/turf/T = get_turf(A)
 		var/area/T_area = get_area(T)
-		message_admins("<span class='warning'>[src] hit [A] in [T_area] [ADMIN_JMP(T)].</span>")
+		//message_admins("<span class='warning'>[src] hit [A] in [T_area] [ADMIN_JMP(T)].</span>")
 		log_game("[src] hit [A] ([T.x], [T.y], [T.z]) in [T_area].")
-		A.meteorhit(src)
+		if(ismob(A))
+			visible_message("<span class='red'>[A] has been hit by [src].</span>")
+		ram_turf(get_turf(A))
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
-	if(--src.hits <= 0)
+		get_hit()
 
-		// Prevent meteors from blowing up the singularity's containment.
-		// Changing emitter and generator ex_act would result in them being bomb and C4 proof.
-		if(!istype(A,/obj/machinery/power/emitter) && \
-			!istype(A,/obj/machinery/field_generator) && \
-			prob(15))
-			explosion(src.loc, 4, 5, 6, 7, 0)
-		qdel(src)
-	return
-
-
-/obj/effect/meteor/ex_act(severity)
-
-	if (severity < 4)
-		qdel(src)
-	return
-
-/obj/effect/meteor/big
-	name = "big meteor"
-	hits = 5
-
-/obj/effect/meteor/big/ex_act(severity)
-	return
-
-/obj/effect/meteor/big/Bump(atom/A)
-	// Prevent meteors from blowing up the singularity's containment.
-	// Changing emitter and generator ex_act would result in them being bomb and C4 proof
-	if(!istype(A, /obj/machinery/power/emitter) && \
-		!istype(A, /obj/machinery/field_generator))
-		if(--src.hits <= 0)
-			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
-			qdel(src) // Dont blow up singularity containment if we get stuck there.
+/obj/effect/meteor/proc/ram_turf(var/turf/T)
+	//first bust whatever is in the turf
+	for(var/obj/structure/window/W in T)	// window protects grille 
+		W.ex_act(hitpwr)
+		if(!QDELETED(W))
 			return
-	if(A)
-		var/turf/F = get_turf(A)
-		var/area/T_area = get_area(F)
-		message_admins("<span class='warning'>[src] hit [A]  in [T_area] [ADMIN_JMP(F)].</span>")
-		log_game("[src] hit [A] ([F.x], [F.y], [F.z]) in [T_area].")
+		break
+	for(var/atom/A in T.contents - src)
+		if(!istype(A, /obj/machinery/power/emitter) && !istype(A, /obj/machinery/field_generator)) //Protect the singularity from getting released every round!
+			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
+
+	//then, ram the turf if it still exists
+	if(T)
+		T.ex_act(hitpwr)
+
+//process getting 'hit' by colliding with a dense object
+//or randomly when ramming turfs
+/obj/effect/meteor/proc/get_hit()
+	hits--
+	if(hits <= 0)
+		make_debris()
+		meteor_effect()
+		qdel(src)
+
+/obj/effect/meteor/proc/meteor_effect()
+	if(heavy)
 		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
 				continue
 			shake_camera(M, 3, get_dist(M.loc, src.loc) > 20 ? 1 : 3)
-			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
-		explosion(src.loc, 0, 1, 2, 3, 0)
+			playsound(src, meteorsound, VOL_EFFECTS_MASTER)
 
-	if(--src.hits <= 0)
-		if(prob(15) && !istype(A, /obj/structure/grille))
-			explosion(src.loc, 1, 2, 3, 4, 0)
-		qdel(src)
+/obj/effect/meteor/proc/make_debris()
+	for(var/throws in 1 to dropamt)
+		new meteordrop(get_turf(src))
+
+/obj/effect/meteor/ex_act()
 	return
 
-/obj/effect/meteor/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pickaxe))
-		qdel(src)
-		return
+///////////////////////
+//Meteor types
+///////////////////////
+
+//Dust
+/obj/effect/meteor/dust
+	name = "space dust"
+	desc = "Dust in space."
+	icon_state = "space_dust"
+	pass_flags = PASSTABLE | PASSGRILLE
+	hits = 1
+	hitpwr = 3
+
+	meteordrop = /obj/item/weapon/ore/glass
+	dropamt = 2
+
+/obj/effect/meteor/dust/make_debris()
+	if(prob(33))
+		dropamt = 1
 	..()
+
+//Medium-sized
+/obj/effect/meteor/medium
+	name = "meteor"
+	dropamt = 3
+
+/obj/effect/meteor/medium/meteor_effect()
+	..()
+	explosion(src.loc, 0, 1, 2, 3, 0)
+
+//Large-sized
+/obj/effect/meteor/big
+	name = "big meteor"
+	icon_state = "flaming"
+	hits = 6
+	heavy = TRUE
+	dropamt = 4
+
+/obj/effect/meteor/big/meteor_effect()
+	..()
+	explosion(src.loc, 1, 2, 3, 4, 0)
