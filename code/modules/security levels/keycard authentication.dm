@@ -156,11 +156,14 @@
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Block All Maintenance")
-			if(security_level >= SEC_LEVEL_RED)
-				make_bolt_all_maintenance(TRUE)
-				feedback_inc("alert_keycard_auth_maintGrant",1)
+			if(block_maintenance_off) // see event/radiation_storm/start()
+				to_chat(usr, "[bicon(src)] <span class='warning'>Maintenance impossible to block during a radiation storm.</span>")
 			else
-				to_chat(usr, "[bicon(src)] <span class='warning'>Elevating the security level to red is required to block all maintenance entrances.</span>")
+				if(security_level >= SEC_LEVEL_RED)
+					make_bolt_all_maintenance(TRUE)
+					feedback_inc("alert_keycard_auth_maintGrant",1)
+				else
+					to_chat(usr, "[bicon(src)] <span class='warning'>Elevating the security level to red is required to block all maintenance entrances.</span>")
 		if("Revoke Block All Maintenance")
 			revoke_bolt_all_maintenance(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
