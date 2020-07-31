@@ -76,7 +76,7 @@
 				if(attempts == 0)
 					for(var/mob/living/carbon/M in viewers(src, 3))
 						M.flash_eyes(3)
-						to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
+						to_chat(M, "<span class='danger'>The crate's anti-tamper system activates!</span>")
 					qdel(src)
 		else
 			to_chat(user, "<span class='notice'>You attempt to interact with the device using a hand gesture, but it appears this crate is from before the DECANECT came out.</span>")
