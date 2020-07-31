@@ -12,3 +12,4 @@ var/global/block_maintenance_off = FALSE
 	make_maint_all_access(FALSE)
 	block_maintenance_off = TRUE
 	SSweather.run_weather("radiation storm", ZTRAIT_STATION)
+	block_maintenance_off = FALSE
