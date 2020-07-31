@@ -51,7 +51,6 @@ var/list/ai_verbs_default = list(
 	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
-	var/custom_sprite = 0 //For our custom sprites
 	var/next_emergency_message_time = 0
 	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
@@ -289,31 +288,12 @@ var/list/ai_verbs_default = list(
 	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
-	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
-		var/file = file2text("config/custom_sprites.txt")
-		var/lines = splittext(file, "\n")
-
-		for(var/line in lines)
-		// split & clean up
-			var/list/Entry = splittext(line, ":")
-			for(var/i = 1 to Entry.len)
-				Entry[i] = trim(Entry[i])
-
-			if(Entry.len < 2)
-				continue;
-
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name)
-				custom_sprite = 1 //They're in the list? Custom sprite time
-				icon = 'icons/mob/custom-synthetic.dmi'
 
 	if(!chooses_ai_cores)
 		chooses_ai_cores = list()
 		for(var/name in name_by_state)
 			chooses_ai_cores[name] = image(icon = 'icons/mob/AI.dmi', icon_state = name_by_state[name])
 
-	if(custom_sprite == 1) 
-		icon_state = "[src.ckey]-ai"
-	else 
 		var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
 		icon_state = name_by_state[state]
 
