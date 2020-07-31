@@ -86,7 +86,7 @@
 	if(!coloring)
 		populate_selection()
 
-	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = FALSE)
+	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!new_appearance || !crayon)
 		return
 	if(!user.Adjacent(src))
