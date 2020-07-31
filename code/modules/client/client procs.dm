@@ -335,7 +335,10 @@ var/list/blacklisted_builds = list(
 	var/sql_ckey = sanitize_sql(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
-	query.Execute()
+	
+	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
+		return           // dbcore revision needed
+	
 	var/sql_id = 0
 	var/sql_player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
 	var/sql_player_ingame_age = 0

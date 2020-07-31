@@ -57,7 +57,7 @@
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A Collectable red Beret. It smells faintly of Garlic."
-	icon_state = "beret"
+	icon_state = "beret_red"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/welding

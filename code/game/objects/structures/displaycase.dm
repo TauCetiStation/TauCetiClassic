@@ -43,13 +43,6 @@
 			occupied = 0
 		qdel(src)
 
-
-/obj/structure/displaycase/meteorhit(obj/O)
-		new /obj/item/weapon/shard( src.loc )
-		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
-		qdel(src)
-
-
 /obj/structure/displaycase/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
@@ -71,11 +64,12 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	src.health -= W.force
-	src.healthcheck()
-	..()
-	return
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	. = ..()
+	health -= W.force
+	healthcheck()
 
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)

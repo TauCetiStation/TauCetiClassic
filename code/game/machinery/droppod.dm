@@ -77,11 +77,6 @@
 		return
 	return ..()
 
-/obj/structure/droppod/meteorhit()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
 /********Moving camera Eye********/
 
 /obj/structure/droppod/relaymove(mob/user, direction)
@@ -723,7 +718,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.

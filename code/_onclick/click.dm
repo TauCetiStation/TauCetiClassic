@@ -20,6 +20,12 @@
 /mob/proc/SetNextMove(num)
 	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
 
+// Delays the mob's next click/action either by num deciseconds, or maximum that was already there.
+/mob/proc/AdjustNextMove(num)
+	var/new_next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	if(new_next_move > next_move)
+		next_move = new_next_move
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.

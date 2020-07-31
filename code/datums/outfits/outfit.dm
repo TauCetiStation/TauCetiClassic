@@ -47,7 +47,7 @@
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
-	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
+	var/list/implants = null  /// asoc_list implant - bodypart. Any implants the mob should start implanted with. Format of this list is (typepath = bodypart, typepath = bodypart, typepath = bodypart)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
@@ -256,12 +256,12 @@
 					if(!isnum(number))//Default to 1
 						number = 1
 					for(var/i in 1 to number)
-						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
+				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
+				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -272,12 +272,13 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			H.internal = H.get_item_by_slot(internals_slot)
-			H.update_icons()
+			H.internal = H.get_equipped_item(internals_slot)
+			if(H.internals)
+				H.internals.icon_state = "internal1"
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.inject(H)
+				I.inject(H, implants[implant_type])
 
 	H.update_body()
 	return TRUE
@@ -288,7 +289,7 @@
 		var/slot_type = slot2type[slot]
 		if(!slot_type)
 			continue
-		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
+		H.equip_to_slot_or_del(new slot_type(H), text2num(slot))
 
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit

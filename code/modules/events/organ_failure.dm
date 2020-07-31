@@ -1,5 +1,4 @@
 /datum/event/organ_failure
-	var/severity = 1
 
 /datum/event/organ_failure/setup()
 	announceWhen = rand(0, 300)

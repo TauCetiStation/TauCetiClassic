@@ -305,7 +305,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		for(var/i=0; i<duration, i++)
 			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
 			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
+		animate(M.client, pixel_x = 0, pixel_y = 0, time = 2)
 
 
 /proc/findname(msg)

@@ -164,7 +164,7 @@
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
-	if(volume >= 5)
+	if(volume >= 30)
 		if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
