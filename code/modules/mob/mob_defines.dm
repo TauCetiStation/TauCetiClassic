@@ -184,7 +184,7 @@
 
 //List of active diseases
 
-	var/viruses = list() // replaces var/datum/disease/virus
+	var/list/viruses = list() // replaces var/datum/disease/virus
 
 //Monkey/infected mode
 	var/list/resistances = list()

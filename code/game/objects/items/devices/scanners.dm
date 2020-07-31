@@ -512,7 +512,7 @@ REAGENT SCANNER
 	                                 /obj/item/weapon/bananapeel,
 	                                 /obj/item/weapon/soap,
 	                                 /obj/item/weapon/bikehorn,
-	                                 /obj/item/toy/laugh_button,
+	                                 /obj/item/toy/sound_button,
 	                                 /obj/item/device/tabletop_assistant,
 	                                 /obj/item/weapon/storage/pill_bottle,
 	                                 /obj/item/device/paicard,
