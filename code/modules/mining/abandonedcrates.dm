@@ -96,7 +96,7 @@
 			to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts == 1 ? "on next" : "[attempts]"] failed access attempts.</span>")
 			to_chat(user, "<span class='notice'>* Last access attempt [code > lastattempt ? "lower" : "higher"] than expected code.</span>")
 		return
-	..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
