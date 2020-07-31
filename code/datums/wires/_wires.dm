@@ -198,7 +198,7 @@ var/global/list/wire_daltonism_colors = list()
 
 	// Value of colors
 	var/list/colors_by_num
-	if(see_effect != 1 && see_effect != null)
+	if(see_effect != SEE_BLIND && see_effect != null)
 		colors_by_num = list()
 		for(var/color in color_by_hex)
 			var/r = hex2num(copytext(color_by_hex[color], 2, 4))
