@@ -11,7 +11,6 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "code\_compile_options.dm"
-#include "code\_compile_options_cyrillic.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\priority_queue.dm"
