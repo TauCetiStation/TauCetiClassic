@@ -360,8 +360,7 @@
 		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/alarmlist = alarms[cat]
@@ -378,7 +377,10 @@
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(dat, "window=robotalerts&can_close=0")
+
+	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))

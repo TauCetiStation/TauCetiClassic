@@ -469,9 +469,9 @@
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, flavor_text), text("window=[];size=500x200", name))
-		onclose(usr, "[name]")
-
+		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(flavor_text)
+		popup.open()
 	return
 
 

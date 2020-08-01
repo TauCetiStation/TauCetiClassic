@@ -13,7 +13,7 @@ var/global/list/frozen_items = list()
 //Main cryopod console.
 
 /obj/machinery/computer/cryopod
-	name = "cryogenic oversight console"
+	name = "Cryogenic Oversight Console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
@@ -33,8 +33,9 @@ var/global/list/frozen_items = list()
 	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
 	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a>.<br/><hr/>"
 
-	user << browse(dat, "window=cryopod_console")
-	onclose(user, "cryopod_console")
+	var/datum/browser/popup = new(user, "window=cryopod_console", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
 	. = ..()
@@ -50,7 +51,9 @@ var/global/list/frozen_items = list()
 			dat += "[person]<br/>"
 		dat += "<hr/>"
 
-		user << browse(dat, "window=cryolog")
+		var/datum/browser/popup = new(user, "window=cryolog", src.name + ": Log")
+		popup.set_content(dat)
+		popup.open()
 
 	else if(href_list["item"])
 

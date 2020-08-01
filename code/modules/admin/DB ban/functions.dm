@@ -319,7 +319,6 @@
 	var/output = "<div align='center'><table width='90%'><tr>"
 
 	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
 	output += "</td>"
 
 	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
@@ -503,7 +502,9 @@
 
 			output += "</table></div>"
 
-	usr << browse(output,"window=lookupbans;size=900x700")
+	var/datum/browser/popup = new(usr, "window=lookupbans", "Banning panel", 900, 700, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
 //Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)

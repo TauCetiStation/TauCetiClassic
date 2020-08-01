@@ -471,9 +471,6 @@
 			to_chat(usr, "Job Master has not been setup!")
 			return
 
-		var/dat = ""
-		var/header = "<head><title>Job-Ban Panel: [M.name]</title></head>"
-		var/body
 		var/jobs = ""
 
 	/***********************************WARNING!************************************
@@ -808,9 +805,9 @@
 		jobs += "</tr></table>"
 
 
-		body = "<body>[jobs]</body>"
-		dat = "<tt>[header][body]</tt>"
-		usr << browse(dat, "window=jobban2;size=800x490")
+		var/datum/browser/popup = new(usr, "window=jobban2", "Job-Ban Panel: [M.name]", 800, 490, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(jobs)
+		popup.open()
 		return
 
 	//JOBBAN'S INNARDS
@@ -1679,7 +1676,9 @@
 		var/info = locate(href_list["CentcommFaxViewInfo"])
 		var/stamps = locate(href_list["CentcommFaxViewStamps"])
 
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
+		var/datum/browser/popup = new(usr, "window=Centcomm Fax Message", "Centcomm Fax Message", ntheme = CSS_THEME_LIGHT)
+		popup.set_content("[info][stamps]")
+		popup.open()
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
@@ -2171,7 +2170,9 @@
 		else
 			return
 
-		usr << browse(content, "window=book")
+		var/datum/browser/popup = new(usr, "window=book", "Book #[bookid]", ntheme = CSS_THEME_LIGHT)
+		popup.set_content(content)
+		popup.open()
 
 	else if(href_list["restorebook"])
 		if(!check_rights(R_PERMISSIONS))

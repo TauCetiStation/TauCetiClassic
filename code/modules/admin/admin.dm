@@ -422,8 +422,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if (!istype(src,/datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
 		return
-	var/dat
-	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
+	var/dat = ""
 
 	switch(admincaster_screen)
 		if(0)
@@ -653,8 +652,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
 	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
-	usr << browse(dat, "window=admincaster_main;size=400x600")
-	onclose(usr, "admincaster_main")
+
+	var/datum/browser/popup = new(usr, "window=admincaster_main", "Admin Newscaster", 400, 600, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /datum/admins/proc/Game()
 	if(!check_rights(0))	return

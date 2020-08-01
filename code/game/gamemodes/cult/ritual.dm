@@ -273,7 +273,10 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse(notedat, "window=notes")
+
+	var/datum/browser/popup = new(usr, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+	popup.set_content(notedat)
+	popup.open()
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
 	M.log_combat(user, "beaten with [name]")
@@ -328,7 +331,9 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse(tomedat, "window=Arcane Tome")
+			var/datum/browser/popup = new(user, "window=Arcane Tome", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(tomedat)
+			popup.open()
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -346,7 +351,10 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse(notedat, "window=notes")
+
+			var/datum/browser/popup = new(user, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(notedat)
+			popup.open()
 			return
 	if(usr.get_active_hand() != src)
 		return

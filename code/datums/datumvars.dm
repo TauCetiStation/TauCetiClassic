@@ -319,7 +319,7 @@
 
 	body += "</ol>"
 
-	var/html = "<html><head>"
+	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	if (title)
 		html += "<title>[title]</title>"
 	html += {"<style>

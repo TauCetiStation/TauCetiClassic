@@ -109,7 +109,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster
-	name = "newscaster"
+	name = "Newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
@@ -252,7 +252,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
-		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3><style>img {border-style:none;}</style></style>")
+		dat = ""
 
 		src.scan_user(human_or_robot_user) //Newscaster scans you
 
@@ -542,14 +542,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<HR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[10]'>Return</A>"
 			else
-				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com | If (break (likes/dislikes) or (system of commenting)) then report this bug in tauceti github "
+				dat+="Error 404"
 
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
 		assets.register()
 		assets.send(human_or_robot_user)
 
-		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_or_robot_user, "newscaster_main")
+		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()
 
 	/*if(src.isbroken) //debugging shit
 		return
@@ -953,7 +954,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 //########################################################################################################################
 
 /obj/item/weapon/newspaper
-	name = "newspaper"
+	name = "Newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
@@ -1042,8 +1043,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 		dat+="<BR><HR><div align='center'>[src.curr_page+1]</div>"
-		human_user << browse(dat, "window=newspaper_main;size=300x400")
-		onclose(human_user, "newspaper_main")
+
+		var/datum/browser/popup = new(human_user, "window=newspaper_main", src.name, 300, 400, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()
 	else
 		to_chat(user, "The paper is full of intelligible symbols!")
 
