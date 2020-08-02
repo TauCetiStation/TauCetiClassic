@@ -1,5 +1,5 @@
 /obj/item/weapon/clipboard
-	name = "clipboard"
+	name = "Clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "clipboard"
@@ -61,7 +61,7 @@
 		return ..()
 
 /obj/item/weapon/clipboard/attack_self(mob/user)
-	var/dat = "<title>Clipboard</title>"
+	var/dat = ""
 	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 	else
@@ -79,8 +79,10 @@
 	for(var/obj/item/weapon/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 
-	user << browse(entity_ja(dat), "window=clipboard")
-	onclose(user, "clipboard")
+	var/datum/browser/popup = new(user, "window=clipboard", src,name)
+	popup.set_content(dat)
+	popup.open()
+
 	add_fingerprint(usr)
 	return
 

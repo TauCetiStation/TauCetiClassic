@@ -119,7 +119,7 @@ var/req_console_information = list()
 
 /obj/machinery/requests_console/ui_interact(user)
 	var/dat
-	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
+	dat = ""
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
@@ -214,16 +214,20 @@ var/req_console_information = list()
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[entity_ja(dat)]", "window=request_console")
-		onclose(user, "req_console")
+		var/datum/browser/popup = new(user, "window=request_console", src.name)
+		popup.set_content(dat)
+		popup.open()
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
 
-	if(reject_bad_text(href_list["write"]))
+	if(href_list["write"])
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+
+		if(!dpt)
+			return
 
 		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)

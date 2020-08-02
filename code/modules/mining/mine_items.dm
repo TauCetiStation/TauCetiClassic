@@ -128,7 +128,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=200x150")
+	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	. = ..()

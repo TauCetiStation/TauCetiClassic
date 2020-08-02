@@ -226,7 +226,7 @@
 		victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
 		if(armor_check < 30)
 			to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
-			victim.adjustHalLoss(CLAMP(0, 40 - victim.halloss, 40)) // up to 40 halloss
+			victim.adjustHalLoss(clamp(0, 40 - victim.halloss, 40)) // up to 40 halloss
 
 	victim_G.force_down = TRUE
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
