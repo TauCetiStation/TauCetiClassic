@@ -121,7 +121,9 @@
 			output += "<br><B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-	recipient << browse(entity_ja(output),"window=memory")
+	var/datum/browser/popup = new(recipient, "window=memory")
+	popup.set_content(output)
+	popup.open()
 
 /datum/mind/proc/edit_memory()
 	if(!SSticker || !SSticker.mode)
@@ -489,7 +491,9 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(entity_ja(out), "window=edit_memory[src];size=400x500")
+	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 400, 500)
+	popup.set_content(out)
+	popup.open()
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
@@ -502,7 +506,7 @@
 
 	else if (href_list["memory_edit"])
 		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
-		if (new_memo)
+		if (!new_memo)
 			return
 		memory = new_memo
 
@@ -530,9 +534,7 @@
 		switch (new_obj_type)
 			if ("assassinate","protect","debrain", "dehead", "harm", "brig")
 				//To determine what to name the objective in explanation text.
-				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-				var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+				var/objective_type = "[capitalize(new_obj_type)]"
 
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in SSticker.minds)

@@ -97,7 +97,7 @@
 
 		listclearnulls(possible_targets)
 
-		if(LAZYLEN(possible_targets))
+		if(length(possible_targets))
 			sacrifice_target = pick(possible_targets)
 
 	for(var/datum/mind/cult_mind in cult)

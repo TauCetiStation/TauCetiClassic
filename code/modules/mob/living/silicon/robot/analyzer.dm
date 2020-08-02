@@ -56,7 +56,7 @@
 
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
-			user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, message)
@@ -112,7 +112,7 @@
 	message += "<span class='notice'>Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 
 	if(!output_to_chat)
-		user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+		user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 		onclose(user, "[M.name]_scan_report")
 	else
 		to_chat(user, message)

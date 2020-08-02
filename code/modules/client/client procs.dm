@@ -305,6 +305,7 @@ var/list/blacklisted_builds = list(
 			return
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
+		popup(src, "Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.", "Byond Verion")
 		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)

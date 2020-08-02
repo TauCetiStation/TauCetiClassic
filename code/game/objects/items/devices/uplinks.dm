@@ -13,7 +13,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/list/purchase_log = list()
 	var/show_description = null
 	var/active = 0
-	var/uplink_type = "traitor" //0 - триторский аплинк, 1 - нюкерский
+	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
 	var/list/uplink_items = list()
 
 /obj/item/device/uplink/atom_init()
@@ -77,7 +77,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
 	dat += "</font></body>"
-	user << browse(entity_ja(dat), "window=hidden")
+	user << browse(dat, "window=hidden")
 	onclose(user, "hidden")
 	return
 

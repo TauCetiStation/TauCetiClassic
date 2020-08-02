@@ -1,3 +1,5 @@
+// revision required before use
+
 #define DMM_IGNORE_AREAS 1
 #define DMM_IGNORE_TURFS 2
 #define DMM_IGNORE_OBJS 4
@@ -167,3 +169,10 @@
 		key = "[key][letter_digits[place_value+1]]"
 		}
 	return key
+
+#undef DMM_IGNORE_AREAS
+#undef DMM_IGNORE_TURFS
+#undef DMM_IGNORE_OBJS
+#undef DMM_IGNORE_NPCS
+#undef DMM_IGNORE_PLAYERS
+#undef DMM_IGNORE_MOBS

@@ -27,17 +27,17 @@
 
 /proc/log_href(text, say_type)
 	if (config && config.log_hrefs)
-		global.hrefs_log << "\[[time_stamp()]]: [LOG_CLEANING(text)][log_end]"
+		global.hrefs_log << "\[[time_stamp()]]: [text][log_end]"
 
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		global.game_log << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMIN: [text][log_end]"
 
 /proc/log_admin_private(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		global.game_log << "\[[time_stamp()]]ADMINPRIVATE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMINPRIVATE: [text][log_end]"
 
 /proc/log_debug(text)
 	if (config.log_debug)
@@ -54,7 +54,7 @@
 
 /proc/log_vote(text)
 	if (config.log_vote)
-		global.game_log << "\[[time_stamp()]]VOTE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]VOTE: [text][log_end]"
 
 /proc/log_access(text)
 	if (config && config.log_access)
@@ -62,19 +62,19 @@
 
 /proc/log_say(text)
 	if (config.log_say)
-		global.game_log << "\[[time_stamp()]]SAY: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]SAY: [text][log_end]"
 
 /proc/log_ooc(text)
 	if (config.log_ooc)
-		global.game_log << "\[[time_stamp()]]OOC: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]OOC: [text][log_end]"
 
 /proc/log_whisper(text)
 	if (config.log_whisper)
-		global.game_log << "\[[time_stamp()]]WHISPER: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]WHISPER: [text][log_end]"
 
 /proc/log_emote(text)
 	if (config.log_emote)
-		global.game_log << "\[[time_stamp()]]EMOTE: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]EMOTE: [text][log_end]"
 
 /proc/log_attack(text)
 	if (config.log_attack)
@@ -83,15 +83,15 @@
 /proc/log_adminsay(text, say_type)
 	admin_log.Add(text)
 	if (config.log_adminchat)
-		global.game_log << "\[[time_stamp()]][say_type]: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]][say_type]: [text][log_end]"
 
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
-		global.game_log << "\[[time_stamp()]]ADMINWARN: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]ADMINWARN: [text][log_end]"
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		global.game_log << "\[[time_stamp()]]PDA: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]PDA: [text][log_end]"
 
 /proc/log_misc(text)
 	global.game_log << "\[[time_stamp()]]MISC: [text][log_end]"
@@ -130,7 +130,7 @@
 	if(!message || !subject)
 		return
 	var/F = file("[global.log_investigate_directory]/[subject].html")
-	F << "[time_stamp()] \ref[src] ([x],[y],[z]) || [src] [LOG_CLEANING(strip_html_properly(message))]<br>[log_end]"
+	F << "[time_stamp()] \ref[src] ([x],[y],[z]) || [src] [strip_html_properly(message)]<br>[log_end]"
 
 // Helper procs for building detailed log lines
 /datum/proc/get_log_info_line()
@@ -177,7 +177,7 @@
 
 /proc/log_fax(text)
 	if (config.log_fax)
-		global.game_log << "\[[time_stamp()]]FAX: [LOG_CLEANING(text)][log_end]"
+		global.game_log << "\[[time_stamp()]]FAX: [text][log_end]"
 
 /proc/datum_info_line(datum/D)
 	if(!istype(D))
@@ -249,7 +249,7 @@
 
 	var/stat_file = file("[global.log_directory]/stat.json")
 
-	stat_file << list2json(stats)
+	stat_file << json_encode(stats)
 
 /proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
 	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))

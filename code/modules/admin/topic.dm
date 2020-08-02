@@ -471,9 +471,6 @@
 			to_chat(usr, "Job Master has not been setup!")
 			return
 
-		var/dat = ""
-		var/header = "<head><title>Job-Ban Panel: [M.name]</title></head>"
-		var/body
 		var/jobs = ""
 
 	/***********************************WARNING!************************************
@@ -808,9 +805,9 @@
 		jobs += "</tr></table>"
 
 
-		body = "<body>[jobs]</body>"
-		dat = "<tt>[header][body]</tt>"
-		usr << browse(entity_ja(dat), "window=jobban2;size=800x490")
+		var/datum/browser/popup = new(usr, "window=jobban2", "Job-Ban Panel: [M.name]", 800, 490, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(jobs)
+		popup.open()
 		return
 
 	//JOBBAN'S INNARDS
@@ -920,7 +917,6 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
 					to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
@@ -943,7 +939,6 @@
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>")
 						to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
@@ -1004,7 +999,7 @@
 				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
 				for(var/x in C.prefs.cid_list)
 					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-				usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
+				usr << browse(dat, "window=[C.ckey]_cid_list")
 
 	else if(href_list["cid_ignore"])
 		if(!check_rights(R_LOG))
@@ -1034,7 +1029,7 @@
 				dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
 				dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-				usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
+				usr << browse(dat, "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
@@ -1050,25 +1045,6 @@
 			message_admins("<span class='notice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
 			del(M.client)
-/*
-	//Player Notes
-	else if(href_list["notes"])
-		var/ckey = href_list["ckey"]
-		if(!ckey)
-			var/mob/M = locate(href_list["mob"])
-			if(ismob(M))
-				ckey = M.ckey
-
-		switch(href_list["notes"])
-			if("show")
-				notes_show(ckey)
-			if("add")
-				notes_add(ckey,href_list["text"])
-				notes_show(ckey)
-			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
-				notes_show(ckey)
-*/
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
@@ -1161,7 +1137,7 @@
 		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [master_mode]"}
-		usr << browse(entity_ja(dat), "window=c_mode")
+		usr << browse(dat, "window=c_mode")
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))
@@ -1176,7 +1152,7 @@
 			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
-		usr << browse(entity_ja(dat), "window=f_secret")
+		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -1700,7 +1676,9 @@
 		var/info = locate(href_list["CentcommFaxViewInfo"])
 		var/stamps = locate(href_list["CentcommFaxViewStamps"])
 
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[entity_ja(info)][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
+		var/datum/browser/popup = new(usr, "window=Centcomm Fax Message", "Centcomm Fax Message", ntheme = CSS_THEME_LIGHT)
+		popup.set_content("[info][stamps]")
+		popup.open()
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
@@ -1859,7 +1837,7 @@
 			alert("Removed:\n" + jointext(removed_paths, "\n"))
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
+		var/number = clamp(text2num(href_list["object_count"]), 1, 100)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -2192,7 +2170,9 @@
 		else
 			return
 
-		usr << browse(entity_ja(content), "window=book")
+		var/datum/browser/popup = new(usr, "window=book", "Book #[bookid]", ntheme = CSS_THEME_LIGHT)
+		popup.set_content(content)
+		popup.open()
 
 	else if(href_list["restorebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2312,22 +2292,23 @@
 	// player info stuff
 
 	if(href_list["add_player_info"])
-		var/key = href_list["add_player_info"]
+		var/key = ckey(href_list["add_player_info"])
 		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
 		if(!add) return
 
 		notes_add(key, add, usr.client)
-		show_player_info(key)
+		show_player_notes(key)
 
+	/* unimplemented
 	if(href_list["remove_player_info"])
-		var/key = href_list["remove_player_info"]
+		var/key = ckey(href_list["remove_player_info"])
 		var/index = text2num(href_list["remove_index"])
 
 		notes_del(key, index, usr.client)
-		show_player_info(key)
+		show_player_notes(key)*/
 
 	if(href_list["notes"])
-		var/ckey = href_list["ckey"]
+		var/ckey = ckey(href_list["ckey"])
 		if(!ckey)
 			var/mob/M = locate(href_list["mob"])
 			if(ismob(M))
@@ -2335,7 +2316,5 @@
 
 		switch(href_list["notes"])
 			if("show")
-				show_player_info(ckey)
-			if("list")
-				PlayerNotesPage(text2num(href_list["index"]))
+				show_player_notes(ckey)
 		return

@@ -2074,7 +2074,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Display Initialzie() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
-	if(!LAZYLEN(SSatoms.BadInitializeCalls))
+	if(!length(SSatoms.BadInitializeCalls))
 		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
 	else
 		usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")

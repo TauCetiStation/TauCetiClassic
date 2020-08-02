@@ -35,39 +35,39 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right ear",	"#ê" = "right ear",		".ê" = "right ear",
-	  ":ä" = "left ear",	"#ä" = "left ear",		".ä" = "left ear",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ğ" = "department",	"#ğ" = "department",	".ğ" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":ã" = "Supply",		"#ã" = "Supply",		".ã" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling",
-	  ":â" = "dronechat",	"#â" = "dronechat",		".â" = "dronechat",
+	  ":Ğº" = "right ear",	"#Ğº" = "right ear",		".Ğº" = "right ear",
+	  ":Ğ´" = "left ear",	"#Ğ´" = "left ear",		".Ğ´" = "left ear",
+	  ":Ñˆ" = "intercom",	"#Ñˆ" = "intercom",		".Ñˆ" = "intercom",
+	  ":Ñ€" = "department",	"#Ñ€" = "department",	".Ñ€" = "department",
+	  ":Ñ" = "Command",		"#Ñ" = "Command",		".Ñ" = "Command",
+	  ":Ñ‚" = "Science",		"#Ñ‚" = "Science",		".Ñ‚" = "Science",
+	  ":ÑŒ" = "Medical",		"#ÑŒ" = "Medical",		".ÑŒ" = "Medical",
+	  ":Ñƒ" = "Engineering",	"#Ñƒ" = "Engineering",	".Ñƒ" = "Engineering",
+	  ":Ñ‹" = "Security",	"#Ñ‹" = "Security",		".Ñ‹" = "Security",
+	  ":Ñ†" = "whisper",		"#Ñ†" = "whisper",		".Ñ†" = "whisper",
+	  ":Ğ¸" = "binary",		"#Ğ¸" = "binary",		".Ğ¸" = "binary",
+	  ":Ñ„" = "alientalk",	"#Ñ„" = "alientalk",		".Ñ„" = "alientalk",
+	  ":Ğµ" = "Syndicate",	"#Ğµ" = "Syndicate",		".Ğµ" = "Syndicate",
+	  ":Ğ³" = "Supply",		"#Ğ³" = "Supply",		".Ğ³" = "Supply",
+	  ":Ğ¿" = "changeling",	"#Ğ¿" = "changeling",	".Ğ¿" = "changeling",
+	  ":Ğ²" = "dronechat",	"#Ğ²" = "dronechat",		".Ğ²" = "dronechat",
 
-	  ":Ê" = "right ear",	"#Ê" = "right ear",		".Ê" = "right ear",
-	  ":Ä" = "left ear",	"#Ä" = "left ear",		".Ä" = "left ear",
-	  ":Ø" = "intercom",	"#Ø" = "intercom",		".Ø" = "intercom",
-	  ":Ğ" = "department",	"#Ğ" = "department",	".Ğ" = "department",
-	  ":Ñ" = "Command",		"#Ñ" = "Command",		".Ñ" = "Command",
-	  ":Ò" = "Science",		"#Ò" = "Science",		".Ò" = "Science",
-	  ":Ü" = "Medical",		"#Ü" = "Medical",		".Ü" = "Medical",
-	  ":Ó" = "Engineering",	"#Ó" = "Engineering",	".Ó" = "Engineering",
-	  ":Û" = "Security",	"#Û" = "Security",		".Û" = "Security",
-	  ":Ö" = "whisper",		"#Ö" = "whisper",		".Ö" = "whisper",
-	  ":È" = "binary",		"#È" = "binary",		".È" = "binary",
-	  ":Ô" = "alientalk",	"#Ô" = "alientalk",		".Ô" = "alientalk",
-	  ":Å" = "Syndicate",	"#Å" = "Syndicate",		".Å" = "Syndicate",
-	  ":Ã" = "Supply",		"#Ã" = "Supply",		".Ã" = "Supply",
-	  ":Ï" = "changeling",	"#Ï" = "changeling",	".Ï" = "changeling",
-	  ":Â" = "dronechat",	"#Â" = "dronechat",		".Â" = "dronechat"
+	  ":Ğš" = "right ear",	"#Ğš" = "right ear",		".Ğš" = "right ear",
+	  ":Ğ”" = "left ear",	"#Ğ”" = "left ear",		".Ğ”" = "left ear",
+	  ":Ğ¨" = "intercom",	"#Ğ¨" = "intercom",		".Ğ¨" = "intercom",
+	  ":Ğ " = "department",	"#Ğ " = "department",	".Ğ " = "department",
+	  ":Ğ¡" = "Command",		"#Ğ¡" = "Command",		".Ğ¡" = "Command",
+	  ":Ğ¢" = "Science",		"#Ğ¢" = "Science",		".Ğ¢" = "Science",
+	  ":Ğ¬" = "Medical",		"#Ğ¬" = "Medical",		".Ğ¬" = "Medical",
+	  ":Ğ£" = "Engineering",	"#Ğ£" = "Engineering",	".Ğ£" = "Engineering",
+	  ":Ğ«" = "Security",	"#Ğ«" = "Security",		".Ğ«" = "Security",
+	  ":Ğ¦" = "whisper",		"#Ğ¦" = "whisper",		".Ğ¦" = "whisper",
+	  ":Ğ˜" = "binary",		"#Ğ˜" = "binary",		".Ğ˜" = "binary",
+	  ":Ğ¤" = "alientalk",	"#Ğ¤" = "alientalk",		".Ğ¤" = "alientalk",
+	  ":Ğ•" = "Syndicate",	"#Ğ•" = "Syndicate",		".Ğ•" = "Syndicate",
+	  ":Ğ“" = "Supply",		"#Ğ“" = "Supply",		".Ğ“" = "Supply",
+	  ":ĞŸ" = "changeling",	"#ĞŸ" = "changeling",	".ĞŸ" = "changeling",
+	  ":Ğ’" = "dronechat",	"#Ğ’" = "dronechat",		".Ğ’" = "dronechat"
 )
 
 /mob/living/proc/binarycheck()
@@ -116,6 +116,8 @@ var/list/department_radio_keys = list(
 
 	if(sanitize)
 		message = sanitize(message)
+		if(!message)
+			return
 
 	var/turf/T = get_turf(src)
 

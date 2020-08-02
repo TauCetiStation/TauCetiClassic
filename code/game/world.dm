@@ -340,7 +340,7 @@ var/shutdown_processed = FALSE
 		for(var/line in L)
 			if(!length(line))
 				continue
-			if(copytext(line,1,2) == "#")
+			if(line[1] == "#")
 				continue
 			donators.Add(ckey(line))
 
@@ -351,7 +351,7 @@ var/shutdown_processed = FALSE
 			warning("Failed to load taucetistation.org patreon list")
 			message_admins("Failed to load taucetistation.org patreon list, please inform responsible persons")
 		else
-			var/list/l = json2list(w)
+			var/list/l = json_decode(w)
 			for(var/i in l)
 				if(l[i]["reward_price"] == "5.00")
 					donators.Add(ckey(l[i]["name"]))

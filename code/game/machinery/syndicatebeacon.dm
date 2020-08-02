@@ -7,7 +7,7 @@
 
 
 /obj/machinery/syndicate_beacon
-	name = "ominous beacon"
+	name = "Ominous Beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
@@ -38,8 +38,10 @@
 			if(!selfdestructing)
 				dat += "<br><br><A href='?src=\ref[src];betraitor=1;traitormob=\ref[user]'>\"[pick("I want to switch teams.", "I want to work for you.", "Let me join you.", "I can be of use to you.", "You want me working for you, and here's why...", "Give me an objective.", "How's the 401k over at the Syndicate?")]\"</A><BR>"
 	dat += temptext
-	user << browse(entity_ja(dat), "window=syndbeacon")
-	onclose(user, "syndbeacon")
+
+	var/datum/browser/popup = new(user, "window=syndbeacon", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/syndicate_beacon/is_operational_topic()
 	return TRUE

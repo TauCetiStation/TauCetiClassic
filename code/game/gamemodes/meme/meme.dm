@@ -42,7 +42,7 @@
 	if (!..())
 		return FALSE
 
-	var/meme_number = CLAMP((global.player_list.len/13), required_enemies, recommended_enemies)
+	var/meme_number = clamp((global.player_list.len/13), required_enemies, recommended_enemies)
 
 	if (antag_candidates.len < meme_number)
 		meme_number = antag_candidates.len

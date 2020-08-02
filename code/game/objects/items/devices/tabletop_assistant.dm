@@ -93,7 +93,7 @@
 /obj/item/device/tabletop_assistant/interact(mob/user)
 	user.machine = src
 	update()
-	user << browse(entity_ja(data), "window=tabletop_assistant")
+	user << browse(data, "window=tabletop_assistant")
 	onclose(user, "tabletop_assistant")
 
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
