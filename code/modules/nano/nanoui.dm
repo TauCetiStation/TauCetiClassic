@@ -469,7 +469,7 @@ nanoui is used to open and update nano browser uis
 
 	//user << json_encode(data) // used for debugging
 
-	var/send_json = json_decode(send_data)
+	var/send_json = json_encode(send_data)
 	if(cached_data)
 		send_json = copytext(send_json, 1, -1) + ",\"cached\":[cached_data]}"
 

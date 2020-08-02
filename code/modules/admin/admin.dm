@@ -240,8 +240,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/list/db_messages = load_info_player_db_messages(key)
 	var/list/db_bans = load_info_player_db_bans(key)
 	// Start render info page
-	var/dat = "<html><head><title>Info on [key]</title></head>"
-	dat += "<body>"
+	var/dat = ""
 	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><hr>"
 
 	if(!length(db_messages) && !length(db_bans))
@@ -253,8 +252,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			dat += "<br><br>"
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
-	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x480")
+
+	var/datum/browser/popup = new(usr, "window=adminplayerinfo", "Info on [key]", 480, 480, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /datum/admins/proc/generalized_players_info(list/file_notes, list/db_notes)
 	var/list/datum/player_info/merged = list()
