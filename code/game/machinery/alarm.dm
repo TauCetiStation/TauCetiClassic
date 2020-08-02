@@ -936,7 +936,7 @@ Code shamelessly copied from apc_frame
 FIRE ALARM
 */
 /obj/machinery/firealarm
-	name = "fire alarm"
+	name = "Fire Alarm"
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
@@ -1096,9 +1096,12 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", src.name)
+		popup.set_content(dat)
+		popup.open()
+
 	else
 		if (A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
@@ -1110,9 +1113,11 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(entity_ja(dat), "window=firealarm")
-		onclose(user, "firealarm")
+		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+
+		var/datum/browser/popup = new(user, "window=firealarm", stars(src.name))
+		popup.set_content(dat)
+		popup.open()
 
 /obj/machinery/firealarm/Topic(href, href_list)
 	. = ..()

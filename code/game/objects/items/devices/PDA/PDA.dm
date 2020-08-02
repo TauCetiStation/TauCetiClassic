@@ -341,7 +341,7 @@
 		else
 			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 	HTML +="</body></html>"
-	usr << browse(entity_ja(HTML), "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 
 /obj/item/device/pda/silicon/can_use()
@@ -1496,7 +1496,7 @@
 	else
 		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
-			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else

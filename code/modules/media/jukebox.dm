@@ -203,7 +203,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
-		current_song=CLAMP(text2num(href_list["song"]), 1, playlist.len)
+		current_song=clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
@@ -225,10 +225,7 @@ var/global/loopModeNames=list(
 				stat &= BROKEN
 				update_icon()
 				return
-			var/json_reader/reader = new()
-			reader.tokens = reader.ScanJson(json)
-			reader.i = 1
-			var/songdata = reader.read_value()
+			var/songdata = json_decode(json)
 			for(var/list/record in songdata)
 				playlist += new /datum/song_info(record)
 			if(playlist.len==0)

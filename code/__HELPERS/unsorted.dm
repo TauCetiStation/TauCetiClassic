@@ -14,34 +14,6 @@
 //Checks if all high bits in req_mask are set in bitfield
 #define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
 
-//Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
-		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
-	return text("#[][][]", textr, textg, textb)
-
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
 
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
@@ -193,16 +165,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
-
-	var/i, ch, len = length(key)
-
-	for (i = 7, i <= len, ++i)
-		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+	return findtext(key, "Guest-", 1, 7) == 1
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)
@@ -573,12 +536,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
-
-#if DM_VERSION < 513
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-#endif
 
 //returns random gauss number
 /proc/GaussRand(sigma)
@@ -1264,8 +1221,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -1277,8 +1234,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
+	tX = clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/iscatwalk(atom/A)

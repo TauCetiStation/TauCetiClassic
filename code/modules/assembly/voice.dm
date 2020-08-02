@@ -13,7 +13,7 @@
 
 /obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)
 
-	msg = lowertext_(sanitize(msg))
+	msg = lowertext(msg)
 
 	if(listening)
 		recorded = msg

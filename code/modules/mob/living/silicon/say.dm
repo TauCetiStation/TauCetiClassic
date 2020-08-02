@@ -1,5 +1,5 @@
 /mob/living/silicon/say_quote(text)
-	var/ending = copytext(text, length(text))
+	var/ending = copytext(text, -1)
 
 	if (ending == "?")
 		return "queries"
@@ -24,8 +24,6 @@
 	return ..()
 
 /mob/living/silicon/say(var/message)
-	if (!message)
-		return
 
 	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
@@ -36,10 +34,13 @@
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
@@ -82,7 +83,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext(message,2+length_char(speaking.key)))
 
 	var/area/A = get_area(src)
 
