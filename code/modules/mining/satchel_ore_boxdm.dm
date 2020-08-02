@@ -29,7 +29,7 @@
 		dat += "[ore]: [stored_ore[ore]]<br>"
 
 	dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
-	user << browse("[entity_ja(dat)]", "window=orebox")
+	user << browse("[dat]", "window=orebox")
 	return
 
 /obj/structure/ore_box/examine(mob/user)

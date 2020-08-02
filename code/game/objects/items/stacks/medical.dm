@@ -395,7 +395,7 @@
 		if(H.stat == CONSCIOUS)
 			H.shock_stage += pain_factor
 		BP.status &= ~ORGAN_ARTERY_CUT
-		BP.clamp()
+		BP.strap()
 		user.visible_message(
 			"<span class='notice'>[user] has stitched [L]'s [BP.name] with [src].</span>",
 			"<span class='notice'>You have stitched [L]'s [BP.name] with [src].</span>")

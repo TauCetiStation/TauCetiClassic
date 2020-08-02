@@ -108,7 +108,7 @@
 
 			if(!output_to_chat)
 				message += "</BODY></HTML>"
-				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, message)
@@ -116,7 +116,7 @@
 			add_fingerprint(user)
 			var/dat = health_analyze(M, user, TRUE, output_to_chat)
 			if(!output_to_chat)
-				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(dat, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, dat)
@@ -191,7 +191,7 @@
 					dat += "<br>"
 					dat += "<A href='?src=\ref[src];menu=1'>Back to menu</A><br>"
 			dat += "</font></body>"
-			user << browse(entity_ja(dat), "window=pipboy")
+			user << browse(dat, "window=pipboy")
 			onclose(user, "pipboy")
 			return
 		else

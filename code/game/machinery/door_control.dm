@@ -9,7 +9,7 @@
 #define ON_TABLE 1
 
 /obj/machinery/door_control
-	name = "remote door control"
+	name = "Remote Door Control"
 	desc = "It controls doors, remotely."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
@@ -253,8 +253,10 @@
 	setup_menu += "<b><a href='?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];clear=1'>Clear data</a></b><br>"
-	user << browse("<head><title>[src]</title></head><tt>[entity_ja(setup_menu)]</tt>", "window=door_control")
-	onclose(user, "door_control")
+
+	var/datum/browser/popup = new(user, "window=door_control", src.name)
+	popup.set_content(setup_menu)
+	popup.open()
 
 /obj/machinery/door_control/Topic(href, href_list)
 	. = ..()

@@ -31,7 +31,9 @@
 		add_fingerprint(user)
 		var/dat = health_analyze(M, user, TRUE, output_to_chat) // TRUE means limb-scanning mode
 		if(output_to_chat)
-			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			var/datum/browser/popup = new(user, "window=[M.name]_scan_report", "Scan Report", 400, 400)
+			popup.set_content(dat)
+			popup.open()
 			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, dat)
