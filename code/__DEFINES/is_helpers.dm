@@ -83,17 +83,7 @@
 
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
-#if DM_VERSION < 513
-#define islist(L) (istype(L, /list))
-#endif
-
 #define ismachinery(A) (istype(A, /obj/machinery))
-
-#if DM_VERSION < 513
-#define ismovableatom(A) (istype(A, /atom/movable))
-#else
-#define ismovableatom(A) ismovable(A)
-#endif
 
 // GOONCHAT PORT
 

@@ -405,5 +405,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	for(var/path in tmplist)
 		dat += "[path] - [tmplist[path]] times<BR>"
 
-	usr << browse(entity_ja(dat), "window=qdeletedlog")
+	var/datum/browser/popup = new(usr, "window=qdeletedlog")
+	popup.set_content(dat)
+	popup.open()
+	
 #endif

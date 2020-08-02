@@ -351,25 +351,29 @@ nanoui is used to open and update nano browser uis
 
 	var/template_data_json = "{}" // An empty JSON object
 	if (templates.len > 0)
-		template_data_json = replacetext(list2json(templates), "'", "`")
+		template_data_json = replacetext(json_encode(templates), "'", "`")
 
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = replacetext(list2json(send_data, cached_data), "'", "`")
+	var/initial_data_json = json_encode(send_data)
 
-	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
+	if(cached_data)
+		initial_data_json = copytext(initial_data_json, 1, -1) + ",\"cached\":[cached_data]}"
+
+	initial_data_json = replacetext(initial_data_json, "'", "`")
+
+	var/url_parameters_json = json_encode(list("src" = "\ref[src]"))
 
 	return {"
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="error_handler.js"></script>
 		<script type='text/javascript'>
 			var triggerError = attachErrorHandler('nanoui', true);
 
 			function receiveUpdateData(jsonString)
 			{
-				jsonString = jsonString.replace(/¶/g, "&#1103;");//fx fo ja
 				// We need both jQuery and NanoStateManager to be able to recieve data
 				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
@@ -439,7 +443,7 @@ nanoui is used to open and update nano browser uis
 	winset(user, window_id, "on-close=\"nanoclose [params]\"")
 
 /**
- * Appends already processed json txt to the list2json proc when setting initial-data and data pushes
+ * Appends already processed json txt to the json_encode proc when setting initial-data and data pushes
  * Used for data that is fucking huge like manifests and camera lists that doesn't change often.
  * And we only want to process them when they change.
  * Fuck javascript
@@ -463,8 +467,13 @@ nanoui is used to open and update nano browser uis
 
 	var/list/send_data = get_send_data(data)
 
-	//user << list2json(data) // used for debugging
-	user << output(list2params(list(replacetext(list2json(send_data,cached_data), "'", "`"))),"[window_id].browser:receiveUpdateData")
+	//user << json_encode(data) // used for debugging
+
+	var/send_json = json_encode(send_data)
+	if(cached_data)
+		send_json = copytext(send_json, 1, -1) + ",\"cached\":[cached_data]}"
+
+	user << output(list2params(list(replacetext(send_json, "'", "`"))),"[window_id].browser:receiveUpdateData")
 
  /**
   * This Topic() proc is called whenever a user clicks on a link within a Nano UI

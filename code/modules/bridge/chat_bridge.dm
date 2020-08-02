@@ -25,11 +25,11 @@
 	if(mention)
 		json["mention"] = mention
 
-	var/encoded_json = replacetext(list2json(json), "'", @"\\`")//todo: replace on json_encode() after unicode update
+	var/encoded_json = replacetext(json_encode(json), "'", @"\\`")//todo: replace on json_encode() after unicode update
 	//world.log << "send2bridge json: [encoded_json]"
 
 	spawn()
-		var/list/result = json2list(world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'"))
+		var/list/result = json_decode(world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'"))
 		if(result["success"] != 1)
 			if(result["error"])
 				ERROR("Unsuccessful send2bridge, json:\n \t[encoded_json]\n \tbridge error:\n \t[result["error"]]")
