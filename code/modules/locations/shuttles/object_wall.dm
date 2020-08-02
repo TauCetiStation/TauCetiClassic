@@ -1,4 +1,4 @@
-//костыль, в будущем что-то сделать с этим
+//РєРѕСЃС‚С‹Р»СЊ, РІ Р±СѓРґСѓС‰РµРј С‡С‚Рѕ-С‚Рѕ СЃРґРµР»Р°С‚СЊ СЃ СЌС‚РёРј
 /obj/structure/object_wall
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."

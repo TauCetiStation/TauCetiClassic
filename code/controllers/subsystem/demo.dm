@@ -189,7 +189,7 @@ var/datum/subsystem/demo/SSdemo
 			loc_string = "null"
 			if(isturf(M.loc))
 				loc_string = "[M.x],[M.y],[M.z]"
-			else if(ismovableatom(M.loc))
+			else if(ismovable(M.loc))
 				loc_string = "\ref[M.loc]"
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
@@ -218,7 +218,7 @@ var/datum/subsystem/demo/SSdemo
 		var/loc_string = "null"
 		if(isturf(M.loc))
 			loc_string = "[M.x],[M.y],[M.z]"
-		else if(ismovableatom(M.loc))
+		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
 		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type)]"

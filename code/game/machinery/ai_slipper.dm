@@ -57,7 +57,7 @@
 	if (!istype(area))
 		to_chat(user, text("Turret badly positioned - area is [].", area))
 		return
-	var/t = "<TT><B>AI Liquid Dispenser</B> ([area.name])<HR>"
+	var/t = ""
 
 	if(locked && !issilicon_allowed(user) && !isobserver(user))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
@@ -65,8 +65,9 @@
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
 		t += text("Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
 
-	user << browse(entity_ja(t), "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "window=computer", src.name, 575, 450)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	. = ..()

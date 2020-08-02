@@ -33,7 +33,7 @@
 		to_chat(user, "You hold \the [itemname] up to the pAI...")
 		if(pai.client && !(pai.stat == DEAD))
 			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
-			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
+			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 
 	else
 		return ..()
@@ -236,7 +236,7 @@
 				<br>
 				<p>Each time this button is pressed, a request will be sent out to any available personalities. Check back often give plenty of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
 			"}
-	user << browse(entity_ja(dat), "window=paicard")
+	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
 
