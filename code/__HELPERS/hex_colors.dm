@@ -1,4 +1,13 @@
-// For proc which normalize something
+#define HEX_VAL_RED(col)   hex2num(copytext(col, 2, 4))
+#define HEX_VAL_GREEN(col) hex2num(copytext(col, 4, 6))
+#define HEX_VAL_BLUE(col)  hex2num(copytext(col, 6, 8))
+#define HEX_VAL_ALPHA(col) hex2num(copytext(col, 8, 10))
+
+/proc/random_short_color()
+	return "#" + random_string(3, global.hex_characters)
+
+/proc/random_color()
+	return "#" + random_string(6, global.hex_characters)
 
 /proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 
@@ -35,7 +44,7 @@
 	if (!value) return color
 
 	var/list/RGB = ReadRGB(color)
-	RGB[1] = CLAMP(RGB[1]+value,0,255)
-	RGB[2] = CLAMP(RGB[2]+value,0,255)
-	RGB[3] = CLAMP(RGB[3]+value,0,255)
+	RGB[1] = clamp(RGB[1]+value,0,255)
+	RGB[2] = clamp(RGB[2]+value,0,255)
+	RGB[3] = clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])

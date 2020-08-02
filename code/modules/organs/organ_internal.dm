@@ -367,7 +367,7 @@
 			if(!first)
 				damage_report += "\n"
 			first = FALSE
-			damage_report += "<span class='warning'><b>%[uppertext_(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext_(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+			damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
 
 	if(damage_report != "")
 		to_chat(owner, damage_report)

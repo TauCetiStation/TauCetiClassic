@@ -110,10 +110,13 @@
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 	else if(length(message) >= 2)
 

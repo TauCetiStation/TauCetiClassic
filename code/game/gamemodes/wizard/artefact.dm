@@ -112,9 +112,10 @@
 	dat += "<BR>"
 	for(var/datum/mind/M in previous_users)
 		dat += "<I>[M.name]</I><BR>"
-	user << browse(entity_ja(dat), "window=radio")
-	onclose(user, "radio")
-	return
+
+	var/datum/browser/popup = new(user, "window=radio", "Contract")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/contract/Topic(href, href_list)
 	..()

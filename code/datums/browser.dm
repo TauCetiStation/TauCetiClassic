@@ -5,7 +5,7 @@
 	var/width = 0
 	var/height = 0
 	var/atom/ref = null
-	var/theme = CSS_THEME_DARK
+	var/theme = CSS_THEME_DARK // or CSS_THEME_LIGHT
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
@@ -88,9 +88,9 @@
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		[head_content]
 	</head>
 	<body scroll=auto class='[theme]'>
@@ -103,9 +103,6 @@
 	return {"
 			</div>
 		</div>
-		<script>
-			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "&#1103;");
-		</script>
 	</body>
 </html>"}
 

@@ -512,7 +512,7 @@
 	else if(busy_with_action)
 		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
 	if (pose)
-		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
+		if( findtext(pose,".",-1) == 0 && findtext(pose,"!",-1) == 0 && findtext(pose,"?",-1) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 

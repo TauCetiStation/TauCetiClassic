@@ -322,8 +322,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/show_alerts()
 
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/alarmlist = alarms[cat]
@@ -346,7 +345,10 @@ var/list/ai_verbs_default = list(
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
+
+	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/ai/proc/can_retransmit_messages()
 	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)

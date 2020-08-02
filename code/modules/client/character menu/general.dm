@@ -159,16 +159,16 @@
 	else
 		. += 					"<br><b>Records:</b>"
 		. += 					"<br>Medical Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[copytext(med_record, 1, 3)]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[copytext_char(med_record, 1, 3)]...":"\[...\]"]</a>"
 		. += 					"<br>Security Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[copytext(sec_record, 1, 3)]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[copytext_char(sec_record, 1, 3)]...":"\[...\]"]</a>"
 		. += 					"<br>Employment Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[copytext(gen_record, 1, 3)]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[copytext_char(gen_record, 1, 3)]...":"\[...\]"]</a>"
 
 	. += 						"<br><br>"
 
 	. += 						"<b>Flavor:</b>"
-	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[copytext(flavor_text, 1, 3)]...":"\[...\]"]</a>"
+	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[copytext_char(flavor_text, 1, 3)]...":"\[...\]"]</a>"
 	. += 					"</td>"
 	. += 				"</tr>"
 	. += 			"</table>"	//Backstory table end
