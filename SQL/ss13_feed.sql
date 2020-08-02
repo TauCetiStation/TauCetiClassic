@@ -29,7 +29,7 @@ CREATE TABLE `erro_ban` (
   `serverip` varchar(32) NOT NULL,
   `round_id` int(11) unsigned NOT NULL DEFAULT 0,
   `bantype` varchar(32) NOT NULL,
-  `reason` VARCHAR(2048),
+  `reason` VARCHAR(2048) NOT NULL,
   `job` varchar(32) DEFAULT NULL,
   `duration` int(11) NOT NULL,
   `rounds` int(11) DEFAULT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE `whitelist` (
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `erro_stickyban` (
   `ckey` VARCHAR(32) NOT NULL,
-  `reason` VARCHAR(2048),
+  `reason` VARCHAR(2048) NOT NULL,
   `banning_admin` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ckey`)
