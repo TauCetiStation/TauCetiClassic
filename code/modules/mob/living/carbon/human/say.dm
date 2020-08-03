@@ -76,12 +76,12 @@
 	else
 		switch(species.name)
 			if(TAJARAN)
-				message = replacetext(message, "р", pick(list("ррр" , "рр")))
-				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
+				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
+				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
 			if(UNATHI)
-				message = replacetext(message, "с", pick(list("ссс" , "сс")))
+				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
+				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
