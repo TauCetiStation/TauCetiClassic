@@ -285,19 +285,22 @@ var/list/ai_verbs_default = list(
 	if(powered_ai.anchored)
 		set_power_use(ACTIVE_POWER_USE)
 
+/mob/living/silicon/ai/proc/gen_radial_cores()
+	if(!chooses_ai_cores)
+		chooses_ai_cores = list()
+		for(var/name in name_by_state)
+			chooses_ai_cores[name] = image(icon = 'icons/mob/AI.dmi', icon_state = name_by_state[name])
+
 /mob/living/silicon/ai/proc/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
 
-	if(!chooses_ai_cores)
-		chooses_ai_cores = list()
-		for(var/name in name_by_state)
-			chooses_ai_cores[name] = image(icon = 'icons/mob/AI.dmi', icon_state = name_by_state[name])
+	gen_radial_cores()
 
-		var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
-		icon_state = name_by_state[state]
+	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
@@ -709,6 +712,51 @@ var/list/ai_verbs_default = list(
 				SD.friendc = 0
 	return
 
+/mob/living/silicon/ai/proc/gen_radial_holo(type)
+	switch(type)
+		if("Crew Member")
+			if(!chooses_ai_staff)
+				chooses_ai_staff = list()
+
+			for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
+				if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
+					continue
+
+				chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
+
+			if(chooses_ai_staff.len)
+				var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
+				if(chooses_ai_staff[state])
+					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
+					holo_icon = chooses_ai_staff[state]
+			else
+				alert("No suitable records found. Aborting.")
+
+		if("Unique")
+			var/icon_list = list(
+				"Default",
+				"Floatingface",
+				"Alien",
+				"Carp",
+				"Queen",
+				"Rommie",
+				"Sonny",
+				"Miku",
+				"Medbot",
+			)
+
+			if(!chooses_ai_holo)
+				chooses_ai_holo = list()
+				var/i = 1
+				for(var/name_holo in icon_list)
+					chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
+					i++
+
+			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
+			if(state)
+				qdel(holo_icon)
+				holo_icon = chooses_ai_holo[state]
+
 //I am the icon meister. Bow fefore me.	//>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
 	set name = "Change Hologram"
@@ -718,49 +766,8 @@ var/list/ai_verbs_default = list(
 	if(check_unable())
 		return
 
-	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member", "Unique") == "Crew Member")
-		if(!chooses_ai_staff)
-			chooses_ai_staff = list()
-
-		for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
-			if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
-				continue
-
-			chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
-
-		if(chooses_ai_staff.len)
-			var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
-			if(chooses_ai_staff[state])
-				qdel(holo_icon) //Clear old icon so we're not storing it in memory.
-				holo_icon = chooses_ai_staff[state]
-		else
-			alert("No suitable records found. Aborting.")
-
-	else
-		var/icon_list = list(
-			"Default",
-			"Floatingface",
-			"Alien",
-			"Carp",
-			"Queen",
-			"Rommie",
-			"Sonny",
-			"Miku",
-			"Medbot",
-		)
-
-		if(!chooses_ai_holo)
-			chooses_ai_holo = list()
-			var/i = 1
-			for(var/name_holo in icon_list)
-				chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
-				i++
-
-		var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
-		if(state)
-			qdel(holo_icon)
-			holo_icon = chooses_ai_holo[state]
-	return
+	var/asnwer = alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member", "Unique")
+	gen_radial_holo(asnwer)
 
 /*/mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
