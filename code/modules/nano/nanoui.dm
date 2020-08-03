@@ -208,6 +208,8 @@ nanoui is used to open and update nano browser uis
 
 	if (!isnull(data))
 		send_data["data"] = data
+	else
+		send_data["data"] = list() // in case if it's null and we're sending cached_data(I guess it can't happen but it's better to be sure anyway)
 
 	return send_data
 
@@ -357,7 +359,7 @@ nanoui is used to open and update nano browser uis
 	var/initial_data_json = json_encode(send_data)
 
 	if(cached_data)
-		initial_data_json = copytext(initial_data_json, 1, -1) + ",\"cached\":[cached_data]}"
+		initial_data_json = copytext(initial_data_json, 1, -2) + ",\"cached\":[cached_data]}}"
 
 	initial_data_json = replacetext(initial_data_json, "'", "`")
 
@@ -471,7 +473,7 @@ nanoui is used to open and update nano browser uis
 
 	var/send_json = json_encode(send_data)
 	if(cached_data)
-		send_json = copytext(send_json, 1, -1) + ",\"cached\":[cached_data]}"
+		send_json = copytext(send_json, 1, -2) + ",\"cached\":[cached_data]}}"
 
 	user << output(list2params(list(replacetext(send_json, "'", "`"))),"[window_id].browser:receiveUpdateData")
 
