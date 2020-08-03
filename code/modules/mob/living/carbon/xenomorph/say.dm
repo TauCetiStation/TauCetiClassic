@@ -12,8 +12,8 @@
 		return emote(copytext(message, 2))
 
 	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
+		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			if (stat == DEAD)
 				return say_dead(message)
@@ -32,8 +32,8 @@
 	message = sanitize(message)
 
 	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
+		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			if (stat == DEAD)
 				return say_dead(message)
