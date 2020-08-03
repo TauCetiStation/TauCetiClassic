@@ -86,17 +86,6 @@
 	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
-
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user)
 	switch(emagged)
 		if(0)
@@ -368,7 +357,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)

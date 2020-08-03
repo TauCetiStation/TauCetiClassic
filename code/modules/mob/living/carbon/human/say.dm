@@ -17,6 +17,9 @@
 
 	message =  sanitize(message)
 
+	if(!message)
+		return
+
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return
@@ -27,7 +30,7 @@
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
@@ -43,7 +46,7 @@
 		if (message_mode == "headset")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
-			message = copytext(message,3)
+			message = copytext(message,2 + length(message[2]))
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
@@ -67,18 +70,18 @@
 			return
 
 	if (has_lang_prefix)
-		message = copytext(message,2+length(speaking.key))
+		message = copytext(message,2+length_char(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
 	else
 		switch(species.name)
 			if(TAJARAN)
-				message = replacetext(message, "ð", pick(list("ððð" , "ðð")))
-				message = replacetext(message, "Ð", pick(list("Ððð" , "Ðð")))
+				message = replacetextEx_char(message, "Ñ€", pick(list("Ñ€Ñ€Ñ€" , "Ñ€Ñ€")))
+				message = replacetextEx_char(message, "Ð ", pick(list("Ð Ñ€Ñ€" , "Ð Ñ€")))
 			if(UNATHI)
-				message = replacetext(message, "ñ", pick(list("ñññ" , "ññ")))
-				//È äëÿ çàãëàâíîé... Ôèãîâà êîïèïàñòà. Êòî çíàåò ðåøåíèå áåç âòîðîé îáðàáîòêè äëÿ çàãëàâíîé áóêâû, îáÿçàòåëüíî ïåðåäåëàéòå.
-				message = replacetext(message, "Ñ", pick(list("Ñññ" , "Ññ")))
+				message = replacetextEx_char(message, "Ñ", pick(list("ÑÑÑ" , "ÑÑ")))
+				//Ð˜ Ð´Ð»Ñ Ð·Ð°Ð³Ð»Ð°Ð²Ð½Ð¾Ð¹... Ð¤Ð¸Ð³Ð¾Ð²Ð° ÐºÐ¾Ð¿Ð¸Ð¿Ð°ÑÑ‚Ð°. ÐšÑ‚Ð¾ Ð·Ð½Ð°ÐµÑ‚ Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ Ð±ÐµÐ· Ð²Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸ Ð´Ð»Ñ Ð·Ð°Ð³Ð»Ð°Ð²Ð½Ð¾Ð¹ Ð±ÑƒÐºÐ²Ñ‹, Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð¿ÐµÑ€ÐµÐ´ÐµÐ»Ð°Ð¹Ñ‚Ðµ.
+				message = replacetextEx_char(message, "Ð¡", pick(list("Ð¡ÑÑ" , "Ð¡Ñ")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
@@ -98,7 +101,7 @@
 	if(iszombie(src))
 		message = zombie_talk(message)
 
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 	if (speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
@@ -274,7 +277,7 @@
 
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
@@ -309,7 +312,7 @@
 			if(prob(80))
 				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
 			else if(config.rus_language)
-				message =  "[message]... Íî ÿ ÃÍÎÌ!"
+				message =  "[message]... ÐÐ¾ Ñ Ð“ÐÐžÐœ!"
 			else
 				message =  "[message]... But i'm A GNOME!"
 			verb = pick("yells like an idiot", "says rather loudly")
@@ -321,7 +324,7 @@
 		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
-		message = "[uppertext_(message)]!!!"
+		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
 	if(slurring)
@@ -340,7 +343,7 @@
 			message = stutter(message)
 			verb = pick("stammers", "stutters")
 		if(prob(braindam))
-			message = uppertext_(message)
+			message = uppertext(message)
 			verb = pick("yells like an idiot","says rather loudly")
 
 	returns[1] = message

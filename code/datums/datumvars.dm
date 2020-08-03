@@ -319,7 +319,7 @@
 
 	body += "</ol>"
 
-	var/html = "<html><head>"
+	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	if (title)
 		html += "<title>[title]</title>"
 	html += {"<style>
@@ -346,7 +346,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
+	usr << browse(html, "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -1042,7 +1042,7 @@ body
 			return
 
 		var/mob/C = locate(href_list["setckey"])
-		if(C.ckey && copytext(C.ckey, 1, 2) != "@")
+		if(C.ckey && C.ckey[1] != "@")
 			if(alert("This mob already controlled by [C.ckey]. Are you sure you want to continue?",,"Cancel","Continue") != "Continue")
 				return
 

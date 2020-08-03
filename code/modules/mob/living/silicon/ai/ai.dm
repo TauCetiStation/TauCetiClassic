@@ -134,6 +134,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
+	verbs -= /mob/living/verb/ghost
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -150,6 +151,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
+	verbs += /mob/living/verb/ghost
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -309,8 +311,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/show_alerts()
 
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/alarmlist = alarms[cat]
@@ -333,7 +334,10 @@ var/list/ai_verbs_default = list(
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
+
+	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/ai/proc/can_retransmit_messages()
 	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
@@ -564,15 +568,6 @@ var/list/ai_verbs_default = list(
 
 		return
 
-	return
-
-/mob/living/silicon/ai/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
 	return
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)

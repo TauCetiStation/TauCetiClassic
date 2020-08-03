@@ -139,7 +139,7 @@ var/global/ManifestJSON
 		"bot" = bot,\
 		"misc" = misc\
 		)
-	ManifestJSON = replacetext(list2json(PDA_Manifest), "'", "`")
+	ManifestJSON = replacetext(json_encode(PDA_Manifest), "'", "`")
 	return PDA_Manifest
 
 // Using json manifest for html manifest. One proc for manifest generation

@@ -1,7 +1,5 @@
 /datum/event/disease_outbreak
 	announceWhen	= 15
-	oneShot			= 1
-
 
 /datum/event/disease_outbreak/announce()
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
@@ -13,15 +11,14 @@
 	var/virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
-		var/foundAlready = 0	// don't infect someone that already has the virus
+		if(!H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
+			continue
+
+		if(H.viruses.len) //don't infect someone that already has the virus
+			continue
+
 		var/turf/T = get_turf(H)
-		if(!T)
-			continue
-		if(!is_station_level(T.z))
-			continue
-		for(var/datum/disease/D in H.viruses)
-			foundAlready = 1
-		if(H.stat == DEAD || foundAlready)
+		if(!T || !is_station_level(T.z))
 			continue
 
 		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.

@@ -363,8 +363,7 @@
 		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/alarmlist = alarms[cat]
@@ -381,7 +380,10 @@
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(entity_ja(dat), "window=robotalerts&can_close=0")
+
+	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
@@ -396,7 +398,7 @@
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	src << browse(entity_ja(dat), "window=robotdiagnosis")
+	src << browse(dat, "window=robotdiagnosis")
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
@@ -496,17 +498,6 @@
 				adjustBruteLoss(30)
 
 	updatehealth()
-
-
-/mob/living/silicon/robot/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
@@ -931,7 +922,7 @@
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(entity_ja(dat), "window=robotmod")
+	src << browse(dat, "window=robotmod")
 
 
 /mob/living/silicon/robot/Topic(href, href_list)

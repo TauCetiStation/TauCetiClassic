@@ -3,8 +3,8 @@ sudo: false
 
 env:
   global:
-    - BYOND_MAJOR=512
-    - BYOND_MINOR=1463
+    - BYOND_MAJOR=513
+    - BYOND_MINOR=1528
 
 cache:
   directories:
@@ -20,7 +20,7 @@ script:
 matrix:
   include:
     - name: "DreamChecker"
-      env: SPACEMAN_DMM_VERSION=suite-1.4
+      env: SPACEMAN_DMM_VERSION=suite-1.5
       cache:
         directories: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
       install:
