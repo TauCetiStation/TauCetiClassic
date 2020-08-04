@@ -383,8 +383,10 @@
 	return FALSE
 
 /proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
-	if(!dividend || !divisor)
+	if(!dividend && !divisor)
 		return
+	else if(!dividend || !divisor)
+		return !dividend ? 0 : INFINITY
 	var/ratio = dividend.maxHealth / divisor.maxHealth
 	if(dividend.small && !divisor.small)
 		ratio *= 0.5
