@@ -197,7 +197,7 @@
 	throw_range = 15
 	attack_verb = list("HONKED")
 	var/cooldown = FALSE
-	var/emagged = 0
+	var/emagged = FALSE
 
 /obj/item/weapon/bikehorn/emag_act(mob/user)
 	if(emagged)
