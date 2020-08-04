@@ -46,7 +46,7 @@
 		if (message_mode == "headset")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
-			message = copytext(message,3)
+			message = copytext(message,2 + length(message[2]))
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
@@ -76,12 +76,12 @@
 	else
 		switch(species.name)
 			if(TAJARAN)
-				message = replacetext(message, "р", pick(list("ррр" , "рр")))
-				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
+				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
+				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
 			if(UNATHI)
-				message = replacetext(message, "с", pick(list("ссс" , "сс")))
+				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
+				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/sm = sanitize(message)
