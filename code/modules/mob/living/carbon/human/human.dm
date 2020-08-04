@@ -7,6 +7,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	//icon_state = "body_m_s"
+	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
@@ -113,6 +114,16 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
+
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
 	. = ..()
 
@@ -769,6 +780,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 										modified = 1
 
 										spawn()
+											hud_updateflag |= 1 << WANTED_HUD
 											if(istype(usr,/mob/living/carbon/human))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
@@ -2159,6 +2171,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	tod = null
 	timeofdeath = 0
 	dead_mob_list -= src
+	update_health_hud()
 	apply_brain_damage(deadtime)
 
 /mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)

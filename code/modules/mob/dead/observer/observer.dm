@@ -164,6 +164,23 @@ Works together with spawning an observer, noted above.
 		for(var/mob/living/target in oview(src, 14))
 			if(target.mind&&(target.mind.special_role||issilicon(target)) )
 				target_list += target
+		if(target_list.len)
+			assess_targets(target_list, src)
+	if(medHUD)
+		process_medHUD(src)
+
+
+/mob/dead/proc/process_medHUD(mob/M)
+	var/client/C = M.client
+	for(var/mob/living/carbon/human/patient in oview(M, 14))
+		C.images += patient.hud_list[HEALTH_HUD]
+		C.images += patient.hud_list[STATUS_HUD_OOC]
+
+/mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
+	var/client/C = U.client
+	for(var/mob/living/carbon/human/target in target_list)
+		C.images += target.hud_list[SPECIALROLE_HUD]
+
 
 /*
 		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.

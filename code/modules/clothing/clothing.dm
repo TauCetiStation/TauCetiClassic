@@ -492,7 +492,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
-	var/sensor_mode = SUIT_SENSOR_OFF
+	var/sensor_mode = 0
 		/*
 		1 = Report living/dead
 		2 = Report detailed damages
@@ -616,13 +616,13 @@ BLIND     // can't see anything
 /obj/item/clothing/under/examine(mob/user)
 	..()
 	switch(src.sensor_mode)
-		if(SUIT_SENSOR_OFF)
+		if(0)
 			to_chat(user, "Its sensors appear to be disabled.")
-		if(SUIT_SENSOR_BINARY)
+		if(1)
 			to_chat(user, "Its binary life sensors appear to be enabled.")
-		if(SUIT_SENSOR_VITAL)
+		if(2)
 			to_chat(user, "Its vital tracker appears to be enabled.")
-		if(SUIT_SENSOR_TRACKING)
+		if(3)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -691,5 +691,5 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/rank/atom_init()
-	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
+	sensor_mode = pick(0,1,2,3)
 	. = ..()

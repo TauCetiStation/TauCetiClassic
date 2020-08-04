@@ -220,18 +220,17 @@
 		var/mob/living/carbon/human/H = host
 		set_EyesVision(H.sightglassesmod)
 		if(H.glasses)
-			if(istype(H.glasses, /obj/item/clothing/glasses/hud/sechud))
-				var/obj/item/clothing/glasses/hud/sechud/O = H.glasses
-				var/datum/atom_hud/AH = global.huds[O.hud_type]
-				AH.add_hud_to(src)
+			if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+				var/obj/item/clothing/glasses/sunglasses/sechud/O = H.glasses
+				if(O.hud)
+					O.hud.process_hud(src)
 			else if(istype(H.glasses, /obj/item/clothing/glasses/hud))
 				var/obj/item/clothing/glasses/hud/O = H.glasses
-				var/datum/atom_hud/AH = global.huds[O.hud_type]
-				AH.add_hud_to(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/hud/secmed))
-				var/obj/item/clothing/glasses/hud/secmed/O = H.glasses
-				var/datum/atom_hud/AH = global.huds[O.hud_type]
-				AH.add_hud_to(src)
+				O.process_hud(src)
+			else if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
+				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = H.glasses
+				O.process_hud(src)
+
 
 		for(var/scr in screens) // screens shit
 			if(!(scr in host.screens))

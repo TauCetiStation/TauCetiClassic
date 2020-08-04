@@ -108,7 +108,7 @@
 /obj/structure/closet/secure_closet/velocity_security/full
 
 /obj/structure/closet/secure_closet/velocity_security/full/PopulateContents()
-	new /obj/item/clothing/glasses/hud/sechud(src)
+	new /obj/item/clothing/glasses/sunglasses/sechud(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)

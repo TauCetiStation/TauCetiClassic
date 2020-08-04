@@ -40,7 +40,7 @@
 	item_state = "o_suit"
 	item_color = "orange"
 	has_sensor = 2
-	sensor_mode = SUIT_SENSOR_TRACKING
+	sensor_mode = 3
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/pink

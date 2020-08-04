@@ -233,6 +233,21 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
+/obj/item/clothing/glasses/sunglasses/sechud
+	name = "HUDsunglasses"
+	desc = "Sunglasses with a HUD."
+	icon_state = "sunhud"
+	var/obj/item/clothing/glasses/hud/security/hud = null
+
+/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
+	. = ..()
+	hud = new/obj/item/clothing/glasses/hud/security(src)
+
+/obj/item/clothing/glasses/sunglasses/sechud/tactical
+	name = "tactical HUD"
+	desc = "Flash-resistant goggles with inbuilt combat and security information."
+	icon_state = "swatgoggles"
+
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
@@ -328,17 +343,17 @@
 	toggleable = 0
 	action_button_name = null
 
-/obj/item/clothing/glasses/hud/sechud/gar
+/obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
 	item_state = "gars"
 
-/obj/item/clothing/glasses/hud/gar/super
+/obj/item/clothing/glasses/sunglasses/gar/super
 	name = "supergar sunglasses"
 	icon_state = "supergarb"
 	item_state = "supergarb"
 
-/obj/item/clothing/glasses/hud/sechud/gar/super
+/obj/item/clothing/glasses/sunglasses/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
 	item_state = "supergars"

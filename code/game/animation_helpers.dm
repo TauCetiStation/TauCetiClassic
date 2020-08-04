@@ -1,11 +1,6 @@
 /atom
 	var/shaking_anim = FALSE
 
-	///This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = null
-	///HUD images that this atom can provide.
-	var/list/hud_possible
-
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff)
 	return
 

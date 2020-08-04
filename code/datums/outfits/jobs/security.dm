@@ -7,7 +7,7 @@
 	gloves = /obj/item/clothing/gloves/black
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/heads/hos
-	glasses = /obj/item/clothing/glasses/hud/sechud
+	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
 	belt = /obj/item/device/pda/heads/hos
@@ -28,7 +28,7 @@
 	gloves = /obj/item/clothing/gloves/black
 	shoes = /obj/item/clothing/shoes/boots
 	l_ear = /obj/item/device/radio/headset/headset_sec
-	glasses = /obj/item/clothing/glasses/hud/sechud
+	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 
 	l_pocket = /obj/item/device/flash
 	l_hand_back = /obj/item/weapon/handcuffs

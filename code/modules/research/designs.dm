@@ -2145,7 +2145,7 @@ other types of metals and chemistry for reagents).
 	id = "secmed_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
-	build_path = /obj/item/clothing/glasses/hud/secmed
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/secmed
 	category = list("Support")
 
 /datum/design/mining_hud

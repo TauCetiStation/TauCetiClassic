@@ -31,6 +31,7 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
+		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -165,6 +166,7 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
+		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
