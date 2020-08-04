@@ -203,7 +203,7 @@
 	if(emagged)
 		return FALSE
 	to_chat(user, "<span class='warning'>You overload \the [src]'s bluespace air valve.</span>")
-	emagged = 1
+	emagged = TRUE
 	attack_verb = list("BWOINKED")
 	return TRUE
 
