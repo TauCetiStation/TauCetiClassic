@@ -20,6 +20,9 @@
 
 	return h_style
 
+/proc/random_gradient_style()
+	return pick(hair_gradients)
+
 /proc/random_ipc_monitor(ipc_head)
 	var/h_style = "Bald"
 	var/list/valid_hairstyles = list()
@@ -175,7 +178,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
@@ -250,7 +253,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -299,8 +302,3 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
-
-/proc/popup(user, message, title)
-	var/datum/browser/P = new(user, title, title)
-	P.set_content(message)
-	P.open()

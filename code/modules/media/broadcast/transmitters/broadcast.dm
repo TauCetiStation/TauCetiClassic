@@ -123,7 +123,7 @@
 		else
 			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
 		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
+			if(!IS_INTEGER(newfreq))
 				newfreq *= 10 // shift the decimal one place
 			if(newfreq > 900 && newfreq < 2000) // Between (90.0 and 100.0)
 				disconnect_frequency()

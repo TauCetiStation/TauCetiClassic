@@ -20,14 +20,19 @@
 		health = 0
 
 /obj/structure/grille/ex_act(severity)
-	qdel(src)
+	switch(severity)
+		if(1)
+			health -= rand(30, 50)
+		if(2)
+			health -= rand(15, 30)
+		if(3)
+			health -= rand(5, 15)
+	healthcheck()
+	return
 
 /obj/structure/grille/blob_act()
-	qdel(src)
-
-/obj/structure/grille/meteorhit(obj/M)
-	qdel(src)
-
+	health -= rand(initial(health)*0.8, initial(health)*3) //Grille will always be blasted, but chances of leaving things over
+	healthcheck()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -184,19 +189,21 @@
 		return
 //window placing end
 
-	else if(istype(W, /obj/item/weapon/shard))
-		health -= W.force * 0.1
-	else if(!shock(user, 70))
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		switch(W.damtype)
-			if("fire")
-				health -= W.force
-			if("brute")
-				health -= W.force * 0.1
-	healthcheck()
-	..()
-	return
+	if(user.a_intent != INTENT_HARM)
+		return
 
+	. = ..()
+	if((W.flags & CONDUCT) && shock(user, 70))
+		return
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+	switch(W.damtype)
+		if("fire")
+			health -= W.force
+		if("brute")
+			health -= W.force * 0.1
+
+	healthcheck()
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 5)

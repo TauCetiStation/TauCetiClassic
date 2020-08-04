@@ -995,6 +995,15 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Medical crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/roller_beds
+	name = "Roller beds crate"
+	cost = 1000
+	contains = list(/obj/item/roller, /obj/item/roller,
+					/obj/item/roller, /obj/item/roller)
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Roller beds crate"
+	group = "Medical / Science"
+
 /datum/supply_pack/virus
 	name = "Virus sample crate"
 	contains = list(/obj/item/weapon/virusdish/random,
@@ -1659,7 +1668,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/wcoat,
 					/obj/item/clothing/suit/hastur,
 					/obj/item/clothing/suit/holidaypriest,
-					/obj/item/clothing/suit/nun,
+					/obj/item/clothing/suit/hooded/skhima,
+					/obj/item/clothing/suit/hooded/nun,
 					/obj/item/clothing/suit/imperium_monk,
 					/obj/item/clothing/suit/ianshirt,
 					/obj/item/clothing/under/gimmick/rank/captain/suit,

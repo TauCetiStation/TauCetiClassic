@@ -40,7 +40,7 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 			V.update_wires_check()
 
 		if(VENDING_WIRE_CONTRABAND)
-			V.extended_inventory = !mended
+			V.set_extended_inventory(!mended)
 
 		if(VENDING_WIRE_ELECTRIFY)
 			if(mended)
@@ -64,7 +64,7 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 			V.update_wires_check()
 
 		if(VENDING_WIRE_CONTRABAND)
-			V.extended_inventory = !V.extended_inventory
+			V.set_extended_inventory(!V.extended_inventory)
 
 		if(VENDING_WIRE_ELECTRIFY)
 			V.electrified_until = world.time + 30 SECONDS

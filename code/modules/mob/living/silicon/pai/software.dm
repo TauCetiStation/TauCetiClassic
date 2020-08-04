@@ -91,10 +91,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
-		if(config.rus_language)
-			left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"	//This file has to be saved as ANSI or this will not display correctly
-		else
-			left_part = "<b><font color=red>3Rr0R �a�A C0RrU?�ion</font></b>"
+		left_part = "<b><font color=red>3Rr0R ?a?A C0RrU??ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 	else
 		switch(src.screen)							// Determine which interface to show here
@@ -168,7 +165,7 @@
 				</div>
 			</body>
 			</html>"}
-	usr << browse(entity_ja(dat), "window=pai;size=685x449;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	usr << browse(dat, "window=pai;size=685x449;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
 	return
@@ -463,11 +460,11 @@
 			var/mob/living/silicon/pai/targetPersonality = target.pai
 			switch(interaction_type)
 				if(INTERACTION_PAI_MODIFY_MAIN_LAW)
-					targetPersonality.pai_law0 = input("Insert new main law here.", "PAI exploiter", targetPersonality.pai_law0) as text
-					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.pai_law0]")
+					targetPersonality.laws.set_zeroth_law(sanitize(input("Insert new main law here.", "PAI exploiter", targetPersonality.laws.zeroth) as text))
+					to_chat(targetPersonality, "Your primary directives have been updated. Your new directive are: [targetPersonality.laws.zeroth]")
 				if(INTERACTION_PAI_MODIFY_SEC_LAW)
-					targetPersonality.pai_laws = input("Insert new secondary law here.", "PAI exploiter", targetPersonality.pai_laws) as text
-					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [targetPersonality.pai_laws]")
+					targetPersonality.laws.add_supplied_law(0, sanitize(input("Insert new secondary law here.", "PAI exploiter", targetPersonality.laws.supplied.len ? targetPersonality.laws.supplied[1] : "") as text))
+					to_chat(targetPersonality, "Your supplemental directives have been updated. Your new supplemental directive are: [jointext(targetPersonality.laws.supplied, "<br>")]")
 				if(INTERACTION_PAI_MANAGE_MARKED)
 					var/markedobjselected
 					while(markedobjselected != "Cancel")
@@ -576,7 +573,7 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>�</font>" : "<font color=#55FF55>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>•</font>" : "<font color=#55FF55>•</font>"] <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -595,11 +592,11 @@
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "universal translator")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>�</font>" : "<font color=#FF5555>�</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "interaction module")
@@ -638,9 +635,9 @@
 	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_law0]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.pai_laws]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(laws.supplied, "<br>")]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
@@ -922,8 +919,8 @@
 				dat += "pAI.<br>"
 				if(Temp.pai)
 					var/mob/living/silicon/pai/Temppai = Temp.pai
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.pai_law0]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [Temppai.pai_laws]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_MAIN_LAW];sub=0'>Modify Main Law</a> (Current: [Temppai.laws.zeroth]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MODIFY_SEC_LAW];sub=0'>Modify Secondary Laws</a> (Current: [jointext(Temppai.laws.supplied, "<br>")]) <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_MANAGE_MARKED];sub=0'>Get Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_RESET_MARKED];sub=0'>Clear Marked Objects List</a> <br>"
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_PAI_CLEAR_SOFTWARE];sub=0'>Delete All Installed Software</a> <br>"

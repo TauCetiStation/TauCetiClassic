@@ -73,7 +73,7 @@
 commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
-	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
+	src << browse(output,"window=playersetup;size=210x240;can_close=0")
 	return
 
 /mob/dead/new_player/Stat()
@@ -323,13 +323,13 @@ commented cause polls are kinda broken now, needs refactoring */
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
 
-		character = character.AIize(move=0) // AIize the character, but don't move them yet
-
 		// IsJobAvailable for AI checks that there is an empty core available in this list
 		var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
 		empty_playable_ai_cores -= C
 
 		character.loc = C.loc
+
+		character = character.AIize(move=0) // AIize the character, but don't move them yet
 
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		ticker.mode.latespawn(character)
@@ -474,7 +474,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
-	//src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
+	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
 
 	// Added the new browser window method
 	var/accurate_length = 600
@@ -539,7 +539,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	dat += "<h4>Show Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 /mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	return FALSE
@@ -547,6 +547,9 @@ commented cause polls are kinda broken now, needs refactoring */
 /mob/dead/new_player/proc/close_spawn_windows()
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
+	src << browse(null, "window=preferences_window")
+	if(client)
+		client.clear_character_previews()
 
 /mob/dead/new_player/proc/has_admin_rights()
 	return (client && client.holder && (client.holder.rights & R_ADMIN))

@@ -77,11 +77,6 @@
 		return
 	return ..()
 
-/obj/structure/droppod/meteorhit()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
 /********Moving camera Eye********/
 
 /obj/structure/droppod/relaymove(mob/user, direction)
@@ -523,12 +518,12 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
+	intruder << browse(get_stats_html(), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()
 	var/output = {"<html>
-				<head><title>[name] data</title>
+				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
 				body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 				hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -723,7 +718,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.

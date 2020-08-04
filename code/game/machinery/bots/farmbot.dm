@@ -116,8 +116,9 @@
 		dat += "Ignore Mushrooms : <A href='?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
 		dat += "</TT>"
 
-	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autofarm")
-	onclose(user, "autofarm")
+	var/datum/browser/popup = new(user, "window=autofarm", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
 	. = ..()

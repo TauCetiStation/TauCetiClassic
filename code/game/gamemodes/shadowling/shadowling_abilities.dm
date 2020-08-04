@@ -93,16 +93,12 @@
 		user.incorporeal_move = 1
 		user.alpha = 0
 		if(user.buckled)
-			//user.buckled.unbuckle_mob()
 			user.buckled.unbuckle_mob()
 		sleep(40) //4 seconds
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
-		var/turf/mobloc = get_turf(user.loc)
-		if(!mobloc.is_mob_placeable(user))
-			do_teleport(user, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
-
+		user.eject_from_wall(gib = TRUE)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze

@@ -186,7 +186,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(CYRILLIC_TRAIT_TOURETTE))
+							say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
@@ -252,9 +252,9 @@
 					if(config.rus_language)//TODO:CYRILLIC dictionary?
 						switch(rand(1, 3))
 							if(1)
-								say(pick(CYRILLIC_BRAINDAMAGE_1))
+								say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
 							if(2)
-								say(pick(CYRILLIC_BRAINDAMAGE_2))
+								say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
 							if(3)
 								emote("drool")
 					else
@@ -561,7 +561,7 @@
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
@@ -1570,17 +1570,8 @@
 		set_EyesVision("greyscale")
 		return
 	var/obj/item/clothing/glasses/G = glasses
-	if(istype(G) && G.active)
-		if(istype(glasses, /obj/item/clothing/glasses/meson))
-			sightglassesmod = "meson"
-		else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-			sightglassesmod = "nvg"
-		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			sightglassesmod = "thermal"
-		else if(istype(glasses, /obj/item/clothing/glasses/science))
-			sightglassesmod = "sci"
-		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
-			sightglassesmod = "greyscale"
+	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
+		sightglassesmod = G.sightglassesmod
 
 	if(species.nighteyes)
 		var/light_amount = 0

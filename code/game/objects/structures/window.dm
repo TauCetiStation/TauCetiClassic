@@ -99,21 +99,14 @@
 			qdel(src)
 			return
 		if(2.0)
-			shatter(0)
+			take_damage(rand(30, 50))
 			return
 		if(3.0)
-			if(prob(50))
-				shatter(0)
-				return
-
+			take_damage(rand(5, 15))
+			return
 
 /obj/structure/window/blob_act()
-	shatter()
-
-
-/obj/structure/window/meteorhit()
-	shatter()
-
+	take_damage(rand(30, 50))
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -289,7 +282,7 @@
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
@@ -299,7 +292,7 @@
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
+		return ..()
 
 /obj/structure/window/proc/fastened_change()
 	return
@@ -582,4 +575,4 @@
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
-	. = ..()
+	return ..()

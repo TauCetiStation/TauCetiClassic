@@ -247,10 +247,16 @@
 		mannequin.r_hair = H.r_hair
 		mannequin.g_hair = H.g_hair
 		mannequin.b_hair = H.b_hair
+		mannequin.r_grad = H.r_grad
+		mannequin.g_grad = H.g_grad
+		mannequin.b_grad = H.b_grad
 	else
 		mannequin.r_hair = H.dyed_r_hair
 		mannequin.g_hair = H.dyed_g_hair
 		mannequin.b_hair = H.dyed_b_hair
+		mannequin.r_grad = H.dyed_r_hair
+		mannequin.g_grad = H.dyed_g_hair
+		mannequin.b_grad = H.dyed_b_hair
 
 	if(!H.facial_painted)
 		mannequin.r_facial = H.r_facial
@@ -271,6 +277,8 @@
 		mannequin.h_style = selectedhairstyle
 	else
 		mannequin.h_style = H.h_style
+
+	mannequin.grad_style = H.grad_style
 
 	if(isfacehair && selectedhairstyle)
 		mannequin.f_style = selectedhairstyle

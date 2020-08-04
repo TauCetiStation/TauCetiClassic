@@ -76,17 +76,19 @@
 	assets.register()
 	assets.send(user)
 
+	name = sanitize(name)
 	var/data
+
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(info)][stamp_text]</BODY></HTML>"
-		if(view)
-			user << browse(entity_ja(data), "window=[name]")
-			onclose(user, "[name]")
+		data = "[stars(info)][stamp_text]"
 	else
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
-		if(view)
-			user << browse(entity_ja(data), "window=[name]")
-			onclose(user, "[name]")
+		data = "[infolinks ? info_links : info][stamp_text]"
+
+	if(view)
+		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(data)
+		popup.open()
+	
 	return data
 
 /obj/item/weapon/paper/verb/rename()
