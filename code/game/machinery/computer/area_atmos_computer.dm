@@ -78,7 +78,7 @@
 			<i>[zone]</i>
 		</body>
 	</html>"}
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=400x400")
+	user << browse("[dat]", "window=miningshuttle;size=400x400")
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)
@@ -153,7 +153,7 @@
 		if(A2 && A2 == A)
 			connectedscrubbers += scrubber
 
-	if(!LAZYLEN(connectedscrubbers))
+	if(!length(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
 	src.updateUsrDialog()

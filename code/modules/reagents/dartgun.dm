@@ -239,7 +239,7 @@
 			dat += "<font color='red'>The dart cartridge is empty!</font>"
 		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]"
 
-	user << browse(entity_ja(dat), "window=dartgun")
+	user << browse(dat, "window=dartgun")
 	onclose(user, "dartgun", src)
 
 /obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(obj/item/B)

@@ -73,10 +73,6 @@
 	deflate(1)
 
 
-/obj/structure/inflatable/meteorhit()
-	//world << "glass at [x],[y],[z] Mhit"
-	deflate(1)
-
 /obj/structure/inflatable/attack_paw(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)

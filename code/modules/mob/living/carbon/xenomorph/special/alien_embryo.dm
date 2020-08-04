@@ -127,11 +127,12 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
 		// to 4, so we don't do a process heavy check everytime.
-		var/list/candidates = list()
-		candidates = get_larva_candidates()
+		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+
 		var/client/larva_candidate
 		if(candidates.len)
-			larva_candidate = pick(candidates)
+			var/mob/candidate = pick(candidates)
+			larva_candidate = candidate.client
 		else if(affected_mob.client)
 			if((ROLE_ALIEN in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, ROLE_ALIEN))
 				larva_candidate = affected_mob.key
@@ -179,7 +180,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 	for(var/mob/living/carbon/xenomorph/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected"))
+				if(dd_hasprefix(I.icon_state, "infected"))
 					qdel(I)
 			for(var/mob/living/L in living_list)
 				if(iscorgi(L) || iscarbon(L))
@@ -210,5 +211,5 @@ Des: Removes the alien infection image from all aliens in the world located in p
 			if(alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)
-						if(dd_hasprefix_case(I.icon_state, "infected"))
+						if(dd_hasprefix(I.icon_state, "infected"))
 							qdel(I)

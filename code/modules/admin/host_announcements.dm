@@ -25,7 +25,7 @@
 			return
 
 	else
-		var/name = reject_bad_text(input("Enter short english name for file", "Name") as null|text, 25)
+		var/name = ckey(input("Enter short english name for file", "Name") as null|text)
 		
 		if(!name)
 			to_chat(usr, "<span class='warning'>Bad name.</span>")

@@ -130,7 +130,8 @@
 
 	if(mob.control_object)	Move_object(direct)
 
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(isobserver(mob) || isovermind(mob))
+		return mob.Move(n,direct)
 
 	if(!forced)
 		if(moving || mob.throwing)

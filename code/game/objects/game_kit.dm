@@ -107,7 +107,7 @@
 	assets.send(user)
 	if (!( data ))
 		update()
-	user << browse(entity_ja(data), "window=game_kit")
+	user << browse(data, "window=game_kit")
 	onclose(user, "game_kit")
 
 /obj/item/weapon/game_kit/Topic(href, href_list)

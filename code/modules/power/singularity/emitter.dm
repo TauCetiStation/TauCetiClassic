@@ -124,9 +124,6 @@
 			set_power_use(IDLE_POWER_USE)	*/
 	return 1
 
-/obj/machinery/containment_field/meteorhit()
-	return 0
-
 /obj/machinery/power/emitter/process()
 	if(stat & (BROKEN))
 		return
