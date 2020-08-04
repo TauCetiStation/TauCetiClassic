@@ -49,7 +49,6 @@
 			return
 		BP.implants += src
 		part = BP
-		H.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"

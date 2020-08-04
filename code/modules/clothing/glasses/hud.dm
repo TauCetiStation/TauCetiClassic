@@ -5,27 +5,34 @@
 	origin_tech = "magnets=3;biotech=2"
 	var/fixtime = 0
 	var/list/icon/current = list() //the current hud icons
+	var/hud_type
 
-/obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
-	return
+/obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
+	if(hud_type)
+		var/datum/atom_hud/H = global.huds[hud_type]
+		H.add_hud_to(user)
+
+/obj/item/clothing/glasses/sunglasses/sechud
+	name = "HUD"
+
+/obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	if(hud_type)
+		var/datum/atom_hud/H = global.huds[hud_type]
+		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/set_prototype_qualities(rel_val=100, mark=0)
 	..()
 	fixtime = -1
 
-/obj/item/clothing/glasses/sunglasses/hud/secmed
+/obj/item/clothing/glasses/hud/broken
+	hud_type = null
+
+/obj/item/clothing/glasses/hud/secmed
 	name = "mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon_state = "secmedhud"
 	body_parts_covered = 0
-	var/fixtime = 0
-
-
-/obj/item/clothing/glasses/sunglasses/hud/secmed/proc/process_hud(mob/M)
-	if(fixtime != -1 && crit_fail && fixtime < world.time)
-		crit_fail = 0
-	process_med_hud(M, 1, crit_fail = crit_fail)
-	process_sec_hud(M, 1, crit_fail = crit_fail)
+	hud_type = DATA_HUD_MEDICAL_SEC
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	if(!crit_fail)
@@ -37,18 +44,25 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	body_parts_covered = 0
+	hud_type = DATA_HUD_MEDICAL_BASIC
 
+/obj/item/clothing/glasses/hud/sechud
+	name = "HUDsunglasses"
+	desc = "Sunglasses with a HUD."
+	icon_state = "sunhud"
+	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 
-/obj/item/clothing/glasses/hud/health/process_hud(mob/M)
-	check_integrity()
-	process_med_hud(M, 1, crit_fail = crit_fail)
+/obj/item/clothing/glasses/hud/sechud/tactical
+	name = "tactical HUD"
+	desc = "Flash-resistant goggles with inbuilt combat and security information."
+	icon_state = "swatgoggles"
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	body_parts_covered = 0
-	var/static/list/jobs[0]
+	hud_type = DATA_HUD_SECURITY_BASIC
 
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
@@ -58,12 +72,12 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 3
 
-/obj/item/clothing/glasses/hud/security/process_hud(mob/M)
-	check_integrity()
-	process_sec_hud(M, 1, crit_fail = crit_fail)
-
-/obj/item/clothing/glasses/hud/broken/process_hud(mob/M)
-	process_broken_hud(M, 1)
+/obj/item/clothing/glasses/hud/diagnostic
+	name = "diagnostic HUD"
+	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
+	icon_state = "diagnostichud"
+	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	sightglassesmod = "sepia"
 
 /obj/item/clothing/glasses/hud/proc/check_integrity()
 	if(!crit_fail)

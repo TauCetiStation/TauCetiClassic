@@ -39,7 +39,6 @@
 	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
 	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
 	newtraitor.mind.special_role = "Syndicate"
-	newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
 	ticker.mode.forge_syndicate_objectives(newtraitor.mind)
 	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
 	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")

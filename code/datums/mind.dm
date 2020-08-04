@@ -49,6 +49,9 @@
 
 	var/datum/job/assigned_job
 
+	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
+	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
+
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
@@ -643,7 +646,6 @@
 		var/is_mind_shield = findtext(href_list["implant"], "m_")
 		if(is_mind_shield)
 			href_list["implant"] = copytext(href_list["implant"], 3)
-		H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
 				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
@@ -695,7 +697,6 @@
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
 	else if (href_list["revolution"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 
 		switch(href_list["revolution"])
 			if("clear")
@@ -790,7 +791,6 @@
 					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
 
 	else if (href_list["gang"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 
 		switch(href_list["gang"])
 			if("clear")
@@ -860,7 +860,6 @@
 					qdel(SC)
 
 	else if (href_list["cult"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["cult"])
 			if("clear")
 				if(src in ticker.mode.cult)
@@ -910,8 +909,6 @@
 					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
 		switch(href_list["wizard"])
 			if("clear")
 				if(src in ticker.mode.wizards)
@@ -940,7 +937,6 @@
 					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["changeling"])
 			if("clear")
 				if(src in ticker.mode.changelings)
@@ -978,9 +974,6 @@
 
 	else if (href_list["nuclear"])
 		var/mob/living/carbon/human/H = current
-
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
 		switch(href_list["nuclear"])
 			if("clear")
 				if(src in ticker.mode.syndicates)
@@ -1034,7 +1027,6 @@
 					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 
 	else if (href_list["traitor"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["traitor"])
 			if("clear")
 				if(src in ticker.mode.traitors)
@@ -1085,7 +1077,6 @@
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["shadowling"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["shadowling"])
 			if("clear")
 				current.spellremove(current)
@@ -1201,7 +1192,6 @@
 						src = M.mind
 
 	else if (href_list["silicon"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["silicon"])
 			if("unmalf")
 				if(src in ticker.mode.malf_ai)

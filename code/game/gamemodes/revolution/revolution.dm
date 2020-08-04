@@ -214,7 +214,6 @@
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current.hud_updateflag |= 1 << SPECIALROLE_HUD
 
 		if(beingborged)
 			to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT></span>")

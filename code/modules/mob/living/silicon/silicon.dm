@@ -5,14 +5,8 @@
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
-	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 	var/obj/item/device/pda/silicon/pda = null
-
-
-
-
-
 
 	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
 

@@ -497,9 +497,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
 
-	hud_updateflag |= 1 << ID_HUD
-	hud_updateflag |= 1 << WANTED_HUD
-
 	apply_overlay(ID_LAYER)
 
 

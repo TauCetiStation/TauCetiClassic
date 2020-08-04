@@ -457,7 +457,6 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	update_health_hud()
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
@@ -530,7 +529,6 @@
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
 	regenerate_icons()
-	update_health_hud()
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -544,10 +542,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
-/mob/living/proc/update_health_hud()
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/UpdateDamageIcon()
 	return

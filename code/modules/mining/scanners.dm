@@ -55,19 +55,6 @@
 	. = ..()
 	error = pick(-1,1)
 
-/obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
-	if(!M)	return
-	if(!M.client)	return
-	var/client/C = M.client
-	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
-	for(var/turf/simulated/mineral/rock in RANGE_TURFS(7, (get_turf(M))))
-		if(!C) return
-
-		if(rock.finds && rock.finds.len || rock.artifact_find)
-			C.images += image(hudMineral,rock,"hudanomaly")
-		else if (rock.mineral)
-			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
-
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."

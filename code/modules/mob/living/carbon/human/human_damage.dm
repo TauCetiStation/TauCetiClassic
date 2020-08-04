@@ -177,7 +177,6 @@
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
-	hud_updateflag |= 1 << HEALTH_HUD
 
 // =============================================
 
@@ -225,8 +224,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/organ/external/BP = pick(parts)
-	if(BP.heal_damage(brute, burn))
-		hud_updateflag |= 1 << HEALTH_HUD
+	BP.heal_damage(brute, burn)
 	updatehealth()
 
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
@@ -241,7 +239,6 @@
 	var/damage_flags = (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
 
 	if(BP.take_damage(brute, burn, damage_flags))
-		hud_updateflag |= 1 << HEALTH_HUD
 		updatehealth()
 		speech_problem_flag = 1
 
@@ -258,7 +255,6 @@
 		burn -= (burn_was - BP.burn_dam)
 		parts -= BP
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
 	speech_problem_flag = 1
 
 
@@ -286,7 +282,6 @@
 		parts -= BP
 
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
 
 
 ////////////////////////////////////////////
@@ -314,8 +309,7 @@ This function restores all bodyparts.
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
 	if(istype(BP, /obj/item/organ/external))
-		if(BP.heal_damage(brute, burn))
-			hud_updateflag |= 1 << HEALTH_HUD
+		BP.heal_damage(brute, burn)
 	else
 		return 0
 
@@ -365,6 +359,5 @@ This function restores all bodyparts.
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
 
 	return created_wound
