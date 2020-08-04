@@ -197,9 +197,22 @@
 	throw_range = 15
 	attack_verb = list("HONKED")
 	var/cooldown = FALSE
+	var/emagged = 0
+
+/obj/item/weapon/bikehorn/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	to_chat(user, "<span class='warning'>You overload \the [src]'s air valve.</span>")
+	emagged = 1
+	attack_verb = list("BWOINKED")
+	return TRUE
+
 
 /obj/item/weapon/bikehorn/proc/honk(mob/user)
-	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+	if(emagged)
+		playsound(src, 'sound/effects/adminhelp.ogg', VOL_EFFECTS_MISC)
+	else
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 	if(user.can_waddle())
 		user.waddle(pick(-14, 0, 14), 4)
 
