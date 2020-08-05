@@ -216,10 +216,7 @@
 					g_hair = rand(0,255)
 					b_hair = rand(0,255)
 				if("h_style")
-					if(species == IPC)
-						h_style = random_ipc_monitor(ipc_head)
-					else
-						h_style = random_hair_style(gender, species)
+					h_style = random_hair_style(gender, species, ipc_head)
 				if("facial")
 					r_facial = rand(0,255)
 					g_facial = rand(0,255)
@@ -284,10 +281,7 @@
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
-						if(species == IPC)
-							h_style = random_ipc_monitor(ipc_head)
-						else
-							h_style = random_hair_style(gender, species)
+						h_style = random_hair_style(gender, species, ipc_head)
 						ResetJobs()
 						UpdateAllowedQuirks()
 						ResetQuirks()
@@ -559,7 +553,7 @@
 				if("ipc_head")
 					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
-					h_style = random_ipc_monitor(ipc_head)
+					h_style = random_hair_style(gender, species, ipc_head)
 
 		else
 			switch(href_list["preference"])
@@ -570,11 +564,7 @@
 						gender = MALE
 
 					f_style = random_facial_hair_style(gender, species)
-					if(species == IPC)
-						h_style = random_ipc_monitor(ipc_head)
-					else
-						h_style = random_hair_style(gender, species)
-
+					h_style = random_hair_style(gender, species, ipc_head)
 
 				if("randomslot")
 					randomslot = !randomslot
@@ -596,7 +586,11 @@
 
 /datum/preferences/proc/get_valid_styles_from_cache(list/styles_cache)
 	var/hash = "[species][gender][species == IPC ? ipc_head : ""]"
-	return styles_cache[hash]
+	return styles_cache[hash] || list()
+
+/proc/get_valid_styles_from_cache(styles_cache, species, gender, ipc_head = "Default")
+	var/hash = "[species][gender][species == IPC ? ipc_head : ""]"
+	return styles_cache[hash] || list()
 
 /datum/preferences/proc/get_left_right_style_num(direction, list/styles_list, style)
 	var/style_num = styles_list.Find(style)
