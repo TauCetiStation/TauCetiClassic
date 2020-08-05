@@ -16,9 +16,10 @@
 
 	// Circular double list initialization
 	for(var/hash in hairs_cache)
-		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache[hash].len]
-		hairs_cache[hash][hairs_cache[hash][hairs_cache[hash].len]][RIGHT] = hairs_cache[hash][1]
-		for(var/i in 1 to hairs_cache[hash].len)
+		var/hairs_cache_len = hairs_cache[hash].len
+		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache_len]
+		hairs_cache[hash][hairs_cache[hash][hairs_cache_len]][RIGHT] = hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
 			hairs_cache[hash][hairs_cache[hash][i]][LEFT] = hairs_cache[hash][hairs_cache[hash][i]][LEFT] || hairs_cache[hash][i - 1]
 			hairs_cache[hash][hairs_cache[hash][i]][RIGHT] = hairs_cache[hash][hairs_cache[hash][i]][RIGHT] || hairs_cache[hash][i + 1]
 
@@ -35,9 +36,10 @@
 
 	// Circular double list initialization
 	for(var/hash in facial_hairs_cache)
-		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash].len]
-		facial_hairs_cache[hash][facial_hairs_cache[hash][facial_hairs_cache[hash].len]][RIGHT] = facial_hairs_cache[hash][1]
-		for(var/i in 1 to facial_hairs_cache[hash].len)
+		var/hairs_cache_len = facial_hairs_cache[hash].len
+		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][hairs_cache_len]
+		facial_hairs_cache[hash][facial_hairs_cache[hash][hairs_cache_len]][RIGHT] = facial_hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
 			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] || facial_hairs_cache[hash][i - 1]
 			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] || facial_hairs_cache[hash][i + 1]
 
