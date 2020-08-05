@@ -657,6 +657,7 @@ BLIND     // can't see anything
 				to_chat(usr, "Your suit will now report your vital lifesigns.")
 			if(3)
 				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
 			if(0)
@@ -673,6 +674,11 @@ BLIND     // can't see anything
 	set category = "Object"
 	set src in usr
 	set_sensors(usr)
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
 
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"

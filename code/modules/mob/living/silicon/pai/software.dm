@@ -334,10 +334,24 @@
 						src.securityActive2 = M
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				if(secHUD)
+					var/datum/atom_hud/sec = global.huds[sec_hud]
+					sec.add_hud_to(src)
+				else
+					var/datum/atom_hud/sec = global.huds[sec_hud]
+					sec.remove_hud_from(src)
+
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				if(medHUD)
+					var/datum/atom_hud/med = global.huds[med_hud]
+					med.add_hud_to(src)
+				else
+					var/datum/atom_hud/med = global.huds[med_hud]
+					med.remove_hud_from(src)
+
 		if("translator")
 			if(href_list["toggle"])
 				src.translator_toggle()

@@ -8,3 +8,6 @@
 /mob/living/silicon/decoy/atom_init()
 	. = ..()
 	silicon_list -= src //because fake ai break round end statistics
+
+/mob/living/silicon/decoy/prepare_huds()
+	return

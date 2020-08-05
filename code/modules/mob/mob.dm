@@ -32,6 +32,7 @@
 	else
 		alive_mob_list += src
 	. = ..()
+	prepare_huds()
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -1153,3 +1154,21 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Return null if mob of this type can not scramble messages.
 /mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)
+
+/**
+  * Prepare the huds for this atom
+  *
+  * Goes through hud_possible list and adds the images to the hud_list variable (if not already
+  * cached)
+  */
+/atom/proc/prepare_huds()
+	hud_list = list()
+	for(var/hud in hud_possible)
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I

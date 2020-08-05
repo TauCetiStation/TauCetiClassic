@@ -148,6 +148,7 @@
 			drop_from_inventory(belt)
 		w_uniform = null
 		update_inv_w_uniform()
+		update_suit_sensors()
 	else if (W == gloves)
 		gloves = null
 		update_inv_gloves()
@@ -342,6 +343,7 @@
 			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
+			update_suit_sensors()
 			update_inv_w_uniform()
 		if(SLOT_L_STORE)
 			src.l_store = W

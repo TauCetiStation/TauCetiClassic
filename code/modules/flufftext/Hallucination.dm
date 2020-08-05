@@ -26,6 +26,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
 	var/handling_hal = 0
 	var/hal_crit = 0
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal) return

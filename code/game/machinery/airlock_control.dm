@@ -4,7 +4,7 @@
 /obj/machinery/door/airlock
 	var/id_tag
 	var/suppres_next_status_send = FALSE
-
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -109,9 +109,8 @@
 	. = ..()
 	if(frequency)
 		set_frequency(frequency)
-
 	update_icon()
-
+	prepare_huds()
 
 /obj/machinery/door/airlock/atom_init()
 	. = ..()

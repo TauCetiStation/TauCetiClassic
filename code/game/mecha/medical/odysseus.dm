@@ -67,7 +67,7 @@
 			holder.icon_state = "hudhealth-100"
 			C.images += holder
 		else
-			holder.icon_state = "hud[RoundHealth(patient.health)]"
+			holder.icon_state = "hud[RoundHealth(patient)]"
 			C.images += holder
 
 		if(patient.stat == DEAD)

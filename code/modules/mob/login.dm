@@ -58,6 +58,8 @@
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = 0
 
+	reload_huds()
+
 	client.screen += blocker
 
 	//Clear ability list and update from mob.

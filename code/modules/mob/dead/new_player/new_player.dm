@@ -5,6 +5,7 @@
 	stat = DEAD
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
+	hud_possible = list()
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
@@ -74,6 +75,9 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
 	src << browse(output,"window=playersetup;size=210x240;can_close=0")
+	return
+
+/mob/dead/new_player/prepare_huds()
 	return
 
 /mob/dead/new_player/Stat()
