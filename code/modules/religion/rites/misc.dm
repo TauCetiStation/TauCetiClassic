@@ -349,7 +349,7 @@
 /datum/religion_rites/honkization
 	name = "Honkization"
 	desc = "Changes the hit sound to HONK!"
-	ritual_length = (30 SECONDS)
+	ritual_length = (20 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
 							  "...to whom they turn for help!..",
