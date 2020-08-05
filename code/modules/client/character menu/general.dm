@@ -330,13 +330,11 @@
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
-					var/h_style_num = get_left_right_style_num(LEFT, valid_hairstyles, h_style)
-					h_style = valid_hairstyles[h_style_num]
+					h_style = valid_hairstyles[h_style][LEFT]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
-					var/h_style_num = get_left_right_style_num(RIGHT, valid_hairstyles, h_style)
-					h_style = valid_hairstyles[h_style_num]
+					h_style = valid_hairstyles[h_style][RIGHT]
 
 				if("grad_color")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
@@ -378,13 +376,11 @@
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
-					var/f_style_num = get_left_right_style_num(LEFT, valid_facialhairstyles, f_style)
-					f_style = valid_facialhairstyles[f_style_num]
+					f_style = valid_facialhairstyles[f_style][LEFT]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
-					var/f_style_num = get_left_right_style_num(RIGHT, valid_facialhairstyles, f_style)
-					f_style = valid_facialhairstyles[f_style_num]
+					f_style = valid_facialhairstyles[f_style][RIGHT]
 
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
@@ -599,9 +595,8 @@
 					submenu_type = "gear"
 
 /datum/preferences/proc/get_valid_styles_from_cache(list/styles_cache)
-	var/hash_neuter = "[species][NEUTER][species == IPC ? ipc_head : ""]"
 	var/hash = "[species][gender][species == IPC ? ipc_head : ""]"
-	return styles_cache[hash_neuter] + styles_cache[hash]
+	return styles_cache[hash]
 
 /datum/preferences/proc/get_left_right_style_num(direction, list/styles_list, style)
 	var/style_num = styles_list.Find(style)

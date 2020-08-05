@@ -8,14 +8,37 @@
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
 		for(var/S in H.species_allowed)
-			hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name)
+			hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+
+	// Double list generation
+	for(var/hash in hairs_cache)
+		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache[hash].len]
+		hairs_cache[hash][hairs_cache[hash][hairs_cache[hash].len]][RIGHT] = hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache[hash].len)
+			hairs_cache[hash][hairs_cache[hash][i]][LEFT] = hairs_cache[hash][hairs_cache[hash][i]][LEFT] || hairs_cache[hash][i - 1]
+			hairs_cache[hash][hairs_cache[hash][i]][RIGHT] = hairs_cache[hash][hairs_cache[hash][i]][RIGHT] || hairs_cache[hash][i + 1]
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
 		for(var/S in H.species_allowed)
-			facial_hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name)
+			facial_hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				facial_hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				facial_hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+
+	// Double list generation
+	for(var/hash in facial_hairs_cache)
+		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash].len]
+		facial_hairs_cache[hash][facial_hairs_cache[hash][facial_hairs_cache[hash].len]][RIGHT] = facial_hairs_cache[hash][1]
+		for(var/i in 1 to facial_hairs_cache[hash].len)
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] || facial_hairs_cache[hash][i - 1]
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] || facial_hairs_cache[hash][i + 1]
+
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	for(var/T in subtypesof(/datum/surgery_step))
