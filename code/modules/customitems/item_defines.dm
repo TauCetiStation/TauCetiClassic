@@ -756,7 +756,7 @@
 	item_state = "jane_sid_suit"
 	item_color = "jane_sid_suit"
 	has_sensor = 2
-	sensor_mode = 3
+	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL
 
 //Suit roll-down toggle.

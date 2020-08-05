@@ -19,7 +19,7 @@ the HUD updates properly! */
 		if(!local_scanner)
 			if(istype(patient.w_uniform, /obj/item/clothing/under))
 				var/obj/item/clothing/under/U = patient.w_uniform
-				if(U.sensor_mode < 2)
+				if(U.sensor_mode < SUIT_SENSOR_VITAL)
 					continue
 			else
 				continue
