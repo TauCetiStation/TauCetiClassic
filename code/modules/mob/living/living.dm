@@ -544,10 +544,8 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
+// TODO: FUCK THIS AND REWORK HERE
 /mob/living/proc/update_health_hud()
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
 
 /mob/living/proc/UpdateDamageIcon()
 	return

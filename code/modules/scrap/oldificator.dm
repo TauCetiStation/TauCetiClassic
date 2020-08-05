@@ -166,7 +166,7 @@
 	if(prob(75))
 		block = pick(MONKEYBLOCK, HALLUCINATIONBLOCK, DEAFBLOCK, BLINDBLOCK, NERVOUSBLOCK, TWITCHBLOCK, CLUMSYBLOCK, COUGHBLOCK, HEADACHEBLOCK, GLASSESBLOCK)
 	..()
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/make_old()
 	if(prob(75) && !istype(src, /obj/item/clothing/glasses/hud/broken))
 		var/obj/item/clothing/glasses/hud/broken/brokenhud= new /obj/item/clothing/glasses/hud/broken

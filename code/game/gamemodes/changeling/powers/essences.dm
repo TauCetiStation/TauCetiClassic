@@ -216,6 +216,8 @@
 	for(var/image/hud in client.images) // hud shit goes here
 		if(copytext(hud.icon_state, 1, 4) == "hud")
 			client.images.Remove(hud)
+
+	// TODO: FUCK THIS AND REWORK HERE
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		set_EyesVision(H.sightglassesmod)

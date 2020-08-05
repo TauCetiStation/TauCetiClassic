@@ -185,15 +185,10 @@
 
 	regular_hud_updates()
 
+	// TODO: FUCK THIS AND REWORK HERE
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)
 		hud.hud.process_hud(src)
-	else
-		switch(src.sensor_mode)
-			if (SEC_HUD)
-				process_sec_hud(src,0)
-			if (MED_HUD)
-				process_med_hud(src,0)
 
 	if (src.healths)
 		if (src.stat != DEAD)
@@ -231,7 +226,7 @@
 						src.healths.icon_state = "health6"
 		else
 			src.healths.icon_state = "health7"
-
+// TODO: FUCK THIS AND REWORK HERE
 	if (src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
 			for(var/datum/mind/tra in ticker.mode.traitors)
@@ -245,7 +240,7 @@
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
-
+// TODO: FUCK THIS AND REWORK HERE
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
 		switch(cellcharge)

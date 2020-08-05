@@ -140,7 +140,7 @@
 			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B></span> It is time to pay your debt to the Syndicate...")
 			to_chat(newtraitor, "<B>You are now a traitor.</B>")
 			newtraitor.mind.special_role = "traitor"
-			newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
+
 			var/obj_count = 1
 			to_chat(newtraitor, "<span class='notice'>Your current objectives:</span>")
 			if(!config.objectives_disabled)

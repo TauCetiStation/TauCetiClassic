@@ -36,8 +36,8 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			card.setPersonality(pai)
 			card.looking_for_personality = 0
 
-			ticker.mode.update_all_cult_icons()
-			ticker.mode.update_all_rev_icons()
+
+
 
 			pai_candidates -= candidate
 			usr << browse(null, "window=findPai")

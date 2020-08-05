@@ -531,7 +531,7 @@
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
 	to_chat(user, msg)
-
+// TODO: FUCK THIS AND REWORK HERE
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M, hudtype)
 	if(istype(M, /mob/living/carbon/human))

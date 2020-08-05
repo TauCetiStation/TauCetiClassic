@@ -217,7 +217,7 @@ datum/design/space_suit_helmet_recycler
 	starts_unlocked = TRUE
 	category = list("Tools")
 
-//geo_hud
+//geo_hud// TODO: FUCK THIS AND REWORK HERE
 /datum/design/geo_hud
 	name = "Geological Optical Scanner"
 	id = "geo_hud"

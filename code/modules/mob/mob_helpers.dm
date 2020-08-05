@@ -392,10 +392,10 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-/proc/broadcast_security_hud_message(message, broadcast_source)
+/proc/broadcast_security_hud_message(message, broadcast_source) //TODO: FUCK THIS AND REWORK HERE
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)
 
-/proc/broadcast_medical_hud_message(message, broadcast_source)
+/proc/broadcast_medical_hud_message(message, broadcast_source) //TODO: FUCK THIS AND REWORK HERE
 	broadcast_hud_message(message, broadcast_source, med_hud_users)
 
 /proc/broadcast_hud_message(message, broadcast_source, list/targets)

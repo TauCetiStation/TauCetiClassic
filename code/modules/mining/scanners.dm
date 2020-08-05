@@ -39,7 +39,7 @@
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
@@ -55,6 +55,7 @@
 	. = ..()
 	error = pick(-1,1)
 
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
 	if(!M)	return
 	if(!M.client)	return
@@ -67,7 +68,7 @@
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
 			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."

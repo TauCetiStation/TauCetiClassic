@@ -3,7 +3,7 @@
 		for(var/image/hud in client.images)
 			if(copytext(hud.icon_state,1,4) == "hud")
 				client.images -= hud
-
+// TODO: FUCK THIS AND REWORK HERE
 /mob/living/silicon/pai/proc/securityHUD()
 	if(client)
 		var/image/holder
@@ -12,7 +12,7 @@
 			if(src.see_invisible < perp.invisibility)
 				continue
 			var/perpname = "wot"
-			holder = perp.hud_list[ID_HUD]
+
 			if(perp.wear_id)
 				var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
 				if(I)
@@ -29,7 +29,7 @@
 
 			for(var/datum/data/record/E in data_core.general)
 				if(E.fields["name"] == perpname)
-					holder = perp.hud_list[WANTED_HUD]
+
 					for(var/datum/data/record/R in data_core.security)
 						if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							holder.icon_state = "hudwanted"
@@ -65,7 +65,7 @@
 					foundVirus = 1
 					break
 
-			holder = patient.hud_list[HEALTH_HUD]
+
 			if(patient.stat == DEAD)
 				holder.icon_state = "hudhealth-100"
 				client.images += holder
@@ -73,7 +73,7 @@
 				holder.icon_state = "hud[RoundHealth(patient.health)]"
 				client.images += holder
 
-			holder = patient.hud_list[STATUS_HUD]
+
 			if(patient.stat == DEAD)
 				holder.icon_state = "huddead"
 			else if(patient.status_flags & XENO_HOST)

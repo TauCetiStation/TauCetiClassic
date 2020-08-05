@@ -164,23 +164,6 @@ Works together with spawning an observer, noted above.
 		for(var/mob/living/target in oview(src, 14))
 			if(target.mind&&(target.mind.special_role||issilicon(target)) )
 				target_list += target
-		if(target_list.len)
-			assess_targets(target_list, src)
-	if(medHUD)
-		process_medHUD(src)
-
-
-/mob/dead/proc/process_medHUD(mob/M)
-	var/client/C = M.client
-	for(var/mob/living/carbon/human/patient in oview(M, 14))
-		C.images += patient.hud_list[HEALTH_HUD]
-		C.images += patient.hud_list[STATUS_HUD_OOC]
-
-/mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
-	var/client/C = U.client
-	for(var/mob/living/carbon/human/target in target_list)
-		C.images += target.hud_list[SPECIALROLE_HUD]
-
 
 /*
 		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
@@ -298,7 +281,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	mind.current.key = key
 	return 1
-
+// TODO: FUCK THIS AND REWORK HERE
 /mob/dead/observer/verb/toggle_medHUD()
 	set category = "Ghost"
 	set name = "Toggle MedicHUD"
@@ -311,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		medHUD = 1
 		to_chat(src, "<span class='info'><B>Medical HUD Enabled</B></span>")
-
+// TODO: FUCK THIS AND REWORK HERE
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
 	set name = "Toggle AntagHUD"

@@ -109,7 +109,7 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
-	update_all_cult_icons()
+
 
 	return ..()
 
@@ -186,7 +186,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
-		update_cult_icons_added(cult_mind)
+
 		return 1
 
 
@@ -203,51 +203,8 @@
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
 		cult_mind.memory = ""
-		update_cult_icons_removed(cult_mind)
 		if(show_message)
 			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
-
-/datum/game_mode/proc/update_all_cult_icons()
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/image/I in cultist.current.client.images)
-				if(I.icon_state == "cult")
-					cultist.current.client.images -= I
-					qdel(I)
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/datum/mind/cultist_1 in cult)
-				if(cultist_1.current)
-					var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-					cultist.current.client.images += I
-
-
-/datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	if(!cult_mind.current)
-		return 0
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-			cultist.current.client.images += I
-		if(cult_mind.current.client)
-			var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-			cult_mind.current.client.images += J
-
-/datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	if(!cult_mind.current)
-		return 0
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/image/I in cultist.current.client.images)
-				if(I.icon_state == "cult" && I.loc == cult_mind.current)
-					cultist.current.client.images -= I
-					qdel(I)
-	if(cult_mind.current.client)
-		for(var/image/I in cult_mind.current.client.images)
-			if(I.icon_state == "cult")
-				cult_mind.current.client.images -= I
-				qdel(I)
-
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()

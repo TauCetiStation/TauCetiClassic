@@ -342,17 +342,17 @@
 	item_state = "garm"
 	toggleable = 0
 	action_button_name = null
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
 	item_state = "gars"
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/sunglasses/gar/super
 	name = "supergar sunglasses"
 	icon_state = "supergarb"
 	item_state = "supergarb"
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/sunglasses/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"

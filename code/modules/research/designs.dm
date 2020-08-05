@@ -2120,7 +2120,7 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
-
+// TODO: FUCK THIS AND REWORK HERE
 /datum/design/health_hud
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
@@ -2129,7 +2129,7 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
 	category = list("Support")
-
+// TODO: FUCK THIS AND REWORK HERE
 /datum/design/security_hud
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
@@ -2139,7 +2139,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/security
 	category = list("Support")
 
-/datum/design/secmed_hud
+/datum/design/secmed_hud// TODO: FUCK THIS AND REWORK HERE
 	name = "Mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	id = "secmed_hud"

@@ -10,14 +10,17 @@
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
+	// TODO: FUCK THIS AND REWORK HERE
 	var/obj/item/clothing/glasses/hud/health/mech/hud
 
 /obj/mecha/medical/odysseus/atom_init()
 	. = ..()
+	// TODO: FUCK THIS AND REWORK HERE
 	hud = new /obj/item/clothing/glasses/hud/health/mech(src)
 
 /obj/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
 	if(..())
+		// TODO: FUCK THIS AND REWORK HERE
 		if(H.glasses)
 			occupant_message("<font color='red'>[H.glasses] prevent you from using [src] [hud]</font>")
 		else
@@ -29,6 +32,7 @@
 /obj/mecha/medical/odysseus/go_out()
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/H = occupant
+		// TODO: FUCK THIS AND REWORK HERE
 		if(H.glasses == hud)
 			H.glasses = null
 	..()
@@ -37,7 +41,7 @@
 /obj/item/clothing/glasses/hud/health/mech
 	name = "Integrated Medical Hud"
 
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/health/mech/process_hud(mob/M)
 
 	if(!M || M.stat || !(M in view(M)))
@@ -59,7 +63,6 @@
 				foundVirus = 1
 				break
 
-		holder = patient.hud_list[HEALTH_HUD]
 		if(patient.stat == DEAD)
 			holder.icon_state = "hudhealth-100"
 			C.images += holder
@@ -67,7 +70,6 @@
 			holder.icon_state = "hud[RoundHealth(patient.health)]"
 			C.images += holder
 
-		holder = patient.hud_list[STATUS_HUD]
 		if(patient.stat == DEAD)
 			holder.icon_state = "huddead"
 		else if(patient.status_flags & XENO_HOST)

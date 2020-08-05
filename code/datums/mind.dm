@@ -643,7 +643,6 @@
 		var/is_mind_shield = findtext(href_list["implant"], "m_")
 		if(is_mind_shield)
 			href_list["implant"] = copytext(href_list["implant"], 3)
-		H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
 				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
@@ -669,18 +668,16 @@
 			if(src in ticker.mode.revolutionaries)
 				special_role = null
 				ticker.mode.revolutionaries -= src
-				ticker.mode.update_rev_icons_removed(src)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(!is_mind_shield && (src in ticker.mode.head_revolutionaries))
 				special_role = null
 				ticker.mode.head_revolutionaries -=src
-				ticker.mode.update_rev_icons_removed(src)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(src in ticker.mode.cult)
 				ticker.mode.cult -= src
-				ticker.mode.update_cult_icons_removed(src)
+
 				special_role = null
 				var/datum/game_mode/cult/cult = ticker.mode
 				if (istype(cult))
@@ -695,19 +692,15 @@
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
 	else if (href_list["revolution"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
 		switch(href_list["revolution"])
 			if("clear")
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>")
-					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
-					ticker.mode.update_rev_icons_removed(src)
 					special_role = null
 					current.verbs -= /mob/living/carbon/human/proc/RevConvert
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
@@ -715,7 +708,6 @@
 			if("rev")
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
-					ticker.mode.update_rev_icons_removed(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>")
 				else if(!(src in ticker.mode.revolutionaries))
 					to_chat(current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
@@ -723,14 +715,12 @@
 				else
 					return
 				ticker.mode.revolutionaries += src
-				ticker.mode.update_all_rev_icons()
 				special_role = "Revolutionary"
 				log_admin("[key_name(usr)] has rev'ed [current].")
 
 			if("headrev")
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
-					ticker.mode.update_rev_icons_removed(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT></span>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 				else if(!(src in ticker.mode.head_revolutionaries))
@@ -750,7 +740,7 @@
 						ticker.mode.greet_revolutionary(src,0)
 				current.verbs += /mob/living/carbon/human/proc/RevConvert
 				ticker.mode.head_revolutionaries += src
-				ticker.mode.update_all_rev_icons()
+
 				special_role = "Head Revolutionary"
 				log_admin("[key_name(usr)] has head-rev'ed [current].")
 
@@ -790,8 +780,6 @@
 					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
 
 	else if (href_list["gang"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
 		switch(href_list["gang"])
 			if("clear")
 				ticker.mode.remove_gangster(src,0,1)
@@ -860,12 +848,11 @@
 					qdel(SC)
 
 	else if (href_list["cult"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["cult"])
 			if("clear")
 				if(src in ticker.mode.cult)
 					ticker.mode.cult -= src
-					ticker.mode.update_cult_icons_removed(src)
+
 					special_role = null
 					var/datum/game_mode/cult/cult = ticker.mode
 					if (istype(cult))
@@ -877,7 +864,7 @@
 			if("cultist")
 				if(!(src in ticker.mode.cult))
 					ticker.mode.cult += src
-					ticker.mode.update_all_cult_icons()
+
 					special_role = "Cultist"
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
@@ -910,7 +897,7 @@
 					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
+
 
 		switch(href_list["wizard"])
 			if("clear")
@@ -940,7 +927,6 @@
 					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["changeling"])
 			if("clear")
 				if(src in ticker.mode.changelings)
@@ -979,8 +965,6 @@
 	else if (href_list["nuclear"])
 		var/mob/living/carbon/human/H = current
 
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
 		switch(href_list["nuclear"])
 			if("clear")
 				if(src in ticker.mode.syndicates)
@@ -990,7 +974,7 @@
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
 					ticker.mode.syndicates += src
-					ticker.mode.update_synd_icons_added(src)
+
 					if (ticker.mode.syndicates.len==1)
 						ticker.mode.prepare_syndicate_leader(src)
 					else
@@ -1034,7 +1018,6 @@
 					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 
 	else if (href_list["traitor"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["traitor"])
 			if("clear")
 				if(src in ticker.mode.traitors)
@@ -1085,13 +1068,12 @@
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["shadowling"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["shadowling"])
 			if("clear")
 				current.spellremove(current)
 				if(src in ticker.mode.shadows)
 					ticker.mode.shadows -= src
-					ticker.mode.update_shadows_icons_removed(src)
+
 					special_role = null
 					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
@@ -1100,7 +1082,7 @@
 					current.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 				else if(src in ticker.mode.thralls)
 					ticker.mode.thralls -= src
-					ticker.mode.update_shadows_icons_removed(src)
+
 					special_role = null
 					to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>")
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
@@ -1110,7 +1092,7 @@
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				ticker.mode.shadows += src
-				ticker.mode.update_all_shadows_icons()
+
 				special_role = "shadowling"
 				to_chat(current, "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
 				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
@@ -1123,7 +1105,7 @@
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				ticker.mode.add_thrall(src)
-				ticker.mode.update_all_shadows_icons()
+
 				special_role = "thrall"
 				to_chat(current, "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
 				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>")
@@ -1201,7 +1183,6 @@
 						src = M.mind
 
 	else if (href_list["silicon"])
-		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["silicon"])
 			if("unmalf")
 				if(src in ticker.mode.malf_ai)
@@ -1360,7 +1341,6 @@
 /datum/mind/proc/make_Nuke()
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
-		ticker.mode.update_synd_icons_added(src)
 		if (ticker.mode.syndicates.len==1)
 			ticker.mode.prepare_syndicate_leader(src)
 		else
@@ -1418,7 +1398,7 @@
 /datum/mind/proc/make_Cultist()
 	if(!(src in ticker.mode.cult))
 		ticker.mode.cult += src
-		ticker.mode.update_all_cult_icons()
+
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
@@ -1464,7 +1444,7 @@
 				objectives += rev_obj
 			ticker.mode.greet_revolutionary(src,0)
 	ticker.mode.head_revolutionaries += src
-	ticker.mode.update_all_rev_icons()
+
 	special_role = "Head Revolutionary"
 
 	ticker.mode.forge_revolutionary_objectives(src)

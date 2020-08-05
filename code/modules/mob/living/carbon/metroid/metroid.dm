@@ -706,8 +706,6 @@
 	else
 		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
-		user.client.images += I
 		spirit = user
 		user.golem_rune = src
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
@@ -725,9 +723,7 @@
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
 	G.my_master = H
-	G.update_golem_hud_icons()
 	H.my_golem = G
-	H.update_golem_hud_icons()
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	qdel(src)
 
@@ -750,17 +746,6 @@
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return result
-
-/mob/living/carbon/human/proc/update_golem_hud_icons()
-	if(client)
-		if(dna && (dna.mutantrace == "adamantine"))
-			if(my_master)
-				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
-				client.images += I
-		else
-			if(my_golem)
-				var/I = image('icons/mob/hud.dmi', loc = my_golem, icon_state = "agolem_master")
-				client.images += I
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

@@ -157,7 +157,7 @@
 	for(var/datum/disease2/effectholder/e in effects)
 		e.effect.deactivate(mob, e, src)
 	mob.virus2.Remove("[uniqueID]")
-	mob.hud_updateflag |= 1 << STATUS_HUD
+
 
 /datum/disease2/disease/proc/getcopy()
 	var/datum/disease2/disease/disease = new /datum/disease2/disease
