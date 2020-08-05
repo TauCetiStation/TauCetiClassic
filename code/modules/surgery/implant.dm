@@ -220,7 +220,7 @@
 		target.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 		//Handle possessive brain borers.
-		if(istype(implant_to_remove,/mob/living/simple_animal/borer))
+		if(istype(implant_to_remove, /mob/living/simple_animal/borer))
 			var/mob/living/simple_animal/borer/worm = implant_to_remove
 			if(worm.controlling)
 				target.release_control()
