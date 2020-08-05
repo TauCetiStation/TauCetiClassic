@@ -13,7 +13,7 @@
 				hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 				hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 
-	// Double list generation
+	// Circular double list initialization
 	for(var/hash in hairs_cache)
 		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache[hash].len]
 		hairs_cache[hash][hairs_cache[hash][hairs_cache[hash].len]][RIGHT] = hairs_cache[hash][1]
@@ -31,7 +31,7 @@
 				facial_hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 				facial_hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 
-	// Double list generation
+	// Circular double list initialization
 	for(var/hash in facial_hairs_cache)
 		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash].len]
 		facial_hairs_cache[hash][facial_hairs_cache[hash][facial_hairs_cache[hash].len]][RIGHT] = facial_hairs_cache[hash][1]
