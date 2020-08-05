@@ -53,11 +53,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
 
 /datum/disease/proc/stage_act()
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/H = affected_mob
-		if(H.species.flags[VIRUS_IMMUNE])
-			cure()
-			return
 	age++
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
