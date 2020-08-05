@@ -56,7 +56,7 @@
 	if(QDELING(container) || QDELING(user))
 		return
 
-	playsound(src, 'sound/voice/holy.ogg', VOL_EFFECTS_MASTER)
+	playsound(container, 'sound/voice/holy.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 	var/atom/movable/AM = container
 	if(AM.can_waddle())

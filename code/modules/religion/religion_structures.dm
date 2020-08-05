@@ -119,6 +119,7 @@
 			to_chat(user, "<span class='warning'>You offer [I] to [pick(religion.deity_names)], but they would not accept such pityful offering.</span>")
 
 	if(sacrificed)
+		playsound(src, 'sound/voice/holy.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		to_chat(user, "<span class='notice'>[pick(religion.deity_names)] accepted your offering.</span>")
 		return TRUE
 	return FALSE

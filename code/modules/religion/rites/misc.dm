@@ -279,7 +279,7 @@
 	I.alpha = 150
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.transform = M
-	I.pixel_x = 12	
+	I.pixel_x = 12
 	I.pixel_y = 12
 	user.add_overlay(I)
 	user.set_light(7)
@@ -320,7 +320,7 @@
 	if(!isanimal(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
- 
+
 	var/mob/living/simple_animal/S = AOG.buckled_mob
 	if(!S.animalistic)
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
@@ -345,3 +345,30 @@
 	animal.rejuvenate()
 
 	return TRUE
+
+/datum/religion_rites/honkization
+	name = "Honkization"
+	desc = "Changes the hit sound to HONK!"
+	ritual_length = (30 SECONDS)
+	ritual_invocations = list("Come to me, wisp...",
+							  "...Appear to me the one whom everyone wants...",
+							  "...to whom they turn for help!..",
+							  "...Good wisp, able to reveal the darkness...",
+							  "...I ask you for help...",
+							  "...Hear me, do not reject me...",
+							  "...for it's not just for the sake of curiosity that I disturb your peace...")
+	invoke_msg = "...I pray, please come!"
+	favor_cost = 125
+
+	needed_aspects = list(
+		ASPECT_WACKY = 1,
+		ASPECT_WEAPON = 1,
+	)
+
+/datum/religion_rites/honkization/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/obj/item/O in AOG.loc)
+		O.hitsound = list('sound/items/bikehorn.ogg')
