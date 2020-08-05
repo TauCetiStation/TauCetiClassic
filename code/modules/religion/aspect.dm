@@ -103,7 +103,7 @@
 	icon_state = "aspect_weapon"
 
 /datum/aspect/weapon/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
-	return I.force * I.force / 4
+	return (I.force * I.force) / 4
 
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
