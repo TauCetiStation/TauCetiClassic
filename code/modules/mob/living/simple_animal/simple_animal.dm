@@ -386,6 +386,8 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	update_health_hud()
+	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
 	if(!speak.len)

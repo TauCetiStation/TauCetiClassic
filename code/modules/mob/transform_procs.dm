@@ -225,6 +225,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)

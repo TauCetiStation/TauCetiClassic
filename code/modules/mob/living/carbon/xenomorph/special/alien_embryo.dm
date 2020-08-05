@@ -32,6 +32,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
 		RemoveInfectionImages(affected_mob)
+		affected_mob.med_hud_set_status()
 	affected_mob = null
 	baby = null
 	return ..()
@@ -63,6 +64,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
 		RemoveInfectionImages(affected_mob)
+		affected_mob.med_hud_set_status()
 		affected_mob = null
 		return FALSE
 

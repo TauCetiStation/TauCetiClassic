@@ -39,6 +39,12 @@
 /mob/living/silicon/drop_item()
 	return
 
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
+
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)

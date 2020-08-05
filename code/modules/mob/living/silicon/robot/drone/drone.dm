@@ -95,6 +95,23 @@
 /mob/living/silicon/robot/drone/pick_module()
 	return
 
+/mob/living/simple_animal/drone/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/drone/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(stat == DEAD)
+		holder.icon_state = "huddead2"
+	else if(incapacitated())
+		holder.icon_state = "hudoffline"
+	else
+		holder.icon_state = "hudstat"
+
 //Drones can only use binary and say emotes. NOTHING else.
 //TBD, fix up boilerplate. ~ Z
 /mob/living/silicon/robot/drone/say(var/message)

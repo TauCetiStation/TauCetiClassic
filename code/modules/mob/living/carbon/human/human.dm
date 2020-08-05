@@ -2035,13 +2035,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
 
-/mob/living/carbon/update_stat()
-	if(stat == DEAD)
-		return
-	if(IsSleeping())
-		stat = UNCONSCIOUS
-		blinded = TRUE
-
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
 
@@ -2171,7 +2164,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	tod = null
 	timeofdeath = 0
 	dead_mob_list -= src
-	update_health_hud()
+	med_hud_set_health()
 	apply_brain_damage(deadtime)
 
 /mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)

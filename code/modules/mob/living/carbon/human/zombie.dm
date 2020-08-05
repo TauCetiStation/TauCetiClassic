@@ -193,7 +193,7 @@
 	H.stat = CONSCIOUS
 	H.update_canmove()
 	H.regenerate_icons()
-	H.update_health_hud()
+	H.med_hud_set_health()
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")

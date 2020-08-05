@@ -14,6 +14,7 @@
 		total_burn += BP.burn_dam
 
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	med_hud_set_health()
 
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)

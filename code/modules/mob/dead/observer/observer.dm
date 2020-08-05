@@ -98,6 +98,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	mind.current.med_hud_set_status()
 	QDEL_NULL(adminMulti)
 	return ..()
 

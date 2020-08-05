@@ -213,6 +213,8 @@
 		stat = CONSCIOUS
 	else
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		med_hud_set_health()
+		med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -465,7 +467,7 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	update_health_hud()
+	med_hud_set_health()
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
@@ -538,7 +540,7 @@
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
 	regenerate_icons()
-	update_health_hud()
+	med_hud_set_health()
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -552,9 +554,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-// TODO: FUCK THIS AND REWORK HERE
-/mob/living/proc/update_health_hud()
-
 /mob/living/proc/UpdateDamageIcon()
 	return
 

@@ -906,6 +906,8 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	update_health_hud()
+	med_hud_set_status()
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

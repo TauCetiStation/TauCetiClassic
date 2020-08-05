@@ -297,6 +297,7 @@
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
 		target.status_flags |= XENO_HOST
+		target.med_hud_set_status()
 
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", "<span class='userdanger'>[src] violates your face!</span>")
