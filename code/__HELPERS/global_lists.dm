@@ -7,11 +7,15 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
+		for(var/S in H.species_allowed)
+			hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name)
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
+		for(var/S in H.species_allowed)
+			facial_hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name)
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	for(var/T in subtypesof(/datum/surgery_step))
