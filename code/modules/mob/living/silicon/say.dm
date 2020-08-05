@@ -68,7 +68,7 @@
 		if (message_mode == "general")
 			message = trim(copytext(message,2))
 		else
-			message = trim(copytext(message,3))
+			message = trim(copytext(message,2 + length(message[2])))
 
 	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
 		to_chat(src, "<span class='warning'>Your radio isn't functional at this time.</span>")

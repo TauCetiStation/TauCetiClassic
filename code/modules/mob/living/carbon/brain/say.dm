@@ -5,8 +5,8 @@
 	if(container)
 		if(istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/mmi/posibrain))
 			message = sanitize(message)
-			if ((department_radio_keys[copytext(message, 1, 3)] == "binary") && (container && istype(container, /obj/item/device/mmi/posibrain)))
-				message = copytext(message, 3)
+			if ((department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "binary") && (container && istype(container, /obj/item/device/mmi/posibrain)))
+				message = copytext(message, 2 + length(message[2]))
 				message = trim(message)
 				robot_talk(message)
 				return

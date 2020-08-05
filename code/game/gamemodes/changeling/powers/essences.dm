@@ -87,7 +87,7 @@
 		if(!(flags_allowed & ESSENCE_SPEAK_TO_HOST))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
-		message = copytext_char(message, 3) // deleting prefix
+		message = copytext_char(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
