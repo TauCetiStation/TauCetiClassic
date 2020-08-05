@@ -12,6 +12,7 @@
 			if(H.gender == NEUTER)
 				hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 				hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
 
 	// Circular double list initialization
 	for(var/hash in hairs_cache)
@@ -30,6 +31,7 @@
 			if(H.gender == NEUTER)
 				facial_hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
 				facial_hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			facial_hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
 
 	// Circular double list initialization
 	for(var/hash in facial_hairs_cache)
