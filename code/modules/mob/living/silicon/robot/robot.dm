@@ -117,7 +117,8 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-
+	
+	diag_hud_set_borgcell()
 
 
 
@@ -654,6 +655,7 @@
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
+			diag_hud_set_borgcell()
 
 	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
@@ -791,6 +793,7 @@
 			cell_component.wrapped = null
 			cell_component.installed = 0
 			updateicon()
+			diag_hud_set_borgcell()
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped

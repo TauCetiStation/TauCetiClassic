@@ -183,6 +183,8 @@
 			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
 		else
 			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+	diag_hud_set_health()
+	diag_hud_set_status()
 
 /mob/living/silicon/ai/rejuvenate()
 	..()
