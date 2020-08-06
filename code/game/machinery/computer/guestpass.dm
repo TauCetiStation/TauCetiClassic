@@ -91,6 +91,9 @@
 			O.loc = src
 			giver = O
 			updateUsrDialog()
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.sec_hud_set_ID()
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
@@ -174,6 +177,9 @@
 						usr.drop_item()
 						I.loc = src
 						giver = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 				updateUsrDialog()
 
 			if ("print")

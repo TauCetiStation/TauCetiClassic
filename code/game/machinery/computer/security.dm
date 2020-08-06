@@ -239,6 +239,9 @@ What a mess.*/
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 
 		if("Log Out")
 			authenticated = null

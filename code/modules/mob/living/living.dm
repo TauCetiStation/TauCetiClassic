@@ -6,6 +6,10 @@
 	default_pixel_x = pixel_x
 	default_pixel_y = pixel_y
 	default_layer = layer
+	var/datum/atom_hud/data/medical/medhud = global.huds[DATA_HUD_MEDICAL]
+	medhud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
+		diag_hud.add_to_hud(src)
 
 
 /mob/living/Destroy()
@@ -29,6 +33,7 @@
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
+	to_chat(world, "/mob/living/prepare_huds()")
 
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
@@ -215,6 +220,7 @@
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 		med_hud_set_health()
 		med_hud_set_status()
+		to_chat(world, "updatehealth()")
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -468,6 +474,7 @@
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
 	med_hud_set_health()
+	to_chat(world, "revive()")
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)

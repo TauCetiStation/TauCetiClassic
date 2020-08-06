@@ -110,13 +110,14 @@
 	if(frequency)
 		set_frequency(frequency)
 	update_icon()
-	prepare_huds()
-
-/obj/machinery/door/airlock/atom_init()
-	. = ..()
-
+	
 	if(radio_controller)
 		set_frequency(frequency)
+
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
+		diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)

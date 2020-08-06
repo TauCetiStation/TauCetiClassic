@@ -22,6 +22,10 @@
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
+		diag_hud.add_to_hud(src)
+	diag_hud_set_status()
+	diag_hud_set_health()
 
 /mob/living/silicon/Destroy()
 	silicon_list -= src
@@ -180,16 +184,19 @@
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical", "Diagnostic","Disable")
 	switch(sensor_type)
 		if ("Security")
+			remove_sensors(sensor_mode)
 			sensor_mode = DATA_HUD_SECURITY
 			var/datum/atom_hud/sec = global.huds[sec_hud]
 			sec.add_hud_to(src)
 			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
 		if ("Medical")
+			remove_sensors(sensor_mode)
 			sensor_mode = DATA_HUD_MEDICAL
 			var/datum/atom_hud/med = global.huds[med_hud]
 			med.add_hud_to(src)
 			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
 		if ("Diagnostic")
+			remove_sensors(sensor_mode)
 			sensor_mode = DATA_HUD_DIAGNOSTIC
 			var/datum/atom_hud/diagsensor = global.huds[d_hud]
 			diagsensor.add_hud_to(src)

@@ -194,6 +194,7 @@
 		update_inv_wear_mask()
 	else if (W == wear_id)
 		wear_id = null
+		sec_hud_set_ID()
 		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
@@ -289,6 +290,7 @@
 		if(SLOT_WEAR_ID)
 			src.wear_id = W
 			W.equipped(src, slot)
+			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(SLOT_L_EAR)
 			src.l_ear = W

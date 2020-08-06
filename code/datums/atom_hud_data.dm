@@ -135,7 +135,6 @@
 				holder.icon_state = "hudbuff"
 			else
 				holder.icon_state = "hudhealthy"
-
 /***********************************************
  Security HUDs! Basic mode shows only the job.
 ************************************************/
@@ -150,6 +149,7 @@
 	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
+	to_chat(world, "SecId")
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
@@ -195,6 +195,7 @@
 					holder.icon_state = "huddischarged"
 					return
 	holder.icon_state = null
+	to_chat(world, "SecStat")
 
 /***********************************************
  Diagnostic HUDs!
@@ -277,6 +278,17 @@
 	holder.icon_state = null
 	if(internal_damage)
 		holder.icon_state = "hudwarn"
+
+/*~~~~~~~~~~~~
+	Gland!
+~~~~~~~~~~~~~*/
+/obj/item/gland/proc/update_gland_hud()
+	if(!host)
+		return
+	var/image/holder = host.hud_list[GLAND_HUD]
+	var/icon/I = icon(host.icon, host.icon_state, host.dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "hudgland_ready"
 
 /*~~~~~~~~~~~~
 	Airlocks!

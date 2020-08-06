@@ -64,6 +64,9 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+	
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
+		diag_hud.add_to_hud(src)
 
 /mob/living/silicon/robot/drone/Destroy()
 	drone_list -= src

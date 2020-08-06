@@ -51,6 +51,9 @@
 				C.loc = src
 				C.add_fingerprint(usr)
 				update_icon()
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					H.sec_hud_set_ID()
 	else
 		if(iswrench(O))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)

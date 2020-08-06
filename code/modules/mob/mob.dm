@@ -1172,3 +1172,4 @@ note dizziness decrements automatically in the mob's Life() proc.
 				var/image/I = image('icons/mob/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
+	to_chat(world, "/atom/proc/prepare_huds()")

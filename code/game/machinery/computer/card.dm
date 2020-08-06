@@ -175,6 +175,9 @@
 					else
 						datum_account = null	//delete information if there is something in the variable
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 		if ("scan")
 			if (scan)
@@ -194,6 +197,9 @@
 					I.loc = src
 					scan = I
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 		if("access")
 			if(href_list["allowed"])

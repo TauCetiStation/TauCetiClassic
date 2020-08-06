@@ -420,6 +420,9 @@ log transactions
 							usr.drop_item()
 							I.loc = src
 							held_card = I
+							if(ishuman(usr))
+								var/mob/living/carbon/human/H = usr
+								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
 			if("logout")
