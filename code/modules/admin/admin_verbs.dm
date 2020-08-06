@@ -22,6 +22,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_subtle_message,	//send an message to somebody as a 'voice in their head',
 	/client/proc/cmd_admin_delete,		//delete an instance/object/mob/etc,
 	/client/proc/cmd_admin_check_contents,	//displays the contents of an instance,
+	/client/proc/toggle_combo_hud,			//all aviables huds
 	/datum/admins/proc/access_news_network,	//allows access of newscasters,
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
@@ -738,14 +739,19 @@ var/list/admin_verbs_hideable = list(
 	set name = "De-admin self"
 	set category = "Admin"
 
-	if(holder)
-		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
-			log_admin("[key_name(usr)] deadmined themself.")
-			message_admins("[key_name_admin(usr)] deadmined themself.")
-			deadmin()
-			to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-			verbs += /client/proc/readmin_self
-			feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!holder)
+		return
+
+	if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
+		if(has_antag_hud())
+			toggle_combo_hud()
+
+		log_admin("[key_name(usr)] deadmined themself.")
+		message_admins("[key_name_admin(usr)] deadmined themself.")
+		deadmin()
+		to_chat(src, "<span class='interface'>You are now a normal player.</span>")
+		verbs += /client/proc/readmin_self
+		feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
@@ -861,6 +867,34 @@ var/list/admin_verbs_hideable = list(
 		if (job)
 			SSjob.FreeRole(job)
 	return
+
+/client/proc/toggle_combo_hud()
+	set name = "Toggle Combo HUD"
+	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
+	set category = "Admin"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/adding_hud = !has_antag_hud()
+
+	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL, DATA_HUD_DIAGNOSTIC)) // add data huds
+		var/datum/atom_hud/H = global.huds[hudtype]
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+
+	if(ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		H.update_sight()
+
+	to_chat(usr, "You toggled your admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+
+/client/proc/has_antag_hud()
+	var/datum/atom_hud/A = global.huds[ANTAG_HUD_TRAITOR]
+	return A.hudusers[mob]
 
 /client/proc/toggleattacklogs()
 	set name = "Toggle Attack Log Messages"

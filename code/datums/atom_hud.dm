@@ -67,6 +67,7 @@ var/global/list/huds[15]
 	else
 		hudusers[M]++
 
+// Now dont used
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user,hidden_atom)
 	if(hudusers[hud_user])
 		remove_from_single_hud(hud_user,hidden_atom)
@@ -75,6 +76,7 @@ var/global/list/huds[15]
 	else
 		hud_exceptions[hud_user] += hidden_atom
 
+// Now dont used
 /datum/atom_hud/proc/unhide_single_atomhud_from(hud_user,hidden_atom)
 	hud_exceptions[hud_user] -= hidden_atom
 	if(hudusers[hud_user])

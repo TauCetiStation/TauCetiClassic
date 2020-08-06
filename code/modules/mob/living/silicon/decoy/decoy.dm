@@ -11,3 +11,9 @@
 
 /mob/living/silicon/decoy/prepare_huds()
 	return
+
+/mob/living/silicon/decoy/diag_hud_set_status()
+	return
+
+/mob/living/silicon/decoy/diag_hud_set_health()
+	return

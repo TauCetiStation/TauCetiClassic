@@ -236,7 +236,7 @@
 	if(prob(50))
 		content_mob = /mob/living/simple_animal/hostile/giant_spider
 
-/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+/obj/item/clothing/glasses/sunglasses/hud/sechud/make_old()
 	..()
 	if(hud && prob(75))
 		hud = new /obj/item/clothing/glasses/hud/broken

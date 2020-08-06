@@ -1344,28 +1344,6 @@
 				else
 					see_invisible = SEE_INVISIBLE_MINIMUM
 
-/* HUD shit goes here, as long as it doesn't modify sight flags */
-// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
-
-
-			// TODO: FUCK THIS AND REWORK HERE
-			if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-				if(O.hud)
-					O.hud.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
-			else if(istype(glasses, /obj/item/clothing/glasses/hud))
-				var/obj/item/clothing/glasses/hud/O = glasses
-				O.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
-			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
-				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = glasses
-				O.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
-
 		else if(!seer)
 			see_invisible = SEE_INVISIBLE_LIVING
 

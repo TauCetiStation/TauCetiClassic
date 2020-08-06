@@ -859,6 +859,14 @@
 	min_age = 100
 	max_age = 500
 
+/datum/species/abductor/on_gain(mob/living/carbon/C, datum/species/old_species)
+	var/datum/atom_hud/abductor_hud = global.huds[DATA_HUD_ABDUCTOR]
+	abductor_hud.add_hud_to(C)
+
+/datum/species/abductor/on_loose(mob/living/carbon/C)
+	var/datum/atom_hud/abductor_hud = global.huds[DATA_HUD_ABDUCTOR]
+	abductor_hud.remove_hud_from(C)
+
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 

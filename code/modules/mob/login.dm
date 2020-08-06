@@ -59,6 +59,7 @@
 	blocker.mouse_opacity = 0
 
 	reload_huds()
+	add_click_catcher()
 
 	client.screen += blocker
 

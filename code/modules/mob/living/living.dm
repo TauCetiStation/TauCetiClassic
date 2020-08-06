@@ -33,7 +33,6 @@
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
-	to_chat(world, "/mob/living/prepare_huds()")
 
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
@@ -220,7 +219,6 @@
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
 		med_hud_set_health()
 		med_hud_set_status()
-		to_chat(world, "updatehealth()")
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually

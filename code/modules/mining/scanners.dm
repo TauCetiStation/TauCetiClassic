@@ -56,7 +56,7 @@
 	error = pick(-1,1)
 
 // TODO: FUCK THIS AND REWORK HERE
-/obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
+/obj/item/clothing/glasses/hud/mining/proc/process_hud(mob/M)
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client
@@ -68,6 +68,7 @@
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
 			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
+
 // TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"

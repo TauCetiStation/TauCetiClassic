@@ -24,7 +24,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
-	var/medHUD = 0
+	var/data_hud = FALSE
 	var/antagHUD = 0
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
@@ -33,6 +33,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -282,20 +283,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	mind.current.key = key
 	return 1
-// TODO: FUCK THIS AND REWORK HERE
-/mob/dead/observer/verb/toggle_medHUD()
+
+/mob/dead/observer/verb/toggle_allHUD()
 	set category = "Ghost"
-	set name = "Toggle MedicHUD"
-	set desc = "Toggles Medical HUD allowing you to see how everyone is doing."
+	set name = "Toggle HUDs"
+	set desc = "Toggles all HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
-	if(medHUD)
-		medHUD = 0
-		to_chat(src, "<span class='info'><B>Medical HUD Disabled</B></span>")
+	if(data_hud)
+		data_hud = !data_hud
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = global.huds[hudtype]
+			H.remove_hud_from(src)
+		to_chat(src, "<span class='info'><B>HUDs Disabled</B></span>")
 	else
-		medHUD = 1
-		to_chat(src, "<span class='info'><B>Medical HUD Enabled</B></span>")
-// TODO: FUCK THIS AND REWORK HERE
+		data_hud = !data_hud
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = global.huds[hudtype]
+			H.add_hud_to(src)
+		to_chat(src, "<span class='info'><B>HUDs Enabled</B></span>")
+
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
 	set name = "Toggle AntagHUD"

@@ -92,6 +92,8 @@ var/list/airlock_overlays = list()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	closeOther = null
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/process()
