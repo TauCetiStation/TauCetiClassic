@@ -1886,15 +1886,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(!(species.name in S.species_allowed))
-			continue
-		if(BP.ipc_head != S.ipc_head_compatible)
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
+	var/list/valid_hairstyles = random_hair_style(gender, get_species(), BP.ipc_head)
 	var/new_h_style = ""
 	if(valid_hairstyles.len == 1)
 		new_h_style = valid_hairstyles[1]
@@ -1912,7 +1904,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 		h_style = new_h_style
 	if(h_style == "IPC off screen")
-		random_ipc_monitor(BP.ipc_head)
+		random_hair_style(gender, get_species(), BP.ipc_head)
 
 	update_hair()
 
