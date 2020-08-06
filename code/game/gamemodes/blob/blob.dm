@@ -45,6 +45,7 @@ var/global/blobwincount = 500
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
+		blobminds += blob
 		blob.special_role = "Blob"
 		log_game("[key_name(blob)] has been selected as a Blob")
 		antag_candidates -= blob

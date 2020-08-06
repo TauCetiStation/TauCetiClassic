@@ -35,8 +35,8 @@ var/global/list/datum/mind/blobminds = list()
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		blobminds += mind
-		
+		blobminds |= mind
+
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
 			)

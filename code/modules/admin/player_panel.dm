@@ -540,18 +540,20 @@
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/blob)) //Блоб
-			var/datum/game_mode/blob/mode = ticker.mode
+		if(blobminds.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			dat += "<tr><td><i>Progress: [blobs.len]/[blobwincount]</i></td></tr>"
-			for(var/datum/mind/blob in mode.infected_crew)
+			for(var/datum/mind/blob in blobminds)
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 		dat += "</table>"
+
+		if(borers.len)
+			dat += check_role_table("Borers", borers, src)
 
 		if(ticker.mode.changelings.len)
 			dat += check_role_table("Changelings", ticker.mode.changelings, src)
