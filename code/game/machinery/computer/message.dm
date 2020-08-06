@@ -20,7 +20,7 @@
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
-	var/rebootmsg = "<span class='warning'>%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
+	var/rebootmsg = "<span class='warning'>%$&(ďż˝: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
@@ -55,7 +55,7 @@
 		src.spark_system.start()
 		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
 		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		MK.info += "<br><br><font color='red'>ďż˝%@%(*$%&(ďż˝&?*(%&ďż˝/{}</font>"
 		MK.update_icon()
 		spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
 		message = rebootmsg
@@ -84,9 +84,7 @@
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
-	var/dat = "<head><title>Message Monitor Console</title></head><body>"
-	dat += "<center><h2>Message Monitor Console</h2></center><hr>"
-	dat += "<center><h4><font color='blue'[message]</h5></center>"
+	var/dat = "<center><h4><font color='blue'[message]</h5></center>"
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
@@ -236,10 +234,11 @@
 			dat += "</table>"
 
 
-	dat += "</body>"
 	message = defaultmsg
-	user << browse(entity_ja(dat), "window=message;size=700x700")
-	onclose(user, "message")
+
+	var/datum/browser/popup = new(user, "window=message", src.name, 700, 700, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))

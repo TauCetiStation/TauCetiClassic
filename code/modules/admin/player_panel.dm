@@ -8,6 +8,7 @@
 	dat += {"
 
 		<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			<script type='text/javascript'>
 
 				var locked_tabs = new Array();
@@ -318,13 +319,13 @@
 	</body></html>
 	"}
 
-	usr << browse(entity_ja(dat), "window=players;size=600x480")
+	usr << browse(dat, "window=players;size=600x480")
 
 //The old one
 /datum/admins/proc/player_panel_old()
 	if (!usr.client.holder)
 		return
-	var/dat = "<html><head><title>Player Menu</title></head>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Player Menu</title></head>"
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
@@ -380,11 +381,11 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(entity_ja(dat), "window=players;size=640x480")
+	usr << browse(dat, "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
+		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
@@ -480,7 +481,7 @@
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.memes.len) //ÃÂÏÂ
+		if(ticker.mode.memes.len) //–ú–µ–º–µ
 			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/meme in ticker.mode.memes)
 				var/mob/living/parasite/meme/M = meme.current
@@ -539,10 +540,10 @@
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/blob)) //¡ÎÓ·
+		if(istype(ticker.mode, /datum/game_mode/blob)) //–ë–ª–æ–±
 			var/datum/game_mode/blob/mode = ticker.mode
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			dat += "<tr><td><i>Progress: [blobs.len]/[mode.blobwincount]</i></td></tr>"
+			dat += "<tr><td><i>Progress: [blobs.len]/[blobwincount]</i></td></tr>"
 			for(var/datum/mind/blob in mode.infected_crew)
 				var/mob/M = blob.current
 				if(M)
@@ -582,7 +583,7 @@
 			dat += mutiny.check_antagonists_ui(src)
 
 		dat += "</body></html>"
-		usr << browse(entity_ja(dat), "window=roundstatus;size=400x500")
+		usr << browse(dat, "window=roundstatus;size=400x500")
 	else
 		alert("The game hasn't started yet!")
 

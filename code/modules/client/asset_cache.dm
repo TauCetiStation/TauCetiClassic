@@ -58,7 +58,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = (ASSET_CACHE_SEND_TIMEOUT * client.sending.len) + ASSET_CACHE_SEND_TIMEOUT
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -107,7 +107,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = ASSET_CACHE_SEND_TIMEOUT * client.sending.len
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -126,7 +126,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (register_asset)
 			register_asset(file,files[file])
 		send_asset(client,file)
-		sleep(0) //queuing calls like this too quickly can cause issues in some client versions
+		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
@@ -263,14 +263,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	for (var/path in common_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					common[filename] = fcopy_rsc(path + filename)
 					register_asset(filename, common[filename])
 	for (var/path in uncommon_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
 	
@@ -401,4 +401,35 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
 		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/cargo
+	name = "cargo"
+
+/datum/asset/spritesheet/cargo/register()
+	var/all_objects = list()
+	for(var/supply_name in SSshuttle.supply_packs)
+		var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
+		for(var/supp in N.contains)
+			if(supp in all_objects)
+				continue
+			all_objects += supp
+		if(N.crate_type in all_objects)
+			continue
+		all_objects += N.crate_type
+		if(ispath(N.crate_type, /obj/structure/closet/critter))
+			var/obj/structure/closet/critter/C = N.crate_type
+			all_objects += initial(C.content_mob)
+	for(var/content in all_objects)
+		var/imgid = null
+		var/icon/sprite = null
+		if(ispath(content, /mob))
+			var/mob/M = content
+			sprite = icon(initial(M.icon), initial(M.icon_state))
+			imgid = replacetext(replacetext("[content]", "/mob/", ""), "/", "-")
+		else
+			var/obj/supply = new content
+			sprite = getFlatIcon(supply)
+			imgid = replacetext(replacetext("[content]", "/obj/", ""), "/", "-")
+		insert_icon_in_list(imgid, sprite)
 	return ..()

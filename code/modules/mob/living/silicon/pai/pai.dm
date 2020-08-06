@@ -77,6 +77,8 @@
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
+	verbs -= /mob/living/verb/ghost
+
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -169,15 +171,6 @@
 
 
 // See software.dm for Topic()
-
-/mob/living/silicon/pai/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (src.health > 0)
-		src.adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			src.adjustFireLoss(40)
-		src.updatehealth()
-	return
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))

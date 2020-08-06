@@ -178,7 +178,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
@@ -253,7 +253,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 

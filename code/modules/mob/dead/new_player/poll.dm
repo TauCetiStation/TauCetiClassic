@@ -39,7 +39,7 @@
 
 	output += "</div>"
 
-	src << browse(entity_ja(output),"window=privacypoll;size=600x500")
+	src << browse(output,"window=privacypoll;size=600x500")
 	return
 
 
@@ -76,7 +76,7 @@
 
 		output += "</table>"
 
-		src << browse(entity_ja(output),"window=playerpolllist;size=500x300")
+		src << browse(output,"window=playerpolllist;size=500x300")
 
 
 
@@ -159,7 +159,7 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				src << browse(output,"window=playerpoll;size=500x250")
 
 			//Polls with a text input
 			if("TEXT")
@@ -201,7 +201,7 @@
 				else
 					output += "[vote_text]"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				src << browse(output,"window=playerpoll;size=500x500")
 
 			//Polls with a text input
 			if("NUMVAL")
@@ -272,7 +272,7 @@
 					output += "<p><input type='submit' value='Submit'>"
 					output += "</form>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				src << browse(output,"window=playerpoll;size=500x500")
 			if("MULTICHOICE")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
@@ -334,7 +334,7 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				src << browse(output,"window=playerpoll;size=500x250")
 		return
 
 /mob/dead/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)

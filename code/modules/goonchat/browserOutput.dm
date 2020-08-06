@@ -51,9 +51,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(usr.client != owner)
 		return 1
 
+	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
 	for(var/key in href_list)
-		if(length(key) > 7 && findtext(key, "param"))
+		if(length(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
 			var/param_name = copytext(key, 7, -1)
 			var/item = href_list[key]
 			params[param_name] = item
@@ -61,10 +62,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data
 	switch(href_list["proc"])
 		if("doneLoading")
-			data = doneLoading(arglist(params))
+			doneLoading()
 
 		if("ping")
-			data = ping(arglist(params))
+			data = ping()
 
 		if("analyzeClientData")
 			analyzeClientData(arglist(params))
@@ -237,8 +238,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)
-
-	//message = entity_ja(message)//moved to js
 
 	if(islist(target))
 		var/encoded = url_encode(message)

@@ -105,7 +105,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -161,9 +161,6 @@
 			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
 			return FALSE
 	return TRUE
-
-/atom/proc/meteorhit(obj/meteor)
-	return
 
 /atom/proc/allow_drop()
 	return 1
@@ -382,7 +379,7 @@
 		// Add the fingerprints
 		//
 		if(fingerprints[full_print])
-			switch(stringpercent(fingerprints[full_print]))		//tells us how many stars are in the current prints.
+			switch(stringpercent_ascii(fingerprints[full_print]))		//tells us how many stars are in the current prints.
 
 				if(28 to 32)
 					if(prob(1))

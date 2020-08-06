@@ -234,7 +234,7 @@
 
 		//world << "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>"
 
-		explosion(epicenter, round(CLAMP(range*0.25,effrange*0.25,effrange-2)), round(CLAMP(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
+		explosion(epicenter, round(clamp(range*0.25,effrange*0.25,effrange-2)), round(clamp(range*0.5,effrange*0.5,effrange-1)), round(effrange), round(effrange*1.5))
 		qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)

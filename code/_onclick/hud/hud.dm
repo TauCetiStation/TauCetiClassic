@@ -172,7 +172,7 @@ var/global/list/available_ui_styles = list(
 	else if(isrobot(mymob))
 		robot_hud()
 	else if(isobserver(mymob))
-		ghost_hud()
+		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
 		blob_hud()
 	else if(isessence(mymob))
@@ -289,7 +289,7 @@ var/global/list/available_ui_styles = list(
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src))
+		if(ishuman(src) || isobserver(src))
 			hud_used.show_hud() //Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else
