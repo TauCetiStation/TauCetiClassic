@@ -1,9 +1,3 @@
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = FALSE
-	STOP_PROCESSING(SSobj, src)
-	return FALSE
-
 SUBSYSTEM_DEF(obj)
 	name = "Objects"
 
