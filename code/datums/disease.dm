@@ -150,6 +150,13 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(!holder)
 		STOP_PROCESSING(SSdiseases, src)
 		return
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		if(H.species.flags[VIRUS_IMMUNE])
+			STOP_PROCESSING(SSdisease, src)
+			cure()
+			return
+
 	if(prob(65))
 		spread(holder)
 
