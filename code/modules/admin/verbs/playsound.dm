@@ -15,7 +15,7 @@ var/global/list/sounds_cache_local = list()
 
 	switch(choice)
 		if("Cache")
-			if(!LAZYLEN(sounds_cache_global))
+			if(!length(sounds_cache_global))
 				to_chat(src, "<span class='notice'>Operation aborted. Reason: no cache.</span>")
 				return
 			S = input("Select a sound from the server to play") as null|anything in sounds_cache_global
@@ -52,7 +52,7 @@ var/global/list/sounds_cache_local = list()
 
 	switch(choice)
 		if("Cache")
-			if(!LAZYLEN(sounds_cache_local))
+			if(!length(sounds_cache_local))
 				to_chat(src, "<span class='notice'>Operation aborted. Reason: no cache.</span>")
 				return
 			var/cache_entry = input("Select a sound from the server to play") as null|anything in sounds_cache_local

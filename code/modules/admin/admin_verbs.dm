@@ -57,8 +57,6 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggledsay,		//toggles dsay on/off for everyone,
 	/client/proc/game_panel,			//game panel, allows to change game-mode etc,
 	/client/proc/cmd_admin_say,			//admin-only ooc chat,
-	/datum/admins/proc/PlayerNotes,
-	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/toggleattacklogs,
@@ -78,6 +76,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	)
 var/list/admin_verbs_log = list(
+	/client/proc/show_player_notes,
 	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
 	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
@@ -541,7 +540,7 @@ var/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
@@ -819,32 +818,33 @@ var/list/admin_verbs_hideable = list(
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
-
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
+
+	// hair
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	if(new_hstyle)
+		M.h_style = new_hstyle
+
+	// facial hair
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	if(new_fstyle)
+		M.f_style = new_fstyle
+
 	M.apply_recolor()
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/playernotes()
-	set name = "Show Player Info"
+/client/proc/show_player_notes()
+	set name = "Show Player Notes"
 	set category = "Admin"
 	if(holder)
-		holder.PlayerNotes()
+		holder.show_player_notes()
 	return
 
 /client/proc/free_slot()
@@ -1060,7 +1060,7 @@ var/list/admin_verbs_hideable = list(
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 		var/pos = findtext(t, " ")
 		var/name = null

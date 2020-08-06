@@ -351,22 +351,20 @@
 
 	create_character_previews()
 
-	var/list/selected_styles_list = hair_styles_list
+	var/list/selected_styles_list = hairs_cache["[barbertarget.get_species()][PLURAL]"]
 	if(isfacehair)
-		selected_styles_list = facial_hair_styles_list
+		selected_styles_list = facial_hairs_cache["[barbertarget.get_species()][PLURAL]"]
 
 	var/haircutlist = "<table style='width:100%'><tr>"
 	var/tablei = 0
 	for(var/i in selected_styles_list)
-		var/datum/sprite_accessory/hair/tmp_hair = selected_styles_list[i]
-		if(barbertarget.species.name in tmp_hair.species_allowed)
-			var/styles = ""
-			if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
-				styles = "color: rgb(255,0,0)"
-			haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
-			if(++tablei >= 5)
-				tablei = 0
-				haircutlist+="</tr><tr>"
+		var/styles = ""
+		if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
+			styles = "color: rgb(255,0,0)"
+		haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
+		if(++tablei >= 5)
+			tablei = 0
+			haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
 	winshow(barber, "barber_window", TRUE)

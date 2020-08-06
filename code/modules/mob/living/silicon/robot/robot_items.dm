@@ -213,6 +213,6 @@
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
-	var/ampr = copytext(reject_bad_text(input(user,"Excavation depth?","Set excavation depth","")),1,MAX_NAME_LEN)
-	excavation_amount = 0 + text2num(ampr)/2
+	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num
+	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."

@@ -542,17 +542,17 @@
 	var/to_say
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
-		var/phrase = lowertext_(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "слайм") || findtext(phrase, "легион"))) // Talking to us
+		var/phrase = lowertext(speech_buffer[2]) // What did they say?
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "СЃР»Р°Р№Рј") || findtext(phrase, "Р»РµРіРёРѕРЅ"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
-				findtext(phrase, "здравствуйте") || findtext(phrase, "привет")    \
+				findtext(phrase, "Р·РґСЂР°РІСЃС‚РІСѓР№С‚Рµ") || findtext(phrase, "РїСЂРёРІРµС‚")    \
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
 				findtext(phrase, "attack") || findtext(phrase, "kill") ||         \
-				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
-				findtext(phrase, "атак")                                     \
+				findtext(phrase, "СѓР±РёС‚СЊ") || findtext(phrase, "СѓРЅРёС‡С‚РѕР¶РёС‚СЊ") ||    \
+				findtext(phrase, "Р°С‚Р°Рє")                                     \
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
@@ -575,8 +575,8 @@
 				else
 					to_say = "I won't do it..."
 			else if (                                                             \
-				findtext(phrase, "follow") || findtext(phrase, "ко мне") ||       \
-				findtext(phrase, "за мной")                                       \
+				findtext(phrase, "follow") || findtext(phrase, "РєРѕ РјРЅРµ") ||       \
+				findtext(phrase, "Р·Р° РјРЅРѕР№")                                       \
 			)
 				if (Leader)
 					if (holding_still)
@@ -597,8 +597,8 @@
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
 			else if (                                                            \
-				findtext(phrase, "stop") || findtext(phrase, "перестань") ||     \
-				findtext(phrase, "хватит") || findtext(phrase, "стоп")           \
+				findtext(phrase, "stop") || findtext(phrase, "РїРµСЂРµСЃС‚Р°РЅСЊ") ||     \
+				findtext(phrase, "С…РІР°С‚РёС‚") || findtext(phrase, "СЃС‚РѕРї")           \
 			)
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
@@ -646,8 +646,8 @@
 						to_say = "No..."
 
 			else if (                                                           \
-				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
-				findtext(phrase, "стой") || findtext(phrase, "не двигайся")     \
+				findtext(phrase, "stay") || findtext(phrase, "РѕСЃС‚Р°РЅРѕРІРёС‚РµСЃСЊ") || \
+				findtext(phrase, "СЃС‚РѕР№") || findtext(phrase, "РЅРµ РґРІРёРіР°Р№СЃСЏ")     \
 			)
 				if (Leader)
 					if (Leader == who)

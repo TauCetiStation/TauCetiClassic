@@ -223,7 +223,7 @@
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
 			if(ores_processing[metal] == 4) //Drop.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -255,7 +255,7 @@
 							console.points += A.points
 							new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
@@ -265,7 +265,7 @@
 					console.points += O.points
 					new O.compresses_to(output.loc)
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
