@@ -413,21 +413,14 @@
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
 
 	for(var/mob/living/carbon/M in viewers(world.view, location))
+		if(M.eyecheck() > 0)
+			continue
+		M.flash_eyes()
 		switch(get_dist(M, location))
 			if(0 to 3)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				M.flash_eyes()
 				M.Weaken(15)
 
 			if(4 to 5)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				M.flash_eyes()
 				M.Stun(5)
 
 /datum/chemical_reaction/napalm

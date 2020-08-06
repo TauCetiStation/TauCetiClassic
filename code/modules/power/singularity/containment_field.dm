@@ -39,9 +39,6 @@
 /obj/machinery/containment_field/ex_act(severity)
 	return 0
 
-/obj/machinery/containment_field/meteorhit()
-	return 0
-
 /obj/machinery/containment_field/HasProximity(atom/movable/AM)
 	if(issilicon(AM) && prob(40))
 		shock(AM)

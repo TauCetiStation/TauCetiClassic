@@ -582,9 +582,6 @@
 	take_damage(10, "brute")
 	return
 
-//TODO
-/obj/mecha/meteorhit()
-	return ex_act(rand(1,3))//should do for now
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
@@ -1094,7 +1091,7 @@
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
-	src.occupant << browse(entity_ja(src.get_stats_html()), "window=exosuit")
+	src.occupant << browse(src.get_stats_html(), "window=exosuit")
 	return
 
 /*
@@ -1400,7 +1397,7 @@
 		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
 	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
 	output += "</body></html>"
-	user << browse(entity_ja(output), "window=exosuit_add_access")
+	user << browse(output, "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
 	return
 
@@ -1419,7 +1416,7 @@
 						[(state>0) ?"<a href='?src=\ref[src];set_internal_tank_valve=1;user=\ref[user]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
-	user << browse(entity_ja(output), "window=exosuit_maint_console")
+	user << browse(output, "window=exosuit_maint_console")
 	onclose(user, "exosuit_maint_console")
 	return
 
@@ -1520,7 +1517,7 @@
 	if (href_list["view_log"])
 		if(usr != src.occupant)	return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.occupant << browse(entity_ja(src.get_log_html()), "window=exosuit_log")
+		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])

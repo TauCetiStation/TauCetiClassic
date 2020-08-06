@@ -537,7 +537,7 @@ var/list/airlock_overlays = list()
 			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	user << browse(entity_ja(t1), "window=airlock")
+	user << browse(t1, "window=airlock")
 	onclose(user, "airlock")
 
 
@@ -1201,9 +1201,6 @@ var/list/airlock_overlays = list()
 			if(prob(10))
 				to_chat(user,"<span=userdanger>You accidentally drop your wrench in the flame</span>")
 				qdel(O)
-	else
-		return
-
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()

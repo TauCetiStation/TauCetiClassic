@@ -190,7 +190,7 @@
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 /mob/living/simple_animal/shade/god/resist()
 	. = ..()

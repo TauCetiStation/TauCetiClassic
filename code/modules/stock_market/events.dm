@@ -157,7 +157,7 @@
 	if(prob(50))
 		position = "C[prob(20) ? vowel() : consonant()]O"
 	else
-		position = ucfirsts(company.industry.detokenize("Lead %industrial% Engineer"))
+		position = capitalize_words(company.industry.detokenize("Lead %industrial% Engineer"))
 	offenses = ""
 	var/list/O = list("corruption", "murder", "grand theft", "assault", "battery", "drug possession", "burglary", "theft", "grand sabotage", "bribery",
 						"disorderly conduct", "treason", "sedition", "shoplifting", "tax evasion", "tax fraud", "insurance fraud", "perjury", "kidnapping", "manslaughter", "vandalism", "forgery", "extortion", "embezzlement",

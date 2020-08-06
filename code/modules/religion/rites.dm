@@ -7,7 +7,7 @@
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
-	/// Ritе of this religion
+	/// Rite of this religion
 	var/datum/religion/religion
 	/// Just unique tip when examine altar
 	var/list/tips = list()
@@ -90,8 +90,6 @@
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
-		return FALSE
 	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE
 

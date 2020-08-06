@@ -101,10 +101,6 @@
 		return
 	try_open(user)
 
-/obj/machinery/door/meteorhit(obj/M)
-	src.open()
-	return
-
 /obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
 	if(operating)
 		return

@@ -37,6 +37,19 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
 
+/obj/effect/overlay/wall_rot
+	name = "Wallrot"
+	desc = "Ick..."
+	icon = 'icons/effects/wallrot.dmi'
+	anchored = TRUE
+	density = TRUE
+	mouse_opacity = 0
+
+/obj/effect/overlay/wall_rot/atom_init()
+	..()
+	pixel_x += rand(-10, 10)
+	pixel_y += rand(-10, 10)
+
 /obj/effect/overlay/singularity_act()
 	return
 

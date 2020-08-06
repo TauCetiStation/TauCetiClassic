@@ -216,7 +216,7 @@
 	max_ammo = 20
 
 /obj/item/ammo_box/shotgun/update_icon()
-	var/filled_perc = CLAMP(stored_ammo.len * 100 / max_ammo, 0, 100)
+	var/filled_perc = clamp(stored_ammo.len * 100 / max_ammo, 0, 100)
 
 	if(filled_perc >= 50 && filled_perc < 100)
 		filled_perc = 75

@@ -186,7 +186,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(CYRILLIC_TRAIT_TOURETTE))
+							say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
@@ -252,9 +252,9 @@
 					if(config.rus_language)//TODO:CYRILLIC dictionary?
 						switch(rand(1, 3))
 							if(1)
-								say(pick(CYRILLIC_BRAINDAMAGE_1))
+								say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
 							if(2)
-								say(pick(CYRILLIC_BRAINDAMAGE_2))
+								say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
 							if(3)
 								emote("drool")
 					else
@@ -385,22 +385,6 @@
 
 				breath = loc.remove_air(breath_moles)
 
-				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-					var/obj/item/clothing/mask/gas/G = wear_mask
-					var/datum/gas_mixture/filtered = new
-					for(var/g in  G.filter)
-						if(breath.gas[g])
-							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
-							breath.gas[g] -= filtered.gas[g]
-
-					breath.update_values()
-					filtered.update_values()
-
-				if(!is_lung_ruptured())
-					if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-						if(prob(5))
-							rupture_lung()
-
 				// Handle filtering
 				var/block = 0
 				if(wear_mask)
@@ -422,6 +406,22 @@
 								if(smoke)
 									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
+
+			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+				var/obj/item/clothing/mask/gas/G = wear_mask
+				var/datum/gas_mixture/filtered = new
+				for(var/g in  G.filter)
+					if(breath.gas[g])
+						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+						breath.gas[g] -= filtered.gas[g]
+
+				breath.update_values()
+				filtered.update_values()
+
+			if(!is_lung_ruptured())
+				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+					if(prob(5))
+						rupture_lung()
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -561,7 +561,7 @@
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else

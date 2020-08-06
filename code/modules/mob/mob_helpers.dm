@@ -162,141 +162,166 @@
 
 	return zone
 
-/proc/stars(n, pr)
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
-		return null
-	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+/proc/stars(text, probability = 25)
+	if (probability >= 100)
+		return text
+
+	text = html_decode(text)
+
+	var/new_text = ""
+	var/bytes_length = length(text)
+	var/letter = ""
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		if(letter != " " && prob(probability))
+			new_text += "*"
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			new_text += letter
 
-/proc/slur(phrase)
-	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="c")	newletter="k"
-			if(lowertext_(newletter)=="ч")	newletter="щ" //247 -> 249
-			if(lowertext_(newletter)=="е")	newletter="и" //229 -> 232
-			if(lowertext_(newletter)=="з")	newletter="с" //231 -> 241
+	return new_text
+
+/proc/slur(text)
+
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
+		if(prob(35))
+			switch(lowertext(new_letter))
+				// latin
+				if("o")
+					new_letter = "u"
+				if("s")
+					new_letter = "ch"
+				if("a")
+					new_letter = "ah"
+				if("c")
+					new_letter = "k"
+				// cyrillic
+				if("ч")
+					new_letter = "щ"
+				if("е")
+					new_letter = "и"
+				if("з")
+					new_letter = "с"
+				if("к")
+					new_letter = "х"
+
 		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext_(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext_(newletter)]"
-			if(7)	newletter+="'"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+			if(1,3,5,8)
+				new_letter = lowertext(new_letter)
+			if(2,4,6,15)
+				new_letter = uppertext(new_letter)
+			if(7)
+				new_letter += "'"
 
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""//placed before the message. Not really sure what it's for.
-	n = length(n)//length of the entire word
-	var/alphabet[0]
-	//latin
-	//"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z"
-	alphabet.Add(98,99,100,102,103,104,105,106,107,108,109,110,112,113,114,115,116,118,119,120,121,122)
-	//cyrillic
-	//"б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ"
-	alphabet.Add(225,226,227,228,230,231,233,234,235,236,237,239,240,241,242,244,245,246,247,248,249)
+		new_text += new_letter
 
-	var/p = null
-	p = 1//1 is the start of any word
-	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
-		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (text2ascii(lowertext_(n_letter)) in alphabet))
+	return html_encode(capitalize(new_text))
+
+/proc/stutter(text)
+
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	var/static/list/stutter_alphabet = list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z","б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ")
+
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
+		if(prob(80) && (lowertext(new_letter) in stutter_alphabet))
 			if (prob(10))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
+				new_letter = "[new_letter]-[new_letter]-[new_letter]-[new_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
+					new_letter = "[new_letter]-[new_letter]-[new_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						new_letter = ""
 					else
-						n_letter = text("[n_letter]-[n_letter]")
-		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
-		p++//for each letter p is increased to find where the next letter will be.
-	return sanitize(t)
+						new_letter = "[new_letter]-[new_letter]"
 
+		new_text += new_letter
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
-	/* Turn text into complete gibberish! */
-	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
+	return html_encode(new_text)
 
-		var/letter = copytext(t, i, i+1)
+/proc/Gibberish(text, p) // Any value higher than 70 for p will cause letters to be replaced instead of added
+	text = html_decode(text)
+
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
+
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
+
 		if(prob(50))
+
 			if(p >= 70)
-				letter = ""
+				new_letter = ""
 
 			for(var/j = 1, j <= rand(0, 2), j++)
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+				new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
-		returntext += letter
+		new_text += new_letter
 
-	return returntext
+	return html_encode(new_text)
 
-/proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
-	/* Turn text into complete gibberish! */
-	var/returntext = ""
-	for(var/i = 1 to length(t))
+/proc/GibberishAll(text) // Same as above, except there is no probability and chance always 100.
+	text = html_decode(text)
 
-		var/letter = ""
+	var/bytes_length = length(text)
+	var/new_text = ""
+	var/letter = ""
+	var/new_letter = ""
 
-		for(var/j = rand(0, 2) to 0 step -1)
-			letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+	for(var/i = 1, i <= bytes_length, i += length(letter))
+		letter = text[i]
+		new_letter = letter
 
-		returntext += letter
+		for(var/j = 1, j <= rand(0, 2), j++)
+			new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
-	return returntext
+		new_text += new_letter
 
+	return html_encode(new_text)
 
-/proc/ninjaspeak(n)
-/*
-The difference with stutter is that this proc can stutter more than 1 letter
-The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-*/
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return sanitize(t)
+/proc/zombie_talk(var/message)
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+
+	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
+		var/insertpos = rand(1, message_list.len)
+		message_list.Insert(insertpos, "[pick("МОЗГИ", "Мозги", "Моозгиии", "МОООЗГИИИИ", "БОЛЬНО", "БОЛЬ", "ПОМОГИ", "РАААА", "АААА", "АРРХ", "ОТКРОЙТЕ", "ОТКРОЙ")]...")
+
+	for(var/i = 1, i <= message_list.len, i++)
+		if(prob(50) && !(copytext(message_list[i], -3) == "..."))
+			message_list[i] = message_list[i] + "..."
+
+		if(prob(60))
+			message_list[i] = stutter(message_list[i])
+
+		message_list[i] = stars(message_list[i], 80)
+
+		if(prob(60))
+			message_list[i] = slur(message_list[i])
+
+	return jointext(message_list, " ")
 
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || !strength) return
@@ -305,7 +330,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		for(var/i=0; i<duration, i++)
 			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
 			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
+		animate(M.client, pixel_x = 0, pixel_y = 0, time = 2)
 
 
 /proc/findname(msg)

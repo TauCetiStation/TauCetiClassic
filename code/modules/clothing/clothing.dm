@@ -492,7 +492,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
-	var/sensor_mode = 0
+	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
 		1 = Report living/dead
 		2 = Report detailed damages
@@ -616,13 +616,13 @@ BLIND     // can't see anything
 /obj/item/clothing/under/examine(mob/user)
 	..()
 	switch(src.sensor_mode)
-		if(0)
+		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")
-		if(1)
+		if(SUIT_SENSOR_BINARY)
 			to_chat(user, "Its binary life sensors appear to be enabled.")
-		if(2)
+		if(SUIT_SENSOR_VITAL)
 			to_chat(user, "Its vital tracker appears to be enabled.")
-		if(3)
+		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -649,23 +649,23 @@ BLIND     // can't see anything
 
 	if (src.loc == usr)
 		switch(sensor_mode)
-			if(0)
+			if(SUIT_SENSOR_OFF)
 				to_chat(usr, "You disable your suit's remote sensing equipment.")
-			if(1)
+			if(SUIT_SENSOR_BINARY)
 				to_chat(usr, "Your suit will now report whether you are live or dead.")
-			if(2)
+			if(SUIT_SENSOR_VITAL)
 				to_chat(usr, "Your suit will now report your vital lifesigns.")
-			if(3)
+			if(SUIT_SENSOR_TRACKING)
 				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
-			if(0)
+			if(SUIT_SENSOR_OFF)
 				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
-			if(1)
+			if(SUIT_SENSOR_BINARY)
 				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
-			if(2)
+			if(SUIT_SENSOR_VITAL)
 				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
-			if(3)
+			if(SUIT_SENSOR_TRACKING)
 				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
 
 /obj/item/clothing/under/verb/toggle()
@@ -691,5 +691,5 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/rank/atom_init()
-	sensor_mode = pick(0,1,2,3)
+	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()

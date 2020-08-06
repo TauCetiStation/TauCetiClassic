@@ -38,9 +38,6 @@
 		if(3.0)
 			return
 
-/obj/structure/meteorhit(obj/O)
-	qdel(src)
-
 /obj/structure/proc/climb_on()
 
 	set name = "Climb structure"
@@ -68,6 +65,10 @@
 		return FALSE
 
 	if(climber.loc == loc)
+		return FALSE
+
+	if(user.incapacitated())
+		to_chat(user, "<span class='danger'>You can't pull [climber] up onto [src] while being incapacitated.</span>")
 		return FALSE
 
 	if(user != climber)
@@ -176,9 +177,9 @@
 
 			var/damage = rand(15,30)
 			var/mob/living/carbon/human/H = M
-			if(!istype(M))
+			if(!istype(H))
 				to_chat(H, "<span class='red'>You land heavily!</span>")
-				M.adjustBruteLoss(damage)
+				H.adjustBruteLoss(damage)
 				return
 
 			var/obj/item/organ/external/BP
@@ -192,7 +193,7 @@
 					BP = H.bodyparts_by_name[BP_HEAD]
 
 			if(BP)
-				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")
+				to_chat(H, "<span class='red'>You land heavily on your [BP.name]!</span>")
 				BP.take_damage(damage, 0)
 				if(BP.parent)
 					BP.parent.add_autopsy_data("Misadventure", damage)
@@ -201,7 +202,6 @@
 				H.adjustBruteLoss(damage)
 
 			H.updatehealth()
-	return
 
 /obj/structure/proc/can_touch(mob/user)
 	if(!user)

@@ -27,8 +27,7 @@
 			user << browse(null, "window=op")
 			return
 
-	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[user];mach_close=op'>Close</A><br><br>" //| <A HREF='?src=\ref[user];update=1'>Update</A>"
+	var/dat = ""
 	if(src.table && (src.table.check_victim()))
 		src.victim = src.table.victim
 		dat += {"
@@ -53,8 +52,10 @@
 			<BR>
 			<B>No Patient Detected</B>
 			"}
-	user << browse(entity_ja(dat), "window=op")
-	onclose(user, "op")
+
+	var/datum/browser/popup = new(user, "window=op", "Operating Computer")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/operating/process()
 	if(..())

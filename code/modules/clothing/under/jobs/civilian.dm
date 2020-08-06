@@ -55,12 +55,19 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/chaplain
-	desc = "It's a black jumpsuit, often worn by religious folk."
-	name = "chaplain's jumpsuit"
-	icon_state = "chaplain"
-	item_state = "bl_suit"
-	item_color = "chapblack"
+	desc = "It's a dark robe, often worn by religious folk."
+	name = "chaplain's dark robe"
+	icon_state = "chaplain_dark"
+	item_state = "chaplain_dark"
+	item_color = "chaplain_dark"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/chaplain/light
+	desc = "It's a light robe, often worn by religious folk."
+	name = "chaplain's light robe"
+	icon_state = "chaplain_light"
+	item_state = "chaplain_light"
+	item_color = "chaplain_light"
 
 
 /obj/item/clothing/under/rank/chef

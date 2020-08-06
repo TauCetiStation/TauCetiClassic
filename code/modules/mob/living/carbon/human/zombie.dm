@@ -124,6 +124,15 @@
 		return
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
+	var/obj/item/organ/internal/eyes = H.bodyparts_by_name[O_EYES]
+	var/obj/item/organ/internal/brain = H.bodyparts_by_name[O_BRAIN]
+	if(eyes)
+		eyes.damage = 0
+	if(brain)
+		brain.damage = 0
+	H.setBrainLoss(0)
+	H.eye_blurry = 0
+	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		H.drop_l_hand()
@@ -172,13 +181,6 @@
 	H.nutrition = 400
 	H.SetSleeping(0)
 	H.radiation = 0
-
-	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-	if(istype(IO))
-		IO.damage = 0
-		H.eye_blurry = 0
-		H.eye_blind = 0
-
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
 	H.restore_blood()
 
@@ -247,28 +249,6 @@
 			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
-
-/proc/zombie_talk(var/message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len)
-		message_list.Insert(insertpos, "[pick("лнгцх", "лНГЦХ", "лННГЦХХХ", "лнннгцхххх", "анкэмн", "анкэ", "онлнцх", "пюююю", "юююю", "юппу", "нрйпнире", "нрйпни")]...")
-
-	for(var/i = 1, i <= message_list.len, i++)
-		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
-			message_list[i] = message_list[i] + "..."
-
-		if(prob(60))
-			message_list[i] = stutter(message_list[i])
-
-		message_list[i] = stars(message_list[i], 80)
-
-		if(prob(60))
-			message_list[i] = slur(message_list[i])
-
-	return jointext(message_list, " ")
 
 /mob/living/carbon/human/proc/zombie_movement_delay()
 	if(!has_gravity(src))

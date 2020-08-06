@@ -15,6 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	anchored = 1	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
+	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -292,7 +293,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(mind && mind.current && can_reenter_corpse))
 		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
-	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
 	mind.current.key = key
@@ -339,7 +340,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
-/mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
@@ -349,6 +350,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
+	
+	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	if(!A)
+		return
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)
 		return
@@ -564,7 +569,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
@@ -627,12 +632,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_length = 50
 
-	var/message = sanitize_safe(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 
-		if (length(message) > max_length)
-			message += "-"//Should crop any letters? No?
+		if (length_char(message) > max_length)
+			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
