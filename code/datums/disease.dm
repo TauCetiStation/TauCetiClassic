@@ -153,7 +153,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		if(H.species.flags[VIRUS_IMMUNE])
-			STOP_PROCESSING(SSdisease, src)
+			STOP_PROCESSING(SSdiseases, src)
 			cure()
 			return
 
