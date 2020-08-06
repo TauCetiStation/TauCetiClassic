@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[15]
+var/global/list/huds[14]
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud

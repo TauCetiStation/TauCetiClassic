@@ -38,21 +38,21 @@
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
 #define DATA_HUD_SECURITY				1
-#define DATA_HUD_MEDICAL				3
-#define DATA_HUD_DIAGNOSTIC				4
-#define DATA_HUD_ABDUCTOR				5
+#define DATA_HUD_MEDICAL				2
+#define DATA_HUD_DIAGNOSTIC				3
+#define DATA_HUD_ABDUCTOR				4
 
 //antag HUD defines
-#define ANTAG_HUD_CULT          6
-#define ANTAG_HUD_REV           7
-#define ANTAG_HUD_OPS           8
-#define ANTAG_HUD_WIZ           9
-#define ANTAG_HUD_SHADOW        10
-#define ANTAG_HUD_TRAITOR       11
-#define ANTAG_HUD_NINJA         12
-#define ANTAG_HUD_CHANGELING    13
-#define ANTAG_HUD_ABDUCTOR      14
-#define ANTAG_HUD_GANGSTER      15
+#define ANTAG_HUD_CULT          5
+#define ANTAG_HUD_REV           6
+#define ANTAG_HUD_OPS           7
+#define ANTAG_HUD_WIZ           8
+#define ANTAG_HUD_SHADOW        9
+#define ANTAG_HUD_TRAITOR       10
+#define ANTAG_HUD_NINJA         11
+#define ANTAG_HUD_CHANGELING    12
+#define ANTAG_HUD_ABDUCTOR      13
+#define ANTAG_HUD_GANGSTER      14
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

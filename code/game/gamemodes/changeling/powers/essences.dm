@@ -64,9 +64,6 @@
 			clear_fullscreen(scr)
 		for(var/alert in alerts)
 			clear_alert(alert)
-		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state, 1, 4) == "hud")
-				client.images.Remove(hud)
 
 /mob/living/parasite/essence/proc/transfer(atom/new_host)
 	exit_host()
@@ -213,11 +210,6 @@
 	see_in_dark = host.see_in_dark
 	see_invisible = host.see_invisible
 
-	for(var/image/hud in client.images) // hud shit goes here
-		if(copytext(hud.icon_state, 1, 4) == "hud")
-			client.images.Remove(hud)
-
-	// TODO: FUCK THIS AND REWORK HERE
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		if(H.glasses)

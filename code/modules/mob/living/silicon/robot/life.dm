@@ -186,7 +186,6 @@
 
 	regular_hud_updates()
 
-// TODO: FUCK THIS AND REWORK HERE
 	if (src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
 			for(var/datum/mind/tra in ticker.mode.traitors)

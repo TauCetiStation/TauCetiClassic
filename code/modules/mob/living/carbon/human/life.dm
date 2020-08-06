@@ -1239,10 +1239,6 @@
 	if(!client)
 		return 0
 
-	for(var/image/hud in client.images)
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
-
 	if(stat == UNCONSCIOUS && health <= 0)
 		//Critical damage passage overlay
 		var/severity = 0

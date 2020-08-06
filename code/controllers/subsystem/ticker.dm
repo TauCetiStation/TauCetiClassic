@@ -511,8 +511,8 @@ var/datum/subsystem/ticker/ticker
 	antagonist_announce()
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in GLOB.huds)
-		for(var/m in GLOB.player_list)
+	for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)
 

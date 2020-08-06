@@ -540,8 +540,6 @@ What a mess.*/
 
 				if ("Change Criminal Status")
 					if (active2)
-						for(var/mob/living/carbon/human/H in player_list)
-
 						switch(href_list["criminal2"])
 							if("none")
 								active2.fields["criminal"] = "None"
@@ -553,6 +551,10 @@ What a mess.*/
 								active2.fields["criminal"] = "Paroled"
 							if("released")
 								active2.fields["criminal"] = "Released"
+
+						for(var/i in global.human_list)
+							var/mob/living/carbon/human/H = i
+							H.sec_hud_set_security_status()
 
 				if ("Delete Record (Security) Execute")
 					if (active2)

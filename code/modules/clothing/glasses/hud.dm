@@ -8,6 +8,8 @@
 	var/hud_type = null
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
+	if(slot != SLOT_GLASSES)
+		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]
 		H.add_hud_to(user)
@@ -15,6 +17,8 @@
 			H.add_hud_to(parasit)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	if(!istype(user) || user.glasses != src)
+		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]
 		H.remove_hud_from(user)
@@ -75,6 +79,8 @@
 	var/hud_type = null
 
 /obj/item/clothing/glasses/sunglasses/hud/equipped(mob/living/carbon/human/user, slot)
+	if(slot != SLOT_GLASSES)
+		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]
 		H.add_hud_to(user)
@@ -82,6 +88,8 @@
 			H.add_hud_to(parasit)
 
 /obj/item/clothing/glasses/sunglasses/hud/dropped(mob/living/carbon/human/user)
+	if(!istype(user) || user.glasses != src)
+		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]
 		H.remove_hud_from(user)

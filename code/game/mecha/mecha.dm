@@ -374,6 +374,8 @@
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -386,6 +388,7 @@
 			occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
 		if(MECHA_INT_TANK_BREACH)
 			occupant_message("<font color='blue'><b>Damaged internal tank has been sealed.</b></font>")
+	diag_hud_set_mechstat()
 	return
 
 
