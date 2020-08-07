@@ -43,7 +43,7 @@
 	permeability_coefficient = 0.90
 
 
-	if(A.icon_custom)  //Фикс для нашей одежды
+	if(A.icon_custom)  //Р¤РёРєСЃ РґР»СЏ РЅР°С€РµР№ РѕРґРµР¶РґС‹
 		icon = A.icon_custom
 		icon_custom = A.icon_custom
 	else

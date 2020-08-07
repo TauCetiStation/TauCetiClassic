@@ -52,7 +52,7 @@ field_generator power level display
 	cut_overlays()
 	if(warming_up)
 		add_overlay("+a[warming_up]")
-	if(LAZYLEN(fields))
+	if(length(fields))
 		add_overlay("+on")
 	// Power level indicator
 	// Scale % power to % FG_POWER_LEVELS and truncate value
@@ -161,9 +161,6 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/containment_field/meteorhit()
-	return FALSE
-
 /obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		power += Proj.damage
@@ -206,7 +203,7 @@ field_generator power level display
 
 	power = min(power, FG_MAX_POWER)
 
-	var/power_draw = 2 + LAZYLEN(fields)
+	var/power_draw = 2 + length(fields)
 	if(!draw_power(round(power_draw / 2, 1)))
 		visible_message("<span class='warning'>The [src] shuts down!</span>")
 		turn_off()
@@ -306,12 +303,12 @@ field_generator power level display
 
 	clean_up = TRUE
 
-	if(LAZYLEN(fields))
+	if(length(fields))
 		for(var/obj/machinery/containment_field/CF in fields)  // `fileds` list will be cleared by field themself in `Destroy()` so no `Cut()`.
 			if(!QDESTROYING(CF))
 				qdel(CF)
 
-	if(LAZYLEN(connected_gens))
+	if(length(connected_gens))
 		for(var/obj/machinery/field_generator/FG in connected_gens)
 			FG.connected_gens -= src
 			FG.cleanup()

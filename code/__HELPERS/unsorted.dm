@@ -14,34 +14,6 @@
 //Checks if all high bits in req_mask are set in bitfield
 #define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
 
-//Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
-		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
-	return text("#[][][]", textr, textg, textb)
-
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
 
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
@@ -193,16 +165,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
-
-	var/i, ch, len = length(key)
-
-	for (i = 7, i <= len, ++i)
-		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+	return findtext(key, "Guest-", 1, 7) == 1
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)
@@ -573,12 +536,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
-
-#if DM_VERSION < 513
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-#endif
 
 //returns random gauss number
 /proc/GaussRand(sigma)
@@ -1264,8 +1221,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -1277,8 +1234,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
+	tX = clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/iscatwalk(atom/A)
@@ -1530,17 +1487,23 @@ var/list/WALLITEMS = typecacheof(list(
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta - 1, 1)), 1)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
-/proc/stoplag()
+//returns the number of ticks slept
+/proc/stoplag(initial_delay)
+	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+		sleep(world.tick_lag)
+		return 1
+	if (!initial_delay)
+		initial_delay = world.tick_lag
 	. = 0
-	var/i = 1
+	var/i = DS2TICKS(initial_delay)
 	do
-		. += round(i * DELTA_CALC)
+		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
 
 #undef DELTA_CALC
 

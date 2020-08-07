@@ -75,7 +75,7 @@
 	else
 		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
 
@@ -149,11 +149,6 @@
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	return ..()
-
-/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
-	emergencyShutdown()
-	..()
-
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
@@ -311,9 +306,9 @@
 	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
-		A.gravitychange(0,A)
+		A.gravitychange(FALSE)
 	else
-		A.gravitychange(1,A)
+		A.gravitychange(TRUE)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
 	//Get rid of any items
@@ -326,7 +321,7 @@
 	loadIdProgram()
 
 	if(!linkedholodeck.has_gravity)
-		linkedholodeck.gravitychange(1,linkedholodeck)
+		linkedholodeck.gravitychange(TRUE)
 
 	active = 0
 	set_power_use(IDLE_POWER_USE)

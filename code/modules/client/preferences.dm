@@ -154,9 +154,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
+	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 
@@ -200,7 +202,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
-	user << browse(entity_ja(dat), "window=preferences_browser")
+	user << browse(dat, "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)

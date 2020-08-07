@@ -95,7 +95,7 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(entity_ja(dat), "window=gravgen")
+	user << browse(dat, "window=gravgen")
 	onclose(user, "gravgen")
 
 
@@ -114,12 +114,12 @@
 					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
-					A.gravitychange(0,A)
+					A.gravitychange(FALSE)
 
 
 		else
 			for(var/area/A in gravity_generator:localareas)
 				gravity_generator:on = 1
-				A.gravitychange(1,A)
+				A.gravitychange(TRUE)
 
 	src.updateUsrDialog()

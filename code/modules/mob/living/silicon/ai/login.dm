@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Login()	//ThisIsDumb(TM) TODO: tidy this up ¬_¬ ~Carn
+/mob/living/silicon/ai/Login()	//ThisIsDumb(TM) TODO: tidy this up Â¬_Â¬ ~Carn
 	..()
 	if(wipe_timer_id)
 		deltimer(wipe_timer_id)

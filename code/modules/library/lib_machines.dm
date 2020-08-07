@@ -44,7 +44,7 @@
 	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	switch(screenstate)
 		if(0)
 			dat += {"<h2>Search Settings</h2><br>
@@ -83,7 +83,7 @@
 			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
 			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
 
-	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 600)
+	var/datum/browser/popup = new(user, "publiclibrary", "Library Visitor", 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -169,7 +169,7 @@
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
 	user.set_machine(src)
-	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	switch(screenstate)
 		if(0)
 			// Main Menu
@@ -279,7 +279,7 @@
 			<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
 
-	var/datum/browser/popup = new(user, "library", name, 600, 600)
+	var/datum/browser/popup = new(user, "library", "Book Inventory Management", 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -486,7 +486,7 @@
 		O.loc = src
 
 /obj/machinery/libraryscanner/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	if(cache)
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
 	else
@@ -499,8 +499,10 @@
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR>"
 	else
 		dat += "<BR>"
-	user << browse(entity_ja(dat), "window=scanner")
-	onclose(user, "scanner")
+
+	var/datum/browser/popup = new(user, "window=scanner", "Scanner Control Interface")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
 	. = ..()

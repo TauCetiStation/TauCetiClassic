@@ -77,12 +77,11 @@
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
-	user << browse(entity_ja("<html><head><title>[name]</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>"), "window=book;size=192x[scribble ? 400 : 192]")
-	onclose(user, "[name]")
+
+	var/datum/browser/popup = new(user, "window=book [name]", "[sanitize(name)]", 192, (scribble ? 400 : 192), ntheme = CSS_THEME_LIGHT)
+	popup.set_content("<div style='overflow:hidden;text-align:center;'> <img src='tmp_photo.png' width = '192' style='-ms-interpolation-mode:nearest-neighbor'>[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : null]</div>")
+	popup.open()
+
 	return
 
 /obj/item/weapon/photo/verb/rename()
