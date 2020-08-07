@@ -4,6 +4,43 @@
 	. = ..()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
+	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets
+
+/obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets()
+	set name = "Toggle antag-HUD"
+	set desc = "Toggles the huds, who see the soul of people."
+	set category = "Ninja Equip"
+
+	if(!hud)
+		hud = !hud
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.add_hud_to(src)
+	else
+		hud = !hud
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.remove_hud_from(src)
+
+	// This micro TODO LIST? If true, then.... why?
+	// TODO: FUCK THIS AND REWORK HERE
+	/*
+	var/icon/tempHud = 'icons/mob/hud.dmi'
+	for(var/mob/living/target in target_list)
+		if(iscarbon(target))
+			switch(target.mind.special_role)
+				if("Hunter","Sentinel","Drone","Queen")
+					U.client.images += image(tempHud,target,"hudalien")
+				if("Death Commando")
+					U.client.images += image(tempHud,target,"huddeathsquad")
+				else
+					U.client.images += image(tempHud,target,"hudunknown1")
+		else
+			var/mob/living/silicon/silicon_target = target
+			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len)))
+				if(isrobot(silicon_target))
+					U.client.images += image(tempHud,silicon_target,"hudmalborg")
+				else
+					U.client.images += image(tempHud,silicon_target,"hudmalai")
+		*/
 
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"

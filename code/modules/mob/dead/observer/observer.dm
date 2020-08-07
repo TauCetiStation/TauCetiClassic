@@ -99,7 +99,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
-	mind.current.med_hud_set_status()
+	if(mind.current)
+		mind.current.med_hud_set_status()
 	QDEL_NULL(adminMulti)
 	return ..()
 
@@ -320,9 +321,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = 1
 	if(M.antagHUD)
 		M.antagHUD = 0
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
 		M.antagHUD = 1
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
 /mob/dead/observer/proc/dead_tele()

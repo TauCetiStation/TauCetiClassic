@@ -139,22 +139,34 @@
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
+	var/y = 0
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-	for(var/obj/item/weapon/implant/I in src)
-		if(istype(I, /obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I, /obj/item/weapon/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			holder.icon_state = "hud_imp_chem"
+
 	if(isloyal(src))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
+		y += -5
+
 	if(ismindshielded(src))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
+		holder.pixel_y = y
+		y += -5
+
+	for(var/obj/item/weapon/implant/I in src)
+		if(istype(I, /obj/item/weapon/implant/chem))
+			holder = hud_list[IMPCHEM_HUD]
+			holder.icon_state = "hud_imp_chem"
+			holder.pixel_y = y
+			y += -5
+
+		else if(istype(I, /obj/item/weapon/implant/tracking))
+			holder = hud_list[IMPTRACK_HUD]
+			holder.icon_state = "hud_imp_tracking"
+			holder.pixel_y = y
+			y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]

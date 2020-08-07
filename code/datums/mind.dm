@@ -816,7 +816,6 @@
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.A_bosses += src
 				src.special_role = "[gang_name("A")] Gang (A) Boss"
-				ticker.mode.update_gang_icons_added(src, "A")
 				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", current)
 				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>")
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
@@ -839,7 +838,6 @@
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.B_bosses += src
 				src.special_role = "[gang_name("B")] Gang (B) Boss"
-				ticker.mode.update_gang_icons_added(src, "B")
 				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", current)
 				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>")
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
@@ -1501,7 +1499,6 @@
 /datum/mind/proc/make_Gang(gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
 	add_antag_hud(ANTAG_HUD_GANGSTER, "[(gang=="A") ? "gang_boss_a" : "gang_boss_b"]", current)
-	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)

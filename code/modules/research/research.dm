@@ -772,7 +772,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 600
 
 	unlocks_designs = list("gibber", "monkey_recycler", "processor", "candymaker")
-// TODO: FUCK THIS AND REWORK HERE
 
 /datum/technology/basic_medical_tools
 	name = "Basic Medical Tools"

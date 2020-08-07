@@ -59,7 +59,6 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 3
 
-// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/proc/check_integrity()
 	if(!crit_fail)
 		return

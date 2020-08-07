@@ -212,8 +212,6 @@
 	if(mode)
 		mode.update_icon(H)
 
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
-		ticker.mode.update_all_gang_icons()
 	if (H.mind in ticker.mode.cult)
 		ticker.mode.add_cultist(src.occupant.mind)
 

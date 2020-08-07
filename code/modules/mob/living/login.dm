@@ -7,16 +7,9 @@
 
 	//Round specific stuff like hud updates
 	if(ticker && ticker.mode)
-		switch(ticker.mode.name)
-			if("gang war")
-				if((mind in ticker.mode.A_bosses) || (mind in ticker.mode.A_gang))
-					ticker.mode.update_gang_icons_added(src.mind,"A")
-				if((mind in ticker.mode.B_bosses) || (mind in ticker.mode.B_gang))
-					ticker.mode.update_gang_icons_added(src.mind,"B")
-			if("mutiny")
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.update_all_icons()
+		var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+		if(mode)
+			mode.update_all_icons()
 
 	//Zombies
 	if(src in zombie_list)
