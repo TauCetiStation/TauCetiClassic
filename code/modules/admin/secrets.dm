@@ -580,10 +580,14 @@
 
 		// Show last [length(lastsignalers)] signalers
 		if("list_signalers")
-			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
+			var/dat = ""
 			for(var/sig in lastsignalers)
 				dat += "[sig]<BR>"
-			usr << browse(dat, "window=lastsignalers;size=800x500")
+
+			var/datum/browser/popup = new(usr, "lastsignalers", "Showing last [length(lastsignalers)] signalers", 800, 500)
+			popup.set_content(dat)
+			popup.open()
+
 		// how last [length(lawchanges)] law changes
 		if("list_lawchanges")
 			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
