@@ -50,6 +50,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 	else
 		set_ninja_objectives(new_ninja)
+	ticker.mode.ninjas += new_ninja.mind
 
 	return TRUE
 

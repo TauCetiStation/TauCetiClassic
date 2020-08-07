@@ -1,5 +1,3 @@
-var/global/list/datum/mind/blobminds = list()
-
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -35,8 +33,8 @@ var/global/list/datum/mind/blobminds = list()
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		blobminds += mind
-		
+		ticker.mode.infected_crew |= mind
+
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
 			)
