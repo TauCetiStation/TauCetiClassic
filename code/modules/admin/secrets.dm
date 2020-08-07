@@ -641,13 +641,17 @@
 			check_antagonists()
 		// List DNA (Blood)
 		if("DNA")
-			var/dat = "<B>Showing DNA from blood.</B><HR>"
+			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in human_list)
 				if(H.dna && H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 			dat += "</table>"
-			usr << browse(dat, "window=DNA;size=440x410")
+
+			var/datum/browser/popup = new(usr, "DNA", "Showing DNA from blood", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// List Fingerprints
 		if("fingerprints")
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
