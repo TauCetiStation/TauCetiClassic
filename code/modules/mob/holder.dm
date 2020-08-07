@@ -103,6 +103,7 @@
 	icon_state = "cat"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/holder/monkey/farwa
 	name = "farwa"

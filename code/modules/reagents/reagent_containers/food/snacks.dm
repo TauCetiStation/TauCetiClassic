@@ -46,7 +46,7 @@
 		qdel(src)
 		return 0
 
-	if(!CanEat(user, M, src, "eat")) return	//tc code
+	if(!check_mouth_coverage(user, M, src, "eat")) return	//tc code
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M

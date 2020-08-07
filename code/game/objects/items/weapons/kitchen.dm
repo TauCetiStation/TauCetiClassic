@@ -47,7 +47,7 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
 		if(istype(toEat))
-			if(CanEat(user, M, toEat, "eat"))
+			if(check_mouth_coverage(user, M, toEat, "eat"))
 				toEat.On_Consume(M, user)
 				if(toEat)
 					qdel(toEat)

@@ -18,7 +18,7 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/living/M, mob/user, def_zone)
-	if(!CanEat(user, M, src, "drink")) return
+	if(!check_mouth_coverage(user, M, src, "drink")) return
 
 	if (!canopened)
 		to_chat(user, "<span class='notice'>You need to open the drink!</span>")

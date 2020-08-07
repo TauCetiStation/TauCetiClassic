@@ -130,7 +130,7 @@
 		to_chat(user, "<span class='warning'>It's empty!</span>")
 		return 1
 	var/zone = user.zone_sel.selecting
-	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
+	if(zone == O_MOUTH && check_mouth_coverage(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
 		playsound(src, 'sound/effects/peelz.ogg', VOL_EFFECTS_MASTER)
 		var/list/peelz = filter_list(contents,/obj/item/weapon/reagent_containers/pill)

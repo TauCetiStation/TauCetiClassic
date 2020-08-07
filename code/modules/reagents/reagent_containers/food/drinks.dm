@@ -31,7 +31,7 @@
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
-	if(!CanEat(user, M, src, "drink")) return
+	if(!check_mouth_coverage(user, M, src, "drink")) return
 
 	if(M == user)
 

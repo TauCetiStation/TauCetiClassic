@@ -224,7 +224,7 @@
 //user - who is feeding
 //food - whai is feeded
 //eatverb - take/drink/eat method
-/proc/CanEat(user, mob, food, eatverb = "consume")
+/proc/check_mouth_coverage(user, mob, food, eatverb = "consume")
 	if(ishuman(mob))
 		var/mob/living/carbon/human/Feeded = mob
 		if(Feeded.head)
