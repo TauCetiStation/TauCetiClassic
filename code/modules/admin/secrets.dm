@@ -631,7 +631,11 @@
 				if(H.ckey)
 					dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 			dat += "</table>"
-			usr << browse(dat, "window=manifest;size=440x410")
+
+			var/datum/browser/popup = new(usr, "manifest", "Showing Crew Manifest", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// Show current traitors and objectives
 		if("check_antagonist")
 			check_antagonists()
