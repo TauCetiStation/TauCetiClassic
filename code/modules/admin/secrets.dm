@@ -570,10 +570,14 @@
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List
 		if("list_bombers")
-			var/dat = "<B>Bombing List</B><HR>"
+			var/dat = ""
 			for(var/l in bombers)
 				dat += text("[l]<BR>")
-			usr << browse(dat, "window=bombers")
+
+			var/datum/browser/popup = new(usr, "bombers", "Bombing List")
+			popup.set_content(dat)
+			popup.open()
+
 		// Show last [length(lastsignalers)] signalers
 		if("list_signalers")
 			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
