@@ -661,7 +661,6 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!check_rights(0))	return
 
 	var/dat = {"
-		<center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
 	if(master_mode == "secret")
@@ -678,7 +677,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	var/datum/browser/popup = new(usr, "admin2", "Game Panel", 210, 280)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /datum/admins/proc/change_crew_salary()
