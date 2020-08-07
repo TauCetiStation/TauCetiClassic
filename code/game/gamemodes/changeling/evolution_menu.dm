@@ -296,16 +296,6 @@ var/list/sting_paths
 	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
-/////
-/*
-/obj/effect/proc_holder/changeling/evolution_menu/Topic(href, href_list)
-	..()
-	if(!(iscarbon(usr) && usr.mind && usr.mind.changeling))
-		return
-	if(href_list["P"])
-		usr.mind.changeling.purchasePower(usr, href_list["P"])
-	var/dat = create_menu(usr.mind.changeling)
-	usr << browse(dat, "window=powers;size=600x700") */
 
 /datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 
