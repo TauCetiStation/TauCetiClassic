@@ -1131,13 +1131,16 @@
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
+		var/dat = ""
 		for(var/mode in config.modes)
 			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [master_mode]"}
-		usr << browse(dat, "window=c_mode")
+
+		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
+		popup.set_content(dat)
+		popup.open()
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))
