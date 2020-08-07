@@ -476,9 +476,6 @@ commented cause polls are kinda broken now, needs refactoring */
 		dat += "</td></tr></table>"
 		dat += "</div></div>"
 
-	// Removing the old window method but leaving it here for reference
-	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
-
 	// Added the new browser window method
 	var/accurate_length = 600
 	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
