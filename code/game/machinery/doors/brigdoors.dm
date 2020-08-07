@@ -196,7 +196,7 @@
 	var/setminute = round(((timetoset / 10) - setsecond) / 60)
 
 	// dat
-	var/dat = "<HTML><BODY><TT>"
+	var/dat = "<TT>"
 
 	switch(screen)
 		if(MAIN_SCREEN)
@@ -237,7 +237,7 @@
 					dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
 			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
-			dat += "</TT></BODY></HTML>"
+			dat += "</TT>"
 
 		if(ERROR_SCREEN)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
@@ -249,7 +249,10 @@
 				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 //Function for using door_timer dialog input, checks if user has permission
