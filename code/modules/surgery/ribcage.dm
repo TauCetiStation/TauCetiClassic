@@ -731,3 +731,5 @@
 
 	if (target.nutrition > C.maxcharge)
 		target.nutrition = C.maxcharge
+	else
+		target.nutrition = 100

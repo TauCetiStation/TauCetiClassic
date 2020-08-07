@@ -325,6 +325,9 @@
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
+	if(owner.nutrition < 1)
+		owner.SetParalysis(5)
+		to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
