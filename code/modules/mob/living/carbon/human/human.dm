@@ -1886,15 +1886,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(!(species.name in S.species_allowed))
-			continue
-		if(BP.ipc_head != S.ipc_head_compatible)
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
+	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, get_species(), gender, BP.ipc_head)
 	var/new_h_style = ""
 	if(valid_hairstyles.len == 1)
 		new_h_style = valid_hairstyles[1]
@@ -1902,7 +1894,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
 
 	if(new_h_style)
-		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
+		var/datum/sprite_accessory/SA = hair_styles_list[new_h_style]
 		if(SA.do_colouration)
 			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 			if(new_hair)
@@ -1912,7 +1904,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 		h_style = new_h_style
 	if(h_style == "IPC off screen")
-		random_ipc_monitor(BP.ipc_head)
+		random_hair_style(gender, get_species(), BP.ipc_head)
 
 	update_hair()
 
