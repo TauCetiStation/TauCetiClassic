@@ -44,11 +44,11 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(C.can_eat(diet_flags))
-				C.nutrition += nutriment_factor
+				C.nutrition += min(volume * 10, nutriment_factor)
 				if(prob(50))
 					C.adjustBruteLoss(-1)
 		else
-			M.nutrition += nutriment_factor
+			M.nutrition += min(volume * 10, nutriment_factor)
 	return TRUE
 
 /datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
