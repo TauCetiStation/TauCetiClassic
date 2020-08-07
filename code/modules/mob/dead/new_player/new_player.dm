@@ -535,11 +535,11 @@ commented cause polls are kinda broken now, needs refactoring */
 	return new_character
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
-	dat += "<h4>Show Crew Manifest</h4>"
-	dat += data_core.get_manifest(OOC = 1)
+	var/dat = data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	return FALSE
