@@ -8,7 +8,8 @@
 
 /obj/item/weapon/book/manual/wiki
 	var/wiki_page = ""
-	window_size = "970x710"
+	window_width = 970
+	window_height = 710
 
 /obj/item/weapon/book/manual/wiki/atom_init()
 	..()
