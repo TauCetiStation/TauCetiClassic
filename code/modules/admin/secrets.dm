@@ -590,10 +590,14 @@
 
 		// how last [length(lawchanges)] law changes
 		if("list_lawchanges")
-			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
+			var/dat = ""
 			for(var/sig in lawchanges)
 				dat += "[sig]<BR>"
-			usr << browse(dat, "window=lawchanges;size=800x500")
+
+			var/datum/browser/popup = new(usr, "lawchanges", "Showing last [length(lawchanges)] law changes", 800, 500)
+			popup.set_content(dat)
+			popup.open()
+
 		// Show Job Debug
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
