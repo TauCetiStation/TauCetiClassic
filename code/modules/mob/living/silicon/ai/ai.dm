@@ -87,6 +87,8 @@ var/list/ai_verbs_default = list(
 	var/list/chooses_ai_holo
 	// Radial menu for choose skin of staff hologram
 	var/list/chooses_ai_staff
+	// Radial menu for choose category of holo type
+	var/list/chooses_holo_category
 	// Radilal menu.
 	var/static/list/name_by_state = list(
 		"Standard" = "ai",
@@ -714,7 +716,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/gen_radial_holo(type)
 	switch(type)
-		if("Crew Member")
+		if("Crew Member Category")
 			if(!chooses_ai_staff)
 				chooses_ai_staff = list()
 
@@ -732,7 +734,7 @@ var/list/ai_verbs_default = list(
 			else
 				alert("No suitable records found. Aborting.")
 
-		if("Unique")
+		if("Unique Category")
 			var/icon_list = list(
 				"Default",
 				"Floatingface",
@@ -766,7 +768,12 @@ var/list/ai_verbs_default = list(
 	if(check_unable())
 		return
 
-	var/asnwer = alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member", "Unique")
+	if(!chooses_holo_category)
+		chooses_holo_category = list()
+		chooses_holo_category["Crew Member Category"] = getHologramIcon(icon('icons/mob/AI.dmi', "holo1"))
+		chooses_holo_category["Unique Category"] = getHologramIcon(icon('icons/mob/AI.dmi', "holo4"))
+
+	var/asnwer = show_radial_menu(usr, eyeobj, chooses_holo_category, tooltips = TRUE)
 	gen_radial_holo(asnwer)
 
 /*/mob/living/silicon/ai/proc/corereturn()
