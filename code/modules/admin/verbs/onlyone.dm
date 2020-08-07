@@ -9,6 +9,7 @@
 
 		ticker.mode.traitors += H.mind
 		H.mind.special_role = "traitor"
+		add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind

@@ -27,6 +27,8 @@
 	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 4
+	antag_hud_type = ANTAG_HUD_GANGSTER
+	antag_hud_name = "gangster"
 	var/finished = 0
 	// Victory timers
 	var/A_timer = "OFFLINE"
@@ -73,12 +75,14 @@
 			forge_gang_objectives(boss_mind, "A")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
+			add_antag_hud(antag_hud_type, antag_hud_name, boss_mind.current)
 
 		for(var/datum/mind/boss_mind in B_bosses)
 			update_gang_icons_added(boss_mind, "B")
 			forge_gang_objectives(boss_mind, "B")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
+			add_antag_hud(antag_hud_type, antag_hud_name, boss_mind.current)
 
 	modePlayer += A_bosses
 	modePlayer += B_bosses
@@ -98,12 +102,14 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", boss)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", boss)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
@@ -300,6 +306,8 @@
 	to_chat(gangster_mind.current, "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>")
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "[gang=="A" ? "gangster_a" : "gangster_b"]", gangster_mind.current)
+	
 	update_gang_icons_added(gangster_mind,gang)
 	return 2
 ////////////////////////////////////////////////////////////////////
@@ -329,6 +337,7 @@
 		return
 
 	gangster_mind.special_role = null
+	remove_antag_hud(ANTAG_HUD_GANGSTER, gangster_mind.current)
 	if(silent < 2)
 		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 

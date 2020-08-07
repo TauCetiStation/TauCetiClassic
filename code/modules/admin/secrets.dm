@@ -281,6 +281,7 @@
 				//traitorize(H, objective, 0)
 				ticker.mode.traitors += H.mind
 				H.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
@@ -291,6 +292,7 @@
 			for(var/mob/living/silicon/A in player_list)
 				ticker.mode.traitors += A.mind
 				A.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", A)
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective

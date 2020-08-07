@@ -92,6 +92,8 @@
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 	transfer_actions(new_character)
+	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
+	transfer_antag_huds(hud_to_transfer)
 
 //	if(changeling)
 //		new_character.make_changeling()
@@ -671,17 +673,20 @@
 			if(src in ticker.mode.revolutionaries)
 				special_role = null
 				ticker.mode.revolutionaries -= src
+				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(!is_mind_shield && (src in ticker.mode.head_revolutionaries))
 				special_role = null
 				ticker.mode.head_revolutionaries -=src
+				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(src in ticker.mode.cult)
 				ticker.mode.cult -= src
 
 				special_role = null
+				remove_antag_hud(ANTAG_HUD_CULT, current)
 				var/datum/game_mode/cult/cult = ticker.mode
 				if (istype(cult))
 					cult.memoize_cult_objectives(src)
@@ -691,6 +696,7 @@
 			if(!is_mind_shield && (src in ticker.mode.traitors))
 				ticker.mode.traitors -= src
 				special_role = null
+				remove_antag_hud(ANTAG_HUD_TRAITOR, current)
 				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 
@@ -701,10 +707,12 @@
 					ticker.mode.revolutionaries -= src
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>")
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_REV, current)
 				if(src in ticker.mode.head_revolutionaries)
 					ticker.mode.head_revolutionaries -= src
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_REV, current)
 					current.verbs -= /mob/living/carbon/human/proc/RevConvert
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 
@@ -718,6 +726,7 @@
 				else
 					return
 				ticker.mode.revolutionaries += src
+				add_antag_hud(ANTAG_HUD_REV, "hudrevolutionary", current)
 				special_role = "Revolutionary"
 				log_admin("[key_name(usr)] has rev'ed [current].")
 
@@ -745,6 +754,7 @@
 				ticker.mode.head_revolutionaries += src
 
 				special_role = "Head Revolutionary"
+				add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", current)
 				log_admin("[key_name(usr)] has head-rev'ed [current].")
 
 			if("autoobjectives")
@@ -789,12 +799,14 @@
 				remove_objectives()
 				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
+				remove_antag_hud(ANTAG_HUD_GANGSTER, current)
 
 			if("agang")
 				if(src in ticker.mode.A_gang)
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"A",0)
+				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_a", current)
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
 
@@ -805,6 +817,7 @@
 				ticker.mode.A_bosses += src
 				src.special_role = "[gang_name("A")] Gang (A) Boss"
 				ticker.mode.update_gang_icons_added(src, "A")
+				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", current)
 				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>")
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
@@ -816,6 +829,7 @@
 					return
 				ticker.mode.remove_gangster(src, 0, 2)
 				ticker.mode.add_gangster(src,"B",0)
+				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_b", current)
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
 
@@ -826,6 +840,7 @@
 				ticker.mode.B_bosses += src
 				src.special_role = "[gang_name("B")] Gang (B) Boss"
 				ticker.mode.update_gang_icons_added(src, "B")
+				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", current)
 				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>")
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
 				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
@@ -863,12 +878,14 @@
 							cult.memoize_cult_objectives(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>")
 					memory = ""
+					remove_antag_hud(ANTAG_HUD_CULT, current)
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
 				if(!(src in ticker.mode.cult))
 					ticker.mode.cult += src
 
 					special_role = "Cultist"
+					add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -907,6 +924,7 @@
 				if(src in ticker.mode.wizards)
 					ticker.mode.wizards -= src
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_WIZ, current)
 					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
@@ -914,6 +932,7 @@
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
+					add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", current)
 					//ticker.mode.learn_basic_spells(current)
 					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -935,6 +954,7 @@
 				if(src in ticker.mode.changelings)
 					ticker.mode.changelings -= src
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_CHANGELING, current)
 					current.remove_changeling_powers()
 				//	current.verbs -= /datum/changeling/proc/EvolutionMenu
 					if(changeling)
@@ -951,6 +971,7 @@
 					if(config.objectives_disabled)
 						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name(usr)] has changeling'ed [current].")
+					add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", current)
 			if("autoobjectives")
 				if(!config.objectives_disabled)
 					ticker.mode.forge_changeling_objectives(src)
@@ -974,6 +995,7 @@
 					ticker.mode.remove_nuclear(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-nuke op'ed [current].")
+					remove_antag_hud(ANTAG_HUD_OPS, current)
 			if("nuclear")
 				if(!(src in ticker.mode.syndicates))
 					ticker.mode.syndicates += src
@@ -984,6 +1006,7 @@
 						current.real_name = "Gorlex Maradeurs Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
 					current.faction = "syndicate"
+					add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", current)
 					to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 
 					if(config.objectives_disabled)
@@ -1025,6 +1048,7 @@
 			if("clear")
 				if(src in ticker.mode.traitors)
 					ticker.mode.remove_traitor(src)
+					remove_antag_hud(ANTAG_HUD_TRAITOR, current)
 					if(isAI(current))
 						to_chat(current, "<span class='warning'><FONT size = 3><B>Bzzzt..Bzzt..Error..Error..Syndicate law is corrupted.. Shutdown laws system.. Restart.. Load Standart NT Laws.</B></FONT></span>")
 						var/mob/living/silicon/ai/AI = current
@@ -1057,6 +1081,7 @@
 					special_role = "traitor"
 					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
 					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+					add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", current)
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
@@ -1078,6 +1103,7 @@
 					ticker.mode.shadows -= src
 
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_SHADOW, current)
 					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
@@ -1087,6 +1113,7 @@
 					ticker.mode.thralls -= src
 
 					special_role = null
+					remove_antag_hud(ANTAG_HUD_SHADOW, current)
 					to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>")
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
 					log_admin("[key_name(usr)] has de-thrall'ed [current].")
@@ -1097,6 +1124,7 @@
 				ticker.mode.shadows += src
 
 				special_role = "shadowling"
+				add_antag_hud(ANTAG_HUD_SHADOW, "hudshadowling", current)
 				to_chat(current, "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
 				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
 				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>")
@@ -1110,6 +1138,7 @@
 				ticker.mode.add_thrall(src)
 
 				special_role = "thrall"
+				add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", current)
 				to_chat(current, "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
 				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>")
 				to_chat(current, "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>")
@@ -1119,12 +1148,14 @@
 	else if(href_list["abductor"])
 		switch(href_list["abductor"])
 			if("clear")
-				to_chat(usr, "Not implemented yet. Sorry!")
+				to_chat(usr, "Not implemented yet. Sorry!") // Mmm, nice!
+				remove_antag_hud(ANTAG_HUD_ABDUCTOR, current)
 			if("abductor")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				make_Abductor()
+				add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductor", current)
 				current.regenerate_icons()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 			if("equip")
@@ -1336,6 +1367,7 @@
 	if(!(src in ticker.mode.traitors))
 		ticker.mode.traitors += src
 		special_role = "traitor"
+		add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", current)
 		if (!config.objectives_disabled)
 			ticker.mode.forge_traitor_objectives(src)
 		ticker.mode.finalize_traitor(src)
@@ -1349,6 +1381,7 @@
 		else
 			current.real_name = "Gorlex Maradeurs Operative #[ticker.mode.syndicates.len-1]"
 		special_role = "Syndicate"
+		add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", current)
 		current.faction = "syndicate"
 		assigned_role = "MODE"
 		to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
@@ -1376,6 +1409,7 @@
 		ticker.mode.changelings += src
 		ticker.mode.grant_changeling_powers(current)
 		special_role = "Changeling"
+		add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", current)
 		if(!config.objectives_disabled)
 			ticker.mode.forge_changeling_objectives(src)
 		ticker.mode.greet_changeling(src)
@@ -1384,6 +1418,7 @@
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
+		add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", current)
 		assigned_role = "MODE"
 		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
@@ -1403,6 +1438,7 @@
 		ticker.mode.cult += src
 
 		special_role = "Cultist"
+		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 		var/datum/game_mode/cult/cult = ticker.mode
@@ -1449,6 +1485,7 @@
 	ticker.mode.head_revolutionaries += src
 
 	special_role = "Head Revolutionary"
+	add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", current)
 
 	ticker.mode.forge_revolutionary_objectives(src)
 	ticker.mode.greet_revolutionary(src,0)
@@ -1463,6 +1500,7 @@
 
 /datum/mind/proc/make_Gang(gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "[(gang=="A") ? "gang_boss_a" : "gang_boss_b"]", current)
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)
@@ -1662,16 +1700,19 @@
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
+	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
+	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()

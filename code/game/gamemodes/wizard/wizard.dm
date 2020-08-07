@@ -10,6 +10,8 @@
 	required_players_secret = 10
 	required_enemies = 1
 	recommended_enemies = 1
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "hudwizard"
 
 	votable = 0
 
@@ -33,6 +35,7 @@
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
+	add_antag_hud(antag_hud_type, antag_hud_name, wizard.current)
 	wizard.original = wizard.current
 	return TRUE
 	
@@ -53,7 +56,6 @@
 		greet_wizard(wizard)
 
 	return ..()
-
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	if (config.objectives_disabled)

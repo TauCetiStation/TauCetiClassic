@@ -208,6 +208,7 @@ var/list/cult_runes = list()
 			if(passed)
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
+				M.mind.add_antag_hud(ANTAG_HUD_CULT, "hudcultist", M)
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
 			else
@@ -575,6 +576,7 @@ var/list/cult_runes = list()
 	D.key = ghost.key
 	ticker.mode.add_cultist(D.mind)
 	D.mind.special_role = "Cultist"
+	D.mind.add_antag_hud(ANTAG_HUD_CULT, "hudcultist", D)
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
 		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \

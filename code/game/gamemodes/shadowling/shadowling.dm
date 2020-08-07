@@ -71,6 +71,8 @@ Made by Xhuis
 	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_name = "hudshadowling"
+	antag_hud_type = ANTAG_HUD_SHADOW
 
 	votable = 0
 
@@ -106,6 +108,7 @@ Made by Xhuis
 		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "shadowling"
+		add_antag_hud(antag_hud_type, antag_hud_name, shadow.current)
 		shadowlings--
 	return TRUE
 

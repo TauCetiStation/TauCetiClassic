@@ -179,6 +179,7 @@
 		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
+		H.mind.add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductee", H)
 		H.mind.objectives += O
 		var/obj_count = 1
 		to_chat(H, "<span class='notice'>Your current objectives:</span>")

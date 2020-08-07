@@ -27,6 +27,8 @@
 	protected_jobs = list()
 	required_players = 5
 	required_players_secret = 20
+	antag_hud_type = ANTAG_HUD_CULT
+	antag_hud_name = "hudcultist"
 
 	required_enemies = 3
 	recommended_enemies = 4
@@ -109,10 +111,10 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
+		add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 
 	return ..()
-
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)

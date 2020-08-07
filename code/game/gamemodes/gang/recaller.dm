@@ -315,6 +315,7 @@
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			ticker.mode.A_bosses += user.mind
 			user.mind.special_role = "[gang_name("A")] Gang (A) Lieutenant"
+			add_antag_hud(ANTAG_HUD_GANGSTER, "lieutenant_a", user)
 			ticker.mode.update_gang_icons_added(user.mind, "A")
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
 			promoted = 1
@@ -326,6 +327,7 @@
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			ticker.mode.B_bosses += user.mind
 			user.mind.special_role = "[gang_name("B")] Gang (B) Lieutenant"
+			add_antag_hud(ANTAG_HUD_GANGSTER, "lieutenant_b", user)
 			ticker.mode.update_gang_icons_added(user.mind, "B")
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
 			promoted = 1

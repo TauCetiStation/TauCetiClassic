@@ -9,6 +9,8 @@
 	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_type = ANTAG_HUD_NINJA
+	antag_hud_name = "hudninja"
 
 	votable = 0
 
@@ -39,6 +41,7 @@
 		modePlayer += ninja
 		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		ninja.special_role = "Ninja"
+		add_antag_hud(ANTAG_HUD_NINJA, "hudninja", ninja.current)
 		ninja.original = ninja.current
 		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--
@@ -68,6 +71,7 @@
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"
+		add_antag_hud(antag_hud_type, antag_hud_name, N)
 		if(N.wear_suit && istype(N.wear_suit,/obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/S = N.wear_suit
 			S:randomize_param()

@@ -211,21 +211,3 @@
 				continue
 			L+= path
 		return L
-
-/proc/init_hud_list()
-	// Crooked port from TG, but he needed
-	// atom_hud.dm defines
-	huds[DATA_HUD_SECURITY] = new/datum/atom_hud/data/security
-	huds[DATA_HUD_MEDICAL] = new/datum/atom_hud/data/medical
-	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
-	huds[DATA_HUD_ABDUCTOR] = new/datum/atom_hud/abductor
-	huds[ANTAG_HUD_CULT] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_REV] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_OPS] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_WIZ] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_SHADOW] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_TRAITOR] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_NINJA] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Rework gamemode!

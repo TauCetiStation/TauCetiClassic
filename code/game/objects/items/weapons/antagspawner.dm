@@ -40,4 +40,5 @@
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	R.mind.special_role = "syndicate"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", R)
 	R.faction = "syndicate"

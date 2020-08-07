@@ -20,6 +20,8 @@
 	required_players_secret = 20
 	required_enemies = 3
 	recommended_enemies = 3
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "hudheadrevolutionary"
 
 	votable = 0
 
@@ -104,7 +106,6 @@
 		checkwin_counter = 0
 	return 0
 
-
 /datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
 	if(!config.objectives_disabled)
 		var/list/heads = get_living_heads()
@@ -123,6 +124,7 @@
 		for(var/datum/objective/objective in rev_mind.objectives)
 			to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			rev_mind.special_role = "Head Revolutionary"
+			add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 			obj_count++
 	else
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -203,6 +205,7 @@
 	rev_mind.current.Stun(5)
 	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
+	add_antag_hud(ANTAG_HUD_REV, "hudrevolutionary", rev_mind.current)
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return 1
@@ -213,6 +216,7 @@
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
+		remove_antag_hud(ANTAG_HUD_REV, rev_mind.current)
 
 
 		if(beingborged)

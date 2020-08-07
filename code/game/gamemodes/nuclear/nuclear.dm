@@ -11,6 +11,8 @@
 	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 6
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "hudsyndicate"
 
 	votable = 0
 
@@ -63,6 +65,7 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
+		add_antag_hud(antag_hud_type, antag_hud_name, synd_mind.current)
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
 	return TRUE
@@ -145,7 +148,6 @@
 
 	return ..()
 
-
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0)
@@ -194,6 +196,7 @@
 /datum/game_mode/proc/remove_nuclear(mob/M)
 	syndicates -= M
 	M.mind.special_role = null
+	remove_antag_hud(ANTAG_HUD_OPS, M)
 	M.mind.remove_objectives()
 	M.mind.current.faction = "neutral"
 

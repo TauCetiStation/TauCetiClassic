@@ -12,6 +12,8 @@
 	required_enemies = 1
 	required_players_secret = 1
 	recommended_enemies = 4
+	antag_hud_type = ANTAG_HUD_TRAITOR
+	antag_hud_name = "traitor"
 
 	votable = 0
 
@@ -51,6 +53,7 @@
 		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
 		traitor.special_role = "traitor"
+		add_antag_hud(antag_hud_type, antag_hud_name, traitor.current)
 		antag_candidates.Remove(traitor)
 
 	if(!traitors.len)
@@ -67,7 +70,6 @@
 			greet_traitor(traitor)
 	modePlayer += traitors
 	return ..()
-
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
 	if (config.objectives_disabled)
@@ -167,6 +169,7 @@
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
 	traitors -= M
 	M.special_role = null
+	remove_antag_hud(antag_hud_type, M.current)
 	if(isAI(M.current))
 		var/mob/living/silicon/ai/A = M.current
 		A.set_zeroth_law("")
