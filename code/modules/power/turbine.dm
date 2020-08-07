@@ -276,8 +276,7 @@
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
-		dat += {"<BR><B>Gas turbine remote control system</B><HR>
-		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+		dat += {"\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
 		\nTurbine speed: [src.compressor.rpm]rpm<BR>
 		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
@@ -292,7 +291,10 @@
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", "Gas turbine remote control system", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 
