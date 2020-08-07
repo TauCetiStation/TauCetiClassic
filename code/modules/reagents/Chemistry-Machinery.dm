@@ -991,7 +991,10 @@
 		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
-	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
+	var/datum/browser/popup = new(user, "pandemic", src.name, 575, 400)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "pandemic")
 
 
@@ -1192,7 +1195,11 @@
 			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
-	user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
+
+	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "reagentgrinder")
 
 
