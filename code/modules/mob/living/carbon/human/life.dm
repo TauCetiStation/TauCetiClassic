@@ -382,22 +382,6 @@
 
 				breath = loc.remove_air(breath_moles)
 
-				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-					var/obj/item/clothing/mask/gas/G = wear_mask
-					var/datum/gas_mixture/filtered = new
-					for(var/g in  G.filter)
-						if(breath.gas[g])
-							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
-							breath.gas[g] -= filtered.gas[g]
-
-					breath.update_values()
-					filtered.update_values()
-
-				if(!is_lung_ruptured())
-					if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-						if(prob(5))
-							rupture_lung()
-
 				// Handle filtering
 				var/block = 0
 				if(wear_mask)
@@ -419,6 +403,22 @@
 								if(smoke)
 									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
+
+			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+				var/obj/item/clothing/mask/gas/G = wear_mask
+				var/datum/gas_mixture/filtered = new
+				for(var/g in  G.filter)
+					if(breath.gas[g])
+						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+						breath.gas[g] -= filtered.gas[g]
+
+				breath.update_values()
+				filtered.update_values()
+
+			if(!is_lung_ruptured())
+				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+					if(prob(5))
+						rupture_lung()
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
