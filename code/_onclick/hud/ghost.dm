@@ -36,6 +36,14 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
+/obj/screen/ghost/toggle_darkness
+	name = "Toggle Darkness"
+	icon_state = "toggle_darkness"
+
+/obj/screen/ghost/toggle_darkness/Click()
+	var/mob/dead/observer/G = usr
+	G.toggle_darkness()
+
 /datum/hud/ghost/New()
 	adding = list()
 	var/obj/screen/using
@@ -54,6 +62,10 @@
 
 	using = new /obj/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
+	adding += using
+
+	using = new /obj/screen/ghost/toggle_darkness()
+	using.screen_loc = ui_ghost_toggle_darkness
 	adding += using
 
 	..()
