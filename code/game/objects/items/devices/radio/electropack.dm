@@ -122,6 +122,10 @@ Code:
 <A href='byond://?src=\ref[src];code=1'>+</A>
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 </TT>"}
-	user << browse(dat, "window=radio")
+
+	var/datum/browser/popup = new(user, "radio")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "radio")
 	return
