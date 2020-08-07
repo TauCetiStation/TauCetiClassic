@@ -48,8 +48,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title></head>"
-	body += "<body>Options panel for <b>[M]</b>"
+	var/body = ""
+	body += "Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
@@ -192,11 +192,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
 
-	body += {"<br>
-		</body></html>
-	"}
+	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key]", 550, 515)
+	popup.set_content(body)
+	popup.open()
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
