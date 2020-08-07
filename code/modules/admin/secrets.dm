@@ -600,7 +600,7 @@
 
 		// Show Job Debug
 		if("list_job_debug")
-			var/dat = "<B>Job Debug info.</B><HR>"
+			var/dat = ""
 			if(SSjob)
 				for(var/line in SSjob.job_debug)
 					dat += "[line]<BR>"
@@ -608,7 +608,11 @@
 				for(var/datum/job/job in SSjob.occupations)
 					if(!job)	continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(dat, "window=jobdebug;size=600x500")
+
+				var/datum/browser/popup = new(usr, "jobdebug", "Job Debug info", 600, 500)
+				popup.set_content(dat)
+				popup.open()
+
 		// Show AI Laws
 		if("showailaws")
 			output_ai_laws()
