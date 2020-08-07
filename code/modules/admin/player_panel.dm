@@ -540,10 +540,10 @@
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(length(blobminds + ticker.mode.infected_crew))
+		if(ticker.mode.infected_crew.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			dat += "<tr><td><i>Progress: [blobs.len]/[blobwincount]</i></td></tr>"
-			for(var/datum/mind/blob in blobminds | ticker.mode.infected_crew)
+			for(var/datum/mind/blob in ticker.mode.infected_crew)
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
