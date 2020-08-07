@@ -1027,12 +1027,14 @@
 					return
 				var/client/C = M.client
 
-				var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
+				var/dat = ""
 				dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
 				dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
 				dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-				usr << browse(dat, "window=[C.ckey]_related_accounts")
+				var/datum/browser/popup = new(usr, "[C.ckey]_related_accounts", "[C.key] related accounts by IP and cid")
+				popup.set_content(dat)
+				popup.open()
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
