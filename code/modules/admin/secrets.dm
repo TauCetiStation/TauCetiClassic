@@ -654,7 +654,7 @@
 
 		// List Fingerprints
 		if("fingerprints")
-			var/dat = "<B>Showing Fingerprints.</B><HR>"
+			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H in human_list)
 				if(H.ckey)
@@ -665,7 +665,11 @@
 					else if(!H.dna)
 						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 			dat += "</table>"
-			usr << browse(dat, "window=fingerprints;size=440x410")
+
+			var/datum/browser/popup = new(usr, "fingerprints", "Showing Fingerprints", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// Set Night Shift Mode
 		if("night_shift_set")
 			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
