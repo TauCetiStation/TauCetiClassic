@@ -276,10 +276,12 @@
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	var/accumulator_warning
 
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
+	accumulator_warning = world.time
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -327,7 +329,9 @@
 			owner.nutrition = C.maxcharge - damage * 5
 	if(owner.nutrition < 1)
 		owner.SetParalysis(5)
-		to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+		if(accumulator_warning < world.time)
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+			accumulator_warning = world.time + 15 SECONDS
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
