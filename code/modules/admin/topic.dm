@@ -995,11 +995,14 @@
 				if(!M.client)
 					return
 				var/client/C = M.client
-				var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
+				var/dat = ""
 				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
 				for(var/x in C.prefs.cid_list)
 					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-				usr << browse(dat, "window=[C.ckey]_cid_list")
+
+				var/datum/browser/popup = new(usr, "[C.ckey]_cid_list", "[C.ckey] cid list")
+				popup.set_content(dat)
+				popup.open()
 
 	else if(href_list["cid_ignore"])
 		if(!check_rights(R_LOG))
