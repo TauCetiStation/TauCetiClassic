@@ -54,7 +54,7 @@
 	icon_state = "[icon_temp]_[interaction_mode]"
 
 /obj/item/device/tabletop_assistant/proc/update()
-	var/dat = "<CENTER><B>Tabletop Assistant</B></CENTER><BR><a href='?src=\ref[src];mode=1'>[mode]</a><HR>"
+	var/dat = "<a href='?src=\ref[src];mode=1'>[mode]</a><HR>"
 	switch(mode)
 		if(CARD_MODE)
 			dat += "<a href='?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
@@ -93,7 +93,11 @@
 /obj/item/device/tabletop_assistant/interact(mob/user)
 	user.machine = src
 	update()
-	user << browse(data, "window=tabletop_assistant")
+
+	var/datum/browser/popup = new(user, "tabletop_assistant", "Tabletop Assistant")
+	popup.set_content(data)
+	popup.open()
+
 	onclose(user, "tabletop_assistant")
 
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
