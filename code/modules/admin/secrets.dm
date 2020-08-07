@@ -705,12 +705,16 @@
 	switch(href_list["secretscoder"])
 		// Admin Log
 		if("spawn_objects")
-			var/dat = "<B>Admin Log<HR></B>"
+			var/dat = ""
 			for(var/l in admin_log)
 				dat += "<li>[l]</li>"
 			if(!admin_log.len)
 				dat += "No-one has done anything this round!"
-			usr << browse(dat, "window=admin_log")
+
+			var/datum/browser/popup = new(usr, "admin_log", "Admin Log")
+			popup.set_content(dat)
+			popup.open()
+
 		// Change all maintenance doors to brig access only
 		if("maint_access_brig")
 			for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)
