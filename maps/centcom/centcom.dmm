@@ -16451,6 +16451,16 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"bNO" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod3";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor5"
+	},
+/area/centcom/evac)
 "bOb" = (
 /obj/machinery/door/unpowered/shuttle{
 	dock_tag = "shuttle_escape"
@@ -17897,6 +17907,16 @@
 	icon_state = "warning"
 	},
 /area/velocity)
+"eNc" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod4";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor5"
+	},
+/area/centcom/evac)
 "eOb" = (
 /obj/structure/sign/warning/electricshock,
 /turf/unsimulated/wall,
@@ -18641,6 +18661,14 @@
 	icon_state = "rubber_floor2"
 	},
 /area/velocity)
+"gnG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod1";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "gob" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19799,6 +19827,14 @@
 	icon_state = "warning"
 	},
 /area/centcom/control)
+"iPu" = (
+/obj/machinery/door/airlock/external{
+	locked = 1;
+	name = "Arrival Airlock";
+	req_access = list(1)
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "iQb" = (
 /obj/machinery/light{
 	dir = 1
@@ -22910,6 +22946,21 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"uEr" = (
+/obj/machinery/door/airlock/external{
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"vak" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod2";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "vaT" = (
 /obj/structure/closet/wardrobe/black,
 /turf/unsimulated/floor{
@@ -39622,7 +39673,7 @@ afi
 afi
 pvb
 pGb
-pJb
+iPu
 aII
 pJb
 pLb
@@ -40136,7 +40187,7 @@ aVy
 aVy
 pwb
 bOb
-aFf
+uEr
 aII
 aFf
 pMb
@@ -41678,7 +41729,7 @@ aVy
 aVy
 pwb
 bOb
-aFf
+uEr
 aII
 aFf
 pMb
@@ -41935,7 +41986,7 @@ avJ
 aVy
 pzb
 bOb
-aFf
+uEr
 aII
 aFf
 pMb
@@ -42661,7 +42712,7 @@ aAm
 aaM
 aHv
 abn
-aIJ
+eNc
 abn
 aHv
 aaM
@@ -44460,7 +44511,7 @@ aAm
 aaM
 aaM
 abn
-aIJ
+bNO
 abn
 aaM
 aaM
@@ -48578,13 +48629,13 @@ aAm
 aaM
 aaM
 abn
-aFf
+gnG
 abn
 aaM
 aaM
 aaM
 abn
-aFf
+vak
 abn
 aaM
 aaM

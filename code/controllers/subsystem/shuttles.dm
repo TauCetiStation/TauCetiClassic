@@ -130,44 +130,37 @@ var/datum/subsystem/shuttle/SSshuttle
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if( prob(5) ) // 5% that they survive
+					if(prob(25) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
-
-					for(var/obj/machinery/door/D in end_location)
-						D.open()
-						CHECK_TICK
+						dock_act(end_location, "pod1")
+						dock_act(/area/centcom/evac, "pod1")
 
 					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if( prob(5) ) // 5% that they survive
+					if(prob(25) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
-
-					for(var/obj/machinery/door/D in end_location)
-						D.open()
-						CHECK_TICK
+						dock_act(end_location, "pod2")
+						dock_act(/area/centcom/evac, "pod2")
 
 					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if( prob(5) ) // 5% that they survive
+					if(prob(25) ) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
-
-					for(var/obj/machinery/door/D in end_location)
-						D.open()
+						dock_act(end_location, "pod3")
+						dock_act(/area/centcom/evac, "pod3")
 
 					shake_mobs_in_area(end_location, EAST)
 
 					start_location = locate(/area/shuttle/escape_pod4/transit)
 					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if( prob(5) ) // 5% that they survive
-						start_location.move_contents_to(end_location, null, EAST)
-
-					for(var/obj/machinery/door/D in end_location)
-						D.open()
-						CHECK_TICK
+					if(prob(25) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
+						dock_act(end_location, "pod4")
+						dock_act(/area/centcom/evac, "pod4")
 
 					shake_mobs_in_area(end_location, WEST)
 
@@ -318,9 +311,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
-					for(var/obj/machinery/door/D in end_location)
-						D.close()
-						CHECK_TICK
+					undock_act(start_location, "pod1")
+					undock_act(/area/station/maintenance/chapel, "pod1")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -330,9 +322,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
-					for(var/obj/machinery/door/D in end_location)
-						D.close()
-						CHECK_TICK
+					undock_act(start_location, "pod2")
+					undock_act(/area/station/maintenance/medbay, "pod2")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -342,9 +333,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
-					for(var/obj/machinery/door/D in end_location)
-						D.close()
-						CHECK_TICK
+					undock_act(start_location, "pod3")
+					undock_act(/area/station/maintenance/dormitory, "pod3")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -354,9 +344,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location = locate(/area/shuttle/escape_pod4/transit)
 					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
-					for(var/obj/machinery/door/D in end_location)
-						D.close()
-						CHECK_TICK
+					undock_act(start_location, "pod4")
+					undock_act(/area/station/maintenance/engineering, "pod4")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -407,7 +396,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		CHECK_TICK
 
 /datum/subsystem/shuttle/proc/dock_act(area_type, door_tag)
-	//todo post_signal?
+	//todo post_signal? & doors with door_tag near shuttle zone
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
 	for(var/obj/machinery/door/DOOR in A)
@@ -421,7 +410,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				D.open()
 
 /datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
-	//todo post_signal?
+	//todo post_signal? & doors with door_tag near shuttle zone
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
 	for(var/obj/machinery/door/DOOR in A)
