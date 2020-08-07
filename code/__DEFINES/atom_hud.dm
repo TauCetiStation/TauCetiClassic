@@ -28,8 +28,10 @@
 #define DIAG_AIRLOCK_HUD 	"12"
 /// Gland indicators for abductors
 #define GLAND_HUD 			"13"
-//for antag huds. these are used at the /mob level
+// For antag huds. these are used at the /mob level
 #define ANTAG_HUD			"14"
+// Implant of mindshield
+#define IMPMINDS_HUD		"15"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

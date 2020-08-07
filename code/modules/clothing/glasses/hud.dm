@@ -17,7 +17,7 @@
 			H.add_hud_to(parasit)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
-	if(!istype(user) || user.glasses != src)
+	if(!istype(user))
 		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]
@@ -88,7 +88,7 @@
 			H.add_hud_to(parasit)
 
 /obj/item/clothing/glasses/sunglasses/hud/dropped(mob/living/carbon/human/user)
-	if(!istype(user) || user.glasses != src)
+	if(!istype(user))
 		return
 	if(hud_type)
 		var/datum/atom_hud/H = global.huds[hud_type]

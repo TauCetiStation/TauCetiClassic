@@ -425,6 +425,7 @@
 			var/mob/living/carbon/human/H = M
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 			BP.implants += src
+			H.sec_hud_set_implants()
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name

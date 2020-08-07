@@ -26,7 +26,7 @@
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U))
 		return FALSE
-	if(U.sensor_mode <= 0)
+	if(U.sensor_mode <= SUIT_SENSOR_BINARY)
 		return FALSE
 	return TRUE
 
@@ -42,10 +42,10 @@
 
 // TODO: FUCK THIS AND REWORK HERE
 /datum/atom_hud/data/medical/secmed // Dont lives in the code
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD, STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/security
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
@@ -63,8 +63,6 @@
  Medical HUD! Basic mode needs suit sensors on.
 ************************************************/
 
-//HELPERS
-
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
@@ -76,8 +74,6 @@
 				threat = D.severity
 				severity = D.severity
 	return severity
-
-//HOOKS
 
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
@@ -129,15 +125,13 @@
 				holder.icon_state = "hudbuff"
 			else
 				holder.icon_state = "hudhealthy"
+
 /***********************************************
  Security HUDs! Basic mode shows only the job.
 ************************************************/
-
-//HOOKS
-
 /mob/living/carbon/human/proc/sec_hud_set_ID()
 	var/image/holder = hud_list[ID_HUD]
-	holder.icon_state = "hudno_id"
+	holder.icon_state = "hudunknown"
 	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	holder.pixel_y = -8
@@ -145,7 +139,7 @@
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
-	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
+	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
 	for(var/obj/item/weapon/implant/I in src)
@@ -158,8 +152,8 @@
 	if(isloyal(src))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
-	else if(ismindshielded(src))
-		holder = hud_list[IMPLOYAL_HUD] // TODO: Change define and icon!!!
+	if(ismindshielded(src))
+		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()

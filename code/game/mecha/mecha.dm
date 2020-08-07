@@ -374,7 +374,6 @@
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	diag_hud_set_mechhealth()
 	diag_hud_set_mechstat()
 	return
 
@@ -414,6 +413,7 @@
 /obj/mecha/proc/update_health()
 	if(src.health > 0)
 		src.spark_system.start()
+		diag_hud_set_mechhealth()
 	else
 		src.destroy()
 	return
@@ -598,6 +598,7 @@
 /obj/mecha/emp_act(severity)
 	if(get_charge())
 		use_power((cell.charge/2)/severity)
+		diag_hud_set_mechcell()
 		take_damage(50 / severity,"energy")
 	src.log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
@@ -704,6 +705,7 @@
 		else if(state==4 && src.cell)
 			state=3
 			to_chat(user, "You screw the cell in place")
+		diag_hud_set_mechcell()
 		return
 
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
@@ -716,6 +718,7 @@
 				src.log_message("Powercell installed")
 			else
 				to_chat(user, "There's already a powercell installed.")
+			diag_hud_set_mechcell()
 		return
 
 	else if(iswelder(W) && user.a_intent != INTENT_HARM)
@@ -1706,12 +1709,14 @@
 /obj/mecha/proc/dynusepower(amount)
 	if(get_charge())
 		cell.use(amount)
+		diag_hud_set_mechcell()
 		return 1
 	return 0
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
+		diag_hud_set_mechcell()
 		return 1
 	return 0
 
@@ -1800,6 +1805,7 @@
 			mecha.spark_system.start()
 			mecha.cell.charge -= min(20, mecha.cell.charge)
 			mecha.cell.maxcharge -= min(20, mecha.cell.maxcharge)
+			mecha.diag_hud_set_mechcell()
 	return
 
 /datum/global_iterator/mecha_light/process(var/obj/mecha/mecha)

@@ -31,6 +31,7 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
+		sec_hud_set_implants()
 
 
 	if(tr_flags & TR_KEEPITEMS)
@@ -166,6 +167,7 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
+		sec_hud_set_implants()
 
 
 	if(tr_flags & TR_KEEPITEMS)
@@ -250,6 +252,7 @@
 			if(BP)
 				IMP.part = BP
 				BP.implants += IMP
+		sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)

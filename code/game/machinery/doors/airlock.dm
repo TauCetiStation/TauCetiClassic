@@ -100,6 +100,7 @@ var/list/airlock_overlays = list()
 	if(secondsElectrified > 0)
 		secondsElectrified--
 	else
+		diag_hud_set_electrified()
 		return PROCESS_KILL
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
@@ -838,6 +839,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
+						diag_hud_set_electrified()
 						START_PROCESSING(SSmachine, src)
 
 				if(6)

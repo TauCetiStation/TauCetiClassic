@@ -531,6 +531,7 @@
 	I.imp_in = new_vox
 	I.implanted = 1
 	BP.implants += I
+	new_vox.sec_hud_set_implants()
 	I.part = BP
 
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
