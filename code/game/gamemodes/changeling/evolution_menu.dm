@@ -16,7 +16,7 @@ var/list/sting_paths
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700)
+	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -293,7 +293,7 @@ var/list/sting_paths
 	if(href_list["P"])
 		usr.mind.changeling.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(usr.mind.changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700)
+	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 /////
