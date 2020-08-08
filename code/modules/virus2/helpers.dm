@@ -105,6 +105,7 @@
 		var/datum/disease2/disease/D = disease.getcopy()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
+		M.med_hud_set_status()
 
 
 //Infects mob M with random lesser disease, if he doesn't have one
@@ -113,6 +114,7 @@
 	D.makerandom()
 	D.infectionchance = 1
 	infect_virus2(M,D,1)
+	M.med_hud_set_status()
 
 
 //Infects mob M with random greated disease, if he doesn't have one
@@ -120,6 +122,7 @@
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1)
 	infect_virus2(M,D,1)
+	M.med_hud_set_status()
 
 
 //Fancy prob() function.

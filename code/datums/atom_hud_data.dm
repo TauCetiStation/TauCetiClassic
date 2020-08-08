@@ -40,10 +40,6 @@
 	else
 		remove_from_hud(H)
 
-// TODO: FUCK THIS AND REWORK HERE
-/datum/atom_hud/data/medical/secmed // Dont lives in the code
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD, STATUS_HUD, HEALTH_HUD)
-
 /datum/atom_hud/data/security
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
@@ -125,6 +121,12 @@
 				holder.icon_state = "hudbuff"
 			else
 				holder.icon_state = "hudhealthy"
+
+/mob/living/carbon/human/med_hud_set_status()
+	..()
+	var/image/holder = hud_list[STATUS_HUD]
+	if(iszombie(src))
+		holder.icon_state = "hudill"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.

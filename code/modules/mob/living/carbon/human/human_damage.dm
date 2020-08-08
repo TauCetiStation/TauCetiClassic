@@ -178,6 +178,7 @@
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
+	med_hud_set_health()
 
 
 // =============================================
@@ -316,6 +317,7 @@ This function restores all bodyparts.
 	var/obj/item/organ/external/BP = get_bodypart(zone)
 	if(istype(BP, /obj/item/organ/external))
 		BP.heal_damage(brute, burn)
+		med_hud_set_health()
 	else
 		return 0
 

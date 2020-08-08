@@ -76,6 +76,8 @@
 /obj/item/clothing/glasses/sunglasses/hud
 	name = "sunglasses-HUD"
 	var/hud_type = null
+	// Adding hud type
+	var/hud_type_1
 
 /obj/item/clothing/glasses/sunglasses/hud/equipped(mob/living/carbon/human/user, slot)
 	if(slot != SLOT_GLASSES)
@@ -85,6 +87,12 @@
 		H.add_hud_to(user)
 		for(var/parasit in user.parasites)
 			H.add_hud_to(parasit)
+	if(hud_type_1)
+		var/datum/atom_hud/H = global.huds[hud_type_1]
+		H.add_hud_to(user)
+		for(var/parasit in user.parasites)
+			H.add_hud_to(parasit)
+
 
 /obj/item/clothing/glasses/sunglasses/hud/dropped(mob/living/carbon/human/user)
 	if(!istype(user))
@@ -94,11 +102,17 @@
 		H.remove_hud_from(user)
 		for(var/parasit in user.parasites)
 			H.remove_hud_from(parasit)
+	if(hud_type_1)
+		var/datum/atom_hud/H = global.huds[hud_type_1]
+		H.remove_hud_from(user)
+		for(var/parasit in user.parasites)
+			H.remove_hud_from(parasit)
 
-//TODO: FUCK THIS AND SECMED
 /obj/item/clothing/glasses/sunglasses/hud/secmed
 	name = "mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon_state = "secmedhud"
 	body_parts_covered = 0
 	var/fixtime = 0
+	hud_type_1 = DATA_HUD_SECURITY
+	hud_type = DATA_HUD_MEDICAL

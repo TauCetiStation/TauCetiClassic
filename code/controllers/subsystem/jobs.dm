@@ -549,9 +549,6 @@ var/datum/subsystem/job/SSjob
 
 //		H.update_icons()
 
-
-
-
 	return 1
 
 /datum/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)

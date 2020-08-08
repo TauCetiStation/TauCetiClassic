@@ -9,8 +9,6 @@
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, GLAND_HUD)
 	//icon_state = "body_m_s"
 
-	var/list/AAAAAAAa
-
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
@@ -28,10 +26,6 @@
 	var/massages_done_right = 0
 
 	throw_range = 2
-
-/mob/living/carbon/human/atom_init()
-	. = ..()
-	AAAAAAAa = huds
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -121,16 +115,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
-
-
-
-
-
-
-
-
-
-
 
 	. = ..()
 

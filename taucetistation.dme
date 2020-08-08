@@ -1505,7 +1505,6 @@
 #include "code\modules\mob\living\carbon\metroid\death.dm"
 #include "code\modules\mob\living\carbon\metroid\emote.dm"
 #include "code\modules\mob\living\carbon\metroid\examine.dm"
-#include "code\modules\mob\living\carbon\metroid\hud.dm"
 #include "code\modules\mob\living\carbon\metroid\life.dm"
 #include "code\modules\mob\living\carbon\metroid\login.dm"
 #include "code\modules\mob\living\carbon\metroid\metroid.dm"
