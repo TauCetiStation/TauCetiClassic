@@ -23,7 +23,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living/carbon))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
-		AddInfectionImages(affected_mob)
+		affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
 	else
 		qdel(src)
 
@@ -31,7 +31,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		RemoveInfectionImages(affected_mob)
+		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
 		affected_mob.med_hud_set_status()
 	affected_mob = null
 	baby = null
@@ -63,7 +63,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		RemoveInfectionImages(affected_mob)
+		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
 		affected_mob.med_hud_set_status()
 		affected_mob = null
 		return FALSE
@@ -81,8 +81,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(stage_counter > 60)
 			stage++
 			stage_counter = 0
-			spawn(0)
-				RefreshInfectionImage()
+			//update icon
+			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
 	stage_counter++
 
 	switch(stage)
@@ -174,45 +175,3 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			G.synch()
 			STOP_PROCESSING(SSobj, src)
 			qdel(src)
-
-/*----------------------------------------
-Proc: RefreshInfectionImage()
-Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
-----------------------------------------*/
-/obj/item/alien_embryo/proc/RefreshInfectionImage()
-	for(var/mob/living/carbon/xenomorph/alien in player_list)
-		if(alien.client)
-			for(var/image/I in alien.client.images)
-				if(dd_hasprefix(I.icon_state, "infected"))
-					qdel(I)
-			for(var/mob/living/L in living_list)
-				if(iscorgi(L) || iscarbon(L))
-					if(L.status_flags & XENO_HOST)
-						var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[stage]")
-						alien.client.images += I
-
-/*----------------------------------------
-Proc: AddInfectionImages(C)
-Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
-----------------------------------------*/
-/obj/item/alien_embryo/proc/AddInfectionImages(mob/living/C)
-	if(C)
-		for(var/mob/living/carbon/xenomorph/alien in alien_list)
-			if(alien.client)
-				if(C.status_flags & XENO_HOST)
-					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-					alien.client.images += I
-
-/*----------------------------------------
-Proc: RemoveInfectionImage(C)
-Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
-----------------------------------------*/
-
-/obj/item/alien_embryo/proc/RemoveInfectionImages(mob/living/C)
-	if(C)
-		for(var/mob/living/carbon/xenomorph/alien in alien_list)
-			if(alien.client)
-				for(var/image/I in alien.client.images)
-					if(I.loc == C)
-						if(dd_hasprefix(I.icon_state, "infected"))
-							qdel(I)

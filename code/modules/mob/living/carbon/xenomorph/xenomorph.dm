@@ -279,33 +279,6 @@ Hit Procs
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
-/*----------------------------------------
-Proc: AddInfectionImages()
-Des: Gives the client of the alien an image on each infected mob.
-----------------------------------------*/
-// TODO: FUCK THIS AND REWORK HERE
-/mob/living/carbon/xenomorph/proc/AddInfectionImages()
-	if (client)
-		for (var/mob/living/C in living_list)
-			if(C.status_flags & XENO_HOST)
-				var/obj/item/alien_embryo/A = locate() in C
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
-				client.images += I
-	return
-
-
-/*----------------------------------------
-Proc: RemoveInfectionImages()
-Des: Removes all infected images from the alien.
-----------------------------------------*/
-// TODO: FUCK THIS AND REWORK HERE
-/mob/living/carbon/xenomorph/proc/RemoveInfectionImages()
-	if (client)
-		for(var/image/I in client.images)
-			if(dd_hasprefix(I.icon_state, "infected"))
-				qdel(I)
-	return
-
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.

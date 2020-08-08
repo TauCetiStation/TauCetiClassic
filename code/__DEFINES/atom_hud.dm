@@ -60,6 +60,7 @@
 #define ANTAG_HUD_DEATHCOM      17
 #define ANTAG_HUD_ERT           18
 #define ANTAG_HUD_MALF          19
+#define ANTAG_HUD_ZOMB          20
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

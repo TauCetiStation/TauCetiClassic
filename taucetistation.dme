@@ -1527,7 +1527,6 @@
 #include "code\modules\mob\living\carbon\xenomorph\human_attackxeno.dm"
 #include "code\modules\mob\living\carbon\xenomorph\life.dm"
 #include "code\modules\mob\living\carbon\xenomorph\login.dm"
-#include "code\modules\mob\living\carbon\xenomorph\logout.dm"
 #include "code\modules\mob\living\carbon\xenomorph\powers.dm"
 #include "code\modules\mob\living\carbon\xenomorph\say.dm"
 #include "code\modules\mob\living\carbon\xenomorph\screen.dm"

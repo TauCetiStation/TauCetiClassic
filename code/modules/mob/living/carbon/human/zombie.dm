@@ -296,28 +296,14 @@ var/list/zombie_list = list()
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
-	update_all_zombie_icons()
+	H.mind.add_antag_hud(ANTAG_HUD_ZOMB, "hudzombie", H)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
 	H.RemoveSpell(spell)
 	qdel(spell)
 	zombie_list -= H
-	update_all_zombie_icons()
-
-/proc/update_all_zombie_icons()
-	spawn(0)
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/image/I in H.client.images)
-					if(I.icon_state == "zombie_hud")
-						qdel(I)
-
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/mob/living/carbon/human/Z in zombie_list)
-					var/I = image('icons/mob/human_races/r_zombie.dmi', loc = Z, icon_state = "zombie_hud")
-					H.client.images += I
+	H.mind.remove_antag_hud(ANTAG_HUD_ZOMB, H)
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"
