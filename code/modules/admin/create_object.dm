@@ -11,7 +11,11 @@ var/list/create_object_forms = list(
 		create_object_html = file2text('html/create_object.html')
 		create_object_html = replacetext(create_object_html, "null /* object types */", "\"[objectjs]\"")
 
-	user << browse(replacetext(create_object_html, "/* ref src */", "\ref[src]"), "window=create_object;size=425x475")
+	var/dat = replacetext(create_object_html, "/* ref src */", "\ref[src]")
+
+	var/datum/browser/popup = new(user, "create_object", null, 425, 475)
+	popup.set_content(dat)
+	popup.open()
 
 
 /datum/admins/proc/quick_create_object(mob/user)
