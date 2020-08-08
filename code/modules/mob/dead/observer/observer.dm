@@ -162,15 +162,6 @@ Works together with spawning an observer, noted above.
 			if(target.mind&&(target.mind.special_role||issilicon(target)) )
 				target_list += target
 
-/*
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
-			var/mob/living/silicon/silicon_target = target
-			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
-				if(isrobot(silicon_target))//Different icons for robutts and AI.
-					U.client.images += image(tempHud,silicon_target,"hudmalborg")
-				else
-					U.client.images += image(tempHud,silicon_target,"hudmalai")
-*/
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)

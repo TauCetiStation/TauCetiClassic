@@ -1358,6 +1358,7 @@
 		cur_AI.show_laws()
 		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
 		special_role = "malfunction"
+		add_antag_hud(ANTAG_HUD_MALF, "hudmalai", cur_AI)
 		cur_AI.icon_state = "ai-malf"
 		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 

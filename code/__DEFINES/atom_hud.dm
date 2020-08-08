@@ -55,6 +55,11 @@
 #define ANTAG_HUD_CHANGELING    12
 #define ANTAG_HUD_ABDUCTOR      13
 #define ANTAG_HUD_GANGSTER      14
+#define ANTAG_HUD_GOLEM         15
+#define ANTAG_HUD_ALIEN         16
+#define ANTAG_HUD_DEATHCOM      17
+#define ANTAG_HUD_ERT           18
+#define ANTAG_HUD_MALF          19
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

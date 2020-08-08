@@ -134,8 +134,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
-	my_master = null
+	if(my_master)
+		my_master.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_master)
+		my_master = null
 	if(my_golem)
+		my_golem.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_golem)
 		my_golem.death()
 	my_golem = null
 	return ..()

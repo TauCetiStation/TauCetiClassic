@@ -696,10 +696,6 @@
 		to_chat(user, "<span class='notice'>You cannot do this so often.</span>")
 		return
 	if(user == spirit)
-		for(var/image/I in user.client.images)
-			if(I.loc == src && I.icon_state == "agolem_master")
-				user.client.images -= I
-				break
 		spirit = null
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
@@ -724,7 +720,10 @@
 	G.key = spirit.key
 	G.my_master = H
 	H.my_golem = G
+	H.add_antag_hud(ANTAG_HUD_GOLEM, "agolem_master", H)
+	G.add_antag_hud(ANTAG_HUD_GOLEM, null, G) // For golem can see master
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
+	G.mind.memory += "<B>[H]</B> - your master."
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()

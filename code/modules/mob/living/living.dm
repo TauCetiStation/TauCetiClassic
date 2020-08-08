@@ -474,7 +474,6 @@
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
 	med_hud_set_health()
-	to_chat(world, "revive()")
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)

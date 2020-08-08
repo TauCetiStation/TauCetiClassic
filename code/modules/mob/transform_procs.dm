@@ -439,6 +439,7 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
+	new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.

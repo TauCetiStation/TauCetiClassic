@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[14]
+var/global/list/huds[19]
 
 /proc/init_hud_list() // proc used in global_list.dm
 	// Crooked port from TG, but he needed
@@ -23,6 +23,11 @@ var/global/list/huds[14]
 	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Update gamemode!
+	huds[ANTAG_HUD_GOLEM] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_ALIEN] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_DEATHCOM] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_MALF] = new/datum/atom_hud/antag/hidden
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud

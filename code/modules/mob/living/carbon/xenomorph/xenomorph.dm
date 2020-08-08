@@ -283,6 +283,7 @@ Hit Procs
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
+// TODO: FUCK THIS AND REWORK HERE
 /mob/living/carbon/xenomorph/proc/AddInfectionImages()
 	if (client)
 		for (var/mob/living/C in living_list)
@@ -297,6 +298,7 @@ Des: Gives the client of the alien an image on each infected mob.
 Proc: RemoveInfectionImages()
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
+// TODO: FUCK THIS AND REWORK HERE
 /mob/living/carbon/xenomorph/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)

@@ -427,6 +427,7 @@
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
 	ticker.mode.traitors += new_syndicate_commando.mind

@@ -153,6 +153,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
+		new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
 		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
 
