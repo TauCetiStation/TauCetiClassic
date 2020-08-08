@@ -217,7 +217,7 @@
 		S.before_job_equip(mannequin, previewJob, TRUE)
 	if(previewJob)
 		mannequin.job = previewJob.title
-		previewJob.equip(mannequin, TRUE)
+		previewJob.equip(mannequin, TRUE, GetPlayerAltTitle(previewJob))
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
