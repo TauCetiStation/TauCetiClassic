@@ -469,7 +469,7 @@
 			to_chat(mode.head_mutineer.current, "<span class='warning'><b>[M] declined to support the mutineers.</b></span>")
 
 /proc/get_mutiny_mode()
-	if(!ticker || !istype(ticker.mode, /datum/game_mode/mutiny))
+	if(!SSticker || !istype(SSticker.mode, /datum/game_mode/mutiny))
 		return null
 
-	return ticker.mode
+	return SSticker.mode

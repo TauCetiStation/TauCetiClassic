@@ -4,7 +4,7 @@ var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the
 var/global/sent_syndicate_strike_team = 0
 
 /client/proc/syndicate_strike_team()
-	if(!ticker)
+	if(!SSticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 	if(world.time < 6000)
@@ -124,7 +124,7 @@ var/global/sent_syndicate_strike_team = 0
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
-	ticker.mode.traitors |= new_syndicate_commando.mind	//Adds them to current traitor list. Which is really the extra antagonist list.
+	SSticker.mode.traitors |= new_syndicate_commando.mind	//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	qdel(spawn_location)
 	return new_syndicate_commando

@@ -79,15 +79,15 @@
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && (user.mind in ticker.mode.head_revolutionaries) && ticker.mode.name == "revolution")
+				if(user.mind && (user.mind in SSticker.mode.head_revolutionaries) && SSticker.mode.name == "revolution")
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
 							var/resisted
 							if(!ismindshielded(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
-								if(user.mind in ticker.mode.head_revolutionaries)
+								if(user.mind in SSticker.mode.head_revolutionaries)
 									M.mind.has_been_rev = 1
-									if(!ticker.mode.add_revolutionary(M.mind))
+									if(!SSticker.mode.add_revolutionary(M.mind))
 										resisted = 1
 							else
 								resisted = 1
