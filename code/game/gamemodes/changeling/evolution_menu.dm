@@ -29,6 +29,7 @@ var/list/sting_paths
 	dat += {"
 
 		<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			<script type='text/javascript'>
 
 				var locked_tabs = new Array();
