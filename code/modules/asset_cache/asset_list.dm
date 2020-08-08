@@ -34,9 +34,11 @@
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
 
-/*Spritesheet implementation - coalesces various icons into a single .png file
- and uses CSS to select icons out of that file - saves on transferring some
-1400-odd individual PNG files. (this is the port from tgstation)*/
+/*
+ * Spritesheet implementation - coalesces various icons into a single .png file
+ * and uses CSS to select icons out of that file - saves on transferring some
+ * 1400-odd individual PNG files. (this is the port from tgstation)
+ */
 #define SPR_SIZE 1 //sprite size in list/sprites
 #define SPR_IDX 2 //sprite index in list/sprites
 #define SPRSZ_COUNT 1 //sprite size count in list/sizes
