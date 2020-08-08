@@ -281,7 +281,6 @@
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
-	accumulator_warning = world.time
 
 /obj/item/organ/internal/liver/process()
 	..()
