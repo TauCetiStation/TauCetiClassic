@@ -46,6 +46,9 @@
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
+/datum/atom_hud/data/broken
+	hud_icons = list(BROKEN_HUD)
+
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
@@ -239,6 +242,14 @@
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
+/*~~~~~~~~~~~~~~~~~~~~
+	BROKEN HUUDs
+~~~~~~~~~~~~~~~~~~~~~*/
+/mob/living/carbon/proc/set_broken_hud_icon()
+	var/image/holder = hud_list[BROKEN_HUD]
+	var/list/num = list(1, 2, 3, 4, 5, 6, 7)
+	holder.icon_state = "hudbroken[pick(num)]"
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS

@@ -238,7 +238,6 @@
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
 	hud_type = DATA_HUD_SECURITY
-	var/obj/item/clothing/glasses/hud/security/hud = null
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
