@@ -312,7 +312,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod1")
-					undock_act(/area/station/maintenance/chapel, "pod1")
+					undock_act(/area/station/maintenance/chapel || /area/station/maintenance/bridge, "pod1")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -323,7 +323,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay, "pod2")
+					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge, "pod2")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -334,7 +334,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod3")
-					undock_act(/area/station/maintenance/dormitory, "pod3")
+					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -345,7 +345,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
 					undock_act(start_location, "pod4")
-					undock_act(/area/station/maintenance/engineering, "pod4")
+					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
