@@ -51,8 +51,6 @@
 	var/stage = 0
 	var/cavity = 0
 	var/atom/movable/applied_pressure
-	var/atom/movable/implant_to_remove
-
 	// Misc
 	var/list/butcher_results
 

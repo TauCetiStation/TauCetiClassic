@@ -41,7 +41,7 @@
 	return TRUE
 
 // does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
-/datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(can_infect && BP)
 		spread_germs_to_organ(BP, user, tool)
@@ -54,7 +54,7 @@
 	return
 
 // does stuff to end the step, which is normally print a message + do whatever this step changes
-/datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	return
 
 // stuff that happens when the step fails
@@ -149,15 +149,16 @@
 
 		//check if tool is right or close enough and if this step is possible
 		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
-			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
+			var/PS = S.prepare_step(user, M, target_zone, tool)
+			if(!PS)	//for some kind of checks
 				return TRUE
 
-			S.begin_step(user, M, target_zone, tool)		//...start on it
+			S.begin_step(user, M, target_zone, tool, PS)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.zone_sel.selecting && target_zone == user.zone_sel.selecting)
-				S.end_step(user, M, target_zone, tool)		//finish successfully
+				S.end_step(user, M, target_zone, tool, PS)		//finish successfully
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
-				S.fail_step(user, M, target_zone, tool)		//malpractice~
+				S.fail_step(user, M, target_zone, tool, PS)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 

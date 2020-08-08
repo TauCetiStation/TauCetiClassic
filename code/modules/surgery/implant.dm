@@ -169,13 +169,14 @@
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
-/datum/surgery_step/cavity/implant_removal/prepare_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/implant_removal/prepare_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/list/implants = BP.implants.Copy()
 	if(BP.hidden)
 		implants += BP.hidden
-	BP.implant_to_remove = input(user, "Select the item you want to pull out", "Implant removal")  as null|anything in implants
-	return BP.implant_to_remove && checks_for_surgery(target, user, clothless)
+	. = input(user, "Select the item you want to pull out", "Implant removal")  as null|anything in implants
+	if(!checks_for_surgery(target, user, clothless))
+		return FALSE
 
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -184,20 +185,20 @@
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
 
-/datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	if(!BP.implant_to_remove)
+	if(!prepare_selection)
 		return
-
+	var/atom/movable/PS = prepare_selection
 	var/remove_prob = 50
-	if(istype(BP.implant_to_remove, /obj/item/weapon/implant))
-		var/obj/item/weapon/implant/imp = BP.implant_to_remove
+	if(istype(PS, /obj/item/weapon/implant))
+		var/obj/item/weapon/implant/imp = PS
 		if(imp.islegal())
 			remove_prob = 60
 		else
 			remove_prob = 40
 
-	if(BP.hidden == BP.implant_to_remove)
+	if(BP.hidden == PS)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 		BP.hidden.loc = get_turf(target)
@@ -209,25 +210,25 @@
 
 	else if(prob(remove_prob))
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-		"<span class='notice'>You take [BP.implant_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-		BP.implants -= BP.implant_to_remove
+		"<span class='notice'>You take [PS] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+		BP.implants -= PS
 		for(var/datum/wound/W in BP.wounds)
-			if(BP.implant_to_remove in W.embedded_objects)
-				W.embedded_objects -= BP.implant_to_remove
+			if(PS in W.embedded_objects)
+				W.embedded_objects -= PS
 				break
 
 		target.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 		//Handle possessive brain borers.
-		if(istype(BP.implant_to_remove, /mob/living/simple_animal/borer))
-			var/mob/living/simple_animal/borer/worm = BP.implant_to_remove
+		if(istype(PS, /mob/living/simple_animal/borer))
+			var/mob/living/simple_animal/borer/worm = PS
 			if(worm.controlling)
 				target.release_control()
 			worm.detatch()
 
-		BP.implant_to_remove.loc = get_turf(target)
-		if(istype(BP.implant_to_remove,/obj/item/weapon/implant))
-			var/obj/item/weapon/implant/imp = BP.implant_to_remove
+		PS.loc = get_turf(target)
+		if(istype(PS,/obj/item/weapon/implant))
+			var/obj/item/weapon/implant/imp = PS
 			imp.imp_in = null
 			imp.implanted = 0
 			if(istype(imp,/obj/item/weapon/implant/storage))
@@ -236,8 +237,8 @@
 		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 	else
 		user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
-		"<span class='notice'>You tried to pull [BP.implant_to_remove] inside [target]'s [BP.name], but you just missed it this time.</span>" )
-	BP.implant_to_remove = null
+		"<span class='notice'>You tried to pull [PS] inside [target]'s [BP.name], but you just missed it this time.</span>" )
+	PS = null
 
 /datum/surgery_step/cavity/implant_removal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
@@ -253,4 +254,3 @@
 			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			spawn(25)
 				imp.activate()
-	BP.implant_to_remove = null

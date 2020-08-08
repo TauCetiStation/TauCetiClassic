@@ -100,23 +100,23 @@
 /datum/surgery_step/plastic_surgery/reshape_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.plasticsur == 2 && target.op_stage.face == 1
 
-/datum/surgery_step/plastic_surgery/reshape_face/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	target.op_stage.plastic_new_name = sanitize_name(input(user, "Choose your character's name:", "Changing")  as text|null)
-	return target.op_stage.plastic_new_name && checks_for_surgery(target, user, clothless)
+/datum/surgery_step/plastic_surgery/reshape_face/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
+	. = sanitize_name(input(user, "Choose your character's name:", "Changing")  as text|null)
+	if(!checks_for_surgery(target, user, clothless))
+		return FALSE
 
 /datum/surgery_step/plastic_surgery/reshape_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to alter [target]'s appearance with \the [tool].", \
 	"You begin to alter [target]'s appearance with \the [tool].")
 	..()
 
-/datum/surgery_step/plastic_surgery/reshape_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/plastic_surgery/reshape_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	user.visible_message("<span class='notice'>[user] alters [target]'s appearance with \the [tool].</span>",		\
 	"<span class='notice'>You alter [target]'s appearance with \the [tool].</span>")
-	if(target.op_stage.plastic_new_name)
-		target.real_name = target.op_stage.plastic_new_name
-		target.op_stage.plastic_new_name = null
+	if(prepare_selection)
+		target.real_name = prepare_selection
 
-/datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/plastic_surgery/reshape_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, prepare_selection)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
