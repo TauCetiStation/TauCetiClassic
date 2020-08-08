@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = CLAMP(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = CLAMP(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -134,7 +134,7 @@
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
-	user << browse(entity_ja(t1), "window=stack")
+	user << browse(t1, "window=stack")
 	onclose(user, "stack")
 	return
 

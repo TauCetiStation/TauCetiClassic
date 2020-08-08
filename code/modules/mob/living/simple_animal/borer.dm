@@ -133,10 +133,10 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (copytext(message, 1, 2) == "*")
+	if (message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
@@ -460,7 +460,7 @@ var/global/list/datum/mind/borers = list()
 	if(mind)
 		mind.assigned_role = "Cortical Borer"
 		mind.special_role = "Cortical Borer"
-	borers += mind
+	borers |= mind
 
 	to_chat(src, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
 	to_chat(src, "You can only take control temporarily, and at risk of hurting your host, so be clever and careful; your host is encouraged to help you however they can.")

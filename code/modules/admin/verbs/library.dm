@@ -53,10 +53,9 @@
 		content = query.item[4]
 		break
 
-	var/book = "<HEAD><TITLE>[title], [author]</TITLE></HEAD><BODY>\n"
-	book += content
-
-	usr << browse(entity_ja(content), "window=content")
+	var/datum/browser/popup = new(usr, "window=content", "[title], [author]", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(content)
+	popup.open()
 
 /datum/admins/proc/library_recycle_bin()
 	set category = "Admin"
@@ -77,7 +76,7 @@
 	if(!query.Execute())
 		return
 
-	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
+	var/catalog = ""
 	catalog += "<table border=1 rules=all frame=void cellspacing=0 cellpadding=3><HR><tr><td>ID</td><td>TITLE</td><td>AUTHOR</td><td>CKEY</td><td>REASON</td><td>OPTIONS</td></tr></HR>"
 	var/permitted = check_rights(R_PERMISSIONS,0)
 	while(query.NextRow())
@@ -89,6 +88,6 @@
 		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
 	catalog += "</table>"
 
-
-	usr << browse(entity_ja(catalog), "window=librecyclebin;size=500x500")
-	onclose(usr, "librecyclebin")
+	var/datum/browser/popup = new(usr, "window=librecyclebin", "Book Inventory Management", 500, 500, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(catalog)
+	popup.open()

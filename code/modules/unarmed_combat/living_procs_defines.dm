@@ -82,7 +82,7 @@ var/global/combos_cheat_sheet = ""
 
 		global.combos_cheat_sheet = dat
 
-	var/datum/browser/popup = new /datum/browser(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
+	var/datum/browser/popup = new(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
 	popup.set_content(global.combos_cheat_sheet)
 	popup.open()
 

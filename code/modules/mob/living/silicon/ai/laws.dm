@@ -162,4 +162,6 @@
 	list += {"<br><A href='byond://?src=\ref[src];lawr=1'>Channel: [src.lawchannel]</A><br>"}
 	list += {"<A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
-	usr << browse(entity_ja(list), "window=laws")
+	var/datum/browser/popup = new(usr, "window=laws", "[name] Laws")
+	popup.set_content(list)
+	popup.open()

@@ -6,6 +6,8 @@ var/global/list/blob_cores = list()
 var/global/list/blob_nodes = list()
 var/global/blobwincount = 500
 
+/datum/game_mode/var/list/infected_crew = list()
+
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
@@ -27,8 +29,6 @@ var/global/blobwincount = 500
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
 	var/blob_point_rate = 3
-
-	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)

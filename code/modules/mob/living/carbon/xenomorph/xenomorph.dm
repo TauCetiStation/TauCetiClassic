@@ -300,7 +300,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/xenomorph/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
+			if(dd_hasprefix(I.icon_state, "infected"))
 				qdel(I)
 	return
 

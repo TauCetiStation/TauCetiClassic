@@ -76,11 +76,11 @@
 		dat += "<li><A href='?src=\ref[src];triggerevent=Block All Maintenance'>Block All Maintenance</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Block All Maintenance'>Revoke Block All Maintenance</A></li>"
 		dat += "</ul>"
-		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
+		user << browse(dat, "window=keycard_auth;size=500x250")
 	if(screen == 2)
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
 		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
-		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
+		user << browse(dat, "window=keycard_auth;size=500x250")
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)

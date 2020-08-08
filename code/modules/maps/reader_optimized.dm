@@ -205,7 +205,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/list/fields = list()
 
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				full_def = copytext(full_def,variables_start+1,-1)//removing the last '}'
 				fields = readlist(full_def, ";")
 
 			//then fill the members_attributes list with the corresponding variables
@@ -394,7 +394,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// list
 	if(copytext(text,1,6) == "list(")
-		return readlist(copytext(text,6,length(text)))
+		return readlist(copytext(text,6,-1))
 
 	// typepath
 	var/path = text2path(text)
@@ -403,7 +403,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// file
 	if(copytext(text,1,2) == "'")
-		return file(copytext(text,2,length(text)))
+		return file(copytext(text,2,-1))
 
 	// null
 	if(text == "null")

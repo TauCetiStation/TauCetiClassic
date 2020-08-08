@@ -573,19 +573,19 @@
 			var/dat = "<B>Bombing List</B><HR>"
 			for(var/l in bombers)
 				dat += text("[l]<BR>")
-			usr << browse(entity_ja(dat), "window=bombers")
+			usr << browse(dat, "window=bombers")
 		// Show last [length(lastsignalers)] signalers
 		if("list_signalers")
 			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
 			for(var/sig in lastsignalers)
 				dat += "[sig]<BR>"
-			usr << browse(entity_ja(dat), "window=lastsignalers;size=800x500")
+			usr << browse(dat, "window=lastsignalers;size=800x500")
 		// how last [length(lawchanges)] law changes
 		if("list_lawchanges")
 			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
 			for(var/sig in lawchanges)
 				dat += "[sig]<BR>"
-			usr << browse(entity_ja(dat), "window=lawchanges;size=800x500")
+			usr << browse(dat, "window=lawchanges;size=800x500")
 		// Show Job Debug
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
@@ -596,7 +596,7 @@
 				for(var/datum/job/job in SSjob.occupations)
 					if(!job)	continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(entity_ja(dat), "window=jobdebug;size=600x500")
+				usr << browse(dat, "window=jobdebug;size=600x500")
 		// Show AI Laws
 		if("showailaws")
 			output_ai_laws()
@@ -615,7 +615,7 @@
 				if(H.ckey)
 					dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 			dat += "</table>"
-			usr << browse(entity_ja(dat), "window=manifest;size=440x410")
+			usr << browse(dat, "window=manifest;size=440x410")
 		// Show current traitors and objectives
 		if("check_antagonist")
 			check_antagonists()
@@ -627,7 +627,7 @@
 				if(H.dna && H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 			dat += "</table>"
-			usr << browse(entity_ja(dat), "window=DNA;size=440x410")
+			usr << browse(dat, "window=DNA;size=440x410")
 		// List Fingerprints
 		if("fingerprints")
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
@@ -641,7 +641,7 @@
 					else if(!H.dna)
 						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 			dat += "</table>"
-			usr << browse(entity_ja(dat), "window=fingerprints;size=440x410")
+			usr << browse(dat, "window=fingerprints;size=440x410")
 		// Set Night Shift Mode
 		if("night_shift_set")
 			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
@@ -682,7 +682,7 @@
 				dat += "<li>[l]</li>"
 			if(!admin_log.len)
 				dat += "No-one has done anything this round!"
-			usr << browse(entity_ja(dat), "window=admin_log")
+			usr << browse(dat, "window=admin_log")
 		// Change all maintenance doors to brig access only
 		if("maint_access_brig")
 			for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)

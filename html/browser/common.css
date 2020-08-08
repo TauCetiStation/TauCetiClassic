@@ -10,12 +10,11 @@ body.theme_dark
 {
 	background-color: #272727;
 	color: #ffffff;
-
 }
 
 body.theme_light
 {
-	background-color: #dadada;
+	background-color: #fafafa;
 	color: #000000;
 }
 

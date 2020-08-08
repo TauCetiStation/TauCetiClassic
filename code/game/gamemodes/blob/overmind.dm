@@ -1,5 +1,3 @@
-var/global/list/datum/mind/blobminds = list()
-
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -35,8 +33,8 @@ var/global/list/datum/mind/blobminds = list()
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		blobminds += mind
-		
+		ticker.mode.infected_crew |= mind
+
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
 			)
@@ -65,7 +63,7 @@ var/global/list/datum/mind/blobminds = list()
 		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
 
 
