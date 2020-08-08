@@ -33,7 +33,7 @@
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		ticker.mode.infected_crew |= mind
+		SSticker.mode.infected_crew |= mind
 
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
