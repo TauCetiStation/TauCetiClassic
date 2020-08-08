@@ -5,6 +5,7 @@ var/datum/subsystem/assets/SSasset
 	init_order = SS_INIT_ASSETS
 	flags = SS_NO_FIRE
 	var/list/cache = list()
+	var/list/preload = list()
 
 /datum/subsystem/assets/New()
 	NEW_SS_GLOBAL(SSasset)
@@ -15,6 +16,8 @@ var/datum/subsystem/assets/SSasset
 		if (type != initial(A._abstract)) //no need to register an abstract asset
 			A.register()
 
+	preload = cache.Copy() //don't preload assets generated during the round
+
 	for(var/client/C in clients)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, preload, FALSE), 10)
 	..()
