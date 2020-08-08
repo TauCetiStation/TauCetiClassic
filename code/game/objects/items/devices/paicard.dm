@@ -33,7 +33,10 @@
 		to_chat(user, "You hold \the [itemname] up to the pAI...")
 		if(pai.client && !(pai.stat == DEAD))
 			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
-			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+
+			var/datum/browser/popup = new(pai, itemname, itemname)
+			popup.set_content("<TT>[info]</TT>")
+			popup.open()
 
 	else
 		return ..()
