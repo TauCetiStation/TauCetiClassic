@@ -24,4 +24,8 @@ var/list/create_object_forms = list(
 		html_form = replacetext(html_form, "null /* object types */", "\"[objectjs]\"")
 		create_object_forms[path] = html_form
 
-	user << browse(replacetext(html_form, "/* ref src */", "\ref[src]"), "window=qco[path];size=425x475")
+	var/dat = replacetext(html_form, "/* ref src */", "\ref[src]")
+
+	var/datum/browser/popup = new(user, "qco[path]", null, 425, 475)
+	popup.set_content(dat)
+	popup.open()
