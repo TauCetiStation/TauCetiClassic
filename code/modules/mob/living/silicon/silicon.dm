@@ -17,7 +17,7 @@
 
 	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
 
-	var/sensor_mode = 0 //Determines the current HUD.
+	var/sensor_mode = FALSE //Determines the current HUD.
 
 /mob/living/silicon/atom_init()
 	. = ..()
@@ -171,45 +171,31 @@
 	src << browse(dat, "window=checklanguage")
 	return
 
-/mob/living/silicon/proc/remove_sensors(mode)
-	switch(mode)
-		if(DATA_HUD_SECURITY)
-			var/datum/atom_hud/secsensor = global.huds[sec_hud]
-			secsensor.remove_hud_from(src)
-		if(DATA_HUD_MEDICAL)
-			var/datum/atom_hud/medsensor = global.huds[med_hud]
-			medsensor.remove_hud_from(src)
-		if(DATA_HUD_DIAGNOSTIC)
-			var/datum/atom_hud/diagsensor = global.huds[d_hud]
-			diagsensor.remove_hud_from(src)
+/mob/living/silicon/proc/remove_sensors()
+	var/datum/atom_hud/secsensor = global.huds[sec_hud]
+	secsensor.remove_hud_from(src)
+	var/datum/atom_hud/medsensor = global.huds[med_hud]
+	medsensor.remove_hud_from(src)
+	var/datum/atom_hud/diagsensor = global.huds[d_hud]
+	diagsensor.remove_hud_from(src)
+	sensor_mode = FALSE
+	to_chat(src, "Sensor augmentations disabled.")
 
 /mob/living/silicon/proc/toggle_sensor_mode()
 	//set name = "Set Sensor Augmentation" // Dunno, but it loops if open. ~Zve
 	//set desc = "Augment visual feed with internal sensor overlays."
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical", "Diagnostic","Disable")
-	switch(sensor_type)
-		if ("Security")
-			remove_sensors(sensor_mode)
-			sensor_mode = DATA_HUD_SECURITY
-			var/datum/atom_hud/sec = global.huds[sec_hud]
-			sec.add_hud_to(src)
-			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
-		if ("Medical")
-			remove_sensors(sensor_mode)
-			sensor_mode = DATA_HUD_MEDICAL
-			var/datum/atom_hud/med = global.huds[med_hud]
-			med.add_hud_to(src)
-			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
-		if ("Diagnostic")
-			remove_sensors(sensor_mode)
-			sensor_mode = DATA_HUD_DIAGNOSTIC
-			var/datum/atom_hud/diagsensor = global.huds[d_hud]
-			diagsensor.add_hud_to(src)
-			to_chat(src, "<span class='notice'>Diagnostic signs monitor overlay enabled.</span>")
-		if ("Disable")
-			remove_sensors(sensor_mode)
-			sensor_mode = 0
-			to_chat(src, "Sensor augmentations disabled.")
+	if(sensor_mode)
+		remove_sensors()
+		return
+
+	var/datum/atom_hud/sec = global.huds[sec_hud]
+	sec.add_hud_to(src)
+	var/datum/atom_hud/med = global.huds[med_hud]
+	med.add_hud_to(src)
+	var/datum/atom_hud/diagsensor = global.huds[d_hud]
+	diagsensor.add_hud_to(src)
+	sensor_mode = TRUE
+	to_chat(src, "Sensor augmentations enabled.")
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)

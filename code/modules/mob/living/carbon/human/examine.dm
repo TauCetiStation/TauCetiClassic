@@ -534,26 +534,16 @@
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M, hudtype)
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		switch(hudtype)
-			if("security")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/sechud) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
-			if("medical")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
-			else
-				return 0
-	else if(istype(M, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = M
-		switch(hudtype)
-			if("security")
-				return istype(R.module_state_1, /obj/item/borg/sight/hud/sec) || istype(R.module_state_2, /obj/item/borg/sight/hud/sec) || istype(R.module_state_3, /obj/item/borg/sight/hud/sec)
-			if("medical")
-				return istype(R.module_state_1, /obj/item/borg/sight/hud/med) || istype(R.module_state_2, /obj/item/borg/sight/hud/med) || istype(R.module_state_3, /obj/item/borg/sight/hud/med)
-			else
-				return 0
-	else
-		return 0
+	var/datum/atom_hud/A
+	if(hudtype == "security")
+		A = huds[DATA_HUD_SECURITY]
+	else if(hudtype == "medical")
+		A = huds[DATA_HUD_MEDICAL]
+
+	if(M in A.hudusers)
+		return TRUE
+
+	return FALSE
 
 /mob/living/proc/status_effect_examines() //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

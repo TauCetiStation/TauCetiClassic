@@ -61,31 +61,6 @@
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
-/obj/item/borg/sight/hud
-	name = "hud"
-	var/obj/item/clothing/glasses/hud/hud = null
-
-/obj/item/borg/sight/hud/med
-	name = "medical hud"
-	icon_state = "healthhud"
-	icon = 'icons/obj/clothing/glasses.dmi'
-
-/obj/item/borg/sight/hud/med/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/health(src)
-
-/obj/item/borg/sight/hud/sec
-	name = "security hud"
-	icon_state = "securityhud"
-	icon = 'icons/obj/clothing/glasses.dmi'
-
-/obj/item/borg/sight/hud/sec/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/security(src)
-
+// TODO: FUCK THIS AND REWORK HERE
 /obj/item/borg/sight/hud/miner
 	name = "geological hud"
-
-/obj/item/borg/sight/hud/miner/atom_init()
-	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/mining(src)
