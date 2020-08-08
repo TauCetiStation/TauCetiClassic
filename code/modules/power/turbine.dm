@@ -223,7 +223,7 @@
 		user << browse(null, "window=turbine")
 		return
 
-	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+	var/t = "<TT><PRE>"
 
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
 
@@ -234,7 +234,11 @@
 	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	t += "</TT>"
-	user << browse(t, "window=turbine")
+
+	var/datum/browser/popup = new(user, "turbine", "Gas Turbine Generator")
+	popup.set_content(t)
+	popup.open()
+
 	onclose(user, "turbine")
 
 /obj/machinery/power/turbine/Topic(href, href_list)
