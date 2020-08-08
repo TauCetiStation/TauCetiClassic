@@ -171,7 +171,7 @@
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
 	if(config.ert_admin_call_only) return 1
-	return ticker.mode && ticker.mode.ert_disabled
+	return SSticker.mode && SSticker.mode.ert_disabled
 
 var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
                                                 // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)

@@ -42,7 +42,7 @@
 	output +="<hr>"
 	output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
-	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
+	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
 		if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
 		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
@@ -83,14 +83,14 @@ commented cause polls are kinda broken now, needs refactoring */
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(world.is_round_preparing())
-			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
-			stat("Players:", "[ticker.totalPlayers]")
+			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[ticker.totalPlayersReady]")
+				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -106,10 +106,10 @@ commented cause polls are kinda broken now, needs refactoring */
 		return 1
 
 	if(href_list["ready"])
-		if(ready && ticker.timeLeft <= 50)
+		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return 0
-		if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
+		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = !ready
 
 	if(href_list["refresh"])
@@ -157,7 +157,7 @@ commented cause polls are kinda broken now, needs refactoring */
 			return 1
 
 	if(href_list["late_join"])
-		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
 
@@ -305,7 +305,7 @@ commented cause polls are kinda broken now, needs refactoring */
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if (src != usr)
 		return 0
-	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
 	if(!enter_allowed)
@@ -335,7 +335,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
 
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
-		ticker.mode.latespawn(character)
+		SSticker.mode.latespawn(character)
 
 		qdel(C)
 		qdel(src)
@@ -348,13 +348,13 @@ commented cause polls are kinda broken now, needs refactoring */
 		character.buckled.loc = character.loc
 		character.buckled.dir = character.dir
 
-	ticker.mode.latespawn(character)
+	SSticker.mode.latespawn(character)
 
-	//ticker.mode.latespawn(character)
+	//SSticker.mode.latespawn(character)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 	//	AnnounceArrival(character, rank)
 
 	else
@@ -371,7 +371,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
+	if (SSticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
@@ -507,7 +507,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	if(client.prefs.language)
 		new_character.add_language(client.prefs.language)
 
-	if(ticker.random_players)
+	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)
 		client.prefs.real_name = random_name(new_character.gender)
 		client.prefs.randomize_appearance_for(new_character)

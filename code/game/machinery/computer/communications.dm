@@ -453,7 +453,7 @@
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(sent_strike_team == 1)
@@ -472,7 +472,7 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(ticker.mode.name == "blob")
+	if(SSticker.mode.name == "blob")
 		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
@@ -486,7 +486,7 @@
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
@@ -511,7 +511,7 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+		if(SSticker.mode.name == "blob" || SSticker.mode.name == "epidemic")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
@@ -524,13 +524,13 @@
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
+	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 		to_chat(user, "The console is not responding.")
 		return
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
 		return
-	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))//why??
+	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
 		to_chat(user, "The console is not responding.")
 		return
 
