@@ -282,17 +282,17 @@
 				qdel(A)
 				continue
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
 			if(synd_mind.current)
 				if(synd_mind.current.client)
 					for(var/image/I in synd_mind.current.client.images)
 						if(I.icon_state == "synd")
 							qdel(I)
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
 			if(synd_mind.current)
 				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
+					for(var/datum/mind/synd_mind_1 in SSticker.mode.syndicates)
 						if(synd_mind_1.current)
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
@@ -444,7 +444,7 @@
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
-	ticker.mode.traitors += new_syndicate_commando.mind
+	SSticker.mode.traitors += new_syndicate_commando.mind
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
@@ -548,12 +548,12 @@
 	BP.implants += I
 	I.part = BP
 
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
+	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist ) ) )
+		var/datum/game_mode/heist/M = SSticker.mode
 		M.cortical_stacks[new_vox.mind] = I
 		M.raiders[new_vox.mind] = I
 
-	ticker.mode.traitors += new_vox.mind
+	SSticker.mode.traitors += new_vox.mind
 	new_vox.equip_vox_raider()
 
 	return new_vox
@@ -580,11 +580,11 @@
 			candidates.Remove(G)
 
 	if(candidates.len >= 2)
-		var/number =  ticker.mode.abductor_teams + 1
+		var/number =  SSticker.mode.abductor_teams + 1
 
 		var/datum/game_mode/abduction/temp
-		if(ticker.mode.config_tag == "abduction")
-			temp = ticker.mode
+		if(SSticker.mode.config_tag == "abduction")
+			temp = SSticker.mode
 		else
 			temp = new
 
@@ -608,11 +608,11 @@
 		temp.abductors = list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
-		ticker.mode.abductor_teams++
+		SSticker.mode.abductors += temp.abductors
+		SSticker.mode.abductor_teams++
 
-		if(ticker.mode.config_tag != "abduction")
-			ticker.mode.abductors |= temp.abductors
+		if(SSticker.mode.config_tag != "abduction")
+			SSticker.mode.abductors |= temp.abductors
 
 		return 1
 	else

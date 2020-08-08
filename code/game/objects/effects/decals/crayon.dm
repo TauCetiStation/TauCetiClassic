@@ -52,14 +52,14 @@
 		gang = type
 		color = "#00b7ef"
 		icon_state = gang_name("A")
-		ticker.mode.A_territory_new |= list(territory.type = territory.name)
-		ticker.mode.A_territory_lost -= territory.type
+		SSticker.mode.A_territory_new |= list(territory.type = territory.name)
+		SSticker.mode.A_territory_lost -= territory.type
 	else if(type == "B")
 		gang = type
 		color = "#da0000"
 		icon_state = gang_name("B")
-		ticker.mode.B_territory_new |= list(territory.type = territory.name)
-		ticker.mode.B_territory_lost -= territory.type
+		SSticker.mode.B_territory_new |= list(territory.type = territory.name)
+		SSticker.mode.B_territory_lost -= territory.type
 
 	. = ..(mapload, color, color, icon_state, e_name)
 
@@ -67,11 +67,11 @@
 	var/area/territory = get_area(src)
 
 	if(gang == "A")
-		ticker.mode.A_territory_new -= territory.type
-		ticker.mode.A_territory_lost |= list(territory.type = territory.name)
+		SSticker.mode.A_territory_new -= territory.type
+		SSticker.mode.A_territory_lost |= list(territory.type = territory.name)
 	if(gang == "B")
-		ticker.mode.B_territory_new -= territory.type
-		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
+		SSticker.mode.B_territory_new -= territory.type
+		SSticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
 	return ..()
 

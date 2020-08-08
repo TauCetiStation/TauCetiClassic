@@ -1,5 +1,5 @@
 /client/proc/only_one()
-	if(!ticker)
+	if(!SSticker)
 		alert("The game hasn't started yet!")
 		return
 
@@ -7,7 +7,7 @@
 		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 
-		ticker.mode.traitors += H.mind
+		SSticker.mode.traitors += H.mind
 		H.mind.special_role = "traitor"
 
 		var/datum/objective/steal/steal_objective = new

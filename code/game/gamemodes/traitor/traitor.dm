@@ -243,10 +243,10 @@
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 
-	if(ticker.reconverted_antags.len)
+	if(SSticker.reconverted_antags.len)
 		text += "<br><hr>"
-		for(var/reconverted in ticker.reconverted_antags)
-			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
+		for(var/reconverted in SSticker.reconverted_antags)
+			text += printplayerwithicon(SSticker.reconverted_antags[reconverted])
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))
