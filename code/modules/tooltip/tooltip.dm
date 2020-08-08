@@ -42,6 +42,9 @@ Notes:
 /datum/tooltip/New(client/C)
 	if (C)
 		owner = C
+		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
+		stuff.register()
+		stuff.send(owner)
 		owner << browse(file2text(file), "window=[control]")
 	..()
 

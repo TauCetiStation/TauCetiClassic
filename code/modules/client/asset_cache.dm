@@ -185,6 +185,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
 	)
 
+/datum/asset/simple/jquery
+	_abstract = /datum/asset/simple/jquery
+	assets = list(
+		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
+	)
+
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
 	_abstract = /datum/asset/simple/spider_os
