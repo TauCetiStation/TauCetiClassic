@@ -276,7 +276,7 @@
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
-	var/accumulator_warning
+	var/accumulator_warning = 0
 
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
