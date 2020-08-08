@@ -144,15 +144,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //get a assetdatum or make a new one
 /proc/get_asset_datum(var/type)
-	if (!(type in asset_datums))
-		return new type()
-	return asset_datums[type]
+	return asset_datums[type] || new type()
 
 /datum/asset
 	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
 
 /datum/asset/New()
 	asset_datums[type] = src
+	register()
 
 /datum/asset/proc/register()
 	return
@@ -169,6 +168,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
+
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
 
