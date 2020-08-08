@@ -47,6 +47,9 @@
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			to_chat(C, "DEBUG: [text]")
 
+/proc/log_asset(text)
+	if (config && config.log_asset)
+		global.asset_log << "\[[time_stamp()]]ASSET: [text][log_end]"
 
 /proc/log_game(text)
 	if (config.log_game)

@@ -26,6 +26,7 @@ var/list/net_announcer_secret = list()
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
 	var/log_qdel = 0						// same but for debug qdel logs
+	var/log_asset = 0
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -350,6 +351,9 @@ var/list/net_announcer_secret = list()
 
 				if ("log_qdel")
 					config.log_qdel = 1
+
+				if ("log_asset")
+					config.log_asset = 1
 
 				if ("log_runtime")
 					config.log_runtime = 1
