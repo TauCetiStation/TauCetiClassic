@@ -556,7 +556,7 @@
 			dat += check_role_table("Borers", borers, src)
 
 		if(SSticker.mode.changelings.len)
-			dat += check_role_table("Changelings", ticker.mode.changelings, src)
+			dat += check_role_table("Changelings", SSticker.mode.changelings, src)
 
 		if(SSticker.mode.wizards.len)
 			dat += check_role_table("Wizards", SSticker.mode.wizards, src)
