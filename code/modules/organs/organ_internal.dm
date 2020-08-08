@@ -328,16 +328,16 @@
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
 	if(owner.nutrition < 1)
-		owner.SetParalysis(5)
+		owner.SetParalysis(2)
 		if(accumulator_warning < world.time)
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
 			accumulator_warning = world.time + 15 SECONDS
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-		owner.SetParalysis(5)
-		owner.eye_blurry = 5
-		owner.silent = 5
+		owner.SetParalysis(2)
+		owner.eye_blurry = 2
+		owner.silent = 2
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
