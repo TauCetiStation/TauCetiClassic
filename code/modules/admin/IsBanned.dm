@@ -166,7 +166,7 @@
 					return null
 		if (byond_ban[BANKEY_FROMDB])
 			// update matches DB cache
-			INVOKE_ASYNC(SSstickyban, /datum/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
+			INVOKE_ASYNC(SSstickyban, /datum/controller/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
 		if (is_admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null

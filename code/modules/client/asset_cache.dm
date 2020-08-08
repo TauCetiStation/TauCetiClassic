@@ -41,7 +41,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		return 0
 
 	log_asset("Sending asset [asset_name] to client [client]")
-	client << browse_rsc(SSasset.cache[asset_name], asset_name)
+	client << browse_rsc(SSassets.cache[asset_name], asset_name)
 	if(!verify)
 		client.cache += asset_name
 		return 1
@@ -86,9 +86,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "<span class='info'><b>Sending Resources, please wait...</b></span>")
 	for(var/asset in unreceived)
-		if (asset in SSasset.cache)
+		if (asset in SSassets.cache)
 			log_asset("Sending asset [asset] to client [client]")
-			client << browse_rsc(SSasset.cache[asset], asset)
+			client << browse_rsc(SSassets.cache[asset], asset)
 
 	if(!verify) // Can't access the asset cache browser, rip.
 		client.cache += unreceived
@@ -137,7 +137,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
-	SSasset.cache[asset_name] = asset
+	SSassets.cache[asset_name] = asset
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 
@@ -285,7 +285,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
-	
+
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
 

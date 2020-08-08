@@ -135,7 +135,7 @@
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
 				if(prob(2))
-					if(ticker.current_state > GAME_STATE_SETTING_UP)
+					if(SSticker.current_state > GAME_STATE_SETTING_UP)
 						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 					else
 						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
@@ -143,7 +143,7 @@
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
@@ -538,7 +538,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				if(ticker.current_state > GAME_STATE_SETTING_UP)
+				if(SSticker.current_state > GAME_STATE_SETTING_UP)
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
@@ -564,7 +564,7 @@
 
 	SpawnMonster(T)
 	var/turf/t
-	if(ticker.current_state > GAME_STATE_SETTING_UP)
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
 	else
 		t = T.ChangeTurf(basetype)

@@ -1,16 +1,11 @@
-var/datum/subsystem/assets/SSasset
-
-/datum/subsystem/assets
+SUBSYSTEM_DEF(assets)
 	name = "Assets"
 	init_order = SS_INIT_ASSETS
 	flags = SS_NO_FIRE
 	var/list/cache = list()
 	var/list/preload = list()
 
-/datum/subsystem/assets/New()
-	NEW_SS_GLOBAL(SSasset)
-
-/datum/subsystem/assets/Initialize(timeofday)
+/datum/controller/subsystem/assets/Initialize(timeofday)
 	for(var/type in typesof(/datum/asset))
 		var/datum/asset/A = type
 		if (type != initial(A._abstract))

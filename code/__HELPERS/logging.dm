@@ -114,7 +114,7 @@
 
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
-	if (!ticker || ticker.current_state == GAME_STATE_STARTUP)
+	if (!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
 		preconfig_init_log += "[text][log_end]"
 		return
 
@@ -206,7 +206,7 @@
 	var/temprole
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
-	for(var/datum/mind/Mind in ticker.minds)
+	for(var/datum/mind/Mind in SSticker.minds)
 		temprole = Mind.special_role
 		objectives = ""
 		if(temprole)							//if they are an antagonist of some sort.
@@ -239,11 +239,11 @@
 	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
 	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
 	stats["duration"] = roundduration2text()
-	stats["mode"] = ticker.mode
-	stats["mode_result"] = ticker.mode.mode_result
+	stats["mode"] = SSticker.mode
+	stats["mode_result"] = SSticker.mode.mode_result
 	stats["map"] = SSmapping.config.map_name
 
-	stats["completion_html"] = ticker.mode.completion_text
+	stats["completion_html"] = SSticker.mode.completion_text
 	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?
 
 	stats["score"] = score
