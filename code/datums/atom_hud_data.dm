@@ -297,7 +297,7 @@
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
-/obj/machinery/door/airlock/proc/diag_hud_set_electrified()
+/obj/machinery/door/proc/diag_hud_set_electrified()
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
 	if(secondsElectrified != 0)
 		holder.icon_state = "electrified"

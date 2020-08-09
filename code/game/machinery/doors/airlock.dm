@@ -763,6 +763,7 @@ var/list/airlock_overlays = list()
 						secondsElectrified = 0
 					else if(secondsElectrified > 0)
 						secondsElectrified = 0
+					diag_hud_set_electrified()
 
 				if(7)
 					// Close door
@@ -860,6 +861,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = -1
+						diag_hud_set_electrified()
 
 				if(7)
 					// Open door
