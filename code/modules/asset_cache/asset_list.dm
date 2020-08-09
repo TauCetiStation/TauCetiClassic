@@ -5,7 +5,7 @@
 /var/global/list/asset_datums = list()
 
 //get an assetdatum or make a new one
-/proc/get_asset_datum(var/type)
+/proc/get_asset_datum(type)
 	return global.asset_datums[type] || new type()
 
 /datum/asset
