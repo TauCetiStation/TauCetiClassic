@@ -1586,7 +1586,6 @@
 				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
-			see_invisible = SEE_INVISIBLE_MINIMUM
 	set_EyesVision(sightglassesmod)
 
 /mob/living/carbon/human/proc/handle_random_events()
