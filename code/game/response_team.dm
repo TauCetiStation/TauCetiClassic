@@ -232,8 +232,8 @@ var/can_call_ert
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
 	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
-	if(!(M.mind in ticker.minds))
-		ticker.minds += M.mind//Adds them to regular mind list.
+	if(!(M.mind in SSticker.minds))
+		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
 	return M

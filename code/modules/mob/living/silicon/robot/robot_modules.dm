@@ -315,7 +315,6 @@
 
 /obj/item/weapon/robot_module/miner/atom_init()
 	. = ..()
-	modules += new /obj/item/borg/sight/hud/miner(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)

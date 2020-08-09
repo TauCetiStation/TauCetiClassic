@@ -838,7 +838,6 @@
 				SSticker.mode.remove_gangster(src, 0, 2)
 				SSticker.mode.B_bosses += src
 				src.special_role = "[gang_name("B")] Gang (B) Boss"
-				SSticker.mode.update_gang_icons_added(src, "B")
 				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", current)
 				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>")
 				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
@@ -995,7 +994,6 @@
 			if("nuclear")
 				if(!(src in SSticker.mode.syndicates))
 					SSticker.mode.syndicates += src
-					SSticker.mode.update_synd_icons_added(src)
 					if (SSticker.mode.syndicates.len==1)
 						SSticker.mode.prepare_syndicate_leader(src)
 					else
@@ -1373,7 +1371,6 @@
 /datum/mind/proc/make_Nuke()
 	if(!(src in SSticker.mode.syndicates))
 		SSticker.mode.syndicates += src
-		SSticker.mode.update_synd_icons_added(src)
 		if (SSticker.mode.syndicates.len==1)
 			SSticker.mode.prepare_syndicate_leader(src)
 		else

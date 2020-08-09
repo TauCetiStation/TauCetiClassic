@@ -12,10 +12,6 @@
 			if(mode)
 				mode.update_all_icons()
 
-	//Zombies
-	if(src in zombie_list)
-		update_all_zombie_icons()
-
 	//Vents
 	if(ventcrawler)
 		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
