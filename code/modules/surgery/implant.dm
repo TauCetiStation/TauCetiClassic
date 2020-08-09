@@ -137,8 +137,6 @@
 			var/obj/item/gland/gland = tool
 			user.drop_item()
 			gland.Inject(target)
-			var/datum/atom_hud/abductor/hud = global.huds[DATA_HUD_ABDUCTOR]
-			hud.remove_from_hud(gland.host)
 			BP.cavity = 0
 			return
 	user.drop_item()

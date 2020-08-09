@@ -1148,12 +1148,16 @@
 			if("clear")
 				to_chat(usr, "Not implemented yet. Sorry!") // Mmm, nice!
 				remove_antag_hud(ANTAG_HUD_ABDUCTOR, current)
+				var/datum/atom_hud/abductor_hud = global.huds[DATA_HUD_ABDUCTOR]
+				abductor_hud.remove_hud_from(current)
 			if("abductor")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
 				make_Abductor()
 				add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductor", current)
+				var/datum/atom_hud/abductor_hud = global.huds[DATA_HUD_ABDUCTOR]
+				abductor_hud.add_hud_to(current)
 				current.regenerate_icons()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 			if("equip")

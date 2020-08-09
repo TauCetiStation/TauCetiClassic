@@ -663,6 +663,9 @@ BLIND     // can't see anything
 				to_chat(usr, "Your suit will now report your vital lifesigns.")
 			if(SUIT_SENSOR_TRACKING)
 				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.update_suit_sensors()
 
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
@@ -674,17 +677,15 @@ BLIND     // can't see anything
 				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
 				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(src.loc))
+			var/mob/living/carbon/C = src.loc
+			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
 	set_sensors(usr)
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
 
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
