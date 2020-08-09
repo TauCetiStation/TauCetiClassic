@@ -73,7 +73,7 @@
 	var/sec_record = ""
 	var/gen_record = ""
 	var/blinded = null
-	var/daltonism = 0
+	var/daltonism = FALSE
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
