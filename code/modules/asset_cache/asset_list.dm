@@ -45,6 +45,26 @@
 			continue
 		.[asset_name] = ACI.url
 
+// For registering or sending multiple others at once
+/datum/asset/group
+	_abstract = /datum/asset/group
+	var/list/children
+
+/datum/asset/group/register()
+	for(var/type in children)
+		get_asset_datum(type)
+
+/datum/asset/group/send(client/C)
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		. = A.send(C) || .
+
+/datum/asset/group/get_url_mappings()
+	. = list()
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		. += A.get_url_mappings()
+
 /*
  * Spritesheet implementation - coalesces various icons into a single .png file
  * and uses CSS to select icons out of that file - saves on transferring some

@@ -1,30 +1,37 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/goonchat
-	_abstract = /datum/asset/simple/goonchat
-	assets = list(
-		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
-		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
-		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
-		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
-		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
-		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css',
-		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
-		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
+/datum/asset/group/goonchat
+	children = list(
+		/datum/asset/simple/jquery,
+		/datum/asset/simple/goonchat,
+		/datum/asset/simple/fontawesome
 	)
 
 /datum/asset/simple/jquery
-	_abstract = /datum/asset/simple/jquery
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
 	)
 
+/datum/asset/simple/goonchat
+	assets = list(
+		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
+		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
+		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
+	)
+
+/datum/asset/simple/fontawesome
+	assets = list(
+		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
+		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css'
+	)
+
 /datum/asset/simple/spider_os
-	_abstract = /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
 		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
@@ -43,14 +50,12 @@
 	)
 
 /datum/asset/simple/paper
-	_abstract = /datum/asset/simple/paper
 	assets = list(
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
 /datum/asset/simple/newscaster
-	_abstract = /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
 		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
@@ -59,7 +64,6 @@
 	)
 
 /datum/asset/simple/chess
-	_abstract = /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
 		"BN.png" = 'icons/obj/chess/board_BN.png',
