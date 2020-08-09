@@ -235,7 +235,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if(C.ckey == key)
 			p_age = C.player_age
 			p_ingame_age = C.player_ingame_age
-
+		else
+			var/age_and_ingame_age = load_info_player_db_age_and_ingame_age(key)
+			p_age = age_and_ingame_age[1]
+			p_ingame_age = age_and_ingame_age[2]
 	// Gather data
 	var/list/db_messages = load_info_player_db_messages(key)
 	var/list/db_bans = load_info_player_db_bans(key)
@@ -268,6 +271,19 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)
 	return a.get_days_timestamp() - b.get_days_timestamp()
+
+/datum/admins/proc/load_info_player_db_age_and_ingame_age(player_ckey)
+	var/list/age_and_ingame_age
+	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sanitize_sql(player_ckey)]'")
+
+	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
+		return           // dbcore revision needed
+
+	while(query.NextRow())
+		age_and_ingame_age[1] = text2num(query.item[1])
+		age_and_ingame_age[2] = text2num(query.item[2])
+		break
+	return age_and_ingame_age
 
 /datum/admins/proc/load_info_player_db_messages(player_ckey)
 	// Get player ckey and generate list of players_notes
