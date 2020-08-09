@@ -119,9 +119,9 @@
 		window_size = "size=[width]x[height];"
 	send_asset(user, "error_handler.js")
 	if(stylesheets.len)
-		send_asset_list(user, stylesheets, verify=FALSE)
+		send_asset_list(user, stylesheets)
 	if(scripts.len)
-		send_asset_list(user, scripts, verify=FALSE)
+		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if(use_onclose)
 		onclose(user, window_id, ref)

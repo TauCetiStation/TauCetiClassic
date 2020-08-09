@@ -14,6 +14,9 @@
 	asset_datums[type] = src
 	register()
 
+/datum/asset/proc/get_url_mappings()
+	return list()
+
 /datum/asset/proc/register()
 	return
 
@@ -25,14 +28,21 @@
 /datum/asset/simple
 	_abstract = /datum/asset/simple
 	var/assets = list()
-	var/verify = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
-		register_asset(asset_name, assets[asset_name])
+		assets[asset_name] = register_asset(asset_name, assets[asset_name])
 
 /datum/asset/simple/send(client)
-	send_asset_list(client,assets,verify)
+	. = send_asset_list(client, assets)
+
+/datum/asset/simple/get_url_mappings()
+	. = list()
+	for (var/asset_name in assets)
+		var/datum/asset_cache_item/ACI = assets[asset_name]
+		if (!ACI)
+			continue
+		.[asset_name] = ACI.url
 
 /*
  * Spritesheet implementation - coalesces various icons into a single .png file
@@ -85,7 +95,7 @@
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_asset_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for(var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -122,6 +132,17 @@
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+/datum/asset/spritesheet/get_url_mappings()
+	if (!name)
+		return
+	. = list("spritesheet_[name].css" = get_asset_url("spritesheet_[name].css"))
+	for(var/size_id in sizes)
+		.["[name]_[size_id].png"] = get_asset_url("[name]_[size_id].png")
+
+
+/datum/asset/spritesheet/proc/css_filename()
+	return get_asset_url("spritesheet_[name].css")
 
 #undef SPR_SIZE
 #undef SPR_IDX

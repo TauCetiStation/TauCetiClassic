@@ -1057,6 +1057,7 @@
 #include "code\modules\assembly\voice.dm"
 #include "code\modules\asset_cache\asset_cache.dm"
 #include "code\modules\asset_cache\asset_cache_client.dm"
+#include "code\modules\asset_cache\asset_cache_item.dm"
 #include "code\modules\asset_cache\asset_list.dm"
 #include "code\modules\asset_cache\asset_list_items.dm"
 #include "code\modules\atmospheric\machinery\_atmos_setup.dm"
