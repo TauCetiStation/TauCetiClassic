@@ -1,17 +1,18 @@
 //These datums are used to populate the asset cache, the proc "register()" does this.
+//Place any asset datums you create in asset_list_items.dm
 
 //all of our asset datums, used for referring to these later
 /var/global/list/asset_datums = list()
 
-//get a assetdatum or make a new one
+//get an assetdatum or make a new one
 /proc/get_asset_datum(var/type)
-	return asset_datums[type] || new type()
+	return global.asset_datums[type] || new type()
 
 /datum/asset
 	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
 
 /datum/asset/New()
-	asset_datums[type] = src
+	global.asset_datums[type] = src
 	register()
 
 /datum/asset/proc/get_url_mappings()
@@ -140,6 +141,9 @@
 	for(var/size_id in sizes)
 		.["[name]_[size_id].png"] = get_asset_url("[name]_[size_id].png")
 
+
+/datum/asset/spritesheet/proc/css_tag()
+	return {"<link rel="stylesheet" href="[css_filename()]" />"}
 
 /datum/asset/spritesheet/proc/css_filename()
 	return get_asset_url("spritesheet_[name].css")
