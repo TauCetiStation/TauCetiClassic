@@ -258,7 +258,7 @@
 /obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
-	START_PROCESSING(SSmachine, src)
+	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_open()

@@ -6,10 +6,15 @@
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
 	//Round specific stuff like hud updates
-	if(ticker && ticker.mode)
-		var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-		if(mode)
-			mode.update_all_icons()
+	if(SSticker && SSticker.mode)
+		if(SSticker.mode.name == "mutiny")
+			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+			if(mode)
+				mode.update_all_icons()
+
+	//Zombies
+	if(src in zombie_list)
+		update_all_zombie_icons()
 
 	//Vents
 	if(ventcrawler)

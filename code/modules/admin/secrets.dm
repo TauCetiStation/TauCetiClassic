@@ -190,7 +190,7 @@
 			feedback_add_details("admin_secrets_fun_used","TriAI")
 		// Toggle station artificial gravity
 		if("gravity")
-			if(!(ticker && ticker.mode))
+			if(!(SSticker && SSticker.mode))
 				to_chat(usr, "Please wait until the game starts!  Not sure how it will work otherwise.")
 				return
 			gravity_is_on = !gravity_is_on
@@ -232,7 +232,7 @@
 			power_restore_quick()
 		// Warp all Players to Prison
 		if("prisonwarp")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!", null, null, null, null, null)
 				return
 			feedback_inc("admin_secrets_fun_used",1)
@@ -267,7 +267,7 @@
 				prisonwarped += H
 		// Everyone is the traitor
 		if("traitor_all")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = sanitize(input("Enter an objective"))
@@ -279,26 +279,26 @@
 				if(H.stat == DEAD || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
 				//traitorize(H, objective, 0)
-				ticker.mode.traitors += H.mind
+				SSticker.mode.traitors += H.mind
 				H.mind.special_role = "traitor"
 				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
 				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
-				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
+				SSticker.mode.greet_traitor(H.mind)
+				//SSticker.mode.forge_traitor_objectives(H.mind)
+				SSticker.mode.finalize_traitor(H.mind)
 			for(var/mob/living/silicon/A in player_list)
-				ticker.mode.traitors += A.mind
+				SSticker.mode.traitors += A.mind
 				A.mind.special_role = "traitor"
 				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", A)
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective
 				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
+				SSticker.mode.greet_traitor(A.mind)
+				SSticker.mode.finalize_traitor(A.mind)
 			message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
@@ -604,10 +604,10 @@
 			output_ai_laws()
 		// Show Game Mode
 		if("showgm")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!")
-			else if (ticker.mode)
-				alert("The game mode is [ticker.mode.name]")
+			else if (SSticker.mode)
+				alert("The game mode is [SSticker.mode.name]")
 			else alert("For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
 		if("manifest")

@@ -178,7 +178,7 @@
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
 		var/datum/objective/abductee/O = new objtype()
-		ticker.mode.abductees += H.mind
+		SSticker.mode.abductees += H.mind
 		H.mind.add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductee", H)
 		H.mind.objectives += O
 		var/obj_count = 1

@@ -289,7 +289,7 @@ VOX HEIST ROUNDTYPE
 	var/text = ""
 	if(raiders.len)
 		var/check_return = 0
-		if(ticker && istype(ticker.mode, /datum/game_mode/heist))
+		if(SSticker && istype(SSticker.mode, /datum/game_mode/heist))
 			check_return = 1
 
 		text += printlogo("raider", "vox raiders") // pirates icon, until someone makes proper.
@@ -298,7 +298,7 @@ VOX HEIST ROUNDTYPE
 			text += "<br>[vox.key] was [vox.name] ("
 
 			if(check_return)
-				var/datum/game_mode/heist/GM = ticker.mode
+				var/datum/game_mode/heist/GM = SSticker.mode
 				var/left_behind = TRUE
 
 				var/obj/item/weapon/implant/cortical/I = GM.cortical_stacks[vox]

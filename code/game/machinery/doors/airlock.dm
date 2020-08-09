@@ -847,7 +847,7 @@ var/list/airlock_overlays = list()
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
 						diag_hud_set_electrified()
-						START_PROCESSING(SSmachine, src)
+						START_PROCESSING(SSmachines, src)
 
 				if(6)
 					// Electrify door indefinitely
@@ -1204,7 +1204,7 @@ var/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/attackby(obj/item/O, mob/user)
 	if(iswrench(O))
-		if(ticker >= 300)
+		if(SSticker >= 300)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)
 			new /obj/item/stack/sheet/metal(loc)
@@ -1223,7 +1223,7 @@ var/list/airlock_overlays = list()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/door_scrap/process()
-	if(ticker >= 300)
+	if(SSticker >= 300)
 		cut_overlays()
 		STOP_PROCESSING(SSobj, src)
 		return

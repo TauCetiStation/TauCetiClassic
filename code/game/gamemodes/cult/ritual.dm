@@ -322,7 +322,7 @@ var/list/cult_datums = list()
 		if(obj_to_check.density)
 			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
 			return
-	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(SSticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return
 	switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000

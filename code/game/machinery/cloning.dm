@@ -212,8 +212,8 @@
 	if(mode)
 		mode.update_icon(H)
 
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
+	if (H.mind in SSticker.mode.cult)
+		SSticker.mode.add_cultist(src.occupant.mind)
 
 	// -- End mode specific stuff
 
