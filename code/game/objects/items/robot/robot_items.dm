@@ -60,7 +60,3 @@
 	sight_mode = BORGNIGHT
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'
-
-// TODO: FUCK THIS AND REWORK HERE
-/obj/item/borg/sight/hud/miner
-	name = "geological hud"
