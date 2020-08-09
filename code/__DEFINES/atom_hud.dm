@@ -34,6 +34,8 @@
 #define IMPMINDS_HUD		"15"
 // Broken glasses hud
 #define BROKEN_HUD			"16"
+// Mine huds
+#define MINE_HUD			"17"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -46,6 +48,7 @@
 #define DATA_HUD_DIAGNOSTIC				3
 #define DATA_HUD_ABDUCTOR				4
 #define DATA_HUD_BROKEN					21
+#define DATA_HUD_MINER					22
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          5

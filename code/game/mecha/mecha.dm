@@ -92,8 +92,8 @@
 	mechas_list += src //global mech list
 	maxhealth = health
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
-		diag_hud.add_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()

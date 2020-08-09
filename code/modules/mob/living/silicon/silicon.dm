@@ -7,6 +7,7 @@
 	var/med_hud = DATA_HUD_MEDICAL //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC //Determines the diag hud to use
+	var/mine_hud = DATA_HUD_MINER //Determines the mine hud to use
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
@@ -22,8 +23,8 @@
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
-		diag_hud.add_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 
@@ -194,6 +195,7 @@
 	med.add_hud_to(src)
 	var/datum/atom_hud/diagsensor = global.huds[d_hud]
 	diagsensor.add_hud_to(src)
+
 	sensor_mode = TRUE
 	to_chat(src, "Sensor augmentations enabled.")
 

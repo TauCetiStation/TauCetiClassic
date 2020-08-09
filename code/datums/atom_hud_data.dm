@@ -46,7 +46,10 @@
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
-/datum/atom_hud/data/broken
+/datum/atom_hud/data/mine
+	hud_icons = list(MINE_HUD)
+
+/datum/atom_hud/broken
 	hud_icons = list(BROKEN_HUD)
 
 /datum/atom_hud/abductor
@@ -242,6 +245,16 @@
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
+/*~~~~~~~~~~~~~~~~~~~~
+	MINECRAFT HUDs
+~~~~~~~~~~~~~~~~~~~~~*/
+/turf/simulated/mineral/proc/set_mine_hud()
+	var/image/holder = hud_list[MINE_HUD]
+	if(finds && finds.len || artifact_find)
+		holder.icon_state = "hudanomaly"
+	if(mineral)
+		holder.icon_state = "hud[mineral.ore_type]"
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BROKEN HUUDs

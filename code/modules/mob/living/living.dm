@@ -8,8 +8,8 @@
 	default_layer = layer
 	var/datum/atom_hud/data/medical/medhud = global.huds[DATA_HUD_MEDICAL]
 	medhud.add_to_hud(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
-		diag_hud.add_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
 
 
 /mob/living/Destroy()

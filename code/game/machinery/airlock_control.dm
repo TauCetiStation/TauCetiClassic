@@ -4,7 +4,6 @@
 /obj/machinery/door/airlock
 	var/id_tag
 	var/suppres_next_status_send = FALSE
-	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -113,11 +112,6 @@
 	
 	if(radio_controller)
 		set_frequency(frequency)
-
-	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in global.huds)
-		diag_hud.add_to_hud(src)
-	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)

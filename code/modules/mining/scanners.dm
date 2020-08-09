@@ -39,7 +39,6 @@
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 //	user << "[M.mineral], [M.toughness], [M.ore_amount]"
-// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
@@ -47,29 +46,8 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
-//	vision_flags = SEE_TURFS
-//	invisa_view = 2
-	var/error
+	hud_type = DATA_HUD_MINER
 
-/obj/item/clothing/glasses/hud/mining/atom_init()
-	. = ..()
-	error = pick(-1,1)
-
-// TODO: FUCK THIS AND REWORK HERE
-/obj/item/clothing/glasses/hud/mining/proc/process_hud(mob/M)
-	if(!M)	return
-	if(!M.client)	return
-	var/client/C = M.client
-	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
-	for(var/turf/simulated/mineral/rock in RANGE_TURFS(7, (get_turf(M))))
-		if(!C) return
-
-		if(rock.finds && rock.finds.len || rock.artifact_find)
-			C.images += image(hudMineral,rock,"hudanomaly")
-		else if (rock.mineral)
-			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
-
-// TODO: FUCK THIS AND REWORK HERE
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."

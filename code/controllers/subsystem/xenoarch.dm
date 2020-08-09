@@ -93,6 +93,12 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 		if(isnull(archeo_turf.finds))
 			archeo_turf.finds = list()
+
+			archeo_turf.prepare_huds()
+			var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+			mine.add_to_hud(archeo_turf)
+			archeo_turf.set_mine_hud()
+
 			if(prob(50))
 				archeo_turf.finds += new /datum/find(digsite, rand(5,95))
 				digsite_spawning_turfs += archeo_turf

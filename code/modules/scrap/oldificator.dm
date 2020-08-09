@@ -166,7 +166,7 @@
 	if(prob(75))
 		block = pick(MONKEYBLOCK, HALLUCINATIONBLOCK, DEAFBLOCK, BLINDBLOCK, NERVOUSBLOCK, TWITCHBLOCK, CLUMSYBLOCK, COUGHBLOCK, HEADACHEBLOCK, GLASSESBLOCK)
 	..()
-// TODO: FUCK THIS AND REWORK HERE brokens
+
 /obj/item/clothing/glasses/hud/make_old()
 	if(prob(75))
 		broke_hud()

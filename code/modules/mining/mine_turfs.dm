@@ -9,6 +9,7 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
+	hud_possible = list(MINE_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
@@ -35,6 +36,11 @@
 /turf/simulated/mineral/atom_init_late()
 	MineralSpread()
 	update_overlays()
+
+/turf/simulated/mineral/Destroy()
+	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	mine.remove_from_hud(src)
+	return ..()
 
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
@@ -107,6 +113,12 @@
 					target_turf.mineral = mineral
 					target_turf.UpdateMineral()
 					target_turf.MineralSpread()
+					if(!istype(src, /turf/simulated/floor/plating/airless/asteroid))
+						target_turf.prepare_huds()
+						var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+						mine.add_to_hud(target_turf)
+						target_turf.set_mine_hud()
+
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
@@ -127,7 +139,6 @@
 	else
 		name = "Rock"
 		icon_state = "rock"
-		return
 
 /turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
 	if(mineral)
@@ -616,6 +627,11 @@
 	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid_stone_[rand(1,10)]"
+
+	//I dont know how, but it gets into hudatoms
+	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	if(src in mine.hudatoms)
+		mine.remove_from_hud(src)
 
 	return INITIALIZE_HINT_LATELOAD
 
