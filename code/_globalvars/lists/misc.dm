@@ -134,6 +134,10 @@ var/global/static/list/radial_question = list(
 	"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_cancel")
 )
 
+// Alternate version of color_by_hex
+// Use /hex2color(hex) for find color use this list
+var/global/list/hex_by_color
+
 // Use /hex2color(hex) for find color
 var/global/static/list/color_by_hex = list(
 	"black" = "#000000",
