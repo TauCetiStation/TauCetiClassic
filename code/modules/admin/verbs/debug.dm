@@ -2112,7 +2112,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	// Re-load the assets.
 	get_asset_datum(/datum/asset/nanoui)
 
-	// Clear the user's cache so they get resent.
-	usr.client.cache = list()
+	// Clear the user's sent_assets so they get resent.
+	usr.client.sent_assets = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")

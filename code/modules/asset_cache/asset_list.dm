@@ -52,7 +52,7 @@
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
 
 /datum/asset/spritesheet/register()
-	if (!name)
+	if(!name)
 		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
 	var/res_name = "spritesheet_[name].css"
@@ -69,7 +69,7 @@
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
 		var/size = sizes[size_id]
-		if (size[SPRSZ_STRIPPED])
+		if(size[SPRSZ_STRIPPED])
 			continue
 
 		// save flattened version
@@ -82,12 +82,12 @@
 /datum/asset/spritesheet/proc/generate_css()
 	var/list/out = list()
 
-	for (var/size_id in sizes)
+	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
 		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
 
-	for (var/sprite_id in sprites)
+	for(var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
 		var/size_id = sprite[SPR_SIZE]
 		var/idx = sprite[SPR_IDX]
@@ -105,15 +105,15 @@
 
 /datum/asset/spritesheet/proc/insert_icon_in_list(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
-	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
+	if(!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
-	if (sprites[sprite_name])
+	if(sprites[sprite_name])
 		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
 
-	if (size)
+	if(size)
 		var/position = size[SPRSZ_COUNT]++
 		var/icon/sheet = size[SPRSZ_ICON]
 		size[SPRSZ_STRIPPED] = null

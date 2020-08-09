@@ -79,3 +79,5 @@
 	var/datum/chatOutput/chatOutput
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
+
+	var/connection_time

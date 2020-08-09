@@ -210,6 +210,8 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
+	connection_time = world.time
+
 	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
