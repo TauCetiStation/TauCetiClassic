@@ -833,12 +833,12 @@
 			size_ratio_resisting = get_size_ratio(G.assailant, L)
 			if(!size_ratio_resisting)
 				size_ratio_grabbing = 1 / size_ratio_resisting
-			g_resist_cost = L.resist_cost * size_ratio_grabbing
-			r_resist_cost = L.resist_cost * size_ratio_resisting
-			if(L.getStamina() >= g_resist_cost)
-				G.assailant.adjustStamina(-g_resist_cost)
-				L.adjustStamina(-r_resist_cost)
-				L.visible_message("<span class='danger'>[L] resists!</span>")
+				g_resist_cost = L.resist_cost * size_ratio_grabbing
+				r_resist_cost = L.resist_cost * size_ratio_resisting
+				if(L.getStamina() >= g_resist_cost)
+					G.assailant.adjustStamina(-g_resist_cost)
+					L.adjustStamina(-r_resist_cost)
+					L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
