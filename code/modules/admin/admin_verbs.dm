@@ -21,7 +21,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_subtle_message,	//send an message to somebody as a 'voice in their head',
 	/client/proc/cmd_admin_delete,		//delete an instance/object/mob/etc,
 	/client/proc/cmd_admin_check_contents,	//displays the contents of an instance,
-	/client/proc/toggle_combo_hud,			//all aviables huds
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/access_news_network,	//allows access of newscasters,
@@ -69,6 +68,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,	// Allows a ghost to respawn,
 	/client/proc/aooc,
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,

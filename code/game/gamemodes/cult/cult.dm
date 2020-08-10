@@ -197,6 +197,7 @@
 		return
 	if (!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
+	add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
