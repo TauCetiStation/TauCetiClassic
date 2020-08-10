@@ -24,4 +24,3 @@
 
 /mob/living
 	var/changeling_aug = 0
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD)

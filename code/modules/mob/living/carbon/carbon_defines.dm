@@ -1,5 +1,6 @@
 /mob/living/carbon
 	gender = MALE
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD)
 	var/list/stomach_contents = list()
 	var/chest_brain_op_stage = 0
 	var/list/datum/disease2/disease/virus2 = list()
