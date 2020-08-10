@@ -25,7 +25,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
 	var/data_hud = FALSE
-	var/antagHUD = 0
+	var/antagHUD = FALSE
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
@@ -33,7 +33,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -276,6 +275,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles all HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud
 		for(var/hudtype in datahuds)
@@ -307,16 +307,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
 		if(response == "No")
 			return
-		M.can_reenter_corpse = 0
+		M.can_reenter_corpse = FALSE
 	if(!M.has_enabled_antagHUD && !client.holder)
-		M.has_enabled_antagHUD = 1
+		M.has_enabled_antagHUD = TRUE
 	if(M.antagHUD)
-		M.antagHUD = 0
+		M.antagHUD = FALSE
 		for(var/datum/atom_hud/antag/H in global.huds)
 			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
-		M.antagHUD = 1
+		M.antagHUD = TRUE
 		for(var/datum/atom_hud/antag/H in global.huds)
 			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")

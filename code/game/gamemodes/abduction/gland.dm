@@ -25,9 +25,6 @@
 	host = target
 	target.organs += src
 	src.loc = target
-	var/datum/atom_hud/abductor/hud = global.huds[DATA_HUD_ABDUCTOR]
-	hud.add_to_hud(host)
-	update_gland_hud()
 
 /obj/item/gland/process()
 	if(!active)

@@ -1,3 +1,4 @@
+#define HIDDEN_SCANNER 1
 /*
  * Data HUDs have been rewritten in a more generic way.
  * In short, they now use an observer-listener pattern.
@@ -52,8 +53,6 @@
 /datum/atom_hud/broken
 	hud_icons = list(BROKEN_HUD)
 
-/datum/atom_hud/abductor
-	hud_icons = list(GLAND_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -71,7 +70,7 @@
 	var/severity
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(!(D.hidden[1]))
+		if(!D.hidden[HIDDEN_SCANNER])
 			if(!threat || D.severity > threat) //a buffing virus gets an icon
 				threat = D.severity
 				severity = D.severity
@@ -286,15 +285,6 @@
 		holder.icon_state = "hudwarn"
 
 /*~~~~~~~~~~~~
-	Gland!
-~~~~~~~~~~~~~*/
-/obj/item/gland/proc/update_gland_hud()
-	if(!host)
-		return
-	var/image/holder = host.hud_list[GLAND_HUD]
-	holder.icon_state = "hudgland_ready"
-
-/*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
 /obj/machinery/door/proc/diag_hud_set_electrified()
@@ -351,3 +341,5 @@
 			return "health-85"
 		else
 			return "health-100"
+
+#undef HIDDEN_SCANNER

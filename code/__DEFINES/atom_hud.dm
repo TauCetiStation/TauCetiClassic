@@ -26,16 +26,14 @@
 #define DIAG_MECH_HUD		"11"
 /// Airlock shock overlay
 #define DIAG_AIRLOCK_HUD 	"12"
-/// Gland indicators for abductors
-#define GLAND_HUD 			"13"
 // For antag huds. these are used at the /mob level
-#define ANTAG_HUD			"14"
+#define ANTAG_HUD			"13"
 // Implant of mindshield
-#define IMPMINDS_HUD		"15"
+#define IMPMINDS_HUD		"14"
 // Broken glasses hud
-#define BROKEN_HUD			"16"
+#define BROKEN_HUD			"15"
 // Mine huds
-#define MINE_HUD			"17"
+#define MINE_HUD			"16"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -46,27 +44,26 @@
 #define DATA_HUD_SECURITY				1
 #define DATA_HUD_MEDICAL				2
 #define DATA_HUD_DIAGNOSTIC				3
-#define DATA_HUD_ABDUCTOR				4
-#define DATA_HUD_BROKEN					21
-#define DATA_HUD_MINER					22
+#define DATA_HUD_BROKEN					20
+#define DATA_HUD_MINER					21
 
 //antag HUD defines
-#define ANTAG_HUD_CULT          5
-#define ANTAG_HUD_REV           6
-#define ANTAG_HUD_OPS           7
-#define ANTAG_HUD_WIZ           8
-#define ANTAG_HUD_SHADOW        9
-#define ANTAG_HUD_TRAITOR       10
-#define ANTAG_HUD_NINJA         11
-#define ANTAG_HUD_CHANGELING    12
-#define ANTAG_HUD_ABDUCTOR      13
-#define ANTAG_HUD_GANGSTER      14
-#define ANTAG_HUD_GOLEM         15
-#define ANTAG_HUD_ALIEN         16
-#define ANTAG_HUD_DEATHCOM      17
-#define ANTAG_HUD_ERT           18
-#define ANTAG_HUD_MALF          19
-#define ANTAG_HUD_ZOMB          20
+#define ANTAG_HUD_CULT          4
+#define ANTAG_HUD_REV           5
+#define ANTAG_HUD_OPS           6
+#define ANTAG_HUD_WIZ           7
+#define ANTAG_HUD_SHADOW        8
+#define ANTAG_HUD_TRAITOR       9
+#define ANTAG_HUD_NINJA         10
+#define ANTAG_HUD_CHANGELING    11
+#define ANTAG_HUD_ABDUCTOR      12
+#define ANTAG_HUD_GANGSTER      13
+#define ANTAG_HUD_GOLEM         14
+#define ANTAG_HUD_ALIEN         15
+#define ANTAG_HUD_DEATHCOM      16
+#define ANTAG_HUD_ERT           17
+#define ANTAG_HUD_MALF          18
+#define ANTAG_HUD_ZOMB          19
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

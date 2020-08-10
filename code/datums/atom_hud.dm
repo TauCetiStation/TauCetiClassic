@@ -14,7 +14,6 @@ var/global/list/huds[22]
 	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
 	huds[DATA_HUD_MINER] = new/datum/atom_hud/data/mine
 	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/broken
-	huds[DATA_HUD_ABDUCTOR] = new/datum/atom_hud/abductor
 	huds[ANTAG_HUD_CULT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_REV] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_OPS] = new/datum/atom_hud/antag
@@ -23,7 +22,7 @@ var/global/list/huds[22]
 	huds[ANTAG_HUD_TRAITOR] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_NINJA] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Update gamemode!
 	huds[ANTAG_HUD_GOLEM] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_ALIEN] = new/datum/atom_hud/antag
