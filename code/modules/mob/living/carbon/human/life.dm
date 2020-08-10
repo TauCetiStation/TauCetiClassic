@@ -1478,6 +1478,19 @@
 				else
 					nutrition_icon.icon_state = "starving"
 
+		if(charge_icon)
+			switch(get_nutrition())
+				if(NUTRITION_LEVEL_IPC_FULL to INFINITY)
+					charge_icon.icon_state = "lowcell0"
+				if(NUTRITION_LEVEL_IPC_NORMAL to NUTRITION_LEVEL_IPC_FULL)
+					charge_icon.icon_state = "lowcell1"
+				if(NUTRITION_LEVEL_IPC_LOW to NUTRITION_LEVEL_IPC_NORMAL)
+					charge_icon.icon_state = "lowcell2"
+				if(NUTRITION_LEVEL_IPC_ONE to NUTRITION_LEVEL_IPC_LOW)
+					charge_icon.icon_state = "lowcell3"
+				else
+					charge_icon.icon_state = "emptycell"
+
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
 

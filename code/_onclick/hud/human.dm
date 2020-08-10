@@ -392,9 +392,17 @@
 
 	mymob.nutrition_icon = new
 	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
-	mymob.nutrition_icon.icon_state = "starving"
-	mymob.nutrition_icon.name = "nutrition"
-	mymob.nutrition_icon.screen_loc = ui_nutrition
+	if(!IS_SYNTHETIC)
+		mymob.nutrition_icon.icon_state = "starving"
+		mymob.nutrition_icon.name = "nutrition"
+		mymob.nutrition_icon.screen_loc = ui_nutrition
+
+	mymob.charge_icon = new
+	mymob.charge_icon.icon = 'icons/mob/screen_alert.dmi'
+	if(IS_SYNTHETIC)
+		mymob.charge_icon.icon_state = "lowcell3"
+		mymob.charge_icon.name = "Charge"
+		mymob.charge_icon.screen_loc = ui_nutrition
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
@@ -454,7 +462,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.charge_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0

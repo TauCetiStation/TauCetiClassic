@@ -158,6 +158,8 @@
 		return
 
 	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
+	if(owner.nutrition < 1)
+		return
 	if(!istype(lungs))
 		return
 
@@ -237,6 +239,8 @@
 
 /obj/item/organ/internal/lungs/ipc/process()
 	var/temp_gain = owner.species.synth_temp_gain
+	if(owner.nutrition < 1)
+		return
 
 	if(refrigerant > 0 && !is_broken())
 		var/refrigerant_spent = refrigerant_rate
