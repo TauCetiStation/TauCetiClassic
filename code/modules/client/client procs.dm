@@ -32,6 +32,13 @@ var/list/blacklisted_builds = list(
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
+	// asset_cache
+	var/asset_cache_job
+	if(href_list["asset_cache_confirm_arrival"])
+		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
+		if(!asset_cache_job)
+			return
+
 	if(href_list["_src_"] == "chat")
 		return chatOutput.Topic(href, href_list)
 
@@ -47,13 +54,6 @@ var/list/blacklisted_builds = list(
 		//del(usr)
 		return
 
-	// asset_cache
-	var/asset_cache_job
-	if(href_list["asset_cache_confirm_arrival"])
-		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
-		if(!asset_cache_job)
-			return
-
 	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
@@ -61,11 +61,10 @@ var/list/blacklisted_builds = list(
 		return
 
 	//byond bug ID:2256651
-	if(href_list["asset_cache_confirm_arrival"] && href_list["asset_cache_confirm_arrival"] in completed_asset_jobs)
+	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 		src << browse("...", "window=asset_cache_browser")
 		return
-
 	if(href_list["asset_cache_preload_data"])
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
