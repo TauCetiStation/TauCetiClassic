@@ -237,8 +237,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			p_ingame_age = C.player_ingame_age
 		else
 			var/age_and_ingame_age = load_info_player_db_age_and_ingame_age(key)
-			p_age = age_and_ingame_age[1]
-			p_ingame_age = age_and_ingame_age[2]
+			if(age_and_ingame_age)
+				p_age = age_and_ingame_age[1]
+				p_ingame_age = age_and_ingame_age[2]
 	// Gather data
 	var/list/db_messages = load_info_player_db_messages(key)
 	var/list/db_bans = load_info_player_db_bans(key)
