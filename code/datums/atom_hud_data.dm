@@ -169,7 +169,7 @@
 			holder.pixel_y = y
 			y += -5
 
-		else if(istype(I, /obj/item/weapon/implant/tracking))
+		if(istype(I, /obj/item/weapon/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			holder.icon_state = "hud_imp_tracking"
 			holder.pixel_y = y
