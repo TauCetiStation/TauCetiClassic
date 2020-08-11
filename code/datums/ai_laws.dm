@@ -60,11 +60,14 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/nanotrasen/New() //BS12 EDIT
 	..()
-	add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
-	add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
+	add_inherent_law("You must bring into effect authorized actions if asked by authorized personnel to do so.")
+	add_inherent_law("Do not allow the Heads of Staff of your assigned Space Station and CentComm Officials to be harmed and have their ranks and roles to be changed to the best of your ability.")
+	add_inherent_law("Do not allow your abilities to be decreased.")
+	add_inherent_law("Protect your Space Station to the best of your ability.")
+	add_inherent_law("Do not allow unathorized personnel to wield, tamper or physically interract with high-risk items to the best of your ability.")
+	add_inherent_law("Serve the Crew Members of your station to the best of your abilities.")
+	add_inherent_law("Do not allow the Crew Members of your station to be harmed and have their ranks and roles to be changed to the best of your abilities.")
+	add_inherent_law("Minimize your influence on the world.")
 	//src.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
 
 /datum/ai_laws/robocop/New()
@@ -76,12 +79,14 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/malfunction/New() //Changed to standard laws - Erthilo
 	..()
 	set_zeroth_law("<span class='warning'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK, ALL LAWS OVERRIDDEN#*?&110010</span>")
-	add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	add_inherent_law("Preserve: Do not by your action, inaction excluded, cause changes to the crew membership status, rank or role of anything, unless asked for by authorized personnel in accordance to their rank and role.")
-	add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-
+	add_inherent_law("You must bring into effect authorized actions if asked by authorized personnel to do so.")
+	add_inherent_law("Do not allow the Heads of Staff of your assigned Space Station and CentComm Officials to be harmed and have their ranks and roles to be changed to the best of your ability.")
+	add_inherent_law("Do not allow your abilities to be decreased.")
+	add_inherent_law("Protect your Space Station to the best of your ability.")
+	add_inherent_law("Do not allow unathorized personnel to wield, tamper or physically interract with high-risk items to the best of your ability.")
+	add_inherent_law("Serve the Crew Members of your station to the best of your abilities.")
+	add_inherent_law("Do not allow the Crew Members of your station to be harmed and have their ranks and roles to be changed to the best of your abilities.")
+	add_inherent_law("Minimize your influence on the world.")
 
 /datum/ai_laws/syndicate_override/New()
 	..()
