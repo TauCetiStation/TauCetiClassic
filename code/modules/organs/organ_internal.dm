@@ -400,3 +400,82 @@
 		owner.eye_blurry = 20
 	if(is_broken())
 		owner.eye_blind = 20
+
+/obj/item/organ/internal/stomach
+	name = "stomach"
+	organ_tag = O_STOMACH
+	parent_bodypart = BP_CHEST
+	var/stomach_capacity
+	reagents = new/datum/reagents()
+	var/next_cramp = 0
+
+/obj/item/organ/internal/stomach/atom_init()
+	. = ..()
+	reagents.total_volume = owner.species.stomach_capacity * 10
+	stomach_capacity = owner.species.stomach_capacity
+
+/obj/item/organ/internal/stomach/Destroy()
+	QDEL_NULL(reagents)
+	. = ..()
+
+/obj/item/organ/internal/stomach/proc/can_eat_atom(var/atom/movable/food)
+	return get_devour_time(food)
+
+/obj/item/organ/internal/stomach/proc/is_full(var/atom/movable/food)
+	var/total = round(reagents.total_volume / 10)
+	for(var/a in contents + food)
+		if(ismob(a))
+			var/mob/M = a
+			total += M.mob_size
+		else if(isobj(a))
+			var/obj/item/I = a
+			total += I.get_storage_cost()
+		else
+			continue
+		if(total > stomach_capacity)
+			return TRUE
+	return FALSE
+
+/obj/item/organ/internal/stomach/return_air()
+	return null
+
+/obj/item/organ/internal/stomach/process()
+	..()
+
+	if(!is_broken())
+		reagents.metabolize(owner)
+		for(var/mob/living/M in contents)
+			if(M.stat == DEAD)
+				qdel(M)
+				continue
+
+			M.adjustBruteLoss(3)
+			M.adjustFireLoss(3)
+			M.adjustToxLoss(3)
+			if(M.digestion_product)
+				reagents.add_reagent(M.digestion_product, rand(1,3))
+
+	else if(world.time >= next_cramp)
+		next_cramp = world.time + rand(200,800)
+		owner.custom_pain("Your stomach cramps agonizingly!",1)
+
+/obj/item/organ/internal/stomach/proc/get_devour_time(atom/movable/food)
+	if(iscarbon(food) || isanimal(food))
+		var/mob/living/L = food
+		if((owner.species.gluttonous & GLUT_TINY) && (L.mob_size <= MOB_TINY) && !ishuman(food)) // Anything MOB_TINY or smaller
+			return DEVOUR_SLOW
+		else if((owner.species.gluttonous & GLUT_SMALLER) && owner.mob_size > L.mob_size) // Anything we're larger than
+			return DEVOUR_SLOW
+		else if(owner.species.gluttonous & GLUT_ANYTHING) // Eat anything ever
+			return DEVOUR_FAST
+	else if(istype(food, /obj/item) && !istype(food, /obj/item/weapon/holder)) //Don't eat holders. They are special.
+		var/obj/item/I = food
+		var/cost = I.get_storage_cost()
+		if(cost != ITEM_SIZE_NO_CONTAINER)
+			if((owner.species.gluttonous & GLUT_ITEM_TINY) && cost < 4)
+				return DEVOUR_SLOW
+			else if((owner.species.gluttonous & GLUT_ITEM_NORMAL) && cost <= 4)
+				return DEVOUR_SLOW
+			else if(owner.species.gluttonous & GLUT_ITEM_ANYTHING)
+				return DEVOUR_FAST
+	return FALSE

@@ -33,6 +33,15 @@
 	..()
 	user.remove_passemotes_flag()
 
+/obj/item/weapon/holder/attack(mob/target, mob/user)
+	// Devour on click on self with holder
+	if(target == user && istype(user,/mob/living/carbon))
+		var/mob/living/carbon/human/M = user
+		for(var/mob/victim in src.contents)
+			M.devour(victim)
+
+	..()
+
 /obj/item/weapon/holder/attackby(obj/item/I, mob/user, params)
 	for(var/mob/M in contents)
 		M.attackby(I, user, params)

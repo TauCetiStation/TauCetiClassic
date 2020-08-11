@@ -39,6 +39,7 @@
 #define O_LIVER    "liver"
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
+#define O_STOMACH  "stomach"
 
 #define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
 
@@ -153,3 +154,22 @@
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
 #define MAX_BRAIN_DAMAGE  80
+
+// Gluttony levels.
+#define GLUT_ITEM_TINY 1       // Eat items with a w_class of small or smaller
+#define GLUT_ITEM_NORMAL 2     // Eat items with a w_class of normal or smaller
+#define GLUT_ITEM_ANYTHING 3    // Eat any item
+
+#define GLUT_TINY 4      // Eat anything tiny and smaller
+#define GLUT_SMALLER 8    // Eat anything smaller than we are
+#define GLUT_ANYTHING 11 // Eat anything, ever
+
+// Defines mob sizes, used by lockers and to determine what is considered a small sized mob, etc.
+#define MOB_LARGE  		40
+#define MOB_MEDIUM 		20
+#define MOB_SMALL 		10
+#define MOB_TINY 		5
+#define MOB_MINISCULE	1
+
+#define DEVOUR_SLOW 10 SECONDS
+#define DEVOUR_FAST 3 SECONDS

@@ -93,6 +93,10 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/internal/stomach/stomach = H.organs_by_name[O_STOMACH]
+		target = stomach
 	if (!target )
 		return
 	if (!target.reagents || src.total_volume<=0)
@@ -110,6 +114,7 @@ var/const/INGEST = 2
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 
 	src.trans_to(B, amount)
+
 
 	digest_with_delay(BR, target, B)
 

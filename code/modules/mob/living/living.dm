@@ -1193,7 +1193,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1206,7 +1205,6 @@
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
 		var/mob/living/carbon/human/H = src
-
 		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
 			H.try_mutate_to_hulk()
 
@@ -1226,6 +1224,14 @@
 			else
 				vomitsound = SOUNDIN_MALEVOMIT
 		make_jittery(max(35 - jitteriness, 0))
+		if(H.should_have_organ(O_STOMACH))
+			var/obj/item/organ/internal/stomach/stomach = H.organs_by_name[O_STOMACH]
+			if(stomach.contents && stomach.is_full())
+				for(var/atom/movable/AM in stomach.contents)
+					AM.forceMove(get_turf(src))
+			if(stomach.reagents.total_volume)
+				for(var/datum/reagent/R in stomach.reagents.reagent_list)
+					stomach.reagents.remove_reagent(R, R.volume * 0.5 )
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")

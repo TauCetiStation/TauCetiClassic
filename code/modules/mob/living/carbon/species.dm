@@ -57,7 +57,8 @@
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
-
+	var/gluttonous = GLUT_TINY //Can specie eat mobs, items or semething like that
+	var/stomach_capacity = 5   //How much specie can eat and drink
 	var/darksight = 2
 	var/nighteyes = 0
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
@@ -119,6 +120,7 @@
 		,O_LUNGS   = /obj/item/organ/internal/lungs
 		,O_LIVER   = /obj/item/organ/internal/liver
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		,O_STOMACH = /obj/item/organ/internal/stomach
 		)
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
@@ -131,7 +133,7 @@
 	var/list/prevent_survival_kit_items = list()
 
 	var/list/replace_outfit = list()
-	
+
 	var/min_age = 25 // The default, for Humans.
 	var/max_age = 85
 
@@ -307,7 +309,7 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
-	
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
 			)
@@ -376,7 +378,7 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
-	
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
@@ -418,7 +420,8 @@
 		O_EYES    = /obj/item/organ/internal/eyes,
 		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
 		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		O_KIDNEYS = /obj/item/organ/internal/kidneys,
+		O_STOMACH = /obj/item/organ/internal/stomach
 		)
 
 	eyes = "skrell_eyes"
@@ -442,7 +445,8 @@
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
-
+	gluttonous = GLUT_SMALLER || GLUT_ITEM_NORMAL
+	stomach_capacity = 12
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 

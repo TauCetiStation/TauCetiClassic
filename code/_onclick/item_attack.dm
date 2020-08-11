@@ -60,6 +60,57 @@
 	SSdemo.mark_dirty(user)
 	return I.attack(src, user, user.get_targetzone())
 
+/mob/living/carbon/human/attackby(obj/item/I, mob/user)
+	if(user == src && zone_sel.selecting == O_MOUTH && can_devour(I))
+		if(check_mouth_coverage(src, src, I, "eat"))
+			src.visible_message("1")
+
+		if(devour(I))
+			src.visible_message("2")
+
+	return ..()
+
+/mob/living/carbon/human/proc/can_devour(atom/movable/victim)
+	if(!should_have_organ(O_STOMACH))
+		return FALSE
+
+	var/obj/item/organ/internal/stomach/stomach = organs_by_name[O_STOMACH]
+	if(!stomach || stomach.is_broken())
+		return FALSE
+
+	if(!stomach.can_eat_atom(victim))
+		return FALSE
+
+	if(stomach.is_full(victim))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/human/proc/devour(atom/movable/victim)
+	var/eat_speed = can_devour(victim)
+	if(!eat_speed)
+		return FALSE
+
+	src.visible_message("<span class='danger'>\The [src] is attempting to devour \the [victim] whole!</span>")
+	var/mob/living/target = victim
+	if(isobj(victim))
+		target = src
+	if(!do_mob(src,target,eat_speed))
+		return FALSE
+	src.visible_message("<span class='danger'>\The [src] devours \the [victim] whole!</span>")
+	if(ismob(victim))
+		target.log_combat(src, "Devoured")
+	else
+		src.drop_from_inventory(victim)
+	move_to_stomach(victim)
+
+	return TRUE
+
+/mob/living/carbon/human/proc/move_to_stomach(atom/movable/victim)
+	var/obj/item/organ/internal/stomach/stomach = organs_by_name[O_STOMACH]
+	if(istype(stomach))
+		victim.forceMove(stomach)
+
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
