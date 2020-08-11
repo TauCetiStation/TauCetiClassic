@@ -17,9 +17,9 @@
 
 /obj/item/device/gangtool/atom_init() //Initialize supply point income if it hasn't already been started
 	. = ..()
-	if(!ticker.mode.gang_points)
-		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
-		ticker.mode.gang_points.start()
+	if(!SSticker.mode.gang_points)
+		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
+		SSticker.mode.gang_points.start()
 	if(boss)
 		desc += " Looks important."
 
@@ -27,12 +27,12 @@
 	if (!can_use(user))
 		return
 
-	var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+	var/gang_bosses = ((gang == "A")? SSticker.mode.A_bosses.len : SSticker.mode.B_bosses.len)
 
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
-		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
+		if(user.mind in (SSticker.mode.A_bosses | SSticker.mode.B_bosses))
 			dat += "Give this device to another member of your organization to use to promote them.<hr>"
 			dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
@@ -43,12 +43,12 @@
 			dat += "No promotions available: All positions filled."
 	else
 		var/datum/game_mode/gang/gangmode
-		if(istype(ticker.mode, /datum/game_mode/gang))
-			gangmode = ticker.mode
+		if(istype(SSticker.mode, /datum/game_mode/gang))
+			gangmode = SSticker.mode
 
-		var/gang_size = gang_bosses + ((gang == "A")? ticker.mode.A_gang.len : ticker.mode.B_gang.len)
-		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
-		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
+		var/gang_size = gang_bosses + ((gang == "A")? SSticker.mode.A_gang.len : SSticker.mode.B_gang.len)
+		var/gang_territory = ((gang == "A")? SSticker.mode.A_territory.len : SSticker.mode.B_territory.len)
+		var/points = ((gang == "A") ? SSticker.mode.gang_points.A : SSticker.mode.gang_points.B)
 		var/timer
 		if(gangmode)
 			timer = ((gang == "A") ? gangmode.A_timer : gangmode.B_timer)
@@ -58,7 +58,7 @@
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Influence: <B>[points]</B><br>"
-		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
+		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
 		dat += "<B>Gangtool Functions:</B><br>"
 
@@ -174,7 +174,7 @@
 		return
 
 	if(href_list["purchase"])
-		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
+		var/points = ((gang == "A") ? SSticker.mode.gang_points.A : SSticker.mode.gang_points.B)
 		var/item_type
 		switch(href_list["purchase"])
 			if("spraycan")
@@ -219,8 +219,8 @@
 					item_type = /obj/item/device/gangtool/lt
 					points = tool_cost
 			if("dominator")
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
+				if(istype(SSticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = SSticker.mode
 					if(isnum((gang == "A") ? mode.A_timer : mode.B_timer))
 						return
 
@@ -244,15 +244,15 @@
 
 		if(item_type)
 			if(gang == "A")
-				ticker.mode.gang_points.A -= points
+				SSticker.mode.gang_points.A -= points
 			else if(gang == "B")
-				ticker.mode.gang_points.B -= points
+				SSticker.mode.gang_points.B -= points
 			if(ispath(item_type))
 				var/obj/purchased = new item_type(get_turf(usr))
 				var/mob/living/carbon/human/H = usr
 				H.put_in_any_hand_if_possible(purchased)
 			if(points)
-				ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
+				SSticker.mode.message_gangtools(((gang=="A")? SSticker.mode.A_tools : SSticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
 			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] for [points] Influence.")
 
 		else
@@ -264,7 +264,7 @@
 				recall(usr)
 			if("outfit")
 				if(outfits > 0)
-					ticker.mode.gang_outfit(usr,src,gang)
+					SSticker.mode.gang_outfit(usr,src,gang)
 					outfits -= 1
 			if("ping")
 				ping_gang(usr)
@@ -282,9 +282,9 @@
 		return
 	var/list/members = list()
 	if(gang == "A")
-		members += ticker.mode.A_bosses | ticker.mode.A_gang
+		members += SSticker.mode.A_bosses | SSticker.mode.A_gang
 	else if(gang == "B")
-		members += ticker.mode.B_bosses | ticker.mode.B_gang
+		members += SSticker.mode.B_bosses | SSticker.mode.B_gang
 	if(members.len)
 		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [sanitize(message)]</B></span>"
 		for(var/datum/mind/ganger in members)
@@ -296,8 +296,8 @@
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)
-	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
-		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+	if(!(user.mind in (SSticker.mode.A_bosses|SSticker.mode.B_bosses)))
+		var/gang_bosses = ((gang == "A")? SSticker.mode.A_bosses.len : SSticker.mode.B_bosses.len)
 		if(gang_bosses >= 3)
 			to_chat(user, "<span class='warning'>[bicon(src)] Error: All positions filled.</span>")
 			return
@@ -307,33 +307,33 @@
 		return 0
 
 	var/promoted
-	if(user.mind in (ticker.mode.A_gang | ticker.mode.A_bosses))
-		ticker.mode.A_tools += src
+	if(user.mind in (SSticker.mode.A_gang | SSticker.mode.A_bosses))
+		SSticker.mode.A_tools += src
 		gang = "A"
 		icon_state = "gangtool-a"
-		if(!(user.mind in ticker.mode.A_bosses))
-			ticker.mode.remove_gangster(user.mind, 0, 2)
-			ticker.mode.A_bosses += user.mind
+		if(!(user.mind in SSticker.mode.A_bosses))
+			SSticker.mode.remove_gangster(user.mind, 0, 2)
+			SSticker.mode.A_bosses += user.mind
 			user.mind.special_role = "[gang_name("A")] Gang (A) Lieutenant"
-			ticker.mode.update_gang_icons_added(user.mind, "A")
+			SSticker.mode.update_gang_icons_added(user.mind, "A")
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
 			promoted = 1
-	else if(user.mind in (ticker.mode.B_gang | ticker.mode.B_bosses))
-		ticker.mode.B_tools += src
+	else if(user.mind in (SSticker.mode.B_gang | SSticker.mode.B_bosses))
+		SSticker.mode.B_tools += src
 		gang = "B"
 		icon_state = "gangtool-b"
-		if(!(user.mind in ticker.mode.B_bosses))
-			ticker.mode.remove_gangster(user.mind, 0, 2)
-			ticker.mode.B_bosses += user.mind
+		if(!(user.mind in SSticker.mode.B_bosses))
+			SSticker.mode.remove_gangster(user.mind, 0, 2)
+			SSticker.mode.B_bosses += user.mind
 			user.mind.special_role = "[gang_name("B")] Gang (B) Lieutenant"
-			ticker.mode.update_gang_icons_added(user.mind, "B")
+			SSticker.mode.update_gang_icons_added(user.mind, "B")
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
 			promoted = 1
 	if(promoted)
-		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
+		SSticker.mode.message_gangtools(((gang=="A")? SSticker.mode.A_tools : SSticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
 		to_chat(user, "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>")
-		ticker.mode.forge_gang_objectives(user.mind)
-		ticker.mode.greet_gang(user.mind,0)
+		SSticker.mode.forge_gang_objectives(user.mind)
+		SSticker.mode.greet_gang(user.mind,0)
 		to_chat(user, "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station.")
 		to_chat(user, "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool.")
 	if(!gang)
@@ -343,10 +343,10 @@
 	if(!can_use(user))
 		return 0
 
-	if(!istype(ticker.mode, /datum/game_mode/gang))
+	if(!istype(SSticker.mode, /datum/game_mode/gang))
 		return 0
 
-	var/datum/game_mode/gang/mode = ticker.mode
+	var/datum/game_mode/gang/mode = SSticker.mode
 	recalling = 1
 	to_chat(loc, "<span class='info'>[bicon(src)]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 
@@ -402,9 +402,9 @@
 	var/success
 	if(user.mind)
 		if(gang)
-			if((gang == "A") && (user.mind in ticker.mode.A_bosses))
+			if((gang == "A") && (user.mind in SSticker.mode.A_bosses))
 				success = 1
-			else if((gang == "B") && (user.mind in ticker.mode.B_bosses))
+			else if((gang == "B") && (user.mind in SSticker.mode.B_bosses))
 				success = 1
 		else
 			success = 1
