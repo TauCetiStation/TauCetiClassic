@@ -4,10 +4,9 @@
 	. = ..()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
-	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets
 
-/obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets()
-	set name = "Toggle antag-HUD"
+/obj/item/clothing/mask/gas/voice/space_ninja/proc/togge_huds()
+	set name = "Toggle rat-HUD" // Lore name for antagonists
 	set desc = "Toggles the huds, who see the soul of people."
 	set category = "Ninja Equip"
 

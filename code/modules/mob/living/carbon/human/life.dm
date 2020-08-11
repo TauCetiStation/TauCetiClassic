@@ -1347,10 +1347,7 @@
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
 			switch(O.mode)
 				if(0)
-					var/target_list[] = list()
-					for(var/mob/living/target in oview(src))
-						if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-							target_list += target
+					O.togge_huds()
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_LIVING
 				if(1)

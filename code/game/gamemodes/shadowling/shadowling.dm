@@ -122,7 +122,6 @@ Made by Xhuis
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
-
 		//give_shadowling_abilities(shadow)
 
 	return ..()
@@ -160,13 +159,11 @@ Made by Xhuis
 	if (!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
-
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
 		to_chat(new_thrall_mind.current, "<b>The objectives of the shadowlings:</b> [objective_explanation]")
 		add_antag_hud(antag_hud_type, "hudthrall", H)
-
 		H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 

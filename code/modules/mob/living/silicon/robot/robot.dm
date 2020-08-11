@@ -120,14 +120,6 @@
 	
 	diag_hud_set_borgcell()
 
-
-
-
-
-
-
-
-
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	laws = new laws_type()

@@ -145,23 +145,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
-/*
-Transfer_mind is there to check if mob is being deleted/not going to have a body.
-Works together with spawning an observer, noted above.
-*/
-
-/mob/dead/observer/Life()
-	..()
-	if(!loc) return
-	if(!client) return 0
-
-	if(antagHUD)
-		var/list/target_list = list()
-		for(var/mob/living/target in oview(src, 14))
-			if(target.mind&&(target.mind.special_role||issilicon(target)) )
-				target_list += target
-
-	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
 	if(key)

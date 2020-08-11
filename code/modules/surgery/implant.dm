@@ -205,7 +205,6 @@
 					break
 
 
-
 			//Handle possessive brain borers.
 			if(istype(obj,/mob/living/simple_animal/borer))
 				var/mob/living/simple_animal/borer/worm = obj

@@ -179,8 +179,6 @@
 	add_antag_hud(antag_hud_type, "hudrevolutionary", rev_mind.current)
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-
-
 	return 1
 
 //////////////////////////////////////////////////////////////////////
@@ -273,7 +271,6 @@
 					rev_obj.target = head_mind
 					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 					H.mind.objectives += rev_obj
-
 
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 

@@ -170,15 +170,6 @@ var/list/ai_verbs_default = list(
 	
 	new /obj/machinery/ai_powersupply(src)
 
-
-
-
-
-
-
-
-
-
 	ai_list += src
 
 /mob/living/silicon/ai/proc/announce_role()

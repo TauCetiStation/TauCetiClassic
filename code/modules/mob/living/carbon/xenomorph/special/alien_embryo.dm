@@ -81,8 +81,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(stage_counter > 60)
 			stage++
 			stage_counter = 0
-			//update icon
-			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
 			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
 	stage_counter++
 

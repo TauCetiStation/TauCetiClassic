@@ -188,6 +188,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
+		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
 
 		return 1
 
@@ -197,12 +198,12 @@
 		return
 	if (!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
-	add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
 		cult_mind.memory = ""

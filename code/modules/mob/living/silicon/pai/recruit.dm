@@ -37,8 +37,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			card.looking_for_personality = 0
 
 
-
-
 			pai_candidates -= candidate
 			usr << browse(null, "window=findPai")
 
