@@ -1,0 +1,48 @@
+"a" = (/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"b" = (/turf/simulated/floor/pod,/area/custom/survivalpod)
+"c" = (/obj/machinery/light/small,/obj/structure/inflatable/door/survival_pod,/obj/structure/fans/tiny,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"d" = (/obj/structure/table/woodentable/fancy,/obj/machinery/chem_dispenser/beer{pixel_y = 4},/turf/simulated/floor/pod,/area/custom/survivalpod)
+"e" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"h" = (/obj/structure/table/woodentable/fancy,/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -4; pixel_y = 7},/obj/item/weapon/reagent_containers/food/snacks/carrotfries{pixel_x = 8},/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4},/obj/item/weapon/kitchen/utensil/spoon{pixel_x = -9; pixel_y = -2},/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"i" = (/obj/machinery/light{dir = 1},/obj/machinery/door/window/westright,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"k" = (/obj/structure/stool/bed/chair/comfy/black{dir = 1},/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"l" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/aesirsalad,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"m" = (/obj/structure/table/reinforced,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"n" = (/obj/structure/stool/bar,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"o" = (/obj/structure/stool/bed/chair/comfy/black{dir = 4},/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"p" = (/obj/machinery/vending/boozeomat,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"u" = (/obj/machinery/light,/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"v" = (/obj/structure/table/woodentable/fancy,/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 10; pixel_y = 7},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -3},/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4},/obj/item/weapon/kitchen/utensil/spoon{pixel_x = -9; pixel_y = -2},/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"x" = (/obj/structure/stool/bar,/obj/machinery/light{dir = 8},/turf/simulated/floor/pod,/area/custom/survivalpod)
+"y" = (/obj/structure/inflatable/door/survival_pod,/obj/structure/fans/tiny,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"A" = (/obj/structure/toilet,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"B" = (/obj/structure/table/reinforced,/obj/item/clothing/mask/cigarette/cigar,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"C" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"D" = (/obj/structure/table/woodentable/fancy,/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = -7; pixel_y = 6},/obj/item/weapon/kitchen/utensil/spoon,/obj/item/weapon/kitchen/utensil/fork{pixel_x = 4; pixel_y = 7},/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"F" = (/obj/machinery/media/jukebox/bar,/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"G" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"H" = (/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"I" = (/obj/structure/sink{dir = 8; pixel_x = -12},/obj/structure/mirror{pixel_x = -28},/obj/structure/dryer{dir = 8; pixel_x = 6},/turf/simulated/floor/pod,/area/custom/survivalpod)
+"L" = (/obj/structure/table/reinforced,/obj/item/weapon/lighter/zippo,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"M" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"P" = (/obj/structure/inflatable/survival,/obj/structure/sign/mining/survival{dir = 8},/turf/simulated/floor/pod,/area/custom/survivalpod)
+"Q" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"U" = (/obj/random/vending/cola,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"V" = (/obj/structure/table/reinforced,/obj/item/device/guitar,/turf/simulated/floor/carpet/blue,/area/custom/survivalpod)
+"W" = (/obj/random/vending/snack,/turf/simulated/floor/pod,/area/custom/survivalpod)
+"Y" = (/obj/structure/table/woodentable/fancy,/obj/machinery/chem_dispenser/soda{pixel_y = 4},/turf/simulated/floor/pod,/area/custom/survivalpod)
+"Z" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/pod,/area/custom/survivalpod)
+
+(1,1,1) = {"
+aaaaaaaaaaa
+apdYbibbbGa
+abbMblnbbUa
+aeQmLBnbbWa
+Pxnnnnbbbba
+yHHHHHHHHZa
+PCHCCHFoVba
+avHhDHaaaya
+akHkkHaAaIa
+aHHHuHabcba
+aaaaaaaaaaa
+"}

@@ -254,8 +254,11 @@
 		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
 		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
 		new /datum/data/mining_equipment("Accelerator upgrade",      /obj/item/kinetic_upgrade/speed,										2500),
+		new /datum/data/mining_equipment("Standart capsule",         /obj/item/weapon/survivalcapsule, 										3000),
 		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
-		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
+		new /datum/data/mining_equipment("Improved capsule",    	 /obj/item/weapon/survivalcapsule/improved,								7500),
+		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000),
+		new /datum/data/mining_equipment("Elite capsule(Bar)",    	 /obj/item/weapon/survivalcapsule/elite,                    	        12500)
 		)
 
 /datum/data/mining_equipment
