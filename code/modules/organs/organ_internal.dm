@@ -418,7 +418,7 @@
 	QDEL_NULL(reagents)
 	. = ..()
 
-/obj/item/organ/internal/stomach/proc/can_eat_atom(var/atom/movable/food)
+/obj/item/organ/internal/stomach/proc/can_eat_atom(atom/movable/food)
 	return get_devour_time(food)
 
 /obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
