@@ -418,10 +418,10 @@
 	QDEL_NULL(reagents)
 	. = ..()
 
-/obj/item/organ/internal/stomach/proc/can_eat_atom(var/atom/movable/food)
+/obj/item/organ/internal/stomach/proc/can_eat_atom(atom/movable/food)
 	return get_devour_time(food)
 
-/obj/item/organ/internal/stomach/proc/is_full(var/atom/movable/food)
+/obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
 	var/total = round(reagents.total_volume / 10)
 	for(var/a in contents + food)
 		if(ismob(a))
