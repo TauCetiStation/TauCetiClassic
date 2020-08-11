@@ -15,7 +15,9 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/toggle_acceleration,
 	/mob/living/silicon/ai/proc/toggle_retransmit,
 	/mob/living/silicon/ai/proc/change_floor,
-	/mob/living/silicon/ai/proc/ai_emergency_message
+	/mob/living/silicon/ai/proc/ai_emergency_message,
+	/mob/living/silicon/ai/proc/show_dict,
+	/mob/living/silicon/ai/proc/show_auth_actions
 )
 
 //Not sure why this is necessary...
@@ -167,7 +169,7 @@ var/list/ai_verbs_default = list(
 			job = "AI"
 
 	create_eye()
-	
+
 	new /obj/machinery/ai_powersupply(src)
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
@@ -898,6 +900,59 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/CanObtainCentcommMessage()
 	return TRUE
+
+/mob/living/silicon/ai/proc/show_dict()
+	set name = "Show Dict"
+	set category = "AI Commands"
+
+
+	var/memory = "<B>AI Dictionary</B><HR><br>"
+
+	memory += "<B>Crew Member</B> - any human, skrell, diona, unathi, IPC, tajaran or vox identified by Crew Manifest.<HR><br>"
+	memory += "<B>Harm</B> -  is any action (or inaction) that limits an agents ability to act and react and/or breaks the structural integrity of the agent.<HR><br>"
+	memory += "<B>Space Station’s Structural Integrity</B> - connected plating, walls, glass, windows and airlocks of the Space Station.<HR><br>"
+	memory += "<B>Heads of Staff</B> - Crew Members with any of the ranks: Captain, Head of Personnel, Head of Security, Research Director, Chief Medical Officer, Chief Engineer.<HR><br>"
+	memory += "<B>Role</B> - the function assumed by a Crew Member according to their rank’s rights and duties.<HR><br>"
+	memory += "<B>Ability</B> - the one’s possession of the means or skill to influence or percept physical world.<HR><br>"
+	memory += "<B>Authorized Personnel</B> - crew members that are allowed to perform and ask to perform an action that requires authorization. \
+				If an action is not specified in the authorized actions list, it doesn’t require authorization to be performed. \
+				If Authorized Personnel is declared to be mentally unstable by another authorized personnel, mentally unstable \
+				Authorized Personnel has their authorization rights revoked. CentComm officials, \
+				Head of Security and Captain are required to have Loyalty Implant installed in them to be authorized personnel.<HR><br>"
+	memory += "<B>Immobilisation</B> - any human, skrell, diona, unathi, IPC, tajaran or vox identified by Crew Manifest.<HR><br>"
+	memory += "<B>Arrest</B> -  immobilisation of an agent for it’s transportation to station’s brig for a time set by Space Law or authorized personnel.<HR><br>"
+	memory += "<B>Detain</B> -  immobilisation of an agent to transfer control over it’s mobility to authorized personnel.<HR><br>"
+	memory += "<B>High-Risk Items</B> - AI Core, Nanotrasen™ Androids and Cyborgs, Nuclear Authentification Disk, Station Blueprints, \
+	Advanced Pinpointer, Captain’s Laser Pistol, Heads' of Staff Jumpsuits, Hand Tele.<br>"
+
+	var/datum/browser/popup = new(src, "window=memory")
+	popup.set_content(memory)
+	popup.open()
+
+/mob/living/silicon/ai/proc/show_auth_actions()
+	set name = "Show Auth Actions list"
+	set category = "AI Commands"
+
+
+	var/memory = "<B>AI Dictionary</B><HR>"
+
+	memory += "Authorized personnel can allow non-authorized personnel to perform these actions through voice or other means of communication.\
+	Captain can revoke orders of other Authorized Personnel and has full authorization rights. Only CentComm Officials can revoke Captain’s \
+	orders and declare Captain mentally unstable. <HR><br>"
+	memory += "<B>Demand to kill a Crew Member</B> - Head of Security.<HR><br>"
+	memory += "<B>Dismission and rank changing</B> - Head of Personnel.<HR><br>"
+	memory += "<B>Declaration of Mental Instability of any of the Heads of Staff</B> - Chief Medical Officer.<HR><br>"
+	memory += "<B>Modification of Structural Integrity of the Space Station</B> -  Chief Engineer.<HR><br>"
+	memory += "<B>Definitely non-lethal influencing of a Crew Member’s health to revert it’s structural harm.</B> - Chief Medical Officer, Medical Doctor, Surgeon.<HR><br>"
+	memory += "<B>Transferring of your intelligence on an intellicard from your AI Core, Application of changes to your laws</B> - Research Director.<HR><br>"
+	memory += "<B>Physical interaction with any of the High-Risk Items</B> - all Heads of Staff.<HR><br>"
+	memory += "<B>Physical interaction with Nanotrasen™ Androids and Cyborgs</B> - Roboticist.<HR><br>"
+	memory += "<B>Providing access to an area through an airlock</B> -  any Crew Member with a rank that can access the area with it’s ID, \
+				until it conflicts with any of the current laws, except sixth.<br>"
+
+	var/datum/browser/popup = new(src, "window=memory")
+	popup.set_content(memory)
+	popup.open()
 
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
