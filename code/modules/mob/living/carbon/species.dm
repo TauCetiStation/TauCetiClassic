@@ -57,7 +57,7 @@
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
-	var/gluttonous = GLUT_TINY //Can specie eat mobs, items or semething like that
+	var/gluttonous = GLUT_TINY || GLUT_TINY_ITEM //Can specie eat mobs, items or semething like that
 	var/stomach_capacity = 5   //How much specie can eat and drink
 	var/darksight = 2
 	var/nighteyes = 0
