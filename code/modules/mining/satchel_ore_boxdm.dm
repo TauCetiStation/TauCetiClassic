@@ -24,12 +24,16 @@
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user)
-	var/dat = "<b>The contents of the ore box reveal...</b><br>"
+	var/dat = ""
 	for(var/ore in stored_ore)
 		dat += "[ore]: [stored_ore[ore]]<br>"
 
 	dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
-	user << browse("[dat]", "window=orebox")
+
+	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...")
+	popup.set_content(dat)
+	popup.open()
+
 	return
 
 /obj/structure/ore_box/examine(mob/user)
