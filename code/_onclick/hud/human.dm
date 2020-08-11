@@ -6,6 +6,7 @@
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
+	var/mob/living/carbon/human/A = mymob
 
 	using = new /obj/screen()
 	using.name = "act_intent"
@@ -392,14 +393,14 @@
 
 	mymob.nutrition_icon = new
 	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
-	if(!IS_SYNTHETIC)
+	if(!A.species.flags[IS_SYNTHETIC])
 		mymob.nutrition_icon.icon_state = "starving"
 		mymob.nutrition_icon.name = "nutrition"
 		mymob.nutrition_icon.screen_loc = ui_nutrition
 
 	mymob.charge_icon = new
 	mymob.charge_icon.icon = 'icons/mob/screen_alert.dmi'
-	if(IS_SYNTHETIC)
+	if(A.species.flags[IS_SYNTHETIC])
 		mymob.charge_icon.icon_state = "lowcell3"
 		mymob.charge_icon.name = "Charge"
 		mymob.charge_icon.screen_loc = ui_nutrition

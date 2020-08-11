@@ -1481,8 +1481,10 @@
 		if(charge_icon)
 			switch(get_nutrition())
 				if(NUTRITION_LEVEL_IPC_FULL to INFINITY)
+					charge_icon.icon_state = "lowcell00"
+				if(NUTRITION_LEVEL_IPC_HIGH to NUTRITION_LEVEL_IPC_FULL)
 					charge_icon.icon_state = "lowcell0"
-				if(NUTRITION_LEVEL_IPC_NORMAL to NUTRITION_LEVEL_IPC_FULL)
+				if(NUTRITION_LEVEL_IPC_NORMAL to NUTRITION_LEVEL_IPC_HIGH)
 					charge_icon.icon_state = "lowcell1"
 				if(NUTRITION_LEVEL_IPC_LOW to NUTRITION_LEVEL_IPC_NORMAL)
 					charge_icon.icon_state = "lowcell2"
