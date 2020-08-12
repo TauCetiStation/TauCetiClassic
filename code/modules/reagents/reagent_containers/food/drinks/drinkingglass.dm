@@ -525,7 +525,7 @@
 		desc = "Your standard drinking glass"
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/living/target, mob/user, def_zone)
 	gulp_size = volume
 	if(user.a_intent == INTENT_HARM)
 		if(ismob(target) && target.reagents && reagents.total_volume)
@@ -548,7 +548,7 @@
 			..()
 			return
 	if(reagents.total_volume)
-		if(!check_mouth_coverage(user, target, src, "drink"))
+		if(!target.check_mouth_coverage(user, src, "drink"))
 			return
 		..()
 		target.visible_message("[target] gulped down the whole [src]. Wow!")

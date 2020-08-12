@@ -19,7 +19,7 @@
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
 /obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
-	if(!check_mouth_coverage(user, M, src, "take")) return
+	if(!M.check_mouth_coverage(user, src, "take")) return
 	if(M == user)
 
 		if(istype(M, /mob/living/carbon/human))

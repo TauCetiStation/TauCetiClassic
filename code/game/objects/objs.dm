@@ -224,37 +224,21 @@
 //user - who is feeding
 //food - whai is feeded
 //eatverb - take/drink/eat method
-/proc/check_mouth_coverage(user, mob, food, eatverb = "consume")
-	if(ishuman(mob))
-		var/mob/living/carbon/human/Feeded = mob
-		if(Feeded.head)
-			var/obj/item/Head = Feeded.head
-			if(Head.flags & HEADCOVERSMOUTH)
-				if (Feeded == user)
-					to_chat(user, "You can't [eatverb] [food] through [Head]")
-				else
-					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
-				return FALSE
-		if(Feeded.wear_mask)
-			var/obj/item/Mask = Feeded.wear_mask
-			if(Mask.flags & MASKCOVERSMOUTH)
-				if (Feeded == user)
-					to_chat(user, "You can't [eatverb] [food] through [Mask]")
-				else
-					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
-				return FALSE
-		return TRUE
-	if(isIAN(mob))
-		var/mob/living/carbon/ian/dumdum = mob
-		if(dumdum.head)
-			var/obj/item/Head = dumdum.head
-			if(Head.flags & HEADCOVERSMOUTH)
-				if (dumdum == user)
-					to_chat(user, "You can't [eatverb] [food] through [Head]")
-				else
-					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")
-				return FALSE
-		return TRUE
+/mob/living/proc/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+	return TRUE
+
+/mob/living/carbon/human/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+	for(var/obj/item/covered in list(head, wear_mask))
+		if(covered && (covered.flags & HEADCOVERSMOUTH || covered.flags & MASKCOVERSMOUTH))
+			to_chat(user, "You can't [src == user ? "[eatverb]" : "feed [src] with"] [food] through [covered]")
+			return FALSE
+	return ..()
+
+/mob/living/carbon/ian/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+	if(head && head.flags & HEADCOVERSMOUTH)
+		to_chat(user, "You can't [src == user ? "[eatverb]" : "feed [src] with"] [food] through [head]")
+		return FALSE
+	return ..()
 
 /obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density

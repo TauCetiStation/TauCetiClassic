@@ -45,7 +45,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/living/M, mob/user, def_zone)
-	if(!check_mouth_coverage(user, M, src, "swallow")) return
+	if(!M.check_mouth_coverage(user, src, "swallow")) return
 
 	var/datum/reagents/R = src.reagents
 

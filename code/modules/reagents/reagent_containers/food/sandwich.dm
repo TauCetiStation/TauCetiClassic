@@ -89,9 +89,9 @@
 	var/obj/item/O = pick(contents)
 	to_chat(user, "<span class='notice'>You think you can see [O.name] in there.</span>")
 
-/obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/living/M, mob/user, def_zone)
 
-	if(!check_mouth_coverage(user, M, src, "eat"))
+	if(!M.check_mouth_coverage(user, src, "eat"))
 		return
 	var/obj/item/weapon/shard/shard = locate() in contents
 
