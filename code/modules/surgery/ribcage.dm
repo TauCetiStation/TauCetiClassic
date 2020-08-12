@@ -472,7 +472,7 @@
 	P.transfer_identity(target)
 
 	target.chest_brain_op_stage = 2
-	target.death()
+	target.stat = DEAD
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -504,6 +504,11 @@
 	if(PB.brainmob && PB.brainmob.mind)
 		PB.brainmob.mind.transfer_to(target)
 		target.dna = PB.brainmob.dna
+	dead_mob_list -= user
+	alive_mob_list += user
+	target.stat = CONSCIOUS
+	target.tod = null
+	target.timeofdeath = 0
 
 	qdel(tool)
 //////////////////////////////////////////////////////////////////
