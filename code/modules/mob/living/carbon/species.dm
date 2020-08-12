@@ -445,7 +445,7 @@
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
-	gluttonous = GLUT_SMALLER || GLUT_ITEM_NORMAL
+	gluttonous = GLUT_ANYTHING
 	stomach_capacity = 12
 	warning_low_pressure = 50
 	hazard_low_pressure = 0

@@ -61,30 +61,48 @@
 	return I.attack(src, user, user.get_targetzone())
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
-	if(user == src && zone_sel.selecting == O_MOUTH && can_devour(I))
-		if(check_mouth_coverage(src, src, I, "eat"))
+	if(user == src && zone_sel.selecting == O_MOUTH)
+		if(!check_mouth_coverage(src, src, I, "eat"))
+			src.visible_message("3")
+			return
+
+		if(isholder(I))
 			src.visible_message("1")
+			for(var/mob/M in I.contents)
+				if(devour(M))
+					return
+
+		if(isgrab(I))
+			src.visible_message("2")
+			var/obj/item/weapon/grab/G = I
+			var/grabbed = G.affecting
+			if(ismob(grabbed))
+				var/mob/target = grabbed
+				if(devour(target))
+					return
 
 		if(devour(I))
-			src.visible_message("2")
+			return
 
 	return ..()
 
 /mob/living/carbon/human/proc/can_devour(atom/movable/victim)
 	if(!should_have_organ(O_STOMACH))
+		src.visible_message("11")
 		return FALSE
 
 	var/obj/item/organ/internal/stomach/stomach = organs_by_name[O_STOMACH]
 	if(!stomach || stomach.is_broken())
+		src.visible_message("12")
 		return FALSE
 
-	if(!stomach.can_eat_atom(victim))
-		return FALSE
-
+	var/time = stomach.can_eat_atom(victim)
+	src.visible_message("[time]")
 	if(stomach.is_full(victim))
+		src.visible_message("13")
 		return FALSE
 
-	return TRUE
+	return time
 
 /mob/living/carbon/human/proc/devour(atom/movable/victim)
 	var/eat_speed = can_devour(victim)

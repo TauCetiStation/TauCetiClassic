@@ -69,6 +69,9 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
+#define isholder(A) (istype(A, /obj/item/weapon/holder)) //gaah, someone can put this on correct places?
+
+#define isgrab(A) (istype(A, /obj/item/weapon/grab)) //gaah, someone can put this on correct places?
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
