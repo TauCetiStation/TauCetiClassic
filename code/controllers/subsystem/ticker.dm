@@ -1,5 +1,6 @@
 var/round_start_time = 0
 var/round_start_realtime = 0
+var/round_progressing = TRUE
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
@@ -88,7 +89,9 @@ SUBSYSTEM_DEF(ticker)
 			//countdown
 			if(timeLeft < 0)
 				return
-			timeLeft -= wait
+
+			if(round_progressing)
+				timeLeft -= wait
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
@@ -272,9 +275,9 @@ SUBSYSTEM_DEF(ticker)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		if (length(SSvote.delay_after_start))
+		/*if (length(SSvote.delay_after_start))
 			for (var/DT in SSvote.delay_after_start)
-				SSvote.last_vote_time[DT] = world.time
+				SSvote.last_vote_time[DT] = world.time*/
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
