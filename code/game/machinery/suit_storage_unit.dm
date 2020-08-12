@@ -151,7 +151,7 @@
 			//user << browse(dat, "window=suit_storage_unit;size=400x500")
 			//onclose(user, "suit_storage_unit")
 
-	var/datum/browser/popup = new(user, "window=suit_storage_unit", src.name, 400, 500)
+	var/datum/browser/popup = new(user, "window=suit_storage_unit", src.name, 400, 500, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
