@@ -77,11 +77,6 @@
 		return
 	return ..()
 
-/obj/structure/droppod/meteorhit()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
 /********Moving camera Eye********/
 
 /obj/structure/droppod/relaymove(mob/user, direction)
@@ -148,7 +143,7 @@
 	set name = "Enter Drop Pod"
 	set src in orange(1)
 
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr == second_intruder || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == second_intruder || usr.incapacitated())
 		return
 	if(stored_dna)
 		var/passed = FALSE
@@ -199,7 +194,7 @@
 	set category = "Drop Pod"
 	set name = "Enter Drop Pod as Passenger"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.stat == DEAD || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.incapacitated())
 		return
 	if (usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
@@ -323,7 +318,7 @@
 	set category = "Drop Pod"
 	set name = "Start Drop"
 	set src = orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
 		if(intruder != usr)
@@ -420,7 +415,7 @@
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
@@ -457,7 +452,7 @@
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !isturf(loc))
 		return
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Interface is block down!</span>")
@@ -476,7 +471,7 @@
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !Stored_Nuclear)
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
@@ -509,10 +504,10 @@
 		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
 		qdel(src)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
 	..()
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 
@@ -523,12 +518,12 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
+	intruder << browse(get_stats_html(), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()
 	var/output = {"<html>
-				<head><title>[name] data</title>
+				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
 				body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 				hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -723,7 +718,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.

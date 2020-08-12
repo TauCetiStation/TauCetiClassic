@@ -211,7 +211,7 @@ update_flag
 	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
 
-	health = CLAMP(health - amount, 0, initial(health))
+	health = clamp(health - amount, 0, initial(health))
 
 	if(health <= 10)
 		canister_break()
@@ -270,9 +270,6 @@ update_flag
 		take_damage(round(Proj.damage / 2))
 	..()
 
-/obj/machinery/portable_atmospherics/canister/meteorhit(obj/O)
-	take_damage(health)
-
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!(stat & BROKEN))
@@ -284,7 +281,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != I_HURT && iswelder(W))
+	if(user.a_intent != INTENT_HARM && iswelder(W))
 		if(user.is_busy(src))
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -429,7 +426,7 @@ update_flag
 
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
-		release_pressure = CLAMP(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
+		release_pressure = clamp(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
 		log_investigate("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 	if (href_list["relabel"])

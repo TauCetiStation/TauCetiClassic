@@ -319,7 +319,7 @@
 
 	body += "</ol>"
 
-	var/html = "<html><head>"
+	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	if (title)
 		html += "<title>[title]</title>"
 	html += {"<style>
@@ -346,7 +346,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
+	usr << browse(html, "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -394,21 +394,16 @@ body
 		html += "[name] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-			// not sure if this is completely right...
-			if(0)   //(L.vars.len > 0)
-				html += "<ol>"
-				html += "</ol>"
-			else
-				html += "<ul>"
-				var/index = 1
-				for (var/entry in L)
-					if(istext(entry))
-						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
-					else
-						html += debug_variable(index, L[index], level + 1)
-					index++
-				html += "</ul>"
+			html += "<ul>"
+			var/index = 1
+			for (var/entry in L)
+				if(istext(entry))
+					html += debug_variable(entry, L[entry], level + 1)
+				//html += debug_variable("[index]", L[index], level + 1)
+				else
+					html += debug_variable(index, L[index], level + 1)
+				index++
+			html += "</ul>"
 
 	else if (name in global.bitfields)
 		var/list/flags = list()
@@ -1047,7 +1042,7 @@ body
 			return
 
 		var/mob/C = locate(href_list["setckey"])
-		if(C.ckey && copytext(C.ckey, 1, 2) != "@")
+		if(C.ckey && C.ckey[1] != "@")
 			if(alert("This mob already controlled by [C.ckey]. Are you sure you want to continue?",,"Cancel","Continue") != "Continue")
 				return
 

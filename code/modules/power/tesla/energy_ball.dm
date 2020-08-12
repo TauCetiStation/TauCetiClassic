@@ -65,7 +65,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = -32
 		pixel_y = -32
 		for(var/ball in orbiting_balls)
-			tesla_zap(ball, rand(1, CLAMP(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
+			tesla_zap(ball, rand(1, clamp(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
 
@@ -241,11 +241,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		closest_grounding_rod.tesla_act(power)
 
 	else if(closest_mob)
-		var/shock_damage = CLAMP(round(power/400), 10, 90) + rand(-5, 5)
+		var/shock_damage = clamp(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
 		if(istype(closest_mob, /mob/living/silicon))
 			var/mob/living/silicon/S = closest_mob
-			S.emp_act(2)
+			S.emplode(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5)

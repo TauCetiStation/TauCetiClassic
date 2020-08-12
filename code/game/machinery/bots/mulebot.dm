@@ -137,8 +137,7 @@
 		else
 			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked
@@ -228,8 +227,9 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
-	onclose(user, "mulebot")
+	var/datum/browser/popup = new(user, "window=mulebot", src.name, 350, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	. = ..()
@@ -347,12 +347,11 @@
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(user) && !isrobot(user))
-		return
-	if(user.stat)
+	if(user.incapacitated() || user.lying)
 		return
 
-	if(user.incapacitated() || user.lying)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(AM))
@@ -363,12 +362,16 @@
 // mousedrop a crate to load the bot
 // can load anything if emagged
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	if(!iscarbon(usr) && !isrobot(usr))
-		return
 	if(user.incapacitated() || user.lying)
 		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	if (!istype(AM))
 		return
+
 	load(AM)
 
 // called to load a crate
@@ -830,9 +833,9 @@
 
 /obj/machinery/bot/mulebot/emp_act(severity)
 	if (cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	if(load)
-		load.emp_act(severity)
+		load.emplode(severity)
 	..()
 
 

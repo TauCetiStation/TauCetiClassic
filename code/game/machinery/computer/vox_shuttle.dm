@@ -39,10 +39,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		return // no point in this console after moving shuttle from start position.
 
 	if(announce_vox_departure)
-		console_say("Смена режима маскировки: полная маскировки. КСН \"Исход\" не будет оповещен о нашем прибытии.")
+		console_say("РЎРјРµРЅР° СЂРµР¶РёРјР° РјР°СЃРєРёСЂРѕРІРєРё: РїРѕР»РЅР°СЏ РјР°СЃРєРёСЂРѕРІРєРё. РљРЎРќ \"РСЃС…РѕРґ\" РЅРµ Р±СѓРґРµС‚ РѕРїРѕРІРµС‰РµРЅ Рѕ РЅР°С€РµРј РїСЂРёР±С‹С‚РёРё.")
 		announce_vox_departure = FALSE
 	else
-		console_say("Смена режима маскировки: торговое судно. КСН \"Исход\" будет оповещен о нашем прибытии.")
+		console_say("РЎРјРµРЅР° СЂРµР¶РёРјР° РјР°СЃРєРёСЂРѕРІРєРё: С‚РѕСЂРіРѕРІРѕРµ СЃСѓРґРЅРѕ. РљРЎРќ \"РСЃС…РѕРґ\" Р±СѓРґРµС‚ РѕРїРѕРІРµС‰РµРЅ Рѕ РЅР°С€РµРј РїСЂРёР±С‹С‚РёРё.")
 		announce_vox_departure = TRUE
 
 /obj/machinery/computer/vox_station
@@ -75,7 +75,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	if(announce_vox_departure)
 		if(curr_location == locate(/area/shuttle/vox/arkship))
-			command_alert("Внимание, [station_name()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
+			command_alert("Р’РЅРёРјР°РЅРёРµ, [station_name()], РЅРµРїРѕРґР°Р»С‘РєСѓ РѕС‚ РІР°С€РµР№ СЃС‚Р°РЅС†РёРё РїСЂРѕС…РѕРґРёС‚ РєРѕСЂР°Р±Р»СЊ РЅРµ РѕС‚РІРµС‡Р°СЋС‰РёР№ РЅР° РЅР°С€Рё Р·Р°РїСЂРѕСЃС‹. РџРѕ РїРѕСЃР»РµРґРЅРёРј РґР°РЅРЅС‹Рј СЌС‚РѕС‚ РєРѕСЂР°Р±Р»СЊ РїСЂРёРЅР°РґР»РµР¶РёС‚ РўРѕСЂРіРѕРІРѕР№ РљРѕРЅС„РµРґРµСЂР°С†РёРё.")
 		else if(returning)
 			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of [system_name()] at a rapid clip.", "NSV Icarus")
 
@@ -126,7 +126,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>
 		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
+	var/datum/browser/popup = new(user, "computer", null, 575, 450)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
@@ -136,7 +139,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
+		if(SSticker && (istype(SSticker.mode,/datum/game_mode/heist)))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = TRUE

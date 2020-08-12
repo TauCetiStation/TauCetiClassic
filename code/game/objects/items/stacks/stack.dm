@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = CLAMP(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = CLAMP(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -84,7 +84,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.amount)
+	var/t1 = "<TT>Amount Left: [src.amount]<br>"
 	for(var/i=1;i<=recipe_list.len,i++)
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -133,14 +133,18 @@
 				if (!(max_multiplier in multipliers))
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
-	t1 += "</TT></body></HTML>"
-	user << browse(entity_ja(t1), "window=stack")
+	t1 += "</TT>"
+
+	var/datum/browser/popup = new(user, "stack", "Constructions from [src]")
+	popup.set_content(t1)
+	popup.open()
+
 	onclose(user, "stack")
 	return
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
 	if (href_list["sublist"] && !href_list["make"])
@@ -292,6 +296,9 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
 	if(is_cyborg())
 		return
 	else
@@ -316,9 +323,9 @@
 	F.add_fingerprint(user)
 	use(amount, TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user)
-	if(istype(W, merge_type))
-		var/obj/item/stack/S = W
+/obj/item/stack/attackby(obj/item/I, mob/user, params)
+	if(istype(I, merge_type))
+		var/obj/item/stack/S = I
 		merge(S)
 		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 		if(!QDELETED(S) && usr.machine == S)
@@ -326,7 +333,7 @@
 		if(!QDELETED(src) && usr.machine == src)
 			INVOKE_ASYNC(src, .proc/interact, usr)
 	else
-		..()
+		return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	src.blood_DNA = from.blood_DNA

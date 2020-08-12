@@ -67,7 +67,10 @@
 		"}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "pipedispenser")
 
 /obj/machinery/pipedispenser/is_operational_topic()
@@ -152,9 +155,11 @@ Nah
 
 //Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
-	if(!iscarbon(usr) && !isrobot(usr))
+	if(usr.incapacitated())
 		return
-	if(!usr.canmove || usr.stat || usr.restrained())
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
@@ -177,7 +182,9 @@ Nah
 		<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 		"}
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 

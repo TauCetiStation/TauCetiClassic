@@ -112,7 +112,7 @@
 		set_power_level(new_setting)
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
-		set_temperature = CLAMP(set_temperature + amount, min_temperature, max_temperature)
+		set_temperature = clamp(set_temperature + amount, min_temperature, max_temperature)
 
 	add_fingerprint(usr)
 

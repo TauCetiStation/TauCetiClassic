@@ -75,7 +75,7 @@
 
 /obj/machinery/power/smes/Destroy()
 	smes_list -= src
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at [area.name] [ADMIN_JMP(src)]")
 		log_game("SMES deleted at ([area.name])")

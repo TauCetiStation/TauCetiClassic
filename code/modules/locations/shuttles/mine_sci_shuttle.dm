@@ -35,7 +35,10 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	else
 		dat = "Cannot find shuttle"
 
-	user << browse(entity_ja(dat), "window=flightcomputer;size=575x450")
+	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 575, 450)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "flightcomputer")
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)

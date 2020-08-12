@@ -6,16 +6,15 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	can_be_holstered = FALSE
-	var/alarmed = 0
+	var/alarmed = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
-	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
 	if(..() && chambered)
-		alarmed = 0
+		alarmed = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -48,7 +47,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
@@ -68,9 +67,9 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
-		return silencer_attackby(I,user)
+		return silencer_attackby(I, user, params)
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
@@ -122,7 +121,7 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/user)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
@@ -165,7 +164,7 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
@@ -191,11 +190,11 @@
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/I, mob/user, params)
 	if(!cover_open)
 		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "thompson SMG"
@@ -348,7 +347,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)

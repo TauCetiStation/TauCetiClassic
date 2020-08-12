@@ -352,12 +352,7 @@
 	icon_state = "asher_spock_1"
 	amount_per_transfer_from_this = 5
 	volume = 15
-
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
-	. = ..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("oxycodone", 15)
-	update_icon()
+	list_reagents = list("oxycodone" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
@@ -509,24 +504,6 @@
 	icon_state = "swatcap"
 	body_parts_covered = 0
 
-/obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
-	name = "flame decal welding helmet"
-	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "alice_mccrea_1"
-
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
-	name = "white decal welding helmet"
-	desc = "A white welding helmet with a character written across it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "yuki_matsuda_1"
-
-/obj/item/clothing/head/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
-	name = "blue flame decal welding helmet"
-	desc = "A welding helmet with blue flame decals on it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "norah_briggs_1"
-
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
 	desc = "Hey, I think we're missing a hazard vest..."
@@ -620,7 +597,7 @@
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
-	desc = "A uniform jacket, its buttons polished to a shine, coupled with a dark pair of trousers. 'Hachert' is embroidered upon the jacket�s shoulder bar."
+	desc = "A uniform jacket, its buttons polished to a shine, coupled with a dark pair of trousers. 'Hachert' is embroidered upon the jacket's shoulder bar."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "milohachert"
 	item_state = "milohachert"
@@ -779,7 +756,7 @@
 	item_state = "jane_sid_suit"
 	item_color = "jane_sid_suit"
 	has_sensor = 2
-	sensor_mode = 3
+	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL
 
 //Suit roll-down toggle.
@@ -788,7 +765,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")
@@ -867,17 +844,16 @@
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/paper))
+/obj/item/clothing/accessory/fluff/konaa_hirano/attack_accessory(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
 		if(held)
 			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(user, "You slip [O] into [src].")
-			user.drop_item()
-			O.loc = src
-			src.held = O
-	else
-		..()
+			to_chat(user, "You slip [I] into [src].")
+			user.drop_from_inventory(I, src)
+			held = I
+		return TRUE
+	return FALSE
 
 //////  Medallion - Nasir Khayyam - Jamini
 
@@ -962,29 +938,7 @@
 /obj/item/weapon/melee/baton/fluff/oeng_baton
 	name = "well-used stun baton"
 	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
-/*
-///// Deckard .44 - Callum Leamas - Roaper
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas
-	name = "Deckard .44"
-	desc = "A custom built revolver, based off the semi-popular Detective Special model."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas/update_icon()
-
-	..()
-	if(loaded.len)
-		icon_state = "leamas-loaded"
-	else
-		icon_state = "leamas-empty"
-
-/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-
-	if(istype(A, /obj/item/ammo_magazine))
-		flick("leamas-reloading",src)
-	..()
-
-*/
 ///// Custom Items coded by Iamgoofball are Below /////
 /obj/item/weapon/storage/belt/medical/fluff/nashi_belt
 	name = "rainbow medical belt"

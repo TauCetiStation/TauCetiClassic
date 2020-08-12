@@ -4,8 +4,8 @@
 */
 
 /datum/hud/var/obj/screen/grab_intent
-/datum/hud/var/obj/screen/hurt_intent
-/datum/hud/var/obj/screen/disarm_intent
+/datum/hud/var/obj/screen/harm_intent
+/datum/hud/var/obj/screen/push_intent
 /datum/hud/var/obj/screen/help_intent
 
 /*
@@ -71,8 +71,8 @@ var/global/list/available_ui_styles = list(
 
 /datum/hud/Destroy()
 	grab_intent = null
-	hurt_intent = null
-	disarm_intent = null
+	harm_intent = null
+	push_intent = null
 	help_intent = null
 	lingchemdisplay = null
 	blobpwrdisplay = null
@@ -172,11 +172,13 @@ var/global/list/available_ui_styles = list(
 	else if(isrobot(mymob))
 		robot_hud()
 	else if(isobserver(mymob))
-		ghost_hud()
+		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
 		blob_hud()
 	else if(isessence(mymob))
 		changeling_essence_hud()
+	else if(isliving(mymob))
+		default_hud(ui_color, ui_alpha)
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
@@ -287,7 +289,7 @@ var/global/list/available_ui_styles = list(
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src))
+		if(ishuman(src) || isobserver(src))
 			hud_used.show_hud() //Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else

@@ -53,8 +53,9 @@
 			<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
 			"}
 
-	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=robot_fabricator")
-	onclose(user, "robot_fabricator")
+	var/datum/browser/popup = new(user, "window=robot_fabricator", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
 	. = ..()

@@ -53,7 +53,7 @@
 		mode.body_count.Add(mind)
 
 	//Check for heist mode kill count.
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )
+	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist) ) )
 		//Check for last assailant's mutantrace.
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
@@ -71,13 +71,15 @@
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	if(my_golems)
-		for(var/mob/living/carbon/human/golem in my_golems)
-			golem.death(0)
+		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(my_golem)
+		my_golem.death()
+	if(my_master)
+		my_master.my_golem = null
+		my_master = null
 
 	return ..(gibbed)
 

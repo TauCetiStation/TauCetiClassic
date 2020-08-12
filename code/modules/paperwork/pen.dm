@@ -30,7 +30,7 @@
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
-/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!proximity || !entity)
 		return
@@ -40,21 +40,24 @@
 	                        "Sound the alarms, all of them!", "Are you, [user], any better?", "You can always give up.", "Why even?")
 	to_chat(user, "<span class='bold'>[entity]</span> [pick("moans", "laments", "whines", "blubbers")], \"[pick(phrases)]\"")
 
-/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
-	..()
+/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
+		return
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+		if(H.getBrainLoss() >= 60 || user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")
 			if(entity && istype(I, /obj/item/weapon/nullrod))
 				entity = ""
 				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
+				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
 				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
 				entity = B.deity_name
+				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
 				for(var/A in P.photographed_names)
@@ -62,6 +65,8 @@
 						entity = A
 						to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 						break
+				return
+	return ..()
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -136,6 +141,7 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	tools = list()
 	var/on = 0
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
@@ -149,6 +155,7 @@
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+		tools = list()
 	else
 		on = 1
 		force = 18
@@ -159,6 +166,9 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+		tools = list(
+			TOOL_KNIFE = 1
+			)
 	update_icon()
 
 /obj/item/weapon/pen/edagger/update_icon()
@@ -180,7 +190,7 @@
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
-	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()

@@ -21,13 +21,12 @@
 	if(src in view(2, user))
 		to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 
-/obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
-				user.drop_item()
-				I.loc = src
+				user.drop_from_inventory(I, src)
 				syringes += I
 				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
 				to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
@@ -36,8 +35,10 @@
 		else
 			to_chat(usr, "<span class='warning'>This syringe is broken!</span>")
 
+	else
+		return ..()
 
-/obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(target == user)
 		return
 	..()
@@ -92,9 +93,7 @@
 					for(var/datum/reagent/RA in D.reagents.reagent_list)
 						R += RA.id + " ("
 						R += num2text(RA.volume) + "),"
-				M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-				msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R])", user)
+				M.log_combat(user, "shot with a <b>syringegun</b>")
 
 				if(!M.check_thickmaterial(target_zone = user.zone_sel.selecting) && !M.isSynthetic(user.zone_sel.selecting))
 					if(D.reagents)

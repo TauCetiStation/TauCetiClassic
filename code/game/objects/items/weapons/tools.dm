@@ -81,8 +81,10 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
-	var/random_color = TRUE
 
+	stab_eyes = TRUE
+
+	var/random_color = TRUE
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -99,15 +101,6 @@
 
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-4, 4)
-
-/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
-	if(!istype(M) || user.a_intent == "help")
-		return ..()
-	if(def_zone != O_EYES && def_zone != BP_HEAD)
-		return ..()
-	if((CLUMSY in user.mutations) && prob(50))
-		M = user
-	return eyestab(M,user)
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
@@ -243,8 +236,8 @@
 		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 
-/obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(welding)
 			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return
@@ -256,12 +249,12 @@
 		src.add_fingerprint(user)
 		return
 
-	if((!status) && (istype(W,/obj/item/stack/rods)))
-		var/obj/item/stack/rods/R = W
+	if((!status) && (istype(I, /obj/item/stack/rods)))
+		var/obj/item/stack/rods/R = I
 		if(!R.use(1))
 			return
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
-		src.loc = F
+		forceMove(F)
 		F.weldtool = src
 		if (user.client)
 			user.client.screen -= src
@@ -278,9 +271,7 @@
 		src.add_fingerprint(user)
 		return
 
-	..()
-	return
-
+	return ..()
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
@@ -326,36 +317,37 @@
 		location.hotspot_expose(700, 5, src)
 
 
-/obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
+/obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
-		O.reagents.trans_to(src, max_fuel)
-		to_chat(user, "<span class='notice'>Welder refueled</span>")
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
-		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
-		message_admins("[key_name_admin(user)] triggered a fueltank explosion. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] triggered a fueltank explosion.")
-		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
-		var/obj/structure/reagent_dispensers/fueltank/tank = O
-		tank.explode()
-		return
+	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && target.reagents.has_reagent("fuel"))
+		var/obj/structure/reagent_dispensers/tank = target
+		if (!welding)
+			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
+			tank.reagents.trans_id_to(src, R.id, max_fuel)
+			to_chat(user, "<span class='notice'>Welder refueled</span>")
+			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+			return
+		else if(tank.explode(user))
+			message_admins("[key_name_admin(user)] triggered a [tank] explosion. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] triggered a [tank] explosion.")
+			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
+			return
 	if (src.welding)
 		use(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
 
-			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
-				var/mob/living/L = O
+			if(isliving(target))				//Welding can ignite mobs, splashed with fuel
+				var/mob/living/L = target
 				L.IgniteMob()
-		if(isturf(O))
+		if(isturf(target))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-			s.set_up(3, 1, O)
+			s.set_up(3, 1, target)
 			s.start()
-		else if(isobj(O))
+		else if(isobj(target))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-			s.set_up(3, 1, O)
+			s.set_up(3, 1, target)
 			s.start()
 	return
 
@@ -598,7 +590,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
-		if(!(BP.is_robotic()) || user.a_intent != "help")
+		if(!(BP.is_robotic()) || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

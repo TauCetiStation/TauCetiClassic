@@ -1,4 +1,4 @@
-//TODO: разложить все по полочкам
+//TODO: СЂР°Р·Р»РѕР¶РёС‚СЊ РІСЃРµ РїРѕ РїРѕР»РѕС‡РєР°Рј
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
 	icon = 'code/modules/locations/centcomm/tablo.dmi'
@@ -35,7 +35,7 @@
 /obj/structure/sign/tablo/display/display_90
 	icon = 'code/modules/locations/centcomm/monitor_90.dmi'*/
 
-//надеюсь в скором времени переписать
+//РЅР°РґРµСЋСЃСЊ РІ СЃРєРѕСЂРѕРј РІСЂРµРјРµРЅРё РїРµСЂРµРїРёСЃР°С‚СЊ
 /obj/machinery/information_display
 	anchored = 1
 	density = 0
@@ -68,7 +68,7 @@
 	set name = "Switch monitor"
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS || !ishuman(usr))
+	if (usr.incapacitated() || !ishuman(usr))
 		return
 
 	add_fingerprint(usr)

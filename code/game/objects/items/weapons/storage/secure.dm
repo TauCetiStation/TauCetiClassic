@@ -39,10 +39,10 @@
 /obj/item/weapon/storage/secure/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(locked)
-		if(istype(W, /obj/item/weapon/melee/energy/blade) && (!src.emagged))
-			emagged = 1
+		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)
+			emagged = TRUE
 			user.SetNextMove(CLICK_CD_MELEE)
 			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
@@ -57,15 +57,15 @@
 			to_chat(user, "You slice through the lock on [src].")
 			return
 
-		if (isscrewdriver(W))
-			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
-				src.open =! src.open
+		if (isscrewdriver(I))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
+				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((ismultitool(W)) && (src.open == 1)&& (!src.l_hacking))
+		if ((ismultitool(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
-			if (!user.is_busy(src) && W.use_tool(src, usr, 100, volume = 50))
+			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -82,8 +82,7 @@
 		// ... but it's still locked.
 		return
 
-	// -> storage/attackby() what with handle insertion, etc
-	..()
+	return ..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(!locked || src.emagged)
@@ -119,11 +118,14 @@
 	if (!src.locked)
 		message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	user << browse(entity_ja(dat), "window=caselock;size=300x280")
+
+	var/datum/browser/popup = new(user, "caselock", null, 300, 280)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/storage/secure/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+	if (usr.incapacitated() || get_dist(src, usr) > 1)
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")
@@ -185,8 +187,8 @@
 				src.close(M)
 	src.add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/weapon/W, mob/user)
-	..()
+/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/Topic(href, href_list)

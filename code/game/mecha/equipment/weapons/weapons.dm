@@ -215,7 +215,7 @@
 	name = "LBX AC 10 \"Scattershot\""
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
-	projectile = /obj/item/projectile/bullet/midbullet
+	projectile = /obj/item/projectile/bullet/smg
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 40
 	projectiles_per_shot = 4
@@ -226,7 +226,7 @@
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/midbullet
+	projectile = /obj/item/projectile/bullet/smg
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 300
 	projectiles_per_shot = 3

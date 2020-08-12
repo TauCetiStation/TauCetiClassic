@@ -138,7 +138,7 @@ log transactions
 		return
 
 	//js replicated from obj/machinery/computer/card
-	var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
+	var/dat = ""
 	dat += "For all your monetary needs!<br>"
 	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>"
 
@@ -226,7 +226,9 @@ log transactions
 			dat += "<input type='submit' value='Submit'><br>"
 			dat += "</form>"
 
-	user << browse(entity_ja(dat),"window=atm;size=550x650")
+	var/datum/browser/popup = new(user, "atm", "NanoTrasen Automatic Teller Machine", 550, 650)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/atm/is_operational_topic()
 	return TRUE

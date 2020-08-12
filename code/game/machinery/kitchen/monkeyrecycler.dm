@@ -55,6 +55,8 @@
 	var/cubes_made = 1
 	for(var/obj/item/weapon/stock_parts/manipulator/B in component_parts)
 		req_grind -= B.rating
+		if(req_grind <= 0)
+			req_grind = 1
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		cubes_made = M.rating
 	cube_production = cubes_made
@@ -77,7 +79,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if (src.stat) //NOPOWER etc
 		return
 	if (istype(O, /obj/item/weapon/holder/monkey))
 		var/mob/living/G

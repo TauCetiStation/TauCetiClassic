@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/pickup(mob/user)
+/obj/item/weapon/twohanded/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
@@ -65,7 +65,6 @@
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
-	..()
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
@@ -82,12 +81,11 @@
 			user.drop_from_inventory(O)
 		return
 
-	else //Trying to wield it
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, initial(name), wieldsound)
-			if(W)
-				wield()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/W = H.wield(src, initial(name), wieldsound)
+		if(W)
+			wield()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -118,25 +116,44 @@
 	force_wielded = 40
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
+	sweep_step = 5
+
 /obj/item/weapon/twohanded/fireaxe/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_sweep)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/fireaxe.proc/can_spin)
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	hitsound = SOUNDIN_DESCERATION
+
+/obj/item/weapon/twohanded/fireaxe/proc/can_sweep(mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/fireaxe/proc/can_spin(mob/user)
+	return wielded
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	..()
-	if(A && wielded) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
-			var/obj/structure/window/W = A
+	if(target && wielded) //destroys windows and grilles in one hit
+		if(istype(target,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
+			var/obj/structure/window/W = target
 			W.shatter()
-		else if(istype(A,/obj/structure/grille))
-			var/obj/structure/grille/G = A
+		else if(istype(target,/obj/structure/grille))
+			var/obj/structure/grille/G = target
 			new /obj/item/stack/rods(G.loc)
-			qdel(A)
+			qdel(target)
 
 
 /*
@@ -166,6 +183,8 @@
 	edge = 1
 	can_embed = 0
 
+	sweep_step = 2
+
 /obj/item/weapon/twohanded/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
@@ -186,6 +205,31 @@
 			light_color = COLOR_PINK
 		if("black")
 			light_color = COLOR_GRAY
+
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
+	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/can_swipe)
+	SCB.on_get_sweep_objects = CALLBACK(src, /obj/item/weapon/twohanded/dualsaber.proc/get_sweep_objs)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/dualsaber/proc/can_swipe(mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/dualsaber/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
+
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
+	return sweep_objects
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -215,10 +259,10 @@
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W))
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I))
 		if(!hacked)
-			hacked = 1
+			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
 			light_color = ""
@@ -228,16 +272,16 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) || slicing)
+/obj/item/weapon/twohanded/dualsaber/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target,/obj/machinery/door/airlock) || slicing)
 		return
-	if(O.density && wielded && proximity && in_range(user, O))
-		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
+	if(target.density && wielded && proximity && in_range(user, target))
+		user.visible_message("<span class='danger'>[user] start slicing the [target] </span>")
 		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
-		var/obj/machinery/door/airlock/D = O
+		var/obj/machinery/door/airlock/D = target
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, D))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon

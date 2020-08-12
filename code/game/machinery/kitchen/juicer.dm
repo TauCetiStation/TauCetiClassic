@@ -97,7 +97,11 @@
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
+
+	var/datum/browser/popup = new(user, "juicer", "Juicer")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "juicer")
 
 
@@ -118,7 +122,7 @@
 	set category = "Object"
 	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	if (!beaker)
 		return

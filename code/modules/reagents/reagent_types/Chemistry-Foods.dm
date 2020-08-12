@@ -6,6 +6,8 @@
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
+	data = list()
+
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
 	var/mob_met_factor = 1
@@ -143,9 +145,9 @@
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
@@ -160,7 +162,7 @@
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -172,6 +174,9 @@
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
+		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && S.flags[NO_PAIN])
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -245,6 +250,7 @@
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	for(var/mob/living/carbon/slime/M in T)
 		M.adjustToxLoss(rand(15,30))
 
@@ -303,9 +309,9 @@
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 30)
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 5)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -328,7 +334,7 @@
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
@@ -341,8 +347,9 @@
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if (!istype(T)) return
-	src = null
+	. = ..()
+	if (!istype(T))
+		return
 	if(volume >= 3)
 		T.make_wet_floor(WATER_FLOOR)
 	var/hotspot = (locate(/obj/fire) in T)

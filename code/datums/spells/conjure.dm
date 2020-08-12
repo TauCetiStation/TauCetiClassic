@@ -30,7 +30,7 @@
 			for(var/atom/A in previous_objects)
 				qdel(A)
 				previous_objects -= A
-		for(var/i in 0 to summon_amt)
+		for(var/i in 1 to summon_amt)
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)

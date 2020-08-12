@@ -13,6 +13,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
 	speak_chance = 1
+	melee_damage = 0
 	turns_per_move = 8
 	see_in_dark = 6
 	maxHealth = 15
@@ -21,6 +22,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
+	attacktext = "gnaw"
 	density = FALSE
 	var/body_color //brown, gray and white, leave blank for random
 	layer = MOB_LAYER
@@ -30,6 +32,10 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/mouse/Life()
 	..()
@@ -88,7 +94,7 @@
 	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else
@@ -149,13 +155,13 @@
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(atom/movable/AM)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/mouse/death()
 	layer = MOB_LAYER

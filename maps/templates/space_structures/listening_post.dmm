@@ -399,7 +399,6 @@
 /area/space_structures/listening_post)
 "bc" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1,
 /obj/item/weapon/weldingtool/largetank,
 /obj/structure/cable{
 	d1 = 1;
@@ -502,6 +501,12 @@
 	dir = 1;
 	icon_state = "white"
 	},
+/area/space_structures/listening_post)
+"bo" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
 /area/space_structures/listening_post)
 
 (1,1,1) = {"
@@ -1200,7 +1205,7 @@ ao
 ac
 ac
 ac
-bj
+bo
 aM
 ac
 aU

@@ -31,7 +31,9 @@
 		add_fingerprint(user)
 		var/dat = health_analyze(M, user, TRUE, output_to_chat) // TRUE means limb-scanning mode
 		if(output_to_chat)
-			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			var/datum/browser/popup = new(user, "window=[M.name]_scan_report", "Scan Report", 400, 400)
+			popup.set_content(dat)
+			popup.open()
 			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, dat)
@@ -61,8 +63,8 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/plant_analyzer))
+/obj/item/seeds/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")
 		to_chat(user, "-Plant Lifespan: <span class='notice'>[lifespan]</span>")
@@ -73,7 +75,7 @@
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
-	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/blackpepper
 	name = "pack of piper nigrum seeds"
@@ -867,7 +869,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/goldappleseed)
+	mutatelist = list(/obj/item/seeds/goldappleseed, /obj/item/seeds/poisonedappleseed)
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"
@@ -1243,13 +1245,15 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+/obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
+	if(I.sharp && I.edge && I.force > 10)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
+		return
+	return ..()
 
 
 /obj/item/weapon/grown/sunflower

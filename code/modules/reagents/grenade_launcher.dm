@@ -18,19 +18,19 @@
 	if(src in view(2, user))
 		to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user)
-
-	if((istype(I, /obj/item/weapon/grenade)))
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/grenade))
 		if(grenades.len < max_grenades)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			grenades += I
 			to_chat(user, "<span class='notice'>You put the grenade in the grenade launcher.</span>")
 			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
 		else
 			to_chat(usr, "<span class='warning'>The grenade launcher cannot hold more grenades.</span>")
+	else
+		return ..()
 
-/obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/gun/grenadelauncher/afterattack(atom/target, mob/user, proximity, params)
 	if (locate (/obj/structure/table, src.loc))
 		return
 

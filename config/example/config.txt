@@ -38,6 +38,7 @@ BAN_LEGACY_SYSTEM
 LOG_OOC
 LOG_SAY
 LOG_ADMIN
+LOG_ADMINCHAT
 LOG_ACCESS
 LOG_GAME
 LOG_VOTE
@@ -210,6 +211,23 @@ GATEWAY_DELAY 18000
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
 
+## Expected round length in minutes
+EXPECTED_ROUND_LENGTH 90
+
+## The lower delay between events in minutes.
+## Affect mundane, moderate, and major events respectively
+EVENT_DELAY_LOWER 10;30;50
+
+## The upper delay between events in minutes.
+## Affect mundane, moderate, and major events respectively
+EVENT_DELAY_UPPER 15;45;70
+
+## The delay until the first time an event of the given severity runs in minutes.
+## Unset setting use the EVENT_DELAY_LOWER and EVENT_DELAY_UPPER values instead.
+#EVENT_CUSTOM_START_MUNDANE 10;15
+#EVENT_CUSTOM_START_MODERATE 30;45
+EVENT_CUSTOM_START_MAJOR 80;100
+
 ## Uncommen to allow ghosts to write in blood during Cult rounds.
 ALLOW_CULT_GHOSTWRITER
 
@@ -291,3 +309,7 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Run server in sandbox mode - everyone has admin permissions without logs, bans
 ## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
 # SANDBOX
+
+## This config option disables OOC after round start, and enables it back after round end.
+## Comment it out to disable such behaviour.
+OOC_ROUND_ONLY

@@ -26,7 +26,7 @@
 	icon_state = "metal_frame_item"
 	frame_type = /obj/structure/picture_frame/metal
 
-/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
+/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
 			var/obj/item/weapon/photo/Photo = I
@@ -68,7 +68,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is no glass to screw out in \the [src].</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
@@ -89,7 +89,7 @@
 		if(!over_object)
 			return
 
-		if(!usr.restrained() && !usr.stat)
+		if(!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -118,7 +118,7 @@
 	if(frame_glass)
 		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
 
-/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return
@@ -294,7 +294,7 @@
 		var/mob/living/carbon/M = usr
 		if(!over_object)
 			return
-		if(!usr.restrained() && !usr.stat)
+		if(!usr.incapacitated())
 			if(over_object == M)
 				if(screwed)
 					to_chat(M,"<span class='warning'>It is screwed to the wall.</span>")

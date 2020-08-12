@@ -10,12 +10,14 @@
 
 	sheet_type = /obj/item/stack/sheet/plasteel
 
+	seconds_to_melt = 60
+
 	var/d_state = INTACT
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(5, 25))
 			if(prob(25))
@@ -43,7 +45,7 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -73,11 +75,11 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				thermitemelt(user)
+				thermitemelt(user, seconds_to_melt)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -88,7 +90,7 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))

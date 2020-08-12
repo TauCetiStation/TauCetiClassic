@@ -308,6 +308,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminnotice			{color: #0000ff;}
 .boldannounce			{color: #ff0000; font-weight: bold;}
 .success				{color: #00BF36; font-weight: bold;}
+.vote					{color: purple;}
 
 /* Miscellaneous */
 .say					{}
@@ -386,6 +387,7 @@ h1.alert, h2.alert	{color: #000000;}
 .rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .ipc					{color: #505050;	font-weight: bold;	font-family: "Times New Roman", Times, serif;}
+.syndcode				{color: #C21B1B;}
 
 .interface				{color: #330033;}
 
@@ -396,3 +398,20 @@ h1.alert, h2.alert	{color: #000000;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal; font-style: normal;}
 .hidden {display: none; visibility: hidden;}
+
+/* Popup windows */
+.embedded_tip{position: relative; display: inline;}
+.embedded_tip .embedded_tip-text{
+	display: none;
+	position: absolute;
+	padding: 5px;
+	z-index: 1;
+	bottom: 125%;
+	width: 90vw;
+	word-wrap: break-word;
+	background-color:#353535;
+	color:white;
+	border:1px solid black;
+}
+.embedded_tip:hover .embedded_tip-text{display: block;}
+.embedded_tip-mark{font-style: italic;}

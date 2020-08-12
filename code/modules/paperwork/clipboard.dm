@@ -1,5 +1,5 @@
 /obj/item/weapon/clipboard
-	name = "clipboard"
+	name = "Clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "clipboard"
@@ -22,7 +22,7 @@
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -45,21 +45,23 @@
 	add_overlay("clipboard_over")
 	return
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
-		W.loc = src
-		if(istype(W, /obj/item/weapon/paper))
-			toppaper = W
-		to_chat(user, "<span class='notice'>You clip the [W] onto \the [src].</span>")
+/obj/item/weapon/clipboard/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
+		user.drop_from_inventory(I, src)
+		if(istype(I, /obj/item/weapon/paper))
+			toppaper = I
+		to_chat(user, "<span class='notice'>You clip the [I] onto \the [src].</span>")
 		update_icon()
+
 	else if(toppaper)
-		toppaper.attackby(usr.get_active_hand(), usr)
+		toppaper.attackby(usr.get_active_hand(), usr, params)
 		update_icon()
-	return
+
+	else
+		return ..()
 
 /obj/item/weapon/clipboard/attack_self(mob/user)
-	var/dat = "<title>Clipboard</title>"
+	var/dat = ""
 	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 	else
@@ -77,14 +79,16 @@
 	for(var/obj/item/weapon/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 
-	user << browse(entity_ja(dat), "window=clipboard")
-	onclose(user, "clipboard")
+	var/datum/browser/popup = new(user, "window=clipboard", src,name)
+	popup.set_content(dat)
+	popup.open()
+
 	add_fingerprint(usr)
 	return
 
 /obj/item/weapon/clipboard/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(usr.incapacitated())
 		return
 
 	if(usr.contents.Find(src))

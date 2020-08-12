@@ -195,7 +195,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	set category = "Object"
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+	if(usr.incapacitated() || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
 	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
@@ -395,11 +395,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	else
 		..()
 
-/obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user)
+/obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
+
 	else if(panel_open)
 		if(iscrowbar(I))
 			if(ML)
@@ -415,6 +416,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			user.drop_from_inventory(I, src)
 			ML = I
 			to_chat(user, "<span class='notice'>You install [I] into \the [src].</span>")
+
+	else
+		return ..()
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
 	if(!emagged)

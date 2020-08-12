@@ -23,7 +23,7 @@
 
 /obj/item/clothing/atom_init()
 	. = ..()
-	if (species_restricted_locked == FALSE)
+	if (!species_restricted_locked)
 		update_species_restrictions()
 
 /*
@@ -33,6 +33,26 @@
 */
 var/global/list/specie_sprite_sheet_cache = list()
 var/global/list/icon_state_allowed_cache = list()
+
+/obj/item/clothing/proc/get_sprite_sheet_icon_list(specie, overwrite_slot = null)
+	// Return list of icon states of current spirte_sheet_slot or null
+	if(!specie || !(specie in global.all_species))
+		return
+	var/slot = sprite_sheet_slot
+	if(overwrite_slot)
+		slot = overwrite_slot
+	var/sprite_sheet_cache_key = "[specie]|[slot]"
+	if(global.specie_sprite_sheet_cache[sprite_sheet_cache_key])
+		. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
+	else
+		var/datum/species/S = global.all_species[specie]
+		var/i_path = S.sprite_sheets[slot]
+		// If you specified the mob as sprite_sheet_restricted, but
+		// want to use default sprite sheets for some "slots"
+		// then specify it.
+		if(i_path)
+			global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
+			. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
 
 /obj/item/clothing/proc/update_species_restrictions()
 	if(!species_restricted)
@@ -58,21 +78,7 @@ var/global/list/icon_state_allowed_cache = list()
 		if(global.icon_state_allowed_cache[cache_key])
 			allowed = TRUE
 		else
-			var/specie_cache = "[specie]|[sprite_sheet_slot]"
-			var/list/icons_exist
-			if(global.specie_sprite_sheet_cache[specie_cache])
-				icons_exist = global.specie_sprite_sheet_cache[specie_cache]
-			else
-				var/datum/species/S = global.all_species[specie]
-				var/icon_path = S.sprite_sheets[sprite_sheet_slot]
-				// If you specified the mob as sprite_sheet_restricted, but
-				// want to use default sprite sheets for some "slots"
-				// then specify it.
-				if(icon_path)
-					var/list/sheet_icon_states = icon_states(icon_path)
-					icons_exist = sheet_icon_states
-					global.specie_sprite_sheet_cache[specie_cache] = sheet_icon_states
-
+			var/list/icons_exist = get_sprite_sheet_icon_list(specie)
 			if(icons_exist)
 				var/t_state
 				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
@@ -175,6 +181,28 @@ var/global/list/icon_state_allowed_cache = list()
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
+
+
+/obj/item/clothing/MouseDrop(obj/over_object)
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
@@ -294,9 +322,6 @@ BLIND     // can't see anything
 			cell.reliability -= 10 / severity
 	..()
 
-// Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
-	return 0 // return 1 to cancel attack_hand()
 
 //Head
 /obj/item/clothing/head
@@ -339,8 +364,8 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 //Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
+/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
+	if(iswirecutter(I))
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -360,7 +385,7 @@ BLIND     // can't see anything
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
@@ -385,7 +410,7 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
-/obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 
 //Spacesuit
@@ -414,7 +439,7 @@ BLIND     // can't see anything
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = THICKMATERIAL | PHORONGUARD
+	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM
 	flags_pressure = STOPS_PRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
@@ -467,7 +492,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
-	var/sensor_mode = 0
+	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
 		1 = Report living/dead
 		2 = Report detailed damages
@@ -484,7 +509,7 @@ BLIND     // can't see anything
 	..()
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
-			A.emp_act(severity)
+			A.emplode(severity)
 
 /obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(istype(A))
@@ -514,6 +539,10 @@ BLIND     // can't see anything
 	if(!istype(usr, /mob/living))
 		return
 
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
 	var/obj/item/clothing/accessory/A
 	if(accessories.len > 1)
 		A = input("Select an accessory to remove from [src]") as null|anything in accessories
@@ -540,7 +569,7 @@ BLIND     // can't see anything
 		action_button_name = null
 
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
 		for (var/i in 1 to 3)
 			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
@@ -564,10 +593,10 @@ BLIND     // can't see anything
 
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attackby(I, user)
+			A.attack_accessory(I, user, params)
 		return
 
-	..()
+	return ..()
 
 /obj/item/clothing/under/AltClick()
 	handle_accessories_removal()
@@ -584,40 +613,16 @@ BLIND     // can't see anything
 
 	..()
 
-//This is to ensure people can take off suits when there is an attached accessory
-/obj/item/clothing/under/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
-		if (!over_object)
-			return
-
-		if (!( usr.restrained() ) && !( usr.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
-
 /obj/item/clothing/under/examine(mob/user)
 	..()
 	switch(src.sensor_mode)
-		if(0)
+		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")
-		if(1)
+		if(SUIT_SENSOR_BINARY)
 			to_chat(user, "Its binary life sensors appear to be enabled.")
-		if(2)
+		if(SUIT_SENSOR_VITAL)
 			to_chat(user, "Its vital tracker appears to be enabled.")
-		if(3)
+		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -626,7 +631,8 @@ BLIND     // can't see anything
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
 	if (istype(M, /mob/dead)) return
-	if (usr.stat || usr.restrained()) return
+	if (usr.incapacitated())
+		return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
 		return 0
@@ -643,23 +649,23 @@ BLIND     // can't see anything
 
 	if (src.loc == usr)
 		switch(sensor_mode)
-			if(0)
+			if(SUIT_SENSOR_OFF)
 				to_chat(usr, "You disable your suit's remote sensing equipment.")
-			if(1)
+			if(SUIT_SENSOR_BINARY)
 				to_chat(usr, "Your suit will now report whether you are live or dead.")
-			if(2)
+			if(SUIT_SENSOR_VITAL)
 				to_chat(usr, "Your suit will now report your vital lifesigns.")
-			if(3)
+			if(SUIT_SENSOR_TRACKING)
 				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
-			if(0)
+			if(SUIT_SENSOR_OFF)
 				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
-			if(1)
+			if(SUIT_SENSOR_BINARY)
 				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
-			if(2)
+			if(SUIT_SENSOR_VITAL)
 				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
-			if(3)
+			if(SUIT_SENSOR_TRACKING)
 				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
 
 /obj/item/clothing/under/verb/toggle()
@@ -673,7 +679,8 @@ BLIND     // can't see anything
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if(copytext(item_color,-2) != "_d")
 		basecolor = item_color
@@ -684,5 +691,5 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/rank/atom_init()
-	sensor_mode = pick(0,1,2,3)
+	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()

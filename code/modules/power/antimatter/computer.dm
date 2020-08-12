@@ -58,7 +58,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/am_engine/ui_interact(mob/user)
-	var/dat = "<head><title>Engine Computer</title></head><body>"
+	var/dat = ""
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
@@ -82,6 +82,10 @@
 			dat += "<BR>Contents:<br>[src.connected_E.H_fuel]kg of Hydrogen<br>[src.connected_E.antiH_fuel]kg of Anti-Hydrogen<br>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(entity_ja(dat), "window=communications;size=400x500")
+
+	var/datum/browser/popup = new(user, "communications", "Engine Computer", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "communications")
 

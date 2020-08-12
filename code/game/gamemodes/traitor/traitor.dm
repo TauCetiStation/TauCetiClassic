@@ -197,7 +197,7 @@
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
 	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	//End code phrase.
-
+	killer.add_language("Sy-Code", 1)
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	var/text = ""
@@ -243,10 +243,10 @@
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 
-	if(ticker.reconverted_antags.len)
+	if(SSticker.reconverted_antags.len)
 		text += "<br><hr>"
-		for(var/reconverted in ticker.reconverted_antags)
-			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
+		for(var/reconverted in SSticker.reconverted_antags)
+			text += printplayerwithicon(SSticker.reconverted_antags[reconverted])
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))

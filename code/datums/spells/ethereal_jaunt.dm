@@ -20,7 +20,11 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	set waitfor = FALSE
+
 	for(var/mob/living/target in targets)
+		if(!target.canmove)
+			continue
+
 		var/turf/mobloc = get_turf(target.loc)
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		target.ExtinguishMob()			//This spell can extinguish mob
@@ -32,7 +36,8 @@
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
-		var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
+		var/image/I = image('icons/mob/blob.dmi', holder, "marker", layer = HUD_LAYER)
+		holder.indicator = I
 		if(target.client)
 			target.client.images += I
 			target.forceMove(holder)
@@ -71,15 +76,11 @@
 			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
 		mobloc = get_turf(target.loc)
-		var/can_move_in = 1
-		if(!mobloc.is_mob_placeable(target))
-			can_move_in = 0
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
 				L.status_flags ^= GODMODE
-		if(!can_move_in)
-			do_teleport(target, mobloc, 8, asoundin='sound/effects/phasein.ogg', checkspace = 1)
+		target.eject_from_wall(gib = TRUE, companions = companions)
 		qdel(holder)
 
 /obj/effect/dummy/spell_jaunt
@@ -92,10 +93,11 @@
 	icon_state = "blank"
 	var/mob/master
 	var/canmove = FALSE
+	var/image/indicator
 
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
-	if(!canmove || last_move + 2 > world.time)
+	if(last_move + 2 > world.time)
 		return
 	if(user != master)
 		return
@@ -106,6 +108,9 @@
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	dir = direction
 	last_move = world.time
+	if(indicator)
+		var/turf/T = get_turf(loc)
+		indicator.icon_state = "marker[T.is_mob_placeable() ? "" : "_danger"]"
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
@@ -117,6 +122,39 @@
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	master = null
+	QDEL_NULL(indicator)
 	return ..()
 
 #undef FLICK_OVERLAY_JAUNT_DURATION
+
+/mob/proc/eject_from_wall(gib = FALSE, prioritize_ground = TRUE, list/companions = null)
+	var/turf/mobloc = get_turf(loc)
+	if(mobloc.is_mob_placeable(src))
+		return
+	var/found_ground = !prioritize_ground // this is to give priority to non-space tiles
+	var/to_gib = gib // this is a small feature i considered funny.
+	                  // chances of this occuring are very small
+	                  // as it requires 9x9 grid of impassable tiles ~getup1
+	for(var/turf/newloc in orange(1, mobloc))
+		if(newloc.is_mob_placeable(src) && !istype(newloc, /turf/space))
+			found_ground = TRUE
+			to_gib = FALSE
+			forceMove(newloc)
+			if(companions)
+				for(var/mob/M in companions)
+					M.forceMove(newloc)
+			return
+	if(!found_ground)
+		for(var/turf/newloc in orange(1, mobloc))
+			if(newloc.is_mob_placeable(src))
+				to_gib = FALSE
+				forceMove(newloc)
+				if(companions)
+					for(var/mob/M in companions)
+						M.forceMove(newloc)
+				return
+	if(to_gib)
+		gib()
+		if(companions)
+			for(var/mob/M in companions)
+				M.gib()

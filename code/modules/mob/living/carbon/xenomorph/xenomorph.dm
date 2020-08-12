@@ -264,15 +264,6 @@ Hit Procs
 	updatehealth()
 	return
 
-/mob/living/carbon/xenomorph/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-
-		updatehealth()
-	return
-
 /mob/living/carbon/xenomorph/emp_act(severity)
 	return
 
@@ -309,7 +300,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/xenomorph/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
+			if(dd_hasprefix(I.icon_state, "infected"))
 				qdel(I)
 	return
 
@@ -334,5 +325,5 @@ Des: Removes all infected images from the alien.
 		src.hands.dir = SOUTH*/
 	return
 
-/mob/living/carbon/xenomorph/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)

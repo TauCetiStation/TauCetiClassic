@@ -22,9 +22,9 @@
 		pai.death(0)
 	return ..()
 
-/obj/item/device/paicard/attackby(W, mob/living/user)
-	if(istype(W, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = W
+/obj/item/device/paicard/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = I
 		if(paper.crumpled)
 			to_chat(usr, "Paper to crumpled for anything.")
 			return
@@ -33,8 +33,14 @@
 		to_chat(user, "You hold \the [itemname] up to the pAI...")
 		if(pai.client && !(pai.stat == DEAD))
 			to_chat(pai, "[user.name] holds \a [itemname] up to one of your camera...")
-			pai << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
-	
+
+			var/datum/browser/popup = new(pai, itemname, itemname)
+			popup.set_content("<TT>[info]</TT>")
+			popup.open()
+
+	else
+		return ..()
+
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
@@ -43,6 +49,7 @@
 		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 		<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 					body {
 					    margin-top:5px;
@@ -145,11 +152,11 @@
 				</tr>
 				<tr>
 					<td class="request">Prime directive:</td>
-					<td>[pai.pai_law0]</td>
+					<td>[pai.laws.zeroth]</td>
 				</tr>
 				<tr>
 					<td class="request">Additional directives:</td>
-					<td>[pai.pai_laws]</td>
+					<td>[jointext(pai.laws.supplied, "<br>")]</td>
 				</tr>
 			</table>
 			<br>
@@ -233,13 +240,13 @@
 				<br>
 				<p>Each time this button is pressed, a request will be sent out to any available personalities. Check back often give plenty of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
 			"}
-	user << browse(entity_ja(dat), "window=paicard")
+	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
 
 /obj/item/device/paicard/Topic(href, href_list)
 
-	if(!usr || usr.stat)
+	if(!usr || usr.incapacitated())
 		return
 
 	if(href_list["setdna"])
@@ -270,12 +277,12 @@
 		var/t1 = text2num(href_list["wires"])
 		radio.wires.cut_wire_index(t1)
 	if(href_list["setlaws"])
-		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", input_default(pai.pai_laws)) as message)
+		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied.len ? pai.laws.supplied[1] : "") as message)
 		if(newlaws)
-			pai.pai_laws = newlaws
+			pai.laws.add_supplied_law(0, newlaws)
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
-			to_chat(pai, "Prime Directive: <br>[pai.pai_law0]")
-			to_chat(pai, "Supplemental Directives: <br>[pai.pai_laws]")
+			to_chat(pai, "Prime Directive: <br>[pai.laws.zeroth]")
+			to_chat(pai, "Supplemental Directives: <br>[jointext(pai.laws.supplied, "<br>")]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
@@ -310,5 +317,5 @@
 
 /obj/item/device/paicard/emp_act(severity)
 	for(var/mob/M in src)
-		M.emp_act(severity)
+		M.emplode(severity)
 	..()

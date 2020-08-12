@@ -75,7 +75,7 @@
 
 /obj/item/device/eftpos/attack_self(mob/user)
 	if(get_dist(src,user) <= 1)
-		var/dat = "<b>[eftpos_name]</b><br>"
+		var/dat = ""
 		dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
 		if(transaction_locked)
 			dat += "<a href='?src=\ref[src];choice=toggle_lock'>Back[transaction_paid ? "" : " (authentication required)"]</a><br><br>"
@@ -97,19 +97,21 @@
 			dat += "<a href='?src=\ref[src];choice=change_code'>Change access code</a><br>"
 			dat += "<a href='?src=\ref[src];choice=change_id'>Change EFTPOS ID</a><br>"
 			dat += "Scan card to reset access code <a href='?src=\ref[src];choice=reset'>\[------\]</a>"
-		user << browse(entity_ja(dat),"window=eftpos")
+		var/datum/browser/popup = new(user, "eftpos", "[eftpos_name]")
+		popup.set_content(dat)
+		popup.open()
 	else
 		user << browse(null,"window=eftpos")
 
-/obj/item/device/eftpos/attackby(O, user)
-	if(istype(O, /obj/item/weapon/card))
+/obj/item/device/eftpos/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card))
 		if(linked_account)
-			var/obj/item/weapon/card/I = O
-			scan_card(I)
+			var/obj/item/weapon/card/C = I
+			scan_card(C)
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to linked account.</span>")
-	else if (istype(O, /obj/item/weapon/spacecash/ewallet))
-		var/obj/item/weapon/spacecash/ewallet/E = O
+	else if(istype(I, /obj/item/weapon/spacecash/ewallet))
+		var/obj/item/weapon/spacecash/ewallet/E = I
 		if (linked_account)
 			if(!linked_account.suspended)
 				if(transaction_locked && !transaction_paid)
@@ -139,7 +141,7 @@
 			to_chat(usr, "[bicon(src)]<span class='warning'>EFTPOS is not connected to an account.</span>")
 
 	else
-		..()
+		return ..()
 
 /obj/item/device/eftpos/Topic(var/href, var/href_list)
 	if(href_list["choice"])

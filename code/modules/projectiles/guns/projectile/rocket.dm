@@ -21,6 +21,27 @@
 	wielded = 1
 	update_icon()
 
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
@@ -40,7 +61,7 @@
 			O.unwield()
 	return	unwield()
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/user)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/living/user)
 	unwield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
@@ -82,7 +103,7 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return

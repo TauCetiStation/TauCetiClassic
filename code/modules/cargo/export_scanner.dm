@@ -13,7 +13,10 @@
 	if(!cargo_console)
 		to_chat(user, "<span class='notice'>The [src] is currently not linked to a cargo console.</span>")
 
-/obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/export_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!isobj(target))
+		return
+	var/obj/O = target
 	if(!istype(O) || !proximity)
 		return
 

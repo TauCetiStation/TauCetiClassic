@@ -44,7 +44,9 @@
 	implanted = TRUE
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[def_zone ? def_zone : BP_HEAD]
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
+		if(!BP)
+			return
 		BP.implants += src
 		part = BP
 		H.hud_updateflag |= 1 << IMPLOYAL_HUD
@@ -167,7 +169,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/hear(msg)
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
-	msg = sanitize(msg, replacechars)
+	msg = replace_characters(msg, replacechars)
 	if(findtext(msg,phrase))
 		activate()
 		qdel(src)
@@ -389,6 +391,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
+
+/obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	implanted(C)
 
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"

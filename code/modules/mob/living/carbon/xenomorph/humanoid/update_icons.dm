@@ -29,7 +29,7 @@
 		icon_state = "alien[caste]_pounce"
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "alien[caste]_sleep"
-	else if(m_intent == "run")
+	else if(m_intent == MOVE_INTENT_RUN)
 		icon_state = "alien[caste]_running"
 	else
 		icon_state = "alien[caste]_s"
@@ -47,8 +47,12 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+
+		pixel_x = get_pixel_x_offset(lying)
+		pixel_y = get_pixel_y_offset(lying)
+
+		default_pixel_x = pixel_x
+		default_pixel_y = pixel_y
 
 /mob/living/carbon/xenomorph/humanoid/regenerate_icons()
 	..()

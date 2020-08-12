@@ -1,6 +1,6 @@
 /mob/living/carbon/ian/emote(act, m_type = SHOWMSG_AUDIO, message = null, auto)
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act, 1, length(act))
+		act = copytext(act, 1, -1)
 
 	if(src.stat == DEAD && (act != "deathgasp"))
 		return
@@ -107,6 +107,10 @@
 		if("cough")
 			message = "<B>[src]</B> coughs!"
 			m_type = SHOWMSG_AUDIO
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 		if("help")
 			to_chat(src, "blink, blink_r, choke, collapse, cough, eyebrow, faint, dance, deathgasp, drool, gasp, shiver, gnarl, jump, point, paw, moan, nod,\nroar, roll, scratch, shake, sit, sulk, sway, tail, twitch, twitch_s, whimper")
 		else

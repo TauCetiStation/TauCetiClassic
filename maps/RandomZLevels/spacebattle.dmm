@@ -990,7 +990,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/stew,
+/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -1157,7 +1157,7 @@
 	mobname = "Nathaniel Waters";
 	name = "Nathaniel Waters"
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "bar"

@@ -1,53 +1,23 @@
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
-/proc/random_hair_style(gender, species = HUMAN)
+/proc/random_hair_style(gender, species = HUMAN, ipc_head)
 	var/h_style = "Bald"
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if(!(species in S.species_allowed))
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, species, gender, ipc_head)
 
 	if(valid_hairstyles.len)
 		h_style = pick(valid_hairstyles)
 
 	return h_style
 
-/proc/random_ipc_monitor(ipc_head)
-	var/h_style = "Bald"
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(ipc_head != S.ipc_head_compatible)
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-	if(valid_hairstyles.len)
-		h_style = pick(valid_hairstyles)
-
-	return h_style
+/proc/random_gradient_style()
+	return pick(hair_gradients)
 
 /proc/random_facial_hair_style(gender, species = HUMAN)
 	var/f_style = "Shaved"
 
-	var/list/valid_facialhairstyles = list()
-	for(var/facialhairstyle in facial_hair_styles_list)
-		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
-
-		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+	var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache, species, gender)
 
 	if(valid_facialhairstyles.len)
 		f_style = pick(valid_facialhairstyles)
@@ -143,7 +113,6 @@
 			return "health-85"
 		else
 			return "health-100"
-	return "0"
 
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
@@ -176,7 +145,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
@@ -187,14 +156,24 @@
 		if(user.loc != user_loc || target.loc != target_loc || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
-		if(user.hand != busy_hand)
-			if(user.get_inactive_hand() != holding)
+
+		if(HAS_TRAIT(user, TRAIT_MULTITASKING))
+			if(user.hand != busy_hand)
+				if(user.get_inactive_hand() != holding)
+					. = FALSE
+					break
+			else
+				if(user.get_active_hand() != holding)
+					. = FALSE
+					break
+		else
+			if(user.hand != busy_hand)
 				. = FALSE
 				break
-		else
 			if(user.get_active_hand() != holding)
 				. = FALSE
 				break
+
 		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
 			. = FALSE
 			break
@@ -241,7 +220,7 @@
 	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -266,17 +245,27 @@
 			if(!holdingnull && QDELETED(holding))
 				. = FALSE
 				break
-			if(user.hand != busy_hand)
-				if(user.get_inactive_hand() != holding)
+
+			if(HAS_TRAIT(user, TRAIT_MULTITASKING))
+				if(user.hand != busy_hand)
+					if(user.get_inactive_hand() != holding)
+						. = FALSE
+						break
+				else
+					if(user.get_active_hand() != holding)
+						. = FALSE
+						break
+			else
+				if(user.hand != busy_hand)
 					. = FALSE
 					break
-			else
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
+
 	if(progress)
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
-	if(target)
+	if(target && target != user)
 		target.in_use_action = FALSE

@@ -37,15 +37,16 @@
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/weapon/paper/P in src)
 		dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
-	user << browse("<HEAD><TITLE>Notices</TITLE></HEAD>[entity_ja(dat)]","window=noticeboard")
-	onclose(user, "noticeboard")
 
+	var/datum/browser/popup = new(user, "window=noticeboard", src.name, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/structure/noticeboard/Topic(href, href_list)
 	..()
 	usr.set_machine(src)
 	if(href_list["remove"])
-		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
+		if(usr.incapacitated())	//For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/P = locate(href_list["remove"])
 		if((P && P.loc == src))
@@ -56,7 +57,7 @@
 			icon_state = "nboard0[notices]"
 
 	if(href_list["write"])
-		if((usr.stat || usr.restrained())) //For when a player is handcuffed while they have the notice window open
+		if(usr.incapacitated()) //For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/P = locate(href_list["write"])
 
@@ -75,9 +76,11 @@
 		var/obj/item/weapon/paper/P = locate(href_list["read"])
 		if((P && P.loc == src))
 			if(!( istype(usr, /mob/living/carbon/human) ))
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[entity_ja(stars(P.info))]</TT></BODY></HTML>", "window=[P.name]")
-				onclose(usr, "[P.name]")
+				var/datum/browser/popup = new(usr, "window=[P.name]", P.name, ntheme = CSS_THEME_LIGHT)
+				popup.set_content(stars(P.info))
+				popup.open()
 			else
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[entity_ja(P.info)]</TT></BODY></HTML>", "window=[P.name]")
-				onclose(usr, "[P.name]")
+				var/datum/browser/popup = new(usr, "window=[P.name]", P.name, ntheme = CSS_THEME_LIGHT)
+				popup.set_content(P.info)
+				popup.open()
 	return

@@ -337,6 +337,14 @@
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/dextromethorphan
+	name = "Dextromethorphan"
+	id = "dextromethorphan"
+	result = "dextromethorphan"
+	required_reagents = list("dexalinp" = 1, "oxycodone" = 1)
+	required_catalysts = list("phoron" = 5)
+	result_amount = 2
+
 /datum/chemical_reaction/ethylredoxrazine
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
@@ -405,21 +413,14 @@
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
 
 	for(var/mob/living/carbon/M in viewers(world.view, location))
+		if(M.eyecheck() > 0)
+			continue
+		M.flash_eyes()
 		switch(get_dist(M, location))
 			if(0 to 3)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				M.flash_eyes()
 				M.Weaken(15)
 
 			if(4 to 5)
-				if(hasvar(M, "glasses"))
-					if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
-						continue
-
-				M.flash_eyes()
 				M.Stun(5)
 
 /datum/chemical_reaction/napalm
@@ -1140,23 +1141,11 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimebork/on_reaction(datum/reagents/holder)
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
-	// BORK BORK BORK
-
-	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc))
+		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i = 1, i <= 4 + rand(1,2), i++)
-		var/chosen = pick(borks)
-		var/obj/B = new chosen
-		if(B)
-			B.loc = get_turf_loc(holder.my_atom)
-			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
-					step(B, pick(NORTH,SOUTH,EAST,WEST))
+	spawn_food(get_turf_loc(holder.my_atom), 4 + rand(1,2))
 
 /datum/chemical_reaction/slimebork2
 	name = "Slime Bork 2"
@@ -1168,23 +1157,11 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimebork2/on_reaction(datum/reagents/holder)
-	var/list/borks2 = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
-	// BORK BORK BORK
-
-	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-
-	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
+	for(var/mob/living/carbon/human/M in viewers(usr.loc))
+		if(M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	for(var/i = 1, i <= 4 + rand(1,2), i++)
-		var/chosen = pick(borks2)
-		var/obj/B = new chosen
-		if(B)
-			B.loc = get_turf(holder.my_atom)
-			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
-					step(B, pick(NORTH,SOUTH,EAST,WEST))
+	spawn_food(get_turf_loc(holder.my_atom), 4 + rand(1,2))
 
 
 //Blue

@@ -18,6 +18,17 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
+/obj/item/weapon/stock_parts/cell/set_prototype_qualities(rel_val=100, mark=0)
+	..()
+	while(!prob(reliability))
+		if(maxcharge <= 1000)
+			break
+		if(maxcharge < 10000)
+			maxcharge = max(maxcharge - 2000, 1000)
+		else
+			maxcharge = max(maxcharge * 0.9, 1000)
+		charge = min(charge, maxcharge)
+
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (FIRELOSS)

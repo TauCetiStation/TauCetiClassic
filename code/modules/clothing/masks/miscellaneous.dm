@@ -198,7 +198,7 @@
 	set category = "Object"
 	set name = "Adjust bandana"
 	set src in usr
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		flags ^= MASKCOVERSMOUTH
 		if(flags & MASKCOVERSMOUTH)
 			src.icon_state = initial(icon_state)
@@ -254,6 +254,18 @@
 	name = "gold collar"
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
+
+/obj/item/clothing/mask/tie/silver_cross
+	name = "pectoral silver cross"
+	desc = "That's a big pectoral silver cross for big religion figures."
+	icon_state = "pectoral_silver_cross"
+	item_state = "pectoral_silver_cross"
+
+/obj/item/clothing/mask/tie/golden_cross
+	name = "pectoral golden cross"
+	desc = "That's a big pectoral golden cross for the biggest religion figure."
+	icon_state = "pectoral_golden_cross"
+	item_state = "pectoral_golden_cross"
 
 /obj/item/clothing/mask/ecig
 	name = "electronic cigarette"

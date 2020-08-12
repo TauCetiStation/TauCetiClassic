@@ -224,8 +224,8 @@
 		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
 		return
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
-	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
-		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
+	if(((src.mind in SSticker.mode:head_revolutionaries) || (src.mind in SSticker.mode:revolutionaries)))
+		if((M.mind in SSticker.mode:head_revolutionaries) || (M.mind in SSticker.mode:revolutionaries))
 			to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 		else if(ismindshielded(M))
 			to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
@@ -240,7 +240,7 @@
 			message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
-				ticker.mode:add_revolutionary(M.mind)
+				SSticker.mode:add_revolutionary(M.mind)
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 			else if(choice == "No!")
@@ -284,20 +284,32 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
 
-	if(last_command_report == 0 && world.time >= 10 * 60 * 10)
+	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
-	else if(last_command_report == 1 && world.time >= 10 * 60 * 30)
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions
+		for(var/datum/job/J in SSjob.occupations)
+			if(J.title in excluded_rank)
+				continue
+			J.salary_ratio = 0.5	//halve the salary of all professions except leading
+		var/list/crew = my_subordinate_staff("Admin")
+		for(var/person in crew)
+			if(person["rank"] in command_positions)
+				continue
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
+
+	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		src.command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 10 * 60 * 60)
+	else if(last_command_report == 2 && world.time >= 60 MINUTES)
 		src.command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
 		last_command_report = 3
 
 	checkwin_counter++
 	if(checkwin_counter >= 5)
 		if(!finished)
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 

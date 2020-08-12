@@ -46,15 +46,19 @@
 		Spell.charge_max = initial(Spell.charge_max) // Incase spell has variable charge time, so we need to reset its CD back to normal.
 	update_icon()
 
-/obj/item/weapon/magic/afterattack(atom/A, mob/living/user)
+/obj/item/weapon/magic/afterattack(atom/target, mob/user, proximity, params)
 	if(user.incapacitated() || user.lying)
 		return FALSE
 
 	if(!touch_spell)
-		if(!cast_throw(A, user))
+		var/turf/U = get_turf(user)
+		var/turf/T = get_turf(target)
+		if(U == T)
+			return
+		if(!cast_throw(target, user))
 			return FALSE
 	else
-		if(!cast_touch(A, user))
+		if(!cast_touch(target, user))
 			return FALSE
 
 	if(s_fire)
@@ -188,7 +192,7 @@
 	uses = 30
 	proj_path = /obj/item/projectile/magic/Arcane_barrage
 
-/obj/item/weapon/magic/arcane_barrage/afterattack(atom/A, mob/living/user)
+/obj/item/weapon/magic/arcane_barrage/afterattack(atom/target, mob/user, proximity, params)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
@@ -198,7 +202,6 @@
 		var/obj/item/weapon/magic/arcane_barrage/Arcane = new type(Spell)
 		Arcane.uses = uses
 		drop_activate_recharge = FALSE
-
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()

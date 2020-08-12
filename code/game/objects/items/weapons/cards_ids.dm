@@ -68,13 +68,16 @@
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
 
-/obj/item/weapon/card/emag/afterattack(atom/target, mob/user)
+/obj/item/weapon/card/emag/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return TRUE
 
-	if(target.emag_act(user))
+/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity && target.emag_act(user))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		uses--
 
-	if(uses<1)
+	if(uses < 1)
 		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 		user.drop_item()
 		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
@@ -128,16 +131,17 @@
 /obj/item/weapon/card/id/GetID()
 	return src
 
-/obj/item/weapon/card/id/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W,/obj/item/weapon/id_wallet))
-		to_chat(user, "You slip [src] into [W].")
-		src.name = "[src.registered_name]'s [W.name] ([src.assignment])"
-		src.desc = W.desc
-		src.icon = W.icon
-		src.icon_state = W.icon_state
-		qdel(W)
-		return
+/obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/id_wallet))
+		to_chat(user, "You slip [src] into [I].")
+		src.name = "[src.registered_name]'s [I.name] ([src.assignment])"
+		src.desc = I.desc
+		src.icon = I.icon
+		src.icon_state = I.icon_state
+		qdel(I)
+
+	else
+		return ..()
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
@@ -286,10 +290,10 @@
 	assignment = "Agent"
 	name = "[registered_name]'s ID Card ([assignment])"
 
-/obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
+/obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = O
+	if(istype(target, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)

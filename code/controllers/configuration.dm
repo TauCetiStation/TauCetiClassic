@@ -70,6 +70,9 @@ var/list/net_announcer_secret = list()
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
+	// If true - disable OOC for the duration of a round.
+	var/ooc_round_only = FALSE
+
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
@@ -146,6 +149,22 @@ var/list/net_announcer_secret = list()
 	var/slime_delay = 0
 	var/animal_delay = 0
 
+	// Event settings
+	var/expected_round_length = 90 MINUTES
+	// If the first delay has a custom start time
+	// No custom time
+	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
+									EVENT_LEVEL_MODERATE = null,
+									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+	// The lowest delay until next event
+	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
+									  EVENT_LEVEL_MODERATE = 30 MINUTES,
+									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
+	// The upper delay until next event
+	var/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE  = 15 MINUTES,
+									  EVENT_LEVEL_MODERATE = 45 MINUTES,
+									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
@@ -170,7 +189,7 @@ var/list/net_announcer_secret = list()
 	var/chat_bridge = 0
 	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
-	
+
 	var/guard_email = null
 	var/guard_enabled = FALSE
 	var/guard_autoban_treshhold = null
@@ -198,7 +217,7 @@ var/list/net_announcer_secret = list()
 
 	var/record_replays = FALSE
 
-	
+
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
@@ -322,7 +341,7 @@ var/list/net_announcer_secret = list()
 
 				if ("log_sql_error")
 					config.log_sql_error = 1
-				
+
 				if ("log_js_error")
 					config.log_js_error = 1
 
@@ -588,6 +607,34 @@ var/list/net_announcer_secret = list()
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
+
+				if("expected_round_length")
+					config.expected_round_length = text2num(value) MINUTES
+
+				if("event_delay_lower")
+					var/values = text2numlist(value, ";")
+					config.event_delay_lower[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_delay_upper")
+					var/values = text2numlist(value, ";")
+					config.event_delay_upper[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_custom_start_mundane")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MUNDANE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_moderate")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MODERATE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_major")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MAJOR] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
 				// Bay new things are below
 				if("use_overmap")
 					config.use_overmap = 1
@@ -663,6 +710,9 @@ var/list/net_announcer_secret = list()
 
 				if("sandbox")
 					config.sandbox = TRUE
+
+				if("ooc_round_only")
+					config.ooc_round_only = TRUE
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -900,7 +950,7 @@ var/list/net_announcer_secret = list()
 
 /datum/configuration/proc/load_announcer_config(config_path)
 	// Loading config of network communication between servers
-	// Server list loaded from serverlist.txt file. It's file with comments. 
+	// Server list loaded from serverlist.txt file. It's file with comments.
 	// One line of file = one server. Format - byond://example.com:2506 = secret
 	// First server must be self link for loading the secret
 	//

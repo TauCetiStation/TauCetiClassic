@@ -30,22 +30,20 @@
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
-	..()
-	if(iscoil(W))
-
+/obj/item/stack/sheet/glass/attackby(obj/item/I, mob/user, params)
+	if(iscoil(I))
 		var/list/resources_to_use = list()
-		resources_to_use[W] = 5
+		resources_to_use[I] = 5
 		resources_to_use[src] = 1
 		if(!use_multi(user, resources_to_use))
 			return
 
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		new /obj/item/stack/light_w(user.loc)
-	else if(istype(W, /obj/item/stack/rods))
 
+	else if(istype(I, /obj/item/stack/rods))
 		var/list/resources_to_use = list()
-		resources_to_use[W] = 1
+		resources_to_use[I] = 1
 		resources_to_use[src] = 1
 		if(!use_multi(user, resources_to_use))
 			return
@@ -59,6 +57,27 @@
 				continue
 			G.attackby(RG, user)
 			to_chat(usr, "You add the reinforced glass to the stack. It now contains [RG.get_amount()] sheets.")
+
+	else
+		return ..()
+
+/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/rods))
+		var/list/resources_to_use = list()
+		resources_to_use[I] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/stack/sheet/glass/phoronrglass/FG = new (user.loc)
+		FG.add_fingerprint(user)
+		for(var/obj/item/stack/sheet/glass/phoronrglass/G in user.loc)
+			if(G == FG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(FG, user)
+
 	else
 		return ..()
 
@@ -314,10 +333,9 @@
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
@@ -327,13 +345,13 @@
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
-			//SN src = null
 			qdel(src)
-			return
-	return ..()
+
+	else
+		return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
@@ -360,7 +378,7 @@
 				if(!H.species.flags[NO_PAIN])
 					H.Weaken(3)
 				H.updatehealth()
-	..()
+	. = ..()
 
 /*
  * Phoron Glass sheets

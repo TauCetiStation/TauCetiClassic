@@ -5,21 +5,15 @@
 
 /datum/event/money_lotto/start()
 	winner_sum = pick(5000, 10000, 50000, 100000, 500000, 1000000, 1500000)
-	if(all_money_accounts.len)
-		var/datum/money_account/D = pick(all_money_accounts)
+	var/list/employee_accounts = all_money_accounts
+	for(var/i in department_accounts)
+		employee_accounts.Remove(department_accounts[i])
+	employee_accounts.Remove(station_account)
+
+	if(employee_accounts.len)
+		var/datum/money_account/D = pick(employee_accounts)
 		winner_name = D.owner_name
-		if(!D.suspended)
-			D.adjust_money(winner_sum)
-
-			var/datum/transaction/T = new()
-			T.target_name = "[system_name()] Daily Grand Slam -Stellar- Lottery"
-			T.purpose = "Winner!"
-			T.amount = winner_sum
-			T.date = current_date_string
-			T.time = worldtime2text()
-			T.source_terminal = "Biesel TCD Terminal #[rand(111,333)]"
-			D.transaction_log.Add(T)
-
+		if(charge_to_account(D.account_number, "[system_name()] Daily Grand Slam -Stellar- Lottery", "Winner!", "Biesel TCD Terminal #[rand(111,333)]", winner_sum))
 			deposit_success = 1
 
 /datum/event/money_lotto/announce()

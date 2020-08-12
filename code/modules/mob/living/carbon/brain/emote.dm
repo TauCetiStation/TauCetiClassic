@@ -2,12 +2,12 @@
 	if(!(container && istype(container, /obj/item/device/mmi)))//No MMI, no emotes
 		return
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
+	if (findtext(act, "-", 1))
+		var/t1 = findtext(act, "-", 1)
 		act = copytext(act, 1, t1)
 
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+		act = copytext(act, 1, -1)
 
 	if(src.stat == DEAD)
 		return
@@ -59,6 +59,10 @@
 			to_chat(src, "You boop.")
 			message = "<B>[src]</B> boops."
 			m_type = SHOWMSG_AUDIO
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 		if ("help")
 			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
 		else

@@ -164,7 +164,10 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	user << browse(entity_ja(t), "window=teg;size=460x300")
+	var/datum/browser/popup = new(user, teg, null, 460, 300)
+	popup.set_content(t)
+	popup.open()
+
 	onclose(user, "teg")
 
 
@@ -191,7 +194,7 @@
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -201,7 +204,7 @@
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)

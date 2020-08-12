@@ -45,16 +45,6 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/meteorhit(obj/O)
-	for(var/x in verbs)
-		verbs -= x
-	set_broken()
-	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
-	smoke.set_up(5, 0, src)
-	smoke.start()
-	return
-
-
 /obj/machinery/computer/emp_act(severity)
 	if(prob(20/severity)) set_broken()
 	..()
@@ -92,7 +82,6 @@
 		for(var/x in verbs)
 			verbs -= x
 		set_broken()
-		density = 0
 
 /obj/machinery/computer/update_icon()
 	..()
@@ -216,7 +205,7 @@
 		if(HULK in H.mutations)
 			if(stat & (BROKEN))
 				return 1
-			if(H.a_intent == "hurt")
+			if(H.a_intent == INTENT_HARM)
 				H.visible_message("<span class='danger'>[H.name] smashes [src] with \his mighty arms!</span>")
 				set_broken()
 				return 1
@@ -255,3 +244,14 @@
 	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
 	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
 	"<span class='danger'>You hear a clicking sound.</span>")
+
+/obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/Hulk = M
+		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
+		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
+		Hulk.health -= rand(2,4)
+		if(prob(40))
+			set_broken()
+			to_chat(M, "<span class='warning'>You broke the computer.</span>")
+			return

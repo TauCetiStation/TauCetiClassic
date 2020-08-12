@@ -46,6 +46,13 @@
 	ks1type = /obj/item/device/encryptionkey/syndicate
 	grid = TRUE
 
+/obj/item/device/radio/headset/syndicate/atom_init()
+	. = ..()
+	set_frequency(SYND_FREQ)
+
+/obj/item/device/radio/headset/ninja
+	grid = TRUE
+
 /obj/item/device/radio/headset/syndicate/alt
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
@@ -247,26 +254,30 @@
 /obj/item/device/radio/headset/velocity/chief
 	ks2type = /obj/item/device/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/radio_grid))
+/obj/item/device/radio/headset/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/radio_grid))
 		if(grid)
 			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
 			return
-		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
-		user.drop_item()
-		var/obj/item/device/radio_grid/new_grid = W
+		to_chat(user, "<span class='notice'>You attach [I] to [src]!</span>")
+		user.drop_from_inventory(I)
+		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
-	else if(iswirecutter(W))
+
+	else if(iswirecutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if(isscrewdriver(W))
+
+	else if(isscrewdriver(I))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return
+
 		for(var/ch_name in channels)
 			radio_controller.remove_object(src, radiochannels[ch_name])
 			secure_radio_connections[ch_name] = null
@@ -280,19 +291,22 @@
 		recalculateChannels()
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
-	else if(istype(W, /obj/item/device/encryptionkey))
+
+	else if(istype(I, /obj/item/device/encryptionkey))
 		if(keyslot1 && keyslot2)
 			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
 			return
 		if(!keyslot1)
-			user.drop_item()
-			W.loc = src
-			keyslot1 = W
+			user.drop_from_inventory(I, src)
+			keyslot1 = I
 		else
-			user.drop_item()
-			W.loc = src
-			keyslot2 = W
+			user.drop_from_inventory(I, src)
+			keyslot2 = I
+
 		recalculateChannels()
+
+	else
+		return ..()
 
 /obj/item/device/radio/headset/proc/recalculateChannels()
 	channels = list()

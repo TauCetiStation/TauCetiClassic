@@ -132,11 +132,11 @@
 		add_fingerprint(usr)
 		M.put_in_hands(src)
 
-/obj/item/device/wave_scanner_backpack/attackby(obj/item/W, mob/user, params)
-	if(W == processor)
+/obj/item/device/wave_scanner_backpack/attackby(obj/item/I, mob/user, params)
+	if(I == processor)
 		remove_processor()
 	else
-		..()
+		return ..()
 
 /obj/item/device/wave_scanner_backpack/dropped(mob/user)
 	..()
@@ -178,7 +178,7 @@
 		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
-/obj/item/device/searcher/afterattack(obj/target, mob/user, proximity)
+/obj/item/device/searcher/afterattack(atom/target, mob/user, proximity, params)
 	if(target.loc == loc || target == wavescanner)
 		return
 	..()

@@ -18,7 +18,7 @@
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
 
@@ -52,9 +52,7 @@
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] to [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", user)
+		M.log_combat(user, "fed with [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
@@ -64,9 +62,7 @@
 
 		return 1
 
-	return 0
-
-/obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/pill/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 

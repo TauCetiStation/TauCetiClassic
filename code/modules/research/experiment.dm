@@ -279,7 +279,7 @@
 	icon_state = "science"
 	item_state = "sciencetool"
 	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = ITEM_SIZE_SMALL
@@ -302,23 +302,23 @@
 /obj/item/device/science_tool/attack(mob/living/M, mob/living/user)
 	return
 
-/obj/item/device/science_tool/afterattack(obj/O, mob/living/user)
+/obj/item/device/science_tool/afterattack(atom/target, mob/user, proximity, params)
 	var/scanneddata = 0
 
-	if(istype(O, /obj/item/weapon/disk/research_points))
-		var/obj/item/weapon/disk/research_points/disk = O
+	if(istype(target, /obj/item/weapon/disk/research_points))
+		var/obj/item/weapon/disk/research_points/disk = target
 		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] research points</span>")
 		return
 
-	if(istype(O,/obj/item/weapon/paper/autopsy_report))
-		var/obj/item/weapon/paper/autopsy_report/report = O
+	if(istype(target,/obj/item/weapon/paper/autopsy_report))
+		var/obj/item/weapon/paper/autopsy_report/report = target
 		for(var/datum/autopsy_data/W in report.autopsy_data)
 			if(!(W.weapon in scanned_autopsy_weapons))
 				scanneddata += 1
 				scanned_autopsy_weapons += W.weapon
 
-	if(istype(O, /obj/item/weapon/paper/artifact_info))
-		var/obj/item/weapon/paper/artifact_info/report = O
+	if(istype(target, /obj/item/weapon/paper/artifact_info))
+		var/obj/item/weapon/paper/artifact_info/report = target
 		if(report.artifact_type)
 			for(var/list/artifact in scanned_artifacts)
 				if(artifact["type"] == report.artifact_type && artifact["first_effect"] == report.artifact_first_effect && artifact["second_effect"] == report.artifact_second_effect)
@@ -332,26 +332,26 @@
 			))
 			scanneddata += 1
 
-	if(istype(O, /obj/item/weapon/paper/virus_report))
-		var/obj/item/weapon/paper/virus_report/report = O
+	if(istype(target, /obj/item/weapon/paper/virus_report))
+		var/obj/item/weapon/paper/virus_report/report = target
 		for(var/symptom in report.symptoms)
 			if(!scanned_symptoms[symptom])
 				scanneddata += 1
 				scanned_symptoms[symptom] = report.symptoms[symptom]
-	if(istype(O, /obj/item/slime_extract))
-		if(!(O.type in scanned_slimecores))
-			scanned_slimecores += O.type
+	if(istype(target, /obj/item/slime_extract))
+		if(!(target.type in scanned_slimecores))
+			scanned_slimecores += target.type
 			scanneddata += 1
 
 	if(scanneddata > 0)
 		datablocks += scanneddata
-		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [O]</span>")
-	else if(istype(O, /obj/item))
-		var/science_value = experiments.get_object_research_value(O)
+		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
+	else if(istype(target, /obj/item))
+		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
-			to_chat(user, "<span class='notice'>Estimated research value of [O.name] is [science_value]</span>")
+			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")
 		else
-			to_chat(user, "<span class='notice'>[O] has no research value</span>")
+			to_chat(user, "<span class='notice'>[target] has no research value</span>")
 
 /obj/item/device/science_tool/proc/clear_data()
 	scanned_autopsy_weapons = list()

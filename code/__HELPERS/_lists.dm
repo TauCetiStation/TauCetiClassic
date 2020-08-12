@@ -97,6 +97,16 @@
 		result = first - second
 	return result
 
+// Checks whether sub has all keys of main,
+// and if those keys have the same values.
+/proc/is_sublist_assoc(list/sub, list/main, datum/callback/predicate)
+	for(var/key in sub)
+		if(!main[key] && sub[key])
+			return FALSE
+		if(!predicate.Invoke(sub[key], main[key]))
+			return FALSE
+	return TRUE
+
 /*
  * Returns list containing entries that are in either list but not both.
  * If skipref = 1, repeated elements are treated as one.
@@ -144,6 +154,11 @@
 		listfrom.len--
 		return picked
 	return null
+
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
 
 //Returns the next element in parameter list after first appearance of parameter element. If it is the last element of the list or not present in list, returns first element.
 /proc/next_in_list(element, list/L)
@@ -745,13 +760,30 @@
 
 	return TRUE
 
+/proc/is_associative_list(list/L)
+    var/index = 0
+    for(var/key in L)
+        index++
+
+        var/value = null
+        // if key not num we can check L[key] without fear of "out of bound"
+        // else compare to index to prevent runtime error in e.g. list(5, 1)
+        // L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+        if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+            value = L[key]
+
+        if(!isnull(value))
+            return TRUE
+
+    return FALSE
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
+//#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )

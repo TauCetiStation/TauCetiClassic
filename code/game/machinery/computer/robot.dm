@@ -96,7 +96,10 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
@@ -197,6 +200,8 @@
 //							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 						R.emagged = 1
+						var/mob/living/silicon/ai/AI = R.connected_ai
+						R.set_zeroth_law(AI.laws.zeroth_borg)
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 

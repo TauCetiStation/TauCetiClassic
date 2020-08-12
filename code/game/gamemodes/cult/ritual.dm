@@ -98,9 +98,11 @@ var/list/cult_datums = list()
 	if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 		to_chat(user, "<span class='cult'>You retrace your steps, carefully undoing the lines of the rune.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.assigned_role == "Chaplain")
+	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
+	else
+		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
 	if(!istype(power, /datum/cult/teleport) && !istype(power, /datum/cult/item_port))
@@ -143,6 +145,7 @@ var/list/cult_datums = list()
 
 	tomedat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 25px; margin: 15px 0px 5px;}
 				h2 {font-size: 20px; margin: 15px 0px 5px;}
@@ -271,13 +274,13 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse("[entity_ja(notedat)]", "window=notes")
+
+	var/datum/browser/popup = new(usr, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+	popup.set_content(notedat)
+	popup.open()
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])", user)
+	M.log_combat(user, "beaten with [name]")
 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
@@ -295,17 +298,17 @@ var/list/cult_datums = list()
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
 	to_chat(M, "<span class='danger'You feel searing heat inside!</span>")
 
-/obj/item/weapon/book/tome/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/book/tome/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(iscultist(user) && A.reagents && A.reagents.has_reagent("water"))
-		var/water2convert = A.reagents.get_reagent_amount("water")
-		A.reagents.del_reagent("water")
-		to_chat(user, "<span class='warning'>You curse [A].</span>")
-		A.reagents.add_reagent("unholywater",water2convert)
+	if(iscultist(user) && target.reagents && target.reagents.has_reagent("water"))
+		var/water2convert = target.reagents.get_reagent_amount("water")
+		target.reagents.del_reagent("water")
+		to_chat(user, "<span class='warning'>You curse [target].</span>")
+		target.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return
 
 	if(!cultwords["travel"])
@@ -320,7 +323,7 @@ var/list/cult_datums = list()
 		if(obj_to_check.density)
 			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
 			return
-	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(SSticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return
 	switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
@@ -329,7 +332,9 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse("[entity_ja(tomedat)]", "window=Arcane Tome")
+			var/datum/browser/popup = new(user, "window=Arcane Tome", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(tomedat)
+			popup.open()
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -347,9 +352,16 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse("[entity_ja(notedat)]", "window=notes")
+
+			var/datum/browser/popup = new(user, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(notedat)
+			popup.open()
 			return
 	if(usr.get_active_hand() != src)
+		return
+
+	if(user.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='warning'>You don't have any blood, how do you suppose to write a blood rune?</span>")
 		return
 
 	var/w1
@@ -359,20 +371,19 @@ var/list/cult_datums = list()
 	for(var/w in words)
 		english[words[w]] = w
 	if(user)
-		w1 = input("Write your first rune:", "Rune Scribing") in english
+		w1 = input("Write your first rune:", "Rune Scribing") as null|anything in english
 		if(!w1)
 			return
 		if(w1 in cultwords)
 			w1 = english[w1]
-
 	if(user)
-		w2 = input("Write your second rune:", "Rune Scribing") in english
+		w2 = input("Write your second rune:", "Rune Scribing") as null|anything in english
 		if(!w2)
 			return
 		if(w2 in cultwords)
 			w2 = english[w2]
 	if(user)
-		w3 = input("Write your third rune:", "Rune Scribing") in english
+		w3 = input("Write your third rune:", "Rune Scribing") as null|anything in english
 		if(!w3)
 			return
 		if(w3 in cultwords)
@@ -404,14 +415,17 @@ var/list/cult_datums = list()
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 
-/obj/item/weapon/book/tome/attackby(obj/item/weapon/book/tome/T, mob/living/user)
-	if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
+/obj/item/weapon/book/tome/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/book/tome))
+		var/obj/item/weapon/book/tome/T = I
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("Cancel")
 				return
 		for(var/w in words)
 			words[w] = T.words[w]
-		to_chat(user, "You copy the translation notes from your tome.")
+		to_chat(user, "<span class='notice'>You copy the translation notes from [T].</span>")
+		return
+	return ..()
 
 /obj/item/weapon/book/tome/examine(mob/user)
 	..()

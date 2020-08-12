@@ -62,7 +62,7 @@
 			L.Add(D)
 
 /obj/machinery/computer/lockdown/ui_interact(mob/user)
-	var/t = "<B>Lockdown Control</B><BR>"
+	var/t = ""
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	t += "<table border=1>"
@@ -95,7 +95,11 @@
 		t += "<span class='warning'>No networks connected.<br></span>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(entity_ja(t), "window=lockdown;size=550x600")
+
+	var/datum/browser/popup = new(user, "lockdown", "Lockdown Control", 550, 600)
+	popup.set_content(t)
+	popup.open()
+
 	onclose(user, "lockdown")
 
 /obj/machinery/computer/lockdown/Topic(href, href_list)

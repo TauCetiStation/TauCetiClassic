@@ -1,13 +1,13 @@
 /mob/living/carbon/slime/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
+	if (findtext(act, "-", 1))
+		var/t1 = findtext(act, "-", 1)
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+		act = copytext(act,1,-1)
 
 	var/regenerate_icons
 
@@ -60,6 +60,11 @@
 		if("vibrate")
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = SHOWMSG_VISUAL
+
+		if ("pray")
+			m_type = SHOWMSG_VISUAL
+			message = "<b>[src]</b> prays."
+			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 		if("noface") //mfw I have no face
 			mood = null

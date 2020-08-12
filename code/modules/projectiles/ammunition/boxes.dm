@@ -164,7 +164,16 @@
 	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
-	max_ammo = 30
+	max_ammo = 12
+	multiple_sprites = 2
+
+/obj/item/ammo_box/c9mmr
+	name = "Ammunition Box (9mm rubber)"
+	icon_state = "9mmr"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+	max_ammo = 12
+	multiple_sprites = 2
 /*
 /obj/item/ammo_box/c10mm
 	name = "Ammunition Box (10mm)"
@@ -175,10 +184,19 @@
 
 /obj/item/ammo_box/c45
 	name = "Ammunition Box (.45)"
-	icon_state = "9mm"
+	icon_state = "c45"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
-	max_ammo = 30
+	max_ammo = 7
+	multiple_sprites = 2
+
+/obj/item/ammo_box/c45r
+	name = "Ammunition Box (.45 rubber)"
+	icon_state = "c45r"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c45r
+	max_ammo = 7
+	multiple_sprites = 2
 
 /obj/item/ammo_box/a12mm
 	name = "Ammunition Box (12mm)"
@@ -198,7 +216,7 @@
 	max_ammo = 20
 
 /obj/item/ammo_box/shotgun/update_icon()
-	var/filled_perc = CLAMP(stored_ammo.len * 100 / max_ammo, 0, 100)
+	var/filled_perc = clamp(stored_ammo.len * 100 / max_ammo, 0, 100)
 
 	if(filled_perc >= 50 && filled_perc < 100)
 		filled_perc = 75

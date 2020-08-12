@@ -472,6 +472,8 @@ var/const/INGEST = 2
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
+		R.on_new(data)
+
 		update_total()
 		if(my_atom)
 			my_atom.on_reagent_change()
@@ -606,6 +608,16 @@ var/const/INGEST = 2
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
+/datum/reagents/proc/create_chempuff(amount, multiplier=1, preserve_data=1, name_from_reagents = TRUE, icon_from_reagents = TRUE)
+	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(my_atom))
+	if(name_from_reagents)
+		D.name = get_master_reagent_name()
+	D.create_reagents(amount)
+	D.icon = 'icons/obj/chempuff.dmi'
+	trans_to(D, amount, multiplier, preserve_data)
+	if(icon_from_reagents)
+		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	return D
 ///////////////////////////////////////////////////////////////////////////////////
 
 

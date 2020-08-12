@@ -52,15 +52,15 @@ Made by Xhuis
 	var/objective_explanation
 
 /proc/is_thrall(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.thralls)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.thralls)
 
 
 /proc/is_shadow_or_thrall(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.thralls) || (M.mind in ticker.mode.shadows))
+	return istype(M) && M.mind && SSticker && SSticker.mode && ((M.mind in SSticker.mode.thralls) || (M.mind in SSticker.mode.shadows))
 
 
 /proc/is_shadow(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.shadows)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.shadows)
 
 
 /datum/game_mode/shadowling
@@ -76,6 +76,8 @@ Made by Xhuis
 
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+
+	restricted_species_flags = list(IS_SYNTHETIC)
 
 /datum/game_mode/shadowling/announce()
 	to_chat(world, "<b>The current game mode is - Shadowling!</b>")

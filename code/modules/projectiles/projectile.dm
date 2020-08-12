@@ -177,7 +177,7 @@
 		return 0
 
 	var/forcedodge = 0 // force the projectile to pass
-	var/mob/M = ismob(A) ? A : null
+	var/mob/living/M = isliving(A) ? A : null
 	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
@@ -228,10 +228,7 @@
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(old_firer)
-			M.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			old_firer.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			if(!fake)
-				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src]", old_firer) //BS12 EDIT ALG
+			M.log_combat(old_firer, "shot with <b>[type]</b>", alert_admins = !fake)
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
@@ -270,7 +267,7 @@
 
 	spawn while(src && src.loc)
 		if(paused)
-			sleep(1)
+			stoplag(1)
 			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours

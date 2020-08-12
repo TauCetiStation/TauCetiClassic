@@ -16,17 +16,19 @@
 
 	var/show_value_list = 0
 	var/list/ore_values = list(
-							"glass" = 	1,
-							"iron" = 	1,
-							"coal" = 	1,
-							"steel" =	5,
-							"hydrogen"=	10,
-							"uranium" = 20,
-							"silver" = 	25,
-							"gold" = 	30,
-							"platinum"= 45,
-							"plasteel"= 50,
-							"diamond" = 70)
+							"glass" 			= 1,
+							"iron" 				= 1,
+							"coal" 				= 1,
+							"steel" 			= 5,
+							"hydrogen"			= 10,
+							"uranium" 			= 20,
+							"phoron" 			= 20,
+							"phoron glass"		= 25,
+							"silver" 			= 25,
+							"gold" 				= 30,
+							"platinum"			= 45,
+							"plasteel"			= 50,
+							"diamond" 			= 70)
 
 /obj/machinery/mineral/processing_unit_console/atom_init()
 	..()
@@ -166,10 +168,10 @@
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
 	var/sheets_per_tick = 10
-	var/list/ores_processing[0]
-	var/list/ores_stored[0]
-	var/list/ore_data[0]
-	var/list/alloy_data[0]
+	var/list/ores_processing = list()
+	var/list/ores_stored = list()
+	var/list/ore_data = list()
+	var/list/alloy_data = list()
 	var/active = 0
 
 /obj/machinery/mineral/processing_unit/atom_init()
@@ -221,7 +223,7 @@
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
 			if(ores_processing[metal] == 4) //Drop.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -253,7 +255,7 @@
 							console.points += A.points
 							new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
@@ -263,7 +265,7 @@
 					console.points += O.points
 					new O.compresses_to(output.loc)
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-				var/can_make = CLAMP(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)

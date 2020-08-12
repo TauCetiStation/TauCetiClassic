@@ -120,7 +120,7 @@
 		magazine.power_supply.use(PLASMA_SHOT_ENERGY_COST)
 		chambered = null
 
-/obj/item/weapon/gun/plasma/afterattack(atom/target, mob/living/user, flag)
+/obj/item/weapon/gun/plasma/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 
@@ -140,13 +140,12 @@
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/plasma/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/ammo_box/magazine/plasma))
+/obj/item/weapon/gun/plasma/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine/plasma))
 		var/obj/item/ammo_box/magazine/plasma/AB = I
-		if (!magazine && istype(AB, mag_type))
-			user.remove_from_mob(AB)
+		if(!magazine && istype(AB, mag_type))
+			user.drop_from_inventory(AB, src)
 			magazine = AB
-			magazine.forceMove(src)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
@@ -155,10 +154,13 @@
 					playsound(user, 'sound/weapons/guns/plasma10_overcharge_load.ogg', VOL_EFFECTS_MASTER)
 			AB.update_icon()
 			update_icon(user)
-			return 1
+			return TRUE
+
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/weapon/gun/plasma/update_icon()
 	if(!magazine)

@@ -80,14 +80,14 @@
 
 	var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 	var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-	targetTemperature = dd_range(minTemp, maxTemp, targetTemperature)
+	targetTemperature = clamp(targetTemperature, minTemp, maxTemp)
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
 	if(cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user)
@@ -190,7 +190,7 @@
 
 		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
 
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)

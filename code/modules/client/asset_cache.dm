@@ -38,7 +38,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
 		return 0
 
-	client << browse_rsc(SSasset.cache[asset_name], asset_name)
+	client << browse_rsc(SSassets.cache[asset_name], asset_name)
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
 			client.cache += asset_name
@@ -58,7 +58,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = (ASSET_CACHE_SEND_TIMEOUT * client.sending.len) + ASSET_CACHE_SEND_TIMEOUT
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -86,8 +86,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "<span class='info'><b>Sending Resources, please wait...</b></span>")
 	for(var/asset in unreceived)
-		if (asset in SSasset.cache)
-			client << browse_rsc(SSasset.cache[asset], asset)
+		if (asset in SSassets.cache)
+			client << browse_rsc(SSassets.cache[asset], asset)
 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
@@ -107,7 +107,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = ASSET_CACHE_SEND_TIMEOUT * client.sending.len
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -126,12 +126,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (register_asset)
 			register_asset(file,files[file])
 		send_asset(client,file)
-		sleep(0) //queuing calls like this too quickly can cause issues in some client versions
+		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
-	SSasset.cache[asset_name] = asset
+	SSassets.cache[asset_name] = asset
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 
@@ -145,7 +145,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return asset_datums[type]
 
 /datum/asset
-	var/_abstract
+	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
 
 /datum/asset/New()
 	asset_datums[type] = src
@@ -158,6 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //If you don't need anything complicated.
 /datum/asset/simple
+	_abstract = /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
 
@@ -168,6 +169,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	send_asset_list(client,assets,verify)
 
 /datum/asset/simple/goonchat
+	_abstract = /datum/asset/simple/goonchat
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
@@ -185,6 +187,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
+	_abstract = /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
 		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
@@ -203,12 +206,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/paper
+	_abstract = /datum/asset/simple/paper
 	assets = list(
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
 /datum/asset/simple/newscaster
+	_abstract = /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
 		"like_clck.png" = 'icons/newscaster_icons/like_clck.png',
@@ -217,6 +222,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	)
 
 /datum/asset/simple/chess
+	_abstract = /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
 		"BN.png" = 'icons/obj/chess/board_BN.png',
@@ -257,14 +263,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	for (var/path in common_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					common[filename] = fcopy_rsc(path + filename)
 					register_asset(filename, common[filename])
 	for (var/path in uncommon_dirs)
 		var/list/filenames = flist(path)
 		for(var/filename in filenames)
-			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+			if(copytext(filename, -1) != "/") // Ignore directories.
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
 	
@@ -395,4 +401,35 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
 		var/imgid = replacetext(replacetext("[item.type]", "/obj/item/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/cargo
+	name = "cargo"
+
+/datum/asset/spritesheet/cargo/register()
+	var/all_objects = list()
+	for(var/supply_name in SSshuttle.supply_packs)
+		var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
+		for(var/supp in N.contains)
+			if(supp in all_objects)
+				continue
+			all_objects += supp
+		if(N.crate_type in all_objects)
+			continue
+		all_objects += N.crate_type
+		if(ispath(N.crate_type, /obj/structure/closet/critter))
+			var/obj/structure/closet/critter/C = N.crate_type
+			all_objects += initial(C.content_mob)
+	for(var/content in all_objects)
+		var/imgid = null
+		var/icon/sprite = null
+		if(ispath(content, /mob))
+			var/mob/M = content
+			sprite = icon(initial(M.icon), initial(M.icon_state))
+			imgid = replacetext(replacetext("[content]", "/mob/", ""), "/", "-")
+		else
+			var/obj/supply = new content
+			sprite = getFlatIcon(supply)
+			imgid = replacetext(replacetext("[content]", "/obj/", ""), "/", "-")
+		insert_icon_in_list(imgid, sprite)
 	return ..()

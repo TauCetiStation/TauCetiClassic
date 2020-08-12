@@ -32,7 +32,7 @@
 
 
 /mob/living/simple_animal/hostile/blobspore
-	name = "blob"
+	name = "blob spore"
 	desc = "Some blob thing."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
@@ -40,9 +40,8 @@
 	pass_flags = PASSBLOB
 	health = 40
 	maxHealth = 40
-	melee_damage_lower = 2
-	melee_damage_upper = 4
-	attacktext = "hits"
+	melee_damage = 3
+	attacktext = "attack"
 	attack_sound = list('sound/weapons/genhit1.ogg')
 	var/obj/effect/blob/factory/factory = null
 	var/is_zombie = 0
@@ -60,7 +59,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	adjustBruteLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
+	adjustBruteLoss(clamp(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blobspore/blob_act()
 	return
@@ -94,8 +93,7 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage = 13
 	icon = H.icon
 	icon_state = "husk_s"
 	H.h_style = null
