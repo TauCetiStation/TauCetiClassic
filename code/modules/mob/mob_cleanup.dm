@@ -16,6 +16,10 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 	if(stat >=2)
 		//world << "He's dead jim."
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.species.flags[VIRUS_IMMUNE])
+			return
 	if(istype(virus, /datum/disease/advance))
 		//world << "It's an advance virus."
 		var/datum/disease/advance/A = virus

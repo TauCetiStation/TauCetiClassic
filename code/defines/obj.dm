@@ -147,7 +147,7 @@ var/global/ManifestJSON
 	if (PDA_Manifest.len < 1)
 		get_manifest_json()
 	var/dat = {"
-	<head><style>
+	<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><style>
 		.manifest {border-collapse:collapse;}
 		.manifest td, th {border:1px solid [monochrome?"black":"#DEF; background-color:white; color:black"]; padding:.25em}
 		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #48C; color:white"]}

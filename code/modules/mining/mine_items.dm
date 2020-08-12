@@ -118,9 +118,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
-	var/dat
-
-	dat = "<center>Mining Shuttle Control<hr>"
+	var/dat = "<center>"
 
 	if(mining_shuttle_moving)
 		dat += "Location: <font color='red'>Moving</font> <br>"
@@ -128,7 +126,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-	user << browse("[dat]", "window=miningshuttle;size=200x150")
+
+	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	. = ..()
@@ -136,8 +137,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(ticker.mode.name == "blob")
-		//	if(ticker.mode:declared)
+		//if(SSticker.mode.name == "blob")
+		//	if(SSticker.mode:declared)
 		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		//		return
 
