@@ -716,7 +716,6 @@ The _flatIcons list is a cache for generated icon files.
 				break
 		if(!exist)
 			base_icon_dir = SOUTH
-	//
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
