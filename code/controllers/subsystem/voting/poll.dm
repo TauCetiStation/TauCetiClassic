@@ -171,7 +171,7 @@
 		return 0 //Shouldnt be possible, but safety
 
 	var/mob/M = C.mob
-	if(!M || isobserver(M) || isnewplayer(M) || ismouse(M) || isdrone(M))
+	if(!M || M.stat == DEAD || isobserver(M) || isnewplayer(M) || ismouse(M) || isdrone(M))
 		return VOTE_WEIGHT_LOW
 
 	var/datum/mind/mind = M.mind
@@ -204,4 +204,3 @@
 #undef VOTE_WEIGHT_NORMAL
 #undef VOTE_WEIGHT_HIGH
 #undef MINIMUM_VOTE_LIFETIME
-

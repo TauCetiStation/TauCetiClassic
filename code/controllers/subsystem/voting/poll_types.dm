@@ -17,6 +17,8 @@
 
 	minimum_win_percentage = 0.6
 
+	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
+
 /datum/poll/restart/can_force()
 	. = ..()
 	if(!world.has_round_started() || world.has_round_finished())
@@ -72,6 +74,8 @@
 
 	cooldown = 20 MINUTES
 	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
+
+	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
 /datum/poll/crew_transfer/can_force()
 	. = ..()
