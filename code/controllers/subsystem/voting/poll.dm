@@ -116,7 +116,7 @@
 
 	//Need to pass the minimum threshold of voters
 	if(total_voters() < minimum_voters)
-		text += "<b>Vote Failed: Not enough voters.<b><br>"
+		text += "<b>Vote Failed: Not enough voters.</b><br>"
 		text += "[total_voters()]/[minimum_voters] players voted.<br><br>"
 		invalid = TRUE
 
@@ -124,7 +124,7 @@
 	else if(total_votes() > 0) //Make sure we dont divide by zero
 		var/max_votepercent = max_votes / total_votes()
 		if(max_votepercent < minimum_win_percentage)
-			text += "<b>Vote Failed: Insufficient majority.<b><br>"
+			text += "<b>Vote Failed: Insufficient majority.</b><br>"
 			text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
 			text += "The highest vote share was [max_votepercent*100]%<br><br>"
 			invalid = TRUE
