@@ -275,9 +275,6 @@ SUBSYSTEM_DEF(ticker)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		/*if (length(SSvote.delay_after_start))
-			for (var/DT in SSvote.delay_after_start)
-				SSvote.last_vote_time[DT] = world.time*/
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
