@@ -269,9 +269,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
 						continue
-					possible_targets += M
 
-				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+					possible_targets[M] = getFlatIcon(M)
+
+				var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
+				if(radial_choose)
+					targets += radial_choose
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
