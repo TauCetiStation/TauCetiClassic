@@ -14,14 +14,6 @@
 	item_state = "sheet-metal"
 	w_class = ITEM_SIZE_NORMAL
 
-	var/board_css = {"
-	<style>
-	a.game_kit{
-		background: none !important;
-		border: 0px !important;
-		}
-	</style>"}
-
 /obj/item/weapon/game_kit/red
 	icon_state = "game_kit_red"
 	name = "red gaming kit"
@@ -115,6 +107,14 @@
 	assets.send(user)
 	if (!( data ))
 		update()
+
+	var/board_css = {"
+	<style>
+	a.game_kit{
+		background: none !important;
+		border: 0px !important;
+		}
+	</style>"}
 
 	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
 	popup.add_head_content(board_css)
