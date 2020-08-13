@@ -88,6 +88,17 @@
 	body_parts_covered = 0
 	hud_type = DATA_HUD_SECURITY
 
+/obj/item/clothing/glasses/hud/diagnostic
+	name = "diagnostic goggles"
+	desc = "You can see information about mechs and metal friends!"
+	icon_state = "diagnostichud"
+	item_state = "diagnostichud"
+	origin_tech = "engineering=2;programming=2"
+	action_button_name = "Toggle Goggles"
+	toggleable = 1
+	sightglassesmod = "sepia"
+	hud_type = DATA_HUD_DIAGNOSTIC
+
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
