@@ -830,6 +830,7 @@
 						H.adjustBruteLoss(5) // We bit them.
 						H.shoving_fingers = FALSE
 				qdel(G)
+				break
 			size_ratio_resisting = get_size_ratio(G.assailant, L)
 			if(size_ratio_resisting)
 				size_ratio_grabbing = 1 / size_ratio_resisting

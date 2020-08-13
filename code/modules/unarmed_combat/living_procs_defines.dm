@@ -277,7 +277,7 @@ var/global/combos_cheat_sheet = ""
 				if(G.affecting == attacker)
 					G.adjust_position()
 					var/diff = G.affecting.getStamina() - G.assailant.getStamina()
-					if(G.state < GRAB_AGGRESSIVE)
+					if(diff >= 0 && G.state < GRAB_AGGRESSIVE)
 						qdel(G)
 						return
 					if(diff >= 0 && G.state > GRAB_PASSIVE)
