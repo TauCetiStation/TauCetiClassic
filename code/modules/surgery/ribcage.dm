@@ -472,7 +472,7 @@
 	P.transfer_identity(target)
 
 	target.chest_brain_op_stage = 2
-	target.stat = DEAD
+	target.death()
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
