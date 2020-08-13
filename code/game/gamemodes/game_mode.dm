@@ -520,7 +520,7 @@ Implants;
 	var/text = ""
 	var/tempstate = end_icons.len
 	if(ply.current)
-		var/icon/flat = getFlatIcon(ply.current)
+		var/icon/flat = getFlatIcon(ply.current,exact=1)
 		end_icons += flat
 		tempstate = end_icons.len
 		text += {"<br><img src="logo_[tempstate].png"> <b>[ply.key]</b> was <b>[ply.name]</b> ("}

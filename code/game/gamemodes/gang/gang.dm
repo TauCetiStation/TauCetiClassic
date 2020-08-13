@@ -521,7 +521,7 @@
 	var/tempstate = end_icons.len
 	for(var/datum/mind/gangster in membership)
 		if(gangster.current)
-			var/icon/flat = getFlatIcon(gangster.current)
+			var/icon/flat = getFlatIcon(gangster.current,exact=1)
 			end_icons += flat
 			tempstate = end_icons.len
 			text += {"<br><img src="logo_[tempstate].png"> <b>[gangster.key]</b> was <b>[gangster.name]</b> ("}

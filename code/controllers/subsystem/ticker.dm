@@ -476,7 +476,7 @@ SUBSYSTEM_DEF(ticker)
 			if(istype(robo,/mob/living/silicon/robot/drone))
 				dronecount++
 				continue
-			var/icon/flat = getFlatIcon(robo)
+			var/icon/flat = getFlatIcon(robo,exact=1)
 			end_icons += flat
 			var/tempstate = end_icons.len
 			var/robokey = robo.mind ? robo.mind.key : robo.key

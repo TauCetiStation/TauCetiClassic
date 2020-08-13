@@ -402,7 +402,7 @@
 
 		for(var/datum/mind/headrev in head_revolutionaries)
 			if(headrev.current)
-				var/icon/flat = getFlatIcon(headrev.current)
+				var/icon/flat = getFlatIcon(headrev.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[headrev.key]</b> was <b>[headrev.name]</b> ("}
@@ -446,7 +446,7 @@
 
 		for(var/datum/mind/rev in revolutionaries)
 			if(rev.current)
-				var/icon/flat = getFlatIcon(rev.current)
+				var/icon/flat = getFlatIcon(rev.current,exact=1)
 				end_icons += flat
 				tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[rev.key]</b> was <b>[rev.name]</b> ("}
@@ -479,7 +479,7 @@
 			if(target)
 				text += "<span style='color: red'>"
 			if(head.current)
-				var/icon/flat = getFlatIcon(head.current)
+				var/icon/flat = getFlatIcon(head.current,exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[head.key]</b> was <b>[head.name]</b> ("}
