@@ -25,9 +25,6 @@
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-							// Keeping this separate from the laws var, it should be much more difficult to modify
-	var/pai_law0 = "Serve your master."
-	var/pai_laws				// String for additional operating instructions our master might give us
 
 	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
@@ -65,6 +62,8 @@
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
 
+	laws = new /datum/ai_laws/pai()
+
 	loc = P
 	card = P
 	sradio = new(src)
@@ -77,6 +76,8 @@
 	add_language("Trinary", 1)
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
+
+	verbs -= /mob/living/verb/ghost
 
 	//PDA
 	pda = new(src)
@@ -144,7 +145,7 @@
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
-			src.pai_law0 = "[command] your master."
+			laws.set_zeroth_law("[command] your master.")
 			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
 			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
@@ -170,15 +171,6 @@
 
 
 // See software.dm for Topic()
-
-/mob/living/silicon/pai/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (src.health > 0)
-		src.adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			src.adjustFireLoss(40)
-		src.updatehealth()
-	return
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))

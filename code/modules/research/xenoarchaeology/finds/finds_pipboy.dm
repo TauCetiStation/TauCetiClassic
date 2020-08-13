@@ -97,7 +97,8 @@
 			add_fingerprint(user)
 			var/message = ""
 			if(!output_to_chat)
-				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+				message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+				message += "<title>[M.name]'s scan results</title></head><BODY>"
 
 			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
@@ -108,7 +109,7 @@
 
 			if(!output_to_chat)
 				message += "</BODY></HTML>"
-				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, message)
@@ -116,7 +117,7 @@
 			add_fingerprint(user)
 			var/dat = health_analyze(M, user, TRUE, output_to_chat)
 			if(!output_to_chat)
-				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(dat, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, dat)
@@ -131,7 +132,7 @@
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
+			var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"
@@ -191,7 +192,7 @@
 					dat += "<br>"
 					dat += "<A href='?src=\ref[src];menu=1'>Back to menu</A><br>"
 			dat += "</font></body>"
-			user << browse(entity_ja(dat), "window=pipboy")
+			user << browse(dat, "window=pipboy")
 			onclose(user, "pipboy")
 			return
 		else

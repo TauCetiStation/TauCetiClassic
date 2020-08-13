@@ -36,7 +36,7 @@
 /obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
-	dat += "<B>Holodeck Control System</B><BR>"
+	dat += ""
 	dat += "<HR>Current Loaded Programs:<BR>"
 	for(var/prog in supported_programs)
 		if(prog == "Empty")
@@ -75,7 +75,10 @@
 	else
 		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", "Holodeck Control System", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 
@@ -149,11 +152,6 @@
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	return ..()
-
-/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
-	emergencyShutdown()
-	..()
-
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
@@ -311,9 +309,9 @@
 	set_power_use(IDLE_POWER_USE)
 
 	if(A.has_gravity)
-		A.gravitychange(0,A)
+		A.gravitychange(FALSE)
 	else
-		A.gravitychange(1,A)
+		A.gravitychange(TRUE)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
 	//Get rid of any items
@@ -326,7 +324,7 @@
 	loadIdProgram()
 
 	if(!linkedholodeck.has_gravity)
-		linkedholodeck.gravitychange(1,linkedholodeck)
+		linkedholodeck.gravitychange(TRUE)
 
 	active = 0
 	set_power_use(IDLE_POWER_USE)

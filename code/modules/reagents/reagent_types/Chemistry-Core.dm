@@ -16,16 +16,16 @@
 
 			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
-					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
+					H.dyed_r_hair = clamp(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
+					H.dyed_g_hair = clamp(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
+					H.dyed_b_hair = clamp(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
 					if(H.dyed_r_hair == H.r_hair && H.dyed_g_hair == H.g_hair && H.dyed_b_hair == H.b_hair)
 						H.hair_painted = FALSE
 						changes_occured = TRUE
 				if(H.facial_painted && !((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
-					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
+					H.dyed_r_facial = clamp(round(H.dyed_r_facial * volume_coefficient + ((H.r_facial * volume) / 10)), 0, 255)
+					H.dyed_g_facial = clamp(round(H.dyed_g_facial * volume_coefficient + ((H.g_facial * volume) / 10)), 0, 255)
+					H.dyed_b_facial = clamp(round(H.dyed_b_facial * volume_coefficient + ((H.b_facial * volume) / 10)), 0, 255)
 					if(H.dyed_r_facial == H.r_facial && H.dyed_g_facial == H.g_facial && H.dyed_b_facial == H.b_facial)
 						H.facial_painted = FALSE
 						changes_occured = TRUE
@@ -98,7 +98,7 @@
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && prob(10))
-		ticker.mode.remove_cultist(M.mind)
+		SSticker.mode.remove_cultist(M.mind)
 		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
 				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 

@@ -48,7 +48,7 @@
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 	if(!suit_fibers.len) suit_fibers = null
 
-var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(print) proc, and means about 80% of
+var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_ascii(print) proc, and means about 80% of
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
 /obj/machinery/computer/forensic_scanning
@@ -116,7 +116,11 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
 				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
-	user << browse(entity_ja(dat),"window=scanner")
+
+	var/datum/browser/popup = new(user, "scanner")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user,"scanner")
 
 
@@ -212,7 +216,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				temp = {"<b>Criminal Evidence Database</b><br><br>
 				Consolidated data points: [dossier[2]]<br>"}
 				var/print_string = "Fingerprints: Print not complete!<br>"
-				if(stringpercent(dossier[1]) <= FINGERPRINT_COMPLETE)
+				if(stringpercent_ascii(dossier[1]) <= FINGERPRINT_COMPLETE)
 					print_string = "Fingerprints: (80% or higher completion reached)<br>[dossier[1]]<br>"
 				temp += print_string
 				for(var/object in dossier)
@@ -226,7 +230,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -257,7 +261,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				P.info = "<b>Criminal Evidence Database</b><br><br>"
 				P.info += "Consolidated data points: [dossier[2]]<br>"
 				var/print_string = "Fingerprints: Print not complete!<br>"
-				if(stringpercent(dossier[1]) <= FINGERPRINT_COMPLETE)
+				if(stringpercent_ascii(dossier[1]) <= FINGERPRINT_COMPLETE)
 					print_string = "Fingerprints: (80% or higher completion reached)<br>[dossier[1]]<br>"
 				P.info += print_string
 				for(var/object in dossier)
@@ -271,7 +275,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -303,7 +307,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -338,7 +342,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 					P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"
 					var/complete_prints = 0
 					for(var/print in prints)
-						if(stringpercent(prints[print]) <= FINGERPRINT_COMPLETE)
+						if(stringpercent_ascii(prints[print]) <= FINGERPRINT_COMPLETE)
 							complete_prints++
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[prints[print]]<br>"
 					if(complete_prints)
@@ -528,7 +532,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						var/associated_print = internal_prints[print]
 						var/reference_print = atom_fingerprints[print]
 						if(associated_print && associated_print != reference_print) //It does not match
-							internal_prints[print] = stringmerge(associated_print, reference_print)
+							internal_prints[print] = stringmerge_ascii(associated_print, reference_print)
 						else if(!associated_print)
 							internal_prints[print] = reference_print
 						//If the main print was updated, lets update the master as well.
@@ -580,7 +584,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning/proc/update_fingerprints(ref_print, new_print)
 	var/list/master = files[ref_print]
 	if(master)
-		master[1] = stringmerge(master[1],new_print)
+		master[1] = stringmerge_ascii(master[1],new_print)
 	else
 		CRASH("Fucking hell.  Something went wrong, and it tried to update a null print or something.  Tell SkyMarshal (and give him this call stack)")
 	return

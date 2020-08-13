@@ -47,16 +47,16 @@
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)
-	var/list/implants = null  /// Any implants the mob should start implanted with. Format of this list is (typepath, typepath, typepath)
+	var/list/implants = null  /// asoc_list implant - bodypart. Any implants the mob should start implanted with. Format of this list is (typepath = bodypart, typepath = bodypart, typepath = bodypart)
 
 	var/internals_slot = null /// ID of the slot containing a gas tank
 
 	/**
-	  * Survival box. 
+	  * Survival box.
 	  *
-	  * Will be inserted at the start of backpack_contents. 
+	  * Will be inserted at the start of backpack_contents.
 	  * Contents = species_survival_kit_items + advanced_kit_items
-	  * Other boxes must be in backpack_contents 
+	  * Other boxes must be in backpack_contents
 	  *
 	  */
 	var/survival_box = FALSE
@@ -66,7 +66,7 @@
 	var/list/prevent_survival_kit_items = list()
 
 	// (flavor_misc.dm)
-	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths... 
+	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths...
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
@@ -163,7 +163,7 @@
 	H.species.species_equip(H, src)	// replaces human outfit on species outfit
 
 	//Start with uniform,suit,backpack for additional slots
-	if(H.gender == FEMALE && uniform_f)
+	if(uniform_f && H.use_skirt)
 		uniform = uniform_f
 
 	var/list/slot2type = list(
@@ -185,7 +185,7 @@
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
 		H.update_body()
-	
+
 	if(outfit_underwear_m || outfit_underwear_f)
 		var/list/underwear_options
 		var/outfit_underwear
@@ -203,7 +203,7 @@
 	if(r_hand)
 		H.put_in_r_hand(new r_hand(H))
 
-	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon. 
+	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 
 		slot2type = list(
 			"[SLOT_L_EAR]"   = l_ear,
@@ -214,7 +214,7 @@
 		)
 
 		equip_slots(H, slot2type)
-		
+
 		if(survival_box)
 			var/obj/item/weapon/storage/box/survival/SK = new(H)
 
@@ -256,12 +256,12 @@
 					if(!isnum(number))//Default to 1
 						number = 1
 					for(var/i in 1 to number)
-						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK, TRUE)
+						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE, TRUE)
+				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE, TRUE)
+				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -272,12 +272,13 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			H.internal = H.get_item_by_slot(internals_slot)
-			H.update_icons()
+			H.internal = H.get_equipped_item(internals_slot)
+			if(H.internals)
+				H.internals.icon_state = "internal1"
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.inject(H)
+				I.inject(H, implants[implant_type])
 
 	H.update_body()
 	return TRUE
@@ -288,7 +289,7 @@
 		var/slot_type = slot2type[slot]
 		if(!slot_type)
 			continue
-		H.equip_to_slot_or_del(new slot_type(H), text2num(slot), TRUE)
+		H.equip_to_slot_or_del(new slot_type(H), text2num(slot))
 
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit

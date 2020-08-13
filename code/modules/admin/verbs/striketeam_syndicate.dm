@@ -4,7 +4,7 @@ var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the
 var/global/sent_syndicate_strike_team = FALSE
 
 /client/proc/syndicate_strike_team()
-	if(!ticker)
+	if(!SSticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 	if(world.time < 6000)
@@ -153,6 +153,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		new_syndicate_commando.mind.objectives += syndi_elit_obj
 		syndi_elit_obj.owner = new_syndicate_commando
 		syndi_elit_obj.explanation_text = objectiv
+		
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 

@@ -49,7 +49,7 @@
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = CLAMP((n_players/5), required_enemies, recommended_enemies)
+	agent_number = clamp((n_players/5), required_enemies, recommended_enemies)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len
@@ -198,7 +198,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		P.update_icon()
-		if (ticker.mode.config_tag=="nuclear")
+		if (SSticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
@@ -349,7 +349,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayerwithicon(syndicate)
@@ -369,21 +369,6 @@
 
 	return text
 
-
-/*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
-
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			to_chat(M, "That name is reserved.")
-			return nukelastname(M)
-
-	return newname
-*/
 /proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 

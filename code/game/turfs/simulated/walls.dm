@@ -16,6 +16,8 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
+	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
+
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -186,17 +188,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ChangeTurf(basetype)
-			return
-		if(2.0)
+		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3.0)
-			take_damage(rand(0, 250))
-		else
+		if(3)
+			take_damage(rand(0, 55))
 	return
 
 /turf/simulated/wall/blob_act()
@@ -210,18 +210,9 @@
 
 		var/number_rots = rand(2,3)
 		for(var/i=0, i<number_rots, i++)
-			var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-			O.name = "Wallrot"
-			O.desc = "Ick..."
-			O.icon = 'icons/effects/wallrot.dmi'
-			O.pixel_x += rand(-10, 10)
-			O.pixel_y += rand(-10, 10)
-			O.anchored = 1
-			O.density = 1
-			O.layer = 5
-			O.mouse_opacity = 0
+			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/proc/thermitemelt(mob/user)
+/turf/simulated/wall/proc/thermitemelt(mob/user, var/seconds_to_melt)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -240,19 +231,11 @@
 	F.icon_state = "wall_thermite"
 	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
 
-	spawn(100)
+	spawn(seconds_to_melt * 10)
 		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M)
-	if (prob(15) && !rotting)
-		dismantle_wall()
-	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
 
 //Interactions
 
@@ -324,7 +307,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user)|| ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -353,11 +336,11 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				thermitemelt(user)
+				thermitemelt(user, seconds_to_melt)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -368,7 +351,7 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks

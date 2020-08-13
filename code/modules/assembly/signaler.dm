@@ -69,7 +69,11 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(entity_ja(dat), "window=radio")
+
+	var/datum/browser/popup = new(user, "radio")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "radio")
 	return
 

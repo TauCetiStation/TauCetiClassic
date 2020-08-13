@@ -1,10 +1,12 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 //Few global vars to track the blob
-var/list/blobs = list()
-var/list/blob_cores = list()
-var/list/blob_nodes = list()
+var/global/list/blobs = list()
+var/global/list/blob_cores = list()
+var/global/list/blob_nodes = list()
+var/global/blobwincount = 500
 
+/datum/game_mode/var/list/infected_crew = list()
 
 /datum/game_mode/blob
 	name = "blob"
@@ -27,11 +29,6 @@ var/list/blob_nodes = list()
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
 	var/blob_point_rate = 3
-
-	//var/blobwincount = 350 //default value
-	var/blobwincount = 500
-
-	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)

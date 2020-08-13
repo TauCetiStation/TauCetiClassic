@@ -334,14 +334,17 @@
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
+	var/HTML = ""
 	for(var/index in tnote)
 		if(index["sent"])
 			HTML += addtext("<i><b>&rarr; To <a href='byond://?src=\ref[src];choice=Message;target=",index["src"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 		else
 			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
-	HTML +="</body></html>"
-	usr << browse(entity_ja(HTML), "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+
+	var/datum/browser/popup = new(usr, "log", "AI PDA Message Log", 400, 444)
+	popup.set_window_options("border=1;can_resize=1;can_close=1;can_minimize=0")
+	popup.set_content(HTML)
+	popup.open()
 
 
 /obj/item/device/pda/silicon/can_use()
@@ -845,7 +848,25 @@
 			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
 			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+
 		if("make_transfer")
+		//============check telecoms and message server=================
+			var/obj/machinery/message_server/useMS = FALSE
+			var/useTC = FALSE
+			if(message_servers)
+				for(var/obj/machinery/message_server/MS in message_servers)
+					if(MS.active)
+						useMS = TRUE
+						break
+
+			var/datum/signal/signal = src.telecomms_process()
+			
+			if(signal && signal.data["done"])
+				useTC = TRUE
+			if(!useMS || !useTC)
+				to_chat(U, "[bicon(src)]<span class='warning'>Communication Error</span>")
+				return
+		//==============================================================
 			if(owner_account.suspended)
 				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
 				return
@@ -1478,7 +1499,7 @@
 	else
 		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
-			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else

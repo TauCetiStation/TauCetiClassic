@@ -83,7 +83,6 @@
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
 
-
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -93,8 +92,6 @@
 		else
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
-		return
-
 
 /obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)

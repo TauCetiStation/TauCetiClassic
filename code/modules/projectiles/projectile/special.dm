@@ -76,7 +76,7 @@
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
 
-			A.meteorhit(src)
+			A.ex_act(2)
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
@@ -177,11 +177,8 @@
 	edge = 0
 
 /obj/item/projectile/missile/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	target.ex_act(1)
 	explosion(target, 1,2,4,5)
 	return 1
-
-
 
 /obj/item/projectile/missile/emp
 	damage = 10

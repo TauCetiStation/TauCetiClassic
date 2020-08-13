@@ -47,7 +47,7 @@
 
 /obj/item/weapon/implantpad/attack_self(mob/user)
 	user.set_machine(src)
-	var/dat = "<B>Implant Mini-Computer:</B><HR>"
+	var/dat = ""
 	if (src.case)
 		if(src.case.imp)
 			if(istype(src.case.imp, /obj/item/weapon/implant))
@@ -62,7 +62,11 @@
 			dat += "The implant casing is empty."
 	else
 		dat += "Please insert an implant casing!"
-	user << browse(entity_ja(dat), "window=implantpad")
+
+	var/datum/browser/popup = new(user, "implantpad", "Implant Mini-Computer")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "implantpad")
 	return
 

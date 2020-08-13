@@ -12,7 +12,7 @@
 	var/stored_data
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
-	var/dat = "<html><head><title>[name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
+	var/dat = ""
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in mecha_tracking_list)
@@ -28,9 +28,11 @@
 		dat += "[stored_data]"
 
 	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
-	dat += "</body></html>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", src.name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/mecha/Topic(href, href_list)

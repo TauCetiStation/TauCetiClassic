@@ -118,7 +118,10 @@
 	if (!src.locked)
 		message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	user << browse(entity_ja(dat), "window=caselock;size=300x280")
+
+	var/datum/browser/popup = new(user, "caselock", null, 300, 280)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/storage/secure/Topic(href, href_list)
 	..()

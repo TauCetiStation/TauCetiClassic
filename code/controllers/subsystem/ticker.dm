@@ -1,9 +1,7 @@
 var/round_start_time = 0
 var/round_start_realtime = 0
 
-var/datum/subsystem/ticker/ticker
-
-/datum/subsystem/ticker
+SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
@@ -41,10 +39,9 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null
 
+	var/force_ending = FALSE
 
-/datum/subsystem/ticker/New()
-	NEW_SS_GLOBAL(ticker)
-
+/datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
 	/*
 	'sound/music/space.ogg',\
@@ -61,7 +58,7 @@ var/datum/subsystem/ticker/ticker
 	'sound/lobby/robocop_gb_intro.ogg')
 
 
-/datum/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -69,7 +66,7 @@ var/datum/subsystem/ticker/ticker
 	setupFactions()
 	..()
 
-/datum/subsystem/ticker/fire()
+/datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = initial(timeLeft)
@@ -104,14 +101,14 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1) || force_ending
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
 						C.log_client_ingame_age_to_db()
-					world.save_last_mode(ticker.mode.name)
+					world.save_last_mode(SSticker.mode.name)
 
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
@@ -160,7 +157,7 @@ var/datum/subsystem/ticker/ticker
 							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 						)
 
-/datum/subsystem/ticker/proc/setup()
+/datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 
 	// Discuss your stuff after the round ends.
@@ -267,6 +264,9 @@ var/datum/subsystem/ticker/ticker
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
+		for(var/mob/dead/new_player/N in new_player_list)
+			if(N.client)
+				N.new_player_panel_proc()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -290,99 +290,77 @@ var/datum/subsystem/ticker/ticker
 
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
-	if( cinematic )
-		return	//already a cinematic in progress!
+/datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+	if(cinematic)
+		return
 
-	//initialise our cinematic screen object
+	var/screen = "intro_nuke"
+	var/screen_time = 35
+	var/explosion = "station_explode_fade_red"
+	var/summary = "summary_selfdes"
+	if(mode && !override)
+		override = mode.name
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+		if(M.client)
+			M.client.screen += cinematic	//show every client the cinematic
+		if(isliving(M))
+			var/mob/living/L = M
+			L.SetSleeping(1 MINUTE, TRUE, TRUE)
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
-	//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
-	if(station_missed)
-		for(var/mob/M in mob_list)
-			M.buckled = temp_buckle				//buckles the mob so it can't do anything
-			if(M.client)
-				M.client.screen += cinematic	//show every client the cinematic
-	else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
-		for(var/mob/M in mob_list)
-			M.buckled = temp_buckle
-			if(M.client)
-				M.client.screen += cinematic
-			if(M.stat != DEAD)//Just you wait for real destruction!
-				var/turf/T = get_turf(M)
-				if(T && is_station_level(T.z))
-					M.death(0) //no mercy
-
-	//Now animate the cinematic
 	switch(station_missed)
+		if(0)	//station was destroyed
+			if(override == "AI malfunction")
+				screen = "intro_malf"
+				screen_time = 76
+				summary = "summary_malf"
+			else if(override == "nuclear emergency")
+				summary = "summary_nukewin"
+
+			for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+				if(M.stat != DEAD)	//Just you wait for real destruction!
+					var/turf/T = get_turf(M)
+					if(T && is_station_level(T.z))
+						M.death(0)	//No mercy
+
 		if(1)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
-				override = mode.name
-			switch( override )
-				if("nuclear emergency") //Nuke wasn't on station when it blew up
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // arguments? OOC sound because is a part of cinematic.
-					flick("station_intact_fade_red",cinematic)
-					cinematic.icon_state = "summary_nukefail"
-				else
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-					//flick("end",cinematic)
+			if(override == "nuclear emergency")
+				explosion = "station_intact_fade_red"
+				summary = "summary_nukefail"
+			else
+				explosion = null
+				summary = null
 
+		if(2)	//nuke was nowhere nearby	TODO: a really distant explosion animation
+			screen = null
+			screen_time = 50
+			explosion = null
+			summary = null
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
-			sleep(50)
-			for(var/mob/M in player_list)
-				M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-		else	//station was destroyed
-			if( mode && !override )
-				override = mode.name
-			switch( override )
-				if("nuclear emergency") //Nuke Ops successfully bombed the station
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-					cinematic.icon_state = "summary_nukewin"
-				if("AI malfunction") //Malf (screen,explosion,summary)
-					flick("intro_malf",cinematic)
-					sleep(76)
-					flick("station_explode_fade_red",cinematic)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-					cinematic.icon_state = "summary_malf"
-				if("blob") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-					cinematic.icon_state = "summary_selfdes"
-				else //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red", cinematic)
-					for(var/mob/M in player_list)
-						M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
-					cinematic.icon_state = "summary_selfdes"
-	//If its actually the end of the round, wait for it to end.
-	//Otherwise if its a verb it will continue on afterwards.
-	spawn(300)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
-		if(temp_buckle)
-			qdel(temp_buckle)	//release everybody
-	return
+	if(screen)
+		flick(screen, cinematic)
+	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
+/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
+	for(var/mob/M in mob_list) //search any goodest
+		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+	if(explosion)
+		flick(explosion,cinematic)
+	if(summary)
+		cinematic.icon_state = summary
+	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
 
+/datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
+	for(var/mob/M in mob_list)
+		if(M.client)
+			M.client.screen -= cinematic
+		if(isliving(M))
+			var/mob/living/L = M
+			L.SetSleeping(0, TRUE, TRUE)
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
 
-/datum/subsystem/ticker/proc/create_characters()
+/datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
 		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
@@ -397,13 +375,13 @@ var/datum/subsystem/ticker/ticker
 				qdel(player)
 		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
-/datum/subsystem/ticker/proc/collect_minds()
+/datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
 		if(player.mind)
-			ticker.minds += player.mind
+			SSticker.minds += player.mind
 
 
-/datum/subsystem/ticker/proc/equip_characters()
+/datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
@@ -419,7 +397,7 @@ var/datum/subsystem/ticker/ticker
 				to_chat(M, "Captainship not forced on anyone.")
 
 //cursed code
-/datum/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
 	if(config.ooc_round_only)
 		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
@@ -476,16 +454,18 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(aiPlayer)
 			end_icons += flat
 			var/tempstate = end_icons.len
+			var/aikey = aiPlayer.mind ? aiPlayer.mind.key : aiPlayer.key
 			if (aiPlayer.stat != DEAD)
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the game were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws at the end of the game were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws when it was deactivated were:</B>"}
 			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
 			if (aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
+					var/robokey = robo.mind ? robo.mind.key : robo.key
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [robokey]), "]"
 				ai_completions += "[robolist]"
 
 		var/dronecount = 0
@@ -499,13 +479,14 @@ var/datum/subsystem/ticker/ticker
 			var/icon/flat = getFlatIcon(robo,exact=1)
 			end_icons += flat
 			var/tempstate = end_icons.len
+			var/robokey = robo.mind ? robo.mind.key : robo.key
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) survived as an AI-less borg! Its laws were:</B>"}
 				else
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.mind.key]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
@@ -533,9 +514,12 @@ var/datum/subsystem/ticker/ticker
 
 	scoreboard(ai_completions)
 
+	//Ask the event manager to print round end information
+	SSevents.RoundEnd()
+
 	return 1
 
-/datum/subsystem/ticker/proc/achievement_declare_completion()
+/datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup
@@ -546,18 +530,18 @@ var/datum/subsystem/ticker/ticker
 
 	return text
 
-/datum/subsystem/ticker/proc/start_now()
-	if(ticker.current_state != GAME_STATE_PREGAME)
+/datum/controller/subsystem/ticker/proc/start_now()
+	if(SSticker.current_state != GAME_STATE_PREGAME)
 		return FALSE
-	ticker.can_fire = TRUE
-	ticker.timeLeft = 0
+	SSticker.can_fire = TRUE
+	SSticker.timeLeft = 0
 	return TRUE
 
 /world/proc/has_round_started()
-	return (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+	return (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 
 /world/proc/has_round_finished()
-	return (ticker && ticker.current_state >= GAME_STATE_FINISHED)
+	return (SSticker && SSticker.current_state >= GAME_STATE_FINISHED)
 
 /world/proc/is_round_preparing()
-	return (ticker && ticker.current_state == GAME_STATE_PREGAME)
+	return (SSticker && SSticker.current_state == GAME_STATE_PREGAME)

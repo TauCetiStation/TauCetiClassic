@@ -62,5 +62,5 @@ var/global/datum/js_error_manager/js_error_manager = new
 
 		return
 
-	message = "\[[time_stamp()]]: Client: \[[key_name(C)]\] triggered:\n[log_end] [LOG_CLEANING(message)][log_end]"
+	message = "\[[time_stamp()]]: Client: \[[key_name(C)]\] triggered:\n[log_end] [message][log_end]"
 	WRITE_FILE(file, message)

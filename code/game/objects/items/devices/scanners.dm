@@ -85,9 +85,6 @@ REAGENT SCANNER
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
 			var/message = ""
-			if(!output_to_chat)
-				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
-
 			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
@@ -98,8 +95,11 @@ REAGENT SCANNER
 			last_scan = message
 			last_scan_name = M.name
 			if(!output_to_chat)
-				message += "</BODY></HTML>"
-				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+				popup.set_window_options("can_resize=1")
+				popup.set_content(message)
+				popup.open()
+
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, message)
@@ -112,7 +112,11 @@ REAGENT SCANNER
 			last_scan = dat
 			last_scan_name = M.name
 			if(!output_to_chat)
-				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+				popup.set_window_options("can_resize=1")
+				popup.set_content(dat)
+				popup.open()
+
 				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, dat)
@@ -121,7 +125,11 @@ REAGENT SCANNER
 		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	user << browse(entity_ja(last_scan), "window=[last_scan_name]_scan_report;size=400x400;can_resize=1")
+	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "[last_scan_name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_window_options("can_resize=1")
+	popup.set_content(last_scan)
+	popup.open()
+
 	onclose(user, "[last_scan_name]")
 
 /obj/item/device/healthanalyzer/verb/toggle_output()
@@ -251,7 +259,7 @@ REAGENT SCANNER
 
 	if (user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -263,7 +271,7 @@ REAGENT SCANNER
 		return
 	if (user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))
@@ -305,7 +313,7 @@ REAGENT SCANNER
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(reagents.total_volume)
@@ -361,7 +369,7 @@ REAGENT SCANNER
 	var/recent_fail = 0
 
 /obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))
@@ -512,7 +520,7 @@ REAGENT SCANNER
 	                                 /obj/item/weapon/bananapeel,
 	                                 /obj/item/weapon/soap,
 	                                 /obj/item/weapon/bikehorn,
-	                                 /obj/item/toy/laugh_button,
+	                                 /obj/item/toy/sound_button,
 	                                 /obj/item/device/tabletop_assistant,
 	                                 /obj/item/weapon/storage/pill_bottle,
 	                                 /obj/item/device/paicard,

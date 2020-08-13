@@ -219,7 +219,7 @@
 
 	use_power(50 * chosen_quantity)
 
-	err_log("\[[worldtime2text()]\]<font color='blue'>NOT #201:</font> Mix <font face='fixedsys' size='3' color=[chosen_color]><table border cellspacing='0' style='display:inline;' bgcolor=[chosen_color]><tr><td width='20' height='15'></td></tr></table></font>([chosen_quantity]) created, using <font face='fixedsys' size='3' color=[tank_1_col]><table border cellspacing='0' style='display:inline;' bgcolor=[tank_1_col]><tr><td width='20' height='15'></td></tr></table></font>([quan_req[1]]) <font face='fixedsys' size='3' color=[tank_2_col]><table border cellspacing='0' style='display:inline;' bgcolor=[tank_2_col]><tr><td width='20' height='15'></td></tr></table></font>([quan_req[2]]) <font face='fixedsys' size='3' color=[tank_3_col]><table border cellspacing='0' style='display:inline;' bgcolor=[tank_3_col]><tr><td width='20' height='15'></td></tr></table></font>([quan_req[3]]).", type = "NOT")
+	err_log("\[[worldtime2text()]\]<font color='blue'>NOT #201:</font> Mix [color_square(hex = chosen_color)]([chosen_quantity]) created, using [color_square(hex = tank_1_col)]([quan_req[1]]) [color_square(hex = tank_2_col)]([quan_req[2]]) [color_square(hex = tank_3_col)]([quan_req[3]]).", type = "NOT")
 
 
 /obj/machinery/color_mixer/proc/mix_wrapper()
@@ -443,7 +443,7 @@ A proc that does all the animations before mix()-ing.
 		else
 			if(beakers[tank_id])
 				var/tank_color = mix_color_from_reagents(beakers[tank_id].reagents.reagent_list)
-				dat += "[(tank_id != "output" && tank_color == "#000000") || (tank_id == "output" && tank_color) ? "<font color='red'>Paint color</font>" : "Paint color"]: <font face='fixedsys' size='3' color=[tank_color]><table border cellspacing='0' style='display:inline;' bgcolor=[tank_color]><tr><td width='20' height='15'></td></tr></table></font><BR>"
+				dat += "[(tank_id != "output" && tank_color == "#000000") || (tank_id == "output" && tank_color) ? "<font color='red'>Paint color</font>" : "Paint color"]: [color_square(hex = tank_color)]<BR>"
 				dat += "[(tank_id != "output" && beakers[tank_id].reagents.total_volume < 10) || (tank_id == "output" && beakers[tank_id].reagents.total_volume > 0) ? "<font color='red'>Paint quantity</font>" : "Paint quantity"]: [beakers[tank_id].reagents.total_volume]"
 			else
 				dat += "<b>[tank_name]</b> <font color='red'>is not loaded into [src].</font><BR>"
@@ -456,7 +456,7 @@ A proc that does all the animations before mix()-ing.
 			dat += "<div class='statusDisplay'>"
 			if(beakers[tank_id])
 				if(tank_id == "output")
-					dat += "<A href='?src=\ref[src];action=choose_color'>Color to mix:</A> <font face='fixedsys' size='3' color=[chosen_color]><table border cellspacing='0' style='display:inline;' bgcolor=[chosen_color]><tr><td width='20' height='15'></td></tr></table></font><BR>"
+					dat += "<A href='?src=\ref[src];action=choose_color'>Color to mix:</A> [color_square(hex = chosen_color)]<BR>"
 					dat += "<A href='?src=\ref[src];action=choose_quantity'>Quantity to create:</A> [chosen_quantity]<BR>"
 					dat += "<A href='?src=\ref[src];action=start_mix'>Mix.</A>"
 					dat += "<BR>"
@@ -550,21 +550,21 @@ Quantity of target color is taken into consideration.
 Returns 0 if nothing can be made from mixing the three given colors, otherwise returns a list of quantities of each of three colors needed to be mixed.
 */
 /proc/do_mix_color_from_three(target_col, target_quan, col_1 = "#000000", col_2 = "#000000", col_3 = "#000000")
-	var/r_1 = hex2num(copytext(col_1, 2, 4))
-	var/g_1 = hex2num(copytext(col_1, 4, 6))
-	var/b_1 = hex2num(copytext(col_1, 6, 8))
+	var/r_1 = HEX_VAL_RED(col_1)
+	var/g_1 = HEX_VAL_GREEN(col_1)
+	var/b_1 = HEX_VAL_BLUE(col_1)
 
-	var/r_2 = hex2num(copytext(col_2, 2, 4))
-	var/g_2 = hex2num(copytext(col_2, 4, 6))
-	var/b_2 = hex2num(copytext(col_2, 6, 8))
+	var/r_2 = HEX_VAL_RED(col_2)
+	var/g_2 = HEX_VAL_GREEN(col_2)
+	var/b_2 = HEX_VAL_BLUE(col_2)
 
-	var/r_3 = hex2num(copytext(col_3, 2, 4))
-	var/g_3 = hex2num(copytext(col_3, 4, 6))
-	var/b_3 = hex2num(copytext(col_3, 6, 8))
+	var/r_3 = HEX_VAL_RED(col_3)
+	var/g_3 = HEX_VAL_GREEN(col_3)
+	var/b_3 = HEX_VAL_BLUE(col_3)
 
-	var/r_t = hex2num(copytext(target_col, 2, 4))
-	var/g_t = hex2num(copytext(target_col, 4, 6))
-	var/b_t = hex2num(copytext(target_col, 6, 8))
+	var/r_t = HEX_VAL_RED(target_col)
+	var/g_t = HEX_VAL_GREEN(target_col)
+	var/b_t = HEX_VAL_BLUE(target_col)
 	// We are going to be using Cramer's method of solving a system of equations.
 	// Determ.
 	var/delta = determinant_3_x_3(list(r_1, r_2, r_3, g_1, g_2, g_3, b_1, b_2, b_3))

@@ -1,6 +1,4 @@
-var/datum/subsystem/vote/SSvote
-
-/datum/subsystem/vote
+SUBSYSTEM_DEF(vote)
 	name = "Vote"
 
 	wait = SS_WAIT_VOTE
@@ -18,11 +16,14 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/static/list/votemode2text = list(
+		"restart" = "Restart",
+		"crew_transfer" = "Crew Transfer",
+		"gamemode" = "GameMode",
+		"custom" = "Custom"
+		)
 
-/datum/subsystem/vote/New()
-	NEW_SS_GLOBAL(SSvote)
-
-/datum/subsystem/vote/fire()	//called by master_controller
+/datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((voting_started_time + config.vote_period - world.time)/10)
 
@@ -40,7 +41,7 @@ var/datum/subsystem/vote/SSvote
 				client_popup.open(0)
 
 
-/datum/subsystem/vote/proc/reset()
+/datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -50,7 +51,7 @@ var/datum/subsystem/vote/SSvote
 	voted.Cut()
 	voting.Cut()
 
-/datum/subsystem/vote/proc/get_result()
+/datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -84,7 +85,7 @@ var/datum/subsystem/vote/SSvote
 				. += option
 	return .
 
-/datum/subsystem/vote/proc/announce_result()
+/datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
 	if(winners.len > 0)
@@ -112,7 +113,7 @@ var/datum/subsystem/vote/SSvote
 	to_chat(world, "\n<font color='purple'>[text]</font>")
 	return .
 
-/datum/subsystem/vote/proc/result()
+/datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
 	var/crewtransfer = 0
@@ -127,7 +128,7 @@ var/datum/subsystem/vote/SSvote
 			if("gamemode")
 				if(master_mode != .)
 					world.save_mode(.)
-					if(ticker && ticker.mode)
+					if(SSticker && SSticker.mode)
 						restart = 1
 					else
 						master_mode = .
@@ -152,7 +153,7 @@ var/datum/subsystem/vote/SSvote
 
 	return .
 
-/datum/subsystem/vote/proc/submit_vote(vote)
+/datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -164,7 +165,7 @@ var/datum/subsystem/vote/SSvote
 
 	return 0
 
-/datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	var/is_admin = FALSE
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
@@ -175,7 +176,7 @@ var/datum/subsystem/vote/SSvote
 		if(last_vote_time[timer_mode] != null && !is_admin)
 			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
-				to_chat(usr, "<span class='vote'>Next [vote_type] vote is avaible after [round((next_allowed_time-world.time)/600)] minutes</span>")
+				to_chat(usr, "<span class='vote'>Next [votemode2text[vote_type]] vote is available after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()
@@ -245,7 +246,7 @@ var/datum/subsystem/vote/SSvote
 		return 1
 	return 0
 
-/datum/subsystem/vote/proc/interface(client/C)
+/datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
 	var/admin = FALSE
@@ -311,7 +312,7 @@ var/datum/subsystem/vote/SSvote
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
 	return .
 
-/datum/subsystem/vote/Topic(href,href_list[],hsrc)
+/datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -357,5 +358,5 @@ var/datum/subsystem/vote/SSvote
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
 
-/datum/subsystem/vote/proc/crew_transfer_available()
+/datum/controller/subsystem/vote/proc/crew_transfer_available()
 	return (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)

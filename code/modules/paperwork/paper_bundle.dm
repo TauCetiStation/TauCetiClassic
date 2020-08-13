@@ -58,7 +58,7 @@
 
 	else
 		if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
-			usr << browse("", "window=[name]") //Closes the dialog
+			usr << browse(null, "window=[name]") //Closes the dialog
 		P = src[page]
 		P.attackby(I, user, params)
 
@@ -100,16 +100,20 @@
 		if(istype(src[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
 			dat += P.show_content(human_user, view = FALSE)
-			human_user << browse(entity_ja(dat), "window=[name]")
+
+			var/datum/browser/popup = new(human_user, "window=[name]", "[sanitize(P.name)]", 300, 480, ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat)
+			popup.open()
+
 			P.add_fingerprint(usr)
 		else if(istype(src[page], /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/P = W
 			human_user << browse_rsc(P.img, "tmp_photo.png")
-			human_user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
-			+ "<body style='overflow:hidden'>" \
-			+ "<div> <img src='tmp_photo.png' width = '180'" \
-			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : null]"\
-			+ "</body></html>", "window=[name]")
+
+			var/datum/browser/popup = new(human_user, "window=[name]", "[sanitize(P.name)]", 192, (P.scribble ? 400 : 192), ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat + "<div style='overflow:hidden'> <img src='tmp_photo.png' width = '192' style='-ms-interpolation-mode:nearest-neighbor'>[P.scribble ? "<br>Written on the back:<br><i>[P.scribble]</i>" : null]</div>")
+			popup.open()
+
 			P.add_fingerprint(usr)
 		add_fingerprint(usr)
 		update_icon()

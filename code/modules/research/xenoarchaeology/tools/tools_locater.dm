@@ -62,7 +62,7 @@
 	return src.interact(user)
 
 /obj/item/device/beacon_locator/interact(mob/user)
-	var/dat = "<b>Radio frequency tracker</b><br>"
+	var/dat = ""
 	dat += {"
 				<A href='byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>
 				Frequency:
@@ -74,7 +74,11 @@
 				"}
 
 	dat += "<A href='?src=\ref[src];close=1'>Close</a><br>"
-	user << browse(entity_ja(dat),"window=locater;size=300x150")
+
+	var/datum/browser/popup = new(user, "locater", "Radio frequency tracker", 300, 150)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "locater")
 
 /obj/item/device/beacon_locator/Topic(href, href_list)

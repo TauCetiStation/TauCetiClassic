@@ -124,7 +124,11 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", entity_ja(dat)), "window=med_rec")
+
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "med_rec")
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
@@ -454,7 +458,7 @@
 				return
 			src.active1 = null
 			src.active2 = null
-			t1 = lowertext_(t1)
+			t1 = lowertext(t1)
 			for(var/datum/data/record/R in data_core.medical)
 				if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"]) || t1 == lowertext(R.fields["b_dna"])))
 					src.active2 = R

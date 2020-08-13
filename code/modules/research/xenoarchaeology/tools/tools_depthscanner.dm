@@ -101,7 +101,11 @@
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</a><br>"
 	dat += "<A href='?src=\ref[src];close=1'>Close</a><br>"
-	user << browse(entity_ja(dat),"window=depth_scanner;size=300x500")
+
+	var/datum/browser/popup = new(user, "depth_scanner", null, 300, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "depth_scanner")
 
 /obj/item/device/depth_scanner/Topic(href, href_list)

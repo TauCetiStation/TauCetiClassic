@@ -179,17 +179,9 @@
 		open()
 		qdel(src)
 
-// this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		open()
-		qdel(src)
-
-/obj/structure/closet/meteorhit(obj/O)
-	if(O.icon_state == "flaming")
-		for(var/mob/M in src)
-			M.meteorhit(O)
-		src.dump_contents()
+		dump_contents()
 		qdel(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)

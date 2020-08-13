@@ -63,10 +63,15 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
+	var/use_skirt = FALSE				//using skirt uniform version
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
 	var/b_hair = 0						//Hair color
+	var/grad_style = "none"				//Gradient style
+	var/r_grad = 0						//Gradient color
+	var/g_grad = 0						//Gradient color
+	var/b_grad = 0						//Gradient color
 	var/f_style = "Shaved"				//Face hair type
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
@@ -149,9 +154,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
+	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 
@@ -195,7 +202,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
-	user << browse(entity_ja(dat), "window=preferences_browser")
+	user << browse(dat, "window=preferences_browser")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -322,6 +329,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.g_hair = g_hair
 	character.b_hair = b_hair
 
+	character.r_grad = r_grad
+	character.g_grad = g_grad
+	character.b_grad = b_grad
+
 	character.r_facial = r_facial
 	character.g_facial = g_facial
 	character.b_facial = b_facial
@@ -333,6 +344,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.s_tone = s_tone
 
 	character.h_style = h_style
+	character.grad_style = grad_style
 	character.f_style = f_style
 
 	character.home_system = home_system
@@ -398,6 +410,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
+	character.use_skirt = use_skirt
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(character.gender in list(PLURAL, NEUTER))

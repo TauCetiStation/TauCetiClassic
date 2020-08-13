@@ -194,7 +194,7 @@
 	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
+	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 	for(var/i = 1, i <= tagger_locations.len, i++)
@@ -205,7 +205,10 @@
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
 
-	user << browse(entity_ja(dat), "window=destTagScreen;size=450x350")
+	var/datum/browser/popup = new(user, "destTagScreen", "TagMaster 2.3", 450, 350)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "destTagScreen")
 
 /obj/item/device/destTagger/attack_self(mob/user)

@@ -130,8 +130,9 @@
 
 		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
 
-	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=automed")
-	onclose(user, "automed")
+	var/datum/browser/popup = new(user, "window=automed", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
 	. = ..()

@@ -5,12 +5,15 @@
 
 	message = sanitize(message)
 
-	if(copytext(message, 1, 2) == "*")
+	if(!message)
+		return
+
+	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
 	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
+		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			if (stat == DEAD)
 				return say_dead(message)
@@ -29,8 +32,8 @@
 	message = sanitize(message)
 
 	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
+		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			if (stat == DEAD)
 				return say_dead(message)
@@ -46,7 +49,7 @@
 		return
 
 	//var/message_a = sanitize_chat(say_quote(message))
-	//на бэй опять рефакторят, нужно обновить эту часть кода. А пока, так
+	//РЅР° Р±СЌР№ РѕРїСЏС‚СЊ СЂРµС„Р°РєС‚РѕСЂСЏС‚, РЅСѓР¶РЅРѕ РѕР±РЅРѕРІРёС‚СЊ СЌС‚Сѓ С‡Р°СЃС‚СЊ РєРѕРґР°. Рђ РїРѕРєР°, С‚Р°Рє
 	var/message_a = "<span class='say_quote'>hisses,</span> \"<span class='body'>[message]</span>\""
 
 	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"

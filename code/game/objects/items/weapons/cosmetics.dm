@@ -247,10 +247,16 @@
 		mannequin.r_hair = H.r_hair
 		mannequin.g_hair = H.g_hair
 		mannequin.b_hair = H.b_hair
+		mannequin.r_grad = H.r_grad
+		mannequin.g_grad = H.g_grad
+		mannequin.b_grad = H.b_grad
 	else
 		mannequin.r_hair = H.dyed_r_hair
 		mannequin.g_hair = H.dyed_g_hair
 		mannequin.b_hair = H.dyed_b_hair
+		mannequin.r_grad = H.dyed_r_hair
+		mannequin.g_grad = H.dyed_g_hair
+		mannequin.b_grad = H.dyed_b_hair
 
 	if(!H.facial_painted)
 		mannequin.r_facial = H.r_facial
@@ -271,6 +277,8 @@
 		mannequin.h_style = selectedhairstyle
 	else
 		mannequin.h_style = H.h_style
+
+	mannequin.grad_style = H.grad_style
 
 	if(isfacehair && selectedhairstyle)
 		mannequin.f_style = selectedhairstyle
@@ -343,30 +351,32 @@
 
 	create_character_previews()
 
-	var/list/selected_styles_list = hair_styles_list
+	var/list/selected_styles_list = hairs_cache["[barbertarget.get_species()][PLURAL]"]
 	if(isfacehair)
-		selected_styles_list = facial_hair_styles_list
+		selected_styles_list = facial_hairs_cache["[barbertarget.get_species()][PLURAL]"]
 
 	var/haircutlist = "<table style='width:100%'><tr>"
 	var/tablei = 0
 	for(var/i in selected_styles_list)
-		var/datum/sprite_accessory/hair/tmp_hair = selected_styles_list[i]
-		if(barbertarget.species.name in tmp_hair.species_allowed)
-			var/styles = ""
-			if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
-				styles = "color: rgb(255,0,0)"
-			haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
-			if(++tablei >= 5)
-				tablei = 0
-				haircutlist+="</tr><tr>"
+		var/styles = ""
+		if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
+			styles = "color: rgb(255,0,0)"
+		haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
+		if(++tablei >= 5)
+			tablei = 0
+			haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
 	winshow(barber, "barber_window", TRUE)
-	barber << browse("<html><head><title>Grooming</title></head>" \
-		+ "<body style='margin:0;text-align:center'>" \
-		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
-		+ haircutlist \
-		+ "</body></html>", "window=barber_window")
+	var/dat = ""
+	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
+	dat += haircutlist
+
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", ntheme = CSS_THEME_LIGHT)
+	popup.set_window_options("can_resize=0")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(barber, "barber_window", src)
 	return
 

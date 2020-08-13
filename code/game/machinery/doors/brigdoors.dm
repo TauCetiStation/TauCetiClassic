@@ -196,7 +196,7 @@
 	var/setminute = round(((timetoset / 10) - setsecond) / 60)
 
 	// dat
-	var/dat = "<HTML><BODY><TT>"
+	var/dat = "<TT>"
 
 	switch(screen)
 		if(MAIN_SCREEN)
@@ -237,7 +237,7 @@
 					dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
 			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
-			dat += "</TT></BODY></HTML>"
+			dat += "</TT>"
 
 		if(ERROR_SCREEN)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Invalid prisoner data</B></FONT><HR><BR>"
@@ -249,7 +249,10 @@
 				dat+="<FONT COLOR='maroon'>•Invalid details text.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Return</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 //Function for using door_timer dialog input, checks if user has permission
@@ -265,13 +268,13 @@
 		return
 
 	if(href_list["set_prisoner_name"])
-		prisoner_name = sanitize_safe(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
+		prisoner_name = sanitize(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
 
 	if(href_list["set_prisoner_crimes"])
-		prisoner_crimes = sanitize_safe(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
+		prisoner_crimes = sanitize(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
 
 	if(href_list["set_prisoner_details"])
-		prisoner_details = sanitize_safe(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
+		prisoner_details = sanitize(input(usr, "Enter Details", "Prison Timer", input_default(prisoner_details)), MAX_LNAME_LEN)
 
 	if(!src.allowed(usr))
 		return
@@ -357,22 +360,6 @@
 	if(maptext != new_text)
 		maptext = new_text
 
-
-//Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
-//Stolen from status_display
-/obj/machinery/door_timer/proc/texticon(tn, px = 0, py = 0)
-	var/image/I = image('icons/obj/status_display.dmi', "blank")
-	var/len = lentext(tn)
-
-	for(var/d = 1 to len)
-		var/char = copytext(tn, len-d+1, len-d+2)
-		if(char == " ")
-			continue
-		var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
-		ID.pixel_x = -(d-1)*5 + px
-		ID.pixel_y = py
-		I.add_overlay(ID)
-	return I
 
 /obj/machinery/door_timer/cell_1
 	name = "Cell 1"

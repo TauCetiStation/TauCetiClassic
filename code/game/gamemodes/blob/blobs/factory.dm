@@ -32,7 +32,7 @@
 
 
 /mob/living/simple_animal/hostile/blobspore
-	name = "blob"
+	name = "blob spore"
 	desc = "Some blob thing."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
@@ -59,7 +59,7 @@
 
 /mob/living/simple_animal/hostile/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	adjustBruteLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
+	adjustBruteLoss(clamp(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blobspore/blob_act()
 	return
