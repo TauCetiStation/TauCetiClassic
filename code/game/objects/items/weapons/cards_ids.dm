@@ -340,11 +340,10 @@
 			if("Change look")
 				if(!radial_chooses)
 					radial_chooses = list()
-
-				for(var/P in typesof(/obj/item/weapon/card/id))
-					var/obj/item/weapon/card/id/C = new P
-					if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-						radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+					for(var/P in typesof(/obj/item/weapon/card/id))
+						var/obj/item/weapon/card/id/C = new P
+						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
+							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
 				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
