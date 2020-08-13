@@ -58,6 +58,7 @@
 	speak_emote = list("gibbers")
 	attacktext = "brutally chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
+	mob_size = MOB_LARGE
 	faction = "meat"
 
 /mob/living/simple_animal/hostile/cellular/meat/creep_standing

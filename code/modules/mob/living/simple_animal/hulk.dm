@@ -8,6 +8,7 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
+	mob_size = MOB_LARGE
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")

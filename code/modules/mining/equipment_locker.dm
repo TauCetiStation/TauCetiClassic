@@ -621,6 +621,8 @@
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	mouse_opacity = 1
+	mob_size = MOB_SMALL
+	digestion_product = "carbon"
 	faction = "neutral"
 	var/emagged = 0
 	light_power = 2

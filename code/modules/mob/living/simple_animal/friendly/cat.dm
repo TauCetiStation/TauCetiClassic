@@ -12,6 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	mob_size = MOB_SMALL
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
@@ -148,6 +149,7 @@
 	icon_state = "Syndicat"
 	icon_living = "Syndicat"
 	icon_dead = "Syndicat_dead"
+	digestion_product = "carbon"
 	//gender = FEMALE
 	flags = list(
 	 IS_SYNTHETIC = TRUE

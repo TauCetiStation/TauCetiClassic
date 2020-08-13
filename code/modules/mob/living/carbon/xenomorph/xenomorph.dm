@@ -8,6 +8,7 @@
 
 	alien_talk_understand = 1
 	speak_emote = list("hisses")
+	digestion_product = "sacid"
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500

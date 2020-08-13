@@ -12,6 +12,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+	digestion_product = "slimejelly"
 	var/colour = "grey"
 	ventcrawler = 2
 
@@ -30,6 +31,8 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+	mob_size = MOB_LARGE
+	digestion_product = "slimejelly"
 	var/colour = "grey"
 
 	has_head = TRUE

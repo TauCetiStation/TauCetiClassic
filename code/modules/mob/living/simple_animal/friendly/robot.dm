@@ -26,6 +26,7 @@
 	response_harm   = "kicks the"
 	minbodytemp = 198	// Below -75 Degrees Celcius
 	maxbodytemp = 423	// Above 150 Degrees Celcius
+	digestion_product = "carbon"
 	var/emagged = 0    // Trigger EMAG used
 	var/commandtrigger = 0    // Used command
 	var/searchfortarget = 0	   //  if this is TRUE, robot will be searching for target to explode.

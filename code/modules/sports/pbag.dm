@@ -8,6 +8,8 @@
 
 	can_be_pulled = FALSE
 	density = FALSE
+	digestion_product = null
+	mob_size = MOB_LARGE
 
 	maxHealth = 100
 

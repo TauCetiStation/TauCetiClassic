@@ -5,6 +5,7 @@
 	icon_state = "spaceworm"
 	icon_living = "spaceworm"
 	icon_dead = "spacewormdead"
+	mob_size = MOB_LARGE
 	status_flags = 0
 
 	speak_emote = list("transmits") //not supposed to be used under AI control

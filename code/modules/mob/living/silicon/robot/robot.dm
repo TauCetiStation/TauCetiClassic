@@ -7,6 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
+	digestion_product = "carbon"
 
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0

@@ -14,6 +14,7 @@
 	melee_damage = 10
 	attacktext = "flail"
 	move_to_delay = 5
+	digestion_product = "mednanobots"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 	var/emp_damage = 0

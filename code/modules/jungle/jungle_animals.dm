@@ -65,6 +65,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 50
 	health = 50
+	mob_size = MOB_LARGE
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -122,6 +123,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 25
 	health = 25
+	mob_size = MOB_LARGE
 
 	harm_intent_damage = 2
 	melee_damage = 7

@@ -39,6 +39,8 @@
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
 	small = 1
+	mob_size = MOB_MINISCULE
+	digestion_product = "carbon"
 	speak_emote = list("beeps","clicks","chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)

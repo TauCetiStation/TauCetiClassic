@@ -38,6 +38,8 @@ var/list/ai_verbs_default = list(
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
 	shouldnt_see = list(/obj/effect/rune)
+	mob_size = MOB_LARGE
+	digestion_product = "carbon"
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
@@ -167,7 +169,7 @@ var/list/ai_verbs_default = list(
 			job = "AI"
 
 	create_eye()
-	
+
 	new /obj/machinery/ai_powersupply(src)
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")

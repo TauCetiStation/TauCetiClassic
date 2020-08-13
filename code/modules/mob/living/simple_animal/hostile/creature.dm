@@ -8,6 +8,7 @@
 	health = 80
 	maxHealth = 80
 	melee_damage = 38
+	mob_size = MOB_LARGE
 	attacktext = "chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
 	faction = "creature"

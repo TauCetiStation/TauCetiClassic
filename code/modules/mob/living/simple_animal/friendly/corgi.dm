@@ -17,6 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	mob_size = MOB_SMALL
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -54,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	mob_size = MOB_TINY
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
@@ -111,6 +113,7 @@
 	icon_state = "borgi"
 	icon_living = "borgi"
 	icon_dead = "borgi_dead"
+	digestion_product = "carbon"
 	butcher_results = list()
 	var/emagged = 0
 

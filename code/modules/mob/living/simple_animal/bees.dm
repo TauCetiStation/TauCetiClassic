@@ -13,6 +13,7 @@
 	var/obj/machinery/apiary/parent
 	pass_flags = PASSTABLE
 	turns_per_move = 6
+	mob_size = MOB_MINISCULE
 	var/obj/machinery/hydroponics/my_hydrotray
 
 /mob/living/simple_animal/bee/atom_init(mapload, obj/machinery/apiary/new_parent)

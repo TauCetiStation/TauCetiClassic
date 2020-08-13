@@ -68,6 +68,8 @@
 	speak_emote = list("gibbers")
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
+	mob_size = MOB_LARGE
+	digestion_product = "nanites"
 	faction = "nanite"
 	maxHealth = 60
 	health = 60

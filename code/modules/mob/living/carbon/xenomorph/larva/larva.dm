@@ -11,6 +11,8 @@
 
 	density = 0
 	small = 1
+	mob_size = MOB_SMALL
+
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth

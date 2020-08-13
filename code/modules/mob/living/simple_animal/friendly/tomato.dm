@@ -5,6 +5,9 @@
 	icon_living = "tomato"
 	icon_dead = "tomato_dead"
 	icon_move = "tomato_move"
+	mob_size = MOB_SMALL
+	digestion_product = "plantmatter"
+
 	speak_chance = 0
 	turns_per_move = 5
 	maxHealth = 15

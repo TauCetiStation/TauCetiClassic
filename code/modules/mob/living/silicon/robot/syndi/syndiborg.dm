@@ -7,6 +7,7 @@
 //	designation = "Syndicate"
 	braintype = "Robot"
 	req_access = list(access_syndicate)
+	mob_size = MOB_SMALL
 
 	var/static/image/sword_overlay
 

@@ -26,6 +26,7 @@
 	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
+	digestion_product = "plantmatter"
 
 
 /mob/living/carbon/monkey/diona/is_facehuggable()

@@ -16,6 +16,7 @@
 	speed = 3
 	maxHealth = 40
 	health = 40
+	digestion_product = "carpotoxin"
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -96,6 +97,7 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
+	mob_size = MOB_LARGE
 
 	randomify = FALSE
 
@@ -108,6 +110,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
+	mob_size = MOB_LARGE
 
 	turns_per_move = 5
 	speed = -15

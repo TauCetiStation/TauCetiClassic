@@ -5,6 +5,9 @@
 	icon_living = "mushroom"
 	icon_dead = "mushroom_dead"
 	small = 1
+	mob_size = MOB_SMALL
+	digestion_product = "psilocybin"
+
 	speak_chance = 0
 	turns_per_move = 1
 	maxHealth = 5

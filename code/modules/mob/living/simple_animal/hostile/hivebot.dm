@@ -13,6 +13,7 @@
 	maxHealth = 15
 	melee_damage = 3
 	attacktext = "claw"
+	digestion_product = "carbon"
 	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = "hivebot"

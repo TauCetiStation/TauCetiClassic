@@ -17,6 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
+	mob_size = MOB_LARGE
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -121,6 +122,8 @@
 	health = 500
 	maxHealth = 500
 	faction = "mining"
+	mob_size = MOB_LARGE
+	digestion_product = "carbon"
 	projectiletype = /obj/item/projectile/beam/drone/mining
 
 
@@ -259,6 +262,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	mob_size = MOB_MEDIUM
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)

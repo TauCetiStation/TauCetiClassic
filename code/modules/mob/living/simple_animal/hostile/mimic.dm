@@ -15,6 +15,7 @@
 	speed = 4
 	maxHealth = 250
 	health = 250
+	mob_size = MOB_LARGE
 
 	harm_intent_damage = 5
 	melee_damage = 10

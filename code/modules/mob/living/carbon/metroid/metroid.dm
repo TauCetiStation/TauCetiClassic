@@ -13,6 +13,7 @@
 
 	update_icon = 0
 	nutrition = 700 // 1000 = max
+	digestion_product = "slimejelly"
 
 	see_in_dark = 8
 	update_slimes = 0
@@ -71,6 +72,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
+	mob_size = MOB_LARGE
 
 
 /mob/living/carbon/slime/atom_init()
