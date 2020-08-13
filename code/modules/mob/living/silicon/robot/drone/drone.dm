@@ -347,9 +347,3 @@
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
-
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return 1
-
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
