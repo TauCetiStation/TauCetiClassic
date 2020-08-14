@@ -2064,7 +2064,9 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aja" = (
-/obj/mecha/combat/marauder/mauler,
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -17460,8 +17462,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	dir = 6;
@@ -18749,7 +18751,9 @@
 	},
 /area/velocity)
 "goC" = (
-/obj/machinery/mech_bay_recharge_port,
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -19320,8 +19324,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	dir = 10;
@@ -19448,8 +19452,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /obj/item/ammo_box/magazine/sm45,
 /obj/item/ammo_box/magazine/sm45,
@@ -19688,8 +19692,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /obj/item/weapon/gun/projectile/automatic/c20r,
@@ -21472,8 +21476,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
@@ -21872,8 +21876,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
@@ -23308,8 +23312,8 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access = list(150);
-	dir = 1
+	dir = 1;
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
@@ -23345,9 +23349,7 @@
 	},
 /area/velocity)
 "vSL" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/mecha/combat/marauder/mauler,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -67417,11 +67419,11 @@ aaM
 mAb
 goC
 vSL
-goC
+xsM
 aiP
-goC
+xsM
 vSL
-goC
+aja
 mAb
 aaM
 aaM
@@ -67672,13 +67674,13 @@ aaM
 aaM
 aaM
 mAb
-aja
+mAb
+mAb
+mAb
 aiP
-aja
-aiP
-aja
-aiP
-aja
+mAb
+mAb
+mAb
 mAb
 aaM
 aaM
@@ -67929,13 +67931,13 @@ aaM
 aaM
 aaM
 mAb
+goC
+vSL
+xsM
 aiP
-aiP
-aiP
-aiP
-aiP
-aiP
-aiP
+xsM
+vSL
+aja
 mAb
 aaM
 aaM
@@ -68186,13 +68188,13 @@ aaM
 aaM
 aaM
 mAb
-aiP
-aiP
-aiP
-aiP
-aiP
-aiP
-aiP
+mAb
+mAb
+mAb
+mAb
+mAb
+mAb
+mAb
 mAb
 aaM
 aaM
@@ -68442,15 +68444,15 @@ aaM
 aaM
 aaM
 aaM
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM

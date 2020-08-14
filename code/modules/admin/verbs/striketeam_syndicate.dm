@@ -146,14 +146,14 @@ var/global/sent_syndicate_strike_team = FALSE
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Elite Commando"
 	new_syndicate_commando.mind.current.faction = "syndicate"
-	ticker.mode.syndicates += new_syndicate_commando.mind
-	ticker.mode.update_synd_icons_added(new_syndicate_commando.mind)
+	SSticker.mode.syndicates += new_syndicate_commando.mind
+	SSticker.mode.update_synd_icons_added(new_syndicate_commando.mind)
 	if(objectiv)
 		var/datum/objective/syndi_elit_obj = new
 		new_syndicate_commando.mind.objectives += syndi_elit_obj
 		syndi_elit_obj.owner = new_syndicate_commando
 		syndi_elit_obj.explanation_text = objectiv
-		
+
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
