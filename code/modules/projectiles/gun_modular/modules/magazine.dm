@@ -6,11 +6,13 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
+    move_x = 1
+    move_y = 1
+    prefix_radial = "Magazine"
     var/isinternal = FALSE
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
     var/no_casing = FALSE
-    parent_module_type = /obj/item/weapon/gun_modular/module/magazine
 
 /obj/item/weapon/gun_modular/module/magazine/proc/Return_Round(var/obj/item/ammo_casing/ammo)
     return FALSE
@@ -57,10 +59,7 @@
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/attackby(obj/item/weapon/W, mob/user, params)
     . = ..()
-    if(isscrewdriver(W))
-        if(magazine)
-            remove_item_in_module(magazine)
-    else if(magazine)
+    if(magazine)
         if(istype(W, /obj/item/ammo_casing) || istype(W, /obj/item/ammo_box))
             Give_Round(W, user)
 
@@ -89,7 +88,7 @@
     mag.loc = get_turf(src)
     magazine = null
 
-/obj/item/weapon/gun_modular/module/magazine/bullet/attach_item_in_module(var/obj/item/ammo_box/magazine/mag, mob/user)
+/obj/item/weapon/gun_modular/module/magazine/bullet/attach_item_in_module(var/obj/item/ammo_box/magazine/mag, mob/user = null)
     if(!..())
         return FALSE
     if(user)
@@ -129,12 +128,6 @@
     no_casing = FALSE
     var/obj/item/weapon/stock_parts/cell/magazine = null
 
-/obj/item/weapon/gun_modular/module/magazine/energy/attackby(obj/item/weapon/W, mob/user, params)
-    . = ..()
-    if(isscrewdriver(W))
-        if(magazine)
-            remove_item_in_module(magazine)
-
 /obj/item/weapon/gun_modular/module/magazine/energy/activate(mob/user)
     if(!magazine)
         return FALSE
@@ -163,7 +156,7 @@
     if(!magazine)
         return null
     var/obj/item/ammo_casing/energy/ammo = new lens_type(src)
-    magazine.use(ammo.e_cost * frame_parent.chamber.pellets * 5)
+    magazine.use(ammo.e_cost * frame_parent.chamber.pellets * 10)
     return ammo
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Give_Round(obj/item/ammo_casing/ammo, mob/user, var/charge = 0)
@@ -177,7 +170,7 @@
     cell.loc = get_turf(src)
     magazine = null
 
-/obj/item/weapon/gun_modular/module/magazine/energy/attach_item_in_module(var/obj/item/weapon/stock_parts/cell/cell, mob/user)
+/obj/item/weapon/gun_modular/module/magazine/energy/attach_item_in_module(var/obj/item/weapon/stock_parts/cell/cell, mob/user = null)
     if(!..())
         return FALSE
     magazine = cell
@@ -208,6 +201,10 @@
         return FALSE
     open = FALSE
     return TRUE
+/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
+    if(open)
+        frame_parent.cut_overlay(image(icon, "magazine_open"))
+    ..()
     
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/Get_Ammo()
@@ -264,4 +261,22 @@
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun/Return_Round()
     return FALSE
-    
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto
+    name = "auto shotgun magazine holder"
+    lessdamage = 0
+    lessdispersion = 10
+    size_gun = 3
+    caliber = "shotgun"
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto/attach(obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    frame_parent.chamber.eject_casing = TRUE
+    frame_parent.chamber.empty_chamber = TRUE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto/remove()
+    frame_parent.chamber.eject_casing = initial(frame_parent.chamber.eject_casing)
+    frame_parent.chamber.empty_chamber = initial(frame_parent.chamber.empty_chamber)
+    return ..()

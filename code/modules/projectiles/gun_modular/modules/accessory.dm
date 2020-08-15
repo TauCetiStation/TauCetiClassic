@@ -6,9 +6,41 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
+    prefix_radial = "Accessory"
+    action_button_name = "Activate module"
+    move_x = 4
+    move_y = 4
     gun_type = ALL_GUN_TYPE
-    var/active = FALSE
-    parent_module_type = /obj/item/weapon/gun_modular/module/accessory
+
+/obj/item/weapon/gun_modular/module/accessory/attack_self(mob/user)
+    . = ..()
+    if(!frame_parent)
+        return FALSE
+    if(frame_parent.active_accessory == src)
+        deactivate_module(user)
+        return TRUE
+    else if(frame_parent.active_accessory)
+        frame_parent.active_accessory.deactivate_module(user)
+    activate_module(user)
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/proc/activate_module(mob/user = null)
+    action.background_icon_state = "bg_spell"
+    if(user)
+        user.update_action_buttons()
+    frame_parent.active_accessory = src
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/proc/deactivate_module(mob/user = null)
+    action.background_icon_state = "bg_default"
+    if(user)
+        user.update_action_buttons()
+    frame_parent.active_accessory = null
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/proc/target_activate(atom/A, mob/living/user)
+    deactivate_module(user)
+    return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
@@ -29,6 +61,8 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/remove()
+    if(frame_parent.active_accessory == src)
+        deactivate_module()
     if(frame_parent.accessories)
         LAZYREMOVE(frame_parent.accessories, src)
     ..()
@@ -41,13 +75,26 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 3
+    prefix_radial = "Optical"
     gun_type = ALL_GUN_TYPE
-    parent_module_type = /obj/item/weapon/gun_modular/module/accessory/optical
+    move_x = 1
+    move_y = 1
+    var/active = FALSE
     var/size_barrel = 1
     var/view_range = 6
     var/location_active = null
 
+/obj/item/weapon/gun_modular/module/accessory/optical/activate_module(mob/user = null)
+    ..()
+    if(!activate(user))
+        deactivate_module(user)
+
+/obj/item/weapon/gun_modular/module/accessory/optical/deactivate_module(mob/user = null)
+    deactivate(user)
+    ..()
+
 /obj/item/weapon/gun_modular/module/accessory/optical/deactivate(mob/user, argument = "")
+    UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
     active = FALSE
     user.client.view = world.view
     if(user.hud_used)
@@ -55,6 +102,10 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/optical/activate(mob/user, argument = "")
+    RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/deactivate_module)
+    if(active)
+        deactivate(user, argument)
+        return FALSE
     if(!frame_parent)
         return FALSE
     if(user.stat || !(istype(user ,/mob/living/carbon/human)))
@@ -134,8 +185,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
+    prefix_radial = "Core Charger"
     gun_type = ENERGY_GUN
-    parent_module_type = /obj/item/weapon/gun_modular/module/accessory/core_charger
     var/obj/item/device/assembly/signaler/anomaly/core = null
     var/tick = 0
     var/tick_charge = 8
@@ -169,7 +220,7 @@
         return FALSE
     return TRUE
 
-/obj/item/weapon/gun_modular/module/accessory/core_charger/attach_item_in_module(obj/item/I, mob/user)
+/obj/item/weapon/gun_modular/module/accessory/core_charger/attach_item_in_module(obj/item/I, mob/user = null)
     if(!..())
         return FALSE
     if(user)
@@ -185,5 +236,140 @@
     core = null
     icon_state = "anomal_charger_icon"
     STOP_PROCESSING(SSobj, src)
-    
+
+/obj/item/weapon/gun_modular/module/accessory/silenser
+    name = "gun silenser"
+    icon_state = "silenser_icon"
+    icon_overlay_name = "silenser"
+    caliber = ALL_CALIBER
+    lessdamage = 6
+    lessdispersion = 0.3
+    size_gun = 2
+    prefix_radial = "Silenser"
+    gun_type = BULLET_GUN
+
+/obj/item/weapon/gun_modular/module/accessory/silenser/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
+    if(!..())
+        return FALSE
+    frame_parent.barrel.silensed = TRUE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/silenser/activate(mob/user, argument)
+    return remove()
+
+/obj/item/weapon/gun_modular/module/accessory/silenser/remove()
+    if(frame_parent.barrel)
+        frame_parent.barrel.silensed = initial(frame_parent.barrel.silensed)
+    return ..()
+
+/obj/item/weapon/gun_modular/module/accessory/silenser/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    if(!I.barrel)
+        return FALSE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/bayonet
+    name = "gun bayonet"
+    icon_state = "bayonet_icon"
+    icon_overlay_name = "bayonet"
+    caliber = ALL_CALIBER
+    lessdamage = 0
+    lessdispersion = 0
+    size_gun = 2
+    move_x = 6
+    move_y = 6
+    prefix_radial = "Bayonet"
+    gun_type = ALL_GUN_TYPE
+    var/size_barrel = 2
+
+/obj/item/weapon/gun_modular/module/accessory/bayonet/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    if(!I.barrel)
+        return FALSE
+    if(I.barrel.size_gun < size_barrel)
+        return FALSE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/bayonet/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
+    if(!..())
+        return FALSE
+    frame_parent.force += 12
+    frame_parent.edge = TRUE
+    frame_parent.sharp = TRUE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/bayonet/activate(mob/user, argument)
+    return remove()
+
+/obj/item/weapon/gun_modular/module/accessory/bayonet/remove()
+    frame_parent.force = initial(frame_parent.force)
+    frame_parent.edge = initial(frame_parent.edge)
+    frame_parent.sharp = initial(frame_parent.sharp)
+    return ..()
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery
+    name = "gun additional battery"
+    icon_state = "additional_battery_icon"
+    icon_overlay_name = "additional_battery"
+    caliber = "energy"
+    lessdamage = 0
+    lessdispersion = 0
+    size_gun = 2
+    prefix_radial = "Additional Battery"
+    gun_type = ENERGY_GUN
+    var/obj/item/weapon/stock_parts/cell/additional_battery = null
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/activate_module(mob/user)
+    ..()
+    activate(user)
+    deactivate_module(user)
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/activate(mob/user, argument)
+    if(additional_battery)
+        var/obj/item/weapon/stock_parts/cell/AB = additional_battery
+        remove_item_in_module(AB)
+        user.put_in_hands(AB)
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    if(!additional_battery)
+        return FALSE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/can_attach(obj/item/I)
+    if(additional_battery)
+        return FALSE
+    if(!istype(I, /obj/item/weapon/stock_parts/cell))
+        return FALSE
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/attach_item_in_module(obj/item/I, mob/user = null)
+    if(!..())
+        return FALSE
+    if(user)
+        user.drop_item()
+    I.loc = src
+    additional_battery = I
+    START_PROCESSING(SSobj, src)
+    return TRUE
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/remove_item_in_module(obj/item/I)
+    I.loc = get_turf(src)
+    additional_battery = null
+    STOP_PROCESSING(SSobj, src)
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/process()
+    if(!frame_parent)
+        return
+    if(!frame_parent.magazine)
+        return
+    var/obj/item/weapon/gun_modular/module/magazine/energy/magazine_holder = frame_parent.magazine
+    if(!magazine_holder.magazine)
+        return
+    var/delta_charge = magazine_holder.magazine.maxcharge - magazine_holder.magazine.charge
+    if(delta_charge)
+        magazine_holder.Give_Round(charge = additional_battery.use(delta_charge))
     

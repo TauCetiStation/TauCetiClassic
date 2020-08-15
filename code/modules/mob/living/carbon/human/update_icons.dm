@@ -759,7 +759,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		r_hand.screen_loc = ui_rhand
 		if(client && hud_used)
 			client.screen += r_hand
-
 		var/image/standing = r_hand.get_standing_overlay(src, r_hand.righthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, icon_state_appendix = "_r")
 		overlays_standing[R_HAND_LAYER] = standing
 		if(handcuffed)

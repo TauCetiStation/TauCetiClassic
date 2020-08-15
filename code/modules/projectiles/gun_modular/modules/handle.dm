@@ -7,9 +7,16 @@
     lessdispersion = 0
     size_gun = 1
     gun_type = ALL_GUN_TYPE
-    parent_module_type = /obj/item/weapon/gun_modular/module/handle
+    move_x = -7
+    move_y = -5
+    prefix_radial = "Handle"
     var/lessrecoil = 0
     var/clumsy_check = TRUE
+
+/obj/item/weapon/gun_modular/module/handle/get_info_module()
+    var/info_module = ..()
+    info_module += "[lessrecoil] - Reducing recoil\n"
+    return info_module
 
 /obj/item/weapon/gun_modular/module/handle/proc/Special_Check(mob/user)
     if(user.mind.special_role == "Wizard")

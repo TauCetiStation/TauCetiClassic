@@ -7,15 +7,15 @@ obj/item/weapon/gun_modular/module/chamber
     lessdispersion = 0
     size_gun = 1
     gun_type = BULLET_GUN
-    parent_module_type = /obj/item/weapon/gun_modular/module/chamber
+    prefix_radial = "Chamber"
     var/obj/item/ammo_casing/chambered = null
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
     var/no_casing = FALSE
     var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
     var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
-    var/fire_delay = 3
-    var/fire_delay_default = 3
+    var/fire_delay = 9
+    var/fire_delay_default = 9
     var/last_fired = 0
     var/recoil_chamber = 0
     var/pellets
@@ -37,14 +37,19 @@ obj/item/weapon/gun_modular/module/chamber/proc/shoot_with_empty_chamber(mob/liv
     playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
     return
 
-obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user)
+obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user, var/silensed = FALSE)
     var/recoil = 0
     if(frame_parent.handle)
         recoil = max(recoil_chamber - frame_parent.handle.get_recoil_shoot(), 0)
     if(recoil)
         shake_camera(user, recoil + 1, recoil)
+        if(recoil >= 3)
+            user.drop_item()
+            frame_parent.SpinAnimation(10, 1)
+        if(recoil >= 4)
+            user.Weaken(2)
 
-    if(frame_parent.barrel.get_silensed_shoot())
+    if(silensed)
         playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
     else
         playsound(user, fire_sound, VOL_EFFECTS_MASTER)
@@ -56,24 +61,24 @@ obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/use
     fire_delay = fire_delay_default 
     if(!chambered)
         process_chamber()
-    if(chambered)
+    if(!chambered)
+        shoot_with_empty_chamber(user)
+    else
         fire_sound = chambered.fire_sound
         if(chambered.BB)
             chambered.BB.damage -= frame_parent.lessdamage
             chambered.BB.dispersion -= frame_parent.lessdispersion
             chambered.BB.dispersion = max(chambered.BB.dispersion, 0)
             chambered.BB.dispersion = min(chambered.BB.dispersion, 5)
-            fire_delay = fire_delay_default + chambered.BB.damage/2
+            fire_delay = fire_delay_default * (chambered.BB.damage*chambered.pellets/300 + 1)
         var/silensed = FALSE
         if(frame_parent.barrel)
             silensed = frame_parent.barrel.get_silensed_shoot()
         if(!chambered.fire(target, user, params, , silensed))
             shoot_with_empty_chamber(user)
         else
-            shoot_live_shot(user)
+            shoot_live_shot(user, silensed)
             user.newtonian_move(get_dir(target, user))
-    else
-        shoot_with_empty_chamber(user)
     process_chamber()
     update_icon()
 
@@ -118,8 +123,11 @@ obj/item/weapon/gun_modular/module/chamber/checking_to_attach(var/obj/item/weapo
     if(!istype(I, /obj/item/weapon/gun_modular/module/frame))
         return FALSE
     var/obj/item/weapon/gun_modular/module/frame/frame = I
-    if(isnull(frame.chamber))
-        return TRUE
+    if(!isnull(frame.chamber))
+        return FALSE
+    return TRUE
+
+obj/item/weapon/gun_modular/module/chamber/check_remove()
     return FALSE
 
 obj/item/weapon/gun_modular/module/chamber/attach(var/obj/item/weapon/gun_modular/module/frame/I, user)
@@ -154,7 +162,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/activate(mob/user)
     select_fire(user)
 
 obj/item/weapon/gun_modular/module/chamber/energy/proc/select_fire(mob/living/user)
-    if(lenses.len <= 1)
+    if(lenses.len < 1)
         return
     if(lens_select >= lenses.len)
         lens_select = 1
@@ -169,7 +177,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/u
         chambered.pellets = pellets
         if(chambered.BB)
             chambered.BB.damage /= pellets
-            chambered.BB.lesseffect = pellets
+            chambered.BB.lesseffect = pellets*2
     ..()
 
 obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
@@ -188,13 +196,6 @@ obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
         if(chambered)
             chambered.loc = src
 
-obj/item/weapon/gun_modular/module/chamber/energy/attackby(obj/item/weapon/W, mob/user, params)
-    if(isscrewdriver(W))
-        if(lenses)
-            for(var/obj/item/ammo_casing/energy/I in lenses)
-                remove_item_in_module(I)
-    ..()
-
 obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
         return FALSE
@@ -206,7 +207,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/remove_item_in_module(var/obj/
     I.loc = get_turf(src)
     LAZYREMOVE(lenses, I)
 
-obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/item/ammo_casing/energy/I, mob/user)
+obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/item/ammo_casing/energy/I, mob/user = null)
     if(!..())
         return FALSE
     if(I.caliber != caliber)
@@ -247,7 +248,7 @@ obj/item/weapon/gun_modular/module/chamber/heavyrifle
     icon_overlay_name = "chamber_bullet_PTR"
     lessdamage = 0
     lessdispersion = 0.8
-    size_gun = 2
+    size_gun = 3
     caliber = "14.5mm"
     fire_delay_default = 0
     recoil_chamber = 5
@@ -260,3 +261,6 @@ obj/item/weapon/gun_modular/module/chamber/shotgun
     size_gun = 4
     gun_type = BULLET_GUN
     fire_delay_default = 15
+    eject_casing = FALSE
+    empty_chamber = FALSE
+    no_casing = FALSE
