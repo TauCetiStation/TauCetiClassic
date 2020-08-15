@@ -31,22 +31,23 @@
 		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css'
 	)
 
-/datum/asset/simple/spider_os
+/datum/asset/spritesheet/simple/spider_os
+	name = "spider_os"
 	assets = list(
-		"sos_1.png" = 'icons/spideros_icons/sos_1.png',
-		"sos_2.png" = 'icons/spideros_icons/sos_2.png',
-		"sos_3.png" = 'icons/spideros_icons/sos_3.png',
-		"sos_4.png" = 'icons/spideros_icons/sos_4.png',
-		"sos_5.png" = 'icons/spideros_icons/sos_5.png',
-		"sos_6.png" = 'icons/spideros_icons/sos_6.png',
-		"sos_7.png" = 'icons/spideros_icons/sos_7.png',
-		"sos_8.png" = 'icons/spideros_icons/sos_8.png',
-		"sos_9.png" = 'icons/spideros_icons/sos_9.png',
-		"sos_10.png" = 'icons/spideros_icons/sos_10.png',
-		"sos_11.png" = 'icons/spideros_icons/sos_11.png',
-		"sos_12.png" = 'icons/spideros_icons/sos_12.png',
-		"sos_13.png" = 'icons/spideros_icons/sos_13.png',
-		"sos_14.png" = 'icons/spideros_icons/sos_14.png'
+		"sos_1" = 'icons/spideros_icons/sos_1.png',
+		"sos_2" = 'icons/spideros_icons/sos_2.png',
+		"sos_3" = 'icons/spideros_icons/sos_3.png',
+		"sos_4" = 'icons/spideros_icons/sos_4.png',
+		"sos_5" = 'icons/spideros_icons/sos_5.png',
+		"sos_6" = 'icons/spideros_icons/sos_6.png',
+		"sos_7" = 'icons/spideros_icons/sos_7.png',
+		"sos_8" = 'icons/spideros_icons/sos_8.png',
+		"sos_9" = 'icons/spideros_icons/sos_9.png',
+		"sos_10" = 'icons/spideros_icons/sos_10.png',
+		"sos_11" = 'icons/spideros_icons/sos_11.png',
+		"sos_12" = 'icons/spideros_icons/sos_12.png',
+		"sos_13" = 'icons/spideros_icons/sos_13.png',
+		"sos_14" = 'icons/spideros_icons/sos_14.png'
 	)
 
 /datum/asset/simple/paper

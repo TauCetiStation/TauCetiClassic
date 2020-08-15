@@ -135,6 +135,7 @@ var/global/list/asset_datums = list()
 	return out.Join("\n")
 
 /datum/asset/spritesheet/proc/insert_icon_in_list(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+	to_chat(world, "icon([I], icon_state=icon_state, dir=dir, frame=frame, moving=moving)")
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if(!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
@@ -146,6 +147,7 @@ var/global/list/asset_datums = list()
 
 	if(size)
 		var/position = size[SPRSZ_COUNT]++
+		to_chat(world, "[sprite_name] position: [position]")
 		var/icon/sheet = size[SPRSZ_ICON]
 		size[SPRSZ_STRIPPED] = null
 		sheet.Insert(I, icon_state=sprite_name)
@@ -173,3 +175,15 @@ var/global/list/asset_datums = list()
 #undef SPRSZ_COUNT
 #undef SPRSZ_ICON
 #undef SPRSZ_STRIPPED
+
+
+/datum/asset/spritesheet/simple
+	_abstract = /datum/asset/spritesheet/simple
+	var/list/assets
+
+/datum/asset/spritesheet/simple/register()
+	//to_chat(world, "[name] register()"
+	for(var/key in assets)
+		//to_chat(world, "[key] insert in list")
+		insert_icon_in_list(key, assets[key])
+	..()
