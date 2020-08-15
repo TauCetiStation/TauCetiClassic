@@ -390,12 +390,14 @@
 	if (!cell_use_power(CO.active_usage))
 		to_chat(src, "<span class='userdanger'>Low Power.</span>")
 
-	var/dat = "<HEAD><TITLE>[src.name] Self-Diagnosis Report</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	for (var/V in components)
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	src << browse(dat, "window=robotdiagnosis")
+	var/datum/browser/popup = new(src, "robotdiagnosis", "Self-Diagnosis Report")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
@@ -906,7 +908,7 @@
 	if(!module)
 		pick_module()
 		return
-	var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -935,8 +937,9 @@
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(dat, "window=robotmod")
-
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()

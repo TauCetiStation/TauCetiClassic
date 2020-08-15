@@ -59,7 +59,10 @@
 	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(dat, "window=computer;size=575x450")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 

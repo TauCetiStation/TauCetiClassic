@@ -2067,7 +2067,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	dellog += "</ol>"
 
-	usr << browse(dellog.Join(), "window=dellog")
+	var/datum/browser/popup = new(usr, "dellog")
+	popup.set_content(dellog.Join())
+	popup.open()
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
@@ -2077,7 +2079,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!length(SSatoms.BadInitializeCalls))
 		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
 	else
-		usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
+		var/dat = replacetext(SSatoms.InitLog(), "\n", "<br>")
+
+		var/datum/browser/popup = new(usr, "initlog")
+		popup.set_content(dat)
+		popup.open()
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)

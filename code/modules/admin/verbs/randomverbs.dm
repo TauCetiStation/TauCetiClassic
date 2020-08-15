@@ -98,7 +98,10 @@
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
 
 	if(msg != "")
-		src << browse(msg, "window=Player_age_check")
+		var/datum/browser/popup = new(src, "Player_age_check")
+		popup.set_content(msg)
+		popup.open()
+
 	else
 		to_chat(src, "No matches for that age range found.")
 
