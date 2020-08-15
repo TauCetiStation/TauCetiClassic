@@ -2,7 +2,7 @@
 //Place any asset datums you create in asset_list_items.dm
 
 //all of our asset datums, used for referring to these later
-/var/global/list/asset_datums = list()
+var/global/list/asset_datums = list()
 
 //get an assetdatum or make a new one
 /proc/get_asset_datum(type)
