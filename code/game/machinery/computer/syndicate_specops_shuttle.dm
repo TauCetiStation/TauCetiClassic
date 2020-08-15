@@ -21,7 +21,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/hacked = FALSE
 	var/backpermission = FALSE
 
-/proc/syndicate_elite_process(departpos)
+/proc/syndicate_elite_shuttle_move(departpos)
 	var/area/custom/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
 	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 
@@ -67,69 +67,44 @@ var/syndicate_elite_shuttle_timeleft = 0
 		to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
 		return
 
-	var/area/mothershiploc = locate(/area/shuttle/syndicate_elite/mothership)
-	var/area/stationloc = locate(/area/shuttle/syndicate_elite/station)
+	var/area/startloc
+	var/area/endloc
 
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
 
 	if(departpos == "station")
 		syndicate_elite_shuttle_at_station = TRUE
-		for(var/turf/T in stationloc)
-			dstturfs  = T
-			if(T.y < throwy)
-				throwy = T.y
-
-					// hey you, get out of the way!
-		for(var/turf/T in dstturfs)
-						// find the turf to move things to
-			var/turf/D = locate(T.x, throwy - 1, 1)
-						//var/turf/E = get_step(D, SOUTH)
-			for(var/atom/movable/AM as mob|obj in T)
-				AM.Move(D)
-			if(istype(T, /turf/simulated))
-				qdel(T)
-
-		for(var/mob/living/carbon/bug in stationloc) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
-
-		for(var/mob/living/simple_animal/pest in stationloc) // And for the other kind of bug...
-			pest.gib()
-
-		mothershiploc.move_contents_to(stationloc)
-
-		for(var/turf/T in get_area_turfs(stationloc) )
-			var/mob/M = locate(/mob) in T
-			to_chat(M, "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>")
-
+		startloc = locate(/area/shuttle/syndicate_elite/station)
+		endloc = locate(/area/shuttle/syndicate_elite/mothership)
 	else if(departpos == "syndimothership")
 		syndicate_elite_shuttle_at_station = FALSE
-		for(var/turf/T in mothershiploc)
-			dstturfs  = T
-			if(T.y < throwy)
-				throwy = T.y
+		startloc = locate(/area/shuttle/syndicate_elite/mothership)
+		endloc = locate(/area/shuttle/syndicate_elite/station)
 
-					// hey you, get out of the way!
-		for(var/turf/T in dstturfs)
-						// find the turf to move things to
-			var/turf/D = locate(T.x, throwy - 1, 1)
-						//var/turf/E = get_step(D, SOUTH)
-			for(var/atom/movable/AM as mob|obj in T)
-				AM.Move(D)
-			if(istype(T, /turf/simulated))
-				qdel(T)
+	for(var/turf/T in startloc)
+		dstturfs  = T
+		if(T.y < throwy)
+			throwy = T.y
+	for(var/turf/T in dstturfs)
+		// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, 1)
+		for(var/atom/movable/AM as mob|obj in T)
+			AM.Move(D)
+		if(istype(T, /turf/simulated))
+			qdel(T)
 
-		for(var/mob/living/carbon/bug in mothershiploc) // If someone somehow is still in the shuttle's docking area...
-			bug.gib()
+	for(var/mob/living/carbon/bug in startloc) // If someone somehow is still in the shuttle's docking area...
+		bug.gib()
 
-		for(var/mob/living/simple_animal/pest in mothershiploc) // And for the other kind of bug...
-			pest.gib()
+	for(var/mob/living/simple_animal/pest in startloc) // And for the other kind of bug...
+		pest.gib()
 
-		stationloc.move_contents_to(mothershiploc)
+	endloc.move_contents_to(startloc)
 
-		for(var/turf/T in get_area_turfs(mothershiploc) )
-			var/mob/M = locate(/mob) in T
-			to_chat(M, "<span class='warning'>You have arrived to home. Great job!</span>")
+	for(var/turf/T in get_area_turfs(startloc) )
+		var/mob/M = locate(/mob) in T
+		to_chat(M, syndicate_elite_shuttle_at_station ? "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>" : "<span class='warning'>You have arrived to home. Great job!</span>")
 
 /proc/syndicate_elite_can_move()
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
@@ -168,7 +143,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		if(backpermission)
 			syndicate_elite_shuttle_moving_to_mothership = TRUE
 			syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
-			syndicate_elite_process("syndimothership")
+			syndicate_elite_shuttle_move("syndimothership")
 		else
 			to_chat(usr, "<span class='notice'>The Syndicate haven't permission to return the Elite Squad shuttle.</span>")
 			return FALSE
@@ -185,7 +160,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		temp  = "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		syndicate_elite_shuttle_moving_to_station = TRUE
 		syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
-		syndicate_elite_process("station")
+		syndicate_elite_shuttle_move("station")
 
 
 	else if (href_list["mainmenu"])
