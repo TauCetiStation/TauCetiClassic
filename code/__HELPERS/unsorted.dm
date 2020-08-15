@@ -1143,6 +1143,10 @@ var/global/list/common_tools = list(
 		return 75
 	if(locate(/obj/structure/table) in location)
 		return 66
+	if(locate(/obj/structure/stool/bed/chair/comfy))
+		return 55
+	if(locate(/obj/structure/stool/bed/chair))
+		return 50
 	return 0
 
 //check if mob is lying down on something we can operate him on.
