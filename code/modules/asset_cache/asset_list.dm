@@ -180,8 +180,6 @@ var/global/list/asset_datums = list()
 	var/list/assets
 
 /datum/asset/spritesheet/simple/register()
-	//to_chat(world, "[name] register()"
 	for(var/key in assets)
-		//to_chat(world, "[key] insert in list")
 		insert_icon_in_list(key, assets[key])
 	..()
