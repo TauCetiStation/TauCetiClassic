@@ -156,7 +156,7 @@
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Block All Maintenance")
-			if(block_maintenance_off) // see event/radiation_storm/start()
+			if(global.block_maintenance_off) // see event/radiation_storm/start()
 				to_chat(usr, "[bicon(src)] <span class='warning'>Maintenance impossible to block during a radiation storm.</span>")
 			else
 				if(security_level >= SEC_LEVEL_RED)
