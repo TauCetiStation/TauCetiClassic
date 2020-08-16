@@ -78,7 +78,7 @@
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
@@ -91,7 +91,7 @@
 		return
 
 	if (M.stat != DEAD)
-		if((M.mind in ticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
+		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
 			ticker.mode.remove_cultist(M.mind)
