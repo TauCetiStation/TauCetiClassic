@@ -11,7 +11,10 @@ var/global/BSACooldown = 0
 	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
 	for(var/client/C in admins)
 		if(C.holder.rights & reg_flag)
-			to_chat(C, msg)
+			to_chat(C, 
+				type = MESSAGE_TYPE_ADMINLOG,
+				html = msg,
+				confidential = TRUE)
 
 // do not use with formatted messages (html), we don't need it in logs
 /proc/admin_log_and_message_admins(message as text)
@@ -32,7 +35,10 @@ var/global/BSACooldown = 0
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
 			continue
-		to_chat(C, msg)
+		to_chat(C, 
+			type = MESSAGE_TYPE_ADMINLOG,
+			html = msg,
+			confidential = TRUE)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels

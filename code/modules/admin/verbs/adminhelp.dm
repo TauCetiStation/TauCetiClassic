@@ -285,10 +285,16 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
-		to_chat(X, admin_msg)
+		to_chat(X,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = admin_msg,
+			confidential = TRUE)
 
 	//show it to the person adminhelping too
-	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>")
+	to_chat(initiator,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>",
+			confidential = TRUE)
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
