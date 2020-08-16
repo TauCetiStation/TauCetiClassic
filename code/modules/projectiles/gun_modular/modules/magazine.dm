@@ -86,6 +86,7 @@
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/remove_item_in_module(var/obj/item/ammo_box/magazine/mag)
     mag.loc = get_turf(src)
+    mag.update_icon()
     magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/attach_item_in_module(var/obj/item/ammo_box/magazine/mag, mob/user = null)
@@ -168,6 +169,7 @@
 
 /obj/item/weapon/gun_modular/module/magazine/energy/remove_item_in_module(var/obj/item/weapon/stock_parts/cell/cell)
     cell.loc = get_turf(src)
+    cell.update_icon()
     magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/energy/attach_item_in_module(var/obj/item/weapon/stock_parts/cell/cell, mob/user = null)

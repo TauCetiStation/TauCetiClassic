@@ -1,9 +1,3 @@
-#define SMALL_GUN 5
-#define MEDIUM_GUN 9
-#define LARGE_GUN 12
-#define GOOD_REDUCED 0
-#define LOW_REDUCED -2
-#define CRITICAL_LOW_REDUCED -4
 obj/item/weapon/gun_modular/module/frame
     name = "gun frame"
     icon_state = "chamber_energy"

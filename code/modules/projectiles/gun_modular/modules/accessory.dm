@@ -358,6 +358,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/remove_item_in_module(obj/item/I)
     I.loc = get_turf(src)
+    I.update_icon()
     additional_battery = null
     STOP_PROCESSING(SSobj, src)
 

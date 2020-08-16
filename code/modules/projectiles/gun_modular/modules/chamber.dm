@@ -199,6 +199,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
 obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
         return FALSE
+    LAZYINITLIST(lenses)
     if(lenses.len == 0)
         return FALSE
     return TRUE

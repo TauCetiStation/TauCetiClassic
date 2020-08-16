@@ -1,9 +1,3 @@
-#define ENERGY_GUN 1
-#define BULLET_GUN 2
-#define ALL_GUN_TYPE 4
-
-#define ALL_CALIBER 1
-
 obj/item/weapon/gun_modular/module
     name = "gun module"
     icon = 'code/modules/projectiles/gun_modular/modular.dmi'
@@ -52,6 +46,7 @@ obj/item/weapon/gun_modular/module/proc/deactivate(mob/user, var/argument="")
 obj/item/weapon/gun_modular/module/proc/remove_items()
     for(var/obj/item/I in contents)
         remove_item_in_module(I)
+        I.update_icon()
 obj/item/weapon/gun_modular/module/proc/remove_item_in_module(var/obj/item/I)
     return FALSE
 
