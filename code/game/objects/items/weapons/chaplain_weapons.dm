@@ -78,7 +78,7 @@
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
@@ -91,10 +91,10 @@
 		return
 
 	if (M.stat != DEAD)
-		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
+		if((M.mind in ticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			SSticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_cultist(M.mind)
 		else
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
@@ -470,3 +470,44 @@
 		remove_holy_outline()
 	else
 		qdel(R)
+
+/obj/item/clothing/suit/armor/religion
+	name = "Holy armor"
+	desc = "Metal armor from the Heaven Forge. Warning! Hand wash only."
+	icon_state = "crusader_armor"
+	item_state = "crusader_armor"
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	slowdown = 1
+	allowed = list(/obj/item/weapon/claymore/religion, /obj/item/weapon/nullrod, /obj/item/weapon/nullrod/staff, /obj/item/weapon/nullrod/forcefield_staff)
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/holy_armor = list(melee = 70, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/def_armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/religion/equipped(mob/user, slot)
+	if(user.mind.holy_role)
+		armor = holy_armor
+	else
+		armor = def_armor
+
+/obj/item/clothing/head/helmet/religion
+	name = "Holy helmet"
+	desc = "Metal helmet from the Heaven Forge. Now with a golden cross!"
+	icon_state = "crusader_helmet"
+	flags = HEADCOVERSEYES|THICKMATERIAL|HEADCOVERSMOUTH|BLOCKHAIR
+	item_state = "crusader_helmet"
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/holy_armor = list(melee = 70, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/def_armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEEARS|HIDEEYES|HIDEMASK
+	cold_protection = HEAD
+	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HEAD
+	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/clothing/head/helmet/religion/equipped(mob/user, slot)
+	if(user.mind.holy_role)
+		armor = holy_armor
+	else
+		armor = def_armor

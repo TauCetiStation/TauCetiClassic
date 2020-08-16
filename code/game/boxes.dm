@@ -696,7 +696,7 @@
 /obj/item/weapon/storage/box/religion
 	name = "religion box"
 	desc = "Box from the Gods."
-	icon_state = "religion"
+	icon_state = "box"
 
 /obj/item/weapon/storage/box/religion/atom_init()
 	. = ..()
