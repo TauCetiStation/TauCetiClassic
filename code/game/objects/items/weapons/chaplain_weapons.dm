@@ -94,7 +94,7 @@
 		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			ticker.mode.remove_cultist(M.mind)
+			SSticker.mode.remove_cultist(M.mind)
 		else
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
