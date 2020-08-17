@@ -23,6 +23,10 @@
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/attack_self(mob/user)
+	to_chat(user, "<span class='notice'>Click.</span>")
+	playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 50)
+
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"
