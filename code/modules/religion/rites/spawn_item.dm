@@ -233,7 +233,7 @@
 
 
 	invoke_msg = "...Let it be so!"
-	favor_cost = 150
+	favor_cost = 350
 
 	spawn_type = /obj/item/weapon/storage/box/religion
 
@@ -242,6 +242,10 @@
 		ASPECT_RESOURCES = 1
 
 	)
+
+/datum/religion_rites/spawn_item/create_armor/modify_item(atom/item)
+    new /obj/item/clothing/suit/armor/religion(item)
+    new /obj/item/clothing/head/helmet/religion(item)
 
 /datum/religion_rites/spawn_item/create_armor/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
