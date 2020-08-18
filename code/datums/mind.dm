@@ -657,6 +657,7 @@
 				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
 					if(I.implanted)
 						qdel(I)
+			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
 			var/obj/item/weapon/implant/mindshield/L
@@ -668,6 +669,7 @@
 				L.inject(H)
 				START_PROCESSING(SSobj, L)
 
+			H.sec_hud_set_implants()
 			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
 			 and it just activated!</B></FONT></span>")
 			if(src in SSticker.mode.revolutionaries)

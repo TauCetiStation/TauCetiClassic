@@ -203,6 +203,7 @@
 							if(L.implanted)
 								qdel(L)
 								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
+						target.sec_hud_set_implants()
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")

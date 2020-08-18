@@ -54,7 +54,6 @@
 		C.sec_hud_set_implants()
 		part = BP
 
-
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 

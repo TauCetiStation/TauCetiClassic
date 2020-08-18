@@ -30,6 +30,7 @@
 			if (istype(I, /obj/item/weapon/implant))
 				continue
 			qdel(I)
+		H.sec_hud_set_implants()
 
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), SLOT_W_UNIFORM)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), SLOT_L_EAR)
