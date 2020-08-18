@@ -17,8 +17,9 @@
 #define DROPLIMB_THRESHOLD_DESTROY 1
 #define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
 
-#define BODYPART_ORGANIC  1
-#define BODYPART_ROBOTIC  2
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+#define BODYPART_SKELETON  3
 
 // Bodypart defines
 #define BP_CHEST  "chest"
@@ -39,8 +40,7 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
+#define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
 
 #define LEFT  1
 #define RIGHT 2
@@ -53,11 +53,15 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
-// intent flags
-#define I_HELP   "help"
-#define I_DISARM "disarm"
-#define I_GRAB   "grab"
-#define I_HURT   "hurt" // or harm? or hurt? or what?
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_PUSH   "push"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -104,7 +108,6 @@
 
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)
-#define SKRELL_METABOLISM_FACTOR 2 // Twice the speed for half the sense!
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1
@@ -136,3 +139,17 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"
+
+// Heart status
+#define HEART_NORMAL      "heart_normal"
+#define HEART_FAILURE     "heart_failure"
+#define HEART_FIBR        "heart_fibrillation"
+
+// Defibrillation
+#define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE  80

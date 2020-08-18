@@ -12,7 +12,7 @@
 	level = 1		// underfloor
 	layer = 2.5
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
 	var/freq = 1449		// radio frequency
@@ -140,10 +140,10 @@
 
 	// Update power usage:
 	if(on)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 		active_power_usage = electricity_level *15
 	else
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 
 	// Overload conditions:
@@ -191,7 +191,7 @@
 	icon_state = "airlock_control_standby"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	frequency = 1449
 	var/code = 0
@@ -232,7 +232,7 @@
 
 
 /obj/machinery/magnetic_controller/ui_interact(mob/user)
-	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
+	var/dat = ""
 	if(!autolink)
 		dat += {"
 		Frequency: <a href='?src=\ref[src];operation=setfreq'>[frequency]</a><br>
@@ -252,8 +252,9 @@
 	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
 	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
-	user << browse(entity_ja(dat), "window=magnet;size=400x500")
-	onclose(user, "magnet")
+	var/datum/browser/popup = new(user, "window=magnet", src.name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/magnetic_controller/Topic(href, href_list)
 	. = ..()

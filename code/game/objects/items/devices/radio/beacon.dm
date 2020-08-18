@@ -21,19 +21,18 @@
 /obj/item/device/radio/beacon/send_hear()
 	return null
 
-
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
 	set name = "Alter Beacon's Signal"
 	set category = "Object"
 	set src in usr
 
-	if ((usr.canmove && !( usr.restrained() )))
-		src.code = t
-	if (!( src.code ))
-		src.code = "beacon"
-	src.add_fingerprint(usr)
-	return
+	if(usr.incapacitated())
+		return
 
+	code = t
+	if(!code)
+		code = "beacon"
+	add_fingerprint(usr)
 
 /obj/item/device/radio/beacon/bacon/proc/digest_delay() //Probably a better way of doing this, I'm lazy.
 	spawn(600)
@@ -86,8 +85,8 @@
 	var/timer = 10
 	var/atom/target = null
 
-/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (!ishuman(target))
 		to_chat(user, "<span class='notice'>Can only be planted on human.</span>")
@@ -98,7 +97,7 @@
 		if(medical)
 			if(isturf(medical.loc))
 				var/area/A = get_area(medical)
-				if(istype(A, /area/medical/sleeper))
+				if(istype(A, /area/station/medical/sleeper))
 					target_beacon = medical
 					found = 1
 					break
@@ -125,7 +124,7 @@
 		playsound(H, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		user.visible_message("<span class='warning'>[user.name] finished planting an [name] on [H.name]!</span>")
 		var/I = image('icons/obj/device.dmi', "medicon")
-		H.overlays += I
+		H.add_overlay(I)
 		to_chat(user, "<span class='notice'>Device has been planted. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/teleport, H, target_beacon, I), timer * 10)
 
@@ -144,7 +143,7 @@
 			H.loc = get_turf(beacon)
 		if (src)
 			qdel(src)
-		H.overlays -= I
+		H.cut_overlay(I)
 		qdel(I)
 
 

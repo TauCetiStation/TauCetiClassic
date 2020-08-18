@@ -6,6 +6,28 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN)
 
+
+	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
+	var/brightness_on = 4 //luminosity when on
+	var/on = 0
+
+	light_color = "#00ffff"
+
+/obj/item/clothing/head/helmet/space/skrell/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
+	usr.update_inv_head()
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
+
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
 	item_state = "skrell_helmet_white"
@@ -110,19 +132,11 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/suit.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/suit.dmi',
-		)
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/head.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
-		)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
@@ -144,7 +158,6 @@
 	icon_state = "vox-carapace"
 	item_state = "vox-carapace"
 	desc = "A glowing visor, perhaps stolen from a depressed Cylon."
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 65, bullet = 50, laser = 70, energy = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/vox/carapace
@@ -263,7 +276,8 @@
 			toggle_stealth(TRUE)
 			return
 		if(wearer)
-			wearer.alpha = 5
+			wearer.alpha = 4
+			wearer.mouse_opacity = 0
 			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
 				wearer.playsound_local(null, 'sound/rig/loudbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
 				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
@@ -298,6 +312,7 @@
 		on = FALSE
 		slowdown = 0.5
 		wearer.alpha = 255
+		wearer.mouse_opacity = 1
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
@@ -317,7 +332,8 @@
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
 			slowdown = 2
-			wearer.alpha = 5
+			wearer.alpha = 4
+			wearer.mouse_opacity = 0
 			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)
@@ -343,7 +359,7 @@
 	s.start()
 	toggle_stealth()
 
-/obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+/obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(on)
 		if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 			var/charge_decrease = max(rand(20, 30), round((damage * 25) + rand(1, 5)))
@@ -384,22 +400,14 @@
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX = 'icons/mob/species/vox/gloves.dmi',
-		VOX_ARMALIS = 'icons/mob/species/armalis/gloves.dmi',
-		)
-/obj/item/clothing/shoes/magboots/vox
 
+/obj/item/clothing/shoes/magboots/vox
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
 	name = "vox magclaws"
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
 	species_restricted = list(VOX , VOX_ARMALIS)
-	sprite_sheets = list(
-		VOX_ARMALIS = 'icons/mob/species/armalis/feet.dmi'
-		)
-
 	action_button_name = "Toggle the magclaws"
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)

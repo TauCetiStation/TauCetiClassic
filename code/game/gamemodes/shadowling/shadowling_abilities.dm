@@ -7,8 +7,9 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!ishuman(target))
+		if(target.species.flags[NO_SCAN] || target.species.flags[IS_SYNTHETIC])
 			charge_counter = charge_max
+			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
 		if(target.stat)
 			charge_counter = charge_max
@@ -17,7 +18,7 @@
 			to_chat(usr, "<span class='danger'>You don't see why you would want to paralyze an ally.</span>")
 			charge_counter = charge_max
 			return
-		var/mob/living/carbon/human/M = target
+
 		usr.visible_message("<span class='warning'><b>[usr]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
 		if(in_range(target, usr))
@@ -25,7 +26,7 @@
 		else //Only alludes to the shadowling if the target is close by
 			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
 		target.Stun(10)
-		M.silent += 10
+		target.silent += 10
 
 
 
@@ -39,6 +40,9 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
 	to_chat(usr, "<span class='shadowling'>You silently disable all nearby lights.</span>")
+	light_off_range(targets, usr)
+
+/proc/light_off_range(list/targets, atom/center)
 	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
@@ -46,13 +50,12 @@
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				return
 			F.set_light(0)
+
 		for(var/obj/machinery/light/L in T.contents)
 			L.on = 0
 			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
 			L.update(0)
-		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
-			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-			qdel(G)
+
 		for(var/mob/living/carbon/human/H in T.contents)
 			for(var/obj/item/F in H)
 				if(is_type_in_list(F, blacklisted_lights))
@@ -61,7 +64,16 @@
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
 
+		for(var/obj/machinery/door/airlock/A in T.contents)
+			if(get_dist(center, A) <= 4)
+				if(A.lights && A.hasPower())
+					A.lights = 0
+					A.update_icon()
 
+		for(var/obj/effect/glowshroom/G in T.contents)
+			if(get_dist(center, G) <= 2) //Very small radius
+				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
+				qdel(G)
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk
 	name = "Shadow Walk"
@@ -81,13 +93,12 @@
 		user.incorporeal_move = 1
 		user.alpha = 0
 		if(user.buckled)
-			//user.buckled.unbuckle_mob()
 			user.buckled.unbuckle_mob()
 		sleep(40) //4 seconds
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 		user.incorporeal_move = 0
 		user.alpha = 255
-
+		user.eject_from_wall(gib = TRUE)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
@@ -132,7 +143,7 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
-	for(var/datum/mind/mindToCount in ticker.mode.thralls)
+	for(var/datum/mind/mindToCount in SSticker.mode.thralls)
 		thrallsPresent++
 	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
@@ -155,7 +166,8 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		var/datum/species/S = all_species[target.get_species()]
+		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -209,7 +221,7 @@
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
-		ticker.mode.add_thrall(target.mind)
+		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
 		//var/datum/mind/thrall_mind = target.mind
 		//thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind //Lets thralls hive-chat
@@ -332,8 +344,7 @@
 					M.mind.current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch //In case a shadowling hasn't hatched
 					M.mind.current.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 					for(var/obj/effect/proc_holder/spell/targeted/collective_mind/spell_to_remove in M.spell_list)
-						qdel(spell_to_remove)
-						M.spell_list -= spell_to_remove
+						M.RemoveSpell(spell_to_remove)
 					if(M == usr)
 						to_chat(M, "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>")
 					else
@@ -395,7 +406,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
 	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("scream", 1, "<span class='warning'><b>lets out a horrible scream!</b></span>")
+	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -529,7 +540,7 @@
 		to_chat(boom, "<span class='userdanger'><font size=3>You feel an immense pressure building all across your body!</span></font>")
 		boom.Stun(10)
 		//boom.audible_message("<b>[boom]</b> screams!")
-		boom.emote("scream",,, 1)
+		boom.emote("scream")
 		sleep(20)
 		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
 			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
@@ -568,7 +579,8 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target))
+		var/datum/species/S = all_species[target.get_species()]
+		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
@@ -579,7 +591,7 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		ticker.mode.add_thrall(target.mind)
+		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
 		target.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 

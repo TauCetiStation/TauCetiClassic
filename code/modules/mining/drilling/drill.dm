@@ -1,7 +1,7 @@
 /obj/machinery/mining
 	icon = 'icons/obj/mining_drill.dmi'
 	anchored = 0
-	use_power = 0         //The drill takes power directly from a cell.
+	use_power = NO_POWER_USE         //The drill takes power directly from a cell.
 	density = 1
 	layer = MOB_LAYER+0.1 //So it draws over mobs in the tile north of it.
 
@@ -325,6 +325,7 @@
 		shock(user)
 	if (panel_open && cell)
 		to_chat(user, "You take out \the [cell].")
+		cell.updateicon()
 		cell.loc = get_turf(user)
 		component_parts -= cell
 		cell = null
@@ -409,7 +410,8 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	var/obj/structure/ore_box/B = locate() in orange(1)
 	if(B)

@@ -51,7 +51,7 @@
 	if(!A)
 		on = 0
 	else
-		on = A.powered(EQUIP) // set "on" to the power status
+		on = A.powered(STATIC_EQUIP) // set "on" to the power status
 
 	if(!on)
 		icon_state = "intercom-p"

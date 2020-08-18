@@ -1,13 +1,13 @@
 #define SEARCH_FOR_DISK 0
 #define SEARCH_FOR_OBJECT 1
 /obj/item/weapon/pinpointer/advpinpointer/auth_key
-	name = "\improper Authentication Key Pinpointer"
+	name = "Authentication Key Pinpointer"
 	desc = "Tracks the positions of the emergency authentication keys."
 	var/datum/game_mode/mutiny/mutiny
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/atom_init()
-	if(ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
-		mutiny = ticker.mode
+	if(SSticker.mode && istype(SSticker.mode, /datum/game_mode/mutiny))
+		mutiny = SSticker.mode
 	else
 		mutiny = null
 	. = ..()
@@ -55,5 +55,5 @@
 
 /datum/supply_pack/key_pinpointer/New()
 	// This crate is only accessible during mutiny rounds
-	if (istype(ticker.mode,/datum/game_mode/mutiny))
+	if (istype(SSticker.mode,/datum/game_mode/mutiny))
 		..()

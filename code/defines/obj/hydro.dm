@@ -31,10 +31,12 @@
 		add_fingerprint(user)
 		var/dat = health_analyze(M, user, TRUE, output_to_chat) // TRUE means limb-scanning mode
 		if(output_to_chat)
-			user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+			var/datum/browser/popup = new(user, "window=[M.name]_scan_report", "Scan Report", 400, 400)
+			popup.set_content(dat)
+			popup.open()
 			onclose(user, "[M.name]_scan_report")
 		else
-			user.show_message(dat)
+			to_chat(user, dat)
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
@@ -61,8 +63,8 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/plant_analyzer))
+/obj/item/seeds/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")
 		to_chat(user, "-Plant Lifespan: <span class='notice'>[lifespan]</span>")
@@ -73,7 +75,25 @@
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
-	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
+
+/obj/item/seeds/blackpepper
+	name = "pack of piper nigrum seeds"
+	desc = "These seeds grow into black pepper plants. Spicy."
+	icon_state = "seed-blackpepper"
+	mypath = "/obj/item/seeds/blackpepperseed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "blackpepper"
+	plantname = "Black Pepper"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper"
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 5
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
@@ -248,6 +268,24 @@
 	species = "banana"
 	plantname = "Banana Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana"
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	plant_type = 0
+	growthstages = 6
+	mutatelist = list(/obj/item/seeds/honkyseed)
+
+/obj/item/seeds/honkyseed
+	name = "pack of honk-banana seeds"
+	desc = "They're seeds that grow into banana trees."
+	icon_state = "seed-banana-honk"
+	mypath = "/obj/item/seeds/honkyseed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "honk"
+	plantname = "Honk banana Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk"
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -831,7 +869,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
-	mutatelist = list(/obj/item/seeds/goldappleseed)
+	mutatelist = list(/obj/item/seeds/goldappleseed, /obj/item/seeds/poisonedappleseed)
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"
@@ -1207,13 +1245,15 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
+/obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
+	if(I.sharp && I.edge && I.force > 10)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
+		return
+	return ..()
 
 
 /obj/item/weapon/grown/sunflower

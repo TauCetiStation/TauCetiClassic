@@ -33,6 +33,8 @@ def main(options):
 		else:
 			r = requests.get(options.url)
 
+		r.raise_for_status()
+
 	except requests.exceptions.RequestException as e:
 		print(e, file=sys.stderr)
 		sys.exit(1)
@@ -40,12 +42,10 @@ def main(options):
 	sys.stdout.buffer.write(byond_inner_text(r.text))
 
 def byond_outer_text(text):
-	return text.decode("cp1251").replace("¶", "я")
+	return text.decode("utf-8")
 
-#DOES NOT WORK I HATE THIS
-#UPD OMG IT IS WORK
 def byond_inner_text(text):
-	return text.replace("я", "¶").encode("cp1251", 'ignore')
+	return text.encode("utf-8")
 
 if __name__ == "__main__":
 	options = read_arguments()

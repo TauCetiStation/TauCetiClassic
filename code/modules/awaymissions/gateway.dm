@@ -37,7 +37,7 @@
 	density = TRUE
 	icon_state = "offcenter"
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 5000
 
@@ -105,8 +105,8 @@
 	active = TRUE
 	update_icon()
 
-	use_power = 2
-	START_PROCESSING(SSmachine, src)
+	set_power_use(ACTIVE_POWER_USE)
+	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -116,8 +116,8 @@
 	active = FALSE
 	update_icon()
 
-	use_power = 1
-	STOP_PROCESSING(SSmachine, src)
+	set_power_use(IDLE_POWER_USE)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)
@@ -219,6 +219,7 @@
 /obj/effect/landmark/gateway_transit
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
+	. = ..()
 	if(!AM.freeze_movement)
 		qdel(AM) // THIS IS BLUESPACE FELLAS
 

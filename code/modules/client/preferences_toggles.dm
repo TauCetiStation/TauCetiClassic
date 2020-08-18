@@ -8,15 +8,6 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_ghost_sight()
-	set name = "Show/Hide GhostSight"
-	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs."
-	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
-	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/toggle_ghost_npc()
 	set name = "Show/Hide GhostNPCsSpeech"
 	set category = "Preferences"
@@ -101,6 +92,18 @@
 	to_chat(src, "You will [(role_type in prefs.be_role) ? "now" : "no longer"] be considered for [role] events (where possible).")
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ignored_role()
+	set name = "Toggle Ignore Roles"
+	set category = "Preferences"
+	set desc = "Toggles ignore questions"
+
+	var/role = input(usr, "Ignored Qustions for Roles in current Round:") as null|anything in prefs.ignore_question
+	if(!role)
+		return
+	prefs.ignore_question -= role
+	to_chat(src, "You will receive requests for \"[role]\" again")
+	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/change_ui()
 	set name = "Change UI"
 	set category = "Preferences"
@@ -110,25 +113,30 @@
 		to_chat(usr, "This only for human")
 		return
 
-	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") in list("White", "Midnight", "Orange", "old")
-	if(!UI_style_new) return
+	var/UI_style_new = input(usr, "Select a style, we recommend White for customization") as null|anything in sortList(global.available_ui_styles)
+	if(!UI_style_new)
+		return
 
 	var/UI_style_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-	if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
+	if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50))
+		return
 
 	var/UI_style_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
-	if(!UI_style_color_new) return
+	if(!UI_style_color_new)
+		return
 
 	//update UI
-	var/list/icons = usr.hud_used.adding + usr.hud_used.other +usr.hud_used.hotkeybuttons
+	var/list/icons = usr.hud_used.adding + usr.hud_used.other + usr.hud_used.hotkeybuttons
 	icons.Add(usr.zone_sel)
 
+	var/ui_style = ui_style2icon(UI_style_new)
+	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
+
 	for(var/obj/screen/I in icons)
-		if(I.color && I.alpha)
-			I.icon = ui_style2icon(UI_style_new)
+		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
+			I.icon = ui_style
 			I.color = UI_style_color_new
 			I.alpha = UI_style_alpha_new
-
 
 
 	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")
@@ -237,3 +245,27 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
+
+
+/client/verb/toggle_ghost_sight()
+	set name = "Change Ghost Sight Options"
+	set category = "Preferences"
+	set desc = "Toggle between seeing all mob emotes, all manual-only emotes and only emotes of nearby mobs."
+
+	var/new_setting = input(src, "Ghost Sight Options:") as null|anything in list("Absolutely all emotes", "All manual-only", "Only emotes of nearby mobs")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Absolutely all emotes")
+			to_chat(src, "As a ghost, you will now see absolutely all emotes in the world.")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+		if("All manual-only")
+			to_chat(src, "As a ghost, you will now see all manual-only(me, *emote, etc) emotes in the world.")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
+		if("Only emotes of nearby mobs")
+			to_chat(src, "As a ghost, you will now see only see emotes from nearby mobs")
+			prefs.chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","CGSO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

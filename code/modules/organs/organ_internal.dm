@@ -39,15 +39,9 @@
 	damage = 0
 
 /obj/item/organ/internal/proc/is_bruised()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_bruised_damage
 
 /obj/item/organ/internal/proc/is_broken()
-	// If not robotic, and owner has stabyzol in bloodstream, we are considered not bruised.
-	if(!robotic && owner.reagents.has_reagent("stabyzol"))
-		return FALSE
 	return damage >= min_broken_damage
 
 
@@ -135,9 +129,44 @@
 	name = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
+	var/heart_status = HEART_NORMAL
+	var/fibrillation_timer_id = null
+
+/obj/item/organ/internal/heart/proc/heart_stop()
+	heart_status = HEART_FAILURE
+
+/obj/item/organ/internal/heart/proc/heart_fibrillate()
+	var/failing_interval = 1 MINUTE
+	heart_status = HEART_FIBR
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		failing_interval = 30 SECONDS
+	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/obj/item/organ/internal/heart/proc/heart_normalize()
+	heart_status = HEART_NORMAL
+	deltimer(fibrillation_timer_id)
+	fibrillation_timer_id = null
 
 /obj/item/organ/internal/heart/ipc
-	name = "servomotor"
+	name = "cooling pump"
+
+	var/pumping_rate = 5
+	var/bruised_loss = 3
+
+/obj/item/organ/internal/heart/ipc/process()
+	if(is_broken())
+		return
+
+	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
+	if(!istype(lungs))
+		return
+
+	var/pumping_volume = pumping_rate
+	if(is_bruised())
+		pumping_volume -= bruised_loss
+
+	if(pumping_volume > 0)
+		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
@@ -157,20 +186,25 @@
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
 
+	var/refrigerant_max = 50
+	var/refrigerant = 50
+	var/refrigerant_rate = 5
+	var/bruised_loss = 3
+
 /obj/item/organ/internal/lungs/process()
 	..()
 	if (owner.species && owner.species.flags[NO_BREATHE])
 		return
 	if (germ_level > INFECTION_LEVEL_ONE)
-		if(prob(5))
+		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))
 			owner.emote("cough")		//respitory tract infection
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("gasp", 2, "coughs up blood!", TRUE)
+			owner.emote("cough", message = "coughs up blood!")
 			owner.drip(10)
-		if(prob(4))
-			owner.emote("gasp", 2, "gasps for air!")
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
+			owner.emote("gasp", message = "gasps for air!")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/lungs/diona/process()
@@ -200,6 +234,36 @@
 					owner.adjustToxLoss(0.1 * process_accuracy)
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
+
+/obj/item/organ/internal/lungs/ipc/process()
+	var/temp_gain = owner.species.synth_temp_gain
+
+	if(refrigerant > 0 && !is_broken())
+		var/refrigerant_spent = refrigerant_rate
+		refrigerant -= refrigerant_rate
+		if(refrigerant < 0)
+			refrigerant_spent += refrigerant
+			refrigerant = 0
+
+		if(is_bruised())
+			refrigerant_spent -= bruised_loss
+
+		if(refrigerant_spent > 0)
+			temp_gain -= refrigerant_spent
+
+	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
+		owner.bodytemperature -= 50
+
+	if(temp_gain > 0)
+		owner.bodytemperature += temp_gain
+		if(owner.bodytemperature > owner.species.synth_temp_max)
+			owner.bodytemperature = owner.species.synth_temp_max
+
+/obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
+	if(refrigerant < refrigerant_max)
+		refrigerant += volume
+		if(refrigerant > refrigerant_max)
+			refrigerant = refrigerant_max
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -277,10 +341,6 @@
 	name = "vacuole"
 	parent_bodypart = BP_GROIN
 
-/obj/item/organ/internal/kidneys/ipc
-	name = "self-diagnosis unit"
-	parent_bodypart = BP_GROIN
-
 /obj/item/organ/internal/kidneys/diona/process()
 	if(damage)
 		if(prob(10))
@@ -288,10 +348,29 @@
 		if(prob(2))
 			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
+/obj/item/organ/internal/kidneys/ipc
+	name = "self-diagnosis unit"
+	parent_bodypart = BP_GROIN
+
+	var/next_warning = 0
+
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(next_warning > world.time)
+		return
+	next_warning = world.time + 10 SECONDS
+
+	var/damage_report = ""
+	var/first = TRUE
+
 	for(var/obj/item/organ/internal/IO in owner.organs)
-		if(IO.is_bruised() && prob(4))
-			to_chat(owner, "<span class='warning bold'>%[uppertext_(IO)]% INJURY DETECTED. CEASE DAMAGE TO %ACCUMULATOR%. REQUEST ASSISTANCE.</span>")
+		if(IO.is_bruised())
+			if(!first)
+				damage_report += "\n"
+			first = FALSE
+			damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+
+	if(damage_report != "")
+		to_chat(owner, damage_report)
 
 /obj/item/organ/internal/brain
 	name = "brain"

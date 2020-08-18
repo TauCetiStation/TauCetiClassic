@@ -1,9 +1,9 @@
 /obj/machinery/door/firedoor
-	name = "\improper Emergency Shutter"
+	name = "Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
-	req_one_access = list(access_atmospherics, access_engine_equip)
+	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
 	density = 0
 	layer = FIREDOOR_LAYER
@@ -88,14 +88,14 @@
 
 
 /obj/machinery/door/firedoor/power_change()
-	if(powered(ENVIRON))
+	if(powered(STATIC_ENVIRON))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
 	return
 
 /obj/machinery/door/firedoor/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/alien/humanoid))
+	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
 		if(blocked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -138,7 +138,7 @@
 	"\The [src]", "Yes, [density ? "open" : "close"]", "No")
 	if(answer == "No")
 		return
-	if(user.stat || user.stunned || user.weakened || user.paralysis || (!user.canmove && !isAI(user)) || (get_dist(src, user) > 1  && !isAI(user)))
+	if(user.incapacitated() || (get_dist(src, user) > 1  && !isAI(user)))
 		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
 
@@ -182,6 +182,7 @@
 		hatch_open = !hatch_open
 		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
 									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		update_icon()
 		return
 
@@ -257,7 +258,7 @@
 /obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
-	START_PROCESSING(SSmachine, src)
+	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_open()
@@ -279,26 +280,26 @@
 
 
 /obj/machinery/door/firedoor/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(density)
 		icon_state = "door_closed"
 		if(hatch_open)
-			overlays += "hatch"
+			add_overlay("hatch")
 		if(blocked)
-			overlays += "welded"
+			add_overlay("welded")
 		if(pdiff_alert)
-			overlays += "palert"
+			add_overlay("palert")
 		if(dir_alerts)
 			for(var/d in 1 to 4)
 				var/cdir = cardinal[d]
 				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
-						overlays += new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir)
+						add_overlay(new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir))
 	else
 		icon_state = "door_open"
 		if(blocked)
-			overlays += "welded_open"
-	return
+			add_overlay("welded_open")
+	SSdemo.mark_dirty(src)
 
 	// CHECK PRESSURE
 /obj/machinery/door/firedoor/process()

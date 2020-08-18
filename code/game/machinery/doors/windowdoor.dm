@@ -42,6 +42,7 @@
 		icon_state = base_state
 	else
 		icon_state = "[src.base_state]open"
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/window/proc/shatter(display_message = 1)
 	if(!(flags & NODECONSTRUCT))
@@ -109,7 +110,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( ticker ))
+	if (!( SSticker ))
 		return
 	var/mob/M = AM
 	if(!M.restrained())
@@ -205,10 +206,10 @@
 	..()
 
 //When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM)
+/obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 
 	..()
-	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>", 1)
+	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -229,19 +230,16 @@
 	take_damage(damage)
 
 /obj/machinery/door/window/attack_alien(mob/user)
-	if(islarva(user))
+	if(isxenolarva(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
+/obj/machinery/door/window/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(attacker, attacker.melee_damage)
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
@@ -368,21 +366,7 @@
 			take_damage(aforce)
 		return
 
-	src.add_fingerprint(user)
-	if (!src.requiresID())
-		//don't care who they are or what they have, act as if they're NOTHING
-		user = null
-
-	if (src.allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
-		do_animate("deny")
-
-	return
+	try_open(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(density)

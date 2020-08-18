@@ -5,7 +5,7 @@
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -172,6 +172,12 @@
 						var/obj/item/clothing/shoes/orange/L = S
 						if (L.chained)
 							L.remove_cuffs()
+					if(new_shoe_icon_state == "orange1")
+						new_shoe_icon_state = "orange"
+					if(new_shoe_name == "shackles")
+						new_shoe_name = "orange shoes"
+					if(S.item_state == "o_shoes1")
+						S.item_state = "o_shoes"
 					S.icon_state = new_shoe_icon_state
 					S.item_color = wash_color
 					S.name = new_shoe_name

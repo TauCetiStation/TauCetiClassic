@@ -72,7 +72,7 @@ var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in all_areas)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity))
+		if(istype(AR, /area/shuttle) || istype(AR, /area/shuttle/syndicate) || istype(AR, /area/custom/wizard_station) || istype(AR, /area/station/engineering/singularity))
 			continue
 		if(teleportlocs.Find(AR.name))
 			continue
@@ -90,7 +90,7 @@ var/list/ghostteleportlocs = list()
 	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name))
 			continue
-		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
+		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -297,11 +297,11 @@ var/list/ghostteleportlocs = list()
 	if(always_unpowered)
 		return 0
 	switch(chan)
-		if(EQUIP)
+		if(STATIC_EQUIP)
 			return power_equip
-		if(LIGHT)
+		if(STATIC_LIGHT)
 			return power_light
-		if(ENVIRON)
+		if(STATIC_ENVIRON)
 			return power_environ
 
 	return 0
@@ -319,20 +319,14 @@ var/list/ghostteleportlocs = list()
 /area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
-		if(LIGHT)
-			used += used_light
-		if(EQUIP)
-			used += used_equip
-		if(ENVIRON)
-			used += used_environ
 		if(TOTAL)
-			used += used_light + used_equip + used_environ
+			used += static_light + static_equip + static_environ + used_equip + used_light + used_environ
 		if(STATIC_EQUIP)
-			used += static_equip
+			used += static_equip + used_equip
 		if(STATIC_LIGHT)
-			used += static_light
+			used += static_light + used_light
 		if(STATIC_ENVIRON)
-			used += static_environ
+			used += static_environ + used_environ
 	return used
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -344,19 +338,21 @@ var/list/ghostteleportlocs = list()
 		if(STATIC_ENVIRON)
 			static_environ += value
 
+/area/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
+
 /area/proc/clear_usage()
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
-
 	switch(chan)
-		if(EQUIP)
+		if(STATIC_EQUIP)
 			used_equip += amount
-		if(LIGHT)
+		if(STATIC_LIGHT)
 			used_light += amount
-		if(ENVIRON)
+		if(STATIC_ENVIRON)
 			used_environ += amount
 
 
@@ -403,11 +399,11 @@ var/list/ghostteleportlocs = list()
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
 
-/area/proc/gravitychange(gravitystate = 0, area/A)
-	A.has_gravity = gravitystate
+/area/proc/gravitychange(gravitystate = FALSE)
+	has_gravity = gravitystate
 	if(gravitystate)
-		for(var/mob/living/carbon/human/M in A)
-			thunk(M)
+		for(var/mob/living/carbon/human/H in src)
+			thunk(H)
 
 /area/proc/thunk(mob)
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.

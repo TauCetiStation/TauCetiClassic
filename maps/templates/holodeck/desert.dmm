@@ -3,41 +3,41 @@
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "b" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid6"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "c" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "asteroid2"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "d" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "f" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "h" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid7"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 "k" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "asteroid3"
 	},
-/area/holodeck/source_desert)
+/area/station/civilian/holodeck/source_desert)
 
 (1,1,1) = {"
 a

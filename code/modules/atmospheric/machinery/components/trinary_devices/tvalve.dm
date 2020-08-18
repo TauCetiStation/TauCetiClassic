@@ -8,17 +8,17 @@
 	can_unwrench = TRUE
 	interact_offline = TRUE
 
-	var/state = 0 // 0 = go straight, 1 = go to side
+	var/opened_to_side = FALSE // False = go straight (Parent1 <-> Parent3), True = go to side (Parent1 <-> Parent2)
 
 /obj/machinery/atmospherics/components/trinary/tvalve/bypass
 	icon_state = "map_tvalve1"
-	state = 1
+	opened_to_side = TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/update_icon(animation)
 	if(animation)
-		flick("tvalve[src.state][!src.state]", src)
+		flick("tvalve[opened_to_side ? 1 : 0][opened_to_side ? 0 : 1]", src)
 	else
-		icon_state = "tvalve[state]"
+		icon_state = "tvalve[opened_to_side ? 1 : 0]"
 
 /obj/machinery/atmospherics/components/trinary/tvalve/update_underlays()
 	if(..())
@@ -51,31 +51,31 @@
 
 /obj/machinery/atmospherics/components/trinary/tvalve/proc/go_to_side()
 
-	if(state)
+	if(opened_to_side)
 		return FALSE
 
-	state = 1
+	opened_to_side = TRUE
 	update_icon()
 
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
 	parent1.reconcile_air()
-	investigate_log("was switched to side by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+	log_investigate("was switched to side by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/proc/go_straight()
 
-	if(!state)
+	if(!opened_to_side)
 		return FALSE
 
-	state = 0
+	opened_to_side = FALSE
 	update_icon()
 
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
 	parent1.reconcile_air()
-	investigate_log("was swiched to straight by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+	log_investigate("was swiched to straight by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 	return TRUE
 
@@ -88,10 +88,10 @@
 	if(.)
 		return
 
-	update_icon(1)
+	update_icon(TRUE) // Animate, but not change icon yet
 	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
-	if (state)
+	if (opened_to_side)
 		go_straight()
 	else
 		go_to_side()
@@ -110,7 +110,7 @@
 
 /obj/machinery/atmospherics/components/trinary/tvalve/digital/bypass
 	icon_state = "map_tvalve1"
-	state = 1
+	opened_to_side = TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/digital/update_icon()
 	..()
@@ -136,15 +136,15 @@
 
 	switch(signal.data["command"])
 		if("valve_open")
-			if(!state)
+			if(!opened_to_side)
 				go_to_side()
 
 		if("valve_close")
-			if(state)
+			if(opened_to_side)
 				go_straight()
 
 		if("valve_toggle")
-			if(state)
+			if(opened_to_side)
 				go_straight()
 			else
 				go_to_side()
@@ -154,7 +154,7 @@
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/bypass
 	icon_state = "map_tvalvem1"
-	state = 1
+	opened_to_side = TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/SetInitDirections()
 	switch(dir)
@@ -169,9 +169,9 @@
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/update_icon(animation)
 	if(animation)
-		flick("tvalvem[src.state][!src.state]",src)
+		flick("tvalvem[opened_to_side ? 1 : 0][opened_to_side ? 0 : 1]",src)
 	else
-		icon_state = "tvalvem[state]"
+		icon_state = "tvalvem[opened_to_side ? 1 : 0]"
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital		// can be controlled by AI
 	name = "digital switching valve"
@@ -184,7 +184,7 @@
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital/bypass
 	icon_state = "map_tvalvem1"
-	state = 1
+	opened_to_side = TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital/update_icon()
 	..()
@@ -210,15 +210,15 @@
 
 	switch(signal.data["command"])
 		if("valve_open")
-			if(!state)
+			if(!opened_to_side)
 				go_to_side()
 
 		if("valve_close")
-			if(state)
+			if(opened_to_side)
 				go_straight()
 
 		if("valve_toggle")
-			if(state)
+			if(opened_to_side)
 				go_straight()
 			else
 				go_to_side()

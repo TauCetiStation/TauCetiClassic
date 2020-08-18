@@ -1,6 +1,6 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
-	name = "\proper space"
+	name = "space"
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -13,9 +13,7 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
-
-	if(!istype(src, /turf/space/transit))
-		icon_state = SPACE_ICON_STATE
+	icon_state = SPACE_ICON_STATE
 
 	if(light_power && light_range)
 		update_light()
@@ -90,14 +88,14 @@
 	..()
 	if ((!(A) || src != A.loc))	return
 
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
-		// if(ticker.mode.name == "nuclear emergency")	return
+		// if(SSticker.mode.name == "nuclear emergency")	return
 		if(!SSmapping.has_level(A.z))
 			return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+			if(istype(A, /obj/effect/meteor))
 				qdel(A)
 				return
 
@@ -157,7 +155,7 @@
 			if(ismob(A))
 				var/mob/M = A
 				if(M.pulling)
-					M.pulling.forceMove(get_turf(M), keep_pulling = TRUE)
+					M.pulling.forceMove(get_turf(M), TRUE)
 
 
 			stoplag()//Let a diagonal move finish, if necessary
@@ -172,7 +170,7 @@
 	var/list/y_arr
 
 	if(src.x <= 1)
-		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
 
@@ -247,7 +245,7 @@
 					A.loc.Entered(A)
 
 	else if (src.y >= world.maxy)
-		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()

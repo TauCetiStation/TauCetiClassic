@@ -61,7 +61,7 @@
 	H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
 
 /datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
-	H.monkeyize()
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"

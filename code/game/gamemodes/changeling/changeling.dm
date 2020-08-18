@@ -11,9 +11,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 2
-	required_players_secret = 10
+	required_players_secret = 20
 	required_enemies = 1
 	recommended_enemies = 4
+
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 
 	votable = 0
 
@@ -115,6 +117,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
+	changeling.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if (you_are)
 		to_chat(changeling.current, "<B><span class='warning'>You are a changeling!</span></B>")
 	to_chat(changeling.current, "<b><span class='warning'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span></b>")
@@ -257,7 +260,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(text)
 		antagonists_completion += list(list("mode" = "changeling", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)

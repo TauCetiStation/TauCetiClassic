@@ -9,7 +9,7 @@
 	volume = 10
 	var/filled = 0
 
-/obj/item/weapon/reagent_containers/robodropper/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/robodropper/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	if(filled)
@@ -25,7 +25,7 @@
 
 		var/trans = 0
 
-		if(ismob(target))
+		if(isliving(target))
 			if(istype(target , /mob/living/carbon/human))
 				var/mob/living/carbon/human/victim = target
 
@@ -45,8 +45,7 @@
 						safe_thing.create_reagents(100)
 					trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='warning'><B>[] tries to squirt something into []'s eyes, but fails!</B></span>", user, target), 1)
+					user.visible_message("<span class='warning'><B>[user] tries to squirt something into [target]'s eyes, but fails!</B></span>")
 					spawn(5)
 						src.reagents.reaction(safe_thing, TOUCH)
 
@@ -58,19 +57,16 @@
 					return
 
 
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='warning'><B>[] squirts something into []'s eyes!</B></span>", user, target), 1)
+			user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
 			src.reagents.reaction(target, TOUCH)
 
-			var/mob/M = target
+			var/mob/living/M = target
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
 			var/contained = english_list(injected)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
 
+			M.log_combat(user, "squirted with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")

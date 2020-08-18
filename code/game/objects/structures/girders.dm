@@ -1,11 +1,20 @@
 /obj/structure/girder
-	icon_state = "girder"
+	icon = 'icons/obj/smooth_structures/girder.dmi'
+	icon_state = "box"
 	anchored = 1
 	density = 1
 	layer = 2.9
 	var/state = 0
 	var/health = 200
-
+	canSmoothWith = list(
+		/turf/simulated/wall,
+		/turf/simulated/wall/r_wall,
+		/obj/structure/falsewall,
+		/obj/structure/falsewall/reinforced,
+		/obj/structure/girder,
+		/obj/structure/girder/reinforced
+	)
+	smooth = SMOOTH_TRUE
 
 /obj/structure/girder/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam))
@@ -111,7 +120,7 @@
 					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
-					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+					if (istype (src, /obj/structure/girder/reinforced))
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "<span class='notice'>Now finalising reinforced wall.</span>")
@@ -192,25 +201,28 @@
 		else
 	return
 
-/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
+/obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.environment_smash)
 		..()
-		M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+		attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
 			 "<span class='warning'>You smash against [src].</span>", \
 			 "You hear twisting metal.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= M.melee_damage_upper
+		health -= attacker.melee_damage
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 
 /obj/structure/girder/displaced
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = 0
 	health = 50
+	smooth = SMOOTH_FALSE
 
 /obj/structure/girder/reinforced
-	icon_state = "reinforced"
+	icon = 'icons/obj/smooth_structures/girder_reinforced.dmi'
+	icon_state = "box"
 	state = 2
 	health = 500
 
@@ -221,6 +233,7 @@
 	density = 1
 	layer = 2.9
 	var/health = 250
+	smooth = SMOOTH_FALSE
 
 /obj/structure/cultgirder/attackby(obj/item/W, mob/user)
 	if(user.is_busy(src))

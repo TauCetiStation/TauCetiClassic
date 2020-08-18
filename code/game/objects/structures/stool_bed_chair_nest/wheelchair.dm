@@ -13,9 +13,9 @@
 	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
-	overlays = null
+	cut_overlays()
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
-	overlays += O
+	add_overlay(O)
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
@@ -36,7 +36,7 @@
 		var/mob/living/M = usr
 		if(buckled_mob == M)
 			if(brake)
-				M.throw_alert("brake")
+				M.throw_alert("brake", /obj/screen/alert/brake)
 				alert = 1
 			else
 				M.clear_alert("brake")
@@ -50,7 +50,7 @@
 	if(brake)
 		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
 		return
-	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
+	if(user.incapacitated())
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null
@@ -157,8 +157,7 @@
 			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
-				for(var/mob/O in viewers(pulling, null))
-					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
+				visible_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>")
 			else
 				to_chat(usr, "You let go of \the [name]'s handles.")
 			pulling.pulledby = null
@@ -171,9 +170,9 @@
 	..()
 	if(!buckled_mob)	return
 
-	if(propelled || (pulling && (pulling.a_intent == "hurt")))
+	if(propelled || (pulling && (pulling.a_intent == INTENT_HARM)))
 		var/mob/living/occupant = unbuckle_mob()
-		if (pulling && (pulling.a_intent == "hurt"))
+		if (pulling && (pulling.a_intent == INTENT_HARM))
 			occupant.throw_at(A, 3, 3, pulling)
 		else if (propelled)
 			occupant.throw_at(A, 3, propelled)
@@ -190,9 +189,7 @@
 		if(pulling)
 			occupant.visible_message("<span class='danger'>[pulling] has thrusted \the [name] into \the [A], throwing \the [occupant] out of it!</span>")
 
-			pulling.attack_log += "\[[time_stamp()]\]<font color='red'> Crashed [occupant.name]'s ([occupant.ckey]) [name] into \a [A]</font>"
-			occupant.attack_log += "\[[time_stamp()]\]<font color='orange'> Thrusted into \a [A] by [pulling.name] ([pulling.ckey]) with \the [name]</font>"
-			msg_admin_attack("[pulling.name] ([pulling.ckey]) has thrusted [occupant.name]'s ([occupant.ckey]) [name] into \a [A]", pulling)
+			occupant.log_combat(pulling, "crashed [name] into [A]")
 		else
 			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 

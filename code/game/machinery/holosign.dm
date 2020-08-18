@@ -33,6 +33,7 @@
 	if (stat & NOPOWER)
 		lit = 0
 	update_icon()
+	update_power_use()
 
 /obj/machinery/holosign/surgery
 	name = "surgery holosign"
@@ -46,7 +47,7 @@
 	icon_state = "light1"
 	desc = "A remote control switch for holosign."
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	var/id = null

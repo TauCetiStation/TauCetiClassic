@@ -37,21 +37,21 @@
 	update_overlays()
 
 /turf/simulated/mineral/update_overlays()
-	overlays.Cut()
+	cut_overlays()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 	else
 		if(ore_amount >= 8)
-			name = "\improper [mineral.display_name] rich deposit"
-			overlays += "rock_[mineral.name]"
+			name = "[mineral.display_name] rich deposit"
+			add_overlay("rock_[mineral.name]")
 		else
-			name = "\improper Rock"
+			name = "Rock"
 			icon_state = "rock"
 	if(excav_overlay)
-		overlays += excav_overlay
+		add_overlay(excav_overlay)
 	if(archaeo_overlay)
-		overlays += archaeo_overlay
+		add_overlay(archaeo_overlay)
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
@@ -59,7 +59,7 @@
 			if (T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 				I.plane = 6
-				T.overlays += I
+				T.add_overlay(I)
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -110,7 +110,7 @@
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 	else
@@ -121,11 +121,11 @@
 		else
 			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
-		name = "\improper [mineral.display_name] rich deposit"
-		overlays.Cut()
-		overlays += "rock_[mineral.name]"
+		name = "[mineral.display_name] rich deposit"
+		cut_overlays()
+		add_overlay("rock_[mineral.name]")
 	else
-		name = "\improper Rock"
+		name = "Rock"
 		icon_state = "rock"
 		return
 
@@ -135,7 +135,7 @@
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
 				if(prob(2))
-					if(ticker.current_state > GAME_STATE_SETTING_UP)
+					if(SSticker.current_state > GAME_STATE_SETTING_UP)
 						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 					else
 						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
@@ -143,7 +143,7 @@
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
@@ -167,6 +167,14 @@
 		if(W.use_tool(src, user, 25, volume = 50))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
+
+	if (istype(W, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = W
+		if(S.wielded)
+			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
+			GetDrilled(artifact_fail = 1)
+		else
+			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
@@ -261,7 +269,7 @@
 				var/datum/find/F = finds[1]
 				if(F.excavation_required <= excavation_level + F.view_range)
 					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-					overlays += archaeo_overlay
+					add_overlay(archaeo_overlay)
 
 			// there's got to be a better way to do this
 			var/update_excav_overlay = 0
@@ -279,7 +287,7 @@
 			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
 				var/excav_quadrant = round(excavation_level / 25) + 1
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
-				overlays += excav_overlay
+				add_overlay(excav_overlay)
 
 			/* Nope.
 			//extract pesky minerals while we're excavating
@@ -312,6 +320,7 @@
 
 
 /turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0)
+	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
 
@@ -430,7 +439,7 @@
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && mineral_name in name_to_mineral)
+		if (mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
@@ -529,7 +538,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				if(ticker.current_state > GAME_STATE_SETTING_UP)
+				if(SSticker.current_state > GAME_STATE_SETTING_UP)
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
@@ -547,7 +556,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
-		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
+		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -555,7 +564,7 @@
 
 	SpawnMonster(T)
 	var/turf/t
-	if(ticker.current_state > GAME_STATE_SETTING_UP)
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
 	else
 		t = T.ChangeTurf(basetype)
@@ -564,7 +573,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored))
+		if(istype(loc, /area/asteroid/mine/explored))
 			return
 		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
@@ -612,7 +621,7 @@
 
 /turf/proc/update_overlays()
 
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
 		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
@@ -626,7 +635,7 @@
 					overlay_name = "rock_side_8"
 				if(8)
 					overlay_name = "rock_side_4"
-			overlays += image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6)
+			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -640,7 +649,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.overlays += I
+				src.add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A

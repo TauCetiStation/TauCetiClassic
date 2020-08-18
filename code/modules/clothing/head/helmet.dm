@@ -57,7 +57,7 @@
 	set name = "Adjust helmet visor"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
@@ -91,7 +91,7 @@
 		return TRUE
 
 /obj/item/clothing/head/helmet/swat
-	name = "\improper SWAT helmet"
+	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = HEADCOVERSEYES | THICKMATERIAL
@@ -103,7 +103,7 @@
 	siemens_coefficient = 0.3
 
 /obj/item/clothing/head/helmet/thunderdome
-	name = "\improper thunderdome helmet"
+	name = "thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = HEADCOVERSEYES

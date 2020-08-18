@@ -113,28 +113,23 @@
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
-			var/mob/GM = G.affecting
+			var/mob/living/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
-			for (var/mob/V in viewers(usr))
-				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
+			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20))
 				GM.loc = src
 				GM.instant_vision_update(1,src)
-				for (var/mob/C in viewers(src))
-					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
+				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>"
-				GM.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-				msg_admin_attack("[usr.name] ([usr.ckey]) placed [GM.name] ([GM.ckey]) in a disposals unit.", usr)
+
+				GM.log_combat(usr, "placed in disposals")
 		return
 
 
 	if(istype(I, /obj/item/weapon/holder))
-		for(var/mob/holdermob in I.contents)
-			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [holdermob.name] ([holdermob.ckey]) in disposals.</font>"
-			holdermob.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>"
-			msg_admin_attack("[usr.name] ([usr.ckey]) placed [holdermob.name] ([holdermob.ckey]) in a disposals unit", usr)
+		for(var/mob/living/holdermob in I.contents)
+			holdermob.log_combat(usr, "placed in disposals")
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
@@ -142,18 +137,14 @@
 	if(I)
 		I.loc = src
 
-	to_chat(user, "<span class='notice'>You place \the [I] into the [src].</span>")
-	for(var/mob/M in viewers(src))
-		if(M == user)
-			continue
-		M.show_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", 3)
+	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
 	update()
 
 // mouse drop another mob or self
 //
-/obj/machinery/disposal/proc/MouseDrop_T2(mob/target, mob/user)
-	if(user.stat || !user.canmove || !istype(target))
+/obj/machinery/disposal/proc/MouseDrop_Mob(mob/living/target, mob/living/user)
+	if(user.incapacitated())
 		return
 	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
 		return
@@ -166,12 +157,15 @@
 	src.add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
-	for (var/mob/V in viewers(usr))
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("<span class='red'>[usr] starts climbing into the disposal.</span>", 3)
-		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			if(target.anchored) return
-			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
+	var/self_msg
+
+	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+	if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+		if(target.anchored)
+			return
+		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
+
 	if(user.is_busy() || !do_after(usr, 20, target = src))
 		return
 	if(target_loc != target.loc)
@@ -179,24 +173,19 @@
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 											// must be awake, not stunned or whatever
 		msg = "<span class='red'>[user.name] climbs into the [src].</span>"
-		to_chat(user, "<span class='notice'>You climb into the [src].</span>")
+		self_msg = "<span class='notice'>You climb into the [src].</span>"
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
-		to_chat(user, "<span class='red'>You stuff [target.name] into the [src]!</span>")
+		self_msg = "<span class='red'>You stuff [target.name] into the [src]!</span>"
 
-		user.attack_log += "\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>"
-		target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) placed [target.name] ([target.ckey]) in a disposals unit.", usr)
+		target.log_combat(user, "placed in disposals")
 	else
 		return
 
 	target.loc = src
 	target.instant_vision_update(1,src)
 
-	for (var/mob/C in viewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
+	user.visible_message(msg, self_message = self_msg)
 
 	update()
 	return
@@ -204,29 +193,31 @@
 //tc, temporary hack
 /obj/machinery/disposal/MouseDrop_T(atom/A, mob/user)
 	if(ismob(A))
-		MouseDrop_T2(A, user)
+		MouseDrop_Mob(A, user)
 	else if(istype(A, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/target = A
 
-		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai)) return
+		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || istype(user, /mob/living/silicon/ai)) return
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
 		src.add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg
+		var/self_msg
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
-		for (var/mob/V in viewers(usr))
-			V.show_message("<span class='notice'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
+		if(user.incapacitated())
+			return
+		user.visible_message("<span class='notice'>[user] starts stuffing [target.name] into the disposal.</span>")
 		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
 
-		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
+		if(user.incapacitated())
+			return
 		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
-		to_chat(user, "<span class='notice'>You stuff [target.name] into the [src]!</span>")
+		self_msg = "<span class='notice'>You stuff [target.name] into the [src]!</span>"
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
@@ -234,10 +225,7 @@
 
 		target.loc = src
 
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
+		user.visible_message(msg, self_message = self_msg)
 
 		update()
 		return
@@ -283,7 +271,7 @@
 		user.unset_machine(src)
 		return
 
-	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
+	var/dat = ""
 
 	if(!isAI(user))  // AI can't pull flush handle
 		if(flush)
@@ -304,11 +292,15 @@
 	if(need_env_pressure)
 		per = 100 * air_contents.return_pressure() / (SEND_PRESSURE)
 
-	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR></body>"
+	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR>"
 
 
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=disposal;size=360x170")
+
+	var/datum/browser/popup = new(user, "disposal", "Waste Disposal Unit", 360, 170)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "disposal")
 
 // handle machine interaction
@@ -362,7 +354,7 @@
 
 // update the icon & overlays to reflect mode & status
 /obj/machinery/disposal/proc/update()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		icon_state = "disposal-broken"
 		mode = 0
@@ -371,7 +363,7 @@
 
 	// flush handle
 	if(flush)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -379,18 +371,17 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-full")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-full"))
 
 	// charging and ready light
 	if(mode == 1)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-charge")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
-		overlays += image('icons/obj/pipes/disposal.dmi', "dispover-ready")
+		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-ready"))
 
 // timed process
 // charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/process()
-	use_power = 0
 	if(stat & BROKEN)			// nothing can happen if broken
 		return
 
@@ -413,13 +404,10 @@
 	if(stat & NOPOWER)			// won't charge if no power
 		return
 
-	use_power = 1
-
 	if(mode != 1)		// if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power = 2
 
 	var/atom/L = loc						// recharging from loc turf
 
@@ -438,6 +426,7 @@
 	// if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)
 		mode = 2
+		set_power_use(IDLE_POWER_USE)
 		update()
 	return
 
@@ -478,6 +467,7 @@
 	flush = 0
 	if(mode == 2)	// if was ready,
 		mode = 1	// switch to charging
+		set_power_use(ACTIVE_POWER_USE)
 	update()
 	return
 
@@ -513,11 +503,9 @@
 			return
 		if(prob(75))
 			I.loc = src
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] lands in \the [src].", 3)
+			visible_message("\the [I] lands in \the [src].")
 		else
-			for(var/mob/M in viewers(src))
-				M.show_message("\the [I] bounces off of \the [src]'s rim!.", 3)
+			visible_message("\the [I] bounces off of \the [src]'s rim!")
 		return 0
 	else
 		return ..(mover, target, height, air_group)
@@ -562,8 +550,7 @@
 		AM.loc = src
 		if(istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
-			if(FAT in H.mutations)		// is a human and fat?
-				has_fat_guy = 1			// set flag on holder
+			has_fat_guy = HAS_TRAIT(H, TRAIT_FAT) // is a human and fat? set flag on holder
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
 			src.destinationTag = T.sortTag

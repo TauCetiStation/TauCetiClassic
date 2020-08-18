@@ -11,7 +11,7 @@
 	density = 1
 	var/previous_power_state = 0
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	active_power_usage = 2000
 	idle_power_usage = 1000
 
@@ -24,7 +24,7 @@
 	if(prob(33))
 		spawn_type = pick(\
 		/mob/living/simple_animal/hostile/giant_spider/nurse,\
-		/mob/living/simple_animal/hostile/alien,\
+		/mob/living/simple_animal/hostile/xenomorph,\
 		/mob/living/simple_animal/hostile/bear,\
 		/mob/living/simple_animal/hostile/creature,\
 		/mob/living/simple_animal/hostile/panther,\
@@ -61,7 +61,7 @@
 		// if we've finished growing...
 		if(time_spent_spawning >= time_per_spawn)
 			time_spent_spawning = 0
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			src.visible_message("<span class='notice'>[bicon(src)] [src] pings!</span>")
 			icon_state = "autocloner_on"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
@@ -70,11 +70,11 @@
 
 		// if we're getting close to finished, kick into overdrive power usage
 		if(time_spent_spawning / time_per_spawn > 0.75)
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 			icon_state = "autocloner_process"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow. A dark shape appears to be forming inside..."
 		else
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			icon_state = "autocloner_on"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
 

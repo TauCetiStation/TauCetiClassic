@@ -96,25 +96,19 @@
 				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 		else
 			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
-	else if(hasvar(W,"force") && hasvar(W,"damtype"))
+	else
 		switch(W.damtype)
 			if("fire")
 				health -= W.force * fire_dam_coeff
 			if("brute")
 				health -= W.force * brute_dam_coeff
-		..()
 		healthcheck()
-	else
-		..()
+		return ..()
 
 /obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
-
-/obj/vehicle/meteorhit()
-	explode()
-	return
 
 /obj/vehicle/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff
@@ -168,7 +162,7 @@
 	update_icon()
 
 /obj/vehicle/proc/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/stack/rods(Tsec)

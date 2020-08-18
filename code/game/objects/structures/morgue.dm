@@ -33,7 +33,10 @@
 
 /obj/structure/morgue/AltClick(mob/user)
 	..()
-	if(!CanUseTopic(user) || !user.IsAdvancedToolUser())
+	if(!CanUseTopic(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
@@ -78,7 +81,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in compiled)
-		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || H.brain_op_stage == 4.0 || H.suiciding || !H.ckey || !H.mind)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || !H.has_brain() || H.suiciding || !H.ckey || !H.mind)
 			continue
 
 		return TRUE
@@ -167,7 +170,7 @@
 		..()
 
 /obj/structure/morgue/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	connected = new /obj/structure/m_tray( loc )
 	step(connected, dir)
@@ -218,7 +221,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -347,7 +350,7 @@
 		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
-	if (user.stat || locked)
+	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
@@ -372,28 +375,23 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream",,, 1)
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+				M.emote("scream")
+			M.log_combat(user, "cremated")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
@@ -442,7 +440,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)

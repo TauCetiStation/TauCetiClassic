@@ -4,7 +4,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
 	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
@@ -17,7 +17,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 				return
-			usr.notransform = 1
+			usr.notransform = TRUE
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -61,7 +61,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(10)
 			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 
-			usr.notransform = 0
+			usr.notransform = FALSE
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
@@ -75,7 +75,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
 
 			usr.mind.transfer_to(H)
-			ticker.mode.update_all_shadows_icons()
+			SSticker.mode.update_all_shadows_icons()
 			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
 
 			qdel(usr)
@@ -86,7 +86,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	set category = "Shadowling Evolution"
 	set name = "Ascendance"
 
-	if(usr.stat)
+	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))
@@ -99,7 +99,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
-			usr.notransform = 1
+			usr.notransform = TRUE
 			usr.Stun(34)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")
@@ -113,18 +113,18 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 								"<span class='shadowling'>You feel yourself beginning to mutate.</span>")
 
 			sleep(20)
-			if(!ticker.mode.shadowling_ascended)
+			if(!SSticker.mode.shadowling_ascended)
 				to_chat(usr, "<span class='shadowling'>It isn't enough. Time to draw upon your thralls.</span>")
 			else
 				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
 			for(var/mob/M in mob_list)
-				if(is_thrall(M) && !ticker.mode.shadowling_ascended)
+				if(is_thrall(M) && !SSticker.mode.shadowling_ascended)
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
 
-					ticker.mode.thralls -= M.mind //To prevent message spam
+					SSticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
 
 			to_chat(usr, "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>")
@@ -158,10 +158,10 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				A.real_name = usr.real_name
 			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
-			usr.notransform = 1
+			usr.notransform = TRUE
 			sleep(50)
-			if(!ticker.mode.shadowling_ascended)
+			if(!SSticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
-			ticker.mode.shadowling_ascended = 1
+			SSticker.mode.shadowling_ascended = 1
 			qdel(usr)

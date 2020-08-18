@@ -15,7 +15,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
-	var/next_slap_mention_time = 0 // This acts as cooldown for sending @here to discord.
 	var/list/ckey_cooldown_holder = list()
 
 /datum/admin_help_tickets/Destroy()
@@ -64,7 +63,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<html><head><title>[title]</title></head>")
+	var/list/dat = list("<title>[title]</title>")
 	dat += "<A href='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -131,7 +130,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help
 	var/id
 	var/name
-	var/stat_name // name that is displayed in stat panel (because of byond until 513 unicode).
 	var/state = AHELP_ACTIVE
 
 	var/opened_at // ticks
@@ -154,8 +152,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 //msg is the title of the ticket: usually the ahelp text
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
-	//clean the input msg
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -165,7 +161,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	opened_at_server = world.timeofday
 
 	name = msg
-	stat_name = sanitize_stat(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -188,7 +183,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		MessageNoRecipient(msg)
 
 		//send it to chat bridge if nobody is on and tell us how many were on
-		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name)
+		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name, type = list(BRIDGE_ADMINALERT), mention = BRIDGE_MENTION_HERE)
 
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		
@@ -404,7 +399,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	var/list/dat = list("<title>Ticket #[id]</title>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
@@ -436,19 +431,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	popup.set_content(dat.Join())
 	popup.open()
 
-//takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
-/datum/admin_help/proc/sanitize_stat(msg)
-	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
-	var/string = ""
-	for (var/i in 1 to length(msg))
-		string += "&#[text2ascii(copytext(msg,i,i+1))];"
-	return string
-
 /datum/admin_help/proc/Retitle()
 	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null)
 	if(new_title)
 		name = new_title
-		stat_name = sanitize_stat(new_title)
 		//not saying the original name cause it could be a long ass message
 		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_admin(usr)]"
 		message_admins(msg)
@@ -487,7 +473,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	. = ..()
 
 /obj/effect/statclick/ahelp/update()
-	return ..(ahelp_datum.stat_name)
+	return ..(ahelp_datum.name)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
@@ -590,7 +576,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			.["present"] += X
 
-/proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN)
+/proc/send2bridge_adminless_only(title, msg, requiredflags = R_BAN, type, mention)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]
 	. = activemins.len
@@ -605,21 +591,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		else
 			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 
-		if(world.time > ahelp_tickets.next_slap_mention_time)
-			ahelp_tickets.next_slap_mention_time = world.time + 30 MINUTES
-			world.send2bridge(
-				type = list(BRIDGE_ADMINALERT),
-				attachment_title = title,
-				attachment_msg = msg,
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-				attachment_footer = final,
-				mention = BRIDGE_MENTION_HERE,
-			)
-		else
-			world.send2bridge(
-				type = list(BRIDGE_ADMINALERT),
-				attachment_title = title,
-				attachment_msg = msg,
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-				attachment_footer = final,
-			)
+		world.send2bridge(
+			type = type,
+			attachment_title = title,
+			attachment_msg = msg,
+			attachment_color = BRIDGE_COLOR_ADMINALERT,
+			attachment_footer = final,
+			mention = mention,
+		)

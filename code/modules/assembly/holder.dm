@@ -59,15 +59,15 @@
 
 
 /obj/item/device/assembly_holder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(a_left)
-		overlays += "[a_left.icon_state]_left"
+		add_overlay("[a_left.icon_state]_left")
 		for(var/O in a_left.attached_overlays)
-			overlays += "[O]_l"
+			add_overlay("[O]_l")
 	if(a_right)
-		src.overlays += "[a_right.icon_state]_right"
+		src.add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
-			overlays += "[O]_r"
+			add_overlay("[O]_r")
 	if(master)
 		master.update_icon()
 
@@ -89,7 +89,8 @@
 		special_assembly.HasProximity(AM)
 
 
-/obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
+/obj/item/device/assembly_holder/Crossed(atom/movable/AM)
+	. = ..()
 	if(a_left)
 		a_left.Crossed(AM)
 	if(a_right)
@@ -131,9 +132,8 @@
 	..()
 	return
 
-
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/device/assembly_holder/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
@@ -146,12 +146,10 @@
 			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
-	else if(W.IsSpecialAssembly())
-		attach_special(W, user)
+	else if(I.IsSpecialAssembly())
+		attach_special(I, user)
 	else
-		..()
-	return
-
+		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
@@ -227,7 +225,7 @@
 	set category = "Object"
 	set src in usr
 
-	if ( !(usr.stat || usr.restrained()) )
+	if (!usr.incapacitated())
 		var/obj/item/device/assembly_holder/holder
 		if(istype(src,/obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/gren = src

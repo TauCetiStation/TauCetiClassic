@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/heavyrifle
-	name = "\improper PTR-7 rifle"
+	name = "PTR-7 rifle"
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
@@ -22,13 +22,13 @@
 /obj/item/weapon/gun/projectile/heavyrifle/process_chamber()
 	return ..(0, 0)
 
-/obj/item/weapon/gun/projectile/heavyrifle/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/heavyrifle/attackby(obj/item/I, mob/user, params)
 	if(!bolt_open)
 		return
 	if(chambered)
 		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
 		return
-	var/num_loaded = magazine.attackby(A, user, 1)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/weapons/guns/heavybolt_in.ogg', VOL_EFFECTS_MASTER)
@@ -36,7 +36,7 @@
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
 		update_icon()	//I.E. fix the desc
-		A.update_icon()
+		I.update_icon()
 
 /obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user)
 	bolt_open = !bolt_open

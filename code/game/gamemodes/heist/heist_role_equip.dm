@@ -81,11 +81,11 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 55
 
-/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(20)//+10=30
-		S.emp_act(2)
+		S.emplode(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(25)
@@ -95,11 +95,11 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 30
 
-/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(10)//+10=20
-		S.emp_act(2)
+		S.emplode(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(15)
@@ -161,9 +161,10 @@ var/global/raider_tick = 1
 		to_chat(user, "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>")
 	return 1
 
-/obj/item/device/price_tool/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/price_tool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!istype(O))
+	if(!isobj(target))
 		return
+	var/obj/O = target
 	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>")
 	return

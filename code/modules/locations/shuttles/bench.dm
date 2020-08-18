@@ -16,7 +16,7 @@
 		src.layer = OBJ_LAYER
 		var/image/behind = image(src.icon, "[src.icon_state]_behind")
 		behind.layer = FLY_LAYER
-		overlays += behind
+		add_overlay(behind)
 
 /obj/structure/stool/bed/chair/schair/wagon/bench/atom_init_late()
 	return

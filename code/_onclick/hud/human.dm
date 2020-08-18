@@ -1,4 +1,4 @@
-/datum/hud/proc/human_hud(ui_style='icons/mob/screen1_White.dmi', ui_color = "#ffffff", ui_alpha = 255)
+/datum/hud/proc/human_hud(ui_color = "#ffffff", ui_alpha = 255)
 
 	src.adding = list()
 	src.other = list()
@@ -10,7 +10,7 @@
 	using = new /obj/screen()
 	using.name = "act_intent"
 	using.icon = ui_style
-	using.icon_state = "intent_"+mymob.a_intent
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
@@ -27,7 +27,7 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
 	using = new /obj/screen( src )
-	using.name = "help"
+	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -39,19 +39,19 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
 	using = new /obj/screen( src )
-	using.name = "disarm"
+	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	disarm_intent = using
+	push_intent = using
 
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "grab"
+	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -63,13 +63,13 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "harm"
+	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	hurt_intent = using
+	harm_intent = using
 
 //end intent small hud objects
 
@@ -374,6 +374,8 @@
 	mymob.internals = new /obj/screen()
 	mymob.internals.icon = ui_style
 	mymob.internals.icon_state = "internal0"
+	if(istype(mymob.internal, /obj/item/weapon/tank))
+		mymob.internals.icon_state = "internal1"
 	mymob.internals.name = "internal"
 	mymob.internals.screen_loc = ui_internal
 
@@ -387,6 +389,12 @@
 	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
+
+	mymob.nutrition_icon = new
+	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
+	mymob.nutrition_icon.icon_state = "starving"
+	mymob.nutrition_icon.name = "nutrition"
+	mymob.nutrition_icon.screen_loc = ui_nutrition
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
@@ -417,8 +425,8 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
@@ -446,7 +454,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0

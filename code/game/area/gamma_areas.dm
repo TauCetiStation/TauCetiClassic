@@ -1,46 +1,50 @@
-/area/engine/monitoring
+/area/station/engineering/monitoring
 	name = "Engineering Monitoring Room"
 
-/area/engine/equip
+/area/station/engineering/equip
 	name = "Engineering Equipment Storage"
 
-/area/hallway/primary/bridgehall
+/area/station/hallway/primary/bridgehall
 	name = "Bridge Primary Hallway"
 	icon_state = "hallC"
 
-/area/crew_quarters/dormone
+/area/station/civilian/dormitories/dormone
 	name = "First Dorm Room"
 
-/area/crew_quarters/dormtwo
+/area/station/civilian/dormitories/dormtwo
 	name = "Second Dorm Room"
 
-/area/crew_quarters/dormthree
+/area/station/civilian/dormitories/dormthree
 	name = "Third Dorm Room"
 
-/area/crew_quarters/dormfour
+/area/station/civilian/dormitories/dormfour
 	name = "Fourth Dorm Room"
 
-/area/crew_quarters/dormfive
+/area/station/civilian/dormitories/dormfive
 	name = "Fifth Dorm Room"
 
-/area/crew_quarters/theater
+/area/station/civilian/dormitories/theater
 	name = "Theater"
 	icon_state = "bar"
 
-/area/security/secconfhall
+/area/station/security/secconfhall
 	name = "Security Conference Hall"
 	icon_state = "security"
 
-/area/assembly/sppodconstr
+/area/station/rnd/sppodconstr
 	name = "Space Pod Construction Site"
 	icon_state = "mechbay"
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
 
-/area/medical/hallway/outbranch
+/area/station/medical/hallway/outbranch
 	icon_state = "medbay3"
 
-/area/medical/surgerystorage
+/area/station/medical/surgerystorage
 	name = "Operating Storage"
 	icon_state = "surgery2"
+
+/area/station/maintenance/brig
+	name = "Brig maintenance"
+	icon_state = "fmaint"

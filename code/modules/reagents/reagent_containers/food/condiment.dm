@@ -41,13 +41,10 @@
 	volume = 50
 	var/empty_icon = "condiment" // Empty state icon
 
-/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W, mob/user)
-	return
-
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/condiment/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "swallow")) return
 
 	var/datum/reagents/R = src.reagents
@@ -68,23 +65,19 @@
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='rose'> [user] attempts to feed [M] [src].</span>", 1)
+		user.visible_message("<span class='rose'> [user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message("<span class='rose'> [user] feeds [M] [src].</span>", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+		user.visible_message("<span class='rose'> [user] feeds [M] [src].</span>")
+
+		M.log_combat(user, "fed with [name] (INTENT: [uppertext(user.a_intent)])")
 
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, 10)
 
 		playsound(M,'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
-	return 0
 
-/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/condiment/afterattack(atom/target, mob/user, proximity, params)
 	if(get_dist(src, target) > 1)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
@@ -92,7 +85,8 @@
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='rose'> [target] is empty.</span>")
 			return
-
+		if (!reagents.maximum_volume)
+			to_chat(user, "<span class='rose'> [src] can't hold this.</span>")
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> [src] is full.</span>")
 			return
@@ -104,6 +98,9 @@
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='rose'> [src] is empty.</span>")
+			return
+		if (!target.reagents.maximum_volume)
+			to_chat(user, "<span class='rose'> [target] can't hold this.</span>")
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> you can't add anymore to [target].</span>")
@@ -137,19 +134,20 @@
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
-/obj/item/weapon/condiment_shelf/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/wrench))
+/obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/stack/sheet/wood(src.loc)
+		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
 		return
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment))
+
+	if(istype(I, /obj/item/weapon/reagent_containers/food/condiment))
 		to_chat(user, "<span class='rose'>You need to place it onto the wall first!</span>")
 		return
-	else
-		..()
 
-/obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity)
+	return ..()
+
+/obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
 	if(get_dist(T, user) > 1)
 		return
@@ -222,9 +220,9 @@
 
 /obj/structure/condiment_shelf/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents as obj|null
+		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr) || usr.incapacitated())
+			if(!in_range(loc, usr) || usr.incapacitated())
 				return
 			if(ishuman(user))
 				user.put_in_hands(choice)
@@ -251,7 +249,7 @@
 				qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
 		return
 	var/cond_number = 0
@@ -259,7 +257,7 @@
 		if(F.type in can_be_placed)
 			var/mutable_appearance/condiment = mutable_appearance(icon, "[initial(F.icon_state)]")
 			condiment.pixel_x += cond_number
-			overlays += condiment
+			add_overlay(condiment)
 			cond_number += 4
 
 //////////////////////

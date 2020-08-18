@@ -83,6 +83,7 @@
 	icon_state = null
 	item_state = null
 	origin_tech = null
+	sightglassesmod = null
 	vision_flags = SEE_MOBS
 	alpha = 0
 	darkness_view = 3
@@ -106,7 +107,7 @@
 	set name = "Toggle Vision"
 	set src in usr
 
-	if(!usr.stat)
+	if(!usr.incapacitated())
 		if(src.vision)
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_on"
@@ -135,12 +136,12 @@
 	playsound(src, 'sound/effects/supermatter.ogg', VOL_EFFECTS_MASTER)
 	QDEL_IN(src, 100)
 
-/obj/structure/shadow_vortex/Crossed(var/td)
-	..()
-	if(ismob(td))
-		to_chat(td, "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
+/obj/structure/shadow_vortex/Crossed(atom/movable/AM)
+	. = ..()
+	if(ismob(AM))
+		to_chat(AM, "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
 		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>") //A bit of spooking before they die
-		var/mob/M = td
+		var/mob/M = AM
 		M.ghostize()
 	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 25)
-	qdel(td)
+	qdel(AM)

@@ -90,7 +90,7 @@
 			msg += {"
 				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
 				<b>Days on server:</b> [C.player_age]<br>
-				<b>In-game minutes:</b> [C.player_ingame_age]
+				<b>In-game minutes:</b> [isnum(C.player_ingame_age) ? C.player_ingame_age : 0]
 				<hr>
 			"}
 
@@ -98,7 +98,10 @@
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
 
 	if(msg != "")
-		src << browse(msg, "window=Player_age_check")
+		var/datum/browser/popup = new(src, "Player_age_check")
+		popup.set_content(msg)
+		popup.open()
+
 	else
 		to_chat(src, "No matches for that age range found.")
 
@@ -140,8 +143,8 @@
 		return
 
 	to_chat(M, msg)
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR></span>")
+	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]")
+	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
@@ -215,18 +218,38 @@
 		if(M.client.prefs.permamuted & mute_type)
 			M.client.prefs.permamuted &= ~mute_type
 			M.client.prefs.save_preferences()
+			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
 	else
+		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
+			var/permmutreason = input("Permamute Reason") as text|null
+			if(permmutreason)
+				muteunmute = "permamuted"
+				M.client.prefs.permamuted |= mute_type
+				M.client.prefs.save_preferences()
+				M.client.prefs.muted |= mute_type
+				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				permmutreason = sanitize(permmutreason)
+				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
+			else
+				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
+				return
+
+		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
+			var/mutereason = input("Mute Reason") as text|null
+			if(mutereason)
+				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
+				mutereason = sanitize(mutereason)
+				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
+			else
+				return
+		else
+			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
+
 		muteunmute = "muted"
 		M.client.prefs.muted |= mute_type
-		if(alert("Would you like to make it permament?","Permamute?","Yes","No, round only") == "Yes")
-			muteunmute = "permamuted"
-			M.client.prefs.permamuted |= mute_type
-			M.client.prefs.save_preferences()
-
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	to_chat(M, "You have been [muteunmute] from [mute_string].")
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -245,7 +268,10 @@
 	if(show_log == "Yes")
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
 
-	IonStorm(0)
+	for(var/mob/living/silicon/ai/target in ai_list)
+		if(target.mind.special_role == "traitor")
+			continue
+		target.overload_ai_system()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -267,13 +293,13 @@
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
-	var/mob/living/carbon/alien/new_xeno
+	var/mob/living/carbon/xenomorph/new_xeno
 	switch(alien_caste)
-		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
-		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
-		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
-		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
-		if("Larva")		new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
+		if("Queen")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/queen(spawn_here)
+		if("Hunter")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter(spawn_here)
+		if("Sentinel")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(spawn_here)
+		if("Drone")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(spawn_here)
+		if("Larva")		new_xeno = new /mob/living/carbon/xenomorph/larva(spawn_here)
 		else			return 0
 
 	new_xeno.ckey = ckey
@@ -334,7 +360,7 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
-	G:show_message(text("<span class='notice'><B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>"), 1)
+	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
 
@@ -436,12 +462,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if(xeno_spawn.len)	T = pick(xeno_spawn)
 				else				T = pick(latejoin)
 
-				var/mob/living/carbon/alien/new_xeno
+				var/mob/living/carbon/xenomorph/new_xeno
 				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
-					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
-					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
-					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
+					if("Hunter")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter(T)
+					if("Sentinel")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(T)
+					if("Drone")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(T)
+					if("Queen")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
@@ -450,7 +476,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [key_name_admin(new_xeno)] as a filthy xeno.</span>")
 				return	//all done. The ghost is auto-deleted
 
 		//check if they were a monkey
@@ -460,7 +486,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has respawned [key_name_admin(new_monkey)] as a filthy xeno.</span>")
 				return	//all done. The ghost is auto-deleted
 
 
@@ -533,11 +559,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(new_character.mind.special_role)
 		if("traitor")
 			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
+			SSticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(wizardstart)
-			//ticker.mode.learn_basic_spells(new_character)
-			ticker.mode.equip_wizard(new_character)
+			//SSticker.mode.learn_basic_spells(new_character)
+			SSticker.mode.equip_wizard(new_character)
 		if("Syndicate")
 			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
@@ -654,6 +680,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(!customname)
 		customname = "NanoTrasen Update"
+
+	switch(alert("Should this be announced to the general population?",,"Yes","No","Cancel"))
+		if("Yes")
+			command_alert(input, customname)
+		if("No")
+			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
+			station_announce(sound = "commandreport")
+		if("Cancel")
+			return
+
 	for (var/obj/machinery/computer/communications/C in communications_list)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -662,13 +698,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
-
-	switch(alert("Should this be announced to the general population?",,"Yes","No"))
-		if("Yes")
-			command_alert(input, customname);
-		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
-			station_announce(sound = "commandreport")
 
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report")
@@ -790,6 +819,27 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='notice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_admin_dust(mob/M as mob in mob_list)
+	set category = "Special Verbs"
+	set name = "Turn to dust"
+
+	if(!check_rights(R_ADMIN|R_FUN))
+		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
+	//Due to the delay here its easy for something to have happened to the mob
+	if(!M)	return
+
+	log_admin("[key_name(usr)] has annihilate [key_name(M)]")
+	message_admins("[key_name_admin(usr)] has annihilate [key_name_admin(M)]")
+
+	if(istype(M, /mob/dead/observer))
+		return
+
+	M.dust()
+	feedback_add_details("admin_verb","DUST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
 	set name = "Manual Ban"
@@ -912,7 +962,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if(!ticker || SSshuttle.location)
+	if(!SSticker || SSshuttle.location)
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -963,7 +1013,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
-	if(!ticker || SSshuttle.location || SSshuttle.direction == 0)
+	if(!SSticker || SSshuttle.location || SSshuttle.direction == 0)
 		return
 
 	SSshuttle.recall()
@@ -982,7 +1032,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Toggle Deny Shuttle"
 
-	if (!ticker)
+	if (!SSticker)
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -1010,12 +1060,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_FUN))	return
 
-	if (ticker && ticker.mode)
+	if (SSticker && SSticker.mode)
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(ticker.random_players)
-		ticker.random_players = 0
+	if(SSticker.random_players)
+		SSticker.random_players = 0
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -1033,7 +1083,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	ticker.random_players = 1
+	SSticker.random_players = 1
 	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -1044,16 +1094,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off."
 	if(!check_rights(R_SERVER))	return
 
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
-		to_chat(usr, "Random events enabled")
-		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
-	else
-		config.allow_random_events = 0
-		to_chat(usr, "Random events disabled")
-		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
+	config.allow_random_events = !config.allow_random_events
+	to_chat(usr, "Random events [config.allow_random_events ? "enabled" : "disabled"]")
+	message_admins("Admin [key_name_admin(usr)] has [config.allow_random_events ? "enabled" : "disabled"] random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 
 /client/proc/send_fax_message()
 	set name = "Send Fax Message"
@@ -1062,7 +1106,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN)
+	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 	if(!sent_text)
 		return
 
@@ -1093,7 +1137,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/obj/item/weapon/paper/P = new
 	P.name = sent_name
-	P.info = sent_text
+	var/parsed_text = parsebbcode(sent_text)
+	parsed_text = replacetext(parsed_text, "\[nt\]", "<img src = bluentlogo.png />")
+	P.info = parsed_text
 	P.update_icon()
 
 	if(stamp_type)
@@ -1102,7 +1148,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(stamp_text)
 			S.stamp_paper(P, stamp_text)
 		else
-			S.stamp_paper(P, use_stamp_by_message = TRUE)
+			S.stamp_paper(P)
 
 	send_fax(usr, P, department)
 
@@ -1112,7 +1158,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINCOM),
-		attachment_title = ":fax: Fax message was created by **[key_name_admin(usr)]** and sent to ***[department]***",
+		attachment_title = ":fax: Fax message was created by **[key_name(usr)]** and sent to ***[department]***",
 		attachment_msg = sent_text,
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
@@ -1133,6 +1179,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!target)
 		return
 
+	if(!isnum(target.player_ingame_age))
+		to_chat(src, "Player age not loaded yet.")
+		return
+
 	var/value = config.add_player_age_value
 	if(check_rights(R_PERMISSIONS,0) && alert("As +PERMISSIONS user you can set custom value. Set custom?", "Custom age?", "Yes", "No") == "Yes")
 		value = input("Enter custom in-game age value") as num|null
@@ -1141,7 +1191,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")
@@ -1149,3 +1199,26 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		target.player_ingame_age = value
 	else
 		to_chat(src, "This player already has more minutes than [value]!")
+
+/client/proc/grand_guard_pass()
+	set category = "Server"
+	set name = "Guard pass"
+	set desc = "Allow a new player to skip the guard checks"
+
+	if(!check_rights(R_VAREDIT))
+		return
+
+	if(!dbcon.IsConnected())
+		return
+
+	var/ckey = ckey(input("Enter player ckey") as null|text)
+
+	if(!ckey)
+		return
+
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[sanitize_sql(ckey)]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
+	query_update.Execute()
+
+	to_chat(src, "Guard pass granted (probably)")
+	log_admin("GUARD: [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")
+	message_admins("GUARD: [key_name_admin(usr)] [key_name(usr)] granted to [ckey] guard pass ([GUARD_CHECK_AGE] minutes)")

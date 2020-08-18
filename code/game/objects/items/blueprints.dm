@@ -31,7 +31,7 @@
 
 /obj/item/blueprints/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if ((usr.incapacitated() || usr.get_active_hand() != src))
 		return
 	if (!href_list["action"])
 		return
@@ -49,10 +49,7 @@
 
 /obj/item/blueprints/interact()
 	var/area/A = get_area()
-	var/text = {"<HTML><head><title>[src]</title></head><BODY>
-<h2>[station_name()] blueprints</h2>
-<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>
-"}
+	var/text = "<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>"
 	switch (get_area_type())
 		if (AREA_SPACE)
 			text += {"
@@ -71,8 +68,11 @@ move an amendment</a> to the drawing.</p>
 "}
 		else
 			return
-	text += "</BODY></HTML>"
-	usr << browse(entity_ja(text), "window=blueprints")
+
+	var/datum/browser/popup = new(usr, "blueprints", "[station_name()] blueprints")
+	popup.set_content(text)
+	popup.open()
+
 	onclose(usr, "blueprints")
 
 
@@ -90,10 +90,10 @@ move an amendment</a> to the drawing.</p>
 		/area/shuttle,
 		/area/centcom,
 		/area/asteroid,
-		/area/tdome,
-		/area/syndicate_station,
-		/area/wizard_station
-		// /area/derelict //commented out, all hail derelict-rebuilders!
+		/area/centcom/tdome,
+		/area/shuttle/syndicate,
+		/area/custom/wizard_station
+		// /area/space_structures/derelict //commented out, all hail derelict-rebuilders!
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )

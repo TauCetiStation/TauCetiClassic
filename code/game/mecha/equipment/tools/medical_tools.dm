@@ -46,7 +46,7 @@
 	if(occupant)
 		occupant_message("The sleeper is already occupied")
 		return
-	if(istype(target, /mob/living/carbon/alien))
+	if(istype(target, /mob/living/carbon/xenomorph))
 		occupant_message("Warning! Unauthorized life form detected!")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,target))
@@ -119,7 +119,7 @@
 	if(F.get("eject"))
 		go_out()
 	if(F.get("view_stats"))
-		chassis.occupant << browse(entity_ja(get_occupant_stats()),"window=msleeper")
+		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(F.get("inject"))
@@ -131,6 +131,7 @@
 		return
 	return {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<title>[occupant] statistics</title>
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
@@ -527,7 +528,7 @@
 			log_message("Reagent processing started.")
 		return
 	if(F.get("show_reagents"))
-		chassis.occupant << browse(entity_ja(get_reagents_page()),"window=msyringegun")
+		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
 	if(F.get("purge_reagent"))
 		var/reagent = F.get("purge_reagent")
 		if(reagent)
@@ -541,6 +542,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 						<title>Reagent Synthesizer</title>
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]

@@ -1,111 +1,107 @@
-/*
-	HOW DO I LOG RUNTIMES?
-	Firstly, start dreamdeamon if it isn't already running. Then select "world>Log Session" (or press the F3 key)
-	navigate the popup window to the data/logs/runtime/ folder from where your tgstation .dmb is located.
-	(you may have to make this folder yourself)
-
-	OPTIONAL: 	you can select the little checkbox down the bottom to make dreamdeamon save the log everytime you
-				start a world. Just remember to repeat these steps with a new name when you update to a new revision!
-
-	Save it with the name of the revision your server uses (e.g. r3459.txt).
-	Game Masters will now be able to grant access any runtime logs you have archived this way!
-	This will allow us to gather information on bugs across multiple servers and make maintaining the TG
-	codebase for the entire /TG/station commuity a TONNE easier :3 Thanks for your help!
-*/
-
-
-//This proc allows Game Masters to grant a client access to the .getruntimelog verb
-//Permissions expire at the end of each round.
-//Runtimes can be used to meta or spot game-crashing exploits so it's advised to only grant coders that
-//you trust access. Also, it may be wise to ensure that they are not going to play in the current round.
-/client/proc/giveruntimelog()
-	set name = ".giveruntimelog"
-	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
-	set category = null
-
-	if(!src.holder)
-		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
-		return
-
-	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
-	if(!istype(target,/client))
-		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
-		return
-
-	target.verbs |= /client/proc/getruntimelog
-	to_chat(target, "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>")
-	return
-
-
-//This proc allows download of runtime logs saved within the data/logs/ folder by dreamdeamon.
-//It works similarly to show-server-log.
-/client/proc/getruntimelog()
-	set name = ".getruntimelog"
-	set desc = "Retrieve any session logfiles saved by dreamdeamon."
-	set category = null
-
-	var/path = browse_files("data/logs/runtime/")
-	if(!path)
-		return
-
-	if(file_spam_check())
-		return
-
-	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
-	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
-	return
-
-
 //This proc allows download of past server logs saved within the data/logs/ folder.
-//It works similarly to show-server-log.
-/client/proc/getserverlog()
-	set name = ".getserverlog"
-	set desc = "Fetch logfiles from data/logs"
-	set category = null
+/client/proc/getserverlogs()
+	set name = "Get Server Logs"
+	set desc = "View/retrieve logfiles."
+	set category = "Logs"
 
-	var/path = browse_files("data/logs/")
+	browseserverlogs()
+
+/client/proc/getcurrentlogs()
+	set name = "Get Current Logs"
+	set desc = "View/retrieve logfiles for the current round."
+	set category = "Logs"
+
+	browseserverlogs("[global.log_directory]/")
+
+/client/proc/getlogsbyid()
+	set name = "Get Logs By ID"
+	set desc = "View/retrieve logfiles for the specific round."
+	set category = "Logs"
+
+	browseserverlogs_id()
+
+/client/proc/getdebuglogsbyid() // shouldbeunderscored
+	set name = "Get Debug Logs By ID"
+	set desc = "View/retrieve logfiles for the specific round."
+	set category = "Logs"
+
+	browseserverlogs_id(subpath = "debug/")
+
+/client/proc/getoldlogs() // todo: remove me someday in 2021
+	set name = "Get Logs (old)"
+	set desc = "View/retrieve old formated logfiles."
+	set category = "Logs"
+
+	browseserverlogs("data/old_logs/")
+
+/client/proc/investigate_show()
+	set name = "Investigate"
+	set category = "Logs"
+
+	//var/list/investigates = list(INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION, INVESTIGATE_NANITES, INVESTIGATE_PRESENTS)
+
+	browseserverlogs("[global.log_investigate_directory]/")
+
+//current round runtimes
+/client/proc/view_runtimes()
+	set category = "Logs"
+	set name = "View Runtimes"
+	set desc = "Open the runtime Viewer"
+
+	if(!check_rights(R_LOG|R_DEBUG))
+		return
+
+	error_cache.show_to(src)
+
+/client/proc/browseserverlogs(path = "data/logs/")
+
+	if(!check_rights(R_LOG|R_DEBUG))
+		return
+
+	path = browse_files(path)
 	if(!path)
+		to_chat(usr, "<span class='alert'>No logs found</span>")
 		return
 
 	if(file_spam_check())
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
-	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
+	log_game("[key_name(src)] accessed file: [path]")
+	
+	switch(alert("View (in game), Open (in your system's text editor), or Download?", path, "View", "Open", "Download", "Cancel"))
+		if ("View")
+			var/datum/browser/popup = new(src, "window=viewfile.[path]", "[path]", ntheme = CSS_THEME_LIGHT)
+			popup.set_content("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>")
+			popup.open()
+		if ("Open")
+			src << run(file(path))
+		if ("Download")
+			src << ftp(file(path))
+		else
+			return
+	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.")
 	return
 
+/client/proc/browseserverlogs_id(subpath = "")
 
-//Other log stuff put here for the sake of organisation
-
-//Shows today's server log
-/datum/admins/proc/view_txt_log()
-	set category = "Admin"
-	set name = "Show Server Log"
-	set desc = "Shows today's server log."
-
-	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
-	if( fexists(path) )
-		src << run( file(path) )
-	else
-		to_chat(src, "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>")
+	if(!dbcon.IsConnected())
+		to_chat(usr, "<span class='alert'>Database connection required</span>")
 		return
-	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
 
-//Shows today's attack log
-/datum/admins/proc/view_atk_log()
-	set category = "Admin"
-	set name = "Show Server Attack Log"
-	set desc = "Shows today's server attack log."
+	var/id = input("Enter round ID", "Round ID") as num|null
 
-	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
-	if( fexists(path) )
-		src << run( file(path) )
-	else
-		to_chat(src, "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>")
+	if(!id)
 		return
-	usr << run( file(path) )
-	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
+
+	var/DBQuery/round_query = dbcon.NewQuery("SELECT DATE_FORMAT(initialize_datetime, '%Y/%m/%d') FROM erro_round WHERE id = [id];")
+	round_query.Execute()
+
+	if(round_query.NextRow())
+		var/round_date = round_query.item[1]
+
+		if(!length(round_date))
+			to_chat(usr, "<span class='alert'>No logs found</span>")
+			return
+
+		browseserverlogs("data/logs/[round_date]/round-[id]/[subpath]")

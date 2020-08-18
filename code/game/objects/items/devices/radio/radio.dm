@@ -402,7 +402,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"] && position.z in signal.data["level"])
+		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
 			return
 
@@ -558,27 +558,27 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_normal))
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_voice))
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 			if (length(heard_garbled))
 				quotedmsg = M.say_quote(stars(message))
@@ -586,9 +586,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 				for (var/mob/R in heard_voice)
 					if(istype(R, /mob/living/silicon/ai))
-						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
+						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
-						R.show_message(rendered, 2)
+						R.show_message(rendered, SHOWMSG_AUDIO)
 
 /obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
 
@@ -655,30 +655,35 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (src in view(1, user))
 		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
-/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/radio_grid))
+/obj/item/device/radio/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/radio_grid))
 		if(grid)
 			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
 			return
-		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
-		user.drop_item()
-		var/obj/item/device/radio_grid/new_grid = W
+
+		to_chat(user, "<span class='notice'>You attach [I] to [src]!</span>")
+		user.drop_from_inventory(I)
+		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
-	else if(iswirecutter(W))
+
+	else if(iswirecutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
+
 		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
-	else if (isscrewdriver(W))
+
+	else if (isscrewdriver(I))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!istype(src, /obj/item/device/radio/beacon))
 			to_chat(user, "<span class='notice'>The radio can [b_stat ? "now" : "no longer"] be attached and modified!</span>")
+
 	else
-		..()
+		return ..()
 
 /obj/item/device/radio/emp_act(severity)
 	if(!grid)
@@ -702,20 +707,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon_state = "radio"
 	canhear_range = 0 // Should prevent everyone around the cyborg hearing potentionally secret stuff from department channels (espicially sec)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user)
-//	..()
+/obj/item/device/radio/borg/attackby(obj/item/I, mob/user, params)
 	user.set_machine(src)
-	if (!( isscrewdriver(W) || (istype(W, /obj/item/device/encryptionkey))))
-		return
 
-	if(isscrewdriver(W))
+	if(isscrewdriver(I))
 		if(keyslot)
-
-
 			for(var/ch_name in channels)
 				radio_controller.remove_object(src, radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
-
 
 			if(keyslot)
 				var/turf/T = get_turf(user)
@@ -725,23 +724,22 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			recalculateChannels()
 			to_chat(user, "You pop out the encryption key in the radio!")
-
 		else
 			to_chat(user, "This radio doesn't have any encryption keys!")
 
-	if(istype(W, /obj/item/device/encryptionkey))
+	else if(istype(I, /obj/item/device/encryptionkey))
 		if(keyslot)
 			to_chat(user, "The radio can't hold another key!")
 			return
 
 		if(!keyslot)
-			user.drop_item()
-			W.loc = src
-			keyslot = W
+			user.drop_from_inventory(I, src)
+			keyslot = I
 
 		recalculateChannels()
 
-	return
+	else
+		return ..()
 
 /obj/item/device/radio/borg/proc/recalculateChannels()
 	src.channels = list()
@@ -777,7 +775,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/borg/Topic(href, href_list)
-	if(usr.stat || !on)
+	if(usr.incapacitated() || !on)
 		return
 	if (href_list["mode"])
 		if(subspace_transmission != 1)
@@ -796,7 +794,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!on)
 		return
 
-	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	var/dat = "<TT>"
 	dat += {"
 				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 				Frequency:
@@ -811,7 +809,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
 			dat+=text_sec_channel(ch_name, channels[ch_name])
-	user << browse(entity_ja(dat), "window=radio")
+
+	var/datum/browser/popup = new(user, "radio", "[src]")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "radio")
 	return
 

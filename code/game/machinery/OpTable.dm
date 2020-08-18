@@ -5,7 +5,7 @@
 	icon_state = "table2-idle"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	active_power_usage = 5
 	var/mob/living/carbon/human/victim = null
@@ -20,8 +20,7 @@
 		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -73,21 +72,14 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
-	if(isrobot(user) || isessence(user))
+/obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
+	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+		var/mob/living/carbon/M = A
+		if (M.buckled)
+			M.buckled.user_unbuckle_mob(user)
+		take_victim(M, user)
 		return
-
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
+	return ..()
 
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
@@ -128,7 +120,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained())
+	if(usr.incapacitated() || !ishuman(usr) || !usr.canmove)
 		return
 
 	if(src.victim)
@@ -149,10 +141,4 @@
 			qdel(G)
 			return
 
-	if(!W.canremove || W.flags & NODROP)
-		return
-
-	user.drop_item()
-	if(W && W.loc)
-		W.loc = src.loc
-	return
+	return ..()

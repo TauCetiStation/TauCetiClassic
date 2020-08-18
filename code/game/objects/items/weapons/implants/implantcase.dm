@@ -18,48 +18,48 @@
 	return
 
 
-/obj/item/weapon/implantcase/attackby(obj/item/weapon/I, mob/user)
-	..()
-	if (istype(I, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
-		if (user.get_active_hand() != I)
+/obj/item/weapon/implantcase/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pen))
+		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
+
+		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
 			return
-		if((!in_range(src, usr) && src.loc != user))
-			return
-		if(t)
-			src.name = text("Glass Case- '[]'", t)
-		else
-			src.name = "Glass Case"
+
+		name = "Glass Case"
+		if (t)
+			name += " - '[t]'"
+
 	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
-		if(!src.imp)	return
-		if(!src.imp.allow_reagents)	return
-		if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
+		if(!imp || !src.imp.allow_reagents)
+			return
+
+		if(imp.reagents.total_volume >= imp.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			spawn(5)
-				I.reagents.trans_to(src.imp, 5)
-				to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>")
-	else if (istype(I, /obj/item/weapon/implanter))
-		if (I:imp)
-			if ((src.imp || I:imp.implanted))
+			I.reagents.trans_to(src.imp, 5)
+			to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>")
+
+	else if(istype(I, /obj/item/weapon/implanter))
+		var/obj/item/weapon/implanter/IMP = I
+		if (IMP.imp)
+			if (imp || IMP.imp.implanted)
 				return
-			I:imp.loc = src
-			src.imp = I:imp
-			I:imp = null
-			src.update()
-			I:update()
-		else
-			if (src.imp)
-				if (I:imp)
-					return
-				src.imp.loc = I
-				I:imp = src.imp
-				src.imp = null
-				update()
-			I:update()
-	return
+			IMP.imp.forceMove(src)
+			imp = IMP.imp
+			IMP.imp = null
+			update()
+			IMP.update()
+		else if(imp)
+			if(IMP.imp)
+				return
+			imp.forceMove(IMP)
+			IMP.imp = imp
+			imp = null
+			update()
+		IMP.update()
 
-
+	else
+		return ..()
 
 /obj/item/weapon/implantcase/tracking
 	name = "Glass Case- 'Tracking'"

@@ -12,15 +12,27 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
+/obj/structure/grille/atom_init()
+	. = ..()
+	if(destroyed)
+		icon_state = "brokengrille"
+		density = FALSE
+		health = 0
+
 /obj/structure/grille/ex_act(severity)
-	qdel(src)
+	switch(severity)
+		if(1)
+			health -= rand(30, 50)
+		if(2)
+			health -= rand(15, 30)
+		if(3)
+			health -= rand(5, 15)
+	healthcheck()
+	return
 
 /obj/structure/grille/blob_act()
-	qdel(src)
-
-/obj/structure/grille/meteorhit(obj/M)
-	qdel(src)
-
+	health -= rand(initial(health)*0.8, initial(health)*3) //Grille will always be blasted, but chances of leaving things over
+	healthcheck()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -48,7 +60,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/alien/larva))	return
+	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -73,15 +85,15 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)
+/obj/structure/grille/attack_animal(mob/living/simple_animal/attacker)
+	if(attacker.melee_damage == 0)
 		return
 	..()
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+	attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-	health -= M.melee_damage_upper
+	health -= attacker.melee_damage
 	healthcheck()
 	return
 
@@ -113,7 +125,10 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-			new /obj/item/stack/rods(get_turf(src), 2)
+			if(destroyed)
+				new /obj/item/stack/rods(get_turf(src), 1)
+			else
+				new /obj/item/stack/rods(get_turf(src), 2)
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -174,19 +189,21 @@
 		return
 //window placing end
 
-	else if(istype(W, /obj/item/weapon/shard))
-		health -= W.force * 0.1
-	else if(!shock(user, 70))
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		switch(W.damtype)
-			if("fire")
-				health -= W.force
-			if("brute")
-				health -= W.force * 0.1
-	healthcheck()
-	..()
-	return
+	if(user.a_intent != INTENT_HARM)
+		return
 
+	. = ..()
+	if((W.flags & CONDUCT) && shock(user, 70))
+		return
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+	switch(W.damtype)
+		if("fire")
+			health -= W.force
+		if("brute")
+			health -= W.force * 0.1
+
+	healthcheck()
 
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 5)

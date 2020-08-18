@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
 	light_color="#4285f4"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 1000
 
@@ -83,18 +83,18 @@
 */
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(on)
-		overlays+="broadcaster on"
+		add_overlay("broadcaster on")
 		set_light(3) // OH FUUUUCK
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
 	else
 		set_light(1) // Only the tile we're on.
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	if(sources.len)
-		overlays+="broadcaster linked"
+		add_overlay("broadcaster linked")
 
 /obj/machinery/media/transmitter/broadcast/proc/update_on()
 	if(on)
@@ -123,7 +123,7 @@
 		else
 			newfreq = input(usr, "Set a new frequency (MHz, 90.0, 200.0).", src, media_frequency) as null|num
 		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
+			if(!IS_INTEGER(newfreq))
 				newfreq *= 10 // shift the decimal one place
 			if(newfreq > 900 && newfreq < 2000) // Between (90.0 and 100.0)
 				disconnect_frequency()

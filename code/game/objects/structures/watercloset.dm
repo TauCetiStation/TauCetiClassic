@@ -286,14 +286,15 @@
 	icon_state = "shower"
 	density = 0
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
+	layer = MOB_LAYER + 1.1
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
-	var/cost_per_activation = 150
+	var/cost_per_activation = 10
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -320,7 +321,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // ≈сли игрок выключил раньше времени - принудительное аннулирование платы.
+			is_payed = 0 // If the player closes ahead of time - force cancel the fee
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
@@ -357,8 +358,8 @@
 						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
 							//transfer the money
-							D.money -= transaction_amount
-							station_account.money += transaction_amount
+							D.adjust_money(-transaction_amount)
+							station_account.adjust_money(transaction_amount)
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()
@@ -390,12 +391,12 @@
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -414,12 +415,12 @@
 				qdel(mymist)
 				ismist = 0
 
-/obj/machinery/shower/Crossed(atom/movable/O)
-	..()
-	wash(O)
-	if(ismob(O))
+/obj/machinery/shower/Crossed(atom/movable/AM)
+	. = ..()
+	wash(AM)
+	if(ismob(AM))
 		mobpresent += 1
-		check_heat(O)
+		check_heat(AM)
 
 /obj/machinery/shower/Uncrossed(atom/movable/O)
 	if(ismob(O))

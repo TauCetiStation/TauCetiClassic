@@ -2,7 +2,76 @@
 	name = "shield"
 	var/block_chance = 65
 
+/obj/item/weapon/shield/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
+	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
+
+	var/is_stunned = is_type_in_list(target, SW.interupt_on_sweep_hit_types)
+	if(is_stunned)
+		to_chat(user, "<span class='warning'>Your [src] has hit [target]! There's not enough space for broad sweeps here!</span>")
+
+	var/resolved = target.attackby(src, user, list())
+	if(!resolved && src)
+		afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(isliving(target) && prob(Get_shield_chance())) // Better shields have more chance to stun.
+		var/mob/living/M = target
+		user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
+		if(M.buckled)
+			M.buckled.user_unbuckle_mob(M)
+
+		M.apply_effect(2, STUN, 0)
+		M.apply_effect(2, WEAKEN, 0)
+		M.apply_effect(4, STUTTER, 0)
+		shake_camera(M, 1, 1)
+
+	return is_stunned
+
+/obj/item/weapon/shield/proc/on_sweep_push_success(atom/target, mob/user)
+	var/turf/T_target = get_turf(target)
+
+	if(user.a_intent != INTENT_HELP)
+		var/resolved = target.attackby(src, user, list())
+		if(!resolved && src)
+			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+
+	if(!has_gravity(src) && !istype(target, /turf/space))
+		step_away(user, T_target)
+	else if(istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		if(!AM.anchored)
+			var/turf/to_move = get_step(target, get_dir(user, target))
+			step_away(target, get_turf(src))
+			if(AM.loc != to_move && isliving(AM)) // We tried pushing them, but pushed them into something, IT'S FALLING DOWN TIME.
+				var/mob/living/M = AM
+
+				M.log_combat(user, "pushed with [name]")
+
+				user.visible_message("<span class='warning'>[M] is stunned by [user] with [src]!</span>", "<span class='warning'>You stun [M] with [src]!</span>")
+				if(M.buckled)
+					M.buckled.user_unbuckle_mob(M)
+
+				M.apply_effect(2, STUN, 0)
+				M.apply_effect(2, WEAKEN, 0)
+				M.apply_effect(6, STUTTER, 0)
+				shake_camera(M, 1, 1)
+
 /obj/item/weapon/shield/riot
+	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
@@ -23,14 +92,14 @@
 /obj/item/weapon/shield/riot/Get_shield_chance()
 	return block_chance
 
-/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/melee/baton))
+/obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
 			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 			cooldown = world.time
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -48,6 +117,30 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 	var/emp_cooldown = 0
+
+/obj/item/weapon/shield/energy/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/shield/energy/proc/can_sweep_push(mob/user)
+	return active
 
 /obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
 	if(active)
@@ -81,6 +174,30 @@
 	w_class = ITEM_SIZE_NORMAL
 	var/active = 0
 
+/obj/item/weapon/shield/riot/tele/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf)
+
+	SCB.can_sweep = TRUE
+
+	SCB.can_push = TRUE
+
+	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+
+	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+
+	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/riot/tele/proc/can_sweep(mob/user)
+	return active
+
+/obj/item/weapon/shield/riot/tele/proc/can_sweep_push(mob/user)
+	return active
+
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
 		return block_chance
@@ -112,6 +229,65 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/buckler
+	name = "buckler"
+	desc = "A standard home-made shield, that can protect you from multiple shots. May break."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "buckler"
+	flags = CONDUCT
+	force = 6.0
+	throwforce = 4.0
+	throw_speed = 3
+	throw_range = 5
+	block_chance = 45
+	w_class = ITEM_SIZE_NORMAL
+	m_amt = 1000
+	g_amt = 0
+	origin_tech = "materials=2"
+	attack_verb = list("shoved", "bashed")
+	hitsound = list('sound/weapons/wood_shield_hit.ogg')
+	var/cooldown = 0
+
+/obj/item/weapon/shield/buckler/Get_shield_chance()
+	return block_chance
+
+
+/obj/item/weapon/shield/buckler/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/twohanded/spear))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] hits the buclker with spear!</span>")
+			playsound(user, 'sound/effects/hits_to_w_shield.ogg', VOL_EFFECTS_MASTER)
+			cooldown = world.time
+
+	else
+		return ..()
+
+// *(BUCKLER craft in recipes.dm)*
+
+/obj/item/weapon/bucklerframe1
+	name = "shield(1 stage)"
+	desc = "To finish you need: cut with wirecutters; bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe1"
+
+/obj/item/weapon/bucklerframe2
+	name = "shield(2 stage)"
+	desc = "To finish you need: bound with cable restraints; attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe2"
+
+/obj/item/weapon/bucklerframe3
+	name = "shield(3 stage)"
+	desc = "To finish you need: attach 4 plasteel; weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe3"
+
+/obj/item/weapon/bucklerframe4
+	name = "shield(4 stage)"
+	desc = "To finish you need: weld it all."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bucklerframe4"
 
 /*
 /obj/item/weapon/cloaking_device

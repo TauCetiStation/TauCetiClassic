@@ -57,13 +57,18 @@
 	return null
 
 
-/mob/living/carbon/human/proc/has_bodypart(name)
+/mob/living/carbon/human/has_bodypart(name)
 	var/obj/item/organ/external/BP = bodyparts_by_name[name]
 
 	return (BP && !(BP.is_stump) )
 
+/mob/living/carbon/human/has_organ(name)
+	var/obj/item/organ/internal/IO = organs_by_name[name]
+
+	return IO
+
 /mob/living/carbon/human/proc/specie_has_slot(slot)
-	if(species && slot in species.restricted_inventory_slots)
+	if(species && (slot in species.restricted_inventory_slots))
 		return FALSE
 	return TRUE
 
@@ -220,7 +225,19 @@
 
 	return 1
 
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+	var/datum/outfit/O = null
 
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return 0
+	if(!O)
+		return 0
+
+	return O.equip(src, visualsOnly)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
@@ -264,6 +281,7 @@
 			W.equipped(src, slot)
 			update_inv_r_hand()
 		if(SLOT_BELT)
+			playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.belt = W
 			W.equipped(src, slot)
 			update_inv_belt()
@@ -310,6 +328,7 @@
 			W.equipped(src, slot)
 			update_inv_head()
 		if(SLOT_SHOES)
+			playsound(src, 'sound/effects/equip_shoes.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.shoes = W
 			W.equipped(src, slot)
 			update_inv_shoes()
@@ -320,6 +339,7 @@
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(SLOT_W_UNIFORM)
+			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
 			update_inv_w_uniform()

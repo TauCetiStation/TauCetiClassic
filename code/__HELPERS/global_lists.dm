@@ -7,23 +7,42 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	hair_styles_male_list += H.name
-			if(FEMALE)	hair_styles_female_list += H.name
-			else
-				hair_styles_male_list += H.name
-				hair_styles_female_list += H.name
+		for(var/S in H.species_allowed)
+			hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
+
+	// Circular double list initialization
+	for(var/hash in hairs_cache)
+		var/hairs_cache_len = length(hairs_cache[hash])
+		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache_len]
+		hairs_cache[hash][hairs_cache[hash][hairs_cache_len]][RIGHT] = hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
+			hairs_cache[hash][hairs_cache[hash][i]][LEFT] = hairs_cache[hash][hairs_cache[hash][i]][LEFT] || hairs_cache[hash][i - 1]
+			hairs_cache[hash][hairs_cache[hash][i]][RIGHT] = hairs_cache[hash][hairs_cache[hash][i]][RIGHT] || hairs_cache[hash][i + 1]
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	facial_hair_styles_male_list += H.name
-			if(FEMALE)	facial_hair_styles_female_list += H.name
-			else
-				facial_hair_styles_male_list += H.name
-				facial_hair_styles_female_list += H.name
+		for(var/S in H.species_allowed)
+			facial_hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				facial_hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				facial_hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			facial_hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
+
+	// Circular double list initialization
+	for(var/hash in facial_hairs_cache)
+		var/hairs_cache_len = length(facial_hairs_cache[hash])
+		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][hairs_cache_len]
+		facial_hairs_cache[hash][facial_hairs_cache[hash][hairs_cache_len]][RIGHT] = facial_hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] || facial_hairs_cache[hash][i - 1]
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] || facial_hairs_cache[hash][i + 1]
+
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	for(var/T in subtypesof(/datum/surgery_step))
@@ -47,7 +66,7 @@
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		for(var/key in L.key)
-			language_keys[":[lowertext_(key)]"] = L
+			language_keys[":[lowertext(key)]"] = L
 
 	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
@@ -58,6 +77,8 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
+		if(S.flags[SPRITE_SHEET_RESTRICTION])
+			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
@@ -85,6 +106,100 @@
 				global.chemical_reactions_list[id] = list()
 			global.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant.
+
+	// Create list for rituals to determine the value of things
+	var/list/money_type_by_cash_am = list()
+	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash) - /obj/item/weapon/spacecash/ewallet
+	for(var/money_type in type_cash)
+		var/obj/item/weapon/spacecash/cash = money_type
+		var/cash_am = "[initial(cash.worth)]"
+		money_type_by_cash_am[cash_am] = cash
+
+	var/i = 0
+	for(var/cash_am in money_type_by_cash_am)
+		if(i == money_type_by_cash_am.len - 1)
+			break
+		i++
+		var/money_type = money_type_by_cash_am[cash_am]
+		var/next_money_type = money_type_by_cash_am[money_type_by_cash_am[i + 1]]
+		cash_increase_list[money_type] = next_money_type
+
+	cash_increase_list[/obj/item/weapon/spacecash/c1000] = /obj/item/stack/sheet/mineral/gold
+	cash_increase_list[/obj/item/weapon/spacecash] = /obj/item/weapon/spacecash/c1
+
+	global.combat_combos = list()
+	for(var/path in subtypesof(/datum/combat_combo))
+		var/datum/combat_combo/CC = new path()
+		var/list/hashes = CC.get_hash()
+		for(var/hash in hashes)
+			if(global.combat_combos[hash])
+				var/datum/combat_combo/conflict = global.combat_combos[hash]
+				warning("[CC.name] IS CONFLICTING WITH [conflict.name]!")
+			global.combat_combos[hash] = CC
+		global.combat_combos_by_name[CC.name] = CC
+
+	/*
+		Chaplain related: Spells and Rites
+	*/
+	global.spells_by_aspects = list()
+	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = new path()
+		if(!S.needed_aspect)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = S.needed_aspect[1]
+
+		if(!global.spells_by_aspects[aspect_type])
+			global.spells_by_aspects[aspect_type] = list()
+		global.spells_by_aspects[aspect_type] += path
+
+	global.rites_by_aspects = list()
+	for(var/path in subtypesof(/datum/religion_rites))
+		var/datum/religion_rites/RR = new path()
+		if(!RR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = RR.needed_aspects[1]
+
+		if(!global.rites_by_aspects[aspect_type])
+			global.rites_by_aspects[aspect_type] = list()
+		global.rites_by_aspects[aspect_type] += path
+
+	global.holy_reagents_by_aspects = list()
+	for(var/id in global.chemical_reagents_list)
+		var/datum/reagent/R = global.chemical_reagents_list[id]
+		if(!R.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = R.needed_aspects[1]
+
+		if(!global.holy_reagents_by_aspects[aspect_type])
+			global.holy_reagents_by_aspects[aspect_type] = list()
+		global.holy_reagents_by_aspects[aspect_type] += id
+
+	global.faith_reactions = list()
+	for(var/path in subtypesof(/datum/faith_reaction))
+		var/datum/faith_reaction/FR = new path
+		if(!FR.id)
+			continue
+
+		global.faith_reactions[FR.id] = FR
+
+	global.faith_reactions_by_aspects = list()
+	for(var/id in global.faith_reactions)
+		var/datum/faith_reaction/FR = global.faith_reactions[id]
+		if(!FR.needed_aspects)
+			continue
+
+		// Don't bother adding ourselves to other aspects, it is redundant.
+		var/aspect_type = FR.needed_aspects[1]
+
+		if(!global.faith_reactions_by_aspects[aspect_type])
+			global.faith_reactions_by_aspects[aspect_type] = list()
+		global.faith_reactions_by_aspects[aspect_type] += id
 
 	populate_gear_list()
 

@@ -73,7 +73,7 @@
 	if(ckey in admin_datums)
 		ammount += 1
 
-	if(player_ingame_age >= config.customitem_slot_by_time)
+	if(isnum(player_ingame_age) && player_ingame_age >= config.customitem_slot_by_time)
 		ammount += 1
 
 	if(ckey in slots)

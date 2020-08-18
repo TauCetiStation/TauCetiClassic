@@ -34,50 +34,34 @@ BAN_LEGACY_SYSTEM
 ##Unhash this to use real in-game minutes for certain jobs (USE_AGE_RESTRICTION_FOR_JOBS must be enabled too)
 #USE_INGAME_MINUTES_RESTRICTION_FOR_JOBS
 
-## log OOC channel
+## log stuff, see configuration.dm for descriptions
 LOG_OOC
-
-## log client Say
 LOG_SAY
-
-## log admin actions
 LOG_ADMIN
-
-## log client access (logon/logoff)
+LOG_ADMINCHAT
 LOG_ACCESS
-
-## log game actions (start of round, results, etc.)
 LOG_GAME
-
-## log player votes
 LOG_VOTE
-
-## log client Whisper
 LOG_WHISPER
-
-## log emotes
 LOG_EMOTE
-
-## log attack messages
 LOG_ATTACK
-
-## log pda messages
 LOG_PDA
-
-## log all Topic() calls (for use by coders in tracking down Topic issues)
+LOG_RUNTIME
+LOG_SQL_ERROR
+LOG_INITIALIZATION
+LOG_QDEL
+# LOG_JS_ERROR
 # LOG_HREFS
-
-## log world.log and runtime errors to a file
-# LOG_RUNTIME
-
-## log admin warning messages
-##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
+# LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching
 # SQL_ENABLED
 
-## disconnect players who did nothing during 10 minutes
+## disconnect players who did nothing during 10 minutes or AFK_TIME_BRACKET time
 # KICK_INACTIVE
+
+## Minutes until user will be kicked for being AFK
+# AFK_TIME_BRACKET 10
 
 ## probablities for game modes chosen in "secret" and "random" modes
 ##
@@ -210,7 +194,7 @@ GATEWAY_DELAY 18000
 #CONTINUOUS_ROUNDS
 
 ## Uncomment to restrict non-admins from using humanoid alien races
-USEALIENWHITELIST
+#USEALIENWHITELIST
 
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
 #ALIEN_PLAYER_RATIO 0.2
@@ -226,6 +210,23 @@ USEALIENWHITELIST
 ## Path to the python2 executable on the system.  Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
+
+## Expected round length in minutes
+EXPECTED_ROUND_LENGTH 90
+
+## The lower delay between events in minutes.
+## Affect mundane, moderate, and major events respectively
+EVENT_DELAY_LOWER 10;30;50
+
+## The upper delay between events in minutes.
+## Affect mundane, moderate, and major events respectively
+EVENT_DELAY_UPPER 15;45;70
+
+## The delay until the first time an event of the given severity runs in minutes.
+## Unset setting use the EVENT_DELAY_LOWER and EVENT_DELAY_UPPER values instead.
+#EVENT_CUSTOM_START_MUNDANE 10;15
+#EVENT_CUSTOM_START_MODERATE 30;45
+EVENT_CUSTOM_START_MAJOR 80;100
 
 ## Uncommen to allow ghosts to write in blood during Cult rounds.
 ALLOW_CULT_GHOSTWRITER
@@ -245,11 +246,20 @@ REQ_CULT_GHOSTWRITER 6
 ## 2 - for first day
 ANTIGRIEF_ALARM_LEVEL 1
 
-## Uncomment for
-#PROXY_AUTOBAN
+## guard (geoip and stuff)
+#GUARD_EMAIL contact@taucetistation.org
+#GUARD_ENABLED
+#GUARD_AUTOBAN_TRESHHOLD 2
+#GUARD_AUTOBAN_REASON We think you are a bad guy and block you because of this.
+#GUARD_AUTOBAN_STICKY
+# ISO 3166-1 codes for trusted
+#GUARD_WHITELISTED_COUNTRY_CODES RU,UA,BY,KZ
 
 ## Uncomment to provide special actions for people from /config/donators.txt
 #ALLOW_DONATORS
+
+## Uncomment to provide special actions for Tau Ceti Station patrons
+#ALLOW_TAUCETI_PATRONS
 
 ## Uncomment to provide special actions (same as for donators) for people with Byond Membership
 #ALLOW_BYOND_MEMBERSHIP
@@ -280,8 +290,26 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Registration panic bunker won't allow user with registration date less than that. (format: year-month-day)
 # REGISTRATION_PANIC_BUNKER_AGE 2000-1-1
 
+## If user played more than this value (in minutes), bunker will let him in
+# ALLOWED_BY_BUNKER_PLAYER_AGE 60
+
 ## Panic bunker configured by players limit. This value is a maximum number of players.
 # CLIENT_LIMIT_PANIC_BUNKER_COUNT 60
 
 ## Link used by limit panic bunker to redirect a client
 # CLIENT_LIMIT_PANIC_BUNKER_LINK byond://game.taucetistation.org:2507
+
+## Replaces whatever map json file with maps/testmap.json to load testmap only.
+## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
+# SUMMON_TESTMAP
+
+## Enables demo recordings, works slower on windows
+# RECORD_REPLAYS
+
+## Run server in sandbox mode - everyone has admin permissions without logs, bans
+## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server
+# SANDBOX
+
+## This config option disables OOC after round start, and enables it back after round end.
+## Comment it out to disable such behaviour.
+OOC_ROUND_ONLY

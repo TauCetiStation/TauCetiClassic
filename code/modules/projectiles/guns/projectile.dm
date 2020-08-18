@@ -7,10 +7,10 @@
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
+	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
 	var/obj/item/ammo_box/magazine/magazine
-	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
@@ -53,22 +53,24 @@
 				casting_reagents.delete()
 	return
 
-/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
+/obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = I
 		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
-			user.remove_from_mob(AM)
+			user.drop_from_inventory(AM, src)
 			magazine = AM
-			magazine.loc = src
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
-			A.update_icon()
+			I.update_icon()
 			update_icon()
-			return 1
+			return TRUE
+
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/weapon/gun/projectile/can_fire()
 	if(chambered && chambered.BB)
@@ -84,6 +86,9 @@
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		return 1
+	else if(chambered)
+		playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
+		process_chamber()
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
@@ -96,7 +101,7 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	if(!energy_gun && src in view(1, user))
+	if(src in view(1, user))
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)

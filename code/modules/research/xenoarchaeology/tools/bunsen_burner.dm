@@ -22,8 +22,8 @@
 			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
 			var/image/I = image("icon" = W, "layer" = FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
 			var/image/I2 = image("icon" = src.icon, icon_state ="bunsen_prong", "layer" = FLOAT_LAYER)
-			overlays += I
-			overlays += I2
+			add_overlay(I)
+			add_overlay(I2)
 			if(heating)
 				spawn(heat_time)
 					try_heating()
@@ -43,7 +43,7 @@
 		to_chat(user, "<span class='warning'>There is nothing on the [src].</span>")
 		return 1
 
-	overlays = null
+	cut_overlays()
 	to_chat(user, "<span class='notice'>You remove the [held_container] from the [src].</span>")
 	held_container.loc = src.loc
 	held_container.attack_hand(user)
@@ -57,7 +57,7 @@
 			src.visible_message("<span class='notice'> [bicon(held_container)] [held_container] was successfully fried on the [src].</span>")
 			new /obj/item/weapon/reagent_containers/food/snacks/meatsteak(get_turf(src))
 			held_container = 0
-			overlays = null
+			cut_overlays()
 			return
 		held_container.reagents.handle_reactions()
 		heated = FALSE

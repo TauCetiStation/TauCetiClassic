@@ -86,7 +86,7 @@
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat = "<h3>Cloning System Control</h3>"
+	var/dat = ""
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
@@ -192,8 +192,10 @@
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
 
+	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
+	popup.set_content(dat)
+	popup.open()
 
-	user << browse(entity_ja(dat), "window=cloning")
 	onclose(user, "cloning")
 	return
 
@@ -350,7 +352,7 @@
 	if ((isnull(subject)) || (!(ishuman(subject))) || subject.species.flags[NO_SCAN] || (!subject.dna))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if (subject.brain_op_stage == 4.0)
+	if (!subject.has_brain())
 		scantemp = "Error: No signs of intelligence detected."
 		return
 	if (subject.suiciding == 1)

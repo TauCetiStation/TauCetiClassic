@@ -116,13 +116,50 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/melee/baton,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
-	cost = 3000
+	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Weapons crate"
+	access = access_brig
+	group = "Security"
+
+/datum/supply_pack/pistol
+	name = "9mm pistol crate"
+	contains = list(/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock,
+					/obj/item/weapon/gun/projectile/glock)
+	cost = 4500
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "9mm pistol crate"
+	access = access_brig
+	group = "Security"
+
+/datum/supply_pack/pistol_magazine
+	name = "9mm magazine"
+	contains = list(/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2,
+					/obj/item/ammo_box/magazine/m9mm_2)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "9mm magazine"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/pistol_magazine_rubber
+	name = "9mm magazine (rubber)"
+	contains = list(/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber,
+					/obj/item/ammo_box/magazine/m9mm_2/rubber)
+	cost = 1000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "9mm magazine (rubber)"
 	access = access_brig
 	group = "Security"
 
@@ -200,8 +237,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
-					/obj/item/weapon/gun/projectile/shotgun/combat,
-					/obj/item/weapon/gun/projectile/shotgun/combat)
+					/obj/item/weapon/gun/projectile/shotgun,
+					/obj/item/weapon/gun/projectile/shotgun)
 	cost = 5000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Ballistic gear crate"
@@ -249,8 +286,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/r4046
 	name = "40x46mm rubber grenades"
-	contains = list(/obj/item/weapon/storage/box/r4046,
-					/obj/item/weapon/storage/box/r4046)
+	contains = list(/obj/item/weapon/storage/box/r4046/rubber,
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "40x46mm rubber grenades"
@@ -260,7 +297,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/m79,
-					/obj/item/weapon/storage/box/r4046)
+					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "m79 grenade launcher"
@@ -677,7 +714,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell,
 					/obj/item/weapon/stock_parts/cell/high,
-					/obj/item/weapon/stock_parts/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/gun/energy/pyrometer/engineering,
+					/obj/item/weapon/gun/energy/pyrometer/engineering)
 	cost = 1500
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Electrical maintenance crate"
@@ -705,6 +744,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 800
 	crate_type = /obj/structure/largecrate
 	crate_name = "fuel tank crate"
+	group = "Engineering"
+
+/datum/supply_pack/aqueous_foam_tank
+	name = "AFFF crate"
+	contains = list(/obj/structure/reagent_dispensers/aqueous_foam_tank)
+	cost = 800
+	crate_type = /obj/structure/largecrate
+	crate_name = "AFFF crate"
 	group = "Engineering"
 
 /datum/supply_pack/solar
@@ -743,7 +790,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	cost = 1500
-	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Emitter crate"
 	access = access_ce
 	group = "Engineering"
@@ -752,23 +799,50 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Field Generator crate"
 
 /datum/supply_pack/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
 	cost = 2000
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Singularity Generator crate"
+
+/datum/supply_pack/engine/tesla_gen
+	name = "Energy Ball Generator crate"
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Energy Ball Generator crate"
 
 /datum/supply_pack/engine/collector
 	name = "Collector crate"
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Collector crate"
+
+/datum/supply_pack/engine/ground_rod
+	name = "Grounding Rod crate"
+	contains = list(/obj/machinery/power/grounding_rod,
+					/obj/machinery/power/grounding_rod)
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Grounding Rod crate"
+
+/datum/supply_pack/engine/tesla_coil
+	name = "Tesla Coil crate"
+	contains = list(/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil)
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
+	crate_name = "Tesla Coil crate"
 
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator crate"
@@ -780,7 +854,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
-	crate_type = /obj/structure/closet/crate/engi
+	crate_type = /obj/structure/closet/crate/secure/large
+	access = access_engine
 	crate_name = "Particle Accelerator crate"
 
 /datum/supply_pack/mecha_ripley
@@ -815,7 +890,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/device/flash,
 					/obj/item/device/flash,
 					/obj/item/weapon/stock_parts/cell/high,
-					/obj/item/weapon/stock_parts/cell/high)
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics,)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "Robotics assembly"
@@ -912,10 +988,20 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/storage/box/autoinjectors,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
-					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space)
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/gun/energy/pyrometer/medical,)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "Medical crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/roller_beds
+	name = "Roller beds crate"
+	cost = 1000
+	contains = list(/obj/item/roller, /obj/item/roller,
+					/obj/item/roller, /obj/item/roller)
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Roller beds crate"
 	group = "Medical / Science"
 
 /datum/supply_pack/virus
@@ -960,17 +1046,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_pack/surgery
 	name = "Surgery crate"
-	contains = list(/obj/item/weapon/cautery,
-					/obj/item/weapon/surgicaldrill,
-					/obj/item/clothing/mask/breath/medical,
+	contains = list(/obj/item/clothing/mask/breath/medical,
 					/obj/item/weapon/tank/anesthetic,
-					/obj/item/weapon/FixOVein,
-					/obj/item/weapon/hemostat,
-					/obj/item/weapon/scalpel,
-					/obj/item/weapon/bonegel,
-					/obj/item/weapon/retractor,
-					/obj/item/weapon/bonesetter,
-					/obj/item/weapon/circular_saw)
+					/obj/item/weapon/storage/visuals/surgery/full)
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Surgery crate"
@@ -1590,7 +1668,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/wcoat,
 					/obj/item/clothing/suit/hastur,
 					/obj/item/clothing/suit/holidaypriest,
-					/obj/item/clothing/suit/nun,
+					/obj/item/clothing/suit/hooded/skhima,
+					/obj/item/clothing/suit/hooded/nun,
 					/obj/item/clothing/suit/imperium_monk,
 					/obj/item/clothing/suit/ianshirt,
 					/obj/item/clothing/under/gimmick/rank/captain/suit,

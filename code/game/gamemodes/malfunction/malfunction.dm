@@ -31,6 +31,25 @@
 	to_chat(world, "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>")
 	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it.")
 
+/datum/game_mode/malfunction/can_start()
+	if (!..())
+		return FALSE
+	if (config && !config.allow_ai)
+		return FALSE
+	var/datum/job/ai_job = SSjob.GetJob("AI")
+	if (!ai_job || !ai_job.map_check())
+		return FALSE
+	for(var/mob/dead/new_player/player in new_player_list)
+		if (player.mind in antag_candidates)
+			var/malf_possible = FALSE
+			for (var/lvl in 1 to 3)
+				if (player.client.prefs.job_preferences[ai_job.title] == lvl && (!jobban_isbanned(player, ai_job.title)))
+					malf_possible = TRUE
+					break
+			if (!malf_possible)
+				antag_candidates -= player.mind
+	return length(antag_candidates)
+
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/dead/new_player/player in player_list)
@@ -69,6 +88,7 @@
 
 
 /datum/game_mode/proc/greet_malf(datum/mind/malf)
+	malf.current.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	to_chat(malf.current, "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>")
 	to_chat(malf.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>")
 	to_chat(malf.current, "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>")
@@ -188,14 +208,14 @@
 			malf_turf = get_turf(cur_AI)
 	explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
 		to_chat(world, "[i]")
 	sleep(10)
 	enter_allowed = FALSE
-	ticker.station_explosion_cinematic(0, null)
+	SSticker.station_explosion_cinematic(0, null)
 	if(malf_turf)
 		sleep(20)
 		explosion(malf_turf, 15, 70, 200)
@@ -257,7 +277,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	var/text = ""
-	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
+	if( malf_ai.len || istype(SSticker.mode,/datum/game_mode/malfunction) )
 		text += "<b>The malfunctioning AI were:</b>"
 
 		for(var/datum/mind/malf in malf_ai)
@@ -284,7 +304,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "malfunction", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 #undef INTERCEPT_APCS

@@ -34,7 +34,7 @@
 
 	drone_list += src
 
-	if(camera && "Robots" in camera.network)
+	if(camera && ("Robots" in camera.network))
 		camera.add_network("Engineering")
 
 	//They are unable to be upgraded, so let's give them a bit of a better battery.
@@ -82,11 +82,11 @@
 
 /mob/living/silicon/robot/drone/updateicon()
 
-	overlays.Cut()
+	cut_overlays()
 	if(stat == CONSCIOUS)
-		overlays += "eyes-[icon_state]"
+		add_overlay("eyes-[icon_state]")
 	else
-		overlays -= "eyes"
+		cut_overlay("eyes")
 
 /mob/living/silicon/robot/drone/choose_icon()
 	return
@@ -110,10 +110,13 @@
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 	else if(length(message) >= 2)
 
@@ -125,11 +128,11 @@
 
 			for (var/mob/living/S in drone_list)
 				if(S.stat != DEAD)
-					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 			for (var/mob/M in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 		else
 
@@ -287,7 +290,7 @@
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("drone") && (ROLE_PAI in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find(IGNORE_DRONE) && (ROLE_GHOSTLY in C.prefs.be_role))
 				question(C)
 
 /mob/living/silicon/robot/drone/proc/question(client/C)
@@ -300,9 +303,9 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.ignore_question += "drone"
+			C.prefs.ignore_question += IGNORE_DRONE
 
-/mob/living/silicon/robot/drone/proc/transfer_personality(client/player)
+/mob/living/silicon/robot/drone/transfer_personality(client/player)
 
 	if(!player) return
 

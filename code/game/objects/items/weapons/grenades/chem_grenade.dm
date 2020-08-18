@@ -34,21 +34,13 @@
 					beakers -= B
 					user.put_in_hands(B)
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
-	if(stage > 1 && !active && clown_check(user))
-		to_chat(user, "<span class='warning'>You prime \the [name]!</span>")
 
-		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src].", user)
+	if(stage > 1)
+		..()
 
-		activate()
-		add_fingerprint(user)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.throw_mode_on()
-
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
-
-	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
-		var/obj/item/device/assembly_holder/det = W
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
+		var/obj/item/device/assembly_holder/det = I
 		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
@@ -56,17 +48,25 @@
 			to_chat(user, "<span class='red'>Assembly must be secured with screwdriver.</span>")
 			return
 		path = 1
-		to_chat(user, "<span class='notice'>You add [W] to the metal casing.</span>")
+		to_chat(user, "<span class='notice'>You add [I] to the metal casing.</span>")
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
-		user.remove_from_mob(det)
-		det.loc = src
+		user.drop_from_inventory(det, src)
 		detonator = det
+		if(istimer(det.a_left))
+			var/obj/item/device/assembly/timer/T = det.a_left
+			det_time = T.time * 10
+		else if(istimer(det.a_right))
+			var/obj/item/device/assembly/timer/T = det.a_right
+			det_time = T.time * 10
 		icon_state = initial(icon_state) +"_ass"
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
-	else if(isscrewdriver(W) && path != 2)
+
+	else if(isscrewdriver(I) && path != 2)
 		if(stage == 1)
 			path = 1
+			if(!detonator)
+				det_time = 1
 			if(beakers.len)
 				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
 				name = "grenade"
@@ -89,21 +89,24 @@
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
 				stage = 1
 				active = 0
-	else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
+
+	else if(is_type_in_list(I, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
 		if(beakers.len == 2)
 			to_chat(user, "<span class='red'>The grenade can not hold more containers.</span>")
 			return
 		else
-			if(W.reagents.total_volume)
-				to_chat(user, "<span class='notice'>You add \the [W] to the assembly.</span>")
-				user.drop_item()
-				W.loc = src
-				beakers += W
+			if(I.reagents && I.reagents.total_volume)
+				to_chat(user, "<span class='notice'>You add \the [I] to the assembly.</span>")
+				user.drop_from_inventory(I, src)
+				beakers += I
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'>\the [W] is empty.</span>")
+				to_chat(user, "<span class='red'>\the [I] is empty.</span>")
+
+	else
+		return ..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
@@ -121,6 +124,7 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)
@@ -170,7 +174,8 @@
 	spawn(50)		   //To make sure all reagents can work
 		qdel(src)	   //correctly before deleting the grenade.
 
-/obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM as mob|obj)
+/obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
+	. = ..()
 	if (detonator)
 		detonator.Crossed(AM)
 

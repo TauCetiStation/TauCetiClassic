@@ -8,6 +8,11 @@
 		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] [ADMIN_JMP(epicenter)]")
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
+	var/power = heavy_range * 2 + light_range
+	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
+		if(get_dist(W, epicenter) < 10)
+			W.react_empulse(epicenter, power)
+
 	if(heavy_range > 1)
 		var/obj/effect/overlay/pulse = new /obj/effect/overlay(epicenter)
 		pulse.icon = 'icons/effects/effects.dmi'
@@ -27,12 +32,12 @@
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emp_act(1)
+			T.emplode(1)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emp_act(1)
+				T.emplode(1)
 			else
-				T.emp_act(2)
+				T.emplode(2)
 		else if(distance <= light_range)
-			T.emp_act(2)
+			T.emplode(2)
 	return 1

@@ -43,16 +43,14 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	if(!istype(get_area(user), /area/wizard_station))
+	if(!istype(get_area(user), /area/custom/wizard_station))
 		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			user.spell_list -= aspell
-			user.mind.spell_list -= aspell
-			qdel(aspell)
+			user.RemoveSpell(aspell)
 			qdel(S)
 			return cost
 	return -1
@@ -235,7 +233,14 @@
 	buy_word = "Summon"
 	var/item_path= null
 
+/datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	. = ..()
+	if(.)
+		return surplus != 0
+
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(surplus > 0)
+		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
@@ -249,12 +254,14 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
+/* Commented because admins ban everyone who uses this staff... Somebody should rebalance this thing
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
+*/
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -328,6 +335,15 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
 
+/datum/spellbook_entry/item/tophat
+	name = "The Wabbajack Hat"
+	desc = "A magical hat that comes with it's own pocket dimension."
+	item_path = /obj/item/clothing/head/wizard/tophat
+	log_name = "TH"
+	category = "Assistance"
+	refundable = FALSE
+	cost = 1
+	surplus = 1
 
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -368,7 +384,7 @@
 	return dat
 
 /datum/spellbook_entry/summon/IsAvailible()
-	return ticker.mode // In case spellbook is placed on map
+	return SSticker.mode // In case spellbook is placed on map
 
 /obj/item/weapon/spellbook
 	name = "spell book"
@@ -407,15 +423,17 @@
 
 
 
-/obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = O
+/obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/contract))
+		var/obj/item/weapon/contract/contract = I
 		if(contract.uses != initial(contract.uses))
 			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
 		else
 			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
 			uses += CONTRACT_PRICE
-			qdel(O)
+			qdel(I)
+	else
+		return ..()
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
@@ -440,7 +458,7 @@
 
 /obj/item/weapon/spellbook/proc/wrap(content)
 	var/dat = ""
-	dat +="<html><head><title>Spellbook</title></head>"
+	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Spellbook</title></head>"
 	dat += {"
 	<head>
 		<style type="text/css">
@@ -499,7 +517,7 @@
 		dat += cat_dat[category]
 		dat += "</div>"
 
-	user << browse(wrap(entity_ja(dat)), "window=spellbook;size=700x500")
+	user << browse(wrap(dat), "window=spellbook;size=700x500")
 	onclose(user, "spellbook")
 	return
 
@@ -509,7 +527,7 @@
 		return 1
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.incapacitated())
 		return
 
 	var/datum/spellbook_entry/E = null

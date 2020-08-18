@@ -10,7 +10,7 @@ var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
@@ -38,9 +38,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
 /mob/living/carbon/human/proc/handle_blood(blood_volume = 0)
 
-	// Aclometasone prevents blood forming, by preventing metabolism.
-	// *Blood regeneration is here, for some reason* ~Luduk
-	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume && !reagents.has_reagent("aclometasone"))
+	//Blood regeneration if there is some space
+	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
 		var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 		if(B) // Make sure there's some blood at all
 			if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -60,57 +59,59 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Damaged heart virtually reduces the blood volume, as the blood isn't
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(!IO)
+		return
 
-	if(!reagents.has_reagent("stabyzol") || IO.robotic)
-		if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
-			blood_volume *= 0.8
-		else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
-			blood_volume *= 0.6
-		else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
-			blood_volume *= 0.3
+	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage || IO.heart_status == HEART_FIBR)
+		blood_volume *= 0.8
+	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
+		blood_volume *= 0.6
+	else if((IO.damage >= IO.min_broken_damage && IO.damage < INFINITY) || IO.heart_status == HEART_FAILURE)
+		blood_volume *= 0.3
 
 	//Effects of bloodloss
-	switch(blood_volume)
-		if(BLOOD_VOLUME_SAFE to 10000)
-			if(pale)
-				pale = 0
-				update_body()
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(!pale)
-				pale = 1
-				update_body()
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel [word]</span>")
-			if(prob(1))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel [word]</span>")
-			if(oxyloss < 20)
-				oxyloss += 3
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			if(!pale)
-				pale = 1
-				update_body()
-			eye_blurry += 6
-			if(oxyloss < 50)
-				oxyloss += 10
-			oxyloss += 1
-			if(prob(15))
-				Paralyse(rand(1,3))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			oxyloss += 5
-			toxloss += 3
-			if(prob(15))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-		if(0 to BLOOD_VOLUME_SURVIVE)
-			// There currently is a strange bug here. If the mob is not below -100 health
-			// when death() is called, apparently they will be just fine, and this way it'll
-			// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-			if(!iszombie(src)) //zombies dont care about blood
-				toxloss += 300 // just to be safe!
-				death()
+	if(!HAS_TRAIT(src, TRAIT_CPB))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_SAFE to 10000)
+				if(pale)
+					pale = 0
+					update_body()
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(!pale)
+					pale = 1
+					update_body()
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(prob(1))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(oxyloss < 20)
+					oxyloss += 3
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				if(!pale)
+					pale = 1
+					update_body()
+				eye_blurry += 6
+				if(oxyloss < 50)
+					oxyloss += 10
+				oxyloss += 1
+				if(prob(15))
+					Paralyse(rand(1,3))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				oxyloss += 5
+				toxloss += 3
+				if(prob(15))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(0 to BLOOD_VOLUME_SURVIVE)
+				// There currently is a strange bug here. If the mob is not below -100 health
+				// when death() is called, apparently they will be just fine, and this way it'll
+				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
+				if(!iszombie(src)) //zombies dont care about blood
+					toxloss += 300 // just to be safe!
+					death()
 
 	// Without enough blood you slowly go hungry.
 	if(blood_volume < BLOOD_VOLUME_SAFE)
@@ -118,10 +119,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			nutrition -= 10
 		else if(nutrition >= 200)
 			nutrition -= 3
-
-	// We don't bleed out at all if metatrombine is injected.
-	if(reagents.has_reagent("metatrombine"))
-		return
 
 	//Bleeding out
 	var/blood_max = 0
@@ -159,6 +156,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
 				else
 					vessel.remove_reagent("blood", bleed_amount)
+				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
 
 	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
 		return
@@ -193,9 +191,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
-	if(reagents.has_reagent("metatrombine"))
-		return 0
-
 	if(remove_blood(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt
@@ -341,13 +336,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(src.virus2)
 	B.data["antibodies"] = src.antibodies
-	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
+	B.data["blood_DNA"] = src.dna.unique_enzymes
 	if(src.resistances && src.resistances.len)
 		if(B.data["resistances"])
 			B.data["resistances"] |= src.resistances.Copy()
 		else
 			B.data["resistances"] = src.resistances.Copy()
-	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
+	B.data["blood_type"] = src.dna.b_type
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
@@ -425,8 +420,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
-	var/donor_antigen = copytext(donor,1,lentext(donor))
-	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
+	var/donor_antigen = copytext(donor,1,-1)
+	var/receiver_antigen = copytext(receiver,1,-1)
 	var/donor_rh = (findtext(donor,"+")>0)
 	var/receiver_rh = (findtext(receiver,"+")>0)
 	if(donor_rh && !receiver_rh) return 1

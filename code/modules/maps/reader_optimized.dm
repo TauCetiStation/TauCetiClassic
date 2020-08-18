@@ -146,7 +146,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
- * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/explored)
+ * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/asteroid/mine/explored)
  *
  * WORKING :
  *
@@ -167,7 +167,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		same construction as those contained in a .dmm file, and instantiates them.
 	*/
 
-	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/asteroid/mine/explored)
 	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 	var/list/cached = modelCache[model]
 	var/index
@@ -189,7 +189,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/dpos
 
 		do
-			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
+			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/asteroid/mine/explored)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
 			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
@@ -205,7 +205,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/list/fields = list()
 
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				full_def = copytext(full_def,variables_start+1,-1)//removing the last '}'
 				fields = readlist(full_def, ";")
 
 			//then fill the members_attributes list with the corresponding variables
@@ -227,7 +227,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	//first instance the /area and remove it from the members list
 	index = members.len
-	if(members[index] != /area/template_noop)
+	if(members[index] != /area/custom/template_noop)
 		var/atom/instance
 		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 		instance = locate(members[index])
@@ -394,7 +394,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// list
 	if(copytext(text,1,6) == "list(")
-		return readlist(copytext(text,6,length(text)))
+		return readlist(copytext(text,6,-1))
 
 	// typepath
 	var/path = text2path(text)
@@ -403,7 +403,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	// file
 	if(copytext(text,1,2) == "'")
-		return file(copytext(text,2,length(text)))
+		return file(copytext(text,2,-1))
 
 	// null
 	if(text == "null")
@@ -443,7 +443,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		what.vars[attribute] = value
 	use_preloader = FALSE
 
-/area/template_noop
+/area/custom/template_noop
 	name = "Area Passthrough"
 
 /turf/template_noop

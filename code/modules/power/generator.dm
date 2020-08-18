@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 0
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
 	var/obj/machinery/atmospherics/components/binary/circulator/circ1
@@ -51,12 +51,12 @@
 
 /obj/machinery/power/generator/proc/updateicon()
 	if(stat & (NOPOWER|BROKEN))
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays.Cut()
+		cut_overlays()
 
 		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+			add_overlay(image('icons/obj/power.dmi', "teg-op[lastgenlev]"))
 
 /obj/machinery/power/generator/process()
 	if(!circ1 || !circ2 || !anchored || stat & (BROKEN|NOPOWER))
@@ -119,7 +119,7 @@
 	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
-		use_power = anchored
+		set_power_use(anchored)
 		reconnect()
 	else
 		..()
@@ -164,7 +164,10 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	user << browse(entity_ja(t), "window=teg;size=460x300")
+	var/datum/browser/popup = new(user, teg, null, 460, 300)
+	popup.set_content(t)
+	popup.open()
+
 	onclose(user, "teg")
 
 
@@ -191,7 +194,7 @@
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -201,7 +204,7 @@
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained()  || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)

@@ -23,7 +23,7 @@
 
 /obj/machinery/floodlight/process()
 	if(on)
-		if(cell.charge >= use)
+		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
 			on = 0
@@ -58,6 +58,9 @@
 		on = 0
 		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		set_light(0)
+		
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 	else
 		if(!cell)
 			return
@@ -66,6 +69,10 @@
 		on = 1
 		to_chat(user, "<span class='notice'>You turn on the light</span>")
 		set_light(brightness_on)
+		
+		user.SetNextMove(CLICK_CD_INTERACT)
+		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
+		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	updateicon()
 
@@ -84,7 +91,7 @@
 		if(unlocked)
 			if(open)
 				open = 0
-				overlays = null
+				cut_overlays()
 				to_chat(user, "You crowbar the battery panel in place.")
 			else
 				if(unlocked)

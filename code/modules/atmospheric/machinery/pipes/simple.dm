@@ -86,20 +86,20 @@
 
 	alpha = 255
 
-	overlays.Cut()
+	cut_overlays()
 
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
 	if(node1 && node2)
-		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]intact[icon_connect_type]")
+		add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]intact[icon_connect_type]"))
 		//if(leaking)
 		//	leaking = FALSE
 	else
-		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]exposed[node1?1:0][node2?1:0][icon_connect_type]")
+		add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]exposed[node1?1:0][node2?1:0][icon_connect_type]"))
 		//if(!leaking)
 		//	leaking = TRUE
-		//	START_PROCESSING(SSmachine, src)
+		//	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/atmospherics/pipe/simple/update_underlays()
 	return

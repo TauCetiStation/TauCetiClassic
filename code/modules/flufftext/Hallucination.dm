@@ -47,7 +47,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         //STRANGE ITEMS
 
 			if(16 to 25)
-				if(!halitem)
+				if(!halitem && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
@@ -101,7 +101,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, TURFS
 
 			if(26 to 40)
-				if(!halimage)
+				if(!halimage && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
 								if(!H.stat)
-									H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+									H.emote(pick("scream", "cry", "laugh"))
 						if(client)
 							client.images += halimage
 						spawn(rand(10,50)) //Only seen for a brief moment.
@@ -168,7 +168,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							if(!H.stat)
-								H.emote(pick("scream", "cry", "laugh"), auto = TRUE)
+								H.emote(pick("scream", "cry", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
 						                              'sound/weapons/guns/gunshot_ak74.ogg',
@@ -181,7 +181,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						spawn(rand(10,30))
 							playsound_local(target, gunsound, VOL_EFFECTS_MASTER)
 							if(prob(60))
-								playsound_local(target, pick(SOUNDIN_MSCREAM + SOUNDIN_FSCREAM), VOL_EFFECTS_MASTER, null, FALSE)
+								playsound_local(target, pick(SOUNDIN_FEMALE_HEAVY_PAIN + SOUNDIN_MALE_HEAVY_PAIN), VOL_EFFECTS_MASTER, null, FALSE)
 					if(8) // MELEE
 						var/list/hallsound = list('sound/weapons/smash.ogg',
 						                          'sound/weapons/polkan_atk.ogg',
@@ -190,7 +190,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/weapons/armbomb.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(9) // GUNPULSES
-						var/list/gunsound_list = list('sound/weapons/guns/gunpulse_l10c.ogg',
+						var/list/gunsound_list = list('sound/weapons/guns/plasma10_shot.ogg',
 						                              'sound/weapons/guns/gunpulse_Taser.ogg',
 						                              'sound/weapons/guns/gunpulse_laser.ogg',
 						                              'sound/weapons/guns/gunpulse_stunrevolver.ogg')
@@ -225,7 +225,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							H.Weaken(5)
 							H.Stun(8)
 							to_chat(src, "<span class='userdanger'>[pick("", "Voices in my head...", "WHY?!")] [pick("They're coming back!", "Not again...", "WHAT YOU NEED?!", "I CAN'T TAKE IT ANYMORE!", "GAAAAAAAAAAAAAH!")]</span>")
-							H.emote("scream", auto = TRUE)
+							H.emote("scream")
 					if(13) // MISC
 						var/list/hallsound = list('sound/effects/Heart Beat.ogg',
 						                          'sound/hallucinations/liar.ogg',
@@ -242,7 +242,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FLASHES OF DANGER, MOBS
 
 			if(66 to 70)
-				if(!halbody)
+				if(!halbody && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
@@ -262,16 +262,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(client) client.images -= halbody
 							halbody = null
 
+			if(71 to 73)
+				if(!HAS_TRAIT(src, TRAIT_STRONGMIND))
+					fake_attack(src)
+
         // FAKE DEATH
 
-			if(71 to 72)
-				src.sleeping = 20
+			if(74 to 75)
+				src.SetSleeping(40 SECONDS)
 				hal_crit = 1
 				hal_screwyhud = 1
 				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
 				playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(50,100))
-					src.sleeping = 0
+					src.SetSleeping(0)
 					hal_crit = 0
 					hal_screwyhud = 0
 
@@ -308,17 +312,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		to_chat(M, "<span class='warning'><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span class='warning'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
+	my_target.visible_message("<span class='warning'><B>[my_target] flails around wildly.</B></span>", self_message = "<span class='warning'><B>[src] has been attacked by [my_target] </B></span>")
 
 	src.health -= P.force
 
 
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
-	if(M == my_target)
+/obj/effect/fake_attacker/Crossed(atom/movable/AM)
+	. = ..()
+	if(AM == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
@@ -371,7 +374,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				src.do_attack_animation(my_target)
 				if(weapon_name)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
+					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 8
 					if(prob(20)) my_target.eye_blurry += 3
 					if(prob(33))
@@ -379,7 +382,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 				else
 					my_target.playsound_local(null, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 35)
-					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", 1)
+					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 4
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -427,7 +430,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.stat || H.lying) continue
+		if(H.incapacitated())
+			continue
 //		possible_clones += H
 		clone = H
 		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.

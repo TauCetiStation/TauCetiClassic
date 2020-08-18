@@ -101,13 +101,13 @@ var/list/fuel_injectors = list()
 	if(!injecting && cur_assembly)
 		icon_state = "injector1"
 		injecting = 1
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 
 /obj/machinery/fusion_fuel_injector/proc/StopInjecting()
 	if(injecting)
 		injecting = 0
 		icon_state = "injector0"
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 /obj/machinery/fusion_fuel_injector/proc/Inject()
 	if(!injecting)

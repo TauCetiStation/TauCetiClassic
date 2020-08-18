@@ -92,7 +92,7 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
-	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
+	var/dat = ""
 	if(cell)
 		var/colour = "red"
 		if(cell.charge / cell.maxcharge > 0.66)
@@ -122,7 +122,11 @@
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
 	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
-	user << browse(entity_ja(dat), "window=suspension;size=500x400")
+
+	var/datum/browser/popup = new(user, "suspension", "Multi-phase mobile suspension field generator MK II \"Steadfast\"", 500, 400)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/process()
@@ -149,7 +153,7 @@
 		for(var/obj/item/I in T)
 			if(!suspension_field.contents.len)
 				suspension_field.icon_state = "energynet"
-				suspension_field.overlays += "shield2"
+				suspension_field.add_overlay("shield2")
 			I.loc = suspension_field
 
 		for(var/mob/living/simple_animal/M in T)
@@ -267,7 +271,7 @@
 
 	if(collected)
 		suspension_field.icon_state = "energynet"
-		suspension_field.overlays += "shield2"
+		suspension_field.add_overlay("shield2")
 		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
 		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))

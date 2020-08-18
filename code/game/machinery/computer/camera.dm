@@ -4,7 +4,7 @@
 	for(var/obj/machinery/computer/security/s in computer_list)
 		s.camera_cache = null
 	for(var/datum/alarm/A in datum_alarm_list)
-		A.cameras = null
+		A.cameras = list()
 
 /obj/machinery/computer/security
 	name = "security camera monitor"
@@ -55,7 +55,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache = replacetext(list2json(camera_list), "'", "`")
+		camera_cache = replacetext(json_encode(camera_list), "'", "`")
 	else
 		if(current)
 			data["current"] = current.nano_structure()
@@ -247,6 +247,11 @@
 	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
+
+/obj/machinery/computer/security/nuclear/shiv
+	name = "pilot camera monitor"
+	desc = "Console used by fighter pilot to monitor the battlefield."
+	network = list("shiv")
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"

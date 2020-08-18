@@ -1,6 +1,4 @@
-var/datum/subsystem/vote/SSvote
-
-/datum/subsystem/vote
+SUBSYSTEM_DEF(vote)
 	name = "Vote"
 
 	wait = SS_WAIT_VOTE
@@ -8,19 +6,24 @@ var/datum/subsystem/vote/SSvote
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
 
 	var/initiator = null
-	var/started_time = null			//Not counting for custom votes, because it will apply voting cooldown and this is bad...
 	var/voting_started_time = null	//...thats why we use separate var to count remaining vote time.
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
+	var/description = null
+	var/list/last_vote_time = list() //Not counting for custom votes, because it will apply voting cooldown and this is bad...
+	var/list/delay_after_start = list("default", "restart")
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/static/list/votemode2text = list(
+		"restart" = "Restart",
+		"crew_transfer" = "Crew Transfer",
+		"gamemode" = "GameMode",
+		"custom" = "Custom"
+		)
 
-/datum/subsystem/vote/New()
-	NEW_SS_GLOBAL(SSvote)
-
-/datum/subsystem/vote/fire()	//called by master_controller
+/datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((voting_started_time + config.vote_period - world.time)/10)
 
@@ -38,16 +41,17 @@ var/datum/subsystem/vote/SSvote
 				client_popup.open(0)
 
 
-/datum/subsystem/vote/proc/reset()
+/datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
 	mode = null
 	question = null
+	description = null
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
 
-/datum/subsystem/vote/proc/get_result()
+/datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -81,7 +85,7 @@ var/datum/subsystem/vote/SSvote
 				. += option
 	return .
 
-/datum/subsystem/vote/proc/announce_result()
+/datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
 	if(winners.len > 0)
@@ -109,7 +113,7 @@ var/datum/subsystem/vote/SSvote
 	to_chat(world, "\n<font color='purple'>[text]</font>")
 	return .
 
-/datum/subsystem/vote/proc/result()
+/datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
 	var/crewtransfer = 0
@@ -124,7 +128,7 @@ var/datum/subsystem/vote/SSvote
 			if("gamemode")
 				if(master_mode != .)
 					world.save_mode(.)
-					if(ticker && ticker.mode)
+					if(SSticker && SSticker.mode)
 						restart = 1
 					else
 						master_mode = .
@@ -149,7 +153,7 @@ var/datum/subsystem/vote/SSvote
 
 	return .
 
-/datum/subsystem/vote/proc/submit_vote(vote)
+/datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -161,14 +165,18 @@ var/datum/subsystem/vote/SSvote
 
 	return 0
 
-/datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	var/is_admin = FALSE
 	if(check_rights(R_ADMIN))
 		is_admin = TRUE
+	var/timer_mode = "default"
+	if(vote_type == "restart")
+		timer_mode = "restart"
 	if(!mode)
-		if(started_time != null && !is_admin)
-			var/next_allowed_time = (started_time + config.vote_delay)
+		if(last_vote_time[timer_mode] != null && !is_admin)
+			var/next_allowed_time = (last_vote_time[timer_mode] + config.vote_delay)
 			if(next_allowed_time > world.time)
+				to_chat(usr, "<span class='vote'>Next [votemode2text[vote_type]] vote is available after [round((next_allowed_time-world.time)/600)] minutes</span>")
 				return 0
 
 		reset()
@@ -181,13 +189,24 @@ var/datum/subsystem/vote/SSvote
 							if(!C.holder.fakekey && !C.is_afk())
 								num_admins_online++
 					if(num_admins_online)
+						to_chat(usr, "<span class='vote'>Admins online. Restart vote canceled</span>")
 						return 0
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+				for(var/M in config.votable_modes)
+					if(config.is_modeset(M))
+						var/list/submodes = list()
+						for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
+							submodes.Add(D.name)
+						if(length(submodes) > 0)
+							description += "<b>[M]</b>: "
+							description += submodes.Join(", ")
+							description += "<br>"
 			if("crew_transfer")
 				if(!is_admin)
 					if(get_security_level() == "red" || get_security_level() == "delta")
+						to_chat(usr, "<span class='vote'>Security level is red or delta. Crew transfer vote canceled</span>")
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
@@ -208,10 +227,13 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		else
-			started_time = world.time
+			last_vote_time[timer_mode] = world.time
 		log_vote(text)
+		var/vote_sound = 'sound/misc/notice1.ogg'
+		if(mode == "restart")
+			vote_sound = 'sound/misc/interference.ogg'
 		for(var/mob/M in player_list)
-			M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, vote_sound, VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
@@ -221,15 +243,10 @@ var/datum/subsystem/vote/SSvote
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
-		if(vote_type == "crew_transfer")
-			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed), config.vote_period)
-			if(ooc_allowed)
-				ooc_allowed = FALSE
-				to_chat(world, "<B>The OOC channel will be globally disabled during vote!</B>")
 		return 1
 	return 0
 
-/datum/subsystem/vote/proc/interface(client/C)
+/datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
 	var/admin = FALSE
@@ -238,10 +255,13 @@ var/datum/subsystem/vote/SSvote
 	voting |= C
 
 	if(mode)
-		if(question)
-			. += "<h2>Vote: '[sanitize(question)]'</h2>"
-		else
-			. += "<h2>Vote: [capitalize(mode)]</h2>"
+		switch(mode)
+			if("custom")
+				. += "<h2>Vote: '[sanitize(question)]'</h2>"
+			if("restart")
+				. += "<h2 style='color:red'>Vote: /!!!\\ Restart /!!!\\</h2>"
+			else
+				. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
@@ -254,12 +274,14 @@ var/datum/subsystem/vote/SSvote
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
+		if(description)
+			. += "[description]<hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(admin || config.allow_vote_restart)
+		if(admin || config.allow_vote_restart && world.has_round_started())
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
@@ -267,7 +289,7 @@ var/datum/subsystem/vote/SSvote
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(admin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode && crew_transfer_available())
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
@@ -275,7 +297,7 @@ var/datum/subsystem/vote/SSvote
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(admin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode && world.is_round_preparing())
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
@@ -290,8 +312,7 @@ var/datum/subsystem/vote/SSvote
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
 	return .
 
-
-/datum/subsystem/vote/Topic(href,href_list[],hsrc)
+/datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -312,17 +333,14 @@ var/datum/subsystem/vote/SSvote
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("restart")
-			if(config.allow_vote_restart || usr.client.holder)
-				if(!SSshuttle.online && SSshuttle.location == 0)
-					initiate_vote("restart",usr.key)
+			if((config.allow_vote_restart || usr.client.holder) && !SSshuttle.online && SSshuttle.location == 0)
+				initiate_vote("restart",usr.key)
 		if("crew_transfer")
-			if(config.allow_vote_mode || usr.client.holder)
-				if((ticker.current_state > GAME_STATE_SETTING_UP) && !SSshuttle.online && SSshuttle.location == 0)
-					initiate_vote("crew_transfer",usr.key)
+			if((config.allow_vote_mode || usr.client.holder) && crew_transfer_available())
+				initiate_vote("crew_transfer",usr.key)
 		if("gamemode")
-			if(config.allow_vote_mode || usr.client.holder)
-				if(ticker.current_state <= GAME_STATE_SETTING_UP)
-					initiate_vote("gamemode",usr.key)
+			if((config.allow_vote_mode || usr.client.holder) && world.is_round_preparing())
+				initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
@@ -340,7 +358,5 @@ var/datum/subsystem/vote/SSvote
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
 
-/datum/subsystem/vote/proc/return_ooc(old_stat_ooc)
-	if(old_stat_ooc && !ooc_allowed)
-		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
-		ooc_allowed = TRUE
+/datum/controller/subsystem/vote/proc/crew_transfer_available()
+	return (world.has_round_started() && !world.has_round_finished() && !SSshuttle.online && SSshuttle.location == 0)

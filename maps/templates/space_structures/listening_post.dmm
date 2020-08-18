@@ -1,0 +1,1565 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/simulated/mineral/random/caves,
+/area/space)
+"ac" = (
+/turf/simulated/wall,
+/area/space_structures/listening_post)
+"ad" = (
+/obj/machinery/computer/message_monitor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ae" = (
+/obj/structure/table,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"af" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas/syndicate,
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "podhatch"
+	},
+/area/space_structures/listening_post)
+"ag" = (
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	layer = 3.3;
+	pixel_y = 32
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ah" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ai" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aj" = (
+/obj/machinery/telecomms/relay/preset/ruskie{
+	id = "Listening Outpost Omega"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ak" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/device/flashlight/lantern,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"al" = (
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"am" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"an" = (
+/obj/structure/curtain/open/shower/security,
+/obj/machinery/light/small,
+/obj/machinery/shower{
+	pixel_y = 20
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space_structures/listening_post)
+"ao" = (
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ap" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aq" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"ar" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"as" = (
+/obj/machinery/door/airlock{
+	name = "Toilet"
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space_structures/listening_post)
+"at" = (
+/obj/structure/toilet{
+	pixel_y = 15
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space_structures/listening_post)
+"au" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/jailbreaker,
+/obj/item/clothing/head/helmet/space/syndicate/jailbreaker,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"av" = (
+/obj/structure/closet/crate/bin,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aw" = (
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"ax" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/washing_machine,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"ay" = (
+/obj/structure/filingcabinet,
+/obj/item/weapon/paper/monitorkey,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"az" = (
+/obj/structure/rack,
+/obj/item/device/multitool,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aA" = (
+/obj/structure/rack,
+/obj/item/device/geoscanner,
+/obj/item/weapon/pickaxe,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aB" = (
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aC" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Telecommunications"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aD" = (
+/obj/machinery/door/airlock/hatch{
+	name = "E.V.A."
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aE" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/disk/research_points,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"aF" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -30
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aG" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 3
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -30
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aH" = (
+/obj/machinery/door/airlock{
+	name = "Personal Quarters"
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aI" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aJ" = (
+/obj/random/vending/snack,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aK" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aL" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aM" = (
+/obj/structure/flora/plant/random,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aN" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light/small,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aO" = (
+/obj/random/vending/cola,
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aP" = (
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"aQ" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"aR" = (
+/obj/machinery/door/airlock/medical{
+	name = "Infirmary"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"aS" = (
+/obj/structure/bookcase/manuals/security,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"aT" = (
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"aU" = (
+/obj/item/weapon/bedsheet/syndie,
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"aV" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aW" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"aX" = (
+/obj/machinery/sleeper/upgraded,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"aY" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"aZ" = (
+/obj/structure/closet/secure_closet/medical1,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"ba" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Listening Post APC";
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
+/area/space_structures/listening_post)
+"bb" = (
+/obj/structure/table/holotable/wooden,
+/obj/item/weapon/book/manual/nuclear,
+/obj/item/device/flashlight/lamp/green,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"bc" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weapon/weldingtool/largetank,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
+/area/space_structures/listening_post)
+"bd" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/tactical,
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"be" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
+	},
+/area/space_structures/listening_post)
+"bf" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
+/area/space_structures/listening_post)
+"bg" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"bh" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 25
+	},
+/obj/item/stack/sheet/metal{
+	amount = 12
+	},
+/obj/item/stack/sheet/glass{
+	amount = 23
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 0.01;
+	oxygen = 0.01
+	},
+/area/space_structures/listening_post)
+"bi" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor/plating,
+/area/space_structures/listening_post)
+"bj" = (
+/obj/structure/sign/poster{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+"bk" = (
+/obj/structure/closet/wardrobe/black,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"bl" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/space_structures/listening_post)
+"bm" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"bn" = (
+/obj/machinery/iv_drip,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
+	},
+/area/space_structures/listening_post)
+"bo" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/space_structures/listening_post)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(11,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(12,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(13,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(14,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(15,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(16,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(17,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(18,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(19,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(20,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+an
+ac
+av
+aF
+aG
+aK
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+at
+as
+aw
+aw
+aw
+aL
+ac
+aS
+bk
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(22,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ax
+aV
+aw
+aw
+aP
+aT
+bl
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(23,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ag
+ao
+ac
+ac
+ac
+bo
+aM
+ac
+aU
+bb
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(24,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ad
+ah
+ai
+be
+ay
+ac
+aH
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(25,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ae
+ai
+ai
+ai
+ai
+aC
+aw
+aN
+ac
+ba
+bc
+bf
+bh
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+aj
+ap
+aE
+az
+ac
+aw
+aw
+aQ
+al
+al
+bg
+bi
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+bj
+aW
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ak
+aq
+au
+aA
+ac
+aI
+aw
+ac
+aX
+bd
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+af
+ai
+ai
+ai
+ai
+aD
+aw
+aw
+aR
+aY
+bm
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+am
+ac
+ac
+aB
+ac
+aJ
+aO
+ac
+aZ
+bn
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+al
+ar
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+am
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

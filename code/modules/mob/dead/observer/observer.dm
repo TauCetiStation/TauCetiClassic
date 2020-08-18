@@ -15,6 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	anchored = 1	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
+	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -51,11 +52,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
 		if(ishuman(body))
-			overlays = body.overlays
+			copy_overlays(body)
 		else
 			icon = body.icon
 			icon_state = body.icon_state
-			overlays = body.overlays
+			copy_overlays(body)
+
+		cut_overlay(list(body.typing_indicator, body.stat_indicator))
 
 		alpha = 127
 
@@ -204,6 +207,8 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
+		ghost.playsound_stop(CHANNEL_AMBIENT)
+		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
 		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
 			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
 		return ghost
@@ -238,6 +243,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			robot.toggle_all_components()
 		else
 			resting = 1
+			Sleeping(2 SECONDS)
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
@@ -273,8 +279,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker.mode && ticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = ticker.mode
+		if(SSticker.mode && SSticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = SSticker.mode
 			if(isnum(mode.A_timer))
 				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 			if(isnum(mode.B_timer))
@@ -287,7 +293,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(mind && mind.current && can_reenter_corpse))
 		to_chat(src, "<span class='warning'>You have no body.</span>")
 		return
-	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
 	mind.current.key = key
@@ -334,7 +340,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
-/mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
@@ -344,6 +350,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
+	
+	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	if(!A)
+		return
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)
 		return
@@ -530,7 +540,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 		return
 
-	if(!ticker.mode)
+	if(!SSticker.mode)
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
@@ -555,11 +565,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
-	var/dat
-	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest()
+	var/dat = data_core.get_manifest()
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
@@ -579,8 +589,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0 //something is terribly wrong
 
 	var/ghosts_can_write
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/C = ticker.mode
+	if(SSticker.mode.name == "cult")
+		var/datum/game_mode/cult/C = SSticker.mode
 		if(C.cult.len > config.cult_ghostwriter_req_cultists)
 			ghosts_can_write = 1
 
@@ -622,12 +632,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_length = 50
 
-	var/message = sanitize_safe(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 
-		if (length(message) > max_length)
-			message += "-"//Should crop any letters? No?
+		if (length_char(message) > max_length)
+			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)

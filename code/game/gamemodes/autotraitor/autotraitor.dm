@@ -16,6 +16,7 @@
 	..()
 	to_chat(world, "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.</B>")
 
+
 /datum/game_mode/traitor/autotraitor/pre_setup()
 
 	if(config.protect_roles_from_antagonist)
@@ -26,15 +27,11 @@
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-
-	for(var/mob/dead/new_player/P in new_player_list)
-		if(P.client && P.ready)
-			num_players++
-
 	//var/r = rand(5)
 	var/num_traitors = 1
 	var/max_traitors = 1
 	var/traitor_prob = 0
+	num_players = num_players()
 	max_traitors = round(num_players / 10) + 1
 	traitor_prob = (num_players - (max_traitors - 1) * 10) * 10
 

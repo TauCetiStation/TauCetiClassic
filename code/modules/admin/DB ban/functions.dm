@@ -14,18 +14,18 @@
 	var/bantype_str
 	switch(bantype)
 		if(BANTYPE_PERMA)
-			bantype_str = "PERMABAN"
+			bantype_str = BANTYPE_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_TEMP)
-			bantype_str = "TEMPBAN"
+			bantype_str = BANTYPE_TEMP_STR
 			bantype_pass = 1
 		if(BANTYPE_JOB_PERMA)
-			bantype_str = "JOB_PERMABAN"
+			bantype_str = BANTYPE_JOB_PERMA_STR
 			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_JOB_TEMP)
-			bantype_str = "JOB_TEMPBAN"
+			bantype_str = BANTYPE_JOB_TEMP_STR
 			bantype_pass = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
@@ -98,6 +98,9 @@
 		attachment_msg = "**[key_name(usr)]** [text("has added a **[]** for **[] [] []** with the reason: ***[]*** to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]"))]",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
@@ -108,22 +111,22 @@
 		var/bantype_pass = 0
 		switch(bantype)
 			if(BANTYPE_PERMA)
-				bantype_str = "PERMABAN"
+				bantype_str = BANTYPE_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_TEMP)
-				bantype_str = "TEMPBAN"
+				bantype_str = BANTYPE_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_PERMA)
-				bantype_str = "JOB_PERMABAN"
+				bantype_str = BANTYPE_JOB_PERMA_STR
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
-				bantype_str = "JOB_TEMPBAN"
+				bantype_str = BANTYPE_JOB_TEMP_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_FULLBAN)
-				bantype_str = "ANY"
+				bantype_str = BANTYPE_ANY_FULLBAN_STR
 				bantype_pass = 1
 			if(BANTYPE_ANY_JOB)
-				bantype_str = "ANYJOB"
+				bantype_str = BANTYPE_ANY_JOB_STR
 				bantype_pass = 1
 		if( !bantype_pass ) return
 
@@ -316,7 +319,6 @@
 	var/output = "<div align='center'><table width='90%'><tr>"
 
 	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
 	output += "</td>"
 
 	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
@@ -410,13 +412,13 @@
 				if(playercid)
 					cidsearch  = "AND computerid = '[playercid]' "
 			else
-				if(adminckey && lentext(adminckey) > 3)
+				if(adminckey && length(adminckey) > 3)
 					adminsearch = "AND a_ckey LIKE '[adminckey]%' "
-				if(playerckey && lentext(playerckey) > 3)
+				if(playerckey && length(playerckey) > 3)
 					playersearch = "AND ckey LIKE '[playerckey]%' "
-				if(playerip && lentext(playerip) > 3)
+				if(playerip && length(playerip) > 3)
 					ipsearch  = "AND ip LIKE '[playerip]%' "
-				if(playercid && lentext(playercid) > 7)
+				if(playercid && length(playercid) > 7)
 					cidsearch  = "AND computerid LIKE '[playercid]%' "
 
 			if(dbbantype)
@@ -500,7 +502,9 @@
 
 			output += "</table></div>"
 
-	usr << browse(entity_ja(output),"window=lookupbans;size=900x700")
+	var/datum/browser/popup = new(usr, "window=lookupbans", "Banning panel", 900, 700, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
 //Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
@@ -584,3 +588,6 @@
 		attachment_msg = "**Tau Kitty** has added a **[bantype_str]** for **[ckey]** **[(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""]** with the reason: ***\"[reason]\"*** to the ban database.",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
+	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
+		// servers use data from DB
+		world.send_ban_announce(ckey, ip, computerid)

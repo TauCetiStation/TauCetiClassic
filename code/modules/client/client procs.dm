@@ -53,10 +53,10 @@ var/list/blacklisted_builds = list(
 		completed_asset_jobs += job
 		return
 
-	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
+	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
-		debugFileOutput.error(file, message, src)
+		js_error_manager.log_error(file, message, src)
 		return
 
 	//Admin PM
@@ -85,8 +85,7 @@ var/list/blacklisted_builds = list(
 		return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -142,12 +141,16 @@ var/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
+
+	if(!guard)
+		guard = new(src)
+
+	chatOutput = new /datum/chatOutput(src) // Right off the bat.
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -160,10 +163,15 @@ var/list/blacklisted_builds = list(
 	clients += src
 	directory[ckey] = src
 
-	global.ahelp_tickets.ClientLogin(src)
+	global.ahelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
+
+	if(config.sandbox && !holder)
+		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
+		holder = admin_datums[ckey]
+
 	if(holder)
 		holder.owner = src
 		admins += src
@@ -202,46 +210,7 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
-
-	spawn(50)//should wait for goonchat initialization
-		if(config.client_limit_panic_bunker_count != null)
-			if(!(ckey in admin_datums) && !(src in mentors) && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
-				if (config.client_limit_panic_bunker_link)
-					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
-					SEND_LINK(src, config.client_limit_panic_bunker_link)
-				else
-					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
-					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-					qdel(src)
-				return
-
-		if(config.registration_panic_bunker_age)
-			if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-				to_chat(src, "<span class='danger'>Sorry, but server is currently accepting only users with registration date before [config.registration_panic_bunker_age]. Try to connect later.</span>")
-				message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				qdel(src)
-				return
-			if(holder)
-				to_chat("<span class='adminnotice'>Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]</span>")
-
-		if(config.byond_version_min && byond_version < config.byond_version_min)
-			to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
-			log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
-			if(!holder)
-				qdel(src)
-				return
-
-		if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
-			to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
-
-		if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || num2text(byond_build) in blacklisted_builds)
-			to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
-			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
-			log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
-			if(!holder)
-				qdel(src)
-				return
+	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
@@ -257,8 +226,7 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if (config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
-		supporter = 1
+	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
 	log_client_to_db(tdata)
@@ -267,12 +235,15 @@ var/list/blacklisted_builds = list(
 
 	generate_clickcatcher()
 
+	// Set config based title for main window
+	if (config.server_name)
+		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
+	else
+		winset(src, "mainwindow", "title='[world.name]'")
+
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
-
-	if(!geoip)
-		geoip = new(src, address)
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -286,17 +257,23 @@ var/list/blacklisted_builds = list(
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
+	spawn(50)//should wait for goonchat initialization
+		handle_autokick_reasons()
+
 	//////////////
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	for(var/window_id in browsers)
+		qdel(browsers[window_id])
+
 	log_client_ingame_age_to_db()
 	if(cob && cob.in_building_mode)
 		cob.remove_build_overlay(src)
 	if(holder)
 		holder.owner = null
 		admins -= src
-	global.ahelp_tickets.ClientLogout(src)
+	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
 	mentors -= src
 	clients -= src
@@ -306,6 +283,45 @@ var/list/blacklisted_builds = list(
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
+/client/proc/handle_autokick_reasons()
+	if(config.client_limit_panic_bunker_count != null)
+		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+			if (config.client_limit_panic_bunker_link)
+				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+				SEND_LINK(src, config.client_limit_panic_bunker_link)
+				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
+			else
+				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+				QDEL_IN(src, 2 SECONDS)
+			return
+
+	if(config.registration_panic_bunker_age)
+		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
+			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players. Try to connect later.</span>")
+			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
+			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+			QDEL_IN(src, 2 SECONDS)
+			return
+
+	if(config.byond_version_min && byond_version < config.byond_version_min)
+		popup(src, "Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.", "Byond Verion")
+		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
+		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
+		if(!holder)
+			QDEL_IN(src, 2 SECONDS)
+			return
+
+	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
+		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
+
+	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || (num2text(byond_build) in blacklisted_builds))
+		to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
+		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
+		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
+		if(!holder)
+			QDEL_IN(src, 2 SECONDS)
+			return
 
 
 /client/proc/log_client_to_db(connectiontopic)
@@ -320,28 +336,39 @@ var/list/blacklisted_builds = list(
 	var/sql_ckey = sanitize_sql(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
-	query.Execute()
+	
+	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
+		return           // dbcore revision needed
+	
 	var/sql_id = 0
-	player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
-	player_ingame_age = 0
+	var/sql_player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
+	var/sql_player_ingame_age = 0
 	while(query.NextRow())
 		sql_id = query.item[1]
-		player_age = text2num(query.item[2])
-		player_ingame_age = text2num(query.item[3])
+		sql_player_age = text2num(query.item[2])
+		sql_player_ingame_age = text2num(query.item[3])
 		break
 
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
-		related_accounts_ip += "[query_ip.item[1]], "
+		if(src.ckey == query_ip.item[1])
+			continue
+		if(length(related_accounts_ip))
+			related_accounts_ip += ", "
+		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
+		if(src.ckey == query_cid.item[1])
+			continue
+		if(length(related_accounts_cid))
+			related_accounts_cid += ", "
+		related_accounts_cid += "[query_cid.item[1]]"
 		break
 
 	var/admin_rank = "Player"
@@ -368,8 +395,12 @@ var/list/blacklisted_builds = list(
 		query_update.Execute()
 	else if(!config.serverwhitelist)
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[player_ingame_age]')")
+		guard.first_entry = TRUE
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
 		query_insert.Execute()
+
+	player_age = sql_player_age
+	player_ingame_age = sql_player_ingame_age
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
@@ -489,12 +520,8 @@ var/list/blacklisted_builds = list(
 		return
 	..()
 
-//checks if a client is afk
-//3000 frames = 5 minutes
-/client/proc/is_afk(duration = 3000)
-	if(inactivity > duration)
-		return inactivity
-	return 0
+/client/proc/is_afk(duration = config.afk_time_bracket)
+	return inactivity > duration
 
 // Send resources to the client.
 /client/proc/send_resources()
@@ -506,7 +533,7 @@ var/list/blacklisted_builds = list(
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -544,22 +571,44 @@ var/list/blacklisted_builds = list(
 	char_render_holders = null
 
 /client/proc/is_blocked_by_regisration_panic_bunker()
-	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
 	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
-	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
 
-	if (!user_page)
+	var/list/byond_date = get_byond_registration()
+
+	if (!length(byond_date))
 		return
 
-	joined_date_regex.Find(user_page)
 	bunker_date_regex.Find(config.registration_panic_bunker_age)
 
-	var/user_year = text2num(joined_date_regex.group[1])
-	var/user_month = text2num(joined_date_regex.group[2])
-	var/user_day = text2num(joined_date_regex.group[3])
+	var/user_year = byond_date[1]
+	var/user_month = byond_date[2]
+	var/user_day = byond_date[3]
 
 	var/bunker_year = text2num(bunker_date_regex.group[1])
 	var/bunker_month = text2num(bunker_date_regex.group[2])
 	var/bunker_day = text2num(bunker_date_regex.group[3])
 
-	return (user_year > bunker_year) || (user_year == bunker_year && user_month > bunker_month) || (user_year == bunker_year && user_month == bunker_month && user_day > bunker_day)
+	var/is_invalid_year = user_year > bunker_year
+	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
+	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
+
+	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
+	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
+
+	return is_invalid_date && is_invalid_ingame_age
+
+/client/proc/get_byond_registration()
+	if(byond_registration)
+		return byond_registration
+
+	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
+
+	if (!user_page)
+		return
+
+	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	joined_date_regex.Find(user_page)
+
+	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
+
+	return byond_registration

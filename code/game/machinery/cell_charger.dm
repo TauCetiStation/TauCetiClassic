@@ -4,10 +4,9 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
-	power_channel = EQUIP
 	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
@@ -23,12 +22,12 @@
 
 		if(chargelevel != newlevel)
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 			chargelevel = newlevel
 	else
-		overlays.Cut()
+		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
 	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
@@ -89,7 +88,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(charging)
-		charging.emp_act(severity)
+		charging.emplode(severity)
 	..(severity)
 
 

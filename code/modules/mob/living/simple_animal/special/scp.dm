@@ -18,13 +18,12 @@
 	response_harm   = "hits the"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	attacktext = "brutally crushes"
+	melee_damage = 0
+	attacktext = "brutally crush"
 	environment_smash = 0
 
 	speed = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 1
@@ -41,6 +40,10 @@
 	minbodytemp = 0
 
 	see_in_dark = 100
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 	var/life_cicle = 0
 	var/next_cicle = 10
@@ -191,9 +194,7 @@
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
+	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

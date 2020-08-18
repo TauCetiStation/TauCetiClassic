@@ -7,11 +7,9 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (isslime(target))
+	if (!ishuman(target))
 		return FALSE
 	if (target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if (!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
@@ -52,18 +50,14 @@
 	"<span class='notice'>You have made a bloodless incision on [target]'s [BP.name] with \the [tool].</span>",)
 	//Could be cleaner ...
 	BP.open = 1
-	BP.createwound(CUT, 1)
-	BP.createwound(BURN, 1)
-	BP.clamp()
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
+	BP.take_damage(1, 1, DAM_SHARP|DAM_EDGE, tool)
+	BP.strap()
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 7.5)
-	BP.createwound(BURN, 12.5)
+	BP.take_damage(7.5, 12.5, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/incision_manager
 	allowed_tools = list(
@@ -92,18 +86,15 @@
 	"<span class='notice'>You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
-	BP.createwound(CUT, 1)
-	BP.clamp()
+	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
+	BP.strap()
 	BP.open = 2
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
 
 /datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 20)
-	BP.createwound(BURN, 15)
+	BP.take_damage(20, 15, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open
 	allowed_tools = list(
@@ -133,15 +124,13 @@
 	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
 	BP.status |= ORGAN_BLEEDING
-	BP.createwound(CUT, 1)
-	if (target_zone == BP_HEAD)
-		target.brain_op_stage = 1
+	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>")
-	BP.createwound(CUT, 10)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/clamp_bleeders
 	allowed_tools = list(
@@ -171,13 +160,13 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] clamps bleeders in [target]'s [BP.name] with \the [tool].</span>",	\
 	"<span class='notice'>You clamp bleeders in [target]'s [BP.name] with \the [tool].</span>")
-	BP.clamp()
+	BP.strap()
 
 /datum/surgery_step/generic/clamp_bleeders/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [BP.name] with \the [tool]!</span>",	\
 	"<span class='warning'>Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [BP.name] with \the [tool]!</span>",)
-	BP.createwound(CUT, 10)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/retract_skin
 	allowed_tools = list(
@@ -232,13 +221,14 @@
 		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]</span>"
 		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!</span>"
 	user.visible_message(msg, self_msg)
-	target.apply_damage(12, BRUTE, BP, null, DAM_SHARP)
+	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
+	/obj/item/stack/medical/suture = 100,
+	/obj/item/weapon/cautery = 100,
+	/obj/item/clothing/mask/cigarette = 75,
+	/obj/item/weapon/lighter = 50,
 	/obj/item/weapon/weldingtool = 50
 	)
 
@@ -268,7 +258,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s [BP.name] with \the [tool]!</span>")
-	target.apply_damage(3, BURN, BP)
+	BP.take_damage(0, 3, used_weapon = tool)
 
 /datum/surgery_step/generic/cut_limb
 	allowed_tools = list(
@@ -308,8 +298,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, sawwing through the bone in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(CUT, 30)
 	BP.fracture()
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 //////////////////////////////////////////////////////////////////
 //						COMMON ROBOTIC STEPS					//
 //////////////////////////////////////////////////////////////////
@@ -318,11 +308,9 @@
 	allowed_species = list(IPC)
 
 /datum/surgery_step/ipcgeneric/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(isslime(target))
+	if(!ishuman(target))
 		return FALSE
 	if(target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
@@ -360,13 +348,13 @@
 	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",
 	"<span class='notice'>You have unscrewed [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",)
 	BP.open = 1
-	BP.createwound(CUT, 1)
+	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipcgeneric/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")
-	BP.createwound(CUT, 10)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipcgeneric/pry_open
 	allowed_tools = list(
@@ -401,7 +389,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, damaging [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")
-	target.apply_damage(12, BRUTE, BP, null)
+	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipcgeneric/close_shut
 	allowed_tools = list(
@@ -435,4 +423,4 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, denting [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")
-	target.apply_damage(5, BRUTE, BP)
+	BP.take_damage(5, 0, used_weapon = tool)

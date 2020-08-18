@@ -9,7 +9,7 @@
 	. += 				"<tr><td>Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a></td></tr>"
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	if(config.allow_Metadata)
-		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
+		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
 	//	if(user.client.holder)
 	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
@@ -36,7 +36,7 @@
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a></td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_ghostsight == CHAT_GHOSTSIGHT_ALL) ? "All Emotes" : ((chat_ghostsight == CHAT_GHOSTSIGHT_ALLMANUAL) ? "All manual-only emotes" : "Nearest Creatures")]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost radio:</td>"
@@ -67,10 +67,12 @@
 	. += 					"</a></b></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
-	. += 					"<td width='45%'>Ambient Occlusion:</td>"
-	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 					"<td width='45%'>Parallax theme:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=parallax_theme'><b>[parallax_theme]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
+	. += 					"<td width='45%'>Ambient Occlusion:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
@@ -116,17 +118,9 @@
 			UI_style_alpha = UI_style_alpha_new
 
 		if("ui")
-			switch(UI_style)
-				if("White")
-					UI_style = "Midnight"
-				if("Midnight")
-					UI_style = "Orange"
-				if("Orange")
-					UI_style = "old"
-				if("old")
-					UI_style = "White"
-				else
-					UI_style = "White"
+			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
+			if(pickedui)
+				UI_style = pickedui
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
@@ -151,14 +145,20 @@
 				if(PARALLAX_THEME_TG)
 					parallax_theme = PARALLAX_THEME_CLASSIC
 
+		if("ghost_sight")
+			switch(chat_ghostsight)
+				if(CHAT_GHOSTSIGHT_ALL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALLMANUAL
+				if(CHAT_GHOSTSIGHT_ALLMANUAL)
+					chat_ghostsight = CHAT_GHOSTSIGHT_NEARBYMOBS
+				if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+					chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
 
 		if("npc_ghost_ears")
 			chat_toggles ^= CHAT_GHOSTNPC
-
-		if("ghost_sight")
-			chat_toggles ^= CHAT_GHOSTSIGHT
 
 		if("ghost_radio")
 			chat_toggles ^= CHAT_GHOSTRADIO

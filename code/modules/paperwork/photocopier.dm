@@ -4,10 +4,9 @@
 	icon_state = "bigscanner"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
-	power_channel = EQUIP
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/weapon/paper_bundle/bundle = null
@@ -16,7 +15,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 /obj/machinery/photocopier/ui_interact(mob/user)
-	var/dat = "Photocopier<BR><BR>"
+	var/dat = ""
 	if(copy || photocopy || bundle)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
@@ -31,7 +30,11 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(entity_ja(dat), "window=copier")
+
+	var/datum/browser/popup = new(user, "copier", "Photocopier")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "copier")
 
 /obj/machinery/photocopier/is_operational_topic()
@@ -166,11 +169,8 @@
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 	else if(iswrench(O))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-	return
+		default_unfasten_wrench(user, O)
+
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
@@ -209,11 +209,15 @@
 	var/copied = html_decode(copy.info)
 	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied = replacetext(copied, "<img ", "<img style=\"filter: gray;\"")	//IE is still IE
+	copied = replacetext(copied, "<font color=", "<font nocolor=")
+	copied = replacetext(copied, "<table border=3px cellpadding=5px bordercolor=", "<table border=3px cellpadding=5px bordernocolor=")
 	P.info += copied
 	P.info += "</font>"//</font>
 	P.name = copy.name // -- Doohl
 	P.fields = copy.fields
-	P.stamp_text = copy.stamp_text
+	P.sfields = copy.sfields
+	P.stamp_text = replacetext(copy.stamp_text, "color:", "nocolor:") // Russian server? I hope nobody will write this on paper
 	P.stamped = LAZYCOPY(copy.stamped)
 	P.ico = LAZYCOPY(copy.ico)
 	P.offset_x = LAZYCOPY(copy.offset_x)
@@ -224,11 +228,13 @@
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
 		else if (findtext(copy.ico[i], "deny"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
+		else if (findtext(copy.ico[i], "approve"))
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-check")
 		else
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
 		img.pixel_x = copy.offset_x[i]
 		img.pixel_y = copy.offset_y[i]
-		P.overlays += img
+		P.add_overlay(img)
 	P.updateinfolinks()
 	P.update_icon()
 	toner--
@@ -263,5 +269,6 @@
 /obj/item/device/toner
 	name = "toner cartridge"
 	icon_state = "tonercartridge"
+	w_class = ITEM_SIZE_SMALL
 	var/charges = 50
 	var/max_charges = 50

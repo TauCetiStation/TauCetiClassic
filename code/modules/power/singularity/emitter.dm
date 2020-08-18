@@ -9,7 +9,7 @@
 	density = TRUE
 	req_access = list(access_engine_equip)
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -67,7 +67,7 @@
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
 	log_game("Emitter deleted at ([x],[y],[z])")
-	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+	log_investigate("<font color='red'>deleted</font> at ([x],[y],[z])",INVESTIGATE_SINGULO)
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -95,8 +95,8 @@
 				active = 0
 				to_chat(user, "You turn off the [src].")
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - src)]",0,1)
-				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
+				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
+				log_investigate("turned <font color='red'>off</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			else
 				if(panel_open)
 					to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
@@ -106,8 +106,8 @@
 				shot_number = 0
 				fire_delay = maximum_fire_delay
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
-				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
-				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
+				log_game("Emitter turned on by [key_name(user)] in ([x],[y],[z])")
+				log_investigate("turned <font color='green'>on</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -121,11 +121,8 @@
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1	*/
+			set_power_use(IDLE_POWER_USE)	*/
 	return 1
-
-/obj/machinery/containment_field/meteorhit()
-	return 0
 
 /obj/machinery/power/emitter/process()
 	if(stat & (BROKEN))
@@ -141,12 +138,12 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+				log_investigate("regained power and turned <font color='green'>on</font>",INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				log_investigate("lost power and turned <font color='red'>off</font>",INVESTIGATE_SINGULO)
 			return
 
 		src.last_shot = world.time

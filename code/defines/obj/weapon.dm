@@ -13,7 +13,7 @@
 	hitsound = list('sound/weapons/ring.ogg')
 
 /obj/item/weapon/rsp
-	name = "\improper Rapid-Seed-Producer (RSP)"
+	name = "Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
@@ -59,15 +59,23 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/weapon/cane/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
 	item_state = "gift"
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_NORMAL
+	var/size = ITEM_SIZE_NORMAL
+	var/sender = FALSE
+	var/recipient = FALSE
 
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
@@ -100,7 +108,8 @@
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
-/obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
+	. = ..()
 	if(armed)
 		if(ishuman(AM))
 			if(isturf(src.loc))
@@ -110,19 +119,14 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
+					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("<span class='danger'>[H] steps on \the [src].</span>", 1)
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
 
 		icon_state = "beartrap[armed]"
-	..()
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
@@ -137,7 +141,7 @@
 	..()
 	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
@@ -197,6 +201,7 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -207,10 +212,10 @@
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
-/obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(isturf(A))
+	if(isturf(target))
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -247,6 +252,7 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
+	on_step_sound = 'sound/effects/metalstep.ogg'
 
 /obj/item/weapon/shard/shrapnel/atom_init()
 	. = ..()
@@ -297,11 +303,28 @@
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
+/obj/item/weapon/staff/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+
+/obj/item/weapon/staff/broom/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/staff/gentcane
 	name = "Gentlemans Cane"
@@ -404,7 +427,7 @@
 	g_amt = 50
 
 /obj/item/weapon/module/id_auth
-	name = "\improper ID authentication module"
+	name = "ID authentication module"
 	icon_state = "id_mod"
 	desc = "A module allowing secure authorization of ID cards."
 
@@ -444,6 +467,15 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
+/obj/item/weapon/hatchet/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/obj, /turf)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
@@ -471,13 +503,22 @@
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/scythe/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A, 1))
+	if(istype(target, /obj/effect/spacevine))
+		for(var/obj/effect/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
-		qdel(A)
+		qdel(target)
 
 /*
 /obj/item/weapon/cigarpacket
@@ -496,6 +537,8 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+	flags = NOBLUDGEON | NOATTACKANIMATION | CONDUCT
+	w_class = ITEM_SIZE_SMALL
 
 	var/obj/machinery/machine
 
@@ -532,10 +575,13 @@
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag)
-	if(flag)
+/obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity)
 		return
-	if(works_from_distance && istype(T) && T.component_parts)
+	if(!istype(target, /obj/machinery))
+		return
+	var/obj/machinery/T = target
+	if(works_from_distance && T.component_parts)
 		T.exchange_parts(user, src)
 		user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 
@@ -826,7 +872,7 @@
 	icon_state = "broom_sauna"
 
 /obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
-	if(!istype(M) || user.a_intent == "hurt")
+	if(!istype(M) || user.a_intent == INTENT_HARM)
 		return ..()
 	if(wet - 5 < 0)
 		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")

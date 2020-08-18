@@ -44,9 +44,7 @@
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])", user)
+	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
 	if(broken)
@@ -76,20 +74,20 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			M.confused = max(rand(6, 10), M.confused)
 			M.flash_eyes()
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && (user.mind in ticker.mode.head_revolutionaries) && ticker.mode.name == "revolution")
+				if(user.mind && (user.mind in SSticker.mode.head_revolutionaries) && SSticker.mode.name == "revolution")
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
 							var/resisted
 							if(!ismindshielded(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
-								if(user.mind in ticker.mode.head_revolutionaries)
+								if(user.mind in SSticker.mode.head_revolutionaries)
 									M.mind.has_been_rev = 1
-									if(!ticker.mode.add_revolutionary(M.mind))
+									if(!SSticker.mode.add_revolutionary(M.mind))
 										resisted = 1
 							else
 								resisted = 1
@@ -142,7 +140,7 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(broken)
-		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
+		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
 
 	flash_recharge()
@@ -158,7 +156,7 @@
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user.show_message("<span class='warning'>*click* *click*</span>", 2)
+			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("flash2", src)
@@ -173,7 +171,7 @@
 			sleep(5)
 			qdel(animation)
 
-	for(var/mob/living/carbon/M in oviewers(3, null))
+	for(var/mob/living/carbon/M in oviewers(6, null))
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
@@ -197,8 +195,7 @@
 				if(safety <= 0)
 					M.Weaken(10)
 					M.flash_eyes()
-					for(var/mob/O in viewers(M, null))
-						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
+					M.visible_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()
 
 /obj/item/device/flash/synthetic

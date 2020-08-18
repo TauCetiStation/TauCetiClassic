@@ -2,6 +2,7 @@
 var/global/list/space_surprises = list(		/obj/item/weapon/pickaxe/silver					=4,
 											/obj/item/weapon/pickaxe/drill					=4,
 											/obj/item/weapon/pickaxe/drill/jackhammer		=4,
+											/obj/item/weapon/twohanded/sledgehammer			=3,
 											/obj/item/weapon/pickaxe/diamond				=3,
 											/obj/item/weapon/pickaxe/drill/diamond_drill	=3,
 											/obj/item/weapon/pickaxe/gold					=3,
@@ -90,7 +91,7 @@ var/global/list/spawned_surprises = list()
 	var/list/turfs = null
 
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/asteroid/mine/unexplored)
 
 	if(!turfs.len)
 		return 0
@@ -112,7 +113,7 @@ var/global/list/spawned_surprises = list()
 		surroundings += range(7, locate(T.x,T.y+size,T.z))
 		surroundings += range(7, locate(T.x+size,T.y+size,T.z))
 
-		if(locate(/area/mine/explored) in surroundings)			// +5s are for view range
+		if(locate(/area/asteroid/mine/explored) in surroundings)			// +5s are for view range
 			valid = 0
 			continue
 

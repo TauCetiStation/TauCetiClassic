@@ -20,7 +20,7 @@ log transactions
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/datum/money_account/authenticated_account
 	var/number_incorrect_tries = 0
@@ -93,7 +93,7 @@ log transactions
 					return
 				else
 					money_stock += SC.worth
-			authenticated_account.money += SC.worth
+			authenticated_account.adjust_money(SC.worth)
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 			else
@@ -138,7 +138,7 @@ log transactions
 		return
 
 	//js replicated from obj/machinery/computer/card
-	var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
+	var/dat = ""
 	dat += "For all your monetary needs!<br>"
 	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>"
 
@@ -226,7 +226,9 @@ log transactions
 			dat += "<input type='submit' value='Submit'><br>"
 			dat += "</form>"
 
-	user << browse(entity_ja(dat),"window=atm;size=550x650")
+	var/datum/browser/popup = new(user, "atm", "NanoTrasen Automatic Teller Machine", 550, 650)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/atm/is_operational_topic()
 	return TRUE
@@ -248,7 +250,7 @@ log transactions
 						var/transfer_purpose = href_list["purpose"]
 						if(charge_to_account(target_account_number, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
 							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-							authenticated_account.money -= transfer_amount
+							authenticated_account.adjust_money(-transfer_amount)
 
 							//create an entry in the account transaction log
 							var/datum/transaction/T = new()
@@ -331,7 +333,7 @@ log transactions
 				else if(authenticated_account && amount > 0)
 					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
-						authenticated_account.money -= amount
+						authenticated_account.adjust_money(-amount)
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
@@ -364,7 +366,7 @@ log transactions
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
 					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -402,7 +404,7 @@ log transactions
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
 					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)

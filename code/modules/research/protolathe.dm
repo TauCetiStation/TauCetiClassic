@@ -38,7 +38,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/max_material_storage = 100000
 	var/efficiency_coeff
-	var/list/loaded_materials = list()
+	var/list/datum/rnd_material/loaded_materials = list()
 	var/list/queue = list()
 
 /obj/machinery/r_n_d/protolathe/atom_init()
@@ -138,22 +138,22 @@ Note: Must be placed west/left of and R&D console to function.
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
 	if(!I)
 		return
-	if(amount < 0)//No negative numbers
-		amount = 0
-	if(amount == 0)
-		return
 	if(amount > stack.get_amount())
 		amount = stack.get_amount()
 	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
 		amount = min(stack.get_amount(), round((max_material_storage-TotalMaterials())/stack.perunit))
+	if(amount < 0)//No negative numbers
+		amount = 0
+	if(amount == 0)
+		return
 
 	busy = TRUE
 
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 
-	overlays += "protolathe_[stack.name]"
+	add_overlay("protolathe_[stack.name]")
 	sleep(10)
-	overlays -= "protolathe_[stack.name]"
+	cut_overlay("protolathe_[stack.name]")
 
 	use_power(max(1000, (3750 * amount / 10)))
 
@@ -214,12 +214,23 @@ Note: Must be placed west/left of and R&D console to function.
 	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
 
 /obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
+	if(!linked_console)
+		return
 	var/datum/design/D = RNDD.design
 	var/amount = RNDD.amount
 	for(var/i = 1 to amount)
 		var/obj/new_item = new D.build_path(loc)
+		// This is very important. Almost all items constructed via protolathe are unreliable
+		// And are deconstructions of items made by deconstructing other items
+		// So consider them tests of "new" construction techniques for an item already known
+		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
+		new_item.prototipify(min_reliability=linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
+
+		linked_console.files.design_reliabilities[D.id] += linked_console.files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** linked_console.files.design_created_prototypes[D.id])
+		linked_console.files.design_reliabilities[D.id] = max(round(linked_console.files.design_reliabilities[D.id], 5), 1)
+		linked_console.files.design_created_prototypes[D.id]++
 	busy = FALSE
 	queue -= RNDD
 

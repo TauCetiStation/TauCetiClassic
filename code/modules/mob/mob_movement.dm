@@ -1,4 +1,10 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	if(retVal & COMPONENT_CANTPASS)
+		return FALSE
+	else if(retVal & COMPONENT_CANPASS)
+		return TRUE
+
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
@@ -48,15 +54,12 @@
 	return
 
 /client/Northwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!L.get_active_hand() && !L.drop_combo_element())
 			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
 		drop_item()
-	else
-		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
-	return
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
@@ -121,20 +124,24 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
-/client/Move(n, direct)
+/client/Move(n, direct, forced = FALSE)
 	if(!mob)
 		return // Moved here to avoid nullrefs below
 
 	if(mob.control_object)	Move_object(direct)
 
-	if(isobserver(mob))	return mob.Move(n,direct)
+	if(isobserver(mob) || isovermind(mob))
+		return mob.Move(n,direct)
 
-	if(moving || mob.throwing)	return 0
+	if(!forced)
+		if(moving || mob.throwing)
+			return
 
-	if(world.time < move_delay)	return
+		if(world.time < move_delay)
+			return
 
-	if(mob.stat==DEAD)	return
+	if(!forced && mob.stat)
+		return
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
@@ -142,10 +149,15 @@
 		return currentSpirit.Spirit_Move(direct) */
 
 	// handle possible AI movement
+
+	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+		return mob.remote_control.relaymove(mob, direct)
+
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+	if(mob.notransform)
+		return//This is sota the goto stop mobs from moving var
 
 	if(isliving(mob))
 		var/mob/living/L = mob
@@ -157,7 +169,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, mob.contents))		// If mob moves while zoomed in with sniper rifle, unzoom them.
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in mob
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	Process_Grab()
 
@@ -170,7 +182,7 @@
 			direct = pick(cardinal)
 		return mob.buckled.relaymove(mob,direct)
 
-	if(!mob.canmove)
+	if(!forced && !mob.canmove)
 		return
 
 	if(!mob.lastarea)
@@ -188,8 +200,8 @@
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
-					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
 						return 0
 					else
 						M.stop_pulling()
@@ -206,7 +218,7 @@
 					move_delay += 6
 				move_delay += 1+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				move_delay += 2.5+config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
@@ -226,6 +238,9 @@
 
 		//We are now going to move
 		moving = 1
+		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			moving = FALSE
+			return
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
 			move_delay = max(move_delay, world.time + 7)
@@ -260,7 +275,14 @@
 							return
 
 		else if(mob.confused)
-			step(mob, pick(cardinal))
+			var/newdir = direct
+			if(mob.confused > 40)
+				newdir = pick(alldirs)
+			else if(prob(mob.confused * 1.5))
+				newdir = angle2dir(dir2angle(direct) + 180)
+			else if(prob(mob.confused * 3))
+				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
+			step(mob, newdir)
 		else
 			. = mob.SelfMove(n, direct)
 
@@ -271,13 +293,11 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		moving = 0
+		moving = FALSE
 		if(mob && .)
-			mob.throwing = 0
+			mob.throwing = FALSE
 
-		return .
-
-	return
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
@@ -406,17 +426,20 @@
 
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
+	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
 	return FALSE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
+	..()
 	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
 
 /mob/living/carbon/slime/slip()
+	..()
 	return FALSE
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
 	if(!(lube & GALOSHES_DONT_HELP))
-		if(shoes && (shoes.flags & NOSLIP))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
 			return FALSE
 	return ..()
 
@@ -427,6 +450,10 @@
 /mob/proc/Move_Pulled(atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
+
+	if(SEND_SIGNAL(src, COMSIG_LIVING_MOVE_PULLED, A) & COMPONENT_PREVENT_MOVE_PULLED)
+		return
+
 	if (pulling.anchored)
 		return
 	if (!pulling.Adjacent(src))
@@ -440,7 +467,7 @@
 		var/atom/movable/t = M.pulling
 		M.stop_pulling()
 		step(pulling, get_dir(pulling.loc, A))
-		if(M)
+		if(M && t)
 			M.start_pulling(t)
 	else
 		step(pulling, get_dir(pulling.loc, A))

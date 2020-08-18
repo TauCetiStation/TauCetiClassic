@@ -9,14 +9,14 @@
 #define ON_TABLE 1
 
 /obj/machinery/door_control
-	name = "remote door control"
+	name = "Remote Door Control"
 	desc = "It controls doors, remotely."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	allowed_checks = ALLOWED_CHECK_A_HAND
@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/machinery/door_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
@@ -85,12 +85,12 @@
 				if(stat & NOPOWER)
 					return
 				else if(emagged)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-emagged"))
 				else if(connected_poddoors.len || connected_airlocks.len)
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-is_id"))
 					return
 				else
-					overlays += image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id")
+					add_overlay(image('icons/obj/stationobjs.dmi', "doorctrl_assembly-no_id"))
 					return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
 			icon_state = "doorctrl_assembly0"
@@ -253,8 +253,10 @@
 	setup_menu += "<b><a href='?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
 	setup_menu += "<b><a href='?src=\ref[src];clear=1'>Clear data</a></b><br>"
-	user << browse("<head><title>[src]</title></head><tt>[entity_ja(setup_menu)]</tt>", "window=door_control")
-	onclose(user, "door_control")
+
+	var/datum/browser/popup = new(user, "window=door_control", src.name)
+	popup.set_content(setup_menu)
+	popup.open()
 
 /obj/machinery/door_control/Topic(href, href_list)
 	. = ..()
@@ -348,10 +350,10 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 	for(var/obj/machinery/door/airlock/A in connected_airlocks)
-		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_airlock, A)
+		INVOKE_ASYNC(src, .proc/toggle_airlock, A)
 	for(var/obj/machinery/door/poddoor/P in connected_poddoors)
-		INVOKE_ASYNC(src, .obj/machinery/door_control/proc/toggle_poddoor, P)
-	addtimer(CALLBACK(src, .update_icon), 15)
+		INVOKE_ASYNC(src, .proc/toggle_poddoor, P)
+	addtimer(CALLBACK(src, /obj.proc/update_icon), 15)
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
 	if(!A.isAllPowerCut() && A.hasPower())
@@ -416,11 +418,12 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl_assembly0"
 
-/obj/item/door_control_frame/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (iswrench(W))
+/obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
+		return
+	return ..()
 
 /obj/item/door_control_frame/proc/try_build(target)
 	if (get_dist(target, usr) > 1)
@@ -513,7 +516,6 @@
 #undef DOOR_CONTROL_WITHOUT_WIRES
 
 #undef OPEN_BOLTS
-#undef BOLTS_SHOCKS
 #undef OPEN_BOLTS_SHOCK
 
 #undef ON_WALL

@@ -86,14 +86,14 @@
 		toggle_custom_item(user, href_list["toggle_custom_gear"])
 
 	else if(href_list["gear"] && href_list["tweak"])
-		var/datum/gear/gear = gear_datums[href_list["gear"]]
+		var/datum/gear/G = gear_datums[href_list["gear"]]
 		var/datum/gear_tweak/tweak = locate(href_list["tweak"])
-		if(!tweak || !istype(gear) || !(tweak in gear.gear_tweaks))
+		if(!tweak || !istype(G) || !(tweak in G.gear_tweaks))
 			return
-		var/metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
+		var/metadata = tweak.get_metadata(user, get_tweak_metadata(G, tweak))
 		if(!metadata)
 			return
-		set_tweak_metadata(gear, tweak, metadata)
+		set_tweak_metadata(G, tweak, metadata)
 	else if(href_list["select_category"])
 		gear_tab = href_list["select_category"]
 	else if(href_list["clear_loadout"])

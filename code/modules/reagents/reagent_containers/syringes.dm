@@ -17,12 +17,13 @@
 	volume = 15
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
@@ -48,10 +49,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
-	return
-
-/obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -59,7 +57,7 @@
 		to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 		return
 
-	if (user.a_intent == "hurt" && ismob(target))
+	if (user.a_intent == INTENT_HARM && ismob(target))
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
 		syringestab(target, user)
@@ -106,9 +104,7 @@
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
-					to_chat(user, "<span class='notice'>You take a blood sample from [target]</span>")
-					for(var/mob/O in viewers(4, user))
-						O.show_message("<span class='warning'>[user] takes a blood sample from [target].</span>", 1)
+					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -142,25 +138,25 @@
 
 			if(isliving(target))
 				var/mob/living/L = target
+				var/list/injected = list()
+				for(var/datum/reagent/R in src.reagents.reagent_list)
+					injected += R.name
+				var/contained = english_list(injected)
 				if(target != user)
 
 					if(!L.try_inject(user, TRUE))
 						return
 
 					var/mob/living/M = target
-					var/list/injected = list()
-					for(var/datum/reagent/R in src.reagents.reagent_list)
-						injected += R.name
-					var/contained = english_list(injected)
 					infect_limb(user, target)
-					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-					msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+
+					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					src.reagents.reaction(target, INGEST)
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
+					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")
 					src.reagents.reaction(target, INGEST)
 					infect_limb(user, target)
 			var/datum/reagent/blood/B
@@ -171,8 +167,8 @@
 			if(B && istype(target,/mob/living/carbon))
 				var/list/virus2 = B.data["virus2"]
 				if(virus2.len)
-					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
-					log_game("Injected blood with virus to [target] by [user.ckey]([user]) in ([user.x],[user.y],[user.z])")
+					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
+					log_game("Injected blood with virus to [target] by [key_name(user)] in ([user.x],[user.y],[user.z])")
 				var/mob/living/carbon/C = target
 				C.inject_blood(src,5)
 			else
@@ -183,12 +179,11 @@
 				update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target, mob/living/carbon/user)
-
 	if(target.try_inject(user, FALSE, TRUE))
+		target.log_combat(user, "stabbed with [name] (INTENT: [uppertext(user.a_intent)])")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+		if((user != target) && target.check_shields(src, 7, "the [src.name]", get_dir(user,target)))
+			return
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -199,9 +194,6 @@
 				return
 
 			var/hit_area = BP.name
-
-			if((user != target) && target.check_shields(7, "the [src.name]", get_dir(user,target)))
-				return
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
@@ -216,6 +208,7 @@
 		var/syringestab_amount_transferred = rand(0, (reagents.total_volume - 5)) //nerfed by popular demand
 		reagents.trans_to(target, syringestab_amount_transferred)
 
+	playsound(target, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'><B>[user] stabs [target] with [src.name]!</B></span>")
 
 	desc += " It is broken."
@@ -227,10 +220,10 @@
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
 		icon_state = "broken"
-		overlays.Cut()
+		cut_overlays()
 		return
 	var/rounded_vol = round(reagents.total_volume,5)
-	overlays.Cut()
+	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
@@ -238,7 +231,7 @@
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		overlays += injoverlay
+		add_overlay(injoverlay)
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
 
@@ -248,7 +241,7 @@
 		filling.icon_state = "syringe[rounded_vol]"
 
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
@@ -273,12 +266,13 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 50
+	flags = NOBLUDGEON
 	var/mode = SYRINGE_DRAW
 
 /obj/item/weapon/reagent_containers/ld50_syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/user)
+/obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
 	..()
 	update_icon()
 
@@ -297,10 +291,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
-	return
-
-/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
 	if(!target.reagents) return
 
 	switch(mode)
@@ -344,11 +335,9 @@
 				return
 
 			if(ismob(target) && target != user)
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'><B>[] is trying to inject [] with a giant syringe!</B></span>", user, target), 1)
+				user.visible_message("<span class='warning'><B>[user] is trying to inject [target] with a giant syringe!</B></span>")
 				if(!do_mob(user, target, 300)) return
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='warning'>[] injects [] with a giant syringe!</span>", user, target), 1)
+				user.visible_message("<span class='warning'>[user] injects [target] with a giant syringe!</span>")
 				src.reagents.reaction(target, INGEST)
 			if(ismob(target) && target == user)
 				src.reagents.reaction(target, INGEST)

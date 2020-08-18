@@ -65,7 +65,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = -32
 		pixel_y = -32
 		for(var/ball in orbiting_balls)
-			tesla_zap(ball, rand(1, CLAMP(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
+			tesla_zap(ball, rand(1, clamp(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
 
@@ -76,6 +76,10 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(orbiting_balls.len)
 		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
 
+/obj/singularity/energy_ball/get_current_temperature()
+	// #define COIL_EFFICENCY_LOSS_FACTOR 2
+	// since coils divide the power by 2, to be truthful - we gotta multiply it by 2 joy pain
+	return 2 * WATTS_2_CELSIUM * (TESLA_DEFAULT_POWER + orbiting_balls.len * TESLA_MINI_POWER)
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
@@ -237,11 +241,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		closest_grounding_rod.tesla_act(power)
 
 	else if(closest_mob)
-		var/shock_damage = CLAMP(round(power/400), 10, 90) + rand(-5, 5)
+		var/shock_damage = clamp(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
 		if(istype(closest_mob, /mob/living/silicon))
 			var/mob/living/silicon/S = closest_mob
-			S.emp_act(2)
+			S.emplode(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5)

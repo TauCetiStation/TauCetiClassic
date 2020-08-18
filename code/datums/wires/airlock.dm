@@ -115,8 +115,8 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
-			A.update_icon()
 
+	A.update_icon()
 
 /datum/wires/airlock/update_pulsed(index)
 	var/obj/machinery/door/airlock/A = holder
@@ -135,11 +135,11 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 			if(!A.locked)
 				A.bolt()
-				A.audible_message("You hear a click from the bottom of the door.", null,  1)
+				A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 			else
 				if(A.hasPower())
 					A.unbolt()
-					A.audible_message("You hear a click from the bottom of the door.", null, 1)
+					A.audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			A.loseBackupPower()
@@ -156,7 +156,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
 				A.secondsElectrified = 30
-				START_PROCESSING(SSmachine, A)
+				START_PROCESSING(SSmachines, A)
 
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			if(!A.requiresID() || A.check_access(null))
@@ -175,4 +175,5 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
-			A.update_icon()
+
+	A.update_icon()

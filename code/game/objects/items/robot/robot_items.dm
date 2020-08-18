@@ -9,10 +9,9 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
-/obj/item/borg/stun/attack(mob/M, mob/living/silicon/robot/user)
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])", user)
+/obj/item/borg/stun/attack(mob/living/M, mob/living/silicon/robot/user)
+	M.log_combat(user, "stunned with [name]")
+	playsound(src, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 
 	user.cell.charge -= 30
 
@@ -21,9 +20,8 @@
 		M.stuttering = 5
 	M.Stun(5)
 
-	for(var/mob/O in viewers(M, null))
-		if (O.client)
-			O.show_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
+
+	M.visible_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 
 /obj/item/borg/overdrive
 	name = "overdrive"
@@ -40,25 +38,25 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray Vision"
+	name = "x-ray Vision"
 	sight_mode = BORGXRAY
 
 
 /obj/item/borg/sight/thermal
-	name = "\proper thermal vision"
+	name = "thermal vision"
 	sight_mode = BORGTHERM
 	icon_state = "thermal"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 
 /obj/item/borg/sight/meson
-	name = "\proper meson vision"
+	name = "meson vision"
 	sight_mode = BORGMESON
 	icon_state = "meson"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/borg/sight/night
-	name = "\proper night vision"
+	name = "night vision"
 	sight_mode = BORGNIGHT
 	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'

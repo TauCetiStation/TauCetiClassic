@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
@@ -14,6 +14,7 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
 	var/resource_coeff_tech = 1
+	var/efficiency_coeff = 0
 	var/list/resources = list(
 								MAT_METAL=0,
 								MAT_GLASS=0,
@@ -82,18 +83,8 @@
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
+	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
-
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
 
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user)
 	switch(emagged)
@@ -167,16 +158,23 @@
 	being_built = D
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
-	overlays += "fab-active"
-	use_power = 2
+	add_overlay("fab-active")
+	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
-	overlays -= "fab-active"
+	set_power_use(IDLE_POWER_USE)
+	cut_overlay("fab-active")
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
 	var/I = new D.build_path(location)
+	if(isobj(I))
+		var/obj/O = I
+		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
+
+		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
+		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)
+		files.design_created_prototypes[D.id]++
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
 		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
@@ -331,6 +329,7 @@
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
+			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			  <title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
@@ -359,7 +358,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -549,7 +548,7 @@
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -557,7 +556,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

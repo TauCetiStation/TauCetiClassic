@@ -11,6 +11,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	active = 0
 	det_time = 50
+	activate_sound = 'sound/items/matchstick_light.ogg'
 	var/range = 3
 	var/list/times
 
@@ -56,25 +57,20 @@
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_active")
 
-	overlays = overlays_list
+	cut_overlays()
+	add_overlay(overlays_list)
 
-/obj/item/weapon/grenade/cancasing/attack_self(mob/user)
-	if(!active)
-		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
-			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src]!</span>", "<span class='warning'>[bicon(src)] You light \the [name]!</span>")
-			active = 1
-			update_icon()
-			add_fingerprint(user)
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
+/obj/item/weapon/grenade/cancasing/activate(mob/user)
+	if(user)
+		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
+		var/turf/T = get_turf(src)
+		if(T)
+			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at [A.name] [ADMIN_JMP(A)].")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name].")
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
-			addtimer(CALLBACK(src, .proc/prime), det_time)
+	active = 1
+	update_icon()
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
+	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/cancasing/prime() // Blowing that can up
 	//update_mob()
@@ -105,41 +101,39 @@
 	if(active)
 		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_rag_active")
 
-	overlays = overlays_list
+	cut_overlays()
+	add_overlay(overlays_list)
 
 /obj/item/weapon/grenade/cancasing/rag/attack_self(mob/user)
 	return
 
-/obj/item/weapon/grenade/cancasing/rag/attackby(obj/item/weapon/W, mob/living/user)
-	. = ..()
+/obj/item/weapon/grenade/cancasing/rag/attackby(obj/item/I, mob/user, params)
 	if(active)
 		return
+
 	var/is_W_lit = FALSE
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/O = I
 		if(O.lit)
 			is_W_lit = TRUE
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
+	else if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/O = I
 		if(O.lit)
 			is_W_lit = TRUE
-	else if(iswelder(W))
-		var/obj/item/weapon/weldingtool/O = W
+	else if(iswelder(I))
+		var/obj/item/weapon/weldingtool/O = I
 		if(O.welding)
 			is_W_lit = TRUE
-	if(is_W_lit)
-		if(clown_check(user))
-			playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
-			user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [W]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [W]!</span>")
-			active = 1
-			update_icon()
-			add_fingerprint(user)
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
 
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at [A.name] [ADMIN_JMP(A)].")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
-			addtimer(CALLBACK(src, .proc/prime), det_time)
+	if(!is_W_lit)
+		return ..()
+
+	if(!clown_check(user))
+		return ..()
+
+	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [I]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [I]!</span>")
+	activate(user)
+	add_fingerprint(user)
+	if(iscarbon(user) && istype(user.get_inactive_hand(), src))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()

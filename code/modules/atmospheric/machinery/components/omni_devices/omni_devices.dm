@@ -5,7 +5,7 @@
 	name = "omni device"
 	icon = 'icons/atmos/omni_devices.dmi'
 	icon_state = "base"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	initialize_directions = 0
 
 	device_type = QUATERNARY
@@ -50,11 +50,14 @@
 /obj/machinery/atmospherics/components/omni/update_icon()
 	..()
 	if(stat & NOPOWER)
-		overlays = overlays_off
+		cut_overlays()
+		add_overlay(overlays_off)
 	else if(error_check())
-		overlays = overlays_error
+		cut_overlays()
+		add_overlay(overlays_error)
 	else
-		overlays = use_power ? (overlays_on) : (overlays_off)
+		cut_overlays()
+		add_overlay(use_power ? (overlays_on) : (overlays_off))
 
 	underlays = underlays_current
 
@@ -68,7 +71,7 @@
 	last_flow_rate = 0
 
 	if(error_check())
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return FALSE

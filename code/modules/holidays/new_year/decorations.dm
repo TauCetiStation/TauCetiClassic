@@ -10,7 +10,7 @@
 	if(choice == "Yes" && get_dist(src, user) <= 1)
 		..()
 
-/obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		src.forceMove(target)
@@ -106,28 +106,62 @@
 	var/gifts_dealt = 0
 	var/list/decals = list()
 
-/obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/W, mob/user, params)
-	if (!W) return
 
-	if(!(W.flags & ABSTRACT))
+/obj/item/device/flashlight/lamp/fir/special/examine(mob/user)
+	..()
+	if(!gifts_dealt || ((world.time - gifts_dealt) > 5000))
+		to_chat(user, "<span class='notice'>Looks like there is something stuck between the branches... Have you been a good boy this year?</span>")
+	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
+
+/obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/gift))
+		var/obj/item/weapon/gift/present = I
+		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
+		var/sender = sanitize(input("Enter your name:") as text|null)
+		if(src && recipient && sender && present && get_dist(src, user) <= 1)
+			present.recipient = recipient
+			present.sender = sender
+			user.drop_item()
+			present.forceMove(src)
+			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
+		return
+	if(!(I.flags & ABSTRACT))
 		if(user.drop_item())
-			user.visible_message("[user] attaches [W] to \the [src] .", "<span class='notice'>You attache [W] to \the [src].</span>")
-			W.forceMove(loc)
-			W.layer = 5.1 // Item should be on the tree, not under
-			W.anchored = 1 // Make item a part of the tree
-			decals += W
+			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
+			I.forceMove(loc)
+			I.layer = 5.1 // Item should be on the tree, not under
+			I.anchored = TRUE // Make item a part of the tree
+			decals += I
 			var/list/click_params = params2list(params)
 			// Center the icon where the user clicked.
-			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
-			if(istype(W, /obj/item/organ/external/head))
-				W.pixel_y -= 10 // Head always has 10 pixels shift
-				W.dir = 2 // Rotate head face to us
-				W.transform = turn(null, null)	//Turn it to initial angle
-	return
+			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			if(istype(I, /obj/item/organ/external/head))
+				I.pixel_y -= 10 // Head always has 10 pixels shift
+				I.dir = 2 // Rotate head face to us
+				I.transform = turn(null, null)	//Turn it to initial angle
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
-	shake()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/how_many_gifts = 0
+	var/choosen_gift
+	for(var/O in src.contents)
+		if(istype(O, /obj/item/weapon/gift))
+			var/obj/item/weapon/gift/present = O
+			if(present.recipient == H.name)
+				how_many_gifts++
+				choosen_gift = present
+	if(how_many_gifts)
+		var/obj/item/weapon/gift/G = choosen_gift
+		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under \the tree!</span>")
+		src.visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
+			"<span class='notice'>You take a gift from \the [src].</span>")
+		G.forceMove(H.loc)
+		user.put_in_active_hand(G)
+	else
+		shake()
 	return
 
 /obj/item/device/flashlight/lamp/fir/special/verb/shake()
@@ -170,9 +204,9 @@
 				new /obj/item/weapon/present(src.loc)
 			gifts_dealt = world.time
 		else
-			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens.</span>")
+			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != "help"))
+	if(decals.len && (C.a_intent != INTENT_HELP))
 		for(var/item in decals)
 			var/obj/item/I = item
 			if(!I)
@@ -200,12 +234,24 @@
 
 /obj/structure/snowman/attackby(obj/item/W, mob/user)
 	. = ..()
+	if(istype(W, /obj/item/clothing/head/that))
+		if(icon_state == "snowman_s")
+			user.drop_item()
+			qdel(W)
+			icon_state = "snowman_hat"
+			src.visible_message("<span class='notice'>[user] puts a hat on the snowman. He looks happy!</span>",
+			"<span class='notice'>You put a hat on the snowman. He looks happy!</span>")
+		else
+			to_chat(user, "<span class='warning'>But snowman already has a hat!</span>")
+		return
 	if(W.force > 4)
 		health -= W.force
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] is destroyed!</span>")
 			for(var/i = 0 to 6)
 				new /obj/item/snowball(get_turf(src))
+			if(icon_state == "snowman_hat")
+				new /obj/item/clothing/head/that(get_turf(src))
 			qdel(src)
 		else
 			visible_message("<span class='notice'>[src] is damaged!</span>")

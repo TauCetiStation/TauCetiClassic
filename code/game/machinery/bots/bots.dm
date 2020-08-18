@@ -1,10 +1,18 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+#define SECBOT_IDLE         0  // idle
+#define SECBOT_HUNT         1  // found target, hunting
+#define SECBOT_PREP_ARREST  2  // at target, preparing to arrest
+#define SECBOT_ARREST       3  // arresting target
+#define SECBOT_START_PATROL 4  // start patrol
+#define SECBOT_PATROL       5  // patrolling
+#define SECBOT_SUMMON       6  // summoned by PDA
+
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
 	light_range = 3
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
@@ -65,7 +73,7 @@
 		else
 			to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
 
-/obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
+/obj/machinery/bot/attack_alien(mob/living/carbon/xenomorph/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= rand(15,30)*brute_dam_coeff
@@ -76,13 +84,13 @@
 	healthcheck()
 
 
-/obj/machinery/bot/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/bot/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper == 0)
+	if(attacker.melee_damage == 0)
 		return
-	src.health -= M.melee_damage_upper
-	src.visible_message("<span class='warning'><B>[M] has [M.attacktext] [src]!</B></span>")
-	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+	src.health -= attacker.melee_damage
+	src.visible_message("<span class='warning'><B>[attacker] has [attacker.attacktext] [src]!</B></span>")
+	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	healthcheck()
@@ -96,14 +104,17 @@
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
 	else if(iswelder(W))
-		if(health < maxhealth)
-			if(open)
-				health = min(maxhealth, health+10)
-				user.visible_message("<span class='warning'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+		if(W.use(0, user))
+			if(health < maxhealth)
+				if(open)
+					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
+					if(W.use_tool(src, user, 20, volume = 50))
+						health = min(maxhealth, health+10)
+						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
+				else
+					to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 			else
-				to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
-		else
-			to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
+				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 	else
 		if(hasvar(W,"force") && hasvar(W,"damtype"))
 			switch(W.damtype)
@@ -120,10 +131,6 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
-
-/obj/machinery/bot/meteorhit()
-	src.explode()
-	return
 
 /obj/machinery/bot/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff

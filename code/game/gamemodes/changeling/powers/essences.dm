@@ -18,7 +18,7 @@
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
 	enter_host(host)
-	overlays = victim.overlays
+	copy_overlays(victim, TRUE)
 	phantom = new(src, src)
 	phantom.create_overlay(src)
 
@@ -87,7 +87,7 @@
 		if(!(flags_allowed & ESSENCE_SPEAK_TO_HOST))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
-		message = copytext(message, 3) // deleting prefix
+		message = copytext_char(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
@@ -101,7 +101,7 @@
 		if(!(flags_allowed & ESSENCE_HIVEMIND))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking in hivemind</span>")
 			return
-		message = copytext(message, 3) // deleting prefix
+		message = copytext_char(message, 3) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/mob/M in mob_list)
 			if(M.mind && M.mind.changeling)
@@ -248,14 +248,14 @@
 			var/obj/screen/alert/host_alert = host.alerts[alert]
 			if(length(host_alert.overlays) > 0)
 				continue
-			var/obj/screen/alert/new_alert = throw_alert(alert)
+			var/obj/screen/alert/new_alert = throw_alert(alert, host_alert.type)
 			if(new_alert)
 				new_alert.icon_state = host_alert.icon_state
 
 		if(healthdoll && host.healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			healthdoll.icon_state = host.healthdoll.icon_state
-			healthdoll.overlays += host.healthdoll.overlays
+			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
 		if(internals && host.internals)
@@ -422,7 +422,7 @@
 	name = f_overlay.name
 	overlay = image(f_overlay.icon, f_overlay.icon_state)
 	overlay.alpha = 200
-	overlay.overlays = f_overlay.overlays
+	overlay.copy_overlays(f_overlay)
 	overlay.loc = src
 
 /obj/effect/essence_phantom/proc/show_phantom(atom/place)

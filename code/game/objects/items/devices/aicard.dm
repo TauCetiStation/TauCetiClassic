@@ -13,9 +13,7 @@
 	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
 		return ..()
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])", user)
+	M.log_combat(user, "carded via [name]")
 
 	transfer_ai("AICORE", "AICARD", M, user)
 	return
@@ -31,7 +29,7 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Intelicard</B><BR>"
+	var/dat = "<TT>"
 	var/laws
 	for(var/mob/living/silicon/ai/A in src)
 		dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
@@ -75,7 +73,11 @@
 			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-	user << browse(entity_ja(dat), "window=aicard")
+
+	var/datum/browser/popup = new(user, "aicard", "Intelicard")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "aicard")
 	return
 
@@ -124,9 +126,9 @@
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
 				if (A.control_disabled)
-					overlays -= image('icons/obj/pda.dmi', "aicard-on")
+					cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 				else
-					overlays += image('icons/obj/pda.dmi', "aicard-on")
+					add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 	attack_self(U)
 
 

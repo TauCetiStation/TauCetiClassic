@@ -45,7 +45,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s throat wth \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, slicing [target]'s throat wth \the [tool]!</span>" )
-	BP.createwound(CUT, 60)
+	BP.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
 	target.losebreath += 10
 
 /datum/surgery_step/face/mend_vocal
@@ -105,7 +105,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
-	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP | DAM_EDGE)
+	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/face/cauterize
 	allowed_tools = list(
@@ -141,7 +141,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>")
-	target.apply_damage(4, BURN, BP)
+	BP.take_damage(0, 4, used_weapon = tool)
 //////////////////////////////////////////////////////////////////
 //				ROBOTIC FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	BP.createwound(CUT, 60)
+	BP.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc_face/pry_screen
 	allowed_tools = list(
@@ -219,43 +219,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, damaging [target]'s screen with \the [tool]!</span>")
-	target.apply_damage(12, BRUTE, BP, null)
-
-/datum/surgery_step/ipc_face/hack_face
-	allowed_tools = list(
-	/obj/item/device/multitool = 100,
-	/obj/item/device/assembly/signaler = 75
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ipc_face/hack_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 2
-
-/datum/surgery_step/ipc_face/hack_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts adjusting coloration on [target]'s screen with \the [tool].",
-	"You start adjusting coloration on [target]'s screen with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc_face/hack_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] changes coloration on [target]'s screen with \the [tool].</span>",
-	"<span class='notice'>You change coloration on [target]'s screen with \the [tool].</span>")
-	var/list/species_hair = list()
-	for(var/i in hair_styles_list)
-		var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-		if(target.species.name in tmp_hair.species_allowed)
-			species_hair += i
-	var/new_style = input(user, "Select a screen color scheme", "Changing")  as null|anything in species_hair
-	if(new_style)
-		target.h_style = new_style
-		target.update_hair()
-
-/datum/surgery_step/ipc_face/hack_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	target.apply_damage(10, BRUTE, BP)
+	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc_face/fix_screen
 	allowed_tools = list(
@@ -285,11 +249,11 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] on [target]'s screen, denting it up!</span>",
 	"<span class='warning'>Your hand slips, smearing [tool] on [target]'s screen, denting it up!</span>")
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-		target.apply_damage(6, BURN, BP, null)
+		BP.take_damage(0, 6, used_weapon = tool)
 
 	else if(iswrench(tool))
-		target.apply_damage(12, BRUTE, BP, null)
-		BP.createwound(CUT, 5)
+		BP.take_damage(12, 0, used_weapon = tool)
+		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc_face/close_shut
 	allowed_tools = list(
@@ -324,4 +288,4 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small dent on [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, leaving a small dent on [target]'s screen with \the [tool]!</span>")
-	target.apply_damage(6, BRUTE, BP)
+	BP.take_damage(6, 0, used_weapon = tool)

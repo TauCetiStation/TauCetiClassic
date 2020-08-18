@@ -38,6 +38,12 @@
 		max_storage_space = max_storage_space / 2
 	..()
 
+/obj/machinery/chem_dispenser/make_old()
+	..()
+	var/to_delete_amount = rand(1, dispensable_reagents.len)
+	for(var/i in 1 to to_delete_amount)
+		pick_n_take(dispensable_reagents)
+
 /obj/item/weapon/reagent_containers/make_old()
 	for(var/datum/reagent/R in reagents.reagent_list)
 		R.volume = rand(0,R.volume)
@@ -133,7 +139,7 @@
 
 
 /obj/item/weapon/aiModule/broken // -- TLE
-	name = "\improper broken core AI module"
+	name = "broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
 /obj/machinery/broken/atom_init()
@@ -147,7 +153,7 @@
 
 /obj/item/weapon/aiModule/broken/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	IonStorm(0)
+	target.overload_ai_system()
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)

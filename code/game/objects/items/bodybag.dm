@@ -24,7 +24,7 @@
 
 
 /obj/structure/closet/body_bag/attackby(W, mob/user)
-	if (istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/weapon/pen))
 		var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != W)
 			return
@@ -33,15 +33,16 @@
 		if (t)
 			src.name = "body bag - "
 			src.name += t
-			src.overlays += image(src.icon, "bodybag_label")
+			src.add_overlay(image(src.icon, "bodybag_label"))
 		else
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 		return
+
 	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.overlays.Cut()
+		src.cut_overlays()
 		return
 
 
@@ -100,6 +101,19 @@
 		O.icon_state = "bodybag_used"
 		O.desc = "Pretty useless now.."
 		qdel(src)
+
+/obj/structure/closet/body_bag/cryobag/Entered(atom/movable/AM, atom/oldLoc)
+	if(isliving(AM))
+		var/mob/living/M = AM
+		M.ExtinguishMob()
+		M.apply_status_effect(STATUS_EFFECT_STASIS_BAG, null, TRUE)
+		used++
+	..()
+
+/obj/structure/closet/body_bag/cryobag/dump_contents()
+	for(var/mob/living/M in contents)
+		M.remove_status_effect(STATUS_EFFECT_STASIS_BAG)
+	..()
 
 /obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
 	if(!iscarbon(usr) && !isrobot(usr))

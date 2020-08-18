@@ -53,10 +53,10 @@
 	alarm_playing = 0
 	return
 
-/obj/item/clothing/gloves/pipboy/attackby(obj/item/weapon/W, mob/user)
-	if(iscoil(W) || istype(W, /obj/item/weapon/stock_parts/cell) || iswirecutter(W) || istype(W, /obj/item/weapon/scalpel))
+/obj/item/clothing/gloves/pipboy/attackby(obj/item/I, mob/user, params)
+	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iswirecutter(I) || istype(I, /obj/item/weapon/scalpel))
 		return
-	..()
+	return ..()
 
 /obj/item/clothing/gloves/pipboy/ui_action_click()
 	open_interface()
@@ -97,7 +97,8 @@
 			add_fingerprint(user)
 			var/message = ""
 			if(!output_to_chat)
-				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+				message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+				message += "<title>[M.name]'s scan results</title></head><BODY>"
 
 			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
@@ -108,20 +109,20 @@
 
 			if(!output_to_chat)
 				message += "</BODY></HTML>"
-				user << browse(entity_ja(message), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(message)
+				to_chat(user, message)
 		else
 			add_fingerprint(user)
 			var/dat = health_analyze(M, user, TRUE, output_to_chat)
 			if(!output_to_chat)
-				user << browse(entity_ja(dat), "window=[M.name]_scan_report;size=400x400;can_resize=1")
+				user << browse(dat, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 				onclose(user, "[M.name]_scan_report")
 			else
-				user.show_message(dat)
+				to_chat(user, dat)
 	else
-		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/clothing/gloves/pipboy/attack_self(mob/user)
 	return src.interact(user)
@@ -131,7 +132,7 @@
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
+			var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"
@@ -191,7 +192,7 @@
 					dat += "<br>"
 					dat += "<A href='?src=\ref[src];menu=1'>Back to menu</A><br>"
 			dat += "</font></body>"
-			user << browse(entity_ja(dat), "window=pipboy")
+			user << browse(dat, "window=pipboy")
 			onclose(user, "pipboy")
 			return
 		else
@@ -240,7 +241,7 @@
 	if (!(on))
 		return
 
-	if(U.stat || U.restrained() || U.paralysis || U.stunned || U.weakened || U.incapacitated())
+	if(U.incapacitated())
 		return
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)

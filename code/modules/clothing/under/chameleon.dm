@@ -43,7 +43,7 @@
 	permeability_coefficient = 0.90
 
 
-	if(A.icon_custom)  //Фикс для нашей одежды
+	if(A.icon_custom)  //Р¤РёРєСЃ РґР»СЏ РЅР°С€РµР№ РѕРґРµР¶РґС‹
 		icon = A.icon_custom
 		icon_custom = A.icon_custom
 	else
@@ -74,7 +74,9 @@
 /obj/item/clothing/head/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/head/chameleon,
-		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)//Prevent infinite loops and bad hats.
+		/obj/item/clothing/head/helmet/space/golem, 
+		/obj/item/clothing/head/justice, 
+		/obj/item/clothing/head/collectable/tophat/badmin_magic_hat, )//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/head)-blocked)
 		var/obj/item/clothing/head/V = new U
 		clothing_choices[V.name] = U

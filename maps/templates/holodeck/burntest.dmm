@@ -6,7 +6,7 @@
 	nitrogen = 0.01;
 	phoron = 82.1472
 	},
-/area/holodeck/source_burntest)
+/area/station/civilian/holodeck/source_burntest)
 "b" = (
 /obj/effect/landmark{
 	name = "Atmospheric Test Start"
@@ -17,7 +17,7 @@
 	nitrogen = 0.01;
 	phoron = 82.1472
 	},
-/area/holodeck/source_burntest)
+/area/station/civilian/holodeck/source_burntest)
 
 (1,1,1) = {"
 a

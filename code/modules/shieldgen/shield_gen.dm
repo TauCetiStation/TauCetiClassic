@@ -25,7 +25,7 @@
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 20
@@ -50,7 +50,7 @@
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
@@ -96,7 +96,7 @@
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
-	var/t = "<B>Shield Generator Control Console</B><BR><br>"
+	var/t = ""
 	if(locked && !isobserver(user))
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
@@ -128,7 +128,10 @@
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(entity_ja(t), "window=shield_generator;size=500x400")
+
+	var/datum/browser/popup = new(user, "shield_generator", "Shield Generator Control Console", 500, 400)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/shield_gen/process()
 
@@ -213,8 +216,10 @@
 			spawn(rand(0, 15))
 				src.icon_state = "generator0"
 				stat |= NOPOWER
+				update_power_use()
 			if (src.active)
 				toggle()
+	update_power_use()
 
 /obj/machinery/shield_gen/ex_act(var/severity)
 

@@ -1,9 +1,9 @@
-/area/ai_monitored
+/area/station/ai_monitored
 	name = "AI Monitored Area"
 	var/obj/machinery/camera/motioncamera = null
 
 
-/area/ai_monitored/atom_init(mapload)
+/area/station/ai_monitored/atom_init(mapload)
 	. = ..()
 
 	if(mapload)
@@ -13,12 +13,12 @@
 				M.area_motion = src
 				return
 
-/area/ai_monitored/Entered(atom/movable/O)
+/area/station/ai_monitored/Entered(atom/movable/O)
 	..()
 	if (ismob(O) && motioncamera)
 		motioncamera.newTarget(O)
 
-/area/ai_monitored/Exited(atom/movable/O)
+/area/station/ai_monitored/Exited(atom/movable/O)
 	if (ismob(O) && motioncamera)
 		motioncamera.lostTarget(O)
 

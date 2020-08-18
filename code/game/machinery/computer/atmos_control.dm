@@ -1,9 +1,9 @@
 /obj/item/weapon/circuitboard/atmoscontrol
-	name = "\improper Central Atmospherics Computer Circuitboard"
+	name = "Central Atmospherics Computer Circuitboard"
 	build_path = /obj/machinery/computer/atmoscontrol
 
 /obj/machinery/computer/atmoscontrol
-	name = "\improper Central Atmospherics Computer"
+	name = "Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
@@ -37,7 +37,10 @@
 				if (2)
 					dat += "<font color=red>[alarm]</font>"
 			dat += "</a><br/>"
-	user << browse(entity_ja(dat), "window=atmoscontrol")
+
+	var/datum/browser/popup = new(user, "atmoscontrol")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/atmoscontrol/emag_act(mob/user)
 	if(emagged)

@@ -158,8 +158,10 @@
 /datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	return
 
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
@@ -173,14 +175,6 @@
 /datum/game_mode/traitor/declare_completion()
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.//WHERE IS check_extra_completion?!?!
-
-/datum/game_mode/traitor/process()
-	// Make sure all objectives are processed regularly, so that objectives
-	// which can be checked mid-round are checked mid-round.
-	for(var/datum/mind/traitor_mind in traitors)
-		for(var/datum/objective/objective in traitor_mind.objectives)
-			objective.check_completion()
-	return 0
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
@@ -203,7 +197,7 @@
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
 	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	//End code phrase.
-
+	killer.add_language("Sy-Code", 1)
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	var/text = ""
@@ -249,10 +243,10 @@
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 
-	if(ticker.reconverted_antags.len)
+	if(SSticker.reconverted_antags.len)
 		text += "<br><hr>"
-		for(var/reconverted in ticker.reconverted_antags)
-			text += printplayerwithicon(ticker.reconverted_antags[reconverted])
+		for(var/reconverted in SSticker.reconverted_antags)
+			text += printplayerwithicon(SSticker.reconverted_antags[reconverted])
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))

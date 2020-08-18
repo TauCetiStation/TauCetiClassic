@@ -1,6 +1,4 @@
-var/datum/subsystem/xenoarch/SSxenoarch
-
-/datum/subsystem/xenoarch
+SUBSYSTEM_DEF(xenoarch)
 	name = "Xenoarch"
 
 	init_order = SS_INIT_XENOARCH
@@ -20,9 +18,9 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	var/list/spawn_types_animal = list(
 		/mob/living/carbon/slime,
-		/mob/living/simple_animal/hostile/alien,
-		/mob/living/simple_animal/hostile/alien/drone,
-		/mob/living/simple_animal/hostile/alien/sentinel,
+		/mob/living/simple_animal/hostile/xenomorph,
+		/mob/living/simple_animal/hostile/xenomorph/drone,
+		/mob/living/simple_animal/hostile/xenomorph/sentinel,
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/giant_spider/nurse,
@@ -49,11 +47,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		/obj/item/seeds/blackberry
 	)
 
-
-/datum/subsystem/xenoarch/New()
-	NEW_SS_GLOBAL(SSxenoarch)
-
-/datum/subsystem/xenoarch/Initialize(timeofday)
+/datum/controller/subsystem/xenoarch/Initialize(timeofday)
 	// Local lists for sonic speed.
 	var/list/turfs_to_process        = list()
 	var/list/artifact_spawning_turfs = list()
@@ -108,7 +102,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 			var/datum/find/F = archeo_turf.finds[1]
 			if(F.excavation_required <= F.view_range)
 				archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-				archeo_turf.overlays += archeo_turf.archaeo_overlay
+				archeo_turf.add_overlay(archeo_turf.archaeo_overlay)
 
 		// Have a chance for an artifact to spawn here, but not in animal or plant digsites
 		if(isnull(archeo_turf.artifact_find) && digsite != 1 && digsite != 2)
@@ -156,5 +150,5 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	..()
 
-/datum/subsystem/xenoarch/Recover()
+/datum/controller/subsystem/xenoarch/Recover()
 	flags |= SS_NO_INIT

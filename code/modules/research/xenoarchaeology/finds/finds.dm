@@ -41,9 +41,9 @@
 	if(severity && prob(30))
 		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
-/obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pickaxe/brush))
-		if(W.use_tool(src, user, 20, volume = 50) && W)
+/obj/item/weapon/ore/strangerock/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/pickaxe/brush))
+		if(I.use_tool(src, user, 20, volume = 50))
 			if(inside)
 				inside.forceMove(get_turf(src))
 				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
@@ -53,34 +53,31 @@
 			qdel(src)
 			return
 
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)
 						inside.forceMove(get_turf(src))
-						for(var/mob/M in viewers(world.view, user))
-							M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
+						user.visible_message("<span class='info'>[src] burns away revealing [inside].</span>")
 					else
-						for(var/mob/M in viewers(world.view, user))
-							M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
+						user.visible_message("<span class='info'>[src] burns away into nothing.</span>")
 					qdel(src)
 					WT.use(4)
 				else
-					for(var/mob/M in viewers(world.view, user))
-						M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
+					visible_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>")
 					WT.use(1)
 		return
 
-	else if(istype(W,/obj/item/device/core_sampler))
-		var/obj/item/device/core_sampler/S = W
+	if(istype(I, /obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/S = I
 		S.sample_item(src, user)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
-	..()
+	. = ..()
 	if(prob(33))
 		src.visible_message("<span class='warning'>[src] crumbles away, leaving some dust and gravel behind.</span>")
 		qdel(src)

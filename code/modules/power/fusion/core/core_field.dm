@@ -187,7 +187,7 @@
 			if(percent_unstable > 1)
 				percent_unstable = 1
 			if(percent_unstable > 0)
-				percent_unstable = max(0, percent_unstable - rand(0.01, 0.03))
+				percent_unstable = max(0, percent_unstable - rand(10, 30) * 0.001)
 
 	if(percent_unstable >= 1)
 		owned_core.Shutdown(force_rupture = 1)
@@ -317,7 +317,7 @@
 
 			AM.visible_message("<span class='danger'>The field buckles visibly around \the [AM]!</span>")
 			tick_instability += rand(30, 50)
-			AM.emp_act(empsev)
+			AM.emplode(empsev)
 
 		if(radiation)
 			var/rad_power = radiation * 0.001

@@ -10,8 +10,7 @@
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<B>One-click Antagonist</B><br>
-		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
+	var/dat = {"<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
@@ -26,12 +25,12 @@
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
-	usr << browse(entity_ja(dat), "window=oneclickantag;size=400x400")
+	var/datum/browser/popup = new(usr, "oneclickantag", "One-click Antagonist", 400, 400)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 
@@ -273,7 +272,7 @@
 		if(closet_spawn)
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-		for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
+		for (var/obj/effect/landmark/A in /area/shuttle/syndicate/start)//Because that's the only place it can BE -Sieve
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/structure/closet/syndicate/personal(A.loc)
 				qdel(A)
@@ -284,17 +283,17 @@
 				qdel(A)
 				continue
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
 			if(synd_mind.current)
 				if(synd_mind.current.client)
 					for(var/image/I in synd_mind.current.client.images)
 						if(I.icon_state == "synd")
 							qdel(I)
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
+		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
 			if(synd_mind.current)
 				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
+					for(var/datum/mind/synd_mind_1 in SSticker.mode.syndicates)
 						if(synd_mind_1.current)
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
@@ -302,18 +301,6 @@
 		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
-	return 1
-
-
-
-
-
-/datum/admins/proc/makeAliens()
-	alien_infestation(3)
-	return 1
-
-/datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
 	return 1
 
 /datum/admins/proc/makeDeathsquad()
@@ -347,7 +334,7 @@
 	if(candidates.len)
 		var/numagents = 6
 		//Spawns commandos and equips them.
-		for (var/obj/effect/landmark/L in /area/syndicate_mothership/elite_squad)
+		for (var/obj/effect/landmark/L in /area/custom/syndicate_mothership/elite_squad)
 			if(numagents<=0)
 				break
 			if (L.name == "Syndicate-Commando")
@@ -428,7 +415,7 @@
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.age = rand(new_character.species.min_age, new_character.species.min_age * 1.5)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -448,7 +435,7 @@
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.age = !syndicate_leader_selected ? rand(new_syndicate_commando.species.min_age, new_syndicate_commando.species.min_age * 1.5) : rand(new_syndicate_commando.species.min_age * 1.25, new_syndicate_commando.species.min_age * 1.75)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -458,7 +445,7 @@
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
-	ticker.mode.traitors += new_syndicate_commando.mind
+	SSticker.mode.traitors += new_syndicate_commando.mind
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
@@ -539,7 +526,7 @@
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.age = rand(new_vox.species.min_age, new_vox.species.max_age)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.dna.mutantrace = "vox"
@@ -562,12 +549,12 @@
 	BP.implants += I
 	I.part = BP
 
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
+	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist ) ) )
+		var/datum/game_mode/heist/M = SSticker.mode
 		M.cortical_stacks[new_vox.mind] = I
 		M.raiders[new_vox.mind] = I
 
-	ticker.mode.traitors += new_vox.mind
+	SSticker.mode.traitors += new_vox.mind
 	new_vox.equip_vox_raider()
 
 	return new_vox
@@ -594,11 +581,11 @@
 			candidates.Remove(G)
 
 	if(candidates.len >= 2)
-		var/number =  ticker.mode.abductor_teams + 1
+		var/number =  SSticker.mode.abductor_teams + 1
 
 		var/datum/game_mode/abduction/temp
-		if(ticker.mode.config_tag == "abduction")
-			temp = ticker.mode
+		if(SSticker.mode.config_tag == "abduction")
+			temp = SSticker.mode
 		else
 			temp = new
 
@@ -622,11 +609,11 @@
 		temp.abductors = list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
-		ticker.mode.abductor_teams++
+		SSticker.mode.abductors += temp.abductors
+		SSticker.mode.abductor_teams++
 
-		if(ticker.mode.config_tag != "abduction")
-			ticker.mode.abductors |= temp.abductors
+		if(SSticker.mode.config_tag != "abduction")
+			SSticker.mode.abductors |= temp.abductors
 
 		return 1
 	else

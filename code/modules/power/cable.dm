@@ -382,6 +382,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
+	force = 1.0
 	icon_state = "coil"
 	amount = MAXCOIL
 	max_amount = MAXCOIL
@@ -396,6 +397,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
+	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
@@ -429,7 +431,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/mob/living/carbon/human/H = M
 
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		if(!BP.is_robotic() || user.a_intent != "help")
+		if(!BP.is_robotic() || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

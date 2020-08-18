@@ -4,7 +4,27 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click	= 0
+// This is mainly modified by click code, to modify click delays elsewhere, use next_move and SetNextMove()
+/mob/var/next_click = 0
+
+// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+/mob/var/next_move_adjust = 0   // Amount to adjust action/click delays by, + or -
+/mob/var/next_move_modifier = 1 // Value to multiply action/click delays by
+
+
+//Delays the mob's next click/action by num deciseconds
+// eg: 10-3 = 7 deciseconds of delay
+// eg: 10*0.5 = 5 deciseconds of delay
+// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+
+/mob/proc/SetNextMove(num)
+	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+
+// Delays the mob's next click/action either by num deciseconds, or maximum that was already there.
+/mob/proc/AdjustNextMove(num)
+	var/new_next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	if(new_next_move > next_move)
+		next_move = new_next_move
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -33,19 +53,16 @@
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user,params) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
+	* item/afterattack(atom,user,proximity,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/var/next_move_modifier = 0 // for now just used for species
-
-
-/mob/proc/SetNextMove(num)
-	next_move = world.time + num + next_move_modifier
-
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
+
+	if(notransform)
+		return
 
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
@@ -55,6 +72,9 @@
 
 	if(client.cob && client.cob.in_building_mode)
 		cob_click(client, modifiers)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -79,11 +99,10 @@
 		return
 
 	face_atom(A) // change direction to face what you clicked on
-
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
@@ -97,18 +116,20 @@
 		throw_item(A)
 		return
 
-	if(!istype(A,/obj/item/weapon/gun) && !isturf(A) && !istype(A,/obj/screen))
+	if(!istype(A, /obj/item/weapon/gun) && !isturf(A) && !istype(A, /obj/screen))
 		last_target_click = world.time
 
 	var/obj/item/W = get_active_hand()
-
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand()
-		else
-			update_inv_r_hand()
+		W.update_inv_mob()
 		return
+
+	if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.pda_paymod)
+			P.click_to_pay(A) //Click on someone to pay
+			return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
@@ -116,15 +137,16 @@
 
 		// No adjacency needed
 		if(W)
-
-			var/resolved = A.attackby(W,src,params)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
 			UnarmedAttack(A)
 		return
 
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
+	if(!isturf(loc)) // (This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that.) Not anymore
+		if((TK in mutations) && (XRAY in mutations))//Now telekinesing from inside a closet is possible
+			ranged_attack_tk(A)
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
@@ -167,14 +189,17 @@
 /mob/proc/RangedAttack(atom/A, params)
 	if(!mutations.len)
 		return
-	if(a_intent == "hurt" && (LASEREYES in mutations))
+	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		var/dist = get_dist(src, A)
-		if(dist > tk_maxrange)
-			return
-		SetNextMove(max(dist, CLICK_CD_MELEE))
-		A.attack_tk(src)
+		ranged_attack_tk(A)
+
+/mob/proc/ranged_attack_tk(atom/A)
+	var/dist = get_dist(src, A)
+	if(dist > tk_maxrange)
+		return
+	SetNextMove(max(dist, CLICK_CD_MELEE))
+	A.attack_tk(src)
 
 /*
 	Restrained ClickOn
@@ -191,7 +216,11 @@
 */
 /mob/proc/MiddleClickOn(atom/A)
 	return
+
 /mob/living/carbon/MiddleClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLECLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
 	swap_hand()
 
 // In case of use break glass
@@ -207,10 +236,12 @@
 */
 /mob/proc/ShiftClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.ShiftClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_SHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
 		user.examinate(src)
@@ -223,9 +254,13 @@
 
 
 /mob/proc/CtrlClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlClick(src)
 	return
 
@@ -241,8 +276,9 @@
 */
 /mob/proc/AltClickOn(atom/A)
 	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.AltClickAction(A, src))
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_ALTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
+
 	A.AltClick(src)
 	return
 
@@ -255,6 +291,14 @@
 			user.listed_turf = T
 			user.client.statpanel = T.name
 
+/mob/living/AltClick(mob/living/user)
+	/*
+	Handling combat activation after **item swipes** and changeling stings.
+	*/
+	if(istype(user) && user.Adjacent(src) && user.try_combo(src))
+		return FALSE
+	return ..()
+
 /mob/proc/TurfAdjacent(turf/T)
 	return T.AdjacentQuick(src)
 
@@ -263,9 +307,13 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(I && next_move <= world.time && !incapacitated() && I.CtrlShiftClickAction(A, src))
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_CTRL_SHIFT, A) & COMPONENT_CANCEL_CLICK)
 		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_CTRLSHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
 	A.CtrlShiftClick(src)
 	return
 
@@ -308,6 +356,29 @@
 	else
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
+
+// Simple helper to face what you clicked on, in case it should be needed in more than one place
+// This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
+/mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
+	if( stat || buckled)
+		return
+
+	var/dx = pixel_x_new - pixel_x
+	var/dy = pixel_y_new - pixel_y
+
+	if(dx == 0 && dy == 0)
+		return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
+	else
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)

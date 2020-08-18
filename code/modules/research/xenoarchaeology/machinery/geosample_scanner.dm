@@ -7,7 +7,7 @@
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "spectrometer"
 
-	use_power = 1 // 1 = idle, 2 = active
+	use_power = IDLE_POWER_USE // 1 = idle, 2 = active
 	idle_power_usage = 20
 	active_power_usage = 300
 

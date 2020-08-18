@@ -392,6 +392,13 @@
 					<b>Cost</b></br>
 					{{:data.selected_technology.cost}} Research Points
 					</br></br>
+					{{if data.selected_technology.isresearched}}
+						<b>Average Design Reliability Estimate</b></br>
+						{{:data.selected_technology.avg_reliability}}%</br>
+						<b>Reliability Upgrade Cost</b></br>
+						{{:data.selected_technology.reliability_upgrade_cost}} Research Points
+						</br></br>
+					{{/if}}
 					<b>Requirements</b></br>
 					{{for data.selected_technology.requirements}}
 						<span style="color: {{:value.isgood?'#00FF00':'#FF0000'}}">{{:value.text}}</span></br>
@@ -403,7 +410,8 @@
 					{{/for}}
 					</br>
 					{{if data.selected_technology.isresearched}}
-						<span class="average">Researched</span>
+						<span class="average">Researched</span></br>
+						{{:helper.link("Upgrade Reliability", '', {'upgrade_technology' : data.selected_technology.id})}}
 					{{else}}
 						{{:helper.link("Research", '', {'unlock_technology' : data.selected_technology.id})}}
 					{{/if}}

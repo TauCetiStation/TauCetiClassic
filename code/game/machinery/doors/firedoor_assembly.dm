@@ -1,5 +1,5 @@
 /obj/structure/firedoor_assembly
-	name = "\improper emergency shutter assembly"
+	name = "emergency shutter assembly"
 	desc = "It can save lives."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_construction"
@@ -65,4 +65,4 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 	else
-		..(C, user)
+		return ..()

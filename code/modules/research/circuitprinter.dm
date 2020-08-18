@@ -11,7 +11,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	var/max_material_amount = 75000.0
 	var/efficiency_coeff
-	var/list/loaded_materials = list()
+	var/list/datum/rnd_material/loaded_materials = list()
 	reagents = new(0)
 	var/list/queue = list()
 
@@ -46,10 +46,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/blob_act()
 	if (prob(50))
 		qdel(src)
-
-/obj/machinery/r_n_d/circuit_imprinter/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	if(loaded_materials[M])
@@ -112,12 +108,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)
+	if(amount > stack.get_amount())
+		amount = min(stack.get_amount(), round((max_material_amount-TotalMaterials())/stack.perunit))
 	if(amount < 0)
 		amount = 0
 	if(amount == 0)
 		return
-	if(amount > stack.get_amount())
-		amount = min(stack.get_amount(), round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
@@ -181,7 +177,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design
-	new D.build_path(loc)
+	var/atom/A = new D.build_path(loc)
+	if(isobj(A))
+		var/obj/O = A
+		O.origin_tech = null
 	busy = FALSE
 	queue -= RNDD
 

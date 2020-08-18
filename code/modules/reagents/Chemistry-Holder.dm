@@ -10,6 +10,7 @@ var/const/INGEST = 2
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
+	var/proccessing_reaction_count = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -147,7 +148,7 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
 	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
@@ -171,8 +172,8 @@ var/const/INGEST = 2
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
-			R.add_reagent(current_reagent.id, amount, trans_data)
-			src.remove_reagent(current_reagent.id, amount, 1)
+			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
+			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
 	src.update_total()
@@ -181,15 +182,13 @@ var/const/INGEST = 2
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(mob/M, alien)
-	if(has_reagent("aclometasone")) // Has a "unique" metabolization disabling factor, which just prevents any metabolization at all without affecting hunger. ~Luduk
-		return
+/datum/reagents/proc/metabolize(mob/M)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			R.on_mob_life(M, alien)
+			R.on_mob_life(M)
 			remove_reagent(R.id, remove_amount)
 	update_total()
 
@@ -214,6 +213,8 @@ var/const/INGEST = 2
 	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 
+	// Carefull, next while cycle are async
+	proccessing_reaction_count += 1
 	var/reaction_occured = 0
 	do
 		reaction_occured = 0
@@ -308,8 +309,9 @@ var/const/INGEST = 2
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>[bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.</span>")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
+							ME2.origin_tech = null
 
 					playsound(my_atom, 'sound/effects/bubbles.ogg', VOL_EFFECTS_MASTER)
 
@@ -319,7 +321,14 @@ var/const/INGEST = 2
 
 	while(reaction_occured)
 	update_total()
+	if (proccessing_reaction_count > 0)
+		proccessing_reaction_count -= 1
 	return 0
+
+/datum/reagents/proc/is_reaction_in_proccessing()
+	if (proccessing_reaction_count > 0)
+		return TRUE
+	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
@@ -394,12 +403,15 @@ var/const/INGEST = 2
 	return
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount))
+		return 1
+	if(amount < 0)
+		return 0
+	if(amount > 2000)
+		return
 	update_total()
-	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-
+	if(total_volume + amount > maximum_volume)
+		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
@@ -460,6 +472,8 @@ var/const/INGEST = 2
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
+		R.on_new(data)
+
 		update_total()
 		if(my_atom)
 			my_atom.on_reagent_change()
@@ -492,16 +506,6 @@ var/const/INGEST = 2
 	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = 0)
-	/*
-	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
-	to prevent all of the above.
-	*/
-	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
-	if(ismob(my_atom) && ACLO)
-		if(reagent == "aclometasone")
-			return ACLO.volume
-		return 0
-
 	for(var/datum/reagent/R in reagent_list)
 		if(R.id == reagent)
 			if(!amount)
@@ -511,16 +515,6 @@ var/const/INGEST = 2
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
-	/*
-	Aclometasone prevents: reactions, metabolism, reagent effects, so we make this special snowflake code
-	to prevent all of the above.
-	*/
-	var/datum/reagent/aclometasone/ACLO = locate(/datum/reagent/aclometasone) in reagent_list
-	if(ismob(my_atom) && ACLO)
-		if(reagent == "aclometasone")
-			return ACLO.volume
-		return 0
-
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -614,6 +608,16 @@ var/const/INGEST = 2
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
+/datum/reagents/proc/create_chempuff(amount, multiplier=1, preserve_data=1, name_from_reagents = TRUE, icon_from_reagents = TRUE)
+	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(my_atom))
+	if(name_from_reagents)
+		D.name = get_master_reagent_name()
+	D.create_reagents(amount)
+	D.icon = 'icons/obj/chempuff.dmi'
+	trans_to(D, amount, multiplier, preserve_data)
+	if(icon_from_reagents)
+		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	return D
 ///////////////////////////////////////////////////////////////////////////////////
 
 

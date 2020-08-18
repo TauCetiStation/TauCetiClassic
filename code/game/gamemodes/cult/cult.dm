@@ -4,13 +4,16 @@
 	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
 		return FALSE
-	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
-		return FALSE
+	if(ishuman(mind.current))
+		if((mind.assigned_role in list("Captain", "Chaplain")))
+			return FALSE
+		if(mind.current.get_species() == GOLEM)
+			return FALSE
 	if(ismindshielded(mind.current))
 		return FALSE
 	return TRUE
@@ -32,6 +35,8 @@
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 20
+
+	restricted_species_flags = list(NO_BLOOD)
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
@@ -92,7 +97,7 @@
 
 		listclearnulls(possible_targets)
 
-		if(LAZYLEN(possible_targets))
+		if(length(possible_targets))
 			sacrifice_target = pick(possible_targets)
 
 	for(var/datum/mind/cult_mind in cult)
@@ -270,7 +275,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat!=2)
 			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
+			if ( is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0
@@ -337,7 +342,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
 			text += printplayerwithicon(cultist)
@@ -345,5 +350,5 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text

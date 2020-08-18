@@ -26,7 +26,7 @@
 		display_head.pixel_x = 1
 		display_head.layer = 3
 		display_head.plane = 0
-		overlays += display_head
+		add_overlay(display_head)
 	if(S)
 		spear = S
 		S.forceMove(src)

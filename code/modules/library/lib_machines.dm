@@ -44,7 +44,7 @@
 	state_nopower_preset = "computer_old0"
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	switch(screenstate)
 		if(0)
 			dat += {"<h2>Search Settings</h2><br>
@@ -83,7 +83,7 @@
 			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
 			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
 
-	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 600)
+	var/datum/browser/popup = new(user, "publiclibrary", "Library Visitor", 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -153,7 +153,8 @@
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-	var/bibledelay = 0
+	var/count_bible = 4
+	var/next_print = 0
 
 /obj/machinery/computer/libraryconsole/bookmanagement/old // an older-looking version, looks fancy
 	icon_state = "computer_old"
@@ -168,7 +169,7 @@
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
 	user.set_machine(src)
-	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	switch(screenstate)
 		if(0)
 			// Main Menu
@@ -278,7 +279,7 @@
 			<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
 
-	var/datum/browser/popup = new(user, "library", name, 600, 600)
+	var/datum/browser/popup = new(user, "library", "Book Inventory Management", 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -288,8 +289,7 @@
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
 		to_chat(user, "[scanner]'s associated machine has been set to [src].")
-		for (var/mob/V in hearers(src))
-			V.show_message("[src] lets out a low, short blip.", 2)
+		audible_message("[src] lets out a low, short blip.")
 	else
 		..()
 
@@ -319,22 +319,16 @@
 			if("5")
 				screenstate = 5
 			if("6")
-				if(!bibledelay)
-
-					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
-						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
-						B.name = ticker.Bible_name
-						B.deity_name = ticker.Bible_deity_name
-
-					bibledelay = 1
-					spawn(60)
-						bibledelay = 0
+				if(count_bible > 0 && world.time > next_print)
+					if(global.chaplain_religion)
+						global.chaplain_religion.spawn_bible(loc)
+						count_bible -= 1
+						next_print = world.time + 6 SECONDS
+					else
+						visible_message("<b>[src]</b>'s monitor flashes,  \"Could not connect to station's religion database at this moment, please try again later.\"")
 
 				else
-					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
+					visible_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
 				screenstate = 7
@@ -400,7 +394,7 @@
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
 							else
-								log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 								alert("Upload Complete.")
 
 	if(href_list["targetid"])
@@ -411,13 +405,10 @@
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
-			for (var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
+		if(next_print > world.time)
+			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
-			bibledelay = 1
-			spawn(60)
-				bibledelay = 0
+			next_print = world.time + 6 SECONDS
 			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
 			query.Execute()
 
@@ -495,7 +486,7 @@
 		O.loc = src
 
 /obj/machinery/libraryscanner/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/dat = ""
 	if(cache)
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
 	else
@@ -508,8 +499,10 @@
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR>"
 	else
 		dat += "<BR>"
-	user << browse(entity_ja(dat), "window=scanner")
-	onclose(user, "scanner")
+
+	var/datum/browser/popup = new(user, "window=scanner", "Scanner Control Interface")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
 	. = ..()

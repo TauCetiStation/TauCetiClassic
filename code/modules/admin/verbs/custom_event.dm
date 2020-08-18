@@ -10,11 +10,11 @@
 	var/input = sanitize(input(usr, "Enter the description of the custom event. Be descriptive. To cancel the event, make this blank or hit cancel.", "Custom Event", input_default(custom_event_msg)) as message|null, MAX_BOOK_MESSAGE_LEN, extra = FALSE)
 	if(!input || input == "")
 		custom_event_msg = null
-		log_admin("[usr.key] has cleared the custom event text.")
+		log_admin("[key_name(usr)] has cleared the custom event text.")
 		message_admins("[key_name_admin(usr)] has cleared the custom event text.")
 		return
 
-	log_admin("[usr.key] has changed the custom event text.")
+	log_admin("[key_name(usr)] has changed the custom event text.")
 	message_admins("[key_name_admin(usr)] has changed the custom event text.")
 
 	custom_event_msg = input
@@ -30,7 +30,7 @@
 		world.send2bridge(
 			type = list(BRIDGE_ANNOUNCE),
 			attachment_title = "Custom Event",
-			attachment_msg = custom_event_msg,
+			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",,
 			attachment_color = BRIDGE_COLOR_ANNOUNCE,
 			mention = BRIDGE_MENTION_EVENT,
 		)

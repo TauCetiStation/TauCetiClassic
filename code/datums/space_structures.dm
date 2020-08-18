@@ -80,3 +80,44 @@
 	desc = "Unknown shuttle"
 	mappath = "maps/templates/space_structures/ghost_ship_2.dmm"
 
+/datum/map_template/space_structure/syndicate_fighter
+	name = "syndicate_fighter"
+	structure_id = "syndicate_fighter"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/syndicate_fighter.dmm"
+
+/datum/map_template/space_structure/delivery_shuttle
+	name = "delivery_shuttle"
+	structure_id = "delivery_shuttle"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/delivery_shuttle.dmm"
+
+/datum/map_template/space_structure/lost_pod
+	name = "lost_pod"
+	structure_id = "lost_pod"
+	desc = "Unknown small object"
+	mappath = "maps/templates/space_structures/lost_pod.dmm"
+
+/datum/map_template/space_structure/cloning_lab
+	name = "cloning_lab"
+	structure_id = "cloning_lab"
+	desc = "Unknown debris"
+	mappath = "maps/templates/space_structures/cloning_lab.dmm"
+
+/datum/map_template/space_structure/listening_post
+	name = "listening_post"
+	structure_id = "listening_post"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/listening_post.dmm"
+
+/datum/map_template/space_structure/iss
+	name = "iss"
+	structure_id = "iss"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/iss.dmm"
+
+/datum/map_template/space_structure/NASA_satellite
+	name = "NASA satellite"
+	structure_id = "NASA satellite"
+	desc = "Unknown small object"
+	mappath = "maps/templates/space_structures/satellite.dmm"

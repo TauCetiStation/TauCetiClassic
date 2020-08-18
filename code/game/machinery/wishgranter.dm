@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	anchored = 1
 	density = 1
 
@@ -60,7 +60,7 @@
 
 		user.update_mutations()
 
-		ticker.mode.traitors += user.mind
+		SSticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
 		var/datum/objective/silence/silence = new

@@ -73,10 +73,6 @@
 	deflate(1)
 
 
-/obj/structure/inflatable/meteorhit()
-	//world << "glass at [x],[y],[z] Mhit"
-	deflate(1)
-
 /obj/structure/inflatable/attack_paw(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -97,21 +93,17 @@
 		user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
 /obj/structure/inflatable/attack_alien(mob/user)
-	if(islarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 15)
 
-/obj/structure/inflatable/attack_animal(mob/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
+/obj/structure/inflatable/attack_animal(mob/living/simple_animal/attacker)
 	..()
-
-	if(M.melee_damage_upper <= 0)
+	if(attacker.melee_damage <= 0)
 		return
-	attack_generic(M, M.melee_damage_upper)
+	attack_generic(attacker, attacker.melee_damage)
 
 
 /obj/structure/inflatable/attack_slime(mob/user)

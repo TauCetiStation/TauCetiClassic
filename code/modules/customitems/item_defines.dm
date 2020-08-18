@@ -25,7 +25,7 @@
 	stampoverlay.pixel_x = rand(-2, 2)
 	stampoverlay.pixel_y = rand(-3, 2)
 	stampoverlay.icon_state = "paper_stamp-rd"
-	overlays += stampoverlay
+	add_overlay(stampoverlay)
 
 	update_icon()
 
@@ -100,9 +100,12 @@
 
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt //Matthew Riebhardt - ZekeSulastin
 	name = "academic journal"
-	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of 2557. Paper flags demarcate some articles the owner finds interesting."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "matthewriebhardt"
+
+/obj/item/weapon/folder/blue/fluff/matthew_riebhardt/atom_init()
+	. = ..()
+	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of [gamestory_start_year]. Paper flags demarcate some articles the owner finds interesting."
 
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
@@ -132,8 +135,7 @@
 	icon_state = "victor_kaminsky_1"
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message("[user] shows you: [bicon(src)] [src.name].", 1)
+	user.visible_message("[user] shows you: [bicon(src)] [src.name].")
 	src.add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
@@ -248,8 +250,7 @@
 
 /obj/item/weapon/fluff/cado_keppel_1/attack_self(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
+		visible_message("<span class='warning'>[user] uses [src] to comb their hair with incredible style and sophistication. What a guy.</span>")
 	return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
@@ -351,12 +352,7 @@
 	icon_state = "asher_spock_1"
 	amount_per_transfer_from_this = 5
 	volume = 15
-
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
-	. = ..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("oxycodone", 15)
-	update_icon()
+	list_reagents = list("oxycodone" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
@@ -412,9 +408,8 @@
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
 	name = "Zelda's Crowbar"
 	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'."
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "zeldacrowbar"
-	item_state = "crowbar"
+	item_state = "zeldacrowbar"
 
 ////// Ripley customisation kit - Butchery Royce - MayeDay
 
@@ -504,28 +499,10 @@
 //////////// Hats ////////////
 
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
-	name = "\improper SWAT hat"
+	name = "SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
 	icon_state = "swatcap"
 	body_parts_covered = 0
-
-/obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
-	name = "flame decal welding helmet"
-	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "alice_mccrea_1"
-
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
-	name = "white decal welding helmet"
-	desc = "A white welding helmet with a character written across it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "yuki_matsuda_1"
-
-/obj/item/clothing/head/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
-	name = "blue flame decal welding helmet"
-	desc = "A welding helmet with blue flame decals on it."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "norah_briggs_1"
 
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
@@ -620,7 +597,7 @@
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
-	desc = "A uniform jacket, its buttons polished to a shine, coupled with a dark pair of trousers. 'Hachert' is embroidered upon the jacket�s shoulder bar."
+	desc = "A uniform jacket, its buttons polished to a shine, coupled with a dark pair of trousers. 'Hachert' is embroidered upon the jacket's shoulder bar."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "milohachert"
 	item_state = "milohachert"
@@ -779,7 +756,7 @@
 	item_state = "jane_sid_suit"
 	item_color = "jane_sid_suit"
 	has_sensor = 2
-	sensor_mode = 3
+	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL
 
 //Suit roll-down toggle.
@@ -788,7 +765,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")
@@ -826,7 +803,7 @@
 
 /*
 /obj/item/clothing/mask/fluff/flagmask //searif: Tsiokeriio Tarbell
-	name = "\improper First Nations facemask"
+	name = "First Nations facemask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "flagmask"
@@ -867,17 +844,16 @@
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/paper))
+/obj/item/clothing/accessory/fluff/konaa_hirano/attack_accessory(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
 		if(held)
 			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(user, "You slip [O] into [src].")
-			user.drop_item()
-			O.loc = src
-			src.held = O
-	else
-		..()
+			to_chat(user, "You slip [I] into [src].")
+			user.drop_from_inventory(I, src)
+			held = I
+		return TRUE
+	return FALSE
 
 //////  Medallion - Nasir Khayyam - Jamini
 
@@ -933,7 +909,7 @@
 
 /*
 /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
-	name = "\improper CDC labcoat"
+	name = "CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "labcoat_cdc_open"
@@ -962,29 +938,7 @@
 /obj/item/weapon/melee/baton/fluff/oeng_baton
 	name = "well-used stun baton"
 	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
-/*
-///// Deckard .44 - Callum Leamas - Roaper
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas
-	name = "Deckard .44"
-	desc = "A custom built revolver, based off the semi-popular Detective Special model."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas/update_icon()
-
-	..()
-	if(loaded.len)
-		icon_state = "leamas-loaded"
-	else
-		icon_state = "leamas-empty"
-
-/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
-
-	if(istype(A, /obj/item/ammo_magazine))
-		flick("leamas-reloading",src)
-	..()
-
-*/
 ///// Custom Items coded by Iamgoofball are Below /////
 /obj/item/weapon/storage/belt/medical/fluff/nashi_belt
 	name = "rainbow medical belt"

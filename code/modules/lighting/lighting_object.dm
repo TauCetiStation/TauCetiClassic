@@ -103,7 +103,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points™?, it won't even be a flat 0.
+	// Because of floating points™, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
@@ -127,6 +127,8 @@
 
 	luminosity = set_luminosity
 
+	SEND_SIGNAL(src, COMSIG_LIGHT_UPDATE_OBJECT, myturf)
+
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
@@ -145,5 +147,5 @@
 /atom/movable/lighting_object/Move()
 	return
 
-/atom/movable/lighting_object/forceMove(atom/destination)
+/atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
 	return

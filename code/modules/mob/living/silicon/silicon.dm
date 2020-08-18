@@ -59,20 +59,6 @@
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
 
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-
-
-	if(!Proj.nodamage)
-		switch(Proj.damage_type)
-			if(BRUTE)
-				adjustBruteLoss(Proj.damage)
-			if(BURN)
-				adjustFireLoss(Proj.damage)
-
-	Proj.on_hit(src,2)
-
-	return 2
-
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
@@ -125,11 +111,14 @@
 // this function displays the stations manifest in a separate window
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
-	dat += "<h4>Crew Manifest</h4>"
 	if(data_core)
 		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
-	src << browse(entity_ja(dat), "window=airoster")
+
+	var/datum/browser/popup = new(src, "airoster", "Crew Manifest")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(src, "airoster")
 
 //can't inject synths
@@ -160,7 +149,7 @@
 	set category = "IC"
 	set src = usr
 
-	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
+	var/dat = ""
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
@@ -168,7 +157,10 @@
 			dat += "(:[l_key])"
 		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
 
-	src << browse(entity_ja(dat), "window=checklanguage")
+	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
+	popup.set_content(dat)
+	popup.open()
+
 	return
 
 /mob/living/silicon/proc/toggle_sensor_mode()
@@ -194,3 +186,8 @@
 /mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
+
+/mob/living/silicon/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	if(show_message)
+		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
+	return FALSE

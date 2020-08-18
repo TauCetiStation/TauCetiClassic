@@ -1,6 +1,4 @@
-var/datum/subsystem/garbage_collector/SSgarbage
-
-/datum/subsystem/garbage_collector
+SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 
 	priority      = SS_PRIORITY_GARBAGE
@@ -28,7 +26,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	//Queue
 	var/list/queues
 
-/datum/subsystem/garbage_collector/New()
+/datum/controller/subsystem/garbage/PreInit()
 	queues = new(GC_QUEUE_COUNT)
 	pass_counts = new(GC_QUEUE_COUNT)
 	fail_counts = new(GC_QUEUE_COUNT)
@@ -36,9 +34,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		queues[i] = list()
 		pass_counts[i] = 0
 		fail_counts[i] = 0
-	NEW_SS_GLOBAL(SSgarbage)
 
-/datum/subsystem/garbage_collector/stat_entry(msg)
+/datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
 	for (var/list/L in queues)
 		counts += length(L)
@@ -58,7 +55,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	msg += "|F:[fail_counts.Join(",")]"
 	..(msg)
 
-/datum/subsystem/garbage_collector/fire()
+/datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
 	var/queue = GC_QUEUE_PREQUEUE
 
@@ -79,7 +76,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandlePreQueue()
+/datum/controller/subsystem/garbage/proc/HandlePreQueue()
 	var/list/tobequeued = queues[GC_QUEUE_PREQUEUE]
 	var/static/count = 0
 	if (count)
@@ -96,7 +93,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		tobequeued.Cut(1,count+1)
 		count = 0
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(level = GC_QUEUE_CHECK)
+/datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
 		delslasttick = 0
 		gcedlasttick = 0
@@ -144,7 +141,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				log_qdel("GC: -- \ref[D] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -160,12 +157,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		queue.Cut(1,count+1)
 		count = 0
 
-/datum/subsystem/garbage_collector/proc/PreQueue(datum/D)
+/datum/controller/subsystem/garbage/proc/PreQueue(datum/D)
 	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		queues[GC_QUEUE_PREQUEUE] += D
 		D.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
-/datum/subsystem/garbage_collector/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
+/datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
 	if (isnull(D))
 		return
 	if (D.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
@@ -184,7 +181,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	queue[refid] = gctime
 
 //this is mainly to separate things profile wise.
-/datum/subsystem/garbage_collector/proc/HardDelete(datum/D)
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
@@ -211,16 +208,16 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if (time > highest_del_time)
 		highest_del_time = time
 	if (time > 10)
-		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
+		log_qdel("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time)
 
-/datum/subsystem/garbage_collector/proc/HardQueue(datum/D)
+/datum/controller/subsystem/garbage/proc/HardQueue(datum/D)
 	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		queues[GC_QUEUE_PREQUEUE] += D
 		D.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
-/datum/subsystem/garbage_collector/Recover()
+/datum/controller/subsystem/garbage/Recover()
 	if (istype(SSgarbage.queues))
 		for (var/i in 1 to SSgarbage.queues.len)
 			queues[i] |= SSgarbage.queues[i]
@@ -272,6 +269,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.PreQueue(D)
 			if (QDEL_HINT_IWILLGC)
 				D.gc_destroyed = world.time
+				SSdemo.mark_destroyed(D)
 				return
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
@@ -291,8 +289,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 				SSgarbage.PreQueue(D)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
+				SSdemo.mark_destroyed(D)
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
+				SSdemo.mark_destroyed(D)
 				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.PreQueue(D)
@@ -306,64 +306,13 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				#endif
 				I.no_hint++
 				SSgarbage.PreQueue(D)
+		if(D)
+			SSdemo.mark_destroyed(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-
-// Default implementation of clean-up code.
-// This should be overridden to remove all references pointing to the object being destroyed.
-// Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
-// TODO: Move this and all datum var definitions into code/datums/datum.dm
-/datum/proc/Destroy(force = FALSE, ...)
-	tag = null
-
-	var/list/timers = active_timers
-	active_timers = null
-	for(var/thing in timers)
-		var/datum/timedevent/timer = thing
-		if (timer.spent)
-			continue
-		qdel(timer)
-
-	//BEGIN: ECS SHIT
-	signal_enabled = FALSE
-
-	var/list/dc = datum_components
-	if(dc)
-		var/all_components = dc[/datum/component]
-		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
-				qdel(C, FALSE, TRUE)
-		else
-			var/datum/component/C = all_components
-			qdel(C, FALSE, TRUE)
-		dc.Cut()
-
-	var/list/lookup = comp_lookup
-	if(lookup)
-		for(var/sig in lookup)
-			var/list/comps = lookup[sig]
-			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
-					comp.UnregisterSignal(src, sig)
-			else
-				var/datum/component/comp = comps
-				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
-
-	for(var/target in signal_procs)
-		UnregisterSignal(target, signal_procs[target])
-	//END: ECS SHIT
-
-	return QDEL_HINT_QUEUE
-
-/datum/var/gc_destroyed //Time when this object was destroyed.
-
 #ifdef TESTING
 /client/var/running_find_references
-/datum/var/running_find_references
 
 /datum/verb/find_references()
 	set category = "Debug"
@@ -453,5 +402,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	for(var/path in tmplist)
 		dat += "[path] - [tmplist[path]] times<BR>"
 
-	usr << browse(entity_ja(dat), "window=qdeletedlog")
+	var/datum/browser/popup = new(usr, "window=qdeletedlog")
+	popup.set_content(dat)
+	popup.open()
+	
 #endif

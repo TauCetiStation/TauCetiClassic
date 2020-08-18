@@ -20,10 +20,9 @@
 	anchored = TRUE
 
 	density = FALSE
-	use_power = TRUE				//this turret uses and requires power
+	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
@@ -314,10 +313,12 @@ var/list/turret_icons
 		update_icon()
 	else
 		addtimer(CALLBACK(src, .proc/power_change_post), rand(1, 15))
+	update_power_use()
 
 /obj/machinery/porta_turret/proc/power_change_post()
 	stat |= NOPOWER
 	update_icon()
+	update_power_use()
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
 	if(stat & BROKEN)
@@ -384,7 +385,7 @@ var/list/turret_icons
 		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = TRUE
-				addtimer(CALLBACK(src, .proc/attacked_clear), 60)
+				addtimer(VARSET_CALLBACK(src, attacked, FALSE), 60)
 		..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
@@ -398,7 +399,7 @@ var/list/turret_icons
 	iconholder = TRUE
 	controllock = TRUE
 	enabled = FALSE //turns off the turret temporarily
-	addtimer(CALLBACK(src, .proc/enable), 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	addtimer(VARSET_CALLBACK(src, enabled, TRUE), 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	return TRUE
 
 /obj/machinery/porta_turret/proc/take_damage(force)
@@ -422,7 +423,7 @@ var/list/turret_icons
 	if(enabled)
 		if(!attacked && !emagged)
 			attacked = TRUE
-			addtimer(CALLBACK(src, .proc/attacked_clear), 60)
+			addtimer(VARSET_CALLBACK(src, attacked, FALSE), 60)
 
 	..()
 
@@ -442,7 +443,7 @@ var/list/turret_icons
 			emagged = TRUE
 
 		enabled = FALSE
-		addtimer(CALLBACK(src, .proc/enable), rand(60, 600))
+		addtimer(VARSET_CALLBACK(src, enabled, TRUE), rand(60, 600))
 
 	..()
 
@@ -463,12 +464,6 @@ var/list/turret_icons
 	stat |= BROKEN	//enables the BROKEN bit
 	spark_system.start()	//creates some sparks because they look cool
 	update_icon()
-
-/obj/machinery/porta_turret/proc/enable()
-	enabled = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
-
-/obj/machinery/porta_turret/proc/attacked_clear()
-	attacked = FALSE
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
@@ -546,7 +541,7 @@ var/list/turret_icons
 	if(isanimal(L)) // Animals are not so dangerous
 		return check_anomalies ? TURRET_SECONDARY_TARGET : TURRET_NOT_TARGET
 
-	if(isalien(L)) // Xenos are dangerous
+	if(isxeno(L)) // Xenos are dangerous
 		return check_anomalies ? TURRET_PRIORITY_TARGET	: TURRET_NOT_TARGET
 
 	if(ishuman(L))	//if the target is a human, analyze threat level
@@ -629,7 +624,7 @@ var/list/turret_icons
 		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
 			return
 		last_fired = TRUE
-		addtimer(CALLBACK(src, .proc/ready_to_fire), shot_delay)
+		addtimer(VARSET_CALLBACK(src, last_fired, FALSE), shot_delay)
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
@@ -667,25 +662,19 @@ var/list/turret_icons
 	else
 		playsound(src, shot_sound, VOL_EFFECTS_MASTER)
 
-/obj/machinery/porta_turret/proc/ready_to_fire()
-	last_fired = FALSE
-
-
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	if(M.melee_damage_upper == 0)
+	if(attacker.melee_damage == 0)
 		return
 	if(!(stat & BROKEN))
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		take_damage(M.melee_damage_upper)
+		visible_message("<span class='danger'>[attacker] [attacker.attacktext] [src]!</span>")
+		attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+		take_damage(attacker.melee_damage)
 	else
-
-		to_chat(M, "<span class='red'>That object is useless to you.</span>")
-	return
+		to_chat(attacker, "<span class='red'>That object is useless to you.</span>")
 
 
-/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
+/obj/machinery/porta_turret/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
 	M.do_attack_animation(src)
 	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
@@ -738,7 +727,7 @@ var/list/turret_icons
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	density = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/build_step = 0			//the current step in the building process
 	var/finish_name="turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed

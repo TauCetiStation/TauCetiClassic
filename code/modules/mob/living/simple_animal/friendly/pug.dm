@@ -1,6 +1,6 @@
 //Corgi
 /mob/living/simple_animal/pug
-	name = "\improper pug"
+	name = "pug"
 	real_name = "pug"
 	desc = "It's a pug."
 	icon_state = "pug"
@@ -17,6 +17,9 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	see_in_dark = 5
+
+	has_head = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/pug/Life()
 	..()

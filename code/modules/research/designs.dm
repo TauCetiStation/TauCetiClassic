@@ -2,7 +2,7 @@
 
 /***************************************************************
 **						Design Datums						  **
-**	All the data for building stuff and tracking reliability. **
+**	All the data for building stuff.                          **
 ***************************************************************/
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
@@ -103,6 +103,16 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/operating
 	category = list("Computer")
+
+/datum/design/slime_management
+	name = "Circuit Design (Slime management console)"
+	desc = "Allows for the construction of circuit boards used to build a slime management console."
+	id = "slime_management"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/camera_advanced/xenobio
+	category = list("Computer")
+
 
 /datum/design/pandemic
 	name = "Circuit Design (PanD.E.M.I.C. 2200)"
@@ -1809,6 +1819,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/taser/stunrevolver
 	category = list("Weapons")
 
+/datum/design/laserrifle
+	name = "Laser Rifle"
+	desc = "An energy weapon with concentrated energy bolts."
+	id = "laserrifle"
+	build_type = PROTOLATHE
+	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
+	build_path = /obj/item/weapon/gun/energy/laser
+	category = list("Weapons")
+
 /datum/design/lasercannon
 	name = "Laser Cannon"
 	desc = "A heavy duty laser cannon."
@@ -1890,22 +1909,31 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	category = list("Weapons")
 
-/datum/design/l10
-	name = "L10-c"
-	desc = "A basic energy-based carbine with fast rate of fire."
-	id = "l10"
+/datum/design/plasma_10_gun
+	name = "plasma 10-bc"
+	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	id = "plasma_10_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic/l10c
+	build_path = /obj/item/weapon/gun/plasma
 	category = list("Weapons")
 
-/datum/design/l10_mag
-	name = "L10-c battery"
-	desc = "A special battery with protection from EM pulse."
-	id = "l10_mag"
+/datum/design/plasma_104_gun
+	name = "plasma 104-sass"
+	desc = "A plasma-based semi-automatic short shotgun."
+	id = "plasma_104_gun"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
+	build_path = /obj/item/weapon/gun/plasma/p104sass
+	category = list("Weapons")
+
+/datum/design/plasma_mag
+	name = "plasma weapon battery pack"
+	desc = "A special battery case with protection against EM pulse. Has standardized dimensions and can be used with any plasma type gun of this series."
+	id = "plasma_mag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
-	build_path = /obj/item/ammo_box/magazine/l10mag
+	build_path = /obj/item/ammo_box/magazine/plasma
 	category = list("Weapons")
 
 /datum/design/smg
@@ -2453,6 +2481,15 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
 	build_path = /obj/item/airbag
 	category = list("Support")
+
+/datum/design/universal_pyrometer
+	name = "Universal pyrometer"
+	desc = "A pyrometer with all possible modes built-in. Battery and micro-laser component not included!"
+	id = "universal_pyrometer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 100)
+	build_path = /obj/item/weapon/gun/energy/pyrometer/universal
+	category = list("Tools")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

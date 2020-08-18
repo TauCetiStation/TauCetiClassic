@@ -1,11 +1,11 @@
-// To add a rev to the list of revolutionaries, make sure it's rev (with if(ticker.mode.name == "revolution)),
-// then call ticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
+// To add a rev to the list of revolutionaries, make sure it's rev (with if(SSticker.mode.name == "revolution)),
+// then call SSticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
 // nothing else needs to be done, as that proc will check if they are a valid target.
 // Just make sure the converter is a head before you call it!
-// To remove a rev (from brainwashing or w/e), call ticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
+// To remove a rev (from brainwashing or w/e), call SSticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
 // this will also check they're not a head, so it can just be called freely
-// If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
-// If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
+// If the rev icons start going wrong for some reason, SSticker.mode:update_all_rev_icons() can be called to correct them.
+// If the game somtimes isn't registering a win properly, then SSticker.mode.check_win() isn't being called somewhere.
 
 /datum/game_mode
 	var/list/datum/mind/head_revolutionaries = list()
@@ -100,7 +100,7 @@
 	checkwin_counter++
 	if(checkwin_counter >= 5)
 		if(!finished)
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 
@@ -372,6 +372,8 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
+	if(name == "rp-revolution") // hack, we should move game_mode/revolution/rp_revolution to game_mode/rp_revolution
+		return ..()
 	completion_text += "<h3>Revolution mode resume:</h3>"
 	if(!config.objectives_disabled)
 		if(finished == 1)
@@ -385,7 +387,7 @@
 	var/num_revs = 0
 	for(var/mob/living/carbon/mob in alive_mob_list)
 		if(mob.mind)
-			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+			if((mob.mind in head_revolutionaries) || (mob.mind in revolutionaries))
 				num_revs++
 	completion_text += "<br>[TAB]Command's Approval Rating: <b>[100 - round((num_revs/alive_mob_list.len)*100, 0.1)]%</b>" // % of loyal crew
 	..()
@@ -395,7 +397,7 @@
 	var/list/targets = list()
 
 	var/text = ""
-	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		text += printlogo("rev_head", "head revolutionaries")
 
 		for(var/datum/mind/headrev in head_revolutionaries)
@@ -434,7 +436,7 @@
 				targets |= objective.target
 
 
-	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
 		text += "<br>"
 		text += printlogo("rev-logo", "head revolutionaries")
 		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
@@ -467,7 +469,7 @@
 			text += ")"
 
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution) )
 		text += "<br>"
 		text += printlogo("nano-logo", "heads of staff")
 

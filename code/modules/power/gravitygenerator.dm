@@ -19,7 +19,7 @@
 	icon_state = "TheSingGen"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000
 	var/on = 1
@@ -66,7 +66,7 @@
 /obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat = "<h3>Generator Control System</h3>"
+	var/dat = ""
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(gravity_generator)
 		if(gravity_generator:on)
@@ -95,7 +95,10 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(entity_ja(dat), "window=gravgen")
+	var/datum/browser/popup = new(user, "gravgen", "Generator Control System")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "gravgen")
 
 
@@ -114,12 +117,12 @@
 					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
-					A.gravitychange(0,A)
+					A.gravitychange(FALSE)
 
 
 		else
 			for(var/area/A in gravity_generator:localareas)
 				gravity_generator:on = 1
-				A.gravitychange(1,A)
+				A.gravitychange(TRUE)
 
 	src.updateUsrDialog()

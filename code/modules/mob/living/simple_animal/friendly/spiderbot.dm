@@ -26,10 +26,8 @@
 	health = 10
 	maxHealth = 10
 
-	attacktext = "shocks"
-	attacktext = "shocks"
-	melee_damage_lower = 1
-	melee_damage_upper = 3
+	attacktext = "shock"
+	melee_damage = 2
 
 	response_help  = "pets"
 	response_disarm = "shoos"
@@ -91,8 +89,7 @@
 				if(health > maxHealth)
 					health = maxHealth
 				add_fingerprint(user)
-				for(var/mob/W in viewers(user, null))
-					W.show_message(text("<span class='warning'>[user] has spot-welded some of the damage to [src]!</span>"), 1)
+				user.visible_message("<span class='warning'>[user] has spot-welded some of the damage to [src]!</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] is undamaged!</span>")
 		else
@@ -131,16 +128,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
+			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
+			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 
-/mob/living/simple_animal/spiderbot/proc/transfer_personality(obj/item/device/mmi/M)
+/mob/living/simple_animal/spiderbot/transfer_personality(obj/item/device/mmi/M)
 
 		src.mind = M.brainmob.mind
 		src.mind.key = M.brainmob.key
@@ -163,9 +156,7 @@
 		return FALSE
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[src] makes an odd warbling noise, fizzles, and explodes.</span>")
+	visible_message("<span class='warning'>[src] makes an odd warbling noise, fizzles, and explodes.</span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
 	eject_brain()
 	death()
@@ -241,7 +232,7 @@
 	set category = "Spiderbot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return
 
 	if(!held_item)
@@ -262,14 +253,12 @@
 	held_item = null
 	return 1
 
-	return
-
 /mob/living/simple_animal/spiderbot/verb/get_item()
 	set name = "Pick up item"
 	set category = "Spiderbot"
 	set desc = "Allows you to take a nearby small item."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)

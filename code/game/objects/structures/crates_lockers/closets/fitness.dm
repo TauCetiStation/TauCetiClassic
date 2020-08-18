@@ -49,7 +49,7 @@
 	icon_closed = "red"
 
 /obj/structure/closet/lasertag/red/PopulateContents()
-	for (var/i in 1 to 2)
+	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser/lasertag/redtag(src)
 		new /obj/item/clothing/suit/lasertag/redtag(src)
 
@@ -61,6 +61,6 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/lasertag/blue/PopulateContents()
-	for (var/i in 1 to 2)
+	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(src)
 		new /obj/item/clothing/suit/lasertag/bluetag(src)

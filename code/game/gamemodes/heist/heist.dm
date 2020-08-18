@@ -37,31 +37,35 @@
 	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns.")
 
 /datum/game_mode/heist/can_start()
+	if (!..())
+		return FALSE
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "voxstart")
+			return TRUE
+	return FALSE
 
+/datum/game_mode/heist/assign_outsider_antag_roles()
 	if(!..())
-		return 0
+		return FALSE
 
-	var/raider_num = 0
+	var/raider_num = recommended_enemies
 
 	//Check that we have enough vox.
-	if(antag_candidates.len < required_enemies)
-		return 0
-	else if(antag_candidates.len < recommended_enemies)
+	if(antag_candidates.len < recommended_enemies)
 		raider_num = antag_candidates.len
-	else
-		raider_num = recommended_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
+		modePlayer += new_raider
 		antag_candidates -= new_raider
 		raider_num--
 
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
 		raider.special_role = "Raider"
-	return 1
+	return TRUE
 
 /datum/game_mode/heist/pre_setup()
 	return 1
@@ -118,7 +122,7 @@
 		vox.real_name = newname
 		vox.name = vox.real_name
 		raider.name = vox.name
-		vox.age = rand(17,85)
+		vox.age = rand(vox.species.min_age, vox.species.max_age)
 		//vox.dna.mutantrace = "vox"
 		//vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
@@ -134,7 +138,7 @@
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 		heist_recursive_price_reset(AM)
 
 	return ..()
@@ -144,7 +148,7 @@
 		return 0
 
 	for(var/obj/stack in cortical_stacks)
-		if (get_area(stack) != locate(/area/shuttle/vox/station))
+		if (get_area(stack) != locate(/area/shuttle/vox/arkship))
 			return 0
 	return 1
 
@@ -167,13 +171,13 @@
 	var/msg = ""
 	to_chat(raider.current, "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>")
 	to_chat(raider.current, "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>")
-	msg = "У вашего капитана имеется fulton recovery pack! Используйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель живая - попадет в комнату удержания на шаттле)."
+	msg = "РЈ РІР°С€РµРіРѕ РєР°РїРёС‚Р°РЅР° РёРјРµРµС‚СЃСЏ fulton recovery pack! РСЃРїРѕР»СЊР·СѓР№С‚Рµ РµРіРѕ, С‡С‚РѕР±С‹ Р±С‹СЃС‚СЂРѕ РґРѕСЃС‚Р°РІРёС‚СЊ РІСЃРµ С‡С‚Рѕ СѓРіРѕРґРЅРѕ РЅР° РІР°С€ РєРѕСЂР°Р±Р»СЊ (РµСЃР»Рё С†РµР»СЊ Р¶РёРІР°СЏ - РїРѕРїР°РґРµС‚ РІ РєРѕРјРЅР°С‚Сѓ СѓРґРµСЂР¶Р°РЅРёСЏ РЅР° С€Р°С‚С‚Р»Рµ)."
 	to_chat(raider.current, "[sanitize(msg)]")
-	msg = "На вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! Используйте их на станции, чтобы сеять хаос (осторожно, гранаты содержат агрессивную живность которая с удовольствием перекусит даже вами, а семена можно сажать прямо на пол станции)."
+	msg = "РќР° РІР°С€РµРј РєРѕСЂР°Р±Р»Рµ Р»РµР¶Р°С‚ СЃРµРјРµРЅР° РєСѓРґР·Сѓ Рё СЌРєСЃРєР»СЋР·РёРІРЅС‹Рµ РєСѓР±РёС‡РµСЃРєРёРµ РіСЂР°РЅР°С‚С‹! РСЃРїРѕР»СЊР·СѓР№С‚Рµ РёС… РЅР° СЃС‚Р°РЅС†РёРё, С‡С‚РѕР±С‹ СЃРµСЏС‚СЊ С…Р°РѕСЃ (РѕСЃС‚РѕСЂРѕР¶РЅРѕ, РіСЂР°РЅР°С‚С‹ СЃРѕРґРµСЂР¶Р°С‚ Р°РіСЂРµСЃСЃРёРІРЅСѓСЋ Р¶РёРІРЅРѕСЃС‚СЊ РєРѕС‚РѕСЂР°СЏ СЃ СѓРґРѕРІРѕР»СЊСЃС‚РІРёРµРј РїРµСЂРµРєСѓСЃРёС‚ РґР°Р¶Рµ РІР°РјРё, Р° СЃРµРјРµРЅР° РјРѕР¶РЅРѕ СЃР°Р¶Р°С‚СЊ РїСЂСЏРјРѕ РЅР° РїРѕР» СЃС‚Р°РЅС†РёРё)."
 	to_chat(raider.current, "<span class='info'>[sanitize(msg)]</span>")
-	msg = "Ваша винтовка и пистолет модифицированы для использования специальных сверхзвуковых снарядов нового поколения, они не наносят вреда обычным живым существам но имеют огромную силу удара, что позволяет вывести из боя человека нацепившего на себя много брони, а синтетам и мехам наносит колоссальный вред."
+	msg = "Р’Р°С€Р° РІРёРЅС‚РѕРІРєР° Рё РїРёСЃС‚РѕР»РµС‚ РјРѕРґРёС„РёС†РёСЂРѕРІР°РЅС‹ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЃРїРµС†РёР°Р»СЊРЅС‹С… СЃРІРµСЂС…Р·РІСѓРєРѕРІС‹С… СЃРЅР°СЂСЏРґРѕРІ РЅРѕРІРѕРіРѕ РїРѕРєРѕР»РµРЅРёСЏ, РѕРЅРё РЅРµ РЅР°РЅРѕСЃСЏС‚ РІСЂРµРґР° РѕР±С‹С‡РЅС‹Рј Р¶РёРІС‹Рј СЃСѓС‰РµСЃС‚РІР°Рј РЅРѕ РёРјРµСЋС‚ РѕРіСЂРѕРјРЅСѓСЋ СЃРёР»Сѓ СѓРґР°СЂР°, С‡С‚Рѕ РїРѕР·РІРѕР»СЏРµС‚ РІС‹РІРµСЃС‚Рё РёР· Р±РѕСЏ С‡РµР»РѕРІРµРєР° РЅР°С†РµРїРёРІС€РµРіРѕ РЅР° СЃРµР±СЏ РјРЅРѕРіРѕ Р±СЂРѕРЅРё, Р° СЃРёРЅС‚РµС‚Р°Рј Рё РјРµС…Р°Рј РЅР°РЅРѕСЃРёС‚ РєРѕР»РѕСЃСЃР°Р»СЊРЅС‹Р№ РІСЂРµРґ."
 	to_chat(raider.current, "[sanitize(msg)]")
-	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. Учтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Не используйте его на дверях с опущенными болтами, конечно если ваша цель не является полностью заблокировать дверь."
+	msg = "Debugger РєРѕС‚РѕСЂС‹Р№ РІС‹ РЅР°Р№РґРµС‚Рµ РЅР° РєРѕСЂР°Р±Р»Рµ - РїРѕРјРѕР¶РµС‚ РІР°Рј СЃРѕ РІР·Р»РѕРјРѕРј APC Рё РґРІРµСЂРµР№. РЈС‡С‚РёС‚Рµ С‡С‚Рѕ С‚Р°РєРѕР№ РјРµС‚РѕРґ РЅР°РЅРѕСЃРёС‚ РІСЂРµРґ РїСЂРѕРіСЂР°РјРјРЅРѕРјСѓ РѕР±РµСЃРїРµС‡РµРЅРёСЋ Рё РІ СЃР»СѓС‡Р°Рµ СЃ РґРІРµСЂСЊРјРё - РїРѕРїСЂРѕСЃС‚Сѓ СЃР¶РёРіР°РµС‚ РїР»Р°С‚Сѓ. РќРµ РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РµРіРѕ РЅР° РґРІРµСЂСЏС… СЃ РѕРїСѓС‰РµРЅРЅС‹РјРё Р±РѕР»С‚Р°РјРё, РєРѕРЅРµС‡РЅРѕ РµСЃР»Рё РІР°С€Р° С†РµР»СЊ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ РґРІРµСЂСЊ."
 	to_chat(raider.current, "<span class='info'>[sanitize(msg)]</span>")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
@@ -268,7 +272,7 @@
 				sav_score = 0
 			if(max_score > sav_score)
 				S["HeistMaxScore"] << num2text(heist_rob_total,9)
-			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+			for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
 				if(AM.get_price())
 					var/count = 0
 					S["[AM.type]"] >> count
@@ -283,7 +287,7 @@
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
 				var/area/A = get_area(raider.current)
-				if(!istype(A, /area/shuttle/vox/station))
+				if(!istype(A, /area/shuttle/vox/arkship))
 					text += "left behind)"
 					continue
 				else if(raider.current.stat == DEAD)
@@ -305,7 +309,7 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "heist", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text
 
 /datum/game_mode/heist/check_finished()

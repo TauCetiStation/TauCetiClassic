@@ -50,7 +50,17 @@
 				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
 			return
-	..()
+
+	else if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
+		var/obj/item/weapon/twohanded/sledgehammer/S = W
+		if(S.wielded && !(flags & NODECONSTRUCT))
+			new /obj/item/stack/sheet/metal(loc)
+			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
+			shake_camera(user, 1, 1)
+			qdel(src)
+			return
+	else
+		..()
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
@@ -75,7 +85,7 @@
 	w_class = ITEM_SIZE_HUGE
 	var/obj/structure/stool/origin_stool = null
 
-/obj/item/weapon/stool/throw_at()
+/obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
 
 /obj/item/weapon/stool/atom_init()

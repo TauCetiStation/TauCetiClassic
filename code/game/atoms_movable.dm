@@ -6,13 +6,13 @@
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
-	var/thrower
 	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/fly_speed = 0  // Used to get throw speed param exposed in proc, so we could use it in hitby reactions.
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/can_be_pulled = TRUE
 
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -50,12 +50,15 @@
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
-/atom/movable/Crossed(atom/movable/AM, oldloc)
+/atom/movable/Crossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
+
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
 
 	var/atom/oldloc = loc
 
@@ -102,6 +105,10 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -114,7 +121,13 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+	SSdemo.mark_dirty(src)
 	return 1
+
+/atom/movable/proc/locMoved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
+	for(var/atom/movable/AM in contents)
+		AM.locMoved(OldLoc, Dir)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T
@@ -166,18 +179,18 @@
 	. = ..()
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
 		loc = destination
 		loc.Entered(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //called when src is thrown into hit_atom
-/atom/movable/proc/throw_impact(atom/hit_atom)
-	hit_atom.hitby(src)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	hit_atom.hitby(src, throwingdatum)
 
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -255,7 +268,6 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	src.thrower = thrower
 	throw_source = get_turf(loc)
 	fly_speed = speed
 	throwing = TRUE

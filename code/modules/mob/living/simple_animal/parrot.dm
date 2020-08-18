@@ -26,7 +26,7 @@
 
 
 /mob/living/simple_animal/parrot
-	name = "\improper Parrot"
+	name = "Parrot"
 	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\""
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
@@ -49,6 +49,9 @@
 	response_harm   = "swats the"
 	stop_automated_movement = 1
 	universal_speak = 1
+
+	has_head = TRUE
+	has_leg = TRUE
 
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
@@ -118,26 +121,29 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
-	if(user.stat) return
+	if(user.incapacitated()) return
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
+	var/dat = ""
 	if(ears)
 		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=\ref[src];remove_inv=ears'>Remove</a>)"
 	else
 		dat +=	"<br><b>Headset:</b> <a href='?src=\ref[src];add_inv=ears'>Nothing</a>"
 
-	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
+	var/datum/browser/popup = new(user, "mob[real_name]", "Inventory of [name]", 325, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "mob[real_name]")
 	return
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr))
+	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isxenoadult(usr))
 
 		//Removing from inventory
 		if(href_list["remove_inv"])
@@ -152,8 +158,8 @@
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
+							if(copytext(possible_phrase,1,2 + length(possible_phrase[2])) in department_radio_keys)
+								possible_phrase = copytext(possible_phrase, 2 + length(possible_phrase[2]),-1)
 					else
 						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 						return
@@ -212,46 +218,24 @@
 /*
  * Attack responces
  */
-//Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
-	..()
-	if(client) return
-	if(!stat && M.a_intent == "hurt")
-
+/mob/living/simple_animal/parrot/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	. = ..()
+	if(client)
+		return
+	if(!stat)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = M
+		parrot_interest = attacker
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
-		if(M.health < 50) //Weakened mob? Fight back!
+		if(attacker.health < 50) //Weakened mob? Fight back!
 			parrot_state |= PARROT_ATTACK
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	return
-
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
-	attack_hand(M)
-
-//Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
-	if(client) return
-	if(..())
-		return
-
-	if(parrot_state == PARROT_PERCH)
-		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
-
-	if(M.melee_damage_upper > 0)
-		parrot_interest = M
-		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-		icon_state = "parrot_fly"
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
@@ -269,7 +253,9 @@
 
 //Bullets
 /mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -279,8 +265,6 @@
 		parrot_been_shot += 5
 		icon_state = "parrot_fly"
 		drop_held_item(0)
-	return
-
 
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
@@ -298,8 +282,8 @@
 	if(client || stat)
 		return //Lets not force players or dead/incap parrots to move
 
-	if(!isturf(src.loc) || !canmove || buckled)
-		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
+	if(!isturf(src.loc) || !canmove)
+		return //If it can't move, dont let it move.
 
 
 //-----SPEECH
@@ -346,8 +330,8 @@
 						if(prob(50))
 							useradio = 1
 
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						if(copytext(possible_phrase,1, 2 + length(possible_phrase[2])) in department_radio_keys)
+							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,2 + length(possible_phrase[2]))]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
 
@@ -355,8 +339,8 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						if(copytext(possible_phrase,1, 2 + length(possible_phrase[2])) in department_radio_keys)
+							possible_phrase = "[copytext(possible_phrase,2 + length(possible_phrase[2]))]" //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
@@ -394,11 +378,11 @@
 					return
 			return
 
-		if(parrot_interest && parrot_interest in view(src))
+		if(parrot_interest && (parrot_interest in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_STEAL
 			return
 
-		if(parrot_perch && parrot_perch in view(src))
+		if(parrot_perch && (parrot_perch in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
@@ -583,7 +567,7 @@
 	set category = "Parrot"
 	set desc = "Grabs a nearby item."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -611,7 +595,7 @@
 	set category = "Parrot"
 	set desc = "Steals an item right out of a person's hand!"
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(held_item)
@@ -642,7 +626,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return
 
 	src.drop_held_item()
@@ -654,7 +638,7 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
-	if(stat)
+	if(incapacitated())
 		return -1
 
 	if(!held_item)
@@ -681,7 +665,7 @@
 	set category = "Parrot"
 	set desc = "Sit on a nice comfy perch."
 
-	if(stat || !client)
+	if(incapacitated() || !client)
 		return
 
 	if(icon_state == "parrot_fly")
@@ -728,7 +712,7 @@
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
@@ -788,7 +772,7 @@
 
 /mob/living/simple_animal/parrot/say(var/message)
 
-	if(stat)
+	if(stat || !message)
 		return
 
 	var/verb = "says"
@@ -797,16 +781,16 @@
 
 
 	var/message_mode=""
-	if(copytext(message,1,2) == ";")
+	if(message[1] == ";")
 		message_mode = "headset"
 		message = copytext(message,2)
 
 	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
+		var/channel_prefix = copytext(message, 1 ,2 + length(message[2]))
 		message_mode = department_radio_keys[channel_prefix]
 
-	if(copytext(message,1,2) == ":")
-		var/positioncut = 3
+	if(message[1] == ":")
+		var/positioncut = 2 + length(message[2])
 		message = trim(copytext(message,positioncut))
 
 	message = capitalize(trim_left(message))
@@ -828,7 +812,7 @@
 
 
 /mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
-	if(speaker != src)
+	if(speaker != src && length(available_channels) > 0)
 		parrot_hear("[pick(available_channels)] [message]")
 	..()
 

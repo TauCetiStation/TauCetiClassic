@@ -35,14 +35,14 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	if(.)
 		return
 
-	if(get_area(src) != locate(/area/shuttle/vox/station))
+	if(get_area(src) != locate(/area/shuttle/vox/arkship))
 		return // no point in this console after moving shuttle from start position.
 
 	if(announce_vox_departure)
-		console_say("Смена режима маскировки: полная маскировки. КСН \"Исход\" не будет оповещен о нашем прибытии.")
+		console_say("РЎРјРµРЅР° СЂРµР¶РёРјР° РјР°СЃРєРёСЂРѕРІРєРё: РїРѕР»РЅР°СЏ РјР°СЃРєРёСЂРѕРІРєРё. РљРЎРќ \"РСЃС…РѕРґ\" РЅРµ Р±СѓРґРµС‚ РѕРїРѕРІРµС‰РµРЅ Рѕ РЅР°С€РµРј РїСЂРёР±С‹С‚РёРё.")
 		announce_vox_departure = FALSE
 	else
-		console_say("Смена режима маскировки: торговое судно. КСН \"Исход\" будет оповещен о нашем прибытии.")
+		console_say("РЎРјРµРЅР° СЂРµР¶РёРјР° РјР°СЃРєРёСЂРѕРІРєРё: С‚РѕСЂРіРѕРІРѕРµ СЃСѓРґРЅРѕ. РљРЎРќ \"РСЃС…РѕРґ\" Р±СѓРґРµС‚ РѕРїРѕРІРµС‰РµРЅ Рѕ РЅР°С€РµРј РїСЂРёР±С‹С‚РёРё.")
 		announce_vox_departure = TRUE
 
 /obj/machinery/computer/vox_station
@@ -59,7 +59,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
-	curr_location = locate(/area/shuttle/vox/station)
+	curr_location = locate(/area/shuttle/vox/arkship)
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)
@@ -70,12 +70,12 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	if(curr_location == dest_location)
 		return
 
-	if(dest_location == locate(/area/shuttle/vox/station))
+	if(dest_location == locate(/area/shuttle/vox/arkship))
 		returning = TRUE
 
 	if(announce_vox_departure)
-		if(curr_location == locate(/area/shuttle/vox/station))
-			command_alert("Внимание, [station_name()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
+		if(curr_location == locate(/area/shuttle/vox/arkship))
+			command_alert("Р’РЅРёРјР°РЅРёРµ, [station_name()], РЅРµРїРѕРґР°Р»С‘РєСѓ РѕС‚ РІР°С€РµР№ СЃС‚Р°РЅС†РёРё РїСЂРѕС…РѕРґРёС‚ РєРѕСЂР°Р±Р»СЊ РЅРµ РѕС‚РІРµС‡Р°СЋС‰РёР№ РЅР° РЅР°С€Рё Р·Р°РїСЂРѕСЃС‹. РџРѕ РїРѕСЃР»РµРґРЅРёРј РґР°РЅРЅС‹Рј СЌС‚РѕС‚ РєРѕСЂР°Р±Р»СЊ РїСЂРёРЅР°РґР»РµР¶РёС‚ РўРѕСЂРіРѕРІРѕР№ РљРѕРЅС„РµРґРµСЂР°С†РёРё.")
 		else if(returning)
 			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of [system_name()] at a rapid clip.", "NSV Icarus")
 
@@ -83,7 +83,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	lastMove = world.time
 
 	if(curr_location.type != dest_location.type)
-		var/area/transit_location = locate(/area/vox_station/transit)
+		var/area/transit_location = locate(/area/shuttle/vox/transit)
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
@@ -92,7 +92,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	if(istype(dest_location, /area/shuttle/vox/station))
+	if(istype(dest_location, /area/shuttle/vox/arkship))
 		vox_shuttle_location = "start"
 	moving = FALSE
 
@@ -126,7 +126,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>
 		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
+	var/datum/browser/popup = new(user, "computer", null, 575, 450)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
@@ -136,23 +139,23 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
+		if(SSticker && (istype(SSticker.mode,/datum/game_mode/heist)))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = TRUE
 				addtimer(CALLBACK(src, .proc/reset_warning), 10 SECONDS) // so, if someone accidentaly uses this, it won't stuck for a whole round.
 				return
-		vox_move_to(/area/shuttle/vox/station)
+		vox_move_to(/area/shuttle/vox/arkship)
 	else if(href_list["solars_fore_starboard"])
-		vox_move_to(/area/vox_station/northeast_solars)
+		vox_move_to(/area/shuttle/vox/northeast_solars)
 	else if(href_list["solars_fore_port"])
-		vox_move_to(/area/vox_station/northwest_solars)
+		vox_move_to(/area/shuttle/vox/northwest_solars)
 	else if(href_list["solars_aft_starboard"])
-		vox_move_to(/area/vox_station/southeast_solars)
+		vox_move_to(/area/shuttle/vox/southeast_solars)
 	else if(href_list["solars_aft_port"])
-		vox_move_to(/area/vox_station/southwest_solars)
+		vox_move_to(/area/shuttle/vox/southwest_solars)
 	else if(href_list["mining"])
-		vox_move_to(/area/vox_station/mining)
+		vox_move_to(/area/shuttle/vox/mining)
 
 	updateUsrDialog()
 

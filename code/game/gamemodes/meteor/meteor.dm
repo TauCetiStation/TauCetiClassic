@@ -44,7 +44,7 @@
 			switch(location.loc.type)
 				if( /area/shuttle/escape/centcom )
 					text += "<br><b>[player.real_name] escaped on the emergency shuttle</b>"
-				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
+				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom )
 					text += "<br>[player.real_name] escaped in a life pod."
 				else
 					text += "<br>[player.real_name] survived but is stranded without any hope of rescue."

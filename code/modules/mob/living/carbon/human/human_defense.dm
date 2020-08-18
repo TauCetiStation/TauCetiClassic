@@ -14,19 +14,17 @@
 	..()
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
 
-	if(P.impact_force)
-		for(var/i=1, i<=P.impact_force, i++)
-			step_to(src, get_step(loc, P.dir))
-			if(istype(src.loc, /turf/simulated))
-				src.loc.add_blood(src)
+	return ..()
+
+/mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
+	. = PROJECTILE_ALL_OK
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -39,11 +37,7 @@
 					// redirect the projectile
 					P.redirect(new_x, new_y, curloc, src)
 
-				return -1 // complete projectile permutation
-
-	if(check_shields(P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, 100, def_zone)
-		return 2
+				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -55,7 +49,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -76,7 +70,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
@@ -90,7 +84,7 @@
 					if(C.flags & THICKMATERIAL )
 						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
 						qdel(P)
-						return
+						return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
@@ -102,7 +96,7 @@
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-		return
+		return PROJECTILE_ACTED
 
 	if(istype(P, /obj/item/projectile/bullet))
 		var/obj/item/projectile/bullet/B = P
@@ -113,7 +107,7 @@
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
-			P.on_hit(src, armor, def_zone)
+			P.on_hit(src, def_zone, armor)
 			//return Nope! ~Zve
 		if(delta < 10)
 			P.sharp = 0
@@ -145,8 +139,6 @@
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
-
-	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
@@ -229,7 +221,11 @@
 				return 1
 	return 0
 
-/mob/living/carbon/human/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
+/mob/living/carbon/human/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	. = ..()
+	if(.)
+		return
+
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
@@ -256,21 +252,20 @@
 			if(!isturf(picked)) return
 			src.loc = picked
 			return 1
-	return 0
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
 		if(!O)
 			continue
-		O.emp_act(severity)
+		O.emplode(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		BP.emp_act(severity)
+		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			if(IO.robotic == 0)
 				continue
-			IO.emp_act(severity)
+			IO.emplode(severity)
 	..()
 
 
@@ -278,24 +273,11 @@
 	if(!I || !user)
 		return FALSE
 
-	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
-
-	if(user == src) // Attacking yourself can't miss
-		target_zone = user.zone_sel.selecting
-	if(!target_zone)
-		visible_message("<span class='userdanger'>[user] misses [src] with \the [I]!</span>")
-		return FALSE
-
-	var/obj/item/organ/external/BP = get_bodypart(target_zone)
+	var/obj/item/organ/external/BP = get_bodypart(def_zone)
 	if (!BP)
-		to_chat(user, "What [parse_zone(target_zone)]?")
+		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
-
-	if(user != src)
-		user.do_attack_animation(src)
-		if(check_shields(I.force, "the [I.name]", get_dir(user,src) ))
-			return 0
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!BP.is_robotic())
@@ -363,9 +345,9 @@
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
-					if(src != user && I.damtype == BRUTE)
-						ticker.mode.remove_revolutionary(mind)
-						ticker.mode.remove_gangster(mind, exclude_bosses=1)
+					if(src != user && I.damtype == BRUTE && mind)
+						SSticker.mode.remove_revolutionary(mind)
+						SSticker.mode.remove_gangster(mind, exclude_bosses=1)
 
 				if(bloody)//Apply blood
 					if(wear_mask)
@@ -478,3 +460,41 @@
 		rig.take_hit(damage)
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+// Does not check whether a targetzone's bodypart is actually a head :shrug:
+// Make var/is_head for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_head(targetzone = null)
+	if(isnull(targetzone))
+		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
+		if(head && head.is_usable())
+			return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually an arm :shrug:
+// Make var/is_arm for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_arm(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_arms = list(get_bodypart(BP_L_ARM), get_bodypart(BP_R_ARM))
+		for(var/obj/item/organ/external/arm in pos_arms)
+			if(arm && arm.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE
+
+// Does not check whether a targetzone's bodypart is actually a leg :shrug:
+// Make var/is_leg for external bodyparts when such stuff would be required.
+/mob/living/carbon/human/is_usable_leg(targetzone = null)
+	if(isnull(targetzone))
+		var/list/pos_legs = list(get_bodypart(BP_L_LEG), get_bodypart(BP_R_LEG))
+		for(var/obj/item/organ/external/leg in pos_legs)
+			if(leg && leg.is_usable())
+				return TRUE
+	var/obj/item/organ/external/BP = get_bodypart(targetzone)
+	if(BP)
+		return BP.is_usable()
+	return FALSE

@@ -1,6 +1,6 @@
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 #define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
@@ -21,15 +21,16 @@
 
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
-	var/in_stasis = 0
 
 
-/mob/living/carbon/human/Life()
+/mob/living/carbon/human/Life(seconds)
 	set invisibility = 0
 	set background = 1
 
-	if (monkeyizing)	return
-	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
+	if (notransform)
+		return
+	if(!loc)
+		return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
 
@@ -53,17 +54,16 @@
 	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
-	if(in_stasis) loc:used++
-
 	if(life_tick%30==15)
 		hud_updateflag = 1022
 
 	voice = GetVoice()
 
+	handle_combat()
+
 	//No need to update all of these procs if the guy is dead.
-	if(stat != DEAD && !in_stasis)
-		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
+	if(stat != DEAD && !IS_IN_STASIS(src))
+		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
@@ -71,32 +71,41 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+		if(stat != DEAD) // incase if anyone wonder why - mob can die while any of those procs run, so we recheck stat where needed.
+			//Mutations and radiation
+			handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		if(stat != DEAD)
+			//Chemicals in the body
+			handle_chemicals_in_body()
 
-		//Disabilities
-		handle_disabilities()
+		if(stat != DEAD)
+			//Disabilities
+			handle_disabilities()
 
-		//Random events (vomiting etc)
-		handle_random_events()
+			//Random events (vomiting etc)
+			handle_random_events()
 
-		handle_virus_updates()
+			handle_virus_updates()
 
-		//stuff in the stomach
-		handle_stomach()
+			//stuff in the stomach
+			handle_stomach()
 
-		handle_shock()
+			handle_shock()
 
-		handle_pain()
+			handle_pain()
 
-		handle_medical_side_effects()
+			handle_medical_side_effects()
 
-		handle_heart_beat()
+			handle_heart_beat()
 
-	handle_stasis_bag()
+			//This block was in handle_regular_status_updates under != DEAD
+			stabilize_body_temperature()	//Body temperature adjusts itself
+			handle_bodyparts()	//Optimized.
+			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(blood_volume > 0)
+					handle_blood(blood_volume)
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -106,8 +115,6 @@
 
 	//Check if we're on fire
 	handle_fire()
-	if(on_fire && fire_stacks > 0)
-		fire_stacks -= 0.5
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
@@ -158,22 +165,18 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || has_trait(TRAIT_EPILEPSY))
+	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if ((prob(1) && paralysis < 1))
-			to_chat(src, "<span class='warning'>You have a seizure!</span>")
-			for(var/mob/O in viewers(src, null))
-				if(O == src)
-					continue
-				O.show_message(text("<span class='danger'>[src] starts having a seizure!</span>"), 1)
+			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if (disabilities & COUGHING || has_trait(TRAIT_COUGH))
+	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || has_trait(TRAIT_TOURETTE))
+	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
 		if ((prob(10) && paralysis <= 1))
 			Stun(10)
@@ -183,7 +186,7 @@
 						emote("twitch")
 					if(2 to 3)
 						if(config.rus_language)
-							say(pick(CYRILLIC_TRAIT_TOURETTE))
+							say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
 						else
 							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
 				var/old_x = pixel_x
@@ -194,30 +197,10 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS || has_trait(TRAIT_NERVOUS))
+	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
 		if (prob(10))
 			stuttering = max(10, stuttering)
-	// No. -- cib
-	//Oh, really?
-	if (getBrainLoss() >= 60 && stat != DEAD)
-		if(prob(3))
-			if(config.rus_language)//TODO:CYRILLIC dictionary?
-				switch(pick(1,2,3))
-					if(1)
-						say(pick(CYRILLIC_BRAINDAMAGE_1))
-					if(2)
-						say(pick(CYRILLIC_BRAINDAMAGE_2))
-					if(3)
-						emote("drool")
-			else
-				switch(pick(1,2,3))
-					if(1)
-						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
-					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
-					if(3)
-						emote("drool")
 
 	if(stat != DEAD)
 		if(gnomed) // if he's dead he's gnomed foreva-a-ah
@@ -244,32 +227,44 @@
 					dna.SetSEState(SMALLSIZEBLOCK, 0)
 					domutcheck(src, null)
 
-		var/rn = rand(0, 200)
-		if(getBrainLoss() >= 5)
-			if(0 <= rn && rn <= 3)
-				custom_pain("Your head feels numb and painful.")
-		if(getBrainLoss() >= 15)
-			if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-				to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
-				eye_blurry = 10
-		if(getBrainLoss() >= 35)
-			if(7 <= rn && rn <= 9) if(get_active_hand())
-				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
-				drop_item()
-		if(getBrainLoss() >= 50)
-			if(10 <= rn && rn <= 12) if(!lying)
-				to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
-				resting = 1
+		switch(rand(0, 200))
+			if(0 to 3)
+				if(getBrainLoss() >= 5)
+					custom_pain("Your head feels numb and painful.")
 
-/mob/living/carbon/human/proc/handle_stasis_bag()
-	// Handle side effects from stasis bag
-	if(in_stasis)
-		// First off, there's no oxygen supply, so the mob will slowly take brain damage
-		adjustBrainLoss(0.1)
+			if(4 to 6)
+				if(getBrainLoss() >= 15 && eye_blurry <= 0)
+					to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
+					eye_blurry = 10
 
-		// Next, the method to induce stasis has some adverse side-effects, manifesting
-		// as cloneloss
-		adjustCloneLoss(0.1)
+			if(7 to 9)
+				if(getBrainLoss() >= 35 && get_active_hand())
+					to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
+					drop_item()
+
+			if(10 to 12)
+				if(getBrainLoss() >= 50 && !lying)
+					to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
+					resting = 1
+
+			if(13 to 18)
+				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+					if(config.rus_language)//TODO:CYRILLIC dictionary?
+						switch(rand(1, 3))
+							if(1)
+								say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
+							if(2)
+								say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+							if(3)
+								emote("drool")
+					else
+						switch(rand(1, 3))
+							if(1)
+								say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
+							if(2)
+								say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
+							if(3)
+								emote("drool")
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
@@ -352,24 +347,14 @@
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
-	if(NO_BREATH in src.mutations)
-		return //#Z2 We need no breath with this mutation
-	if(reagents.has_reagent("lexorin"))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return
-	if(dna && dna.mutantrace == "adamantine")
-		return
-	if(ismob(loc))
+	if(!need_breathe())
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+	if((handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV))
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath>0) //Suffocating so do not take a breath
@@ -400,22 +385,6 @@
 
 				breath = loc.remove_air(breath_moles)
 
-				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-					var/obj/item/clothing/mask/gas/G = wear_mask
-					var/datum/gas_mixture/filtered = new
-					for(var/g in  G.filter)
-						if(breath.gas[g])
-							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
-							breath.gas[g] -= filtered.gas[g]
-
-					breath.update_values()
-					filtered.update_values()
-
-				if(!is_lung_ruptured())
-					if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-						if(prob(5))
-							rupture_lung()
-
 				// Handle filtering
 				var/block = 0
 				if(wear_mask)
@@ -437,6 +406,22 @@
 								if(smoke)
 									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
+
+			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+				var/obj/item/clothing/mask/gas/G = wear_mask
+				var/datum/gas_mixture/filtered = new
+				for(var/g in  G.filter)
+					if(breath.gas[g])
+						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+						breath.gas[g] -= filtered.gas[g]
+
+				breath.update_values()
+				filtered.update_values()
+
+			if(!is_lung_ruptured())
+				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+					if(prob(5))
+						rupture_lung()
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -485,7 +470,7 @@
 		if(suiciding)
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
-			throw_alert("oxy")
+			throw_alert("oxy", /obj/screen/alert/oxy)
 			return 0
 		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -494,7 +479,7 @@
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
 
@@ -532,7 +517,7 @@
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy")
+		throw_alert("oxy", /obj/screen/alert/oxy)
 
 	else
 		// We're in safe limits
@@ -576,9 +561,9 @@
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
-		throw_alert("tox_in_air")
+		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -594,7 +579,7 @@
 
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
-				Sleeping(5)
+				Sleeping(10 SECONDS)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > 0.15)
@@ -664,15 +649,16 @@
 
 		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 		var/temp_adj = 0
-		if(!on_fire && !(is_type_organ(O_LUNGS, /obj/item/organ/internal/lungs/ipc) && is_bruised_organ(O_LUNGS))) //If you're on fire, you do not heat up or cool down based on surrounding gases. IPC's lungs are the cooling element. If it's broken, IPCs should cool down.
+		//If you're on fire, you do not heat up or cool down based on surrounding gases.
+		if(!on_fire)
 			if(loc_temp < bodytemperature)			//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
 			else if (loc_temp > bodytemperature)			//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
 			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
@@ -701,33 +687,41 @@
 	if(bodytemperature > species.heat_level_1)
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
-			throw_alert("temp","hot",3)
+			throw_alert("temp", /obj/screen/alert/hot, 3)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 		else if(bodytemperature > species.heat_level_2)
 			if(on_fire)
-				throw_alert("temp","hot",3)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 			else
-				throw_alert("temp","hot",2)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
 		else
-			throw_alert("temp","hot",1)
+			throw_alert("temp", /obj/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp","cold",3)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
 			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp","cold",2)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 			else
-				throw_alert("temp","cold",1)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 		else
 			clear_alert("temp")
 	else
 		clear_alert("temp")
+
+	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
+		if(bodytemperature < species.cold_level_3)
+			drowsyness  = max(drowsyness, 20)
+		else if(prob(50) && bodytemperature < species.cold_level_2)
+			drowsyness = max(drowsyness, 10)
+		else if(prob(10))
+			drowsyness = max(drowsyness, 2)
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
@@ -735,15 +729,15 @@
 	if(adjusted_pressure >= species.hazard_high_pressure)
 		var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
 		take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
-		throw_alert("pressure","highpressure",2)
+		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 	else if(adjusted_pressure >= species.warning_high_pressure)
-		throw_alert("pressure","highpressure",1)
+		throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
 	else if(adjusted_pressure >= species.hazard_low_pressure)
-		throw_alert("pressure","lowpressure",1)
+		throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 	else
-		throw_alert("pressure","lowpressure",2)
+		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
@@ -793,7 +787,6 @@
 
 /mob/living/carbon/human/proc/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
-		bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 		return
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
@@ -984,10 +977,7 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = null
-		if(species)
-			alien = species.name
-		reagents.metabolize(src,alien)
+		reagents.metabolize(src)
 
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -1047,32 +1037,33 @@
 			SetStunned(0)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(FAT in mutations)
-		if(!has_trait(TRAIT_FAT) && overeatduration < 100)
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
-			mutations.Remove(FAT)
+			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			update_body()
 			update_mutantrace()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if((has_trait(TRAIT_FAT) || overeatduration > 500) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-				mutations.Add(FAT)
+		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
+				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
 				update_mutantrace()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 
-
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(has_trait(TRAIT_STRESS_EATER))
-			nutrition = max(0, nutrition - met_factor * getHalLoss() * 0.01)
+		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+			var/pain = getHalLoss()
+			if(pain > 0)
+				nutrition = max(0, nutrition - met_factor * pain * 0.01)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -1087,10 +1078,11 @@
 			traumatic_shock++
 
 	if (drowsyness)
-		drowsyness--
+		drowsyness = max(0, drowsyness - 1)
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
-			sleeping += 1
+		if(prob(5))
+			emote("yawn")
+			Sleeping(10 SECONDS)
 			Paralyse(5)
 
 	confused = max(0, confused - 1)
@@ -1113,17 +1105,11 @@
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
+		clear_stat_indicator()
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
-		if(!in_stasis)
-			stabilize_body_temperature()	//Body temperature adjusts itself
-			handle_bodyparts()	//Optimized.
-			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(blood_volume > 0)
-					handle_blood(blood_volume)
 
-		if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
+		if(health <= config.health_threshold_dead || (!has_brain() && should_have_organ(O_BRAIN)))
 			death()
 			blinded = 1
 			silent = 0
@@ -1145,8 +1131,6 @@
 
 		if(hallucination)
 			if(hallucination >= 20)
-				if(prob(3))
-					fake_attack(src)
 				if(hallucination > 1000)
 					hallucination = 1000
 				if(!handling_hal)
@@ -1165,7 +1149,7 @@
 			if(halloss > 100)
 				//src << "<span class='notice'>You're in too much pain to keep going...</span>"
 				//for(var/mob/O in oviewers(src, null))
-				//	O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+				//	O.show_messageold("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
 				if(prob(3))
 					Paralyse(10)
 				else
@@ -1178,19 +1162,8 @@
 			stat = UNCONSCIOUS
 			if(halloss > 0)
 				adjustHalLoss(-3)
-		else if(sleeping)
-			throw_alert("asleep")
-			speech_problem_flag = 1
-			handle_dreams()
-			adjustHalLoss(-3)
-			if (mind)
-				if((mind.active && client != null) || immune_to_ssd) //This also checks whether a client is connected, if not, sleep is not reduced.
-					sleeping = max(sleeping-1, 0)
-			blinded = 1
-			stat = UNCONSCIOUS
-			if( prob(2) && health && !hal_crit )
-				spawn(0)
-					emote("snore")
+		else if(IsSleeping())
+			blinded = TRUE
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS
@@ -1199,8 +1172,14 @@
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
-		if(!sleeping) //No refactor - no life!
-			clear_alert("asleep")
+
+		if(stat == UNCONSCIOUS)
+			if(client)
+				throw_stat_indicator(IND_STAT)
+			else
+				throw_stat_indicator(IND_STAT_NOCLIENT)
+		else
+			clear_stat_indicator()
 
 		if(embedded_flag && !(life_tick % 10))
 			var/list/E
@@ -1210,7 +1189,7 @@
 
 
 		//Eyes
-		if(sdisabilities & BLIND || has_trait(TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -1222,7 +1201,7 @@
 			eye_blurry = max(eye_blurry-1, 0)
 
 		//Ears
-		if(sdisabilities & DEAF || has_trait(TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
+		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
@@ -1331,7 +1310,7 @@
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
 					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in src
 					if(s.zoom)
-						s.zoom()
+						s.toggle_zoom()
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1430,6 +1409,10 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 
+		if(blinded)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+
 		if(healths)
 			if (analgesic)
 				healths.icon_state = "health_health_numb"
@@ -1458,41 +1441,42 @@
 								healths.icon_state = "health6"
 
 		if(healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			if(stat == DEAD)
 				healthdoll.icon_state = "healthdoll_DEAD"
 			else
-				healthdoll.icon_state = "healthdoll_OVERLAY"
+				healthdoll.icon_state = "healthdoll_EMPTY"
 				for(var/obj/item/organ/external/BP in bodyparts)
-					var/damage = BP.burn_dam + BP.brute_dam
-					var/comparison = (BP.max_damage / 5)
-					var/icon_num = 0
-					if(damage)
-						icon_num = 1
-					if(damage > (comparison))
-						icon_num = 2
-					if(damage > (comparison*2))
-						icon_num = 3
-					if(damage > (comparison*3))
-						icon_num = 4
-					if(damage > (comparison*4))
-						icon_num = 5
-					if(icon_num)
-						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+					if(BP && !BP.is_stump)
+						var/damage = BP.burn_dam + BP.brute_dam
+						var/comparison = (BP.max_damage / 5)
+						var/icon_num = 0
+						if(damage)
+							icon_num = 1
+						if(damage > (comparison))
+							icon_num = 2
+						if(damage > (comparison*2))
+							icon_num = 3
+						if(damage > (comparison*3))
+							icon_num = 4
+						if(damage > (comparison*4))
+							icon_num = 5
+						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
-		switch(get_nutrition())
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				throw_alert("nutrition","fat")
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				throw_alert("nutrition", "full")
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				throw_alert("nutrition", "well_fed")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				throw_alert("nutrition", "fed")
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				throw_alert("nutrition","hungry")
-			else
-				throw_alert("nutrition","starving")
+		if(nutrition_icon)
+			switch(get_nutrition())
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					nutrition_icon.icon_state = "fat"
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					nutrition_icon.icon_state = "full"
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					nutrition_icon.icon_state = "well_fed"
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					nutrition_icon.icon_state = "fed"
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					nutrition_icon.icon_state = "hungry"
+				else
+					nutrition_icon.icon_state = "starving"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
@@ -1506,7 +1490,7 @@
 		var/nearsighted = 0
 		var/impaired    = 0
 
-		if(disabilities & NEARSIGHTED || has_trait(TRAIT_NEARSIGHT))
+		if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
 			nearsighted = 1
 
 		if(glasses)
@@ -1560,6 +1544,8 @@
 					to_chat(src, "Too hard to concentrate...")
 					remoteview_target = null
 					reset_view(null)//##Z2
+			if(force_remote_viewing)
+				isRemoteObserve = TRUE
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
@@ -1580,28 +1566,20 @@
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
+	if(blinded)
+		set_EyesVision("greyscale")
+		return
 	var/obj/item/clothing/glasses/G = glasses
-	if(istype(G) && G.active)
-		if(istype(glasses, /obj/item/clothing/glasses/meson))
-			sightglassesmod = "meson"
-		else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-			sightglassesmod = "nvg"
-		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			sightglassesmod = "thermal"
-		else if(istype(glasses, /obj/item/clothing/glasses/science))
-			sightglassesmod = "sci"
-		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/noir))
-			sightglassesmod = "greyscale"
+	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
+		sightglassesmod = G.sightglassesmod
 
 	if(species.nighteyes)
-		if(sightglassesmod)
-			sightglassesmod = "nightsight_glasses"
-		else
-			var/light_amount = 0
-			var/turf/T = get_turf(src)
-			light_amount = round(T.get_lumcount()*10)
-			if(light_amount > 1)
-				sightglassesmod = null
+		var/light_amount = 0
+		var/turf/T = get_turf(src)
+		light_amount = round(T.get_lumcount()*10)
+		if(light_amount < 1)
+			if(sightglassesmod)
+				sightglassesmod = "nightsight_glasses"
 			else
 				sightglassesmod = "nightsight"
 	set_EyesVision(sightglassesmod)
@@ -1616,7 +1594,7 @@
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
 		if(T.get_lumcount() < 0.1)
-			playsound_local(src, pick(scarySounds), VOL_EFFECTS_MASTER)
+			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -1673,7 +1651,7 @@
 					stomach_contents.Remove(M)
 					qdel(M)
 					continue
-				if(SSmob.times_fired%3==1)
+				if(SSmobs.times_fired%3==1)
 					if(!(M.status_flags & GODMODE))
 						M.adjustBruteLoss(5)
 					nutrition += 10
@@ -1754,6 +1732,16 @@
 
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
+
+	if(HAS_TRAIT(src, TRAIT_CPB))
+		return PULSE_NORM
+
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(IO.heart_status == HEART_FAILURE)
+		return PULSE_NONE
+
+	if(IO.heart_status == HEART_FIBR)
+		return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

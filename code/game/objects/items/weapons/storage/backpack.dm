@@ -22,8 +22,8 @@
 		close(loc)
 	opened = !opened
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (length(use_sound))
+/obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
+	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
@@ -44,15 +44,17 @@
 	max_w_class = ITEM_SIZE_LARGE
 	max_storage_space = 56
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
 	if(crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+
+	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		qdel(W)
+		qdel(I)
 		return
-	..()
+
+	return ..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
@@ -84,6 +86,12 @@
 	name = "trophy rack"
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
+
+/obj/item/weapon/storage/backpack/chaplain
+	name = "chaplain's backpack"
+	desc = "A comfy capacious backpack for magic toys."
+	icon_state = "chaplain_backpack"
+	item_state = "chaplain_backpack"
 
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -216,6 +224,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_medical"
 
+//Stealth
+/obj/item/weapon/storage/backpack/ert/stealth
+	name = "emergency response team stealth backpack"
+	desc = "A backpack worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
+
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
 	icon_state = "kitbag"
@@ -225,8 +239,41 @@
 	icon_state = "medbag"
 
 /obj/item/weapon/storage/backpack/alt
+	name = "sporty backpack"
+	desc = "Smaller and more comfortable version of an old boring backpack."
 	icon_state = "backpack-alt"
 	item_state = "backpack"
+
+/obj/item/weapon/storage/backpack/alt/vir
+	name = "virologist sporty backpack"
+	desc = "A sterile backpack with virologist colours."
+	icon_state = "backpack-vir-alt"
+	item_state = "backpack-vir"
+
+/obj/item/weapon/storage/backpack/alt/chem
+	name = "chemist sporty backpack"
+	desc = "A sterile backpack with chemist colours."
+	icon_state = "backpack-chem-alt"
+	item_state = "backpack-chem"
+
+/obj/item/weapon/storage/backpack/alt/gen
+	name = "geneticist sporty backpack"
+	desc = "A sterile backpack with geneticist colours."
+	icon_state = "backpack-gen-alt"
+	item_state = "backpack-gen"
+
+/obj/item/weapon/storage/backpack/alt/tox
+	name = "scientist sporty backpack"
+	desc = "Useful for holding research materials."
+	icon_state = "backpack-tox-alt"
+	item_state = "backpack-tox"
+
+/obj/item/weapon/storage/backpack/alt/hyd
+	name = "hydroponics sporty backpack"
+	desc = "A green backpack for plant related work."
+	icon_state = "backpack-hyd-alt"
+	item_state = "backpack-hyd"
+
 
 /obj/item/weapon/storage/backpack/backpack_vir
 	name = "virologist backpack"

@@ -61,6 +61,8 @@
 				to_chat(who, "<span class='notice'>You failed to take off \a [slot_ref] from [src]'s [slot_name]!</span>")
 			return
 		else
+			if(!slot_ref.onStripPanelUnEquip(who, strip_gloves))
+				return
 			remove_from_mob(slot_ref)
 			if(strip_gloves)
 				who.put_in_hands(slot_ref)
@@ -72,6 +74,9 @@
 			return
 		if(!this_item.mob_can_equip(src, where))
 			to_chat(who, "<span class='warning'>\The [this_item.name] doesn't fit in that place!</span>")
+			return
+
+		if(!this_item.onStripPanelUnEquip(who, strip_gloves))
 			return
 
 		who.remove_from_mob(this_item)

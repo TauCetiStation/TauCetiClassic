@@ -30,12 +30,27 @@
 	else
 		return 0
 
+/obj/machinery/door/poddoor/try_open(mob/living/user, obj/item/tool = null)
+	if(!tool)
+		add_fingerprint(user)
+		return
+	..()
+
 /obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
-	if(iscrowbar(C) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
-		if(!hasPower())
+
+	if(!hasPower())
+		var/can_wedge = FALSE
+		if(iscrowbar(C))
+			can_wedge = TRUE
+		else if(istype(C, /obj/item/weapon/twohanded/fireaxe))
+			var/obj/item/weapon/twohanded/fireaxe/F = C
+			can_wedge = F.wielded
+
+		if(can_wedge)
 			open(TRUE)
-	if(ismultitool(C) && hasPower() && !density)
+
+	else if(ismultitool(C) && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
@@ -65,12 +80,14 @@
 	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
 	icon_state = icon_state_open
+	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = 0
 	layer = base_layer
 	density = FALSE
 	set_opacity(FALSE)
 	update_nearby_tiles()
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/poddoor/do_close()
 	if(hasPower())
@@ -78,6 +95,7 @@
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	icon_state = icon_state_close
+	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = initial(explosion_resistance)
 	layer = base_layer + PODDOOR_CLOSED_MOD
@@ -85,6 +103,7 @@
 	set_opacity(TRUE)
 	do_afterclose()
 	update_nearby_tiles()
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)

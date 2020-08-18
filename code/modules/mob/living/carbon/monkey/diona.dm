@@ -28,17 +28,17 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 
-/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/monkey/diona/is_facehuggable()
+	return FALSE
 
-	//Let people pick the little buggers up.
-	if(M.a_intent == "grab")
-		if(M.species && M.species.name == DIONA)
-			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
-			if(M.is_busy() || !do_after(M, 40, target = src))
-				return
-			merging(M)
-			return
-	..()
+/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	if(attacker.get_species() == DIONA)
+		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
+			return TRUE
+		merging(attacker)
+		return TRUE
+	return ..()
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
@@ -129,7 +129,11 @@
 		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
 		return
 
-	var/langdiff = languages - gestalt.languages
+	var/list/langdiff = languages - gestalt.languages
+	if(langdiff.len == 0)
+		to_chat(src, "<span class='notice'>It would appear, that [gestalt] already knows all you could give.</span>")
+		return
+
 	var/datum/language/L = pick(langdiff)
 	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
 	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")
@@ -316,7 +320,7 @@
 			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 
-	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = copytext_char(trim(message), 1, MAX_MESSAGE_LEN)
 
 	if(stat == DEAD)
 		return say_dead(message)
@@ -324,7 +328,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext_char(message,2+length_char(speaking.key)))
 
 	if(!message || stat)
 		return

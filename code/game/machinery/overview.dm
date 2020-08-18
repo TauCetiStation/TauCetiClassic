@@ -7,7 +7,7 @@
 	usr.set_machine(src)
 	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
 	src.drawmap(usr)
 
@@ -112,9 +112,9 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = HEX_VAL_RED(colour)
+					var/green = HEX_VAL_GREEN(colour)
+					var/blue = HEX_VAL_BLUE(colour)
 
 
 					green = min(255, green+40)
@@ -265,9 +265,9 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = HEX_VAL_RED(colour)
+					var/green = HEX_VAL_GREEN(colour)
+					var/blue = HEX_VAL_BLUE(colour)
 
 
 					green = min(255, green+40)
@@ -341,16 +341,6 @@
 
 
 		return
-
-/proc/getr(col)
-	return hex2num( copytext(col, 2,4))
-
-/proc/getg(col)
-	return hex2num( copytext(col, 4,6))
-
-/proc/getb(col)
-	return hex2num( copytext(col, 6))
-
 
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs

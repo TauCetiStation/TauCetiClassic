@@ -26,9 +26,16 @@
 #define DEFAULT_VOLUME   100
 #define MAX_LINE_SIZE    50
 #define MAX_LINES_COUNT  150
+#define MAX_SONG_SIZE    MAX_LINE_SIZE*MAX_LINES_COUNT
 #define MAX_REPEAT_COUNT 10
 #define MAX_TEMPO_RATE   600
 #define MAX_DIONATEMPO_RATE 200
+
+// Cache holder for sound() instances.
+var/global/datum/notes_storage/note_cache_storage = new
+
+/datum/notes_storage
+	var/list/instrument_sound_notes = list() // associative list.
 
 /**
  * Method called before playing of every note, so it's some kinde of
@@ -136,7 +143,7 @@
 /datum/music_player/Topic(herf, href_list)
 	..()
 
-	if(in_range(instrument, usr) && isliving(usr) && !issilicon(usr))
+	if(instrument.Adjacent(usr) && isliving(usr) && !issilicon(usr))
 		if(href_list["newsong"])
 			playing = FALSE
 			song_lines.len = 0
@@ -153,31 +160,31 @@
 
 			var/repeat_num = input("How many times do you want to repeat this piece? (max: [MAX_REPEAT_COUNT])") as num|null
 
-			if(!in_range(instrument, usr))
+			if(!instrument.Adjacent(usr))
 				return
 
-			repeat = CLAMP(repeat_num, 0, MAX_REPEAT_COUNT)
+			repeat = clamp(repeat_num, 0, MAX_REPEAT_COUNT)
 
 		else if(href_list["change_tempo"])
 			var/new_tempo = input("Enter new tempo: ", "Change tempo", song_tempo) as num|null
 
-			if(!in_range(instrument, usr))
+			if(!instrument.Adjacent(usr))
 				return
 
-			song_tempo = CLAMP(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+			song_tempo = clamp(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 
 		else if(href_list["play"])
 			playing = TRUE
 			INVOKE_ASYNC(src, /datum/music_player.proc/playsong, usr)
 
 		else if(href_list["newline"])
-			var/newline = html_encode(input("Enter new line: ") as text|null)
-
-			if(!newline || song_lines.len > MAX_LINES_COUNT)
+			if(song_lines.len > MAX_LINES_COUNT)
 				return
 
-			if(lentext(newline) > MAX_LINE_SIZE)
-				newline = copytext(newline, 1, MAX_LINE_SIZE)
+			var/newline = sanitize(input("Enter new line: ") as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+
+			if(!newline || !instrument.Adjacent(usr))
+				return
 
 			song_lines += newline
 
@@ -187,13 +194,10 @@
 
 		else if(href_list["modifyline"])
 			var/line_num = text2num(href_list["modifyline"])
-			var/content = html_encode(input("Enter your line: ", "Change line [line_num]", song_lines[line_num]) as text|null)
+			var/content = sanitize(input("Enter your line: ", "Change line [line_num]", song_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
 
-			if (!content || !in_range(instrument, usr))
+			if (!content || !instrument.Adjacent(usr))
 				return
-
-			if(lentext(content) > MAX_LINE_SIZE)
-				content = copytext(content, 1, MAX_LINE_SIZE)
 
 			song_lines[line_num] = content
 
@@ -201,14 +205,13 @@
 			playing = FALSE
 
 		else if(href_list["import"])
-			var/song_text = html_encode(input("Please, paste the entire song formatted: ") as message|null)
+			var/song_text = sanitize(input("Please, paste the entire song formatted: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
 
-			if(!in_range(instrument, usr))
+			if (!song_text || !instrument.Adjacent(usr))
 				return
 
-			if(song_text)
-				parse_song_text(song_text)
-				playing = FALSE
+			parse_song_text(song_text)
+			playing = FALSE
 
 		interact(usr)
 
@@ -240,14 +243,14 @@
 						playing = FALSE
 						return
 
-					if(lentext(note) == 0)
+					if(length(note) == 0)
 						continue
 
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
 
-					for(var/i in 2 to lentext(note))
+					for(var/i in 2 to length(note))
 						var/ni = copytext(note,i,i+1)
 
 						if(!text2num(ni))
@@ -259,7 +262,18 @@
 							cur_oct[cur_note] = ni
 
 					var/current_note = uppertext(copytext(note, 1, 2)) + cur_acc[cur_note] + cur_oct[cur_note]
-					playsound(instrument, "[sound_path]/[current_note].ogg", VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
+
+					if(fexists("[sound_path]/[current_note].ogg"))
+						// ^ Since this is dynamic path, no point in running playsound without file (since it will play even "no file" and eat cpu for nothing)
+						// and no point in integrating this into playsound itself,
+						// because this is the only case where we use dynamic path for sounds, as they should be avoided normally.
+						// Without cache dynamic paths eat 10~ times more CPU than doing same with hardcoded paths, so cache is required.
+
+						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
+						if(!S)
+							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
+
+						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 
@@ -280,14 +294,14 @@
 	var/list/lines = splittext(song_text, "\n")
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = CLAMP(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
+		song_tempo = clamp(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
 		lines.Cut(MAX_LINES_COUNT + 1)
 
 	for(var/line_num in 1 to lines.len)
-		if(lentext(lines[line_num]) > MAX_LINE_SIZE)
+		if(length(lines[line_num]) > MAX_LINE_SIZE)
 			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
@@ -297,6 +311,7 @@
 #undef DEFAULT_VOLUME
 #undef MAX_LINE_SIZE
 #undef MAX_LINES_COUNT
+#undef MAX_SONG_SIZE
 #undef MAX_REPEAT_COUNT
 #undef MAX_TEMPO_RATE
 #undef MAX_DIONATEMPO_RATE

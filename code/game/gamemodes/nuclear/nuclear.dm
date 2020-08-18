@@ -9,15 +9,13 @@
 	role_type = ROLE_OPERATIVE
 	required_players = 15
 	required_players_secret = 25
-	required_enemies = 1
-	recommended_enemies = 5
+	required_enemies = 2
+	recommended_enemies = 6
 
 	votable = 0
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
-
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -29,25 +27,29 @@
 	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")
 	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/nuclear/can_start()
+	if (!..())
+		return FALSE
+	// Looking for map to nuclear spawn points
+	var/spwn_synd = FALSE
+	var/spwn_comm = FALSE
+	for(var/obj/effect/landmark/A in landmarks_list)
+		if(A.name == "Syndicate-Commander")
+			spwn_comm = TRUE
+		else if (A.name == "Syndicate-Spawn")
+			spwn_synd = TRUE
+		if (spwn_synd && spwn_comm)
+			return TRUE
+	return FALSE
+
+/datum/game_mode/nuclear/assign_outsider_antag_roles()
 	if(!..())
-		return 0
-
+		return FALSE
 	var/agent_number = 0
-
-    /*
-	 * if(antag_candidates.len > agents_possible)
-	 * 	agent_number = agents_possible
-	 * else
-	 * 	agent_number = antag_candidates.len
-	 *
-	 * if(agent_number > n_players)
-	 *	agent_number = n_players/2
-	 */
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = CLAMP((n_players/5), 2, 6)
+	agent_number = clamp((n_players/5), required_enemies, recommended_enemies)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len
@@ -63,8 +65,7 @@
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
-	return 1
-
+	return TRUE
 
 /datum/game_mode/nuclear/pre_setup()
 	return 1
@@ -151,11 +152,10 @@
 		if(!leader_selected)
 			log_debug("Leader - [synd_mind]")
 			synd_mind.current.loc = synd_comm_spawn
+			equip_syndicate(synd_mind.current, 1)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
 			greet_syndicate(synd_mind, 0, 1)
-			equip_syndicate(synd_mind.current, 1)
-
 		else
 			log_debug("[synd_mind] - not a leader")
 			greet_syndicate(synd_mind)
@@ -198,7 +198,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		P.update_icon()
-		if (ticker.mode.config_tag=="nuclear")
+		if (SSticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
@@ -225,6 +225,7 @@
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
+	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)
@@ -246,46 +247,12 @@
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, boss)
-	var/radio_freq = SYND_FREQ
-
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
-	R.set_frequency(radio_freq)
-	synd_mob.equip_to_slot_or_del(R, SLOT_L_EAR)
-
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), SLOT_W_UNIFORM)
-	if(synd_mob.backbag == 2)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), SLOT_BACK)
-	if(synd_mob.backbag == 3)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), SLOT_BACK)
-	if(synd_mob.backbag == 4)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), SLOT_BACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), SLOT_IN_BACKPACK)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), SLOT_BELT)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), SLOT_IN_BACKPACK)
+	var/nuclear_outfit = /datum/outfit/nuclear
 	if(boss)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), SLOT_WEAR_ID)
-	else
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), SLOT_WEAR_ID)
+		nuclear_outfit = /datum/outfit/nuclear/leader
+	synd_mob.equipOutfit(nuclear_outfit)
 
-	switch(synd_mob.get_species())
-		if(UNATHI)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), SLOT_SHOES)
-		if(TAJARAN)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat/cut(synd_mob), SLOT_SHOES)
-		if(SKRELL)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), SLOT_IN_BACKPACK)
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
-		else
-			synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), SLOT_SHOES)
-
-	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
-	E.imp_in = synd_mob
-	E.implanted = 1
-	synd_mob.update_icons()
+	synd_mob.add_language("Sy-Code")
 	return 1
 
 
@@ -303,14 +270,13 @@
 					return 0
 	return 1
 
-
 /datum/game_mode/nuclear/declare_completion()
 	if(config.objectives_disabled)
 		return
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/disk_area = get_area(D)
-		if(!is_type_in_list(disk_area, centcom_areas))
+		if(!is_type_in_typecache(disk_area, centcom_areas_typecache))
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)
@@ -383,7 +349,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayerwithicon(syndicate)
@@ -403,21 +369,6 @@
 
 	return text
 
-
-/*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
-
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			to_chat(M, "That name is reserved.")
-			return nukelastname(M)
-
-	return newname
-*/
 /proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 

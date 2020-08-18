@@ -60,13 +60,13 @@
 /obj/item/weapon/spikethrower/update_icon()
 	icon_state = "spikethrower[spikes]"
 
-/obj/item/weapon/spikethrower/afterattack(atom/A, mob/living/user, flag, params)
-	if(flag) return
-	if(user && user.client && user.client.gun_mode && !(A in target))
+/obj/item/weapon/spikethrower/afterattack(atom/target, mob/user, proximity, params)
+	if(proximity) return
+	if(user && user.client && user.client.gun_mode && !(target in target))
 		//TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
 		//PreFire(A,user,params)
 	else
-		Fire(A,user,params)
+		Fire(target,user,params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 	if (M == user && def_zone == O_MOUTH)
@@ -74,11 +74,11 @@
 		return
 
 	if (spikes > 0)
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
 			return
-		else if(target && M in target)
+		else if(target && (M in target))
 			Fire(M,user)
 			return
 	else

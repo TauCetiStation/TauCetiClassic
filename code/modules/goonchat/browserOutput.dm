@@ -6,9 +6,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/client/owner = null
 	var/loaded = 0
 	var/list/messageQueue = list()
-	var/cookieSent = 0
 	var/list/connectionHistory = list()
 	var/broken = FALSE
+
+	var/charset
 
 /datum/chatOutput/New(client/C)
 	. = ..()
@@ -50,9 +51,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(usr.client != owner)
 		return 1
 
+	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
 	for(var/key in href_list)
-		if(length(key) > 7 && findtext(key, "param"))
+		if(length(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
 			var/param_name = copytext(key, 7, -1)
 			var/item = href_list[key]
 			params[param_name] = item
@@ -60,13 +62,13 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data
 	switch(href_list["proc"])
 		if("doneLoading")
-			data = doneLoading(arglist(params))
+			doneLoading()
 
 		if("ping")
-			data = ping(arglist(params))
+			data = ping()
 
 		if("analyzeClientData")
-			data = analyzeClientData(arglist(params))
+			analyzeClientData(arglist(params))
 
 	if(data)
 		ehjax_send(data = data)
@@ -119,11 +121,15 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
 
-/datum/chatOutput/proc/analyzeClientData(cookie = "")
-	if(!cookie)
+/datum/chatOutput/proc/analyzeClientData(cookie = "", charset = "")
+	if(owner.guard.chat_processed)
 		return
 
-	if(cookie != "none")
+	if(charset && istext(charset))
+		src.charset = ckey(charset)
+		owner.guard.chat_data["charset"] = src.charset
+
+	if(cookie && cookie != "none")
 		var/list/connData = json_decode(cookie)
 		if(connData && islist(connData) && connData.len > 0 && connData["connData"])
 			connectionHistory = connData["connData"]
@@ -131,18 +137,28 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			for(var/i in connectionHistory.len to 1 step -1)
 				var/list/row = connectionHistory[i]
 				if(!row || row.len < 3 || !(row["ckey"] && row["compid"] && row["ip"]))
+					owner.guard.chat_processed = TRUE
 					return
-				if(world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+
+				row["ckey"] = ckey(row["ckey"])
+				row["compid"] = sanitize_cid(row["compid"])
+				row["ip"] = sanitize_ip(row["ip"])
+
+				if(!(row["ckey"] && row["compid"] && row["ip"]))
+					owner.guard.chat_processed = TRUE
+					return
+				if(world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only = TRUE))
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
 			if (found.len > 0)
+				owner.guard.chat_data["cookie_match"] = found
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
-	cookieSent = 1
+	owner.guard.chat_processed = TRUE
 
 /datum/chatOutput/proc/ping()
 	return "pong"
@@ -212,7 +228,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	//if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
 	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !istext(message))
 		CRASH("DEBUG: to_chat called with invalid message: [message]")
-		return
 
 	if(target == world)
 		target = clients
@@ -220,13 +235,9 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/original_message = message
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)
-
-	//message = entity_ja(message)//moved to js
 
 	if(islist(target))
 		var/encoded = url_encode(message)

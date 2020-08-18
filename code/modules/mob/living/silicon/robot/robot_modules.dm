@@ -14,9 +14,9 @@
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
-			O.emp_act(severity)
+			O.emplode(severity)
 	if(emag)
-		emag.emp_act(severity)
+		emag.emplode(severity)
 	..()
 	return
 
@@ -74,7 +74,7 @@
 	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/baton(src)
-	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
@@ -109,7 +109,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/surgicaldrill(src)
 	modules += new /obj/item/weapon/razor(src)
-	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
 	modules += new /obj/item/stack/nanopaste(src)
 
@@ -148,7 +148,7 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -187,7 +187,7 @@
 	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
-	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -276,6 +276,8 @@
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1
+	L.icon_state = L.icon_on
+	L.item_state = L.icon_on
 	modules += L
 
 	modules += new /obj/item/weapon/tray/robotray(src)
@@ -378,7 +380,7 @@
 
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/scalpel(src)
-	modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src) //To unfuck xenobiology up
 
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/weapon/wrench(src)

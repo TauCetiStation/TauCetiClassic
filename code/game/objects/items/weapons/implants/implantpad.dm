@@ -35,22 +35,19 @@
 	return
 
 
-/obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user)
-	..()
-	if(istype(C, /obj/item/weapon/implantcase))
-		if(!( src.case ))
-			user.drop_item()
-			C.loc = src
-			src.case = C
-	else
-		return
-	src.update()
-	return
+/obj/item/weapon/implantpad/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/implantcase))
+		if(!case)
+			user.drop_from_inventory(I, src)
+			case = I
+			update()
 
+	else
+		return ..()
 
 /obj/item/weapon/implantpad/attack_self(mob/user)
 	user.set_machine(src)
-	var/dat = "<B>Implant Mini-Computer:</B><HR>"
+	var/dat = ""
 	if (src.case)
 		if(src.case.imp)
 			if(istype(src.case.imp, /obj/item/weapon/implant))
@@ -65,14 +62,18 @@
 			dat += "The implant casing is empty."
 	else
 		dat += "Please insert an implant casing!"
-	user << browse(entity_ja(dat), "window=implantpad")
+
+	var/datum/browser/popup = new(user, "implantpad", "Implant Mini-Computer")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "implantpad")
 	return
 
 
 /obj/item/weapon/implantpad/Topic(href, href_list)
 	..()
-	if (usr.stat)
+	if (usr.incapacitated())
 		return
 	if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)

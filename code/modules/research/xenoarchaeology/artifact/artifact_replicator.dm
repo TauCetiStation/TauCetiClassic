@@ -8,7 +8,7 @@
 
 	idle_power_usage = 100
 	active_power_usage = 1000
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	interact_offline = TRUE
 
 	var/spawn_progress_time = 0
@@ -44,7 +44,7 @@
 	/obj/item/weapon/autopsy_scanner,\
 	/obj/item/weapon/bikehorn,\
 	/obj/item/weapon/bonesetter,\
-	/obj/item/weapon/butch,\
+	/obj/item/weapon/kitchenknife/butch,\
 	/obj/item/weapon/caution,\
 	/obj/item/weapon/caution/cone,\
 	/obj/item/weapon/crowbar,\
@@ -97,9 +97,9 @@
 			var/spawn_type = pop(spawning_types)
 			var/obj/spawned_obj = new spawn_type(src.loc)
 			if(source_material)
-				if(lentext(source_material.name) < MAX_MESSAGE_LEN)
+				if(length_char(source_material.name) < MAX_MESSAGE_LEN)
 					spawned_obj.name = "[source_material] " +  spawned_obj.name
-				if(lentext(source_material.desc) < MAX_MESSAGE_LEN * 2)
+				if(length_char(source_material.desc) < MAX_MESSAGE_LEN * 2)
 					if(spawned_obj.desc)
 						spawned_obj.desc += " It is made of [source_material]."
 					else
@@ -110,7 +110,7 @@
 			max_spawn_time = rand(30,100)
 
 			if(!spawning_types.len || !stored_materials.len)
-				use_power = 1
+				set_power_use(IDLE_POWER_USE)
 				icon_state = "replicator"
 
 		else if(prob(5))
@@ -124,7 +124,9 @@
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 
-	user << browse(entity_ja(dat), "window=alien_replicator")
+	var/datum/browser/popup = new(user, "alien_replicator")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
 	user.drop_item()
@@ -151,7 +153,7 @@
 
 				spawning_types.Add(construction[construction[index]])
 				spawn_progress_time = 0
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 				icon_state = "replicator_active"
 			else
 				src.visible_message(fail_message)

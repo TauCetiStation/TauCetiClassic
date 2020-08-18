@@ -24,11 +24,11 @@ var/global/bridge_ooc_colour = "#7b804f"
 		return
 
 	if(!holder)
-		if(!ooc_allowed)
-			to_chat(src, "<span class='red'>OOC is globally muted</span>")
-			return
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
+			return
+		if(!ooc_allowed && !istype(mob, /mob/dead/new_player))
+			to_chat(src, "<span class='red'>OOC is globally muted.[config.ooc_round_only ? " Try again after round end." : ""]</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
@@ -66,11 +66,14 @@ var/global/bridge_ooc_colour = "#7b804f"
 		return
 
 	if(sender)
-		log_ooc("[sender.mob.name]/[sender.key] : [msg]")
+		log_ooc("[key_name(sender)] : [msg]")
 	else
 		log_ooc("[name]: [msg]")
 
 	for(var/client/C in clients)
+		// Lobby people can only say in OOC to other lobby people.
+		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
+			continue
 		var/display_name = name
 
 		if(sender)
@@ -84,7 +87,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 					display_name = sender.holder.fakekey
 
 		if(C.prefs.chat_toggles & CHAT_OOC)
-			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
+			var/chat_suffix = "[C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""]"
+			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>OOC[chat_suffix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"
@@ -104,7 +108,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+		prefs.ooccolor = normalize_color(new_ooccolor)
 		prefs.save_preferences()
 
 /client/verb/looc(msg as text)
@@ -153,7 +157,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else if(prefs.chat_toggles & CHAT_CKEY)
 		display_name += " ([key])"
 
-	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+	log_ooc("(LOCAL) [key_name(mob)] : [msg]")
 
 	var/list/heard = get_mobs_in_view(7, src.mob)
 	for(var/mob/M in heard)

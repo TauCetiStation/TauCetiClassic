@@ -10,6 +10,11 @@
 	var/mob_trait //if applicable, apply and remove this mob trait
 	var/mob/living/quirk_holder
 
+	/// Which species can not have this quirk. Is used in subsystem/quirks to populate quirk_blacklist_species. (Unless overriden in
+	/// proc/get_incompatible_species())
+	var/list/incompatible_species
+	// A dict of /datum/species flags of kind flag = value. Checks if those values are upheld.
+	var/list/req_species_flags
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
@@ -21,7 +26,7 @@
 		to_chat(quirk_holder, gain_text)
 	quirk_holder.roundstart_quirks += src
 	if(mob_trait)
-		quirk_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
 	START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
@@ -36,16 +41,30 @@
 			to_chat(quirk_holder, lose_text)
 		quirk_holder.roundstart_quirks -= src
 		if(mob_trait)
-			quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
+			REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
 	SSquirks.quirk_objects -= src
 	return ..()
+
+/datum/quirk/proc/get_incompatible_species()
+	. = incompatible_species
+	LAZYINITLIST(.)
+
+	species_loop:
+		for(var/specie_name in all_species)
+			var/datum/species/S = all_species[specie_name]
+
+			for(var/flag in req_species_flags)
+				var/has_flag = !!S.flags[flag]
+				if(has_flag != req_species_flags[flag])
+					. |= specie_name
+					continue species_loop
 
 /datum/quirk/proc/transfer_mob(mob/living/to_mob)
 	quirk_holder.roundstart_quirks -= src
 	to_mob.roundstart_quirks += src
 	if(mob_trait)
-		quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT)
-		to_mob.add_trait(mob_trait, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(to_mob, mob_trait, ROUNDSTART_TRAIT)
 	quirk_holder = to_mob
 	on_transfer()
 
@@ -104,7 +123,7 @@ Use this as a guideline
 
 	mob_trait = TRAIT_NEARSIGHT
 	///This define is in __DEFINES/traits.dm and is the actual "trait" that the game tracks
-	///You'll need to use "has_trait(X, sources)" checks around the code to check this; for instance, the Ageusia trait is checked in taste code
+	///You'll need to use "HAS_TRAIT_FROM(src, X, sources)" checks around the code to check this; for instance, the Ageusia trait is checked in taste code
 	///If you need help finding where to put it, the declaration finder on GitHub is the best way to locate it
 
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"

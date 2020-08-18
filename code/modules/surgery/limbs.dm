@@ -46,7 +46,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>", \
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
-		BP.createwound(CUT, 10)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 
 /datum/surgery_step/limb/mend
@@ -78,7 +78,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, tearing flesh on [target]'s [BP.name]!</span>", \
 		"<span class='warning'>Your hand slips, tearing flesh on [target]'s [BP.name]!</span>")
-		target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 
 /datum/surgery_step/limb/prepare
@@ -131,6 +131,9 @@
 			if (target_zone != p.part)
 				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
+			if(!p.can_attach())
+				to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
+				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 		if(istype(tool, /obj/item/organ/external))
 			var/obj/item/organ/external/p = tool
@@ -151,8 +154,9 @@
 
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
-		var/bodypart_type = L.bodypart_type
-		BP = new bodypart_type()
+		if(!L.can_attach())
+			return
+		BP = new L.bodypart_type()
 		target.remove_from_mob(tool)
 		qdel(tool)
 
@@ -180,19 +184,31 @@
 			QDEL_NULL(B.brainmob)
 		target.f_style = B.f_style
 		target.h_style = B.h_style
+		target.grad_style = B.grad_style
 		target.r_facial = B.r_facial
 		target.g_facial = B.g_facial
 		target.b_facial = B.b_facial
+		target.dyed_r_facial = B.dyed_r_facial
+		target.dyed_g_facial = B.dyed_g_facial
+		target.dyed_b_facial = B.dyed_b_facial
+		target.facial_painted = B.facial_painted
 		target.r_hair = B.r_hair
 		target.g_hair = B.g_hair
 		target.b_hair = B.b_hair
+		target.dyed_r_hair = B.dyed_r_hair
+		target.dyed_g_hair = B.dyed_g_hair
+		target.dyed_b_hair = B.dyed_b_hair
+		target.r_grad = B.r_grad
+		target.g_grad = B.g_grad
+		target.b_grad = B.b_grad
+		target.hair_painted = B.hair_painted
 		target.update_hair()
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging connectors on [target]'s [BP.name]!</span>",
 	"<span class='warning'>Your hand slips, damaging connectors on [target]'s [BP.name]!</span>")
-	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
+	target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP)
 
 //////////////////////////////////////////////////////////////////
 //						ROBO LIMB SURGERY						//
@@ -242,7 +258,7 @@
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
-		BP.createwound(CUT, 10)
+		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc_limb/ipc_prepare
 	allowed_tools = list(

@@ -467,7 +467,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 	if(!can_button_up)
 		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
@@ -578,7 +578,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "gmjacket_open")

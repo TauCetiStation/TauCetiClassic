@@ -39,7 +39,7 @@
 		src.attack_hand(user)
 		return
 
-	if(istype(O, /obj/item/weapon/virusdish))
+	else if(istype(O, /obj/item/weapon/virusdish))
 
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
@@ -53,6 +53,8 @@
 		nanomanager.update_uis(src)
 
 		src.attack_hand(user)
+	else
+		return ..()
 
 /obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
@@ -111,7 +113,7 @@
 		if (!working)
 			nanomanager.update_uis(src)
 			icon_state = "incubator"
-		if(!powered(EQUIP))
+		if(!powered(power_channel))
 			icon_state = "incubator"
 
 	if(beaker)

@@ -16,6 +16,8 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
+	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
+
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -30,6 +32,35 @@
 		/turf/simulated/wall/r_wall,
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
+		/obj/structure/girder,
+		/obj/structure/girder/reinforced,
+		/obj/machinery/door/airlock,
+		/obj/machinery/door/airlock/command,
+		/obj/machinery/door/airlock/security,
+		/obj/machinery/door/airlock/engineering,
+		/obj/machinery/door/airlock/medical,
+		/obj/machinery/door/airlock/virology,
+		/obj/machinery/door/airlock/maintenance,
+		/obj/machinery/door/airlock/freezer,
+		/obj/machinery/door/airlock/mining,
+		/obj/machinery/door/airlock/atmos,
+		/obj/machinery/door/airlock/research,
+		/obj/machinery/door/airlock/science,
+		/obj/machinery/door/airlock/neutral,
+		/obj/machinery/door/airlock/highsecurity,
+		/obj/machinery/door/airlock/vault,
+		/obj/machinery/door/airlock/external,
+		/obj/machinery/door/airlock/glass,
+		/obj/machinery/door/airlock/command/glass,
+		/obj/machinery/door/airlock/engineering/glass,
+		/obj/machinery/door/airlock/security/glass,
+		/obj/machinery/door/airlock/medical/glass,
+		/obj/machinery/door/airlock/virology/glass,
+		/obj/machinery/door/airlock/research/glass,
+		/obj/machinery/door/airlock/mining/glass,
+		/obj/machinery/door/airlock/atmos/glass,
+		/obj/machinery/door/airlock/science/glass,
+		/obj/machinery/door/airlock/science/neutral,
 		)
 	smooth = SMOOTH_TRUE
 
@@ -70,7 +101,7 @@
 		generate_overlays()
 
 	if(!damage)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
@@ -80,8 +111,8 @@
 	if(damage_overlay && overlay == damage_overlay) //No need to update.
 		return
 
-	overlays.Cut()
-	overlays += damage_overlays[overlay]
+	cut_overlays()
+	add_overlay(damage_overlays[overlay])
 	damage_overlay = overlay
 
 	return
@@ -130,7 +161,9 @@
 		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O,/obj/effect/decal/cleanable/crayon))
+			qdel(O)
+		else if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
@@ -155,17 +188,15 @@
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ChangeTurf(basetype)
-			return
-		if(2.0)
+		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
 			else
 				dismantle_wall(1,1)
-		if(3.0)
-			take_damage(rand(0, 250))
-		else
+		if(3)
+			take_damage(rand(0, 55))
 	return
 
 /turf/simulated/wall/blob_act()
@@ -179,18 +210,9 @@
 
 		var/number_rots = rand(2,3)
 		for(var/i=0, i<number_rots, i++)
-			var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-			O.name = "Wallrot"
-			O.desc = "Ick..."
-			O.icon = 'icons/effects/wallrot.dmi'
-			O.pixel_x += rand(-10, 10)
-			O.pixel_y += rand(-10, 10)
-			O.anchored = 1
-			O.density = 1
-			O.layer = 5
-			O.mouse_opacity = 0
+			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/proc/thermitemelt(mob/user)
+/turf/simulated/wall/proc/thermitemelt(mob/user, var/seconds_to_melt)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -209,19 +231,11 @@
 	F.icon_state = "wall_thermite"
 	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
 
-	spawn(100)
+	spawn(seconds_to_melt * 10)
 		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M)
-	if (prob(15) && !rotting)
-		dismantle_wall()
-	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
 
 //Interactions
 
@@ -253,7 +267,7 @@
 			var/mob/living/simple_animal/hulk/Hulk = M
 			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 			Hulk.health -= rand(4,10)
-		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))
@@ -273,7 +287,7 @@
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
-		if(user.a_intent == "hurt")
+		if(user.a_intent == INTENT_HARM)
 			playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 			take_damage(rand(15, 50))
@@ -293,7 +307,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user)|| ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -322,11 +336,11 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				thermitemelt(user)
+				thermitemelt(user, seconds_to_melt)
 				return
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -337,7 +351,7 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
-			thermitemelt(user)
+			thermitemelt(user, seconds_to_melt)
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
@@ -386,8 +400,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart.</span>", viewing_distance = 5)
 		return
 
 	//DRILLING
@@ -404,8 +417,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
 				dismantle_wall()
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
+				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", blind_message = "<span class='warning'>You hear the grinding of metal.</span>", viewing_distance = 5)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -426,8 +438,7 @@
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
-				for(var/mob/O in viewers(user, 5))
-					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
+				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", viewing_distance = 5)
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W

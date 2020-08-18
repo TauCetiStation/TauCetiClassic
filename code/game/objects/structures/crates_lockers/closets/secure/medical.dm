@@ -40,7 +40,7 @@
 
 /obj/structure/closet/secure_closet/medical3
 	name = "Medical Doctor's Locker"
-	req_access = list(access_surgery)
+	req_one_access = list(access_surgery, access_paramedic)
 	icon_state = "securemed1"
 	icon_closed = "securemed"
 	icon_locked = "securemed1"
@@ -80,6 +80,7 @@
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
+	new /obj/item/weapon/gun/energy/pyrometer/medical(src)
 
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer's Locker"

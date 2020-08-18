@@ -1,5 +1,5 @@
 /obj/machinery/computer/telescience
-	name = "\improper Telepad Control Console"
+	name = "Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
@@ -89,12 +89,14 @@
 		W.loc = null
 		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
 		updateDialog()
+		return
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
 			user.drop_from_inventory(W)
 			W.loc = src
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
+		return
 	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
@@ -105,8 +107,9 @@
 			telepad.computer = src
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/ui_interact(mob/user)
 	var/t
@@ -187,7 +190,7 @@
 
 /obj/machinery/computer/telescience/proc/close_wormhole()
 	if(active_wormhole)
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 		qdel(active_wormhole)
 		active_wormhole = null
 
@@ -204,15 +207,15 @@
 		return
 
 	if(telepad)
-		var/truePower = CLAMP(power + power_off, 1, 1000)
+		var/truePower = clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = CLAMP(angle + angle_off, 1, 90)
+		var/trueAngle = clamp(angle + angle_off, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = CLAMP(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = CLAMP(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/trueX = clamp(round(proj_data.dest_x, 1), 1, world.maxx)
+		var/trueY = clamp(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -239,7 +242,7 @@
 
 				// use a lot of power
 				use_power(power * 1500)
-				use_power = 2
+				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, get_turf(telepad))
@@ -250,7 +253,7 @@
 					temp_msg += "<BR>Calibration required soon."
 				else
 					temp_msg += "<BR>Data printed below."
-				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				log_investigate("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].",INVESTIGATE_TELESCI)
 
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, target)
@@ -316,14 +319,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = CLAMP(new_rot, -900, 900)
+		rotation = clamp(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(!..())
 			return
-		angle = CLAMP(round(new_angle, 0.1), 1, 9999)
+		angle = clamp(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -335,7 +338,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(!..())
 			return
-		z_co = CLAMP(round(new_z), 1, 10)
+		z_co = clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		inserted_gps.loc = loc
@@ -367,7 +370,7 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	if(telepad)
-		teles_left = CLAMP(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
+		teles_left = clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
 	else
 		teles_left = 0
 	angle_off = rand(-25, 25)

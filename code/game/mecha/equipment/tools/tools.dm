@@ -72,16 +72,14 @@
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat>1) return
-		if(chassis.occupant.a_intent == "hurt")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
 			occupant_message("<span class='warning'>You squeeze [target] with [src.name]. Something cracks.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] squeezes [target].</span>")
 
-			chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-			msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+			M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -142,9 +140,7 @@
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
-					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
 				target.ex_act(2)
@@ -207,9 +203,7 @@
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
-					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
-					M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
-					msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]", chassis.occupant)
+					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
 				target.ex_act(2)
 	return 1
@@ -222,6 +216,13 @@
 
 
 /********Extinguisher********/
+/obj/item/weapon/reagent_containers/spray/extinguisher/mecha
+	volume = 1200
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/mecha/atom_init()
+	. = ..()
+	flags |= OPENCONTAINER
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "extinguisher"
 	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
@@ -230,57 +231,35 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
+	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/atom_init()
-	reagents = new/datum/reagents(200)
-	reagents.my_atom = src
-	reagents.add_reagent("water", 200)
+	ext = new/obj/item/weapon/reagent_containers/spray/extinguisher/mecha(src)
 	. = ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
-	if(!action_checks(target) || get_dist(chassis, target)>3) return
-	if(get_dist(chassis, target)>2) return
-	set_ready_state(0)
-	if(do_after_cooldown(target))
-		if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
-			var/obj/o = target
-			o.reagents.trans_to(src, 200)
-			occupant_message("<span class='notice'>Extinguisher refilled</span>")
-			playsound(chassis, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
-		else
-			if(src.reagents.total_volume > 0)
-				playsound(chassis, 'sound/effects/extinguish.ogg', VOL_EFFECTS_MASTER, null, null, -3)
-				var/direction = get_dir(chassis,target)
-				var/turf/T = get_turf(target)
-				var/turf/T1 = get_step(T,turn(direction, 90))
-				var/turf/T2 = get_step(T,turn(direction, -90))
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Destroy()
+	QDEL_NULL(ext)
+	return ..()
 
-				var/list/the_targets = list(T,T1,T2)
-				spawn(0)
-					for(var/a in 1 to 5)
-						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
-						if(!W)	return
-						var/turf/my_target = pick(the_targets)
-						var/datum/reagents/R = new/datum/reagents(5)
-						W.reagents = R
-						R.my_atom = W
-						src.reagents.trans_to(W,1)
-						for(var/b in 1 to 4)
-							if(!W)	return
-							if(!W.reagents) break
-							step_towards(W,my_target)
-							W.reagents.reaction(get_turf(W))
-							for(var/atom/atm in get_turf(W))
-								W.reagents.reaction(atm)
-								if(isliving(atm)) //For extinguishing mobs on fire
-									var/mob/living/M = atm
-									M.ExtinguishMob()
-							if(W.loc == my_target)	break
-							sleep(2)
-						qdel(W)
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target)
+	if(!action_checks(target))
+		return
+
+	set_ready_state(0)
+
+	if(do_after_cooldown(target) && chassis.occupant)
+		ext.afterattack(target, chassis.occupant)
 	return 1
 
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Topic(href, href_list)
+	..()
+	if (href_list["switch"])
+		ext.safety = !ext.safety
+		occupant_message("The [name] now [ext.safety ? "locked" : "ready"].")
+		update_equip_info()
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
-	return "[..()] \[[src.reagents.total_volume]\]"
+	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
 	return
@@ -313,7 +292,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
 		disabled = 0
@@ -654,18 +633,18 @@
 	do_after_cooldown()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/A)
-	if(!action_checks(A))
-		return chassis.dynhitby(A)
-	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
-		chassis.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
-		chassis.visible_message("The [A] bounces off the [chassis] armor")
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(!action_checks(AM))
+		return chassis.dynhitby(AM, throwingdatum)
+	if(prob(chassis.deflect_chance*deflect_coeff) || isliving(AM) || istype(AM, /obj/item/mecha_parts/mecha_tracking))
+		chassis.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		chassis.visible_message("The [AM] bounces off the [chassis] armor")
 		chassis.log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
+		if(isliving(AM))
+			var/mob/living/M = AM
 			M.take_bodypart_damage(10)
-	else if(istype(A, /obj))
-		var/obj/O = A
+	else if(isobj(AM))
+		var/obj/O = AM
 		if(O.throwforce)
 			chassis.take_damage(round(O.throwforce*damage_coeff))
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -697,16 +676,16 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M)
 	..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
-	M.overlays += droid_overlay
+	M.add_overlay(droid_overlay)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	if(chassis)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
-	chassis.overlays -= droid_overlay
+	chassis.cut_overlay(droid_overlay)
 	pr_repair_droid.stop()
 	..()
 	return
@@ -718,7 +697,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		if(pr_repair_droid.toggle())
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 			log_message("Activated.")
@@ -726,7 +705,7 @@
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
 			log_message("Deactivated.")
 			set_ready_state(1)
-		chassis.overlays += droid_overlay
+		chassis.add_overlay(droid_overlay)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
 
@@ -771,7 +750,7 @@
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
-	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
 	. = ..()
@@ -848,7 +827,7 @@
 		var/area/A = get_area(ER.chassis)
 		if(A)
 			var/pow_chan
-			for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			for(var/c in list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT))
 				if(A.powered(c))
 					pow_chan = c
 					break
@@ -937,15 +916,14 @@
 			return 0
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user)
-	var/result = load_fuel(weapon)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/I, mob/user, params)
+	var/result = load_fuel(I)
 	if(isnull(result))
-		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [weapon] cannot be used as fuel.</font>")
+		user.visible_message("[user] tries to shove [I] into [src]. What a dumb-ass.","<font color='red'>[fuel] traces minimal. [I] cannot be used as fuel.</font>")
 	else if(!result)
 		to_chat(user, "Unit is full.")
 	else
 		user.visible_message("[user] loads [src] with [fuel].","[result] unit\s of [fuel] successfully loaded.")
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/critfail()
 	..()
@@ -1078,10 +1056,10 @@
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat>1) return
-		if(chassis.occupant.a_intent == "hurt")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			chassis.occupant_message("<span class='warning'>You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == "disarm")
+		else if(chassis.occupant.a_intent == INTENT_PUSH)
 			chassis.occupant_message("<span class='warning'>You tear [target]'s limbs off with [src.name].</span>")
 			chassis.visible_message("<span class='warning'>[chassis] rips [target]'s arms off.</span>")
 		else
@@ -1156,7 +1134,7 @@
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		aiming = FALSE
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			chassis.occupant_message("<span class='warning'>You've issued a combat challenge to the station! \
 			You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
@@ -1164,7 +1142,7 @@
 			aiming = FALSE
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
 	chassis.loc = pick(L)
 	uses--

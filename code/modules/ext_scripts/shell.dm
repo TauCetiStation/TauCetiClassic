@@ -26,10 +26,10 @@
 		errorcode = shell("[command] > [out_file] 2> [err_file]")
 		if(fexists(out_file))
 			stdout = file2text(out_file)
-			//fdel(out_file)
+			fdel(out_file)
 		if(fexists(err_file))
 			stderr = file2text(err_file)
-			//fdel(err_file)
+			fdel(err_file)
 		shelleo_ids[shelleo_id] = FALSE
 	else
 		CRASH("Operating System: [world.system_type] not supported by shelleo(), disable hooks") // If you encounter this error, you are encouraged to update this proc with support for the new operating system

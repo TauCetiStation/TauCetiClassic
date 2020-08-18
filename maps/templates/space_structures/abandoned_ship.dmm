@@ -6,22 +6,22 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ac" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ad" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall14"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ae" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "af" = (
 /obj/structure/scrap_cube,
 /turf/space,
@@ -33,25 +33,25 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ah" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ai" = (
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aj" = (
 /obj/machinery/sleeper,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ak" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -60,7 +60,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "al" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -68,22 +68,22 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "am" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall13"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "an" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ao" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall11"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ap" = (
 /obj/machinery/computer/med_data{
 	dir = 4
@@ -91,7 +91,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aq" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
@@ -105,12 +105,12 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ar" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall15"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "as" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -118,7 +118,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "at" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -128,49 +128,41 @@
 	icon_state = "heater1"
 	},
 /turf/simulated/floor/plating/airless,
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "au" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/space,
-/area/derelict/ship)
-"av" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
-	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aw" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ax" = (
 /obj/machinery/body_scanconsole,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ay" = (
 /obj/item/weapon/scalpel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "az" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aA" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aB" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -178,7 +170,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aC" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -186,14 +178,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aE" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hibernation Pods"
@@ -201,13 +193,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aF" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aG" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -215,7 +207,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aH" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb2,
@@ -223,18 +215,18 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aJ" = (
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aK" = (
 /obj/item/weapon/stock_parts/cell{
 	charge = 100;
@@ -243,7 +235,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aL" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -251,19 +243,19 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aM" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aN" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aO" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -271,12 +263,12 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aP" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aQ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -284,19 +276,19 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aR" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aS" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aT" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -304,13 +296,13 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aU" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aV" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/machinery/light_construct/small{
@@ -319,7 +311,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aW" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -327,7 +319,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aX" = (
 /obj/machinery/light_construct/small{
 	dir = 4
@@ -335,7 +327,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aY" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -343,7 +335,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "aZ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
@@ -355,26 +347,26 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ba" = (
 /obj/machinery/door/window,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bb" = (
 /obj/item/weapon/soap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bc" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bd" = (
 /obj/structure/lattice,
 /turf/space,
@@ -385,21 +377,21 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bf" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/medal/gold/captain,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bg" = (
 /obj/structure/table,
 /obj/item/weapon/tank/oxygen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bh" = (
 /obj/machinery/light_construct/small{
 	dir = 1
@@ -407,13 +399,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bi" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bj" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
@@ -441,7 +433,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bo" = (
 /obj/effect/decal/remains/human,
 /obj/structure/stool/bed/chair/metal{
@@ -451,7 +443,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bp" = (
 /obj/machinery/door/airlock/glass{
 	name = "Living Module"
@@ -459,19 +451,19 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bq" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "br" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bs" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
@@ -509,14 +501,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "by" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/medal/gold/heroism,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bz" = (
 /obj/machinery/door/window/northright,
 /obj/effect/decal/remains/human,
@@ -524,7 +516,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bA" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
@@ -538,7 +530,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bB" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -546,14 +538,14 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bD" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/shuttle/floor{
@@ -564,12 +556,12 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bF" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bG" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -600,14 +592,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bK" = (
 /obj/machinery/light/small,
 /obj/structure/dispenser/oxygen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bL" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
@@ -630,13 +622,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bP" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bQ" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -644,7 +636,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bR" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -653,7 +645,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bS" = (
 /obj/structure/computerframe{
 	anchored = 1
@@ -662,7 +654,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bT" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/emergency_oxygen,
@@ -675,7 +667,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bU" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate,
@@ -685,13 +677,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bV" = (
 /obj/machinery/vending/engivend,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bW" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -709,7 +701,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bX" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -717,7 +709,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -727,14 +719,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "bZ" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "burst_r"
 	},
 /turf/space,
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ca" = (
 /obj/machinery/door/poddoor{
 	id = "oldship_gun";
@@ -743,7 +735,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cb" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -752,7 +744,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cc" = (
 /obj/effect/decal/cleanable/ash,
 /obj/structure/cable{
@@ -763,7 +755,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cd" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -773,7 +765,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ce" = (
 /obj/machinery/door/airlock/glass{
 	name = "Pod Bay"
@@ -786,7 +778,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cf" = (
 /obj/effect/decal/remains/human,
 /obj/structure/cable{
@@ -797,7 +789,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cg" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -805,7 +797,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ch" = (
 /obj/machinery/computer/pod{
 	dir = 4;
@@ -814,13 +806,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ci" = (
 /obj/machinery/vending/tool,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "cj" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
@@ -831,7 +823,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 "ck" = (
 /obj/machinery/light/small,
 /obj/machinery/constructable_frame/machine_frame,
@@ -839,7 +831,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/derelict/ship)
+/area/space_structures/abandoned_ship)
 
 (1,1,1) = {"
 aa

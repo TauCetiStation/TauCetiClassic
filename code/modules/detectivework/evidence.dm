@@ -8,12 +8,16 @@
 	item_state = ""
 	w_class = ITEM_SIZE_SMALL
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!in_range(I, user))
+	if(!in_range(target, user))
 		return
 
-	if(!istype(I) || I.anchored == 1)
+	if(!istype(target, /obj/item))
+		return ..()
+
+	var/obj/item/I = target
+	if(I.anchored)
 		return ..()
 
 	if(istype(I, /obj/item/weapon/evidencebag))

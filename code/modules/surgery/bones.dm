@@ -74,7 +74,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!</span>" , \
 		"<span class='warning'>Your hand slips, damaging the bone in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.createwound(BRUISE, 5)
+	BP.take_damage(5, 0, used_weapon = tool)
 
 /datum/surgery_step/mend_skull
 	allowed_tools = list(
@@ -106,7 +106,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s face with \the [tool]!</span>"  , \
 		"<span class='warning'>Your hand slips, damaging [target]'s face with \the [tool]!</span>")
 	var/obj/item/organ/external/head/H = BP
-	H.createwound(BRUISE, 10)
+	H.take_damage(10, 0, used_weapon = tool)
 	H.disfigured = 1
 
 /datum/surgery_step/finish_bone

@@ -13,7 +13,6 @@ var/list/cult_runes = list()
 	if(!holder)
 		qdel(src)
 		CRASH("someone stupid tried to create datum without holder")
-		return
 	src.holder = holder
 
 /datum/cult/Destroy()
@@ -207,7 +206,7 @@ var/list/cult_runes = list()
 				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
 
 			if(passed)
-				ticker.mode.add_cultist(M.mind)
+				SSticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
@@ -231,16 +230,16 @@ var/list/cult_runes = list()
 	if(length(acolytes) < 9)
 		return fizzle(user)
 
-	if(ticker.mode.nar_sie_has_risen)
+	if(SSticker.mode.nar_sie_has_risen)
 		for(var/mob/living/carbon/C in acolytes)
 			to_chat(C, "<font size='4'><span class='danger'>I am already here!</span></font>")
 			return
-	if(!istype(ticker.mode, /datum/game_mode/cult))
+	if(!istype(SSticker.mode, /datum/game_mode/cult))
 		return
-	var/datum/game_mode/cult/cur_mode = ticker.mode
+	var/datum/game_mode/cult/cur_mode = SSticker.mode
 	for(var/objective in cur_mode.objectives)
 		if(objective == "eldergod")
-			ticker.mode.nar_sie_has_risen = TRUE
+			SSticker.mode.nar_sie_has_risen = TRUE
 			cur_mode.eldergod = FALSE
 			new /obj/singularity/narsie/large(get_turf(holder))
 			return
@@ -366,8 +365,8 @@ var/list/cult_runes = list()
 	var/mob/living/carbon/human/body_to_sacrifice
 
 	var/datum/mind/sacrifice_target
-	if(istype(ticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/cur_mode = SSticker.mode
 		sacrifice_target = cur_mode.sacrifice_target
 
 	for(var/mob/living/carbon/human/M in holder.loc)
@@ -401,7 +400,7 @@ var/list/cult_runes = list()
 
 	corpse_to_raise.revive()
 	playsound(holder, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
-	ticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
+	SSticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
 
 
 	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
@@ -574,7 +573,7 @@ var/list/cult_runes = list()
 	D.g_eyes = 200
 	D.underwear = 0
 	D.key = ghost.key
-	ticker.mode.add_cultist(D.mind)
+	SSticker.mode.add_cultist(D.mind)
 	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
@@ -639,7 +638,7 @@ var/list/cult_runes = list()
 
 /datum/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in ticker.mode.cult)
+	for(var/datum/mind/H in SSticker.mode.cult)
 		if(iscarbon(H.current))
 			cultists += H.current
 	var/list/acolytes = nearest_cultists()
@@ -667,7 +666,6 @@ var/list/cult_runes = list()
 		if(istype(closet.loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/D = closet.loc
 			closet.forceMove(get_turf(D.loc))
-			D.wrapped = null
 			qdel(D)
 		if(closet.welded || closet.locked || !closet.opened)
 			closet.welded = FALSE
@@ -745,8 +743,8 @@ var/list/cult_runes = list()
 	var/list/victims = list()
 	var/datum/mind/sacrifice_target
 
-	if(istype(ticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/cur_mode = SSticker.mode
 		sacrifice_target = cur_mode.sacrifice_target
 
 	for(var/target in holder.loc)
@@ -754,7 +752,7 @@ var/list/cult_runes = list()
 			victims[target] = 80
 		else if(ismonkey(target))
 			victims[target] = 40
-		else if(isalien(target))
+		else if(isxeno(target))
 			victims[target] = 75
 		else if(isIAN(target))
 			victims[target] = 70
@@ -774,7 +772,7 @@ var/list/cult_runes = list()
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
-			var/datum/game_mode/cult/cur_mode = ticker.mode // we checked our mode earlier
+			var/datum/game_mode/cult/cur_mode = SSticker.mode // we checked our mode earlier
 			cur_mode.sacrificed += H.mind
 			if(isrobot(H))
 				H.dust() //To prevent the MMI from remaining
@@ -786,7 +784,7 @@ var/list/cult_runes = list()
 			var/prob_divider = max(1 + H.stat, 2)
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>")
 			if(prob(victims[H] / prob_divider))
-				ticker.mode.grant_runeword(user)
+				SSticker.mode.grant_runeword(user)
 			else
 				to_chat(user, "<span class='cult'>However, this soul was not enough to gain His favor.</span>")
 
@@ -824,7 +822,7 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
-	for(var/datum/mind/H in ticker.mode.cult)
+	for(var/datum/mind/H in SSticker.mode.cult)
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
 
@@ -839,7 +837,7 @@ var/list/cult_runes = list()
 
 /datum/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in ticker.mode.cult)
+	for(var/datum/mind/H in SSticker.mode.cult)
 		if (iscarbon(H.current))
 			cultists += H.current
 
@@ -912,7 +910,7 @@ var/list/cult_runes = list()
 	var/list/affected = nearest_heretics()
 	if(length(affected) < 1)
 		return fizzle(user)
-	var/blindless_modifier = CLAMP(holder_reaction(user) / length(affected), 5, 30)
+	var/blindless_modifier = clamp(holder_reaction(user) / length(affected), 5, 30)
 	for(var/mob/living/carbon/C in affected)
 		C.eye_blurry += blindless_modifier
 		C.eye_blind += blindless_modifier / 2
@@ -920,7 +918,7 @@ var/list/cult_runes = list()
 			C.disabilities |= NEARSIGHTED
 			if(prob(10))
 				C.sdisabilities |= BLIND
-		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", 3)
+		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/bloodboil
@@ -969,7 +967,7 @@ var/list/cult_runes = list()
 			C.stuttering = 1
 			C.Weaken(stun_modifier)
 			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", 3)
+			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", SHOWMSG_VISUAL)
 	qdel(holder)
 
 /datum/cult/stun/talisman_reaction(mob/living/carbon/user, mob/living/affected)
@@ -1014,7 +1012,7 @@ var/list/cult_runes = list()
 		for(var/mob/living/target in holder.loc)
 			if(!do_checks(user, target))
 				return
-			user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
+			user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen'ni nÃ³tim ve rmar aldaron!")
 			to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
 			to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
 			brainswapping = TRUE
@@ -1024,13 +1022,13 @@ var/list/cult_runes = list()
 			to_chat(user, "<span class='warning'>You feel weakend.</span>")
 			target.adjustBrainLoss(bdam)
 			user.adjustBrainLoss(bdam)
-			user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
+			user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen'ni nÃ³tim ve rmar aldaron!")
 			to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
 			var/mob/dead/observer/ghost = target.ghostize(FALSE)
 			user.mind.transfer_to(target)
 			ghost.mind.transfer_to(user)
 			user.key = ghost.key
-			ticker.mode.update_all_cult_icons()
+			SSticker.mode.update_all_cult_icons()
 			brainswapping = FALSE
 			return
 
@@ -1071,7 +1069,7 @@ var/list/cult_runes = list()
 	"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), SLOT_SHOES)
+	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/cult(user), SLOT_SHOES)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), SLOT_BACK)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
