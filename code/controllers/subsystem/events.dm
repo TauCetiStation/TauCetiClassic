@@ -1,6 +1,4 @@
-var/datum/subsystem/events/SSevents
-
-/datum/subsystem/events
+SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = SS_INIT_EVENTS
 	// Report events at the end of the rouund
@@ -28,14 +26,11 @@ var/datum/subsystem/events/SSevents
 
 	var/datum/event_meta/new_event = new
 
-/datum/subsystem/events/New()
-	NEW_SS_GLOBAL(SSevents)
-
-/datum/subsystem/events/Initialize()
+/datum/controller/subsystem/events/Initialize()
 	allEvents = subtypesof(/datum/event) - /datum/event/anomaly
 	return ..()
 
-/datum/subsystem/events/fire()
+/datum/controller/subsystem/events/fire()
 	for(var/datum/event/E in active_events)
 		E.process()
 
@@ -43,7 +38,7 @@ var/datum/subsystem/events/SSevents
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
 
-/datum/subsystem/events/proc/event_complete(var/datum/event/E)
+/datum/controller/subsystem/events/proc/event_complete(var/datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"
 		log_debug("Event of '[E.type]' with missing meta-data has completed.")
 		return
@@ -68,11 +63,11 @@ var/datum/subsystem/events/SSevents
 
 	log_debug("Event '[EM.name]' has completed at [worldtime2text()].")
 
-/datum/subsystem/events/proc/delay_events(var/severity, var/delay)
+/datum/controller/subsystem/events/proc/delay_events(var/severity, var/delay)
 	var/datum/event_container/EC = event_containers[severity]
 	EC.next_event_time += delay
 
-/datum/subsystem/events/proc/Interact(var/mob/living/user)
+/datum/controller/subsystem/events/proc/Interact(var/mob/living/user)
 
 	var/html = GetInteractWindow()
 
@@ -80,7 +75,7 @@ var/datum/subsystem/events/SSevents
 	popup.set_content(html)
 	popup.open()
 
-/datum/subsystem/events/proc/RoundEnd()
+/datum/controller/subsystem/events/proc/RoundEnd()
 	if(!report_at_round_end)
 		return
 
@@ -100,11 +95,11 @@ var/datum/subsystem/events/SSevents
 
 		to_chat(world, message)
 
-/datum/subsystem/events/proc/GetInteractWindow()
+/datum/controller/subsystem/events/proc/GetInteractWindow()
 	var/html = "<A align='right' href='?src=\ref[src];refresh=1'>Refresh</A>"
 	if(!config.allow_random_events)
 		html = "<span class='alert'>Random events has been disabled by SERVER!</span><br>" + html
-	else 
+	else
 		var/pause_all = FALSE
 		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 			var/datum/event_container/EC = event_containers[severity]
@@ -218,13 +213,13 @@ var/datum/subsystem/events/SSevents
 
 	return html
 
-/datum/subsystem/events/Topic(href, href_list)
+/datum/controller/subsystem/events/Topic(href, href_list)
 	if(..())
 		return
 
 	if(!check_rights(R_ADMIN))
 		return
-		
+
 
 	if(href_list["toggle_report"])
 		report_at_round_end = !report_at_round_end

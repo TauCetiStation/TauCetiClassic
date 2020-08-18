@@ -190,7 +190,7 @@
 			feedback_add_details("admin_secrets_fun_used","TriAI")
 		// Toggle station artificial gravity
 		if("gravity")
-			if(!(ticker && ticker.mode))
+			if(!(SSticker && SSticker.mode))
 				to_chat(usr, "Please wait until the game starts!  Not sure how it will work otherwise.")
 				return
 			gravity_is_on = !gravity_is_on
@@ -232,7 +232,7 @@
 			power_restore_quick()
 		// Warp all Players to Prison
 		if("prisonwarp")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!", null, null, null, null, null)
 				return
 			feedback_inc("admin_secrets_fun_used",1)
@@ -267,7 +267,7 @@
 				prisonwarped += H
 		// Everyone is the traitor
 		if("traitor_all")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = sanitize(input("Enter an objective"))
@@ -279,24 +279,24 @@
 				if(H.stat == DEAD || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
 				//traitorize(H, objective, 0)
-				ticker.mode.traitors += H.mind
+				SSticker.mode.traitors += H.mind
 				H.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
 				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
-				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
+				SSticker.mode.greet_traitor(H.mind)
+				//SSticker.mode.forge_traitor_objectives(H.mind)
+				SSticker.mode.finalize_traitor(H.mind)
 			for(var/mob/living/silicon/A in player_list)
-				ticker.mode.traitors += A.mind
+				SSticker.mode.traitors += A.mind
 				A.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective
 				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
+				SSticker.mode.greet_traitor(A.mind)
+				SSticker.mode.finalize_traitor(A.mind)
 			message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
@@ -570,25 +570,37 @@
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List
 		if("list_bombers")
-			var/dat = "<B>Bombing List</B><HR>"
+			var/dat = ""
 			for(var/l in bombers)
 				dat += text("[l]<BR>")
-			usr << browse(dat, "window=bombers")
+
+			var/datum/browser/popup = new(usr, "bombers", "Bombing List")
+			popup.set_content(dat)
+			popup.open()
+
 		// Show last [length(lastsignalers)] signalers
 		if("list_signalers")
-			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
+			var/dat = ""
 			for(var/sig in lastsignalers)
 				dat += "[sig]<BR>"
-			usr << browse(dat, "window=lastsignalers;size=800x500")
+
+			var/datum/browser/popup = new(usr, "lastsignalers", "Showing last [length(lastsignalers)] signalers", 800, 500)
+			popup.set_content(dat)
+			popup.open()
+
 		// how last [length(lawchanges)] law changes
 		if("list_lawchanges")
-			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
+			var/dat = ""
 			for(var/sig in lawchanges)
 				dat += "[sig]<BR>"
-			usr << browse(dat, "window=lawchanges;size=800x500")
+
+			var/datum/browser/popup = new(usr, "lawchanges", "Showing last [length(lawchanges)] law changes", 800, 500)
+			popup.set_content(dat)
+			popup.open()
+
 		// Show Job Debug
 		if("list_job_debug")
-			var/dat = "<B>Job Debug info.</B><HR>"
+			var/dat = ""
 			if(SSjob)
 				for(var/line in SSjob.job_debug)
 					dat += "[line]<BR>"
@@ -596,16 +608,20 @@
 				for(var/datum/job/job in SSjob.occupations)
 					if(!job)	continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(dat, "window=jobdebug;size=600x500")
+
+				var/datum/browser/popup = new(usr, "jobdebug", "Job Debug info", 600, 500)
+				popup.set_content(dat)
+				popup.open()
+
 		// Show AI Laws
 		if("showailaws")
 			output_ai_laws()
 		// Show Game Mode
 		if("showgm")
-			if(!ticker)
+			if(!SSticker)
 				alert("The game hasn't started yet!")
-			else if (ticker.mode)
-				alert("The game mode is [ticker.mode.name]")
+			else if (SSticker.mode)
+				alert("The game mode is [SSticker.mode.name]")
 			else alert("For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
 		if("manifest")
@@ -615,22 +631,30 @@
 				if(H.ckey)
 					dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 			dat += "</table>"
-			usr << browse(dat, "window=manifest;size=440x410")
+
+			var/datum/browser/popup = new(usr, "manifest", "Showing Crew Manifest", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// Show current traitors and objectives
 		if("check_antagonist")
 			check_antagonists()
 		// List DNA (Blood)
 		if("DNA")
-			var/dat = "<B>Showing DNA from blood.</B><HR>"
+			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in human_list)
 				if(H.dna && H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 			dat += "</table>"
-			usr << browse(dat, "window=DNA;size=440x410")
+
+			var/datum/browser/popup = new(usr, "DNA", "Showing DNA from blood", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// List Fingerprints
 		if("fingerprints")
-			var/dat = "<B>Showing Fingerprints.</B><HR>"
+			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H in human_list)
 				if(H.ckey)
@@ -641,7 +665,11 @@
 					else if(!H.dna)
 						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 			dat += "</table>"
-			usr << browse(dat, "window=fingerprints;size=440x410")
+
+			var/datum/browser/popup = new(usr, "fingerprints", "Showing Fingerprints", 440, 410)
+			popup.set_content(dat)
+			popup.open()
+
 		// Set Night Shift Mode
 		if("night_shift_set")
 			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
@@ -677,12 +705,16 @@
 	switch(href_list["secretscoder"])
 		// Admin Log
 		if("spawn_objects")
-			var/dat = "<B>Admin Log<HR></B>"
+			var/dat = ""
 			for(var/l in admin_log)
 				dat += "<li>[l]</li>"
 			if(!admin_log.len)
 				dat += "No-one has done anything this round!"
-			usr << browse(dat, "window=admin_log")
+
+			var/datum/browser/popup = new(usr, "admin_log", "Admin Log")
+			popup.set_content(dat)
+			popup.open()
+
 		// Change all maintenance doors to brig access only
 		if("maint_access_brig")
 			for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)

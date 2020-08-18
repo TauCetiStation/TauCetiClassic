@@ -196,7 +196,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(ticker && ticker.mode)
+	if(SSticker && SSticker.mode)
 		to_chat(src, "blobs: [blobs.len]")
 		to_chat(src, "cores: [blob_cores.len]")
 		to_chat(src, "nodes: [blob_nodes.len]")
