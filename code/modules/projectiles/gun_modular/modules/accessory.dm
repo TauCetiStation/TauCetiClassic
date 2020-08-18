@@ -17,11 +17,11 @@
     if(!frame_parent)
         return FALSE
     if(frame_parent.active_accessory == src)
-        deactivate_module(user)
-        return TRUE
+        return deactivate_module(user)
     else if(frame_parent.active_accessory)
         frame_parent.active_accessory.deactivate_module(user)
-    activate_module(user)
+    if(!frame_parent.active_accessory)
+        activate_module(user)
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/proc/activate_module(mob/user = null)
@@ -49,7 +49,7 @@
         return FALSE
     var/obj/item/weapon/gun_modular/module/frame/frame = I
     LAZYINITLIST(frame.accessories)
-    if(frame.max_accessory < frame.accessories.len)
+    if(frame.max_accessory <= frame.accessories.len)
         return FALSE
     return TRUE
 
@@ -82,7 +82,6 @@
     var/active = FALSE
     var/size_barrel = 1
     var/view_range = 6
-    var/location_active = null
 
 /obj/item/weapon/gun_modular/module/accessory/optical/activate_module(mob/user = null)
     ..()
@@ -119,7 +118,6 @@
     usr.client.view = view_range
     to_chat(usr, "<font color='[active?"blue":"red"]'>Zoom mode [active?"dis":"en"]abled.</font>")
     active = TRUE
-    location_active = get_turf(src)
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/optical/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
@@ -191,6 +189,12 @@
     var/tick = 0
     var/tick_charge = 8
     var/charge = 1000
+
+/obj/item/weapon/gun_modular/module/accessory/core_charger/Destroy()
+    if(core)
+        core.Destroy()
+    core = null
+    return ..()
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger/process()
     if(!frame_parent)
@@ -281,6 +285,9 @@
     move_y = 6
     prefix_radial = "Bayonet"
     gun_type = ALL_GUN_TYPE
+    force = 12
+    edge = TRUE
+    sharp = TRUE
     var/size_barrel = 2
 
 /obj/item/weapon/gun_modular/module/accessory/bayonet/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
@@ -301,7 +308,7 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/bayonet/activate(mob/user, argument)
-    return remove()
+    return remove(user)
 
 /obj/item/weapon/gun_modular/module/accessory/bayonet/remove()
     frame_parent.force = initial(frame_parent.force)
@@ -320,6 +327,12 @@
     prefix_radial = "Additional Battery"
     gun_type = ENERGY_GUN
     var/obj/item/weapon/stock_parts/cell/additional_battery = null
+
+/obj/item/weapon/gun_modular/module/accessory/additional_battery/Destroy()
+    if(additional_battery)
+        additional_battery.Destroy()
+    additional_battery = null
+    return ..()
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/activate_module(mob/user)
     ..()
@@ -373,4 +386,54 @@
     var/delta_charge = magazine_holder.magazine.maxcharge - magazine_holder.magazine.charge
     if(delta_charge)
         magazine_holder.Give_Round(charge = additional_battery.use(delta_charge))
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter
+    name = "gun dna crypter"
+    icon_state = "dna_crypter"
+    icon_overlay_name = "dna_crypter"
+    caliber = ALL_CALIBER
+    lessdamage = 0
+    lessdispersion = 0
+    size_gun = 1
+    prefix_radial = "DNA Crypter"
+    gun_type = ALL_GUN_TYPE
+    var/mob/living/carbon/Owner = null
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/activate(mob/user, argument)
+    if(!Owner)
+        Owner = user
+    
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/deactivate(mob/user, argument)
+    if(!Owner)
+        return
+    if(user == Owner)
+        activate_module()
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/activate_module(mob/user)
+    ..()
+    if(!user)
+        return
+    if(!Owner)
+        activate(user)
+    if(user != Owner)
+        return
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/deactivate_module(mob/user)
+    if(!user)
+        return ..()
+    if(user != Owner)
+        return
+    ..()
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/target_activate(atom/A, mob/living/user)
+    if(user == Owner)
+        return ..()
+    return FALSE
+
+/obj/item/weapon/gun_modular/module/accessory/dna_crypter/remove(mob/user = null)
+    if(!Owner || !user)
+        Owner = null
+        return ..()
+    if(Owner != user)
+        return FALSE
     

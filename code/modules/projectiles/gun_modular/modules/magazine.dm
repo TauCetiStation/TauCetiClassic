@@ -1,5 +1,6 @@
 /obj/item/weapon/gun_modular/module/magazine
     name = "gun magazine"
+    desc = "Magazine holder, forms a bridge between the chamber and the cartridge storage. A cartridge storage is placed in the magazine holder, after which it is attached to the frame"
     icon_state = "magazine_external_icon"
     icon_overlay_name = "magazine_external"
     caliber = null
@@ -13,6 +14,14 @@
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
     var/no_casing = FALSE
+
+obj/item/weapon/gun_modular/module/magazine/get_info_module()
+    var/info_module = ..()
+    info_module += "Standard case actions:\n"
+    info_module += "Eject casing - [eject_casing ? "TRUE" : "FALSE"]\n"
+    info_module += "Emptying the chamber - [empty_chamber ? "TRUE" : "FALSE"]\n"
+    info_module += "Destruction of the cartridge case - [no_casing ? "TRUE" : "FALSE"]\n"
+    return info_module
 
 /obj/item/weapon/gun_modular/module/magazine/proc/Return_Round(var/obj/item/ammo_casing/ammo)
     return FALSE
@@ -30,6 +39,12 @@
     name = "gun bullet magazine"
     gun_type = BULLET_GUN
     var/obj/item/ammo_box/magazine/magazine = null
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/Destroy()
+    if(magazine)
+        magazine.Destroy()
+    magazine = null
+    return ..()
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/Return_Round(var/obj/item/ammo_casing/ammo)
     if(!magazine)
@@ -58,10 +73,11 @@
     return FALSE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/attackby(obj/item/weapon/W, mob/user, params)
-    . = ..()
+    ..()
     if(magazine)
         if(istype(W, /obj/item/ammo_casing) || istype(W, /obj/item/ammo_box))
             Give_Round(W, user)
+            return TRUE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/activate(mob/user)
     if(!magazine)
@@ -77,6 +93,7 @@
         frame_parent.chamber.eject_casing = eject_casing
         frame_parent.chamber.empty_chamber = empty_chamber
         frame_parent.chamber.no_casing = no_casing
+        frame_parent.chamber.process_chamber(TRUE)
     return TRUE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/remove()
@@ -128,6 +145,12 @@
     empty_chamber = FALSE
     no_casing = FALSE
     var/obj/item/weapon/stock_parts/cell/magazine = null
+
+/obj/item/weapon/gun_modular/module/magazine/energy/Destroy()
+    if(magazine)
+        magazine.Destroy()
+    magazine = null
+    return ..()
 
 /obj/item/weapon/gun_modular/module/magazine/energy/activate(mob/user)
     if(!magazine)

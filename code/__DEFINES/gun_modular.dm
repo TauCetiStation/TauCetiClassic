@@ -1,8 +1,8 @@
-#define ENERGY_GUN 1
-#define BULLET_GUN 2
-#define ALL_GUN_TYPE 4
+#define ENERGY_GUN "Energy gun"
+#define BULLET_GUN "Bullet gun"
+#define ALL_GUN_TYPE "Compatible with all types of weapons"
 
-#define ALL_CALIBER 1
+#define ALL_CALIBER "Compatible with all calibers"
 
 #define SMALL_GUN 5
 #define MEDIUM_GUN 9

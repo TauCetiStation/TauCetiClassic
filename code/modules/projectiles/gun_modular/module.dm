@@ -23,19 +23,30 @@ obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
     to_chat(user, "[bicon(src)] [name]. <span class='info'>[EMBED_TIP("More info.", get_info_module())]</span><br>")
 
+obj/item/weapon/gun_modular/module/Destroy()
+    if(frame_parent)
+        remove()
+    return ..()
+
 obj/item/weapon/gun_modular/module/proc/get_info_module()
-    var/info_module = "[desc]"
-    info_module += "[lessdamage] - Damage reduction\n"
-    info_module += "[lessdispersion] - Increased accuracy\n"
-    info_module += "[size_gun] - Module size\n"
+    var/info_module = ""
+    if(desc != "")
+        info_module += "[desc]\n"
+    info_module += "Damage reduction - ([lessdamage])\n"
+    info_module += "Increased accuracy - ([lessdispersion])\n"
+    info_module += "Module size - ([size_gun])\n"
+    info_module += "Compatible caliber - ([caliber])\n"
+    info_module += "Compatible weapon type - ([gun_type])\n"
+    info_module += "Additional module parameters:\n"
     return info_module
 
 obj/item/weapon/gun_modular/module/attackby(obj/item/weapon/W, mob/user, params)
-    . = ..()
+    ..()
     if(isscrewdriver(W))
-        remove_items()
-        return
-    attach_item_in_module(W, user)
+        remove_items(user)
+        return TRUE
+    if(attach_item_in_module(W, user))
+        return TRUE
 
 obj/item/weapon/gun_modular/module/proc/activate(mob/user, var/argument="")
     return FALSE
@@ -43,7 +54,7 @@ obj/item/weapon/gun_modular/module/proc/activate(mob/user, var/argument="")
 obj/item/weapon/gun_modular/module/proc/deactivate(mob/user, var/argument="")
     return FALSE
 
-obj/item/weapon/gun_modular/module/proc/remove_items()
+obj/item/weapon/gun_modular/module/proc/remove_items(mob/user)
     for(var/obj/item/I in contents)
         remove_item_in_module(I)
         I.update_icon()
@@ -82,12 +93,13 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
     frame.change_state(src, TRUE)
     if(user)
         user.drop_item()
+        to_chat(user, "Module '[name]' was attached")
     src.loc = frame
     animate(icon_overlay, pixel_x = move_x, pixel_y = move_y)
     frame_parent.add_overlay(icon_overlay)
     return TRUE
 
-obj/item/weapon/gun_modular/module/proc/remove()
+obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
     frame_parent.modules[prefix_radial] = null
     frame_parent.change_state(src, FALSE)
     src.loc = get_turf(frame_parent)
@@ -96,8 +108,10 @@ obj/item/weapon/gun_modular/module/proc/remove()
         for(var/key in frame_parent.modules)
             var/obj/item/weapon/gun_modular/module/module = frame_parent.modules[key]
             if(module && module.check_remove())
-                module.remove()
+                module.remove(user)
     frame_parent = null
+    if(user)
+        to_chat(user, "Module '[name]' has been removed")
 
 obj/item/weapon/gun_modular/module/proc/check_remove()
     return !checking_to_attach(frame_parent)

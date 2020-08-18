@@ -1,5 +1,6 @@
 /obj/item/weapon/gun_modular/module/barrel
     name = "gun barrel"
+    desc = "The barrel of the weapon has a greater effect on the accuracy of shooting, as well as the damage of the weapon, it also depends on the barrel which accessories can be attached to it"
     icon_state = "barrel_medium_icon"
     icon_overlay_name = "barrel_medium"
     caliber = ALL_CALIBER
@@ -33,7 +34,7 @@
     icon_overlay_name = "barrel_small"
     caliber = ALL_CALIBER
     lessdamage = 6
-    lessdispersion = -0.2
+    lessdispersion = 0.5
     size_gun = 1
     gun_type = ALL_GUN_TYPE
 
@@ -43,7 +44,7 @@
     icon_overlay_name = "barrel_medium"
     caliber = ALL_CALIBER
     lessdamage = 0
-    lessdispersion = 0.3
+    lessdispersion = 1
     size_gun = 2
     gun_type = ALL_GUN_TYPE
 
@@ -53,7 +54,7 @@
     icon_overlay_name = "barrel_large"
     caliber = ALL_CALIBER
     lessdamage = -6
-    lessdispersion = 1
+    lessdispersion = 2
     size_gun = 3
     gun_type = ALL_GUN_TYPE
 
@@ -63,7 +64,7 @@
     icon_overlay_name = "barrel_large_bullet"
     caliber = ALL_CALIBER
     lessdamage = -8
-    lessdispersion = 1
+    lessdispersion = 2
     size_gun = 4
     gun_type = BULLET_GUN
 

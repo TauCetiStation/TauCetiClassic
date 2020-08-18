@@ -1,10 +1,11 @@
 /obj/item/weapon/gun_modular/module/handle
     name = "gun handle"
+    desc = "The handle, the ability to fire a weapon depends on it, different types of handles give different bonuses and problems. Also, the recoil of the weapon depends on the handle, if the recoil is too strong for the shooter, the weapon can fly out of the hand"
     icon_state = "grip_normal"
     icon_overlay_name = "grip_normal"
     caliber = ALL_CALIBER
     lessdamage = 0
-    lessdispersion = 0
+    lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     move_x = -7
@@ -15,7 +16,7 @@
 
 /obj/item/weapon/gun_modular/module/handle/get_info_module()
     var/info_module = ..()
-    info_module += "[lessrecoil] - Reducing recoil\n"
+    info_module += "Reducing recoil - [lessrecoil]\n"
     return info_module
 
 /obj/item/weapon/gun_modular/module/handle/proc/Special_Check(mob/user)
@@ -103,7 +104,7 @@
     icon_overlay_name = "grip_shotgun"
     caliber = ALL_CALIBER
     lessdamage = 5
-    lessdispersion = -0.8
+    lessdispersion = 0
     size_gun = 3
     gun_type = ALL_GUN_TYPE
     lessrecoil = 3

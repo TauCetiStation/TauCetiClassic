@@ -1,8 +1,9 @@
 obj/item/weapon/gun_modular/module/frame
     name = "gun frame"
+    desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
     icon_state = "chamber_energy"
     lessdamage = 0
-    lessdispersion = -4
+    lessdispersion = -2
     size_gun = 1
     prefix_radial = "Frame"
     var/max_accessory = 3
@@ -17,7 +18,7 @@ obj/item/weapon/gun_modular/module/frame
     var/list/icon/radial_icons = list()
 
 obj/item/weapon/gun_modular/module/frame/examine(mob/user)
-    . = ..()
+    ..()
     if(!in_range(user, src))
         return
     var/dir = "The weapon consists of:\n"
@@ -40,7 +41,6 @@ obj/item/weapon/gun_modular/module/frame/examine(mob/user)
         dir += config_text
     to_chat(user, dir)
 
-
 obj/item/weapon/gun_modular/module/frame/atom_init()
     . = ..()
     var/matrix/frame_change = matrix()
@@ -48,6 +48,12 @@ obj/item/weapon/gun_modular/module/frame/atom_init()
     frame_change.Turn(315)
     animate(src, pixel_x = move_x, pixel_y = move_y, transform = frame_change)
     update_icon()
+
+obj/item/weapon/gun_modular/module/frame/Destroy()
+    for(var/key in modules)
+        if(modules[key])
+            modules[key].Destroy()
+    return ..()
 
 obj/item/weapon/gun_modular/module/frame/proc/generate_radial_icon()
     radial_icons = list()
@@ -109,27 +115,30 @@ obj/item/weapon/gun_modular/module/frame/AltClick(mob/user)
     . = ..()
     config_user(user, "AltClick")
 
+obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
+    if(!modules)
+        return
+    generate_radial_icon()
+    var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
+    if(!remove)
+        return
+    modules[remove].remove(user)
+
 obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)
-    . = ..()
+    ..()
     if(istype(W, /obj/item/weapon/gun_modular/module))
         var/obj/item/weapon/gun_modular/module/module = W
         module.attach(src, user)
-    if(isscrewdriver(W))
-        if(!modules)
-            return
-        generate_radial_icon()
-        var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
-        if(!remove)
-            return
-        modules[remove].remove()
-    else if(active_accessory && active_accessory.attach_item_in_module(W, user))
-        return
-    else
+        return TRUE
+    else if(active_accessory && active_accessory.attackby(W, user))
+        return TRUE
+    else if(!isscrewdriver(W))
         for(var/key in modules)
             if(modules[key])
                 var/obj/item/weapon/gun_modular/module/M = modules[key]
-                if(M.attach_item_in_module(W, user))
+                if(M.attackby(W, user))
                     break
+        return TRUE
 
 obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, flag, params)
     if(!handle)
@@ -137,7 +146,8 @@ obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, fl
     if(!handle.Special_Check(user))
         return FALSE
     if(active_accessory)
-        active_accessory.target_activate(A, user)
+        if(!active_accessory.target_activate(A, user))
+            return FALSE
     if(chamber)
         chamber.Fire(A, user, params)
 
@@ -210,3 +220,16 @@ obj/item/weapon/gun_modular/module/frame/energy_shotgun/atom_init()
     new_additional.attach(src)
     core_charger.attach_item_in_module(core)
     core_charger.attach(src)
+
+obj/item/weapon/gun_modular/module/frame/pistol_9mm/atom_init()
+    . = ..()
+    var/obj/item/weapon/gun_modular/module/chamber/new_chamber = new(src)
+    var/obj/item/weapon/gun_modular/module/magazine/bullet/new_magazine = new(src)
+    var/obj/item/ammo_box/magazine/m9mm/internal_magazine = new(src)
+    var/obj/item/weapon/gun_modular/module/handle/new_handle = new(src)
+    var/obj/item/weapon/gun_modular/module/barrel/medium/new_barrel = new(src)
+    new_chamber.attach(src)
+    new_magazine.attach_item_in_module(internal_magazine)
+    new_magazine.attach(src)
+    new_handle.attach(src)
+    new_barrel.attach(src)

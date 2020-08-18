@@ -1,5 +1,6 @@
 obj/item/weapon/gun_modular/module/chamber
     name = "gun bullet chamber"
+    desc = "The chamber, requests a cartridge from the magazine holder and, if possible, receives it, upon confirmation of the handle, it fires a shot, the accuracy of which depends on the totality of statistics of all modules. Also in the chamber, there is a default recoil, which must be compensated for by a suitable handle. Also, the frequency of shooting depends on the damage inflicted by the bullet, some types of chamber do not have such a limitation."
     icon_state = "chamber_bullet_icon"
     icon_overlay_name = "chamber_bullet"
     caliber = "9mm"
@@ -19,6 +20,24 @@ obj/item/weapon/gun_modular/module/chamber
     var/last_fired = 0
     var/recoil_chamber = 0
     var/pellets
+
+obj/item/weapon/gun_modular/module/chamber/Destroy()
+    if(chambered)
+        chambered.Destroy()
+    chambered = null
+    return ..()
+
+obj/item/weapon/gun_modular/module/chamber/get_info_module()
+    var/info_module = ..()
+    info_module += "Fire delay default - [fire_delay_default]\n"
+    info_module += "Recoil - [recoil_chamber]\n"
+    if(pellets)
+        info_module += "Separation of charges - [pellets]\n"
+    info_module += "Standard case actions:\n"
+    info_module += "Eject casing - [eject_casing ? "TRUE" : "FALSE"]\n"
+    info_module += "Emptying the chamber - [empty_chamber ? "TRUE" : "FALSE"]\n"
+    info_module += "Destruction of the cartridge case - [no_casing ? "TRUE" : "FALSE"]\n"
+    return info_module
 
 obj/item/weapon/gun_modular/module/chamber/activate(mob/user)
     if(chambered)
@@ -79,7 +98,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/use
         else
             shoot_live_shot(user, silensed)
             user.newtonian_move(get_dir(target, user))
-    process_chamber()
+    process_chamber(TRUE)
     update_icon()
 
 obj/item/weapon/gun_modular/module/chamber/proc/process_chamber(var/chamber_round = FALSE)
@@ -178,6 +197,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/u
         if(chambered.BB)
             chambered.BB.damage /= pellets
             chambered.BB.lesseffect = pellets*2
+            chambered.BB.dispersion = 0.5 * pellets
     ..()
 
 obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
