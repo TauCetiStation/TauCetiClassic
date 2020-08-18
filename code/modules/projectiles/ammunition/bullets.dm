@@ -131,18 +131,22 @@
 
 /obj/item/ammo_casing/r4046/rubber
 	desc = "A 40x46mm grenade (rubber)."
+	icon_state = "r40x46-live"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046/rubber
 
 /obj/item/ammo_casing/r4046/chem/teargas
 	desc = "A 40x46mm grenade (teargas)."
+	icon_state = "gas40x46-live"
 	projectile_type = /obj/item/projectile/bullet/chem/teargas
 
 /obj/item/ammo_casing/r4046/chem/EMP
 	desc = "A 40x46mm grenade (EMP)."
+	icon_state = "emp40x46-live"
 	projectile_type = /obj/item/projectile/bullet/chem/EMP
 
 /obj/item/ammo_casing/r4046/chem/Exp
 	desc = "A 40x46mm grenade (Exp)."
+	icon_state = "expl40x46-live"
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
 
 
