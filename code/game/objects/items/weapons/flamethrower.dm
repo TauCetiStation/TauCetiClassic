@@ -121,7 +121,11 @@
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
 		return
 	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
-	user << browse(entity_ja(dat), "window=flamethrower;size=600x300")
+
+	var/datum/browser/popup = new(user, "flamethrower", null, 600, 300)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "flamethrower")
 
 /obj/item/weapon/flamethrower/Topic(href,href_list[])
@@ -140,7 +144,7 @@
 			START_PROCESSING(SSobj, src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
-		throw_amount = CLAMP(throw_amount, 1, 10)
+		throw_amount = clamp(throw_amount, 1, 10)
 	if(href_list["remove"])
 		if(!ptank)	return
 		usr.put_in_hands(ptank)

@@ -794,7 +794,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!on)
 		return
 
-	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	var/dat = "<TT>"
 	dat += {"
 				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 				Frequency:
@@ -809,7 +809,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
 			dat+=text_sec_channel(ch_name, channels[ch_name])
-	user << browse(entity_ja(dat), "window=radio")
+
+	var/datum/browser/popup = new(user, "radio", "[src]")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "radio")
 	return
 

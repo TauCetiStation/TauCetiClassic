@@ -6,11 +6,8 @@
 		else
 			gender = FEMALE
 	s_tone = random_skin_tone()
-	if(species == IPC)
-		h_style = random_ipc_monitor(ipc_head)
-	else
-		h_style = random_hair_style(gender, species)
-		grad_style = random_gradient_style()
+	h_style = random_hair_style(gender, species, ipc_head)
+	grad_style = random_gradient_style()
 	f_style = random_facial_hair_style(gender, species)
 	randomize_hair_color("hair")
 	randomize_hair_color("facial")
@@ -220,7 +217,7 @@
 		S.before_job_equip(mannequin, previewJob, TRUE)
 	if(previewJob)
 		mannequin.job = previewJob.title
-		previewJob.equip(mannequin, TRUE)
+		previewJob.equip(mannequin, TRUE, GetPlayerAltTitle(previewJob))
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 

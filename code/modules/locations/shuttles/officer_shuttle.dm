@@ -6,12 +6,12 @@
 	name = "Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/arrival_note = "Velocity transport shuttle docked with - dock 1." //сообщение по прибытию на станцию
-	var/department_note = "Velocity transport shuttle departed from station." //сообщение по отлёту от станции
+	var/arrival_note = "Velocity transport shuttle docked with - dock 1." //СЃРѕРѕР±С‰РµРЅРёРµ РїРѕ РїСЂРёР±С‹С‚РёСЋ РЅР° СЃС‚Р°РЅС†РёСЋ
+	var/department_note = "Velocity transport shuttle departed from station." //СЃРѕРѕР±С‰РµРЅРёРµ РїРѕ РѕС‚Р»С‘С‚Сѓ РѕС‚ СЃС‚Р°РЅС†РёРё
 	var/obj/item/device/radio/intercom/radio
-//	var/location = 0 // 0 - Велосити (исходная позиция) 1 - транзитная зона 2 - Исход 3 - ЦК
-	var/moving = 0 //в движении или нет
-	var/area/curr_location //текущая локация
+//	var/location = 0 // 0 - Р’РµР»РѕСЃРёС‚Рё (РёСЃС…РѕРґРЅР°СЏ РїРѕР·РёС†РёСЏ) 1 - С‚СЂР°РЅР·РёС‚РЅР°СЏ Р·РѕРЅР° 2 - РСЃС…РѕРґ 3 - Р¦Рљ
+	var/moving = 0 //РІ РґРІРёР¶РµРЅРёРё РёР»Рё РЅРµС‚
+	var/area/curr_location //С‚РµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ
 	var/area/from_area
 	var/lastMove = 0
 
@@ -37,7 +37,7 @@
 	if(curr_location == locate(/area/shuttle/officer/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/exit, "arrival_officer")
 		SSshuttle.undock_act(curr_location)
-		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии шаттла
+		radio.autosay(department_note, "Arrivals Alert System") //РІС‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС‚Р±С‹С‚РёРё С€Р°С‚С‚Р»Р°
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.undock_act(/area/velocity, "velocity_officer")
 		SSshuttle.undock_act(curr_location)
@@ -67,7 +67,7 @@
 	if(dest_location == locate(/area/shuttle/officer/station))
 		SSshuttle.dock_act(/area/station/hallway/secondary/exit, "arrival_officer")
 		SSshuttle.dock_act(dest_location)
-		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об прибытии шаттла
+		radio.autosay(arrival_note, "Arrivals Alert System") //РІС‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РїСЂРёР±С‹С‚РёРё С€Р°С‚С‚Р»Р°
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.dock_act(/area/velocity, "velocity_officer")
 		SSshuttle.dock_act(dest_location)
@@ -91,7 +91,10 @@
 		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>
 		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/officer_shuttle/Topic(href, href_list)

@@ -111,9 +111,9 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	return ..()
 
 /mob/proc/playsound_lobbymusic()
-	if(!ticker || !ticker.login_music || !client)
+	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(ticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!isfile(soundin))
@@ -187,7 +187,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		. = max(0.002, VOL_LINEAR_TO_NON(.)) // max(master slider won't kill sub slider's volume if both are less than max value).
 
 /client/proc/set_sound_volume(volume_channel, vol)
-	vol = CLAMP(vol, 0, 100)
+	vol = clamp(vol, 0, 100)
 
 	switch(volume_channel)
 		if(VOL_MUSIC)
@@ -516,7 +516,6 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		</script>
 		"}
 
-//	src << browse(dat, "window=volcontrols")
 	var/datum/browser/popup = new(usr, "volcontrols", "Audio Settings:", 620, 500, null, CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()

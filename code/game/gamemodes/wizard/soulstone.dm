@@ -33,18 +33,16 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Soul Stone</B><BR>"
+	var/dat = ""
 	for(var/mob/living/simple_animal/shade/A in src)
 		dat += "Captured Soul: [A.name]<br>"
 		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 		dat += "<br>"
 		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-	user << browse(entity_ja(dat), "window=aicard")
-	onclose(user, "aicard")
-	return
 
-
-
+	var/datum/browser/popup = new(user, "window=aicard", "Soul Stone", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/device/soulstone/Topic(href, href_list)
 	var/mob/U = usr
@@ -160,11 +158,11 @@
 						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_all_cult_icons()
+								SSticker.mode.cult+=Z.mind
+							SSticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -175,11 +173,11 @@
 						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_all_cult_icons()
+								SSticker.mode.cult+=Z.mind
+							SSticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -190,11 +188,11 @@
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(ticker.mode.name == "cult")
-								ticker.mode:add_cultist(Z.mind)
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								ticker.mode.cult+=Z.mind
-							ticker.mode.update_all_cult_icons()
+								SSticker.mode.cult+=Z.mind
+							SSticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")

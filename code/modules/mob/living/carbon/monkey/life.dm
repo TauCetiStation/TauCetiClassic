@@ -15,7 +15,7 @@
 	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
-			if(SSmob.times_fired%4==2)
+			if(SSmobs.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
 				breathe()
 			else //Still give containing object the chance to interact
@@ -348,9 +348,9 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.gas["phoron"] / safe_phoron_max) * 10
-		//adjustToxLoss(CLAMP(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = max(phoron_alert, 1)
 	else
 		phoron_alert = 0

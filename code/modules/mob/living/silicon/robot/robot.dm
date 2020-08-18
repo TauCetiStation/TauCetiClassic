@@ -360,8 +360,7 @@
 		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/alarmlist = alarms[cat]
@@ -378,7 +377,10 @@
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(entity_ja(dat), "window=robotalerts&can_close=0")
+
+	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
@@ -388,12 +390,14 @@
 	if (!cell_use_power(CO.active_usage))
 		to_chat(src, "<span class='userdanger'>Low Power.</span>")
 
-	var/dat = "<HEAD><TITLE>[src.name] Self-Diagnosis Report</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	for (var/V in components)
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	src << browse(entity_ja(dat), "window=robotdiagnosis")
+	var/datum/browser/popup = new(src, "robotdiagnosis", "Self-Diagnosis Report")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
@@ -438,15 +442,15 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(ticker && ticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = ticker.mode
+	if(SSticker && SSticker.mode.name == "AI malfunction")
+		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
 				if(connected_ai.mind == malfai)
 					if(malf.apcs >= 3)
 						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-			else if(ticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			else if(SSticker.mode:malf_mode_declared)
+				stat(null, "Time left: [max(SSticker.mode:AI_win_timeleft/(SSticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -493,17 +497,6 @@
 				adjustBruteLoss(30)
 
 	updatehealth()
-
-
-/mob/living/silicon/robot/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
@@ -915,7 +908,7 @@
 	if(!module)
 		pick_module()
 		return
-	var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -944,8 +937,9 @@
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(entity_ja(dat), "window=robotmod")
-
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()

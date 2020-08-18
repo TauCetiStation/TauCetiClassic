@@ -145,6 +145,7 @@ var/list/cult_datums = list()
 
 	tomedat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 25px; margin: 15px 0px 5px;}
 				h2 {font-size: 20px; margin: 15px 0px 5px;}
@@ -273,7 +274,10 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse("[entity_ja(notedat)]", "window=notes")
+
+	var/datum/browser/popup = new(usr, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+	popup.set_content(notedat)
+	popup.open()
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
 	M.log_combat(user, "beaten with [name]")
@@ -319,7 +323,7 @@ var/list/cult_datums = list()
 		if(obj_to_check.density)
 			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
 			return
-	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(SSticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return
 	switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
@@ -328,7 +332,9 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse("[entity_ja(tomedat)]", "window=Arcane Tome")
+			var/datum/browser/popup = new(user, "window=Arcane Tome", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(tomedat)
+			popup.open()
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -346,7 +352,10 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse("[entity_ja(notedat)]", "window=notes")
+
+			var/datum/browser/popup = new(user, "window=notes", "Tome", 400, 600, ntheme=CSS_THEME_LIGHT)
+			popup.set_content(notedat)
+			popup.open()
 			return
 	if(usr.get_active_hand() != src)
 		return

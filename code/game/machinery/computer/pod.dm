@@ -49,7 +49,7 @@
 	return
 
 /obj/machinery/computer/pod/ui_interact(mob/user)
-	var/dat = "<HTML><BODY><TT><B>[title]</B>"
+	var/dat = "<TT>"
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -69,8 +69,12 @@
 		dat += "<HR>\nPower Level: [temp]<BR>\n<A href = '?src=\ref[src];alarm=1'>Firing Sequence</A><BR>\n<A href = '?src=\ref[src];drive=1'>Test Fire Driver</A><BR>\n<A href = '?src=\ref[src];door=1'>Toggle Outer Door</A><BR>"
 	else
 		dat += "<BR>\n<A href = '?src=\ref[src];door=1'>Toggle Outer Door</A><BR>"
-	dat += "<BR><BR><A href='?src=\ref[user];mach_close=computer'>Close</A></TT></BODY></HTML>"
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	dat += "<BR><BR><A href='?src=\ref[user];mach_close=computer'>Close</A></TT>"
+
+	var/datum/browser/popup = new(user, "computer", "[title]", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 

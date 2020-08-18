@@ -28,7 +28,7 @@
 			user.machine = null
 			user << browse(null, "window=laser_control")
 			return
-	var/t = "<TT><B>Laser status monitor</B><HR>"
+	var/t = "<TT>"
 	for(var/obj/machinery/zero_point_emitter/laser in lasers)
 		t += "Zero Point Laser<br>"
 		t += "Power level: <A href = '?src=\ref[laser];input=-0.005'>-</A> <A href = '?src=\ref[laser];input=-0.001'>-</A> <A href = '?src=\ref[laser];input=-0.0005'>-</A> <A href = '?src=\ref[laser];input=-0.0001'>-</A> [laser.energy]MeV <A href = '?src=\ref[laser];input=0.0001'>+</A> <A href = '?src=\ref[laser];input=0.0005'>+</A> <A href = '?src=\ref[laser];input=0.001'>+</A> <A href = '?src=\ref[laser];input=0.005'>+</A><BR>"
@@ -36,7 +36,11 @@
 		t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(entity_ja(t), "window=laser_control;size=500x800")
+
+	var/datum/browser/popup = new(user, "laser_control", "Laser status monitor", 500, 800)
+	popup.set_content(t)
+	popup.open()
+
 	user.machine = src
 
 /*

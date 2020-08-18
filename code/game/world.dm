@@ -12,6 +12,8 @@ var/base_commit_sha = 0
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
+	timezoneOffset = text2num(time2text(0, "hh")) HOURS
+
 	load_configuration()
 	load_regisration_panic_bunker()
 	load_stealth_keys()
@@ -50,7 +52,7 @@ var/base_commit_sha = 0
 	ahelp_tickets = new
 
 	spawn(10)
-		Master.Setup()
+		Master.Initialize()
 
 	if(!setup_old_database_connection())
 		log_sql("Your server failed to establish a connection with the SQL database.")
@@ -148,7 +150,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["host"] = host ? host : null
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
-		s["gamestate"] = ticker.current_state
+		s["gamestate"] = SSticker.current_state
 		s["roundduration"] = roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
@@ -338,7 +340,7 @@ var/shutdown_processed = FALSE
 		for(var/line in L)
 			if(!length(line))
 				continue
-			if(copytext(line,1,2) == "#")
+			if(line[1] == "#")
 				continue
 			donators.Add(ckey(line))
 
@@ -349,7 +351,7 @@ var/shutdown_processed = FALSE
 			warning("Failed to load taucetistation.org patreon list")
 			message_admins("Failed to load taucetistation.org patreon list, please inform responsible persons")
 		else
-			var/list/l = json2list(w)
+			var/list/l = json_decode(w)
 			for(var/i in l)
 				if(l[i]["reward_price"] == "5.00")
 					donators.Add(ckey(l[i]["name"]))
@@ -388,7 +390,7 @@ var/shutdown_processed = FALSE
 
 	var/list/features = list()
 
-	if(ticker)
+	if(SSticker)
 		if(master_mode)
 			features += master_mode
 	else

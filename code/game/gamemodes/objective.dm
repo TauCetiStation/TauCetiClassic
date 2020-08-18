@@ -24,7 +24,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if(possible_target.assigned_role in protected_jobs)
 			continue
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
@@ -34,7 +34,7 @@ var/global/list/all_objectives = list()
 
 
 /datum/objective/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 			target = possible_target
 			break
@@ -125,8 +125,8 @@ var/global/list/all_objectives = list()
 			return OBJECTIVE_WIN
 
 		// Check if they're converted
-		if(istype(ticker.mode, /datum/game_mode/revolution))
-			if(target in ticker.mode:revolutionaries)
+		if(istype(SSticker.mode, /datum/game_mode/revolution))
+			if(target in SSticker.mode:revolutionaries)
 				return OBJECTIVE_WIN
 
 		var/turf/T = get_turf(target.current)
@@ -702,15 +702,15 @@ var/global/list/all_objectives = list()
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (ticker)
+	if (SSticker)
 		var/n_p = 1 //autowin
-		if (ticker.current_state == GAME_STATE_SETTING_UP)
+		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in new_player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
-		else if (ticker.current_state == GAME_STATE_PLAYING)
+		else if (SSticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P in human_list)
-				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
+				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
@@ -785,6 +785,27 @@ var/global/list/all_objectives = list()
 				return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
+//Borer objective(s).
+/datum/objective/borer_survive
+	explanation_text = "Survive in a host until the end of the round."
+
+/datum/objective/borer_survive/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/borer_reproduce
+	explanation_text = "Reproduce at least once."
+
+/datum/objective/borer_reproduce/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.has_reproduced)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
 //Vox heist objectives.
 
 /datum/objective/heist/proc/choose_target()
@@ -795,7 +816,7 @@ var/global/list/all_objectives = list()
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
 
 			possible_targets += possible_target
@@ -871,7 +892,7 @@ var/global/list/all_objectives = list()
 		if(total_amount >= target_amount)
 			return TRUE
 
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/O in raider.current.get_contents())
@@ -912,7 +933,7 @@ var/global/list/all_objectives = list()
 					S = I
 					total_amount += S.get_amount()
 
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/item/O in raider.current.get_contents())
@@ -965,7 +986,7 @@ var/heist_rob_total = 0
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 
 /datum/objective/heist/inviolate_crew/check_completion()
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	if(H.is_raider_crew_safe())
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
@@ -981,3 +1002,11 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(vox_kills > MAX_VOX_KILLS)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"
+
+/datum/objective/blob_takeover/check_completion()
+	if(blobs.len >= blobwincount)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

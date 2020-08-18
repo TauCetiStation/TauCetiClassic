@@ -314,7 +314,7 @@
 	if(!module)
 		module = new /obj/item/weapon/robot_module/drone(src)
 
-	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -356,7 +356,9 @@
 
 	dat += resources
 
-	src << browse(entity_ja(dat), "window=robotmod")
+	var/datum/browser/popup = new(src, "robotmod", "Drone modules")
+	popup.set_content(dat)
+	popup.open()
 
 //Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()

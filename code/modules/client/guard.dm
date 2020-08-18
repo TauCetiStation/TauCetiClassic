@@ -221,7 +221,7 @@
 	if(geoip_processed && !force_reload)
 		return
 
-	var/cache_path = ("data/player_saves/[copytext(holder.ckey,1,2)]/[holder.ckey]/geoip.sav")
+	var/cache_path = ("data/player_saves/[holder.ckey[1]]/[holder.ckey]/geoip.sav")
 	
 	if(fexists(cache_path) && !force_reload)
 		var/savefile/S = new /savefile(cache_path)

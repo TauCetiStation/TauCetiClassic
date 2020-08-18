@@ -76,17 +76,19 @@
 	assets.register()
 	assets.send(user)
 
+	name = sanitize(name)
 	var/data
+
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(info)][stamp_text]</BODY></HTML>"
-		if(view)
-			user << browse(entity_ja(data), "window=[name]")
-			onclose(user, "[name]")
+		data = "[stars(info)][stamp_text]"
 	else
-		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
-		if(view)
-			user << browse(entity_ja(data), "window=[name]")
-			onclose(user, "[name]")
+		data = "[infolinks ? info_links : info][stamp_text]"
+
+	if(view)
+		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(data)
+		popup.open()
+	
 	return data
 
 /obj/item/weapon/paper/verb/rename()
@@ -320,8 +322,7 @@
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
-	<BODY>
+	var/dat = {"
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
 		\[br\] : Creates a linebreak.<br>
@@ -338,8 +339,11 @@
 		\[list\] - \[/list\] : A list.<br>
 		\[*\] : A dot used for lists.<br>
 		\[hr\] : Adds a horizontal rule.
-	</BODY></HTML>"}, "window=paper_help")
+		"}
 
+	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,

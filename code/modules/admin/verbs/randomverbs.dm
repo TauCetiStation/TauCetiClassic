@@ -98,7 +98,10 @@
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
 
 	if(msg != "")
-		src << browse(msg, "window=Player_age_check")
+		var/datum/browser/popup = new(src, "Player_age_check")
+		popup.set_content(msg)
+		popup.open()
+
 	else
 		to_chat(src, "No matches for that age range found.")
 
@@ -224,7 +227,7 @@
 				M.client.prefs.permamuted |= mute_type
 				M.client.prefs.save_preferences()
 				M.client.prefs.muted |= mute_type
-				notes_add(M.key, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
 				permmutreason = sanitize(permmutreason)
 				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
 			else
@@ -234,7 +237,7 @@
 		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
 			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
-				notes_add(M.key, "Muted from [mute_string]: [mutereason]", usr.client)
+				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
 				mutereason = sanitize(mutereason)
 				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
 			else
@@ -265,7 +268,10 @@
 	if(show_log == "Yes")
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
 
-	IonStorm(0)
+	for(var/mob/living/silicon/ai/target in ai_list)
+		if(target.mind.special_role == "traitor")
+			continue
+		target.overload_ai_system()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -553,11 +559,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(new_character.mind.special_role)
 		if("traitor")
 			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
+			SSticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(wizardstart)
-			//ticker.mode.learn_basic_spells(new_character)
-			ticker.mode.equip_wizard(new_character)
+			//SSticker.mode.learn_basic_spells(new_character)
+			SSticker.mode.equip_wizard(new_character)
 		if("Syndicate")
 			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
@@ -956,7 +962,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if(!ticker || SSshuttle.location)
+	if(!SSticker || SSshuttle.location)
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -1007,7 +1013,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
-	if(!ticker || SSshuttle.location || SSshuttle.direction == 0)
+	if(!SSticker || SSshuttle.location || SSshuttle.direction == 0)
 		return
 
 	SSshuttle.recall()
@@ -1026,7 +1032,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Toggle Deny Shuttle"
 
-	if (!ticker)
+	if (!SSticker)
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -1054,12 +1060,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_FUN))	return
 
-	if (ticker && ticker.mode)
+	if (SSticker && SSticker.mode)
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(ticker.random_players)
-		ticker.random_players = 0
+	if(SSticker.random_players)
+		SSticker.random_players = 0
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -1077,7 +1083,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	ticker.random_players = 1
+	SSticker.random_players = 1
 	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -1088,14 +1094,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off."
 	if(!check_rights(R_SERVER))	return
 
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
-		to_chat(usr, "Random events enabled")
-		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
-	else
-		config.allow_random_events = 0
-		to_chat(usr, "Random events disabled")
-		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
+	config.allow_random_events = !config.allow_random_events
+	to_chat(usr, "Random events [config.allow_random_events ? "enabled" : "disabled"]")
+	message_admins("Admin [key_name_admin(usr)] has [config.allow_random_events ? "enabled" : "disabled"] random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/send_fax_message()
@@ -1190,7 +1191,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")

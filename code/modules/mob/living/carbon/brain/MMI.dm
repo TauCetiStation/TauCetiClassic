@@ -66,8 +66,9 @@
 		return
 
 	else if(brainmob)
-		I.attack(brainmob, user)//Oh noooeeeee
-		return
+		// Oh noooeeeee
+		user.SetNextMove(CLICK_CD_MELEE)
+		return I.attack(brainmob, user)
 
 	return ..()
 

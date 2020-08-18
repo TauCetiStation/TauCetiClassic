@@ -70,10 +70,6 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(obj/O)
-	griefProtection()
-	..()
-
 
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
@@ -287,7 +283,11 @@
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
-	user << browse("<TITLE>R&D Server Control</TITLE><HR>[entity_ja(dat)]", "window=server_control;size=575x400")
+
+	var/datum/browser/popup = new(user, "server_control", "R&D Server Control", 575, 400)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "server_control")
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)

@@ -271,7 +271,7 @@
 		user.unset_machine(src)
 		return
 
-	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
+	var/dat = ""
 
 	if(!isAI(user))  // AI can't pull flush handle
 		if(flush)
@@ -292,11 +292,15 @@
 	if(need_env_pressure)
 		per = 100 * air_contents.return_pressure() / (SEND_PRESSURE)
 
-	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR></body>"
+	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR>"
 
 
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=disposal;size=360x170")
+
+	var/datum/browser/popup = new(user, "disposal", "Waste Disposal Unit", 360, 170)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "disposal")
 
 // handle machine interaction
