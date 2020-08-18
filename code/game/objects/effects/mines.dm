@@ -1,101 +1,105 @@
-/obj/effect/mine
-	name = "Mine"
-	desc = "I Better stay away from that thing."
-	density = 1
-	anchored = 1
-	layer = 3
+/obj/item/mine
+	name = "mine"
+	desc = "EXPLOSIVE!"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	layer = 3
+	var/triggered = FALSE
 
-/obj/effect/mine/atom_init()
-	. = ..()
-	icon_state = "uglyminearmed"
+/obj/item/mine/attack_self(mob/living/user)
+	if(locate(/obj/item/mine) in get_turf(src))
+		to_chat(user, "<span class='warning'>There already is a mine at this position!</span>")
+		return
 
-/obj/effect/mine/Crossed(atom/movable/AM)
-	. = ..()
+	if(!user.loc || user.loc.density)
+		to_chat(user, "<span class='warning'>You can't plant a mine here.</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", \
+	"<span class='notice'>You start deploying [src].</span>")
+	if(!do_after(user, 40, target = src))
+		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", \
+	"<span class='notice'>You stop deploying \the [src].</span>")
+		return
+	user.visible_message("<span class='notice'>[user] finishes deploying [src].</span>", \
+	"<span class='notice'>You finish deploying [src].</span>")
+	user.drop_from_inventory(src, user.loc)
+
+	anchored = TRUE
+
+/obj/item/mine/update_icon()
+	if(anchored)
+		icon_state = "[icon_state]armed"
+		alpha = 45
+	else
+		icon_state = initial(icon_state)
+		alpha = 255
+
+/obj/item/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
-/obj/effect/mine/Bumped(mob/M)
-
+/obj/item/mine/Bumped(mob/M)
 	if(triggered) return
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
-		for(var/mob/O in viewers(world.view, src.loc))
-			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
-		triggered = 1
-		trigger_act(M)
+	if(istype(M, /mob/living))
+		if(anchored)
+			M.visible_message("<span class='danger'>[M] steps on [src]!</span>")
+			triggered = TRUE
+			trigger_act(M)
+		else
+			return
 
-/obj/effect/mine/proc/trigger_act(obj)
+/obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 0, 1, 2, 3)
-	spawn(0)
-		qdel(src)
+	qdel(src)
 
-/obj/effect/mine/dnascramble
-	name = "Radiation Mine"
-	icon_state = "uglymine"
+/obj/item/mine/attackby(obj/item/I, mob/user, params)
+	. = ..()
 
-/obj/effect/mine/dnascramble/trigger_act(obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-	s.set_up(3, 1, src)
-	s.start()
-	obj:radiation += 50
-	randmutb(obj)
-	domutcheck(obj,null)
-	spawn(0)
-		qdel(src)
+	if(!ismultitool(I) || !anchored)
+		return
 
-/obj/effect/mine/phoron
-	name = "Phoron Mine"
-	icon_state = "uglymine"
+	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", \
+	"<span class='notice'>You start disarming [src].</span>")
 
-/obj/effect/mine/phoron/trigger_act(obj)
-	for (var/turf/simulated/floor/target in range(1,src))
-		if(!target.blocks_air)
+	if(!do_after(user, 40, target = src))
+		user.visible_message("<span class='warning'>[user] stops disarming [src].", \
+		"<span class='warning'>You stop disarming [src].")
+		return
 
-			target.assume_gas("phoron", 30)
+	user.visible_message("<span class='notice'>[user] finishes disarming [src].", \
+	"<span class='notice'>You finish disarming [src].")
 
-			target.hotspot_expose(1000, CELL_VOLUME)
+	anchored = FALSE
 
-	spawn(0)
-		qdel(src)
+/obj/item/mine/stun
+	name = "stun mine"
+	desc = "A security-issued non-lethal mine for area-denial, this mine will stun and weaken anyone unfortunate to step on it."
+	icon_state = "stun"
 
-/obj/effect/mine/kick
-	name = "Kick Mine"
-	icon_state = "uglymine"
-
-/obj/effect/mine/kick/trigger_act(obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-	s.set_up(3, 1, src)
-	s.start()
-	del(obj:client)
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/n2o
-	name = "N2O Mine"
-	icon_state = "uglymine"
-
-/obj/effect/mine/n2o/trigger_act(obj)
-	//note: im lazy
-
-	for (var/turf/simulated/floor/target in range(1,src))
-		if(!target.blocks_air)
-			target.assume_gas("sleeping_agent", 30)
-
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/stun
-	name = "Stun Mine"
-	icon_state = "uglymine"
-
-/obj/effect/mine/stun/trigger_act(obj)
-	if(ismob(obj))
-		var/mob/M = obj
-		M.Stun(30)
+/obj/item/mine/stun/trigger_act(obj)
+	if(isliving(obj))
+		var/mob/living/M = obj
+		M.apply_effect(150,AGONY,0)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
 	spawn(0)
 		qdel(src)
+
+/obj/item/mine/shock
+	name = "shock mine"
+	desc = "A security issued less-than-lethal mine, this one will shock and stun anyone unfortunate to step on it."
+	icon_state = "shock"
+
+/obj/item/mine/shock/trigger_act(obj)
+	if(isliving(obj))
+		var/mob/living/M = obj
+		M.electrocute_act(30, src) // electrocute act does a message.
+		M.Weaken(5)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, src)
+	s.start()
+	spawn(0)
+		qdel(src)
+
