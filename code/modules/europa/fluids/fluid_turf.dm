@@ -51,7 +51,7 @@
 	return ..()
 
 /turf/simulated/atom_init()
-	if((ticker.current_state == GAME_STATE_PLAYING) && SSfluids)
+	if((SSticker.current_state == GAME_STATE_PLAYING) && SSfluids)
 		fluid_update()
 	. = ..()
 

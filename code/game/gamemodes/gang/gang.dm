@@ -107,7 +107,7 @@
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
-	if(istype(ticker.mode, /datum/game_mode/gang))
+	if(istype(SSticker.mode, /datum/game_mode/gang))
 		var/datum/objective/rival_obj = new
 		rival_obj.owner = boss_mind
 		rival_obj.explanation_text = "Preform a hostile takeover of the station with a Dominator."
@@ -485,7 +485,7 @@
 /datum/game_mode/proc/auto_declare_completion_gang()
 	var/winner
 	var/text = ""
-	var/datum/game_mode/gang/game_mode = ticker.mode
+	var/datum/game_mode/gang/game_mode = SSticker.mode
 	if(istype(game_mode))
 		if(game_mode.finished)
 			winner = game_mode.finished
@@ -567,30 +567,30 @@
 	var/B_lost_names = ""
 
 	//Process lost territories
-	for(var/area in ticker.mode.A_territory_lost)
+	for(var/area in SSticker.mode.A_territory_lost)
 		if(A_lost_names == "")
 			A_lost_names += ":<br>"
 		else
 			A_lost_names += ", "
-		A_lost_names += "[ticker.mode.A_territory_lost[area]], "
-		ticker.mode.A_territory -= area
+		A_lost_names += "[SSticker.mode.A_territory_lost[area]], "
+		SSticker.mode.A_territory -= area
 
-	for(var/area in ticker.mode.B_territory_lost)
+	for(var/area in SSticker.mode.B_territory_lost)
 		if(B_lost_names == "")
 			B_lost_names += ":<br>"
 		else
 			B_lost_names += ", "
-		B_lost_names += "[ticker.mode.B_territory_lost[area]], "
-		ticker.mode.B_territory -= area
+		B_lost_names += "[SSticker.mode.B_territory_lost[area]], "
+		SSticker.mode.B_territory -= area
 
 	var/datum/game_mode/gang/gangmode
-	if(istype(ticker.mode, /datum/game_mode/gang))
-		gangmode = ticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/gang))
+		gangmode = SSticker.mode
 
 	//Count uniformed gangsters
 	var/A_uniformed = 0
 	var/B_uniformed = 0
-	for(var/datum/mind/gangmind in (ticker.mode.A_gang|ticker.mode.A_bosses|ticker.mode.B_gang|ticker.mode.B_bosses))
+	for(var/datum/mind/gangmind in (SSticker.mode.A_gang|SSticker.mode.A_bosses|SSticker.mode.B_gang|SSticker.mode.B_bosses))
 		if(ishuman(gangmind.current))
 			var/mob/living/carbon/human/gangster = gangmind.current
 			//Gangster must be alive and on station
@@ -616,79 +616,79 @@
 					B_uniformed ++
 
 	//Calculate and report influence growth
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"*---------*<br><b>[gang_name("A")] Gang Status Report:</b>")
+	SSticker.mode.message_gangtools(SSticker.mode.A_tools,"*---------*<br><b>[gang_name("A")] Gang Status Report:</b>")
 	var/A_message = ""
 	if(gangmode && isnum(gangmode.A_timer))
-		var/new_time = max(300,gangmode.A_timer - ((ticker.mode.A_territory.len + A_uniformed) * 2))
+		var/new_time = max(300,gangmode.A_timer - ((SSticker.mode.A_territory.len + A_uniformed) * 2))
 		if(new_time < gangmode.A_timer)
-			A_message += "Takeover shortened by [gangmode.A_timer - new_time] seconds for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
+			A_message += "Takeover shortened by [gangmode.A_timer - new_time] seconds for defending [SSticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 			gangmode.A_timer = new_time
 		A_message += "[gangmode.A_timer] seconds remain in hostile takeover."
 	else
-		var/A_new = min(999,A + 15 + (A_uniformed * 2) + ticker.mode.A_territory.len)
+		var/A_new = min(999,A + 15 + (A_uniformed * 2) + SSticker.mode.A_territory.len)
 		if(A_new != A)
-			A_message += "Gang influence has increased by [A_new - A] for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
+			A_message += "Gang influence has increased by [A_new - A] for defending [SSticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 		A = A_new
 		A_message += "Your gang now has [A] influence."
-	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
+	SSticker.mode.message_gangtools(SSticker.mode.A_tools,A_message,0)
 
-	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
+	SSticker.mode.message_gangtools(SSticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
 	var/B_message = ""
 	if(gangmode && isnum(gangmode.B_timer))
-		var/new_time = max(300,gangmode.B_timer - ((ticker.mode.B_territory.len + B_uniformed) * 2))
+		var/new_time = max(300,gangmode.B_timer - ((SSticker.mode.B_territory.len + B_uniformed) * 2))
 		if(new_time < gangmode.B_timer)
-			A_message += "Takeover shortened by [gangmode.B_timer - new_time] seconds for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
+			A_message += "Takeover shortened by [gangmode.B_timer - new_time] seconds for defending [SSticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 			gangmode.B_timer = new_time
 		B_message += "[gangmode.B_timer] seconds remain hostile takeover."
 	else
-		var/B_new = min(999,B + 15 + (B_uniformed * 2) + ticker.mode.B_territory.len)
+		var/B_new = min(999,B + 15 + (B_uniformed * 2) + SSticker.mode.B_territory.len)
 		if(B_new != B)
-			A_message += "Gang influence has increased by [B_new - B] for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
+			A_message += "Gang influence has increased by [B_new - B] for defending [SSticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 		B = B_new
 		B_message += "Your gang now has [B] influence."
-	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message,0)
+	SSticker.mode.message_gangtools(SSticker.mode.B_tools,B_message,0)
 
 
 	//Remove territories they already own from the buffer, so if they got tagged over, they can still earn income if they tag it back before the next status report
-	ticker.mode.A_territory_new -= ticker.mode.A_territory
-	ticker.mode.B_territory_new -= ticker.mode.B_territory
+	SSticker.mode.A_territory_new -= SSticker.mode.A_territory
+	SSticker.mode.B_territory_new -= SSticker.mode.B_territory
 
 	//Process new territories
-	for(var/area in ticker.mode.A_territory_new)
+	for(var/area in SSticker.mode.A_territory_new)
 		if(A_added_names == "")
 			A_added_names += ":<br>"
 		else
 			A_added_names += ", "
-		A_added_names += "[ticker.mode.A_territory_new[area]]"
-		ticker.mode.A_territory += area
+		A_added_names += "[SSticker.mode.A_territory_new[area]]"
+		SSticker.mode.A_territory += area
 
-	for(var/area in ticker.mode.B_territory_new)
+	for(var/area in SSticker.mode.B_territory_new)
 		if(B_added_names == "")
 			B_added_names += ":<br>"
 		else
 			B_added_names += ", "
-		B_added_names += "[ticker.mode.B_territory_new[area]]"
-		ticker.mode.B_territory += area
+		B_added_names += "[SSticker.mode.B_territory_new[area]]"
+		SSticker.mode.B_territory += area
 
 	//Report territory changes
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_new.len] new territories</b><BR>[A_added_names]",0)
-	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_new.len] new territories</b><BR>[B_added_names]",0,)
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_lost.len] territories lost</b><BR>[A_lost_names]",0)
-	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_lost.len] territories lost</b><BR>[B_lost_names]",0)
+	SSticker.mode.message_gangtools(SSticker.mode.A_tools,"<b>[SSticker.mode.A_territory_new.len] new territories</b><BR>[A_added_names]",0)
+	SSticker.mode.message_gangtools(SSticker.mode.B_tools,"<b>[SSticker.mode.B_territory_new.len] new territories</b><BR>[B_added_names]",0,)
+	SSticker.mode.message_gangtools(SSticker.mode.A_tools,"<b>[SSticker.mode.A_territory_lost.len] territories lost</b><BR>[A_lost_names]",0)
+	SSticker.mode.message_gangtools(SSticker.mode.B_tools,"<b>[SSticker.mode.B_territory_lost.len] territories lost</b><BR>[B_lost_names]",0)
 
 	//Clear the lists
-	ticker.mode.A_territory_new = list()
-	ticker.mode.B_territory_new = list()
-	ticker.mode.A_territory_lost = list()
-	ticker.mode.B_territory_lost = list()
+	SSticker.mode.A_territory_new = list()
+	SSticker.mode.B_territory_new = list()
+	SSticker.mode.A_territory_lost = list()
+	SSticker.mode.B_territory_lost = list()
 
-	var/A_control = round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)
-	var/B_control = round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)
-	ticker.mode.message_gangtools((ticker.mode.A_tools),"Your gang now has <b>[A_control]% control</b> of the station.<BR>*---------*",0)
-	ticker.mode.message_gangtools((ticker.mode.B_tools),"Your gang now has <b>[B_control]% control</b> of the station.<BR>*---------*",0)
+	var/A_control = round((SSticker.mode.A_territory.len/start_state.num_territories)*100, 1)
+	var/B_control = round((SSticker.mode.B_territory.len/start_state.num_territories)*100, 1)
+	SSticker.mode.message_gangtools((SSticker.mode.A_tools),"Your gang now has <b>[A_control]% control</b> of the station.<BR>*---------*",0)
+	SSticker.mode.message_gangtools((SSticker.mode.B_tools),"Your gang now has <b>[B_control]% control</b> of the station.<BR>*---------*",0)
 
 	//Increase outfit stock
-	for(var/obj/item/device/gangtool/tool in (ticker.mode.A_tools | ticker.mode.B_tools))
+	for(var/obj/item/device/gangtool/tool in (SSticker.mode.A_tools | SSticker.mode.B_tools))
 		tool.outfits = min(tool.outfits+2,5)
 
 	//Restart the counter

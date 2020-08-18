@@ -4,7 +4,7 @@ var/const/commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_strike_team = 0
 
 /client/proc/strike_team()
-	if(!ticker)
+	if(!SSticker)
 		to_chat(usr, "<font color='red'>The game hasn't started yet!</font>")
 		return
 	if(world.time < 6000)
@@ -122,7 +122,7 @@ var/global/sent_strike_team = 0
 	new_commando.mind_initialize()
 	new_commando.mind.assigned_role = "MODE"
 	new_commando.mind.special_role = "Death Commando"
-	ticker.mode.traitors |= new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+	SSticker.mode.traitors |= new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
 	return new_commando
 

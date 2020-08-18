@@ -1,4 +1,4 @@
-/datum/subsystem/ticker/proc/scoreboard(completions)
+/datum/controller/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
 		completions += "<div class='block'>[achievement_declare_completion()]</div>"
 
@@ -68,8 +68,8 @@
 				score["dmgestkey"] = E.key
 
 	var/nukedpenalty = 1000
-	if (ticker.mode.config_tag == "nuclear")
-		var/datum/game_mode/nuclear/GM = ticker.mode
+	if (SSticker.mode.config_tag == "nuclear")
+		var/datum/game_mode/nuclear/GM = SSticker.mode
 		var/foecount = 0
 		for(var/datum/mind/M in GM.syndicates)
 			foecount++
@@ -112,8 +112,8 @@
 				else
 					nukedpenalty = 10000
 
-	if (ticker.mode.config_tag == "rp-revolution")
-		var/datum/game_mode/rp_revolution/GM = ticker.mode
+	if (SSticker.mode.config_tag == "rp-revolution")
+		var/datum/game_mode/rp_revolution/GM = SSticker.mode
 		var/foecount = 0
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			foecount++
@@ -157,7 +157,7 @@
 			score["mess"] += 1
 
 	// How many antags did we reconvert using loyalty implant.
-	for(var/reconverted in ticker.reconverted_antags)
+	for(var/reconverted in SSticker.reconverted_antags)
 		score["rec_antags"]++
 
 	//Research Levels
@@ -188,7 +188,7 @@
 	var/plaguepoints = score["disease"] * 30
 
 	// Mode Specific
-	if (ticker.mode.config_tag == "nuclear")
+	if (SSticker.mode.config_tag == "nuclear")
 		if (score["disc"])
 			score["crewscore"] += 500
 		var/killpoints = score["opkilled"] * 250
@@ -198,7 +198,7 @@
 		if (score["nuked"])
 			score["crewscore"] -= nukedpenalty
 
-	if (ticker.mode.config_tag == "rp-revolution")
+	if (SSticker.mode.config_tag == "rp-revolution")
 		var/arrestpoints = score["arrested"] * 1000
 		var/killpoints = score["opkilled"] * 500
 		var/comdeadpts = score["deadcommand"] * 500
@@ -253,12 +253,12 @@
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
-	if (ticker.mode.name == "nuclear emergency")
+	if (SSticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
 		var/diskdat = ""
 		var/bombdat = null
-		var/datum/game_mode/nuclear/GM = ticker.mode
+		var/datum/game_mode/nuclear/GM = SSticker.mode
 		for(var/datum/mind/M in GM.syndicates)
 			foecount++
 		for(var/mob/living/C in alive_mob_list)
@@ -311,12 +311,12 @@
 		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
 //		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
-	if (ticker.mode.name == "rp-revolution")
+	if (SSticker.mode.name == "rp-revolution")
 		var/foecount = 0
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
-		var/datum/game_mode/rp_revolution/GM = ticker.mode
+		var/datum/game_mode/rp_revolution/GM = SSticker.mode
 		for(var/datum/mind/M in GM.head_revolutionaries)
 			if (M.current && M.current.stat != DEAD) foecount++
 		for(var/datum/mind/M in GM.revolutionaries)
