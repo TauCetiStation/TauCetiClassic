@@ -266,11 +266,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			else
 				var/possible_targets = list()
 
-				var/image/I
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
 						continue
-					I = image(M.icon, M.icon_state)
+					var/image/I = image(M.icon, M.icon_state)
 					I.appearance = M
 					possible_targets[M] = I
 
