@@ -70,8 +70,8 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			ticker.mode.equip_traitor(N)
-			ticker.mode.traitors += N.mind
+			SSticker.mode.equip_traitor(N)
+			SSticker.mode.traitors += N.mind
 			N.mind.special_role = "traitor"
 			var/objective = "Free Objective"
 			switch(rand(1,100))

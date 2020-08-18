@@ -75,7 +75,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
 
 			usr.mind.transfer_to(H)
-			ticker.mode.update_all_shadows_icons()
+			SSticker.mode.update_all_shadows_icons()
 			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
 
 			qdel(usr)
@@ -113,18 +113,18 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 								"<span class='shadowling'>You feel yourself beginning to mutate.</span>")
 
 			sleep(20)
-			if(!ticker.mode.shadowling_ascended)
+			if(!SSticker.mode.shadowling_ascended)
 				to_chat(usr, "<span class='shadowling'>It isn't enough. Time to draw upon your thralls.</span>")
 			else
 				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
 			for(var/mob/M in mob_list)
-				if(is_thrall(M) && !ticker.mode.shadowling_ascended)
+				if(is_thrall(M) && !SSticker.mode.shadowling_ascended)
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
 
-					ticker.mode.thralls -= M.mind //To prevent message spam
+					SSticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
 
 			to_chat(usr, "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>")
@@ -160,8 +160,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)
-			if(!ticker.mode.shadowling_ascended)
+			if(!SSticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
-			ticker.mode.shadowling_ascended = 1
+			SSticker.mode.shadowling_ascended = 1
 			qdel(usr)
