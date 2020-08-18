@@ -122,6 +122,8 @@ obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
     var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
     if(!remove)
         return
+    if(!do_after(user, 2 SECOND, target = src))
+        return FALSE
     modules[remove].remove(user)
 
 obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)

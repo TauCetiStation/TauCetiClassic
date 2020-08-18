@@ -55,9 +55,13 @@ obj/item/weapon/gun_modular/module/proc/deactivate(mob/user, var/argument="")
     return FALSE
 
 obj/item/weapon/gun_modular/module/proc/remove_items(mob/user)
+    if(!do_after(user, 2 SECOND, target = src))
+        return FALSE
     for(var/obj/item/I in contents)
         remove_item_in_module(I)
         I.update_icon()
+    return TRUE
+
 obj/item/weapon/gun_modular/module/proc/remove_item_in_module(var/obj/item/I)
     return FALSE
 
@@ -87,14 +91,16 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
         return FALSE
     if(!frame.can_attach(src))
         return FALSE
+    if(user)
+        if(!do_after(user, 1 SECOND, target = I))
+            return FALSE
+        user.drop_item()
+        to_chat(user, "Module '[name]' was attached")
+    src.loc = frame
     frame_parent = frame
     LAZYINITLIST(frame.modules)
     frame.modules[prefix_radial] = src
     frame.change_state(src, TRUE)
-    if(user)
-        user.drop_item()
-        to_chat(user, "Module '[name]' was attached")
-    src.loc = frame
     animate(icon_overlay, pixel_x = move_x, pixel_y = move_y)
     frame_parent.add_overlay(icon_overlay)
     return TRUE
