@@ -253,6 +253,6 @@
 		return FALSE
 
 	if(ASPECT_OBSCURE in AOG.religion.aspects)
-		user.visible_message("Your God doesn't love you, chaosit")
+		user.visible_message("Only those who serve the good can create an armor")
 		return FALSE
 	return TRUE
