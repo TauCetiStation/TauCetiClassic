@@ -35,7 +35,7 @@
 		icon_state = initial(icon_state)
 		alpha = 255
 
-/obj/item/mine/Crossed(AM as mob|obj)
+/obj/item/mine/Crossed(atom/movable/AM)
 	Bumped(AM)
 
 /obj/item/mine/Bumped(mob/M)
@@ -102,4 +102,3 @@
 	s.start()
 	spawn(0)
 		qdel(src)
-
