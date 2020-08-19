@@ -25,14 +25,12 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 /// Returns TRUE if any assets were sent.
 /proc/send_asset_list(client/client, list/asset_list)
 	if(!istype(client))
-		if(ismob(client))
-			var/mob/M = client
-			if(M.client)
-				client = M.client
-			else
-				return
-		else
+		if(!ismob(client))
 			return
+		var/mob/M = client
+		if(!M.client)
+			return
+		client = M.client
 
 	var/list/unreceived = list()
 
