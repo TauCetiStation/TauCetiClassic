@@ -33,7 +33,7 @@
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		ticker.mode.infected_crew |= mind
+		SSticker.mode.infected_crew |= mind
 
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
@@ -74,11 +74,11 @@
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		if(!istype(ticker.mode,/datum/game_mode/blob))
+		if(!istype(SSticker.mode,/datum/game_mode/blob))
 			addtimer(CALLBACK(src, .proc/victory), 450)
 
 /mob/camera/blob/proc/victory()
-	ticker.force_ending = TRUE
+	SSticker.force_ending = TRUE
 
 /mob/camera/blob/Destroy()
 	STOP_PROCESSING(SSobj, src)

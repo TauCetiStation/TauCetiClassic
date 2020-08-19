@@ -97,7 +97,8 @@
 			add_fingerprint(user)
 			var/message = ""
 			if(!output_to_chat)
-				message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+				message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+				message += "<title>[M.name]'s scan results</title></head><BODY>"
 
 			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
@@ -131,7 +132,7 @@
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
+			var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"

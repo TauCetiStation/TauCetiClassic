@@ -212,15 +212,15 @@
 	if(mode)
 		mode.update_icon(H)
 
-	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
-		ticker.mode.update_all_gang_icons()
-	if(H.mind in ticker.mode.syndicates)
-		ticker.mode.update_all_synd_icons()
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if((H.mind in SSticker.mode.revolutionaries) || (H.mind in SSticker.mode.head_revolutionaries))
+		SSticker.mode.update_all_rev_icons() //So the icon actually appears
+	if((H.mind in SSticker.mode.A_bosses) || ((H.mind in SSticker.mode.A_gang) || (H.mind in SSticker.mode.B_bosses)) || (H.mind in SSticker.mode.B_gang))
+		SSticker.mode.update_all_gang_icons()
+	if(H.mind in SSticker.mode.syndicates)
+		SSticker.mode.update_all_synd_icons()
+	if (H.mind in SSticker.mode.cult)
+		SSticker.mode.add_cultist(src.occupant.mind)
+		SSticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 
