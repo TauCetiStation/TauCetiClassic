@@ -481,7 +481,7 @@
 	slowdown = 1
 	allowed = list(/obj/item/weapon/claymore/religion, /obj/item/weapon/nullrod, /obj/item/weapon/nullrod/staff, /obj/item/weapon/nullrod/forcefield_staff)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/list/holy_armor = list(melee = 70, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/holy_armor = list(melee = 55, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/def_armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/religion/equipped(mob/user, slot)

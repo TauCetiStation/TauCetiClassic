@@ -698,11 +698,6 @@
 	desc = "Box from the Gods."
 	icon_state = "religion"
 
-/obj/item/weapon/storage/box/religion/atom_init()
-	. = ..()
-	new /obj/item/clothing/suit/armor/religion(src)
-	new /obj/item/clothing/head/helmet/religion(src)
-
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"

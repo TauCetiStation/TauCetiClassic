@@ -252,7 +252,7 @@
 	if(!.)
 		return FALSE
 
-	if(AOG.religion.bible_info.icon_state == "koran")
-		user.visible_message("Your God doesn't love you, muslim")
+	if(ASPECT_OBSCURE in AOG.religion.aspects)
+		user.visible_message("Your God doesn't love you, chaosit")
 		return FALSE
 	return TRUE

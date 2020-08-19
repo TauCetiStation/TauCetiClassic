@@ -43,16 +43,21 @@ var/list/cult_runes = list()
 				C.say(message)
 	return acolytes
 
-/datum/cult/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
+/datum/cult/proc/nearest_heretics(range = 7, ignore_holy = FALSE)
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/heretic in view(range, center))
 		if(iscultist(heretic))
 			continue
-		if(!ignore_nullrod)
+
+		if(!ignore_holy)
 			var/obj/item/weapon/nullrod/N = locate() in heretic
-			if(N)
+			var/obj/item/clothing/suit/armor/religion/A = locate() in heretic
+			var/obj/item/clothing/head/helmet/religion/H = locate() in heretic
+
+			if(heretic.mind.holy_role > 0 && (N || (A && H)))
 				continue
+
 		heretics += heretic
 	return heretics
 
