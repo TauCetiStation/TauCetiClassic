@@ -1,8 +1,7 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
-var/datum/subsystem/throwing/SSthrowing
 
-/datum/subsystem/throwing
+SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
 
 	priority = SS_PRIORITY_THROWING
@@ -13,16 +12,15 @@ var/datum/subsystem/throwing/SSthrowing
 	var/list/currentrun
 	var/list/processing
 
-/datum/subsystem/throwing/New()
-	NEW_SS_GLOBAL(SSthrowing)
+/datum/controller/subsystem/throwing/PreInit()
 	processing = list()
 
 
-/datum/subsystem/throwing/stat_entry()
+/datum/controller/subsystem/throwing/stat_entry()
 	..("P:[processing.len]")
 
 
-/datum/subsystem/throwing/fire(resumed = 0)
+/datum/controller/subsystem/throwing/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

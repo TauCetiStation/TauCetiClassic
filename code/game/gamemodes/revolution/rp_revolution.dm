@@ -224,8 +224,8 @@
 		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
 		return
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
-	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
-		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
+	if(((src.mind in SSticker.mode:head_revolutionaries) || (src.mind in SSticker.mode:revolutionaries)))
+		if((M.mind in SSticker.mode:head_revolutionaries) || (M.mind in SSticker.mode:revolutionaries))
 			to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 		else if(ismindshielded(M))
 			to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
@@ -240,7 +240,7 @@
 			message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
-				ticker.mode:add_revolutionary(M.mind)
+				SSticker.mode:add_revolutionary(M.mind)
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 			else if(choice == "No!")
@@ -309,7 +309,7 @@
 	checkwin_counter++
 	if(checkwin_counter >= 5)
 		if(!finished)
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 

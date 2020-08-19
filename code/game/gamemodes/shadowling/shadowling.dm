@@ -52,15 +52,15 @@ Made by Xhuis
 	var/objective_explanation
 
 /proc/is_thrall(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.thralls)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.thralls)
 
 
 /proc/is_shadow_or_thrall(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.thralls) || (M.mind in ticker.mode.shadows))
+	return istype(M) && M.mind && SSticker && SSticker.mode && ((M.mind in SSticker.mode.thralls) || (M.mind in SSticker.mode.shadows))
 
 
 /proc/is_shadow(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.shadows)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.shadows)
 
 
 /datum/game_mode/shadowling

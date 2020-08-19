@@ -55,11 +55,6 @@ a.popt {text-decoration: none;}
 	border-radius: 10px;
 }
 
-/* to minimize the impact of the unicode funny things */
-.entry {
-	overflow: hidden;
-}
-
 /*****************************************
 *
 * OUTPUT NOT RELATED TO ACTUAL MESSAGES
