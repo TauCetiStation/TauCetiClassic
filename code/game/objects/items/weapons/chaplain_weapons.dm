@@ -71,17 +71,22 @@
 		return
 
 	M.log_combat(user, "attempt deconvert via [name]")
-	if((M.mind in SSticker.mode.cult) && prob(33) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(iscultist(M) && prob(33) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 		to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
 		M.log_combat(user, "deconvert via [name]")
 		SSticker.mode.remove_cultist(M.mind)
+
+		set_light(1.5, 0,"#ffff00")
+		addtimer(CALLBACK(src, .atom/proc/set_light, 0), 1)
 	else
 		to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
-/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+// TODO: rework for alternate apperance
+// TODO: The rune is only visible to the chaplain in this situation.
+/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, click_parameters)
+	if(proximity && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 
@@ -219,7 +224,7 @@
 			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
 			return
 		transfer_personality(C.mob, user)
-	else if (response == "Never for this round")
+	else if(response == "Never for this round")
 		C.prefs.ignore_question += IGNORE_TSTAFF
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
@@ -237,18 +242,14 @@
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
-	brainmob.invisibility = INVISIBILITY_OBSERVER
-	brainmob.see_invisible = SEE_INVISIBLE_OBSERVER
-
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
+	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
-	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
 		brainmob.mind.memory += god_lore
-	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	for(var/aspect in global.chaplain_religion.aspects)
 		var/datum/aspect/asp = global.chaplain_religion.aspects[aspect]
@@ -258,8 +259,6 @@
 	candidate.cancel_camera()
 	candidate.reset_view()
 
-	brainmob.universal_speak = FALSE
-
 	global.chaplain_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
@@ -268,6 +267,8 @@
 	name = "staff of the [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
 		name = "Aghanim's Scepter"
+	
+	brainmob.real_name = name
 
 	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
 	to_chat(brainmob, "<b>You are an avatar of god, brought into existence on [station_name()].</b>")
@@ -368,9 +369,9 @@
 		deactivate(user)
 
 
-//////////////
-//  WEAPONS //
-//////////////
+///////////////
+// EQUIPMENT //
+///////////////
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Go-... Whatever deity you worship protects you!"
