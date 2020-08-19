@@ -303,6 +303,8 @@
 	set name = "Rotate suspension gen (counter-clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
@@ -313,6 +315,8 @@
 	set name = "Rotate suspension gen (clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
