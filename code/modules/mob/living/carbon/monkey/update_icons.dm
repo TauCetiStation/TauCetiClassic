@@ -90,17 +90,26 @@
 
 /mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
 	if(back)
-		if(!istype(src, /mob/living/carbon/monkey/diona))
-			if(back:icon_custom)
-				overlays_standing[M_BACK_LAYER]	= image("icon" = back:icon_custom, "icon_state" = "[back.icon_state]_mob")
-			else
-				overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
-		else 
-			overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "backpack-diona")
+		if(back:icon_custom)
+			overlays_standing[M_BACK_LAYER]	= image("icon" = back:icon_custom, "icon_state" = "[back.icon_state]_mob")
+		else
+			overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
 		back.screen_loc = ui_monkey_back
 	else
 		overlays_standing[M_BACK_LAYER]	= null
 	if(update_icons)		update_icons()
+
+/mob/living/carbon/monkey/diona/update_inv_back(update_icons = TRUE)
+	if(back)
+		if(back.icon_custom)
+			overlays_standing[M_BACK_LAYER] = image("icon" = back.icon_custom, "icon_state" = "[back.icon_state]_mob")
+		else
+			overlays_standing[M_BACK_LAYER] = image("icon" = 'icons/mob/diona_back.dmi', "icon_state" = "[back.icon_state]")
+		back.screen_loc = ui_monkey_back
+	else
+		overlays_standing[M_BACK_LAYER] = null
+	if(update_icons)
+		update_icons()
 
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
