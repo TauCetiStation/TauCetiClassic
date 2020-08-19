@@ -129,18 +129,16 @@
 	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
-	// Damn... He's free now.
-	if(brainmob)
-		brainmob.invisibility = 0
-		qdel(brainmob.GetComponent(/datum/component/bounded))
-		brainmob.container = null
-		brainmob = null
-
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
 		hide_god(M)
 
 	QDEL_NULL(god_image)
+
+	if(brainmob)
+		brainmob.container = null
+		brainmob.gib()
+		brainmob = null
 
 	return ..()
 
