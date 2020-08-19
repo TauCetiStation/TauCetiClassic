@@ -14,13 +14,17 @@
 
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
-	var/dat = "<B>Teleportation Scroll:</B><BR>"
+	var/dat = ""
 	dat += "Number of uses: [src.uses]<BR>"
 	dat += "<HR>"
 	dat += "<B>Four uses use them wisely:</B><BR>"
 	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
 	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
-	user << browse(dat, "window=scroll")
+
+	var/datum/browser/popup = new(user, "scroll", "Teleportation Scroll:", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "scroll")
 	return
 

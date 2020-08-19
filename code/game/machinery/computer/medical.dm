@@ -124,7 +124,11 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
+
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "med_rec")
 
 /obj/machinery/computer/med_data/Topic(href, href_list)

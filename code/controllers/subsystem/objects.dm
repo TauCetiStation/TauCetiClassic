@@ -1,12 +1,4 @@
-var/datum/subsystem/objects/SSobj
-
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = FALSE
-	STOP_PROCESSING(SSobj, src)
-	return FALSE
-
-/datum/subsystem/objects
+SUBSYSTEM_DEF(obj)
 	name = "Objects"
 
 	priority   = SS_PRIORITY_OBJECTS
@@ -15,13 +7,10 @@ var/datum/subsystem/objects/SSobj
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/subsystem/objects/New()
-	NEW_SS_GLOBAL(SSobj)
-
-/datum/subsystem/objects/stat_entry()
+/datum/controller/subsystem/obj/stat_entry()
 	..("P:[processing.len]")
 
-/datum/subsystem/objects/fire(resumed = 0)
+/datum/controller/subsystem/obj/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -39,6 +28,6 @@ var/datum/subsystem/objects/SSobj
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/objects/Recover()
+/datum/controller/subsystem/obj/Recover()
 	if (istype(SSobj.processing))
 		processing = SSobj.processing

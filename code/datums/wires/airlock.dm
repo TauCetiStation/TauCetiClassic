@@ -156,7 +156,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
 				A.secondsElectrified = 30
-				START_PROCESSING(SSmachine, A)
+				START_PROCESSING(SSmachines, A)
 
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			if(!A.requiresID() || A.check_access(null))
