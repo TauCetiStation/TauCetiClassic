@@ -2,19 +2,19 @@
 
 /datum/asset/simple/tgui_common
 	assets = list(
-		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
+		"tgui-common.chunk.js" = 'tgui/public/tgui-common.chunk.js',
 	)
 
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
+		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
 	)
 
 /datum/asset/simple/tgui_panel
 	assets = list(
-		"tgui-panel.bundle.js" = 'tgui/packages/tgui/public/tgui-panel.bundle.js',
-		"tgui-panel.bundle.css" = 'tgui/packages/tgui/public/tgui-panel.bundle.css',
+		"tgui-panel.bundle.js" = 'tgui/public/tgui-panel.bundle.js',
+		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
 	)
 
 
