@@ -397,7 +397,7 @@ var/list/advance_cures = 	list(
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdiseases.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(human_list))

@@ -182,15 +182,15 @@
 						  0,0,-1,
 						  1,1,1)
 		if("nightsight")
-			matrix = list(-1,-1,-1,
+			matrix = list(1,1,1,
 						  0,0,0,
 						  0,0,0,
-						  1,1,1)
+						  0.3,0.3,0.3)
 		if("nightsight_glasses")
-			matrix = list(0,0,1,
-						  1,0,0,
-						  0,1,0,
-						  0.8,0.8,0.8)
+			matrix = list(1,1,1,
+						  0,0,0,
+						  0,0,0,
+						  0.2,0.2,0.2)
 		if("thermal")
 			matrix = list(1.4,0.8,0.8,
 						  0,0,0,

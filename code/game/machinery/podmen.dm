@@ -134,20 +134,20 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(mode)
 		mode.update_icon(podman.mind)
 
-	switch(ticker.mode.name)
+	switch(SSticker.mode.name)
 		if ("revolution")
-			if (podman.mind in ticker.mode:revolutionaries)
-				ticker.mode:add_revolutionary(podman.mind)
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-			if (podman.mind in ticker.mode:head_revolutionaries)
-				ticker.mode:update_all_rev_icons()
+			if (podman.mind in SSticker.mode:revolutionaries)
+				SSticker.mode:add_revolutionary(podman.mind)
+				SSticker.mode:update_all_rev_icons() //So the icon actually appears
+			if (podman.mind in SSticker.mode:head_revolutionaries)
+				SSticker.mode:update_all_rev_icons()
 		if ("nuclear emergency")
-			if (podman.mind in ticker.mode:syndicates)
-				ticker.mode:update_all_synd_icons()
+			if (podman.mind in SSticker.mode:syndicates)
+				SSticker.mode:update_all_synd_icons()
 		if ("cult")
-			if (podman.mind in ticker.mode:cult)
-				ticker.mode:add_cultist(podman.mind)
-				ticker.mode:update_all_cult_icons() //So the icon actually appears
+			if (podman.mind in SSticker.mode:cult)
+				SSticker.mode:add_cultist(podman.mind)
+				SSticker.mode:update_all_cult_icons() //So the icon actually appears
 		// -- End mode specific stuff
 
 	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
