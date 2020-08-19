@@ -356,6 +356,22 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_teleporter
 	group = "Security"
 
+/datum/supply_pack/stun_mines
+	name = "Stun mines crate"
+	contains = list(/obj/item/weapon/storage/box/mines/shock)
+	cost = 1500
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "stun mines crate"
+	group = "Security"
+
+/datum/supply_pack/shock_mines
+	name = "Shock mines crate"
+	contains = list(/obj/item/weapon/storage/box/mines/shock)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "shock mines crate"
+	group = "Security"
+
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------

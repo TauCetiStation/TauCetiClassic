@@ -692,6 +692,38 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/toy/plushie/girly_corgi(src)
 
+/obj/item/weapon/storage/box/mines
+	name = "box of mines"
+	desc = "Full of military-grade mines, just add a foot."
+	icon_state = "mine_box"
+
+/obj/item/weapon/storage/box/mines/explosive
+	name = "box of HE mines"
+
+obj/item/weapon/storage/box/mines/explosive/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/mines/stun
+	name = "box of stun mines"
+
+obj/item/weapon/storage/box/mines/stun/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine/stun(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/mines/shock
+	name = "box of shock mines"
+
+/obj/item/weapon/storage/box/mines/shock/atom_init()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/item/mine/shock(src)
+	make_exact_fit()
+
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"

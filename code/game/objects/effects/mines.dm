@@ -1,8 +1,8 @@
 /obj/item/mine
 	name = "mine"
-	desc = "EXPLOSIVE!"
+	desc = "A friendly-looking pancake with a happy light on the top. Absolute opposite of libertarian - this mine BEGS to be stepped on."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "uglymine"
+	icon_state = "mine"
 	layer = 3
 	var/triggered = FALSE
 
@@ -26,6 +26,7 @@
 	user.drop_from_inventory(src, user.loc)
 
 	anchored = TRUE
+	update_icon()
 
 /obj/item/mine/update_icon()
 	if(anchored)
@@ -41,7 +42,7 @@
 /obj/item/mine/Bumped(mob/M)
 	if(triggered) return
 
-	if(istype(M, /mob/living))
+	if(istype(M, /mob/living/carbon) || istype(M, /mob/living/silicon))
 		if(anchored)
 			M.visible_message("<span class='danger'>[M] steps on [src]!</span>")
 			triggered = TRUE
@@ -50,7 +51,7 @@
 			return
 
 /obj/item/mine/proc/trigger_act(obj)
-	explosion(loc, 0, 1, 2, 3)
+	explosion(loc, 1, 1, 3, 3)
 	qdel(src)
 
 /obj/item/mine/attackby(obj/item/I, mob/user, params)
@@ -71,11 +72,12 @@
 	"<span class='notice'>You finish disarming [src].")
 
 	anchored = FALSE
+	update_icon()
 
 /obj/item/mine/stun
 	name = "stun mine"
 	desc = "A security-issued non-lethal mine for area-denial, this mine will stun and weaken anyone unfortunate to step on it."
-	icon_state = "stun"
+	icon_state = "stunmine"
 
 /obj/item/mine/stun/trigger_act(obj)
 	if(isliving(obj))
@@ -90,7 +92,7 @@
 /obj/item/mine/shock
 	name = "shock mine"
 	desc = "A security issued less-than-lethal mine, this one will shock and stun anyone unfortunate to step on it."
-	icon_state = "shock"
+	icon_state = "shockmine"
 
 /obj/item/mine/shock/trigger_act(obj)
 	if(isliving(obj))
@@ -103,3 +105,14 @@
 	spawn(0)
 		qdel(src)
 
+/obj/item/mine/incendiary
+	name = "incendiary mine"
+	desc = "This thing definetly violates Space Geneva Convention."
+	icon_state = "incendiarymine"
+
+/obj/item/mine/incendiary/trigger_act(obj)
+	if(isliving(obj))
+		var/mob/living/M = obj
+		M.adjust_fire_stacks(10)
+		M.IgniteMob()
+		qdel(src)
