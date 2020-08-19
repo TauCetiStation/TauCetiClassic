@@ -40,7 +40,6 @@
 		qdel(src)
 		return
 
-
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))
 		O.transfer_soul("SHADE", src, user)
@@ -54,6 +53,9 @@
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
+	return
+
+/mob/living/simple_animal/shade/handle_combat()
 	return
 
 /mob/living/simple_animal/shade/god
