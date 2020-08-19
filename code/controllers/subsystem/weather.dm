@@ -1,5 +1,7 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-SUBSYSTEM_DEF(weather)
+var/datum/subsystem/weather/SSweather
+
+/datum/subsystem/weather
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
@@ -7,7 +9,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list()
 
-/datum/controller/subsystem/weather/fire()
+/datum/subsystem/weather/fire()
 	for(var/V in processing)
 		var/datum/weather/W = V
 		if(W.aesthetic)
@@ -29,13 +31,14 @@ SUBSYSTEM_DEF(weather)
 		eligible_zlevels -= Z
 		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 
-/datum/controller/subsystem/weather/Initialize(start_timeofday)
+/datum/subsystem/weather/Initialize(start_timeofday)
 	..()
+	NEW_SS_GLOBAL(SSweather)
 	for(var/V in subtypesof(/datum/weather))
 		var/datum/weather/W = V
 		new W	//weather->New will handle adding itself to the list
 
-/datum/controller/subsystem/weather/proc/run_weather(weather_name, Ztrait)
+/datum/subsystem/weather/proc/run_weather(weather_name, Ztrait)
 	if(!weather_name)
 		return
 	for(var/V in existing_weather)
@@ -43,5 +46,5 @@ SUBSYSTEM_DEF(weather)
 		if(W.name == weather_name && Ztrait == W.target_ztrait)
 			W.telegraph()
 
-/datum/controller/subsystem/weather/proc/make_z_eligible(zlevel)
+/datum/subsystem/weather/proc/make_z_eligible(zlevel)
 	eligible_zlevels |= zlevel

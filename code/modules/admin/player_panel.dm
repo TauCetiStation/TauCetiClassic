@@ -384,9 +384,9 @@
 	usr << browse(dat, "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
-		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
+		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
 		if (!SSshuttle.online)
@@ -398,10 +398,10 @@
 					dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
 				if(1)
 					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
-		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
-		if(SSticker.mode.syndicates.len)
+		dat += "<a href='?src=\ref[src];delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
+		if(ticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.syndicates)
+			for(var/datum/mind/N in ticker.mode.syndicates)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -423,22 +423,22 @@
 				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.head_revolutionaries.len || SSticker.mode.revolutionaries.len)
+		if(ticker.mode.head_revolutionaries.len || ticker.mode.revolutionaries.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/N in ticker.mode.head_revolutionaries)
 				var/mob/M = N.current
 				if(!M)
 					dat += "<tr><td><i>Head Revolutionary not found!</i></td></tr>"
 				else
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.revolutionaries)
+			for(var/datum/mind/N in ticker.mode.revolutionaries)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 			dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.get_living_heads())
+			for(var/datum/mind/N in ticker.mode.get_living_heads())
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -449,41 +449,41 @@
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.A_bosses.len || SSticker.mode.A_gang.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang: [(SSticker.mode.gang_points ? "[SSticker.mode.gang_points.A] Influence, " : "")][round((SSticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.A_bosses)
+		if(ticker.mode.A_bosses.len || ticker.mode.A_gang.len)
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang: [(ticker.mode.gang_points ? "[ticker.mode.gang_points.A] Influence, " : "")][round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.A_bosses)
 				var/mob/M = N.current
 				if(!M)
 					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.A_gang)
+			for(var/datum/mind/N in ticker.mode.A_gang)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.B_bosses.len || SSticker.mode.B_gang.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang: [(SSticker.mode.gang_points ? "[SSticker.mode.gang_points.B] Influence, " : "")][round((SSticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.B_bosses)
+		if(ticker.mode.B_bosses.len || ticker.mode.B_gang.len)
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang: [(ticker.mode.gang_points ? "[ticker.mode.gang_points.B] Influence, " : "")][round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.B_bosses)
 				var/mob/M = N.current
 				if(!M)
 					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.B_gang)
+			for(var/datum/mind/N in ticker.mode.B_gang)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.memes.len) //Меме
+		if(ticker.mode.memes.len) //Меме
 			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/meme in SSticker.mode.memes)
+			for(var/datum/mind/meme in ticker.mode.memes)
 				var/mob/living/parasite/meme/M = meme.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.key]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -501,9 +501,9 @@
 						dat += "<tr><td><i>Meme not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.shadows.len)
+		if(ticker.mode.shadows.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Shadowlings</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.shadows)
+			for(var/datum/mind/N in ticker.mode.shadows)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -516,21 +516,21 @@
 					thrall++
 			dat += "<tr><td>[thrall] of 15</td></tr>"
 			dat += "<br><tr><td><B>Ascended:</B></td><td></td></tr>"
-			dat += "<tr><td>[SSticker.mode.shadowling_ascended ? "Yes" : "No"]</td></tr>"
+			dat += "<tr><td>[ticker.mode.shadowling_ascended ? "Yes" : "No"]</td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.thralls.len)
+		if(ticker.mode.thralls.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Shadowling Thralls</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.thralls)
+			for(var/datum/mind/N in ticker.mode.thralls)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.abductors.len)
+		if(ticker.mode.abductors.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/abductor in SSticker.mode.abductors)
+			for(var/datum/mind/abductor in ticker.mode.abductors)
 				var/mob/M = abductor.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -540,10 +540,10 @@
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.infected_crew.len)
+		if(ticker.mode.infected_crew.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			dat += "<tr><td><i>Progress: [blobs.len]/[blobwincount]</i></td></tr>"
-			for(var/datum/mind/blob in SSticker.mode.infected_crew)
+			for(var/datum/mind/blob in ticker.mode.infected_crew)
 				var/mob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -555,30 +555,30 @@
 		if(borers.len)
 			dat += check_role_table("Borers", borers, src)
 
-		if(SSticker.mode.changelings.len)
-			dat += check_role_table("Changelings", SSticker.mode.changelings, src)
+		if(ticker.mode.changelings.len)
+			dat += check_role_table("Changelings", ticker.mode.changelings, src)
 
-		if(SSticker.mode.wizards.len)
-			dat += check_role_table("Wizards", SSticker.mode.wizards, src)
+		if(ticker.mode.wizards.len)
+			dat += check_role_table("Wizards", ticker.mode.wizards, src)
 
-		if(SSticker.mode.raiders.len)
-			var/datum/game_mode/heist/mode = SSticker.mode
+		if(ticker.mode.raiders.len)
+			var/datum/game_mode/heist/mode = ticker.mode
 			dat += "<br><table cellspacing=5><tr><td align=center><font color='green'><B>Heist:</font></B></td><td></td><td></td></tr>"
 			if(mode.raid_objectives && mode.raid_objectives.len)
 				for(var/datum/objective/heist/H in mode.raid_objectives)
 					//heist_get_shuttle_price()
 					dat += "<tr><td><B>[H.explanation_text]</B></td></tr>"
 					//dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
-			dat += check_role_table("Raiders", SSticker.mode.raiders, src)
+			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
-		if(SSticker.mode.ninjas.len)
-			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
+		if(ticker.mode.ninjas.len)
+			dat += check_role_table("Ninjas", ticker.mode.ninjas, src)
 
-		if(SSticker.mode.cult.len)
-			dat += check_role_table("Cultists", SSticker.mode.cult, src, 0)
+		if(ticker.mode.cult.len)
+			dat += check_role_table("Cultists", ticker.mode.cult, src, 0)
 
-		if(SSticker.mode.traitors.len)
-			dat += check_role_table("Traitors", SSticker.mode.traitors, src)
+		if(ticker.mode.traitors.len)
+			dat += check_role_table("Traitors", ticker.mode.traitors, src)
 
 		var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()
 		if(mutiny)

@@ -158,10 +158,7 @@
 
 	dat += "</b></center>"
 
-	var/datum/browser/popup = new(user, "arcade", "[name]", ntheme = CSS_THEME_LIGHT)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=arcade")
 	onclose(user, "arcade")
 
 /obj/machinery/computer/arcade/Topic(href, href_list)

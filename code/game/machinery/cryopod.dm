@@ -21,7 +21,7 @@ var/global/list/frozen_items = list()
 	var/mode = null
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
-	if(!SSticker)
+	if(!ticker)
 		return
 
 	var/dat
@@ -206,8 +206,8 @@ var/global/list/frozen_items = list()
 					qdel(occupant.mind.objectives)
 					occupant.mind.special_role = null
 				else
-					if(SSticker.mode.name == "AutoTraitor")
-						var/datum/game_mode/traitor/autotraitor/current_mode = SSticker.mode
+					if(ticker.mode.name == "AutoTraitor")
+						var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
 						current_mode.possible_traitors.Remove(occupant)*/
 
 			// Delete them from datacore.

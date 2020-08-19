@@ -88,10 +88,10 @@
 	..()
 	if ((!(A) || src != A.loc))	return
 
-	if(SSticker && SSticker.mode)
+	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
-		// if(SSticker.mode.name == "nuclear emergency")	return
+		// if(ticker.mode.name == "nuclear emergency")	return
 		if(!SSmapping.has_level(A.z))
 			return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))

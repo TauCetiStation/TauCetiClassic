@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(nanoui)
+var/datum/subsystem/nanoui/SSnano
+
+/datum/subsystem/nanoui
 	name = "NanoUI"
 
 	priority      = SS_PRIORITY_NANOUI
@@ -11,10 +13,13 @@ SUBSYSTEM_DEF(nanoui)
 	var/list/open_uis   = list() // A list of open UIs, grouped by src_object and ui_key.
 	var/list/processing = list() // A list of processing UIs, ungrouped.
 
-/datum/controller/subsystem/nanoui/stat_entry()
+/datum/subsystem/nanoui/New()
+	NEW_SS_GLOBAL(SSnano)
+
+/datum/subsystem/nanoui/stat_entry()
 	..("P:[processing.len]")
 
-/datum/controller/subsystem/nanoui/fire(resumed = 0)
+/datum/subsystem/nanoui/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)

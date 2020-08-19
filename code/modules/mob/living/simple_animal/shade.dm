@@ -186,11 +186,11 @@
 	set name = "View Crew Manifest"
 	set category = "Deity"
 
-	var/dat = data_core.get_manifest()
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
 
-	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
-	popup.set_content(dat)
-	popup.open()
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 /mob/living/simple_animal/shade/god/resist()
 	. = ..()

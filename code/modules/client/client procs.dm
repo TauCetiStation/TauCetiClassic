@@ -533,7 +533,7 @@ var/list/blacklisted_builds = list(
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
 
 /client/proc/generate_clickcatcher()
 	if(!void)

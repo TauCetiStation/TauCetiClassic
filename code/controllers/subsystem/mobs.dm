@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(mobs)
+var/datum/subsystem/mobs/SSmob
+
+/datum/subsystem/mobs
 	name = "Mobs"
 
 	priority      = SS_PRIORITY_MOBS
@@ -8,11 +10,15 @@ SUBSYSTEM_DEF(mobs)
 
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/mobs/stat_entry()
+/datum/subsystem/mobs/New()
+	NEW_SS_GLOBAL(SSmob)
+
+
+/datum/subsystem/mobs/stat_entry()
 	..("P:[mob_list.len]")
 
 
-/datum/controller/subsystem/mobs/fire(resumed = 0)
+/datum/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = mob_list.Copy()

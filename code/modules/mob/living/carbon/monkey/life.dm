@@ -15,7 +15,7 @@
 	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
-			if(SSmobs.times_fired%4==2)
+			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
 				breathe()
 			else //Still give containing object the chance to interact

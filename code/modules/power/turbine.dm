@@ -223,7 +223,7 @@
 		user << browse(null, "window=turbine")
 		return
 
-	var/t = "<TT><PRE>"
+	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
 
@@ -234,11 +234,7 @@
 	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	t += "</TT>"
-
-	var/datum/browser/popup = new(user, "turbine", "Gas Turbine Generator")
-	popup.set_content(t)
-	popup.open()
-
+	user << browse(t, "window=turbine")
 	onclose(user, "turbine")
 
 /obj/machinery/power/turbine/Topic(href, href_list)
@@ -280,7 +276,8 @@
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
-		dat += {"\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+		dat += {"<BR><B>Gas turbine remote control system</B><HR>
+		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
 		\nTurbine speed: [src.compressor.rpm]rpm<BR>
 		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
@@ -295,10 +292,7 @@
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	var/datum/browser/popup = new(user, "computer", "Gas turbine remote control system", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
 

@@ -40,11 +40,7 @@
 	if(src.occupant)
 		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 	user.set_machine(src)
-
-	var/datum/browser/popup = new(user, "implant")
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=implant")
 	onclose(user, "implant")
 
 

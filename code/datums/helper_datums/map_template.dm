@@ -53,7 +53,7 @@
 				continue
 
 	SSatoms.InitializeAtoms(atoms)
-	SSmachines.setup_template_powernets(cables)
+	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load(turf/T, centered = FALSE, initBounds = TRUE)

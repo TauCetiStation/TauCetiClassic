@@ -14,17 +14,13 @@
 	update_icon()
 
 /obj/machinery/media/receiver/boombox/ui_interact(mob/user)
-	var/dat = "<TT>"
+	var/dat = "<html><head><title>[src]</title></head><body><TT>"
 	dat += {"
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
 				"}
-	dat+={"</TT>"}
-
-	var/datum/browser/popup = new(user, "radio-recv", "[src]")
-	popup.set_content(dat)
-	popup.open()
-
+	dat+={"</TT></body></html>"}
+	user << browse(dat, "window=radio-recv")
 	onclose(user, "radio-recv")
 
 /obj/machinery/media/receiver/boombox/proc/update_on()

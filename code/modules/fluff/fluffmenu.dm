@@ -26,7 +26,7 @@ var/list/editing_item_oldname_list = list()
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
 	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
+	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
@@ -357,7 +357,6 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -419,7 +418,6 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>

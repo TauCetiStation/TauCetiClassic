@@ -50,7 +50,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 	else
 		set_ninja_objectives(new_ninja)
-	SSticker.mode.ninjas += new_ninja.mind
+	ticker.mode.ninjas += new_ninja.mind
 
 	return TRUE
 
@@ -78,7 +78,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
 
-	var/datum/game_mode/current_mode = SSticker.mode
+	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
 	var/list/xeno_list = list()//Aliens.
 	var/list/commando_list = list()//Commandos.

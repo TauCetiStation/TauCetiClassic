@@ -209,7 +209,7 @@
 		user << browse(null, "window=port_gen")
 		return
 
-	var/dat = ""
+	var/dat = text("<b>[name]</b><br>")
 	if (active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
@@ -221,11 +221,7 @@
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += text("Heat: [heat]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-
-	var/datum/browser/popup = new(user, "port_gen", src.name)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse("[dat]", "window=port_gen")
 	onclose(user, "port_gen")
 
 /obj/machinery/power/port_gen/pacman/is_operational_topic()

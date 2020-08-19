@@ -23,35 +23,46 @@
 	scanscrubbers()
 
 /obj/machinery/computer/area_atmos/ui_interact(mob/user)
-	var/area_atmos_css = {"
-	<style>
-	a.green:link{
-		color:#00CC00;
-		}
-	a.green:visited{
-		color:#00CC00;
-		}
-	a.green:hover{
-		color:#00CC00;
-		}
-	a.green:active{
-		color:#00CC00;
-		}
-	a.red:link{
-		color:#FF0000;
-		}
-	a.red:visited{
-		color:#FF0000;
-		}
-	a.red:hover{
-		color:#FF0000;
-		}
-	a.red:active{
-		color:#FF0000;
-		}
-	</style>"}
 	var/dat = {"
-			<center><h1></h1></center>
+	<html>
+		<head>
+			<style type="text/css">
+				a.green:link
+				{
+					color:#00CC00;
+				}
+				a.green:visited
+				{
+					color:#00CC00;
+				}
+				a.green:hover
+				{
+					color:#00CC00;
+				}
+				a.green:active
+				{
+					color:#00CC00;
+				}
+				a.red:link
+				{
+					color:#FF0000;
+				}
+				a.red:visited
+				{
+					color:#FF0000;
+				}
+				a.red:hover
+				{
+					color:#FF0000;
+				}
+				a.red:active
+				{
+					color:#FF0000;
+				}
+			</style>
+		</head>
+		<body>
+			<center><h1>Area Air Control</h1></center>
 			<font color="red">[status]</font><br>
 			<a href="?src=\ref[src];scan=1">Scan</a>
 			<table border="1" width="90%">"}
@@ -65,13 +76,9 @@
 	dat += {"
 			</table><br>
 			<i>[zone]</i>
-			"}
-
-	var/datum/browser/popup = new(user, "miningshuttle", "Area Air Control", ntheme = CSS_THEME_LIGHT)
-	popup.add_head_content(area_atmos_css)
-	popup.set_content(dat)
-	popup.open()
-
+		</body>
+	</html>"}
+	user << browse("[dat]", "window=miningshuttle;size=400x400")
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)

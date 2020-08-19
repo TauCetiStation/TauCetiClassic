@@ -138,10 +138,7 @@
 				<a href='?src=\ref[src];node2_c=0.1'>+</a>
 				"}
 
-	var/datum/browser/popup = new(user, "atmo_mixer", "[src.name] control")
-	popup.set_content("<TT>[dat]</TT>")
-	popup.open()
-
+	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
 	onclose(user, "atmo_mixer")
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)

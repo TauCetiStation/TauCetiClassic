@@ -126,10 +126,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>
 		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	var/datum/browser/popup = new(user, "computer", null, 575, 450)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
@@ -139,7 +136,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
-		if(SSticker && (istype(SSticker.mode,/datum/game_mode/heist)))
+		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
 			if(!warning)
 				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
 				warning = TRUE

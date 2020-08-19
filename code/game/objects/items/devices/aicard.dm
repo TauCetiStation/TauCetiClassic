@@ -29,7 +29,7 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT>"
+	var/dat = "<TT><B>Intelicard</B><BR>"
 	var/laws
 	for(var/mob/living/silicon/ai/A in src)
 		dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
@@ -73,11 +73,7 @@
 			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-
-	var/datum/browser/popup = new(user, "aicard", "Intelicard")
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
 	return
 

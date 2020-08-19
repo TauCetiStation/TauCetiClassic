@@ -84,7 +84,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = "<TT>Amount Left: [src.amount]<br>"
+	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.amount)
 	for(var/i=1;i<=recipe_list.len,i++)
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -133,12 +133,8 @@
 				if (!(max_multiplier in multipliers))
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
-	t1 += "</TT>"
-
-	var/datum/browser/popup = new(user, "stack", "Constructions from [src]")
-	popup.set_content(t1)
-	popup.open()
-
+	t1 += "</TT></body></HTML>"
+	user << browse(t1, "window=stack")
 	onclose(user, "stack")
 	return
 

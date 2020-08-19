@@ -40,7 +40,7 @@
 		if (istype(C,/obj/item/weapon/coin/mythril))
 			amt_hydrogen++;
 
-	var/dat = ""
+	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
 		dat += text("Gold coins: [amt_gold] <A href='?src=\ref[src];remove=gold'>Remove one</A><br>")
 	if (amt_silver)
@@ -59,10 +59,7 @@
 		dat += text("Platinum coins: [amt_platinum] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
 	if (amt_hydrogen)
 		dat += text("Mythril coins: [amt_hydrogen] <A href='?src=\ref[src];remove=hydrogen'>Remove one</A><br>")
-
-	var/datum/browser/popup = new(user, "moneybag", "The contents of the moneybag reveal...")
-	popup.set_content(dat)
-	popup.open()
+	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/coin))

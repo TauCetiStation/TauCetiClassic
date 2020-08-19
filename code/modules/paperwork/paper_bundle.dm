@@ -58,7 +58,7 @@
 
 	else
 		if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
-			usr << browse(null, "window=[name]") //Closes the dialog
+			usr << browse("", "window=[name]") //Closes the dialog
 		P = src[page]
 		P.attackby(I, user, params)
 

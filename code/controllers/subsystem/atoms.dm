@@ -3,7 +3,9 @@
 #define BAD_INIT_SLEPT       4
 #define BAD_INIT_NO_HINT     8
 
-SUBSYSTEM_DEF(atoms)
+var/datum/subsystem/atoms/SSatoms
+
+/datum/subsystem/atoms
 	name = "Atoms"
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE
@@ -16,7 +18,10 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
-/datum/controller/subsystem/atoms/Initialize(timeofday)
+/datum/subsystem/atoms/New()
+	NEW_SS_GLOBAL(SSatoms)
+
+/datum/subsystem/atoms/Initialize(timeofday)
 	global_announcer = new(null) // Doh...
 	setupGenetics() // to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	initialized = INITIALIZATION_INNEW_MAPLOAD
@@ -29,7 +34,7 @@ SUBSYSTEM_DEF(atoms)
 	log_initialization(msg)
 	return time
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
+/datum/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
@@ -71,7 +76,7 @@ SUBSYSTEM_DEF(atoms)
 		. = created_atoms + atoms
 		created_atoms = null
 
-/datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
+/datum/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
 	if(QDELING(A))
 		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
@@ -106,21 +111,21 @@ SUBSYSTEM_DEF(atoms)
 
 	return qdeleted || QDELETED(A)
 
-/datum/controller/subsystem/atoms/proc/map_loader_begin()
+/datum/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
 	initialized = INITIALIZATION_INSSATOMS
 
-/datum/controller/subsystem/atoms/proc/map_loader_stop()
+/datum/subsystem/atoms/proc/map_loader_stop()
 	initialized = old_initialized
 
-/datum/controller/subsystem/atoms/Recover()
+/datum/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
 	old_initialized = SSatoms.old_initialized
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
-/datum/controller/subsystem/atoms/proc/InitLog()
+/datum/subsystem/atoms/proc/InitLog()
 	. = ""
 	for(var/path in BadInitializeCalls)
 		. += "Path : [path] \n"

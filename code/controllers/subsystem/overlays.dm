@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(overlays)
+var/datum/subsystem/overlays/SSoverlays
+
+/datum/subsystem/overlays
 	name = "Overlay"
 	flags = SS_TICKER
 	wait = SS_WAIT_OVERLAYS
@@ -10,19 +12,22 @@ SUBSYSTEM_DEF(overlays)
 	var/list/overlay_icon_state_caches = list()
 	var/list/overlay_icon_cache = list()
 
-/datum/controller/subsystem/overlays/Initialize()
+/datum/subsystem/overlays/New()
+	NEW_SS_GLOBAL(SSoverlays)
+
+/datum/subsystem/overlays/Initialize()
 	fire(mc_check = FALSE)
 	return ..()
 
-/datum/controller/subsystem/overlays/stat_entry()
+/datum/subsystem/overlays/stat_entry()
 	..("Ov:[length(queue)]")
 
-/datum/controller/subsystem/overlays/Recover()
+/datum/subsystem/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
-/datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
+/datum/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/queue = src.queue
 	var/static/count = 0
 	if (count)

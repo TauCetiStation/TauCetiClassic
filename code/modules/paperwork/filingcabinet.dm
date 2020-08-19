@@ -67,10 +67,7 @@
 		var/obj/item/P = contents[i]
 		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
-
-	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)
-	popup.set_content(dat)
-	popup.open()
+	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
 	return
 
@@ -93,7 +90,7 @@
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
-		usr << browse(null, "window=filingcabinet") // Close the menu
+		usr << browse("", "window=filingcabinet") // Close the menu
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]

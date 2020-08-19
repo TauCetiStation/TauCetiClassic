@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(xenoarch)
+var/datum/subsystem/xenoarch/SSxenoarch
+
+/datum/subsystem/xenoarch
 	name = "Xenoarch"
 
 	init_order = SS_INIT_XENOARCH
@@ -47,7 +49,11 @@ SUBSYSTEM_DEF(xenoarch)
 		/obj/item/seeds/blackberry
 	)
 
-/datum/controller/subsystem/xenoarch/Initialize(timeofday)
+
+/datum/subsystem/xenoarch/New()
+	NEW_SS_GLOBAL(SSxenoarch)
+
+/datum/subsystem/xenoarch/Initialize(timeofday)
 	// Local lists for sonic speed.
 	var/list/turfs_to_process        = list()
 	var/list/artifact_spawning_turfs = list()
@@ -150,5 +156,5 @@ SUBSYSTEM_DEF(xenoarch)
 
 	..()
 
-/datum/controller/subsystem/xenoarch/Recover()
+/datum/subsystem/xenoarch/Recover()
 	flags |= SS_NO_INIT

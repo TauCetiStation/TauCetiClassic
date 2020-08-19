@@ -37,10 +37,7 @@
 				if (2)
 					dat += "<font color=red>[alarm]</font>"
 			dat += "</a><br/>"
-
-	var/datum/browser/popup = new(user, "atmoscontrol")
-	popup.set_content(dat)
-	popup.open()
+	user << browse(dat, "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/emag_act(mob/user)
 	if(emagged)

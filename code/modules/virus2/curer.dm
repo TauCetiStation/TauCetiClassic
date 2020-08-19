@@ -60,10 +60,7 @@
 	else
 		dat = "Please insert a container."
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
 /obj/machinery/computer/curer/process()

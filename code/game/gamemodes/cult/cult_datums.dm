@@ -206,7 +206,7 @@ var/list/cult_runes = list()
 				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
 
 			if(passed)
-				SSticker.mode.add_cultist(M.mind)
+				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
@@ -230,16 +230,16 @@ var/list/cult_runes = list()
 	if(length(acolytes) < 9)
 		return fizzle(user)
 
-	if(SSticker.mode.nar_sie_has_risen)
+	if(ticker.mode.nar_sie_has_risen)
 		for(var/mob/living/carbon/C in acolytes)
 			to_chat(C, "<font size='4'><span class='danger'>I am already here!</span></font>")
 			return
-	if(!istype(SSticker.mode, /datum/game_mode/cult))
+	if(!istype(ticker.mode, /datum/game_mode/cult))
 		return
-	var/datum/game_mode/cult/cur_mode = SSticker.mode
+	var/datum/game_mode/cult/cur_mode = ticker.mode
 	for(var/objective in cur_mode.objectives)
 		if(objective == "eldergod")
-			SSticker.mode.nar_sie_has_risen = TRUE
+			ticker.mode.nar_sie_has_risen = TRUE
 			cur_mode.eldergod = FALSE
 			new /obj/singularity/narsie/large(get_turf(holder))
 			return
@@ -365,8 +365,8 @@ var/list/cult_runes = list()
 	var/mob/living/carbon/human/body_to_sacrifice
 
 	var/datum/mind/sacrifice_target
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
+	if(istype(ticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/cur_mode = ticker.mode
 		sacrifice_target = cur_mode.sacrifice_target
 
 	for(var/mob/living/carbon/human/M in holder.loc)
@@ -400,7 +400,7 @@ var/list/cult_runes = list()
 
 	corpse_to_raise.revive()
 	playsound(holder, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
-	SSticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
+	ticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
 
 
 	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
@@ -573,7 +573,7 @@ var/list/cult_runes = list()
 	D.g_eyes = 200
 	D.underwear = 0
 	D.key = ghost.key
-	SSticker.mode.add_cultist(D.mind)
+	ticker.mode.add_cultist(D.mind)
 	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
@@ -638,7 +638,7 @@ var/list/cult_runes = list()
 
 /datum/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in ticker.mode.cult)
 		if(iscarbon(H.current))
 			cultists += H.current
 	var/list/acolytes = nearest_cultists()
@@ -743,8 +743,8 @@ var/list/cult_runes = list()
 	var/list/victims = list()
 	var/datum/mind/sacrifice_target
 
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
+	if(istype(ticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/cur_mode = ticker.mode
 		sacrifice_target = cur_mode.sacrifice_target
 
 	for(var/target in holder.loc)
@@ -772,7 +772,7 @@ var/list/cult_runes = list()
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
-			var/datum/game_mode/cult/cur_mode = SSticker.mode // we checked our mode earlier
+			var/datum/game_mode/cult/cur_mode = ticker.mode // we checked our mode earlier
 			cur_mode.sacrificed += H.mind
 			if(isrobot(H))
 				H.dust() //To prevent the MMI from remaining
@@ -784,7 +784,7 @@ var/list/cult_runes = list()
 			var/prob_divider = max(1 + H.stat, 2)
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>")
 			if(prob(victims[H] / prob_divider))
-				SSticker.mode.grant_runeword(user)
+				ticker.mode.grant_runeword(user)
 			else
 				to_chat(user, "<span class='cult'>However, this soul was not enough to gain His favor.</span>")
 
@@ -822,7 +822,7 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in ticker.mode.cult)
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
 
@@ -837,7 +837,7 @@ var/list/cult_runes = list()
 
 /datum/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in ticker.mode.cult)
 		if (iscarbon(H.current))
 			cultists += H.current
 
@@ -1028,7 +1028,7 @@ var/list/cult_runes = list()
 			user.mind.transfer_to(target)
 			ghost.mind.transfer_to(user)
 			user.key = ghost.key
-			SSticker.mode.update_all_cult_icons()
+			ticker.mode.update_all_cult_icons()
 			brainswapping = FALSE
 			return
 

@@ -47,7 +47,7 @@
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class='warning'>You try to analyze the floor's vitals!</span>")
 		var/message = ""
 		if(!output_to_chat)
-			message += "<title>floor's scan results</title>"
+			message += "<HTML><head><title>floor's scan results</title></head><BODY>"
 
 		message += "<span class='notice'>Analyzing Results for The floor:<br>&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: 0-0-0-0</span><br>"
@@ -55,10 +55,8 @@
 		message += "<span class='notice'>Body Temperature: ???</span><br>"
 
 		if(!output_to_chat)
-			var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
-			popup.set_content(message)
-			popup.open()
-
+			message += "</BODY></HTML>"
+			user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, message)
@@ -68,7 +66,7 @@
 
 	var/message = ""
 	if(!output_to_chat)
-		message += "<title>[M.name]'s scan results</title>"
+		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
 
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
@@ -114,10 +112,7 @@
 	message += "<span class='notice'>Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 
 	if(!output_to_chat)
-		var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
-		popup.set_content(message)
-		popup.open()
-
+		user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
 		onclose(user, "[M.name]_scan_report")
 	else
 		to_chat(user, message)

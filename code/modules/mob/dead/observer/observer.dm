@@ -279,8 +279,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(SSticker.mode && SSticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = SSticker.mode
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
 			if(isnum(mode.A_timer))
 				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 			if(isnum(mode.B_timer))
@@ -540,7 +540,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 		return
 
-	if(!SSticker.mode)
+	if(!ticker.mode)
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
@@ -565,11 +565,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
-	var/dat = data_core.get_manifest()
+	var/dat
+	dat += "<h4>Crew Manifest</h4>"
+	dat += data_core.get_manifest()
 
-	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
-	popup.set_content(dat)
-	popup.open()
+	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
@@ -589,8 +589,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0 //something is terribly wrong
 
 	var/ghosts_can_write
-	if(SSticker.mode.name == "cult")
-		var/datum/game_mode/cult/C = SSticker.mode
+	if(ticker.mode.name == "cult")
+		var/datum/game_mode/cult/C = ticker.mode
 		if(C.cult.len > config.cult_ghostwriter_req_cultists)
 			ghosts_can_write = 1
 

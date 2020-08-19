@@ -1,3 +1,5 @@
+var/datum/subsystem/shuttle/SSshuttle
+
 #define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
@@ -11,7 +13,7 @@
 #define SUPPLY_STATION_AREATYPE /area/shuttle/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/shuttle/supply/velocity	//Type of the supply shuttle area for dock
 
-SUBSYSTEM_DEF(shuttle)
+/datum/subsystem/shuttle
 	name = "Shuttles"
 
 	init_order = SS_INIT_SHUTTLES
@@ -56,7 +58,10 @@ SUBSYSTEM_DEF(shuttle)
 
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
-/datum/controller/subsystem/shuttle/Initialize(timeofday)
+/datum/subsystem/shuttle/New()
+	NEW_SS_GLOBAL(SSshuttle)
+
+/datum/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
 
@@ -66,7 +71,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	..()
 
-/datum/controller/subsystem/shuttle/fire()
+/datum/subsystem/shuttle/fire()
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
@@ -366,7 +371,7 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			return 1
 
-/datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
+/datum/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
 		if(M.client)
 			if(M.buckled || issilicon(M))
@@ -401,7 +406,7 @@ SUBSYSTEM_DEF(shuttle)
 					step(L, fall_direction)
 		CHECK_TICK
 
-/datum/controller/subsystem/shuttle/proc/dock_act(area_type, door_tag)
+/datum/subsystem/shuttle/proc/dock_act(area_type, door_tag)
 	//todo post_signal?
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
@@ -415,7 +420,7 @@ SUBSYSTEM_DEF(shuttle)
 				D.locked = 0
 				D.open()
 
-/datum/controller/subsystem/shuttle/proc/undock_act(area_type, door_tag)
+/datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
 	//todo post_signal?
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
@@ -429,7 +434,7 @@ SUBSYSTEM_DEF(shuttle)
 				D.close()
 				D.locked = 1
 
-/datum/controller/subsystem/shuttle/proc/send()
+/datum/subsystem/shuttle/proc/send()
 	var/area/from
 	var/area/dest
 	var/area/the_shuttles_way
@@ -456,7 +461,7 @@ SUBSYSTEM_DEF(shuttle)
 	from.move_contents_to(dest)
 
 //Check whether the shuttle is allowed to move
-/datum/controller/subsystem/shuttle/proc/can_move()
+/datum/subsystem/shuttle/proc/can_move()
 	if(moving) return 0
 	if(!at_station) return 1
 
@@ -469,7 +474,7 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
-/datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
+/datum/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
 	if(istype(A,/mob/living))
 		return 1
 	if(istype(A,/obj/item/weapon/disk/nuclear))
@@ -485,7 +490,7 @@ SUBSYSTEM_DEF(shuttle)
 			return 1
 
 	//Sellin
-/datum/controller/subsystem/shuttle/proc/sell()
+/datum/subsystem/shuttle/proc/sell()
 	var/shuttle_at
 	if(at_station)
 		shuttle_at = SUPPLY_STATION_AREATYPE
@@ -525,7 +530,7 @@ SUBSYSTEM_DEF(shuttle)
 
 
 //Buyin
-/datum/controller/subsystem/shuttle/proc/buy()
+/datum/subsystem/shuttle/proc/buy()
 	if(!shoppinglist.len)
 		return
 
@@ -576,7 +581,7 @@ SUBSYSTEM_DEF(shuttle)
 	return
 
 
-/datum/controller/subsystem/shuttle/proc/incall(coeff = 1)
+/datum/subsystem/shuttle/proc/incall(coeff = 1)
 	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 		return
 	var/obj/machinery/status_display/S = status_display_list[1]
@@ -594,17 +599,17 @@ SUBSYSTEM_DEF(shuttle)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
 
 
-/datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()
+/datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
-	if(SSticker && istype(SSticker.mode,/datum/game_mode/mutiny))
+	if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
 		return SHUTTLEARRIVETIME * 2
 
 	return SHUTTLEARRIVETIME
 
-/datum/controller/subsystem/shuttle/proc/shuttlealert(X)
+/datum/subsystem/shuttle/proc/shuttlealert(X)
 	alert = X
 
-/datum/controller/subsystem/shuttle/proc/recall()
+/datum/subsystem/shuttle/proc/recall()
 	if(direction == 1)
 		var/timeleft = timeleft()
 		for(var/obj/machinery/status_display/Screen in status_display_list)
@@ -629,7 +634,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	// returns the time (in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
-/datum/controller/subsystem/shuttle/proc/timeleft()
+/datum/subsystem/shuttle/proc/timeleft()
 	if(online)
 		var/timeleft = round((endtime - world.timeofday)/10 ,1)
 		if(direction == 1 || direction == 2)
@@ -640,13 +645,13 @@ SUBSYSTEM_DEF(shuttle)
 		return get_shuttle_arrive_time()
 
 	// sets the time left to a given delay (in seconds)
-/datum/controller/subsystem/shuttle/proc/settimeleft(delay)
+/datum/subsystem/shuttle/proc/settimeleft(delay)
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
 	// 1 = towards SS13, -1 = back to centcom
-/datum/controller/subsystem/shuttle/proc/setdirection(dirn)
+/datum/subsystem/shuttle/proc/setdirection(dirn)
 	if(direction == dirn)
 		return
 	direction = dirn

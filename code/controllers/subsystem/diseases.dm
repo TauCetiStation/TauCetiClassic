@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(diseases)
+var/datum/subsystem/diseases/SSdisease
+
+/datum/subsystem/diseases
 	name = "Diseases"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
@@ -6,10 +8,13 @@ SUBSYSTEM_DEF(diseases)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/diseases/stat_entry(msg)
+/datum/subsystem/diseases/New()
+	NEW_SS_GLOBAL(SSdisease)
+
+/datum/subsystem/diseases/stat_entry(msg)
 	..("P:[processing.len]")
 
-/datum/controller/subsystem/diseases/fire(resumed = 0)
+/datum/subsystem/diseases/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

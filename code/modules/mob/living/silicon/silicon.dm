@@ -111,14 +111,11 @@
 // this function displays the stations manifest in a separate window
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
+	dat += "<h4>Crew Manifest</h4>"
 	if(data_core)
 		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
-
-	var/datum/browser/popup = new(src, "airoster", "Crew Manifest")
-	popup.set_content(dat)
-	popup.open()
-
+	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
 //can't inject synths
@@ -149,7 +146,7 @@
 	set category = "IC"
 	set src = usr
 
-	var/dat = ""
+	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
@@ -157,10 +154,7 @@
 			dat += "(:[l_key])"
 		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
 
-	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
-	popup.set_content(dat)
-	popup.open()
-
+	src << browse(dat, "window=checklanguage")
 	return
 
 /mob/living/silicon/proc/toggle_sensor_mode()

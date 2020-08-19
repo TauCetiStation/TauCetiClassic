@@ -144,7 +144,7 @@ Class Procs:
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
 	else
-		START_PROCESSING(SSmachines, src)
+		START_PROCESSING(SSmachine, src)
 
 	power_change()
 	update_power_use()
@@ -159,7 +159,7 @@ Class Procs:
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		STOP_PROCESSING(SSmachines, src)
+		STOP_PROCESSING(SSmachine, src)
 
 	dropContents()
 	return ..()

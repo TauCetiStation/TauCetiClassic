@@ -22,7 +22,7 @@
 	if(H.getBrainLoss() >= 60)
 		return
 
-	var/t1 = ""
+	var/t1 = text("<B>Access control</B><br>\n")
 
 
 	if (last_configurator)
@@ -53,10 +53,7 @@
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
-	var/datum/browser/popup = new(user, "airlock_electronics", "Access control")
-	popup.set_content(t1)
-	popup.open()
-
+	user << browse(t1, "window=airlock_electronics")
 	onclose(user, "airlock")
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)

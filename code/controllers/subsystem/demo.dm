@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(demo)
+var/datum/subsystem/demo/SSdemo
+
+/datum/subsystem/demo
 	name = "Demo"
 	flags = SS_TICKER
 	wait = SS_WAIT_DEMO
@@ -23,7 +25,10 @@ SUBSYSTEM_DEF(demo)
 	var/last_queued = 0
 	var/last_completed = 0
 
-/datum/controller/subsystem/demo/proc/write_time()
+/datum/subsystem/demo/New()
+	NEW_SS_GLOBAL(SSdemo)
+
+/datum/subsystem/demo/proc/write_time()
 	if(!config.record_replays)
 		return
 	var/new_time = world.time
@@ -34,7 +39,7 @@ SUBSYSTEM_DEF(demo)
 			pre_init_lines += "time [new_time]"
 	last_written_time = new_time
 
-/datum/controller/subsystem/demo/proc/write_event_line(line)
+/datum/subsystem/demo/proc/write_event_line(line)
 	if(!config.record_replays)
 		return
 	write_time()
@@ -43,7 +48,7 @@ SUBSYSTEM_DEF(demo)
 	else
 		pre_init_lines += line
 
-/datum/controller/subsystem/demo/proc/write_chat(target, text)
+/datum/subsystem/demo/proc/write_chat(target, text)
 	if(!config.record_replays)
 		return
 	var/target_text = ""
@@ -67,7 +72,7 @@ SUBSYSTEM_DEF(demo)
 	write_event_line("chat [target_text] [last_chat_message == text ? "=" : json_encode(text)]")
 	last_chat_message = text
 
-/datum/controller/subsystem/demo/Initialize()
+/datum/subsystem/demo/Initialize()
 	if(!config.record_replays)
 		can_fire = FALSE
 		return ..()
@@ -154,7 +159,7 @@ SUBSYSTEM_DEF(demo)
 
 	return ..()
 
-/datum/controller/subsystem/demo/fire()
+/datum/subsystem/demo/fire()
 	if(!src.marked_new.len && !src.marked_dirty.len && !src.marked_turfs.len && !src.del_list.len)
 		return // nothing to do
 
@@ -245,7 +250,7 @@ SUBSYSTEM_DEF(demo)
 	if(canceled)
 		return;
 
-/datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
+/datum/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
 	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
@@ -256,7 +261,7 @@ SUBSYSTEM_DEF(demo)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
+/datum/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -401,7 +406,7 @@ SUBSYSTEM_DEF(demo)
 			return diffed_string
 	return undiffed_string
 
-/datum/controller/subsystem/demo/stat_entry(msg)
+/datum/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"
 	msg += "Trf:[marked_turfs.len]|"
 	msg += "New:[marked_new.len]|"
@@ -410,12 +415,12 @@ SUBSYSTEM_DEF(demo)
 	msg += "}"
 	..(msg)
 
-/datum/controller/subsystem/demo/proc/mark_turf(turf/T)
+/datum/subsystem/demo/proc/mark_turf(turf/T)
 	if(!isturf(T))
 		return
 	marked_turfs[T] = TRUE
 
-/datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
+/datum/subsystem/demo/proc/mark_new(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(QDELETED(M))
@@ -425,7 +430,7 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= M
 
 // I can't wait for when TG ports this and they make this a #define macro.
-/datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
+/datum/subsystem/demo/proc/mark_dirty(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(QDELETED(M))
@@ -433,7 +438,7 @@ SUBSYSTEM_DEF(demo)
 	if(!marked_new[M])
 		marked_dirty[M] = TRUE
 
-/datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+/datum/subsystem/demo/proc/mark_destroyed(atom/movable/M)
 	if(!isobj(M) && !ismob(M))
 		return
 	if(marked_new[M])

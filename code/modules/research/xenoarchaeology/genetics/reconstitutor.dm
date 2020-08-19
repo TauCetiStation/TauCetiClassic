@@ -93,7 +93,7 @@
 		user.unset_machine(src)
 		return
 
-	var/dat = ""
+	var/dat = "<B>Garland Corp genetic reconstitutor</B><BR>"
 	dat += "<HR>"
 	if(!pod1)
 		pod1 = locate() in orange(1, src)
@@ -164,11 +164,7 @@
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
-
-	var/datum/browser/popup = new(user, "reconstitutor", "Garland Corp genetic reconstitutor", 600, 500)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=reconstitutor;size=600x500")
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)

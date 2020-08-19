@@ -109,10 +109,7 @@ var/global/vs_control/vsc = new
 				vw_name = vars["[ch]_NAME"]
 		dat += "<b>[vw_name] = [vw]</b> <A href='?src=\ref[src];changevar=[ch]'>\[Change\]</A><br>"
 		dat += "<i>[vw_desc]</i><br><br>"
-
-	var/datum/browser/popup = new(user, "settings")
-	popup.set_content(dat)
-	popup.open()
+	user << browse(dat,"window=settings")
 
 /vs_control/Topic(href,href_list)
 	if("changevar" in href_list)

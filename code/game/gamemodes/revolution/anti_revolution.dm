@@ -89,7 +89,7 @@
 	checkwin_counter++
 	if(checkwin_counter >= 5)
 		if(!finished)
-			SSticker.mode.check_win()
+			ticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 
@@ -211,12 +211,12 @@
 	set category = "IC"
 	set name = "Resign From Head Position"
 
-	if(!istype(SSticker.mode, /datum/game_mode/anti_revolution))
+	if(!istype(ticker.mode, /datum/game_mode/anti_revolution))
 		return
 
-	SSticker.mode:heads -= src.mind
+	ticker.mode:heads -= src.mind
 	src.mind.objectives = list()
-	SSticker.mode.modePlayer -= src.mind
+	ticker.mode.modePlayer -= src.mind
 	src.mind.special_role = null
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition

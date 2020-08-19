@@ -110,7 +110,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( SSticker ))
+	if (!( ticker ))
 		return
 	var/mob/M = AM
 	if(!M.restrained())

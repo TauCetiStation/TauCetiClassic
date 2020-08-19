@@ -100,7 +100,7 @@
 						emote(pick(emote_hear),2)
 
 	if (stat != DEAD && !IS_IN_STASIS(src))
-		if(SSmobs.times_fired%4==2)
+		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
 		else if(isobj(loc)) //Still give containing object the chance to interact
@@ -621,7 +621,7 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(SSticker.mode)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(ticker.mode)
+		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

@@ -281,14 +281,14 @@
  */
 
 /obj/machinery/door/proc/open_checks(forced)
-	if(!operating && SSticker)
+	if(!operating && ticker)
 		if(!forced)
 			return normal_open_checks()
 		return TRUE
 	return FALSE
 
 /obj/machinery/door/proc/close_checks(forced)
-	if(!operating && SSticker)
+	if(!operating && ticker)
 		if(!forced)
 			return normal_close_checks()
 		return TRUE

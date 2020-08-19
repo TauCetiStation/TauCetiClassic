@@ -375,7 +375,7 @@
 		user << browse(null, "window=solcon")
 		return
 
-	var/t = "<TT><PRE>"
+	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
 	t += "Station Rotational Period: [60/abs(SSsun.rate)] minutes<BR>"
 	t += "Station Rotational Direction: [SSsun.rate<0 ? "CCW" : "CW"]<BR>"
@@ -399,11 +399,7 @@
 		if(1)
 			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
-	popup.set_content(t)
-	popup.open()
-
+	user << browse(t, "window=solcon")
 	onclose(user, "solcon")
 
 

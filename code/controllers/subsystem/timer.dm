@@ -1,7 +1,8 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
+var/datum/subsystem/timer/SStimer
 
-SUBSYSTEM_DEF(timer)
+/datum/subsystem/timer
 	name = "Timer"
 
 	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
@@ -24,18 +25,19 @@ SUBSYSTEM_DEF(timer)
 	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
 
 
-/datum/controller/subsystem/timer/PreInit()
+/datum/subsystem/timer/New()
 	processing        = list()
 	hashes            = list()
 	bucket_list       = list()
 	timer_id_dict     = list()
 	clienttime_timers = list()
+	NEW_SS_GLOBAL(SStimer)
 
 
-/datum/controller/subsystem/timer/stat_entry(msg)
+/datum/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
-/datum/controller/subsystem/timer/fire(resumed = FALSE)
+/datum/subsystem/timer/fire(resumed = FALSE)
 	if (length(clienttime_timers))
 		for (var/thing in clienttime_timers)
 			var/datum/timedevent/ctime_timer = thing
@@ -104,7 +106,7 @@ SUBSYSTEM_DEF(timer)
 	spent.len = 0
 
 
-/datum/controller/subsystem/timer/proc/shift_buckets()
+/datum/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
 	var/list/alltimers = list()
 	//collect the timers currently in the bucket
@@ -170,7 +172,7 @@ SUBSYSTEM_DEF(timer)
 	processing = (alltimers - timers_to_remove)
 
 
-/datum/controller/subsystem/timer/Recover()
+/datum/subsystem/timer/Recover()
 	processing |= SStimer.processing
 	hashes |= SStimer.hashes
 	timer_id_dict |= SStimer.timer_id_dict

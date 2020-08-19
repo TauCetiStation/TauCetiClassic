@@ -1,25 +1,29 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-SUBSYSTEM_DEF(junkyard)
+var/datum/subsystem/junkyard/SSjunkyard
+
+/datum/subsystem/junkyard
 	name = "Junkyard"
 	flags = SS_NO_FIRE
 	var/list/junk = list()
 	var/junkyard_initialised = 0
 
-/datum/controller/subsystem/junkyard/Initialize(timeofday)
+/datum/subsystem/junkyard/Initialize(timeofday)
 	..()
+
+	NEW_SS_GLOBAL(SSjunkyard)
 	load_stats()
 
-/datum/controller/subsystem/junkyard/proc/save_stats()
+/datum/subsystem/junkyard/proc/save_stats()
 	var/savefile/S = new /savefile("data/junkyard/stats.sav")
 	S["junk"]	<< junk
 
-/datum/controller/subsystem/junkyard/proc/load_stats()
+/datum/subsystem/junkyard/proc/load_stats()
 	var/savefile/S = new /savefile("data/junkyard/stats.sav")
 	S["junk"] 	>> junk
 	if(isnull(junk))
 		junk = new/list()
 
-/datum/controller/subsystem/junkyard/proc/populate_junkyard()
+/datum/subsystem/junkyard/proc/populate_junkyard()
 	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
 	if(!zlevel)
 		return
@@ -36,7 +40,7 @@ SUBSYSTEM_DEF(junkyard)
 	junkyard_initialised = 1
 	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 
-/datum/controller/subsystem/junkyard/proc/add_junk_to_stats(junktype)
+/datum/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)
 		return
 	if(isnull(junk[junktype]))

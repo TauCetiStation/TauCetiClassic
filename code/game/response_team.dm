@@ -15,10 +15,10 @@ var/can_call_ert
 	if(!holder)
 		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
 		return
-	if(!SSticker)
+	if(!ticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(SSticker.current_state == 1)
+	if(ticker.current_state == 1)
 		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 	if(send_emergency_team)
@@ -231,8 +231,8 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
-	if(!(M.mind in SSticker.minds))
-		SSticker.minds += M.mind//Adds them to regular mind list.
+	if(!(M.mind in ticker.minds))
+		ticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
 	return M

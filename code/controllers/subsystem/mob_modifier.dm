@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(mob_modifier)
+var/datum/subsystem/mob_modifier/SSmob_modifier
+
+/datum/subsystem/mob_modifier
 	name = "Mob Modifiers"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
@@ -6,10 +8,13 @@ SUBSYSTEM_DEF(mob_modifier)
 	var/list/processing = list()
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/mob_modifier/stat_entry()
+/datum/subsystem/mob_modifier/New()
+	NEW_SS_GLOBAL(SSmob_modifier)
+
+/datum/subsystem/mob_modifier/stat_entry()
 	..("P:[processing.len]")
 
-/datum/controller/subsystem/mob_modifier/fire(resumed = 0)
+/datum/subsystem/mob_modifier/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -27,6 +32,6 @@ SUBSYSTEM_DEF(mob_modifier)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/mob_modifier/Recover()
+/datum/subsystem/mob_modifier/Recover()
 	if(istype(SSmob_modifier.processing))
 		processing = SSmob_modifier.processing

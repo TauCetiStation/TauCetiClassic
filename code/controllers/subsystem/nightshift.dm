@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(nightshift)
+var/datum/subsystem/nightshift/SSnightshift
+
+/datum/subsystem/nightshift
 	name = "Night shift"
 	init_order = SS_INIT_NIGHTSHIFT
 	wait = SS_WAIT_NIGHTSHIFT
@@ -10,16 +12,20 @@ SUBSYSTEM_DEF(nightshift)
 	var/nightshift_end_time = 8
 	var/high_security_mode = FALSE
 
-/datum/controller/subsystem/nightshift/Initialize(timeofday)
+
+/datum/subsystem/nightshift/New()
+	NEW_SS_GLOBAL(SSnightshift)
+
+/datum/subsystem/nightshift/Initialize(timeofday)
 	if(config.nightshift)
 		check_nightshift()
 	..()
 
-/datum/controller/subsystem/nightshift/fire(resumed = FALSE)
+/datum/subsystem/nightshift/fire(resumed = FALSE)
 	if(config.nightshift)
 		check_nightshift()
 
-/datum/controller/subsystem/nightshift/proc/check_nightshift()
+/datum/subsystem/nightshift/proc/check_nightshift()
 	var/emergency = security_level >= SEC_LEVEL_RED
 	var/current_hour = text2num(time2text(world.realtime, "hh"))
 	var/current_minute = text2num(time2text(world.realtime, "mm"))
@@ -33,7 +39,7 @@ SUBSYSTEM_DEF(nightshift)
 	if(nightshift_active != night_time)
 		update_nightshift(night_time)
 
-/datum/controller/subsystem/nightshift/proc/update_nightshift(active)
+/datum/subsystem/nightshift/proc/update_nightshift(active)
 	nightshift_active = active
 	for(var/obj/machinery/power/apc/APC in apc_list)
 		if (is_station_level(APC.z) || is_mining_level(APC.z))

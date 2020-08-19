@@ -84,10 +84,8 @@ FLOOR SAFES
 			var/obj/item/P = contents[i]
 			dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
+	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
 
-	var/datum/browser/popup = new(user, "safe", src.name, 350, 300)
-	popup.set_content(dat)
-	popup.open()
 
 /obj/structure/safe/Topic(href, href_list)
 	if(!ishuman(usr))	return
@@ -137,7 +135,7 @@ FLOOR SAFES
 		return
 
 	if(href_list["retrieve"])
-		user << browse(null, "window=safe") // Close the menu
+		user << browse("", "window=safe") // Close the menu
 
 		var/obj/item/P = locate(href_list["retrieve"]) in src
 		if(open)

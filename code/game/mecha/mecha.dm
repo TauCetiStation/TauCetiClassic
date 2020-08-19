@@ -1221,9 +1221,7 @@
 
 /obj/mecha/proc/get_stats_html()
 	var/output = {"<html>
-						<head>
-						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-						<title>[src.name] data</title>
+						<head><title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -1369,7 +1367,7 @@
 
 
 /obj/mecha/proc/get_log_html()
-	var/output = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
 		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] [game_year]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
@@ -1381,9 +1379,7 @@
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
 	if(!id_card || !user) return
 	var/output = {"<html>
-						<head>
-						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-						<style>
+						<head><style>
 						h1 {font-size:15px;margin-bottom:4px;}
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {color:#0f0;}
@@ -1409,7 +1405,6 @@
 	if(!id_card || !user) return
 	var/output = {"<html>
 						<head>
-						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {padding:2px 5px; background:#32CD32;color:#000;display:block;margin:2px;text-align:center;text-decoration:none;}

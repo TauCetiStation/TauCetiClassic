@@ -322,7 +322,8 @@
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
-	var/dat = {"
+	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
+	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
 		\[br\] : Creates a linebreak.<br>
@@ -339,11 +340,8 @@
 		\[list\] - \[/list\] : A list.<br>
 		\[*\] : A dot used for lists.<br>
 		\[hr\] : Adds a horizontal rule.
-		"}
+	</BODY></HTML>"}, "window=paper_help")
 
-	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
-	popup.set_content(dat)
-	popup.open()
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,

@@ -2,7 +2,9 @@ var/global/list/lighting_update_lights = list() // List of lighting sources  que
 var/global/list/lighting_update_corners = list() // List of lighting corners  queued for update.
 var/global/list/lighting_update_objects = list() // List of lighting objects queued for update.
 
-SUBSYSTEM_DEF(lighting)
+var/datum/subsystem/lighting/SSlighting
+
+/datum/subsystem/lighting
 	name = "Lighting"
 
 	init_order    = SS_INIT_LIGHTING
@@ -11,10 +13,15 @@ SUBSYSTEM_DEF(lighting)
 
 	flags = SS_TICKER
 
-/datum/controller/subsystem/lighting/stat_entry()
+
+/datum/subsystem/lighting/New()
+	NEW_SS_GLOBAL(SSlighting)
+
+
+/datum/subsystem/lighting/stat_entry()
 	..("L:[global.lighting_update_lights.len]|C:[global.lighting_update_corners.len]|O:[global.lighting_update_objects.len]")
 
-/datum/controller/subsystem/lighting/Initialize(timeofday)
+/datum/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
 		if (config.starlight)
 			for(var/I in global.all_areas)
@@ -29,7 +36,7 @@ SUBSYSTEM_DEF(lighting)
 
 	..()
 
-/datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
+/datum/subsystem/lighting/proc/create_all_lighting_objects()
 	for(var/area/A in global.all_areas)
 		if(!IS_DYNAMIC_LIGHTING(A))
 			continue
@@ -43,7 +50,7 @@ SUBSYSTEM_DEF(lighting)
 			CHECK_TICK
 		CHECK_TICK
 
-/datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
+/datum/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
@@ -99,6 +106,6 @@ SUBSYSTEM_DEF(lighting)
 	if (i)
 		global.lighting_update_objects.Cut(1, i+1)
 
-/datum/controller/subsystem/lighting/Recover()
+/datum/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()

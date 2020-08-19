@@ -63,7 +63,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<title>[title]</title>")
+	var/list/dat = list("<html><head><title>[title]</title></head>")
 	dat += "<A href='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -399,7 +399,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<title>Ticket #[id]</title>")
+	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "

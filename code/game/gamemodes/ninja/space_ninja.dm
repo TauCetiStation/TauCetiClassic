@@ -8,7 +8,7 @@
 	set category = null
 	set name = "Make Space Ninja"
 
-	if(!SSticker)
+	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(!toggle_space_ninja)
@@ -43,7 +43,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(!SSticker.mode)
+	if(!ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 	if(!toggle_space_ninja)
@@ -92,7 +92,7 @@
 	mind.assigned_role = "MODE"
 	mind.special_role = "Ninja"
 
-	//SSticker.mode.ninjas |= mind
+	//ticker.mode.ninjas |= mind
 	return 1
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.

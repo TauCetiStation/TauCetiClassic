@@ -6,7 +6,7 @@
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
-	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
+	if(ticker.mode && ticker.mode.check_antagonists_topic(href, href_list))
 		check_antagonists()
 		return
 
@@ -267,13 +267,13 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if( SSticker.mode.name == "blob" )
+		if( ticker.mode.name == "blob" )
 			alert("You can't call the shuttle during blob!")
 			return
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if ((!( SSticker ) || SSshuttle.location))
+				if ((!( ticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
@@ -282,7 +282,7 @@
 				make_maint_all_access(FALSE)
 
 			if("2")
-				if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
+				if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
 					return
 				switch(SSshuttle.direction)
 					if(-1)
@@ -314,12 +314,12 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		ticker.delay_end = !ticker.delay_end
+		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 		href_list["secretsadmin"] = "check_antagonist"
@@ -382,7 +382,7 @@
 					newmeme.mind.transfer_to(M)
 					message_admins("Failed to find host for meme [M.key]. Aborting.")
 
-				SSticker.mode.memes += newmeme
+				ticker.mode.memes += newmeme
 
 				if(delmob)
 					qdel(M)
@@ -979,7 +979,7 @@
 	else if(href_list["guard"])
 		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 			return
-
+	
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
@@ -995,14 +995,11 @@
 				if(!M.client)
 					return
 				var/client/C = M.client
-				var/dat = ""
+				var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
 				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
 				for(var/x in C.prefs.cid_list)
 					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-
-				var/datum/browser/popup = new(usr, "[C.ckey]_cid_list", "[C.ckey] cid list")
-				popup.set_content(dat)
-				popup.open()
+				usr << browse(dat, "window=[C.ckey]_cid_list")
 
 	else if(href_list["cid_ignore"])
 		if(!check_rights(R_LOG))
@@ -1027,14 +1024,12 @@
 					return
 				var/client/C = M.client
 
-				var/dat = ""
+				var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
 				dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
 				dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
 				dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-				var/datum/browser/popup = new(usr, "[C.ckey]_related_accounts", "[C.key] related accounts by IP and cid")
-				popup.set_content(dat)
-				popup.open()
+				usr << browse(dat, "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
@@ -1134,24 +1129,21 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		var/dat = ""
+		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
 			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [master_mode]"}
-
-		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
-		popup.set_content(dat)
-		popup.open()
+		usr << browse(dat, "window=c_mode")
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1160,16 +1152,13 @@
 			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
-
-		var/datum/browser/popup = new(usr, "f_secret")
-		popup.set_content(dat)
-		popup.open()
+		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (SSticker && SSticker.mode)
+		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [master_mode].")
@@ -1183,7 +1172,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1769,7 +1758,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker || !SSticker.mode)
+		if(!ticker || !ticker.mode)
 			alert("The game hasn't started yet!")
 			return
 

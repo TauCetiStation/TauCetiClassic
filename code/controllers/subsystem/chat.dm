@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(chat)
+var/datum/subsystem/chat/SSchat
+
+/datum/subsystem/chat
 	name = "Chat"
 	init_order = SS_INIT_CHAT
 	wait = SS_WAIT_CHAT
@@ -7,7 +9,10 @@ SUBSYSTEM_DEF(chat)
 
 	var/list/payload = list()
 
-/datum/controller/subsystem/chat/fire()
+/datum/subsystem/chat/New()
+	NEW_SS_GLOBAL(SSchat)
+
+/datum/subsystem/chat/fire()
 	for(var/i in payload)
 		var/client/C = i
 		C << output(payload[C], "browseroutput:output")
@@ -16,7 +21,7 @@ SUBSYSTEM_DEF(chat)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
 	if(!target || !message)
 		return
 

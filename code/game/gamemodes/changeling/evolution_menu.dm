@@ -16,7 +16,7 @@ var/list/sting_paths
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700)
 	popup.set_content(dat)
 	popup.open()
 
@@ -29,7 +29,6 @@ var/list/sting_paths
 	dat += {"
 
 		<head>
-			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			<script type='text/javascript'>
 
 				var locked_tabs = new Array();
@@ -294,9 +293,19 @@ var/list/sting_paths
 	if(href_list["P"])
 		usr.mind.changeling.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(usr.mind.changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700)
 	popup.set_content(dat)
 	popup.open()
+/////
+/*
+/obj/effect/proc_holder/changeling/evolution_menu/Topic(href, href_list)
+	..()
+	if(!(iscarbon(usr) && usr.mind && usr.mind.changeling))
+		return
+	if(href_list["P"])
+		usr.mind.changeling.purchasePower(usr, href_list["P"])
+	var/dat = create_menu(usr.mind.changeling)
+	usr << browse(dat, "window=powers;size=600x700") */
 
 /datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 

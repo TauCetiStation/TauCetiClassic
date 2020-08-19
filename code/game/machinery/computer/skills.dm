@@ -143,11 +143,7 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-
-	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
-	popup.set_content("<TT>[dat]</TT>")
-	popup.open()
-
+	user << browse(text("<HEAD><TITLE>Employment Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
 	onclose(user, "secure_rec")
 
 /*Revised /N

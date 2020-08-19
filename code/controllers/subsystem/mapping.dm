@@ -1,9 +1,11 @@
+var/datum/subsystem/mapping/SSmapping
+
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMMOUNT 7
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
-SUBSYSTEM_DEF(mapping)
+/datum/subsystem/mapping
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
@@ -22,11 +24,14 @@ SUBSYSTEM_DEF(mapping)
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
 
-/datum/controller/subsystem/mapping/proc/LoadMapConfig()
+/datum/subsystem/mapping/New()
+	NEW_SS_GLOBAL(SSmapping)
+
+/datum/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
 		config = load_map_config(error_if_missing = FALSE)
 
-/datum/controller/subsystem/mapping/Initialize(timeofday)
+/datum/subsystem/mapping/Initialize(timeofday)
 	LoadMapConfig()
 	station_image = config.station_image
 	station_name = config.station_name
@@ -47,11 +52,11 @@ SUBSYSTEM_DEF(mapping)
 	spawn_space_structures()
 	..()
 
-/datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
+/datum/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to max_secret_rooms)
 		make_mining_asteroid_secret()
 
-/datum/controller/subsystem/mapping/proc/populate_distribution_map()
+/datum/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
 		var/datum/ore_distribution/distro = new
 		distro.populate_distribution_map(z)
@@ -63,7 +68,7 @@ SUBSYSTEM_DEF(mapping)
 	var/x2 // right-top
 	var/y2
 
-/datum/controller/subsystem/mapping/proc/spawn_space_structures()
+/datum/subsystem/mapping/proc/spawn_space_structures()
 	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
 
@@ -105,7 +110,7 @@ SUBSYSTEM_DEF(mapping)
 			message_admins("[structure_id] was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
 #endif
 
-/datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
+/datum/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
@@ -138,7 +143,7 @@ SUBSYSTEM_DEF(mapping)
 #endif
 	return null
 
-/datum/controller/subsystem/mapping/Recover()
+/datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 
 	config = SSmapping.config
@@ -147,7 +152,7 @@ SUBSYSTEM_DEF(mapping)
 #undef SPACE_STRUCTURES_AMMOUNT
 
 #define INIT_ANNOUNCE(X) info(X)
-/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
@@ -194,7 +199,7 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps
 
-/datum/controller/subsystem/mapping/proc/loadWorld()
+/datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
@@ -235,7 +240,7 @@ SUBSYSTEM_DEF(mapping)
 #undef INIT_ANNOUNCE
 
 // Some areas use station name so we rename them here
-/datum/controller/subsystem/mapping/proc/renameAreas()
+/datum/subsystem/mapping/proc/renameAreas()
 	if(!config)
 		return
 
@@ -248,7 +253,7 @@ SUBSYSTEM_DEF(mapping)
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")

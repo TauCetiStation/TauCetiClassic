@@ -49,7 +49,10 @@
 
 /obj/item/blueprints/interact()
 	var/area/A = get_area()
-	var/text = "<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>"
+	var/text = {"<HTML><head><title>[src]</title></head><BODY>
+<h2>[station_name()] blueprints</h2>
+<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>
+"}
 	switch (get_area_type())
 		if (AREA_SPACE)
 			text += {"
@@ -68,11 +71,8 @@ move an amendment</a> to the drawing.</p>
 "}
 		else
 			return
-
-	var/datum/browser/popup = new(usr, "blueprints", "[station_name()] blueprints")
-	popup.set_content(text)
-	popup.open()
-
+	text += "</BODY></HTML>"
+	usr << browse(text, "window=blueprints")
 	onclose(usr, "blueprints")
 
 

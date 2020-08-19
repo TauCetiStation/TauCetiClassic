@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(sun)
+var/datum/subsystem/sun/SSsun
+
+/datum/subsystem/sun
 	name = "Sun"
 
 	init_order = SS_INIT_SUN
@@ -14,16 +16,18 @@ SUBSYSTEM_DEF(sun)
 	var/nexttime = 3600		// Replacement for var/counter to force the sun to move every X IC minutes
 	var/lastAngleUpdate
 
-/datum/controller/subsystem/sun/PreInit()
+/datum/subsystem/sun/New()
+	NEW_SS_GLOBAL(SSsun)
+
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(500,2000)/1000			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
-/datum/controller/subsystem/sun/stat_entry(msg)
+/datum/subsystem/sun/stat_entry(msg)
 	..("P:[solars.len]")
 
-/datum/controller/subsystem/sun/fire()
+/datum/subsystem/sun/fire()
 	angle = ((rate*world.time/100)%360 + 360)%360
 
 	/*
@@ -63,7 +67,7 @@ SUBSYSTEM_DEF(sun)
 			occlusion(S)
 
 // for a solar panel, trace towards sun to see if we're in shadow
-/datum/controller/subsystem/sun/proc/occlusion(obj/machinery/power/solar/S)
+/datum/subsystem/sun/proc/occlusion(obj/machinery/power/solar/S)
 	var/ax = S.x		// start at the solar panel
 	var/ay = S.y
 

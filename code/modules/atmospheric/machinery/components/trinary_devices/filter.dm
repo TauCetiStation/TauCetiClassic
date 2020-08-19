@@ -131,10 +131,7 @@
 			<B>Flow rate: </B>[round(last_flow_rate, 0.1)]L/s
 			"}
 
-	var/datum/browser/popup = new(user, "atmo_filter", "[src.name] control")
-	popup.set_content("<TT>[dat]</TT>")
-	popup.open()
-
+	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
 	onclose(user, "atmo_filter")
 
 /obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list) // -- TLE

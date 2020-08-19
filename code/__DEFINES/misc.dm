@@ -33,7 +33,7 @@
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
 
-//SSticker.current_state values
+//ticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2

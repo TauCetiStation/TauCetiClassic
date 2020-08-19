@@ -1,6 +1,6 @@
-/datum/controller/subsystem
+/datum/subsystem
 	// Metadata; you should define these.
-	name = "fire coderbus" //name of the subsystem
+	var/name = "fire coderbus" //name of the subsystem
 
 	// See subsystem.dm in __DEFINES
 	var/init_order    = SS_INIT_DEFAULT     // Order of initialization. Higher numbers are initialized first, lower numbers later. Can be decimal and negative values.
@@ -28,20 +28,17 @@
 	var/queued_time = 0     //time we entered the queue, (for timing and priority reasons)
 	var/queued_priority     //we keep a running total to make the math easier, if priority changes mid-fire that would break our running total, so we store it here
 	//linked list stuff for the queue
-	var/datum/controller/subsystem/queue_next
-	var/datum/controller/subsystem/queue_prev
+	var/datum/subsystem/queue_next
+	var/datum/subsystem/queue_prev
 
-//Do not override
-///datum/controller/subsystem/New()
+	// The object used for the clickable stat() button.
+	var/obj/effect/statclick/statclick
 
 // Used to initialize the subsystem BEFORE the map has loaded
-// Called AFTER Recover if that is called
-// Prefer to use Initialize if possible
-/datum/controller/subsystem/proc/PreInit()
-	return
+/datum/subsystem/New()
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
+/datum/subsystem/proc/ignite(resumed = 0)
 	set waitfor = 0
 	. = SS_SLEEPING
 	fire(resumed)
@@ -56,11 +53,11 @@
 
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
-/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/subsystem/proc/fire(resumed = 0)
 	flags |= SS_NO_FIRE
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
-/datum/controller/subsystem/Destroy()
+/datum/subsystem/Destroy()
 	dequeue()
 	can_fire = 0
 	flags |= SS_NO_FIRE
@@ -69,10 +66,10 @@
 //Queue it to run.
 //  (we loop thru a linked list until we get to the end or find the right point)
 //  (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
-/datum/controller/subsystem/proc/enqueue()
+/datum/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
-	var/datum/controller/subsystem/queue_node
+	var/datum/subsystem/queue_node
 	var/queue_node_priority
 	var/queue_node_flags
 
@@ -126,7 +123,7 @@
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
 
-/datum/controller/subsystem/proc/dequeue()
+/datum/subsystem/proc/dequeue()
 	if (queue_next)
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
@@ -139,7 +136,7 @@
 	if (state == SS_QUEUED)
 		state = SS_IDLE
 
-/datum/controller/subsystem/proc/pause()
+/datum/subsystem/proc/pause()
 	. = TRUE
 	if (state == SS_RUNNING)
 		state = SS_PAUSED
@@ -147,7 +144,7 @@
 		state = SS_PAUSING
 
 //used to initialize the subsystem AFTER the map has loaded
-/datum/controller/subsystem/Initialize(start_timeofday)
+/datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
@@ -156,11 +153,11 @@
 	return time
 
 // Is called after all this subsystem is initialized.
-/datum/controller/subsystem/proc/PostInitialize()
+/datum/subsystem/proc/PostInitialize()
 	return
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
-/datum/controller/subsystem/stat_entry(msg)
+/datum/subsystem/proc/stat_entry(msg)
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
@@ -175,7 +172,7 @@
 
 	stat(title, statclick.update(msg))
 
-/datum/controller/subsystem/proc/state_letter()
+/datum/subsystem/proc/state_letter()
 	switch (state)
 		if (SS_RUNNING)
 			. = "R"
@@ -190,19 +187,19 @@
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
-/datum/controller/subsystem/proc/postpone(cycles = 1)
+/datum/subsystem/proc/postpone(cycles = 1)
 	if(next_fire - world.time < wait)
 		next_fire += (wait*cycles)
 
-//usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
+//usually called via datum/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
-/datum/controller/subsystem/Recover()
+/datum/subsystem/proc/Recover()
 
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
-/datum/controller/subsystem/on_varedit(edited_var)
+/datum/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
 
-/datum/controller/subsystem/StartLoadingMap()
+/datum/subsystem/proc/StartLoadingMap()
 
-/datum/controller/subsystem/StopLoadingMap()
+/datum/subsystem/proc/StopLoadingMap()

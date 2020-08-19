@@ -81,7 +81,7 @@
 	return
 
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
-	if(!SSticker)
+	if(!ticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 		return
 

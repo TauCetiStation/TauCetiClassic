@@ -69,11 +69,7 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-
-	var/datum/browser/popup = new(user, "radio")
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
 

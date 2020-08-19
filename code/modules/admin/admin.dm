@@ -48,8 +48,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/body = ""
-	body += "Options panel for <b>[M]</b>"
+	var/body = "<html><head><title>Options for [M.key]</title></head>"
+	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
@@ -192,10 +192,11 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
 
-	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key]", 550, 515)
-	popup.set_content(body)
-	popup.open()
+	body += {"<br>
+		</body></html>
+	"}
 
+	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -661,6 +662,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!check_rights(0))	return
 
 	var/dat = {"
+		<center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
 	if(master_mode == "secret")
@@ -677,9 +679,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	var/datum/browser/popup = new(usr, "admin2", "Game Panel", 210, 280)
-	popup.set_content(dat)
-	popup.open()
+	usr << browse(dat, "window=admin2;size=210x280")
 	return
 
 /datum/admins/proc/change_crew_salary()
@@ -817,11 +817,11 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 
-	if(SSticker.current_state < GAME_STATE_PREGAME)
+	if(ticker.current_state < GAME_STATE_PREGAME)
 		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
 		return 0
 
-	if(SSticker.start_now())
+	if(ticker.start_now())
 		log_admin("[key_name(usr)] has started the game.")
 		message_admins("<font color='blue'>[key_name_admin(usr)] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -919,11 +919,11 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set name="Delay pre-game"
 
 	if(!check_rights(R_SERVER))	return
-	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.timeLeft/10)) as num|null
-	if(SSticker.current_state > GAME_STATE_PREGAME)
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.timeLeft/10)) as num|null
+	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)
-		SSticker.timeLeft = newtime * 10
+		ticker.timeLeft = newtime * 10
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
@@ -948,13 +948,13 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set name="Delay end-game"
 
 	if(!check_rights(R_SERVER))	return
-	if(SSticker.current_state > GAME_STATE_PREGAME)
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		ticker.delay_end = !ticker.delay_end
+		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
@@ -1031,38 +1031,38 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
-	if(!SSticker || !SSticker.mode)
+	if(!ticker || !ticker.mode)
 		return 0
 	if (!istype(M))
 		return 0
-	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "revolution")
+	if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+		if (ticker.mode.config_tag == "revolution")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.cult)
-		if (SSticker.mode.config_tag == "cult")
+	if(M.mind in ticker.mode.cult)
+		if (ticker.mode.config_tag == "cult")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
+	if(M.mind in ticker.mode.malf_ai)
+		if (ticker.mode.config_tag == "malfunction")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
+	if(M.mind in ticker.mode.syndicates)
+		if (ticker.mode.config_tag == "nuclear")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
+	if(M.mind in ticker.mode.wizards)
+		if (ticker.mode.config_tag == "wizard")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
+	if(M.mind in ticker.mode.changelings)
+		if (ticker.mode.config_tag == "changeling")
 			return 2
 		return 1
 
 	for(var/datum/disease/D in M.viruses)
 		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
+			if (ticker.mode.config_tag == "monkey")
 				return 2
 			return 1
 	if(isrobot(M))

@@ -18,7 +18,6 @@
 	title = "Out on the Dig"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -133,7 +132,6 @@
 	title = "High powered mass spectrometry, a comprehensive guide"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -206,7 +204,6 @@
 	title = "Spectroscopy: Analysing the Anomalies of the Cosmos"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -233,7 +230,6 @@
 	title = "Materials Analysis and the Chemical Implications"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -262,7 +258,6 @@
 	title = "Anomalous Materials and Energies"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -342,7 +337,6 @@
 	title = "Cellular Suspension, the New Cryogenics?"
 	dat = {"<html>
 				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}

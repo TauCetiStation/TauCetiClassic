@@ -236,7 +236,7 @@
 	set category = "IC"
 	set src = usr
 
-	var/dat = ""
+	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
@@ -244,8 +244,5 @@
 			dat += "(:[l_key])"
 		dat += " </b><br/>[L.desc]<br/><br/>"
 
-	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
-	popup.set_content(dat)
-	popup.open()
-
+	src << browse(dat, "window=checklanguage")
 	return

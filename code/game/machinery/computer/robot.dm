@@ -96,10 +96,7 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	var/datum/browser/popup = new(user, "computer", null, 400, 500)
-	popup.set_content(dat)
-	popup.open()
-
+	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
 /obj/machinery/computer/robotics/Topic(href, href_list)

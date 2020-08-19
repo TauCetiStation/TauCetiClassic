@@ -164,10 +164,7 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	var/datum/browser/popup = new(user, teg, null, 460, 300)
-	popup.set_content(t)
-	popup.open()
-
+	user << browse(t, "window=teg;size=460x300")
 	onclose(user, "teg")
 
 

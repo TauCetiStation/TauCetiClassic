@@ -368,15 +368,11 @@
 	haircutlist+="</tr></table>"
 
 	winshow(barber, "barber_window", TRUE)
-	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
-	dat += haircutlist
-
-	var/datum/browser/popup = new(barber, "barber_window", "Grooming", ntheme = CSS_THEME_LIGHT)
-	popup.set_window_options("can_resize=0")
-	popup.set_content(dat)
-	popup.open()
-
+	barber << browse("<html><head><title>Grooming</title></head>" \
+		+ "<body style='margin:0;text-align:center'>" \
+		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
+		+ haircutlist \
+		+ "</body></html>", "window=barber_window")
 	onclose(barber, "barber_window", src)
 	return
 

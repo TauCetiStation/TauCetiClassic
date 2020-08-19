@@ -52,7 +52,7 @@ var/base_commit_sha = 0
 	ahelp_tickets = new
 
 	spawn(10)
-		Master.Initialize()
+		Master.Setup()
 
 	if(!setup_old_database_connection())
 		log_sql("Your server failed to establish a connection with the SQL database.")
@@ -150,7 +150,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["host"] = host ? host : null
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
-		s["gamestate"] = SSticker.current_state
+		s["gamestate"] = ticker.current_state
 		s["roundduration"] = roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
@@ -390,7 +390,7 @@ var/shutdown_processed = FALSE
 
 	var/list/features = list()
 
-	if(SSticker)
+	if(ticker)
 		if(master_mode)
 			features += master_mode
 	else
