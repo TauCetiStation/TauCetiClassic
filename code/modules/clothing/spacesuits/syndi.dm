@@ -8,7 +8,7 @@
 	action_button_name = "Toggle Helmet Light"
 	var/brightness = 3 //light_range when on
 	var/lit = FALSE
-	species_restricted = list("exclude" , DIONA)
+	species_restricted = list("exclude" , DIONA , VOX)
 	var/image/lamp = null
 
 /obj/item/clothing/suit/space/syndicate
@@ -26,7 +26,7 @@
 	               /obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	species_restricted = list("exclude" , DIONA)
+	species_restricted = list("exclude" , DIONA , VOX)
 
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
