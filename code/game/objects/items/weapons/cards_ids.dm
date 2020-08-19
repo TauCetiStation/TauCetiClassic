@@ -274,9 +274,9 @@
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
-	var/list/colorlist = list()
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
+	var/list/radial_chooses
 
 
 
@@ -338,14 +338,14 @@
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")
-				for(var/P in typesof(/obj/item/weapon/card/id))
-					var/obj/item/weapon/card/id/C = new P
-					if (C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-						C.name = C.icon_state
-						colorlist += C
+				if(!radial_chooses)
+					radial_chooses = list()
+					for(var/P in typesof(/obj/item/weapon/card/id))
+						var/obj/item/weapon/card/id/C = new P
+						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
+							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
-				var/obj/item/weapon/card/id/newc
-				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state
