@@ -83,17 +83,17 @@
 
 /obj/effect/proc_holder/spell/dumbfire/blessing/cast()
 	var/list/possible_targets = list()
-	var/obj/item/weapon/target
+	var/obj/item/target
 
 	for(var/obj/item/W in orange(3))
 		if(!W.blessed)
-			possible_targets += W
+			possible_targets[W] = image(W.icon, W.icon_state)
 
 	if(possible_targets.len == 0)
 		revert_cast()
 		return
 
-	target = input("Choose the target for the spell.", "Targeting") in possible_targets
+	target = show_radial_menu(usr, usr, possible_targets, radius = 36, tooltips = TRUE)
 
 	target.visible_message("<span class='notice'>[target] has been blessed by [usr]!</span>")
 	target.name = "blessed [target.name]"

@@ -1,3 +1,7 @@
+
+////////////////
+//  NULLRODS  //
+////////////////
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
@@ -11,9 +15,7 @@
 	light_color = "#4c4cff"
 	light_power = 3
 	w_class = ITEM_SIZE_SMALL
-	var/last_process = 0
 	var/datum/cult/reveal/power
-	var/static/list/scum
 
 	var/tried_replacing = FALSE
 
@@ -23,8 +25,6 @@
 
 /obj/item/weapon/nullrod/atom_init()
 	. = ..()
-	if(!scum)
-		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 	power = new(src)
 
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
@@ -52,51 +52,32 @@
 
 	return ..()
 
-/obj/item/weapon/nullrod/equipped(mob/user, slot)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		START_PROCESSING(SSobj, src)
-	..()
-
 /obj/item/weapon/nullrod/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(power)
 	return ..()
 
-/obj/item/weapon/nullrod/dropped(mob/user)
-	if(isprocessing)
-		STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/nullrod/process()
-	if(last_process + 60 >= world.time)
-		return
-	last_process = world.time
-	var/turf/turf = get_turf(loc)
-	for(var/A in range(6, turf))
-		if(iscultist(A) || is_type_in_typecache(A, scum))
-			set_light(3)
-			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
-
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
-	M.log_combat(user, "deconvered (attempt) via [name]")
-
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50) && user.mind && !user.mind.holy_role)
 		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat != DEAD)
-		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
-			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
-			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			SSticker.mode.remove_cultist(M.mind)
-		else
-			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
+	if(M.stat == DEAD)
+		return
+
+	M.log_combat(user, "attempt deconvert via [name]")
+	if((M.mind in SSticker.mode.cult) && prob(33) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
+		to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
+		M.log_combat(user, "deconvert via [name]")
+		SSticker.mode.remove_cultist(M.mind)
+	else
+		to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -123,8 +104,14 @@
 
 	var/list/next_apply = list()
 
+	var/static/list/scum
+	var/last_process = 0
+
 /obj/item/weapon/nullrod/staff/atom_init()
 	. = ..()
+	if(!scum)
+		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
+
 	god_name = pick(global.chaplain_religion.deity_names)
 	god_lore = global.chaplain_religion.lore
 
@@ -140,8 +127,20 @@
 		brainmob.gib()
 		brainmob = null
 
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/weapon/nullrod/staff/process()
+	if(last_process + 60 >= world.time)
+		return
+	last_process = world.time
+	var/turf/turf = get_turf(loc)
+	for(var/A in range(6, turf))
+		if(iscultist(A) || is_type_in_typecache(A, scum))
+			set_light(3)
+			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+
+// TODO: rework for alternate apperance
 /obj/item/weapon/nullrod/staff/proc/show_god(mob/M)
 	if(M.client && god_image)
 		M.client.images += god_image
@@ -151,20 +150,24 @@
 		M.client.images -= god_image
 
 /obj/item/weapon/nullrod/staff/equipped(mob/user, slot)
-	..()
+	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		START_PROCESSING(SSobj, src)
+
 	if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		hide_god(user)
 	else
 		show_god(user)
 
 /obj/item/weapon/nullrod/staff/dropped(mob/user)
-	..()
+	if(isprocessing)
+		STOP_PROCESSING(SSobj, src)
+
 	if(user)
 		hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
+		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god, now
 			var/obj/item/device/soulstone/S = I
 			if(S.imprinted == "empty")
 				S.imprinted = brainmob.name
@@ -177,7 +180,6 @@
 				searching = FALSE
 				icon_state = "talking_staff"
 				visible_message("<span class='notice'>The energy of \the [src] was dispelled.</span>")
-
 	else
 		return ..()
 
@@ -366,7 +368,9 @@
 		deactivate(user)
 
 
-
+//////////////
+//  WEAPONS //
+//////////////
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Go-... Whatever deity you worship protects you!"
