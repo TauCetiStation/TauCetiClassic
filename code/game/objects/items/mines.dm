@@ -15,14 +15,11 @@
 		to_chat(user, "<span class='warning'>You can't plant a mine here.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", \
-	"<span class='notice'>You start deploying [src].</span>")
+	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
 	if(!do_after(user, 40, target = src))
-		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", \
-	"<span class='notice'>You stop deploying \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", "<span class='notice'>You stop deploying \the [src].</span>")
 		return
-	user.visible_message("<span class='notice'>[user] finishes deploying [src].</span>", \
-	"<span class='notice'>You finish deploying [src].</span>")
+	user.visible_message("<span class='notice'>[user] finishes deploying [src].</span>", "<span class='notice'>You finish deploying [src].</span>")
 	user.drop_from_inventory(src, user.loc)
 
 	anchored = TRUE
@@ -60,16 +57,13 @@
 	if(!ismultitool(I) || !anchored)
 		return
 
-	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", \
-	"<span class='notice'>You start disarming [src].</span>")
+	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
 
 	if(!do_after(user, 40, target = src))
-		user.visible_message("<span class='warning'>[user] stops disarming [src].", \
-		"<span class='warning'>You stop disarming [src].")
+		user.visible_message("<span class='warning'>[user] stops disarming [src].", "<span class='warning'>You stop disarming [src].")
 		return
 
-	user.visible_message("<span class='notice'>[user] finishes disarming [src].", \
-	"<span class='notice'>You finish disarming [src].")
+	user.visible_message("<span class='notice'>[user] finishes disarming [src].", "<span class='notice'>You finish disarming [src].")
 
 	anchored = FALSE
 	update_icon()
