@@ -154,7 +154,7 @@
 	checkwin_counter++
 	if(checkwin_counter >= 20)
 		if(!finished)
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 
@@ -187,7 +187,7 @@
 ///Handle crew failure(station explodes)///
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
-	ticker.mode:explosion_in_progress = 1
+	SSticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "<span class='notice'><b>Incoming missile detected.. Impact in 10..</b></span>")
@@ -196,11 +196,11 @@
 		to_chat(world, "<span class='notice'><b>[i]..</b></span>")
 	sleep(10)
 	enter_allowed = 0
-	if(ticker)
-		ticker.station_explosion_cinematic(0,null)
-		if(ticker.mode)
-			ticker.mode:station_was_nuked = 1
-			ticker.mode:explosion_in_progress = 0
+	if(SSticker)
+		SSticker.station_explosion_cinematic(0,null)
+		if(SSticker.mode)
+			SSticker.mode:station_was_nuked = 1
+			SSticker.mode:explosion_in_progress = 0
 	finished = 2
 	return
 
