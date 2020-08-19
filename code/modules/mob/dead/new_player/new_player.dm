@@ -74,7 +74,10 @@
 commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
-	src << browse(output,"window=playersetup;size=210x240;can_close=0")
+	var/datum/browser/popup = new(src, "playersetup", null, 210, 240)
+	popup.set_window_options("can_close=0")
+	popup.set_content(output)
+	popup.open()
 	return
 
 /mob/dead/new_player/prepare_huds()
@@ -477,9 +480,6 @@ commented cause polls are kinda broken now, needs refactoring */
 		dat += "</td></tr></table>"
 		dat += "</div></div>"
 
-	// Removing the old window method but leaving it here for reference
-	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
-
 	// Added the new browser window method
 	var/accurate_length = 600
 	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
@@ -539,11 +539,11 @@ commented cause polls are kinda broken now, needs refactoring */
 	return new_character
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
-	dat += "<h4>Show Crew Manifest</h4>"
-	dat += data_core.get_manifest(OOC = 1)
+	var/dat = data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	return FALSE

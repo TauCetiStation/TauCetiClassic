@@ -146,6 +146,7 @@ var/list/cult_datums = list()
 
 	tomedat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 25px; margin: 15px 0px 5px;}
 				h2 {font-size: 20px; margin: 15px 0px 5px;}

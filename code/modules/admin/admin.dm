@@ -48,8 +48,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title></head>"
-	body += "<body>Options panel for <b>[M]</b>"
+	var/body = ""
+	body += "Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
@@ -192,11 +192,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
 
-	body += {"<br>
-		</body></html>
-	"}
+	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key]", 550, 515)
+	popup.set_content(body)
+	popup.open()
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -662,7 +661,6 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!check_rights(0))	return
 
 	var/dat = {"
-		<center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
 	if(master_mode == "secret")
@@ -679,7 +677,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	var/datum/browser/popup = new(usr, "admin2", "Game Panel", 210, 280)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /datum/admins/proc/change_crew_salary()

@@ -30,6 +30,10 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/custom/syndicate_mothership/armory
+	name = "Syndicate Armory"
+	icon_state = "syndie-armory"
+
 /area/custom/syndicate_mothership/droppod_garage
 	name = "Drop pod garage"
 
