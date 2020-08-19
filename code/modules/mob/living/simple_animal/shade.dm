@@ -56,6 +56,9 @@
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 	return
 
+/mob/living/simple_animal/shade/handle_combat()
+	return
+
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
 	real_name = "Unbelievable God"
