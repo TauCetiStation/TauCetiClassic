@@ -82,13 +82,13 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/hologram/holopad/holo = null
 
 	// Radial menu for choose skin of core
-	var/list/chooses_ai_cores
+	var/static/list/chooses_ai_cores
 	// Radial menu for choose skin of standart hologram
-	var/list/chooses_ai_holo
+	var/static/list/chooses_ai_holo
 	// Radial menu for choose skin of staff hologram
 	var/list/chooses_ai_staff
 	// Radial menu for choose category of holo type
-	var/list/chooses_holo_category
+	var/static/list/chooses_holo_category
 	// Radilal menu.
 	var/static/list/name_by_state = list(
 		"Standard" = "ai",
@@ -296,7 +296,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
-	if(stat || aiRestorePowerRoutine)
+	if(check_unable())
 		return
 
 	gen_radial_cores()
@@ -714,18 +714,40 @@ var/list/ai_verbs_default = list(
 				SD.friendc = 0
 	return
 
+/mob/living/silicon/ai/proc/gen_ai_uniq_holo()
+	var/icon_list = list(
+		"Default",
+		"Floatingface",
+		"Alien",
+		"Carp",
+		"Queen",
+		"Rommie",
+		"Sonny",
+		"Miku",
+		"Medbot",
+	)
+
+	if(!chooses_ai_holo)
+		chooses_ai_holo = list()
+		var/i = 1
+		for(var/name_holo in icon_list)
+			chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
+			i++
+
+/mob/living/silicon/ai/proc/gen_ai_staff_holo()
+	if(!chooses_ai_staff)
+		chooses_ai_staff = list()
+
+	for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
+		if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
+			continue
+
+		chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
+
 /mob/living/silicon/ai/proc/gen_radial_holo(type)
 	switch(type)
 		if("Crew Member Category")
-			if(!chooses_ai_staff)
-				chooses_ai_staff = list()
-
-			for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
-				if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
-					continue
-
-				chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
-
+			gen_ai_staff_holo()
 			if(chooses_ai_staff.len)
 				var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
 				if(chooses_ai_staff[state])
@@ -735,25 +757,7 @@ var/list/ai_verbs_default = list(
 				alert("No suitable records found. Aborting.")
 
 		if("Unique Category")
-			var/icon_list = list(
-				"Default",
-				"Floatingface",
-				"Alien",
-				"Carp",
-				"Queen",
-				"Rommie",
-				"Sonny",
-				"Miku",
-				"Medbot",
-			)
-
-			if(!chooses_ai_holo)
-				chooses_ai_holo = list()
-				var/i = 1
-				for(var/name_holo in icon_list)
-					chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
-					i++
-
+			gen_ai_uniq_holo()
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
 			if(state)
 				qdel(holo_icon)
