@@ -1,7 +1,7 @@
 /obj/item/mine
 	name = "mine"
 	desc = "A friendly-looking pancake with a happy light on the top. Absolute opposite of libertarian - this mine BEGS to be stepped on."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/mines.dmi'
 	icon_state = "mine"
 	layer = 3
 	var/triggered = FALSE
