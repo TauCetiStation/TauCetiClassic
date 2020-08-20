@@ -86,6 +86,9 @@ var/global/list/asset_datums = list()
 	if(!name)
 		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
+	for(var/size_id in sizes)
+		var/size = sizes[size_id]
+		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
@@ -93,9 +96,6 @@ var/global/list/asset_datums = list()
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
 
-	for(var/size_id in sizes)
-		var/size = sizes[size_id]
-		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
