@@ -606,6 +606,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"preparation",
 		"death commando",
 		"syndicate commando",
+		"syndicate commando comander",
 		"special ops officer",
 		"blue wizard",
 		"red wizard",
@@ -861,7 +862,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_death_commando()
 
 		if("syndicate commando")
-			M.equip_syndicate_commando()
+			M.equip_syndicate_commando(FALSE)
+
+		if("syndicate commando comander")
+			M.equip_syndicate_commando(TRUE)
 
 		if("nanotrasen representative")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
