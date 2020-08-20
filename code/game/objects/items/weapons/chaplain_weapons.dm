@@ -495,7 +495,7 @@
 	flags = HEADCOVERSEYES|THICKMATERIAL|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "crusader_helmet"
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/list/holy_armor = list(melee = 70, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/holy_armor = list(melee = 55, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/def_armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEMASK
 	cold_protection = HEAD
