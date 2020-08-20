@@ -137,6 +137,7 @@
 		if(peelz.len)
 			var/obj/item/weapon/reagent_containers/pill/P = pick(peelz)
 			remove_from_storage(P)
+			user.SetNextMove(CLICK_CD_MELEE)
 			P.attack(target,user)
 			return 1
 

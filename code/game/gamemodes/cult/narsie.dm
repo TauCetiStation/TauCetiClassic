@@ -155,7 +155,7 @@
 	narsie_spawn_animation()
 	invisibility = 60
 
-	addtimer(CALLBACK(SSshuttle, /datum/subsystem/shuttle.proc/incall, 0.5), 70)
+	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user)
 	if(!(src in view()))

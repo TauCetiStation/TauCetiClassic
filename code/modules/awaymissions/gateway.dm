@@ -106,7 +106,7 @@
 	update_icon()
 
 	set_power_use(ACTIVE_POWER_USE)
-	START_PROCESSING(SSmachine, src)
+	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -117,7 +117,7 @@
 	update_icon()
 
 	set_power_use(IDLE_POWER_USE)
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)

@@ -33,20 +33,20 @@
 		return
 
 	var/mob/living/carbon/human/newtraitor = pick(possible_traitors)
-	ticker.mode.equip_traitor(newtraitor)
-	ticker.mode.syndicates += newtraitor.mind
-	ticker.mode.update_synd_icons_added(newtraitor.mind)
+	SSticker.mode.equip_traitor(newtraitor)
+	SSticker.mode.syndicates += newtraitor.mind
+	SSticker.mode.update_synd_icons_added(newtraitor.mind)
 	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
 	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
 	newtraitor.mind.special_role = "Syndicate"
 	newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
-	ticker.mode.forge_syndicate_objectives(newtraitor.mind)
+	SSticker.mode.forge_syndicate_objectives(newtraitor.mind)
 	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
 	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in newtraitor.mind.objectives)
 		to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
-	ticker.mode.update_all_synd_icons()
+	SSticker.mode.update_all_synd_icons()
 
 

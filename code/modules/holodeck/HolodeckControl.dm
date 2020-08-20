@@ -36,7 +36,7 @@
 /obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
-	dat += "<B>Holodeck Control System</B><BR>"
+	dat += ""
 	dat += "<HR>Current Loaded Programs:<BR>"
 	for(var/prog in supported_programs)
 		if(prog == "Empty")
@@ -75,7 +75,10 @@
 	else
 		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", "Holodeck Control System", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 
