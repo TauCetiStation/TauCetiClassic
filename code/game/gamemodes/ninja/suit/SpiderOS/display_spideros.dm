@@ -9,8 +9,6 @@
 		to_chat(affecting, "<span class='warning'>The interface is locked!</span>")
 	return
 
-#define SPIDEROS(what) {"<span class="spider_os16x16 [#what]"></span>"}
-
 // SPIDEROS PROC
 /obj/item/clothing/suit/space/space_ninja/proc/display_spideros()
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
@@ -18,14 +16,14 @@
 	var/mob/living/silicon/ai/A = AI
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/spider_os)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/spider_os)
 	assets.send(U)
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"
-	dat += "<a href='byond://?src=\ref[src];choice=Refresh'>[SPIDEROS(sos_7)] Refresh</a>"
+	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
 	if(spideros)
-		dat += " | <a href='byond://?src=\ref[src];choice=Return'>[SPIDEROS(sos_1)] Return</a>"
-	dat += " | <a href='byond://?src=\ref[src];choice=Close'>[SPIDEROS(sos_8)] Close</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
+	dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
 	dat += "<br>"
 	if(s_control)
 		dat += "<h2 ALIGN=CENTER>SpiderOS v.1.337</h2>"
@@ -33,10 +31,10 @@
 	else
 		dat += "<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>"
 	dat += "<br>"
-	dat += "[SPIDEROS(sos_10)] Current Time: [worldtime2text()]<br>"
-	dat += "[SPIDEROS(sos_9)] Battery Life: [round(cell.charge/100)]%<br>"
-	dat += "[SPIDEROS(sos_11)] Smoke Bombs: \Roman [s_bombs]<br>"
-	dat += "[SPIDEROS(sos_14)] pai Device: "
+	dat += "<img src=sos_10.png> Current Time: [worldtime2text()]<br>"
+	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
+	dat += "<img src=sos_11.png> Smoke Bombs: \Roman [s_bombs]<br>"
+	dat += "<img src=sos_14.png> pai Device: "
 	if(pai)
 		dat += "<a href='byond://?src=\ref[src];choice=Configure pAI'>Configure</a>"
 		dat += " | "
@@ -47,23 +45,23 @@
 
 	switch(spideros)
 		if(0)
-			dat += "<h4>[SPIDEROS(sos_1)] Available Functions:</h4>"
+			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=7'>[SPIDEROS(sos_4)] Research Stored</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_4.png> Research Stored</a></li>"
 			if(s_control)
 				if(AI)
-					dat += "<li><a href='byond://?src=\ref[src];choice=5'>[SPIDEROS(sos_13)] AI Status</a></li>"
+					dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_13.png> AI Status</a></li>"
 			else
-				dat += "<li><a href='byond://?src=\ref[src];choice=Shock'>[SPIDEROS(sos_4)] Shock [U.real_name]</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=6'>[SPIDEROS(sos_6)] Activate Abilities</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=3'>[SPIDEROS(sos_3)] Medical Screen</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=1'>[SPIDEROS(sos_5)] Atmos Scan</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=2'>[SPIDEROS(sos_12)] Messenger</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=Shock'><img src=sos_4.png> Shock [U.real_name]</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_6.png> Activate Abilities</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_3.png> Medical Screen</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_5.png> Atmos Scan</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_12.png> Messenger</a></li>"
 			if(s_control)
-				dat += "<li><a href='byond://?src=\ref[src];choice=4'>[SPIDEROS(sos_6)] Other</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Other</a></li>"
 			dat += "</ul>"
 		if(3)
-			dat += "<h4>[SPIDEROS(sos_3)] Medical Report:</h4>"
+			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
 			if(U.dna)
 				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
 				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
@@ -82,10 +80,10 @@
 			for(var/datum/reagent/R in reagents.reagent_list)
 				if(R.id=="radium"&&s_control)//Can only directly inject radium when AI is in control.
 					continue
-				dat += "<li><a href='byond://?src=\ref[src];choice=Inject;name=[R.name];tag=[R.id]'>[SPIDEROS(sos_2)] Inject [R.name]: [(reagents.get_reagent_amount(R.id)-(R.id=="radium"?(a_boost*a_transfer):0))/(R.id=="nutriment"?5:a_transfer)] left</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=Inject;name=[R.name];tag=[R.id]'><img src=sos_2.png> Inject [R.name]: [(reagents.get_reagent_amount(R.id)-(R.id=="radium"?(a_boost*a_transfer):0))/(R.id=="nutriment"?5:a_transfer)] left</a></li>"
 			dat += "</ul>"
 		if(1)
-			dat += "<h4>[SPIDEROS(sos_5)] Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
+			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
 			var/turf/T = get_turf_or_move(U.loc)
 			if (isnull(T))
 				dat += "Unable to obtain a reading."
@@ -115,9 +113,9 @@
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
 		if(2)
 			if(k_unlock==7||!s_control)
-				dat += "<a href='byond://?src=\ref[src];choice=32'>[SPIDEROS(sos_1)] Hidden Menu</a>"
-			dat += "<h4>[SPIDEROS(sos_12)] Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
-			dat += "<h4>[SPIDEROS(sos_6)] Detected PDAs:</h4>"
+				dat += "<a href='byond://?src=\ref[src];choice=32'><img src=sos_1.png> Hidden Menu</a>"
+			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
+			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
 			dat += "<ul>"
 			var/count = 0
 			for (var/obj/item/device/pda/P in PDAs)
@@ -130,7 +128,7 @@
 			if (count == 0)
 				dat += "None detected.<br>"
 		if(32)
-			dat += "<h4>[SPIDEROS(sos_1)] Hidden Menu:</h4>"
+			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
 			if(s_control)
 				dat += "Please input password: "
 				dat += "<a href='byond://?src=\ref[src];choice=Unlock Kamikaze'><b>HERE</b></a><br>"
@@ -143,7 +141,7 @@
 				dat += "<b>ERROR</b>: TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive.<br>"
 		if(4)
 			dat += {"
-					<h4>[SPIDEROS(sos_6)] Ninja Manual:</h4>
+					<h4><img src=sos_6.png> Ninja Manual:</h4>
 					<h5>Who they are:</h5>
 					Space ninjas are a special type of ninja, specifically one of the space-faring type. The vast majority of space ninjas belong to the Spider Clan, a cult-like sect, which has existed for several hundred years. The Spider Clan practice a sort of augmentation of human flesh in order to achieve a more perfect state of being and follow Postmodern Space Bushido. They also kill people for money. Their leaders are chosen from the oldest of the grand-masters, people that have lived a lot longer than any mortal man should.<br>Being a sect of technology-loving fanatics, the Spider Clan have the very best to choose from in terms of hardware--cybernetic implants, exoskeleton rigs, hyper-capacity batteries, and you get the idea. Some believe that much of the Spider Clan equipment is based on reverse-engineered alien technology while others doubt such claims.<br>Whatever the case, their technology is absolutely superb.
 					<h5>How they relate to other SS13 organizations:</h5>
@@ -188,7 +186,7 @@
 					"}//This has always bothered me but not anymore!
 		if(5)
 			var/laws
-			dat += "<h4>[SPIDEROS(sos_13)] AI Control:</h4>"
+			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
 			//var/mob/living/silicon/ai/A = AI
 			if(AI)//If an AI exists.
 				dat += "Stored AI: <b>[A.name]</b><br>"
@@ -226,20 +224,20 @@
 				dat += " <A href='byond://?src=\ref[src];choice=Wireless AI'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"
 		if(6)
 			dat += {"
-					<h4>[SPIDEROS(sos_6)] Activate Abilities:</h4>
+					<h4><img src=sos_6.png> Activate Abilities:</h4>
 					<ul>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Phase Jaunt;cost= (10E)'>[SPIDEROS(sos_13)] Phase Jaunt</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Phase Shift;cost= (20E)'>[SPIDEROS(sos_13)] Phase Shift</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Blade;cost= (5E)'>[SPIDEROS(sos_13)] Energy Blade</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Star;cost= (5E)'>[SPIDEROS(sos_13)] Energy Star</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Net;cost= (20E)'>[SPIDEROS(sos_13)] Energy Net</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=EM Burst;cost= (25E)'>[SPIDEROS(sos_13)] EM Pulse</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Smoke Bomb;cost='>[SPIDEROS(sos_13)] Smoke Bomb</a></li>
-					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Adrenaline Boost;cost='>[SPIDEROS(sos_13)] Adrenaline Boost</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Phase Jaunt;cost= (10E)'><img src=sos_13.png> Phase Jaunt</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Phase Shift;cost= (20E)'><img src=sos_13.png> Phase Shift</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Blade;cost= (5E)'><img src=sos_13.png> Energy Blade</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Star;cost= (5E)'><img src=sos_13.png> Energy Star</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Energy Net;cost= (20E)'><img src=sos_13.png> Energy Net</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=EM Burst;cost= (25E)'><img src=sos_13.png> EM Pulse</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Smoke Bomb;cost='><img src=sos_13.png> Smoke Bomb</a></li>
+					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Adrenaline Boost;cost='><img src=sos_13.png> Adrenaline Boost</a></li>
 					</ul>
 					"}
 		if(7)
-			dat += "<h4>[SPIDEROS(sos_4)] Research Stored:</h4>"
+			dat += "<h4><img src=sos_4.png> Research Stored:</h4>"
 			if(t_disk)
 				dat += "<a href='byond://?src=\ref[src];choice=Eject Disk'>Eject Disk</a><br>"
 			dat += "<ul>"
@@ -255,5 +253,3 @@
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
 	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
-
-#undef SPIDEROS
