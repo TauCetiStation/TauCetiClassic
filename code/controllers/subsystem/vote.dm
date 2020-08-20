@@ -112,6 +112,7 @@ SUBSYSTEM_DEF(vote)
 			. += "<tr><td>"
 			if(C.key in choice.voters)
 				. += "<b><a href='?src=\ref[src];vote=\ref[choice]'>[choice.text]</a></b>"
+				. += " [html_decode("&#10003")]" // Checkmark
 			else
 				. += "<a href='?src=\ref[src];vote=\ref[choice]'>[choice.text]</a>"
 			. += "</td><td align = 'center'>[c_votes]</td></tr>"
