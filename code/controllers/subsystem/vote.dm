@@ -23,12 +23,9 @@ SUBSYSTEM_DEF(vote)
 					C << browse(null, "window=vote;can_close=0")
 				stop_vote()
 			else
-				update_voters()
+				for(var/client/C in voters)
+					interface_client(C)
 
-
-/datum/controller/subsystem/vote/proc/update_voters()
-	for(var/client/C in voters)
-		interface_client(C)
 
 /datum/controller/subsystem/vote/proc/interface_client(client/C)
 	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650)
