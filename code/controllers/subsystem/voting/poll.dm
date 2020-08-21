@@ -64,23 +64,23 @@
 /datum/poll/process()
 	return
 
-/datum/poll/proc/vote(datum/vote_choice/choice, client/CL)
-	var/ckey = CL.ckey
+/datum/poll/proc/vote(datum/vote_choice/choice, client/C)
+	var/ckey = C.ckey
 	if(ckey in choice.voters)
 		if(can_revote && can_unvote)
 			choice.voters.Remove(ckey)
 	else
 		if(multiple_votes)
-			choice.voters[ckey] = get_vote_power(CL)
+			choice.voters[ckey] = get_vote_power(C)
 		else
 			var/already_voted = FALSE
-			for(var/datum/vote_choice/C in choices)
-				if(ckey in C.voters)
+			for(var/datum/vote_choice/VC in choices)
+				if(ckey in VC.voters)
 					already_voted = TRUE
 					if(can_revote)
-						C.voters.Remove(ckey)
+						VC.voters.Remove(ckey)
 			if(can_revote || !already_voted)
-				choice.voters[ckey] = get_vote_power(CL)
+				choice.voters[ckey] = get_vote_power(C)
 
 
 //How much does this person's vote count for?
