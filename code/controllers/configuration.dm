@@ -32,7 +32,6 @@ var/list/net_announcer_secret = list()
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
-	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
@@ -372,9 +371,6 @@ var/list/net_announcer_secret = list()
 
 				if ("default_no_vote")
 					config.vote_no_default = 1
-
-				if ("vote_delay")
-					config.vote_delay = text2num(value)
 
 				if ("vote_period")
 					config.vote_period = text2num(value)

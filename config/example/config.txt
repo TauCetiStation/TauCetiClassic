@@ -96,15 +96,6 @@ ALLOW_ADMIN_OOCCOLOR
 ## If metadata is supported
 # ALLOW_METADATA
 
-## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
-
-## allow players to initate a mode-change start
-ALLOW_VOTE_MODE
-
-## min delay (deciseconds) between voting sessions (default 1 hour)
-VOTE_DELAY 36000
-
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 1200
 
