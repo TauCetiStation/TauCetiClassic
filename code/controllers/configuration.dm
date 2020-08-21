@@ -33,7 +33,6 @@ var/list/net_announcer_secret = list()
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
@@ -364,9 +363,6 @@ var/list/net_announcer_secret = list()
 
 				if ("allow_admin_spawning")
 					config.allow_admin_spawning = 1
-
-				if ("default_no_vote")
-					config.vote_no_default = 1
 
 				if ("vote_period")
 					config.vote_period = text2num(value)
