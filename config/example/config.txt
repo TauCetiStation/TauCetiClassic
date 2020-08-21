@@ -99,9 +99,6 @@ ALLOW_ADMIN_OOCCOLOR
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 1200
 
-## prevents dead players from voting or starting votes
-#NO_DEAD_VOTE
-
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 DEFAULT_NO_VOTE
 
