@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(vote)
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
 			. += "<tr><td>"
-			if(C.key in choice.voters)
+			if(C.ckey in choice.voters)
 				. += "<b><a href='?src=\ref[src];vote=\ref[choice]'>[choice.text]</a></b>"
 				. += " [html_decode("&#10003")]" // Checkmark
 			else
