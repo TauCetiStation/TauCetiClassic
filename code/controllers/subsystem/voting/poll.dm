@@ -175,11 +175,6 @@
 	if(!M || M.stat == DEAD || isobserver(M) || isnewplayer(M) || ismouse(M) || isdrone(M))
 		return VOTE_WEIGHT_LOW
 
-	var/datum/mind/mind = M.mind
-	if(!mind)
-		//If you don't have a mind in your mob, you arent really alive
-		return VOTE_WEIGHT_LOW
-
 	//Antags control the story of the round, they should be able to delay evac in order to enact their
 	//fun and interesting plans
 	if(is_special_character(M))
@@ -187,7 +182,7 @@
 
 	//How long has this player been alive
 	//This comes after the antag check because that's more important
-	var/lifetime = world.time - mind.creation_time
+	var/lifetime = world.time - M.mind.creation_time
 	if(lifetime <= MINIMUM_VOTE_LIFETIME)
 		//If you just spawned for the vote, your weight is still low
 		return VOTE_WEIGHT_LOW
