@@ -59,7 +59,6 @@
 		for (var/x = 1 to 8)
 			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"		//Color the squares in black and white or black and green in case of the chaplain kit.
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
-			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
 			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
 				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
