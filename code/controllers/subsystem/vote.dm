@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(vote)
 
 	vote_start_time = world.time
 
-	for(var/client/C in voters)
+	for(var/client/C in clients)
 		interface_client(C)
 
 	var/text = "[poll.name] vote started by [poll.initiator]."
