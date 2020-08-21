@@ -147,6 +147,7 @@
 		if(ch == winner)
 			text += "</b>"
 
+	text += "\tTotal voted - [all_voters.len]<br>"
 	if(!winner)
 		text += "\t<b>Did not vote - [non_voters]</b><br>"
 	else
