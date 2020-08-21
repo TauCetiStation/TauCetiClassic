@@ -1,6 +1,5 @@
 var/round_start_time = 0
 var/round_start_realtime = 0
-var/round_progressing = TRUE
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
@@ -89,9 +88,7 @@ SUBSYSTEM_DEF(ticker)
 			//countdown
 			if(timeLeft < 0)
 				return
-
-			if(round_progressing)
-				timeLeft -= wait
+			timeLeft -= wait
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP

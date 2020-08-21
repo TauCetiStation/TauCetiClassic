@@ -160,14 +160,12 @@
 /datum/poll/gamemode/on_start()
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		pregame = TRUE
-		round_progressing = FALSE
-		to_chat(world, "<b>Game start has been delayed due to voting.</b>")
+		if(SSticker.timeLeft < config.vote_period)
+			SSticker.timeLeft = config.vote_period + 10 SECONDS
+			to_chat(world, "<b>Game start has been delayed due to voting.</b>")
 
 /datum/poll/gamemode/on_end()
 	..()
-	if(pregame)
-		round_progressing = TRUE
-		to_chat(world, "<b>The game will start in [SSticker.timeLeft/10] seconds.</b>")
 	pregame = FALSE
 
 /datum/vote_choice/gamemode
