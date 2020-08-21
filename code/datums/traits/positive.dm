@@ -1,5 +1,5 @@
 /datum/quirk/multitasking
-	name = "Multitasking"
+	name = QUIRK_MULTITASKING
 	desc = "You can do stuff with both of your hands simultaneously!"
 	value = 2
 	mob_trait = TRAIT_MULTITASKING
