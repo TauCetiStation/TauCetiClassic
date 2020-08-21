@@ -147,11 +147,11 @@
 		if(ch == winner)
 			text += "</b>"
 
-	text += "\tTotal voted - [all_voters.len]<br>"
+	text += "Total voted - [all_voters.len]<br>"
 	if(!winner)
-		text += "\t<b>Did not vote - [non_voters]</b><br>"
+		text += "<b>Did not vote - [non_voters]</b><br>"
 	else
-		text += "\tDid not vote - [non_voters]<br>"
+		text += "Did not vote - [non_voters]<br>"
 		winner.on_win()
 
 	log_vote(text)
