@@ -143,7 +143,7 @@
 	for(var/datum/vote_choice/ch in choice_votes)
 		if(ch == winner)
 			text += "<b>"
-		text += "\t[ch.text] - [(choice_votes[ch]/total_votes())*100]%<br>"
+		text += "\t[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%<br>"
 		if(ch == winner)
 			text += "</b>"
 
