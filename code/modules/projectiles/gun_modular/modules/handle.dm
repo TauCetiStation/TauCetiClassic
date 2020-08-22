@@ -10,7 +10,7 @@
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     move_x = -7
-    move_y = 3
+    move_y = -5
     prefix_radial = "Handle"
     var/lessrecoil = 0
     var/clumsy_check = TRUE

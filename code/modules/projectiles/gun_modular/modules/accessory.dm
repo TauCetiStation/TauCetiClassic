@@ -328,7 +328,7 @@
     lessdispersion = 0
     size_gun = 2
     move_x = 3
-    move_y = 1
+    move_y = 3
     prefix_radial = "Additional Battery"
     gun_type = ENERGY_GUN
     var/obj/item/weapon/stock_parts/cell/additional_battery = null

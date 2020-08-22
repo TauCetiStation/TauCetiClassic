@@ -9,7 +9,7 @@
     lessdispersion = 0
     size_gun = 1
     move_x = 5
-    move_y = 1
+    move_y = 5
     gun_type = ALL_GUN_TYPE
     prefix_radial = "Barrel"
     var/silensed = FALSE
