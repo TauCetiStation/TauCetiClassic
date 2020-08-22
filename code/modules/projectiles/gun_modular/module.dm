@@ -29,10 +29,7 @@ obj/item/weapon/gun_modular/module/Destroy()
         remove()
     return ..()
 
-obj/item/weapon/gun_modular/module/proc/get_icon_overlay(var/matrix/mat)
-    var/image/icon_overlay_changed = image(icon, icon_overlay_name)
-    animate(icon_overlay_changed, transform = mat)
-    return icon_overlay_changed
+// This gives information in the tooltip, here you can talk about additional weapon stats
 
 obj/item/weapon/gun_modular/module/proc/get_info_module()
     var/info_module = ""
@@ -54,11 +51,15 @@ obj/item/weapon/gun_modular/module/attackby(obj/item/weapon/W, mob/user, params)
     if(attach_item_in_module(W, user))
         return TRUE
 
+// Activation of the module, configs are sent to this, as well as deactivation of modules, it is activated to return everything to the past state
+
 obj/item/weapon/gun_modular/module/proc/activate(mob/user, var/argument="")
     return FALSE
 
 obj/item/weapon/gun_modular/module/proc/deactivate(mob/user, var/argument="")
     return FALSE
+
+// Removing all items that were installed in the weapon
 
 obj/item/weapon/gun_modular/module/proc/remove_items(mob/user)
     if(!do_after(user, 2 SECOND, target = src))
@@ -77,6 +78,8 @@ obj/item/weapon/gun_modular/module/proc/attach_item_in_module(var/obj/item/I, mo
 obj/item/weapon/gun_modular/module/proc/can_attach(var/obj/item/I)
     return FALSE
 
+// Check for the ability to attach the module to the frame
+
 obj/item/weapon/gun_modular/module/proc/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!istype(I, /obj/item/weapon/gun_modular/module/frame))
         return FALSE
@@ -88,6 +91,8 @@ obj/item/weapon/gun_modular/module/proc/checking_to_attach(var/obj/item/weapon/g
     if(gun_type != frame.gun_type && gun_type != ALL_GUN_TYPE)
         return FALSE
     return TRUE
+
+// Module attachment procedure
 
 obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/module/frame/I, mob/user)
     if(!istype(I))
@@ -111,6 +116,8 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
     frame.change_state(src, TRUE)
     return TRUE
 
+// Module removal procedure
+
 obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
     frame_parent.modules[prefix_radial] = null
     frame_parent.cut_overlay(icon_overlay)
@@ -124,6 +131,8 @@ obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
     frame_parent = null
     if(user)
         to_chat(user, "Module '[name]' has been removed")
+
+// This check is called for each module when a module is removed from a weapon. This is done to avoid conflicts.
 
 obj/item/weapon/gun_modular/module/proc/check_remove()
     return !checking_to_attach(frame_parent)

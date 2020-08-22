@@ -19,6 +19,8 @@ obj/item/weapon/gun_modular/module/frame
     var/list/icon/radial_icons = list()
     var/list/image/human_overlays = list()
 
+// When changing weapons, icons are rebuilt to display on a person
+
 obj/item/weapon/gun_modular/module/frame/proc/build_images()
     var/image/l_hand = image(icon = icon, icon_state = "")
     var/image/r_hand = image(icon = icon, icon_state = "")
@@ -90,11 +92,15 @@ obj/item/weapon/gun_modular/module/frame/Destroy()
             modules[key].Destroy()
     return ..()
 
+// Generation of icons for the radial menu, generated when creating a configuration for a weapon
+
 obj/item/weapon/gun_modular/module/frame/proc/generate_radial_icon()
     radial_icons = list()
     for(var/key in modules)
         if(modules[key])
             radial_icons[key] = image(modules[key].icon, modules[key].icon_state)
+
+// Weapon configuration by index, you can configure which module to activate during actions. Now done by clicking on the weapon and by CTRL clicking
 
 obj/item/weapon/gun_modular/module/frame/proc/config_user(mob/user, var/index)
     if(!modules[config_user[index]])
@@ -149,6 +155,8 @@ obj/item/weapon/gun_modular/module/frame/attack_self(mob/user)
 obj/item/weapon/gun_modular/module/frame/AltClick(mob/user)
     . = ..()
     config_user(user, "AltClick")
+
+// Pulling objects out of the frame is done according to a different principle, since this is a common use for all modules, it is activated with a screwdriver. Here, when you click with a screwdriver, a module for pulling out is given
 
 obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
     if(!modules)
@@ -205,6 +213,8 @@ obj/item/weapon/gun_modular/module/frame/can_attach(var/obj/item/weapon/gun_modu
     var/obj/item/weapon/gun_modular/module/module = M
     return module.checking_to_attach(src)
 
+// Changing the stats of weapons, called when the module is attached, as well as when it is pulled
+
 obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/gun_modular/module/M, var/attach = TRUE)
     if(!istype(M, /obj/item/weapon/gun_modular/module))
         return FALSE
@@ -227,7 +237,7 @@ obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/g
     update_icon()
     return TRUE
 
-///////////////////////////////////////////set up
+// These are weapon presets for testing, and can be used to create station or spawn weapon presets. The main thing is to observe the order as when assembling
 
 obj/item/weapon/gun_modular/module/frame/ptr_heavyrifle/atom_init()
     . = ..()

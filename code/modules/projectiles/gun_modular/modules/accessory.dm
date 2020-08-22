@@ -39,6 +39,8 @@
     frame_parent.active_accessory = null
     return TRUE
 
+// It is activated if the module is active and the person tried to shoot, in this case, the code first occurs here, and if it returns FALSE, then the weapon will not fire
+
 /obj/item/weapon/gun_modular/module/accessory/proc/target_activate(atom/A, mob/living/user)
     deactivate_module(user)
     return TRUE
