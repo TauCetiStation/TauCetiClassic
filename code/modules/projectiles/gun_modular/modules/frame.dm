@@ -115,6 +115,8 @@
     if(!config_user[index])
         generate_radial_icon()
         var/rezult = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
+        if(!in_range(user, src))
+            return
         config_user[index] = rezult
     else
         modules[config_user[index]].activate(user)
@@ -174,6 +176,8 @@
         return
     if(!do_after(user, 2 SECOND, target = src))
         return FALSE
+    if(!in_range(user, src))
+        return
     modules[remove].remove(user)
 
 /obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)

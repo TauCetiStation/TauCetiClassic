@@ -113,6 +113,8 @@
     if(user)
         if(!do_after(user, 1 SECOND, target = I))
             return FALSE
+        if(!in_range(user, frame))
+            return FALSE
         user.drop_item()
         to_chat(user, "Module '[name]' was attached")
     src.loc = frame
