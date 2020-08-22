@@ -245,14 +245,6 @@
 		return
 	..()
 
-/mob/living/silicon/robot/drone/death(gibbed)
-
-	if(module)
-		var/obj/item/weapon/gripper/G = locate(/obj/item/weapon/gripper) in module
-		if(G) G.drop_item()
-
-	..(gibbed)
-
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
