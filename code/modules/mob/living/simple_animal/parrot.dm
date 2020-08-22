@@ -684,7 +684,7 @@
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS LOOSE CALL THE SHUTTLE")
+	speak = list("Поли хочет крекер!", ":e Проверьте сингу, долбожуи!",":e Настройте соляры, ленивые черти!",":e КТО ВЗЯЛ ВСЕ СРАНЫЕ СКАФАНДРЫ?",":e СИНГА СБЕЖАЛА ЗОВИТЕ ШАТТЛ!")
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -696,19 +696,19 @@
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
-		speak += pick("...[longest_survival].", "The things I have seen!", "I have lived many lives!", "What are you before me?")
+		speak += pick("...[longest_survival].", "Вещи, мною виденные!", "Я прожил много жизней!", "Что есть ты передо мной?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
-		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		speak += pick("Чего ты ждешь!", "Насилие порождает насилие!", "Кровь! Кровь!", "Убей меня, если посмеешь!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
-		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		speak += pick("...снова?", "Нет, оно же было кончено!", "Выпустите меня!", "Никогда не кончается!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
-		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+		speak += pick("...живой?", "Это не попугайский рай!", "Я живу, я умираю, я живу снова!", "Пустота исчезает!")
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
