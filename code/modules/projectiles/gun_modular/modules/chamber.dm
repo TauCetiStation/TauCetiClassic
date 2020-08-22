@@ -1,4 +1,4 @@
-obj/item/weapon/gun_modular/module/chamber
+/obj/item/weapon/gun_modular/module/chamber
     name = "gun bullet chamber"
     desc = "The chamber, requests a cartridge from the magazine holder and, if possible, receives it, upon confirmation of the handle, it fires a shot, the accuracy of which depends on the totality of statistics of all modules. Also in the chamber, there is a default recoil, which must be compensated for by a suitable handle. Also, the frequency of shooting depends on the damage inflicted by the bullet, some types of chamber do not have such a limitation."
     icon_state = "chamber_bullet_icon"
@@ -22,13 +22,13 @@ obj/item/weapon/gun_modular/module/chamber
     var/recoil_chamber = 0
     var/pellets
 
-obj/item/weapon/gun_modular/module/chamber/Destroy()
+/obj/item/weapon/gun_modular/module/chamber/Destroy()
     if(chambered)
         chambered.Destroy()
     chambered = null
     return ..()
 
-obj/item/weapon/gun_modular/module/chamber/get_info_module()
+/obj/item/weapon/gun_modular/module/chamber/get_info_module()
     var/info_module = ..()
     info_module += "Fire delay default - [fire_delay_default]\n"
     info_module += "Recoil - [recoil_chamber]\n"
@@ -40,24 +40,24 @@ obj/item/weapon/gun_modular/module/chamber/get_info_module()
     info_module += "Destruction of the cartridge case - [no_casing ? "TRUE" : "FALSE"]\n"
     return info_module
 
-obj/item/weapon/gun_modular/module/chamber/activate(mob/user)
+/obj/item/weapon/gun_modular/module/chamber/activate(mob/user)
     if(chambered)
         playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
         process_chamber()
 
-obj/item/weapon/gun_modular/module/chamber/proc/ready_to_fire()
+/obj/item/weapon/gun_modular/module/chamber/proc/ready_to_fire()
     if(world.time >= last_fired + fire_delay)
         last_fired = world.time
         return TRUE
     else
         return FALSE
 
-obj/item/weapon/gun_modular/module/chamber/proc/shoot_with_empty_chamber(mob/living/user)
+/obj/item/weapon/gun_modular/module/chamber/proc/shoot_with_empty_chamber(mob/living/user)
     to_chat(user, "<span class='warning'>*click*</span>")
     playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
     return
 
-obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user, var/silensed = FALSE)
+/obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user, var/silensed = FALSE)
     var/recoil = 0
     if(frame_parent.handle)
         recoil = max(recoil_chamber - frame_parent.handle.get_recoil_shoot(), 0)
@@ -75,7 +75,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user,
         playsound(user, fire_sound, VOL_EFFECTS_MASTER)
         user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
 
-obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/user, params, var/point_blank = FALSE)
+/obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/user, params, var/point_blank = FALSE)
     if(!ready_to_fire())
         return
     fire_delay = fire_delay_default 
@@ -105,7 +105,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/use
     process_chamber(TRUE)
     update_icon()
 
-obj/item/weapon/gun_modular/module/chamber/proc/process_chamber(var/chamber_round = FALSE)
+/obj/item/weapon/gun_modular/module/chamber/proc/process_chamber(var/chamber_round = FALSE)
     var/obj/item/ammo_casing/AC = chambered //Find chambered round
     if(isnull(AC) || !istype(AC))
         chamber_round()
@@ -125,7 +125,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/process_chamber(var/chamber_roun
         chamber_round()
     return
 
-obj/item/weapon/gun_modular/module/chamber/proc/chamber_round()
+/obj/item/weapon/gun_modular/module/chamber/proc/chamber_round()
     if (chambered || !frame_parent.magazine)
         return
     if (frame_parent.magazine.Ammo_Count())
@@ -142,7 +142,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/chamber_round()
 
 
 
-obj/item/weapon/gun_modular/module/chamber/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+/obj/item/weapon/gun_modular/module/chamber/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!istype(I, /obj/item/weapon/gun_modular/module/frame))
         return FALSE
     var/obj/item/weapon/gun_modular/module/frame/frame = I
@@ -150,10 +150,10 @@ obj/item/weapon/gun_modular/module/chamber/checking_to_attach(var/obj/item/weapo
         return FALSE
     return TRUE
 
-obj/item/weapon/gun_modular/module/chamber/check_remove()
+/obj/item/weapon/gun_modular/module/chamber/check_remove()
     return FALSE
 
-obj/item/weapon/gun_modular/module/chamber/attach(var/obj/item/weapon/gun_modular/module/frame/I, user)
+/obj/item/weapon/gun_modular/module/chamber/attach(var/obj/item/weapon/gun_modular/module/frame/I, user)
     if(!..())
         return FALSE
     frame_parent.gun_type = gun_type
@@ -161,14 +161,14 @@ obj/item/weapon/gun_modular/module/chamber/attach(var/obj/item/weapon/gun_modula
     frame_parent.chamber = src
     return TRUE
 
-obj/item/weapon/gun_modular/module/chamber/remove()
+/obj/item/weapon/gun_modular/module/chamber/remove()
     if(frame_parent)
         frame_parent.gun_type = null
         frame_parent.caliber = null
         frame_parent.chamber = null
     ..()
 
-obj/item/weapon/gun_modular/module/chamber/energy
+/obj/item/weapon/gun_modular/module/chamber/energy
     name = "gun energy chamber"
     icon_state = "chamber_laser"
     caliber = "energy"
@@ -181,10 +181,10 @@ obj/item/weapon/gun_modular/module/chamber/energy
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
 
-obj/item/weapon/gun_modular/module/chamber/energy/activate(mob/user)
+/obj/item/weapon/gun_modular/module/chamber/energy/activate(mob/user)
     select_fire(user)
 
-obj/item/weapon/gun_modular/module/chamber/energy/proc/select_fire(mob/living/user)
+/obj/item/weapon/gun_modular/module/chamber/energy/proc/select_fire(mob/living/user)
     if(lenses.len < 1)
         return
     if(lens_select >= lenses.len)
@@ -194,7 +194,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/proc/select_fire(mob/living/us
     if (lenses[lens_select].select_name)
         to_chat(user, "<span class='warning'>[src] is now set to [lenses[lens_select].select_name].</span>")
 
-obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/user, params)
+/obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/user, params)
     chamber_round()
     if(chambered)
         chambered.pellets = pellets
@@ -204,12 +204,12 @@ obj/item/weapon/gun_modular/module/chamber/energy/Fire(atom/target, mob/living/u
             chambered.BB.dispersion = 0.5 * pellets
     ..()
 
-obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
+/obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
     if(chambered)
         qdel(chambered)
         chambered = null
 
-obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
+/obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
     if(!frame_parent.magazine)
         return FALSE
     if(chambered)
@@ -220,7 +220,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/chamber_round()
         if(chambered)
             chambered.loc = src
 
-obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+/obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
         return FALSE
     LAZYINITLIST(lenses)
@@ -228,11 +228,11 @@ obj/item/weapon/gun_modular/module/chamber/energy/checking_to_attach(var/obj/ite
         return FALSE
     return TRUE
 
-obj/item/weapon/gun_modular/module/chamber/energy/remove_item_in_module(var/obj/item/ammo_casing/energy/I)
+/obj/item/weapon/gun_modular/module/chamber/energy/remove_item_in_module(var/obj/item/ammo_casing/energy/I)
     I.loc = get_turf(src)
     LAZYREMOVE(lenses, I)
 
-obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/item/ammo_casing/energy/I, mob/user = null)
+/obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/item/ammo_casing/energy/I, mob/user = null)
     if(!..())
         return FALSE
     if(I.caliber != caliber)
@@ -244,7 +244,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/attach_item_in_module(var/obj/
     I.loc = src
     return TRUE
 
-obj/item/weapon/gun_modular/module/chamber/energy/can_attach(var/obj/item/ammo_casing/energy/I)
+/obj/item/weapon/gun_modular/module/chamber/energy/can_attach(var/obj/item/ammo_casing/energy/I)
     if(!istype(I, /obj/item/ammo_casing/energy))
         return FALSE
     LAZYINITLIST(lenses)
@@ -253,7 +253,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/can_attach(var/obj/item/ammo_c
     return TRUE
 
 
-obj/item/weapon/gun_modular/module/chamber/energy/shotgun
+/obj/item/weapon/gun_modular/module/chamber/energy/shotgun
     name = "gun energy shotgun chamber"
     icon_state = "chamber_laser1"
     icon_overlay_name = "chamber_laser1"
@@ -267,7 +267,7 @@ obj/item/weapon/gun_modular/module/chamber/energy/shotgun
     fire_delay_default = 15
 
 
-obj/item/weapon/gun_modular/module/chamber/heavyrifle
+/obj/item/weapon/gun_modular/module/chamber/heavyrifle
     name = "PTR-7 rifle chamber"
     icon_state = "chamber_bullet_PTR_icon"
     icon_overlay_name = "chamber_bullet_PTR"
@@ -278,7 +278,7 @@ obj/item/weapon/gun_modular/module/chamber/heavyrifle
     fire_delay_default = 0
     recoil_chamber = 5
 
-obj/item/weapon/gun_modular/module/chamber/shotgun
+/obj/item/weapon/gun_modular/module/chamber/shotgun
     name = "gun shotgun chamber"
     caliber = "shotgun"
     lessdamage = 0

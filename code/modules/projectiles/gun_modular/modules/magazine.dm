@@ -16,7 +16,7 @@
     var/empty_chamber = TRUE
     var/no_casing = FALSE
 
-obj/item/weapon/gun_modular/module/magazine/get_info_module()
+/obj/item/weapon/gun_modular/module/magazine/get_info_module()
     var/info_module = ..()
     info_module += "Standard case actions:\n"
     info_module += "Eject casing - [eject_casing ? "TRUE" : "FALSE"]\n"

@@ -1,4 +1,4 @@
-obj/item/weapon/gun_modular/module/frame
+/obj/item/weapon/gun_modular/module/frame
     name = "gun frame"
     desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
     icon_state = "chamber_energy"
@@ -21,7 +21,7 @@ obj/item/weapon/gun_modular/module/frame
 
 // When changing weapons, icons are rebuilt to display on a person
 
-obj/item/weapon/gun_modular/module/frame/proc/build_images()
+/obj/item/weapon/gun_modular/module/frame/proc/build_images()
     var/image/l_hand = image(icon = icon, icon_state = "")
     var/image/r_hand = image(icon = icon, icon_state = "")
     var/image/belt = image(icon = icon, icon_state = "")
@@ -46,7 +46,7 @@ obj/item/weapon/gun_modular/module/frame/proc/build_images()
 
     update_icon()
 
-obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+/obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
     var/image/I = ..()
     src.update_icon()
     I.icon_state = ""
@@ -54,7 +54,7 @@ obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/
         I.add_overlay(human_overlays["[sprite_sheet_slot][icon_state_appendix]"])
     return I
 
-obj/item/weapon/gun_modular/module/frame/examine(mob/user)
+/obj/item/weapon/gun_modular/module/frame/examine(mob/user)
     ..()
     if(!in_range(user, src))
         return
@@ -78,7 +78,7 @@ obj/item/weapon/gun_modular/module/frame/examine(mob/user)
         dir += config_text
     to_chat(user, dir)
 
-obj/item/weapon/gun_modular/module/frame/atom_init()
+/obj/item/weapon/gun_modular/module/frame/atom_init()
     . = ..()
     var/matrix/frame_change = matrix()
     frame_change.Scale(0.85)
@@ -86,7 +86,7 @@ obj/item/weapon/gun_modular/module/frame/atom_init()
     animate(src, pixel_x = move_x, pixel_y = move_y, transform = frame_change)
     update_icon()
     
-obj/item/weapon/gun_modular/module/frame/Destroy()
+/obj/item/weapon/gun_modular/module/frame/Destroy()
     for(var/key in modules)
         if(modules[key])
             modules[key].Destroy()
@@ -94,7 +94,7 @@ obj/item/weapon/gun_modular/module/frame/Destroy()
 
 // Generation of icons for the radial menu, generated when creating a configuration for a weapon
 
-obj/item/weapon/gun_modular/module/frame/proc/generate_radial_icon()
+/obj/item/weapon/gun_modular/module/frame/proc/generate_radial_icon()
     radial_icons = list()
     for(var/key in modules)
         if(modules[key])
@@ -102,7 +102,7 @@ obj/item/weapon/gun_modular/module/frame/proc/generate_radial_icon()
 
 // Weapon configuration by index, you can configure which module to activate during actions. Now done by clicking on the weapon and by CTRL clicking
 
-obj/item/weapon/gun_modular/module/frame/proc/config_user(mob/user, var/index)
+/obj/item/weapon/gun_modular/module/frame/proc/config_user(mob/user, var/index)
     if(!modules[config_user[index]])
         config_user[index] = null
     if(!config_user[index])
@@ -112,14 +112,14 @@ obj/item/weapon/gun_modular/module/frame/proc/config_user(mob/user, var/index)
     else
         modules[config_user[index]].activate(user)
 
-obj/item/weapon/gun_modular/module/frame/verb/reset_config()
+/obj/item/weapon/gun_modular/module/frame/verb/reset_config()
     set src in usr
     set name = "Reset Config"
     set category = "Gun"
 
     config_user = list()
 
-obj/item/weapon/gun_modular/module/frame/verb/select_fire_chamber()
+/obj/item/weapon/gun_modular/module/frame/verb/select_fire_chamber()
     set src in usr
     set name = "Select fire"
     set category = "Gun"
@@ -127,7 +127,7 @@ obj/item/weapon/gun_modular/module/frame/verb/select_fire_chamber()
     if(chamber)
         chamber.activate(usr)
 
-obj/item/weapon/gun_modular/module/frame/verb/eject_magazine()
+/obj/item/weapon/gun_modular/module/frame/verb/eject_magazine()
     set src in usr
     set name = "Eject magazine/ammo"
     set category = "Gun"
@@ -135,30 +135,30 @@ obj/item/weapon/gun_modular/module/frame/verb/eject_magazine()
     if(magazine)
         magazine.activate(usr)
 
-obj/item/weapon/gun_modular/module/frame/dropped(mob/user)
+/obj/item/weapon/gun_modular/module/frame/dropped(mob/user)
     . = ..()
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = src
             A.deactivate(user)
 
-obj/item/weapon/gun_modular/module/frame/attack_hand(mob/user)
+/obj/item/weapon/gun_modular/module/frame/attack_hand(mob/user)
     . = ..()
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = user
 
-obj/item/weapon/gun_modular/module/frame/attack_self(mob/user)
+/obj/item/weapon/gun_modular/module/frame/attack_self(mob/user)
     . = ..()
     config_user(user, "AttackSelf")
 
-obj/item/weapon/gun_modular/module/frame/AltClick(mob/user)
+/obj/item/weapon/gun_modular/module/frame/AltClick(mob/user)
     . = ..()
     config_user(user, "AltClick")
 
 // Pulling objects out of the frame is done according to a different principle, since this is a common use for all modules, it is activated with a screwdriver. Here, when you click with a screwdriver, a module for pulling out is given
 
-obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
+/obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
     if(!modules)
         return
     generate_radial_icon()
@@ -169,7 +169,7 @@ obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
         return FALSE
     modules[remove].remove(user)
 
-obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)
     ..()
     if(istype(W, /obj/item/weapon/gun_modular/module))
         var/obj/item/weapon/gun_modular/module/module = W
@@ -185,7 +185,7 @@ obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, p
                     break
         return TRUE
 
-obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, flag, params)
+/obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, flag, params)
     if(!handle)
         return FALSE
     if(!handle.Special_Check(user))
@@ -196,7 +196,7 @@ obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, fl
     if(chamber)
         chamber.Fire(A, user, params)
 
-obj/item/weapon/gun_modular/module/frame/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/weapon/gun_modular/module/frame/attack(mob/living/M, mob/living/user, def_zone)
     if(!handle)
         return FALSE
     if(!handle.Special_Check(user))
@@ -207,7 +207,7 @@ obj/item/weapon/gun_modular/module/frame/attack(mob/living/M, mob/living/user, d
         return
     return ..()
 
-obj/item/weapon/gun_modular/module/frame/can_attach(var/obj/item/weapon/gun_modular/module/M)
+/obj/item/weapon/gun_modular/module/frame/can_attach(var/obj/item/weapon/gun_modular/module/M)
     if(!istype(M, /obj/item/weapon/gun_modular/module))
         return FALSE
     var/obj/item/weapon/gun_modular/module/module = M
@@ -215,7 +215,7 @@ obj/item/weapon/gun_modular/module/frame/can_attach(var/obj/item/weapon/gun_modu
 
 // Changing the stats of weapons, called when the module is attached, as well as when it is pulled
 
-obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/gun_modular/module/M, var/attach = TRUE)
+/obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/gun_modular/module/M, var/attach = TRUE)
     if(!istype(M, /obj/item/weapon/gun_modular/module))
         return FALSE
     var/obj/item/weapon/gun_modular/module/module = M
@@ -239,7 +239,7 @@ obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/g
 
 // These are weapon presets for testing, and can be used to create station or spawn weapon presets. The main thing is to observe the order as when assembling
 
-obj/item/weapon/gun_modular/module/frame/ptr_heavyrifle/atom_init()
+/obj/item/weapon/gun_modular/module/frame/ptr_heavyrifle/atom_init()
     . = ..()
     var/obj/item/weapon/gun_modular/module/chamber/heavyrifle/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/new_magazine = new(src)
@@ -254,7 +254,7 @@ obj/item/weapon/gun_modular/module/frame/ptr_heavyrifle/atom_init()
     new_barrel.attach(src)
     new_optical.attach(src)
 
-obj/item/weapon/gun_modular/module/frame/energy_shotgun/atom_init()
+/obj/item/weapon/gun_modular/module/frame/energy_shotgun/atom_init()
     . = ..()
     var/obj/item/weapon/gun_modular/module/chamber/energy/shotgun/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/energy/new_magazine = new(src)
@@ -281,7 +281,7 @@ obj/item/weapon/gun_modular/module/frame/energy_shotgun/atom_init()
     core_charger.attach_item_in_module(core)
     core_charger.attach(src)
 
-obj/item/weapon/gun_modular/module/frame/pistol_9mm/atom_init()
+/obj/item/weapon/gun_modular/module/frame/pistol_9mm/atom_init()
     . = ..()
     var/obj/item/weapon/gun_modular/module/chamber/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/bullet/new_magazine = new(src)
