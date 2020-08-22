@@ -2,6 +2,7 @@
     name = "gun accessory"
     icon_state = "optical_medium_icon"
     icon_overlay_name = "optical_medium"
+    icon_overlay_layer = LAYER_ACCESSORY
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 0
@@ -183,6 +184,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
+    move_x = 3
+    move_y = 0
     prefix_radial = "Core Charger"
     gun_type = ENERGY_GUN
     var/obj/item/device/assembly/signaler/anomaly/core = null
@@ -282,7 +285,7 @@
     lessdispersion = 0
     size_gun = 2
     move_x = 6
-    move_y = 6
+    move_y = 4
     prefix_radial = "Bayonet"
     gun_type = ALL_GUN_TYPE
     force = 12
@@ -324,6 +327,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 2
+    move_x = 3
+    move_y = 1
     prefix_radial = "Additional Battery"
     gun_type = ENERGY_GUN
     var/obj/item/weapon/stock_parts/cell/additional_battery = null
@@ -395,6 +400,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
+    move_x = 2
+    move_y = 2
     prefix_radial = "DNA Crypter"
     gun_type = ALL_GUN_TYPE
     var/mob/living/carbon/Owner = null

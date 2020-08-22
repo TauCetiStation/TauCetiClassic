@@ -3,12 +3,13 @@
     desc = "The barrel of the weapon has a greater effect on the accuracy of shooting, as well as the damage of the weapon, it also depends on the barrel which accessories can be attached to it"
     icon_state = "barrel_medium_icon"
     icon_overlay_name = "barrel_medium"
+    icon_overlay_layer = LAYER_BARREL
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    move_x = 4
-    move_y = 4
+    move_x = 5
+    move_y = 1
     gun_type = ALL_GUN_TYPE
     prefix_radial = "Barrel"
     var/silensed = FALSE

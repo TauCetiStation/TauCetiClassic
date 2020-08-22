@@ -2,6 +2,7 @@ obj/item/weapon/gun_modular/module/frame
     name = "gun frame"
     desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
     icon_state = "chamber_energy"
+    icon_overlay_layer = LAYER_FRAME
     lessdamage = 0
     lessdispersion = -2
     size_gun = 1
@@ -16,6 +17,40 @@ obj/item/weapon/gun_modular/module/frame
     var/obj/item/weapon/gun_modular/module/accessory/active_accessory = null
     var/list/config_user = list()
     var/list/icon/radial_icons = list()
+    var/list/image/human_overlays = list()
+
+obj/item/weapon/gun_modular/module/frame/proc/build_images()
+    var/image/l_hand = image(icon = icon, icon_state = "")
+    var/image/r_hand = image(icon = icon, icon_state = "")
+    var/image/belt = image(icon = icon, icon_state = "")
+    var/image/back = image(icon = icon, icon_state = "")
+    for(var/key in modules)
+        var/obj/item/weapon/gun_modular/module/M = modules[key]
+        if(!M)
+            continue
+        var/image/M_icon_l = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_l", layer = M.icon_overlay_layer)
+        var/image/M_icon_r = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_r", layer = M.icon_overlay_layer)
+        var/image/M_icon_belt = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_belt", layer = M.icon_overlay_layer)
+        var/image/M_icon_back = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_back", layer = M.icon_overlay_layer)
+        l_hand.add_overlay(M_icon_l)
+        r_hand.add_overlay(M_icon_r)
+        belt.add_overlay(M_icon_belt)
+        back.add_overlay(M_icon_back)
+
+    human_overlays["[SPRITE_SHEET_HELD]_l"] = l_hand
+    human_overlays["[SPRITE_SHEET_HELD]_r"] = r_hand
+    human_overlays["[SPRITE_SHEET_BELT]"] = belt
+    human_overlays["[SPRITE_SHEET_BACK]"] = back
+
+    update_icon()
+
+obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+    var/image/I = ..()
+    src.update_icon()
+    I.icon_state = ""
+    if(human_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+        I.add_overlay(human_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+    return I
 
 obj/item/weapon/gun_modular/module/frame/examine(mob/user)
     ..()
@@ -48,7 +83,7 @@ obj/item/weapon/gun_modular/module/frame/atom_init()
     frame_change.Turn(315)
     animate(src, pixel_x = move_x, pixel_y = move_y, transform = frame_change)
     update_icon()
-
+    
 obj/item/weapon/gun_modular/module/frame/Destroy()
     for(var/key in modules)
         if(modules[key])
@@ -153,6 +188,17 @@ obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, fl
     if(chamber)
         chamber.Fire(A, user, params)
 
+obj/item/weapon/gun_modular/module/frame/attack(mob/living/M, mob/living/user, def_zone)
+    if(!handle)
+        return FALSE
+    if(!handle.Special_Check(user))
+        return ..()
+    if(user.a_intent == INTENT_HARM)
+        if(chamber)
+            chamber.Fire(M, user, TRUE)
+        return
+    return ..()
+
 obj/item/weapon/gun_modular/module/frame/can_attach(var/obj/item/weapon/gun_modular/module/M)
     if(!istype(M, /obj/item/weapon/gun_modular/module))
         return FALSE
@@ -177,6 +223,8 @@ obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/g
             w_class = ITEM_SIZE_NORMAL
         if(size_gun >= LARGE_GUN)
             w_class = ITEM_SIZE_LARGE
+    build_images()
+    update_icon()
     return TRUE
 
 ///////////////////////////////////////////set up

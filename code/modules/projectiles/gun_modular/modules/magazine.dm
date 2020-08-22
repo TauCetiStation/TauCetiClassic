@@ -3,6 +3,7 @@
     desc = "Magazine holder, forms a bridge between the chamber and the cartridge storage. A cartridge storage is placed in the magazine holder, after which it is attached to the frame"
     icon_state = "magazine_external_icon"
     icon_overlay_name = "magazine_external"
+    icon_overlay_layer = LAYER_MAGAZINE
     caliber = null
     lessdamage = 0
     lessdispersion = 0
@@ -259,6 +260,7 @@ obj/item/weapon/gun_modular/module/magazine/get_info_module()
         frame_parent.cut_overlay(image(icon, "magazine_open"))
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
+    frame_parent.update_icon()
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun
     name = "shotgun magazine holder"

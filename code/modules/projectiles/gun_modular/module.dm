@@ -3,8 +3,9 @@ obj/item/weapon/gun_modular/module
     icon = 'code/modules/projectiles/gun_modular/modular.dmi'
     desc = ""
     w_class = ITEM_SIZE_SMALL
-    var/icon/icon_overlay
+    var/image/icon_overlay
     var/icon_overlay_name
+    var/icon_overlay_layer
     var/prefix_radial
     var/caliber
     var/lessdamage = 0
@@ -17,7 +18,7 @@ obj/item/weapon/gun_modular/module
 
 obj/item/weapon/gun_modular/module/atom_init()
     . = ..()
-    icon_overlay = image(icon, icon_overlay_name)
+    icon_overlay = image(icon, icon_overlay_name, layer = icon_overlay_layer)
 
 obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
@@ -27,6 +28,11 @@ obj/item/weapon/gun_modular/module/Destroy()
     if(frame_parent)
         remove()
     return ..()
+
+obj/item/weapon/gun_modular/module/proc/get_icon_overlay(var/matrix/mat)
+    var/image/icon_overlay_changed = image(icon, icon_overlay_name)
+    animate(icon_overlay_changed, transform = mat)
+    return icon_overlay_changed
 
 obj/item/weapon/gun_modular/module/proc/get_info_module()
     var/info_module = ""
@@ -99,17 +105,17 @@ obj/item/weapon/gun_modular/module/proc/attach(var/obj/item/weapon/gun_modular/m
     src.loc = frame
     frame_parent = frame
     LAZYINITLIST(frame.modules)
-    frame.modules[prefix_radial] = src
-    frame.change_state(src, TRUE)
     animate(icon_overlay, pixel_x = move_x, pixel_y = move_y)
     frame_parent.add_overlay(icon_overlay)
+    frame.modules[prefix_radial] = src
+    frame.change_state(src, TRUE)
     return TRUE
 
 obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
     frame_parent.modules[prefix_radial] = null
+    frame_parent.cut_overlay(icon_overlay)
     frame_parent.change_state(src, FALSE)
     src.loc = get_turf(frame_parent)
-    frame_parent.cut_overlay(icon_overlay)
     if(frame_parent)
         for(var/key in frame_parent.modules)
             var/obj/item/weapon/gun_modular/module/module = frame_parent.modules[key]

@@ -11,3 +11,10 @@
 #define GOOD_REDUCED 0
 #define LOW_REDUCED -2
 #define CRITICAL_LOW_REDUCED -4
+
+#define LAYER_FRAME -8
+#define LAYER_HANDLE -7
+#define LAYER_CHAMBER -6
+#define LAYER_MAGAZINE -5
+#define LAYER_BARREL -4
+#define LAYER_ACCESSORY -3

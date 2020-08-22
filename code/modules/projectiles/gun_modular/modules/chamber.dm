@@ -3,6 +3,7 @@ obj/item/weapon/gun_modular/module/chamber
     desc = "The chamber, requests a cartridge from the magazine holder and, if possible, receives it, upon confirmation of the handle, it fires a shot, the accuracy of which depends on the totality of statistics of all modules. Also in the chamber, there is a default recoil, which must be compensated for by a suitable handle. Also, the frequency of shooting depends on the damage inflicted by the bullet, some types of chamber do not have such a limitation."
     icon_state = "chamber_bullet_icon"
     icon_overlay_name = "chamber_bullet"
+    icon_overlay_layer = LAYER_CHAMBER
     caliber = "9mm"
     lessdamage = 0
     lessdispersion = 0
@@ -74,7 +75,7 @@ obj/item/weapon/gun_modular/module/chamber/proc/shoot_live_shot(mob/living/user,
         playsound(user, fire_sound, VOL_EFFECTS_MASTER)
         user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a gunshot!")
 
-obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/user, params)
+obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/user, params, var/point_blank = FALSE)
     if(!ready_to_fire())
         return
     fire_delay = fire_delay_default 
@@ -90,6 +91,9 @@ obj/item/weapon/gun_modular/module/chamber/proc/Fire(atom/target, mob/living/use
             chambered.BB.dispersion = max(chambered.BB.dispersion, 0)
             chambered.BB.dispersion = min(chambered.BB.dispersion, 5)
             fire_delay = fire_delay_default * (chambered.BB.damage*chambered.pellets/300 + 1)
+            if(point_blank)
+                chambered.BB.dispersion = 0
+                chambered.BB.damage *= 2.5
         var/silensed = FALSE
         if(frame_parent.barrel)
             silensed = frame_parent.barrel.get_silensed_shoot()

@@ -3,13 +3,14 @@
     desc = "The handle, the ability to fire a weapon depends on it, different types of handles give different bonuses and problems. Also, the recoil of the weapon depends on the handle, if the recoil is too strong for the shooter, the weapon can fly out of the hand"
     icon_state = "grip_normal"
     icon_overlay_name = "grip_normal"
+    icon_overlay_layer = LAYER_HANDLE
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     move_x = -7
-    move_y = -5
+    move_y = 3
     prefix_radial = "Handle"
     var/lessrecoil = 0
     var/clumsy_check = TRUE
