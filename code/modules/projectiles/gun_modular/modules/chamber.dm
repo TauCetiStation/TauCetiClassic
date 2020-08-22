@@ -184,6 +184,20 @@
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
 
+/obj/item/weapon/gun_modular/module/chamber/energy/get_info_module(mob/user)
+    var/info_module = ..()
+    if(user)
+        if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            return info_module
+    LAZYINITLIST(lenses)
+    info_module += "<br>"
+    info_module += "Max lenses - ([lenses.len])\n"
+    info_module += "Lenses count - ([lenses.len])\n"
+    info_module += "Lenses:\n"
+    for(var/obj/item/ammo_casing/energy/L in lenses)
+        info_module += "Lens [L.BB ? L.BB.name : "GLASS"], cost energy ([L.e_cost] * [pellets])\n"
+    return info_module
+
 /obj/item/weapon/gun_modular/module/chamber/energy/activate(mob/user)
     select_fire(user)
 
@@ -218,7 +232,7 @@
     if(chambered)
         return FALSE
     var/obj/item/ammo_casing/energy/lens = lenses[lens_select]
-    if(frame_parent.magazine.Ammo_Count(lens))
+    if(frame_parent.magazine.Ammo_Count(lens.e_cost * pellets * 10))
         chambered = frame_parent.magazine.Get_Ammo(lens.type)
         if(chambered)
             chambered.loc = src

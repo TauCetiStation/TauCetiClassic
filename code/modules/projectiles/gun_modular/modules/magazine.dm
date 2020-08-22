@@ -33,7 +33,7 @@
 /obj/item/weapon/gun_modular/module/magazine/proc/Give_Round(var/obj/item/ammo_casing/ammo, mob/user = null)
     return FALSE
 
-/obj/item/weapon/gun_modular/module/magazine/proc/Ammo_Count(var/obj/item/ammo_casing/ammo = null)
+/obj/item/weapon/gun_modular/module/magazine/proc/Ammo_Count(var/use_ammo = null)
     return FALSE
 
 /obj/item/weapon/gun_modular/module/magazine/proc/Get_Ammo()
@@ -73,7 +73,7 @@
         return magazine.attackby(ammo, user)
     return FALSE
 
-/obj/item/weapon/gun_modular/module/magazine/bullet/Ammo_Count(var/obj/item/ammo_casing/ammo = null)
+/obj/item/weapon/gun_modular/module/magazine/bullet/Ammo_Count(var/use_ammo = null)
     if(magazine)
         return magazine.ammo_count()
     return FALSE
@@ -185,9 +185,9 @@
     frame_parent.magazine = src
     return TRUE
 
-/obj/item/weapon/gun_modular/module/magazine/energy/Ammo_Count(var/obj/item/ammo_casing/energy/lens)
+/obj/item/weapon/gun_modular/module/magazine/energy/Ammo_Count(var/energy_use)
     if(magazine)
-        return magazine.charge > lens.e_cost * frame_parent.chamber.pellets * 5
+        return magazine.charge >= energy_use
     return FALSE
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Get_Ammo(var/lens_type)
