@@ -319,6 +319,7 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto/remove()
-    frame_parent.chamber.eject_casing = initial(frame_parent.chamber.eject_casing)
-    frame_parent.chamber.empty_chamber = initial(frame_parent.chamber.empty_chamber)
+    if(frame_parent.chamber)
+        frame_parent.chamber.eject_casing = initial(frame_parent.chamber.eject_casing)
+        frame_parent.chamber.empty_chamber = initial(frame_parent.chamber.empty_chamber)
     return ..()

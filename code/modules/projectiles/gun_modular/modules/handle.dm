@@ -68,6 +68,8 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/handle/remove()
+    lessrecoil = initial(lessrecoil)
+    clumsy_check = initial(clumsy_check)
     if(frame_parent)
         frame_parent.handle = null
     ..()

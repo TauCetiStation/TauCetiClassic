@@ -165,11 +165,17 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/chamber/remove()
+    pellets = initial(pellets)
+    eject_casing = initial(eject_casing)
+    empty_chamber = initial(empty_chamber)
+    no_casing = initial(no_casing)
+    fire_delay_default = initial(fire_delay_default)
+    recoil_chamber = initial(recoil_chamber)
     if(frame_parent)
         frame_parent.gun_type = null
         frame_parent.caliber = null
         frame_parent.chamber = null
-    ..()
+    return ..()
 
 /obj/item/weapon/gun_modular/module/chamber/energy
     name = "gun energy chamber"
@@ -183,6 +189,10 @@
     var/max_lens = 1
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
+
+/obj/item/weapon/gun_modular/module/chamber/energy/remove()
+    max_lens = initial(max_lens)
+    return ..()
 
 /obj/item/weapon/gun_modular/module/chamber/energy/get_info_module(mob/user)
     var/info_module = ..()

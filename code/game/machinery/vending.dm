@@ -910,6 +910,57 @@
 					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6, /obj/item/ammo_box/c9mmr = 10)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
 
+/obj/machinery/vending/security/gun_modules
+	name = "GunMod"
+	desc = "Modules for improving weapons."
+	product_ads = "Upgrade your gun !; Do you think you have a small barrel? Buy a new one !; Hey, do you wanna do justice? Do it with your friend, who will protect you everywhere, of course we are talking about weapons !; Take care of your firearms buddy !;"
+	icon_state = "sec"
+	light_color = "#f1f8ff"
+	icon_deny = "sec-deny"
+	req_access = list(1)
+	products = list(/obj/item/weapon/gun_modular/module/frame = 10,
+					/obj/item/toy/crayon/spraycan = 2,
+					/obj/item/weapon/gun_modular/module/accessory/optical/medium = 1,
+					/obj/item/weapon/gun_modular/module/accessory/optical/small = 2,
+					/obj/item/weapon/gun_modular/module/accessory/bayonet = 3,
+					/obj/item/weapon/gun_modular/module/accessory/additional_battery = 1,
+					/obj/item/weapon/gun_modular/module/barrel/small = 4,
+					/obj/item/weapon/gun_modular/module/barrel/medium = 4,
+					/obj/item/weapon/gun_modular/module/barrel/large = 4,
+					/obj/item/weapon/gun_modular/module/handle = 4,
+					/obj/item/weapon/gun_modular/module/handle/weighted = 2,
+					/obj/item/weapon/gun_modular/module/handle/resilient = 1,
+					/obj/item/weapon/gun_modular/module/handle/shotgun = 1,
+					/obj/item/weapon/gun_modular/module/magazine = 2,
+					/obj/item/weapon/gun_modular/module/magazine/energy = 2)
+	premium = list(/obj/item/weapon/gun_modular/module/accessory/optical/large = 1,
+					/obj/item/weapon/gun_modular/module/accessory/dna_crypter = 3,
+					/obj/item/weapon/gun_modular/module/barrel/rifle_bullet = 2,
+					/obj/item/weapon/gun_modular/module/barrel/rifle_laser = 2,
+					/obj/item/weapon/gun_modular/module/handle/rifle = 2,
+					/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle = 1,
+					/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun = 1,
+					/obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto = 1,
+					/obj/item/weapon/gun_modular/module/chamber/energy/shotgun = 1,
+					/obj/item/weapon/gun_modular/module/chamber/heavyrifle = 1,
+					/obj/item/weapon/gun_modular/module/chamber/shotgun = 1)
+	contraband = list(/obj/item/weapon/gun_modular/module/accessory/silenser = 1)
+	prices = list(/obj/item/weapon/gun_modular/module/frame = 60,
+					/obj/item/toy/crayon/spraycan = 10,
+					/obj/item/weapon/gun_modular/module/accessory/optical/medium = 120,
+					/obj/item/weapon/gun_modular/module/accessory/optical/small = 60,
+					/obj/item/weapon/gun_modular/module/accessory/bayonet = 60,
+					/obj/item/weapon/gun_modular/module/accessory/additional_battery = 180,
+					/obj/item/weapon/gun_modular/module/barrel/small = 40,
+					/obj/item/weapon/gun_modular/module/barrel/medium = 80,
+					/obj/item/weapon/gun_modular/module/barrel/large = 160,
+					/obj/item/weapon/gun_modular/module/handle = 40,
+					/obj/item/weapon/gun_modular/module/handle/weighted = 80,
+					/obj/item/weapon/gun_modular/module/handle/resilient = 120,
+					/obj/item/weapon/gun_modular/module/handle/shotgun = 120,
+					/obj/item/weapon/gun_modular/module/magazine = 80,
+					/obj/item/weapon/gun_modular/module/magazine/energy = 80)
+
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
 	desc = "A plant nutrients vendor."
