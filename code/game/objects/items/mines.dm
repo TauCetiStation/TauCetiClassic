@@ -60,10 +60,10 @@
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
 
 	if(!do_after(user, 40, target = src))
-		user.visible_message("<span class='warning'>[user] stops disarming [src].", "<span class='warning'>You stop disarming [src].</span>")
+		user.visible_message("<span class='warning'>[user] stops disarming [src].</span>", "<span class='warning'>You stop disarming [src].</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] finishes disarming [src].", "<span class='notice'>You finish disarming [src].</span>")
+	user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 	anchored = FALSE
 	update_icon()
