@@ -147,7 +147,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	new_syndicate_commando.mind.special_role = "Syndicate Elite Commando"
 	new_syndicate_commando.mind.current.faction = "syndicate"
 	SSticker.mode.syndicates += new_syndicate_commando.mind
-	SSticker.mode.update_synd_icons_added(new_syndicate_commando.mind)
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 	if(objectiv)
 		var/datum/objective/syndi_elit_obj = new
 		new_syndicate_commando.mind.objectives += syndi_elit_obj
