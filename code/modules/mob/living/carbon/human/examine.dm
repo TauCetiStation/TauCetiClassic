@@ -541,6 +541,10 @@
 				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
 			if("medical")
 				return istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
+			if("science")
+				if(istype(H.glasses, /obj/item/clothing/glasses/science))
+					var/obj/item/clothing/glasses/science/S = H.glasses
+					return S.active
 			else
 				return 0
 	else if(istype(M, /mob/living/silicon/robot))

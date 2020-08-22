@@ -16,13 +16,18 @@
     var/move_x = 1
     var/move_y = 1
 
+/obj/item/weapon/gun_modular/module/update_icon()
+    icon_overlay = image(icon, icon_overlay_name, layer = icon_overlay_layer)
+    icon_overlay.color = color
+    return
+
 /obj/item/weapon/gun_modular/module/atom_init()
     . = ..()
     icon_overlay = image(icon, icon_overlay_name, layer = icon_overlay_layer)
 
 /obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
-    to_chat(user, "[bicon(src)] [name]. <span class='info'>[EMBED_TIP("More info.", get_info_module())]</span><br>")
+    to_chat(user, "[bicon(src)] [name]. <span class='info'>[EMBED_TIP("More info.", get_info_module(user))]</span><br>")
 
 /obj/item/weapon/gun_modular/module/Destroy()
     if(frame_parent)
@@ -31,10 +36,13 @@
 
 // This gives information in the tooltip, here you can talk about additional weapon stats
 
-/obj/item/weapon/gun_modular/module/proc/get_info_module()
+/obj/item/weapon/gun_modular/module/proc/get_info_module(mob/user = null)
     var/info_module = ""
     if(desc != "")
         info_module += "[desc]\n"
+    if(user)
+        if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            return info_module
     info_module += "Damage reduction - ([lessdamage])\n"
     info_module += "Increased accuracy - ([lessdispersion])\n"
     info_module += "Module size - ([size_gun])\n"

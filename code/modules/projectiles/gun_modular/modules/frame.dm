@@ -7,6 +7,7 @@
     lessdispersion = -2
     size_gun = 1
     prefix_radial = "Frame"
+    var/custom_name = ""
     var/max_accessory = 3
     var/obj/item/weapon/gun_modular/module/chamber/chamber = null
     var/obj/item/weapon/gun_modular/module/handle/handle = null
@@ -34,6 +35,12 @@
         var/image/M_icon_r = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_r", layer = M.icon_overlay_layer)
         var/image/M_icon_belt = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_belt", layer = M.icon_overlay_layer)
         var/image/M_icon_back = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_back", layer = M.icon_overlay_layer)
+
+        M_icon_l.color = M.color
+        M_icon_r.color = M.color
+        M_icon_belt.color = M.color
+        M_icon_back.color = M.color
+
         l_hand.add_overlay(M_icon_l)
         r_hand.add_overlay(M_icon_r)
         belt.add_overlay(M_icon_belt)
@@ -63,7 +70,7 @@
         var/obj/item/weapon/gun_modular/module/M = modules[key]
         if(!M)
             continue
-        dir += "[bicon(M)] [M.name]. <span class='info'>[EMBED_TIP("More info.", M.get_info_module())]</span>\n"
+        dir += "[bicon(M)] [M.name]. <span class='info'>[EMBED_TIP("More info.", M.get_info_module(user))]</span>\n"
     dir += "<br>"
     dir += "Weapon size - [size_gun > SMALL_GUN ? size_gun < LARGE_GUN ? "Medium size" : "Large size" : "Small size"]\n"
     dir += "Reduced spread - [lessdispersion >= CRITICAL_LOW_REDUCED ? lessdispersion < GOOD_REDUCED ? "Low Reduced" : "Good Reduced" : "CRITICAL LOW REDUCED"]\n"
@@ -171,7 +178,10 @@
 
 /obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)
     ..()
-    if(istype(W, /obj/item/weapon/gun_modular/module))
+    if(istype(W, /obj/item/weapon/pen))
+        change_name(user)
+        return TRUE
+    else if(istype(W, /obj/item/weapon/gun_modular/module))
         var/obj/item/weapon/gun_modular/module/module = W
         module.attach(src, user)
         return TRUE
@@ -215,6 +225,15 @@
 
 // Changing the stats of weapons, called when the module is attached, as well as when it is pulled
 
+/obj/item/weapon/gun_modular/module/frame/proc/change_name(mob/user = null)
+    var/custom = ""
+    if(user)
+        custom_name = sanitize_safe(input(usr,"What would you like to name this gun?","Input a name", "") as text|null, MAX_NAME_LEN)
+    custom += "[caliber] gun"
+    if(custom_name)
+        custom += " '[custom_name]'"
+    name = custom
+
 /obj/item/weapon/gun_modular/module/frame/proc/change_state(var/obj/item/weapon/gun_modular/module/M, var/attach = TRUE)
     if(!istype(M, /obj/item/weapon/gun_modular/module))
         return FALSE
@@ -234,6 +253,7 @@
         if(size_gun >= LARGE_GUN)
             w_class = ITEM_SIZE_LARGE
     build_images()
+    change_name()
     update_icon()
     return TRUE
 
@@ -243,12 +263,10 @@
     . = ..()
     var/obj/item/weapon/gun_modular/module/chamber/heavyrifle/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/new_magazine = new(src)
-    var/obj/item/ammo_box/magazine/internal/heavyrifle/internal_magazine = new(src)
     var/obj/item/weapon/gun_modular/module/handle/rifle/new_handle = new(src)
     var/obj/item/weapon/gun_modular/module/barrel/rifle_bullet/new_barrel = new(src)
     var/obj/item/weapon/gun_modular/module/accessory/optical/large/new_optical = new(src)
     new_chamber.attach(src)
-    new_magazine.attach_item_in_module(internal_magazine)
     new_magazine.attach(src)
     new_handle.attach(src)
     new_barrel.attach(src)

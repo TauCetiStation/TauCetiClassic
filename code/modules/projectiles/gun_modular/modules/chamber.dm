@@ -28,8 +28,11 @@
     chambered = null
     return ..()
 
-/obj/item/weapon/gun_modular/module/chamber/get_info_module()
+/obj/item/weapon/gun_modular/module/chamber/get_info_module(mob/user = null)
     var/info_module = ..()
+    if(user)
+        if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            return info_module
     info_module += "Fire delay default - [fire_delay_default]\n"
     info_module += "Recoil - [recoil_chamber]\n"
     if(pellets)

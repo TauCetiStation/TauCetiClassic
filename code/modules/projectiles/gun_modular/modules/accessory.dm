@@ -286,8 +286,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 2
-    move_x = 6
-    move_y = 4
+    move_x = 8
+    move_y = 8
     prefix_radial = "Bayonet"
     gun_type = ALL_GUN_TYPE
     force = 12

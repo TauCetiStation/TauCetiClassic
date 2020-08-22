@@ -317,6 +317,11 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(istype(target, /obj/item/weapon/gun_modular/module) && uses >= 2)
+		var/obj/item/weapon/gun_modular/module/M = target
+		M.color = normalize_color(colour)
+		M.update_icon()
+		uses -= 2
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 

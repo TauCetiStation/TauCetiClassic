@@ -16,8 +16,11 @@
     var/empty_chamber = TRUE
     var/no_casing = FALSE
 
-/obj/item/weapon/gun_modular/module/magazine/get_info_module()
+/obj/item/weapon/gun_modular/module/magazine/get_info_module(mob/user = null)
     var/info_module = ..()
+    if(user)
+        if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            return info_module
     info_module += "Standard case actions:\n"
     info_module += "Eject casing - [eject_casing ? "TRUE" : "FALSE"]\n"
     info_module += "Emptying the chamber - [empty_chamber ? "TRUE" : "FALSE"]\n"
@@ -39,7 +42,14 @@
 /obj/item/weapon/gun_modular/module/magazine/bullet
     name = "gun bullet magazine"
     gun_type = BULLET_GUN
+    var/mag_type = /obj/item/ammo_box/magazine/m9mm_2
     var/obj/item/ammo_box/magazine/magazine = null
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/atom_init()
+    ..()
+    if(mag_type)
+        var/obj/item/ammo_box/magazine/mag = new mag_type(src)
+        attach_item_in_module(mag)
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/Destroy()
     if(magazine)
@@ -124,6 +134,9 @@
 /obj/item/weapon/gun_modular/module/magazine/bullet/can_attach(var/obj/item/ammo_box/magazine/mag)
     if(!istype(mag, /obj/item/ammo_box/magazine))
         return FALSE
+    if(mag_type)
+        if(!istype(mag, mag_type))
+            return FALSE
     if(magazine)
         return FALSE
     if(!caliber)
@@ -220,6 +233,7 @@
     lessdispersion = 10
     size_gun = 2
     caliber = "14.5mm"
+    mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
     var/open = FALSE
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/attach(obj/item/weapon/gun_modular/module/frame/I)
@@ -295,6 +309,7 @@
     lessdispersion = 10
     size_gun = 3
     caliber = "shotgun"
+    mag_type = /obj/item/ammo_box/magazine/internal/shotcom
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto/attach(obj/item/weapon/gun_modular/module/frame/I)
     if(!..())

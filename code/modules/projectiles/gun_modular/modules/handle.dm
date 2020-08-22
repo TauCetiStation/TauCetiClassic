@@ -15,8 +15,11 @@
     var/lessrecoil = 0
     var/clumsy_check = TRUE
 
-/obj/item/weapon/gun_modular/module/handle/get_info_module()
+/obj/item/weapon/gun_modular/module/handle/get_info_module(mob/user = null)
     var/info_module = ..()
+    if(user)
+        if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            return info_module
     info_module += "Reducing recoil - [lessrecoil]\n"
     return info_module
 
