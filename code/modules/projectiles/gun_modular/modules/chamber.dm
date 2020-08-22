@@ -194,7 +194,7 @@
     max_lens = initial(max_lens)
     return ..()
 
-/obj/item/weapon/gun_modular/module/chamber/energy/get_info_module(mob/user)
+/obj/item/weapon/gun_modular/module/chamber/energy/get_info_module(mob/user = null)
     var/info_module = ..()
     if(user)
         if(!hasHUD(user, "science") && !hasHUD(user, "security"))
