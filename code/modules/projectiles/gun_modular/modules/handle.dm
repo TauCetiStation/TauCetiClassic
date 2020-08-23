@@ -91,10 +91,10 @@
     icon_overlay_name = "grip_resilient"
     caliber = ALL_CALIBER
     lessdamage = 0
-    lessdispersion = 2
+    lessdispersion = 1
     size_gun = 2
     gun_type = ALL_GUN_TYPE
-    lessrecoil = 2
+    lessrecoil = 3
 
 /obj/item/weapon/gun_modular/module/handle/resilient/Special_Check(mob/user)
     if(!..())
@@ -109,19 +109,19 @@
     icon_state = "grip_shotgun"
     icon_overlay_name = "grip_shotgun"
     caliber = ALL_CALIBER
-    lessdamage = 5
-    lessdispersion = 0
+    lessdamage = 0
+    lessdispersion = 0.5
     size_gun = 3
     gun_type = ALL_GUN_TYPE
-    lessrecoil = 3
+    lessrecoil = 2
 
 /obj/item/weapon/gun_modular/module/handle/rifle
     name = "gun handle rifle"
     icon_state = "grip_rifle"
     icon_overlay_name = "grip_rifle"
     caliber = ALL_CALIBER
-    lessdamage = -3
-    lessdispersion = 1
+    lessdamage = 0
+    lessdispersion = 2.5
     size_gun = 3
     gun_type = ALL_GUN_TYPE
     lessrecoil = 3

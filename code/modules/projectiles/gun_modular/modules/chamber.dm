@@ -5,7 +5,7 @@
     icon_overlay_name = "chamber_bullet"
     icon_overlay_layer = LAYER_CHAMBER
     caliber = "9mm"
-    lessdamage = 0
+    lessdamage = -3
     lessdispersion = 0
     size_gun = 1
     gun_type = BULLET_GUN
@@ -181,8 +181,8 @@
     name = "gun energy chamber"
     icon_state = "chamber_laser"
     caliber = "energy"
-    lessdamage = 0
-    lessdispersion = 0
+    lessdamage = -5
+    lessdispersion = 1
     size_gun = 1
     gun_type = ENERGY_GUN
     pellets = 1
@@ -286,7 +286,7 @@
     icon_overlay_name = "chamber_laser1"
     caliber = "energy"
     lessdamage = 0
-    lessdispersion = -0.8
+    lessdispersion = -10
     size_gun = 4
     gun_type = ENERGY_GUN
     pellets = 5
@@ -298,7 +298,7 @@
     name = "PTR-7 rifle chamber"
     icon_state = "chamber_bullet_PTR_icon"
     icon_overlay_name = "chamber_bullet_PTR"
-    lessdamage = 0
+    lessdamage = -6
     lessdispersion = 0.8
     size_gun = 3
     caliber = "14.5mm"
@@ -309,10 +309,11 @@
     name = "gun shotgun chamber"
     caliber = "shotgun"
     lessdamage = 0
-    lessdispersion = -0.8
+    lessdispersion = -2
     size_gun = 4
     gun_type = BULLET_GUN
     fire_delay_default = 15
     eject_casing = FALSE
     empty_chamber = FALSE
     no_casing = FALSE
+    recoil_chamber = 3

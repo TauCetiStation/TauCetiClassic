@@ -151,7 +151,7 @@
     lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
-    view_range = 8
+    view_range = 9
     size_barrel = 1
 
 /obj/item/weapon/gun_modular/module/accessory/optical/medium

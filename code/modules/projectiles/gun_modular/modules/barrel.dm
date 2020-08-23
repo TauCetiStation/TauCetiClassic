@@ -35,7 +35,7 @@
     icon_overlay_name = "barrel_small"
     caliber = ALL_CALIBER
     lessdamage = 6
-    lessdispersion = 0.5
+    lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
 
@@ -45,7 +45,7 @@
     icon_overlay_name = "barrel_medium"
     caliber = ALL_CALIBER
     lessdamage = 0
-    lessdispersion = 1
+    lessdispersion = 2
     size_gun = 2
     gun_type = ALL_GUN_TYPE
 
@@ -55,7 +55,7 @@
     icon_overlay_name = "barrel_large"
     caliber = ALL_CALIBER
     lessdamage = -6
-    lessdispersion = 2
+    lessdispersion = 3
     size_gun = 3
     gun_type = ALL_GUN_TYPE
 
@@ -65,7 +65,7 @@
     icon_overlay_name = "barrel_large_bullet"
     caliber = ALL_CALIBER
     lessdamage = -8
-    lessdispersion = 2
+    lessdispersion = 4
     size_gun = 4
     gun_type = BULLET_GUN
 
@@ -75,6 +75,6 @@
     icon_overlay_name = "barrel_large_laser"
     caliber = ALL_CALIBER
     lessdamage = -8
-    lessdispersion = 3
+    lessdispersion = 4
     size_gun = 4
     gun_type = ENERGY_GUN

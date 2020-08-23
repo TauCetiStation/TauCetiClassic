@@ -279,7 +279,7 @@
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun
     name = "shotgun magazine holder"
     lessdamage = 0
-    lessdispersion = 10
+    lessdispersion = 0
     size_gun = 2
     caliber = "shotgun"
     var/pumped = TRUE
@@ -306,7 +306,7 @@
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun_auto
     name = "auto shotgun magazine holder"
     lessdamage = 0
-    lessdispersion = 10
+    lessdispersion = 0
     size_gun = 3
     caliber = "shotgun"
     mag_type = /obj/item/ammo_box/magazine/internal/shotcom
