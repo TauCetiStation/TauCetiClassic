@@ -186,7 +186,7 @@
     size_gun = 1
     gun_type = ENERGY_GUN
     pellets = 1
-    var/max_lens = 1
+    var/max_lens = 2
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
 
