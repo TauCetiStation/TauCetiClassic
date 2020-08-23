@@ -105,7 +105,7 @@
         else
             shoot_live_shot(user, silensed)
             user.newtonian_move(get_dir(target, user))
-    process_chamber(TRUE)
+    process_chamber()
     update_icon()
 
 /obj/item/weapon/gun_modular/module/chamber/proc/process_chamber(var/chamber_round = FALSE)
