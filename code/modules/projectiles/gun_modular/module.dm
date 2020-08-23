@@ -70,6 +70,8 @@
 // Removing all items that were installed in the weapon
 
 /obj/item/weapon/gun_modular/module/proc/remove_items(mob/user)
+    if(!contents.len)
+        return FALSE
     if(!do_after(user, 2 SECOND, target = src))
         return FALSE
     for(var/obj/item/I in contents)

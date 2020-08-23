@@ -169,16 +169,19 @@
 
 /obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
     if(!modules)
-        return
+        return FALSE
     generate_radial_icon()
     var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
     if(!remove)
-        return
+        return FALSE
+    if(!modules[remove])
+        return FALSE
     if(!do_after(user, 2 SECOND, target = src))
         return FALSE
     if(!in_range(user, src))
-        return
+        return FALSE
     modules[remove].remove(user)
+    return TRUE
 
 /obj/item/weapon/gun_modular/module/frame/attackby(obj/item/weapon/W, mob/user, params)
     ..()
