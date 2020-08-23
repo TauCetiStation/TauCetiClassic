@@ -174,11 +174,13 @@
     var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
     if(!remove)
         return FALSE
-    if(!modules[remove])
+    if(in_use_action)
         return FALSE
-    if(!do_after(user, 2 SECOND, target = src))
+    if(!do_after(user, 2 SECOND, target = src, needhand = TRUE))
         return FALSE
     if(!in_range(user, src))
+        return FALSE
+    if(!modules[remove])
         return FALSE
     modules[remove].remove(user)
     return TRUE

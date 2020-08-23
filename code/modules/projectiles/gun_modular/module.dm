@@ -72,10 +72,13 @@
 /obj/item/weapon/gun_modular/module/proc/remove_items(mob/user)
     if(!contents.len)
         return FALSE
-    if(!do_after(user, 2 SECOND, target = src))
+    if(in_use_action)
+        return FALSE
+    if(!do_after(user, 2 SECOND, target = src, needhand = TRUE))
         return FALSE
     for(var/obj/item/I in contents)
         remove_item_in_module(I)
+        I.loc = get_turf(src)
         I.update_icon()
     return TRUE
 
@@ -113,7 +116,9 @@
     if(!frame.can_attach(src))
         return FALSE
     if(user)
-        if(!do_after(user, 1 SECOND, target = I))
+        if(in_use_action)
+            return FALSE
+        if(!do_after(user, 1 SECOND, target = I, needhand = TRUE))
             return FALSE
         if(!in_range(user, frame))
             return FALSE
@@ -122,7 +127,8 @@
     src.loc = frame
     frame_parent = frame
     LAZYINITLIST(frame.modules)
-    animate(icon_overlay, pixel_x = move_x, pixel_y = move_y)
+    icon_overlay.pixel_x = move_x
+    icon_overlay.pixel_y = move_y
     frame_parent.add_overlay(icon_overlay)
     frame.modules[prefix_radial] = src
     frame.change_state(src, TRUE)
