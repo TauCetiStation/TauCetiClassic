@@ -168,13 +168,13 @@
 // Pulling objects out of the frame is done according to a different principle, since this is a common use for all modules, it is activated with a screwdriver. Here, when you click with a screwdriver, a module for pulling out is given
 
 /obj/item/weapon/gun_modular/module/frame/remove_items(mob/user)
+    if(in_use_action)
+        return FALSE
     if(!modules)
         return FALSE
     generate_radial_icon()
     var/remove = show_radial_menu(user, src, radial_icons, tooltips = TRUE)
     if(!remove)
-        return FALSE
-    if(in_use_action)
         return FALSE
     if(!do_after(user, 2 SECOND, target = src, needhand = TRUE))
         return FALSE

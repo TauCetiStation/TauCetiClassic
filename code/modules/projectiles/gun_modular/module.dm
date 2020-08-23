@@ -86,6 +86,9 @@
     return FALSE
 
 /obj/item/weapon/gun_modular/module/proc/attach_item_in_module(var/obj/item/I, mob/user = null)
+    if(user)
+        if(in_use_action)
+            return FALSE
     return can_attach(I)
 
 /obj/item/weapon/gun_modular/module/proc/can_attach(var/obj/item/I)
