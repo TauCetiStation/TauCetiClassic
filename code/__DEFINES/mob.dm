@@ -155,7 +155,5 @@
 #define MAX_BRAIN_DAMAGE  80
 
 // Awareness about syndicate, it`s agents and equipment
-#define SYNDICATE_UNAWARE            0
-#define SYNDICATE_AWARE              1
-#define SYNDICATE_GREATLY_AWARE      2
-#define SYNDICATE_SUSPICIOUSLY_AWARE 3
+#define SYNDICATE_UNAWARE  0
+#define SYNDICATE_AWARE    1

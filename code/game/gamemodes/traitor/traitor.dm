@@ -347,7 +347,7 @@
 	ASSERT(traitor_mob)
 	give_codewords(traitor_mob)
 	ASSERT(traitor_mob.mind)
-	traitor_mob.mind.syndicate_awareness = SYNDICATE_SUSPICIOUSLY_AWARE
+	traitor_mob.mind.syndicate_awareness = SYNDICATE_AWARE
 
 /datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
 	ASSERT(global.syndicate_code_phrase.len)
