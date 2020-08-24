@@ -183,20 +183,8 @@
 	killer.set_zeroth_law(law, law_borg)
 	to_chat(killer, "New law: 0. [law]")
 
-	//Begin code phrase.
-	to_chat(killer, "The Syndicate provided you with the following information on how to identify their agents:")
-	if(prob(80))
-		to_chat(killer, "<span class='warning'>Code Phrase:</span> [syndicate_code_phrase]")
-		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-	else
-		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code phrase.")
-	if(prob(80))
-		to_chat(killer, "<span class='warning'>Code Response:</span> [syndicate_code_response]")
-		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-	else
-		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
-	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	//End code phrase.
+	give_intel(killer)
+
 	killer.add_language("Sy-Code", 1)
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
@@ -345,24 +333,32 @@
 			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
 		else
 			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-	//Begin code phrase.
-	if(!safety)//If they are not a rev. Can be added on to.
-		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
-		if(prob(80))
-			to_chat(traitor_mob, "<span class='warning'>Code Phrase:</span> [syndicate_code_phrase]")
-			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-		else
-			to_chat(traitor_mob, "Unfortunetly, the Syndicate did not provide you with a code phrase.")
-		if(prob(80))
-			to_chat(traitor_mob, "<span class='warning'>Code Response:</span> [syndicate_code_response]")
-			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-		else
-			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
-		to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	//End code phrase.
+
+	if(!safety)
+		give_intel(traitor_mob)
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+/datum/game_mode/proc/give_intel(mob/living/traitor_mob)
+	ASSERT(traitor_mob)
+	give_codewords(traitor_mob)
+	ASSERT(traitor_mob.mind)
+	traitor_mob.mind.syndicate_awareness = SYNDICATE_SUSPICIOUSLY_AWARE
+
+/datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
+	ASSERT(global.syndicate_code_phrase.len)
+	to_chat(traitor_mob, "<u><b>Your employers provided you with the following information on how to identify possible allies:</b></u>")
+	var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
+	to_chat(traitor_mob, code_phrase)
+	traitor_mob.mind.store_memory(code_phrase)
+
+	ASSERT(global.syndicate_code_response.len)
+	var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
+	to_chat(traitor_mob, code_response)
+	traitor_mob.mind.store_memory(code_response)
+
+	to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")

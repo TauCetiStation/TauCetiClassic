@@ -59,10 +59,10 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	if(!syndicate_code_phrase)
-		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)
-		syndicate_code_response	= generate_code_phrase()
+	global.syndicate_code_phrase = generate_code_phrase()
+	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
+	global.syndicate_code_response = generate_code_phrase()
+	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
 	setupFactions()
 	..()
 

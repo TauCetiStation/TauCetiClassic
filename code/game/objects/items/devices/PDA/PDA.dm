@@ -1183,6 +1183,9 @@
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
 			L = P.loc
+			if(L.mind && L.mind.syndicate_awareness == SYNDICATE_SUSPICIOUSLY_AWARE)
+				t = highlight_codewords(t, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
+				t = highlight_codewords(t, global.code_response_highlight_rule, "deptradio")
 		//Maybe they are a pAI!
 		else
 			L = get(P, /mob/living/silicon)
