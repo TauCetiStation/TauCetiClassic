@@ -302,7 +302,8 @@ var/list/ai_verbs_default = list(
 	gen_radial_cores()
 
 	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
-	icon_state = name_by_state[state]
+	if(state)
+		icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
