@@ -302,8 +302,9 @@ var/list/ai_verbs_default = list(
 	gen_radial_cores()
 
 	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
-	if(state)
-		icon_state = name_by_state[state]
+	if(!state)
+		return
+	icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
@@ -751,6 +752,8 @@ var/list/ai_verbs_default = list(
 			gen_ai_staff_holo()
 			if(chooses_ai_staff.len)
 				var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
+				if(!state)
+					return
 				if(chooses_ai_staff[state])
 					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
@@ -760,9 +763,10 @@ var/list/ai_verbs_default = list(
 		if("Unique Category")
 			gen_ai_uniq_holo()
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
-			if(state)
-				qdel(holo_icon)
-				holo_icon = chooses_ai_holo[state]
+			if(!state)
+				return
+			qdel(holo_icon)
+			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
@@ -779,6 +783,8 @@ var/list/ai_verbs_default = list(
 		chooses_holo_category["Unique Category"] = getHologramIcon(icon('icons/mob/AI.dmi', "holo4"))
 
 	var/asnwer = show_radial_menu(usr, eyeobj, chooses_holo_category, tooltips = TRUE)
+	if(!asnwer)
+		return
 	gen_radial_holo(asnwer)
 
 /*/mob/living/silicon/ai/proc/corereturn()

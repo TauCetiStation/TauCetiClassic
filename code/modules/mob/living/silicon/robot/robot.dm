@@ -185,6 +185,8 @@
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
 	modtype = show_radial_menu(usr, usr, choose_module, radius = 38, tooltips = TRUE)
+	if(!modtype)
+		return
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
 	if(module)
@@ -315,6 +317,8 @@
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
 
 	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
+	if(!new_icon_state)
+		return
 	icon_state = module_sprites[new_icon_state]
 	radio.config(module.channels)
 
