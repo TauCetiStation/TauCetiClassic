@@ -73,7 +73,7 @@
 	var/pose
 
 	// Radial menu for choose module
-	var/list/choose_module
+	var/static/list/choose_module
 
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	spark_system = new /datum/effect/effect/system/spark_spread()
