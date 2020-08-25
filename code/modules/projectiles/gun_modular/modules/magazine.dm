@@ -243,12 +243,12 @@
         return FALSE
     open = FALSE
     hole_magaine = image(icon, "magazine_open")
-    hole_magaine.pixel_x = pixel_x
-    hole_magaine.pixel_x = pixel_y
+    hole_magaine.pixel_x = get_delta_offset(CHAMBER)[1]
+    hole_magaine.pixel_y = get_delta_offset(CHAMBER)[2]
     return TRUE
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
     if(open)
-        icon_overlay.cut_overlay(hole_magaine)
+        frame_parent.cut_overlay(hole_magaine)
     open = FALSE
     ..()
     
@@ -270,14 +270,14 @@
     if(open)
         playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt open.</span>")
-        icon_overlay.add_overlay(hole_magaine)
+        frame_parent.add_overlay(hole_magaine)
         if(frame_parent.chamber)
             frame_parent.chamber.process_chamber(TRUE)
         return ..()
     else
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
-        icon_overlay.cut_overlay(hole_magaine)
+        frame_parent.cut_overlay(hole_magaine)
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
     frame_parent.update_icon()
