@@ -86,7 +86,7 @@ var/list/ai_verbs_default = list(
 	// Radial menu for choose skin of standart hologram
 	var/static/list/chooses_ai_holo
 	// Radial menu for choose skin of staff hologram
-	var/list/chooses_ai_staff
+	var/static/list/chooses_ai_staff
 	// Radial menu for choose category of holo type
 	var/static/list/chooses_holo_category
 	// Radilal menu.

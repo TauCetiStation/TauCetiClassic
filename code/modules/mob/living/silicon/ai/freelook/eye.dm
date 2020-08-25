@@ -14,6 +14,7 @@
 	var/image/ghostimage = null
 
 /mob/camera/Eye/ai
+	alpha = 255
 	var/mob/living/silicon/ai/ai = null
 
 /mob/camera/Eye/ai/atom_init()
