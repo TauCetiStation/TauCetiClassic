@@ -312,10 +312,15 @@
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()
+	// Default skin of module
+	var/list/sprite_names = list()
 
 	for(var/name in module_sprites)
+		sprite_names += name
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
 
+	// Default skin of module
+	icon_state = module_sprites[pick(sprite_names)]
 	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
 	if(!new_icon_state)
 		return
