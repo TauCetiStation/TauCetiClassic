@@ -184,7 +184,7 @@
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
-	modtype = show_radial_menu(usr, usr, choose_module, radius = 38, tooltips = TRUE)
+	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
 	if(!modtype)
 		return
 
