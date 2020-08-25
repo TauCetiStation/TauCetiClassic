@@ -18,3 +18,9 @@
 #define LAYER_MAGAZINE -5
 #define LAYER_BARREL -4
 #define LAYER_ACCESSORY -3
+
+#define FRAME "Frame"
+#define CHAMBER "Chamber"
+#define HANDLE "Handle"
+#define MAGAZINE "Magazine"
+#define BARREL "Barrel"

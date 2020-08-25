@@ -8,10 +8,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    move_x = 5
-    move_y = 5
     gun_type = ALL_GUN_TYPE
-    prefix_radial = "Barrel"
+    prefix = BARREL
     var/silensed = FALSE
 
 /obj/item/weapon/gun_modular/module/barrel/proc/get_silensed_shoot()
@@ -38,6 +36,8 @@
     lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
+    exit_point = "1,2"
+    points_of_entry = list("Silenser" = "8,2")
 
 /obj/item/weapon/gun_modular/module/barrel/medium
     name = "gun barrel medium"
@@ -48,6 +48,9 @@
     lessdispersion = 2
     size_gun = 2
     gun_type = ALL_GUN_TYPE
+    exit_point = "1,2"
+    points_of_entry = list("Bayonet" = "11,1",
+                            "Silenser" = "12,2")
 
 /obj/item/weapon/gun_modular/module/barrel/large
     name = "gun barrel large"
@@ -58,6 +61,9 @@
     lessdispersion = 3
     size_gun = 3
     gun_type = ALL_GUN_TYPE
+    exit_point = "1,2"
+    points_of_entry = list("Bayonet" = "16,1",
+                            "Silenser" = "17,2")
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_bullet
     name = "gun barrel large bullet"
@@ -68,6 +74,9 @@
     lessdispersion = 4
     size_gun = 4
     gun_type = BULLET_GUN
+    exit_point = "1,7"
+    points_of_entry = list("Bayonet" = "16,3",
+                            "Silenser" = "16,7")
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_laser
     name = "gun barrel large laser"
@@ -78,3 +87,5 @@
     lessdispersion = 4
     size_gun = 4
     gun_type = ENERGY_GUN
+    exit_point = "1,7"
+    points_of_entry = list("Bayonet" = "16,3")

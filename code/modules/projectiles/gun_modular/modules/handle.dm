@@ -9,9 +9,8 @@
     lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
-    move_x = -7
-    move_y = -5
-    prefix_radial = "Handle"
+    prefix = HANDLE
+    exit_point = "13,12"
     var/lessrecoil = 0
     var/clumsy_check = TRUE
 
@@ -84,6 +83,7 @@
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     lessrecoil = 1
+    exit_point = "9,11"
 
 /obj/item/weapon/gun_modular/module/handle/resilient
     name = "gun handle resilient"
@@ -95,6 +95,7 @@
     size_gun = 2
     gun_type = ALL_GUN_TYPE
     lessrecoil = 3
+    exit_point = "19,9"
 
 /obj/item/weapon/gun_modular/module/handle/resilient/Special_Check(mob/user)
     if(!..())
@@ -114,6 +115,7 @@
     size_gun = 3
     gun_type = ALL_GUN_TYPE
     lessrecoil = 2
+    exit_point = "15,7"
 
 /obj/item/weapon/gun_modular/module/handle/rifle
     name = "gun handle rifle"
@@ -125,6 +127,7 @@
     size_gun = 3
     gun_type = ALL_GUN_TYPE
     lessrecoil = 3
+    exit_point = "19,7"
 
 /obj/item/weapon/gun_modular/module/handle/rifle/Special_Check(mob/user)
     if(!..())

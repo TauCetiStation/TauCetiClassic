@@ -1,12 +1,18 @@
 /obj/item/weapon/gun_modular/module/frame
     name = "gun frame"
     desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
-    icon_state = "chamber_energy"
+    icon_state = "frame_icon"
     icon_overlay_layer = LAYER_FRAME
     lessdamage = 0
     lessdispersion = -2
     size_gun = 1
-    prefix_radial = "Frame"
+    prefix = FRAME
+    points_of_entry = list(CHAMBER = "16,16",
+                            HANDLE = "0,0",
+                            MAGAZINE = "0,0",
+                            BARREL = "0,0",
+                            "DNA Crypter" = "13,14")
+    exit_point = "16,16"
     var/custom_name = ""
     var/max_accessory = 3
     var/obj/item/weapon/gun_modular/module/chamber/chamber = null
@@ -23,6 +29,7 @@
 // When changing weapons, icons are rebuilt to display on a person
 
 /obj/item/weapon/gun_modular/module/frame/proc/build_images()
+    var/image/icon_s = image(icon = icon, icon_state = icon_state, layer = layer)
     var/image/l_hand = image(icon = icon, icon_state = "")
     var/image/r_hand = image(icon = icon, icon_state = "")
     var/image/belt = image(icon = icon, icon_state = "")
@@ -45,11 +52,21 @@
         r_hand.add_overlay(M_icon_r)
         belt.add_overlay(M_icon_belt)
         back.add_overlay(M_icon_back)
+        icon_s.add_overlay(M.icon_overlay)
 
     human_overlays["[SPRITE_SHEET_HELD]_l"] = l_hand
     human_overlays["[SPRITE_SHEET_HELD]_r"] = r_hand
     human_overlays["[SPRITE_SHEET_BELT]"] = belt
     human_overlays["[SPRITE_SHEET_BACK]"] = back
+
+    icon_s.appearance_flags = appearance_flags
+    icon_overlay = icon_s
+    var/matrix/frame_change = matrix()
+    frame_change.Scale(0.7 + (0.8 / size_gun))
+    if(size_gun > MEDIUM_GUN)
+        frame_change.Turn(315)
+    animate(icon_s, transform = frame_change)
+    appearance = icon_s.appearance
 
     update_icon()
 
@@ -87,10 +104,8 @@
 
 /obj/item/weapon/gun_modular/module/frame/atom_init()
     . = ..()
-    var/matrix/frame_change = matrix()
-    frame_change.Scale(0.85)
-    frame_change.Turn(315)
-    animate(src, pixel_x = move_x, pixel_y = move_y, transform = frame_change)
+    appearance_flags |= KEEP_TOGETHER
+    appearance_flags |= PIXEL_SCALE
     update_icon()
     
 /obj/item/weapon/gun_modular/module/frame/Destroy()
@@ -146,6 +161,8 @@
 
 /obj/item/weapon/gun_modular/module/frame/dropped(mob/user)
     . = ..()
+    appearance_flags |= KEEP_TOGETHER
+    appearance_flags |= PIXEL_SCALE
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = src
@@ -153,6 +170,8 @@
 
 /obj/item/weapon/gun_modular/module/frame/attack_hand(mob/user)
     . = ..()
+    appearance_flags |= KEEP_TOGETHER
+    appearance_flags |= PIXEL_SCALE
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = user
@@ -263,7 +282,6 @@
             w_class = ITEM_SIZE_LARGE
     build_images()
     change_name()
-    update_icon()
     return TRUE
 
 // These are weapon presets for testing, and can be used to create station or spawn weapon presets. The main thing is to observe the order as when assembling
@@ -273,7 +291,7 @@
     var/obj/item/weapon/gun_modular/module/chamber/heavyrifle/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/new_magazine = new(src)
     var/obj/item/weapon/gun_modular/module/handle/rifle/new_handle = new(src)
-    var/obj/item/weapon/gun_modular/module/barrel/rifle_bullet/new_barrel = new(src)
+    var/obj/item/weapon/gun_modular/module/barrel/large/new_barrel = new(src)
     var/obj/item/weapon/gun_modular/module/accessory/optical/large/new_optical = new(src)
     new_chamber.attach(src)
     new_magazine.attach(src)

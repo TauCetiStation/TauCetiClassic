@@ -8,9 +8,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    move_x = 1
-    move_y = 1
-    prefix_radial = "Magazine"
+    prefix = MAGAZINE
+    exit_point = "0,2"
     var/isinternal = FALSE
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
@@ -158,6 +157,8 @@
     eject_casing = FALSE
     empty_chamber = FALSE
     no_casing = FALSE
+    points_of_entry = list("Additional Battery" = "2,2",
+                            "Core Charger" = "2,2")
     var/obj/item/weapon/stock_parts/cell/magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Destroy()
@@ -230,20 +231,25 @@
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle
     name = "PTR-7 rifle magazine holder"
     lessdamage = 0
-    lessdispersion = 10
+    lessdispersion = 0
     size_gun = 2
     caliber = "14.5mm"
     mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
     var/open = FALSE
+    var/image/hole_magaine
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/attach(obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
         return FALSE
     open = FALSE
+    hole_magaine = image(icon, "magazine_open")
+    hole_magaine.pixel_x = pixel_x
+    hole_magaine.pixel_x = pixel_y
     return TRUE
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
     if(open)
-        frame_parent.cut_overlay(image(icon, "magazine_open"))
+        icon_overlay.cut_overlay(hole_magaine)
+    open = FALSE
     ..()
     
 
@@ -264,14 +270,14 @@
     if(open)
         playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt open.</span>")
-        frame_parent.add_overlay(image(icon, "magazine_open"))
+        icon_overlay.add_overlay(hole_magaine)
         if(frame_parent.chamber)
             frame_parent.chamber.process_chamber(TRUE)
         return ..()
     else
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
-        frame_parent.cut_overlay(image(icon, "magazine_open"))
+        icon_overlay.cut_overlay(hole_magaine)
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
     frame_parent.update_icon()

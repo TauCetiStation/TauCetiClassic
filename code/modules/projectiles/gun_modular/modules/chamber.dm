@@ -9,7 +9,12 @@
     lessdispersion = 0
     size_gun = 1
     gun_type = BULLET_GUN
-    prefix_radial = "Chamber"
+    prefix = CHAMBER
+    points_of_entry = list(HANDLE = "6,2",
+                            BARREL = "9,6",
+                            MAGAZINE = "13,1",
+                            "Optical" = "4,7")
+    exit_point = "6,4"
     var/obj/item/ammo_casing/chambered = null
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
@@ -186,6 +191,11 @@
     size_gun = 1
     gun_type = ENERGY_GUN
     pellets = 1
+    points_of_entry = list(HANDLE = "6,2",
+                            BARREL = "9,6",
+                            MAGAZINE = "13,1",
+                            "Optical" = "4,7")
+    exit_point = "6,4"
     var/max_lens = 2
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
@@ -228,7 +238,7 @@
         if(chambered.BB)
             chambered.BB.damage /= pellets
             chambered.BB.lesseffect = pellets*2
-            chambered.BB.dispersion = 0.5 * pellets
+            chambered.BB.dispersion = 1 * pellets
     ..()
 
 /obj/item/weapon/gun_modular/module/chamber/energy/process_chamber()
@@ -292,6 +302,11 @@
     pellets = 5
     max_lens = 2
     fire_delay_default = 15
+    points_of_entry = list(HANDLE = "6,4",
+                            BARREL = "22,4",
+                            MAGAZINE = "12,1",
+                            "Optical" = "10,6")
+    exit_point = "12,4"
 
 
 /obj/item/weapon/gun_modular/module/chamber/heavyrifle
@@ -304,6 +319,12 @@
     caliber = "14.5mm"
     fire_delay_default = 0
     recoil_chamber = 5
+    points_of_entry = list(HANDLE = "5,6",
+                            BARREL = "20,5",
+                            MAGAZINE = "20,2",
+                            "Optical" = "5,7")
+
+    exit_point = "12,5"
 
 /obj/item/weapon/gun_modular/module/chamber/shotgun
     name = "gun shotgun chamber"

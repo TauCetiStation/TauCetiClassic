@@ -7,10 +7,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    prefix_radial = "Accessory"
+    prefix = "Accessory"
     action_button_name = "Activate module"
-    move_x = 4
-    move_y = 4
     gun_type = ALL_GUN_TYPE
 
 /obj/item/weapon/gun_modular/module/accessory/attack_self(mob/user)
@@ -78,10 +76,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 3
-    prefix_radial = "Optical"
+    prefix = "Optical"
     gun_type = ALL_GUN_TYPE
-    move_x = 1
-    move_y = 1
     var/active = FALSE
     var/size_barrel = 1
     var/view_range = 6
@@ -153,6 +149,7 @@
     gun_type = ALL_GUN_TYPE
     view_range = 9
     size_barrel = 1
+    exit_point = "1,0"
 
 /obj/item/weapon/gun_modular/module/accessory/optical/medium
     name = "gun optical medium accessory"
@@ -165,6 +162,7 @@
     gun_type = ALL_GUN_TYPE
     view_range = 11
     size_barrel = 2
+    exit_point = "2,0"
 
 /obj/item/weapon/gun_modular/module/accessory/optical/large
     name = "gun optical large accessory"
@@ -177,6 +175,7 @@
     gun_type = ALL_GUN_TYPE
     view_range = 14
     size_barrel = 3
+    exit_point = "4,0"
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger
     name = "gun core charger accessory"
@@ -186,10 +185,9 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    move_x = 3
-    move_y = 0
-    prefix_radial = "Core Charger"
+    prefix = "Core Charger"
     gun_type = ENERGY_GUN
+    exit_point = "3,1"
     var/obj/item/device/assembly/signaler/anomaly/core = null
     var/tick = 0
     var/tick_charge = 8
@@ -254,7 +252,8 @@
     lessdamage = 6
     lessdispersion = 0.3
     size_gun = 2
-    prefix_radial = "Silenser"
+    prefix = "Silenser"
+    exit_point = "1,3"
     gun_type = BULLET_GUN
 
 /obj/item/weapon/gun_modular/module/accessory/silenser/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
@@ -286,9 +285,8 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 2
-    move_x = 8
-    move_y = 8
-    prefix_radial = "Bayonet"
+    prefix = "Bayonet"
+    exit_point = "4,4"
     gun_type = ALL_GUN_TYPE
     force = 12
     edge = TRUE
@@ -329,10 +327,9 @@
     lessdamage = 0
     lessdispersion = 0
     size_gun = 2
-    move_x = 3
-    move_y = 3
-    prefix_radial = "Additional Battery"
+    prefix = "Additional Battery"
     gun_type = ENERGY_GUN
+    exit_point = "15,13"
     var/obj/item/weapon/stock_parts/cell/additional_battery = null
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/Destroy()
@@ -396,16 +393,15 @@
 
 /obj/item/weapon/gun_modular/module/accessory/dna_crypter
     name = "gun dna crypter"
-    icon_state = "dna_crypter"
+    icon_state = "dna_crypter_icon"
     icon_overlay_name = "dna_crypter"
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 0
     size_gun = 1
-    move_x = 2
-    move_y = 2
-    prefix_radial = "DNA Crypter"
+    prefix = "DNA Crypter"
     gun_type = ALL_GUN_TYPE
+    exit_point = "9,5"
     var/mob/living/carbon/Owner = null
 
 /obj/item/weapon/gun_modular/module/accessory/dna_crypter/activate(mob/user, argument)
