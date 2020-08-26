@@ -9,7 +9,7 @@
 	stat_allowed = 0
 	invocation = "YU'V, BN GN'MD!"
 	invocation_type = "shout"
-	range = 7
+	range = 1
 	selection_type = "range"
 	action_icon_state = "gnomed"
 
