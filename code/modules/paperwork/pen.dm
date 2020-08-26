@@ -22,6 +22,16 @@
 	throw_range = 15
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
+	var/click_cooldown = 0
+
+/obj/item/weapon/pen/proc/get_signature(mob/user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/attack_self(mob/user)
+	if(click_cooldown <= world.time)
+		click_cooldown = world.time + 2
+		to_chat(user, "<span class='notice'>Click.</span>")
+		playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 50)
 
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
@@ -29,6 +39,18 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
+
+/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
+	..()
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
+		if(!entity)
+			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
+			var/list/choices = list()
+			for(var/mob/dead/observer/D in observer_list)
+				if(D.started_as_observer)
+					choices += D.name
+			if(choices.len)
+				entity = sanitize(pick(choices))
 
 /obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity, params)
 	..()
@@ -67,6 +89,9 @@
 						break
 				return
 	return ..()
+
+/obj/item/weapon/pen/ghost/get_signature(mob/user)
+	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -119,7 +144,6 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "materials=2;syndicate=5"
 
-
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	..()
 
@@ -128,7 +152,6 @@
 
 	if(reagents.total_volume && M.reagents && M.try_inject(user, TRUE, TRUE, TRUE))
 		reagents.trans_to(M, 50)
-
 
 /obj/item/weapon/pen/paralysis/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
@@ -145,6 +168,7 @@
 	var/on = 0
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+	..()
 	if(on)
 		on = 0
 		force = initial(force)
@@ -187,27 +211,11 @@
 	var/signature = ""
 
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
+	..()
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
-
-/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
-	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.holy_role || user.mind.role_alt_title == "Paranormal Investigator")))
-		if(!entity)
-			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
-			var/list/choices = list()
-			for(var/mob/dead/observer/D in observer_list)
-				if(D.started_as_observer)
-					choices += D.name
-			if(choices.len)
-				entity = sanitize(pick(choices))
-
-/obj/item/weapon/pen/proc/get_signature(mob/user)
-	return (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/get_signature(mob/user)
 	return signature ? signature : "Anonymous"
-
-/obj/item/weapon/pen/ghost/get_signature(mob/user)
-	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/verb/set_colour()
 	set name = "Change Pen Colour"
@@ -237,4 +245,3 @@
 			else
 				colour = "black"
 		to_chat(usr, "<span class='info'>You select the [lowertext(selected_type)] ink container.</span>")
-
