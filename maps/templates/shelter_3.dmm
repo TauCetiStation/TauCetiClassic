@@ -49,11 +49,30 @@
 /obj/machinery/door/window/westright,
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
-"k" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 1
+"j" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/kitchen/utensil/spoon{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/weapon/kitchen/utensil/fork{
+	pixel_x = 4
+	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 10;
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"k" = (
+/obj/machinery/vending/wallmed1{
+	layer = 3.1;
+	pixel_y = 30
+	},
+/turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "l" = (
 /obj/structure/table/reinforced,
@@ -68,37 +87,26 @@
 /obj/structure/stool/bar,
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
-"o" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue,
-/area/custom/survivalpod)
 "p" = (
 /obj/machinery/vending/boozeomat,
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
-"u" = (
-/obj/machinery/light,
-/turf/simulated/floor/carpet/blue,
-/area/custom/survivalpod)
-"v" = (
+"t" = (
 /obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 10;
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/kitchen/utensil/fork{
+	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/weapon/kitchen/utensil/fork{
-	pixel_x = 4
-	},
-/obj/item/weapon/kitchen/utensil/spoon{
-	pixel_x = -9;
-	pixel_y = -2
-	},
 /turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"u" = (
+/obj/machinery/light,
+/turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "x" = (
 /obj/structure/stool/bar,
@@ -118,7 +126,18 @@
 /area/custom/survivalpod)
 "B" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 2;
+	pixel_y = -2
+	},
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "C" = (
@@ -126,20 +145,14 @@
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "D" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/weapon/kitchen/utensil/spoon,
-/obj/item/weapon/kitchen/utensil/fork{
-	pixel_x = 4;
-	pixel_y = 7
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "F" = (
-/obj/machinery/media/jukebox/bar,
+/obj/structure/table/reinforced,
+/obj/item/device/guitar,
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "G" = (
@@ -147,7 +160,16 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "H" = (
-/turf/simulated/floor/carpet/blue,
+/obj/structure/table/reinforced,
+/obj/item/toy/cards{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/pill_bottle/dice{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "I" = (
 /obj/structure/sink{
@@ -184,14 +206,15 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
+"R" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
 "U" = (
 /obj/random/vending/cola,
 /turf/simulated/floor/pod,
-/area/custom/survivalpod)
-"V" = (
-/obj/structure/table/reinforced,
-/obj/item/device/guitar,
-/turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "W" = (
 /obj/random/vending/snack,
@@ -230,11 +253,11 @@ p
 b
 e
 x
-H
+b
 C
-v
-k
-H
+j
+R
+b
 a
 "}
 (3,1,1) = {"
@@ -243,11 +266,11 @@ d
 b
 Q
 n
-H
-H
-H
-H
-H
+b
+b
+b
+b
+b
 a
 "}
 (4,1,1) = {"
@@ -256,11 +279,11 @@ Y
 M
 m
 n
-H
+b
 C
 h
-k
-H
+R
+b
 a
 "}
 (5,1,1) = {"
@@ -269,10 +292,10 @@ b
 b
 L
 n
-H
+b
 C
-D
-k
+t
+R
 u
 a
 "}
@@ -282,11 +305,11 @@ i
 l
 B
 n
-H
-H
-H
-H
-H
+b
+b
+b
+b
+b
 a
 "}
 (7,1,1) = {"
@@ -295,7 +318,7 @@ b
 n
 n
 b
-H
+b
 F
 a
 a
@@ -304,12 +327,12 @@ a
 "}
 (8,1,1) = {"
 a
+k
 b
 b
 b
 b
-H
-o
+D
 a
 A
 b
@@ -321,8 +344,8 @@ b
 b
 b
 b
-H
-V
+b
+b
 a
 a
 c
@@ -333,7 +356,7 @@ a
 G
 U
 W
-b
+H
 Z
 b
 y

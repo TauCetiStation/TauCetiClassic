@@ -671,8 +671,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/improved
-	name = "bluespace shelter capsule"
-	desc = "An emergency shelter stored within a pocket of bluespace."
+	name = "improved bluespace shelter capsule"
+	desc = "Version with all the amenities for survival."
 	icon_state = "capsule_improved"
 	icon = 'icons/obj/mining.dmi'
 	w_class = ITEM_SIZE_TINY
@@ -680,8 +680,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	template_id = "shelter_beta"
 
 /obj/item/weapon/survivalcapsule/elite
-	name = "bluespace shelter capsule"
-	desc = "An emergency shelter stored within a pocket of bluespace."
+	name = "elite bluespace shelter capsule"
+	desc = "Wow, this is a mining bar?"
 	icon_state = "capsule_elite"
 	icon = 'icons/obj/mining.dmi'
 	w_class = ITEM_SIZE_TINY
