@@ -259,14 +259,6 @@ var/global/combos_cheat_sheet = ""
 	return TRUE
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
-		if(!attacker.grabbed_by.len)
-			attacker.do_attack_animation(src)
-		//var/turf/to_move = get_step(src, force_get_dir(attacker, src))
-		//step_to(src, get_force_step_away(src, attacker))
-		if(!force_push(attacker, src))
-			adjustHalLoss(4)
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
 		stop_pulling()
@@ -277,21 +269,29 @@ var/global/combos_cheat_sheet = ""
 				if(G.affecting == attacker)
 					G.adjust_position()
 					var/diff = G.affecting.getStamina() - G.assailant.getStamina()
-					if(diff >= 0 && G.state < GRAB_AGGRESSIVE)
-						qdel(G)
-						return
-					if(diff >= 0 && G.state > GRAB_PASSIVE)
-						G.affecting.setStamina(diff)
-						visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
+					if(G.state < GRAB_AGGRESSIVE)
+						continue //For fun, so that you can make a mini-train of two people, while not breaking the grab 
+					else if(diff >= 0)
+						G.affecting.setStamina(diff - (G.state-2) * 100)
+						to_chat(G.affecting, "<span class='warning'><b>You broke up the grab on yourself.</b></span>")
 						qdel(G)
 					else
 						to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to break up the grab.</span>")
 					continue
 				else if(G.assailant == attacker)
 					continue
-				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
+				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</b></span>")
 				qdel(G)
 		//End BubbleWrap
+
+	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+		if(!attacker.grabbed_by.len)
+			attacker.do_attack_animation(src)
+		//var/turf/to_move = get_step(src, force_get_dir(attacker, src))
+		//step_to(src, get_force_step_away(src, attacker))
+		if(!force_push(attacker, src))
+			adjustHalLoss(4)
+	
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
