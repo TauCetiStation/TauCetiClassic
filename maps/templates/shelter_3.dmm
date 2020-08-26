@@ -8,8 +8,6 @@
 /area/custom/survivalpod)
 "c" = (
 /obj/machinery/light/small,
-/obj/structure/inflatable/door/survival_pod,
-/obj/structure/fans/tiny,
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "d" = (
@@ -335,7 +333,7 @@ b
 D
 a
 A
-b
+c
 a
 "}
 (9,1,1) = {"
@@ -348,7 +346,7 @@ b
 b
 a
 a
-c
+y
 a
 "}
 (10,1,1) = {"
