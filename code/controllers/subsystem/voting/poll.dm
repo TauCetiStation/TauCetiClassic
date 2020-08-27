@@ -130,7 +130,7 @@
 		if(max_votepercent < minimum_win_percentage)
 			invalid_text += "<b>Vote Failed: Insufficient majority.</b><br>"
 			invalid_text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
-			invalid_text += "The highest vote share was [round(100 * max_votepercent, 0.1)]%<br><br>"
+			invalid_text += "The highest vote share was [PERCENT(max_votepercent)]%<br><br>"
 			invalid = TRUE
 
 	var/datum/vote_choice/winner = null
@@ -148,10 +148,11 @@
 
 	text += "<b>Votes:</b><br>"
 	for(var/datum/vote_choice/ch in choice_votes)
+		var/ch_percent = total_votes() ? PERCENT(choice_votes[ch] / total_votes()) : 0
 		if(ch in winners)
-			text += "\t<b>[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%</b><br>"
+			text += "\t<b>[ch.text] - [ch_percent]%</b><br>"
 		else
-			text += "\t[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%<br>"
+			text += "\t[ch.text] - [ch_percent]%<br>"
 
 	if(winner)
 		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
