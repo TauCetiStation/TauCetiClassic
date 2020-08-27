@@ -114,7 +114,7 @@
 	for(var/datum/vote_choice/V in choice_votes)
 		max_votes = max(max_votes, choice_votes[V])
 
-	var/text = "<b>[name] vote</b><br>" //The result text will be built and displayed
+	var/text = "" //The result text will be built and displayed
 	var/invalid = FALSE //Check for conditions that would nullify the vote
 	var/invalid_text = ""
 
