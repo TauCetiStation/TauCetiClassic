@@ -138,6 +138,8 @@
 			winner = pick(winners)
 
 	var/non_voters = clients.len - all_voters.len
+	text += "Total voted - [all_voters.len]<br>"
+	text += "Did not vote - [non_voters]<br>"
 
 	text += "<b>Votes:</b><br>"
 	for(var/datum/vote_choice/ch in choice_votes)
@@ -145,9 +147,6 @@
 			text += "\t<b>[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%</b><br>"
 		else
 			text += "\t[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%<br>"
-
-	text += "Total voted - [all_voters.len]<br>"
-	text += "Did not vote - [non_voters]<br>"
 
 	if(winner)
 		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
