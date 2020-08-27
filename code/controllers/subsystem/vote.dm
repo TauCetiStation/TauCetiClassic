@@ -168,6 +168,7 @@ SUBSYSTEM_DEF(vote)
 
 	if(href_list["cancel"])
 		if(active_vote && check_rights())
+			to_chat(world, "<span class='vote'><b>[active_vote.name] vote canceled by [usr.key].</b></span>")
 			stop_vote()
 
 	if(href_list["close"])
