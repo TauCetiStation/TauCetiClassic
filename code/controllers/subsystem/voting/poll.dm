@@ -156,10 +156,12 @@
 
 	if(winner)
 		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
-		winner.on_win()
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")
+
+	if(winner)
+		winner.on_win()
 
 /*To prevent abuse and rule-by-salt, the evac vote weights each player's vote based on a few parameters
 	If you are alive and have been for a while, then you have the normal 1 vote

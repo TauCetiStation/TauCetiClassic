@@ -50,6 +50,7 @@
 			break
 	if(!active_admins)
 		to_chat(world, "<span class='boldannounce'>World restarting due to vote...</span>")
+		sleep(50)
 		world.Reboot(end_state = "restart vote")
 	else
 		to_chat(world, "<span class='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
