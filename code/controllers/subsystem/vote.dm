@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(vote)
 
 	var/text = "[poll.name] vote started by [poll.initiator]."
 	log_vote(text)
-	to_chat(world, {"<span class='vote'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes. <br>You have [get_vote_time()] seconds to vote.</span>"})
+	to_chat(world, "<span class='vote'><b>[text]</b><br>Type <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes. <br>You have [get_vote_time()] seconds to vote.</span>")
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
