@@ -15,6 +15,7 @@
 	can_unvote = FALSE
 	see_votes = FALSE
 
+	cooldown = 60 MINUTES
 	minimum_win_percentage = 0.6
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
@@ -72,7 +73,7 @@
 
 	minimum_win_percentage = 0.6
 
-	cooldown = 20 MINUTES
+	cooldown = 30 MINUTES
 	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
