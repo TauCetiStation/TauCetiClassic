@@ -50,7 +50,7 @@
 			break
 	if(!active_admins)
 		to_chat(world, "<span class='boldannounce'>World restarting due to vote...</span>")
-		world.Reboot(end_state = "restart vote")
+		addtimer(CALLBACK(world, /world/Reboot, , "restart vote"), 5 SECONDS)
 	else
 		to_chat(world, "<span class='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 		message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
