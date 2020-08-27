@@ -2,91 +2,12 @@
     name = "gun frame"
     desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
     icon_state = "frame_icon"
+    icon_overlay_name = "frame_icon"
     icon_overlay_layer = LAYER_FRAME
     lessdamage = 0
     lessdispersion = -2
     size_gun = 1
     prefix = FRAME
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list(CHAMBER = list(16, 16),
-                            HANDLE = list(0, 0),
-                            MAGAZINE = list(0, 0),
-                            BARREL = list(0, 0),
-                            "DNA Crypter" = list(13, 14)),
-            NORTH_DIR = list(CHAMBER = list(16, 16),
-                            HANDLE = list(0, 0),
-                            MAGAZINE = list(0, 0),
-                            BARREL = list(0, 0),
-                            "DNA Crypter" = list(13, 14)),
-            WEST_DIR = list(CHAMBER = list(16, 16),
-                            HANDLE = list(0, 0),
-                            MAGAZINE = list(0, 0),
-                            BARREL = list(0, 0),
-                            "DNA Crypter" = list(13, 14)),
-            EAST_DIR = list(CHAMBER = list(16, 16),
-                            HANDLE = list(0, 0),
-                            MAGAZINE = list(0, 0),
-                            BARREL = list(0, 0),
-                            "DNA Crypter" = list(13, 14))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(16, 16),
-            NORTH_DIR = list(16, 16),
-            WEST_DIR = list(16, 16),
-            EAST_DIR = list(16, 16)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
     var/custom_name = ""
     var/max_accessory = 3
     var/obj/item/weapon/gun_modular/module/chamber/chamber = null
@@ -100,9 +21,15 @@
     var/list/icon/radial_icons = list()
     var/list/image/frame_overlays = list()
 
+/obj/item/weapon/gun_modular/module/frame/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(16, 16))
+    change_list_entry("ICON", "[SOUTH]", list(CHAMBER = list(16, 16),
+                                        "DNA Crypter" = list(13, 14)))
+
 // When changing weapons, icons are rebuilt to display on a person
 
-/obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = SOUTH, var/slot = "hand_l")
+/obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = SOUTH, var/slot = "ICON")
     var/image/overlay = image(icon = icon, icon_state = "")
     for(var/key in modules)
         var/obj/item/weapon/gun_modular/module/M = modules[key]
@@ -112,10 +39,8 @@
         
         M_icon.color = M.color
 
-        var/dir_t = direct != SOUTH ? direct != NORTH ? direct != WEST ? EAST_DIR : WEST_DIR : NORTH_DIR : SOUTH_DIR
-
-        M_icon.pixel_x = M.get_delta_offset(slot, dir_t)[1]
-        M_icon.pixel_y = M.get_delta_offset(slot, dir_t)[2]
+        M_icon.pixel_x = M.get_delta_offset(slot, direct)[1]
+        M_icon.pixel_y = M.get_delta_offset(slot, direct)[2]
 
         overlay.add_overlay(M_icon)
 
@@ -132,19 +57,9 @@
 
 /obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
     var/image/I = ..()
-    var/slot = ""
-    if(sprite_sheet_slot == SPRITE_SHEET_HELD)
-        if(icon_state_appendix == "_l")
-            slot = "hand_l"
-        else
-            slot = "hand_r"
-    else if(sprite_sheet_slot == SPRITE_SHEET_BELT)
-        slot = "belt"
-    else if(sprite_sheet_slot == SPRITE_SHEET_BACK)
-        slot = "back"
     I.icon_state = ""
-    if(frame_overlays[slot])
-        I.add_overlay(frame_overlays[slot])
+    if(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+        I.add_overlay(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"])
     return I
 
 /obj/item/weapon/gun_modular/module/frame/examine(mob/user)
@@ -298,8 +213,6 @@
 /obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, proximity, params)
     if(proximity)
         return FALSE
-    if(istype(A, /obj/structure/gun_bench))
-        return FALSE
     if(!handle)
         return FALSE
     if(!handle.Special_Check(user))
@@ -360,7 +273,11 @@
     for(var/key_type in points_of_entry)
         for(var/key_dir in points_of_entry[key_type])
             build_images(key_dir, key_type)
+    frame_overlays["ICON"].icon_state = initial(icon_state)
+    frame_overlays["ICON"].appearance_flags |= KEEP_TOGETHER
+    appearance = frame_overlays["ICON"].appearance
     change_name()
+    update_icon()
     return TRUE
 
 // These are weapon presets for testing, and can be used to create station or spawn weapon presets. The main thing is to observe the order as when assembling

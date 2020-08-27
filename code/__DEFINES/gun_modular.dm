@@ -25,7 +25,3 @@
 #define MAGAZINE "Magazine"
 #define BARREL "Barrel"
 
-#define SOUTH_DIR "SOUTH"
-#define NORTH_DIR "NORTH"
-#define WEST_DIR "WEST"
-#define EAST_DIR "EAST"

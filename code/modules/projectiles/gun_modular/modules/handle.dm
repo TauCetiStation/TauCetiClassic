@@ -10,72 +10,13 @@
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     prefix = HANDLE
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(13, 12),
-            NORTH_DIR = list(13, 12),
-            WEST_DIR = list(13, 12),
-            EAST_DIR = list(13, 12)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list("Butt" = list(3, 12)),
-            NORTH_DIR = list("Butt" = list(3, 12)),
-            WEST_DIR = list("Butt" = list(3, 12)),
-            EAST_DIR = list("Butt" = list(3, 12))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
     var/lessrecoil = 0
     var/clumsy_check = TRUE
+
+/obj/item/weapon/gun_modular/module/handle/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(13, 12))
+    change_list_entry("ICON", "[SOUTH]", list("Butt" = list(3, 12)))
 
 /obj/item/weapon/gun_modular/module/handle/get_info_module(mob/user = null)
     var/info_module = ..()
@@ -146,70 +87,11 @@
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     lessrecoil = 1
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(9, 11),
-            NORTH_DIR = list(9, 11),
-            WEST_DIR = list(9, 11),
-            EAST_DIR = list(9, 11)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
+
+/obj/item/weapon/gun_modular/module/handle/weighted/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(9, 11))
+    change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/resilient
     name = "gun handle resilient"
@@ -221,70 +103,11 @@
     size_gun = 2
     gun_type = ALL_GUN_TYPE
     lessrecoil = 3
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(19, 9),
-            NORTH_DIR = list(19, 9),
-            WEST_DIR = list(19, 9),
-            EAST_DIR = list(19, 9)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
+
+/obj/item/weapon/gun_modular/module/handle/resilient/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(19, 9))
+    change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/resilient/Special_Check(mob/user)
     if(!..())
@@ -304,70 +127,11 @@
     size_gun = 3
     gun_type = ALL_GUN_TYPE
     lessrecoil = 4
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(22, 10),
-            NORTH_DIR = list(22, 10),
-            WEST_DIR = list(22, 10),
-            EAST_DIR = list(22, 10)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
+
+/obj/item/weapon/gun_modular/module/handle/rifle/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(22, 10))
+    change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/rifle/Special_Check(mob/user)
     if(!..())

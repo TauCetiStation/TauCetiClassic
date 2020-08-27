@@ -10,82 +10,6 @@
     size_gun = 1
     gun_type = BULLET_GUN
     prefix = CHAMBER
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(9, 6),
-                            MAGAZINE = list(13, 1),
-                            "Optical" = list(4, 7)),
-            NORTH_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(9, 6),
-                            MAGAZINE = list(13, 1),
-                            "Optical" = list(4, 7)),
-            WEST_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(9, 6),
-                            MAGAZINE = list(13, 1),
-                            "Optical" = list(4, 7)),
-            EAST_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(9, 6),
-                            MAGAZINE = list(13, 1),
-                            "Optical" = list(4, 7))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(6, 4),
-            NORTH_DIR = list(6, 4),
-            WEST_DIR = list(6, 4),
-            EAST_DIR = list(6, 4)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
     var/obj/item/ammo_casing/chambered = null
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
@@ -97,6 +21,14 @@
     var/last_fired = 0
     var/recoil_chamber = 0
     var/pellets
+
+/obj/item/weapon/gun_modular/module/chamber/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(6, 4))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2),
+                                                                BARREL = list(9, 6),
+                                                                MAGAZINE = list(13, 1),
+                                                                "Optical" = list(4, 7)))
 
 /obj/item/weapon/gun_modular/module/chamber/Destroy()
     if(chambered)
@@ -262,85 +194,17 @@
     size_gun = 1
     gun_type = ENERGY_GUN
     pellets = 1
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(27, 4),
-                            MAGAZINE = list(26, 1),
-                            "Optical" = list(7, 9)),
-            NORTH_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(27, 4),
-                            MAGAZINE = list(26, 1),
-                            "Optical" = list(7, 9)),
-            WEST_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(27, 4),
-                            MAGAZINE = list(26, 1),
-                            "Optical" = list(7, 9)),
-            EAST_DIR = list(HANDLE = list(6, 2),
-                            BARREL = list(27, 4),
-                            MAGAZINE = list(26, 1),
-                            "Optical" = list(7, 9))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(6, 4),
-            NORTH_DIR = list(6, 4),
-            WEST_DIR = list(6, 4),
-            EAST_DIR = list(6, 4)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
     var/max_lens = 2
     var/lens_select = 1
     var/list/obj/item/ammo_casing/energy/lenses = list()
+
+/obj/item/weapon/gun_modular/module/chamber/energy/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(6, 4))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2),
+                                                                BARREL = list(27, 4),
+                                                                MAGAZINE = list(26, 1),
+                                                                "Optical" = list(7, 9)))
 
 /obj/item/weapon/gun_modular/module/chamber/energy/remove()
     max_lens = initial(max_lens)
@@ -444,82 +308,14 @@
     pellets = 5
     max_lens = 2
     fire_delay_default = 15
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list(HANDLE = list(6, 4),
-                            BARREL = list(22, 4),
-                            MAGAZINE = list(12, 1),
-                            "Optical" = list(10, 6)),
-            NORTH_DIR = list(HANDLE = list(6, 4),
-                            BARREL = list(22, 4),
-                            MAGAZINE = list(12, 1),
-                            "Optical" = list(10, 6)),
-            WEST_DIR = list(HANDLE = list(6, 4),
-                            BARREL = list(22, 4),
-                            MAGAZINE = list(12, 1),
-                            "Optical" = list(10, 6)),
-            EAST_DIR = list(HANDLE = list(6, 4),
-                            BARREL = list(22, 4),
-                            MAGAZINE = list(12, 1),
-                            "Optical" = list(10, 6))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(12, 4),
-            NORTH_DIR = list(12, 4),
-            WEST_DIR = list(12, 4),
-            EAST_DIR = list(12, 4)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
+
+/obj/item/weapon/gun_modular/module/chamber/energy/shotgun/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(12, 4))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 4),
+                                                                BARREL = list(22, 4),
+                                                                MAGAZINE = list(12, 1),
+                                                                "Optical" = list(10, 6)))
 
 
 /obj/item/weapon/gun_modular/module/chamber/heavyrifle
@@ -532,94 +328,37 @@
     caliber = "14.5mm"
     fire_delay_default = 0
     recoil_chamber = 5
-    points_of_entry = list(
-        "ICON" = list(
-            SOUTH_DIR = list(HANDLE = list(7,11),
-                            BARREL = list(30, 9),
-                            MAGAZINE = list(9, 6),
-                            "Optical" = list(8, 14)),
-            NORTH_DIR = list(HANDLE = list(7,11),
-                            BARREL = list(30, 9),
-                            MAGAZINE = list(9, 6),
-                            "Optical" = list(8, 14)),
-            WEST_DIR = list(HANDLE = list(7,11),
-                            BARREL = list(30, 9),
-                            MAGAZINE = list(9, 6),
-                            "Optical" = list(8, 14)),
-            EAST_DIR = list(HANDLE = list(7,11),
-                            BARREL = list(30, 9),
-                            MAGAZINE = list(9, 6),
-                            "Optical" = list(8, 14))
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(HANDLE = list(12,3),
-                            BARREL = list(2, 3),
-                            MAGAZINE = list(7, 1),
-                            "Optical" = list(8, 4)),
-            NORTH_DIR = list(HANDLE = list(2,3),
-                            BARREL = list(12, 3),
-                            MAGAZINE = list(7, 1),
-                            "Optical" = list(6, 4)),
-            WEST_DIR = list(HANDLE = list(7,3),
-                            BARREL = list(2, 3),
-                            MAGAZINE = list(4, 1),
-                            "Optical" = list(4, 4)),
-            EAST_DIR = list(HANDLE = list(6,3),
-                            BARREL = list(1, 3),
-                            MAGAZINE = list(4, 1),
-                            "Optical" = list(4, 4))
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "belt"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        ),
-        "back"  = list(
-            SOUTH_DIR = null,
-            NORTH_DIR = null,
-            WEST_DIR = null,
-            EAST_DIR = null
-        )
-    )
-    exit_point = list(
-        "ICON" = list(
-            SOUTH_DIR = list(12, 5),
-            NORTH_DIR = list(12, 5),
-            WEST_DIR = list(12, 5),
-            EAST_DIR = list(12, 5)
-        ),
-        "hand_l" = list(
-            SOUTH_DIR = list(8, 3),
-            NORTH_DIR = list(6, 3),
-            WEST_DIR = list(4, 3),
-            EAST_DIR = list(5, 3)
-        ),
-        "hand_r" = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "belt"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        ),
-        "back"  = list(
-            SOUTH_DIR = list(0, 0),
-            NORTH_DIR = list(0, 0),
-            WEST_DIR = list(0, 0),
-            EAST_DIR = list(0, 0)
-        )
-    )
+
+/obj/item/weapon/gun_modular/module/chamber/heavyrifle/build_points_list()
+    ..()
+    change_list_exit("ICON", "[SOUTH]", list(12, 5))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(7, 11),
+                                                                BARREL = list(30, 9),
+                                                                MAGAZINE = list(9, 6),
+                                                                "Optical" = list(8, 14)))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(8, 3))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(6, 3))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(4, 3))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(5, 3))
+
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(HANDLE = list(12, 3),
+                                                                BARREL = list(2, 3),
+                                                                MAGAZINE = list(7, 1),
+                                                                "Optical" = list(8, 4)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(HANDLE = list(2, 3),
+                                                                BARREL = list(12, 3),
+                                                                MAGAZINE = list(7, 1),
+                                                                "Optical" = list(6, 4)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", list(HANDLE = list(7, 3),
+                                                                BARREL = list(2, 3),
+                                                                MAGAZINE = list(4, 1),
+                                                                "Optical" = list(4, 4)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", list(HANDLE = list(6, 3),
+                                                                BARREL = list(1, 3),
+                                                                MAGAZINE = list(4, 1),
+                                                                "Optical" = list(4, 4)))
+
 
 /obj/item/weapon/gun_modular/module/chamber/shotgun
     name = "gun shotgun chamber"
