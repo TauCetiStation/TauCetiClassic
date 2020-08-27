@@ -681,7 +681,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/survivalcapsule/elite
 	name = "elite bluespace shelter capsule"
-	desc = "Wow, this is a mining bar?"
+	desc = "Wow, this is a mining bar? In a capsule?"
 	icon_state = "capsule_elite"
 	icon = 'icons/obj/mining.dmi'
 	w_class = ITEM_SIZE_TINY
