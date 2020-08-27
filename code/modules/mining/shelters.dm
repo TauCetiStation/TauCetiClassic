@@ -48,7 +48,7 @@
 /datum/map_template/shelter/alpha
 	name = "Shelter Alpha"
 	shelter_id = "shelter_alpha"
-	description = "A cosy self-contained pressurized shelter, with built-in navigation, entertainment, medical facilities and a sleeping area!"
+	description = "A cosy self-contained pressurized shelter, with built-in navigation, entertainment, medical facilities and a sleeping area! Order now, and we'll throw in a TINY FAN, absolutely free!"
 	mappath = "maps/templates/shelter_1.dmm"
 
 /datum/map_template/shelter/beta
@@ -62,4 +62,3 @@
 	shelter_id = "shelter_gamma"
 	description = "Rare and expensive shelter. Hmm, maybe invite my friends to a party?"
 	mappath = "maps/templates/shelter_3.dmm"
-
