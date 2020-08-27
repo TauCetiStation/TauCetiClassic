@@ -113,20 +113,21 @@
 
 	var/text = "" //The result text will be built and displayed
 	var/invalid = FALSE //Check for conditions that would nullify the vote
+	var/invalid_text = ""
 
 	//Need to pass the minimum threshold of voters
 	if(total_voters() < minimum_voters)
-		text += "<b>Vote Failed: Not enough voters.</b><br>"
-		text += "[total_voters()]/[minimum_voters] players voted.<br><br>"
+		invalid_text += "<b>Vote Failed: Not enough voters.</b><br>"
+		invalid_text += "[total_voters()]/[minimum_voters] players voted.<br><br>"
 		invalid = TRUE
 
 	//Lets see if the max votes meets the minimum threshold
 	else if(total_votes() > 0) //Make sure we dont divide by zero
 		var/max_votepercent = max_votes / total_votes()
 		if(max_votepercent < minimum_win_percentage)
-			text += "<b>Vote Failed: Insufficient majority.</b><br>"
-			text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
-			text += "The highest vote share was [round(100 * max_votepercent, 0.1)]%<br><br>"
+			invalid_text += "<b>Vote Failed: Insufficient majority.</b><br>"
+			invalid_text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
+			invalid_text += "The highest vote share was [round(100 * max_votepercent, 0.1)]%<br><br>"
 			invalid = TRUE
 	var/datum/vote_choice/winner = null
 	var/list/winners = list()
@@ -151,6 +152,8 @@
 	if(winner)
 		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
 		winner.on_win()
+	else
+		text += invalid_text
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")
