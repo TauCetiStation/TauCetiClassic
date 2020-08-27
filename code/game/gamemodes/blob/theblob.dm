@@ -19,7 +19,7 @@
 
 /obj/effect/blob/atom_init()
 	blobs += src
-	dir = pick(1, 2, 4, 8)
+	set_dir(pick(1, 2, 4, 8))
 	update_icon()
 	. = ..()
 	for(var/atom/A in loc)

@@ -132,7 +132,7 @@
 			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
-			A.dir = dir
+			A.set_dir(dir)
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
@@ -162,7 +162,7 @@
 
 		if(I.use_tool(src, user, 20, volume = 50) && src && I)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-			dir = text2dir(dir_choise)
+			set_dir(text2dir(dir_choise))
 
 /obj/machinery/computer/verb/rotate()
 	set category = "Object"
@@ -197,7 +197,7 @@
 
 	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>","<span class='notice'>You turn \the [src] [dir_choise].</span>")
-		dir = text2dir(dir_choise)
+		set_dir(text2dir(dir_choise))
 
 /obj/machinery/computer/attack_hand(user)
 	if(ishuman(user))

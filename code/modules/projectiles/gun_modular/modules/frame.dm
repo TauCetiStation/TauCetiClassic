@@ -7,12 +7,86 @@
     lessdispersion = -2
     size_gun = 1
     prefix = FRAME
-    points_of_entry = list(CHAMBER = "16,16",
-                            HANDLE = "0,0",
-                            MAGAZINE = "0,0",
-                            BARREL = "0,0",
-                            "DNA Crypter" = "13,14")
-    exit_point = "16,16"
+    points_of_entry = list(
+        "ICON" = list(
+            SOUTH_DIR = list(CHAMBER = list(16, 16),
+                            HANDLE = list(0, 0),
+                            MAGAZINE = list(0, 0),
+                            BARREL = list(0, 0),
+                            "DNA Crypter" = list(13, 14)),
+            NORTH_DIR = list(CHAMBER = list(16, 16),
+                            HANDLE = list(0, 0),
+                            MAGAZINE = list(0, 0),
+                            BARREL = list(0, 0),
+                            "DNA Crypter" = list(13, 14)),
+            WEST_DIR = list(CHAMBER = list(16, 16),
+                            HANDLE = list(0, 0),
+                            MAGAZINE = list(0, 0),
+                            BARREL = list(0, 0),
+                            "DNA Crypter" = list(13, 14)),
+            EAST_DIR = list(CHAMBER = list(16, 16),
+                            HANDLE = list(0, 0),
+                            MAGAZINE = list(0, 0),
+                            BARREL = list(0, 0),
+                            "DNA Crypter" = list(13, 14))
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "belt"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "back"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        )
+    )
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(16, 16),
+            NORTH_DIR = list(16, 16),
+            WEST_DIR = list(16, 16),
+            EAST_DIR = list(16, 16)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     var/custom_name = ""
     var/max_accessory = 3
     var/obj/item/weapon/gun_modular/module/chamber/chamber = null
@@ -24,88 +98,84 @@
     var/obj/item/weapon/gun_modular/module/accessory/active_accessory = null
     var/list/config_user = list()
     var/list/icon/radial_icons = list()
-    var/list/image/human_overlays = list()
+    var/list/image/frame_overlays = list()
 
 // When changing weapons, icons are rebuilt to display on a person
 
-/obj/item/weapon/gun_modular/module/frame/proc/build_images()
-    var/image/icon_s = image(icon = icon, icon_state = icon_state, layer = layer)
-    var/image/l_hand = image(icon = icon, icon_state = "")
-    var/image/r_hand = image(icon = icon, icon_state = "")
-    var/image/belt = image(icon = icon, icon_state = "")
-    var/image/back = image(icon = icon, icon_state = "")
+/obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = SOUTH, var/slot = "hand_l")
+    var/image/overlay = image(icon = icon, icon_state = "")
     for(var/key in modules)
         var/obj/item/weapon/gun_modular/module/M = modules[key]
         if(!M)
             continue
-        var/image/M_icon_l = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_l", layer = M.icon_overlay_layer)
-        var/image/M_icon_r = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_r", layer = M.icon_overlay_layer)
-        var/image/M_icon_belt = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_belt", layer = M.icon_overlay_layer)
-        var/image/M_icon_back = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[M.icon_overlay_name]_back", layer = M.icon_overlay_layer)
+        var/image/M_icon = M.icon_overlay[slot]
+        
+        M_icon.color = M.color
 
-        M_icon_l.color = M.color
-        M_icon_r.color = M.color
-        M_icon_belt.color = M.color
-        M_icon_back.color = M.color
+        var/dir_t = direct != SOUTH ? direct != NORTH ? direct != WEST ? EAST_DIR : WEST_DIR : NORTH_DIR : SOUTH_DIR
 
-        l_hand.add_overlay(M_icon_l)
-        r_hand.add_overlay(M_icon_r)
-        belt.add_overlay(M_icon_belt)
-        back.add_overlay(M_icon_back)
-        icon_s.add_overlay(M.icon_overlay)
+        M_icon.pixel_x = M.get_delta_offset(slot, dir_t)[1]
+        M_icon.pixel_y = M.get_delta_offset(slot, dir_t)[2]
 
-    human_overlays["[SPRITE_SHEET_HELD]_l"] = l_hand
-    human_overlays["[SPRITE_SHEET_HELD]_r"] = r_hand
-    human_overlays["[SPRITE_SHEET_BELT]"] = belt
-    human_overlays["[SPRITE_SHEET_BACK]"] = back
+        overlay.add_overlay(M_icon)
 
-    icon_s.appearance_flags = appearance_flags
-    icon_overlay = icon_s
-    var/matrix/frame_change = matrix()
-    frame_change.Scale(0.7 + (0.8 / size_gun))
-    if(size_gun > MEDIUM_GUN)
-        frame_change.Turn(315)
-    animate(icon_s, transform = frame_change)
-    appearance = icon_s.appearance
+    frame_overlays[slot] = overlay
 
-    update_icon()
+    // var/matrix/frame_change = matrix()
+    // frame_change.Scale(0.7 + (0.9 / size_gun))
+    // if(size_gun > MEDIUM_GUN)
+    //     frame_change.Turn(315)
+    // animate(icon_s, transform = frame_change)
+
+/obj/item/weapon/gun_modular/module/frame/proc/update_images(var/mob/user)
+    user.update_inv_item(src)
 
 /obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
     var/image/I = ..()
-    src.update_icon()
+    var/slot = ""
+    if(sprite_sheet_slot == SPRITE_SHEET_HELD)
+        if(icon_state_appendix == "_l")
+            slot = "hand_l"
+        else
+            slot = "hand_r"
+    else if(sprite_sheet_slot == SPRITE_SHEET_BELT)
+        slot = "belt"
+    else if(sprite_sheet_slot == SPRITE_SHEET_BACK)
+        slot = "back"
     I.icon_state = ""
-    if(human_overlays["[sprite_sheet_slot][icon_state_appendix]"])
-        I.add_overlay(human_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+    if(frame_overlays[slot])
+        I.add_overlay(frame_overlays[slot])
     return I
 
 /obj/item/weapon/gun_modular/module/frame/examine(mob/user)
     ..()
     if(!in_range(user, src))
         return
-    var/dir = "The weapon consists of:\n"
+    var/dit = "The weapon consists of:\n"
     for(var/key in modules)
         var/obj/item/weapon/gun_modular/module/M = modules[key]
         if(!M)
             continue
-        dir += "[bicon(M)] [M.name]. <span class='info'>[EMBED_TIP("More info.", M.get_info_module(user))]</span>\n"
-    dir += "<br>"
-    dir += "Weapon size - [size_gun > SMALL_GUN ? size_gun < LARGE_GUN ? "Medium size" : "Large size" : "Small size"]\n"
-    dir += "Reduced spread - [lessdispersion >= CRITICAL_LOW_REDUCED ? lessdispersion < GOOD_REDUCED ? "Low Reduced" : "Good Reduced" : "CRITICAL LOW REDUCED"]\n"
-    dir += "<br>"
-    dir += "Configs:\n"
+        dit += "[bicon(M)] [M.name]. <span class='info'>[EMBED_TIP("More info.", M.get_info_module(user))]</span>\n"
+    dit += "<br>"
+    dit += "Weapon size - [size_gun > SMALL_GUN ? size_gun < LARGE_GUN ? "Medium size" : "Large size" : "Small size"]\n"
+    dit += "Reduced spread - [lessdispersion >= CRITICAL_LOW_REDUCED ? lessdispersion < GOOD_REDUCED ? "Low Reduced" : "Good Reduced" : "CRITICAL LOW REDUCED"]\n"
+    dit += "<br>"
+    dit += "Configs:\n"
     for(var/key in config_user)
         var/config_text = ""
         if(!modules[config_user[key]])
             config_text = "[key] - module not detected\n"
         else
             config_text = "[key] - [modules[config_user[key]].name]\n"
-        dir += config_text
-    to_chat(user, dir)
+        dit += config_text
+    to_chat(user, dit)
 
 /obj/item/weapon/gun_modular/module/frame/atom_init()
     . = ..()
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
+    build_images()
     update_icon()
     
 /obj/item/weapon/gun_modular/module/frame/Destroy()
@@ -161,6 +231,7 @@
 
 /obj/item/weapon/gun_modular/module/frame/dropped(mob/user)
     . = ..()
+    UnregisterSignal(user, COSMIG_ATOM_SETDIR)
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
     if(accessories)
@@ -170,6 +241,7 @@
 
 /obj/item/weapon/gun_modular/module/frame/attack_hand(mob/user)
     . = ..()
+    RegisterSignal(user, COSMIG_ATOM_SETDIR, .proc/update_images)
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
     if(accessories)
@@ -223,7 +295,11 @@
                     break
         return TRUE
 
-/obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, flag, params)
+/obj/item/weapon/gun_modular/module/frame/afterattack(atom/A, mob/living/user, proximity, params)
+    if(proximity)
+        return FALSE
+    if(istype(A, /obj/structure/gun_bench))
+        return FALSE
     if(!handle)
         return FALSE
     if(!handle.Special_Check(user))
@@ -254,7 +330,7 @@
 // Changing the stats of weapons, called when the module is attached, as well as when it is pulled
 
 /obj/item/weapon/gun_modular/module/frame/proc/change_name(mob/user = null)
-    var/custom = ""
+    var/custom = "modular "
     if(user)
         custom_name = sanitize_safe(input(usr,"What would you like to name this gun?","Input a name", "") as text|null, MAX_NAME_LEN)
     custom += "[caliber] gun"
@@ -280,7 +356,10 @@
             w_class = ITEM_SIZE_NORMAL
         if(size_gun >= LARGE_GUN)
             w_class = ITEM_SIZE_LARGE
-    build_images()
+    slowdown = 5 - (25/size_gun)
+    for(var/key_type in points_of_entry)
+        for(var/key_dir in points_of_entry[key_type])
+            build_images(key_dir, key_type)
     change_name()
     return TRUE
 
@@ -304,7 +383,7 @@
     var/obj/item/weapon/gun_modular/module/chamber/energy/shotgun/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/energy/new_magazine = new(src)
     var/obj/item/weapon/stock_parts/cell/bluespace/internal_magazine = new(src)
-    var/obj/item/weapon/gun_modular/module/handle/shotgun/new_handle = new(src)
+    var/obj/item/weapon/gun_modular/module/handle/rifle/new_handle = new(src)
     var/obj/item/weapon/gun_modular/module/barrel/rifle_laser/new_barrel = new(src)
     var/obj/item/weapon/gun_modular/module/accessory/optical/large/new_optical = new(src)
     var/obj/item/weapon/gun_modular/module/accessory/additional_battery/new_additional = new(src)

@@ -79,7 +79,7 @@
 	C.name = O.name
 	C.desc = O.desc
 	C.appearance = O.appearance
-	C.dir = O.dir
+	C.set_dir(O.dir)
 	C.current_type = O.type
 	C.layer = initial(O.layer) // scanning things in your inventory
 	C.plane = initial(O.plane)

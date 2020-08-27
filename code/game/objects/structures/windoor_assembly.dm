@@ -217,7 +217,7 @@
 						else
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
-						windoor.dir = src.dir
+						windoor.set_dir(src.dir)
 						windoor.density = 0
 
 						if(src.electronics.one_access)
@@ -239,7 +239,7 @@
 						else
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
-						windoor.dir = src.dir
+						windoor.set_dir(src.dir)
 						windoor.density = 0
 
 						if(src.electronics.one_access)
@@ -275,7 +275,7 @@
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1) //Compel updates before
 
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1)

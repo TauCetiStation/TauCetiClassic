@@ -75,7 +75,7 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.dir = dir
+		src.set_dir(dir)
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -963,7 +963,7 @@ var/list/airlock_overlays = list()
 				if(glass && da.can_insert_glass)
 					da.set_glass(TRUE)
 				da.state = ASSEMBLY_WIRED
-				da.dir = dir
+				da.set_dir(dir)
 				da.created_name = name
 				da.update_state()
 

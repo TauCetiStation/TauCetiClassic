@@ -149,7 +149,38 @@
     gun_type = ALL_GUN_TYPE
     view_range = 9
     size_barrel = 1
-    exit_point = "1,0"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(1, 1),
+            NORTH_DIR = list(1, 1),
+            WEST_DIR = list(1, 1),
+            EAST_DIR = list(1, 1)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
 
 /obj/item/weapon/gun_modular/module/accessory/optical/medium
     name = "gun optical medium accessory"
@@ -162,7 +193,38 @@
     gun_type = ALL_GUN_TYPE
     view_range = 11
     size_barrel = 2
-    exit_point = "2,0"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(6, 1),
+            NORTH_DIR = list(6, 1),
+            WEST_DIR = list(6, 1),
+            EAST_DIR = list(6, 1)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
 
 /obj/item/weapon/gun_modular/module/accessory/optical/large
     name = "gun optical large accessory"
@@ -175,7 +237,38 @@
     gun_type = ALL_GUN_TYPE
     view_range = 14
     size_barrel = 3
-    exit_point = "4,0"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(9, 1),
+            NORTH_DIR = list(9, 1),
+            WEST_DIR = list(9, 1),
+            EAST_DIR = list(9, 1)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger
     name = "gun core charger accessory"
@@ -187,7 +280,38 @@
     size_gun = 1
     prefix = "Core Charger"
     gun_type = ENERGY_GUN
-    exit_point = "3,1"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(3, 1),
+            NORTH_DIR = list(3, 1),
+            WEST_DIR = list(3, 1),
+            EAST_DIR = list(3, 1)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     var/obj/item/device/assembly/signaler/anomaly/core = null
     var/tick = 0
     var/tick_charge = 8
@@ -253,7 +377,38 @@
     lessdispersion = 0.3
     size_gun = 2
     prefix = "Silenser"
-    exit_point = "1,3"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(1, 3),
+            NORTH_DIR = list(1, 3),
+            WEST_DIR = list(1, 3),
+            EAST_DIR = list(1, 3)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     gun_type = BULLET_GUN
 
 /obj/item/weapon/gun_modular/module/accessory/silenser/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
@@ -286,7 +441,38 @@
     lessdispersion = 0
     size_gun = 2
     prefix = "Bayonet"
-    exit_point = "4,4"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(4, 5),
+            NORTH_DIR = list(4, 5),
+            WEST_DIR = list(4, 5),
+            EAST_DIR = list(4, 5)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(8, 13),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     gun_type = ALL_GUN_TYPE
     force = 12
     edge = TRUE
@@ -329,7 +515,38 @@
     size_gun = 2
     prefix = "Additional Battery"
     gun_type = ENERGY_GUN
-    exit_point = "15,13"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(15, 13),
+            NORTH_DIR = list(15, 13),
+            WEST_DIR = list(15, 13),
+            EAST_DIR = list(15, 13)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     var/obj/item/weapon/stock_parts/cell/additional_battery = null
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/Destroy()
@@ -401,7 +618,38 @@
     size_gun = 1
     prefix = "DNA Crypter"
     gun_type = ALL_GUN_TYPE
-    exit_point = "9,5"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(9, 5),
+            NORTH_DIR = list(9, 5),
+            WEST_DIR = list(9, 5),
+            EAST_DIR = list(9, 5)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     var/mob/living/carbon/Owner = null
 
 /obj/item/weapon/gun_modular/module/accessory/dna_crypter/activate(mob/user, argument)
@@ -441,4 +689,66 @@
         return ..()
     if(Owner != user)
         return FALSE
+
+/obj/item/weapon/gun_modular/module/accessory/butt
+    name = "gun butt"
+    icon_state = "butt"
+    icon_overlay_name = "butt"
+    caliber = ALL_CALIBER
+    lessdamage = 0
+    lessdispersion = 1.5
+    size_gun = 2
+    prefix = "Butt"
+    gun_type = ALL_GUN_TYPE
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(18, 9),
+            NORTH_DIR = list(18, 9),
+            WEST_DIR = list(18, 9),
+            EAST_DIR = list(18, 9)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
+    var/lessrecoil = 2
+
+/obj/item/weapon/gun_modular/module/accessory/butt/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
+    if(!..())
+        return FALSE
+    if(!I.handle)
+        return FALSE
+    return TRUE
+
+
+/obj/item/weapon/gun_modular/module/accessory/butt/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
+    if(!..())
+        return FALSE
+    frame_parent.handle.lessrecoil += lessrecoil
+
+/obj/item/weapon/gun_modular/module/accessory/butt/remove()
+    if(frame_parent.handle)
+        frame_parent.handle.lessrecoil -= lessrecoil
+    return ..()
     

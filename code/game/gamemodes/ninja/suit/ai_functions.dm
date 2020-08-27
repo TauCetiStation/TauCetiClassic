@@ -11,7 +11,7 @@
 			hologram = new(T)//Spawn a blank effect at the location.
 			hologram.invisibility = 101//So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them differently to differnet people.
 			hologram.anchored = 1//So it cannot be dragged by space wind and the like.
-			hologram.dir = get_dir(T,affecting.loc)
+			hologram.set_dir(get_dir(T,affecting.loc))
 			var/image/I = image(AI.holo_icon,hologram)//Attach an image to object.
 			hologram.i_attached = I//To attach the image in order to later reference.
 			AI << I

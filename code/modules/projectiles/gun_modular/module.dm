@@ -3,6 +3,8 @@
     icon = 'code/modules/projectiles/gun_modular/modular.dmi'
     icon_state = "bench_open"
     desc = ""
+    density = TRUE
+    anchored = TRUE
     var/obj/item/weapon/gun_modular/module/frame/frame_parent = null
     var/image/frame_overlay
 
@@ -12,23 +14,101 @@
         if(!frame_parent)
             var/obj/item/weapon/gun_modular/module/frame/F = W
             frame_parent = F
-            frame_overlay = image(frame_parent.icon_overlay.icon, frame_parent.icon_overlay.icon_state)
-            frame_overlay.appearance = frame_parent.icon_overlay.appearance
-            frame_overlay.layer = OBJ_LAYER
+            user.drop_item()
+            frame_parent.loc = src
+            frame_overlay = image(icon, icon_state = "")
+            frame_overlay.appearance = frame_parent.frame_overlays["icon"]
             var/matrix/frame_change = matrix()
-            frame_change.Scale(0.7)
-            animate(frame_overlay, transform = frame_change)
-            add_overlay(frame_parent.icon_overlay)
-    
+            frame_change.Scale(0.5)
+            animate(frame_overlay, pixel_y = 6, transform = frame_change)
+            add_overlay(frame_overlay)
+            return
+    if(istype(W, /obj/item/weapon/gun_modular/module))
+        if(frame_parent)
+            var/obj/item/weapon/gun_modular/module/M = W
+            M.attach(frame_parent, user)
+            icon_state = "bench_work"
+            var/image/work_overlay = image(icon = icon, icon_state = "overlay_work", layer = 5)
+            add_overlay(work_overlay)
+            if(do_after(user, 2 SECOND, needhand = FALSE, target = src, can_move = FALSE, progress = TRUE))
+                icon_state = "bench_open"
+                cut_overlays()
+            frame_overlay.appearance = frame_parent.frame_overlays["icon"]
+            var/matrix/frame_change = matrix()
+            frame_change.Scale(0.5)
+            animate(frame_overlay, pixel_y = 6, transform = frame_change)
+            add_overlay(frame_overlay)
 
 /obj/item/weapon/gun_modular/module
     name = "gun module"
     icon = 'code/modules/projectiles/gun_modular/modular.dmi'
     desc = ""
     w_class = ITEM_SIZE_SMALL
-    var/list/points_of_entry = list()
-    var/list/exit_point = "0,0"
-    var/image/icon_overlay
+    var/list/points_of_entry = list(
+        "ICON" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "belt"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "back"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        )
+    )
+    var/list/exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
+    var/list/image/icon_overlay = list()
     var/icon_overlay_name
     var/icon_overlay_layer
     var/prefix
@@ -39,15 +119,22 @@
     var/gun_type
     var/obj/item/weapon/gun_modular/module/frame/frame_parent = null
 
+/obj/item/weapon/gun_modular/module/proc/test_signal()
+    visible_message("dir")
+
 /obj/item/weapon/gun_modular/module/update_icon()
-    icon_overlay = image(icon, icon_overlay_name, layer = icon_overlay_layer)
-    icon_overlay.color = color
+    for(var/key in icon_overlay)
+        icon_overlay[key].color = color
     return
 
 /obj/item/weapon/gun_modular/module/atom_init()
     . = ..()
-    icon_overlay = image(icon, icon_overlay_name, layer = icon_overlay_layer)
-    icon_overlay.appearance_flags |= KEEP_TOGETHER
+    icon_overlay["ICON"] = image(icon, icon_overlay_name)
+    icon_overlay["ICON"].appearance_flags |= KEEP_TOGETHER
+    icon_overlay["hand_l"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_l", layer = icon_overlay_layer)
+    icon_overlay["hand_r"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_r", layer = icon_overlay_layer)
+    icon_overlay["belt"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_belt", layer = icon_overlay_layer)
+    icon_overlay["back"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_back", layer = icon_overlay_layer)
 
 /obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
@@ -58,19 +145,23 @@
         remove()
     return ..()
 
-/obj/item/weapon/gun_modular/module/proc/get_delta_offset(var/point = prefix)
-    var/list/points_attach = text2numlist(exit_point, ",")
+/obj/item/weapon/gun_modular/module/proc/get_delta_offset(var/type = "ICON", var/direct = SOUTH_DIR, var/point = prefix)
     var/list/points_modify = list(0, 0)
-    var/list/points_null = text2numlist(frame_parent.exit_point, ",")
-    if(frame_parent.points_of_entry[point])
-        points_modify = text2numlist(frame_parent.points_of_entry[point], ",")
+    if(frame_parent.points_of_entry)
+        if(frame_parent.points_of_entry[type])
+            if(frame_parent.points_of_entry[type][direct])
+                if(frame_parent.points_of_entry[type][direct][point])
+                    points_modify = frame_parent.points_of_entry[type][direct][point]
 
-    var/delta_x = points_modify[1] - points_attach[1]
-    var/delta_y = points_modify[2] - points_attach[2]
+    var/delta_x = points_modify[1] - exit_point[type][direct][1]
+    var/delta_y = points_modify[2] - exit_point[type][direct][2]
 
-    for(var/key in points_of_entry)
-        var/list/point_of_entry = text2numlist(points_of_entry[key], ",")
-        frame_parent.points_of_entry[key] = "[points_null[1] + (point_of_entry[1] + (delta_x - points_null[1]))],[points_null[2] + (point_of_entry[2] + (delta_y - points_null[2]))]"
+    if(points_of_entry[type][direct])
+        for(var/key in points_of_entry[type][direct])
+            if(frame_parent.points_of_entry)
+                if(frame_parent.points_of_entry[type])
+                    if(frame_parent.points_of_entry[type][direct])
+                        frame_parent.points_of_entry[type][direct][key] = list(points_of_entry[type][direct][key][1] + delta_x, points_of_entry[type][direct][key][2] + delta_y)
 
     return list(delta_x, delta_y)
 
@@ -146,6 +237,8 @@
         return FALSE
     if(gun_type != frame.gun_type && gun_type != ALL_GUN_TYPE)
         return FALSE
+    if(!frame.points_of_entry["ICON"]["SOUTH"][prefix])
+        return FALSE
     return TRUE
 
 // Module attachment procedure
@@ -173,10 +266,10 @@
     
     var/list/delta_offset = get_delta_offset()
 
-    icon_overlay.pixel_x = delta_offset[1]
-    icon_overlay.pixel_y = delta_offset[2]
+    icon_overlay["ICON"].pixel_x = delta_offset[1]
+    icon_overlay["ICON"].pixel_y = delta_offset[2]
 
-    frame_parent.add_overlay(icon_overlay)
+    frame_parent.add_overlay(icon_overlay["ICON"])
     frame.modules[prefix] = src
     frame.change_state(src, TRUE)
     return TRUE
@@ -184,13 +277,16 @@
 // Module removal procedure
 
 /obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
-    for(var/key in points_of_entry)
-        if(frame_parent.points_of_entry[key])
-            frame_parent.points_of_entry[key] = null
-    icon_overlay.pixel_x = 0
-    icon_overlay.pixel_y = 0
+    for(var/key_type in points_of_entry)
+        for(var/key_dir in points_of_entry[key_type])
+            if(frame_parent.points_of_entry[key_type][key_dir])
+                for(var/key in points_of_entry[key_type][key_dir])
+                    if(frame_parent.points_of_entry[key_type][key_dir][key])
+                        frame_parent.points_of_entry[key_type][key_dir][key] = null
+    icon_overlay["ICON"].pixel_x = 0
+    icon_overlay["ICON"].pixel_y = 0
     frame_parent.modules[prefix] = null
-    frame_parent.cut_overlay(icon_overlay)
+    frame_parent.cut_overlay(icon_overlay["ICON"])
     frame_parent.update_icon()
     frame_parent.change_state(src, FALSE)
     src.loc = get_turf(frame_parent)

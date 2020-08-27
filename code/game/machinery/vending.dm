@@ -930,7 +930,6 @@
 					/obj/item/weapon/gun_modular/module/handle = 4,
 					/obj/item/weapon/gun_modular/module/handle/weighted = 2,
 					/obj/item/weapon/gun_modular/module/handle/resilient = 1,
-					/obj/item/weapon/gun_modular/module/handle/shotgun = 1,
 					/obj/item/weapon/gun_modular/module/magazine = 2,
 					/obj/item/weapon/gun_modular/module/magazine/energy = 2)
 	premium = list(/obj/item/weapon/gun_modular/module/accessory/optical/large = 1,
@@ -957,7 +956,6 @@
 					/obj/item/weapon/gun_modular/module/handle = 40,
 					/obj/item/weapon/gun_modular/module/handle/weighted = 80,
 					/obj/item/weapon/gun_modular/module/handle/resilient = 120,
-					/obj/item/weapon/gun_modular/module/handle/shotgun = 120,
 					/obj/item/weapon/gun_modular/module/magazine = 80,
 					/obj/item/weapon/gun_modular/module/magazine/energy = 80)
 

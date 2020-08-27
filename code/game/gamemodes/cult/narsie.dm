@@ -292,7 +292,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/effects/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	set_dir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

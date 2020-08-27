@@ -300,7 +300,7 @@
 	return 0
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	set_dir(direction)
 	use_power(step_energy_drain)
 	playsound(src, 'sound/mecha/Mech_Rotation.ogg', VOL_EFFECTS_MASTER, 40)
 	return 1
@@ -1015,7 +1015,7 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		log_admin("[key_name(H)] has moved in [src.type] with name [src.name]")
 		src.icon_state = src.reset_icon()
-		dir = dir_in
+		set_dir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', VOL_EFFECTS_MASTER)
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -1074,7 +1074,7 @@
 		src.Entered(mmi_as_oc)
 		src.Move(src.loc)
 		src.icon_state = src.reset_icon()
-		dir = dir_in
+		set_dir(dir_in)
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
@@ -1170,7 +1170,7 @@
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
 		src.icon_state = src.reset_icon()+"-open"
-		src.dir = dir_in
+		src.set_dir(dir_in)
 	return
 
 /////////////////////////

@@ -23,7 +23,7 @@
 
 /obj/structure/stool/bed/chair/pew/handle_rotation()
 	if(buckled_mob)
-		buckled_mob.dir = dir
+		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
 /obj/structure/stool/bed/chair/pew/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

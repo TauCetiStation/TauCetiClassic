@@ -273,6 +273,7 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	SEND_SIGNAL(src, COSMIG_ATOM_SETDIR, src)
 
 /atom/proc/relaymove()
 	return

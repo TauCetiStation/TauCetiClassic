@@ -311,7 +311,7 @@
 								WA.secure = 1
 								WA.anchored = 1
 						WA.state= "02"
-						WA.dir = src.dir
+						WA.set_dir(src.dir)
 						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name

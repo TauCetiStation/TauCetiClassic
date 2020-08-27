@@ -88,6 +88,8 @@
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
 // /atom/movable signals
+/// from base of /atom/proc/set_dir(new_dir): (/atom)
+#define COSMIG_ATOM_SETDIR "atom_set_dir"
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE 1

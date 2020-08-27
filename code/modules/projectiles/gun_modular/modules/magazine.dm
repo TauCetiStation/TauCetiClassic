@@ -9,7 +9,38 @@
     lessdispersion = 0
     size_gun = 1
     prefix = MAGAZINE
-    exit_point = "0,2"
+    exit_point = list(
+        "ICON" = list(
+            SOUTH_DIR = list(0, 2),
+            NORTH_DIR = list(0, 2),
+            WEST_DIR = list(0, 2),
+            EAST_DIR = list(0, 2)
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "belt"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        ),
+        "back"  = list(
+            SOUTH_DIR = list(0, 0),
+            NORTH_DIR = list(0, 0),
+            WEST_DIR = list(0, 0),
+            EAST_DIR = list(0, 0)
+        )
+    )
     var/isinternal = FALSE
     var/eject_casing = TRUE
     var/empty_chamber = TRUE
@@ -157,8 +188,42 @@
     eject_casing = FALSE
     empty_chamber = FALSE
     no_casing = FALSE
-    points_of_entry = list("Additional Battery" = "2,2",
-                            "Core Charger" = "2,2")
+    points_of_entry = list(
+        "ICON" = list(
+            SOUTH_DIR = list("Additional Battery" = list(2, 2),
+                            "Core Charger" = list(2, 2)),
+            NORTH_DIR = list("Additional Battery" = list(2, 2),
+                            "Core Charger" = list(2, 2)),
+            WEST_DIR = list("Additional Battery" = list(2, 2),
+                            "Core Charger" = list(2, 2)),
+            EAST_DIR = list("Additional Battery" = list(2, 2),
+                            "Core Charger" = list(2, 2))
+        ),
+        "hand_l" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "hand_r" = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "belt"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        ),
+        "back"  = list(
+            SOUTH_DIR = null,
+            NORTH_DIR = null,
+            WEST_DIR = null,
+            EAST_DIR = null
+        )
+    )
     var/obj/item/weapon/stock_parts/cell/magazine = null
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Destroy()
@@ -243,8 +308,8 @@
         return FALSE
     open = FALSE
     hole_magaine = image(icon, "magazine_open")
-    hole_magaine.pixel_x = get_delta_offset(CHAMBER)[1]
-    hole_magaine.pixel_y = get_delta_offset(CHAMBER)[2]
+    hole_magaine.pixel_x = frame_parent.chamber.icon_overlay["ICON"].pixel_x + 2
+    hole_magaine.pixel_y = frame_parent.chamber.icon_overlay["ICON"].pixel_y + 2
     return TRUE
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
     if(open)

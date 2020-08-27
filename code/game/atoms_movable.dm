@@ -102,6 +102,7 @@
 		. = 0
 
 	if(.)
+		set_dir(Dir)
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)

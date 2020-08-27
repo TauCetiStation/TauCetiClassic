@@ -331,7 +331,7 @@
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
-		pulse2.dir = pick(cardinal)
+		pulse2.set_dir(pick(cardinal))
 		QDEL_IN(pulse2, 10)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12, src))
