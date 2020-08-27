@@ -177,6 +177,10 @@ SUBSYSTEM_DEF(ticker)
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
+			// Players can initiate gamemode vote again
+			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			if(gamemode_vote)
+				gamemode_vote.reset_next_vote()
 			return 0
 
 		// hiding forced gamemode in secret

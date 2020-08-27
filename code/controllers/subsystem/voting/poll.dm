@@ -61,6 +61,9 @@
 	if(SSvote.active_vote == src)
 		SSvote.active_vote = null
 
+/datum/poll/proc/reset_next_vote()
+	next_vote = 0
+
 /datum/poll/process()
 	return
 
