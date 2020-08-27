@@ -672,7 +672,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/survivalcapsule/improved
 	name = "improved bluespace shelter capsule"
-	desc = "Version with all the amenities for survival."
+	desc = "Version of emergency shelter with all the amenities for survival."
 	icon_state = "capsule_improved"
 	icon = 'icons/obj/mining.dmi'
 	w_class = ITEM_SIZE_TINY
