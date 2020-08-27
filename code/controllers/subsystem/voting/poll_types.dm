@@ -16,7 +16,7 @@
 	see_votes = FALSE
 
 	cooldown = 60 MINUTES
-	minimum_win_percentage = 0.6
+	minimum_win_percentage = 0.75
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
