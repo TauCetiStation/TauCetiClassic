@@ -129,6 +129,7 @@
 			invalid_text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
 			invalid_text += "The highest vote share was [round(100 * max_votepercent, 0.1)]%<br><br>"
 			invalid = TRUE
+
 	var/datum/vote_choice/winner = null
 	var/list/winners = list()
 	if(!invalid)
