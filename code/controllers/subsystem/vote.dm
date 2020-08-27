@@ -89,17 +89,19 @@ SUBSYSTEM_DEF(vote)
 		. += "Started by: <b>[active_vote.initiator]</b><hr>"
 
 		if(active_vote.multiple_votes)
-			. += "You can vote multiple choices.<br>"
+			. += "You can vote <b>multiple</b> choices.<br>"
 		else
-			. += "You can vote one choice.<br>"
+			. += "You can vote <b>only one</b> choice.<br>"
 
 		if(active_vote.can_revote)
-			if(active_vote.can_unvote)
-				. += "You can either change vote or remove it."
-			else
-				. += "You can change your vote."
+			. += "You <b>can change</b> your vote.<br>"
 		else
-			. += "You can't change your vote."
+			. += "You <b>can't change</b> your vote.<br>"
+
+		if(active_vote.can_unvote)
+			. += "You <b>can remove</b> vote.<br>"
+		else
+			. += "You <b>can't remove</b> vote.<br>"
 
 		. += "<hr>"
 		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
