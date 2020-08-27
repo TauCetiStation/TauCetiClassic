@@ -129,8 +129,8 @@
 			text += "The highest vote share was [round(100 * max_votepercent, 0.1)]%<br><br>"
 			invalid = TRUE
 	var/datum/vote_choice/winner = null
+	var/list/winners = list()
 	if(!invalid)
-		var/list/winners = list()
 		for(var/datum/vote_choice/V in choice_votes)
 			if(choice_votes[V] == max_votes)
 				winners.Add(V)
@@ -141,17 +141,16 @@
 
 	text += "<b>Votes:</b><br>"
 	for(var/datum/vote_choice/ch in choice_votes)
-		if(ch == winner)
-			text += "<b>"
-		text += "\t[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%<br>"
-		if(ch == winner)
-			text += "</b>"
+		if(ch in winners)
+			text += "\t<b>[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%</b><br>"
+		else
+			text += "\t[ch.text] - [round(100 * choice_votes[ch] / total_votes(), 0.1)]%<br>"
 
 	text += "Total voted - [all_voters.len]<br>"
-	if(!winner)
-		text += "<b>Did not vote - [non_voters]</b><br>"
-	else
-		text += "Did not vote - [non_voters]<br>"
+	text += "Did not vote - [non_voters]<br>"
+
+	if(winner)
+		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
 		winner.on_win()
 
 	log_vote(text)
