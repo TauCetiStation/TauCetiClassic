@@ -312,19 +312,16 @@
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()
-	// Default skin of module
-	var/list/sprite_names = list()
 
 	for(var/name in module_sprites)
-		sprite_names += name
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
 
 	// Default skin of module
-	icon_state = module_sprites[pick(sprite_names)]
+	icon_state = module_sprites[pick(module_sprites)]
 	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
-	if(!new_icon_state)
-		return
-	icon_state = module_sprites[new_icon_state]
+	if(new_icon_state)
+		icon_state = module_sprites[new_icon_state]
+
 	radio.config(module.channels)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
