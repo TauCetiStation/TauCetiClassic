@@ -10,12 +10,17 @@ var/global/list/last_names = file2list("config/names/last.txt")
 var/global/list/clown_names = file2list("config/names/clown.txt")
 
 // Traitors key-words
-var/global/list/rus_nouns = file2list("config/names/rus_nouns.txt")
-var/global/list/rus_adjectives = file2list("config/names/rus_adjectives.txt")
-var/global/list/rus_verbs = file2list("config/names/rus_verbs.txt")
-var/global/list/rus_occupations = file2list("config/names/rus_occupations.txt")
-var/global/list/rus_bays = file2list("config/names/rus_bays.txt")
-var/global/list/rus_local_terms = file2list("config/names/rus_local_terms.txt")
+var/global/list/rus_nouns
+var/global/list/rus_adjectives
+var/global/list/rus_verbs
+var/global/list/rus_occupations
+var/global/list/rus_bays
+var/global/list/rus_local_terms
+
+var/global/list/eng_adjectives
+var/global/list/eng_verbs
+var/global/list/eng_drinks
+var/global/list/eng_nouns
 
 //loaded on startup because of "
 //would include in rsc if ' was used

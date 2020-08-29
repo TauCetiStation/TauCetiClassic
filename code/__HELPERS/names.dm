@@ -190,8 +190,25 @@ var/global/regex/code_response_highlight_rule
 	One example of an earlier system is commented below.
 	*/
 
-/proc/generate_code_phrase()//Proc is used for phrase and response in subsystem init.
-	var/words_count = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
+/proc/generate_words_list()
+	if(config.rus_language)
+		global.rus_nouns = file2list("config/names/rus_nouns.txt")
+		global.rus_adjectives = file2list("config/names/rus_adjectives.txt")
+		global.rus_verbs = file2list("config/names/rus_verbs.txt")
+		global.rus_occupations = file2list("config/names/rus_occupations.txt")
+		global.rus_bays = file2list("config/names/rus_bays.txt")
+		global.rus_local_terms = file2list("config/names/rus_local_terms.txt")
+	else
+		global.eng_adjectives = file2list("config/names/eng_adjectives.txt")
+		global.eng_verbs = file2list("config/names/eng_verbs.txt")
+		global.eng_drinks = file2list("config/names/eng_drinks.txt")
+		global.eng_nouns = file2list("config/names/eng_nouns.txt")
+
+//Proc is used for phrase and response in subsystem init.
+/proc/generate_code_phrase()
+	//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
+	generate_words_list()
+	var/words_count = pick(
 		50; 2,
 		200; 3,
 		50; 4,
@@ -199,18 +216,29 @@ var/global/regex/code_response_highlight_rule
 	)
 	var/code_phrase[words_count]
 	for(var/i = 1, i <= code_phrase.len, i++)
-		var/word = pick(
-			80; pick(global.rus_occupations),
-			70; pick(global.rus_bays),
-			65; pick(global.rus_local_terms),
-			65; pick(global.rus_adjectives),
-			55; pick(global.rus_nouns),
-			40; pick(global.rus_verbs)
-		)
-		if(!word || code_phrase.Find(word,1,i)) // Reroll duplicates and errors
+		var/word
+		if(config.rus_language)
+			word = pick(
+				80; pick(global.rus_occupations),
+				70; pick(global.rus_bays),
+				65; pick(global.rus_local_terms),
+				65; pick(global.rus_adjectives),
+				55; pick(global.rus_nouns),
+				40; pick(global.rus_verbs)
+			)
+		else
+			word = pick(
+				70; pick(global.eng_drinks),
+				65; pick(global.eng_adjectives),
+				55; pick(global.eng_nouns),
+				40; pick(global.eng_verbs)
+			)
+
+		if(!word || code_phrase.Find(word, 1, i)) // Reroll duplicates and errors
 			i--
 			continue
-		var separator_position = findtext(word, "|")
+
+		var/separator_position = findtext(word, "|")
 		code_phrase[i] = copytext(word, 1, separator_position) // Word's root
 		code_phrase[code_phrase[i]] = separator_position == length(word) ? "" : copytext(word, separator_position + 1) // Associated ending
 
