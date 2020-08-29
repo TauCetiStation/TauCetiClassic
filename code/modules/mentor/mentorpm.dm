@@ -54,7 +54,7 @@
 
 	if(((src in mentors) || holder) && !C.holder)
 		if(config.rus_language)
-			recieve_message = "<font color='[recieve_color]' size='3'><b>-- [text("Нажмите на имя []'а для ответа.", recieve_pm_type)] --</b></font>\n"
+			recieve_message = "<font color='[recieve_color]' size='3'><b>-- РќР°Р¶РјРёС‚Рµ РЅР° РёРјСЏ [recieve_pm_type]'s РґР»СЏ РѕС‚РІРµС‚Р° --</b></font>\n"
 		else
 			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.mentorhelped)
