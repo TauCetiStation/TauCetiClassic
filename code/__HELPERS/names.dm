@@ -190,7 +190,7 @@ var/global/regex/code_response_highlight_rule
 	One example of an earlier system is commented below.
 	*/
 
-/proc/generate_words_list()
+/proc/set_languge_lists()
 	if(config.rus_language)
 		global.rus_nouns = file2list("config/names/rus_nouns.txt")
 		global.rus_adjectives = file2list("config/names/rus_adjectives.txt")
@@ -207,7 +207,7 @@ var/global/regex/code_response_highlight_rule
 //Proc is used for phrase and response in subsystem init.
 /proc/generate_code_phrase()
 	//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
-	generate_words_list()
+	set_languge_lists()
 	var/words_count = pick(
 		50; 2,
 		200; 3,
