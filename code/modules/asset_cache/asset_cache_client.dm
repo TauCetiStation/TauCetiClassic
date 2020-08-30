@@ -11,10 +11,6 @@
 
 /// Process asset cache client topic calls for "asset_cache_preload_data=[HTML+JSON_STRING]
 /client/proc/asset_cache_preload_data(data)
-	/*var/jsonend = findtextEx(data, "{{{ENDJSONDATA}}}")
-	if (!jsonend)
-		CRASH("invalid asset_cache_preload_data, no jsonendmarker")*/
-	//var/json = html_decode(copytext(data, 1, jsonend))
 	var/json = data
 	var/list/preloaded_assets = json_decode(json)
 
