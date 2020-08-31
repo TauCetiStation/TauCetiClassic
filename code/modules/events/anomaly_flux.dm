@@ -12,6 +12,6 @@
 		newAnomaly = new /obj/effect/anomaly/flux(T)
 
 /datum/event/anomaly/anomaly_flux/end()
-		explosion(newAnomaly, 3, 5, 5)
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to blow up.
+		explosion(get_turf(newAnomaly), 3, 5, 5)
 		qdel(newAnomaly)
