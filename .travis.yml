@@ -35,6 +35,20 @@ matrix:
           packages:
             - python3.5
 
+    - name: "Compile All Maps"
+      install:
+        - ./scripts/install-byond.sh
+        - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+      addons:
+        apt:
+          packages:
+            - libstdc++6:i386
+            - python3.5
+      before_script:
+        - ./scripts/template_dm_generator.py
+      script:
+        - ./scripts/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS taucetistation.dme
+
     - name: "Unit Tests - Box Station"
       env: 
         - TEST=UNIT
