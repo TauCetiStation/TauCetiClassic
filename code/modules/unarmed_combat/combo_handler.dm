@@ -266,7 +266,7 @@
 	if(!attacker)
 		return
 
-	if(combo_icon && (SSmob.times_fired % 3) == 0)
+	if(combo_icon && (SSmobs.times_fired % 3) == 0)
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
 	progbar.update(fullness)

@@ -17,7 +17,7 @@
 
 /obj/machinery/dominator/atom_init()
 	. = ..()
-	if(!istype(ticker.mode, /datum/game_mode/gang))
+	if(!istype(SSticker.mode, /datum/game_mode/gang))
 		return INITIALIZE_HINT_QDEL
 	set_light(2)
 	poi_list += src
@@ -28,7 +28,7 @@
 		to_chat(user, "<span class='danger'>It looks completely busted.</span>")
 		return
 
-	var/datum/game_mode/gang/mode = ticker.mode
+	var/datum/game_mode/gang/mode = SSticker.mode
 	var/time = null
 	if(gang == "A")
 		if(isnum(mode.A_timer))
@@ -47,7 +47,7 @@
 
 /obj/machinery/dominator/process()
 	..()
-	var/datum/game_mode/gang/mode = ticker.mode
+	var/datum/game_mode/gang/mode = SSticker.mode
 	if(gang && (isnum(mode.A_timer) || isnum(mode.B_timer)))
 		if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
 			playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
@@ -84,7 +84,7 @@
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()
-	var/datum/game_mode/gang/mode = ticker.mode
+	var/datum/game_mode/gang/mode = SSticker.mode
 	if(gang == "A")
 		mode.A_timer = "OFFLINE"
 	if(gang == "B")
@@ -107,12 +107,12 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
+		SSticker.mode.message_gangtools(((gang=="A") ? SSticker.mode.A_tools : SSticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 
 	set_light(0)
 	icon_state = "dominator-broken"
 	operating = -1
-	STOP_PROCESSING(SSmachine, src)
+	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -162,18 +162,18 @@
 		user.examinate(src)
 		return
 
-	var/datum/game_mode/gang/mode = ticker.mode
+	var/datum/game_mode/gang/mode = SSticker.mode
 	var/gang_territory
 	var/timer
 
 	var/tempgang
-	if(user.mind in (ticker.mode.A_gang|ticker.mode.A_bosses))
+	if(user.mind in (SSticker.mode.A_gang|SSticker.mode.A_bosses))
 		tempgang = "A"
-		gang_territory = ticker.mode.A_territory.len
+		gang_territory = SSticker.mode.A_territory.len
 		timer = mode.A_timer
-	else if(user.mind in (ticker.mode.B_gang|ticker.mode.B_bosses))
+	else if(user.mind in (SSticker.mode.B_gang|SSticker.mode.B_bosses))
 		tempgang = "B"
-		gang_territory = ticker.mode.B_territory.len
+		gang_territory = SSticker.mode.B_territory.len
 		timer = mode.B_timer
 
 	if(!tempgang)
@@ -201,8 +201,8 @@
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
-		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
-		START_PROCESSING(SSmachine, src)
+		SSticker.mode.message_gangtools(((gang=="A") ? SSticker.mode.A_tools : SSticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

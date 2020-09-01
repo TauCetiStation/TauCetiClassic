@@ -17,8 +17,9 @@ var/global/vox_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/carapace, SLOT_WEAR_SUIT)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/carapace, SLOT_HEAD)
 			equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton, SLOT_BELT)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/device/chameleon, SLOT_L_STORE)
+			equip_to_slot_or_del(new /obj/item/weapon/storage/box/smokegrenades, SLOT_IN_BACKPACK)
 
 			var/obj/item/weapon/spikethrower/W = new
 			equip_to_slot_or_del(W, SLOT_IN_BACKPACK)
@@ -35,16 +36,18 @@ var/global/vox_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/stealth, SLOT_WEAR_SUIT)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/stealth, SLOT_HEAD)
 			equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full, SLOT_BELT)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/weapon/card/emag, SLOT_L_STORE)
 			equip_to_slot_or_del(new /obj/item/device/multitool, SLOT_IN_BACKPACK)
 			equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/raider, SLOT_IN_BACKPACK)
+			equip_to_slot_or_del(new /obj/item/device/chameleon, SLOT_IN_BACKPACK)
+			equip_to_slot_or_del(new /obj/item/weapon/storage/box/smokegrenades, SLOT_IN_BACKPACK)
 
 		if(4) // Vox medic!
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/medic, SLOT_WEAR_SUIT)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/medic, SLOT_HEAD)
 			equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full, SLOT_BELT) // Who needs actual surgical tools?
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health/vox, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/weapon/circular_saw, SLOT_L_STORE)
 			equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/medical, SLOT_IN_BACKPACK)
 

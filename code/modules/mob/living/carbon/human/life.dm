@@ -1,6 +1,6 @@
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 #define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
@@ -63,7 +63,7 @@
 
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
-		if(SSmob.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
+		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
@@ -385,22 +385,6 @@
 
 				breath = loc.remove_air(breath_moles)
 
-				if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-					var/obj/item/clothing/mask/gas/G = wear_mask
-					var/datum/gas_mixture/filtered = new
-					for(var/g in  G.filter)
-						if(breath.gas[g])
-							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
-							breath.gas[g] -= filtered.gas[g]
-
-					breath.update_values()
-					filtered.update_values()
-
-				if(!is_lung_ruptured())
-					if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-						if(prob(5))
-							rupture_lung()
-
 				// Handle filtering
 				var/block = 0
 				if(wear_mask)
@@ -422,6 +406,22 @@
 								if(smoke)
 									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
+
+			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+				var/obj/item/clothing/mask/gas/G = wear_mask
+				var/datum/gas_mixture/filtered = new
+				for(var/g in  G.filter)
+					if(breath.gas[g])
+						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+						breath.gas[g] -= filtered.gas[g]
+
+				breath.update_values()
+				filtered.update_values()
+
+			if(!is_lung_ruptured())
+				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+					if(prob(5))
+						rupture_lung()
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj))
@@ -1562,16 +1562,20 @@
 	return 1
 
 /mob/living/carbon/human/update_sight()
-	sightglassesmod = null
 	if(stat == DEAD)
 		set_EyesVision(transition_time = 0)
 		return
 	if(blinded)
 		set_EyesVision("greyscale")
 		return
+	if(daltonism)
+		set_EyesVision(sightglassesmod)
+		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.sightglassesmod && (G.active || !G.toggleable))
 		sightglassesmod = G.sightglassesmod
+	else
+		sightglassesmod = null
 
 	if(species.nighteyes)
 		var/light_amount = 0
@@ -1651,7 +1655,7 @@
 					stomach_contents.Remove(M)
 					qdel(M)
 					continue
-				if(SSmob.times_fired%3==1)
+				if(SSmobs.times_fired%3==1)
 					if(!(M.status_flags & GODMODE))
 						M.adjustBruteLoss(5)
 					nutrition += 10

@@ -97,6 +97,10 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while [CS.victim] is performing something.</span>")
 		return FALSE
+	if(!CS.victim.loc.CanPass(CS.attacker, get_step(CS.attacker, get_dir(CS.attacker, CS.victim))))
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't get to [CS.victim].</span>")
+		return FALSE
 	if(!ignore_size && CS.victim.is_bigger_than(CS.attacker))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b> on them.</span>")

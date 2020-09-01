@@ -91,7 +91,7 @@
 /obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
 	var/message = ""
 	if(!output_to_chat)
-		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
@@ -102,7 +102,7 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return ""
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
