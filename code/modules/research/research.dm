@@ -185,8 +185,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
-	design_reliabilities = O.design_reliabilities
-	design_created_prototypes = O.design_created_prototypes
 
 	for(var/tech_tree_id in O.tech_trees)
 		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
@@ -198,6 +196,12 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/tech_id in O.researched_tech)
 		var/datum/technology/T = O.researched_tech[tech_id]
 		UnlockTechology(T, force = TRUE)
+
+		for(var/D in T.unlocks_designs)
+			if(O.design_reliabilities[D] > design_reliabilities[D]) //check, is the reliability better in the downloadable
+				design_reliabilities[D] = O.design_reliabilities[D]
+				design_created_prototypes[D] = O.design_created_prototypes[D]
+
 	experiments.merge_with(O.experiments)
 
 /datum/research/proc/forget_techology(datum/technology/T)
