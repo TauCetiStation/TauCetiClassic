@@ -205,6 +205,17 @@
 	//ID
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
+		var/id_card = wear_id
+		if(istype(wear_id, /obj/item/device/pda))
+			var/obj/item/device/pda/PDA = wear_id
+			id_card = PDA.id
+		if(istype(id_card, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/ID = id_card
+			if(ID.disabilities)
+				msg += "\a [wear_id] shows [t_He] [t_has] current disabilities: <span class='warning'><B>"
+				for(var/I in 1 to ID.disabilities.len - 1)
+					msg += "[ID.disabilities[I]], "
+				msg += "[ID.disabilities[ID.disabilities.len]].</B></span>\n"
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
