@@ -12,13 +12,13 @@
 		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/event/anomaly/tick()
-	if(!newAnomaly)
+	if(QDELETED(newAnomaly))
 		kill()
 		return
 	newAnomaly.anomalyEffect()
 
 /datum/event/anomaly/end()
-	if(newAnomaly)//If it hasn't been neutralized, it's time to blow up.
+	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to blow up.
 		qdel(newAnomaly)
 
 
