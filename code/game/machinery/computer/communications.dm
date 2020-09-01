@@ -213,10 +213,10 @@
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = sanitize_safe(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
+			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = sanitize_safe(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
+			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
@@ -310,7 +310,7 @@
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
-	var/dat = "<head><title>Communications Console</title></head><body>"
+	var/dat = ""
 	if (SSshuttle.online && SSshuttle.location == 0)
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
@@ -318,7 +318,10 @@
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			user << browse(entity_ja(dat), "window=communications;size=400x500")
+			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+			popup.set_content(dat)
+			popup.open()
+
 			onclose(user, "communications")
 		return
 
@@ -393,7 +396,11 @@
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(entity_ja(dat), "window=communications;size=400x500")
+
+	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "communications")
 
 
@@ -446,7 +453,7 @@
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(sent_strike_team == 1)
@@ -465,7 +472,7 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(ticker.mode.name == "blob")
+	if(SSticker.mode.name == "blob")
 		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
@@ -479,7 +486,7 @@
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
@@ -504,7 +511,7 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+		if(SSticker.mode.name == "blob" || SSticker.mode.name == "epidemic")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
@@ -517,13 +524,13 @@
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
+	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 		to_chat(user, "The console is not responding.")
 		return
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
 		return
-	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))//why??
+	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
 		to_chat(user, "The console is not responding.")
 		return
 

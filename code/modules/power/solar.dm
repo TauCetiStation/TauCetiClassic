@@ -126,7 +126,7 @@
 	if(!control)	return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360+adir+clamp(ndir-adir,-10,10)) % 360
 		update_icon()
 		update_solar_exposure()
 
@@ -143,13 +143,6 @@
 	stat |= BROKEN
 	update_icon()
 	return
-
-
-/obj/machinery/power/solar/meteorhit()
-	if(stat & !BROKEN)
-		broken()
-	else
-		qdel(src)
 
 
 /obj/machinery/power/solar/ex_act(severity)
@@ -382,7 +375,7 @@
 		user << browse(null, "window=solcon")
 		return
 
-	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	var/t = "<TT><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
 	t += "Station Rotational Period: [60/abs(SSsun.rate)] minutes<BR>"
 	t += "Station Rotational Direction: [SSsun.rate<0 ? "CCW" : "CW"]<BR>"
@@ -406,7 +399,11 @@
 		if(1)
 			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
-	user << browse(entity_ja(t), "window=solcon")
+
+	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
+	popup.set_content(t)
+	popup.open()
+
 	onclose(user, "solcon")
 
 
@@ -427,12 +424,12 @@
 
 	else if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0, 359, (360 + src.cdir + text2num(href_list["cdir"])) % 360)
+			src.cdir = clamp((360 + src.cdir + text2num(href_list["cdir"])) % 360, 0, 359)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(0, 360, src.trackrate + text2num(href_list["tdir"]))
+			src.trackrate = clamp(src.trackrate + text2num(href_list["tdir"]), 0, 360)
 			if(src.trackrate)
 				nexttime = world.time + 6000 / trackrate
 
@@ -481,11 +478,6 @@
 /obj/machinery/power/solar_control/proc/broken()
 	stat |= BROKEN
 	update_icon()
-
-
-/obj/machinery/power/solar_control/meteorhit()
-	broken()
-	return
 
 
 /obj/machinery/power/solar_control/ex_act(severity)

@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 30
+#define SAVEFILE_VERSION_MAX 31
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -197,10 +197,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ResetQuirks()
 				break
 
+	if(current_version < 31)
+		flavor_text = fix_cyrillic(flavor_text)
+		med_record  = fix_cyrillic(med_record)
+		sec_record  = fix_cyrillic(sec_record)
+		gen_record  = fix_cyrillic(gen_record)
+		metadata    = fix_cyrillic(metadata)
+		home_system = fix_cyrillic(home_system)
+		citizenship = fix_cyrillic(citizenship)
+		faction     = fix_cyrillic(faction)
+		religion    = fix_cyrillic(religion)
+
+		S["flavor_text"] << flavor_text
+		S["med_record"]  << med_record
+		S["sec_record"]  << sec_record
+		S["gen_record"]  << gen_record
+		S["OOC_Notes"]   << metadata
+		S["home_system"] << home_system
+		S["citizenship"] << citizenship
+		S["faction"]     << faction
+		S["religion"]    << religion
+
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -231,6 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
+	S["chat_ghostsight"]	>> chat_ghostsight
 	S["randomslot"]			>> randomslot
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
@@ -263,6 +285,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
+	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
@@ -310,6 +333,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
+	S["chat_ghostsight"]	<< chat_ghostsight
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
 	S["parallax"]			<< parallax

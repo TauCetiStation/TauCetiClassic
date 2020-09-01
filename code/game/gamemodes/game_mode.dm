@@ -139,8 +139,8 @@ Implants;
 		display_roundstart_logout_report()
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(ticker && ticker.mode)
-		feedback_set_details("game_mode","[ticker.mode]")
+	if(SSticker && SSticker.mode)
+		feedback_set_details("game_mode","[SSticker.mode]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	spawn(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -148,7 +148,7 @@ Implants;
 	start_state.count(1)
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [round_id]")
 		query_round_game_mode.Execute()
 
 	return 1

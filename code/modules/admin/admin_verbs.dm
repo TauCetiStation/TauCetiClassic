@@ -57,8 +57,6 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggledsay,		//toggles dsay on/off for everyone,
 	/client/proc/game_panel,			//game panel, allows to change game-mode etc,
 	/client/proc/cmd_admin_say,			//admin-only ooc chat,
-	/datum/admins/proc/PlayerNotes,
-	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
 	/client/proc/toggleattacklogs,
@@ -73,12 +71,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,	// Allows a ghost to respawn,
 	/client/proc/aooc,
-	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
 	)
 var/list/admin_verbs_log = list(
+	/client/proc/show_player_notes,
 	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
 	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
 	/client/proc/getlogsbyid,			   //allows us to fetch logs by round id,
@@ -158,6 +156,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
+	/client/proc/forceEvent,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_load_junkyard,
@@ -208,7 +207,9 @@ var/list/admin_verbs_whitelist = list(
 	)
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
-	/client/proc/admin_crew_salary
+	/client/proc/admin_crew_salary,
+	/client/proc/event_manager_panel,
+	/client/proc/change_blobwincount
 	)
 
 //verbs which can be hidden - needs work
@@ -539,7 +540,7 @@ var/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
@@ -764,19 +765,6 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		src.holder.output_ai_laws()
 
-/client/proc/change_security_level()
-	set name = "Set security level"
-	set desc = "Sets the station security level."
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
-	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
-		set_security_level(sec_level)
-		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
-
-
 //---- bs12 verbs ----
 
 /client/proc/mod_panel()
@@ -830,32 +818,33 @@ var/list/admin_verbs_hideable = list(
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
-
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
+
+	// hair
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	if(new_hstyle)
+		M.h_style = new_hstyle
+
+	// facial hair
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	if(new_fstyle)
+		M.f_style = new_fstyle
+
 	M.apply_recolor()
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/playernotes()
-	set name = "Show Player Info"
+/client/proc/show_player_notes()
+	set name = "Show Player Notes"
 	set category = "Admin"
 	if(holder)
-		holder.PlayerNotes()
+		holder.show_player_notes()
 	return
 
 /client/proc/free_slot()
@@ -1039,6 +1028,18 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+/client/proc/change_blobwincount()
+	set name = "Change Blobs to Win"
+	set category = "Event"
+	if(holder)
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		if(new_count)
+			blobwincount = new_count
+	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 //////////////////////////////
 // Map loader
 //////////////////////////////
@@ -1059,7 +1060,7 @@ var/list/admin_verbs_hideable = list(
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 		var/pos = findtext(t, " ")
 		var/name = null

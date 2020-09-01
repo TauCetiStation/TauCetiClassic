@@ -1,6 +1,4 @@
-var/datum/subsystem/overlays/SSoverlays
-
-/datum/subsystem/overlays
+SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
 	wait = SS_WAIT_OVERLAYS
@@ -12,22 +10,19 @@ var/datum/subsystem/overlays/SSoverlays
 	var/list/overlay_icon_state_caches = list()
 	var/list/overlay_icon_cache = list()
 
-/datum/subsystem/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
-
-/datum/subsystem/overlays/Initialize()
+/datum/controller/subsystem/overlays/Initialize()
 	fire(mc_check = FALSE)
 	return ..()
 
-/datum/subsystem/overlays/stat_entry()
+/datum/controller/subsystem/overlays/stat_entry()
 	..("Ov:[length(queue)]")
 
-/datum/subsystem/overlays/Recover()
+/datum/controller/subsystem/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
-/datum/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
+/datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/queue = src.queue
 	var/static/count = 0
 	if (count)
@@ -152,7 +147,7 @@ var/datum/subsystem/overlays/SSoverlays
 
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
-		if(cut_old || !LAZYLEN(overlays))
+		if(cut_old || !length(overlays))
 			remove_overlays = overlays
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)

@@ -31,30 +31,24 @@
 	if(!syllables || !syllables.len)
 		return stars(input)
 
-	var/input_size = length(input)
+	var/input_size = length_char(input)
 	var/scrambled_text = ""
-	var/capitalize = 1
 
-	while(length(scrambled_text) < input_size)
-		var/next = pick(syllables)
-		if(capitalize)
-			next = capitalize(next)
-			capitalize = 0
-		scrambled_text += next
-		var/chance = rand(100)
-		if(chance <= 5)
-			scrambled_text += ". "
-			capitalize = 1
-		else if(chance > 5 && chance <= space_chance)
-			scrambled_text += " "
+	for(var/i in 1 to input_size)
+		scrambled_text += pick(syllables)
+		
+		if(i != input_size)
+			if(prob(5))
+				scrambled_text += ", "
+			else if(prob(space_chance))
+				scrambled_text += " "
+	
+	scrambled_text = capitalize(trim(scrambled_text))
 
-	scrambled_text = trim(scrambled_text)
-	var/ending = copytext(scrambled_text, length(scrambled_text))
-	if(ending == ".")
-		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
-	var/input_ending = copytext(input, input_size)
+	var/input_ending = copytext(input, -1)
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
+	
 	return scrambled_text
 
 /datum/language/proc/get_spoken_verb(msg_end)
@@ -72,7 +66,7 @@
 	ask_verb = "hisses"
 	exclaim_verb = "roars"
 	colour = "soghun"
-	key = list("o", "ù")
+	key = list("o", "Ñ‰")
 	allowed_species = list(IPC)
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
@@ -84,7 +78,7 @@
 	exclaim_verb = "yowls"
 	colour = "tajaran"
 	allowed_species = list(IPC)
-	key = list("j", "î")
+	key = list("j", "Ð¾")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
@@ -97,7 +91,7 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
-	key = list("y", "í")
+	key = list("y", "Ð½")
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
 	flags = NONVERBAL
 
@@ -108,7 +102,7 @@
 	ask_verb = "warbles"
 	exclaim_verb = "warbles"
 	colour = "skrell"
-	key = list("k", "ë")
+	key = list("k", "Ð»")
 	allowed_species = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
 
@@ -119,7 +113,7 @@
 	ask_verb = "creels"
 	exclaim_verb = "SHRIEKS"
 	colour = "vox"
-	key = list("v", "ì")
+	key = list("v", "Ð¼")
 	flags = RESTRICTED
 	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
 	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
@@ -132,7 +126,7 @@
 	exclaim_verb = "rustles"
 	allowed_species = list(IPC)
 	colour = "soghun"
-	key = list("q", "é")
+	key = list("q", "Ð¹")
 	syllables = list("hs","zt","kr","st","sh")
 
 /datum/language/diona_space
@@ -140,7 +134,7 @@
 	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
 	allowed_species = list(IPC, DIONA)
 	colour = "soghun"
-	key = list("f", "à")
+	key = list("f", "Ð°")
 	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
@@ -159,7 +153,7 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "÷") //only "dpz" left.
+	key = list("x", "Ñ‡") //only "dpz" left.
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
@@ -242,7 +236,7 @@
 	set category = "IC"
 	set src = usr
 
-	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
+	var/dat = ""
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
@@ -250,5 +244,8 @@
 			dat += "(:[l_key])"
 		dat += " </b><br/>[L.desc]<br/><br/>"
 
-	src << browse(entity_ja(dat), "window=checklanguage")
+	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
+	popup.set_content(dat)
+	popup.open()
+
 	return

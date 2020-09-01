@@ -17,8 +17,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
-	var/dat
-	dat += "<B>Prisoner Implant Manager System</B><BR>"
+	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 	else if(screen == 1)
@@ -50,7 +49,10 @@
 			dat += "********************************<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
+	var/datum/browser/popup = new(user, "computer", "Prisoner Implant Manager System", 400, 500)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 

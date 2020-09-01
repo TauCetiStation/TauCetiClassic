@@ -164,7 +164,7 @@
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
-	if(volume >= 5)
+	if(volume >= 30)
 		if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
@@ -704,41 +704,41 @@
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
-				H.r_skin = CLAMP(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
-				H.g_skin = CLAMP(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.b_skin = CLAMP(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
-				H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
-				H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.r_skin = clamp(round(H.r_skin * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = clamp(round(H.g_skin * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.b_skin = clamp(round(H.b_skin * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_hair = clamp(round(H.dyed_r_hair * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.dyed_g_hair = clamp(round(H.dyed_g_hair * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_hair = clamp(round(H.dyed_b_hair * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.hair_painted = TRUE
-				H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
-				H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
-				H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
+				H.dyed_r_facial = clamp(round(H.dyed_r_facial * max((100 - volume)/100, 0) + r_tweak * 0.1), 0, 255)
+				H.dyed_g_facial = clamp(round(H.dyed_g_facial * max((100 - volume)/100, 0) + g_tweak * 0.1), 0, 255)
+				H.dyed_b_facial = clamp(round(H.dyed_b_facial * max((100 - volume)/100, 0) + b_tweak * 0.1), 0, 255)
 				H.facial_painted = TRUE
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
 		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
 			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
-					H.dyed_r_hair = CLAMP(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = clamp(round(H.b_hair * volume_coefficient + b_tweak), 0, 255)
 					H.hair_painted = TRUE
 				else
-					H.dyed_r_hair = CLAMP(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_hair = CLAMP(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_hair = CLAMP(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_hair = clamp(round(H.dyed_r_hair * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_hair = clamp(round(H.dyed_g_hair * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_hair = clamp(round(H.dyed_b_hair * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
 				if(!H.facial_painted)
-					H.dyed_r_facial = CLAMP(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = clamp(round(H.r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = clamp(round(H.g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = clamp(round(H.b_facial * volume_coefficient + b_tweak), 0, 255)
 					H.facial_painted = TRUE
 				else
-					H.dyed_r_facial = CLAMP(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
-					H.dyed_g_facial = CLAMP(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
-					H.dyed_b_facial = CLAMP(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
+					H.dyed_r_facial = clamp(round(H.dyed_r_facial * volume_coefficient + r_tweak), 0, 255)
+					H.dyed_g_facial = clamp(round(H.dyed_g_facial * volume_coefficient + g_tweak), 0, 255)
+					H.dyed_b_facial = clamp(round(H.dyed_b_facial * volume_coefficient + b_tweak), 0, 255)
 				hair_changes_occured = TRUE
 		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
 			H.lip_style = "spray_face"

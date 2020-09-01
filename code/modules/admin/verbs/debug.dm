@@ -159,7 +159,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -174,7 +174,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 
@@ -222,7 +222,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -239,7 +239,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -256,7 +256,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -273,7 +273,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Monkey"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -288,7 +288,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Changeling"
 
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -308,7 +308,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	to_chat(usr, "Ruby Mode disabled. Command aborted.")
 	return
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts.")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -326,7 +326,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!cultwords["travel"])
 		runerandom()
 	if(M)
-		if(M.mind in ticker.mode.cult)
+		if(M.mind in SSticker.mode.cult)
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
@@ -355,7 +355,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
-				ticker.mode.cult += M.mind
+				SSticker.mode.cult += M.mind
 			to_chat(src, "Made [M] a cultist.")
 */
 
@@ -379,7 +379,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
-	SSmachine.makepowernets()
+	SSmachines.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -432,7 +432,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!ticker)
+	if (!SSticker)
 		alert("Wait until the game starts")
 		return
 	if (istype(M, /mob/living/carbon/human))
@@ -606,6 +606,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"preparation",
 		"death commando",
 		"syndicate commando",
+		"syndicate commando comander",
 		"special ops officer",
 		"blue wizard",
 		"red wizard",
@@ -861,7 +862,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_death_commando()
 
 		if("syndicate commando")
-			M.equip_syndicate_commando()
+			M.equip_syndicate_commando(FALSE)
+
+		if("syndicate commando comander")
+			M.equip_syndicate_commando(TRUE)
 
 		if("nanotrasen representative")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
@@ -2067,21 +2071,27 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	dellog += "</ol>"
 
-	usr << browse(dellog.Join(), "window=dellog")
+	var/datum/browser/popup = new(usr, "dellog")
+	popup.set_content(dellog.Join())
+	popup.open()
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
 	set name = "Display Initialzie() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
-	if(!LAZYLEN(SSatoms.BadInitializeCalls))
+	if(!length(SSatoms.BadInitializeCalls))
 		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
 	else
-		usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
+		var/dat = replacetext(SSatoms.InitLog(), "\n", "<br>")
+
+		var/datum/browser/popup = new(usr, "initlog")
+		popup.set_content(dat)
+		popup.open()
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)
-	if(!ticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))

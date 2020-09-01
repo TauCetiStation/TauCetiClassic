@@ -284,23 +284,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
-	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
+	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
-	return
-
-/mob/living/carbon/human/meteorhit(O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		var/obj/item/organ/external/BP = bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
-		if(!BP)
-			return
-		if (istype(O, /obj/effect/immovablerod))
-			BP.take_damage(101, 0)
-		else
-			BP.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
-		updatehealth()
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
@@ -1201,21 +1188,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
 	if(new_facial)
-		r_facial = hex2num(copytext(new_facial, 2, 4))
-		g_facial = hex2num(copytext(new_facial, 4, 6))
-		b_facial = hex2num(copytext(new_facial, 6, 8))
+		r_facial = HEX_VAL_RED(new_facial)
+		g_facial = HEX_VAL_GREEN(new_facial)
+		b_facial = HEX_VAL_BLUE(new_facial)
 
 	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
 	if(new_facial)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
+		r_hair = HEX_VAL_RED(new_hair)
+		g_hair = HEX_VAL_GREEN(new_hair)
+		b_hair = HEX_VAL_BLUE(new_hair)
 
 	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
 	if(new_eyes)
-		r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		r_eyes = HEX_VAL_RED(new_eyes)
+		g_eyes = HEX_VAL_GREEN(new_eyes)
+		b_eyes = HEX_VAL_BLUE(new_eyes)
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
 
@@ -1303,11 +1290,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(isnull(target))
 		return
 
-	var/say = input ("What do you wish to say")
+	var/say = sanitize(input("What do you wish to say"))
 	if(!say)
 		return
-	else
-		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(REMOTE_TALK in T.mutations)
 		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
@@ -1538,9 +1523,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species.base_color && default_colour)
 		//Apply colour.
-		r_skin = hex2num(copytext(species.base_color,2,4))
-		g_skin = hex2num(copytext(species.base_color,4,6))
-		b_skin = hex2num(copytext(species.base_color,6,8))
+		r_skin = HEX_VAL_RED(species.base_color)
+		g_skin = HEX_VAL_GREEN(species.base_color)
+		b_skin = HEX_VAL_BLUE(species.base_color)
 	else
 		r_skin = 0
 		g_skin = 0
@@ -1623,14 +1608,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/max_length = bloody_hands * 30 //tweeter style
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), MAX_MESSAGE_LEN)
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 		var/used_blood_amount = round(length(message) / 30, 1)
 		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
 
-		if (length(message) > max_length)
-			message += "-"//Should crop any letters? No?
+		if (length_char(message) > max_length)
+			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
@@ -1901,15 +1886,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		set_light(BP.screen_brightness)
 		BP.screen_toggle = TRUE
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(!(species.name in S.species_allowed))
-			continue
-		if(BP.ipc_head != S.ipc_head_compatible)
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
+	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, get_species(), gender, BP.ipc_head)
 	var/new_h_style = ""
 	if(valid_hairstyles.len == 1)
 		new_h_style = valid_hairstyles[1]
@@ -1917,17 +1894,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
 
 	if(new_h_style)
-		var/datum/sprite_accessory/SA = valid_hairstyles[new_h_style]
+		var/datum/sprite_accessory/SA = hair_styles_list[new_h_style]
 		if(SA.do_colouration)
 			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
 			if(new_hair)
-				r_hair = hex2num(copytext(new_hair, 2, 4))
-				g_hair = hex2num(copytext(new_hair, 4, 6))
-				b_hair = hex2num(copytext(new_hair, 6, 8))
+				r_hair = HEX_VAL_RED(new_hair)
+				g_hair = HEX_VAL_GREEN(new_hair)
+				b_hair = HEX_VAL_BLUE(new_hair)
 
 		h_style = new_h_style
 	if(h_style == "IPC off screen")
-		random_ipc_monitor(BP.ipc_head)
+		random_hair_style(gender, get_species(), BP.ipc_head)
 
 	update_hair()
 
@@ -2200,7 +2177,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!brain)
 		return //no brain
 
-	var/brain_damage = CLAMP((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
+	var/brain_damage = clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
 	setBrainLoss(brain_damage)
 
 /mob/living/carbon/human/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)

@@ -264,7 +264,6 @@
 			return
 
 	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
 	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
@@ -288,8 +287,9 @@
 		dat += "- Injecting: [fuel_injection] units<BR>"
 		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-
-	user << browse(entity_ja(dat), "window=AMcontrol;size=420x500")
+	var/datum/browser/popup = new(user, "AMcontrol", "AntiMatter Control Panel", 420, 500)
+	popup.set_content(dat)
+	popup.open()
 	onclose(user, "AMcontrol")
 
 

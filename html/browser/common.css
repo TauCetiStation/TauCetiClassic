@@ -10,12 +10,11 @@ body.theme_dark
 {
 	background-color: #272727;
 	color: #ffffff;
-
 }
 
 body.theme_light
 {
-	background-color: #dadada;
+	background-color: #fafafa;
 	color: #000000;
 }
 
@@ -25,7 +24,7 @@ hr
 	height: 1px;
 }
 
-a, button, a:link, a:visited, a:active, .linkOn, .linkOff
+a, button, a:link, a:visited, a:active, .linkOn, .linkOff, .spoiler b
 {
 	color: #ffffff;
 	text-decoration: none;
@@ -36,10 +35,18 @@ a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 	cursor:default;
 }
 
-a:hover
+a:hover, .spoiler b:hover
 {
 	color: #40628a;
 	background: #ffffff;
+}
+
+a.nobg, a.nobg:link, a.nobg:visited, a.nobg:active, a.nobg:hover
+{
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
 }
 
 a.white, a.white:link, a.white:visited, a.white:active
@@ -286,6 +293,25 @@ div.notice
 	padding: 0;
 }
 
+.blockCargo
+{
+	overflow: auto;
+	height: 470px;
+	padding: 2px;
+}
+
+.spoiler input, .spoiler div  
+{ 
+	display: none; /* Скрываем содержимое */
+}
+   /* Открытый спойлер */
+.spoiler :checked ~ div 
+{
+	display: block; /* Показываем спойлер */
+	margin-left: 35px
+}
+
+
 .progressBar
 {
 	width: 240px;
@@ -438,4 +464,8 @@ ul.sparse {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.alert {
+	color: #FF0000;
 }

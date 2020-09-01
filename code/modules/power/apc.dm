@@ -131,9 +131,9 @@
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
 	if(malfai && operating)
-		if(ticker.mode.config_tag == "malfunction")
+		if(SSticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 				gm_malf.apcs--
 	area.apc = null
 	area.power_light = 0
@@ -398,7 +398,7 @@
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
 						"You broke the charred power control board and remove the remains.",
 						"You hear a crack!")
-					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+					//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
 						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
@@ -707,7 +707,7 @@
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(ticker && ticker.mode && (malf.mind in ticker.mode.malf_ai) && istype(malf))
+	if(SSticker && SSticker.mode && (malf.mind in SSticker.mode.malf_ai) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
 			if(src.occupier == malf)
 				return 3 // 3 = User is shunted in this APC
@@ -859,9 +859,9 @@
 	else if(href_list["breaker"])
 		operating = !operating
 		if(malfai)
-			if(ticker.mode.config_tag == "malfunction")
+			if(SSticker.mode.config_tag == "malfunction")
 				if(is_station_level(z))
-					var/datum/game_mode/malfunction/gm_malf = ticker.mode
+					var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 					operating ? gm_malf.apcs++ : gm_malf.apcs--
 
 		src.update()
@@ -917,9 +917,9 @@
 				if(!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
-					if(ticker.mode.config_tag == "malfunction")
+					if(SSticker.mode.config_tag == "malfunction")
 						if(is_station_level(z))
-							var/datum/game_mode/malfunction/gm_malf = ticker.mode
+							var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 							gm_malf.apcs++
 					if(malfai.parent)
 						src.malfai = malfai.parent
@@ -1203,12 +1203,6 @@
 	return val
 
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(obj/O)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	flick("apc-spark", src)
 	if(cell)
@@ -1255,9 +1249,9 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		if(ticker.mode.config_tag == "malfunction")
+		if(SSticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 				gm_malf.apcs--
 	stat |= BROKEN
 	operating = 0

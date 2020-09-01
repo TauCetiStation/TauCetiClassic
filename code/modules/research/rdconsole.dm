@@ -333,6 +333,13 @@ cause a ton of data to be lost, an admin can go send it back.
 			server_processed = 1
 		if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 			S.produce_heat(100)
+
+	if(selected_tech_tree && selected_technology)//update selected_technology upgrade cost and realibility
+		var/datum/technology/T = files.all_technologies[selected_tech_tree][selected_technology]
+
+		T.reliability_upgrade_cost = files.GetReliabilityUpgradeCost(T)
+		T.avg_reliability = files.GetAverageDesignReliability(T)
+
 	screen = "main"
 	nanomanager.update_uis(src)
 

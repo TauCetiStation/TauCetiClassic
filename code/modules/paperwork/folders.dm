@@ -47,7 +47,7 @@
 		return ..()
 
 /obj/item/weapon/folder/attack_self(mob/user)
-	var/dat = "<title>[name]</title>"
+	var/dat = ""
 
 	for(var/obj/item/weapon/paper/P in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize(P.name)]</A><BR>"
@@ -55,7 +55,11 @@
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 	for(var/obj/item/weapon/paper_bundle/Pb in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='?src=\ref[src];browse=\ref[Pb]'>[sanitize(Pb.name)]</A><BR>"
-	user << browse(entity_ja(dat), "window=folder")
+
+	var/datum/browser/popup = new(user, "folder", "[name]", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "folder")
 	add_fingerprint(usr)
 	return

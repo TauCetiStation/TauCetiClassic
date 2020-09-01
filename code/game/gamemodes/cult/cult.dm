@@ -4,7 +4,7 @@
 	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
@@ -97,7 +97,7 @@
 
 		listclearnulls(possible_targets)
 
-		if(LAZYLEN(possible_targets))
+		if(length(possible_targets))
 			sacrifice_target = pick(possible_targets)
 
 	for(var/datum/mind/cult_mind in cult)
@@ -342,7 +342,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
 			text += printplayerwithicon(cultist)

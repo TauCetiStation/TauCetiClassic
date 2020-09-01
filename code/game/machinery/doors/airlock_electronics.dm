@@ -15,14 +15,14 @@
 	var/broken = FALSE
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user)
-	if (!ishuman(user) && !istype(user,/mob/living/silicon/robot/drone))
+	if (!ishuman(user) && !istype(user,/mob/living/silicon/robot))
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
 	if(H.getBrainLoss() >= 60)
 		return
 
-	var/t1 = text("<B>Access control</B><br>\n")
+	var/t1 = ""
 
 
 	if (last_configurator)
@@ -53,7 +53,10 @@
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
-	user << browse(entity_ja(t1), "window=airlock_electronics")
+	var/datum/browser/popup = new(user, "airlock_electronics", "Access control")
+	popup.set_content(t1)
+	popup.open()
+
 	onclose(user, "airlock")
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)

@@ -15,16 +15,40 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/victory_in_progress = FALSE
+	var/static/added_to_blobminds = FALSE
 
 /mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
 	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
+	update_health_hud()
+	add_points(0)
+	blob_help()
+	if(!added_to_blobminds)
+		added_to_blobminds = TRUE
+		SSticker.mode.infected_crew |= mind
+
+		var/list/datum/objective/objectives = list(
+			new /datum/objective/blob_takeover()
+			)
+		for(var/datum/objective/O in objectives)
+			O.owner = mind
+		mind.objectives = objectives
+
+		var/obj_count = 1
+		to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
+		for(var/datum/objective/objective in mind.objectives)
+			to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			obj_count++
+
+/mob/camera/blob/proc/blob_help()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as...")
 	to_chat(src, "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions.")
@@ -34,9 +58,32 @@
 	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores.")
 	to_chat(src, "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
 
+/mob/camera/blob/proc/update_health_hud()
+	if(blob_core && hud_used)
+		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+
 /mob/camera/blob/proc/add_points(points)
-	if(points != 0)
-		blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	blob_points = clamp(blob_points + points, 0, max_blob_points)
+	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+
+
+/mob/camera/blob/process()
+	if(blob_core && !victory_in_progress && (blobs.len >= blobwincount))
+		victory_in_progress = TRUE
+		command_alert("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		set_security_level("delta")
+		max_blob_points = INFINITY
+		blob_points = INFINITY
+		if(!istype(SSticker.mode,/datum/game_mode/blob))
+			addtimer(CALLBACK(src, .proc/victory), 450)
+
+/mob/camera/blob/proc/victory()
+	SSticker.force_ending = TRUE
+
+/mob/camera/blob/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /mob/camera/blob/say(var/message)
 	if (!message)
 		return
@@ -81,6 +128,9 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		stat(null, "Progress: [blobs.len]/[blobwincount]")
+		stat(null, "Total Nodes: [blob_nodes.len]")
+		stat(null, "Total Cores: [blob_cores.len]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE

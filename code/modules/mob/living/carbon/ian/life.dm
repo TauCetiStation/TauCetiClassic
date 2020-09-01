@@ -100,7 +100,7 @@
 						emote(pick(emote_hear),2)
 
 	if (stat != DEAD && !IS_IN_STASIS(src))
-		if(SSmob.times_fired%4==2)
+		if(SSmobs.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
 		else if(isobj(loc)) //Still give containing object the chance to interact
@@ -285,9 +285,9 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.gas["phoron"]/safe_phoron_max) * 10
-		//adjustToxLoss(CLAMP(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = TRUE
 	else
 		phoron_alert = FALSE
@@ -621,7 +621,7 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(ticker.mode)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(SSticker.mode)
+		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

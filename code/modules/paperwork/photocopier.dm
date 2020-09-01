@@ -15,7 +15,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 /obj/machinery/photocopier/ui_interact(mob/user)
-	var/dat = "Photocopier<BR><BR>"
+	var/dat = ""
 	if(copy || photocopy || bundle)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
@@ -30,7 +30,11 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(entity_ja(dat), "window=copier")
+
+	var/datum/browser/popup = new(user, "copier", "Photocopier")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "copier")
 
 /obj/machinery/photocopier/is_operational_topic()

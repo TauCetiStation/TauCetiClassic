@@ -188,7 +188,11 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", entity_ja(dat)), "window=secure_rec;size=600x400")
+
+	var/datum/browser/popup = new(user, "secure_rec", "Security Records", 600, 400)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 	onclose(user, "secure_rec")
 
 /*Revised /N
@@ -275,11 +279,11 @@ What a mess.*/
 					screen = 1
 //RECORD FUNCTIONS
 		if("Search Records")
-			var/t1 = sanitize(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
+			var/t1 = sanitize(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text, ascii_only = TRUE)
 			if(!t1 || is_not_allowed(usr))
 				return
 			Perp = new/list()
-			t1 = lowertext_(t1)
+			t1 = lowertext(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
 				return //Lets not let them search too greedily.

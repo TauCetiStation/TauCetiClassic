@@ -305,6 +305,7 @@ var/list/blacklisted_builds = list(
 			return
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
+		popup(src, "Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.", "Byond Verion")
 		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)
@@ -335,7 +336,10 @@ var/list/blacklisted_builds = list(
 	var/sql_ckey = sanitize_sql(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
-	query.Execute()
+	
+	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
+		return           // dbcore revision needed
+	
 	var/sql_id = 0
 	var/sql_player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
 	var/sql_player_ingame_age = 0
@@ -529,7 +533,7 @@ var/list/blacklisted_builds = list(
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
 
 /client/proc/generate_clickcatcher()
 	if(!void)

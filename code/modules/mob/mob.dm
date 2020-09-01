@@ -205,7 +205,7 @@
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	var/list/grabs = GetGrabs()
-	if(!LAZYLEN(grabs))
+	if(!length(grabs))
 		if(!L)
 			return null
 		else
@@ -259,7 +259,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = sanitize(msg)
+	msg = replacetext(sanitize(msg, extra = FALSE), "\n", "<br>")
 
 	if(msg && mind)
 		mind.store_memory(msg)
@@ -289,10 +289,10 @@
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
-		if(lentext(msg) <= 40)
+		if(length_char(msg) <= 40)
 			return "<span class='notice'>[msg]</span>"
 		else
-			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
+			return "<span class='notice'>[copytext_char(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
@@ -347,10 +347,10 @@
 	if(!abandon_allowed)
 		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
-	if(stat != DEAD || !ticker)
+	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
-	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
+	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
 		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
@@ -469,9 +469,9 @@
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
-		onclose(usr, "[name]")
-
+		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(flavor_text)
+		popup.open()
 	return
 
 
@@ -667,8 +667,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(ticker.mode && ticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = ticker.mode
+				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
+					var/datum/game_mode/malfunction/GM = SSticker.mode
 					if(GM.malf_mode_declared)
 						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
@@ -695,7 +695,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 						stat("Failsafe Controller:", "ERROR")
 					if(Master)
 						stat(null)
-						for(var/datum/subsystem/SS in Master.subsystems)
+						for(var/datum/controller/subsystem/SS in Master.subsystems)
 							SS.stat_entry()
 					cameranet.stat_entry()
 

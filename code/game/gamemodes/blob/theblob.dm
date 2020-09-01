@@ -9,15 +9,13 @@
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = 0
-	opacity = 0
+	opacity = TRUE
 	anchored = 1
+	layer = BELOW_MOB_LAYER
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
-
-	density = TRUE
-	opacity = TRUE
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -26,11 +24,13 @@
 	. = ..()
 	for(var/atom/A in loc)
 		A.blob_act()
+	update_nearby_tiles()
 
 /obj/effect/blob/Destroy()
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+	update_nearby_tiles()
 	return ..()
 
 
@@ -46,7 +46,7 @@
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	var/damage = CLAMP(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
+	var/damage = clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
 	if(damage)
 		health -= damage
 		update_icon()
@@ -159,7 +159,10 @@
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	..()
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	. = ..()
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	var/damage = 0
 	switch(W.damtype)
@@ -172,7 +175,6 @@
 
 	health -= damage
 	update_icon()
-	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()

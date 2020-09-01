@@ -92,7 +92,7 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
-	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
+	var/dat = ""
 	if(cell)
 		var/colour = "red"
 		if(cell.charge / cell.maxcharge > 0.66)
@@ -122,7 +122,11 @@
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
 	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
-	user << browse(entity_ja(dat), "window=suspension;size=500x400")
+
+	var/datum/browser/popup = new(user, "suspension", "Multi-phase mobile suspension field generator MK II \"Steadfast\"", 500, 400)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/process()
@@ -299,6 +303,8 @@
 	set name = "Rotate suspension gen (counter-clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
@@ -309,6 +315,8 @@
 	set name = "Rotate suspension gen (clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else

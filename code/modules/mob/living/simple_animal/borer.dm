@@ -13,6 +13,8 @@
 
 	message = sanitize(message)
 
+	log_say("[key_name(src)] : [message]")
+
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
 		to_chat(src, "You whisper silently, \"[message]\"")
@@ -55,14 +57,21 @@
 	var/truename                            // Name used for brainworm-speak.
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
+	var/has_reproduced                      // Whether or not the borer has reproduced, for objective purposes.
 	var/docile = 0                          // Sugar can stop borers from acting.
+	var/leaving = FALSE
 
-/mob/living/simple_animal/borer/atom_init()
+/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE)
 	. = ..()
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	real_name = truename
 	host_brain = new/mob/living/captive_brain(src)
+	if(request_ghosts)
+		for(var/mob/dead/observer/O in observer_list)
+			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
 
-	request_player()
+/mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
+	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 
@@ -109,6 +118,8 @@
 	if(!message)
 		return
 
+	log_say("[key_name(src)] : [message]")
+
 	if (stat == DEAD)
 		return say_dead(message)
 
@@ -122,10 +133,10 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (copytext(message, 1, 2) == "*")
+	if (message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
@@ -158,7 +169,7 @@
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Dominate Victim"
 	set desc = "Freeze the limbs of a potential host with supernatural fear."
 
@@ -198,7 +209,7 @@
 	used_dominate = world.time
 
 /mob/living/simple_animal/borer/verb/bond_brain()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host."
 
@@ -237,7 +248,7 @@
 			host.verbs += /mob/living/carbon/proc/spawn_larvae
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
 
@@ -256,7 +267,9 @@
 	if(chemicals < 50)
 		to_chat(src, "You don't have enough chemicals!")
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	if(!chem)
+		return
 
 	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
@@ -266,7 +279,7 @@
 	chemicals -= 50
 
 /mob/living/simple_animal/borer/verb/release_host()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Release Host"
 	set desc = "Slither out of your host."
 
@@ -284,24 +297,39 @@
 
 	if(!host || !src) return
 
+	if(leaving)
+		leaving = FALSE
+		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
+		return
+
 	to_chat(src, "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.")
+
+	leaving = TRUE
+
+	addtimer(CALLBACK(src, .proc/let_go), 200)
+
+
+/mob/living/simple_animal/borer/proc/let_go()
 
 	if(!host.stat)
 		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
+	if(!host || !src || QDELETED(host) || QDELETED(src))
+		return
+	if(!leaving)
+		return
+	if(controlling)
+		return
+	if(incapacitated())
+		to_chat(src, "You cannot infest a target in your current state.")
+		return
+	to_chat(src, "You wiggle out of [host]'s ear and plop to the ground.")
 
-	spawn(200)
+	leaving = FALSE
 
-		if(!host || !src) return
+	if(!host.stat)
+		to_chat(host, "Something slimy wiggles out of your ear and plops to the ground!")
 
-		if(incapacitated())
-			to_chat(src, "You cannot infest a target in your current state.")
-			return
-
-		to_chat(src, "You wiggle out of [host]'s ear and plop to the ground.")
-		if(!host.stat)
-			to_chat(host, "Something slimy wiggles out of your ear and plops to the ground!")
-
-		detatch()
+	detatch()
 
 /mob/living/simple_animal/borer/proc/detatch()
 
@@ -335,7 +363,7 @@
 	host = null
 
 /mob/living/simple_animal/borer/verb/infest()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Infest"
 	set desc = "Infest a suitable humanoid host."
 
@@ -411,7 +439,7 @@
 /mob/living/simple_animal/borer/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
+	set category = "Borer"
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -420,35 +448,69 @@
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
-//Procs for grabbing players.
-/mob/living/simple_animal/borer/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_ALIEN))
-			continue
-		if(role_available_in_minutes(O, ROLE_ALIEN))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_BORER) && (ROLE_ALIEN in C.prefs.be_role))
-				question(C)
+var/global/list/datum/mind/borers = list()
 
-/mob/living/simple_animal/borer/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += IGNORE_BORER
-
-/mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
+/mob/living/simple_animal/borer/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return
 
-	src.mind = candidate.mob.mind
-	src.ckey = candidate.ckey
-	if(src.mind)
-		src.mind.assigned_role = "Cortical Borer"
+	mind = candidate.mob.mind
+	ckey = candidate.ckey
+	if(mind)
+		mind.assigned_role = "Cortical Borer"
+		mind.special_role = "Cortical Borer"
+	borers |= mind
+
+	to_chat(src, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
+	to_chat(src, "You can only take control temporarily, and at risk of hurting your host, so be clever and careful; your host is encouraged to help you however they can.")
+	to_chat(src, "Talk to your fellow borers with ;")
+	var/list/datum/objective/objectives = list(
+		new /datum/objective/borer_survive(),
+		new /datum/objective/borer_reproduce(),
+		new /datum/objective/escape()
+		)
+	for(var/datum/objective/O in objectives)
+		O.owner = mind
+	mind.objectives = objectives
+
+	var/obj_count = 1
+	to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
+	for(var/datum/objective/objective in mind.objectives)
+		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
+
+/datum/game_mode/proc/auto_declare_completion_borer()
+	var/text = ""
+	if(borers.len)
+		text += "<b>The borers were:</b>"
+		for(var/datum/mind/borer in borers)
+			text += printplayerwithicon(borer)
+
+			var/count = 1
+			var/borerwin = 1
+			if(!config.objectives_disabled)
+				for(var/datum/objective/objective in borer.objectives)
+					if(objective.check_completion())
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+						feedback_add_details("borer_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+						feedback_add_details("borer_objective","[objective.type]|FAIL")
+						borerwin = 0
+					count++
+
+				if(borer.current && borer.current.stat!=2 && borerwin)
+					text += "<br><FONT color='green'><b>The borer was successful!</b></FONT>"
+					feedback_add_details("borer_success","SUCCESS")
+					score["roleswon"]++
+				else
+					text += "<br><FONT color='red'><b>The borer has failed!</b></FONT>"
+					feedback_add_details("borer_success","FAIL")
+				text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "borer", "html" = text))
+		text = "<div class='block'>[text]</div>"
+
+	return text

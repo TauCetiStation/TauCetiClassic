@@ -116,8 +116,9 @@
 			"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Securitron v1.3 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autosec")
-	onclose(user, "autosec")
+	var/datum/browser/popup = new(user, "window=autosec", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
 	. = ..()

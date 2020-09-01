@@ -682,3 +682,43 @@
 	holder.wearer.alpha = 255
 
 	return TRUE
+
+/obj/item/rig_module/syndiemmessage
+	name = "Syndicate emergency message"
+	desc = "Special syndicate system emergency message."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "syndie_headset"
+	activate_string = "Send syndicate emergency message"
+	deactivate_string = "Transmitting... Don't turn off this"
+	permanent = TRUE
+	show_toggle_button = TRUE
+	usable = TRUE
+	use_power_cost = 10
+	module_cooldown = 50 SECONDS
+	var/transmitting = FALSE
+
+/obj/item/rig_module/syndiemmessage/activate(forced = FALSE)
+	if(!..())
+		return FALSE
+
+	transmitting = TRUE
+	var/mob/living/carbon/human/H = holder.wearer
+	var/input = sanitize(input(H, "Enter a short and important message that will be useful to command to assess the situation and provide further guidance for your work", "To abort, send an empty message.", ""))
+	if(!input)
+		return FALSE
+	Syndicate_announce(input, H)
+	to_chat(H, "<span class='notice'>Message transmitted.</span>")
+	log_say("[key_name(H)] has made a Syndicate announcement: [H]")
+	transmitting = FALSE
+	deactivate()
+
+/obj/item/rig_module/syndiemmessage/deactivate()
+	if(transmitting)
+		var/mob/living/carbon/human/H = holder.wearer
+		to_chat(H, "<span class='warning'>Syndicate message module transmiting your important message. It turns off on its own how you do it</span>")
+		return FALSE
+
+	if(!..())
+		return FALSE
+
+	return TRUE

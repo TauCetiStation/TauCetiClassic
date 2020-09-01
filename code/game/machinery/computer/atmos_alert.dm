@@ -40,7 +40,12 @@
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user)
-	user << browse(entity_ja(return_text()),"window=computer")
+	var/dat = return_text()
+
+	var/datum/browser/popup = new(user, "computer", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "computer")
 
 /obj/machinery/computer/atmos_alert/process()

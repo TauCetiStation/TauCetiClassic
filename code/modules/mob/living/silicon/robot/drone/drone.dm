@@ -110,10 +110,13 @@
 
 	message = sanitize(message)
 
+	if(!message)
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if(copytext(message,1,2) == "*")
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 	else if(length(message) >= 2)
 
@@ -125,11 +128,11 @@
 
 			for (var/mob/living/S in drone_list)
 				if(S.stat != DEAD)
-					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 			for (var/mob/M in observer_list)
 				if(M.client && M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
+					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,2 + length(message[2])))]\"</span></span></i>")
 
 		else
 
@@ -302,7 +305,7 @@
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += IGNORE_DRONE
 
-/mob/living/silicon/robot/drone/proc/transfer_personality(client/player)
+/mob/living/silicon/robot/drone/transfer_personality(client/player)
 
 	if(!player) return
 
@@ -345,8 +348,8 @@
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
 
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return 1
+/mob/living/silicon/robot/drone/mob_negates_gravity()
+	return TRUE
 
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
+/mob/living/silicon/robot/drone/mob_has_gravity()
+	return mob_negates_gravity()

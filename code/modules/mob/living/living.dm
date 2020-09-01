@@ -12,7 +12,7 @@
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
-	if(LAZYLEN(status_effects))
+	if(length(status_effects))
 		for(var/s in status_effects)
 			var/datum/status_effect/S = s
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
@@ -30,7 +30,7 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
-	if(!ismovableatom(A) || is_blocked_turf(A))
+	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
@@ -270,7 +270,7 @@
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth * 2)
+	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
 
 // ========== OXY ==========
 /mob/living/proc/getOxyLoss()
@@ -279,12 +279,12 @@
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(oxyloss + amount, 0, maxHealth * 2)
+	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(amount, 0, maxHealth * 2)
+	oxyloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
@@ -293,12 +293,12 @@
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(toxloss + amount, 0, maxHealth * 2)
+	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(amount, 0, maxHealth * 2)
+	toxloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
@@ -307,7 +307,7 @@
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	fireloss = CLAMP(fireloss + amount, 0, maxHealth * 2)
+	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
@@ -316,12 +316,12 @@
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(cloneloss + amount, 0, maxHealth * 2)
+	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(amount, 0, maxHealth * 2)
+	cloneloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
@@ -330,12 +330,12 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(brainloss + amount, 0, maxHealth * 2)
+	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(amount, 0, maxHealth * 2)
+	brainloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
@@ -346,14 +346,14 @@
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
-	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
+	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
 	if(amount - halloss > 0)
 		add_combo_value_all(amount - halloss)
-	halloss = CLAMP(amount, 0, maxHealth * 2)
+	halloss = clamp(amount, 0, maxHealth * 2)
 
 // ============================================================
 
@@ -1063,15 +1063,15 @@
 /mob/living/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker.mode && ticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = ticker.mode
+		if(SSticker.mode && SSticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = SSticker.mode
 			if(isnum(mode.A_timer))
 				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 			if(isnum(mode.B_timer))
 				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker)
+	if(!SSticker)
 		return
 	float(!has_gravity)
 

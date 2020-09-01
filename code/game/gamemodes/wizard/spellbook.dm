@@ -384,7 +384,7 @@
 	return dat
 
 /datum/spellbook_entry/summon/IsAvailible()
-	return ticker.mode // In case spellbook is placed on map
+	return SSticker.mode // In case spellbook is placed on map
 
 /obj/item/weapon/spellbook
 	name = "spell book"
@@ -458,7 +458,7 @@
 
 /obj/item/weapon/spellbook/proc/wrap(content)
 	var/dat = ""
-	dat +="<html><head><title>Spellbook</title></head>"
+	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Spellbook</title></head>"
 	dat += {"
 	<head>
 		<style type="text/css">
@@ -517,7 +517,7 @@
 		dat += cat_dat[category]
 		dat += "</div>"
 
-	user << browse(wrap(entity_ja(dat)), "window=spellbook;size=700x500")
+	user << browse(wrap(dat), "window=spellbook;size=700x500")
 	onclose(user, "spellbook")
 	return
 
