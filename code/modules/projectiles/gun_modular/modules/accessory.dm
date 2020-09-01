@@ -2,7 +2,6 @@
     name = "gun accessory"
     icon_state = "optical_medium_icon"
     icon_overlay_name = "optical_medium"
-    icon_overlay_layer = LAYER_ACCESSORY
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 0
@@ -92,18 +91,19 @@
     ..()
 
 /obj/item/weapon/gun_modular/module/accessory/optical/deactivate(mob/user, argument = "")
-    UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
-    active = FALSE
+    if(active)
+        UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+        active = FALSE
     user.client.view = world.view
     if(user.hud_used)
         user.hud_used.show_hud(HUD_STYLE_STANDARD)
     return TRUE
 
 /obj/item/weapon/gun_modular/module/accessory/optical/activate(mob/user, argument = "")
-    RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/deactivate_module)
     if(active)
         deactivate(user, argument)
         return FALSE
+    RegisterSignal(user, list(COMSIG_MOVABLE_MOVED), .proc/deactivate_module)
     if(!frame_parent)
         return FALSE
     if(user.stat || !(istype(user ,/mob/living/carbon/human)))
@@ -269,7 +269,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/silenser/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 3))
+    change_list_exit("ICON", "[SOUTH]", list(1, 4))
 
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(6, 2))
 
@@ -484,7 +484,22 @@
 
 /obj/item/weapon/gun_modular/module/accessory/butt/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(18, 9))
+    change_list_exit("ICON", "[SOUTH]", list(12, 9))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(10, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 6))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(10, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(1, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(6, 6))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(6, 6))
+
+    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(9, 2))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 1))
 
 /obj/item/weapon/gun_modular/module/accessory/butt/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())

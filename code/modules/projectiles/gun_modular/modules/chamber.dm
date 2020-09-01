@@ -3,7 +3,6 @@
     desc = "The chamber, requests a cartridge from the magazine holder and, if possible, receives it, upon confirmation of the handle, it fires a shot, the accuracy of which depends on the totality of statistics of all modules. Also in the chamber, there is a default recoil, which must be compensated for by a suitable handle. Also, the frequency of shooting depends on the damage inflicted by the bullet, some types of chamber do not have such a limitation."
     icon_state = "chamber_bullet_icon"
     icon_overlay_name = "chamber_bullet"
-    icon_overlay_layer = LAYER_CHAMBER
     caliber = "9mm"
     lessdamage = -3
     lessdispersion = 0
@@ -25,10 +24,10 @@
 /obj/item/weapon/gun_modular/module/chamber/build_points_list()
     ..()
     change_list_exit("ICON", "[SOUTH]", list(6, 4))
-    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2),
-                                                                BARREL = list(9, 6),
-                                                                MAGAZINE = list(13, 1),
-                                                                "Optical" = list(4, 7)))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2, -6),
+                                            BARREL = list(9, 6, -4),
+                                            MAGAZINE = list(13, 1, -5),
+                                            "Optical" = list(4, 7, -3)))
 
 /obj/item/weapon/gun_modular/module/chamber/Destroy()
     if(chambered)
@@ -201,10 +200,10 @@
 /obj/item/weapon/gun_modular/module/chamber/energy/build_points_list()
     ..()
     change_list_exit("ICON", "[SOUTH]", list(6, 4))
-    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2),
-                                                                BARREL = list(27, 4),
-                                                                MAGAZINE = list(26, 1),
-                                                                "Optical" = list(7, 9)))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 2, -6),
+                                            BARREL = list(27, 4, -4),
+                                            MAGAZINE = list(26, 1, -5),
+                                            "Optical" = list(7, 9, -3)))
 
 /obj/item/weapon/gun_modular/module/chamber/energy/remove()
     max_lens = initial(max_lens)
@@ -312,10 +311,10 @@
 /obj/item/weapon/gun_modular/module/chamber/energy/shotgun/build_points_list()
     ..()
     change_list_exit("ICON", "[SOUTH]", list(12, 4))
-    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 4),
-                                                                BARREL = list(22, 4),
-                                                                MAGAZINE = list(12, 1),
-                                                                "Optical" = list(10, 6)))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(6, 4, -6),
+                                            BARREL = list(22, 4, -4),
+                                            MAGAZINE = list(12, 1, -5),
+                                            "Optical" = list(10, 6, -3)))
 
 
 /obj/item/weapon/gun_modular/module/chamber/heavyrifle
@@ -331,33 +330,77 @@
 
 /obj/item/weapon/gun_modular/module/chamber/heavyrifle/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(12, 5))
-    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(7, 11),
-                                                                BARREL = list(30, 9),
-                                                                MAGAZINE = list(9, 6),
-                                                                "Optical" = list(8, 14)))
+    change_list_exit("ICON", "[SOUTH]", list(11, 6))
+    change_list_entry("ICON", "[SOUTH]", list(HANDLE = list(7, 3, -6),
+                                            BARREL = list(20, 6, -4),
+                                            MAGAZINE = list(6, 5, -5),
+                                            "Butt" = list(2, 6, -3)))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(8, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(6, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(4, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(5, 3))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(9, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(8, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(7, 4))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(5, 4))
 
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(HANDLE = list(12, 3),
-                                                                BARREL = list(2, 3),
-                                                                MAGAZINE = list(7, 1),
-                                                                "Optical" = list(8, 4)))
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(HANDLE = list(2, 3),
-                                                                BARREL = list(12, 3),
-                                                                MAGAZINE = list(7, 1),
-                                                                "Optical" = list(6, 4)))
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", list(HANDLE = list(7, 3),
-                                                                BARREL = list(2, 3),
-                                                                MAGAZINE = list(4, 1),
-                                                                "Optical" = list(4, 4)))
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", list(HANDLE = list(6, 3),
-                                                                BARREL = list(1, 3),
-                                                                MAGAZINE = list(4, 1),
-                                                                "Optical" = list(4, 4)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(HANDLE = list(13, 3, -6),
+                                                                BARREL = list(2, 5, -4),
+                                                                MAGAZINE = list(9, 4, -5),
+                                                                "Butt" = list(15, 5, -10)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(HANDLE = list(4, 3, -6),
+                                                                BARREL = list(15, 5, -4),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(2, 5, -10)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", list(HANDLE = list(6, 1, -6),
+                                                                BARREL = list(2, 4, -1),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(4, 4, -10)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", list(HANDLE = list(9, 2, -6),
+                                                                BARREL = list(3, 4, -10),
+                                                                MAGAZINE = list(5, 4, -1),
+                                                                "Butt" = list(10, 4, -1)))
+    
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(8, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(9, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(7, 4))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(1, 4))
+
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(HANDLE = list(4, 3, -6),
+                                                                BARREL = list(15, 5, -4),
+                                                                MAGAZINE = list(5, 4, -5),
+                                                                "Butt" = list(2, 5, -10)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(HANDLE = list(13, 3, -6),
+                                                                BARREL = list(2, 5, -4),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(15, 5, -10)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[EAST]", list(HANDLE = list(3, 2, -6),
+                                                                BARREL = list(9, 4, -10),
+                                                                MAGAZINE = list(6, 4, -5),
+                                                                "Butt" = list(2, 4, -1)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", list(HANDLE = list(2, 1, -6),
+                                                                BARREL = list(6, 4, -1),
+                                                                MAGAZINE = list(0, 0, -1),
+                                                                "Butt" = list(4, 4, -10)))
+    
+    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(7, 7))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(7, 7))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(3, 5))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(3, 5))
+
+    change_list_entry("[SPRITE_SHEET_BACK]", "[SOUTH]", list(HANDLE = list(11, 8, -6),
+                                                                BARREL = list(1, 1, -4),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(12, 12, -3)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[NORTH]", list(HANDLE = list(3, 8, -6),
+                                                                BARREL = list(13, 1, -4),
+                                                                MAGAZINE = list(4, 9, -5),
+                                                                "Butt" = list(2, 12, -3)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", list(HANDLE = list(3, 7, -10),
+                                                                BARREL = list(3, 1, -1),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(3, 11, -3)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", list(HANDLE = list(3, 7, -6),
+                                                                BARREL = list(3, 3, -1),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(3, 10, -3)))
 
 
 /obj/item/weapon/gun_modular/module/chamber/shotgun

@@ -3,20 +3,33 @@
     desc = "The handle, the ability to fire a weapon depends on it, different types of handles give different bonuses and problems. Also, the recoil of the weapon depends on the handle, if the recoil is too strong for the shooter, the weapon can fly out of the hand"
     icon_state = "grip_normal"
     icon_overlay_name = "grip_normal"
-    icon_overlay_layer = LAYER_HANDLE
     caliber = ALL_CALIBER
     lessdamage = 0
     lessdispersion = 1
     size_gun = 1
     gun_type = ALL_GUN_TYPE
     prefix = HANDLE
-    var/lessrecoil = 0
+    var/lessrecoil = 1
     var/clumsy_check = TRUE
 
 /obj/item/weapon/gun_modular/module/handle/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(13, 12))
-    change_list_entry("ICON", "[SOUTH]", list("Butt" = list(3, 12)))
+    change_list_exit("ICON", "[SOUTH]", list(6, 7))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(3, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(4, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(2, 4))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(2, 4))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(4, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(3, 5))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 4))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(2, 4))
+
+    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(3, 2))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 2))
 
 /obj/item/weapon/gun_modular/module/handle/get_info_module(mob/user = null)
     var/info_module = ..()

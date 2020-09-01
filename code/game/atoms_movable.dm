@@ -88,6 +88,8 @@
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
+	
+	set_dir(Dir)
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
@@ -102,7 +104,6 @@
 		. = 0
 
 	if(.)
-		set_dir(Dir)
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)

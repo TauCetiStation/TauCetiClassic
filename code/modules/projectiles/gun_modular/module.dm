@@ -48,7 +48,6 @@
     var/list/exit_point = list()
     var/list/image/icon_overlay = list()
     var/icon_overlay_name
-    var/icon_overlay_layer
     var/prefix
     var/caliber
     var/lessdamage = 0
@@ -56,21 +55,6 @@
     var/size_gun = 1
     var/gun_type
     var/obj/item/weapon/gun_modular/module/frame/frame_parent = null
-
-/obj/item/weapon/gun_modular/module/update_icon()
-    for(var/key in icon_overlay)
-        icon_overlay[key].color = color
-    return
-
-/obj/item/weapon/gun_modular/module/atom_init()
-    . = ..()
-    icon_overlay["ICON"] = image(icon, icon_overlay_name)
-    icon_overlay["ICON"].appearance_flags |= KEEP_TOGETHER
-    icon_overlay["[SPRITE_SHEET_HELD]_l"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_l", layer = icon_overlay_layer)
-    icon_overlay["[SPRITE_SHEET_HELD]_r"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_r", layer = icon_overlay_layer)
-    icon_overlay["[SPRITE_SHEET_BELT]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_belt", layer = icon_overlay_layer)
-    icon_overlay["[SPRITE_SHEET_BACK]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_back", layer = icon_overlay_layer)
-    build_points_list()
 
 /obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
@@ -81,50 +65,66 @@
         remove()
     return ..()
 
+/obj/item/weapon/gun_modular/module/update_icon()
+    for(var/key in icon_overlay)
+        if(icon_overlay[key])
+            icon_overlay[key].color = color
+    return
+
+/obj/item/weapon/gun_modular/module/atom_init()
+    . = ..()
+    icon_overlay["ICON"] = image(icon, icon_overlay_name)
+    icon_overlay["ICON"].appearance_flags |= KEEP_TOGETHER
+    icon_overlay["[SPRITE_SHEET_HELD]_l"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_l")
+    icon_overlay["[SPRITE_SHEET_HELD]_r"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_r")
+    icon_overlay["[SPRITE_SHEET_BELT]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_belt")
+    icon_overlay["[SPRITE_SHEET_BACK]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_back")
+    build_points_list()
+
 /obj/item/weapon/gun_modular/module/proc/build_points_list()
     change_list_exit("ICON", "[SOUTH]", list(0, 0))
 
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
 
     change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(0, 0))
 
     change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
 
     change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
     change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
 
     change_list_entry("ICON", "[SOUTH]", null)
 
     change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", null)
     change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
     change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", null)
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
 
     change_list_entry("[SPRITE_SHEET_HELD]_r", "[SOUTH]", null)
     change_list_entry("[SPRITE_SHEET_HELD]_r", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
     change_list_entry("[SPRITE_SHEET_HELD]_r", "[EAST]", null)
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
 
     change_list_entry("[SPRITE_SHEET_BELT]", "[SOUTH]", null)
     change_list_entry("[SPRITE_SHEET_BELT]", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", null)
     change_list_entry("[SPRITE_SHEET_BELT]", "[EAST]", null)
+    change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", null)
 
     change_list_entry("[SPRITE_SHEET_BACK]", "[SOUTH]", null)
     change_list_entry("[SPRITE_SHEET_BACK]", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", null)
     change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", null)
+    change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", null)
     return TRUE
 
 /obj/item/weapon/gun_modular/module/proc/change_list_entry(var/type, var/direct, var/list/points, var/key = null)
@@ -158,18 +158,22 @@
     return TRUE
 
 /obj/item/weapon/gun_modular/module/proc/get_delta_offset(var/type = "ICON", var/direct = "[SOUTH]", var/point = prefix)
-    var/list/points_modify = list(0, 0)
+    var/list/points_modify = list(0, 0, -3)
     if(frame_parent.check_list_point(frame_parent.points_of_entry, type, direct, point))
         points_modify = frame_parent.points_of_entry[type][direct][point]
 
-    var/delta_x = points_modify[1] - exit_point[type][direct][1]
-    var/delta_y = points_modify[2] - exit_point[type][direct][2]
+    var/delta_x = 0
+    var/delta_y = 0
+    var/layer_overlay = points_modify[3]
 
+    delta_x = points_modify[1] - exit_point[type][direct][1]
+    delta_y = points_modify[2] - exit_point[type][direct][2]
+    
     if(check_list_point(points_of_entry, type, direct))
         for(var/key in points_of_entry[type][direct])
-            frame_parent.change_list_entry(type, direct, list(points_of_entry[type][direct][key][1] + delta_x, points_of_entry[type][direct][key][2] + delta_y), key)
+            frame_parent.change_list_entry(type, direct, list(points_of_entry[type][direct][key][1] + delta_x, points_of_entry[type][direct][key][2] + delta_y, points_of_entry[type][direct][key][3]), key)
 
-    return list(delta_x, delta_y)
+    return list(delta_x, delta_y, layer_overlay)
 
 // This gives information in the tooltip, here you can talk about additional weapon stats
 
@@ -179,6 +183,7 @@
         info_module += "[desc]\n"
     if(user)
         if(!hasHUD(user, "science") && !hasHUD(user, "security"))
+            info_module += "Nothing interesting..."
             return info_module
     info_module += "Damage reduction - ([lessdamage])\n"
     info_module += "Increased accuracy - ([lessdispersion])\n"
@@ -275,7 +280,6 @@
     icon_overlay["ICON"].pixel_x = delta_offset[1]
     icon_overlay["ICON"].pixel_y = delta_offset[2]
 
-    frame_parent.add_overlay(icon_overlay["ICON"])
     frame.modules[prefix] = src
     frame.change_state(src, TRUE)
     return TRUE
@@ -287,18 +291,18 @@
         for(var/key_dir in points_of_entry[key_type])
             for(var/key in points_of_entry[key_type][key_dir])
                 frame_parent.change_list_entry(key_type, key_dir, null, key)
-    icon_overlay["ICON"].pixel_x = 0
-    icon_overlay["ICON"].pixel_y = 0
     frame_parent.modules[prefix] = null
-    frame_parent.cut_overlay(icon_overlay["ICON"])
-    frame_parent.update_icon()
-    frame_parent.change_state(src, FALSE)
     src.loc = get_turf(frame_parent)
     if(frame_parent)
         for(var/key in frame_parent.modules)
             var/obj/item/weapon/gun_modular/module/module = frame_parent.modules[key]
-            if(module && module.check_remove())
+            if(!module)
+                continue
+            module.deactivate(user)
+            if(module.check_remove())
                 module.remove(user)
+    frame_parent.change_state(src, FALSE)
+    update_icon()
     frame_parent = null
     if(user)
         to_chat(user, "Module '[name]' has been removed")

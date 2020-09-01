@@ -3,7 +3,6 @@
     desc = "The frame, the base of the weapon, all parts of the weapon are attached to it, and configuration and interaction of the parts also take place through it. For normal assembly, use the installation order: Chamber, Magazine Holder, Handle, Barrel, Accessories"
     icon_state = "frame_icon"
     icon_overlay_name = "frame_icon"
-    icon_overlay_layer = LAYER_FRAME
     lessdamage = 0
     lessdispersion = -2
     size_gun = 1
@@ -20,16 +19,74 @@
     var/list/config_user = list()
     var/list/icon/radial_icons = list()
     var/list/image/frame_overlays = list()
+    var/list/layer_overlays = list()
+
+/obj/item/weapon/gun_modular/module/frame/proc/change_list_layers(var/type, var/direct, var/layer)
+    LAZYINITLIST(layer_overlays)
+    LAZYINITLIST(layer_overlays[type])
+    LAZYINITLIST(layer_overlays[type][direct])
+    layer_overlays[type][direct] = layer
+    return TRUE
 
 /obj/item/weapon/gun_modular/module/frame/build_points_list()
     ..()
+    change_list_layers("[SPRITE_SHEET_HELD]_l", "[SOUTH]", null)
+    change_list_layers("[SPRITE_SHEET_HELD]_l", "[NORTH]", OBJ_LAYER)
+    change_list_layers("[SPRITE_SHEET_HELD]_l", "[EAST]", null)
+    change_list_layers("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
+
+    change_list_layers("[SPRITE_SHEET_HELD]_r", "[SOUTH]", null)
+    change_list_layers("[SPRITE_SHEET_HELD]_r", "[NORTH]", OBJ_LAYER)
+    change_list_layers("[SPRITE_SHEET_HELD]_r", "[EAST]", null)
+    change_list_layers("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
+
+    change_list_layers("[SPRITE_SHEET_BELT]", "[SOUTH]", null)
+    change_list_layers("[SPRITE_SHEET_BELT]", "[NORTH]", null)
+    change_list_layers("[SPRITE_SHEET_BELT]", "[EAST]", OBJ_LAYER)
+    change_list_layers("[SPRITE_SHEET_BELT]", "[WEST]", null)
+
+    change_list_layers("[SPRITE_SHEET_BACK]", "[SOUTH]", OBJ_LAYER)
+    change_list_layers("[SPRITE_SHEET_BACK]", "[NORTH]", null)
+    change_list_layers("[SPRITE_SHEET_BACK]", "[EAST]", OBJ_LAYER)
+    change_list_layers("[SPRITE_SHEET_BACK]", "[WEST]", OBJ_LAYER)
+    
     change_list_exit("ICON", "[SOUTH]", list(16, 16))
-    change_list_entry("ICON", "[SOUTH]", list(CHAMBER = list(16, 16),
-                                        "DNA Crypter" = list(13, 14)))
+    change_list_entry("ICON", "[SOUTH]", list(CHAMBER = list(16, 16, -7),
+                                        "DNA Crypter" = list(13, 14, -3)))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(16, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(16, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(20, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(14, 16))
+
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(CHAMBER = list(16, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(CHAMBER = list(16, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", list(CHAMBER = list(20, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", list(CHAMBER = list(14, 16, -7)))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(16, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(16, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(19, 16))
+    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(13, 16))
+
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(CHAMBER = list(16, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(CHAMBER = list(16, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[EAST]", list(CHAMBER = list(19, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", list(CHAMBER = list(13, 16, -7)))
+
+    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(17, 16))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(17, 16))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(11, 15))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(22, 14))
+
+    change_list_entry("[SPRITE_SHEET_BACK]", "[SOUTH]", list(CHAMBER = list(17, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[NORTH]", list(CHAMBER = list(17, 16, -7)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", list(CHAMBER = list(11, 15, -7)))
+    change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", list(CHAMBER = list(22, 14, -7)))
 
 // When changing weapons, icons are rebuilt to display on a person
 
-/obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = SOUTH, var/slot = "ICON")
+/obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = "[SOUTH]", var/slot = "ICON")
     var/image/overlay = image(icon = icon, icon_state = "")
     for(var/key in modules)
         var/obj/item/weapon/gun_modular/module/M = modules[key]
@@ -39,27 +96,36 @@
         
         M_icon.color = M.color
 
-        M_icon.pixel_x = M.get_delta_offset(slot, direct)[1]
-        M_icon.pixel_y = M.get_delta_offset(slot, direct)[2]
+        var/list/delta_offset = M.get_delta_offset(slot, direct)
+
+        M_icon.pixel_x = delta_offset[1]
+        M_icon.pixel_y = delta_offset[2]
+        M_icon.layer = delta_offset[3]
 
         overlay.add_overlay(M_icon)
+        if(M.icon_overlay["ICON_OVERLAY"])
+            M.icon_overlay["ICON_OVERLAY"].dir = text2dir(direct)
+            add_overlay(M.icon_overlay["ICON_OVERLAY"])
 
-    frame_overlays[slot] = overlay
-
-    // var/matrix/frame_change = matrix()
-    // frame_change.Scale(0.7 + (0.9 / size_gun))
-    // if(size_gun > MEDIUM_GUN)
-    //     frame_change.Turn(315)
-    // animate(icon_s, transform = frame_change)
+    overlay.appearance_flags |= KEEP_TOGETHER
+    LAZYINITLIST(frame_overlays[slot])
+    frame_overlays[slot][direct] = overlay
 
 /obj/item/weapon/gun_modular/module/frame/proc/update_images(var/mob/user)
     user.update_inv_item(src)
 
 /obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-    var/image/I = ..()
-    I.icon_state = ""
-    if(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"])
-        I.add_overlay(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+    var/image/I = image(icon, icon_state = "")
+    if(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"])
+        I.appearance = frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"].appearance
+    if(dirt_overlay && bloodied_icon_state)
+        var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+        bloodsies.color = dirt_overlay.color
+        I.add_overlay(bloodsies)
+    if(check_list_point(layer_overlays, "[sprite_sheet_slot][icon_state_appendix]", "[H.dir]"))
+        I.layer = layer_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"]
+    else
+        I.layer = layer
     return I
 
 /obj/item/weapon/gun_modular/module/frame/examine(mob/user)
@@ -87,9 +153,10 @@
     to_chat(user, dit)
 
 /obj/item/weapon/gun_modular/module/frame/atom_init()
-    . = ..()
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
+    appearance_flags |= TILE_BOUND
+    . = ..()
     build_images()
     update_icon()
     
@@ -149,6 +216,9 @@
     UnregisterSignal(user, COSMIG_ATOM_SETDIR)
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
+    appearance_flags |= TILE_BOUND
+    pixel_x = frame_overlays["ICON"]["[SOUTH]"].pixel_x
+    pixel_y = frame_overlays["ICON"]["[SOUTH]"].pixel_y
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = src
@@ -159,6 +229,7 @@
     RegisterSignal(user, COSMIG_ATOM_SETDIR, .proc/update_images)
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
+    appearance_flags |= TILE_BOUND
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = user
@@ -263,19 +334,23 @@
         lessdamage -= module.lessdamage
         lessdispersion -= module.lessdispersion
         size_gun -= module.size_gun
-        if(size_gun >= SMALL_GUN)
-            w_class = ITEM_SIZE_SMALL
-        if(size_gun >= MEDIUM_GUN)
-            w_class = ITEM_SIZE_NORMAL
-        if(size_gun >= LARGE_GUN)
-            w_class = ITEM_SIZE_LARGE
-    slowdown = 5 - (25/size_gun)
+    if(size_gun >= SMALL_GUN)
+        w_class = ITEM_SIZE_NORMAL
+        slot_flags = SLOT_FLAGS_BELT
+    if(size_gun >= MEDIUM_GUN)
+        w_class = ITEM_SIZE_LARGE
+        slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_BACK
+    if(size_gun >= LARGE_GUN)
+        w_class = ITEM_SIZE_HUGE
+        slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_BACK
+    slowdown = 5 - (20/size_gun)
     for(var/key_type in points_of_entry)
         for(var/key_dir in points_of_entry[key_type])
             build_images(key_dir, key_type)
-    frame_overlays["ICON"].icon_state = initial(icon_state)
-    frame_overlays["ICON"].appearance_flags |= KEEP_TOGETHER
-    appearance = frame_overlays["ICON"].appearance
+    frame_overlays["ICON"]["[SOUTH]"].icon_state = initial(icon_state)
+    frame_overlays["ICON"]["[SOUTH]"].appearance_flags |= KEEP_TOGETHER
+    frame_overlays["ICON"]["[SOUTH]"].layer = OBJ_LAYER
+    appearance = frame_overlays["ICON"]["[SOUTH]"].appearance
     change_name()
     update_icon()
     return TRUE
@@ -286,14 +361,14 @@
     . = ..()
     var/obj/item/weapon/gun_modular/module/chamber/heavyrifle/new_chamber = new(src)
     var/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/new_magazine = new(src)
-    var/obj/item/weapon/gun_modular/module/handle/rifle/new_handle = new(src)
+    var/obj/item/weapon/gun_modular/module/handle/new_handle = new(src)
     var/obj/item/weapon/gun_modular/module/barrel/large/new_barrel = new(src)
-    var/obj/item/weapon/gun_modular/module/accessory/optical/large/new_optical = new(src)
+    var/obj/item/weapon/gun_modular/module/accessory/butt/new_butt = new(src)
     new_chamber.attach(src)
     new_magazine.attach(src)
     new_handle.attach(src)
     new_barrel.attach(src)
-    new_optical.attach(src)
+    new_butt.attach(src)
 
 /obj/item/weapon/gun_modular/module/frame/energy_shotgun/atom_init()
     . = ..()

@@ -471,4 +471,5 @@
 			M.start_pulling(t)
 	else
 		step(pulling, get_dir(pulling.loc, A))
+	pulling.set_dir(pulling.dir)
 	return

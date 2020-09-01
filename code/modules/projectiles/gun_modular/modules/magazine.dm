@@ -3,7 +3,6 @@
     desc = "Magazine holder, forms a bridge between the chamber and the cartridge storage. A cartridge storage is placed in the magazine holder, after which it is attached to the frame"
     icon_state = "magazine_external_icon"
     icon_overlay_name = "magazine_external"
-    icon_overlay_layer = LAYER_MAGAZINE
     caliber = null
     lessdamage = 0
     lessdispersion = 0
@@ -16,7 +15,22 @@
 
 /obj/item/weapon/gun_modular/module/magazine/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(0, 2))
+    change_list_exit("ICON", "[SOUTH]", list(1, 1))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 1))
+
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 1))
+    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
+
+    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 3))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
+    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
 
 /obj/item/weapon/gun_modular/module/magazine/get_info_module(mob/user = null)
     var/info_module = ..()
@@ -164,8 +178,8 @@
 
 /obj/item/weapon/gun_modular/module/magazine/energy/build_points_list()
     ..()
-    change_list_entry("ICON", "[SOUTH]", list("Additional Battery" = list(2, 2),
-                                            "Core Charger" = list(2, 2)))
+    change_list_entry("ICON", "[SOUTH]", list("Additional Battery" = list(2, 2, -3),
+                                            "Core Charger" = list(2, 2, -3)))
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Destroy()
     if(magazine)
@@ -249,15 +263,17 @@
         return FALSE
     open = FALSE
     hole_magaine = image(icon, "magazine_open")
-    hole_magaine.pixel_x = frame_parent.chamber.icon_overlay["ICON"].pixel_x + 2
-    hole_magaine.pixel_y = frame_parent.chamber.icon_overlay["ICON"].pixel_y + 2
+    hole_magaine.pixel_x = icon_overlay["ICON"].pixel_x
+    hole_magaine.pixel_y = icon_overlay["ICON"].pixel_y
+    icon_overlay["ICON_OVERLAY"] = null
     return TRUE
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
     if(open)
         frame_parent.cut_overlay(hole_magaine)
+    icon_overlay["ICON_OVERLAY"] = null
+    hole_magaine = null
     open = FALSE
     ..()
-    
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/Get_Ammo()
     if(!open)
@@ -277,6 +293,7 @@
         playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt open.</span>")
         frame_parent.add_overlay(hole_magaine)
+        icon_overlay["ICON_OVERLAY"] = hole_magaine
         if(frame_parent.chamber)
             frame_parent.chamber.process_chamber(TRUE)
         return ..()
@@ -284,9 +301,14 @@
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
         frame_parent.cut_overlay(hole_magaine)
+        icon_overlay["ICON_OVERLAY"] = null
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
     frame_parent.update_icon()
+
+/obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/deactivate(mob/user, argument)
+    if(open)
+        activate(user)
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/shotgun
     name = "shotgun magazine holder"
