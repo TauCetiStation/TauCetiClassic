@@ -13,8 +13,6 @@
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/B = new
 	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, null, TRUE)) //if you can't put it on the user's eyes, put it in their hands.
 		H.put_in_hands(B)
-	H.equip_to_slot_or_del(new /obj/item/clothing/accessory/certificate/blind(H), SLOT_TIE, TRUE)
-
 
 
 /datum/quirk/cough
@@ -38,11 +36,6 @@
 	mob_trait = TRAIT_DEAF
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
-
-/datum/quirk/deafness/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.equip_to_slot_or_del(new /obj/item/clothing/accessory/certificate/deaf(H), SLOT_TIE, TRUE)
-
 
 /datum/quirk/epileptic
 	name = QUIRK_SEIZURES
@@ -147,11 +140,6 @@
 	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
 	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"
-
-/datum/quirk/mute/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.equip_to_slot_or_del(new /obj/item/clothing/accessory/certificate/mute(H), SLOT_TIE, TRUE)
-
 
 /datum/quirk/light_drinker
 	name = QUIRK_LIGHT_DRINKER

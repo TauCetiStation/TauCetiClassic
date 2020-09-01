@@ -52,22 +52,6 @@
 /obj/item/clothing/accessory/proc/attack_accessory(obj/item/I, mob/user, params)
 	return FALSE
 
-/obj/item/clothing/accessory/certificate
-	name = "certificate"
-	desc = "certificate of special conditions of the employee."
-	icon = 'icons/obj/card.dmi'
-	icon_state = "certificate"
-	item_color = "certificate"
-
-/obj/item/clothing/accessory/certificate/blind
-	name = "certificate of blindness"
-
-/obj/item/clothing/accessory/certificate/deaf
-	name = "certificate of deafness"
-
-/obj/item/clothing/accessory/certificate/mute
-	name = "certificate of muteness"
-
 /obj/item/clothing/accessory/tie
 	layer_priority = 0.1
 
