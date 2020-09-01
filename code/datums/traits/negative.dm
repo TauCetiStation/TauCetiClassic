@@ -15,6 +15,7 @@
 		H.put_in_hands(B)
 
 
+
 /datum/quirk/cough
 	name = QUIRK_COUGHING
 	desc = "You have incurable coughing fit."
@@ -36,6 +37,8 @@
 	mob_trait = TRAIT_DEAF
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
+
+
 
 /datum/quirk/epileptic
 	name = QUIRK_SEIZURES
@@ -140,6 +143,8 @@
 	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>Your voicebox feels wrong somehow.</span>"
 	lose_text = "<span class='notice'>Your voicebox appears to work now.</span>"
+
+
 
 /datum/quirk/light_drinker
 	name = QUIRK_LIGHT_DRINKER
