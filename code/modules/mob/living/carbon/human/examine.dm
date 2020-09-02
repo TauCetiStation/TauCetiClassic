@@ -208,7 +208,7 @@
 		var/id_card = wear_id.GetID()
 		if(istype(id_card, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/ID = id_card
-			if(ID.disabilities)
+			if(ID.disabilities.len)
 				msg += "\a [wear_id] shows [t_He] [t_has] current disabilities: <span class='warning'><B>"
 				for(var/I in 1 to ID.disabilities.len - 1)
 					msg += "[ID.disabilities[I]], "
