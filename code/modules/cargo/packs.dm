@@ -359,8 +359,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_pack/investigation
 	name = "Investigation Crate"
 	cost = 1500
-	contains =  list(/obj/item/weapon/autopsy_scanner,
-	                /obj/item/weapon/scalpel,
+	contains = list(/obj/item/weapon/autopsy_scanner,
+					/obj/item/weapon/scalpel,
 					/obj/item/device/detective_scanner,
 					/obj/item/device/taperecorder,
 					/obj/item/clothing/gloves/latex,
