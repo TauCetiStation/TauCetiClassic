@@ -205,10 +205,7 @@
 	//ID
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
-		var/id_card = wear_id
-		if(istype(wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/PDA = wear_id
-			id_card = PDA.id
+		var/id_card = wear_id.GetID()
 		if(istype(id_card, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/ID = id_card
 			if(ID.disabilities)
