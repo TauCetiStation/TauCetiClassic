@@ -283,7 +283,7 @@ var/global/dmm_suite/preloader/_preloader = new
 //Helpers procs
 ////////////////
 
-/dmm_suite/proc/load_new_z_level(mappath)
+/dmm_suite/proc/load_new_z_level(mappath, linkage)
 	var/file = file(mappath)
 	if(isfile(file))
 		var/list/loaded_stuff = load_map(file)
@@ -295,6 +295,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			return FALSE
 
 		//initialize things that are normally initialized after map load
+		SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
 		initTemplateBounds(bounds)
 		log_game("Z-level loaded [world.maxz]")
 		return TRUE

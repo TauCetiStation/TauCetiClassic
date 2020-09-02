@@ -4203,7 +4203,9 @@
 	},
 /area/station/security/hos)
 "ahj" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod3"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -18912,7 +18914,9 @@
 /turf/simulated/floor,
 /area/station/civilian/fitness)
 "aHt" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod1"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aHu" = (
@@ -28103,7 +28107,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYn" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aYo" = (
@@ -30303,7 +30309,9 @@
 	},
 /area/station/hallway/primary/port)
 "bch" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod1"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -35271,7 +35279,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "blC" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod2"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -54496,7 +54506,9 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cfG" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod4"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -67592,6 +67604,12 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"doG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod3"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "dpb" = (
 /obj/structure/sign/warning/secure_area/armory,
 /turf/simulated/wall/r_wall,
@@ -72747,6 +72765,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ltU" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod4";
+	name = "Escape Pod 4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "lub" = (
 /obj/structure/stool,
 /turf/simulated/floor/plating,
@@ -102622,7 +102647,7 @@ ckj
 ckG
 bZr
 ayQ
-bef
+ltU
 ayQ
 ayQ
 aah
@@ -115866,7 +115891,7 @@ aah
 aaa
 afl
 afl
-aga
+doG
 afl
 afl
 ahq
