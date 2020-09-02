@@ -7,7 +7,7 @@
 	anchored = TRUE
 	//ghost_must_be_admin = TRUE
 	var/obj/item/weapon/card/id/storedcard = null
-	var/list/colorlist = list()
+	var/list/radial_chooses
 
 
 
@@ -27,16 +27,6 @@
 		icon_state = "[initial(icon_state)]-off"
 
 	return
-
-/obj/machinery/idpainter/atom_init()
-	. = ..()
-
-	for(var/P in typesof(/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = new P
-		if (C.customizable_view == UNIVERSAL_VIEW)
-			C.name = C.icon_state
-			colorlist += C
-
 
 /obj/machinery/idpainter/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/card/id))
@@ -63,8 +53,14 @@
 		return
 
 	if(storedcard)
-		var/obj/item/weapon/card/id/C
-		C = input(user, "Select your type!", "Card Painting") as null|anything in colorlist
+		if(!radial_chooses)
+			radial_chooses = list()
+			for(var/P in typesof(/obj/item/weapon/card/id))
+				var/obj/item/weapon/card/id/C = new P
+				if(C.customizable_view == UNIVERSAL_VIEW)
+					radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+
+		var/obj/item/weapon/card/id/C = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 		if(!C)
 			return
 

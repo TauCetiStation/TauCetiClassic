@@ -66,7 +66,7 @@
 /obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat = "<h3>Generator Control System</h3>"
+	var/dat = ""
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(gravity_generator)
 		if(gravity_generator:on)
@@ -95,7 +95,10 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(dat, "window=gravgen")
+	var/datum/browser/popup = new(user, "gravgen", "Generator Control System")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user, "gravgen")
 
 

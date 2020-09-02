@@ -167,7 +167,7 @@
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)

@@ -24,7 +24,7 @@
 
 	var/ore_amount = 0
 
-	has_resources = 1
+	has_resources = TRUE
 
 /turf/simulated/mineral/atom_init()
 	..()
@@ -135,7 +135,7 @@
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
 				if(prob(2))
-					if(ticker.current_state > GAME_STATE_SETTING_UP)
+					if(SSticker.current_state > GAME_STATE_SETTING_UP)
 						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 					else
 						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
@@ -143,7 +143,7 @@
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
@@ -538,7 +538,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				if(ticker.current_state > GAME_STATE_SETTING_UP)
+				if(SSticker.current_state > GAME_STATE_SETTING_UP)
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
@@ -564,7 +564,7 @@
 
 	SpawnMonster(T)
 	var/turf/t
-	if(ticker.current_state > GAME_STATE_SETTING_UP)
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
 	else
 		t = T.ChangeTurf(basetype)
@@ -604,8 +604,12 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	icon_plating = "asteroid"
-	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	has_resources = 1
+	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
+	has_resources = TRUE
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_SAND
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
@@ -666,7 +670,7 @@
 		if(3.0)
 			return
 		if(2.0)
-			if (prob(70))
+			if(prob(70))
 				gets_dug()
 		if(1.0)
 			gets_dug()
@@ -712,12 +716,9 @@
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	dug = 1
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/ore/glass(src)
+	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 	return

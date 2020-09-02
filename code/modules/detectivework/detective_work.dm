@@ -116,7 +116,11 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
 				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
-	user << browse(dat,"window=scanner")
+
+	var/datum/browser/popup = new(user, "scanner")
+	popup.set_content(dat)
+	popup.open()
+
 	onclose(user,"scanner")
 
 

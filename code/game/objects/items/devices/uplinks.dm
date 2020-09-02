@@ -18,9 +18,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/atom_init()
 	. = ..()
-	if(ticker && ticker.mode)
-		welcome = ticker.mode.uplink_welcome
-		uses = ticker.mode.uplink_uses
+	if(SSticker && SSticker.mode)
+		welcome = SSticker.mode.uplink_welcome
+		uses = SSticker.mode.uplink_uses
 	else
 		welcome = "Syndicate Uplink Console:"
 		uses = 20
@@ -73,7 +73,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user)
-	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
+	var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
 	dat += "</font></body>"

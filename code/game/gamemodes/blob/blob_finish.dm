@@ -40,13 +40,13 @@
 
 /datum/game_mode/proc/auto_declare_completion_blob()
 	var/text = ""
-	if(blobminds.len)
-		text += "<b>The blob[(blobminds.len > 1 ? "s were" : " was")]:</b>"
+	if(SSticker.mode.infected_crew.len)
+		text += "<b>The blob[(SSticker.mode.infected_crew.len > 1 ? "s were" : " was")]:</b>"
 
 		var/icon/logo = icon('icons/mob/blob.dmi', "blob_core")
 		end_icons += logo
 		var/tempstate = end_icons.len
-		for(var/datum/mind/blob in blobminds)
+		for(var/datum/mind/blob in SSticker.mode.infected_crew)
 			text += {"<br><img src="logo_[tempstate].png"> <b>[blob.key]</b> was <b>[blob.name]</b>"}
 			var/count = 1
 			var/blobwin = 1
