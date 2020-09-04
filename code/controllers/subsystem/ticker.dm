@@ -182,6 +182,10 @@ SUBSYSTEM_DEF(ticker)
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
+			// Players can initiate gamemode vote again
+			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			if(gamemode_vote)
+				gamemode_vote.reset_next_vote()
 			return 0
 
 		// hiding forced gamemode in secret
@@ -277,9 +281,6 @@ SUBSYSTEM_DEF(ticker)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		if (length(SSvote.delay_after_start))
-			for (var/DT in SSvote.delay_after_start)
-				SSvote.last_vote_time[DT] = world.time
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
