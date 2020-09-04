@@ -275,7 +275,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /datum/admins/proc/load_info_player_db_age_and_ingame_age(player_ckey)
 	var/list/age_and_ingame_age
-	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sanitize_sql(player_ckey)]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sanitize_sql(ckey(player_ckey))]'")
 
 	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
 		return           // dbcore revision needed
