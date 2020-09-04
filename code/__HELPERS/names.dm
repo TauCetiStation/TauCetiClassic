@@ -215,7 +215,7 @@ var/global/regex/code_response_highlight_rule
 		25; 5
 	)
 	var/code_phrase[words_count]
-	for(var/i = 1, i <= code_phrase.len, i++)
+	for(var/i in 1 to code_phrase.len)
 		var/word
 		if(config.rus_language)
 			word = pick(
@@ -235,7 +235,7 @@ var/global/regex/code_response_highlight_rule
 			)
 
 		if(!word || code_phrase.Find(word, 1, i)) // Reroll duplicates and errors
-			i--
+			i -= 1
 			continue
 
 		var/separator_position = findtext(word, "|")
@@ -254,9 +254,27 @@ var/global/regex/code_response_highlight_rule
 
 /proc/codewords2string(list/codewords)
 	ASSERT(islist(codewords))
-	for(var/i = 1, i <= codewords.len, i++)
+	for(var/i in 1 to codewords.len)
 		. += "<span class='danger'>[codewords[i]]</span>"
 		if (codewords[codewords[i]])
 			. += "(-[codewords[codewords[i]]])"
 		. += i != codewords.len ? ", " : "."
 	return
+
+/proc/highlight_traitor_codewords(t, datum/mind/traitor_mind)
+	if(!traitor_mind || !traitor_mind.syndicate_awareness)
+		return
+
+	var/message = ""
+	switch(traitor_mind.syndicate_awareness)
+		if(SYNDICATE_AWARE)
+			message = highlight_codewords(t, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
+			message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")
+
+		if(SYNDICATE_PHRASES)
+			message = highlight_codewords(t, global.code_phrase_highlight_rule)
+
+		if(SYNDICATE_RESPONSE)
+			message = highlight_codewords(t, global.code_response_highlight_rule, "deptradio")
+
+	return message

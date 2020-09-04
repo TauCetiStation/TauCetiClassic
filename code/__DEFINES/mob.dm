@@ -156,4 +156,6 @@
 
 // Awareness about syndicate, it`s agents and equipment
 #define SYNDICATE_UNAWARE  0
-#define SYNDICATE_AWARE    1
+#define SYNDICATE_PHRASES  1
+#define SYNDICATE_RESPONSE 2
+#define SYNDICATE_AWARE    3

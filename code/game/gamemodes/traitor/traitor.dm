@@ -167,6 +167,7 @@
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
 	traitors -= M
 	M.special_role = null
+	M.syndicate_awareness = SYNDICATE_UNAWARE
 	if(isAI(M.current))
 		var/mob/living/silicon/ai/A = M.current
 		A.set_zeroth_law("")
@@ -347,18 +348,33 @@
 	ASSERT(traitor_mob)
 	give_codewords(traitor_mob)
 	ASSERT(traitor_mob.mind)
-	traitor_mob.mind.syndicate_awareness = SYNDICATE_AWARE
 
 /datum/game_mode/proc/give_codewords(mob/living/traitor_mob)
-	ASSERT(global.syndicate_code_phrase.len)
-	to_chat(traitor_mob, "<u><b>Your employers provided you with the following information on how to identify possible allies:</b></u>")
-	var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
-	to_chat(traitor_mob, code_phrase)
-	traitor_mob.mind.store_memory(code_phrase)
+	var/code_words = 0
+	if(prob(80))
+		ASSERT(global.syndicate_code_phrase.len)
+		to_chat(traitor_mob, "<u><b>Your employers provided you with the following information on how to identify possible allies:</b></u>")
+		var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
+		to_chat(traitor_mob, code_phrase)
+		traitor_mob.mind.store_memory(code_phrase)
+		traitor_mob.mind.syndicate_awareness = SYNDICATE_PHRASES
 
-	ASSERT(global.syndicate_code_response.len)
-	var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
-	to_chat(traitor_mob, code_response)
-	traitor_mob.mind.store_memory(code_response)
+		code_words += 1
 
-	to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	if(prob(80))
+		ASSERT(global.syndicate_code_response.len)
+		var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
+		to_chat(traitor_mob, code_response)
+		traitor_mob.mind.store_memory(code_response)
+		traitor_mob.mind.syndicate_awareness = SYNDICATE_RESPONSE
+
+		code_words += 1
+
+	switch(code_words)
+		if(0)
+			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
+		if(1) // half
+			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+		if(2)
+			traitor_mob.mind.syndicate_awareness = SYNDICATE_AWARE
+			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")

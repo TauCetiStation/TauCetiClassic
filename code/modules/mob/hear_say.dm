@@ -65,9 +65,8 @@
 					pronoun = "it"
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
-		if(istype(src, /mob/living) && src.mind && src.mind.syndicate_awareness == SYNDICATE_AWARE)
-			message = highlight_codewords(message, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
-			message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")
+		if(isliving(src))
+			message = highlight_traitor_codewords(message, src.mind)
 		if(language)
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
@@ -183,9 +182,8 @@
 			speaker = S.eyeobj
 		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
 
-	if(istype(src, /mob/living) && src.mind && src.mind.syndicate_awareness == SYNDICATE_AWARE)
-		message = highlight_codewords(message, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
-		message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")
+	if(isliving(src))
+		message = highlight_traitor_codewords(message, src.mind)
 	var/formatted
 	if(language)
 		formatted = language.format_message_radio(message, verb)
