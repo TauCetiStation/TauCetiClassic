@@ -235,7 +235,7 @@ var/global/regex/code_response_highlight_rule
 			)
 
 		if(!word || code_phrase.Find(word, 1, i)) // Reroll duplicates and errors
-			i -= 1
+			i--
 			continue
 
 		var/separator_position = findtext(word, "|")
