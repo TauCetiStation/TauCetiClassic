@@ -1,5 +1,5 @@
 #define MAX_PILL_SPRITE 24
-#define MAX_BOTTLE_SPRITE 3
+#define MAX_BOTTLE_SPRITE 6
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
