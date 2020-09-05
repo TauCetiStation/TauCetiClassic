@@ -27,7 +27,7 @@
 
 /obj/item/device/guitar/electric
 	name = EN_GUITAR_ELECTRIC_NAME
-	desc = EN_GUITAR_DESCRIPTION
+	desc = EN_GUITAR_ELECTRIC_DESCRIPTION
 	icon_state = "eguitar"
 	item_state = "eguitar"
 
