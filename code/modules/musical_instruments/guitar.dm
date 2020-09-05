@@ -1,6 +1,6 @@
 /obj/item/device/guitar
-	name = "guitar"
-	desc = "It's made of wood and has steel strings.<br>The leather belt is folded behind it and the letters J.C. are engraved on the headstock."
+	name = EN_GUITAR_NAME
+	desc = EN_GUITAR_DESCRIPTION
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
@@ -26,8 +26,8 @@
 	MP.interact(user)
 
 /obj/item/device/guitar/electric
-	name = "electric guitar"
-	desc = "Space Rock'n'Roll"
+	name = EN_GUITAR_ELECTRIC_NAME
+	desc = EN_GUITAR_DESCRIPTION
 	icon_state = "eguitar"
 	item_state = "eguitar"
 
