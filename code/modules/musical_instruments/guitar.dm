@@ -26,8 +26,8 @@
 	MP.interact(user)
 
 /obj/item/device/guitar/electric
-	name = EN_GUITAR_ELECTRIC_NAME
-	desc = EN_GUITAR_ELECTRIC_DESCRIPTION
+	name = EN_ELECTRIC_GUITAR_NAME
+	desc = EN_ELECTRIC_GUITAR_DESCRIPTION
 	icon_state = "eguitar"
 	item_state = "eguitar"
 
