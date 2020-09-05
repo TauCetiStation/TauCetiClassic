@@ -1,3 +1,8 @@
+/obj/atom_init()
+	. = ..()
+	name = TRANSLATE(name)
+	desc = TRANSLATE(desc)
+
 /obj/structure/signpost
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"

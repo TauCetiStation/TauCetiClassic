@@ -31,6 +31,8 @@
 		dead_mob_list += src
 	else
 		alive_mob_list += src
+	name = TRANSLATE(name)
+	desc = TRANSLATE(desc)
 	. = ..()
 
 /mob/proc/Cell()
