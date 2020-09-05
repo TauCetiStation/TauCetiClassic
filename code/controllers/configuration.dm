@@ -84,6 +84,7 @@ var/list/net_announcer_secret = list()
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
 	var/rus_language = 0
+	var/language = EN
 
 	var/deathtime_required = 18000	//30 minutes
 
@@ -576,8 +577,10 @@ var/list/net_announcer_secret = list()
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
 
-				if("rus_language")
-					config.rus_language = 1
+				if("language")
+					if(value == RU)
+						config.rus_language = TRUE
+					config.language = value
 
 				if("allow_drone_spawn")
 					config.allow_drone_spawn = text2num(value)

@@ -2,7 +2,7 @@
 # SERVERNAME spacestation13
 
 ## Unhash this if you want see the russian text in some places, like disease and other
-#RUS_LANGUAGE
+#LANGUAGE RU
 
 ## Whitelist for new players
 #SERVERWHITELIST
