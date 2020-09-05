@@ -1,4 +1,4 @@
-#define EN "EN"
+#define EN "EN" // default language of the game
 #define RU "RU"
 #define LOCALIZATIONS list(EN, RU)
 
