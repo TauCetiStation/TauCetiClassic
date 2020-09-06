@@ -542,7 +542,7 @@
     gun_type = ALL_GUN_TYPE
     occupied_slots = 0
 
-/obj/item/weapon/gun_modular/module/accessory/strap/proc/drop_frame(mod/user)
+/obj/item/weapon/gun_modular/module/accessory/strap/proc/drop_frame(mob/user)
     if(user.equip_to_slot_if_possible(frame_parent, SLOT_BELT))
         return TRUE
     if(user.equip_to_slot_if_possible(frame_parent, SLOT_BACK))
@@ -550,7 +550,7 @@
     return FALSE
 
 /obj/item/weapon/gun_modular/module/accessory/strap/remove()
-    UnegisterSignal(frame_parent, COMSIG_ITEM_DROPPED)
+    UnregisterSignal(frame_parent, COMSIG_ITEM_DROPPED)
     return ..()
 
 /obj/item/weapon/gun_modular/module/accessory/strap/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
