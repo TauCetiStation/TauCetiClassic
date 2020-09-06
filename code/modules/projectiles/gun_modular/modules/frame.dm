@@ -19,40 +19,39 @@
     var/list/config_user = list()
     var/list/icon/radial_icons = list()
     var/list/image/frame_overlays = list()
-    var/list/layer_overlays = list()
+    var/list/mask_overlays = list()
 
-/obj/item/weapon/gun_modular/module/frame/proc/change_list_layers(var/type, var/direct, var/layer)
-    LAZYINITLIST(layer_overlays)
-    LAZYINITLIST(layer_overlays[type])
-    LAZYINITLIST(layer_overlays[type][direct])
-    layer_overlays[type][direct] = layer
+/obj/item/weapon/gun_modular/module/frame/proc/change_list_mask(var/type, var/direct, var/layer)
+    LAZYINITLIST(mask_overlays)
+    LAZYINITLIST(mask_overlays[type])
+    LAZYINITLIST(mask_overlays[type][direct])
+    mask_overlays[type][direct] = layer
     return TRUE
 
 /obj/item/weapon/gun_modular/module/frame/build_points_list()
-    ..()
-    change_list_layers("[SPRITE_SHEET_HELD]_l", "[SOUTH]", null)
-    change_list_layers("[SPRITE_SHEET_HELD]_l", "[NORTH]", OBJ_LAYER)
-    change_list_layers("[SPRITE_SHEET_HELD]_l", "[EAST]", null)
-    change_list_layers("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
+    ..()   
+    change_list_mask("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(BP_L_ARM))
+    change_list_mask("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_HEAD))
+    change_list_mask("[SPRITE_SHEET_HELD]_l", "[EAST]", list(BP_L_ARM))
+    change_list_mask("[SPRITE_SHEET_HELD]_l", "[WEST]", list(BP_L_ARM))
 
-    change_list_layers("[SPRITE_SHEET_HELD]_r", "[SOUTH]", null)
-    change_list_layers("[SPRITE_SHEET_HELD]_r", "[NORTH]", OBJ_LAYER)
-    change_list_layers("[SPRITE_SHEET_HELD]_r", "[EAST]", null)
-    change_list_layers("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
+    change_list_mask("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(BP_R_ARM))
+    change_list_mask("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_HEAD))
+    change_list_mask("[SPRITE_SHEET_HELD]_r", "[EAST]", list(BP_R_ARM))
+    change_list_mask("[SPRITE_SHEET_HELD]_r", "[WEST]", list(BP_R_ARM))
 
-    change_list_layers("[SPRITE_SHEET_BELT]", "[SOUTH]", null)
-    change_list_layers("[SPRITE_SHEET_BELT]", "[NORTH]", null)
-    change_list_layers("[SPRITE_SHEET_BELT]", "[EAST]", OBJ_LAYER)
-    change_list_layers("[SPRITE_SHEET_BELT]", "[WEST]", null)
+    change_list_mask("[SPRITE_SHEET_BELT]", "[SOUTH]", list(BP_L_ARM))
+    change_list_mask("[SPRITE_SHEET_BELT]", "[NORTH]", null)
+    change_list_mask("[SPRITE_SHEET_BELT]", "[EAST]", list(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_HEAD))
+    change_list_mask("[SPRITE_SHEET_BELT]", "[WEST]", list(BP_L_ARM))
 
-    change_list_layers("[SPRITE_SHEET_BACK]", "[SOUTH]", OBJ_LAYER)
-    change_list_layers("[SPRITE_SHEET_BACK]", "[NORTH]", null)
-    change_list_layers("[SPRITE_SHEET_BACK]", "[EAST]", OBJ_LAYER)
-    change_list_layers("[SPRITE_SHEET_BACK]", "[WEST]", OBJ_LAYER)
-    
+    change_list_mask("[SPRITE_SHEET_BACK]", "[SOUTH]", list(BP_CHEST, BP_GROIN, BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_HEAD, BP_L_ARM))
+    change_list_mask("[SPRITE_SHEET_BACK]", "[NORTH]", null)
+    change_list_mask("[SPRITE_SHEET_BACK]", "[EAST]", list(BP_R_ARM, BP_CHEST, BP_HEAD, BP_GROIN, BP_R_LEG))
+    change_list_mask("[SPRITE_SHEET_BACK]", "[WEST]", list(BP_L_ARM, BP_CHEST, BP_HEAD, BP_GROIN, BP_L_LEG))
+
     change_list_exit("ICON", "[SOUTH]", list(16, 16))
-    change_list_entry("ICON", "[SOUTH]", list(CHAMBER = list(16, 16, -7),
-                                        "DNA Crypter" = list(13, 14, -3)))
+    change_list_entry("ICON", "[SOUTH]", list(CHAMBER = list(16, 16, -7)))
 
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(16, 16))
     change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(16, 16))
@@ -84,15 +83,25 @@
     change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", list(CHAMBER = list(11, 15, -7)))
     change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", list(CHAMBER = list(22, 14, -7)))
 
+    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(23, 14))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(9, 14))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(16, 14))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(17, 14))
+
+    change_list_entry("[SPRITE_SHEET_BELT]", "[SOUTH]", list(CHAMBER = list(23, 14, -7)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[NORTH]", list(CHAMBER = list(9, 14, -7)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[EAST]", list(CHAMBER = list(16, 14, -7)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", list(CHAMBER = list(17, 14, -7)))
+
 // When changing weapons, icons are rebuilt to display on a person
 
 /obj/item/weapon/gun_modular/module/frame/proc/build_images(var/direct = "[SOUTH]", var/slot = "ICON")
-    var/image/overlay = image(icon = icon, icon_state = "")
     for(var/key in modules)
         var/obj/item/weapon/gun_modular/module/M = modules[key]
         if(!M)
             continue
-        var/image/M_icon = M.icon_overlay[slot]
+        var/image/M_icon = image(icon)
+        M_icon.appearance = M.icon_overlay[slot].appearance
         
         M_icon.color = M.color
 
@@ -102,31 +111,15 @@
         M_icon.pixel_y = delta_offset[2]
         M_icon.layer = delta_offset[3]
 
-        overlay.add_overlay(M_icon)
+        LAZYINITLIST(frame_overlays[slot])
+        LAZYINITLIST(frame_overlays[slot][direct])
+        frame_overlays[slot][direct][M.prefix] = M_icon
         if(M.icon_overlay["ICON_OVERLAY"])
             M.icon_overlay["ICON_OVERLAY"].dir = text2dir(direct)
             add_overlay(M.icon_overlay["ICON_OVERLAY"])
 
-    overlay.appearance_flags |= KEEP_TOGETHER
-    LAZYINITLIST(frame_overlays[slot])
-    frame_overlays[slot][direct] = overlay
-
 /obj/item/weapon/gun_modular/module/frame/proc/update_images(var/mob/user)
     user.update_inv_item(src)
-
-/obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-    var/image/I = image(icon, icon_state = "")
-    if(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"])
-        I.appearance = frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"].appearance
-    if(dirt_overlay && bloodied_icon_state)
-        var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
-        bloodsies.color = dirt_overlay.color
-        I.add_overlay(bloodsies)
-    if(check_list_point(layer_overlays, "[sprite_sheet_slot][icon_state_appendix]", "[H.dir]"))
-        I.layer = layer_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"]
-    else
-        I.layer = layer
-    return I
 
 /obj/item/weapon/gun_modular/module/frame/examine(mob/user)
     ..()
@@ -154,8 +147,6 @@
 
 /obj/item/weapon/gun_modular/module/frame/atom_init()
     appearance_flags |= KEEP_TOGETHER
-    appearance_flags |= PIXEL_SCALE
-    appearance_flags |= TILE_BOUND
     . = ..()
     build_images()
     update_icon()
@@ -217,8 +208,6 @@
     appearance_flags |= KEEP_TOGETHER
     appearance_flags |= PIXEL_SCALE
     appearance_flags |= TILE_BOUND
-    pixel_x = frame_overlays["ICON"]["[SOUTH]"].pixel_x
-    pixel_y = frame_overlays["ICON"]["[SOUTH]"].pixel_y
     if(accessories)
         for(var/obj/item/weapon/gun_modular/module/accessory/A in accessories)
             A.loc = src
@@ -344,13 +333,20 @@
         w_class = ITEM_SIZE_HUGE
         slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_BACK
     slowdown = 5 - (20/size_gun)
+    LAZYCLEARLIST(frame_overlays)
     for(var/key_type in points_of_entry)
         for(var/key_dir in points_of_entry[key_type])
             build_images(key_dir, key_type)
-    frame_overlays["ICON"]["[SOUTH]"].icon_state = initial(icon_state)
-    frame_overlays["ICON"]["[SOUTH]"].appearance_flags |= KEEP_TOGETHER
-    frame_overlays["ICON"]["[SOUTH]"].layer = OBJ_LAYER
-    appearance = frame_overlays["ICON"]["[SOUTH]"].appearance
+    var/image/icon_complex = image(icon)
+    LAZYINITLIST(frame_overlays["ICON"])
+    LAZYINITLIST(frame_overlays["ICON"]["[SOUTH]"])
+    for(var/key in frame_overlays["ICON"]["[SOUTH]"])
+        icon_complex.add_overlay(frame_overlays["ICON"]["[SOUTH]"][key])
+    icon_complex.icon_state = initial(icon_state)
+    icon_complex.appearance_flags |= KEEP_TOGETHER
+    icon_complex.plane = GAME_PLANE
+    icon_complex.layer = OBJ_LAYER
+    appearance = icon_complex.appearance
     change_name()
     update_icon()
     return TRUE

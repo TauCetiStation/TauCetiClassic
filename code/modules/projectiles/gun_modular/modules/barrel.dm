@@ -88,6 +88,11 @@
     change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(3, 6))
     change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(3, 6))
 
+    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(3, 6))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(3, 6))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 6))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(6, 6))
+
 /obj/item/weapon/gun_modular/module/barrel/rifle_bullet
     name = "gun barrel large bullet"
     icon_state = "barrel_large_bullet"

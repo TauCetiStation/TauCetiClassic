@@ -113,6 +113,8 @@
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 
 // /obj/item signals
+/// from base of /obj/item/proc/dropped(mob/user)
+#define COMSIG_ITEM_DROPPED "item_dropped"
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
 #define COMSIG_ITEM_ATTACK "item_attack"
 	#define COMPONENT_ITEM_NO_ATTACK 1

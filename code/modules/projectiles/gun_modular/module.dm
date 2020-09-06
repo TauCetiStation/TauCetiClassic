@@ -171,6 +171,8 @@
     
     if(check_list_point(points_of_entry, type, direct))
         for(var/key in points_of_entry[type][direct])
+            if(frame_parent.check_list_point(frame_parent.points_of_entry, type, direct, key))
+                continue
             frame_parent.change_list_entry(type, direct, list(points_of_entry[type][direct][key][1] + delta_x, points_of_entry[type][direct][key][2] + delta_y, points_of_entry[type][direct][key][3]), key)
 
     return list(delta_x, delta_y, layer_overlay)

@@ -401,6 +401,28 @@
                                                                 BARREL = list(3, 3, -1),
                                                                 MAGAZINE = list(0, 0, -5),
                                                                 "Butt" = list(3, 10, -3)))
+    
+    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(3, 5))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(3, 5))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(7, 7))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(7, 7))
+
+    change_list_entry("[SPRITE_SHEET_BELT]", "[SOUTH]", list(HANDLE = list(3, 7, -10),
+                                                                BARREL = list(3, 1, -1),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(3, 11, -3)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[NORTH]", list(HANDLE = list(3, 7, -6),
+                                                                BARREL = list(3, 3, -1),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(3, 10, -3)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[EAST]", list(HANDLE = list(3, 8, -6),
+                                                                BARREL = list(13, 1, -4),
+                                                                MAGAZINE = list(4, 9, -5),
+                                                                "Butt" = list(2, 12, -3)))
+    change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", list(HANDLE = list(11, 8, -6),
+                                                                BARREL = list(1, 1, -4),
+                                                                MAGAZINE = list(0, 0, -5),
+                                                                "Butt" = list(12, 12, -3)))
 
 
 /obj/item/weapon/gun_modular/module/chamber/shotgun

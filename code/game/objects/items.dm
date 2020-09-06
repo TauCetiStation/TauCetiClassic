@@ -440,6 +440,7 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(DROPDEL & flags)
 		qdel(src)
 

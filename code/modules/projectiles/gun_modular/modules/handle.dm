@@ -30,6 +30,11 @@
     change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(3, 2))
     change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
     change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 2))
+    
+    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 2))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(3, 2))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
 
 /obj/item/weapon/gun_modular/module/handle/get_info_module(mob/user = null)
     var/info_module = ..()

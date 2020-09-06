@@ -179,6 +179,44 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	return I
 
+/obj/item/weapon/gun_modular/module/frame/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/image/I = image(icon, icon_state = "")
+
+	LAZYINITLIST(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"])
+	if(frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"])
+		for(var/key in frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"])
+			if(!modules[key])
+				continue
+			
+			var/image/M_icon = image(icon, icon_state = "")
+			M_icon.appearance = frame_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"][key].appearance
+
+			I.add_overlay(M_icon)
+	I.appearance_flags |= KEEP_TOGETHER
+
+	var/image/mask = image(icon, icon_state = "")
+	for(var/mask_add_key in mask_overlays["[sprite_sheet_slot][icon_state_appendix]"]["[H.dir]"])
+		mask.add_overlay(H.bodyparts_by_name[mask_add_key].get_icon(BODY_LAYER))
+	mask.appearance_flags |= KEEP_TOGETHER
+	mask.render_target = "\ref[mask]"
+	
+	I.filters += filter(type = "alpha", render_source = "\ref[mask]", flags = MASK_INVERSE)
+	I.add_overlay(mask)
+
+	if(dirt_overlay && bloodied_icon_state)
+		var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+		bloodsies.color = dirt_overlay.color
+		I.add_overlay(bloodsies)
+
+	I.layer = layer
+
+	var/image/strap = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "strap", dir = H.dir)
+	strap.appearance_flags |= KEEP_APART
+	strap.layer = layer
+	if(sprite_sheet_slot == SPRITE_SHEET_BELT || sprite_sheet_slot == SPRITE_SHEET_BACK)
+		I.add_overlay(strap)
+	return I
+
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/list/overlays_damage[TOTAL_LIMB_LAYERS]

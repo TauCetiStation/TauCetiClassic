@@ -9,6 +9,12 @@
     prefix = "Accessory"
     action_button_name = "Activate module"
     gun_type = ALL_GUN_TYPE
+    var/occupied_slots = 1
+
+/obj/item/weapon/gun_modular/module/accessory/get_info_module(mob/user)
+    var/info_module = ..()
+    info_module += "Accessory slots occupied - ([occupied_slots])\n"
+    return info_module
 
 /obj/item/weapon/gun_modular/module/accessory/attack_self(mob/user)
     . = ..()
@@ -49,7 +55,7 @@
         return FALSE
     var/obj/item/weapon/gun_modular/module/frame/frame = I
     LAZYINITLIST(frame.accessories)
-    if(frame.max_accessory <= frame.accessories.len)
+    if(frame.max_accessory < frame.accessories.len + occupied_slots)
         return FALSE
     return TRUE
 
@@ -501,6 +507,11 @@
     change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
     change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 1))
 
+    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 1))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(9, 2))
+    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
+
 /obj/item/weapon/gun_modular/module/accessory/butt/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
         return FALSE
@@ -518,4 +529,32 @@
     if(frame_parent.handle)
         frame_parent.handle.lessrecoil -= lessrecoil
     return ..()
+
+/obj/item/weapon/gun_modular/module/accessory/strap
+    name = "gun strap"
+    icon_state = "strap"
+    icon_overlay_name = "strap"
+    caliber = ALL_CALIBER
+    lessdamage = 0
+    lessdispersion = 0
+    size_gun = 1
+    prefix = "Strap"
+    gun_type = ALL_GUN_TYPE
+    occupied_slots = 0
+
+/obj/item/weapon/gun_modular/module/accessory/strap/proc/drop_frame(mod/user)
+    if(user.equip_to_slot_if_possible(frame_parent, SLOT_BELT))
+        return TRUE
+    if(user.equip_to_slot_if_possible(frame_parent, SLOT_BACK))
+        return TRUE
+    return FALSE
+
+/obj/item/weapon/gun_modular/module/accessory/strap/remove()
+    UnegisterSignal(frame_parent, COMSIG_ITEM_DROPPED)
+    return ..()
+
+/obj/item/weapon/gun_modular/module/accessory/strap/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
+    if(!..())
+        return FALSE
+    RegisterSignal(I, COMSIG_ITEM_DROPPED, .proc/drop_frame)
     
