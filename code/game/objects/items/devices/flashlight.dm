@@ -27,9 +27,11 @@
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
+		item_state = "[initial(item_state)]-on"
 		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
+		item_state = initial(item_state)
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
