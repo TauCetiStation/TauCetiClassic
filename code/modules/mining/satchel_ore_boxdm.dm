@@ -96,6 +96,7 @@
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
+	stored_ore = list()
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return

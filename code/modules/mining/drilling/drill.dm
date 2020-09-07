@@ -417,6 +417,7 @@
 	if(B)
 		for(var/obj/item/weapon/ore/O in contents)
 			O.loc = B
+			B.stored_ore[O.name]++
 		to_chat(usr, "<span class='notice'>You unload the drill's storage cache into the ore box.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
