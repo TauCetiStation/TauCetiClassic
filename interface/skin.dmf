@@ -860,6 +860,18 @@ window "rpane"
 		text = "Discord"
 		command = "Discord"
 		group = "rpanemode"
+	elem "report-issue"
+		type = BUTTON
+		pos = 509,0
+		size = 90x16
+		anchor1 = none
+		anchor2 = none
+		font-style = "bold"
+		text-color = #ffffff
+		background-color = #df3e3e
+		saved-params = "is-checked"
+		text = "Report Issue"
+		command = "report-issue"
 	elem "forumb"
 		type = BUTTON
 		pos = 215,0
