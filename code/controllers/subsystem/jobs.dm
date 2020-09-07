@@ -75,6 +75,7 @@ SUBSYSTEM_DEF(job)
 		if(!latejoin)
 			position_limit = job.spawn_positions
 		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+		player.mind.assigned_job = job
 		player.mind.assigned_role = rank
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
@@ -153,6 +154,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
+			player.mind.assigned_job = null
 			player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
