@@ -1,8 +1,6 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	if (src.custom_sprite == 1)//check for custom AI sprite, defaulting to blue screen if no.
-		icon_state = "[ckey]-ai-crash"
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
 	else

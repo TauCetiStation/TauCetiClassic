@@ -188,7 +188,9 @@
 	return level == 1
 
 /atom/movable/proc/get_listeners()
-	return list()
+	. = list()
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
 
 /mob/get_listeners()
 	. = list(src)
