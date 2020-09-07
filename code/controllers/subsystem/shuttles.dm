@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(shuttle)
 					shake_mobs_in_area(end_location, WEST)
 
 					dock_act(end_location, "shuttle_escape")
+					dock_act(/area/centcom/evac, "shuttle_escape")
 
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
