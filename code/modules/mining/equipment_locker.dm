@@ -84,7 +84,10 @@
 				for (i = 0; i < ore_pickup_rate; i++)
 					var/obj/item/weapon/ore/O = locate() in B.contents
 					if(O)
+						var/oreName = O.name
 						process_sheet(O)
+						if (QDELETED(O))
+							B.stored_ore[oreName]--
 					else
 						break
 

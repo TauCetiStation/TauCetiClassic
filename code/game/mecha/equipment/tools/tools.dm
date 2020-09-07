@@ -126,6 +126,7 @@
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
+								ore_box.stored_ore[ore.name]++
 			else if(istype(target, /turf/simulated/floor/plating/airless/asteroid))
 				for(var/turf/simulated/floor/plating/airless/asteroid/M in range(chassis,1))
 					if(get_dir(chassis,M)&chassis.dir)
@@ -137,6 +138,7 @@
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
+								ore_box.stored_ore[ore.name]++
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
@@ -191,6 +193,7 @@
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
+								ore_box.stored_ore[ore.name]++
 			else if(istype(target,/turf/simulated/floor/plating/airless/asteroid))
 				for(var/turf/simulated/floor/plating/airless/asteroid/M in range(target,1))
 					M.gets_dug()
@@ -200,6 +203,7 @@
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(target,1))
 							ore.Move(ore_box)
+							ore_box.stored_ore[ore.name]++
 			else if(target.loc == C)
 				if(istype(target,/mob/living))
 					var/mob/living/M = target

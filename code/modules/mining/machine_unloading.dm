@@ -34,6 +34,7 @@
 			for (var/obj/item/weapon/ore/O in BOX.contents)
 				BOX.contents -= O
 				O.loc = output.loc
+				BOX.stored_ore[O.name]--
 				i++
 				if (i>=10)
 					return
