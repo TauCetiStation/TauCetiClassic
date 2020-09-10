@@ -85,6 +85,29 @@ Admin:
 	if(holder)
 		to_chat(src, admin)
 
+
+/client/verb/reportissue()
+	set name = "report-issue"
+	set desc = "Report an issue"
+	set hidden = 1
+
+	var/githuburl = config.repository_link
+	if(!githuburl)
+		to_chat(src, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
+		return
+
+	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	if(alert(message, "Report Issue", "Yes", "No") != "Yes")
+		return
+	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
+	var/servername = config.server_name
+	var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[issue_template]"
+	if(round_id || config.server_name)
+		url_params = "Issue reported from [round_id ? " Round ID: [round_id][servername ? " ([servername])" : ""]" : servername]\n\n[url_params]"
+	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
+
+	return
+
 /client/verb/changes()
 	set name = "Changelog"
 	set desc = "View the changelog."
