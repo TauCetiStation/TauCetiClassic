@@ -86,7 +86,9 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "p" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat{
+	req_access = list()
+	},
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "t" = (
