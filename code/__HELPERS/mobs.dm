@@ -228,3 +228,10 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
+
+//Returns true if this person has a job which is a department head
+/mob/proc/is_head_role()
+	. = FALSE
+	if(!mind || !mind.assigned_job)
+		return
+	return mind.assigned_job.head_position

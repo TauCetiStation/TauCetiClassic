@@ -1183,6 +1183,7 @@
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
 			L = P.loc
+			t = highlight_traitor_codewords(t, L.mind)
 		//Maybe they are a pAI!
 		else
 			L = get(P, /mob/living/silicon)

@@ -25,7 +25,7 @@
 
 	var/ore_amount = 0
 
-	has_resources = 1
+	has_resources = TRUE
 
 /turf/simulated/mineral/atom_init()
 	..()
@@ -615,8 +615,12 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	icon_plating = "asteroid"
-	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	has_resources = 1
+	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
+	has_resources = TRUE
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_SAND
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
@@ -682,7 +686,7 @@
 		if(3.0)
 			return
 		if(2.0)
-			if (prob(70))
+			if(prob(70))
 				gets_dug()
 		if(1.0)
 			gets_dug()
@@ -728,12 +732,9 @@
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	new/obj/item/weapon/ore/glass(src)
-	dug = 1
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/ore/glass(src)
+	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 	return

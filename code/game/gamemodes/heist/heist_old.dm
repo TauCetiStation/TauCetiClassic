@@ -270,7 +270,8 @@ VOX HEIST ROUNDTYPE
 
 	completion_text += " <b>[win_type] [win_group] victory!</b>"
 	completion_text += win_msg
-	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
+	mode_result = "heist - [win_type] [win_group]"
+	feedback_set_details("round_end_result", mode_result)
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)

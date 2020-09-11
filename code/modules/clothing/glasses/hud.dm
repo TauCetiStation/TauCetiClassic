@@ -81,6 +81,14 @@
 	body_parts_covered = 0
 	hud_type = DATA_HUD_MEDICAL
 
+
+/obj/item/clothing/glasses/hud/health/vox
+	name = "health scanner HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	icon_state = "material"
+	body_parts_covered = 0
+
+
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."

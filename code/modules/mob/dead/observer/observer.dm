@@ -553,7 +553,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0 //something is terribly wrong
 
 	var/ghosts_can_write
-	if(SSticker.mode.name == "cult")
+	if(SSticker.mode && SSticker.mode.name == "cult")
 		var/datum/game_mode/cult/C = SSticker.mode
 		if(C.cult.len > config.cult_ghostwriter_req_cultists)
 			ghosts_can_write = 1
