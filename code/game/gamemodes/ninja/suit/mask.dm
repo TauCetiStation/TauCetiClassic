@@ -11,11 +11,11 @@
 	set category = "Ninja Equip"
 
 	if(!hud)
-		hud = !hud
+		hud = TRUE
 		for(var/datum/atom_hud/antag/H in global.huds)
 			H.add_hud_to(usr)
 	else
-		hud = !hud
+		hud = FALSE
 		for(var/datum/atom_hud/antag/H in global.huds)
 			H.remove_hud_from(usr)
 

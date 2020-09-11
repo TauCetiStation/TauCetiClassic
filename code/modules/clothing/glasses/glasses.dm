@@ -237,7 +237,7 @@
 	name = "HUDsunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
-	hud_type = DATA_HUD_SECURITY
+	hud_types = list(DATA_HUD_SECURITY)
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"

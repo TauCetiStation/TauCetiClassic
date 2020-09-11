@@ -33,14 +33,14 @@
 
 /obj/effect/proc_holder/changeling/digitalcamo/proc/HideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in global.ai_list)
-		var/datum/atom_hud/M = global.huds[AI.med_hud]
+		var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
 		M.hide_single_atomhud_from(AI, target)
-		var/datum/atom_hud/S = global.huds[AI.sec_hud]
+		var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
 		S.hide_single_atomhud_from(AI, target)
 
 /obj/effect/proc_holder/changeling/digitalcamo/proc/UnhideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in global.ai_list)
-		var/datum/atom_hud/M = global.huds[AI.med_hud]
+		var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
 		M.unhide_single_atomhud_from(AI, target)
-		var/datum/atom_hud/S = global.huds[AI.sec_hud]
+		var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
 		S.unhide_single_atomhud_from(AI, target)

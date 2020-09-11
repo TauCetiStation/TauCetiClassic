@@ -337,20 +337,20 @@
 			if(href_list["toggle"])
 				secHUD = !secHUD
 				if(secHUD)
-					var/datum/atom_hud/sec = global.huds[sec_hud]
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
 					sec.add_hud_to(src)
 				else
-					var/datum/atom_hud/sec = global.huds[sec_hud]
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
 					sec.remove_hud_from(src)
 
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
 				if(medHUD)
-					var/datum/atom_hud/med = global.huds[med_hud]
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
 					med.add_hud_to(src)
 				else
-					var/datum/atom_hud/med = global.huds[med_hud]
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
 					med.remove_hud_from(src)
 
 		if("translator")

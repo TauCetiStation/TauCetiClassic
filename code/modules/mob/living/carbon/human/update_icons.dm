@@ -499,7 +499,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(ID_LAYER)
 
-
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 	if(gloves)

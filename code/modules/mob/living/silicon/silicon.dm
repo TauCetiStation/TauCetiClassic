@@ -4,11 +4,7 @@
 	voice_name = "synthesized voice"
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 
-	var/med_hud = DATA_HUD_MEDICAL //Determines the med hud to use
-	var/sec_hud = DATA_HUD_SECURITY //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC //Determines the diag hud to use
-	var/mine_hud = DATA_HUD_MINER //Determines the mine hud to use
-
+	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
@@ -179,12 +175,9 @@
 	return
 
 /mob/living/silicon/proc/remove_sensors()
-	var/datum/atom_hud/secsensor = global.huds[sec_hud]
-	secsensor.remove_hud_from(src)
-	var/datum/atom_hud/medsensor = global.huds[med_hud]
-	medsensor.remove_hud_from(src)
-	var/datum/atom_hud/diagsensor = global.huds[d_hud]
-	diagsensor.remove_hud_from(src)
+	for(var/hud in sensor_huds)
+		var/datum/atom_hud/secsensor = global.huds[hud]
+		secsensor.remove_hud_from(src)
 	sensor_mode = FALSE
 	to_chat(src, "Sensor augmentations disabled.")
 
@@ -195,12 +188,9 @@
 		remove_sensors()
 		return
 
-	var/datum/atom_hud/sec = global.huds[sec_hud]
-	sec.add_hud_to(src)
-	var/datum/atom_hud/med = global.huds[med_hud]
-	med.add_hud_to(src)
-	var/datum/atom_hud/diagsensor = global.huds[d_hud]
-	diagsensor.add_hud_to(src)
+	for(var/hud in sensor_huds)
+		var/datum/atom_hud/sec = global.huds[hud]
+		sec.add_hud_to(src)
 
 	sensor_mode = TRUE
 	to_chat(src, "Sensor augmentations enabled.")

@@ -46,7 +46,7 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
-	hud_type = DATA_HUD_MINER
+	hud_types = list(DATA_HUD_MINER)
 
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"

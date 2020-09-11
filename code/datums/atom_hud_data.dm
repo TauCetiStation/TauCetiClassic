@@ -19,6 +19,7 @@
 	hud_icons = null
 
 /datum/atom_hud/data/medical
+	static/hudatoms
 	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/medical/proc/check_sensors(mob/living/carbon/human/H)

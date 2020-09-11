@@ -98,7 +98,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
-	if(mind.current)
+	if(mind && mind.current)
 		mind.current.med_hud_set_status()
 	QDEL_NULL(adminMulti)
 	return ..()
@@ -252,12 +252,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/verb/toggle_allHUD()
+/mob/dead/observer/verb/toggle_allHUD() 
 	set category = "Ghost"
 	set name = "Toggle HUDs"
 	set desc = "Toggles all HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
+
+	if(client.has_antag_hud())
+		to_chat(usr, "Please disable antag-HUD or combo-HUDs in the admin tab.")
+		return
+
 	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud

@@ -283,9 +283,7 @@ var/global/list/icon_state_allowed_cache = list()
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
 	// Standart hud type
-	var/hud_type
-	// Adding hud type
-	var/hud_type_1
+	var/list/hud_types
 	var/mob/living/carbon/glasses_user
 
 /*

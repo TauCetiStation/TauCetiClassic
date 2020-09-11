@@ -37,11 +37,6 @@
 	MineralSpread()
 	update_overlays()
 
-/turf/simulated/mineral/Destroy()
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-	mine.remove_from_hud(src)
-	return ..()
-
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
 	if(!mineral)
@@ -356,6 +351,10 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
+
+	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	mine.remove_from_hud(src)
+
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))

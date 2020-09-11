@@ -873,10 +873,16 @@ var/list/admin_verbs_hideable = list(
 
 	if(!check_rights(R_ADMIN))
 		return
+	
+	if(isobserver(usr))
+		var/mob/dead/observer/O = usr
+		if(O.data_hud)
+			to_chat(usr, "Please disable combo-HUDs in the ghost tab.")
+			return
 
 	var/adding_hud = !has_antag_hud()
 
-	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_MINER)) // add data huds
+	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC)) // add data huds
 		var/datum/atom_hud/H = global.huds[hudtype]
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds

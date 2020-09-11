@@ -1133,11 +1133,11 @@
 /mob/living/silicon/robot/remove_sensors()
 	..()
 	if(istype(module, /obj/item/weapon/robot_module/miner))
-		var/datum/atom_hud/mine = global.huds[mine_hud]
+		var/datum/atom_hud/mine = global.huds[DATA_HUD_MINER]
 		mine.remove_hud_from(src)
 
 /mob/living/silicon/robot/toggle_sensor_mode()
 	..()
 	if(istype(module, /obj/item/weapon/robot_module/miner))
-		var/datum/atom_hud/mine = global.huds[mine_hud]
+		var/datum/atom_hud/mine = global.huds[DATA_HUD_MINER]
 		mine.add_hud_to(src)

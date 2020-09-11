@@ -556,8 +556,8 @@ What a mess.*/
 							if("released")
 								active2.fields["criminal"] = "Released"
 
-						for(var/i in global.human_list)
-							var/mob/living/carbon/human/H = i
+						for(var/human in global.human_list)
+							var/mob/living/carbon/human/H = human
 							H.sec_hud_set_security_status()
 
 				if ("Delete Record (Security) Execute")
