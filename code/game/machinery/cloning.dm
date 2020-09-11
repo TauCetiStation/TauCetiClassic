@@ -110,7 +110,7 @@
 			if(!H.has_brain())
 				continue
 		//They must return in the body
-		else if(istype(M, /mob/dead/observer))
+		else if(isobserver(M))
 			var/mob/dead/observer/O = M
 			if(!O.can_reenter_corpse)
 				continue
