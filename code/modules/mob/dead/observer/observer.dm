@@ -258,7 +258,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Toggles all HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud
 		for(var/hudtype in datahuds)

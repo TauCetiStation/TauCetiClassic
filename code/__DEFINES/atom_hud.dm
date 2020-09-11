@@ -43,6 +43,7 @@
 //Don't forget to update human/New() if you change these!
 #define DATA_HUD_SECURITY				1
 #define DATA_HUD_MEDICAL				2
+#define DATA_HUD_MEDICAL_ADV			22
 #define DATA_HUD_DIAGNOSTIC				3
 #define DATA_HUD_BROKEN					20
 #define DATA_HUD_MINER					21

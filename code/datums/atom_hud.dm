@@ -11,6 +11,7 @@ var/global/list/huds[22]
 	// atom_hud.dm defines
 	huds[DATA_HUD_SECURITY] = new/datum/atom_hud/data/security
 	huds[DATA_HUD_MEDICAL] = new/datum/atom_hud/data/medical
+	huds[DATA_HUD_MEDICAL_ADV] = new/datum/atom_hud/data/medical/adv
 	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
 	huds[DATA_HUD_MINER] = new/datum/atom_hud/data/mine
 	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/broken

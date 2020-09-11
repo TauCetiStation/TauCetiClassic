@@ -41,6 +41,11 @@
 	else
 		remove_from_hud(H)
 
+/datum/atom_hud/data/medical/adv
+
+/datum/atom_hud/data/medical/adv/check_sensors()
+	return TRUE
+
 /datum/atom_hud/data/security
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
