@@ -29,7 +29,12 @@
 	//world.log << "send2bridge json: [encoded_json]"
 
 	spawn()
-		var/list/result = json_decode(world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'"))
+		var/ext = world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'")
+		
+		if(!ext) // ext_python error
+			return
+
+		var/list/result = json_decode(ext)
 		if(result["success"] != 1)
 			if(result["error"])
 				ERROR("Unsuccessful send2bridge, json:\n \t[encoded_json]\n \tbridge error:\n \t[result["error"]]")

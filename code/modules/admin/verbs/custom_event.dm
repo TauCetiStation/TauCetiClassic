@@ -30,7 +30,7 @@
 		world.send2bridge(
 			type = list(BRIDGE_ANNOUNCE),
 			attachment_title = "Custom Event",
-			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",,
+			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",
 			attachment_color = BRIDGE_COLOR_ANNOUNCE,
 			mention = BRIDGE_MENTION_EVENT,
 		)
