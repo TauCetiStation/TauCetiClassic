@@ -74,7 +74,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		ehjax_send(data = data)
 
 /datum/chatOutput/proc/doneLoading()
-	if(loaded)
+	if(!owner || loaded)
 		return
 
 	loaded = TRUE
