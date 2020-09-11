@@ -24,7 +24,7 @@ def read_arguments():
 def main(options):
 
 	if(options.json):
-		options.json = json.loads(options.json)
+		options.json = json.loads(byond_outer_text(options.json))
 
 	try:
 
@@ -40,6 +40,12 @@ def main(options):
 		sys.exit(1)
 
 	sys.stdout.buffer.write(byond_inner_text(r.text))
+
+def byond_outer_text(text):
+	return text.decode("utf-8")
+
+def byond_inner_text(text):
+	return text.encode("utf-8")
 
 if __name__ == "__main__":
 	options = read_arguments()
