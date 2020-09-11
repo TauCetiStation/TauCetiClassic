@@ -173,6 +173,7 @@
 		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
 				next_apply[brainmob.ckey] = world.time + 10 MINUTES
+				brainmob.ghostize(FALSE)
 				qdel(brainmob)
 				searching = FALSE
 				icon_state = "talking_staff"
