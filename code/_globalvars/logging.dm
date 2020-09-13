@@ -10,6 +10,7 @@ var/global/initialization_log
 var/global/runtime_log
 var/global/qdel_log
 var/global/sql_error_log
+var/global/asset_log
 
 var/list/jobMax = list()
 var/list/bombers = list(  )

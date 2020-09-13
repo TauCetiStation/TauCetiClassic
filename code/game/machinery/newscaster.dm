@@ -545,7 +545,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Error 404"
 
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
-		assets.register()
 		assets.send(human_or_robot_user)
 
 		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600, ntheme = CSS_THEME_LIGHT)

@@ -42,8 +42,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(!owner)
 		return
 
-	var/datum/asset/goonchat = get_asset_datum(/datum/asset/simple/goonchat)
-	goonchat.register()
+	var/datum/asset/goonchat = get_asset_datum(/datum/asset/group/goonchat)
 	goonchat.send(owner)
 	owner << browse('code/modules/goonchat/browserassets/html/browserOutput.html', "window=browseroutput")
 
