@@ -93,7 +93,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -230,7 +230,7 @@
 	can_be_holstered = TRUE
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
-	fire_sound = 'sound/weapons/guns/gunshot_c5.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_c5.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
@@ -280,7 +280,7 @@
 	w_class = ITEM_SIZE_HUGE
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
-	fire_sound = 'sound/weapons/guns/Gunshot2.wav'
+	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/luger
 	name = "Luger P08"

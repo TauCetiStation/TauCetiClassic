@@ -230,10 +230,10 @@
 			playsound(user, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 		if("yellow")
 			user.visible_message("[bicon(src)] <span class='warning'>Beep!</span>")
-			playsound(user, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+			playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 		if("red")
 			user.visible_message("[bicon(src)] <span class='warning bold'>BE-E-E-EP!</span>")
-			playsound(user, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+			playsound(user, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
 
 	icon_state = "contraband_scanner_[danger_color]"
 	item_state = "contraband_scanner_[danger_color]"
