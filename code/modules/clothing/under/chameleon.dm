@@ -49,7 +49,7 @@
 		select_radial()
 
 /datum/action/item_action/chameleon/change/proc/select_list()
-	var/picked = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]")as null|anything in options_list
+	var/picked = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]") as null|anything in options_list
 	if(!picked || !options_list[picked])
 		return
 	update_look(picked)
