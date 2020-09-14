@@ -562,12 +562,13 @@ var/list/blacklisted_builds = list(
 
 //This may help with UI's that were stuck and don't want to open anymore.
 /client/verb/close_nanouis()
-	set name = "Fix NanoUI (Close All)"
+	set name = "Fix UI (Close All)"
 	set category = "OOC"
-	set desc = "Closes all opened NanoUI."
+	set desc = "Closes all opened NanoUI/TGUI."
 
-	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.</span>")
 	nanomanager.close_user_uis(usr)
+	SStgui.force_close_all_windows(usr)
+	to_chat(src, "<span class='notice'>You forcibly close any opened TGUI/NanoUI interfaces.</span>")
 
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
