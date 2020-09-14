@@ -29,11 +29,15 @@ matrix:
         - ~/dreamchecker
 
     - name: "Code and Map Linting"
-      env: TEST=LINTING
+      env: 
+        - TEST=LINTING
+        - NODE_VERSION=12
       addons:
         apt:
           packages:
             - python3.5
+      script:
+        - scripts/build_tgui.sh
 
     - name: "Unit Tests - Box Station"
       env: 
