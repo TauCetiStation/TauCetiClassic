@@ -55,7 +55,7 @@
 	update_look(picked)
 
 /datum/action/item_action/chameleon/change/proc/select_radial()
-	var/picked = show_radial_menu(owner, target, options_menu, require_near=TRUE, tooltips=TRUE)
+	var/picked = show_radial_menu(owner, target, options_menu, require_near = TRUE, tooltips = TRUE)
 	if(!picked || !options_list[picked])
 		return
 	update_look(picked)
