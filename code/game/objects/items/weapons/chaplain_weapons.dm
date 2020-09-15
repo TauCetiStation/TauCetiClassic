@@ -173,6 +173,7 @@
 		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
 				next_apply[brainmob.ckey] = world.time + 10 MINUTES
+				brainmob.ghostize(FALSE)
 				qdel(brainmob)
 				searching = FALSE
 				icon_state = "talking_staff"
@@ -225,6 +226,7 @@
 
 	if(brainmob)
 		to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
+		brainmob.ghostize(FALSE)
 		qdel(brainmob) //create new god, otherwise the old mob could not be woken up
 
 	QDEL_NULL(god_image)
@@ -299,6 +301,7 @@
 	icon_state = "talking_staff"
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 	if(brainmob)
+		brainmob.ghostize(FALSE)
 		qdel(brainmob)
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
