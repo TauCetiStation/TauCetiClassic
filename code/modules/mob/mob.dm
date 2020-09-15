@@ -440,7 +440,7 @@
 	set category = "OOC"
 	reset_view(null)
 	unset_machine()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/M = src
 		if(M.cameraFollow)
 			M.cameraFollow = null
