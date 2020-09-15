@@ -72,7 +72,7 @@
 	can_unvote = TRUE
 	see_votes = FALSE
 
-	minimum_win_percentage = 0.6
+	minimum_win_percentage = 0.501
 
 	cooldown = 30 MINUTES
 	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
