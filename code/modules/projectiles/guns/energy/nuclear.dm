@@ -41,6 +41,19 @@
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser_pulse)
 
+/obj/item/weapon/gun/energy/gun/hos
+	name = "\"Revenant\" Energy Advanced Pistol"
+	desc = "Feat of weapon engineering, this pistol is able to fire taser bolts, lasers and EMP bursts. Only issued to high-ranking members of security teams."
+	icon_state = "hosgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
+	origin_tech = "combat=4;magnets=3"
+
+/obj/item/weapon/gun/energy/gun/hos/special_check(mob/user)
+	if(user.mind.assigned_role != "Head of Security")
+		to_chat(user, "[bicon(src)]<span class='warning'>[src] blares, \"USER UNIDENTIFIED. FIRE SEQUENCE ABORTED.\"</span>")
+		return 0
+	return ..()
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
