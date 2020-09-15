@@ -26,7 +26,7 @@
 			if (!V.icon_state || !V.icon || !V)
 				continue
 			local_list[V.name] = U
-			local_menu[V.name] = image(icon=V.icon, icon_state=V.icon_state)
+			local_menu[V.name] = image(icon = V.icon, icon_state = V.icon_state)
 		local_list = sortList(local_list)
 		local_menu = sortList(local_menu)
 		standart_options_list[chameleon_name] = local_list
@@ -39,10 +39,10 @@
 		return
 	
 	var/list/initial_menu = list(
-		"Select from menu" = image(icon=target.icon, icon_state=target.icon_state),
-		"Select from list" = image(icon='icons/obj/paper.dmi', icon_state="paper_words")
+		"Select from menu" = image(icon = target.icon, icon_state = target.icon_state),
+		"Select from list" = image(icon = 'icons/obj/paper.dmi', icon_state = "paper_words")
 	)
-	var/mode = show_radial_menu(owner, target, initial_menu, require_near=TRUE, tooltips=TRUE)
+	var/mode = show_radial_menu(owner, target, initial_menu, require_near = TRUE, tooltips = TRUE)
 	if(mode == "Select from list")
 		select_list()
 	else if(mode == "Select from menu")
@@ -55,7 +55,7 @@
 	update_look(picked)
 
 /datum/action/item_action/chameleon/change/proc/select_radial()
-	var/picked = show_radial_menu(owner, target, options_menu, require_near=TRUE, tooltips=TRUE)
+	var/picked = show_radial_menu(owner, target, options_menu, require_near = TRUE, tooltips = TRUE)
 	if(!picked || !options_list[picked])
 		return
 	update_look(picked)
@@ -66,7 +66,7 @@
 	var/obj/item/T = target
 	T.desc = null
 
-	if(I.icon_custom)  //Фикс для нашей одежды
+	if(I.icon_custom)  //Fix for our clothes
 		T.icon = I.icon_custom
 		T.icon_custom = I.icon_custom
 	else
@@ -157,7 +157,6 @@
 			/obj/item/clothing/head/helmet/space/golem, 
 			/obj/item/clothing/head/justice, 
 			/obj/item/clothing/head/collectable/tophat/badmin_magic_hat,
-			/obj/item/clothing/head/shadowling,
 			/obj/item/clothing/head/feathertrilby 
 		)
 	chameleon_action.initialize_disguises()
