@@ -5,21 +5,21 @@
 Basic tgui backend code consists of the following vars and procs:
 
 ```
-ui_interact(mob/user, datum/tgui/ui)
-ui_data(mob/user)
-ui_act(action, params)
-ui_state()
+tgui_interact(mob/user, datum/tgui/ui)
+tgui_data(mob/user)
+tgui_act(action, params)
+tgui_state()
 ```
 
 - `src_object` - The atom, which UI corresponds to in the game world.
-- `ui_interact` - The proc where you will handle a request to open an
+- `tgui_interact` - The proc where you will handle a request to open an
 interface. Typically, you would update an existing UI (if it exists),
 or set up a new instance of UI by calling the `SStgui` subsystem.
-- `ui_data` - In this proc you munges whatever complex data your `src_object`
+- `tgui_data` - In this proc you munges whatever complex data your `src_object`
 has into an associative list, which will then be sent to UI as a JSON string.
-- `ui_act` - This proc receives user actions and reacts to them by changing
+- `tgui_act` - This proc receives user actions and reacts to them by changing
 the state of the game.
-- `ui_state` - This proc dictates under what conditions a UI may be interacted
+- `tgui_state` - This proc dictates under what conditions a UI may be interacted
 with. This may be the standard checks that check if you are in range and
 conscious, or more.
 
@@ -37,7 +37,7 @@ powerful interactions for embedded objects or remote access.
 Let's start with a very basic hello world.
 
 ```dm
-/obj/machinery/my_machine/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/my_machine/tgui_interact(mob/user, datum/tgui/ui)
   ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "MyMachine")
@@ -45,21 +45,21 @@ Let's start with a very basic hello world.
 ```
 
 This is the proc that defines our interface. There's a bit going on here, so
-let's break it down. First, we override the ui_interact proc on our object. This
+let's break it down. First, we override the tgui_interact proc on our object. This
 will be called by `interact` for you, which is in turn called by `attack_hand`
-(or `attack_self` for items). `ui_interact` is also called to update a UI (hence
+(or `attack_self` for items). `tgui_interact` is also called to update a UI (hence
 the `try_update_ui`), so we accept an existing UI to update.
 
 Inside the `if(!ui)` block (which means we are creating a new UI), we choose our
 template, title, and size; we can also set various options like `style` (for
 themes), or autoupdate. These options will be elaborated on later (as will
-`ui_state`s).
+`tgui_state`s).
 
-After `ui_interact`, we need to define `ui_data`. This just returns a list of
+After `tgui_interact`, we need to define `tgui_data`. This just returns a list of
 data for our object to use. Let's imagine our object has a few vars:
 
 ```dm
-/obj/machinery/my_machine/ui_data(mob/user)
+/obj/machinery/my_machine/tgui_data(mob/user)
   var/list/data = list()
   data["health"] = health
   data["color"] = color
@@ -67,15 +67,15 @@ data for our object to use. Let's imagine our object has a few vars:
   return data
 ```
 
-The `ui_data` proc is what people often find the hardest about tgui, but its
+The `tgui_data` proc is what people often find the hardest about tgui, but its
 really quite simple! You just need to represent your object as numbers, strings,
 and lists, instead of atoms and datums.
 
-Finally, the `ui_act` proc is called by the interface whenever the user used an
+Finally, the `tgui_act` proc is called by the interface whenever the user used an
 input. The input's `action` and `params` are passed to the proc.
 
 ```dm
-/obj/machinery/my_machine/ui_act(action, params)
+/obj/machinery/my_machine/tgui_act(action, params)
   if(..())
     return
   if(action == "change_color")
@@ -156,7 +156,7 @@ Here are the key variables you get from a `useBackend(context)` function:
 interface and who uses it, BYOND refs to various objects, and so forth.
 You are rarely going to use it, but sometimes it can be used to your
 advantage when doing complex UIs.
-- `data` is the data returned from `ui_data` and `ui_static_data` procs in
+- `data` is the data returned from `tgui_data` and `ui_static_data` procs in
 your DM code. Pretty straight forward.
   - Note, that javascript doesn't have associative arrays, so when you
   return an associative list from DM, it will be available in `data` as a
@@ -166,7 +166,7 @@ your DM code. Pretty straight forward.
   are not available on it. Always prefer returning clean arrays from your
   code, since arrays are easier to work with in javascript!
 - `act(name, params)` is a function, which you can call to dispatch an action
-to your DM code. It will be processed in `ui_act` proc. Action name will be
+to your DM code. It will be processed in `tgui_act` proc. Action name will be
 available in `params["action"]`, mixed together with the rest of parameters
 you have passed in `params` object.
 
@@ -292,18 +292,18 @@ here's what you need (note that you'll probably be forced to clean your shit up
 upon code review):
 
 ```dm
-/obj/copypasta/ui_interact(mob/user, datum/tgui/ui)
+/obj/copypasta/tgui_interact(mob/user, datum/tgui/ui)
   ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "copypasta")
     ui.open()
 
-/obj/copypasta/ui_data(mob/user)
+/obj/copypasta/tgui_data(mob/user)
   var/list/data = list()
   data["var"] = var
   return data
 
-/obj/copypasta/ui_act(action, params)
+/obj/copypasta/tgui_act(action, params)
   if(..())
     return
   switch(action)
