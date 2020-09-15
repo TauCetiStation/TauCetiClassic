@@ -9,9 +9,9 @@
 	l_ear = /obj/item/device/radio/headset/heads/hos
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 
-	belt = /obj/item/weapon/gun/energy/gun/hos
-	l_hand_back = /obj/item/weapon/handcuffs
-	l_pocket = /obj/item/device/pda/heads/hos
+	suit_store = /obj/item/weapon/gun/energy/gun
+	belt = /obj/item/device/pda/heads/hos
+	l_pocket_back = /obj/item/weapon/handcuffs
 	r_pocket = /obj/item/device/flash
 
 	implants = list(/obj/item/weapon/implant/mindshield/loyalty)
