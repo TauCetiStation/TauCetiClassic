@@ -156,7 +156,7 @@ Here are the key variables you get from a `useBackend(context)` function:
 interface and who uses it, BYOND refs to various objects, and so forth.
 You are rarely going to use it, but sometimes it can be used to your
 advantage when doing complex UIs.
-- `data` is the data returned from `tgui_data` and `ui_static_data` procs in
+- `data` is the data returned from `tgui_data` and `tgui_static_data` procs in
 your DM code. Pretty straight forward.
   - Note, that javascript doesn't have associative arrays, so when you
   return an associative list from DM, it will be available in `data` as a
