@@ -702,14 +702,11 @@ var/list/ai_verbs_default = list(
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
-		spawn(0)
 		AISD.emotion = emote
 	for(var/obj/machinery/status_display/SD in status_display_list) //if Friend Computer, change ALL displays, else restore them to normal
 		if(emote == "Friend Computer")
-			spawn(0)
 			SD.friendc = TRUE
 		else
-			spawn(0)
 			SD.friendc = FALSE
 	return
 
