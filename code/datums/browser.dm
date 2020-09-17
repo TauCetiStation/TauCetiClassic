@@ -57,7 +57,7 @@
 	else
 		var/asset_name = "[name].css"
 		stylesheets[asset_name] = file
-		if(!SSasset.cache[asset_name])
+		if(!SSassets.cache[asset_name])
 			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
@@ -86,7 +86,7 @@
 	if(title_image)
 		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
 
-	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	return {"<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -119,9 +119,9 @@
 		window_size = "size=[width]x[height];"
 	send_asset(user, "error_handler.js")
 	if(stylesheets.len)
-		send_asset_list(user, stylesheets, verify=FALSE)
+		send_asset_list(user, stylesheets)
 	if(scripts.len)
-		send_asset_list(user, scripts, verify=FALSE)
+		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if(use_onclose)
 		onclose(user, window_id, ref)

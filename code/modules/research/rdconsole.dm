@@ -333,6 +333,13 @@ cause a ton of data to be lost, an admin can go send it back.
 			server_processed = 1
 		if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 			S.produce_heat(100)
+
+	if(selected_tech_tree && selected_technology)//update selected_technology upgrade cost and realibility
+		var/datum/technology/T = files.all_technologies[selected_tech_tree][selected_technology]
+
+		T.reliability_upgrade_cost = files.GetReliabilityUpgradeCost(T)
+		T.avg_reliability = files.GetAverageDesignReliability(T)
+
 	screen = "main"
 	nanomanager.update_uis(src)
 
@@ -346,7 +353,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		material_list += list(list(
 			"id" =             M,
 			"name" =           linked_lathe.loaded_materials[M].name,
-			"ammount" =        linked_lathe.loaded_materials[M].amount,
+			"amount" =        linked_lathe.loaded_materials[M].amount,
 			"can_eject_one" =  linked_lathe.loaded_materials[M].amount >= linked_lathe.loaded_materials[M].sheet_size,
 			"can_eject_five" = linked_lathe.loaded_materials[M].amount >= (linked_lathe.loaded_materials[M].sheet_size * 5),
 		))
@@ -373,7 +380,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		material_list += list(list(
 			"id" =             M,
 			"name" =           linked_imprinter.loaded_materials[M].name,
-			"ammount" =        linked_imprinter.loaded_materials[M].amount,
+			"amount" =        linked_imprinter.loaded_materials[M].amount,
 			"can_eject_one" =  linked_imprinter.loaded_materials[M].amount >= linked_imprinter.loaded_materials[M].sheet_size,
 			"can_eject_five" = linked_imprinter.loaded_materials[M].amount >= (linked_imprinter.loaded_materials[M].sheet_size * 5),
 		))

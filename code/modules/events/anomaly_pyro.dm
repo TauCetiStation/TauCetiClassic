@@ -12,14 +12,14 @@
 		newAnomaly = new /obj/effect/anomaly/pyro(T)
 
 /datum/event/anomaly/anomaly_pyro/tick()
-	if(!newAnomaly)
+	if(QDELETED(newAnomaly))
 		kill()
 		return
 	if(IS_MULTIPLE(activeFor, 5))
 		newAnomaly.anomalyEffect()
 
 /datum/event/anomaly/anomaly_pyro/end()
-	if(newAnomaly)//Kill the anomaly if it still exists at the end.
+	if(!QDELETED(newAnomaly))//Kill the anomaly if it still exists at the end.
 		var/turf/simulated/T = get_turf(newAnomaly)
 		if(istype(T))
 			T.assume_gas("phoron", 200)

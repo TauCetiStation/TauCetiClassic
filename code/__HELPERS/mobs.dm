@@ -1,19 +1,10 @@
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
-/proc/random_hair_style(gender, species = HUMAN)
+/proc/random_hair_style(gender, species = HUMAN, ipc_head)
 	var/h_style = "Bald"
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if(!(species in S.species_allowed))
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, species, gender, ipc_head)
 
 	if(valid_hairstyles.len)
 		h_style = pick(valid_hairstyles)
@@ -23,34 +14,10 @@
 /proc/random_gradient_style()
 	return pick(hair_gradients)
 
-/proc/random_ipc_monitor(ipc_head)
-	var/h_style = "Bald"
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(ipc_head != S.ipc_head_compatible)
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-	if(valid_hairstyles.len)
-		h_style = pick(valid_hairstyles)
-
-	return h_style
-
 /proc/random_facial_hair_style(gender, species = HUMAN)
 	var/f_style = "Shaved"
 
-	var/list/valid_facialhairstyles = list()
-	for(var/facialhairstyle in facial_hair_styles_list)
-		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
-
-		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+	var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache, species, gender)
 
 	if(valid_facialhairstyles.len)
 		f_style = pick(valid_facialhairstyles)
@@ -302,3 +269,10 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
+
+//Returns true if this person has a job which is a department head
+/mob/proc/is_head_role()
+	. = FALSE
+	if(!mind || !mind.assigned_job)
+		return
+	return mind.assigned_job.head_position

@@ -215,7 +215,7 @@
 		to_chat(world, "[i]")
 	sleep(10)
 	enter_allowed = FALSE
-	ticker.station_explosion_cinematic(0, null)
+	SSticker.station_explosion_cinematic(0, null)
 	if(malf_turf)
 		sleep(20)
 		explosion(malf_turf, 15, 70, 200)
@@ -277,7 +277,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	var/text = ""
-	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
+	if( malf_ai.len || istype(SSticker.mode,/datum/game_mode/malfunction) )
 		text += "<b>The malfunctioning AI were:</b>"
 
 		for(var/datum/mind/malf in malf_ai)

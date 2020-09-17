@@ -441,7 +441,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/show_unified_command_interface(mob/user)
 	user.set_machine(src)
-	var/t1 = text("<B>Airlock Control</B><br>\n")
+	var/t1 = ""
 	if(secondsMainPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
 			t1 += text("Main power is offline for [] seconds.<br>\n", secondsMainPowerLost)
@@ -537,7 +537,11 @@ var/list/airlock_overlays = list()
 			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	user << browse(t1, "window=airlock")
+
+	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
+	popup.set_content(t1)
+	popup.open()
+
 	onclose(user, "airlock")
 
 
@@ -835,7 +839,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
-						START_PROCESSING(SSmachine, src)
+						START_PROCESSING(SSmachines, src)
 
 				if(6)
 					// Electrify door indefinitely

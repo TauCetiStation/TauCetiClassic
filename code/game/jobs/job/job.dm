@@ -65,7 +65,7 @@
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, var/alt_title)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, alt_title)
 	if(!H)
 		return FALSE
 
@@ -76,12 +76,12 @@
 	post_equip(H, visualsOnly)
 	return TRUE
 
-/datum/job/proc/get_outfit(var/mob/living/carbon/human/H, var/alt_title)
+/datum/job/proc/get_outfit(mob/living/carbon/human/H, alt_title)
 	if(H.mind)
 		if(alt_titles && H.mind.role_alt_title)
 			return alt_titles[H.mind.role_alt_title] || outfit
 	if(alt_title && alt_titles)
-		return alt_titles[alt_title]
+		return alt_titles[alt_title] || outfit
 	return outfit
 
 /datum/job/proc/get_access()

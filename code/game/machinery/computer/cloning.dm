@@ -86,7 +86,7 @@
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat = "<h3>Cloning System Control</h3>"
+	var/dat = ""
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
@@ -192,8 +192,10 @@
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
 
+	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
+	popup.set_content(dat)
+	popup.open()
 
-	user << browse(dat, "window=cloning")
 	onclose(user, "cloning")
 	return
 
@@ -328,13 +330,16 @@
 				menu = 1
 			else
 				var/mob/selected = find_dead_player("[C.ckey]")
-				selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
-				if(answer != "No" && pod1.growclone(C))
-					temp = "Initiating cloning cycle..."
-					records.Remove(C)
-					qdel(C)
-					menu = 1
+				if(selected)
+					selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+					var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+					if(answer != "No" && pod1.growclone(C))
+						temp = "Initiating cloning cycle..."
+						records.Remove(C)
+						qdel(C)
+						menu = 1
+					else
+						temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 				else
 					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 

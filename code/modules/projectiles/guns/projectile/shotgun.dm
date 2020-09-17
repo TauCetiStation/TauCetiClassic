@@ -194,7 +194,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
-	playsound(M, 'sound/weapons/guns/reload_repeater.wav', VOL_EFFECTS_MASTER, null, FALSE)
+	playsound(M, 'sound/weapons/guns/reload_repeater.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
 	if(chambered)
 		chambered.loc = get_turf(src)

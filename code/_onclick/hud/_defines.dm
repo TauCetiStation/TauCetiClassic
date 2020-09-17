@@ -101,10 +101,11 @@
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 
 // Ghosts
-#define ui_ghost_jumptomob      "SOUTH:6,CENTER-2:16"
-#define ui_ghost_orbit          "SOUTH:6,CENTER-1:16"
-#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:16"
-#define ui_ghost_teleport       "SOUTH:6,CENTER+1:16"
+#define ui_ghost_toggle_darkness "SOUTH:6,CENTER-3:16"
+#define ui_ghost_jumptomob       "SOUTH:6,CENTER-2:16"
+#define ui_ghost_orbit           "SOUTH:6,CENTER-1:16"
+#define ui_ghost_reenter_corpse  "SOUTH:6,CENTER:16"
+#define ui_ghost_teleport        "SOUTH:6,CENTER+1:16"
 
 // AI
 #define ui_ai_core "SOUTH:6,WEST"

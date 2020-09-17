@@ -777,6 +777,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/device/radio/intercom{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3294,6 +3297,10 @@
 /obj/item/clothing/suit/space/rig/security,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/security,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3475,7 +3482,6 @@
 	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
-/obj/item/weapon/implanter/emp,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
@@ -3715,7 +3721,7 @@
 "agq" = (
 /obj/machinery/door/airlock/security{
 	name = "Evidence Storage";
-	req_access = list(1)
+	req_one_access = list(1,4)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -4197,7 +4203,9 @@
 	},
 /area/station/security/hos)
 "ahj" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod3"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -4443,7 +4451,7 @@
 "ahH" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access = list(1)
+	req_one_access = list(1,4)
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -7028,6 +7036,12 @@
 	},
 /area/station/security/brig)
 "alB" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for the brig foyer.";
 	id = "BrigFoyer";
@@ -7035,12 +7049,6 @@
 	pixel_x = -25;
 	pixel_y = -18;
 	range = 10
-	},
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -7204,7 +7212,8 @@
 	pixel_y = 24
 	},
 /obj/machinery/door/window/southright{
-	dir = 8
+	dir = 8;
+	name = "Security lobby"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
@@ -7290,12 +7299,12 @@
 	},
 /area/station/security/brig)
 "alW" = (
-/obj/machinery/door/window/southright{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	name = "Security lobby"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
 "alX" = (
@@ -9891,7 +9900,7 @@
 /obj/machinery/door/window/southright{
 	dir = 1;
 	name = "Containment Pen";
-	req_access = list(47)
+	req_access = list(55)
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -10258,7 +10267,7 @@
 "ard" = (
 /obj/machinery/door/window/southright{
 	name = "Containment Pen";
-	req_access = list(47)
+	req_access = list(55)
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -10694,6 +10703,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_chapel_sensor";
+	layer = 3.3;
 	pixel_x = 25;
 	pixel_y = 12
 	},
@@ -14720,7 +14730,7 @@
 	},
 /area/station/rnd/tox_launch)
 "azS" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "vault"
@@ -18904,7 +18914,9 @@
 /turf/simulated/floor,
 /area/station/civilian/fitness)
 "aHt" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod1"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aHu" = (
@@ -25405,7 +25417,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
 "aTu" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -26223,11 +26235,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUU" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "";
-	name = "Break Room";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -26236,6 +26243,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "";
+	name = "Break Room";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -28095,7 +28107,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYn" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aYo" = (
@@ -30295,7 +30309,9 @@
 	},
 /area/station/hallway/primary/port)
 "bch" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod1"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -35263,7 +35279,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "blC" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod2"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -37725,7 +37743,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
-	req_access = list(5)
+	req_access = list(5,6)
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
@@ -44229,7 +44247,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics Maintenance";
-	req_access = list(35)
+	req_one_access = list(35, 28)
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
@@ -45077,7 +45095,11 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/westright{
+	dir = 4;
+	name = "Cargo Delivery Door";
+	req_access = list(50)
+	},
 /obj/machinery/status_display{
 	layer = 3.3;
 	pixel_y = -30;
@@ -46757,7 +46779,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJA" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -49262,10 +49284,11 @@
 /area/station/civilian/chapel)
 "bQp" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver{
-	pixel_y = 16
-	},
 /obj/item/weapon/wirecutters,
+/obj/item/weapon/screwdriver{
+	pixel_x = -2;
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bQq" = (
@@ -51826,7 +51849,7 @@
 /obj/machinery/door/window/southright{
 	dir = 4;
 	name = "Medbay Storage";
-	req_access = list(5)
+	req_access = list(72)
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -54483,7 +54506,9 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cfG" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod4"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -54690,6 +54715,7 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "solar_xeno_sensor";
+	layer = 3.3;
 	pixel_x = 25;
 	pixel_y = 12
 	},
@@ -67578,6 +67604,12 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"doG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod3"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "dpb" = (
 /obj/structure/sign/warning/secure_area/armory,
 /turf/simulated/wall/r_wall,
@@ -71825,7 +71857,8 @@
 	},
 /obj/machinery/door/window/eastleft{
 	dir = 1;
-	name = "Medbay Reception"
+	name = "Medbay Reception";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -72732,6 +72765,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ltU" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod4";
+	name = "Escape Pod 4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "lub" = (
 /obj/structure/stool,
 /turf/simulated/floor/plating,
@@ -75017,8 +75057,13 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westleft{
+	dir = 4;
 	name = "Kitchen";
 	req_access = list(28)
+	},
+/obj/machinery/door/window/westleft{
+	name = "Hydroponics";
+	req_access = list(35)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -78251,9 +78296,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
-"tpb" = (
-/turf/simulated/wall/r_wall,
-/area/station/medical/patients_rooms)
 "tpw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -102602,7 +102644,7 @@ ckj
 ckG
 bZr
 ayQ
-bef
+ltU
 ayQ
 ayQ
 aah
@@ -105681,7 +105723,7 @@ crH
 crH
 crH
 crH
-cyK
+crH
 crH
 crH
 crH
@@ -115846,7 +115888,7 @@ aah
 aaa
 afl
 afl
-aga
+doG
 afl
 afl
 ahq
@@ -121837,7 +121879,7 @@ bGR
 bIq
 bKa
 bMm
-tpb
+bDV
 lTb
 qUb
 bSi

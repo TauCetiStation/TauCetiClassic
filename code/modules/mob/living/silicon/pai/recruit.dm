@@ -36,8 +36,8 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			card.setPersonality(pai)
 			card.looking_for_personality = 0
 
-			ticker.mode.update_all_cult_icons()
-			ticker.mode.update_all_rev_icons()
+			SSticker.mode.update_all_cult_icons()
+			SSticker.mode.update_all_rev_icons()
 
 			pai_candidates -= candidate
 			usr << browse(null, "window=findPai")
@@ -231,9 +231,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	var/dat = ""
 
 	dat += {"
-		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<!DOCTYPE html>
 		<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 					body {
 						margin-top:5px;

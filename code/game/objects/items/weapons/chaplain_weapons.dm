@@ -78,7 +78,7 @@
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
@@ -91,10 +91,10 @@
 		return
 
 	if (M.stat != DEAD)
-		if((M.mind in ticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
+		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			ticker.mode.remove_cultist(M.mind)
+			SSticker.mode.remove_cultist(M.mind)
 		else
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
@@ -129,18 +129,16 @@
 	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
-	// Damn... He's free now.
-	if(brainmob)
-		brainmob.invisibility = 0
-		qdel(brainmob.GetComponent(/datum/component/bounded))
-		brainmob.container = null
-		brainmob = null
-
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
 		hide_god(M)
 
 	QDEL_NULL(god_image)
+
+	if(brainmob)
+		brainmob.container = null
+		brainmob.gib()
+		brainmob = null
 
 	return ..()
 
@@ -175,6 +173,7 @@
 		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
 				next_apply[brainmob.ckey] = world.time + 10 MINUTES
+				brainmob.ghostize(FALSE)
 				qdel(brainmob)
 				searching = FALSE
 				icon_state = "talking_staff"
@@ -227,6 +226,7 @@
 
 	if(brainmob)
 		to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
+		brainmob.ghostize(FALSE)
 		qdel(brainmob) //create new god, otherwise the old mob could not be woken up
 
 	QDEL_NULL(god_image)
@@ -301,6 +301,7 @@
 	icon_state = "talking_staff"
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 	if(brainmob)
+		brainmob.ghostize(FALSE)
 		qdel(brainmob)
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
