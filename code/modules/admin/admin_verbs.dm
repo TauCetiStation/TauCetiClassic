@@ -1082,12 +1082,17 @@ var/list/admin_verbs_hideable = list(
 	var/choice = input("Select a map", , "CANCEL") in AllowedMaps
 	if(choice == "--CANCEL--") return
 
+	var/linkage = input("Linkage", , "None") in list(SELFLOOPING, CROSSLINKED, "None")
+
+	if(linkage == "None")
+		linkage = UNAFFECTED
+
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice))//, load_speed = 100)
-		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz]")
+	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
+		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 	else
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 

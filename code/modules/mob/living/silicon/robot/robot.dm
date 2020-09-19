@@ -12,7 +12,6 @@
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
 
@@ -72,6 +71,9 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+
+	// Radial menu for choose module
+	var/static/list/choose_module
 
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -160,14 +162,33 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
+
+	if(!choose_module)
+		var/list/modules = list(
+				"Standard" = "robot_old",
+				"Engineering" = "Engineering",
+				"Surgeon" = "medicalrobot",
+				"Crisis" = "Medbot",
+				"Miner" = "Miner",
+				"Janitor" = "JanBot2",
+				"Service" = "Service",
+				"Security" = "secborg",
+				"Science" = "toxbot",
+				)
+
+		choose_module = list()
+		for(var/mod in modules)
+			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
+
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
-		modules+="Combat"
-	modtype = input("Please, select a module!", "Robot", null, null) in modules
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
+		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
+
+	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
+	if(!modtype)
+		return
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-
 	if(module)
 		return
 
@@ -282,10 +303,6 @@
 	//languages
 	module.add_languages(src)
 
-	//Custom_sprite check and entry
-	if (custom_sprite == 1)
-		module_sprites["Custom"] = "[src.ckey]-[modtype]"
-
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
@@ -293,7 +310,18 @@
 	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
-	choose_icon(6,module_sprites)
+	// Radial menu for choose icon_state
+	var/choose_icon = list()
+
+	for(var/name in module_sprites)
+		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
+
+	// Default skin of module
+	icon_state = module_sprites[pick(module_sprites)]
+	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
+	if(new_icon_state)
+		icon_state = module_sprites[new_icon_state]
+
 	radio.config(module.channels)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
@@ -327,25 +355,6 @@
 	//We also need to update name of internal camera.
 	if (camera)
 		camera.c_tag = changed_name
-
-	if(!custom_sprite) //Check for custom sprite
-		var/file = file2text("config/custom_sprites.txt")
-		var/lines = splittext(file, "\n")
-
-		for(var/line in lines)
-		// split & clean up
-			var/list/Entry = splittext(line, "-")
-			for(var/i = 1 to Entry.len)
-				Entry[i] = trim(Entry[i])
-
-			if(Entry.len < 2)
-				continue;
-
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name) //They're in the list? Custom sprite time, var and icon change required
-				custom_sprite = 1
-				icon = 'icons/mob/custom-synthetic.dmi'
-				if(icon_state == "robot")
-					icon_state = "[src.ckey]-Standard"
 
 /mob/living/silicon/robot/proc/Namepick()
 	set waitfor = FALSE
@@ -751,14 +760,14 @@
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
 				sleep(20)
-				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
 				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
 				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
 				sleep(9)
-				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
@@ -840,30 +849,14 @@
 
 	update_fire()
 
-	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
-		if(wiresexposed)
-			add_overlay("[src.ckey]-openpanel +w")
-		else if(cell)
-			add_overlay("[src.ckey]-openpanel +c")
-		else
-			add_overlay("[src.ckey]-openpanel -c")
-
-	if(opened && icon_state == "custom_astra_t3")
-		if(wiresexposed)
-			add_overlay("ov-[icon_state] +w")
-		else if(cell)
-			add_overlay("ov-[icon_state] +c")
-		else
-			add_overlay("ov-[icon_state] -c")
-
-	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
+	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
 			add_overlay("mechoid-open+w")
 		else if(cell)
 			add_overlay("mechoid-open+c")
 		else
 			add_overlay("mechoid-open-c")
-	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
+	else if(opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
 			add_overlay("drone-openpanel +w")
 		else if(cell)
@@ -1116,41 +1109,6 @@
 	set category = "IC"
 
 	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
-
-/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
-
-	if(triesleft<1 || !module_sprites.len)
-		return
-	else
-		triesleft--
-
-	var/icontype
-
-	if (custom_sprite == 1)
-		icontype = "Custom"
-		triesleft = 0
-	else
-		icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
-
-	if(icontype)
-		icon_state = module_sprites[icontype]
-	else
-		to_chat(src, "Something is badly wrong with the sprite selection. Harass a coder.")
-		icon_state = module_sprites[1]
-		return
-
-	cut_overlay("eyes")
-	updateicon()
-
-	if (triesleft >= 1)
-		var/choice = input("Look at your icon - is this what you want?") in list("Yes","No")
-		if(choice=="No")
-			choose_icon(triesleft, module_sprites)
-		else
-			triesleft = 0
-			return
-	else
-		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.

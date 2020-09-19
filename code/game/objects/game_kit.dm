@@ -59,26 +59,25 @@
 		for (var/x = 1 to 8)
 			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"		//Color the squares in black and white or black and green in case of the chaplain kit.
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
-			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
 			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
-				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
 			else		//If it is "BB" - place empty square
-				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
 			dat += "</td>"
 		dat += "</tr>"
 
 	//Pieces for people to click and place on the board
 	dat += "</table><HR><B>Chips:</B><BR>"
 	for (var/piece in list("CB", "CR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 
 	dat += "<HR><B>Chess pieces:</B><BR>"
 	for (var/piece in list("WP", "WK", "WQ", "WI", "WN", "WR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	dat += "<br>"
 	for (var/piece in list("BP", "BK", "BQ", "BI", "BN", "BR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	data = dat
 
 /obj/item/weapon/game_kit/attack_ai(mob/user)
@@ -103,12 +102,11 @@
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
-	assets.register()
 	assets.send(user)
 	if (!( data ))
 		update()
 
-	var/datum/browser/popup = new(user, "game_kit", "Game Board")
+	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(data)
 	popup.open()
 

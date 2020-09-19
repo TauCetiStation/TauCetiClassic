@@ -50,6 +50,7 @@ LOG_RUNTIME
 LOG_SQL_ERROR
 LOG_INITIALIZATION
 LOG_QDEL
+LOG_ASSET
 # LOG_JS_ERROR
 # LOG_HREFS
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
@@ -96,23 +97,8 @@ ALLOW_ADMIN_OOCCOLOR
 ## If metadata is supported
 # ALLOW_METADATA
 
-## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
-
-## allow players to initate a mode-change start
-ALLOW_VOTE_MODE
-
-## min delay (deciseconds) between voting sessions (default 1 hour)
-VOTE_DELAY 36000
-
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 1200
-
-## prevents dead players from voting or starting votes
-#NO_DEAD_VOTE
-
-## players' votes default to "No vote" (otherwise,  default to "No change")
-DEFAULT_NO_VOTE
 
 ## Allow ghosts to see antagonist through AntagHUD
 ALLOW_ANTAG_HUD

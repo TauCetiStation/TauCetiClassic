@@ -128,9 +128,9 @@
 
 /obj/machinery/disease2/incubator/proc/drain_reagent_from_beaker(reagent)
 	if(beaker.reagents.get_reagent_amount(reagent))
-		var/ammount = (min(beaker.reagents.get_reagent_amount(reagent), 5))
+		var/amount = (min(beaker.reagents.get_reagent_amount(reagent), 5))
 		beaker.reagents.remove_reagent(reagent, 5)
-		return ammount
+		return amount
 	return 0
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
