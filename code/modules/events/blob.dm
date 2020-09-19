@@ -11,7 +11,7 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, ROLE_BLOB)
+	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, ROLE_BLOB, 150)
 	if(!candidates.len)
 		kill()
 		return
