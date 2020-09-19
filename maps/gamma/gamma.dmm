@@ -2247,6 +2247,16 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"adG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
+	locked = 1;
+	name = "Supply Dock Airlock";
+	req_access = list(31)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
 	anchored = 1;
@@ -92135,7 +92145,7 @@ vKq
 tGl
 kka
 edr
-kka
+adG
 uPt
 uPt
 uPt
@@ -92649,7 +92659,7 @@ oWd
 tDo
 kka
 kCg
-kka
+adG
 uPt
 uPt
 uPt
