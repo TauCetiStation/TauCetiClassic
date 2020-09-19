@@ -52,11 +52,6 @@
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
 		if(C == user)								//If you're eating it yourself
-			if(ishuman(C))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
-					return
 			if (fullness <= 50)
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
@@ -69,12 +64,6 @@
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
-					return
-
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))

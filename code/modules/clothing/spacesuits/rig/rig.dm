@@ -481,7 +481,7 @@
 
 /obj/item/clothing/suit/space/rig/proc/can_install(obj/item/rig_module/new_module)
 	if(installed_modules.len >= max_mounted_devices)
-		to_chat(usr, "The hardsuit has a maximum ammount of modules installed.")
+		to_chat(usr, "The hardsuit has a maximum amount of modules installed.")
 		return FALSE
 
 	if(new_module.redundant)

@@ -159,7 +159,7 @@
 	name = "pistol"
 	desc = "AT-7 .45 caliber pistol."
 	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/gunshot_at7.wav'
+	fire_sound = 'sound/weapons/guns/gunshot_at7.ogg'
 	mag_type = /obj/item/ammo_box/magazine/at7_45
 
 /obj/item/weapon/gun/projectile/sec_pistol/atom_init()
