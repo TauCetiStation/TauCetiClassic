@@ -1,3 +1,73 @@
+/datum/religion/chaplain
+	deity_names_by_name = list(
+		"Christianity" = list("Lord", "God", "Saviour", "Yahweh", "Jehovah", "Father", "Space-Jesus"),
+		"Satanism" = list("Satana", "Lucifer", "Baphomet", "Leviathan"),
+		"Yog'Sotherie" = list("Cthulhu", "Katuluu", "Kachoochoo", "Kutulu", "The Great Dreamer", "The Sleeper of R'lyeh"),
+		"Islam" = list("Allah"),
+		"Scientology" = list("Xenu", "Xemu"),
+		"Chaos" = list("Chaos", "Khorne", "Slaanesh", "Nurlge", "Tzeentch", "Malal"),
+		"Imperium" = list("God Emperor of Mankind"),
+		"Toolboxia" = list("The Toolbox"),
+		"Science" = list("The Scientific Method"),
+		"Technologism" = list("Omnissiah", "Machine God", "Broken God"),
+		"Clownism" = list("Honkmother", "The Harlequin", "Laughing God", "First fool"),
+		"Buddhism" = list("Vairocana", "Aksobhya", "Ratnasambhava", "Amoghasiddhi", "Bhaisajyaguru", "Vajradhara", "Samanthabhadra", "Tara"),
+		"Atheism" = list("Self", "I"),
+	)
+
+	// Default is /datum/bible_info/custom, if one is not specified here.
+	bible_info_by_name = list(
+		"Christianity" = /datum/bible_info/bible,
+		"Satanism" = /datum/bible_info/satanism,
+		"Yog'Sotherie" = /datum/bible_info/necronomicon,
+		"Islam" = /datum/bible_info/islam,
+		"Scientology" = /datum/bible_info/scientology,
+		"Chaos" = /datum/bible_info/book_of_lorgar,
+		"Imperium" = /datum/bible_info/book_of_lorgar/imperial_truth,
+		"Toolboxia" = /datum/bible_info/toolbox,
+		"Science" = /datum/bible_info/science,
+		"Tecnologism" = /datum/bible_info/techno,
+		"Clownism" = /datum/bible_info/scrapbook,
+		"Buddhism" = /datum/bible_info/bible/buddhism,
+		"Atheism" = /datum/bible_info/atheist,
+	)
+
+	// Is required to have a "Default" as a fallback.
+	pews_info_by_name = list(
+		"Default" = "general",
+		"Christianity" = "christianity",
+		"Satanism" = "dead",
+		"Yog'Sotherie" = "cthulhu",
+		"Islam" = "islam",
+		"Toolboxia" = "toolbox",
+		"Science" = "science",
+		"Technologism" = "singulo",
+		"Clownism" = "clown",
+		"Atheism" = "void",
+		"Slime" = "slime",
+		"NanoTrasen" = "nanotrasen",
+	)
+
+	altar_info_by_name = list(
+		"Default" = "altar",
+		"Christianity" = "chirstianaltar",
+		"Satanism" = "satanaltar",
+		"Toolboxia" = "toolboxaltar",
+		"Science" = "technologyaltar",
+		"NanoTrasen" = "altar",
+		"Chaos" = "chaosaltar",
+		"Imperium" = "imperialaltar",
+		"Druid" = "druidaltar"
+	)
+
+	carpet_dir_by_name = list(
+		"Default" = 0,
+		"Scientology" = 8,
+		"Christianity" = 2,
+		"Atheism" = 10,
+		"Islam" = 4,
+	)
+
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()
@@ -9,6 +79,9 @@
 	gen_pews_variants()
 	gen_carpet_variants()
 	
+/datum/religion/chaplain/setup_religions()
+	global.chaplain_religion = src
+
 /datum/religion/chaplain/proc/religify_chapel()
 	for(var/chap_area in typesof(/area/station/civilian/chapel))
 		religify(chap_area)

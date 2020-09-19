@@ -3,56 +3,25 @@
 	and save them somewhere for future reference.
 */
 
-// This proc is called from tickers setup, right after economy is done, but before any characters are spawned.
-// TO-DO: make cultists, and other antags use this in some way? ~Luduk
-/proc/setup_religions()
-	global.chaplain_religion = new /datum/religion/chaplain
+/proc/setup_religion(type)
+	new type
 
 /datum/religion
 	// The name of this religion.
 	var/name = ""
 	// Lore of this religion. Is displayed to "God(s)". If none is set, chaplain will be prompted to set up their own lore.
 	var/lore = ""
-	var/static/list/lore_by_name = list(
+	var/list/lore_by_name = list(
 	)
 
 	// List of names of deities of this religion.
 	// There is no "default" deity, please specify one for your religion here.
 	var/list/deity_names = list()
-	var/static/list/deity_names_by_name = list(
-		"Christianity" = list("Lord", "God", "Saviour", "Yahweh", "Jehovah", "Father", "Space-Jesus"),
-		"Satanism" = list("Satana", "Lucifer", "Baphomet", "Leviathan"),
-		"Yog'Sotherie" = list("Cthulhu", "Katuluu", "Kachoochoo", "Kutulu", "The Great Dreamer", "The Sleeper of R'lyeh"),
-		"Islam" = list("Allah"),
-		"Scientology" = list("Xenu", "Xemu"),
-		"Chaos" = list("Chaos", "Khorne", "Slaanesh", "Nurlge", "Tzeentch", "Malal"),
-		"Imperium" = list("God Emperor of Mankind"),
-		"Toolboxia" = list("The Toolbox"),
-		"Science" = list("The Scientific Method"),
-		"Technologism" = list("Omnissiah", "Machine God", "Broken God"),
-		"Clownism" = list("Honkmother", "The Harlequin", "Laughing God", "First fool"),
-		"Buddhism" = list("Vairocana", "Aksobhya", "Ratnasambhava", "Amoghasiddhi", "Bhaisajyaguru", "Vajradhara", "Samanthabhadra", "Tara"),
-		"Atheism" = list("Self", "I"),
-	)
+	var/list/deity_names_by_name
 
-	var/datum/bible_info/bible_info
 	// Default is /datum/bible_info/custom, if one is not specified here.
-	var/static/list/bible_info_by_name = list(
-		"Christianity" = /datum/bible_info/bible,
-		"Satanism" = /datum/bible_info/satanism,
-		"Yog'Sotherie" = /datum/bible_info/necronomicon,
-		"Islam" = /datum/bible_info/islam,
-		"Scientology" = /datum/bible_info/scientology,
-		"Chaos" = /datum/bible_info/book_of_lorgar,
-		"Imperium" = /datum/bible_info/book_of_lorgar/imperial_truth,
-		"Toolboxia" = /datum/bible_info/toolbox,
-		"Science" = /datum/bible_info/science,
-		"Tecnologism" = /datum/bible_info/techno,
-		"Clownism" = /datum/bible_info/scrapbook,
-		"Buddhism" = /datum/bible_info/bible/buddhism,
-		"Atheism" = /datum/bible_info/atheist,
-	)
-
+	var/datum/bible_info/bible_info
+	var/list/bible_info_by_name
 	// Radial menu
 	var/list/bible_skins
 
@@ -67,52 +36,19 @@
 	*/
 
 	var/pews_icon_state
-	// Is required to have a "Default" as a fallback.
-	var/static/list/pews_info_by_name = list(
-		"Default" = "general",
-		"Christianity" = "christianity",
-		"Satanism" = "dead",
-		"Yog'Sotherie" = "cthulhu",
-		"Islam" = "islam",
-		"Toolboxia" = "toolbox",
-		"Science" = "science",
-		"Technologism" = "singulo",
-		"Clownism" = "clown",
-		"Atheism" = "void",
-		"Slime" = "slime",
-		"NanoTrasen" = "nanotrasen",
-	)
-
+	var/list/pews_info_by_name
 	// Radial menu
 	var/list/pews_skins
 
 	var/altar_icon_state
 	// Is required to have a "Default" as a fallback.
-	var/static/list/altar_info_by_name = list(
-		"Default" = "altar",
-		"Christianity" = "chirstianaltar",
-		"Satanism" = "satanaltar",
-		"Toolboxia" = "toolboxaltar",
-		"Science" = "technologyaltar",
-		"NanoTrasen" = "altar",
-		"Chaos" = "chaosaltar",
-		"Imperium" = "imperialaltar",
-		"Druid" = "druidaltar"
-	)
-
+	var/list/altar_info_by_name
 	// Radial menu
 	var/list/altar_skins
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
-	var/static/list/carpet_dir_by_name = list(
-		"Default" = 0,
-		"Scientology" = 8,
-		"Christianity" = 2,
-		"Atheism" = 10,
-		"Islam" = 4,
-	)
-
+	var/list/carpet_dir_by_name
 	// Radial menu
 	var/list/carpet_skins
 
@@ -150,6 +86,7 @@
 
 /datum/religion/New()
 	reset_religion()
+	setup_religions()
 
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
@@ -157,6 +94,10 @@
 		return
 
 	adjust_favor(passive_favor_gain)
+
+// This proc is called from tickers setup, right after economy is done, but before any characters are spawned.
+/datum/religion/proc/setup_religions()
+	return
 
 /datum/religion/proc/reset_religion()
 	lore = initial(lore)

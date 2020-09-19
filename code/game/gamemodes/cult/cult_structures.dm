@@ -7,6 +7,9 @@
 	name = "Altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
+	light_color = "#2f0e0e"
+	light_power = 2
+	light_range = 3
 
 
 /obj/structure/cult/forge
@@ -29,6 +32,9 @@
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
+	light_color = "#cc9338"
+	light_power = 2
+	light_range = 3
 
 //sprites for this no longer exist	-Pete
 //(they were stolen from another game anyway)

@@ -85,6 +85,7 @@
 
 
 /datum/game_mode/cult/post_setup()
+	setup_religion(/datum/religion/cult)
 	modePlayer += cult
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()

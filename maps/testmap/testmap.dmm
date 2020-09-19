@@ -274,14 +274,6 @@
 /obj/structure/grille,
 /turf/unsimulated/floor,
 /area/centcom)
-"aL" = (
-/obj/effect/landmark/start{
-	name = "Fallback-Start"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 "aM" = (
 /obj/effect/landmark{
 	name = "JoinLate"
@@ -4235,7 +4227,7 @@ ac
 ay
 ay
 ay
-aL
+ay
 ay
 ay
 ay

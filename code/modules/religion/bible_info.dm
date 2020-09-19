@@ -149,3 +149,8 @@
 	// item_state = "syringe_kit"
 	laws_type = /datum/ai_laws/faith/science
 	borg_name = "Infinity"
+
+/datum/bible_info/cult/blood
+	name = "book"
+	icon = 'icons/obj/library.dmi'
+	icon_state ="book"

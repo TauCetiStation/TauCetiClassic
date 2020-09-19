@@ -65,3 +65,9 @@
 /area/custom/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+/area/custom/cult
+	name = "Cult Heaven"
+	icon_state = "cult-heaven"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
