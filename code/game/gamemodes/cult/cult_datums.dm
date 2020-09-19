@@ -56,7 +56,7 @@ var/list/cult_runes = list()
 				var/obj/item/clothing/suit/armor/religion/A = locate() in heretic
 				var/obj/item/clothing/head/helmet/religion/H = locate() in heretic
 
-				if((N || (A && H)))
+				if(N || (A && H))
 					continue
 
 		heretics += heretic
