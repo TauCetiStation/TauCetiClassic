@@ -22,14 +22,14 @@
 	return
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
-  if(istype(ORE, /obj/item/weapon/ore))
-    stored_ore[ORE.name]++
+	if(istype(ORE, /obj/item/weapon/ore))
+		stored_ore[ORE.name]++
 
 /obj/structure/ore_box/Exited(atom/movable/ORE)
-  if(istype(ORE, /obj/item/weapon/ore))
-    stored_ore[ORE.name]--
-if(!contents)
-	stored_ore = list()
+	if(istype(ORE, /obj/item/weapon/ore))
+		stored_ore[ORE.name]--
+	if(!contents)
+		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
