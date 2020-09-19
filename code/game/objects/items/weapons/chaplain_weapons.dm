@@ -196,29 +196,13 @@
 			addtimer(CALLBACK(src, .proc/reset_search), 600)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
-	for(var/mob/dead/observer/O in player_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+	var/list/candidates = pollGhostCandidates("Someone is requesting a your soul in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
+	for(var/mob/M in candidates) // No random
+		if(next_apply[M.client.ckey] > world.time)
+			to_chat(M, "You were forcibly kicked from staff, left [round((next_apply[M.client.ckey] - world.time) / 600)] minutes")
 			continue
-		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_TSTAFF) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, user)
-
-/obj/item/weapon/nullrod/staff/proc/question(client/C, mob/living/user)
-	if(!C)
-		return
-	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
-	if(!C || (brainmob && brainmob.ckey) || !searching)
-		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yeeesss")
-		if(next_apply[C.ckey] > world.time)
-			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
-			return
-		transfer_personality(C.mob, user)
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += IGNORE_TSTAFF
+		transfer_personality(M, user)
+		break
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
 	searching = FALSE
