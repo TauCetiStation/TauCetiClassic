@@ -167,15 +167,27 @@
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
+
 	var/sheets_per_tick = 10
+	var/point_upgrade = 1
+	var/sheet_per_ore = 1
+
 	var/list/ores_processing = list()
 	var/list/ores_stored = list()
 	var/list/ore_data = list()
 	var/list/alloy_data = list()
+
 	var/active = 0
 
 /obj/machinery/mineral/processing_unit/atom_init()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/device/assembly/igniter(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
 	//TODO: Ore and alloy global storage datum.
 	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
 		alloy_data += new alloytype()
@@ -196,6 +208,20 @@
 		output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 		if(output)
 			break
+
+/obj/machinery/mineral/processing_unit/RefreshParts()
+	var/sheets_per_tick_temp = 10
+	var/point_upgrade_temp = 1
+	var/sheet_per_ore_temp = 1
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		sheet_per_ore_temp = B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		sheets_per_tick_temp = 10 * M.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+		point_upgrade_temp = L.rating
+	sheets_per_tick = sheets_per_tick_temp
+	point_upgrade = point_upgrade_temp
+	sheet_per_ore = sheet_per_ore_temp
 
 /obj/machinery/mineral/processing_unit/process()
 
@@ -252,8 +278,9 @@
 							total = max(1,round(total*A.product_mod)) //Always get at least one sheet.
 							sheets += total-1
 						for(var/i=0,i<total,i++)
-							console.points += A.points
-							new A.product(output.loc)
+							console.points += A.points * point_upgrade
+							for(var/prod, prod <= (sheet_per_ore + 1)), prod++)
+								new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
 				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
@@ -262,8 +289,9 @@
 				for(var/i=0,i<can_make,i+=2)
 					ores_stored[metal]-=2
 					sheets+=2
-					console.points += O.points
-					new O.compresses_to(output.loc)
+					console.points += O.points * point_upgrade
+					for(var/comp, comp <= (sheet_per_ore + 1)), comp++)
+						new O.compresses_to(output.loc)
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
 				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
@@ -271,11 +299,13 @@
 				for(var/i=0,i<can_make,i++)
 					ores_stored[metal]--
 					sheets++
-					console.points += O.points
-					new O.smelts_to(output.loc)
+					console.points += O.points * point_upgrade
+					for(var/smel, smel <= (sheet_per_ore + 1)), smel++)
+						new O.smelts_to(output.loc)
 			else
 				ores_stored[metal]--
 				sheets++
-				new /obj/item/weapon/ore/slag(output.loc)
+				for(var/slag, slag <= (sheet_per_ore + 1)), slag++)
+					new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
