@@ -188,7 +188,9 @@
 	return level == 1
 
 /atom/movable/proc/get_listeners()
-	return list()
+	. = list()
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
 
 /mob/get_listeners()
 	. = list(src)
@@ -243,6 +245,12 @@
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
 				return FALSE
+		if(Feeded.species.flags[IS_SYNTHETIC])
+			if(Feeded == user)
+				to_chat(user, "<span class='warning'>You can't [eatverb] [food], you have a monitor for a head!</span>")
+			else
+				to_chat(user, "<span class='warning'>You can't feed [Feeded] with [food], they have a monitor for a head!</span>")
+			return FALSE
 		return TRUE
 	if(isIAN(mob))
 		var/mob/living/carbon/ian/dumdum = mob

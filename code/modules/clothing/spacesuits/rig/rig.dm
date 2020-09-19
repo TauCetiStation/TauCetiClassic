@@ -481,7 +481,7 @@
 
 /obj/item/clothing/suit/space/rig/proc/can_install(obj/item/rig_module/new_module)
 	if(installed_modules.len >= max_mounted_devices)
-		to_chat(usr, "The hardsuit has a maximum ammount of modules installed.")
+		to_chat(usr, "The hardsuit has a maximum amount of modules installed.")
 		return FALSE
 
 	if(new_module.redundant)
@@ -642,6 +642,7 @@
 	var/image/lamp = null
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
+	var/glowtype = "terror"
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
 	light_color = "#00f397"
 
@@ -669,11 +670,11 @@
 	icon_state = "rig[on]-[rig_type][combat_mode ? "-combat" : ""]"
 	if(user)
 		user.cut_overlay(lamp)
-		if(equipped_on_head && camera && (on || combat_mode))
-			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
+		if(equipped_on_head && camera && on)
+			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1
-			lamp.alpha = on ? 255 : 127
 			user.add_overlay(lamp)
+			lamp.alpha = 255
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
@@ -808,6 +809,45 @@
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
+
+/obj/item/clothing/head/helmet/space/rig/syndi/elite
+	name = "Syndicate elite hybrid helmet"
+	desc = "A hybrid helmet made by the best engineers and designers on special order for elite syndicate operatives"
+	icon_state = "rig0-syndie_elit"
+	rig_type = "syndie_elit"
+	item_state = "syndicate-helm-elite"
+	armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
+	space_armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
+	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
+	glowtype = "terrorelit"
+	light_color = "#e51a1a"
+
+/obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
+	name = "Syndicate elite hybrid helmet"
+	desc = "A hybrid helmet made by the best engineers and designers on special order for elite syndicate operatives"
+	icon_state = "rig0-syndie_elitcom"
+	item_state = "syndicate-helm-commander"
+	rig_type = "syndie_elitcom"
+
+/obj/item/clothing/suit/space/rig/syndi/elite
+	name = "Syndicate elite hybrid suit"
+	desc = "A hybrid suit made by the best engineers and designers on special order for elite syndicate operatives"
+	icon_state = "rig-syndie_elit-space"
+	item_state = "syndicate-elite"
+	item_color = "rig-syndie_elit"
+	slowdown = 1.5
+	armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
+	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
+	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
+	combat_slowdown = 0.5
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
+
+/obj/item/clothing/suit/space/rig/syndi/elite/comander
+	name = "Syndicate elite hybrid suit"
+	desc = "A hybrid suit made by the best engineers and designers on special order for elite syndicate operatives"
+	icon_state = "rig-syndie_elitcom-space"
+	item_state = "syndicate-commander"
+	item_color = "rig-syndie_elitcom"
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard

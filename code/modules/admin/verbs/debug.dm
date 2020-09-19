@@ -606,6 +606,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"preparation",
 		"death commando",
 		"syndicate commando",
+		"syndicate commando comander",
 		"special ops officer",
 		"blue wizard",
 		"red wizard",
@@ -861,7 +862,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_death_commando()
 
 		if("syndicate commando")
-			M.equip_syndicate_commando()
+			M.equip_syndicate_commando(FALSE)
+
+		if("syndicate commando comander")
+			M.equip_syndicate_commando(TRUE)
 
 		if("nanotrasen representative")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
@@ -2116,10 +2120,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	nanomanager.close_user_uis(usr)
 
 	// Re-load the assets.
-	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
-	assets.register()
+	get_asset_datum(/datum/asset/nanoui)
 
-	// Clear the user's cache so they get resent.
-	usr.client.cache = list()
+	// Clear the user's sent_assets so they get resent.
+	usr.client.sent_assets = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")

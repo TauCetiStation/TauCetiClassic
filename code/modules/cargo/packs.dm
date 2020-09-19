@@ -356,6 +356,22 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_teleporter
 	group = "Security"
 
+/datum/supply_pack/investigation
+	name = "Investigation Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/autopsy_scanner,
+					/obj/item/weapon/scalpel,
+					/obj/item/device/detective_scanner,
+					/obj/item/device/taperecorder,
+					/obj/item/clothing/gloves/latex,
+					/obj/item/clothing/suit/storage/labcoat,
+					/obj/item/clothing/mask/surgical,
+					/obj/item/weapon/storage/box/evidence
+					 )
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Investigation Crate"
+	group = "Security"
+
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------

@@ -21,13 +21,6 @@
 /obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
-
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		to_chat(M, "<span class='notice'>You swallow [src].</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Swallow [src.name]. Reagents: [reagentlist(src)]</font>")
 		M.drop_from_inventory(src) //icon update
@@ -39,12 +32,6 @@
 		return 1
 
 	else
-		if(istype(M, /mob/living/carbon/human) )
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
 		if(!do_mob(user, M)) return
