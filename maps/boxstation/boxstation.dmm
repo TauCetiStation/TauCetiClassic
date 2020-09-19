@@ -14730,7 +14730,7 @@
 	},
 /area/station/rnd/tox_launch)
 "azS" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "vault"
@@ -25417,7 +25417,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
 "aTu" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -46779,7 +46779,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJA" = (
-/obj/machinery/constructable_frame,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -78296,9 +78296,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
-"tpb" = (
-/turf/simulated/wall/r_wall,
-/area/station/medical/patients_rooms)
 "tpw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -121882,7 +121879,7 @@ bGR
 bIq
 bKa
 bMm
-tpb
+bDV
 lTb
 qUb
 bSi
