@@ -95,12 +95,12 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 /obj/item/seeds/replicapod/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Someone is harvesting a diona pod. Would you like to play as a diona?", ROLE_GHOSTLY, IGNORE_PLANT, 100, TRUE)
 	for(var/mob/M in candidates) // No random
-		if(is_alien_whitelisted_banned(M, DIONA) || !is_alien_whitelisted(O, DIONA))
+		if(is_alien_whitelisted_banned(M, DIONA) || !is_alien_whitelisted(M, DIONA))
 			continue
-		transfer_personality(M)
+		transfer_personality(M.client)
 		break
 
-/obj/item/seeds/replicapod/proc/transfer_personality(mob/candidate)
+/obj/item/seeds/replicapod/proc/transfer_personality(client/candidate)
 	if(!candidate)
 		return
 
@@ -109,8 +109,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/mob/living/carbon/monkey/diona/podman = new(parent.loc)
 	podman.ckey = candidate.ckey
 
-	if(candidate.mind)
-		candidate.mind.transfer_to(podman)
+	if(candidate.mob && candidate.mob.mind)
+		candidate.mob.mind.transfer_to(podman)
 
 	if(realName)
 		podman.real_name = realName

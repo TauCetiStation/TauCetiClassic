@@ -23,16 +23,23 @@
 		icon_state = "posibrain-searching"
 		searching = TRUE
 		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 600)
+		addtimer(CALLBACK(src, .proc/reset_search), 300)
 
 /obj/item/device/mmi/posibrain/proc/request_player()
-	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 300, TRUE)
+	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 200, TRUE)
 	for(var/mob/M in candidates) // No random
 		transfer_personality(M)
 		break
 
 /obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-"
+	var/number = rand(1, 999)
+	if(number < 10)
+		brainmob.name = "[brainmob.name]00[number]"
+	else if(number < 100)
+		brainmob.name = "[brainmob.name]0[number]"
+	else
+		brainmob.name = "[brainmob.name][number]"
 	brainmob.real_name = brainmob.name
 	brainmob.dna = H.dna
 	brainmob.timeofhostdeath = H.timeofdeath
@@ -49,7 +56,7 @@
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 
-	src.searching = 0
+	src.searching = FALSE
 	src.brainmob.mind = candidate.mind
 	//src.brainmob.key = candidate.key
 	src.brainmob.ckey = candidate.ckey

@@ -193,7 +193,7 @@
 			light_power = 5
 			searching = TRUE
 			request_player(user)
-			addtimer(CALLBACK(src, .proc/reset_search), 600)
+			addtimer(CALLBACK(src, .proc/reset_search), 200)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
 	var/list/candidates = pollGhostCandidates("Someone is requesting a your soul in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
