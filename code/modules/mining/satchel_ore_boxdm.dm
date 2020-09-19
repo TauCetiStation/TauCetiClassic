@@ -9,16 +9,16 @@
 	density = 1
 	var/last_update = 0
 	var/list/stored_ore = list(
-		hematite = 0,
-		carbonaceous rock = 0,
-		impure silicates = 0,
-		pitchblende = 0,
-		diamonds = 0,
-		native gold ore = 0,
-		native silver ore = 0,
-		phoron crystals = 0,
-		raw platinum = 0,
-		raw hydrogen = 0
+		"hematite" = 0,
+		"carbonaceous rock" = 0,
+		"impure silicates" = 0,
+		"pitchblende" = 0,
+		"diamonds" = 0,
+		"native gold ore" = 0,
+		"native silver ore" = 0,
+		"phoron crystals" = 0,
+		"raw platinum" = 0,
+		"raw hydrogen" = 0,
 	)
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
