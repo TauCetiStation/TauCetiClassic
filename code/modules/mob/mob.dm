@@ -2,9 +2,9 @@
   * Delete a mob
   *
   * Removes mob from the following global lists
-  * * GLOB.mob_list
-  * * GLOB.dead_mob_list
-  * * GLOB.alive_mob_list
+  * * global.mob_list
+  * * global.dead_mob_list
+  * * global.alive_mob_list
   * Clears alerts for this mob
   *
   * Parent call
@@ -15,11 +15,13 @@
 	global.mob_list -= src
 	global.dead_mob_list -= src
 	global.alive_mob_list -= src
-	for (var/alert in alerts)
+	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
+	if(mind && mind.my_religion)
+		mind.my_religion.remove_member(src)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 

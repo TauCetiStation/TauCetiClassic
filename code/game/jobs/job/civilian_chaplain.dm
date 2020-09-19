@@ -17,5 +17,5 @@
 
 /datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly && H.mind)
-		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+		global.chaplain_religion.add_member(H, HOLY_ROLE_HIGHPRIEST)
 		INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)

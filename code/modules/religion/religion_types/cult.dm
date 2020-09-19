@@ -19,5 +19,12 @@
 		"Islam" = 4
 	)
 
+	max_favor = 10000
+
+/datum/religion/cult/New()
+	..()
+	area_types = typesof(/area/custom/cult)
+	religify()
+
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src

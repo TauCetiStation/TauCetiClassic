@@ -52,6 +52,8 @@
 	// Radial menu
 	var/list/carpet_skins
 
+	var/list/area_types
+
 	/*
 		Aspects and Rites related
 	*/
@@ -75,6 +77,9 @@
 
 	// Contains an altar, wherever it is
 	var/obj/structure/altar_of_gods/altar
+
+	// The whole composition of beings in religion
+	var/list/consist = list()
 
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
@@ -112,6 +117,7 @@
 	god_spells = list()
 	rites_info = list()
 	rites_by_name = list()
+	consist = list()
 
 	if(altar)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
@@ -179,7 +185,7 @@
 		altar_icon_state = altar_info_by_name["Default"]
 
 // This proc converts all related objects in areatype to this reigion's liking.
-/datum/religion/proc/religify(areatype)
+/datum/religion/proc/religify(area_types)
 	var/list/to_religify = get_area_all_atoms(areatype)
 
 	for(var/atom/A in to_religify)
@@ -351,11 +357,23 @@
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
+	M.mind.my_religion = src
 	give_god_spells(M)
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
+	M.mind.my_religion = null
 	remove_god_spells(M)
+
+/datum/religion/proc/add_member(mob/M, holy_role)
+	consist += M
+	M.mind.my_religion = src
+	M.mind.holy_role = holy_role
+
+/datum/religion/proc/remove_member(mob/M)
+	consist -= M
+	M.mind.my_religion = null
+	M.mind.holy_role = initial(M.mind.holy_role)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)

@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
-	icon_state ="bible"
+	icon_state = "bible"
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
@@ -22,14 +22,6 @@
 		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
 	)
 
-	var/matrix/M = matrix()
-	M.Scale(0.7)
-	for(var/choise in rad_choices)
-		if(choise == "Pews") // Don't need it
-			continue
-		var/image/I = rad_choices[choise]
-		I.transform = M
-
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
 	desc = "To be applied to the head repeatedly."
@@ -37,9 +29,9 @@
 
 /obj/item/weapon/storage/bible/booze/atom_init()
 	. = ..()
-	for (var/i in 1 to 2)
+	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
-	for (var/i in 1 to 3)
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/spacecash(src)
 
 /obj/item/weapon/storage/bible/proc/can_convert(atom/target, mob/user)
@@ -90,7 +82,7 @@
 		if(religify_next[user.ckey] > world.time)
 			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 			return
-		else if(global.chaplain_religion)
+		else if(user.mind.my_religion)
 			change_chapel_looks(user)
 			return
 
@@ -102,6 +94,7 @@
 	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
+	var/datum/religion/R = user.mind.my_religion
 	while(!done)
 		if(!choices.len)
 			done = TRUE
@@ -118,32 +111,40 @@
 
 		switch(looks)
 			if("Altar")
-				var/new_look = show_radial_menu(user, src, global.chaplain_religion.altar_skins, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, R.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				global.chaplain_religion.altar_icon_state = global.chaplain_religion.altar_info_by_name[new_look]
+				R.altar_icon_state = R.altar_info_by_name[new_look]
 				changes = TRUE
 				choices -= "Altar"
 
 			if("Pews")
-				var/new_look = show_radial_menu(user, src, global.chaplain_religion.pews_skins, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, R.pews_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				global.chaplain_religion.pews_icon_state = global.chaplain_religion.pews_info_by_name[new_look]
+				R.pews_icon_state = R.pews_info_by_name[new_look]
 				changes = TRUE
 				choices -= "Pews"
 
 			if("Mat symbol")
-				var/new_mat = show_radial_menu(user, src, global.chaplain_religion.carpet_skins, require_near = TRUE, tooltips = TRUE)
+				var/new_mat = show_radial_menu(user, src, R.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 
-				global.chaplain_religion.carpet_dir = global.chaplain_religion.carpet_dir_by_name[new_mat]
+				R.carpet_dir = R.carpet_dir_by_name[new_mat]
 				changes = TRUE
 				choices -= "Mat symbol"
 
 	if(changes)
 		religify_next[user.ckey] = world.time + 3 MINUTE
-		global.chaplain_religion.religify_chapel()
+		R.religify()
+
+/obj/item/weapon/storage/tome
+	name = "book"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "book"
+	throw_speed = 1
+	throw_range = 5
+	w_class = ITEM_SIZE_NORMAL

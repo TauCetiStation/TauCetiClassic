@@ -19,6 +19,6 @@
 /turf/unsimulated/floor/lava
 	name = "lava"
 	icon_state = "lava"
-	light_color = "#dad60e"
+	light_color = "#9c660e"
 	light_power = 2
 	light_range = 3

@@ -71,7 +71,8 @@
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()
-	religify_chapel()
+	area_types = typesof(/area/station/civilian/chapel)
+	religify()
 
 	//Radial menu
 	gen_bible_variants()
@@ -81,10 +82,6 @@
 	
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
-
-/datum/religion/chaplain/proc/religify_chapel()
-	for(var/chap_area in typesof(/area/station/civilian/chapel))
-		religify(chap_area)
 
 /datum/religion/chaplain/proc/gen_pos_bible_variants()
 	var/list/variants = list()
@@ -188,4 +185,4 @@
 
 	// Update the looks of the chapel.
 	update_structure_info()
-	religify_chapel()
+	religify()

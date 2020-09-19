@@ -79,8 +79,6 @@
 
 	var/obj/item/weapon/nullrod/staff/container
 
-	var/datum/religion/my_religion
-
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
@@ -102,8 +100,8 @@
 		QDEL_NULL(container.god_image)
 		container = null
 
-	if(my_religion)
-		my_religion.remove_deity(src)
+	if(mind && mind.my_religion)
+		mind.my_religion.remove_deity(src)
 
 	return ..()
 

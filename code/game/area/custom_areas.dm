@@ -71,3 +71,11 @@
 	icon_state = "cult-heaven"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambience = list(
+		'sound/ambience/ambiruin1.ogg',
+		'sound/ambience/ambiruin2.ogg',
+		'sound/ambience/ambiruin3.ogg',
+		'sound/ambience/ambiruin4.ogg',
+		'sound/ambience/ambiruin5.ogg',
+		'sound/ambience/ambiruin6.ogg',
+	)

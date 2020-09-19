@@ -11,6 +11,8 @@
 	can_buckle = TRUE
 	buckle_lying = TRUE
 
+	var/change_preset_name = TRUE
+
 	var/datum/religion_rites/performing_rite
 	var/datum/religion_sect/sect //easy access
 	var/datum/religion/chaplain/religion //easy access
@@ -240,7 +242,8 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/proc/generate_available_sects(mob/user) //eventually want to add sects you get from unlocking certain achievements
+//eventually want to add sects you get from unlocking certain achievements
+/obj/structure/altar_of_gods/proc/generate_available_sects(mob/user)
 	var/list/variants = list()
 	for(var/type in subtypesof(/datum/religion_sect))
 		var/datum/religion_sect/sect = new type(src)
@@ -248,7 +251,8 @@
 			continue
 		if(!sect.starter)
 			continue
-		sect.name += global.chaplain_religion.name
+		if(change_preset_name)
+			sect.name += global.chaplain_religion.name
 		variants[sect.name] = sect
 
 	return variants
@@ -262,3 +266,11 @@
 	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
+
+/obj/structure/altar_of_gods/cult
+	name = "Altar of the Death"
+	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	icon = 'icons/obj/structures/chapel.dmi'
+	icon_state = "satanaltar"
+
+	change_preset_name = FALSE

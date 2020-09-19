@@ -133,7 +133,7 @@ var/list/cult_datums = list()
 /obj/item/weapon/book/tome
 	name = "book"
 	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
+	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL

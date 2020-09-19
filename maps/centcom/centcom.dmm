@@ -17411,6 +17411,10 @@
 	icon_state = "floorgrime"
 	},
 /area/velocity)
+"dDS" = (
+/obj/structure/cult/shell,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "dEb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell3";
@@ -18973,6 +18977,10 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"gAC" = (
+/obj/structure/cult/shell,
+/turf/unsimulated/wall/cult,
+/area/custom/cult)
 "gBb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -21045,6 +21053,10 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
+"kYX" = (
+/obj/structure/cult/spacewhole,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "kZb" = (
 /obj/machinery/light{
 	dir = 1
@@ -23381,6 +23393,10 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "sQk" = (
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
+"tou" = (
+/obj/effect/timewhole,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "tyj" = (
@@ -63103,13 +63119,13 @@ aaM
 aaM
 iGK
 rXx
-sQk
+dDS
 sQk
 sQk
 dCw
 sQk
 sQk
-sQk
+kYX
 rXx
 sQk
 sQk
@@ -65684,15 +65700,15 @@ sQk
 mzq
 sQk
 sQk
-sQk
+dDS
+mzq
+tou
 mzq
 sQk
-mzq
 sQk
 sQk
 sQk
-sQk
-sQk
+dDS
 sQk
 sQk
 sQk
@@ -65935,23 +65951,23 @@ dAj
 sQk
 sQk
 sQk
+tou
+sQk
+mzq
+sQk
+sQk
+mzq
+mzq
+sQk
 sQk
 sQk
 mzq
 sQk
 sQk
 mzq
-mzq
 sQk
 sQk
-sQk
-mzq
-sQk
-sQk
-mzq
-sQk
-sQk
-sQk
+kYX
 sQk
 sQk
 rXx
@@ -66199,12 +66215,12 @@ sQk
 sQk
 sQk
 sQk
-sQk
+kYX
 sQk
 sQk
 mzq
 sQk
-sQk
+kYX
 sQk
 mzq
 sQk
@@ -66467,7 +66483,7 @@ mzq
 mzq
 sQk
 sQk
-sQk
+dDS
 rXx
 sQk
 iGK
@@ -66708,7 +66724,7 @@ mzq
 sQk
 mzq
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -66716,7 +66732,7 @@ mzq
 sQk
 sQk
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -66961,7 +66977,7 @@ sQk
 rXx
 mzq
 sQk
-sQk
+tou
 sQk
 sQk
 mzq
@@ -66971,7 +66987,7 @@ sQk
 sQk
 sQk
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -67225,7 +67241,7 @@ sQk
 sQk
 mzq
 sQk
-sQk
+tou
 sQk
 sQk
 mzq
@@ -67731,12 +67747,12 @@ iGK
 sQk
 rXx
 sQk
+kYX
 sQk
 sQk
 sQk
 sQk
-sQk
-sQk
+dDS
 sQk
 mzq
 sQk
@@ -68764,7 +68780,7 @@ dke
 dke
 rXx
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -68780,7 +68796,7 @@ kak
 sQk
 sQk
 sQk
-sQk
+dDS
 rXx
 sQk
 iGK
@@ -69019,7 +69035,7 @@ sQk
 sQk
 sQk
 sQk
-rXx
+gAC
 sQk
 sQk
 sQk
@@ -69281,17 +69297,17 @@ sQk
 sQk
 sQk
 mzq
-sQk
+tou
 sQk
 mzq
 sQk
+dDS
 sQk
 sQk
 sQk
 sQk
 sQk
-sQk
-sQk
+tou
 sQk
 rXx
 mzq
@@ -69535,7 +69551,7 @@ mzq
 sQk
 rXx
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -69795,7 +69811,7 @@ sQk
 sQk
 sQk
 sQk
-sQk
+tou
 sQk
 sQk
 sQk
@@ -70047,7 +70063,7 @@ dke
 aUG
 rXx
 rXx
-sQk
+dDS
 sQk
 mzq
 sQk
@@ -70560,7 +70576,7 @@ rXx
 sQk
 sQk
 sQk
-sQk
+kYX
 sQk
 mzq
 sQk
@@ -70820,7 +70836,7 @@ sQk
 sQk
 sQk
 sQk
-sQk
+dDS
 mzq
 mzq
 mzq
@@ -71076,7 +71092,7 @@ sQk
 sQk
 sQk
 sQk
-sQk
+kYX
 mzq
 mzq
 mzq

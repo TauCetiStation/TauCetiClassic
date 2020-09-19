@@ -48,7 +48,7 @@
 	},
 /area/awaymission/wildwest/vault)
 "al" = (
-/obj/effect/gateway,
+/obj/effect/timewhole,
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "am" = (

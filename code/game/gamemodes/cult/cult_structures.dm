@@ -36,21 +36,33 @@
 	light_power = 2
 	light_range = 3
 
-//sprites for this no longer exist	-Pete
-//(they were stolen from another game anyway)
-/*
-/obj/structure/cult/pillar
-	name = "Pillar"
-	desc = "This should not exist."
-	icon_state = "pillar"
-	icon = 'magic_pillar.dmi'
-*/
+/obj/structure/cult/shell
+	name = "cursed shell"
+	desc = "It looks at you."
+	icon_state = "shuttlecurse"
+	light_color = "#6d1616"
+	light_power = 2
+	light_range = 2
 
-/obj/effect/gateway
-	name = "gateway"
+/obj/structure/cult/spacewhole
+	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."
+	icon_state = "space"
+
+/obj/effect/timewhole
+	name = "abyss in time"
+	desc = "You feel a billion different looks when you gaze into emptiness."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
 	unacidable = 1
 	anchored = 1.0
+	light_color = "#550314"
+	light_power = 30
+	light_range = 3
+
+/obj/effect/orb
+	name = "orb"
+	desc = "Strange circle."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "summoning_orb"

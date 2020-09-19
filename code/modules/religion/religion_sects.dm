@@ -33,6 +33,9 @@
 /datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
 
+/********************/
+/*    CHAPLAIN      */
+/********************/
 /datum/religion_sect/preset/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
@@ -51,8 +54,8 @@
 	    /datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
-    )
-		
+	)
+
 /datum/religion_sect/preset/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
@@ -119,3 +122,16 @@
 			aspects_to_add[aspect_type] += 1
 
 	R.add_aspects(aspects_to_add)
+
+/********************/
+/*        CULT      */
+/********************/
+/datum/religion_sect/preset/cult/blood
+	name = "The cult of blood"
+	desc = "Anything you need, little demon."
+	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	aspect_preset = list(
+	    /datum/aspect/death = 1,
+		/datum/aspect/lightbending/darkness = 1,
+		/datum/aspect/chaos = 1,
+	)
