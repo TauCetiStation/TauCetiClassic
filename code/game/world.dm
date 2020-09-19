@@ -96,6 +96,7 @@ var/base_commit_sha = 0
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
 	global.access_log = file("[log_directory]/access.log")
+	global.asset_log = file("[log_directory]/asset.log")
 
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
@@ -145,7 +146,6 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
-		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
@@ -400,9 +400,6 @@ var/shutdown_processed = FALSE
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
 
 	if (config && config.allow_ai)
 		features += "AI allowed"

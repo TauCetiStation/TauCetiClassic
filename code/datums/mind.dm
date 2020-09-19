@@ -51,6 +51,7 @@
 
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
+	var/syndicate_awareness = SYNDICATE_UNAWARE
 
 	var/list/spell_list = list()
 
@@ -70,8 +71,11 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 
+	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
+
 /datum/mind/New(var/key)
 	src.key = key
+	creation_time = world.time
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	if(!istype(new_character))

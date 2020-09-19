@@ -2247,6 +2247,16 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"adG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
+	locked = 1;
+	name = "Supply Dock Airlock";
+	req_access = list(31)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
 	anchored = 1;
@@ -3875,6 +3885,13 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hallway)
+"apY" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod4";
+	name = "Escape Pod 5"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "aqg" = (
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
@@ -4412,6 +4429,12 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/kitchen)
+"azr" = (
+/obj/structure/object_wall/pod{
+	icon_state = "2,0"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "azH" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "tox_airlock_sensor";
@@ -8556,7 +8579,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bOW" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod4"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -13598,6 +13623,12 @@
 	icon_state = "white"
 	},
 /area/station/rnd/mixing)
+"duy" = (
+/obj/structure/object_wall/pod{
+	icon_state = "2,2"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "duD" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -15432,6 +15463,12 @@
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"ecd" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/bridge)
 "ecD" = (
 /obj/machinery/computer/communications{
 	dir = 8
@@ -15744,7 +15781,7 @@
 "efE" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 3;
+	filter_type = "carbon_dioxide";
 	name = "Gas filter (CO2 tank)"
 	},
 /turf/simulated/floor,
@@ -17629,6 +17666,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
+"eLL" = (
+/obj/structure/object_wall/pod{
+	icon_state = "1,0"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "eLM" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -18851,7 +18894,7 @@
 /area/station/engineering/engine)
 "fdb" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor,
@@ -23338,6 +23381,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"gAc" = (
+/obj/structure/object_wall/pod{
+	icon_state = "0,2"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "gAr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -29242,7 +29291,7 @@
 "ixJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 4;
+	filter_type = "sleeping_agent";
 	name = "Gas filter (N2O tank)"
 	},
 /turf/simulated/floor,
@@ -31071,7 +31120,7 @@
 /area/station/maintenance/science)
 "jfB" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 0;
+	filter_type = "phoron";
 	name = "Gas filter (Toxins tank)"
 	},
 /turf/simulated/floor,
@@ -32490,11 +32539,13 @@
 	},
 /area/station/rnd/hallway)
 "jEi" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod2"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
-/area/shuttle/escape_pod1/station)
+/area/shuttle/escape_pod2/station)
 "jEI" = (
 /obj/structure/table/woodentable,
 /obj/item/device/guitar/electric,
@@ -40463,6 +40514,12 @@
 	icon_state = "bot"
 	},
 /area/station/civilian/locker)
+"mbV" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/bridge)
 "mcx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -44781,6 +44838,12 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/kitchen)
+"nua" = (
+/obj/structure/object_wall/pod{
+	icon_state = "1,2"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "nug" = (
 /obj/structure/closet/athletic_mixed,
 /turf/simulated/floor/plating{
@@ -47524,6 +47587,12 @@
 	icon_state = "vault"
 	},
 /area/station/security/forensic_office)
+"ooL" = (
+/obj/structure/object_wall/pod{
+	icon_state = "0,0"
+	},
+/turf/space/shuttle,
+/area/shuttle/escape_pod2/station)
 "opb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/device/radio/intercom{
@@ -48793,6 +48862,19 @@
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"oMz" = (
+/obj/item/device/radio/intercom/pod{
+	dir = 4;
+	layer = 4;
+	pixel_x = 10
+	},
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/escape_pod2/station)
 "oMT" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/captain,
@@ -53327,6 +53409,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"qkN" = (
+/obj/machinery/light/small,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/escape_pod2/station)
 "qll" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -54204,6 +54295,12 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
+"qyy" = (
+/obj/structure/object_wall/pod{
+	icon_state = "3,2"
+	},
+/turf/space,
+/area/shuttle/escape_pod2/station)
 "qyz" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access = list(8,12)
@@ -58154,7 +58251,7 @@
 	opacity = 0
 	},
 /turf/space,
-/area/shuttle/escape_pod1/station)
+/area/shuttle/escape_pod2/station)
 "rQu" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
@@ -59155,7 +59252,7 @@
 /area/station/rnd/mixing)
 "sgg" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor,
@@ -75223,6 +75320,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"xkV" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "pod3"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "xkY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -75732,6 +75835,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"xsK" = (
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod1"
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/escape_pod1/station)
 "xsR" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -76090,7 +76201,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "xAR" = (
-/obj/machinery/door/unpowered/shuttle/pod,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "pod3"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -77394,6 +77507,12 @@
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"xWa" = (
+/obj/structure/object_wall/pod{
+	icon_state = "3,0"
+	},
+/turf/space,
+/area/shuttle/escape_pod2/station)
 "xWI" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/pbag,
@@ -92026,7 +92145,7 @@ vKq
 tGl
 kka
 edr
-kka
+adG
 uPt
 uPt
 uPt
@@ -92540,7 +92659,7 @@ oWd
 tDo
 kka
 kCg
-kka
+adG
 uPt
 uPt
 uPt
@@ -98618,7 +98737,7 @@ mwL
 iME
 sCr
 sCr
-goQ
+apY
 sCr
 sCr
 plf
@@ -106060,7 +106179,7 @@ plf
 plf
 sCr
 sCr
-mqk
+xkV
 sCr
 sCr
 qZg
@@ -120252,11 +120371,11 @@ tOZ
 iSG
 rRo
 rRo
-hLH
+ecd
 rRo
 rRo
 rRo
-hLH
+mbV
 rRo
 rRo
 vOc
@@ -120508,12 +120627,12 @@ lkm
 jIl
 jIl
 rRo
-xFE
+gAc
 jEi
-gVI
+ooL
 rRo
 xFE
-jEi
+xsK
 gVI
 rRo
 vOc
@@ -120765,9 +120884,9 @@ wrR
 jIl
 vOc
 rRo
-kdr
-cjq
-evF
+nua
+qkN
+eLL
 rRo
 kdr
 cjq
@@ -121022,9 +121141,9 @@ jIl
 jIl
 jIl
 rRo
-owL
-qbl
-ara
+duy
+oMz
+azr
 rRo
 owL
 qbl
@@ -121279,9 +121398,9 @@ plf
 plf
 kHU
 rRo
-hOG
+qyy
 rQo
-egi
+xWa
 rRo
 hOG
 mRt

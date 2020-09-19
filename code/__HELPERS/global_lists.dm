@@ -240,3 +240,10 @@
 				continue
 			L+= path
 		return L
+
+/proc/gen_hex_by_color()
+	if(!hex_by_color)
+		hex_by_color = list()
+
+	for(var/color in color_by_hex)
+		hex_by_color[color_by_hex[color]] = color
