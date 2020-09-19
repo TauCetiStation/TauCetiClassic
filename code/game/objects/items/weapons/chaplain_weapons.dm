@@ -476,6 +476,8 @@
 	item_state = "crusader_armor"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 	slowdown = 1
 	allowed = list(/obj/item/weapon/claymore/religion, /obj/item/weapon/nullrod, /obj/item/weapon/nullrod/staff, /obj/item/weapon/nullrod/forcefield_staff)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -500,8 +502,6 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEMASK
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = HEAD
-	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/helmet/religion/equipped(mob/user, slot)
