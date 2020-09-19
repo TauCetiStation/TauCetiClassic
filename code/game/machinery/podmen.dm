@@ -95,6 +95,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 /obj/item/seeds/replicapod/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Someone is harvesting a diona pod. Would you like to play as a diona?", ROLE_GHOSTLY, IGNORE_PLANT, 100, TRUE)
 	for(var/mob/M in candidates) // No random
+		if(is_alien_whitelisted_banned(M, DIONA) || !is_alien_whitelisted(O, DIONA))
+			continue
 		transfer_personality(M)
 		break
 
