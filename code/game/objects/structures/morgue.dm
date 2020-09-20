@@ -122,7 +122,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		connected = new /obj/structure/m_tray( loc )
-		step(connected, dir)
+		connected.Move(get_step(src, dir))
 		connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
