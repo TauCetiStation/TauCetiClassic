@@ -73,7 +73,6 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
