@@ -703,10 +703,11 @@ var/list/ai_verbs_default = list(
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
 		AISD.emotion = emote
-	for(var/obj/machinery/status_display/SD in status_display_list) //if Friend Computer, change ALL displays, else restore them to normal
-		if(emote == "Friend Computer")
+	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
+		for(var/obj/machinery/status_display/SD in status_display_list)
 			SD.friendc = TRUE
-		else
+	else
+		for(var/obj/machinery/status_display/SD in status_display_list)
 			SD.friendc = FALSE
 	return
 
