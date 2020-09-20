@@ -243,17 +243,17 @@
 	wins++
 	return BRUTELOSS
 
-/obj/item/toy/mecha/examine()
-	. = ..()
-	. += "<span class='notice'>This toy's special attack is [special_attack_cry], [special_attack_type_message] </span>"
+/obj/item/toy/mecha/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>This toy's special attack is [special_attack_cry], [special_attack_type_message] </span>")
 	if(in_combat)
-		. += "<span class='notice'>This toy has a maximum health of [max_combat_health]. Currently, it's [combat_health].</span>"
-		. += "<span class='notice'>Its special move light is [special_attack_cooldown? "flashing red." : "green and is ready!"]</span>"
+		to_chat(user, "<span class='notice'>This toy has a maximum health of [max_combat_health]. Currently, it's [combat_health].</span>")
+		to_chat(user, "<span class='notice'>Its special move light is [special_attack_cooldown? "flashing red." : "green and is ready!"]</span>")
 	else
-		. += "<span class='notice'>This toy has a maximum health of [max_combat_health].</span>"
+		to_chat(user, "<span class='notice'>This toy has a maximum health of [max_combat_health].</span>")
 
 	if(wins || losses)
-		. += "<span class='notice'>This toy has [wins] wins, and [losses] losses.</span>"
+		to_chat(user, "<span class='notice'> This toy has [wins] wins, and [losses] losses.</span>")
 
 
 /obj/item/toy/mecha/proc/say(message)
