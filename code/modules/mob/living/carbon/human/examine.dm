@@ -533,7 +533,11 @@
 	to_chat(user, msg)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
+// Only used for humans and other personal of station.
 /proc/hasHUD(mob/M, hudtype)
+	if(isobserver(M))
+		return FALSE
+
 	var/datum/atom_hud/A
 	if(hudtype == "security")
 		A = huds[DATA_HUD_SECURITY]
