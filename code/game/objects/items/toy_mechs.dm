@@ -258,7 +258,7 @@
 
 /obj/item/toy/mecha/proc/say(message)
 	if(!quiet)
-		visible_message("[src] beeps, [message]")
+		visible_message("<b>[src]</b> beeps, \"[message]\"")
 
 /**
   * The 'master' proc of the mech battle. Processes the entire battle's events and makes sure it start and finishes correctly.

@@ -349,10 +349,12 @@ h1.alert, h2.alert	{color: #000000;}
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}
+.boldwarning			{color: #c51e1e;	font-style: italic;	font-weight: bold}
 .red					{color: #ff0000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.hear					{color: #6685f5;	font-style: italic;}
 
 .wet					{color: #007FBF;}
 
