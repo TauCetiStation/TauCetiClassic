@@ -1028,13 +1028,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 			anchored = 0
 	return 1
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+///Get the ghost of this mob (from the mind)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		for(var/mob/dead/observer/G in observer_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)

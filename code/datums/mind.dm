@@ -105,6 +105,13 @@
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
+/datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
+	for(var/mob/dead/observer/G in (ghosts_with_clients ? global.player_list : global.dead_mob_list))
+		if(G.mind == src)
+			if(G.can_reenter_corpse || even_if_they_cant_reenter)
+				return G
+			break
+
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
 
