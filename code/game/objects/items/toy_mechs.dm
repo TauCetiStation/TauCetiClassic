@@ -416,7 +416,7 @@
 	else //both win?
 		say("NEXT TIME.")
 		//don't want to make this a one sided conversation
-		quiet? attacker.say("I WENT EASY ON YOU.") : attacker.say("OF COURSE.")
+		quiet ? attacker.say("I WENT EASY ON YOU.") : attacker.say("OF COURSE.")
 
 	in_combat = FALSE
 	attacker.in_combat = FALSE
