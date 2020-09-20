@@ -28,7 +28,7 @@
 /obj/structure/ore_box/Exited(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
 		stored_ore[ORE.name]--
-	if(!contents)
+	if(!contents.len)
 		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
