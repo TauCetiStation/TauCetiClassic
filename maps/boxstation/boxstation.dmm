@@ -43828,7 +43828,7 @@
 	info = "Wherah is BANANAS?";
 	info_links = "Clown Memo"
 	},
-/obj/item/toy/prize/honk,
+/obj/item/toy/mecha/honk,
 /obj/item/weapon/reagent_containers/spray/watergun,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -45227,7 +45227,7 @@
 /area/station/bridge/teleporter)
 "bGv" = (
 /obj/structure/closet/crate,
-/obj/item/toy/prize/honk,
+/obj/item/toy/mecha/honk,
 /obj/item/weapon/coin/bananium,
 /obj/item/weapon/coin/bananium{
 	pixel_x = -3

@@ -47278,7 +47278,7 @@
 /area/station/security/forensic_office)
 "ohw" = (
 /obj/structure/closet/crate,
-/obj/item/toy/prize/honk,
+/obj/item/toy/mecha/honk,
 /obj/item/weapon/coin/bananium,
 /obj/item/weapon/coin/bananium,
 /obj/item/weapon/coin/bananium,
@@ -58784,7 +58784,7 @@
 	info = "Wherah is BANANAS?";
 	info_links = "Clown Memo"
 	},
-/obj/item/toy/prize/honk,
+/obj/item/toy/mecha/honk,
 /obj/machinery/camera{
 	c_tag = "Theater Closet"
 	},
