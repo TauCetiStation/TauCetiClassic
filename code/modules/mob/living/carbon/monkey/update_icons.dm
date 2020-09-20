@@ -101,10 +101,10 @@
 
 /mob/living/carbon/monkey/diona/update_inv_back(update_icons = TRUE)
 	if(back)
-		if(back.icon_custom)
-			overlays_standing[M_BACK_LAYER] = image("icon" = back.icon_custom, "icon_state" = "[back.icon_state]_mob")
-		else
-			overlays_standing[M_BACK_LAYER] = image("icon" = 'icons/mob/diona_back.dmi', "icon_state" = "[back.icon_state]")
+		var/icon_path = 'icons/mob/back.dmi'
+		if(istype(back, /obj/item/weapon/storage/backpack) || istype(back, /obj/item/weapon/bedsheet) || istype(back, /obj/item/weapon/tank))
+			icon_path = 'icons/mob/diona_back.dmi'
+		overlays_standing[M_BACK_LAYER] = image("icon" = icon_path, "icon_state" = "[back.icon_state]")
 		back.screen_loc = ui_monkey_back
 	else
 		overlays_standing[M_BACK_LAYER] = null
