@@ -469,86 +469,14 @@
 	if(src in user)
 		to_chat(user, "[reagents.total_volume] unit\s of water left!")
 
-
-/*
- * Mech prizes
- */
-/obj/item/toy/prize
+/obj/random/mech_toy
+	name = "Random Mech Toy"
+	desc = "This is a random mech toy."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	w_class = ITEM_SIZE_SMALL
-	var/cooldown = 0
 
-//all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user)
-	if(cooldown < world.time - 8)
-		to_chat(user, "<span class='notice'>You play with [src].</span>")
-		playsound(user, 'sound/mecha/mechstep.ogg', VOL_EFFECTS_MASTER, 20)
-		cooldown = world.time
-
-/obj/item/toy/prize/attack_hand(mob/user)
-	if(loc == user)
-		if(cooldown < world.time - 8)
-			to_chat(user, "<span class='notice'>You play with [src].</span>")
-			playsound(user, 'sound/mecha/mechturn.ogg', VOL_EFFECTS_MASTER, 20)
-			cooldown = world.time
-			return
-	..()
-
-/obj/item/toy/prize/ripley
-	name = "toy ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11."
-
-/obj/item/toy/prize/fireripley
-	name = "toy firefighting ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11."
-	icon_state = "fireripleytoy"
-
-/obj/item/toy/prize/deathripley
-	name = "toy deathsquad ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11."
-	icon_state = "deathripleytoy"
-
-/obj/item/toy/prize/gygax
-	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11."
-	icon_state = "gygaxtoy"
-
-
-/obj/item/toy/prize/durand
-	name = "toy durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11."
-	icon_state = "durandprize"
-
-/obj/item/toy/prize/honk
-	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11."
-	icon_state = "honkprize"
-
-/obj/item/toy/prize/marauder
-	name = "toy marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11."
-	icon_state = "marauderprize"
-
-/obj/item/toy/prize/seraph
-	name = "toy seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11."
-	icon_state = "seraphprize"
-
-/obj/item/toy/prize/mauler
-	name = "toy mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11."
-	icon_state = "maulerprize"
-
-/obj/item/toy/prize/odysseus
-	name = "toy odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11."
-	icon_state = "odysseusprize"
-
-/obj/item/toy/prize/phazon
-	name = "toy phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11."
-	icon_state = "phazonprize"
+/obj/random/mech_toy/item_to_spawn()
+	return pick(subtypesof(/obj/item/toy/mecha))
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -1164,6 +1092,11 @@ Owl & Griffin toys
 	Flip()
 
 
+/obj/item/toy/prize
+	icon = 'icons/obj/toy.dmi'
+	w_class = ITEM_SIZE_SMALL
+	var/cooldown = 0
+
 /*
  * Poly prizes
  */
@@ -1425,17 +1358,17 @@ Owl & Griffin toys
 	icon_state = "random_toy"
 
 /obj/random/randomfigure/item_to_spawn()
-	var/list/figures = list(	/obj/item/toy/prize/ripley						= 1,
-							/obj/item/toy/prize/fireripley					= 1,
-							/obj/item/toy/prize/deathripley					= 1,
-							/obj/item/toy/prize/gygax						= 1,
-							/obj/item/toy/prize/durand						= 1,
-							/obj/item/toy/prize/honk						= 1,
-							/obj/item/toy/prize/marauder					= 1,
-							/obj/item/toy/prize/seraph						= 1,
-							/obj/item/toy/prize/mauler						= 1,
-							/obj/item/toy/prize/odysseus					= 1,
-							/obj/item/toy/prize/phazon						= 1,
+	var/list/figures = list(	/obj/item/toy/mecha/ripley				= 1,
+							/obj/item/toy/mecha/fireripley				= 1,
+							/obj/item/toy/mecha/deathripley			= 1,
+							/obj/item/toy/mecha/gygax					= 1,
+							/obj/item/toy/mecha/durand					= 1,
+							/obj/item/toy/mecha/honk					= 1,
+							/obj/item/toy/mecha/marauder				= 1,
+							/obj/item/toy/mecha/seraph					= 1,
+							/obj/item/toy/mecha/mauler					= 1,
+							/obj/item/toy/mecha/odysseus				= 1,
+							/obj/item/toy/mecha/phazon					= 1,
 							/obj/item/toy/waterflower						= 1,
 							/obj/item/toy/nuke								= 1,
 							/obj/item/toy/minimeteor						= 2,

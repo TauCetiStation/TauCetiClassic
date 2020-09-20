@@ -66,3 +66,7 @@
 #define HOSTILE_STANCE_ATTACK 	 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 	 5
+
+//the define for visible message range in combat
+#define COMBAT_MESSAGE_RANGE 3
+#define DEFAULT_MESSAGE_RANGE 7
