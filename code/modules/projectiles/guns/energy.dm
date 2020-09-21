@@ -63,9 +63,9 @@
 	if(ammo_type.len <= 1)
 		return
 
+	select++
 	if(select > ammo_type.len)
 		select = 1
-	select++
 
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
