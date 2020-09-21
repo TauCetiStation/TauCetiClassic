@@ -33,3 +33,13 @@
 	new type(src)
 	if(length(contents))
 		return pick(contents)
+
+// creates random mech toy
+/obj/random/mech_toy
+	name = "Random Mech Toy"
+	desc = "This is a random mech toy."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "ripleytoy"
+
+/obj/random/mech_toy/item_to_spawn()
+	return pick(subtypesof(/obj/item/toy/mecha))

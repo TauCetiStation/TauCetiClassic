@@ -469,15 +469,6 @@
 	if(src in user)
 		to_chat(user, "[reagents.total_volume] unit\s of water left!")
 
-/obj/random/mech_toy
-	name = "Random Mech Toy"
-	desc = "This is a random mech toy."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "ripleytoy"
-
-/obj/random/mech_toy/item_to_spawn()
-	return pick(subtypesof(/obj/item/toy/mecha))
-
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
