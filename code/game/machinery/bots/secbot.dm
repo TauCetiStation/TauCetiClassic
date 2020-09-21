@@ -74,10 +74,6 @@
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-	//SECHUD
-	var/datum/atom_hud/secsensor = global.huds[DATA_HUD_SECURITY]
-	secsensor.add_hud_to(src)
-
 	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()
