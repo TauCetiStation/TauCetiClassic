@@ -40,6 +40,11 @@
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
 
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
+
 	update_nearby_tiles(need_rebuild=1)
 
 

@@ -76,11 +76,6 @@ var/list/airlock_overlays = list()
 	if(dir)
 		src.dir = dir
 
-	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_electrified()
-
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
