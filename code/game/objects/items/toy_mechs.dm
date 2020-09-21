@@ -248,7 +248,7 @@
 	to_chat(user, "<span class='notice'>This toy's special attack is [special_attack_cry], [special_attack_type_message] </span>")
 	if(in_combat)
 		to_chat(user, "<span class='notice'>This toy has a maximum health of [max_combat_health]. Currently, it's [combat_health].</span>")
-		to_chat(user, "<span class='notice'>Its special move light is [special_attack_cooldown? "flashing red." : "green and is ready!"]</span>")
+		to_chat(user, "<span class='notice'>Its special move light is [special_attack_cooldown ? "flashing red." : "green and is ready!"]</span>")
 	else
 		to_chat(user, "<span class='notice'>This toy has a maximum health of [max_combat_health].</span>")
 
@@ -280,7 +280,7 @@
 						"<span class='hear'> You hear hard plastic smacking into hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 
 	/// Who's in control of the defender (src)?
-	var/mob/living/carbon/src_controller = (opponent)? opponent : attacker_controller
+	var/mob/living/carbon/src_controller = (opponent) ? opponent : attacker_controller
 	/// How long has the battle been going?
 	var/battle_length = 0
 
