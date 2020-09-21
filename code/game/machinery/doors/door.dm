@@ -8,6 +8,7 @@
 	density = 1
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"

@@ -31,8 +31,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		sec_hud_set_implants()
-
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -110,6 +108,7 @@
 			IMP.loc = O
 			IMP.imp_in = O
 			IMP.implanted = TRUE
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -167,8 +166,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		sec_hud_set_implants()
-
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
@@ -252,7 +249,7 @@
 			if(BP)
 				IMP.part = BP
 				BP.implants += IMP
-		sec_hud_set_implants()
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)

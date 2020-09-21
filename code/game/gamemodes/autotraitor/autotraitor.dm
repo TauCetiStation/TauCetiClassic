@@ -58,7 +58,7 @@
 			continue
 		if(istype(traitor))
 			traitor.special_role = "traitor"
-			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor)
+			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
 
 //	if(!traitors.len)
 //		return 0

@@ -100,14 +100,14 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
-	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", boss)
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", boss.current)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
-	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", boss)
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", boss.current)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
