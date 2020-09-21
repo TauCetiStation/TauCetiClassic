@@ -65,7 +65,6 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		add_antag_hud(antag_hud_type, antag_hud_name, synd_mind.current)
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
 	return TRUE
@@ -178,6 +177,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", syndicate.current)
 	if (you_are)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)

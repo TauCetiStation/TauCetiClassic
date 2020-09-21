@@ -77,8 +77,6 @@
 		abductors |= scientist
 		scientists[team_number] = scientist
 		agents[team_number] = agent
-		add_antag_hud(antag_hud_type, antag_hud_name, scientist.current)
-		add_antag_hud(antag_hud_type, antag_hud_name, agent.current)
 
 		return 1
 	return 0
@@ -131,6 +129,8 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
+		add_antag_hud(antag_hud_type, antag_hud_name, scientist.current)
+		add_antag_hud(antag_hud_type, antag_hud_name, agent.current)
 
 	return ..()
 

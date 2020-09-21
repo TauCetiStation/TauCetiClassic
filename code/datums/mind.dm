@@ -767,7 +767,6 @@
 				current.verbs += /mob/living/carbon/human/proc/RevConvert
 				SSticker.mode.head_revolutionaries += src
 				special_role = "Head Revolutionary"
-				add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", current)
 				log_admin("[key_name(usr)] has head-rev'ed [current].")
 
 			if("autoobjectives")
@@ -1013,7 +1012,6 @@
 						current.real_name = "Gorlex Maradeurs Operative #[SSticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
 					current.faction = "syndicate"
-					add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", current)
 					to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
 
 					if(config.objectives_disabled)
@@ -1371,7 +1369,6 @@
 	if(!(src in SSticker.mode.traitors))
 		SSticker.mode.traitors += src
 		special_role = "traitor"
-		add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", current)
 		if (!config.objectives_disabled)
 			SSticker.mode.forge_traitor_objectives(src)
 		SSticker.mode.finalize_traitor(src)
@@ -1385,7 +1382,6 @@
 		else
 			current.real_name = "Gorlex Maradeurs Operative #[SSticker.mode.syndicates.len-1]"
 		special_role = "Syndicate"
-		add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", current)
 		current.faction = "syndicate"
 		assigned_role = "MODE"
 		to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
@@ -1413,7 +1409,6 @@
 		SSticker.mode.changelings += src
 		SSticker.mode.grant_changeling_powers(current)
 		special_role = "Changeling"
-		add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", current)
 		if(!config.objectives_disabled)
 			SSticker.mode.forge_changeling_objectives(src)
 		SSticker.mode.greet_changeling(src)
@@ -1422,7 +1417,6 @@
 	if(!(src in SSticker.mode.wizards))
 		SSticker.mode.wizards += src
 		special_role = "Wizard"
-		add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", current)
 		assigned_role = "MODE"
 		//SSticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
@@ -1486,7 +1480,6 @@
 			SSticker.mode.greet_revolutionary(src,0)
 	SSticker.mode.head_revolutionaries += src
 	special_role = "Head Revolutionary"
-	add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", current)
 
 	SSticker.mode.forge_revolutionary_objectives(src)
 	SSticker.mode.greet_revolutionary(src,0)

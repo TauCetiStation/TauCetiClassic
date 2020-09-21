@@ -53,7 +53,6 @@
 		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
 		traitor.special_role = "traitor"
-		add_antag_hud(antag_hud_type, antag_hud_name, traitor.current)
 		antag_candidates.Remove(traitor)
 
 	if(!traitors.len)
@@ -146,6 +145,7 @@
 			traitor.objectives += dehead_objective
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
+	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
 	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
 	if (!config.objectives_disabled)
 		var/obj_count = 1

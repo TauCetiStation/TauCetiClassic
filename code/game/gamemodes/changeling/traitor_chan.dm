@@ -37,7 +37,6 @@
 	for(var/datum/mind/changeling in changelings)
 		grant_changeling_powers(changeling.current)
 		changeling.special_role = "Changeling"
-		add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", changeling.current)
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)

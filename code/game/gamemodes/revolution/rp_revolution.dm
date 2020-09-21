@@ -84,7 +84,6 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
-		add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 
@@ -95,13 +94,13 @@
 
 /datum/game_mode/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
+	add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 	if (you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in rev_mind.objectives)
 			to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			rev_mind.special_role = "Head Revolutionary"
-			add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 			obj_count++
 	else
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")

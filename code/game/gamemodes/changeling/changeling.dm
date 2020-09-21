@@ -76,7 +76,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-		add_antag_hud(antag_hud_type, antag_hud_name, changeling.current)
 
 	return ..()
 
@@ -119,7 +118,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
-	add_antag_hud(antag_hud_type, antag_hud_name, changeling.current)
+	add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", changeling.current)
 	changeling.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if (you_are)
 		to_chat(changeling.current, "<B><span class='warning'>You are a changeling!</span></B>")

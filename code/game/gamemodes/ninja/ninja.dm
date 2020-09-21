@@ -41,7 +41,6 @@
 		modePlayer += ninja
 		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		ninja.special_role = "Ninja"
-		add_antag_hud(antag_hud_type, antag_hud_name, ninja.current)
 		ninja.original = ninja.current
 		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--

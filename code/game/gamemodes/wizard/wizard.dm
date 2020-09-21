@@ -35,7 +35,6 @@
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
-	add_antag_hud(antag_hud_type, antag_hud_name, wizard.current)
 	wizard.original = wizard.current
 	return TRUE
 	
@@ -131,6 +130,7 @@
 
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", wizard.current)
 	if (you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
