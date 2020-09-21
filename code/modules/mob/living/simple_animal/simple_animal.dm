@@ -103,6 +103,8 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/simple_animal/updatehealth()
+	med_hud_set_health()
+	med_hud_set_status()
 	return
 
 /mob/living/simple_animal/Life()
