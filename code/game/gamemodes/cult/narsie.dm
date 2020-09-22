@@ -146,8 +146,10 @@
 
 /obj/singularity/narsie/large/atom_init()
 	. = ..()
-	to_chat(world, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
-	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			to_chat(M, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
+			M.playsound_local(null, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	var/area/A = get_area(src)
 	if(A)
