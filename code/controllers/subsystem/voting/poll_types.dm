@@ -14,6 +14,7 @@
 	can_revote = TRUE
 	can_unvote = FALSE
 	see_votes = FALSE
+	detailed_result = FALSE
 
 	cooldown = 60 MINUTES
 	minimum_win_percentage = 0.75
@@ -71,6 +72,7 @@
 	can_revote = TRUE
 	can_unvote = TRUE
 	see_votes = FALSE
+	detailed_result = FALSE
 
 	minimum_win_percentage = 0.501
 
