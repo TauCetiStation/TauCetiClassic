@@ -169,6 +169,7 @@
 				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
 					mecha_brawl(P, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
 					P.wants_to_battle = FALSE
+					wants_to_battle = FALSE
 					return
 
 		//extend the offer of battle to the other mech
