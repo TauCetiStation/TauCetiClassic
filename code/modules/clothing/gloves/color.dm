@@ -44,6 +44,12 @@
 	name = "chief engineer's gloves"
 	item_color = "chief"			//Exists for washing machines.
 
+/obj/item/clothing/gloves/white
+	name = "white gloves"
+	desc = "These look pretty fancy."
+	icon_state = "latex"
+	item_state = "lgloves"
+	item_color = "white"
 
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"

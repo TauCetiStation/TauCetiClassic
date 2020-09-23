@@ -48,7 +48,7 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color = "white"
+	item_color = "mime"
 	germ_level = 0
 
 /obj/item/clothing/gloves/latex/nitrile
