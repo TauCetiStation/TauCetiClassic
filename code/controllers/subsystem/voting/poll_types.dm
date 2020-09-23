@@ -162,8 +162,8 @@
 /datum/poll/gamemode/on_start()
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		pregame = TRUE
-		if(SSticker.timeLeft < config.vote_period)
-			SSticker.timeLeft = config.vote_period + 10 SECONDS
+		if(SSticker.timeLeft < config.vote_period + 15 SECONDS)
+			SSticker.timeLeft = config.vote_period + 15 SECONDS
 			to_chat(world, "<b>Game start has been delayed due to voting.</b>")
 
 /datum/poll/gamemode/on_end()
