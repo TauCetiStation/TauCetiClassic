@@ -75,7 +75,7 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	name = sanitize(name)
+	name = sanitize(name, encode = FALSE)
 	var/data
 
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
