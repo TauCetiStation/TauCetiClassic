@@ -140,9 +140,9 @@
   */
 /obj/item/toy/mecha/attackby(obj/item/user_toy, mob/living/user)
 	if(istype(user_toy, /obj/item/toy/mecha))
-		var/obj/item/toy/mecha/P = user_toy
-		if(check_battle_start(user, P))
-			mecha_brawl(P, user)
+		var/obj/item/toy/mecha/M = user_toy
+		if(check_battle_start(user, M))
+			mecha_brawl(M, user)
 	..()
 
 /**
@@ -161,14 +161,14 @@
 
 		for(var/obj/item/I in list(target.l_hand, target.r_hand))
 			if(istype(I, /obj/item/toy/mecha)) //if you attack someone with a mech who's also holding a mech, offer to battle them
-				var/obj/item/toy/mecha/P = I
-				if(!P.check_battle_start(target, null, user)) //check if the attacker mech is ready
+				var/obj/item/toy/mecha/M = I
+				if(!M.check_battle_start(target, null, user)) //check if the attacker mech is ready
 					break
 
 				//slap them with the metaphorical white glove
-				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
-					mecha_brawl(P, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
-					P.wants_to_battle = FALSE
+				if(M.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
+					mecha_brawl(M, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
+					M.wants_to_battle = FALSE
 					wants_to_battle = FALSE
 					return
 
