@@ -38,11 +38,18 @@
 	SSvote.active_vote = src
 	return TRUE
 
-/datum/poll/proc/can_force()
-	return TRUE
+/datum/poll/proc/get_force_blocking_reason()
+	return
 
 /datum/poll/proc/can_start()
-	return (world.time >= next_vote)
+	return !get_blocking_reason()
+
+/datum/poll/proc/get_blocking_reason()
+	. = get_force_blocking_reason()
+	if(.)
+		return
+	if(world.time < next_vote)
+		return "Vote Cooldown: [round((next_vote - world.time) / 600)] Minutes"
 
 /datum/poll/proc/on_start()
 	return

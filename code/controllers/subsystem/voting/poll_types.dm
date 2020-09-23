@@ -21,18 +21,20 @@
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
-/datum/poll/restart/can_force()
+/datum/poll/restart/get_force_blocking_reason()
 	. = ..()
-	if(!world.has_round_started() || world.has_round_finished())
-		return FALSE
+	if(!world.has_round_started())
+		return "Round has not started"
+	if(world.has_round_finished())
+		return "Round has finished"
 
-/datum/poll/restart/can_start()
+/datum/poll/restart/get_blocking_reason()
 	. = ..()
-	if(!world.has_round_started() || world.has_round_finished())
-		return FALSE
+	if(.)
+		return
 	for(var/client/C in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
-			return FALSE
+			return "Admins Online"
 
 /datum/poll/restart/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
@@ -81,17 +83,23 @@
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
-/datum/poll/crew_transfer/can_force()
+/datum/poll/crew_transfer/get_force_blocking_reason()
 	. = ..()
-	if(!world.has_round_started() || world.has_round_finished())
-		return FALSE
+	if(.)
+		return
+	if(!world.has_round_started())
+		return "Round has not started"
+	if(world.has_round_finished())
+		return "Round has finished"
 
-/datum/poll/crew_transfer/can_start()
+/datum/poll/crew_transfer/get_blocking_reason()
 	. = ..()
-	if(!world.has_round_started() || world.has_round_finished() || SSshuttle.online || SSshuttle.location != 0)
-		return FALSE
+	if(.)
+		return
+	if(SSshuttle.online || SSshuttle.location != 0)
+		return "Shuttle is online"
 	if(security_level >= SEC_LEVEL_RED)
-		return FALSE
+		return "Security Level is RED"
 
 /datum/poll/crew_transfer/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
@@ -128,15 +136,17 @@
 
 	var/pregame = FALSE
 
-/datum/poll/gamemode/can_force()
+/datum/poll/gamemode/get_force_blocking_reason()
 	. = ..()
+	if(.)
+		return
 	if(!world.is_round_preparing())
-		return FALSE
+		return "Pregame only"
 
-/datum/poll/gamemode/can_start()
+/datum/poll/gamemode/get_blocking_reason()
 	. = ..()
-	if(!world.is_round_preparing())
-		return FALSE
+	if(.)
+		return
 
 /datum/poll/gamemode/init_choices()
 	for(var/M in config.votable_modes)
