@@ -102,6 +102,8 @@ SUBSYSTEM_DEF(vote)
 			. += "You <b>can remove</b> vote.<br>"
 		else
 			. += "You <b>can't remove</b> vote.<br>"
+		if(active_vote.minimum_win_percentage)
+			. += "A minimum <b>[active_vote.minimum_win_percentage * 100]%</b> is required to win the option."
 
 		. += "<hr>"
 		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
