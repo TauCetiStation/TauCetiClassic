@@ -32,7 +32,7 @@
 	glasses_user = user
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
-	if(!istype(user))
+	if(!istype(user) || user.glasses)
 		return
 	disable_hud(user)
 	glasses_user = null
@@ -122,7 +122,7 @@
 	enable_hud(user)
 
 /obj/item/clothing/glasses/sunglasses/hud/dropped(mob/living/carbon/human/user)
-	if(!istype(user))
+	if(!istype(user) || user.glasses)
 		return
 	glasses_user = null
 	disable_hud(user)
