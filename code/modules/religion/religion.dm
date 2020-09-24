@@ -185,9 +185,8 @@
 		altar_icon_state = altar_info_by_name["Default"]
 
 // This proc converts all related objects in areatype to this reigion's liking.
-/datum/religion/proc/religify(area_types)
-	var/list/to_religify = get_area_all_atoms(areatype)
-
+/datum/religion/proc/religify()
+	var/list/to_religify = get_area_all_atoms(area_types)
 	for(var/atom/A in to_religify)
 		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpetsymbol")
 			A.dir = carpet_dir
