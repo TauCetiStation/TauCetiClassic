@@ -15,8 +15,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 /datum/paiController
 	var/list/pai_candidates = list()
 
-	var/askDelay = 10 * 60 * 1	// One minute [ms * sec * min]
-
 /datum/paiController/Topic(href, href_list[])
 	if(href_list["download"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"])
@@ -217,7 +215,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	M << browse(dat, "window=paiRecruit;size=580x580;")
 
 /datum/paiController/proc/findPAI(obj/item/device/paicard/p, mob/user)
-	requestRecruits()
+	if(!p.searching)
+		p.searching = TRUE
+		addtimer(CALLBACK(p, /obj/item/device/paicard.proc/reset_searching), 3 MINUTES)
+		requestRecruits()
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in paiController.pai_candidates)
 		if(c.ready)

@@ -7,7 +7,6 @@
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
-	var/askDelay = 10 * 60 * 1
 	mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
