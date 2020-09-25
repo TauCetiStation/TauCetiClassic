@@ -10,6 +10,7 @@
 	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
 
+	var/datum/religion/religion
 	var/religify_next = list()
 
 	var/list/rad_choices

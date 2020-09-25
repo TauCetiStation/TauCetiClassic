@@ -21,6 +21,8 @@
 	// It's fucking science! I ain't gotta explain this.
 	var/datum/experiment_data/experiments
 
+	var/look_piety = FALSE
+
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
 	experiments = new
@@ -30,7 +32,7 @@
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
-	if(!global.chaplain_religion || global.chaplain_religion.aspects.len == 0)
+	if(!religion || religion.aspects.len == 0)
 		return
 
 	var/can_i_see = FALSE
@@ -45,11 +47,15 @@
 	if(!can_i_see)
 		return
 
-	msg += "<span class='notice'>The sect currently has [round(global.chaplain_religion.favor)] favor with [pick(global.chaplain_religion.deity_names)].\n</span>"
+	var/piety = ""
+	if(look_piety)
+		piety = "<span class='piety'>and [round(religion.piety)] piety</span>"
+
+	msg += "<span class='notice'>The sect currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
 
 	if(religion.rites_info.len != 0 || religion.rites_by_name.len != 0)
 		msg += "List of available Rites:"
-		for(var/i in global.chaplain_religion.rites_info)
+		for(var/i in religion.rites_info)
 			msg += "\n[i]"
 
 	to_chat(user, msg)
@@ -113,7 +119,7 @@
 				max_points = points
 
 		if(max_points > MIN_FAVOUR_GAIN)
-			global.chaplain_religion.adjust_favor(max_points, user)
+			religion.adjust_favor(max_points, user)
 			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
 			sacrificed = TRUE
 
@@ -205,7 +211,8 @@
 		return
 
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)
-		if(!global.chaplain_religion)
+		var/obj/item/weapon/storage/bible/B = I
+		if(!religion)
 			to_chat(user, "<span class='warning'>It appears the game hasn't even started! Stop right there!</span>")
 			return
 
@@ -220,10 +227,15 @@
 			return
 
 		sect = available_options[sect_select]
-		religion = global.chaplain_religion
+		religion = B.religion
 		religion.altar = src
 
 		sect.on_select(user, religion)
+		for(var/rite in religion.rites_by_name)
+			var/datum/religion_rites/RR = religion.rites_by_name[rite]
+			if(RR.piety_cost)
+				look_piety = TRUE
+				break
 		return
 
 	// Except when it is not.
@@ -252,7 +264,7 @@
 		if(!sect.starter)
 			continue
 		if(change_preset_name)
-			sect.name += global.chaplain_religion.name
+			sect.name += religion.name
 		variants[sect.name] = sect
 
 	return variants

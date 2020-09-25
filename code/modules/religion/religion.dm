@@ -63,8 +63,11 @@
 	var/favor = 0
 	// The max amount of favor the religion can have
 	var/max_favor = 3000
-	// The amount of favor generated passively.
+	// The amount of favor generated passively
 	var/passive_favor_gain = 0.0
+
+	// More important than favor, used in very expensive rites
+	var/piety = 0
 
 	// Chosen aspects.
 	var/list/aspects = list()
@@ -205,11 +208,13 @@
 	bible_info.apply_to(B)
 	B.deity_name = pick(deity_names)
 	B.god_lore = lore
+	B.religion = src
 	return B
 
 // Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
 /datum/religion/proc/adjust_favor(amount = 0, mob/living/L)
 	. = amount
+	piety += amount
 	if(favor + amount < 0)
 		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
 	if(favor + amount > max_favor)
@@ -283,6 +288,8 @@
 				name_entry += " - [RI.desc]"
 			if(RI.favor_cost)
 				name_entry += " ([RI.favor_cost] favor)"
+			if(RI.favor_cost)
+				name_entry += "<span class='piety'([RI.piety_cost] piety)</span>"
 
 			rites_info += "[name_entry]"
 

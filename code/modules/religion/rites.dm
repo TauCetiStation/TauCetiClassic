@@ -19,6 +19,8 @@
 	var/invoke_msg
 	/// Cost of rite in favor
 	var/favor_cost = 0
+	/// Cost of rite in piety
+	var/piety_cost = 0
 	/// Needed aspects to get the rite.
 	var/list/needed_aspects
 
