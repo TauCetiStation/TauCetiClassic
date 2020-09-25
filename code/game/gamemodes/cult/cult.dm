@@ -1,10 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-/datum/game_mode
-	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.cult)
+	return M && (M in global.cult_religion.members)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
@@ -14,7 +10,7 @@
 			return FALSE
 		if(mind.current.get_species() == GOLEM)
 			return FALSE
-	if(ismindshielded(mind.current))
+	if(ismindshielded(mind.current) || isloyal(mind.current))
 		return FALSE
 	return TRUE
 
@@ -39,6 +35,8 @@
 	restricted_species_flags = list(NO_BLOOD)
 
 	var/datum/mind/sacrifice_target = null
+	var/list/datum/mind/started_cultists = list()
+
 	var/finished = 0
 
 	var/list/startwords = list("blood","join","self","hell")
@@ -52,11 +50,9 @@
 	var/const/acolytes_needed = 5 //for the survive objective
 	var/acolytes_survived = 0
 
-
 /datum/game_mode/cult/announce()
 	to_chat(world, "<B>The current game mode is - Cult!</B>")
 	to_chat(world, "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>")
-
 
 /datum/game_mode/cult/pre_setup()
 	if(!config.objectives_disabled)
@@ -79,21 +75,21 @@
 			break
 		var/datum/mind/cultist = pick(antag_candidates)
 		antag_candidates -= cultist
-		cult += cultist
+		started_cultists += cultist
 
-	return (cult.len >= required_enemies)
+	return (started_cultists.len >= required_enemies)
 
 
 /datum/game_mode/cult/post_setup()
-	setup_religion(/datum/religion/cult)
-	modePlayer += cult
+	create_religion(/datum/religion/cult)
+	modePlayer += started_cultists
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()
 		listclearnulls(possible_targets)
 
 		if(!possible_targets.len)
 			for(var/mob/living/carbon/human/player in player_list)
-				if(player.mind && !(player.mind in cult))
+				if(player.mind && !(player.mind in started_cultists))
 					possible_targets += player.mind
 
 		listclearnulls(possible_targets)
@@ -101,19 +97,19 @@
 		if(length(possible_targets))
 			sacrifice_target = pick(possible_targets)
 
-	for(var/datum/mind/cult_mind in cult)
+	for(var/datum/mind/cult_mind in started_cultists)
+		global.cult_religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
 		equip_cultist(cult_mind.current)
 		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
-		grant_runeword(cult_mind.current)
+
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
+
 	update_all_cult_icons()
-
 	return ..()
-
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
@@ -133,7 +129,6 @@
 	to_chat(cult_mind.current, "The convert rune is join blood self")
 	cult_mind.memory += "The convert rune is join blood self<BR>"
 
-
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
 		return
@@ -143,53 +138,16 @@
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.mutations.Remove(CLUMSY)
 
-
-	var/obj/item/weapon/paper/talisman/supply/T = new(mob)
-	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE,
-		"left hand" = SLOT_L_HAND,
-		"right hand" = SLOT_R_HAND,
-	)
-	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
-		to_chat(mob, "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.")
-	else
-		var/obj/item/weapon/paper/talisman/T2 = new(mob)
-		T2.power = new /datum/cult/communicate(T2)
-		mob.equip_in_one_of_slots(T2, slots)
-		to_chat(mob, "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others.")
-		mob.update_icons()
-		return 1
-
-
-/datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, word)
-	if (!word)
-		if(length(startwords) > 0)
-			word = pick_n_take(startwords)
-	return ..(cult_mob, word)
-
-
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
-	if(!cultwords["travel"])
-		runerandom()
-	if (!word)
-		word = pick(cultwords)
-	var/wordexp = "[cultwords[word]] is [word]..."
-	to_chat(cult_mob, "<span class = 'cult'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
-	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0)
-
+	global.cult_religion.give_tome(mob)
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
-	if (!istype(cult_mind))
-		return 0
-	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+	if(!istype(cult_mind))
+		return FALSE
+	if(is_convertable_to_cult(cult_mind))
+		global.cult_religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
 		cult_mind.current.Paralyse(5)
-		cult += cult_mind
 		update_cult_icons_added(cult_mind)
-		return 1
-
+		return TRUE
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
@@ -197,36 +155,33 @@
 	if (!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
 
-
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
-	if(cult_mind in cult)
-		cult -= cult_mind
-		cult_mind.current.Paralyse(5)
-		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
-		cult_mind.memory = ""
-		update_cult_icons_removed(cult_mind)
-		if(show_message)
-			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
+	global.cult_religion.remove_member(cult_mind.current)
+	cult_mind.current.Paralyse(5)
+	to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
+	cult_mind.memory = ""
+	update_cult_icons_removed(cult_mind)
+	if(show_message)
+		cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
 
 /datum/game_mode/proc/update_all_cult_icons()
-	for(var/datum/mind/cultist in cult)
+	for(var/datum/mind/cultist in global.cult_religion.members)
 		if(cultist.current && cultist.current.client)
 			for(var/image/I in cultist.current.client.images)
 				if(I.icon_state == "cult")
 					cultist.current.client.images -= I
 					qdel(I)
-	for(var/datum/mind/cultist in cult)
+	for(var/datum/mind/cultist in global.cult_religion.members)
 		if(cultist.current && cultist.current.client)
-			for(var/datum/mind/cultist_1 in cult)
+			for(var/datum/mind/cultist_1 in global.cult_religion.members)
 				if(cultist_1.current)
 					var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
 					cultist.current.client.images += I
 
-
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
 	if(!cult_mind.current)
 		return 0
-	for(var/datum/mind/cultist in cult)
+	for(var/datum/mind/cultist in global.cult_religion.members)
 		if(cultist.current && cultist.current.client)
 			var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
 			cultist.current.client.images += I
@@ -237,7 +192,7 @@
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
 	if(!cult_mind.current)
 		return 0
-	for(var/datum/mind/cultist in cult)
+	for(var/datum/mind/cultist in global.cult_religion.members)
 		if(cultist.current && cultist.current.client)
 			for(var/image/I in cultist.current.client.images)
 				if(I.icon_state == "cult" && I.loc == cult_mind.current)
@@ -249,14 +204,12 @@
 				cult_mind.current.client.images -= I
 				qdel(I)
 
-
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in human_list)
 		if(!is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
-
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
@@ -270,10 +223,9 @@
 
 	return cult_fail //if any objectives aren't met, failure
 
-
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
-	for(var/datum/mind/cult_mind in cult)
+	for(var/datum/mind/cult_mind in global.cult_religion.members)
 		if (cult_mind.current && cult_mind.current.stat!=2)
 			var/area/A = get_area(cult_mind.current )
 			if ( is_type_in_typecache(A, centcom_areas_typecache))
@@ -282,7 +234,6 @@
 		return 0
 	else
 		return 1
-
 
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
@@ -343,9 +294,9 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
+	if(global.cult_religion.members.len || (SSticker && istype(SSticker.mode, /datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")
-		for(var/datum/mind/cultist in cult)
+		for(var/datum/mind/cultist in global.cult_religion.members)
 			text += printplayerwithicon(cultist)
 
 	if(text)

@@ -20,7 +20,7 @@
 				if((mind in SSticker.mode.revolutionaries) || (mind in SSticker.mode.head_revolutionaries))
 					SSticker.mode.update_all_rev_icons()
 			if("cult")
-				if(mind in SSticker.mode.cult)
+				if(mind in global.cult_religion.members)
 					SSticker.mode.update_all_cult_icons()
 			if("nuclear emergency")
 				if(mind in SSticker.mode.syndicates)

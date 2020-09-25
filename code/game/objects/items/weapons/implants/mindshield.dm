@@ -30,7 +30,7 @@
 		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
 		return FALSE
 
-	if(H.mind && (H.mind in SSticker.mode.cult))
+	if(H.mind && (H.mind in global.cult_religion.members))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else

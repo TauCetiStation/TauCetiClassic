@@ -96,7 +96,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/list/possible_bad_dudes = list(
 		current_mode.traitors,current_mode.head_revolutionaries,
 		current_mode.head_revolutionaries,
-		current_mode.cult,current_mode.wizards,
+		global.cult_religion.members,current_mode.wizards,
 		current_mode.changelings,current_mode.syndicates
 		)
 	for(var/list in possible_bad_dudes)//For every possible antagonist type.

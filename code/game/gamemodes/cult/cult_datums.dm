@@ -638,7 +638,7 @@ var/list/cult_runes = list()
 
 /datum/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in global.cult_religion.members)
 		if(iscarbon(H.current))
 			cultists += H.current
 	var/list/acolytes = nearest_cultists()
@@ -781,13 +781,7 @@ var/list/cult_runes = list()
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
 
 		else
-			var/prob_divider = max(1 + H.stat, 2)
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>")
-			if(prob(victims[H] / prob_divider))
-				SSticker.mode.grant_runeword(user)
-			else
-				to_chat(user, "<span class='cult'>However, this soul was not enough to gain His favor.</span>")
-
 			if(isrobot(H))
 				H.dust() //To prevent the MMI from remaining
 			else
@@ -822,7 +816,7 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in global.cult_religion.members)
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
 
@@ -837,7 +831,7 @@ var/list/cult_runes = list()
 
 /datum/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
+	for(var/datum/mind/H in global.cult_religion.members)
 		if (iscarbon(H.current))
 			cultists += H.current
 

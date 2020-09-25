@@ -250,7 +250,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if (src in SSticker.mode.cult)
+		else if (src in global.cult_religion.members)
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 /*
@@ -684,8 +684,8 @@
 				SSticker.mode.update_rev_icons_removed(src)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(src in SSticker.mode.cult)
-				SSticker.mode.cult -= src
+			if(src in global.cult_religion.members)
+				global.cult_religion.members -= src
 				SSticker.mode.update_cult_icons_removed(src)
 				special_role = null
 				var/datum/game_mode/cult/cult = SSticker.mode
@@ -869,8 +869,8 @@
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 		switch(href_list["cult"])
 			if("clear")
-				if(src in SSticker.mode.cult)
-					SSticker.mode.cult -= src
+				if(src in global.cult_religion.members)
+					global.cult_religion.members -= src
 					SSticker.mode.update_cult_icons_removed(src)
 					special_role = null
 					var/datum/game_mode/cult/cult = SSticker.mode
@@ -881,8 +881,8 @@
 					memory = ""
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
-				if(!(src in SSticker.mode.cult))
-					SSticker.mode.cult += src
+				if(!(src in global.cult_religion.members))
+					global.cult_religion.members += src
 					SSticker.mode.update_all_cult_icons()
 					special_role = "Cultist"
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
@@ -1422,8 +1422,8 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.cult += src
+	if(!(src in global.cult_religion.members))
+		global.cult_religion.members += src
 		SSticker.mode.update_all_cult_icons()
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")

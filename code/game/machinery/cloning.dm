@@ -218,7 +218,7 @@
 		SSticker.mode.update_all_gang_icons()
 	if(H.mind in SSticker.mode.syndicates)
 		SSticker.mode.update_all_synd_icons()
-	if (H.mind in SSticker.mode.cult)
+	if (H.mind in global.cult_religion.members)
 		SSticker.mode.add_cultist(src.occupant.mind)
 		SSticker.mode.update_all_cult_icons() //So the icon actually appears
 

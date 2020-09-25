@@ -326,7 +326,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!cultwords["travel"])
 		runerandom()
 	if(M)
-		if(M.mind in SSticker.mode.cult)
+		if(M.mind in global.cult_religion.members)
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
@@ -355,7 +355,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
-				SSticker.mode.cult += M.mind
+				global.cult_religion.members += M.mind
 			to_chat(src, "Made [M] a cultist.")
 */
 

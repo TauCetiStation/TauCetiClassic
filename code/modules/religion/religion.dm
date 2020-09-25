@@ -3,7 +3,8 @@
 	and save them somewhere for future reference.
 */
 
-/proc/setup_religion(type)
+// Create a religion. You must declare proc/setup_religions() of religion
+/proc/create_religion(type)
 	new type
 
 /datum/religion
@@ -11,8 +12,7 @@
 	var/name = ""
 	// Lore of this religion. Is displayed to "God(s)". If none is set, chaplain will be prompted to set up their own lore.
 	var/lore = ""
-	var/list/lore_by_name = list(
-	)
+	var/list/lore_by_name = list()
 
 	// List of names of deities of this religion.
 	// There is no "default" deity, please specify one for your religion here.
@@ -79,7 +79,7 @@
 	var/obj/structure/altar_of_gods/altar
 
 	// The whole composition of beings in religion
-	var/list/consist = list()
+	var/list/members = list()
 
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
@@ -117,7 +117,7 @@
 	god_spells = list()
 	rites_info = list()
 	rites_by_name = list()
-	consist = list()
+	members = list()
 
 	if(altar)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
@@ -365,12 +365,18 @@
 	remove_god_spells(M)
 
 /datum/religion/proc/add_member(mob/M, holy_role)
-	consist += M
+	if(M in members)
+		return
+
+	members += M
 	M.mind.my_religion = src
 	M.mind.holy_role = holy_role
 
 /datum/religion/proc/remove_member(mob/M)
-	consist -= M
+	if(!(M in members))
+		return
+
+	members -= M
 	M.mind.my_religion = null
 	M.mind.holy_role = initial(M.mind.holy_role)
 

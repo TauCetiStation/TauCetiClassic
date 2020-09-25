@@ -153,4 +153,5 @@
 /datum/bible_info/cult/blood
 	name = "book"
 	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
+	icon_state = "book"
+	item_state = "book"
