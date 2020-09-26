@@ -57696,7 +57696,6 @@
 	pixel_x = 25
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
