@@ -321,6 +321,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+if(!issilicon(character))
 	SSquirks.AssignQuirks(character, character.client, TRUE)
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
