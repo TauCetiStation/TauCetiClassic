@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(xenoarch)
 
 			archeo_turf.prepare_huds()
 			var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-			archeo_turf.add_to_hud(archeo_turf)
+			mine.add_to_hud(archeo_turf)
 			archeo_turf.set_mine_hud()
 
 		// Have a chance for an artifact to spawn here, but not in animal or plant digsites
