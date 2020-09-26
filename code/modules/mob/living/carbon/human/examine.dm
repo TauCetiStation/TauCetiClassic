@@ -209,10 +209,7 @@
 		if(istype(id_card, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/ID = id_card
 			if(ID.disabilities.len)
-				msg += "\a [ENTITY_TAB]Has disability indicators on the card: <span class='warning bold'><B>"
-				for(var/I in 1 to ID.disabilities.len - 1)
-					msg += "[ID.disabilities[I]], "
-				msg += "[ID.disabilities[ID.disabilities.len]].</B></span>\n"
+				msg += "\a [ENTITY_TAB][ID.GetDisabilities()]\n"
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
