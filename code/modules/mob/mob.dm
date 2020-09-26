@@ -1160,6 +1160,9 @@ note dizziness decrements automatically in the mob's Life() proc.
   * cached)
   */
 /atom/proc/prepare_huds()
+	if(hud_list)
+		return
+
 	hud_list = list()
 	for(var/hud in hud_possible)
 		var/hint = hud_possible[hud]
