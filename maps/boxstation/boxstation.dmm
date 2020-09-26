@@ -10127,6 +10127,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aqQ" = (
@@ -10170,6 +10173,9 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -18960,7 +18966,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/area/station/maintenance/eva)
 "aHy" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -24545,7 +24551,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/civilian/chapel/mass_driver)
+/area/station/maintenance/chapel)
 "aRO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/grass,
@@ -27164,10 +27170,6 @@
 /area/station/hallway/secondary/entry)
 "aWu" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/camera{
-	c_tag = "Mining Shuttle";
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -27907,6 +27909,10 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
+/obj/machinery/camera{
+	c_tag = "Mining Shuttle";
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -30160,8 +30166,8 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
@@ -30193,8 +30199,16 @@
 	},
 /area/station/rnd/scibreak)
 "bbW" = (
-/turf/simulated/wall,
-/area/station/hallway/primary/port)
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "bbX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -33344,6 +33358,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhP" = (
@@ -33532,10 +33547,8 @@
 /area/station/tcommsat/computer)
 "bie" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bif" = (
@@ -34627,7 +34640,7 @@
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/locker)
+/area/station/maintenance/cargo)
 "bkz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -34835,9 +34848,6 @@
 	},
 /area/station/construction/assembly_line)
 "bkQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -36091,6 +36101,9 @@
 	},
 /area/station/civilian/chapel/altar)
 "bnf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /obj/structure/stool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -42480,7 +42493,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/vacantoffice)
+/area/station/maintenance/cargo)
 "bBb" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -42505,7 +42518,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
+/area/station/maintenance/eva)
 "bBg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44039,7 +44052,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/civilian/bar)
+/area/station/maintenance/cargo)
 "bEo" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -46913,6 +46926,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJU" = (
@@ -46940,6 +46954,9 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -57817,7 +57834,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/civilian/fitness)
+/area/station/maintenance/escape)
 "cnR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -64187,12 +64204,8 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cDp" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/turf/simulated/wall,
+/area/station/security/execution)
 "cDq" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -64235,7 +64248,7 @@
 /area/station/aisat)
 "cDv" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -67132,7 +67145,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "cMD" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -67809,6 +67822,9 @@
 /area/station/hallway/secondary/entry)
 "dCb" = (
 /obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -71528,6 +71544,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "job" = (
@@ -71857,8 +71876,7 @@
 	},
 /obj/machinery/door/window/eastleft{
 	dir = 1;
-	name = "Medbay Reception";
-	req_access = list(5)
+	name = "Medbay Reception"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -72180,9 +72198,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "kqb" = (
@@ -72395,8 +72411,11 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
 	},
-/obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kGb" = (
@@ -73353,9 +73372,6 @@
 	name = "VACUUM";
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
-	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -73744,6 +73760,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "mOb" = (
@@ -75070,6 +75087,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"oHZ" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "oIb" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -76256,6 +76280,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"qtj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "qub" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -78296,6 +78327,12 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"tpb" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "tpw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -78693,6 +78730,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "uek" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ueK" = (
@@ -78868,6 +78908,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"usq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78894,7 +78943,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
 "uvb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -79360,15 +79409,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "wwg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -79718,6 +79767,13 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"xLk" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "xQr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -89473,7 +89529,7 @@ aaa
 aDy
 bMg
 aPN
-asD
+aDy
 avy
 avy
 avy
@@ -90000,7 +90056,7 @@ aro
 aEb
 aEb
 apT
-uDb
+usq
 dCb
 apT
 aaa
@@ -90508,7 +90564,7 @@ bTo
 bTo
 blU
 bie
-blU
+bJG
 blU
 bDc
 wJk
@@ -90761,11 +90817,11 @@ aGp
 apT
 uDb
 wwg
-kYI
+xLk
 kYI
 kYI
 bkQ
-kYI
+qtj
 kQm
 bpc
 snu
@@ -91275,7 +91331,7 @@ bOA
 bQB
 bTp
 bbT
-bis
+ajb
 bis
 bHe
 bll
@@ -94611,7 +94667,7 @@ bhr
 bku
 xeC
 bmW
-aWW
+aSM
 qAF
 nLo
 aFg
@@ -94868,7 +94924,7 @@ wfg
 bcF
 bil
 blV
-aWW
+aSM
 bmw
 eXg
 aFg
@@ -96408,7 +96464,7 @@ beY
 beY
 beY
 tMk
-aSP
+aSM
 sCd
 bEW
 psV
@@ -96665,7 +96721,7 @@ biv
 bfb
 biv
 aSP
-aSP
+aSM
 kFh
 aSM
 pAb
@@ -99213,8 +99269,8 @@ aDb
 aEn
 clm
 cnO
-avp
-avp
+clm
+clm
 aGW
 aIc
 aOv
@@ -102298,9 +102354,9 @@ avp
 avp
 avp
 aHx
-avp
-avp
-avp
+agO
+agO
+agO
 aOz
 aQh
 aRd
@@ -103079,7 +103135,7 @@ alZ
 alZ
 awE
 aqd
-bbW
+agO
 bbQ
 bdZ
 bgr
@@ -104665,7 +104721,7 @@ bQH
 bQl
 bQl
 mhb
-cEr
+cDv
 cEr
 cEV
 cFN
@@ -104921,8 +104977,8 @@ bRo
 bQl
 bTV
 bQH
-cDv
 bQl
+tpb
 bQl
 bIz
 bQl
@@ -105178,8 +105234,8 @@ bIZ
 bIZ
 cog
 bQl
-cDp
 chX
+oHZ
 bIZ
 bIZ
 bPF
@@ -105409,7 +105465,7 @@ pIL
 bDd
 bAY
 bvJ
-aGn
+aSM
 bDk
 bEW
 bJK
@@ -105666,7 +105722,7 @@ aGn
 aGn
 aGn
 aGn
-aGn
+aSM
 bDo
 aSM
 aSM
@@ -105906,7 +105962,7 @@ aBy
 aBy
 aBy
 aGF
-aMR
+agO
 ber
 aMM
 bht
@@ -106391,7 +106447,7 @@ cXb
 ddb
 oRb
 pdb
-ahB
+ahC
 awH
 anH
 anr
@@ -106648,7 +106704,7 @@ cYb
 cXb
 oSb
 peb
-ahB
+ahC
 amv
 amG
 amW
@@ -106905,7 +106961,7 @@ cZb
 deb
 oTb
 pgb
-ahB
+ahC
 amw
 amL
 ans
@@ -107162,7 +107218,7 @@ fOb
 dfb
 oUb
 phb
-ahB
+ahC
 ani
 amI
 adM
@@ -107419,7 +107475,7 @@ akx
 oJb
 aaD
 ahC
-ahB
+ahC
 adM
 amO
 adM
@@ -107911,7 +107967,7 @@ aaa
 aaa
 aah
 aaa
-aaW
+cDp
 aaS
 aaW
 aaW
@@ -113135,7 +113191,7 @@ byE
 cxt
 aKx
 bXt
-aMR
+cdA
 bCU
 bCc
 bKX
@@ -116696,7 +116752,7 @@ tmb
 xwC
 gUO
 czf
-aSK
+aSN
 aUh
 aVA
 aXh
@@ -117710,7 +117766,7 @@ atx
 auZ
 aef
 azH
-aAC
+bbW
 ckP
 aDM
 aAC
@@ -128774,7 +128830,7 @@ aup
 aRs
 aTA
 aVB
-wLi
+aup
 aVD
 bCN
 bsF
@@ -129288,7 +129344,7 @@ aMi
 aRx
 aKM
 aPt
-wLi
+aup
 aYO
 bnc
 hUb
@@ -129545,7 +129601,7 @@ aEX
 aEd
 aJy
 aPu
-wLi
+aup
 bam
 bpT
 aKI
@@ -129802,7 +129858,7 @@ auH
 aRG
 aEd
 aPw
-wLi
+aup
 bdm
 wLi
 wLi
@@ -131088,8 +131144,8 @@ bor
 aah
 aah
 aah
-aah
-aah
+aaa
+aaa
 wLi
 oRh
 oRh
