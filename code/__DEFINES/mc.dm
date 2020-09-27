@@ -9,7 +9,6 @@
         Master.current_ticklimit = original_tick_limit;\
     }
 
-
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -37,16 +36,15 @@
 #define SS_NO_FIRE 4
 
 //subsystem only runs on spare cpu (after all non-background subsystems have ran that tick)
-//	SS_BACKGROUND has its own priority bracket
+//	SS_BACKGROUND has its own priority bracket, this overrides SS_TICKER's priority bump
 #define SS_BACKGROUND 8
 
 //subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))
 #define SS_NO_TICK_CHECK 16
 
 //Treat wait as a tick count, not DS, run every wait ticks.
-//	(also forces it to run first in the tick, above even SS_NO_TICK_CHECK subsystems)
+//	(also forces it to run first in the tick (unless SS_BACKGROUND)))
 //	(implies SS_FIRE_IN_LOBBY because of how it works)
-//	(overrides SS_BACKGROUND)
 //	This is designed for basically anything that works as a mini-mc (like SStimer)
 #define SS_TICKER 32
 
