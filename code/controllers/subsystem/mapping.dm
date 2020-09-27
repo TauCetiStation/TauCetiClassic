@@ -1,5 +1,5 @@
 // How many structures will be spawned
-#define SPACE_STRUCTURES_AMMOUNT 7
+#define SPACE_STRUCTURES_AMOUNT 7
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(mapping)
 		possible += structure_id
 
 	var/list/picked_structures = list()
-	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMMOUNT)
+	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMOUNT)
 		var/structure_id = pick(possible)
 		possible -= structure_id
 		picked_structures += structure_id
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
-#undef SPACE_STRUCTURES_AMMOUNT
+#undef SPACE_STRUCTURES_AMOUNT
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)

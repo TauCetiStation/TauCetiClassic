@@ -20028,6 +20028,7 @@
 /area/centcom/control)
 "iPu" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "shuttle_escape";
 	locked = 1;
 	name = "Arrival Airlock";
 	req_access = list(1)
@@ -23362,6 +23363,7 @@
 /area/custom/syndicate_mothership/armory)
 "uEr" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "shuttle_escape";
 	locked = 1;
 	name = "Arrival Airlock"
 	},

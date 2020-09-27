@@ -2247,6 +2247,16 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"adG" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
+	locked = 1;
+	name = "Supply Dock Airlock";
+	req_access = list(31)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
 	anchored = 1;
@@ -15771,7 +15781,7 @@
 "efE" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 3;
+	filter_type = "carbon_dioxide";
 	name = "Gas filter (CO2 tank)"
 	},
 /turf/simulated/floor,
@@ -18884,7 +18894,7 @@
 /area/station/engineering/engine)
 "fdb" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 2;
+	filter_type = "nitrogen";
 	name = "Gas filter (N2 tank)"
 	},
 /turf/simulated/floor,
@@ -29281,7 +29291,7 @@
 "ixJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
 	dir = 8;
-	filter_type = 4;
+	filter_type = "sleeping_agent";
 	name = "Gas filter (N2O tank)"
 	},
 /turf/simulated/floor,
@@ -31110,7 +31120,7 @@
 /area/station/maintenance/science)
 "jfB" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 0;
+	filter_type = "phoron";
 	name = "Gas filter (Toxins tank)"
 	},
 /turf/simulated/floor,
@@ -50192,7 +50202,7 @@
 "pml" = (
 /obj/item/toy/cards,
 /obj/structure/table,
-/obj/item/toy/crayon,
+/obj/item/toy/crayon/red,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "pmL" = (
@@ -59242,7 +59252,7 @@
 /area/station/rnd/mixing)
 "sgg" = (
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on{
-	filter_type = 1;
+	filter_type = "oxygen";
 	name = "Gas filter (O2 tank)"
 	},
 /turf/simulated/floor,
@@ -92135,7 +92145,7 @@ vKq
 tGl
 kka
 edr
-kka
+adG
 uPt
 uPt
 uPt
@@ -92649,7 +92659,7 @@ oWd
 tDo
 kka
 kCg
-kka
+adG
 uPt
 uPt
 uPt

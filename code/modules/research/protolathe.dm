@@ -246,6 +246,6 @@ Note: Must be placed west/left of and R&D console to function.
 		if(available_num_sheets > 0)
 			var/S = loaded_materials[sheet_type].sheet_type
 			var/obj/item/stack/sheet/sheet = new S(loc)
-			var/sheet_ammount = min(available_num_sheets, amount)
-			sheet.set_amount(sheet_ammount)
-			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_ammount * loaded_materials[sheet_type].sheet_size)
+			var/sheet_amount = min(available_num_sheets, amount)
+			sheet.set_amount(sheet_amount)
+			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_amount * loaded_materials[sheet_type].sheet_size)
