@@ -21379,7 +21379,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/eastleft{
-	name = "Mail";
+	name = "Garbage conveyor";
 	req_access = list(50)
 	},
 /obj/machinery/conveyor{
@@ -58562,7 +58562,6 @@
 	pixel_x = 25
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
