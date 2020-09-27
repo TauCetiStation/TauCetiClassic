@@ -99,7 +99,7 @@
 	if(SSshuttle.online || SSshuttle.location != 0)
 		return "Shuttle is online"
 	if(security_level >= SEC_LEVEL_RED)
-		return "Security Level is RED"
+		return "Security Level is RED or higher"
 
 /datum/poll/crew_transfer/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
