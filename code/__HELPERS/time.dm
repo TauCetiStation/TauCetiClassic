@@ -70,12 +70,13 @@ var/last_round_duration = 0
 		//else
 			//return 1
 
-/var/midnight_rollovers = 0
-/var/rollovercheck_last_timeofday = 0
+var/global/midnight_rollovers = 0
+var/global/rollovercheck_last_timeofday = 0
 /proc/update_midnight_rollover()
-	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return midnight_rollovers++
-	return midnight_rollovers
+	if(world.timeofday < global.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+		global.midnight_rollovers++
+	global.rollovercheck_last_timeofday = world.timeofday
+	return global.midnight_rollovers
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
