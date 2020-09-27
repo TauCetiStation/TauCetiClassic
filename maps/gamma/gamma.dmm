@@ -50182,7 +50182,7 @@
 "pml" = (
 /obj/item/toy/cards,
 /obj/structure/table,
-/obj/item/toy/crayon,
+/obj/item/toy/crayon/red,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "pmL" = (
