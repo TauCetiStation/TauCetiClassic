@@ -556,9 +556,9 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_ammount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
 
-/obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
+/obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
 		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		charges["aqueous_foam"].charges = ext.reagents.total_volume
@@ -576,7 +576,7 @@
 	selectable = TRUE
 	toggleable = FALSE
 	var/per_use = 5
-	var/spray_ammount = 0 // 0 does 1x1 tile
+	var/spray_amount = 0 // 0 does 1x1 tile
 	var/max_volume = 100
 
 /obj/item/rig_module/metalfoam_spray/init_charges()
@@ -618,7 +618,7 @@
 	step_towards(D, T)
 	sleep(5)
 	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(spray_ammount, D.loc, metalfoam = 1)
+	s.set_up(spray_amount, D.loc, metalfoam = 1)
 	s.start()
 	qdel(D)
 
