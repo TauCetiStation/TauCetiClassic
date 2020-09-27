@@ -2375,11 +2375,6 @@
 "adV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -10301,19 +10296,6 @@
 	icon_state = "purplecorner"
 	},
 /area/station/hallway/primary/bridgehall)
-"cqA" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
 "cqM" = (
 /obj/machinery/computer/rdservercontrol{
 	dir = 4
@@ -11006,11 +10988,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "rampbottom"
 	},
@@ -17336,11 +17313,6 @@
 	dir = 9
 	},
 /obj/structure/stool/bed/chair/metal/white,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -18398,11 +18370,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=SSW-FC";
 	location = "DS"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
@@ -35701,17 +35668,6 @@
 	icon_state = "whitehall"
 	},
 /area/station/rnd/xenobiology)
-"kuu" = (
-/obj/machinery/power/apc{
-	dir = 6;
-	name = "Gym APC";
-	pixel_y = -30
-	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
 "kuH" = (
 /obj/structure/sign/departments/security{
 	pixel_y = 32
@@ -45508,11 +45464,6 @@
 	dir = 8
 	},
 /obj/structure/stool/bed/chair/metal/white,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -54369,19 +54320,6 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/sppodconstr)
-"qmw" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
 "qmx" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -56493,11 +56431,6 @@
 "qUE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -69860,11 +69793,6 @@
 	name = "Chapel";
 	sortType = "Chapel"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -73795,11 +73723,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "woF" = (
@@ -74206,16 +74129,6 @@
 "wzu" = (
 /turf/simulated/floor,
 /area/station/bridge)
-"wzA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
 "wzJ" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -105732,7 +105645,7 @@ hki
 sdE
 adF
 uwW
-iAr
+uwW
 uwW
 aek
 bbY
@@ -105989,12 +105902,12 @@ qlD
 qcV
 uwW
 aek
-cqA
-qmw
-wzA
-wzA
-wzA
-kuu
+aek
+aek
+uwW
+uwW
+uwW
+uwW
 rBj
 plf
 plf
