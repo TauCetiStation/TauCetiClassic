@@ -148,7 +148,7 @@
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/controller/subsystem/Initialize(start_timeofday)
-	var/time = (world.timeofday - start_timeofday) / 10
+	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	world.log << "[msg]"
 	log_initialization(msg)

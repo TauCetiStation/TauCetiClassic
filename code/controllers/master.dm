@@ -125,18 +125,18 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	log_initialization("Initializing subsystems...")
 	to_chat(world, "<span class='boldannounce'>Initializing game. Please wait...</span>")
 
-	var/start_timeofday = world.timeofday
+	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
 	CURRENT_TICKLIMIT = TICK_LIMIT_MC_INIT
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(world.timeofday)
+		SS.Initialize(REALTIMEOFDAY)
 		SS.PostInitialize()
 		CHECK_TICK
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
-	var/time = (world.timeofday - start_timeofday) / 10
+	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
 	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
@@ -231,7 +231,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	normalsubsystems += tickersubsystems
 	lobbysubsystems += tickersubsystems
 
-	init_timeofday = world.timeofday
+	init_timeofday = REALTIMEOFDAY
 	init_time = world.time
 
 	iteration = 1
@@ -241,7 +241,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	//the actual loop.
 	while (TRUE)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
 		if (processing <= 0)
 			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
