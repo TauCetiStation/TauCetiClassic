@@ -36,7 +36,7 @@
 /********************/
 /*    CHAPLAIN      */
 /********************/
-/datum/religion_sect/preset/puritanism
+/datum/religion_sect/preset/chaplain/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
@@ -46,7 +46,7 @@
 		/datum/aspect/mystic = 1,
 	)
 
-/datum/religion_sect/preset/bloodgods
+/datum/religion_sect/preset/chaplain/bloodgods
 	name = "The Slaves of "
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
@@ -56,7 +56,7 @@
 		/datum/aspect/chaos = 1,
 	)
 
-/datum/religion_sect/preset/technophile
+/datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte."
@@ -66,7 +66,7 @@
 		/datum/aspect/resources = 1,
 	)
 
-/datum/religion_sect/preset/clown
+/datum/religion_sect/preset/chaplain/clown
 	name = "The Jesters of "
 	desc = "Anything a real clown needs!"
 	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"

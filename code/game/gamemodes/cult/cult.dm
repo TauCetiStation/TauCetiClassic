@@ -1,6 +1,6 @@
 
 /proc/iscultist(mob/living/M)
-	return M && (M in global.cult_religion.members)
+	return M && global.cult_religion && (M in global.cult_religion.members)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))

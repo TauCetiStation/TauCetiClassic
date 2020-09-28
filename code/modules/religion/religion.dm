@@ -288,8 +288,9 @@
 				name_entry += " - [RI.desc]"
 			if(RI.favor_cost)
 				name_entry += " ([RI.favor_cost] favor)"
-			if(RI.favor_cost)
-				name_entry += "<span class='piety'([RI.piety_cost] piety)</span>"
+			if(RI.piety_cost)
+				altar.look_piety = TRUE
+				name_entry += "<span class='piety'> ([RI.piety_cost] piety)</span>"
 
 			rites_info += "[name_entry]"
 

@@ -11,6 +11,9 @@
 	can_buckle = TRUE
 	buckle_lying = TRUE
 
+	var/type_of_sects = /datum/religion_sect/preset/chaplain
+	var/custom_sect = TRUE
+
 	var/change_preset_name = TRUE
 
 	var/datum/religion_rites/performing_rite
@@ -49,7 +52,7 @@
 
 	var/piety = ""
 	if(look_piety)
-		piety = "<span class='piety'>and [round(religion.piety)] piety</span>"
+		piety = "and <span class='piety'>[round(religion.piety)] piety</span>"
 
 	msg += "<span class='notice'>The sect currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
 
@@ -213,8 +216,8 @@
 	else if(istype(I, /obj/item/weapon/storage/bible) && !chosen_aspect)
 		var/obj/item/weapon/storage/bible/B = I
 		if(!religion)
-			to_chat(user, "<span class='warning'>It appears the game hasn't even started! Stop right there!</span>")
-			return
+			religion = B.religion
+			religion.altar = src
 
 		chosen_aspect = TRUE
 		var/list/available_options = generate_available_sects(user)
@@ -227,15 +230,8 @@
 			return
 
 		sect = available_options[sect_select]
-		religion = B.religion
-		religion.altar = src
 
 		sect.on_select(user, religion)
-		for(var/rite in religion.rites_by_name)
-			var/datum/religion_rites/RR = religion.rites_by_name[rite]
-			if(RR.piety_cost)
-				look_piety = TRUE
-				break
 		return
 
 	// Except when it is not.
@@ -257,7 +253,10 @@
 //eventually want to add sects you get from unlocking certain achievements
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user)
 	var/list/variants = list()
-	for(var/type in subtypesof(/datum/religion_sect))
+	var/list/sects = typesof(type_of_sects)
+	if(custom_sect)
+		sects += /datum/religion_sect/custom
+	for(var/type in sects)
 		var/datum/religion_sect/sect = new type(src)
 		if(!sect.name)
 			continue
@@ -286,3 +285,5 @@
 	icon_state = "satanaltar"
 
 	change_preset_name = FALSE
+
+	type_of_sects = /datum/religion_sect/preset/cult
