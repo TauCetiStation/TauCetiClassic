@@ -1,3 +1,4 @@
+// shouldn't these be deprecated? ~Luduk
 /mob/living/simple_animal/slime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."
@@ -16,6 +17,7 @@
 	ventcrawler = 2
 
 	has_head = TRUE
+	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
@@ -33,6 +35,7 @@
 	var/colour = "grey"
 
 	has_head = TRUE
+	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()

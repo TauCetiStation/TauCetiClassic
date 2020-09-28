@@ -63,7 +63,18 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	// See atom_init below.
+	moveset_type = null
+
 /mob/living/simple_animal/atom_init()
+	if(!moveset_type)
+		if(animalistic)
+			moveset_type = /datum/combat_moveset/animal
+		else if(has_head && has_arm && has_leg)
+			moveset_type = /datum/combat_moveset/human
+		else
+			moveset_type = /datum/combat_moveset/living
+
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)

@@ -26,6 +26,8 @@
 
 	throw_range = 2
 
+	moveset_type = /datum/combat_moveset/human
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH

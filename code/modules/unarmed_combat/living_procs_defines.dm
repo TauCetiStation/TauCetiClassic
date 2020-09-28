@@ -2,88 +2,49 @@
 	// A bootleg so we don't populate a list of combos on mobs that don't process them.
 	var/updates_combat = FALSE
 
+	// Combos that src knows as pointers to singleton combat_combo objects associated
+	// with a list of movesets that "teach" this combo to this mob.
+	var/list/known_combos = list()
+	// Combos that src can perform as pointers to singleton combat_combo objects
+	// with a list of movesets that permit this combo to this mob.
+	var/list/allowed_combos = list()
+	// Assoc list of lists of movesets with keys being their source.
+	var/list/movesets_by_source = list()
+
 	// /datum/combo_controller-s src is currently performing.
 	var/list/combos_performed = list()
 	// /datum/combo_controller that are  performed on src.
 	var/list/combos_saved = list()
+	// /datum/combat_moveset-s src is capable of.
+	var/list/combo_movesets = list()
 
 	var/attack_animation = FALSE
 	var/combo_animation = FALSE
-
-// Should be deprecated in favour of /datum/combo_moveset. ~Luduk
-var/global/combos_cheat_sheet = ""
 
 /mob/living/verb/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
 	set category = "IC"
 
-	if(!global.combos_cheat_sheet)
-		var/dat = "<center><b>Combos Cheat Sheet</b></center>"
-		for(var/CC_type in subtypesof(/datum/combat_combo))
-			var/datum/combat_combo/CC = new CC_type
-			dat += "<hr><p>"
-			dat += "<b>Name:</b> <i>[CC.name]</i><br>"
-			dat += "<b>Desc:</b> [CC.desc]<br>"
-			dat += "<b>Combopoints cost:</b> [CC.fullness_lose_on_execute]%<br>"
+	var/dat = "<center><b>Combos Cheat Sheet</b></center>"
+	for(var/datum/combat_combo/CC in allowed_combos)
+		dat += "<hr><p>"
+		dat += CC.full_desc
 
-			var/tz_txt = ""
-			var/first = TRUE
-			for(var/tz in CC.allowed_target_zones)
-				switch(tz)
-					if(BP_HEAD)
-						tz = "head"
-					if(BP_CHEST)
-						tz = "chest"
-					if(BP_GROIN)
-						tz = "groin"
-					if(BP_L_ARM)
-						tz = "left arm"
-					if(BP_R_ARM)
-						tz = "right arm"
-					if(BP_L_LEG)
-						tz = "left leg"
-					if(BP_R_LEG)
-						tz = "right leg"
-					if(O_EYES)
-						tz = "eyes"
-					if(O_MOUTH)
-						tz = "mouth"
-				if(first)
-					tz_txt += capitalize(tz)
-					first = FALSE
-				else
-					tz_txt += ", " + tz
+		var/combo_sources = ""
+		var/first = TRUE
+		for(var/datum/combat_moveset/moveset in allowed_combos[CC])
+			if(!first)
+				combo_sources += ", "
+			combo_sources += moveset.name
+			first = FALSE
+		dat += "<span style='font-size: 8px'><i>(Permitted by: [combo_sources])</i></span>"
 
-			dat += "<b>Allowed target zones:</b> [tz_txt]<br>"
+		dat += "</p></hr>"
 
-			var/combo_txt = ""
-			for(var/c_el in CC.combo_elements)
-				switch(c_el)
-					if(INTENT_PUSH)
-						c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
-					if(INTENT_GRAB)
-						c_el = "<font color='yellow'>[capitalize(c_el)]</font>"
-					if(INTENT_HARM)
-						c_el = "<font color='red'>[capitalize(c_el)]</font>"
-					else
-						c_el = "<font color='grey'>[c_el]</font>"
-				combo_txt += c_el + " "
-
-			dat += "<b>Combo required:</b> [combo_txt]<br>"
-			var/notes = ""
-			notes += CC.ignore_size ? "<font color='dodgerblue'><i>* Ignores opponent's size.</i></font><br>" : ""
-			notes += CC.scale_damage_coeff != 0.0 || CC.scale_effect_coeff != 0.0 ? "<font color='red'><i>* Modified by your attack's base damage.</i></font><br>" : ""
-			notes += CC.scale_size_exponent != 0.0 ? "<font color='red'><i>* Damage is amplified by difference in size.</i></font><br>" : ""
-			notes += CC.armor_pierce ? "<font color='red'><i>* Ignores armor.</i></font><br>" : ""
-			if(notes)
-				dat += "<br>" + notes
-			dat += "</p></hr>"
-
-		global.combos_cheat_sheet = dat
 
 	var/datum/browser/popup = new(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
-	popup.set_content(global.combos_cheat_sheet)
+	popup.set_content(dat)
 	popup.open()
 
 // Should return /datum/unarmed_attack at some later time. ~Luduk
@@ -389,3 +350,37 @@ var/global/combos_cheat_sheet = ""
 			return TRUE
 
 	return FALSE
+
+/mob/living/proc/learn_combo(datum/combat_combo/combo, datum/combat_moveset/moveset)
+	var/is_known = (combo in known_combos)
+	if(!is_known)
+		known_combos[combo] = list()
+		if(!(combo in allowed_combos))
+			allowed_combos[combo] = list()
+		allowed_combos[combo] += moveset
+
+	known_combos[combo] += moveset
+
+	SEND_SIGNAL(src, COMSIG_LIVING_LEARN_COMBO, combo, moveset)
+
+/mob/living/proc/forget_combo(datum/combat_combo/combo, datum/combat_moveset/moveset)
+	SEND_SIGNAL(src, COMSIG_LIVING_FORGET_COMBO, combo, moveset)
+
+	known_combos[combo] -= moveset
+	if(known_combos[combo].length == 0)
+		known_combos -= combo
+
+	if(combo in allowed_combos)
+		allowed_combos[combo] -= moveset
+		if(allowed_combos[combo].length == 0)
+			allowed_combos -= combo
+
+/mob/living/proc/add_moveset(datum/combat_moveset/moveset, source)
+	moveset.apply(src, source)
+
+/mob/living/proc/remove_moveset(datum/combat_moveset/moveset, source)
+	moveset.remove(src, source)
+
+/mob/living/proc/remove_moveset_source(source)
+	for(var/datum/combat_moveset/moveset in movesets_by_source[source])
+		remove_moveset(moveset, source)

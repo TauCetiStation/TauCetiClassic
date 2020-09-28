@@ -7,8 +7,13 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
+	if(moveset_type)
+		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 /mob/living/Destroy()
+	allowed_combos = null
+	known_combos = null
+	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
