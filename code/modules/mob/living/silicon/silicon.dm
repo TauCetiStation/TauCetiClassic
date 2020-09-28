@@ -5,7 +5,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
-	var/list/def_sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
+	var/list/def_sensor_huds
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
@@ -20,6 +20,7 @@
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src
+	def_sensor_huds = sensor_huds
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
