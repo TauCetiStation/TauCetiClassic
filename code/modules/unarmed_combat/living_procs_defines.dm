@@ -367,12 +367,12 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_FORGET_COMBO, combo, moveset)
 
 	known_combos[combo] -= moveset
-	if(known_combos[combo].length == 0)
+	if(length(known_combos[combo]) == 0)
 		known_combos -= combo
 
 	if(combo in allowed_combos)
 		allowed_combos[combo] -= moveset
-		if(allowed_combos[combo].length == 0)
+		if(length(allowed_combos[combo]) == 0)
 			allowed_combos -= combo
 
 /mob/living/proc/add_moveset(datum/combat_moveset/moveset, source)

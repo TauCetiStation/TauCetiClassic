@@ -33,7 +33,7 @@
 	UnregisterSignal(L, list(COMSIG_LIVING_LEARN_COMBO, COMSIG_LIVING_FORGET_COMBO))
 
 	L.movesets_by_source[source] -= src
-	if(L.movesets_by_source[source].length == 0)
+	if(length(L.movesets_by_source[source]) == 0)
 		L.movesets_by_source -= source
 
 	for(var/combo_name in teach_combos)
