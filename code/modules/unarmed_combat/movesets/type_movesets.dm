@@ -5,42 +5,47 @@
 /datum/combat_moveset/living
 	name = "Living Form Moveset"
 	teach_combos = list(
-		"Weapon Disarm",
-		"Push",
-		"Dropkick",
-		"Charge"
+		COMBO_DISARM,
+		COMBO_PUSH,
+		COMBO_DROPKICK,
+
+		COMBO_CHARGE
 	)
 
 /datum/combat_moveset/human
 	name = "Human Form Moveset"
 	teach_combos = list(
-		"Weapon Disarm",
-		"Push",
-		"Slide Kick",
-		"Capture",
-		"Dropkick",
-		"Uppercut",
-		"Suplex",
-		"Diving Elbow Drop",
-		"Charge",
-		"Spin & Throw",
-		"Wake Up"
+		COMBO_DISARM,
+		COMBO_PUSH,
+		COMBO_SLIDE_KICK,
+		COMBO_CAPTURE,
+		COMBO_DROPKICK,
+
+		COMBO_UPPERCUT,
+		COMBO_SUPLEX,
+		COMBO_DIVING_ELBOW_DROP,
+		COMBO_CHARGE,
+		COMBO_SPIN_THROW,
+
+		COMBO_WAKE_UP
 	)
 
 /datum/combat_moveset/slime
 	name = "Slime Form Moveset"
 	teach_combos = list(
-		"Weapon Disarm",
-		"Push",
-		"Dropkick",
-		"Charge"
+		COMBO_DISARM,
+		COMBO_PUSH,
+		COMBO_DROPKICK,
+
+		COMBO_CHARGE
 	)
 
 /datum/combat_moveset/animal
 	name = "Animal Form Moveset"
 	teach_combos = list(
-		"Weapon Disarm",
-		"Push",
-		"Dropkick",
-		"Charge"
+		COMBO_DISARM,
+		COMBO_PUSH,
+		COMBO_DROPKICK,
+
+		COMBO_CHARGE
 	)

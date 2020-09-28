@@ -1,5 +1,5 @@
 /datum/combat_combo/disarm
-	name = "Weapon Disarm"
+	name = COMBO_DISARM
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
 	fullness_lose_on_execute = 10
@@ -65,11 +65,11 @@
 							to_give.afterattack(victim, victim, TRUE)
 
 /datum/combat_combo/push
-	name = "Push"
+	name = COMBO_PUSH
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
 	fullness_lose_on_execute = 40
-	combo_elements = list("Weapon Disarm", INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
+	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	check_bodyarmor = TRUE
 
@@ -84,11 +84,11 @@
 
 
 /datum/combat_combo/slide_kick
-	name = "Slide Kick"
+	name = COMBO_SLIDE_KICK
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
 	fullness_lose_on_execute = 40
-	combo_elements = list("Weapon Disarm", INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
+	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
 
@@ -187,7 +187,7 @@
 
 
 /datum/combat_combo/capture
-	name = "Capture"
+	name = COMBO_CAPTURE
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
 	fullness_lose_on_execute = 75
@@ -236,7 +236,7 @@
 
 
 /datum/combat_combo/dropkick
-	name = "Dropkick"
+	name = COMBO_DROPKICK
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
 	fullness_lose_on_execute = 25

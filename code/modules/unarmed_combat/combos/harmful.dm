@@ -1,5 +1,5 @@
 /datum/combat_combo/uppercut
-	name = "Uppercut"
+	name = COMBO_UPPERCUT
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
 	fullness_lose_on_execute = 60
@@ -113,7 +113,7 @@
 
 
 /datum/combat_combo/suplex
-	name = "Suplex"
+	name = COMBO_SUPLEX
 	desc = "A move that lifts your opponent up, only to then throw them to the ground, harshly."
 	combo_icon_state = "suplex"
 	fullness_lose_on_execute = 75
@@ -201,11 +201,11 @@
 
 
 /datum/combat_combo/diving_elbow_drop
-	name = "Diving Elbow Drop"
+	name = COMBO_DIVING_ELBOW_DROP
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
 	fullness_lose_on_execute = 50
-	combo_elements = list("Suplex", INTENT_HARM, INTENT_PUSH, INTENT_HARM)
+	combo_elements = list(COMBO_SUPLEX, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	// A body dropped on us! Armor ain't helping.
 	armor_pierce = TRUE
@@ -294,7 +294,7 @@
 
 
 /datum/combat_combo/charge
-	name = "Charge"
+	name = COMBO_CHARGE
 	desc = "A move that grabs your opponent by the neck, and drives you into the closest obstacle, hitting them on it."
 	combo_icon_state = "charge"
 	fullness_lose_on_execute = 75
@@ -363,7 +363,7 @@
 
 
 /datum/combat_combo/spin_throw
-	name = "Spin & Throw"
+	name = COMBO_SPIN_THROW
 	desc = "A move in which you start to spin yourself up, and at a point you throw your opponent with immense force."
 	combo_icon_state = "spin_throw"
 	fullness_lose_on_execute = 50

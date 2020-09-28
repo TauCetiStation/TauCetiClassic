@@ -29,6 +29,7 @@
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\colors.dm"
 #include "code\__DEFINES\combat.dm"
+#include "code\__DEFINES\combos.dm"
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\damage_organs.dm"
 #include "code\__DEFINES\DNA.dm"

@@ -1,5 +1,5 @@
 /datum/combat_combo/wake_up
-	name = "Wake Up"
+	name = COMBO_WAKE_UP
 	desc = "A move in which you pull your opponent up, shaking off all his pain and stuns."
 	combo_icon_state = "spin_throw"
 	fullness_lose_on_execute = 20
