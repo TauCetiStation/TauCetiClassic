@@ -210,7 +210,7 @@
 		to_chat(user, "<span class='notice'>[src] is in battle, let it finish first.</span>")
 		return
 
-	user.visible_message("<span class='suicide'>[user] begins a fight \His can't win with [src]! It looks like \His trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins a fight \He can't win with [src]! It looks like \His trying to commit suicide!</span>")
 
 	in_combat = TRUE
 	sleep(1.5 SECONDS)
