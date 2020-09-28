@@ -2628,7 +2628,6 @@
 "aet" = (
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -5553,12 +5552,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 26
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11314,7 +11312,7 @@
 	name = "disposal inlet"
 	},
 /turf/simulated/floor/plating{
-	dir = 4;
+	dir = 1;
 	icon_state = "warnplate"
 	},
 /area/station/cargo/office)
@@ -12914,7 +12912,6 @@
 /area/station/maintenance/incinerator)
 "dgb" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -13496,7 +13493,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -13741,7 +13737,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
@@ -13842,7 +13837,6 @@
 "dvw" = (
 /obj/machinery/idpainter,
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor{
@@ -13977,7 +13971,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/cable{
@@ -14713,6 +14706,7 @@
 	name = "Mass Driver";
 	req_access = list(22)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
 	dir = 1;
 	icon_state = "warnplate"
@@ -16507,7 +16501,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating,
@@ -19633,8 +19626,7 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -20274,7 +20266,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -20895,7 +20886,6 @@
 	c_tag = "Dorm North-East"
 	},
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor{
@@ -25406,7 +25396,7 @@
 "hdT" = (
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor/plating,
-/area/station/engineering/break_room)
+/area/station/maintenance/bridge)
 "hdY" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/simulated/wall,
@@ -27954,7 +27944,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating,
@@ -31876,8 +31865,7 @@
 /area/station/maintenance/brig)
 "jkL" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 26
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -37287,7 +37275,6 @@
 /area/station/maintenance/incinerator)
 "kTU" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -37564,6 +37551,23 @@
 	icon_state = "dark"
 	},
 /area/station/bridge/ai_upload)
+"kWR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/alarm{
+	pixel_y = 26
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "kWU" = (
 /turf/simulated/floor{
 	icon_state = "blue"
@@ -38817,11 +38821,10 @@
 	},
 /area/station/civilian/dormitories/dormfour)
 "lqm" = (
+/obj/structure/filingcabinet/chestdrawer/black,
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
-/obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -39967,7 +39970,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -40493,8 +40495,7 @@
 /obj/structure/table,
 /obj/item/weapon/aiModule/nanotrasen,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 26
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
@@ -42269,11 +42270,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "msw" = (
+/obj/structure/stool/bed/chair/comfy/black,
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
-/obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "msG" = (
@@ -44492,12 +44492,11 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
@@ -46773,8 +46772,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -47420,15 +47418,14 @@
 	},
 /area/station/civilian/chapel)
 "nZq" = (
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
-	},
 /obj/machinery/camera{
 	c_tag = "Gym North"
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/alarm{
+	pixel_y = 26
+	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -51323,7 +51320,6 @@
 "psn" = (
 /obj/machinery/recharge_station,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -51735,8 +51731,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 26
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -52153,7 +52148,6 @@
 	dir = 10
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -53076,7 +53070,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -53386,7 +53379,6 @@
 "pZI" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -55714,7 +55706,6 @@
 /area/station/maintenance/science)
 "qJs" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/reagent_dispensers/water_cooler,
@@ -56585,7 +56576,6 @@
 "qYi" = (
 /obj/machinery/iv_drip,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -58785,7 +58775,6 @@
 "rKU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating{
@@ -58995,7 +58984,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -59462,7 +59450,6 @@
 /area/station/medical/morgue)
 "rXn" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -60104,7 +60091,6 @@
 /area/station/maintenance/brig)
 "sgM" = (
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor/carpet,
@@ -65323,6 +65309,7 @@
 	},
 /area/station/rnd/robotics)
 "tNw" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "Chapel Backroom"
 	},
@@ -67046,7 +67033,6 @@
 /area/station/cargo/storage)
 "uqx" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -68260,7 +68246,6 @@
 /area/station/hallway/secondary/entry)
 "uIi" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -69147,15 +69132,14 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "uWZ" = (
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -72744,14 +72728,13 @@
 /obj/machinery/computer/cargo{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/alarm{
+	pixel_y = 26
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -76923,8 +76906,7 @@
 /area/station/engineering/engine)
 "xxj" = (
 /obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 25
+	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
@@ -78016,7 +77998,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	locked = 0;
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating,
@@ -111521,7 +111502,7 @@ bmM
 vgY
 uvU
 lEb
-xPp
+kWR
 pYX
 cKC
 ecb
