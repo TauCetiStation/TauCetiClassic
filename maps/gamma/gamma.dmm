@@ -3354,7 +3354,6 @@
 "ahs" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -7107,7 +7106,6 @@
 /area/station/maintenance/dormitory)
 "bqL" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -9151,7 +9149,6 @@
 "bYI" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/light{
@@ -12383,7 +12380,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -14582,7 +14578,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -19432,7 +19427,6 @@
 "fkE" = (
 /obj/structure/dresser,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
@@ -21437,7 +21431,6 @@
 "fOH" = (
 /obj/structure/dresser,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
@@ -25400,7 +25393,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -30337,7 +30329,6 @@
 /area/station/maintenance/bridge)
 "iJN" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -34070,7 +34061,6 @@
 "jSg" = (
 /obj/structure/closet/wardrobe/chemistry_white,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -35894,12 +35884,8 @@
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
 	},
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = -4
-	},
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = -4
-	},
+/obj/item/weapon/gun/energy/gun,
+/obj/item/weapon/gun/energy/gun,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -49366,7 +49352,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -51012,7 +50997,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -52018,7 +52002,6 @@
 /area/station/rnd/hallway)
 "pCp" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -52637,7 +52620,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/disposalpipe/segment{
@@ -54180,7 +54162,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor,
@@ -55044,7 +55025,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -55792,7 +55772,6 @@
 	pixel_x = 12
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -59313,6 +59292,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/box/evidence,
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -60751,6 +60731,7 @@
 	c_tag = "Secure Armory";
 	dir = 1
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -63060,7 +63041,6 @@
 	c_tag = "Interrogation Observation"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -63414,7 +63394,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -64366,7 +64345,6 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -64559,7 +64537,6 @@
 	dir = 6
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/cable{
@@ -64585,7 +64562,6 @@
 	c_tag = "Central Hallway North"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -68443,7 +68419,6 @@
 /area/station/medical/reception)
 "uMm" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -71455,7 +71430,6 @@
 	network = list("SS13","Medical")
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -72422,7 +72396,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/light{
@@ -75314,7 +75287,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/packageWrap,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -79206,7 +79178,6 @@
 	pixel_x = 27
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
