@@ -62,6 +62,17 @@
 				I.plane = 6
 				T.add_overlay(I)
 
+	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
+		update_hud()
+
+/turf/simulated/mineral/proc/update_hud()
+	if(hud_list)
+		return
+	prepare_huds()
+	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	mine.add_to_hud(src)
+	set_mine_hud()
+
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
 		if(2.0)
@@ -108,12 +119,6 @@
 					target_turf.mineral = mineral
 					target_turf.UpdateMineral()
 					target_turf.MineralSpread()
-					if(!istype(src, /turf/simulated/floor/plating/airless/asteroid))
-						target_turf.prepare_huds()
-						var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-						mine.add_to_hud(target_turf)
-						target_turf.set_mine_hud()
-
 
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
@@ -134,6 +139,8 @@
 	else
 		name = "Rock"
 		icon_state = "rock"
+
+	update_hud()
 
 /turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
 	if(mineral)
