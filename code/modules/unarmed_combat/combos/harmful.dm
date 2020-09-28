@@ -446,7 +446,7 @@
 						V.attack_reaction(H, REACTION_THROWITEM)
 				return
 
-	destroy_grabs()
+	destroy_grabs(victim, attacker)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/spin_throw/execute(mob/living/victim, mob/living/attacker)
