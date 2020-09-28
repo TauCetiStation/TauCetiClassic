@@ -5,6 +5,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
+	var/list/def_sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
@@ -176,8 +177,8 @@
 
 /mob/living/silicon/proc/remove_sensors()
 	for(var/hud in sensor_huds)
-		var/datum/atom_hud/secsensor = global.huds[hud]
-		secsensor.remove_hud_from(src)
+		var/datum/atom_hud/sensor = global.huds[hud]
+		sensor.remove_hud_from(src)
 	sensor_mode = FALSE
 	to_chat(src, "Sensor augmentations disabled.")
 
@@ -189,8 +190,8 @@
 		return
 
 	for(var/hud in sensor_huds)
-		var/datum/atom_hud/sec = global.huds[hud]
-		sec.add_hud_to(src)
+		var/datum/atom_hud/sensor = global.huds[hud]
+		sensor.add_hud_to(src)
 
 	sensor_mode = TRUE
 	to_chat(src, "Sensor augmentations enabled.")

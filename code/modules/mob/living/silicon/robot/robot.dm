@@ -228,6 +228,8 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			sensor_huds = def_sensor_huds
+			sensor_huds += DATA_HUD_MINER
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -1129,15 +1131,3 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
-
-/mob/living/silicon/robot/remove_sensors()
-	..()
-	if(istype(module, /obj/item/weapon/robot_module/miner))
-		var/datum/atom_hud/mine = global.huds[DATA_HUD_MINER]
-		mine.remove_hud_from(src)
-
-/mob/living/silicon/robot/toggle_sensor_mode()
-	..()
-	if(istype(module, /obj/item/weapon/robot_module/miner))
-		var/datum/atom_hud/mine = global.huds[DATA_HUD_MINER]
-		mine.add_hud_to(src)
