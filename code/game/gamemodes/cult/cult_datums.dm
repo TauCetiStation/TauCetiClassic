@@ -53,8 +53,10 @@ var/list/cult_runes = list()
 		if(!ignore_holy)
 			if(heretic.mind.holy_role >= HOLY_ROLE_PRIEST)
 				var/obj/item/weapon/nullrod/N = locate() in heretic
-				var/obj/item/clothing/suit/armor/religion/A = locate() in heretic
-				var/obj/item/clothing/head/helmet/religion/H = locate() in heretic
+				var/A = /obj/item/clothing/suit/armor/religion
+				var/H = /obj/item/clothing/head/helmet/religion
+				heretic.equip_to_slot_or_del(new A, SLOT_WEAR_SUIT)
+				heretic.equip_to_slot_or_del(new H, SLOT_HEAD)
 
 				if(N || (A && H))
 					continue
