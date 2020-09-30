@@ -7161,6 +7161,8 @@
 	dir = 8;
 	network = list("SS13","Medical")
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -15751,6 +15753,15 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
+"edn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/station/medical/medbreak)
 "edr" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -25281,6 +25292,8 @@
 	name = "Medbay Maintenance";
 	req_access = list(5)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -56545,12 +56558,6 @@
 /area/station/cargo/recycler)
 "qXg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -56559,6 +56566,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qXN" = (
@@ -59272,6 +59281,11 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
+"rTD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "rTJ" = (
 /obj/structure/table,
 /obj/item/weapon/evidencebag,
@@ -77388,6 +77402,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"xET" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/station/medical/medbreak)
 "xEX" = (
 /obj/structure/table,
 /obj/item/weapon/crowbar,
@@ -78369,6 +78389,9 @@
 /area/station/medical/virology)
 "xVG" = (
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -116901,13 +116924,13 @@ won
 bXC
 bXC
 rcB
-cNI
-cNI
+xET
+edn
 brv
 hbc
-iVU
-iVU
-iVU
+rTD
+rTD
+rTD
 qXg
 fLz
 pYX
