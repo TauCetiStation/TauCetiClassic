@@ -200,7 +200,7 @@
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
 	needed_aspect = list(ASPECT_SPAWN = 1)
-	summon_amt = 0
+	summon_amt = 1
 
 	invocation = "none"
 	clothes_req = 0
