@@ -91,6 +91,9 @@
 	select_name = "ion"
 	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
+/obj/item/ammo_casing/energy/ion/small
+	projectile_type = /obj/item/projectile/ion/small
+
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
 	select_name = "declone"
