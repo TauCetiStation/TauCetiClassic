@@ -6,6 +6,13 @@
 /datum/atom_hud/antag/hidden
 	self_visible = FALSE
 
+/datum/atom_hud/antag/hidden/golem
+	hud_icons = list(GOLEM_MASTER_HUD)
+
+/mob/living/proc/set_golem_hud()
+	var/image/holder = hud_list[GOLEM_MASTER_HUD]
+	holder.icon_state = "agolem_master"
+
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")

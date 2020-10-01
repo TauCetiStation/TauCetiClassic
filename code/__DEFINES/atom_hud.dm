@@ -34,6 +34,8 @@
 #define BROKEN_HUD			"15"
 // Mine huds
 #define MINE_HUD			"16"
+// Hud of the golem that shows its master
+#define GOLEM_MASTER_HUD	"17"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

@@ -305,7 +305,6 @@
 
 /mob
 	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
-	hud_possible = list(ANTAG_HUD)
 
 /obj/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)

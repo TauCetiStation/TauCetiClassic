@@ -25,7 +25,7 @@ var/global/list/huds[22]
 	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Update gamemode!
-	huds[ANTAG_HUD_GOLEM] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_GOLEM] = new/datum/atom_hud/antag/hidden/golem
 	huds[ANTAG_HUD_ALIEN] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_DEATHCOM] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
@@ -39,7 +39,7 @@ var/global/list/huds[22]
 
 	var/list/next_time_allowed = list() //mobs associated with the next time this hud can be added to them
 	var/list/queued_to_see = list() //mobs that have triggered the cooldown and are queued to see the hud, but do not yet
-	var/hud_exceptions = list() // huduser = list(ofatomswiththeirhudhidden) - aka everyone hates targeted invisiblity
+	var/list/hud_exceptions = list() // huduser = list(ofatomswiththeirhudhidden) - aka everyone hates targeted invisiblity
 
 /datum/atom_hud/New()
 	global.all_huds += src

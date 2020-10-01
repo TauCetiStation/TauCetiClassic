@@ -50,7 +50,7 @@
 
 	var/list/roundstart_quirks = list()
 	var/list/status_effects // a list of all status effects the mob has
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD)
 
 	var/force_remote_viewing = FALSE
 

@@ -1,3 +1,6 @@
+/mob
+	hud_possible = list(ANTAG_HUD)
+
 /**
   * Delete a mob
   *
