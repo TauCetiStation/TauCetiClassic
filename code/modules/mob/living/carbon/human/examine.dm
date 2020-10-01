@@ -205,6 +205,11 @@
 	//ID
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
+		var/id_card = wear_id.GetID()
+		if(istype(id_card, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/ID = id_card
+			if(ID.disabilities.len)
+				msg += "\a [ENTITY_TAB][ID.GetDisabilities()]\n"
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()

@@ -311,6 +311,10 @@ div.notice
 	margin-left: 35px
 }
 
+td.collapsing {
+	width: 1%;
+	white-space: nowrap;
+}
 
 .progressBar
 {
