@@ -136,7 +136,7 @@ commented cause polls are kinda broken now, needs refactoring */
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
 			to_chat(src, "<span class='notice'>Now teleporting.</span>")
-			observer.loc = O.loc
+			observer.forceMove(O.loc)
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 			// client.prefs.update_preview_icon()
@@ -332,7 +332,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
 		empty_playable_ai_cores -= C
 
-		character.loc = C.loc
+		character.forceMove(C.loc)
 
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
 
@@ -343,11 +343,11 @@ commented cause polls are kinda broken now, needs refactoring */
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
+	character.forceMove(pick(latejoin))
 	character.lastarea = get_area(loc)
 	// Moving wheelchair if they have one
 	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
+		character.buckled.forceMove(character.loc)
 		character.buckled.dir = character.dir
 
 	SSticker.mode.latespawn(character)

@@ -129,7 +129,7 @@
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
 					density = 1
 					if(T.Enter(src, get_turf(src)))
-						src.loc = T
+						forceMove(T)
 					density = 0
 				break
 

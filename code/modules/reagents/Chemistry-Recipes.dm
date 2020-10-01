@@ -889,7 +889,7 @@
 
 			var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 			if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-				A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+				A.forceMove(locate(A.x + x_distance, A.y + y_distance, TO.z))
 
 			spawn()
 				if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -941,7 +941,7 @@
 	for(var/i = 1, i <= created_volume, i++)
 		var/chosen = pick(critters)
 		var/mob/living/simple_animal/hostile/C = new chosen
-		C.loc = get_turf_loc(holder.my_atom)
+		C.forceMove(get_turf_loc(holder.my_atom))
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))
@@ -969,7 +969,7 @@
 		var/chosen = pick(borks)
 		var/obj/B = new chosen
 		if(B)
-			B.loc = get_turf_loc(holder.my_atom)
+			B.forceMove(get_turf_loc(holder.my_atom))
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -1043,7 +1043,7 @@
 /datum/chemical_reaction/slimespawn/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
-	S.loc = get_turf_loc(holder.my_atom)
+	S.forceMove(get_turf_loc(holder.my_atom))
 
 
 /datum/chemical_reaction/slimemonkey
@@ -1058,7 +1058,7 @@
 /datum/chemical_reaction/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i = 1, i <= 3, i++)
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
-		M.loc = get_turf_loc(holder.my_atom)
+		M.forceMove(get_turf_loc(holder.my_atom))
 
 //Green
 /datum/chemical_reaction/slimemutate
@@ -1124,7 +1124,7 @@
 		var/chosen = pick(critters)
 		var/mob/living/simple_animal/hostile/C = new chosen
 		C.faction = "slimesummon"
-		C.loc = get_turf_loc(holder.my_atom)
+		C.forceMove(get_turf_loc(holder.my_atom))
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
@@ -1250,7 +1250,7 @@
 
 /datum/chemical_reaction/slimecell/on_reaction(datum/reagents/holder, created_volume)
 	var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
-	P.loc = get_turf_loc(holder.my_atom)
+	P.forceMove(get_turf_loc(holder.my_atom))
 
 /datum/chemical_reaction/slimeglow
 	name = "Slime Glow"
@@ -1264,7 +1264,7 @@
 /datum/chemical_reaction/slimeglow/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The contents of the slime core harden and begin to emit a warm, bright light.</span>")
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
-	F.loc = get_turf(holder.my_atom)
+	F.forceMove(get_turf(holder.my_atom))
 
 //Purple
 
@@ -1279,7 +1279,7 @@
 
 /datum/chemical_reaction/slimepsteroid/on_reaction(datum/reagents/holder)
 	var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
-	P.loc = get_turf_loc(holder.my_atom)
+	P.forceMove(get_turf_loc(holder.my_atom))
 
 
 
@@ -1344,7 +1344,7 @@
 
 /datum/chemical_reaction/slimeppotion/on_reaction(datum/reagents/holder)
 	var/obj/item/weapon/slimepotion/P = new /obj/item/weapon/slimepotion
-	P.loc = get_turf_loc(holder.my_atom)
+	P.forceMove(get_turf_loc(holder.my_atom))
 
 
 //Black
@@ -1386,7 +1386,7 @@
 
 /datum/chemical_reaction/slimepotion2/on_reaction(datum/reagents/holder)
 	var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
-	P.loc = get_turf_loc(holder.my_atom)
+	P.forceMove(get_turf_loc(holder.my_atom))
 
 //Adamantine
 /datum/chemical_reaction/slimegolem
@@ -1400,7 +1400,7 @@
 
 /datum/chemical_reaction/slimegolem/on_reaction(datum/reagents/holder)
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
-	Z.loc = get_turf_loc(holder.my_atom)
+	Z.forceMove(get_turf_loc(holder.my_atom))
 
 //Bluespace
 /datum/chemical_reaction/slimecrystal
@@ -1415,7 +1415,7 @@
 /datum/chemical_reaction/slimecrystal/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The bluespace crystal appears out of thin air!</span>")
 	var/obj/item/bluespace_crystal/I = new /obj/item/bluespace_crystal
-	I.loc = get_turf(holder.my_atom)
+	I.forceMove(get_turf(holder.my_atom))
 
 //Cerulean
 /datum/chemical_reaction/slimepsteroid2
@@ -1429,7 +1429,7 @@
 
 /datum/chemical_reaction/slimepsteroid2/on_reaction(datum/reagents/holder)
 	var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
-	P.loc = get_turf(holder.my_atom)
+	P.forceMove(get_turf(holder.my_atom))
 
 //Sepia
 /datum/chemical_reaction/slimecamera
@@ -1443,7 +1443,7 @@
 
 /datum/chemical_reaction/slimecamera/on_reaction(datum/reagents/holder)
 	var/obj/item/device/camera/P = new /obj/item/device/camera
-	P.loc = get_turf(holder.my_atom)
+	P.forceMove(get_turf(holder.my_atom))
 
 /datum/chemical_reaction/slimefilm
 	name = "Slime Film"
@@ -1456,7 +1456,7 @@
 
 /datum/chemical_reaction/slimefilm/on_reaction(datum/reagents/holder)
 	var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
-	P.loc = get_turf(holder.my_atom)
+	P.forceMove(get_turf(holder.my_atom))
 
 //Pyrite
 /datum/chemical_reaction/slimepaint
@@ -1473,7 +1473,7 @@
 	var/chosen = pick(paints)
 	var/obj/B = new chosen
 	if(B)
-		B.loc = get_turf(holder.my_atom)
+		B.forceMove(get_turf(holder.my_atom))
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 /datum/chemical_reaction/tea

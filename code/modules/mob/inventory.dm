@@ -239,10 +239,11 @@ var/list/slot_equipment_priority = list(
 // Removes an item from inventory and places it in the target atom
 /mob/proc/drop_from_inventory(obj/item/W, atom/target = null)
 	if(W)
+		var/prev_slot = W.slot_equipped
 		remove_from_mob(W, target)
+		update_inv_slot(prev_slot)
 		if(!(W && W.loc))
 			return 1 // self destroying objects (tk, grabs)
-		update_icons()
 		return 1
 	return 0
 

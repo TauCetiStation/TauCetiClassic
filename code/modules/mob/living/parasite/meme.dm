@@ -117,7 +117,8 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 /mob/living/parasite/meme/death()
 	// make sure the mob is on the actual map before gibbing
-	if(host) src.loc = host.loc
+	if(host)
+		forceMove(host.loc)
 	src.stat = DEAD
 	..()
 	qdel(src)
@@ -570,8 +571,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	to_chat(host, "<span class='warning'>Everything goes black..</span>")
 
 	spawn
-		var/mob/dummy = new()
-		dummy.loc = 0
+		var/mob/dummy = new(null)
 		dummy.sight = BLIND
 
 		var/datum/mind/host_mind = host.mind

@@ -115,7 +115,7 @@
 				C.client.perspective = EYE_PERSPECTIVE
 				C.client.eye = src
 			occupant = C
-			C.loc = src
+			C.forceMove(src)
 			C.stop_pulling()
 			break
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
@@ -180,7 +180,7 @@
 	if(iscrowbar(I))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
-				O.loc = loc
+				O.forceMove(loc)
 			default_deconstruction_crowbar(I)
 		return
 
@@ -192,7 +192,7 @@
 
 		beaker = B
 		user.drop_item()
-		B.loc = src
+		B.forceMove(src)
 		user.visible_message("[user] adds \a [B] to \the [src]!", "You add \a [B] to \the [src]!")
 		return
 
@@ -222,21 +222,21 @@
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A in src)
-				A.loc = loc
+				A.forceMove(loc)
 				A.ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
-					A.loc = loc
+					A.forceMove(loc)
 					A.ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
-					A.loc = loc
+					A.forceMove(loc)
 					A.ex_act(severity)
 				qdel(src)
 				return
@@ -246,7 +246,7 @@
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
 		for(var/atom/movable/A in contents)
-			A.loc = loc
+			A.forceMove(loc)
 		qdel(src)
 
 //DNA COMPUTER
@@ -284,7 +284,7 @@
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
 			user.drop_item()
-			I.loc = src
+			I.forceMove(src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src
@@ -638,7 +638,7 @@
 	else if(href_list["ejectBeaker"])
 		if(connected.beaker)
 			var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
-			B.loc = connected.loc
+			B.forceMove(connected.loc)
 			connected.beaker = null
 
 	// Transfer Buffer Management
@@ -657,7 +657,7 @@
 		else if (bufferOption == "ejectDisk")
 			if (!disk)
 				return
-			disk.loc = get_turf(src)
+			disk.forceMove(get_turf(src))
 			disk = null
 
 		// All bufferOptions from here on require a bufferId
@@ -754,7 +754,7 @@
 					success = 1
 				waiting_for_user_input = 0
 				if(success)
-					I.loc = loc
+					I.forceMove(loc)
 					I.name += " ([buf.name])"
 					//temphtml = "Injector created."
 					injector_ready = 0

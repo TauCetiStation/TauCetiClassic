@@ -1017,7 +1017,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.loc = get_turf(src)
+	selection.forceMove(get_turf(src))
 
 	for(var/obj/item/weapon/O in pinned)
 		if(O == selection)

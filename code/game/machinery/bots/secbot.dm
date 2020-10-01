@@ -672,7 +672,7 @@
 		build_step++
 		to_chat(user, "You complete the Securitron! Beep boop.")
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
-		S.loc = get_turf(src)
+		S.forceMove(get_turf(src))
 		S.name = created_name
 		qdel(I)
 		qdel(src)

@@ -445,8 +445,7 @@
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
 				return
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			user.visible_message(\
 				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
@@ -974,7 +973,7 @@
 	else
 		to_chat(src.occupier, "<span class='warning'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
-			src.occupier.loc = src.loc
+			src.occupier.forceMove(src.loc)
 			src.occupier.death()
 			src.occupier.gib()*/
 

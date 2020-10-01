@@ -165,7 +165,7 @@
 		var/mob/living/L = G.affecting
 		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")
 		if(G.use_tool(src, user, 20, volume = 50))
-			L.loc = loc
+			L.forceMove(loc)
 			if(buckle_mob(L))
 				L.visible_message(\
 					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",\

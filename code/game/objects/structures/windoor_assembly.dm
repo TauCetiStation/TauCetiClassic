@@ -159,17 +159,16 @@
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-					user.drop_item()
-					AE.loc = src
+					user.drop_from_inventory(AE, src)
 					if(W.use_tool(src, user, 40, volume = 100))
 						if(src.electronics)
-							AE.loc = src.loc
+							AE.forceMove(loc)
 							return
 						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
 						src.name = "Near finished Windoor Assembly"
 						src.electronics = AE
 					else
-						AE.loc = src.loc
+						AE.forceMove(loc)
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(isscrewdriver(W))
@@ -183,7 +182,7 @@
 					var/obj/item/weapon/airlock_electronics/ae = electronics
 					ae = electronics
 					electronics = null
-					ae.loc = src.loc
+					ae.forceMove(loc)
 
 			else if(istype(W, /obj/item/weapon/pen))
 				var/t = sanitize_safe(input(user, "Enter the name for the door.", src.name, input_default(src.created_name)), MAX_LNAME_LEN)
@@ -226,7 +225,7 @@
 						else
 							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
+						src.electronics.forceMove(windoor)
 						if(created_name)
 							windoor.name = created_name
 
@@ -248,7 +247,7 @@
 						else
 							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
+						src.electronics.forceMove(windoor)
 						if(created_name)
 							windoor.name = created_name
 						windoor.close()

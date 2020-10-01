@@ -340,7 +340,7 @@
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.implants -= src
 
-	src.loc = get_turf(host)
+	forceMove(get_turf(host))
 	controlling = 0
 
 	reset_view(null)
@@ -418,8 +418,8 @@
 		if(!M.stat)
 			to_chat(M, "Something disgusting and slimy wiggles into your ear!")
 
-		src.host = M
-		src.loc = M
+		host = M
+		forceMove(M)
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M

@@ -135,7 +135,7 @@
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
-			I.loc = P
+			I.forceMove(P)
 			var/i = round(I.w_class)
 			if(i in list(1,2,3,4,5))
 				P.icon_state = "deliverycrate[i]"
@@ -148,7 +148,7 @@
 		if (src.amount > 3 && !C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate"
-			C.loc = P
+			C.forceMove(P)
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
@@ -163,7 +163,7 @@
 		else if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			C.welded = 1
-			C.loc = P
+			C.forceMove(P)
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
@@ -263,10 +263,10 @@
 
 	if(istype(AM, /obj))
 		var/obj/O = AM
-		O.loc = src
+		O.forceMove(src)
 	else if(istype(AM, /mob))
 		var/mob/M = AM
-		M.loc = src
+		M.forceMove(src)
 	src.flush()
 
 /obj/machinery/disposal/deliveryChute/flush()

@@ -180,8 +180,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		coin = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
@@ -234,8 +233,7 @@
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
@@ -416,7 +414,7 @@
 			to_chat(usr, "There is no coin in this machine.")
 			return FALSE
 
-		coin.loc = loc
+		coin.forceMove(loc)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
 		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
@@ -426,7 +424,7 @@
 		if (!ewallet)
 			to_chat(usr, "There is no charge card in this machine.")
 			return
-		ewallet.loc = loc
+		ewallet.forceMove(loc)
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
 		to_chat(usr, "<span class='notice'>You remove the [ewallet] from the [src]</span>")

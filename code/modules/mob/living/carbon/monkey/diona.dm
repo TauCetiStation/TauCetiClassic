@@ -245,7 +245,7 @@
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
-		src.loc = L.loc
+		forceMove(L.loc)
 		qdel(L)
 
 	for(var/datum/language/L in languages)

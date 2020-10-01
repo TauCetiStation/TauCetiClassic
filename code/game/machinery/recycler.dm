@@ -115,10 +115,10 @@ var/const/SAFETY_COOLDOWN = 100
 			recycle(AM)
 		else // Can't recycle
 			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			AM.loc = src.loc
+			AM.forceMove(src.loc)
 
 /obj/machinery/recycler/proc/recycle(obj/item/I, sound = 1)
-	I.loc = src.loc
+	I.forceMove(loc)
 	if(is_type_in_list(I, blacklist))
 		qdel(I)
 		if(sound)
@@ -152,7 +152,7 @@ var/const/SAFETY_COOLDOWN = 100
 	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	safety_mode = 1
 	update_icon()
-	L.loc = src.loc
+	L.forceMove(loc)
 
 	spawn(SAFETY_COOLDOWN)
 		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -160,8 +160,7 @@ var/const/SAFETY_COOLDOWN = 100
 		update_icon()
 
 /obj/machinery/recycler/proc/eat(mob/living/L)
-
-	L.loc = src.loc
+	L.forceMove(loc)
 
 	if(issilicon(L))
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)

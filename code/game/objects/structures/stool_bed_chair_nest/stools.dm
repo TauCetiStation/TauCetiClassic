@@ -68,7 +68,7 @@
 		if(H == usr && !H.restrained() && !H.stat && in_range(src, over_object))
 			var/obj/item/weapon/stool/S = new
 			S.origin_stool = src
-			src.loc = S
+			forceMove(S)
 			H.put_in_hands(S)
 			H.visible_message("<span class='red'>[H] grabs [src] from the floor!</span>", "<span class='red'>You grab [src] from the floor!</span>")
 			return
@@ -104,7 +104,7 @@
 
 /obj/item/weapon/stool/dropped(mob/user)
 	if(origin_stool)
-		origin_stool.loc = src.loc
+		origin_stool.forceMove(loc)
 		origin_stool = null
 	..()
 

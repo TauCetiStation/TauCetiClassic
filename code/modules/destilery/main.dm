@@ -58,8 +58,7 @@
 
 /obj/machinery/mill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		input += W
 	else
 		..()
@@ -70,7 +69,7 @@
 		return
 
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
-		F.loc = src.loc
+		F.forceMove(loc)
 		output -= F
 
 
@@ -132,8 +131,7 @@
 
 /obj/machinery/fermenter/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		input += W
 	else
 		..()
@@ -144,7 +142,7 @@
 		return
 
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
-		F.loc = src.loc
+		F.forceMove(loc)
 		output -= F
 
 
@@ -197,8 +195,7 @@
 
 /obj/machinery/still/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		input += W
 	else
 		..()
@@ -209,7 +206,7 @@
 		return
 
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
-		F.loc = src.loc
+		F.forceMove(loc)
 		output -= F
 
 
@@ -286,8 +283,7 @@
 
 /obj/machinery/centrifuge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
-		user.u_equip(W)
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		input += W
 	else
 		..()
@@ -298,9 +294,9 @@
 		return
 
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
-		F.loc = src.loc
+		F.forceMove(loc)
 		output -= F
 	while(enzymes >= 50)
 		enzymes -= 50
-		new/obj/item/weapon/reagent_containers/food/condiment/enzyme(src.loc)
+		new /obj/item/weapon/reagent_containers/food/condiment/enzyme(loc)
 

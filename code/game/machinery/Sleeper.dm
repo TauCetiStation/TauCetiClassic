@@ -93,7 +93,7 @@
 /obj/machinery/sleeper/blob_act()
 	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+			A.forceMove(loc)
 			A.blob_act()
 		qdel(src)
 
@@ -108,8 +108,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!beaker)
 			beaker = I
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
 			src.updateUsrDialog()
 			return
@@ -135,21 +134,21 @@
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+				A.forceMove(loc)
 				ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
 				qdel(src)
 				return
@@ -179,7 +178,7 @@
 	for(var/atom/movable/O in src)
 		if(O == beaker)
 			continue
-		O.loc = loc
+		O.forceMove(loc)
 	if(occupant.client)
 		occupant.client.eye = occupant.client.mob
 		occupant.client.perspective = MOB_PERSPECTIVE
@@ -206,7 +205,7 @@
 		return
 	if(beaker)
 		filtering = 0
-		beaker.loc = usr.loc
+		beaker.forceMove(usr.loc)
 		beaker = null
 	add_fingerprint(usr)
 	return
@@ -310,7 +309,7 @@
 	if(!state_open && !panel_open)
 		..()
 		if(beaker)
-			beaker.loc = src
+			beaker.forceMove(src)
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)

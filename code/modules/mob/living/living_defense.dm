@@ -157,7 +157,7 @@
 			embed(I, zone, created_wound)
 
 /mob/living/proc/embed(obj/item/I)
-	I.loc = src
+	I.forceMove(src)
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 

@@ -283,10 +283,10 @@
 			secure_radio_connections[ch_name] = null
 		var/turf/T = get_turf(user)
 		if(keyslot1)
-			keyslot1.loc = T
+			keyslot1.forceMove(T)
 			keyslot1 = null
 		if(keyslot2)
-			keyslot2.loc = T
+			keyslot2.forceMove(T)
 			keyslot2 = null
 		recalculateChannels()
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)

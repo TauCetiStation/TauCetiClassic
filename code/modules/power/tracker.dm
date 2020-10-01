@@ -21,7 +21,7 @@
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
 		S.anchored = 1
-	S.loc = src
+	S.forceMove(src)
 	connect_to_network()
 
 /obj/machinery/power/tracker/disconnect_from_network()
@@ -61,7 +61,7 @@
 		if(W.use_tool(src, user, 50, volume = 50))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
-				S.loc = src.loc
+				S.forceMove(loc)
 				S.give_glass()
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")

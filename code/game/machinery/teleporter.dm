@@ -40,8 +40,7 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			user.drop_from_inventory(L)
-			L.loc = src
+			user.drop_from_inventory(L, src)
 			locked = L
 			to_chat(user, "<span class='notice'>You insert the GPS device into the [name]'s slot.</span>")
 	else
@@ -147,7 +146,7 @@
 
 /obj/machinery/computer/teleporter/proc/eject()
 	if(locked)
-		locked.loc = loc
+		locked.forceMove(loc)
 		locked = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)

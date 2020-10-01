@@ -87,7 +87,7 @@
 		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
-	
+
 	return data
 
 /obj/item/weapon/paper/verb/rename()
@@ -473,36 +473,11 @@
 			B.name = name
 		else if(I.name != "paper" && I.name != "photo")
 			B.name = I.name
+
 		user.drop_from_inventory(I)
-		if (istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/h_user = user
-			if (h_user.r_hand == src)
-				h_user.drop_from_inventory(src)
-				h_user.put_in_r_hand(B)
-			else if (h_user.l_hand == src)
-				h_user.drop_from_inventory(src)
-				h_user.put_in_l_hand(B)
-			else if (h_user.l_store == src)
-				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
-				B.plane = ABOVE_HUD_PLANE
-				h_user.l_store = B
-				h_user.update_inv_pockets()
-			else if (h_user.r_store == src)
-				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
-				B.plane = ABOVE_HUD_PLANE
-				h_user.r_store = B
-				h_user.update_inv_pockets()
-			else if (h_user.head == src)
-				h_user.u_equip(src)
-				h_user.put_in_hands(B)
-			else if (!istype(loc, /turf))
-				src.loc = get_turf(h_user)
-				if(h_user.client)	h_user.client.screen -= src
-				h_user.put_in_hands(B)
+		user.drop_from_inventory(src)
+		user.put_in_hands(B)
+
 		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
 		forceMove(B)
 		I.forceMove(B)

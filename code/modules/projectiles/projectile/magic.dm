@@ -41,7 +41,7 @@
 				continue
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-			W.loc = M.loc
+			W.forceMove(M.loc)
 			W.dropped(M)
 
 	var/mob/living/new_mob

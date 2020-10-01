@@ -42,9 +42,9 @@
 		if(ishuman(user))
 			if(!user.get_active_hand())
 				user.put_in_hands(cell)
-				cell.loc = user.loc
+				cell.forceMove(user.loc)
 		else
-			cell.loc = loc
+			cell.forceMove(loc)
 
 		cell.add_fingerprint(user)
 		cell.updateicon()
@@ -58,7 +58,7 @@
 		on = 0
 		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		set_light(0)
-		
+
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 	else
@@ -69,7 +69,7 @@
 		on = 1
 		to_chat(user, "<span class='notice'>You turn on the light</span>")
 		set_light(brightness_on)
-		
+
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -103,8 +103,7 @@
 			if(cell)
 				to_chat(user, "There is a power cell already installed.")
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "You insert the power cell.")
 	updateicon()

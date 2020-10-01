@@ -100,7 +100,7 @@
 	H.update_hair()
 	copy_overlays(H, TRUE)
 	add_overlay(image('icons/mob/blob.dmi', icon_state = "blob_head"))
-	H.loc = src
+	H.forceMove(src)
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
@@ -125,7 +125,7 @@
 		factory.spores -= src
 	if(contents)
 		for(var/mob/M in contents)
-			M.loc = src.loc
+			M.forceMove(loc)
 	return ..()
 
 /datum/reagent/toxin/spore

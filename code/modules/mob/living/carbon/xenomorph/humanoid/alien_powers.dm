@@ -278,7 +278,7 @@ Doesn't work on other aliens/AI.*/
 	BB.firer = src
 	BB.def_zone = src.zone_sel.selecting
 	//shoot
-	BB.loc = T
+	BB.forceMove(T)
 	BB.starting = T
 	BB.current = loc
 	BB.yo = U.y - loc.y
@@ -331,7 +331,7 @@ Doesn't work on other aliens/AI.*/
 			for(var/mob/M in src)
 				if(M in stomach_contents)
 					stomach_contents.Remove(M)
-					M.loc = loc
+					M.forceMove(loc)
 					//M.update_pipe_vision()
 					//Paralyse(10)
 			src.visible_message("<span class='warning'>[src] hurls out the contents of their stomach!</span>")

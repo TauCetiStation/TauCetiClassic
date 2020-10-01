@@ -56,7 +56,7 @@
 	to_chat(user, "<span class='notice'>You cut open the present.</span>")
 
 	for(var/mob/M in src) //Should only be one but whatever.
-		M.loc = src.loc
+		M.forceMove(loc)
 		if (M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
@@ -193,7 +193,7 @@
 				H.client.perspective = EYE_PERSPECTIVE
 				H.client.eye = present
 
-			H.loc = present
+			H.forceMove(present)
 
 			H.log_combat(user, "wrapped with [name]")
 

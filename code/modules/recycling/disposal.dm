@@ -118,7 +118,7 @@
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20))
-				GM.loc = src
+				GM.forceMove(src)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -133,9 +133,7 @@
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
-	user.drop_item()
-	if(I)
-		I.loc = src
+	user.drop_from_inventory(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
@@ -182,7 +180,7 @@
 	else
 		return
 
-	target.loc = src
+	target.forceMove(src)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -223,7 +221,7 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		target.loc = src
+		target.forceMove(src)
 
 		user.visible_message(msg, self_message = self_msg)
 
@@ -243,7 +241,7 @@
 
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
-	user.loc = src.loc
+	user.forceMove(loc)
 	user.instant_vision_update(0)
 	update()
 	return
@@ -348,7 +346,7 @@
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
 	for(var/atom/movable/AM in src)
-		AM.loc = src.loc
+		AM.forceMove(loc)
 		AM.pipe_eject(0)
 	update()
 
@@ -502,7 +500,7 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
-			I.loc = src
+			I.forceMove(src)
 			visible_message("\the [I] lands in \the [src].")
 		else
 			visible_message("\the [I] bounces off of \the [src]'s rim!")
@@ -547,7 +545,7 @@
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
 	for(var/atom/movable/AM in D)
-		AM.loc = src
+		AM.forceMove(src)
 		if(istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			has_fat_guy = HAS_TRAIT(H, TRAIT_FAT) // is a human and fat? set flag on holder
@@ -640,7 +638,7 @@
 // used when a a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/atom/movable/AM in other)
-		AM.loc = src		// move everything in other holder to this one
+		AM.forceMove(src)		// move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
 			M.instant_vision_update(1,src)
@@ -719,7 +717,7 @@
 			// this is unlikely, but just dump out everything into the turf in case
 
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(T)
 				AM.pipe_eject(0)
 			qdel(H)
 			return ..()
@@ -749,9 +747,9 @@
 		if(H2 && !H2.active)
 			H.merge(H2)
 
-		H.loc = P
+		H.forceMove(P)
 	else			// if wasn't a pipe, then set loc to turf
-		H.loc = T
+		H.forceMove(T)
 		return null
 
 	return P
@@ -792,7 +790,7 @@
 	// Leaving it intact and sitting in a wall is stupid.
 	if(T.density)
 		for(var/atom/movable/AM in H)
-			AM.loc = T
+			AM.forceMove(T)
 			AM.pipe_eject(0)
 		qdel(H)
 		return
@@ -858,7 +856,7 @@
 			// this is unlikely, but just dump out everything into the turf in case
 
 			for(var/atom/movable/AM in H)
-				AM.loc = T
+				AM.forceMove(T)
 				AM.pipe_eject(0)
 			qdel(H)
 			return
@@ -1155,9 +1153,9 @@
 		if(H2 && !H2.active)
 			H.merge(H2)
 
-		H.loc = P
+		H.forceMove(P)
 	else			// if wasn't a pipe, then set loc to turf
-		H.loc = T
+		H.forceMove(T)
 		return null
 
 	return P

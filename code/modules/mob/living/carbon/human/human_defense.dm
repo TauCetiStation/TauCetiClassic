@@ -124,7 +124,7 @@
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			SP.name = "[P.name] shrapnel"
 			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."
-			SP.loc = BP
+			SP.forceMove(BP)
 			BP.embed(SP)
 
 	if(istype(P, /obj/item/projectile/neurotoxin))
@@ -250,7 +250,7 @@
 			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
-			src.loc = picked
+			forceMove(picked)
 			return 1
 
 /mob/living/carbon/human/emp_act(severity)

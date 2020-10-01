@@ -53,7 +53,7 @@
 
 			dish.info = r
 			dish.analysed = 1
-			dish.loc = src.loc
+			dish.forceMove(loc)
 			dish = null
 
 			icon_state = "analyser"
@@ -66,7 +66,7 @@
 		else
 			pause = 1
 			spawn(25)
-				dish.loc = src.loc
+				dish.forceMove(loc)
 				dish = null
 
 				src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")

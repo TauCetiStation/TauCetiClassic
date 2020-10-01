@@ -129,10 +129,9 @@
 	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
-	user.drop_item()
-	W.loc = src
+	user.drop_from_inventory(W, src)
 	stored_materials.Add(W)
-	src.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+	visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 
 /obj/machinery/replicator/is_operational_topic()
 	return TRUE

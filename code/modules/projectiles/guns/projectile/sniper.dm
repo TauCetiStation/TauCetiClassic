@@ -46,7 +46,7 @@
 			spawn(3)
 				playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You work the bolt open, ejecting [chambered]!</span>")
-			chambered.loc = get_turf(src)//Eject casing
+			chambered.forceMove(get_turf(src))//Eject casing
 			chambered.SpinAnimation(5, 1)
 			chambered = null
 		else

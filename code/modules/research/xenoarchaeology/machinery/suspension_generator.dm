@@ -63,8 +63,7 @@
 			if(cell)
 				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
@@ -154,7 +153,7 @@
 			if(!suspension_field.contents.len)
 				suspension_field.icon_state = "energynet"
 				suspension_field.add_overlay("shield2")
-			I.loc = suspension_field
+			I.forceMove(suspension_field)
 
 		for(var/mob/living/simple_animal/M in T)
 			M.weakened = max(M.weakened, 3)
@@ -204,7 +203,7 @@
 	if(!open)
 		..()
 	else if(cell)
-		cell.loc = loc
+		cell.forceMove(loc)
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
@@ -266,7 +265,7 @@
 	icon_state = "suspension_working"
 
 	for(var/obj/item/I in T)
-		I.loc = suspension_field
+		I.forceMove(suspension_field)
 		collected++
 
 	if(collected)
@@ -331,5 +330,5 @@
 
 /obj/effect/suspension_field/Destroy()
 	for(var/obj/I in src)
-		I.loc = src.loc
+		I.forceMove(loc)
 	return ..()

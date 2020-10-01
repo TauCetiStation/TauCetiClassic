@@ -367,7 +367,7 @@
 
 /obj/item/device/camera/proc/printpicture(mob/user, datum/picture/P)
 	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
-	Photo.loc = user.loc
+	Photo.forceMove(user.loc)
 	if(!user.get_inactive_hand())
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)

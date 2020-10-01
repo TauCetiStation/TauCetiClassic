@@ -102,8 +102,7 @@
 			user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
 			if(W.use_tool(src, user, 40, volume = 50))
-				user.drop_item()
-				AE.loc = src
+				user.drop_from_inventory(AE, src)
 				to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
@@ -119,7 +118,7 @@
 			else
 				AE = electronics
 				electronics = null
-				AE.loc = loc
+				AE.forceMove(loc)
 
 	else if(istype(W, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = W
@@ -174,7 +173,7 @@
 				door.req_access = electronics.conf_access
 			if(created_name)
 				door.name = created_name
-			electronics.loc = door
+			electronics.forceMove(door)
 			electronics = null
 			qdel(src)
 	else

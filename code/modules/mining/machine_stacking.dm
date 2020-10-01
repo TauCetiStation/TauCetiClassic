@@ -105,9 +105,9 @@
 					stack_storage[S.name] += S.get_amount()
 					qdel(S)
 				else
-					S.loc = output.loc
+					S.forceMove(output.loc)
 			else
-				O.loc = output.loc
+				O.forceMove(output.loc)
 	//Output amounts that are past stack_amt.
 	for(var/sheet in stack_storage)
 		if(stack_storage[sheet] >= stack_amt)

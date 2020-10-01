@@ -115,8 +115,7 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You must remove [held_container] from [src] first.</span>")
 			else
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
-				user.drop_item()
-				O.loc = src
+				user.drop_from_inventory(O, src)
 				held_container = O
 		else
 			var/obj/item/weapon/reagent_containers/R = O
@@ -201,7 +200,7 @@ var/list/ingredients_source = list(
 		make( usr, text2num(href_list["make"]) )
 	else if(href_list["eject"])
 		if(held_container)
-			held_container.loc = src.loc
+			held_container.forceMove(loc)
 			held_container = null
 
 	updateDialog()

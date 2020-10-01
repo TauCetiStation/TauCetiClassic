@@ -151,7 +151,7 @@
 		log_debug("Leader status [leader_selected]")
 		if(!leader_selected)
 			log_debug("Leader - [synd_mind]")
-			synd_mind.current.loc = synd_comm_spawn
+			synd_mind.current.forceMove(synd_comm_spawn)
 			equip_syndicate(synd_mind.current, 1)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
@@ -163,7 +163,7 @@
 			if(spawnpos > synd_spawn.len)
 				spawnpos = 1
 			log_debug("[synd_mind] telepoting to [synd_spawn[spawnpos]]")
-			synd_mind.current.loc = synd_spawn[spawnpos]
+			synd_mind.current.forceMove(synd_spawn[spawnpos])
 
 		spawn(0)
 			NukeNameAssign(synd_mind)
@@ -199,10 +199,10 @@
 		P.name = "nuclear bomb code"
 		P.update_icon()
 		if (SSticker.mode.config_tag=="nuclear")
-			P.loc = synd_mind.current.loc
+			P.forceMove(synd_mind.current.loc)
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
-			P.loc = H.loc
+			P.forceMove(H.loc)
 			H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
 			H.update_icons()
 

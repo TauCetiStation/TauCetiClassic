@@ -41,7 +41,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
-		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		B.forceMove(get_step(loc, SOUTH)) //Beaker is carefully ejected from the wreckage of the cryotube
 
 	return ..()
 
@@ -289,7 +289,7 @@
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			beaker.loc = get_step(loc, SOUTH)
+			beaker.forceMove(get_step(loc, SOUTH))
 			beaker = null
 
 	update_icon()
@@ -330,7 +330,7 @@
 		on = FALSE
 		..()
 		if(beaker)
-			beaker.loc = src
+			beaker.forceMove(src)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)

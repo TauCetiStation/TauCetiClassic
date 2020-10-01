@@ -11,14 +11,14 @@
 	if(coat)
 		user.visible_message("[user] takes [coat] off \the [src].", "You take [coat] off the \the [src]")
 		if(!user.put_in_active_hand(coat))
-			coat.loc = get_turf(user)
+			coat.forceMove(get_turf(user))
 		coat = null
 		update_icon()
 		return
 	if(hat)
 		user.visible_message("[user] takes [hat] off \the [src].", "You take [hat] off the \the [src]")
 		if(!user.put_in_active_hand(hat))
-			hat.loc = get_turf(user)
+			hat.forceMove(get_turf(user))
 		hat = null
 		update_icon()
 		return
@@ -32,8 +32,7 @@
 	if (can_hang && !coat && !istype(W, /obj/item/clothing/head/det_hat))
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 		coat = W
-		user.drop_item(src)
-		coat.loc = src
+		user.drop_from_inventory(coat, src)
 		update_icon()
 	else
 		if (can_hang && !hat && istype(W, /obj/item/clothing/head/det_hat))
@@ -52,16 +51,16 @@
 			can_hang = 1
 
 	if (can_hang && !coat && !istype(mover, /obj/item/clothing/head/det_hat))
-		src.visible_message("[mover] lands on \the [src].")
+		visible_message("[mover] lands on \the [src].")
 		coat = mover
-		coat.loc = src
+		coat.forceMove(src)
 		update_icon()
 		return 0
 	else
 		if (can_hang && !hat && istype(mover, /obj/item/clothing/head/det_hat))
-			src.visible_message("[mover] lands on \the [src].")
+			visible_message("[mover] lands on \the [src].")
 			hat = mover
-			hat.loc = src
+			hat.forceMove(src)
 			update_icon()
 			return 0
 		else

@@ -182,7 +182,7 @@
 			else if(iswrench(W))
 				to_chat(user, "You remove the door control assembly from the wall!")
 				var/obj/item/door_control_frame/frame = new
-				frame.loc = user.loc
+				frame.forceMove(user.loc)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return

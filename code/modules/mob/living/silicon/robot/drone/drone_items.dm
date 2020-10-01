@@ -89,7 +89,7 @@
 	if(!wrapped)
 		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
-			thing.loc = get_turf(src)
+			thing.forceMove(get_turf(src))
 		return
 
 	if(wrapped.loc != src)
@@ -97,7 +97,7 @@
 		return
 
 	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
-	wrapped.loc = get_turf(src)
+	wrapped.forceMove(get_turf(src))
 	wrapped = null
 	//update_icon()
 
@@ -117,12 +117,12 @@
 
 	if(wrapped) //Already have an item.
 
-		wrapped.loc = user
+		wrapped.forceMove(user)
 		//Pass the attack on to the target.
 		target.attackby(wrapped,user)
 
 		if(wrapped && src && wrapped.loc == user)
-			wrapped.loc = src
+			wrapped.forceMove(src)
 
 		//Sanity/item use checks.
 
@@ -151,7 +151,7 @@
 		//We can grab the item, finally.
 		if(grab)
 			to_chat(user, "You collect \the [I].")
-			I.loc = src
+			I.forceMove(src)
 			wrapped = I
 			return
 		else
@@ -166,7 +166,7 @@
 
 				A.cell.add_fingerprint(user)
 				A.cell.updateicon()
-				A.cell.loc = src
+				A.cell.forceMove(src)
 				A.cell = null
 
 				A.charging = 0

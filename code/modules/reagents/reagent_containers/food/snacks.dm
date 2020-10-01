@@ -141,7 +141,7 @@
 		U.add_overlay(IM)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
-		collected.loc = U
+		collected.forceMove(U)
 		collected.reagents.remove_any(collected.reagents.total_volume)
 		collected.trash = null
 		if(reagents.total_volume > bitesize)
@@ -163,7 +163,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
+			something.forceMove(get_turf(src))
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
@@ -1290,7 +1290,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/telebacon/On_Consume()
 	if(!reagents.total_volume)
-		baconbeacon.loc = usr
+		baconbeacon.forceMove(usr)
 		baconbeacon.digest_delay()
 */
 
@@ -2264,7 +2264,7 @@
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
 				user.drop_item()
 
-				box.loc = src
+				box.forceMove(src)
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
 				src.boxes.Add( boxestoadd )
 
@@ -2282,8 +2282,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.pizza = I
 
 			update_icon()

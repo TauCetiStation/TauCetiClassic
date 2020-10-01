@@ -50,7 +50,7 @@
 /obj/machinery/giga_drill/proc/drill_mineral(turf/simulated/mineral/M)
 	if(get_turf(src) == drilling_turf && active)
 		M.GetDrilled()
-		src.loc = M
+		forceMove(M)
 		var/list/viewing = list()
 		for(var/mob/H in viewers(src))
 			if(H.client)

@@ -101,7 +101,7 @@
 						else
 							message = "<span class='notice'>[src] licks [A], then ate \him. In last moments of life, [A] was [expression]!</span>"
 							M.health = 0
-							M.loc = src
+							M.forceMove(src)
 							addtimer(CALLBACK(src, .proc/ate_mouse), rand(250, 1200))
 					else if(iscorgi(A))
 						adjustBruteLoss(-1)
@@ -201,7 +201,7 @@
 		return
 
 	visible_message("<span class='warning'>[src] throws up [M].</span>")
-	M.loc = loc
+	M.forceMove(loc)
 	M.gib()
 
 /mob/living/carbon/ian/proc/hiccup()

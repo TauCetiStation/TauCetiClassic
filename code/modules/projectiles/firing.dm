@@ -41,7 +41,7 @@
 		qdel(BB)
 		BB = null
 		return 1
-	BB.loc = get_turf(user)
+	BB.forceMove(get_turf(user))
 	BB.starting = get_turf(user)
 	BB.current = curloc
 	BB.yo = targloc.y - curloc.y

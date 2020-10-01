@@ -76,7 +76,7 @@
 
 	I.pixel_x = temp_x
 	I.pixel_y = temp_y
-	I.loc = src
+	I.forceMove(src)
 
 /obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)

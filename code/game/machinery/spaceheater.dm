@@ -101,9 +101,8 @@
 				// insert cell
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					user.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		else
@@ -210,7 +209,7 @@
 				if(!usr.drop_item())
 					return
 				cell = C
-				C.loc = src
+				C.forceMove(src)
 				C.add_fingerprint(usr)
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")

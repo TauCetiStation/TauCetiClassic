@@ -292,7 +292,7 @@
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
 		if(current_hugger)
 			var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(new_embryo)
-			new_xeno.loc = new_embryo
+			new_xeno.forceMove(new_embryo)
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key

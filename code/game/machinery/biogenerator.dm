@@ -60,7 +60,7 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else
-			user.drop_from_inventory(O, src) 
+			user.drop_from_inventory(O, src)
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
@@ -102,7 +102,7 @@
 		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
+				B.forceMove(loc)
 				beaker = null
 
 	if(exchange_parts(user, O))
@@ -305,7 +305,7 @@
 			activate()
 		if("detach")
 			if(beaker)
-				beaker.loc = src.loc
+				beaker.forceMove(loc)
 				beaker = null
 				update_icon()
 		if("create")

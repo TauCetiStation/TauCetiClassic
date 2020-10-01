@@ -146,7 +146,7 @@ var/global/list/wire_daltonism_colors = list()
 
 			if(!wire_daltonism_colors)
 				wire_daltonism_colors = list()
-			
+
 			// Creates a list of color for people with daltonism and save his
 			if(!wire_daltonism_colors[H.sightglassesmod])
 				wire_daltonism_colors[H.sightglassesmod] = list()
@@ -376,7 +376,7 @@ var/global/list/wire_daltonism_colors = list()
 	if(color && S)
 		if(!is_signaler_attached(color))
 			signallers[color] = S
-			S.loc = holder
+			S.forceMove(holder)
 			S.connected = src
 			return S
 
@@ -386,7 +386,7 @@ var/global/list/wire_daltonism_colors = list()
 		if(S)
 			signallers -= color
 			S.connected = null
-			S.loc = holder.loc
+			S.forceMove(holder.loc)
 			return S
 
 /datum/wires/proc/pulse_signaler(obj/item/device/assembly/signaler/S)

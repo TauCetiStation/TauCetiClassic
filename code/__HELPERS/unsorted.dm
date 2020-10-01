@@ -766,7 +766,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 						// Spawn a new shuttle corner object
 						var/obj/corner = new()
-						corner.loc = X
+						corner.forceMove(X)
 						corner.density = 1
 						corner.anchored = 1
 						corner.icon = X.icon
@@ -798,12 +798,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							continue
 						if(!istype(O,/obj) || !O.simulated)
 							continue
-						O.loc = X
+						O.forceMove(X)
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-						M.loc = X
+						M.forceMove(X)
 						M.update_parallax_contents()
 
 //					var/area/AR = X.loc
@@ -925,7 +925,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 					for(var/obj/O in newobjs)
-						O.loc = X
+						O.forceMove(X)
 
 					for(var/mob/M in T)
 
@@ -936,7 +936,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						newmobs += DuplicateObject(M , 1)
 
 					for(var/mob/M in newmobs)
-						M.loc = X
+						M.forceMove(X)
 
 					copiedobjs += newobjs
 					copiedobjs += newmobs

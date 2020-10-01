@@ -71,9 +71,8 @@
 			to_chat(user, "There is already a reagent container loaded!")
 			return
 
-		user.drop_item()
-		W.loc = src
-		src.beaker = W
+		user.drop_from_inventory(W, src)
+		beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
 		src.update_icon()
 		return
@@ -147,7 +146,7 @@
 		return
 
 	if(beaker)
-		beaker.loc = get_turf(src)
+		beaker.forceMove(get_turf(src))
 		beaker = null
 		update_icon()
 

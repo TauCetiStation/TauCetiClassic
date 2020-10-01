@@ -30,8 +30,7 @@
 			return
 
 		beaker = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
@@ -46,8 +45,7 @@
 			return
 
 		dish = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
@@ -148,7 +146,7 @@
 
 	if (href_list["ejectchem"])
 		if (beaker)
-			beaker.loc = src.loc
+			beaker.forceMove(loc)
 			beaker = null
 		return TRUE
 
@@ -160,7 +158,7 @@
 
 	if (href_list["ejectdish"])
 		if (dish)
-			dish.loc = src.loc
+			dish.forceMove(loc)
 			dish = null
 		return TRUE
 

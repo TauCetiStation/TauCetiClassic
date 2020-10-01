@@ -63,7 +63,7 @@
 		else
 			ae = electronics
 			electronics = null
-			ae.loc = src.loc
+			ae.forceMove(loc)
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
@@ -332,7 +332,7 @@
 						else
 							ae = electronics
 							electronics = null
-							ae.loc = src.loc
+							ae.forceMove(loc)
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"

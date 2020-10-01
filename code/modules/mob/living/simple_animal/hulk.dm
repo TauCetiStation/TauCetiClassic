@@ -171,7 +171,7 @@
 	RH.transform = Mx
 
 	for(var/mob/M in contents)
-		M.loc = src.loc
+		M.forceMove(loc)
 		if(istype(M, /mob/living))
 			var/mob/living/L = M
 			L.Paralyse(15)

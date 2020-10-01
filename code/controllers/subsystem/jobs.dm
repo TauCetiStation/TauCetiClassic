@@ -452,10 +452,10 @@ SUBSYSTEM_DEF(job)
 			spawn_mark = fallback_landmark
 
 		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
-			H.loc = spawn_mark.loc
+			H.forceMove(spawn_mark.loc)
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
-			H.buckled.loc = H.loc
+			H.buckled.forceMove(H.loc)
 			H.buckled.dir = H.dir
 
 	//give them an account in the station database

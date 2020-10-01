@@ -104,9 +104,9 @@
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
 	C.resting = 1
-	C.loc = src.loc
+	C.forceMove(loc)
 	for(var/obj/O in src)
-		O.loc = src.loc
+		O.forceMove(loc)
 	src.add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

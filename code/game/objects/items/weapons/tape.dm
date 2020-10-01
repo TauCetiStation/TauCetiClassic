@@ -115,7 +115,7 @@
 			return
 		var/turf/T = get_turf(target)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
-		P.loc = locate(T.x,T.y,T.z)
+		P.forceMove(locate(T.x,T.y,T.z))
 		P.icon_state = "[icon_base]_door"
 		P.layer = 3.2
 		to_chat(user, "<span class='notice'>You finish placing the [src].</span>")

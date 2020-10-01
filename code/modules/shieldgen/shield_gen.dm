@@ -44,7 +44,7 @@
 /obj/machinery/shield_gen/Destroy()
 	for(var/obj/effect/energy_field/D in field)
 		field.Remove(D)
-		D.loc = null
+		D.forceMove(null)
 	return ..()
 
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)

@@ -99,7 +99,7 @@
 			amount = target.reagents.total_volume
 			target.reagents.remove_reagent("nutriment",amount)
 		var/obj/item/meatslab = P
-		meatslab.loc = get_turf(target)
+		meatslab.forceMove(get_turf(target))
 		playsound(target, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 	else
 		user.visible_message("<span class='notice'>Unfortunately, there is nothing to extract of [target]'s with \the [tool].</span>",		\

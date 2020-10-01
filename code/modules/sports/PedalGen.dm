@@ -32,7 +32,7 @@
 	handle_rotation()
 	Generator = new /obj/machinery/power/dynamo(src)
 	if(anchored)
-		Generator.loc = loc
+		Generator.forceMove(loc)
 		Generator.connect_to_network()
 
 /obj/structure/stool/bed/chair/pedalgen/examine(mob/user)
@@ -48,7 +48,7 @@
 	if(default_unfasten_wrench(user,W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
-			Generator.loc = src.loc
+			Generator.forceMove(loc)
 			Generator.connect_to_network()
 		else
 			Generator.disconnect_from_network()
@@ -102,7 +102,7 @@
 	. = ..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			buckled_mob.loc = loc
+			buckled_mob.forceMove(loc)
 			update_mob(buckled_mob)
 
 

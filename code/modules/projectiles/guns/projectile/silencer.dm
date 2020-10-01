@@ -23,7 +23,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		S.oldsound = fire_sound
 		fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 		w_class = ITEM_SIZE_NORMAL
-		I.loc = src
+		I.forceMove(src)
 		update_icon()
 		return
 

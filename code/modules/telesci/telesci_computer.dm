@@ -44,7 +44,7 @@
 /obj/machinery/computer/telescience/Destroy()
 	eject()
 	if(inserted_gps)
-		inserted_gps.loc = loc
+		inserted_gps.forceMove(loc)
 		inserted_gps = null
 	if(telepad)
 		telepad.computer = null
@@ -84,7 +84,7 @@
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal ports.</span>")
 			return
-		user.drop_item()
+		user.drop_from_inventory(W)
 		crystals += W
 		W.loc = null
 		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
@@ -93,8 +93,7 @@
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
-			user.drop_from_inventory(W)
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
 		return
 	else if(ismultitool(W))
@@ -299,7 +298,7 @@
 
 /obj/machinery/computer/telescience/proc/eject()
 	for(var/obj/item/I in crystals)
-		I.loc = src.loc
+		I.forceMove(loc)
 		crystals -= I
 	power = 0
 
@@ -341,7 +340,7 @@
 		z_co = clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
-		inserted_gps.loc = loc
+		inserted_gps.forceMove(loc)
 		inserted_gps = null
 
 	if(href_list["setMemory"])

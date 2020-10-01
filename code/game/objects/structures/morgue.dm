@@ -107,7 +107,7 @@
 	if (connected)
 		for(var/atom/movable/A in connected.loc)
 			if(!A.anchored)
-				A.loc = src
+				A.forceMove(src)
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
@@ -180,7 +180,7 @@
 		connected.connected = src
 		icon_state = "morgue0"
 		for(var/atom/movable/A in src)
-			A.loc = connected.loc
+			A.forceMove(connected.loc)
 		connected.icon_state = "morguet"
 	else
 		qdel(connected)
@@ -223,7 +223,7 @@
 		return
 	if (!ismob(user) || user.incapacitated())
 		return
-	O.loc = src.loc
+	O.forceMove(loc)
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
@@ -272,21 +272,21 @@
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+				A.forceMove(loc)
 				ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
 				qdel(src)
 				return
@@ -312,7 +312,7 @@
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
-				A.loc = src
+				A.forceMove(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
@@ -326,7 +326,7 @@
 			src.connected.connected = src
 			src.icon_state = "crema0"
 			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.connected.loc
+				A.forceMove(connected.loc)
 			src.connected.icon_state = "cremat"
 		else
 			qdel(src.connected)
@@ -360,7 +360,7 @@
 		src.connected.connected = src
 		src.icon_state = "crema0"
 		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.connected.loc
+			A.forceMove(connected.loc)
 		src.connected.icon_state = "cremat"
 	else
 		qdel(src.connected)
@@ -429,7 +429,7 @@
 	if (src.connected)
 		for(var/atom/movable/A in loc)
 			if (!A.anchored)
-				A.loc = src.connected
+				A.forceMove(connected)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
@@ -442,7 +442,7 @@
 		return
 	if (!ismob(user) || user.incapacitated())
 		return
-	O.loc = src.loc
+	O.forceMove(loc)
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))

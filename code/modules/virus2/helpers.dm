@@ -65,6 +65,8 @@
 	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
 
 	var/rval = dummy.Adjacent(target)
+	// this probably should be a qdel() but I don't want to introduce even more bugs/test stuff
+	// currently please do something about this :( ~Luduk
 	dummy.loc = null
 	dummy = null
 	return rval

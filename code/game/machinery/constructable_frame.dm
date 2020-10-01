@@ -120,7 +120,7 @@
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 					circuit = P
-					P.loc = src
+					P.forceMove(src)
 					icon_state = "box_2"
 					state = 3
 					components = list()
@@ -140,7 +140,7 @@
 			if(iscrowbar(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
-				circuit.loc = src.loc
+				circuit.forceMove(loc)
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
@@ -148,7 +148,7 @@
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
 					for(var/obj/item/weapon/W in components)
-						W.loc = src.loc
+						W.forceMove(loc)
 				desc = initial(desc)
 				req_components = null
 				components = null
@@ -219,7 +219,7 @@
 							return
 						if(!user.drop_item())
 							break
-						P.loc = src
+						P.forceMove(src)
 						components += P
 						req_components[I]--
 						update_req_desc()

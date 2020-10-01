@@ -134,7 +134,7 @@
 /mob/living/carbon/xenomorph/facehugger/proc/leap_at_face(mob/living/carbon/C)
 	if(ishuman(C) || ismonkey(C)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
 		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
+		forceMove(FH)
 		FH.current_hugger = src
 		FH.Attach(C)
 
@@ -242,7 +242,7 @@ This is chestburster mechanic for damaging
 		var/mob/living/carbon/human/H = affecting
 		var/obj/item/organ/external/chest/BP = H.bodyparts_by_name[BP_CHEST]
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
-			chestburster.loc = get_turf(H)
+			chestburster.forceMove(get_turf(H))
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			H.death()
@@ -263,7 +263,7 @@ This is chestburster mechanic for damaging
 	else if(ismonkey(affecting))
 		var/mob/living/carbon/monkey/M = affecting
 		if(M.stat == DEAD)
-			chestburster.loc = get_turf(M)
+			chestburster.forceMove(get_turf(M))
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)

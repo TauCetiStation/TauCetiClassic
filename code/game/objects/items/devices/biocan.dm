@@ -38,7 +38,7 @@
 				if (brainmob.ghostize(can_reenter_corpse = FALSE))
 					dead_mob_list += brainmob
 			brainmob.container = null
-			brainmob.loc = headobj
+			brainmob.forceMove(headobj)
 			headobj.brainmob = brainmob
 			brainmob = null
 		headobj.forceMove(get_turf(src))
@@ -73,7 +73,7 @@
 			if(headobj.brainmob)
 				brainmob = headobj.brainmob
 				headobj.brainmob = null
-				brainmob.loc = src
+				brainmob.forceMove(src)
 				brainmob.container = src
 				brainmob.stat = CONSCIOUS
 				dead_mob_list -= brainmob

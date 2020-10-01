@@ -138,7 +138,7 @@
 
 	var/temp_loc = user.loc
 	flick("poster_being_set", D)
-	D.loc = user.loc
+	D.forceMove(user.loc)
 	D.pixel_x = (x - D.x) * D.bound_width
 	D.pixel_y = (y - D.y) * D.bound_height
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway

@@ -839,8 +839,8 @@
 /obj/item/clothing/accessory/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
 		to_chat(user, "You open [src] and [held] falls out.")
-		held.loc = get_turf(user)
-		src.held = null
+		held.forceMove(get_turf(user))
+		held = null
 
 /obj/item/clothing/accessory/fluff/konaa_hirano/attack_accessory(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))

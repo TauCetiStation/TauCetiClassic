@@ -175,8 +175,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		START_PROCESSING(SSobj, src)
 
 		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_item(src)
+			update_inv_mob()
 
 
 /obj/item/clothing/mask/cigarette/process()

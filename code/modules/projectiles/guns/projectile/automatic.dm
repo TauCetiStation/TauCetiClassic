@@ -183,7 +183,7 @@
 	else if(cover_open && magazine)
 		//drop the mag
 		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(get_turf(loc))
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
@@ -312,7 +312,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user)
 	if (magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(get_turf(loc))
 		magazine.update_icon()
 		magazine = null
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)

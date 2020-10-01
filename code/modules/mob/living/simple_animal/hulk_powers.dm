@@ -396,7 +396,7 @@
 		container.pixel_y = 0
 		visible_message("<span class='warning'>[usr] destroys the [container]. </span>")
 		for(var/atom/movable/A as mob|obj in container)
-			A.loc = container.loc
+			A.forceMove(container.loc)
 			var/mob/M = A
 			if( (istype(M, /mob)) && M.client)
 				M.client.eye = M.client.mob

@@ -38,8 +38,7 @@
 		return
 
 	sample = S
-	user.drop_item()
-	S.loc = src
+	user.drop_from_inventory(S, src)
 
 	user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 	nanomanager.update_uis(src)
@@ -159,7 +158,7 @@
 		return TRUE
 
 	if (href_list["eject"])
-		sample.loc = src.loc
+		sample.forceMove(loc)
 		sample = null
 		update_icon()
 		return TRUE

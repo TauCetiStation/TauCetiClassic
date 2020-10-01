@@ -233,7 +233,7 @@ var/can_call_ert
 	M.mind.special_role = "Response Team"
 	if(!(M.mind in SSticker.minds))
 		SSticker.minds += M.mind//Adds them to regular mind list.
-	M.loc = spawn_location
+	M.forceMove(spawn_location)
 	M.equip_strike_team(leader_selected)
 	return M
 

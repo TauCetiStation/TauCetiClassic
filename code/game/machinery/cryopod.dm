@@ -69,7 +69,7 @@ var/global/list/frozen_items = list()
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>", 3)
 
-		I.loc = get_turf(src)
+		I.forceMove(get_turf(src))
 		frozen_items -= I
 
 	else if(href_list["allitems"])
@@ -81,7 +81,7 @@ var/global/list/frozen_items = list()
 		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>", 3)
 
 		for(var/obj/item/I in frozen_items)
-			I.loc = get_turf(src)
+			I.forceMove(get_turf(src))
 			frozen_items -= I
 
 	else if(href_list["crew"])
@@ -286,7 +286,7 @@ var/global/list/frozen_items = list()
 				add_fingerprint(M)
 
 /obj/machinery/cryopod/proc/preserve_item(obj/item/O)
-	O.loc = src
+	O.forceMove(src)
 
 	var/preserve = FALSE
 	for(var/T in preserve_items)

@@ -140,7 +140,7 @@
 
 	. = ..()
 	if(can_fit_under)
-		src.loc = target_turf
+		forceMove(target_turf)
 	for(var/d in cardinal)
 		var/turf/O = get_step(T,d)
 		//Simple pass check.

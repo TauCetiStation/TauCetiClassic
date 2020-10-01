@@ -18,8 +18,7 @@
 	if(!O.hidden_uplink)
 		to_chat(user, "<span class='notice'>[O] does not have uplink!</span>")
 		return
-	user.drop_from_inventory(O)
-	O.loc = src
+	user.drop_from_inventory(O, src)
 	stored_uplink = O
 	to_chat(user, "<span class='notice'>You insert [O] in [src]!</span>")
 	updateUsrDialog()
@@ -55,7 +54,7 @@
 		return
 
 	if(href_list["eject"])
-		stored_uplink.loc = get_turf(src)
+		stored_uplink.forceMove(get_turf(src))
 		stored_uplink = null
 
 	else if(href_list["buy"])

@@ -161,7 +161,7 @@
 	if(href_list["ejectBeaker"])
 		if(beaker)
 			var/obj/item/weapon/reagent_containers/B = beaker
-			B.loc = loc
+			B.forceMove(loc)
 			beaker = null
 
 			if(iscarbon(usr))
@@ -199,8 +199,7 @@
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
 		src.beaker =  B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		nanomanager.update_uis(src) // update all UIs attached to src
@@ -299,7 +298,7 @@
 		if(iscrowbar(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
+				B.forceMove(loc)
 				beaker = null
 			default_deconstruction_crowbar(I)
 			return 1
@@ -398,8 +397,7 @@
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -410,8 +408,7 @@
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		src.updateUsrDialog()
 
@@ -423,7 +420,7 @@
 		return
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
-			loaded_pill_bottle.loc = src.loc
+			loaded_pill_bottle.forceMove(loc)
 			loaded_pill_bottle = null
 
 	else if(href_list["close"])
@@ -585,7 +582,7 @@
 
 		else if(href_list["eject"])
 			if(beaker)
-				beaker.loc = src.loc
+				beaker.forceMove(loc)
 				beaker = null
 				reagents.clear_reagents()
 				icon_state = "mixer0"
@@ -731,11 +728,11 @@
 
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
 		if(beaker)
-			beaker.loc = src.loc
+			beaker.forceMove(loc)
 			beaker = null
 			reagents.clear_reagents()
 		if(loaded_pill_bottle)
-			loaded_pill_bottle.loc = src.loc
+			loaded_pill_bottle.forceMove(loc)
 			loaded_pill_bottle = null
 		return
 
@@ -755,8 +752,7 @@
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -766,8 +762,7 @@
 			to_chat(user, "<span class='alert'>A pill bottle is already loaded into the machine.</span>")
 			return
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		src.updateUsrDialog()
 
@@ -878,7 +873,7 @@
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 	else if (href_list["eject"])
-		beaker.loc = src.loc
+		beaker.forceMove(loc)
 		beaker = null
 		icon_state = "mixer0"
 	else if(href_list["clear"])
@@ -1006,15 +1001,14 @@
 			return
 
 		src.beaker =  I
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(isscrewdriver(I))
-		if(src.beaker)
-			beaker.loc = get_turf(src)
+		if(beaker)
+			beaker.forceMove(get_turf(src))
 		..()
 		return
 
@@ -1113,8 +1107,7 @@
 			return 1
 		else
 			src.beaker =  O
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			update_icon()
 			src.updateUsrDialog()
 			return 0
@@ -1226,7 +1219,7 @@
 		return
 	if (!beaker)
 		return
-	beaker.loc = src.loc
+	beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 
@@ -1238,7 +1231,7 @@
 		return
 
 	for(var/obj/item/O in holdingitems)
-		O.loc = src.loc
+		O.forceMove(loc)
 		holdingitems -= O
 	holdingitems = list()
 

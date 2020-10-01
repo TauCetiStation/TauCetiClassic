@@ -184,8 +184,8 @@ var/list/bad_messages = list("Never take me off, please!",
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/process()
-	if(src.loc)
-		src.loc = get_turf(pick(orange(1,src)))
+	if(loc)
+		forceMove(get_turf(pick(orange(1,src))))
 		var/mob/living/carbon/M = locate() in src.loc
 		if(M)
 			var/list/hallsound = list('sound/hallucinations/behind_you1.ogg',
@@ -203,7 +203,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/turn_around2.ogg')
 			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
 			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
-			src.loc = null
+			loc = null
 	else
 		STOP_PROCESSING(SSobj, src)
 

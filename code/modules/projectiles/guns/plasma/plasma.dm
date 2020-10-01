@@ -130,7 +130,7 @@
 	if(chambered)
 		QDEL_NULL(chambered)
 	if (magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(get_turf(loc))
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null

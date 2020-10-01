@@ -123,7 +123,7 @@
 		if(U)
 			to_chat(user, "You unattach an upgrade from the assembly.")
 			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-			U.loc = get_turf(src)
+			U.forceMove(get_turf(src))
 			upgrades -= U
 
 	else

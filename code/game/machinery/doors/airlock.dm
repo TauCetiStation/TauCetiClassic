@@ -643,7 +643,7 @@ var/list/airlock_overlays = list()
 	else if (req_one_access.len)
 		ae.conf_access = req_one_access
 		ae.one_access = 1
-	ae.loc = da
+	ae.forceMove(da)
 	da.electronics = ae
 
 	qdel(src)
@@ -980,7 +980,7 @@ var/list/airlock_overlays = list()
 				else
 					ae = electronics
 					electronics = null
-					ae.loc = loc
+					ae.forceMove(loc)
 				if(operating == -1)
 					ae.icon_state = "door_electronics_smoked"
 					ae.broken = TRUE

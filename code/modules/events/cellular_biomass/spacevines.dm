@@ -140,7 +140,7 @@
 		for(var/mob/living/carbon/V in src.loc)
 			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
 				V.buckled = src
-				V.loc = src.loc
+				V.forceMove(loc)
 				V.update_canmove()
 				src.buckled_mob = V
 				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")

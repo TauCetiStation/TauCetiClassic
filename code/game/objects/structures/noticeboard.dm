@@ -13,7 +13,7 @@
 		if(notices > 4)
 			break
 		if(istype(I, /obj/item/weapon/paper))
-			I.loc = src
+			I.forceMove(src)
 			notices++
 	icon_state = "nboard0[notices]"
 
@@ -23,8 +23,7 @@
 		if(notices < 5)
 			O.add_fingerprint(user)
 			add_fingerprint(user)
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
 			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
@@ -50,7 +49,7 @@
 			return
 		var/obj/item/P = locate(href_list["remove"])
 		if((P && P.loc == src))
-			P.loc = get_turf(src)	//dump paper on the floor because you're a clumsy fuck
+			P.forceMove(get_turf(src))	//dump paper on the floor because you're a clumsy fuck
 			P.add_fingerprint(usr)
 			add_fingerprint(usr)
 			notices--

@@ -15,7 +15,7 @@
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		C.dir = dir
-		part.loc = loc
+		part.forceMove(loc)
 		part.master = null
 		part = null
 		qdel(src)

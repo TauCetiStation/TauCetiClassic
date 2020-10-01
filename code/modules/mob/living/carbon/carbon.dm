@@ -49,7 +49,7 @@
 		var/tile = get_turf(get_step(essence.phantom, direction))
 		if(get_dist(tile, essence.host) < 8)
 			essence.phantom.dir = direction
-			essence.phantom.loc = tile
+			essence.phantom.forceMove(tile)
 		return
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -69,7 +69,7 @@
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
+						A.forceMove(loc)
 						stomach_contents.Remove(A)
 					src.gib()
 
@@ -84,7 +84,7 @@
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
-		M.loc = src.loc
+		M.forceMove(loc)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
@@ -635,11 +635,8 @@
 		if(client)
 			client.screen -= W
 		if(W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+			remove_from_mob(W, loc)
+
 	if(legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -647,11 +644,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+			remove_from_mob(W, loc)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_pixel_y_offset(lying_current = FALSE)
@@ -738,7 +731,7 @@
 	if(loc == NewLoc)
 		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
 			if(essence.phantom.showed)
-				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
+				essence.phantom.forceMove(get_turf(get_step(essence.phantom, direct)))
 
 /mob/living/carbon/proc/remove_passemotes_flag()
 	for(var/thing in src)

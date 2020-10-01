@@ -35,7 +35,7 @@
 //	new /obj/effect/effect/bad_smoke(loc)
 
 	for(var/atom/movable/O in src)
-		O.loc = src.loc
+		O.forceMove(loc)
 
 	qdel(src)
 

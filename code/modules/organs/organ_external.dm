@@ -354,7 +354,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
 				if(I.w_class > ITEM_SIZE_SMALL && !istype(I, /obj/item/organ))
-					I.loc = get_turf(src)
+					I.forceMove(get_turf(src))
 			should_delete = TRUE
 		if(DROPLIMB_BLUNT)
 			var/obj/effect/decal/cleanable/blood/gibs/gore
@@ -369,7 +369,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 			for(var/obj/item/I in src)
-				I.loc = get_turf(src)
+				I.forceMove(get_turf(src))
 				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 			should_delete = TRUE
 	switch(body_zone)
@@ -640,7 +640,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(ismob(W.loc))
 		var/mob/living/H = W.loc
 		H.drop_from_inventory(W)
-	W.loc = owner
+	W.forceMove(owner)
 
 /****************************************************
 			   ORGAN DEFINES

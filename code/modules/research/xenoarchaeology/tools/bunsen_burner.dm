@@ -18,7 +18,7 @@
 		else
 			user.drop_item(src)
 			held_container = W
-			held_container.loc = src
+			held_container.forceMove(src)
 			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
 			var/image/I = image("icon" = W, "layer" = FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
 			var/image/I2 = image("icon" = src.icon, icon_state ="bunsen_prong", "layer" = FLOAT_LAYER)
@@ -45,7 +45,7 @@
 
 	cut_overlays()
 	to_chat(user, "<span class='notice'>You remove the [held_container] from the [src].</span>")
-	held_container.loc = src.loc
+	held_container.forceMove(loc)
 	held_container.attack_hand(user)
 	held_container = null
 

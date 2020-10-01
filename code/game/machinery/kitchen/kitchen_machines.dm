@@ -280,7 +280,7 @@
 			cook_process(4)
 			muck_finish()
 			cooked = fail()
-			cooked.loc = src.loc
+			cooked.forceMove(loc)
 			return
 		else if (has_extra_item())
 			if (!cook_process(4))
@@ -288,7 +288,7 @@
 				return
 			broke()
 			cooked = fail()
-			cooked.loc = src.loc
+			cooked.forceMove(loc)
 			return
 		else
 			if (!cook_process(10))
@@ -296,7 +296,7 @@
 				return
 			stop()
 			cooked = fail()
-			cooked.loc = src.loc
+			cooked.forceMove(loc)
 			return
 	else
 		var/halftime = round(recipe.time/10/2)
@@ -306,13 +306,13 @@
 		if (!cook_process(halftime))
 			abort()
 			cooked = fail()
-			cooked.loc = src.loc
+			cooked.forceMove(loc)
 			return
 		cooked = recipe.make_food(src)
 		byproduct = recipe.get_byproduct()
 		stop()
 		if(cooked)
-			cooked.loc = src.loc
+			cooked.forceMove(loc)
 		for(var/i=1,i<efficiency,i++)
 			cooked = new cooked.type(loc)
 		if(byproduct)
@@ -365,7 +365,7 @@
 
 /obj/machinery/kitchen_machine/proc/dispose()
 	for (var/obj/O in contents)
-		O.loc = src.loc
+		O.forceMove(loc)
 	if (src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()

@@ -120,7 +120,7 @@
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
-							src.being_built.loc = get_turf(src)
+							src.being_built.forceMove(get_turf(src))
 							src.being_built = null
 						set_power_use(IDLE_POWER_USE)
 						src.operating = 0

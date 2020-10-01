@@ -26,7 +26,7 @@
 		icon_state = "fitnesslifter2"
 		user.set_dir(SOUTH)
 		user.Stun(4)
-		user.loc = src.loc
+		user.forceMove(loc)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/lifts = 0
@@ -84,7 +84,7 @@
 		icon_state = "fitnessweight-c"
 		user.set_dir(SOUTH)
 		user.Stun(4)
-		user.loc = src.loc
+		user.forceMove(loc)
 		var/image/W = image('icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = MOB_LAYER + 1
 		add_overlay(W)

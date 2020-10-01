@@ -36,9 +36,8 @@
 		else
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
 			if(istype(C))
-				user.drop_item()
+				user.drop_from_inventory(C, src)
 				storedcard = C
-				C.loc = src
 				C.add_fingerprint(usr)
 				update_icon()
 	else
@@ -80,7 +79,7 @@
 		return
 
 	if(storedcard)
-		storedcard.loc = get_turf(src.loc)
+		storedcard.forceMove(get_turf(src.loc))
 		storedcard = null
 		update_icon()
 	else

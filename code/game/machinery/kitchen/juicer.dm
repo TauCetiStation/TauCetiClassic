@@ -42,8 +42,7 @@
 		if (beaker)
 			return 1
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
@@ -52,8 +51,7 @@
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
 		return 1
-	user.remove_from_mob(O)
-	O.loc = src
+	user.drop_from_inventory(O, src)
 	src.updateUsrDialog()
 	return 0
 
@@ -127,7 +125,7 @@
 	if (!beaker)
 		return
 	src.verbs -= /obj/machinery/juicer/verb/detach
-	beaker.loc = src.loc
+	beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 

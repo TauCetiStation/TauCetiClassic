@@ -14,7 +14,7 @@
 		sparks.set_up(3, 0, get_turf(user))
 		sparks.start()
 		//
-	//	user.loc = pick(orange(get_turf(holder), 50))
+	//	user.forceMove(pick(orange(get_turf(holder), 50)))
 		var/turf/N = pick(orange(get_turf(holder), 50))
 		do_teleport(user, N, 4)
 		sparks = new /datum/effect/effect/system/spark_spread()
@@ -38,7 +38,7 @@
 				var/turf/N = pick(orange(get_turf(T), 50))
 				//M.Move(N)
 				do_teleport(M, N, 4)
-			//	M.loc = pick(orange(get_turf(T), 50))
+			//	M.forceMove(pick(orange(get_turf(T), 50)))
 				sparks = new /datum/effect/effect/system/spark_spread()
 				sparks.set_up(3, 0, get_turf(M))
 				sparks.start()

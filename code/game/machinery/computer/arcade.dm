@@ -260,7 +260,7 @@
 			else
 				feedback_inc("arcade_win_normal")
 				var/atom/movable/prize = pick(contents)
-				prize.loc = src.loc
+				prize.forceMove(loc)
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)

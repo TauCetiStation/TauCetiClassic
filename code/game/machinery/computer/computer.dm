@@ -135,7 +135,7 @@
 			A.dir = dir
 			circuit = null
 			for (var/obj/C in src)
-				C.loc = src.loc
+				C.forceMove(loc)
 			if (src.stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				new /obj/item/weapon/shard( src.loc )

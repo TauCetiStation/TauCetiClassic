@@ -94,8 +94,8 @@
 	dir = direction
 	handle_rotation()
 	if(pulling) // Driver
-		if(pulling.loc == src.loc) // We moved onto the wheelchair? Revert!
-			pulling.loc = T
+		if(pulling.loc == loc) // We moved onto the wheelchair? Revert!
+			pulling.forceMove(T)
 		else
 			spawn(0)
 			if(get_dist(src, pulling) > 1) // We are too far away? Losing control.
@@ -128,8 +128,8 @@
 				to_chat(pulling, "<span class='red'>You lost your grip!</span>")
 				pulling = null
 		else
-			if (occupant && (src.loc != occupant.loc))
-				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
+			if (occupant && (loc != occupant.loc))
+				forceMove(occupant.loc) // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	else if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()

@@ -109,7 +109,7 @@
 			return
 
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
-		B.loc = get_turf(src)
+		B.forceMove(get_turf(src))
 		to_chat(user, "<span class='info'>You armed the robot frame!</span>")
 
 		if(user.get_inactive_hand() == src)

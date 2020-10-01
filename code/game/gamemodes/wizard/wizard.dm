@@ -35,11 +35,11 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	return TRUE
-	
+
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
-		wizard.current.loc = pick(wizardstart)
+		wizard.current.forceMove(pick(wizardstart))
 	return TRUE
 
 

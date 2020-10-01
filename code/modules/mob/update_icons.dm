@@ -10,8 +10,8 @@
 /mob/proc/update_hud()
 	return
 
-/mob/proc/update_inv_item(obj/item/I) // don't call this proc and it's subtypes directly, used in update_inv_mob proc.
-	switch(I.slot_equipped)
+/mob/proc/update_inv_slot(slot)
+	switch(slot)
 		if(SLOT_BACK)
 			update_inv_back()
 		if(SLOT_WEAR_MASK)
@@ -45,8 +45,8 @@
 		if(SLOT_LEGCUFFED)
 			update_inv_legcuffed()
 
-/mob/living/carbon/ian/update_inv_item(obj/item/I)
-	switch(I.slot_equipped)
+/mob/living/carbon/ian/update_inv_slot(slot)
+	switch(slot)
 		if(SLOT_MOUTH)
 			update_inv_mouth()
 		if(SLOT_NECK)

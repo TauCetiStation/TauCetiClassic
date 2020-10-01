@@ -100,8 +100,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
-		user.drop_item()
-		C.loc = src
+		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
 	else if(isscrewdriver(I))
@@ -268,9 +267,8 @@
 			if(open && !cell)
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					usr.drop_item()
+					usr.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 
 					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
@@ -402,7 +400,7 @@
 		if(!buckle_mob(AM))
 			return
 	else
-		AM.loc = src
+		AM.forceMove(src)
 		AM.pixel_y += 9
 		if(AM.layer < layer)
 			AM.layer = layer + 0.1
@@ -452,7 +450,7 @@
 		unbuckle_mob()
 		return
 
-	load.loc = loc
+	load.forceMove(loc)
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
 	load.plane = initial(load.plane)
@@ -848,7 +846,7 @@
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut/red(Tsec)
 	if (cell)
-		cell.loc = Tsec
+		cell.forceMove(Tsec)
 		cell.update_icon()
 		cell = null
 

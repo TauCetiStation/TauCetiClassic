@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/cat/death()
 	if(inventory_mouth)
-		inventory_mouth.loc = src.loc
+		inventory_mouth.forceMove(loc)
 		inventory_mouth = null
 		regenerate_icons()
 	return ..()
@@ -111,7 +111,7 @@
 	//Removing from inventory
 	if(href_list["remove_inv"])
 		if(inventory_mouth)
-			inventory_mouth.loc = src.loc
+			inventory_mouth.forceMove(loc)
 			inventory_mouth = null
 			regenerate_icons()
 			show_inv(usr)
@@ -123,8 +123,7 @@
 		if(!item_to_add || inventory_mouth)
 			return
 		else if(item_to_add.type == /obj/item/clothing/mask/cigarette)
-			usr.drop_item()
-			item_to_add.loc = src
+			usr.drop_from_inventory(item_to_add, src)
 			src.inventory_mouth = item_to_add
 			regenerate_icons()
 			show_inv(usr)

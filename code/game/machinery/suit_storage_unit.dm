@@ -232,7 +232,7 @@
 	if(!src.HELMET)
 		return //Do I even need this sanity check? Nyoro~n
 	else
-		src.HELMET.loc = src.loc
+		src.HELMET.forceMove(loc)
 		src.HELMET = null
 		return
 
@@ -241,7 +241,7 @@
 	if(!src.SUIT)
 		return
 	else
-		src.SUIT.loc = src.loc
+		src.SUIT.forceMove(loc)
 		src.SUIT = null
 		return
 
@@ -250,7 +250,7 @@
 	if(!src.MASK)
 		return
 	else
-		src.MASK.loc = src.loc
+		src.MASK.forceMove(loc)
 		src.MASK = null
 		return
 
@@ -258,13 +258,13 @@
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	src.islocked = 0 //locks go free
 	if(src.SUIT)
-		src.SUIT.loc = src.loc
+		src.SUIT.forceMove(loc)
 		src.SUIT = null
 	if(src.HELMET)
-		src.HELMET.loc = src.loc
+		src.HELMET.forceMove(loc)
 		src.HELMET = null
 	if(src.MASK)
-		src.MASK.loc = src.loc
+		src.MASK.forceMove(loc)
 		src.MASK = null
 	if(src.OCCUPANT)
 		src.eject_occupant(OCCUPANT)
@@ -383,7 +383,7 @@
 	if (!src.OCCUPANT)
 		return
 //	for(var/obj/O in src)
-//		O.loc = src.loc
+//		O.forceMove(loc)
 
 	if (src.OCCUPANT.client)
 		if(user != OCCUPANT)
@@ -393,7 +393,7 @@
 
 		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
 		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
-	src.OCCUPANT.loc = src.loc
+	src.OCCUPANT.forceMove(loc)
 	src.OCCUPANT = null
 	if(!src.isopen)
 		src.isopen = 1
@@ -448,7 +448,7 @@
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
-		usr.loc = src
+		usr.forceMove(src)
 //		usr.metabslow = 1
 		src.OCCUPANT = usr
 		src.isopen = 0 //Close the thing after the guy gets inside
@@ -496,12 +496,12 @@
 			if (M.client)
 				M.client.perspective = EYE_PERSPECTIVE
 				M.client.eye = src
-			M.loc = src
+			M.forceMove(src)
 			src.OCCUPANT = M
 			src.isopen = 0 //close ittt
 
 			//for(var/obj/O in src)
-			//	O.loc = src.loc
+			//	O.forceMove(loc)
 			src.add_fingerprint(user)
 			qdel(G)
 			src.updateUsrDialog()
@@ -516,8 +516,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a suit.</font>")
 			return
 		to_chat(user, "You load the [S.name] into the storage compartment.")
-		user.drop_item()
-		S.loc = src
+		user.drop_from_inventory(S, src)
 		src.SUIT = S
 		src.update_icon()
 		src.updateUsrDialog()
@@ -530,8 +529,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a helmet.</font>")
 			return
 		to_chat(user, "You load the [H.name] into the storage compartment.")
-		user.drop_item()
-		H.loc = src
+		user.drop_from_inventory(H, src)
 		src.HELMET = H
 		src.update_icon()
 		src.updateUsrDialog()
@@ -544,8 +542,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
 			return
 		to_chat(user, "You load the [M.name] into the storage compartment.")
-		user.drop_item()
-		M.loc = src
+		user.drop_from_inventory(M, src)
 		src.MASK = M
 		src.update_icon()
 		src.updateUsrDialog()

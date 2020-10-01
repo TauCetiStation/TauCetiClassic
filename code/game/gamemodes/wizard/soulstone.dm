@@ -65,7 +65,7 @@
 				A.status_flags &= ~GODMODE
 				A.canmove = 1
 				to_chat(A, "<b>You have been released from your prison, but you are still bound to [U.name]'s and his allies will. Help them suceed in their goals at all costs.</b>")
-				A.loc = U.loc
+				A.forceMove(U.loc)
 				A.cancel_camera()
 				src.icon_state = "soulstone"
 	attack_self(U)
@@ -113,7 +113,7 @@
 							flick("dust-h", animation)
 							qdel(animation)
 							var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
-							S.loc = C //put shade in stone
+							S.forceMove(C) //put shade in stone
 							S.status_flags |= GODMODE //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
 							S.name = "Shade of [T.real_name]"
@@ -140,7 +140,7 @@
 					if(T.name != C.imprinted)
 						to_chat(U, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone has already been imprinted with [C.imprinted]'s mind!")
 					else
-						T.loc = C //put shade in stone
+						T.forceMove(C) //put shade in stone
 						T.status_flags |= GODMODE
 						T.canmove = 0
 						T.health = T.maxHealth

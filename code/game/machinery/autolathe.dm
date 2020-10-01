@@ -268,8 +268,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 			flick("autolathe_r",src)//plays glass insertion animation
 		stack.use(amount)
 	else
-		usr.remove_from_mob(I)
-		I.loc = src
+		usr.drop_from_inventory(I)
+		I.forceMove(src)
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt+g_amt)*amount/10))

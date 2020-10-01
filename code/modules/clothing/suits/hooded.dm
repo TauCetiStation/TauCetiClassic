@@ -28,7 +28,7 @@
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
 		H.unEquip(hood, 1)
-	hood.loc = src
+	hood.forceMove(src)
 	hooded = !hooded
 	if(icon_suit_up)
 		icon_state = initial(icon_state)

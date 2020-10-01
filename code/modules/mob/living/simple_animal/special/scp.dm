@@ -120,7 +120,7 @@
 
 		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
-				src.loc = T
+				forceMove(T)
 				src.dir = L.dir
 				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()

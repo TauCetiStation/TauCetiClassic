@@ -409,7 +409,7 @@
 				for(var/obj/item/I in new_gun)
 					if(I in new_gun.loaded)
 						new_gun.loaded.Remove(I)
-						I.loc = null  */
+						I.loc = null */
 			else
 				new_gun.magazine.stored_ammo.len = 0
 

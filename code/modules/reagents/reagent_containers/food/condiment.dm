@@ -189,7 +189,7 @@
 		for(var/obj/item/I in loc)
 			if(I.type in can_be_placed)
 				if(contents.len < max_items_inside)
-					I.loc = src
+					I.forceMove(src)
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == EAST ? 32 : -32)
 		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0

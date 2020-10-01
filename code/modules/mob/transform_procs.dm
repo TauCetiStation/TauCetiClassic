@@ -106,7 +106,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
+			IMP.forceMove(O)
 			IMP.imp_in = O
 			IMP.implanted = TRUE
 
@@ -242,7 +242,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
+			IMP.forceMove(O)
 			IMP.imp_in = O
 			IMP.implanted = TRUE
 			var/obj/item/organ/external/BP = pick(O.bodyparts)
@@ -388,7 +388,7 @@
 	else
 		O.key = key
 
-	O.loc = loc
+	O.forceMove(loc)
 	O.job = "Cyborg"
 	if(O.mind.assigned_role == "Cyborg")
 		if(O.mind.role_alt_title == "Android")

@@ -111,7 +111,7 @@
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
 			user.visible_message("<span class='notice'>[user] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
-			rig.loc = get_turf(usr)
+			rig.forceMove(get_turf(usr))
 			rig = null
 			cut_overlays()
 
@@ -142,8 +142,7 @@
 				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 
 			var/icon/test = getFlatIcon(W)
 			test.Shift(NORTH,1)

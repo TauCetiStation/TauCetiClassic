@@ -327,7 +327,7 @@
 		carrier.pixel_x = pos["px"]
 		carrier.pixel_y = pos["py"]
 		carrier.layer = pos["layer"]
-		carrier.loc = carry_obj.loc
+		carrier.forceMove(carry_obj.loc)
 
 		register_carrier(carrier)
 

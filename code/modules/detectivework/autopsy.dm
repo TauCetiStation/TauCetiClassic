@@ -181,22 +181,7 @@
 	P.updateinfolinks()
 	P.update_icon()
 
-	if(istype(usr,/mob/living/carbon))
-		// place the item in the usr's hand if possible
-		if(!usr.r_hand)
-			P.loc = usr
-			usr.r_hand = P
-			P.layer = ABOVE_HUD_LAYER
-			P.plane = ABOVE_HUD_PLANE
-		else if(!usr.l_hand)
-			P.loc = usr
-			usr.l_hand = P
-			P.layer = ABOVE_HUD_LAYER
-			P.plane = ABOVE_HUD_PLANE
-
-	if(istype(usr,/mob/living/carbon/human))
-		usr.update_inv_l_hand()
-		usr.update_inv_r_hand()
+	usr.put_in_hands(src)
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) &!can_operate(M))

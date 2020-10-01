@@ -146,7 +146,7 @@
 		else if(href_list["eject"])
 			flick("farmbot_hatch",src)
 			for (var/obj/item/nutrient/fert in contents)
-				fert.loc = get_turf(src)
+				fert.forceMove(get_turf(src))
 
 	src.updateUsrDialog()
 
@@ -198,11 +198,11 @@
 	new /obj/item/device/plant_analyzer(Tsec)
 
 	if ( tank )
-		tank.loc = Tsec
+		tank.forceMove(Tsec)
 
 	for ( var/obj/item/nutrient/fert in contents )
 		if ( prob(50) )
-			fert.loc = Tsec
+			fert.forceMove(Tsec)
 
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
@@ -382,7 +382,7 @@
 
 	if ( emagged ) // Warning, hungry humans detected: throw fertilizer at them
 		spawn(0)
-			fert.loc = src.loc
+			fert.forceMove(loc)
 			fert.throw_at(target, 16, 3, src)
 		src.visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
 		flick("farmbot_broke", src)

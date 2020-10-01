@@ -99,14 +99,14 @@
 					emote_see = list("clacks")
 					desc = "Free crabs!"
 					src.sd_set_light(0)
-					inventory_head.loc = src.loc
+					inventory_head.forceMove(loc)
 					inventory_head = null
 				else
 					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 					return
 			if("mask")
 				if(inventory_mask)
-					inventory_mask.loc = src.loc
+					inventory_mask.forceMove(loc)
 					inventory_mask = null
 				else
 					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
@@ -171,7 +171,7 @@
 						return
 
 					usr.drop_item()
-					item_to_add.loc = src
+					item_to_add.forceMove(src)
 					src.inventory_head = item_to_add
 					regenerate_icons()
 
@@ -250,7 +250,7 @@
 						return
 
 					usr.drop_item()
-					item_to_add.loc = src
+					item_to_add.forceMove(src)
 					src.inventory_mask = item_to_add
 					regenerate_icons()
 
@@ -276,8 +276,8 @@
 	melee_damage_lower = 3
 	melee_damage_upper = 10//Kill them. Kill them all
 	if(inventory_head)//Drops inventory so it doesn't have to be dealt with
-		inventory_head.loc = src.loc
+		inventory_head.forceMove(src.loc)
 		inventory_head = null
 	if(inventory_mask)
-		inventory_mask.loc = src.loc
+		inventory_mask.forceMove(src.loc)
 		inventory_mask = null*/

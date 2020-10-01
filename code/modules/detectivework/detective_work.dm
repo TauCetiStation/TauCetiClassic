@@ -139,7 +139,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 				temp = null
 		if("eject")
 			if(scanning)
-				scanning.loc = loc
+				scanning.forceMove(loc)
 				scanning = null
 			else
 				temp = "Eject Failed: No Object"
@@ -149,14 +149,13 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 			if(I && istype(I))
 				if(istype(I, /obj/item/weapon/evidencebag))
 					scanning = I.contents[1]
-					scanning.loc = src
+					scanning.forceMove(src)
 					I.underlays.Cut()
 					I.w_class = initial(I.w_class)
 					I.icon_state = "evidenceobj"
 				else
 					scanning = I
-					M.drop_item()
-					I.loc = src
+					M.drop_from_inventory(I, src)
 			else
 				to_chat(usr, "Invalid Object Rejected.")
 		if("card")  //Processing a fingerprint card.
@@ -171,11 +170,10 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 				if(card.amount > 1 || !card.fingerprints.len)
 					to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 					if(card.loc == src)
-						card.loc = src.loc
+						card.forceMove(loc)
 					card = null
 					return
-				M.drop_item()
-				I.loc = src
+				M.drop_from_inventory(I, src)
 				process_card()
 			else
 				to_chat(usr, "<span class='warning'>Invalid Object Rejected.</span>")
@@ -606,7 +604,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 	else
 		to_chat(usr, "<span class='warning'>ERROR: No prints/too many cards.</span>")
 		if(card.loc == src)
-			card.loc = src.loc
+			card.forceMove(loc)
 		card = null
 		return
 	return

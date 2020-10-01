@@ -43,8 +43,7 @@
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
-				user.drop_item()
-				P.loc = src
+				user.drop_from_inventory(P, src)
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
@@ -55,7 +54,7 @@
 				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				state = 1
 				icon_state = "0"
-				circuit.loc = loc
+				circuit.forceMove(loc)
 				circuit = null
 		if(2)
 			if(isscrewdriver(P) && circuit)
@@ -138,8 +137,7 @@
 					SSticker.mode.remove_revolutionary(M.brainmob.mind, 1)
 					SSticker.mode.remove_gangster(M.brainmob.mind, 1)
 
-				user.drop_item()
-				M.loc = src
+				user.drop_from_inventory(M, src)
 				brain = M
 				to_chat(usr, "Added [M].")
 				icon_state = "3b"
@@ -147,7 +145,7 @@
 			if(iscrowbar(P) && brain)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the brain.</span>")
-				brain.loc = loc
+				brain.forceMove(loc)
 				brain = null
 				icon_state = "3"
 
@@ -228,7 +226,7 @@ That prevents a few funky behaviors.
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
 							T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
-							T.loc = C//Throw AI into the card.
+							T.forceMove(C)//Throw AI into the card.
 							C.name = "inteliCard - [T.name]"
 							if (T.stat == DEAD)
 								C.icon_state = "aicard-404"
@@ -255,7 +253,7 @@ That prevents a few funky behaviors.
 								T.aiRestorePowerRoutine = 0
 								T.control_disabled = 1
 								T.aiRadio.disabledAi = 1
-								T.loc = C
+								T.forceMove(C)
 								C.AI = T
 								T.cancel_camera()
 								to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
@@ -270,7 +268,7 @@ That prevents a few funky behaviors.
 						if(A)//If AI exists on the card. Else nothing since both are empty.
 							A.control_disabled = 0
 							A.aiRadio.disabledAi = 0
-							A.loc = T.loc//To replace the terminal.
+							A.forceMove(T.loc)//To replace the terminal.
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
 							C.cut_overlays()
@@ -284,7 +282,7 @@ That prevents a few funky behaviors.
 						if(A)
 							A.control_disabled = 0
 							C.AI = null
-							A.loc = T.loc
+							A.forceMove(T.loc)
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
@@ -301,7 +299,7 @@ That prevents a few funky behaviors.
 								C.icon_state = "aicard"
 								C.name = "inteliCard"
 								C.cut_overlays()
-								A.loc = T
+								A.forceMove(T)
 								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == DEAD)
@@ -324,7 +322,7 @@ That prevents a few funky behaviors.
 									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-								T.occupier.loc = C
+								T.occupier.forceMove(C)
 								T.occupier.cancel_camera()
 								T.occupier = null
 							else if (C.contents.len)
@@ -340,7 +338,7 @@ That prevents a few funky behaviors.
 								to_chat(U, "No AI to copy over!")
 							else
 								var/mob/living/silicon/ai/A = C.AI
-								A.loc = T
+								A.forceMove(T)
 								T.occupant = A
 								C.AI = null
 								A.control_disabled = 1
@@ -358,7 +356,7 @@ That prevents a few funky behaviors.
 									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 									to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
 									to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-									T.occupant.loc = C
+									T.occupant.forceMove(C)
 									T.occupant.cancel_camera()
 									T.occupant = null
 							else if (C.AI)
@@ -381,7 +379,7 @@ That prevents a few funky behaviors.
 								if(A_T)//If there is an AI on the target card.
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [A_T.name] already installed. Remove [A_T.name] to install a new one.")
 								else
-									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
+									A.forceMove(C)//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
 									C.icon_state = "aicard-full"
 									T.AI = null
@@ -393,7 +391,7 @@ That prevents a few funky behaviors.
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
 								else
 									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
-										A_T.loc = T//Throw them into suit.
+										A_T.forceMove(T)//Throw them into suit.
 										C.icon_state = "aicard"
 										C.name = "inteliCard"
 										C.cut_overlays()

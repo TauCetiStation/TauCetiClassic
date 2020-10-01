@@ -47,7 +47,7 @@
 
 	W.screen_loc = null // will get moved if inventory is visible
 
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_HEAD)
@@ -88,7 +88,7 @@
 	if(W.anchored)
 		return FALSE
 	if(!mouth)
-		W.loc = src
+		W.forceMove(src)
 		mouth = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE

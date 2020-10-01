@@ -107,7 +107,7 @@
 				COIN = locate(/obj/item/weapon/coin/mythril,src.contents)
 		if(!COIN)
 			return
-		COIN.loc = src.loc
+		COIN.forceMove(loc)
 	return
 
 

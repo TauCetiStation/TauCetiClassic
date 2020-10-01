@@ -43,7 +43,7 @@
 		var/mob/M = A
 
 		if(M.loc == input_plate)
-			M.loc = src
+			M.forceMove(src)
 			M.gib()
 
 
@@ -148,7 +148,7 @@
 		if(victim.client)
 			victim.client.perspective = EYE_PERSPECTIVE
 			victim.client.eye = src
-		victim.loc = src
+		victim.forceMove(src)
 		src.occupant = victim
 		update_icon()
 
@@ -167,11 +167,11 @@
 	if(operating || !src.occupant)
 		return
 	for(var/obj/O in src)
-		O.loc = src.loc
+		O.forceMove(loc)
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+	src.occupant.forceMove(loc)
 	src.occupant = null
 	update_icon()
 	return

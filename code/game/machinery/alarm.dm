@@ -93,7 +93,7 @@
 
 	if(building)
 		if(loc)
-			src.loc = loc
+			forceMove(loc)
 
 		if(dir)
 			src.dir = dir
@@ -838,7 +838,7 @@
 				if(W.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
-					circuit.loc = user.loc
+					circuit.forceMove(user.loc)
 					buildstage = 0
 					update_icon()
 				return
@@ -853,7 +853,7 @@
 			else if(iswrench(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-				frame.loc = user.loc
+				frame.forceMove(user.loc)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 
@@ -1022,7 +1022,7 @@ FIRE ALARM
 					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
-						circuit.loc = user.loc
+						circuit.forceMove(user.loc)
 						buildstage = 0
 						update_icon()
 
@@ -1038,7 +1038,7 @@ FIRE ALARM
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
-					frame.loc = user.loc
+					frame.forceMove(user.loc)
 					playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 					qdel(src)
 		return
@@ -1181,7 +1181,7 @@ FIRE ALARM
 	firealarm_list += src
 
 	if(loc)
-		src.loc = loc
+		forceMove(loc)
 
 	if(dir)
 		src.dir = dir

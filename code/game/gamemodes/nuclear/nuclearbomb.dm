@@ -91,8 +91,8 @@ var/bomb_set
 
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
-			usr.drop_item()
-			O.loc = src
+			usr.drop_from_inventory(O)
+			O.forceMove(src)
 			src.auth = O
 			src.add_fingerprint(user)
 			return
@@ -214,7 +214,7 @@ var/bomb_set
 		if (yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	
+
 	var/datum/browser/popup = new(user, "window=nuclearbomb", src.name, 300, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -250,16 +250,16 @@ var/bomb_set
 		return
 
 	if (href_list["auth"])
-		if (src.auth)
-			src.auth.loc = src.loc
-			src.yes_code = 0
-			src.auth = null
+		if (auth)
+			auth.forceMove(loc)
+			yes_code = 0
+			auth = null
 		else
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/disk/nuclear))
-				usr.drop_item()
-				I.loc = src
-				src.auth = I
+				usr.drop_from_inventory(I)
+				I.forceMove(src)
+				auth = I
 	if (src.auth)
 		if (href_list["type"])
 			if (href_list["type"] == "E")
@@ -412,7 +412,7 @@ var/bomb_set
 		do_after(usr, 30, 1, src)
 		unbuckle_mob()
 	else if(do_after(usr, 30, 1, src))
-		M.loc = loc
+		M.forceMove(loc)
 		..()
 
 /obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)

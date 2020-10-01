@@ -14,7 +14,7 @@
 /obj/effect/falling_effect/atom_init_late()
 	new falling_type(src)
 	var/atom/movable/dropped = pick(src.contents) //stupid, but allows to get spawn result without efforts if it is other type
-	dropped.loc = get_turf_loc(src)
+	dropped.forceMove(get_turf_loc(src))
 	var/initial_x = dropped.pixel_x
 	var/initial_y = dropped.pixel_y
 	dropped.plane = 1

@@ -90,7 +90,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				H.drowsyness = 0
 				H.SetSleeping(0)
 			//sleep(30)
-			holder_obj.loc = extraction_point
+			holder_obj.forceMove(extraction_point)
 			s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)
 			s.start()

@@ -31,7 +31,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 		for(var/obj/effect/portal/wormhole/O in wormholes)
 			var/turf/T = pick(pick_turfs)
 			if(T)
-				O.loc = T
+				O.forceMove(T)
 
 /datum/event/wormholes/end()
 	QDEL_LIST(wormholes)
@@ -67,8 +67,8 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 			target = P.loc
 	if(!target)
 		return FALSE
-	
+
 	if(!do_teleport(M, target, 1, TRUE)) ///You will appear adjacent to the beacon
 		return FALSE
-	
+
 	return TRUE

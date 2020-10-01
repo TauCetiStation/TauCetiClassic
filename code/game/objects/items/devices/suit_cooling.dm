@@ -29,7 +29,7 @@
 	START_PROCESSING(SSobj, src)
 
 	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	cell.forceMove(src)
 
 /obj/item/device/suit_cooling_unit/process()
 	if (!on || !cell)
@@ -112,7 +112,7 @@
 		if(ishuman(user))
 			user.put_in_hands(cell)
 		else
-			cell.loc = get_turf(loc)
+			cell.forceMove(get_turf(loc))
 
 		cell.add_fingerprint(user)
 		cell.updateicon()

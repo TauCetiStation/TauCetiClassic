@@ -52,7 +52,7 @@
 		orbiter.stop_orbit()
 		return
 
-	orbiter.loc = targetloc
+	orbiter.forceMove(targetloc)
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
 

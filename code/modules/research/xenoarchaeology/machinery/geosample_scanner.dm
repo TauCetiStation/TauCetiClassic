@@ -89,8 +89,7 @@
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		scanned_item = I
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
@@ -317,9 +316,9 @@
 		P.info += "<b>Scanned item:</b> [scanned_item.name]<br><br>" + data
 		P.update_icon()
 		last_scan_data = P.info
-		P.loc = src.loc
+		P.forceMove(loc)
 
-		scanned_item.loc = src.loc
+		scanned_item.forceMove(loc)
 		scanned_item = null
 
 /obj/machinery/radiocarbon_spectrometer/Topic(href, href_list)
@@ -356,5 +355,5 @@
 
 	if(href_list["ejectItem"])
 		if(scanned_item)
-			scanned_item.loc = src.loc
+			scanned_item.forceMove(loc)
 			scanned_item = null

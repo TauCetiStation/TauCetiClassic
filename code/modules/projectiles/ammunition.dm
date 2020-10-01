@@ -96,7 +96,7 @@
 	if (rb)
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
-			rb.loc = src
+			rb.forceMove(src)
 			return 1
 	return 0
 
@@ -126,7 +126,7 @@
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
-		A.loc = get_turf(src.loc)
+		A.forceMove(get_turf(loc))
 		user.put_in_hands(A)
 		to_chat(user, "<span class='notice'>You remove a shell from \the [src]!</span>")
 		update_icon()

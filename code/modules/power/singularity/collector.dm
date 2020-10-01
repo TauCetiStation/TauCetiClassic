@@ -60,9 +60,8 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
-		user.drop_item()
-		src.P = W
-		W.loc = src
+		user.drop_from_inventory(W, src)
+		P = W
 		update_icons()
 	else if(iscrowbar(W))
 		if(P && !src.locked)
@@ -109,7 +108,7 @@ var/global/list/rad_collectors = list()
 	var/obj/item/weapon/tank/phoron/Z = src.P
 	if (!Z)
 		return
-	Z.loc = get_turf(src)
+	Z.forceMove(get_turf(src))
 	Z.layer = initial(Z.layer)
 	Z.plane = initial(Z.plane)
 	src.P = null

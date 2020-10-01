@@ -94,7 +94,7 @@
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
-			I.loc = src
+			I.forceMove(src)
 			inserted_id = I
 			updateUsrDialog()
 		return
@@ -166,7 +166,7 @@
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
-				inserted_id.loc = loc
+				inserted_id.forceMove(loc)
 				inserted_id.verb_pickup()
 				inserted_id = null
 			if(href_list["choice"] == "claim")
@@ -180,7 +180,7 @@
 			if(istype(I))
 				if(!usr.drop_item())
 					return
-				I.loc = src
+				I.forceMove(src)
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
@@ -225,7 +225,7 @@
 		while(s.get_amount() > s.max_amount)
 			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
-		s.loc = loc
+		s.forceMove(loc)
 		s.layer = initial(s.layer)
 		s.plane = initial(s.plane)
 
@@ -317,7 +317,7 @@
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
-				inserted_id.loc = loc
+				inserted_id.forceMove(loc)
 				inserted_id.verb_pickup()
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
@@ -325,7 +325,7 @@
 			if(istype(I))
 				if(!usr.drop_item())
 					return
-				I.loc = src
+				I.forceMove(src)
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='danger'>No valid ID.</span>")
@@ -348,8 +348,7 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
-			usr.drop_item()
-			C.loc = src
+			usr.drop_from_inventory(C, src)
 			inserted_id = C
 			updateUsrDialog()
 		return
@@ -734,22 +733,21 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	var/obj/item/weapon/ore/O
-	for(O in src.loc)
-		O.loc = src
+	for(var/obj/item/weapon/ore/O in loc)
+		O.forceMove(src)
+
 	for(var/dir in alldirs)
-		var/turf/T = get_step(src,dir)
-		for(O in T)
-			O.loc = src
-	return
+		var/turf/T = get_step(src, dir)
+		for(var/obj/item/weapon/ore/O in T)
+			O.forceMove(src)
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
 	if(!contents.len)
 		return
+
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
-		O.loc = src.loc
-	return
+		O.forceMove(loc)
 
 /mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
 	if(search_objects)

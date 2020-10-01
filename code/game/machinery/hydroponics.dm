@@ -110,7 +110,7 @@
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
-		myseed.loc = src
+		myseed.forceMove(src)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -620,7 +620,7 @@
 			age = 1
 			health = myseed.endurance
 			lastcycle = world.time
-			O.loc = src
+			O.forceMove(src)
 			if((user.client  && user.s_active != src))
 				user.client.screen -= O
 			O.dropped(user)

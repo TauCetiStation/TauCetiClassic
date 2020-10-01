@@ -254,14 +254,16 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!isturf(loc))
+		return
+	if(usr.incapacitated())
 		return
 
-	var/turf/T = src.loc
+	var/turf/T = loc
 
-	src.loc = null
+	loc = null
 
-	src.loc = T
+	forceMove(T)
 
 /obj/item/examine(mob/user)
 	. = ..()
@@ -974,7 +976,7 @@ var/global/list/items_blood_overlay_by_type = list()
 	if(!slot_equipped || !ismob(loc))
 		return
 	var/mob/M = loc
-	M.update_inv_item(src)
+	M.update_inv_slot(slot_equipped)
 
 /obj/item/proc/extinguish()
 	return

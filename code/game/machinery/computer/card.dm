@@ -49,14 +49,14 @@
 
 	if(modify)
 		to_chat(usr, "You remove \the [modify] from \the [src].")
-		modify.loc = get_turf(src)
+		modify.forceMove(get_turf(src))
 		if(!usr.get_active_hand())
 			usr.put_in_hands(modify)
 		modify = null
 		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else if(scan)
 		to_chat(usr, "You remove \the [scan] from \the [src].")
-		scan.loc = get_turf(src)
+		scan.forceMove(get_turf(src))
 		if(!usr.get_active_hand())
 			usr.put_in_hands(scan)
 		scan = null
@@ -70,12 +70,10 @@
 		return ..()
 
 	if(!scan && (access_change_ids in id_card.access))
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		modify = id_card
 		if(id_card.associated_account_number)
 			datum_account = get_account(id_card.associated_account_number)
@@ -155,19 +153,18 @@
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
-					modify.loc = usr.loc
+					modify.forceMove(usr.loc)
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(modify)
 					modify = null
 				else
-					modify.loc = loc
+					modify.forceMove(loc)
 					modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					modify = I
 					var/obj/item/weapon/card/id/id_card = I
 					if(id_card.associated_account_number)
@@ -179,19 +176,18 @@
 		if ("scan")
 			if (scan)
 				if(ishuman(usr))
-					scan.loc = usr.loc
+					scan.forceMove(usr.loc)
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					if(!usr.get_active_hand())
 						usr.put_in_hands(scan)
 					scan = null
 				else
-					scan.loc = src.loc
+					scan.forceMove(loc)
 					scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 

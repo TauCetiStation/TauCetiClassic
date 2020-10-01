@@ -29,7 +29,7 @@
 		chamber_round()
 		return
 	if(eject_casing)
-		AC.loc = get_turf(src) //Eject casing onto ground.
+		AC.forceMove(get_turf(src)) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
 		spawn(3) //next gen sound effects
 			playsound(src, 'sound/weapons/guns/shell_drop.ogg', VOL_EFFECTS_MASTER, 25)
@@ -45,7 +45,7 @@
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
-		chambered.loc = src
+		chambered.forceMove(src)
 		if(chambered.BB)
 			if(chambered.reagents && chambered.BB.reagents)
 				var/datum/reagents/casting_reagents = chambered.reagents
@@ -78,7 +78,7 @@
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	if (magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(get_turf(loc))
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null

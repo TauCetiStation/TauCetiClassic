@@ -39,7 +39,7 @@
 				if(do_after_cooldown(target))
 					if(T == chassis.loc && src == chassis.selected)
 						cargo_holder.cargo += O
-						O.loc = chassis
+						O.forceMove(chassis)
 						O.anchored = 0
 						occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -64,7 +64,7 @@
 			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
 			&& !Drop.intruder && !Drop.second_intruder && !(Drop.flags & STATE_DROPING) && !(Drop.flags & STATE_AIMING))
 				cargo_holder.cargo += Drop
-				Drop.loc = chassis
+				Drop.forceMove(chassis)
 				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				return 1
@@ -1041,7 +1041,7 @@
 				if(do_after_cooldown(target))
 					if(T == chassis.loc && src == chassis.selected)
 						cargo_holder.cargo += O
-						O.loc = chassis
+						O.forceMove(chassis)
 						O.anchored = 0
 						chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -1144,7 +1144,7 @@
 	else
 		war_device_activation_forbidden = TRUE
 	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
-	chassis.loc = pick(L)
+	chassis.forceMove(pick(L))
 	uses--
 	chassis.freeze_movement = TRUE // to prevent moving in drop phase.
 	chassis.density = FALSE

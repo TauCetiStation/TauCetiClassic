@@ -169,7 +169,7 @@
 				t_disk = null
 			else
 				if(T)
-					t_disk.loc = T
+					t_disk.forceMove(T)
 					t_disk = null
 				else
 					to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Could not eject disk.")
@@ -190,7 +190,7 @@
 				pai = null
 			else
 				if(T)
-					pai.loc = T
+					pai.forceMove(T)
 					pai = null
 				else
 					to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Could not eject pAI card.")

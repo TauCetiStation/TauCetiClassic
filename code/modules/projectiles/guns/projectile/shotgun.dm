@@ -46,7 +46,7 @@
 	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
+		chambered.forceMove(get_turf(src))//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
 	if(!magazine.ammo_count())	return 0
@@ -144,12 +144,12 @@
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(0)
 			chambered = null
-			CB.loc = get_turf(src.loc)
+			CB.forceMove(get_turf(loc))
 			CB.update_icon()
 			num_unloaded++
 		if (num_unloaded)
 			to_chat(user, "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
-			//chambered.loc = get_turf(src)//Eject casing
+			//chambered.forceMove(get_turf(src))//Eject casing
 			//chambered.SpinAnimation(5, 1)
 			//chambered = null
 		else
@@ -161,7 +161,7 @@
 //		var/obj/item/ammo_casing/CB
 //		CB = magazine.get_round(0)
 //		chambered = null
-//		CB.loc = get_turf(src.loc)
+//		CB.forceMove(get_turf(src.loc))
 //		CB.update_icon()
 //		num_unloaded++
 //	if (num_unloaded)
@@ -197,7 +197,7 @@
 	playsound(M, 'sound/weapons/guns/reload_repeater.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
 	if(chambered)
-		chambered.loc = get_turf(src)
+		chambered.forceMove(get_turf(src))
 		chambered = null
 	if(!magazine.ammo_count())	return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round()
@@ -219,10 +219,10 @@
 	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
 	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
+		chambered.forceMove(get_turf(src))//Eject casing
 		chambered = null
 	if(magazine && !magazine.ammo_count())
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(get_turf(loc))
 		magazine.update_icon()
 		magazine = null
 		return 0

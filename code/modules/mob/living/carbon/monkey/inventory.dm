@@ -7,7 +7,7 @@
 		return
 
 	W.screen_loc = null // will get moved if inventory is visible
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_HEAD)
@@ -40,7 +40,7 @@
 		if(SLOT_IN_BACKPACK)
 			if(src.get_active_hand() == W)
 				src.remove_from_mob(W)
-			W.loc = src.back
+			W.forceMove(src.back)
 		else
 			to_chat(usr, "<span class='red'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return

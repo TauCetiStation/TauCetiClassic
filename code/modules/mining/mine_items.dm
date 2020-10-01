@@ -387,7 +387,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(!power_supply)
 			to_chat(user, "<span class='notice'>There's no powercell in the [src].</span>")
 		else
-			power_supply.loc = get_turf(src.loc)
+			power_supply.forceMove(get_turf(loc))
 			user.put_in_hands(power_supply)
 			power_supply.updateicon()
 			power_supply = null
@@ -847,18 +847,18 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/W = new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 		W.warm = 1
-		W.loc = src
+		W.forceMove(src)
 		if(item_quants[W.name])
 			item_quants[W.name]++
 		else
 			item_quants[W.name] = 1
 	if(prob(50))
 		var/obj/item/weapon/storage/pill_bottle/dice/D = new /obj/item/weapon/storage/pill_bottle/dice(src)
-		D.loc = src
+		D.forceMove(src)
 		item_quants[D.name] = 1
 	else
 		var/obj/item/device/guitar/G = new /obj/item/device/guitar(src)
-		G.loc = src
+		G.forceMove(src)
 		item_quants[G.name] = 1
 	forbidden_tools = typecacheof(/obj/item/weapon/crowbar)
 	forbidden_tools += typecacheof(/obj/item/weapon/screwdriver)
@@ -879,8 +879,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 				return 1
 			else
-				user.remove_from_mob(O)
-				O.loc = src
+				user.drop_from_inventory(O, src)
 				if(item_quants[O.name])
 					item_quants[O.name]++
 				else

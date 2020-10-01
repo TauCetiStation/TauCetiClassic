@@ -118,7 +118,7 @@
 
 	user.visible_message("<span class='warning'>[user] fires [src]!</span>", "<span class='warning'>You fire [src]!</span>")
 	playsound(src, 'sound/weapons/guns/gunshot_spikethrower.ogg', VOL_EFFECTS_MASTER, null, null, -5)
-	spike.loc = get_turf(src)
+	spike.forceMove(get_turf(src))
 	spike.throw_at(target, 10, fire_force, user)
 	spike = null
 	update_icon()

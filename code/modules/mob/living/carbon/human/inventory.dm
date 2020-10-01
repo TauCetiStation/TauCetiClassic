@@ -252,7 +252,7 @@
 		return
 
 	W.screen_loc = null // will get moved if inventory is visible
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_BACK)
@@ -293,7 +293,7 @@
 			src.l_ear = W
 			if(l_ear.slot_flags & SLOT_FLAGS_TWOEARS)
 				var/obj/item/clothing/ears/offear/O = new(W)
-				O.loc = src
+				O.forceMove(src)
 				src.r_ear = O
 				O.layer = ABOVE_HUD_LAYER
 				O.plane = ABOVE_HUD_LAYER
@@ -304,7 +304,7 @@
 			src.r_ear = W
 			if(r_ear.slot_flags & SLOT_FLAGS_TWOEARS)
 				var/obj/item/clothing/ears/offear/O = new(W)
-				O.loc = src
+				O.forceMove(src)
 				src.l_ear = O
 				O.layer = ABOVE_HUD_LAYER
 				O.plane = ABOVE_HUD_LAYER
@@ -358,7 +358,7 @@
 		if(SLOT_IN_BACKPACK)
 			if(src.get_active_hand() == W)
 				src.remove_from_mob(W)
-			W.loc = src.back
+			W.forceMove(src.back)
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
 			uniform.attackby(W, src)

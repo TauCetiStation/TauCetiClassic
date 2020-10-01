@@ -34,7 +34,7 @@
 	M.transfer_to(crab)
 	for(var/mob/living/parasite/essence/E in user)
 		E.exit_host()
-		E.loc = crab
+		E.forceMove(crab)
 		if(E.client)
 			E.client.eye = crab
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
@@ -81,7 +81,7 @@
 			egg.origin = origin
 			if(origin.changeling)
 				for(var/mob/living/parasite/essence/E in src)
-					E.loc = egg
+					E.forceMove(egg)
 					if(E.client)
 						E.client.eye = egg.loc
 		else if(mind)

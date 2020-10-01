@@ -43,7 +43,7 @@
 
 	if(tank)
 		to_chat(usr, "You twist the valve and pop the tank out of [src].")
-		tank.loc = usr.loc
+		tank.forceMove(usr.loc)
 		tank = null
 		icon_state = "pneumatic"
 		item_state = "pneumatic"
@@ -55,7 +55,7 @@
 	if(!tank && istype(I, /obj/item/weapon/tank))
 		user.remove_from_mob(I)
 		tank = I
-		tank.loc = src.tank_container
+		tank.forceMove(src.tank_container)
 		user.visible_message("[user] jams [I] into [src]'s valve and twists it closed.","You jam [I] into [src]'s valve and twist it closed.")
 		icon_state = "pneumatic-tank"
 		item_state = "pneumatic-tank"

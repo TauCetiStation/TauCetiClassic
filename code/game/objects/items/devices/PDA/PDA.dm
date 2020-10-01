@@ -77,8 +77,8 @@
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id && prob(90)) //IDs are kept in 90% of the cases
-		src.id.loc = get_turf(src.loc)
+	if (id && prob(90)) //IDs are kept in 90% of the cases
+		id.forceMove(get_turf(loc))
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
@@ -670,7 +670,7 @@
 				var/turf/T = loc
 				if(ismob(T))
 					T = T.loc
-				cartridge.loc = T
+				cartridge.forceMove(T)
 				mode = 0
 				scanmode = 0
 				if (cartridge.radio)
@@ -860,7 +860,7 @@
 						break
 
 			var/datum/signal/signal = src.telecomms_process()
-			
+
 			if(signal && signal.data["done"])
 				useTC = TRUE
 			if(!useMS || !useTC)
@@ -988,7 +988,7 @@
 						if("2")		// Eject pAI device
 							var/turf/T = get_turf_or_move(src.loc)
 							if(T)
-								pai.loc = T
+								pai.forceMove(T)
 								pai = null
 
 		else
@@ -1097,7 +1097,7 @@
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(get_turf(src))
 		id = null
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
@@ -1253,7 +1253,7 @@
 					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
 					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
 					return
-			O.loc = get_turf(src)
+			O.forceMove(get_turf(src))
 		else
 			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
@@ -1267,15 +1267,13 @@
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
-				I.loc = src
+				user.drop_from_inventory(I, src)
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			id = I
 			user.put_in_hands(old_id)
 	update_icon()

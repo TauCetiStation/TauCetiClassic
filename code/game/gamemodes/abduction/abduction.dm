@@ -101,7 +101,7 @@
 		agent = agents[team_number]
 		H = agent.current
 		L = agent_landmarks[team_number]
-		H.loc = L.loc
+		H.forceMove(L.loc)
 		H.set_species(ABDUCTOR)
 		H.agent = 1
 		H.team = team_number
@@ -116,7 +116,7 @@
 		scientist = scientists[team_number]
 		H = scientist.current
 		L = scientist_landmarks[team_number]
-		H.loc = L.loc
+		H.forceMove(L.loc)
 		H.set_species(ABDUCTOR)
 		H.scientist = 1
 		H.team = team_number
@@ -153,7 +153,7 @@
 	agent = agents[team_number]
 	H = agent.current
 	L = agent_landmarks[team_number]
-	H.loc = L.loc
+	H.forceMove(L.loc)
 	H.set_species(ABDUCTOR)
 	H.agent = 1
 	H.team = team_number
@@ -166,7 +166,7 @@
 	scientist = scientists[team_number]
 	H = scientist.current
 	L = scientist_landmarks[team_number]
-	H.loc = L.loc
+	H.forceMove(L.loc)
 	H.set_species(ABDUCTOR)
 	H.scientist = 1
 	H.team = team_number

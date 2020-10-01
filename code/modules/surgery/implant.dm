@@ -139,9 +139,8 @@
 			gland.Inject(target)
 			BP.cavity = 0
 			return
-	user.drop_item()
+	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
-	tool.loc = target
 	BP.cavity = 0
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -213,7 +212,7 @@
 				worm.detatch()
 
 			if(obj)
-				obj.loc = get_turf(target)
+				obj.forceMove(get_turf(target))
 
 				if(istype(obj,/obj/item/weapon/implant))
 					var/obj/item/weapon/implant/imp = obj
@@ -229,7 +228,7 @@
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-		BP.hidden.loc = get_turf(target)
+		BP.hidden.forceMove(get_turf(target))
 		if(!BP.hidden.blood_DNA)
 			BP.hidden.blood_DNA = list()
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type

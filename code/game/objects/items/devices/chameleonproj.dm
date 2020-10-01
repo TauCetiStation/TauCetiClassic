@@ -106,18 +106,18 @@
 
 /obj/item/device/chameleon/proc/activate(mob/M)
 	var/obj/effect/dummy/chameleon/C = active_dummy
-	C.loc = M.loc
+	C.forceMove(M.loc)
 	M.forceMove(C)
 	toggled = TRUE
 
 /obj/item/device/chameleon/proc/deactivate()
 	var/obj/effect/dummy/chameleon/C = active_dummy
 	for(var/atom/movable/A in C)
-		A.loc = C.loc
+		A.forceMove(C.loc)
 		if(ismob(A))
 			var/mob/M = A
 			M.reset_view(null)
-	C.loc = master
+	C.forceMove(master)
 	toggled = FALSE
 	recharge = TRUE
 

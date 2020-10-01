@@ -60,7 +60,7 @@ This is so anime it hurts. But that's the point.*/
 						if(limit<=0)	break
 
 				handle_teleport_grab(picked, U)
-				U.loc = picked
+				U.forceMove(picked)
 				U.dir = target.dir
 
 				spawn(0)

@@ -530,7 +530,7 @@
 						affecting.log_combat(assailant, "headbutted")
 
 						assailant.drop_from_inventory(src)
-						src.loc = null
+						forceMove(null)
 						qdel(src)
 						return
 				if(INTENT_PUSH)
@@ -575,10 +575,10 @@
 						attacker.adjustCloneLoss(-100)
 						to_chat(attacker, "<span class='notice'>You feel better.</span>")
 				else
-					affecting.loc = user
+					affecting.forceMove(user)
 					attacker.stomach_contents.Add(affecting)
 			else
-				affecting.loc = user
+				affecting.forceMove(user)
 				attacker.stomach_contents.Add(affecting)
 			qdel(src)
 

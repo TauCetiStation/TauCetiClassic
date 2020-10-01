@@ -225,7 +225,7 @@ Class Procs:
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
-		target.loc = src
+		target.forceMove(src)
 		target.stop_pulling()
 		if(target.pulledby)
 			target.pulledby.stop_pulling()
@@ -416,7 +416,7 @@ Class Procs:
 		for(var/obj/item/I in component_parts)
 			if(I.reliability != 100 && crit_fail)
 				I.crit_fail = 1
-			I.loc = loc
+			I.forceMove(loc)
 		qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
@@ -475,7 +475,7 @@ Class Procs:
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
 							component_parts += B
-							B.loc = null
+							B.forceMove(null)
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break

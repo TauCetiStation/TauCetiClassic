@@ -331,7 +331,7 @@ var/list/turret_icons
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
-						t_gun.loc = src.loc
+						t_gun.forceMove(loc)
 						t_gun.power_supply.charge = gun_charge
 						t_gun.update_icon()
 						t_gun = null

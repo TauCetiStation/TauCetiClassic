@@ -24,7 +24,7 @@
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
 	target.organs += src
-	src.loc = target
+	forceMove(target)
 
 /obj/item/gland/process()
 	if(!active)
@@ -93,7 +93,7 @@
 	new /mob/living/carbon/slime(pos)
 	new /mob/living/carbon/slime(pos)
 	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
-	S.loc = pos
+	S.forceMove(pos)
 	host.mind.transfer_to(S)
 	host.gib()
 	return
@@ -252,7 +252,7 @@
 	host.revive()
 	host.mutations |= NOCLONE
 	host.adjustBrainLoss(100)
-	host.loc = C
+	host.forceMove(C)
 
 	C.Start()
 	new /obj/effect/gibspawner/human(get_turf(C))
@@ -275,6 +275,6 @@
 	if(world.time > hatch_time)
 		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
-			src.visible_message("<span class='warning'>[src] hatches!</span>")
-			M.loc = src.loc
+			visible_message("<span class='warning'>[src] hatches!</span>")
+			M.forceMove(loc)
 		qdel(src)

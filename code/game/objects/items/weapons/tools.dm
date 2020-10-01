@@ -267,7 +267,7 @@
 		user.remove_from_mob(src)
 		if (user.client)
 			user.client.screen -= src
-		src.loc = F
+		forceMove(F)
 		src.add_fingerprint(user)
 		return
 

@@ -107,8 +107,7 @@
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
 	if (src.chained)
 		return
-	user.drop_item(cuffs)
-	cuffs.loc = src
+	user.drop_from_inventory(cuffs, src)
 	chained = cuffs
 	slowdown = 15
 	name = "shackles"
@@ -118,7 +117,7 @@
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
 	if (!src.chained)
 		return
-	chained.loc = get_turf(src)
+	chained.forceMove(get_turf(src))
 	slowdown = initial(slowdown)
 	name = initial(name)
 	icon_state = "orange"

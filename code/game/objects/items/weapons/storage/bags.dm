@@ -235,7 +235,7 @@
 		if(!S.get_amount())
 			qdel(S)
 		else
-			S.loc = src
+			S.forceMove(src)
 
 	if(!NoUpdate)
 		update_ui_after_item_insertion()

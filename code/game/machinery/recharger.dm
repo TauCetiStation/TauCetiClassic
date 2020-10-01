@@ -51,8 +51,7 @@
 			return
 		if (istype(G, /obj/item/weapon/gun/magic))
 			return
-		user.drop_item()
-		G.loc = src
+		user.drop_from_inventory(G, src)
 		charging = G
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(ACTIVE_POWER_USE)
@@ -83,7 +82,7 @@
 
 	if(charging)
 		charging.update_icon()
-		charging.loc = loc
+		charging.forceMove(loc)
 		charging = null
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(IDLE_POWER_USE)

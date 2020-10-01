@@ -166,7 +166,7 @@
 	new /obj/effect/effect/smoke(user.loc)
 	var/mob/living/simple_animal/construct/harvester/G = new /mob/living/simple_animal/construct/harvester(user.loc)
 	G.real_name = pick("harvester([rand(1, 10)])", "reaper([rand(1, 10)])")
-	G.loc = src.loc
+	G.forceMove(loc)
 	G.key = user.key
 	to_chat(G, "<span class='warning'>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth</span>")
@@ -209,7 +209,7 @@
 	if(istype(C))
 		if(istype(C, /mob/living/simple_animal/construct))
 			return
-		C.loc = get_turf(C)
+		C.forceMove(get_turf(C))
 		C.gib()
 		return
 

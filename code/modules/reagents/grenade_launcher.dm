@@ -46,7 +46,7 @@
 	user.visible_message("<span class='warning'>[user] fired a grenade!</span>", self_message = "<span class='warning'>You fire the grenade launcher!</span>")
 	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
-	F.loc = user.loc
+	F.forceMove(user.loc)
 	F.throw_at(target, 30, 2, user)
 	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). [ADMIN_JMP(user)]")
 	log_game("[key_name(user)] used a grenade ([src.name]).")

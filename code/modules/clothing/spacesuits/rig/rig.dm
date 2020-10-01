@@ -379,16 +379,14 @@
 		if(istype(H))
 			if(helmet && H.head == helmet)
 				helmet.canremove = 1
-				H.drop_from_inventory(helmet)
-				helmet.loc = src
+				H.drop_from_inventory(helmet, src)
 
 	if(boots)
 		H = boots.loc
 		if(istype(H))
 			if(boots && H.shoes == boots)
 				boots.canremove = 1
-				H.drop_from_inventory(boots)
-				boots.loc = src
+				H.drop_from_inventory(boots, src)
 
 	if(old_wearer)
 		update_overlays(old_wearer)
@@ -418,8 +416,7 @@
 
 	if(H.head == helmet)
 		helmet.canremove = 1
-		H.drop_from_inventory(helmet)
-		helmet.loc = src
+		H.drop_from_inventory(helmet, src)
 		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))

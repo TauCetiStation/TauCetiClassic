@@ -115,7 +115,7 @@
 	if(href_list["toggle_ores"])
 		show_all_ores = !show_all_ores
 	if(href_list["eject"])
-		inserted_id.loc = loc
+		inserted_id.forceMove(loc)
 		inserted_id.verb_pickup()
 		inserted_id = null
 	if(href_list["claim"])
@@ -126,7 +126,7 @@
 		if(istype(I))
 			if(!usr.drop_item())
 				return FALSE
-			I.loc = src
+			I.forceMove(src)
 			inserted_id = I
 		else
 			to_chat(usr, "<span class='warning'>No valid ID.</span>")
@@ -149,7 +149,7 @@
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
-			I.loc = src
+			I.forceMove(src)
 			inserted_id = I
 			updateUsrDialog()
 	else
@@ -207,7 +207,7 @@
 	for(var/i = 0,i<sheets_per_tick,i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
 		var/obj/item/stack/sheet/M = locate() in input.loc
-		if(M)	M.loc = output.loc
+		if(M)	M.forceMove(output.loc)
 		if(!O)	break
 		if(!isnull(ores_stored[O.oretag])) ores_stored[O.oretag]++
 		qdel(O)

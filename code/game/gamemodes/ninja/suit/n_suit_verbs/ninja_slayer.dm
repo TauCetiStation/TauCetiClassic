@@ -25,7 +25,7 @@
 						anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
 			handle_teleport_grab(destination, U)
-			U.loc = destination
+			U.forceMove(destination)
 
 			spawn(0)
 				spark_system.start()

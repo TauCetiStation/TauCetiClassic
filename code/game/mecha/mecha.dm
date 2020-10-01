@@ -94,8 +94,7 @@
 	go_out()
 	poi_list.Remove(src)
 	for(var/mob/M in src)
-		M.loc = get_turf(src)
-		M.loc.Entered(M)
+		M.forceMove(get_turf(src))
 		step_rand(M)
 	mechas_list -= src //global mech list
 	return ..()
@@ -1066,9 +1065,9 @@
 		brainmob.client.perspective = EYE_PERSPECTIVE
 	*/
 		occupant = brainmob
-		brainmob.loc = src //should allow relaymove
+		brainmob.forceMove(src) //should allow relaymove
 		brainmob.canmove = 1
-		mmi_as_oc.loc = src
+		mmi_as_oc.forceMove(src)
 		mmi_as_oc.mecha = src
 		src.verbs -= /obj/mecha/verb/eject
 		src.Entered(mmi_as_oc)
@@ -1164,7 +1163,7 @@
 		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
-				occupant.loc = mmi
+				occupant.forceMove(mmi)
 			mmi.mecha = null
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject

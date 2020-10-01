@@ -42,7 +42,7 @@
 
 /obj/machinery/smartfridge/deconstruction()
 	for(var/atom/movable/A in contents)
-		A.loc = loc
+		A.forceMove(loc)
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -200,8 +200,7 @@
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 		else
-			user.remove_from_mob(O)
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			if(item_quants[O.name])
 				item_quants[O.name]++
 			else
@@ -321,7 +320,7 @@
 			var/i = amount
 			for(var/obj/O in contents)
 				if (O.name == K)
-					O.loc = loc
+					O.forceMove(loc)
 					i--
 					if (i <= 0)
 						return TRUE
@@ -341,7 +340,7 @@
 		item_quants[O]--
 		for(var/obj/T in contents)
 			if(T.name == O)
-				T.loc = src.loc
+				T.forceMove(loc)
 				throw_item = T
 				break
 		break

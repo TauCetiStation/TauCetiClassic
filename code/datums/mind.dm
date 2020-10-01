@@ -933,7 +933,7 @@
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 			if("lair")
-				current.loc = pick(wizardstart)
+				current.forceMove(pick(wizardstart))
 			if("dressup")
 				SSticker.mode.equip_wizard(current)
 			if("name")
@@ -1010,7 +1010,7 @@
 					SSticker.mode.greet_syndicate(src)
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
-				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+				current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
 			if("dressup")
 				qdel(H.belt)
 				qdel(H.back)
@@ -1312,7 +1312,7 @@
 		else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
 			if (t:origradio)
 				var/obj/item/device/radio/R = t:origradio
-				R.loc = current.loc
+				R.forceMove(current.loc)
 				R.traitorradio = null
 				R.traitor_frequency = 0.0
 			qdel(t)
@@ -1376,7 +1376,7 @@
 		SSticker.mode.forge_syndicate_objectives(src)
 		SSticker.mode.greet_syndicate(src)
 
-		current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+		current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
 
 		var/mob/living/carbon/human/H = current
 		qdel(H.belt)
@@ -1408,10 +1408,10 @@
 		assigned_role = "MODE"
 		//SSticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
-			current.loc = pick(latejoin)
+			current.forceMove(pick(latejoin))
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
-			current.loc = pick(wizardstart)
+			current.forceMove(pick(wizardstart))
 
 		SSticker.mode.equip_wizard(current)
 		SSticker.mode.name_wizard(current)
@@ -1556,11 +1556,11 @@
 			if("Agent")
 				H.agent = 1
 				L = agent_landmarks[team]
-				H.loc = L.loc
+				H.forceMove(L.loc)
 			if("Scientist")
 				H.scientist = 1
 				L = agent_landmarks[team]
-				H.loc = L.loc
+				H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
