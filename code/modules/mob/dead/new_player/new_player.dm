@@ -32,7 +32,7 @@
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	client << browse(current_lobby_screen, "file=titlescreen.gif;display=0")
+	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
 	client << browse(file('html/lobby_titlescreen.html'), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
