@@ -173,7 +173,7 @@
 	value = -1
 
 	gain_text = "<span class='notice'>Just thinking about being in the dark makes you shiver.</span>"
-	lose_text = "<span class='notice'>You are not afraid of darkness anymore!</span>"
+	lose_text = "<span class='danger'>You are not afraid of darkness anymore!</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -190,12 +190,16 @@
 	var/mob/living/carbon/human/H = quirk_holder
 
 	if(isturf(oldLoc))
-		UnregisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT))
+		var/turf/T = oldLoc
+		if(!T.lighting_object)
+			return
+		UnregisterSignal(T, list(COMSIG_LIGHT_UPDATE_OBJECT))
 
-	check_fear(H, get_turf(H))
+	check_fear(get_turf(H))
 
 	if(isturf(H.loc))
-		RegisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/check_fear)
+		var/turf/T = H.loc
+		RegisterSignal(T, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/check_fear)
 
 /datum/quirk/nyctophobia/proc/become_afraid()
 	if(is_afraid)
@@ -217,7 +221,8 @@
 
 	REMOVE_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
 
-/datum/quirk/nyctophobia/proc/check_fear(datum/source, turf/myturf)
+/datum/quirk/nyctophobia/proc/check_fear(datum/source)
+	var/turf/myturf = source
 	var/lums = myturf.get_lumcount()
 
 	if(lums <= 0.4)

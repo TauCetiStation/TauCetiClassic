@@ -127,7 +127,7 @@
 
 	luminosity = set_luminosity
 
-	SEND_SIGNAL(src, COMSIG_LIGHT_UPDATE_OBJECT, myturf)
+	SEND_SIGNAL(myturf, COMSIG_LIGHT_UPDATE_OBJECT)
 
 // Variety of overrides so the overlays don't get affected by weird things.
 

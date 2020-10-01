@@ -230,12 +230,12 @@
 
 /datum/aspect/lightbending/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
-	RegisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/recalc_favor_gain)
-	recalc_favor_gain(F.lighting_object, F)
+	RegisterSignal(F, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/recalc_favor_gain)
+	recalc_favor_gain(F)
 
 /datum/aspect/lightbending/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
-	UnregisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT))
+	UnregisterSignal(F, list(COMSIG_LIGHT_UPDATE_OBJECT))
 	if(favor_for_turf)
 		R.passive_favor_gain -= favor_for_turf[F]
 		favor_for_turf -= F
@@ -244,8 +244,8 @@
 /datum/aspect/lightbending/proc/get_light_gain(turf/simulated/floor/F)
 	return 0.0
 
-/datum/aspect/lightbending/proc/recalc_favor_gain(datum/source, turf/myturf)
-	var/turf/simulated/floor/F = myturf
+/datum/aspect/lightbending/proc/recalc_favor_gain(datum/source)
+	var/turf/simulated/floor/F = source
 	if(!istype(F))
 		return
 
