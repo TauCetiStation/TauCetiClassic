@@ -207,7 +207,13 @@ SUBSYSTEM_DEF(mapping)
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
 
-	global.current_lobby_screen = pick(global.lobby_screens)
+	var/newyear
+	#ifdef NEWYEARCONTENT
+	global.current_lobby_screen = pick(global.new_year_screens)
+	newyear = TRUE
+	#endif
+	if(!newyear)
+		global.current_lobby_screen = pick(global.lobby_screens)
 	for(var/mob/dead/new_player/N in new_player_list)
 		N.show_titlescreen()
 
