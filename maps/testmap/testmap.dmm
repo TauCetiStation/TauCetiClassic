@@ -323,7 +323,6 @@
 	},
 /area/centcom)
 "aS" = (
-/turf/unsimulated/wall/splashscreen,
 /area/start)
 "aT" = (
 /turf/unsimulated/floor{
