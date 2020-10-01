@@ -7032,6 +7032,9 @@
 	},
 /obj/item/weapon/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
+/obj/structure/drain{
+	drainage = 2
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -50447,6 +50450,9 @@
 /obj/machinery/shower{
 	dir = 8
 	},
+/obj/structure/drain{
+	drainage = 2
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warnwhite"
@@ -52071,6 +52077,9 @@
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/structure/drain{
+	drainage = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
