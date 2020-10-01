@@ -72,7 +72,7 @@ var/global/list/huds[22]
 	return TRUE
 
 /datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M || !M.client || !A)
+	if(!M || !M.client || !A || !A.hud_list)
 		return
 	for(var/i in hud_icons)
 		M.client.images -= A.hud_list[i]
@@ -123,7 +123,7 @@ var/global/list/huds[22]
 	return TRUE
 
 /datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
-	if(!M || !M.client || !A)
+	if(!M || !M.client || !A || !A.hud_list)
 		return
 	for(var/i in hud_icons)
 		if(A.hud_list[i] && (!hud_exceptions[M] || !(A in hud_exceptions[M])))

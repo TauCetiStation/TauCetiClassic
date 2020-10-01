@@ -1163,7 +1163,7 @@ note dizziness decrements automatically in the mob's Life() proc.
   * cached)
   */
 /atom/proc/prepare_huds()
-	if(hud_list)
+	if(hud_list || !hud_possible)
 		return
 
 	hud_list = list()
