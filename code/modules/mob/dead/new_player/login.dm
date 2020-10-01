@@ -4,6 +4,7 @@
 		mind.active = TRUE
 		mind.current = src
 
+	my_client = client
 	..()
 
 	if(join_motd)
@@ -17,4 +18,5 @@
 
 	new_player_panel()
 	playsound_lobbymusic()
+	show_titlescreen()
 //	handle_privacy_poll() // commented cause polls are kinda broken now, needs refactoring

@@ -100,6 +100,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/stop_server_sound
 	)
 var/list/admin_verbs_fun = list(
+	/client/proc/change_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -711,6 +712,20 @@ var/list/admin_verbs_hideable = list(
 	if(src.mob)
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/change_title_screen()
+	set name = "Change Title Screen"
+	set category = "Fun"
+
+	var/file = input(usr) as icon|null
+	if(!file)
+		return
+	global.current_lobby_screen = file
+	for(var/mob/dead/new_player/N in new_player_list)
+		N.show_titlescreen()
+	log_admin("[key_name(usr)] changed the title screen.")
+	message_admins("[key_name_admin(usr)] changed the title screen.")
+	feedback_add_details("admin_verb", "CTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"

@@ -207,6 +207,10 @@ SUBSYSTEM_DEF(mapping)
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
 
+	global.current_lobby_screen = pick(global.lobby_screens)
+	for(var/mob/dead/new_player/N in new_player_list)
+		N.show_titlescreen()
+
 	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
