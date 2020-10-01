@@ -280,36 +280,19 @@
 //Reboot procs.
 
 /mob/living/silicon/robot/drone/proc/request_player()
-	for(var/mob/dead/observer/O in observer_list)
-		if(jobban_isbanned(O, ROLE_DRONE))
-			continue
-		if(role_available_in_minutes(O, ROLE_DRONE))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_DRONE) && (ROLE_GHOSTLY in C.prefs.be_role))
-				question(C)
+	var/list/candidates = pollGhostCandidates("Someone is attempting to reboot a maintenance drone. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_DRONE, 100, TRUE)
+	for(var/mob/M in candidates) // No random
+		transfer_personality(M.client)
+		break
 
-/mob/living/silicon/robot/drone/proc/question(client/C)
-	spawn(0)
-		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
-			return
-		var/response = alert(C, "Someone is attempting to reboot a maintenance drone. Would you like to play as one?", "Maintenance drone reboot", "No", "Yes", "Never for this round.")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += IGNORE_DRONE
+/mob/living/silicon/robot/drone/transfer_personality(client/candidate)
+	if(!candidate) 
+		return
 
-/mob/living/silicon/robot/drone/transfer_personality(client/player)
+	ckey = candidate.ckey
 
-	if(!player) return
-
-	src.ckey = player.ckey
-
-	if(player.mob && player.mob.mind)
-		player.mob.mind.transfer_to(src)
+	if(candidate.mob && candidate.mob.mind)
+		candidate.mob.mind.transfer_to(src)
 
 	lawupdate = 0
 	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")

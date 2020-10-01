@@ -2648,7 +2648,6 @@
 "aet" = (
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -3365,7 +3364,6 @@
 "ahs" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -7131,7 +7129,6 @@
 /area/station/maintenance/dormitory)
 "bqL" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -9141,7 +9138,6 @@
 "bYI" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/light{
@@ -12246,7 +12242,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -12776,7 +12771,6 @@
 /area/station/maintenance/incinerator)
 "dgb" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -13332,7 +13326,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -13576,7 +13569,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
@@ -13817,7 +13809,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/cable{
@@ -14406,7 +14397,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -19208,7 +19198,6 @@
 "fkE" = (
 /obj/structure/dresser,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
@@ -20034,7 +20023,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -21169,7 +21157,6 @@
 "fOH" = (
 /obj/structure/dresser,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
@@ -25106,7 +25093,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -27260,7 +27246,6 @@
 	dir = 8
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -29993,7 +29978,6 @@
 /area/station/maintenance/bridge)
 "iJN" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -33556,7 +33540,6 @@
 "jSg" = (
 /obj/structure/closet/wardrobe/chemistry_white,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -36749,7 +36732,6 @@
 /area/station/maintenance/incinerator)
 "kTU" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -39364,7 +39346,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -48693,7 +48674,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -50202,7 +50182,7 @@
 "pml" = (
 /obj/item/toy/cards,
 /obj/structure/table,
-/obj/item/toy/crayon,
+/obj/item/toy/crayon/red,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "pmL" = (
@@ -50287,7 +50267,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -50600,7 +50579,6 @@
 "psn" = (
 /obj/machinery/recharge_station,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -51264,7 +51242,6 @@
 /area/station/rnd/hallway)
 "pCp" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -51416,7 +51393,6 @@
 	dir = 10
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -51880,7 +51856,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor,
@@ -52336,7 +52311,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -52634,7 +52608,6 @@
 "pZI" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -53404,7 +53377,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor,
@@ -54279,7 +54251,6 @@
 	dir = 1
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -54963,7 +54934,6 @@
 /area/station/maintenance/science)
 "qJs" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/reagent_dispensers/water_cooler,
@@ -55021,7 +54991,6 @@
 	pixel_x = 12
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -55814,7 +55783,6 @@
 "qYi" = (
 /obj/machinery/iv_drip,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -57696,7 +57664,6 @@
 	pixel_x = 25
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/wood,
@@ -58213,7 +58180,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -58678,7 +58644,6 @@
 /area/station/medical/morgue)
 "rXn" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -62216,7 +62181,6 @@
 	c_tag = "Interrogation Observation"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -62576,7 +62540,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -63544,7 +63507,6 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -63744,7 +63706,6 @@
 	dir = 6
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/structure/cable{
@@ -63770,7 +63731,6 @@
 	c_tag = "Central Hallway North"
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -66247,7 +66207,6 @@
 /area/station/cargo/storage)
 "uqx" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -67431,7 +67390,6 @@
 /area/station/hallway/secondary/entry)
 "uIi" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
@@ -67590,7 +67548,6 @@
 /area/station/medical/reception)
 "uMm" = (
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -70548,7 +70505,6 @@
 	network = list("SS13","Medical")
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -71507,7 +71463,6 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/machinery/light{
@@ -74413,7 +74368,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/packageWrap,
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
@@ -74878,7 +74832,6 @@
 	pixel_y = -2
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /obj/item/weapon/storage/box/flashbangs{
@@ -78305,7 +78258,6 @@
 	pixel_x = 27
 	},
 /obj/machinery/alarm{
-	frequency = 1600;
 	pixel_y = 26
 	},
 /turf/simulated/floor{
