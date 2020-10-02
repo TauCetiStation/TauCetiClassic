@@ -234,6 +234,12 @@
 			A.overlays |= ad;\
 			ad.Cut();\
 		}\
+		for(var/I in A.alternate_appearances){\
+			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+			if(AA.transfer_overlays){\
+				AA.copy_overlays(A, TRUE);\
+			}\
+		}\
 		A.flags_2 &= ~OVERLAY_QUEUED_2;\
 		if(isturf(A)){SSdemo.mark_turf(A);}\
 		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\

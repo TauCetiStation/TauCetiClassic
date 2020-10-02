@@ -31,6 +31,8 @@
 	var/list/image/hud_list = null
 	///HUD images that this atom can provide.
 	var/list/hud_possible
+	///Current alternate_apperances on atom
+	var/list/alternate_appearances
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -94,6 +96,11 @@
 	return
 
 /atom/Destroy()
+	if(alternate_appearances)
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		QDEL_NULL(reagents)
 

@@ -55,6 +55,10 @@
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2   (1<<1)
 
+//alternate appearance flags
+#define AA_TARGET_SEE_APPEARANCE (1<<0)
+#define AA_MATCH_TARGET_OVERLAYS (1<<1)
+
 //Species flags.
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"

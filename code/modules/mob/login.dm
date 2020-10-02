@@ -58,7 +58,16 @@
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = 0
 
+	// atom_huds
 	reload_huds()
+
+	//Reload alternate appearances
+	for(var/v in global.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+
 	add_click_catcher()
 
 	client.screen += blocker
