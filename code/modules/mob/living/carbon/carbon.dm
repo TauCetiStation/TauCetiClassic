@@ -4,6 +4,7 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
+	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
@@ -906,6 +907,7 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	med_hud_set_status()
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

@@ -1089,6 +1089,9 @@
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
+	// Clothing on the Golem is created before the hud_list is generated in the atom
+	H.prepare_huds()
+
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")

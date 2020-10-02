@@ -4,7 +4,6 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 
-	var/hud_updateflag = 0
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0.0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -51,6 +50,7 @@
 
 	var/list/roundstart_quirks = list()
 	var/list/status_effects // a list of all status effects the mob has
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD)
 
 	var/force_remote_viewing = FALSE
 

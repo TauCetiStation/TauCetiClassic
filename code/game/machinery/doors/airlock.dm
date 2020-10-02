@@ -20,7 +20,6 @@ var/list/airlock_overlays = list()
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	explosion_resistance = 15
-
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -76,6 +75,7 @@ var/list/airlock_overlays = list()
 		inner_material = "glass"
 	if(dir)
 		src.dir = dir
+
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -91,12 +91,15 @@ var/list/airlock_overlays = list()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	closeOther = null
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/process()
 	if(secondsElectrified > 0)
 		secondsElectrified--
 	else
+		diag_hud_set_electrified()
 		return PROCESS_KILL
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
@@ -757,6 +760,7 @@ var/list/airlock_overlays = list()
 						secondsElectrified = 0
 					else if(secondsElectrified > 0)
 						secondsElectrified = 0
+					diag_hud_set_electrified()
 
 				if(7)
 					// Close door
@@ -839,6 +843,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
+						diag_hud_set_electrified()
 						START_PROCESSING(SSmachines, src)
 
 				if(6)
@@ -853,6 +858,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = -1
+						diag_hud_set_electrified()
 
 				if(7)
 					// Open door
