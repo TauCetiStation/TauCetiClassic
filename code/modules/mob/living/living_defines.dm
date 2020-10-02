@@ -61,5 +61,8 @@
 	var/default_pixel_y = 0
 	var/default_layer = 0
 
+	// Moveset type that this mob is spawned with(What the mob should know "by nature")
+	var/moveset_type = /datum/combat_moveset/living
+
 	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
 	var/logs_combat = TRUE

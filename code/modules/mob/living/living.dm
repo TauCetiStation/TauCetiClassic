@@ -6,6 +6,7 @@
 	default_pixel_x = pixel_x
 	default_pixel_y = pixel_y
 	default_layer = layer
+
 	for(var/datum/atom_hud/data/medical/medhud in global.huds)
 		medhud.add_to_hud(src)
 	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
@@ -13,7 +14,13 @@
 	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
 	sechud.add_to_hud(src)
 
+	if(moveset_type)
+		add_moveset(new moveset_type(), MOVESET_TYPE)
+
 /mob/living/Destroy()
+	allowed_combos = null
+	known_combos = null
+	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
@@ -24,7 +31,7 @@
 				qdel(S)
 			else
 				S.be_replaced()
-	
+
 	remove_from_all_data_huds()
 
 	living_list -= src

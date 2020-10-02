@@ -19,6 +19,8 @@
 
 	ventcrawler = 2
 
+	moveset_type = /datum/combat_moveset/slime
+
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
