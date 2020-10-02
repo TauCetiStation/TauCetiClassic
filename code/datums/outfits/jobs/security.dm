@@ -67,7 +67,7 @@
 
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
-	
+
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 	back_style = BACKPACK_STYLE_SECURITY
@@ -82,14 +82,14 @@
 	shoes = /obj/item/clothing/shoes/red
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec
-	
+
 	r_pocket_back = /obj/item/device/detective_scanner
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 
 // CADET OUTFIT
 /datum/outfit/job/cadet
 	name = OUTFIT_JOB_NAME("Security Cadet")
-	
+
 	uniform = /obj/item/clothing/under/rank/cadet
 	uniform_f = /obj/item/clothing/under/rank/cadet/skirt
 	belt = /obj/item/device/pda

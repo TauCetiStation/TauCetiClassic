@@ -119,7 +119,6 @@ var/list/ai_verbs_default = list(
 		"Gigyas" = "ai-gigyas",
 		"Yuki" = "ai-yuki",
 		"SyndiCat" = "ai-syndicatmeow",
-		"Yuki" = "ai-yuki",
 		"Hiss!" = "ai-alien",
 		"Alter Ego" = "ai-alterego",
 		"Urist" = "ai-toodeep",
@@ -691,20 +690,16 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "HAL")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in machines) //change status
-		if(istype(M, /obj/machinery/ai_status_display))
-			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
-
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
+		AISD.emotion = emote
+	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = TRUE
+	else
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = FALSE
 	return
 
 /mob/living/silicon/ai/proc/gen_ai_uniq_holo()

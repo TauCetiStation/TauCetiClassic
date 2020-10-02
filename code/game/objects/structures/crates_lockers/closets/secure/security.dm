@@ -128,7 +128,7 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/melee/telebaton(src)
-	new /obj/item/weapon/gun/energy/gun/head(src)
+	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/airbag(src)

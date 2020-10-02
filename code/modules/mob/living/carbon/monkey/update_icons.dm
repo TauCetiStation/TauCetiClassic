@@ -99,6 +99,18 @@
 		overlays_standing[M_BACK_LAYER]	= null
 	if(update_icons)		update_icons()
 
+/mob/living/carbon/monkey/diona/update_inv_back(update_icons = TRUE)
+	if(back)
+		var/icon_path = 'icons/mob/back.dmi'
+		if(istype(back, /obj/item/weapon/storage/backpack) || istype(back, /obj/item/weapon/bedsheet) || istype(back, /obj/item/weapon/tank))
+			icon_path = 'icons/mob/diona_back.dmi'
+		overlays_standing[M_BACK_LAYER] = image("icon" = icon_path, "icon_state" = "[back.icon_state]")
+		back.screen_loc = ui_monkey_back
+	else
+		overlays_standing[M_BACK_LAYER] = null
+	if(update_icons)
+		update_icons()
+
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)

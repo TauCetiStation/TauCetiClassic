@@ -21,6 +21,7 @@
 	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
@@ -626,6 +627,7 @@
 
 	burn_mod = 1.3
 	speed_mod = 7
+	speed_mod_no_shoes = -2
 
 	// restricted_inventory_slots = list(SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_SHOES) // These are trees. Not people. Deal with the fact that they don't have these. P.S. I may return to this one day ~Luduk.
 

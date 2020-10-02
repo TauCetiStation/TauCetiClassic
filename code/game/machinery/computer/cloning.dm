@@ -330,13 +330,16 @@
 				menu = 1
 			else
 				var/mob/selected = find_dead_player("[C.ckey]")
-				selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
-				if(answer != "No" && pod1.growclone(C))
-					temp = "Initiating cloning cycle..."
-					records.Remove(C)
-					qdel(C)
-					menu = 1
+				if(selected)
+					selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+					var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+					if(answer != "No" && pod1.growclone(C))
+						temp = "Initiating cloning cycle..."
+						records.Remove(C)
+						qdel(C)
+						menu = 1
+					else
+						temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 				else
 					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 

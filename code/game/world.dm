@@ -96,6 +96,7 @@ var/base_commit_sha = 0
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
 	global.access_log = file("[log_directory]/access.log")
+	global.asset_log = file("[log_directory]/asset.log")
 
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
