@@ -203,6 +203,7 @@
 							if(L.implanted)
 								qdel(L)
 								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
+						target.sec_hud_set_implants()
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -223,6 +224,7 @@
 		target.setOxyLoss(0) //In case the shadowling was choking them out
 		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
+		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", target)
 		//var/datum/mind/thrall_mind = target.mind
 		//thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind //Lets thralls hive-chat
 
@@ -593,6 +595,7 @@
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
+		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", target)
 		target.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 
 

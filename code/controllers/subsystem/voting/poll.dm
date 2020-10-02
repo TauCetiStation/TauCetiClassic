@@ -12,6 +12,7 @@
 	var/can_revote = TRUE //Can voters change their mind?
 	var/can_unvote = FALSE
 	var/see_votes  = TRUE //Can voters see choices votes count?
+	var/detailed_result = TRUE
 
 	var/minimum_voters = 1 //If less than this many people cast a vote, the result will be invalid
 	var/minimum_win_percentage = 0 //If less than this portion of the total votes are for the winning option, result is invalid
@@ -37,11 +38,18 @@
 	SSvote.active_vote = src
 	return TRUE
 
-/datum/poll/proc/can_force()
-	return TRUE
+/datum/poll/proc/get_force_blocking_reason()
+	return
 
 /datum/poll/proc/can_start()
-	return (world.time >= next_vote)
+	return !get_blocking_reason()
+
+/datum/poll/proc/get_blocking_reason()
+	. = get_force_blocking_reason()
+	if(.)
+		return
+	if(world.time < next_vote)
+		return "Vote Cooldown: [round((next_vote - world.time) / 600)] Minutes"
 
 /datum/poll/proc/on_start()
 	return
@@ -147,9 +155,9 @@
 	for(var/datum/vote_choice/ch in choice_votes)
 		var/ch_percent = total_votes() ? PERCENT(choice_votes[ch] / total_votes()) : 0
 		if(ch in winners)
-			text += "\t<b>[ch.text] - [ch_percent]%</b><br>"
+			text += "\t<b>[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]</b><br>"
 		else
-			text += "\t[ch.text] - [ch_percent]%<br>"
+			text += "\t[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]<br>"
 
 	text += "Total voted - [all_voters.len]<br>"
 	text += "Did not vote - [non_voters]<br>"
@@ -176,6 +184,9 @@
 /datum/poll/proc/get_vote_power_by_role(client/C)
 	if(!istype(C))
 		return 0 //Shouldnt be possible, but safety
+
+	if(C.holder)
+		return VOTE_WEIGHT_NORMAL
 
 	var/mob/M = C.mob
 	if(!M || M.stat == DEAD || isobserver(M) || isnewplayer(M) || ismouse(M) || isdrone(M))

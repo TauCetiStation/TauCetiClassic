@@ -7,6 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
+	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
@@ -28,7 +29,7 @@
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
-	var/module_active = null
+	var/obj/item/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null
 	var/module_state_3 = null
@@ -118,15 +119,8 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	
+	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -234,6 +228,8 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			sensor_huds = def_sensor_huds
+			sensor_huds += DATA_HUD_MINER
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -664,6 +660,7 @@
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
+			diag_hud_set_borgcell()
 
 	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
@@ -760,14 +757,14 @@
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
 				sleep(20)
-				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
 				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
 				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
 				sleep(9)
-				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
@@ -801,6 +798,7 @@
 			cell_component.wrapped = null
 			cell_component.installed = 0
 			updateicon()
+			diag_hud_set_borgcell()
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped

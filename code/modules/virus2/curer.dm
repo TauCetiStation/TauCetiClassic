@@ -29,7 +29,7 @@
 		product.reagents.add_reagent("blood",30,data)
 
 		virusing = TRUE
-		addtimer(VARSET_CALLBACK(src, virusing, FALSE), 1200)
+		VARSET_IN(src, virusing, FALSE, 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
