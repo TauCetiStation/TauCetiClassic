@@ -1,6 +1,8 @@
 #define ANIM_MAX_HIT_TURN_ANGLE 40
 #define COMBOPOINTS_LOSE_PER_TICK 0.7
 #define MIN_COMBOPOINTS_LOSE_PER_TICK 0.3
+#define ANIM_DELAY_WINDUP 2
+#define ANIM_DELAY_RETURN 1
 
 /*
  * This class handles all combo-attack logic,
@@ -116,16 +118,16 @@
 	else
 		M.Turn(pick(-combo_value, combo_value))
 
-	animate(A, transform=M, time=2)
-	sleep(2)
+	animate(A, transform=M, time=ANIM_DELAY_WINDUP)
+	sleep(ANIM_DELAY_WINDUP)
 	if(QDELETED(A))
 		return
 	if(QDELETED(src))
 		A.transform = A.default_transform
 		A.attack_animation = FALSE
 		return
-	animate(A, transform=A.default_transform, time=1)
-	sleep(1)
+	animate(A, transform=A.default_transform, time=ANIM_DELAY_RETURN)
+	sleep(ANIM_DELAY_RETURN)
 	if(QDELETED(A))
 		return
 	A.transform = A.default_transform
@@ -169,7 +171,13 @@
 		combo_hash += "[CE]#"
 
 	var/datum/combat_combo/CC = global.combat_combos[combo_hash]
-	if(CC && CC.can_execute(src))
+	if(!CC)
+		return FALSE
+
+	if(!(CC in attacker.allowed_combos))
+		return FALSE
+
+	if(CC.can_execute(src))
 		next_combo = global.combat_combos[combo_hash]
 		set_combo_icon(next_combo.get_combo_icon())
 		next_combo.on_ready(victim, attacker)
@@ -182,6 +190,8 @@
 	if(CC.heavy_animation)
 		CC.before_animation(victim, attacker)
 
+	if(!CC.do_combo(victim, attacker, ANIM_DELAY_WINDUP + ANIM_DELAY_RETURN))
+		return
 	CC.animate_combo(victim, attacker)
 
 	if(CC.heavy_animation)
@@ -195,6 +205,9 @@
 
 	var/datum/combat_combo/CC = next_combo
 	if(!CC)
+		return FALSE
+
+	if(!(CC in attacker.allowed_combos))
 		return FALSE
 
 	if(CC.can_execute(src, show_warning = TRUE))
@@ -257,7 +270,8 @@
 
 	update_combo_elements()
 
-	if(combo_element == INTENT_PUSH || combo_element == INTENT_HARM)
+	var/static/list/attack_elements = list(INTENT_HELP, INTENT_GRAB, INTENT_PUSH, INTENT_HARM)
+	if(combo_element in attack_elements)
 		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
 
 	return FALSE
@@ -292,3 +306,5 @@
 #undef ANIM_MAX_HIT_TURN_ANGLE
 #undef COMBOPOINTS_LOSE_PER_TICK
 #undef MIN_COMBOPOINTS_LOSE_PER_TICK
+#undef ANIM_DELAY_WINDUP
+#undef ANIM_DELAY_RETURN

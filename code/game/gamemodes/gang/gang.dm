@@ -27,6 +27,8 @@
 	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 4
+	antag_hud_type = ANTAG_HUD_GANGSTER
+	antag_hud_name = "gangster"
 	var/finished = 0
 	// Victory timers
 	var/A_timer = "OFFLINE"
@@ -69,16 +71,16 @@
 /datum/game_mode/gang/post_setup()
 	spawn(rand(10,100))
 		for(var/datum/mind/boss_mind in A_bosses)
-			update_gang_icons_added(boss_mind, "A")
 			forge_gang_objectives(boss_mind, "A")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
+			add_antag_hud(antag_hud_type, antag_hud_name, boss_mind.current)
 
 		for(var/datum/mind/boss_mind in B_bosses)
-			update_gang_icons_added(boss_mind, "B")
 			forge_gang_objectives(boss_mind, "B")
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current)
+			add_antag_hud(antag_hud_type, antag_hud_name, boss_mind.current)
 
 	modePlayer += A_bosses
 	modePlayer += B_bosses
@@ -98,12 +100,14 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", boss.current)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
+	add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", boss.current)
 	log_game("[key_name(boss)] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
@@ -300,7 +304,8 @@
 	to_chat(gangster_mind.current, "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>")
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
-	update_gang_icons_added(gangster_mind,gang)
+	add_antag_hud(ANTAG_HUD_GANGSTER, "[gang=="A" ? "gangster_a" : "gangster_b"]", gangster_mind.current)
+	
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
@@ -329,6 +334,7 @@
 		return
 
 	gangster_mind.special_role = null
+	remove_antag_hud(ANTAG_HUD_GANGSTER, gangster_mind.current)
 	if(silent < 2)
 		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 
@@ -342,128 +348,6 @@
 				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!</B></font>")
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
-
-	update_gang_icons_removed(gangster_mind)
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//Keeps track of players having the correct icons////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_gang_icons()
-	spawn(0)
-		var/list/all_gangsters = A_bosses + B_bosses + A_gang + B_gang
-
-		//Delete all gang icons
-		for(var/datum/mind/gang_mind in all_gangsters)
-			if(gang_mind.current)
-				if(gang_mind.current.client)
-					for(var/image/I in gang_mind.current.client.images)
-						if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-							qdel(I)
-
-		update_gang_icons("A")
-		update_gang_icons("B")
-
-/datum/game_mode/proc/update_gang_icons(gang)
-	var/list/bosses
-	var/list/gangsters
-	if(gang == "A")
-		bosses = A_bosses
-		gangsters = A_gang
-	else if(gang == "B")
-		bosses = B_bosses
-		gangsters = B_gang
-	else
-		to_chat(world, "ERROR: Invalid gang in update_gang_icons()")
-
-	//Update gang icons for boss' visions
-	for(var/datum/mind/boss_mind in bosses)
-		if(boss_mind.current)
-			if(boss_mind.current.client)
-				for(var/datum/mind/gangster_mind in gangsters)
-					if(gangster_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gangster")
-						boss_mind.current.client.images += I
-				for(var/datum/mind/boss2_mind in bosses)
-					if(boss2_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = boss2_mind.current, icon_state = "gang_boss")
-						boss_mind.current.client.images += I
-
-	//Update boss and self icons for gangsters' visions
-	for(var/datum/mind/gangster_mind in gangsters)
-		if(gangster_mind.current)
-			if(gangster_mind.current.client)
-				for(var/datum/mind/boss_mind in bosses)
-					if(boss_mind.current)
-						var/I = image('icons/mob/mob.dmi', loc = boss_mind.current, icon_state = "gang_boss")
-						gangster_mind.current.client.images += I
-					//Tag themselves to see
-					var/K
-					if(gangster_mind in bosses) //If the new gangster is a boss himself
-						K = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gang_boss")
-					else
-						K = image('icons/mob/mob.dmi', loc = gangster_mind.current, icon_state = "gangster")
-					gangster_mind.current.client.images += K
-
-/////////////////////////////////////////////////
-//Assigns icons when a new gangster is recruited//
-/////////////////////////////////////////////////
-/datum/game_mode/proc/update_gang_icons_added(datum/mind/recruit_mind, gang)
-	var/list/bosses
-	if(gang == "A")
-		bosses = A_bosses
-	else if(gang == "B")
-		bosses = B_bosses
-	if(!gang)
-		to_chat(world, "ERROR: Invalid gang in update_gang_icons_added()")
-
-	spawn(0)
-		for(var/datum/mind/boss_mind in bosses)
-			//Tagging the new gangster for the bosses to see
-			if(boss_mind.current)
-				if(boss_mind.current.client)
-					var/I
-					if(recruit_mind in bosses) //If the new gangster is a boss himself
-						I = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gang_boss")
-					else
-						I = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gangster")
-					boss_mind.current.client.images += I
-			//Tagging every boss for the new gangster to see
-			if(recruit_mind.current)
-				if(recruit_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = boss_mind.current, icon_state = "gang_boss")
-					recruit_mind.current.client.images += J
-		//Tag themselves to see
-		if(recruit_mind.current)
-			if(recruit_mind.current.client)
-				var/K
-				if(recruit_mind in bosses) //If the new gangster is a boss himself
-					K = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gang_boss")
-				else
-					K = image('icons/mob/mob.dmi', loc = recruit_mind.current, icon_state = "gangster")
-				recruit_mind.current.client.images += K
-
-////////////////////////////////////////
-//Keeps track of deconverted gangsters//
-////////////////////////////////////////
-/datum/game_mode/proc/update_gang_icons_removed(datum/mind/defector_mind)
-	var/list/all_gangsters = A_bosses + B_bosses + A_gang + B_gang
-
-	spawn(0)
-		//Remove defector's icon from gangsters' visions
-		for(var/datum/mind/boss_mind in all_gangsters)
-			if(boss_mind.current)
-				if(boss_mind.current.client)
-					for(var/image/I in boss_mind.current.client.images)
-						if((I.icon_state == "gangster" || I.icon_state == "gang_boss") && I.loc == defector_mind.current)
-							qdel(I)
-
-		//Remove gang icons from defector's vision
-		if(defector_mind.current)
-			if(defector_mind.current.client)
-				for(var/image/I in defector_mind.current.client.images)
-					if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-						qdel(I)
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//

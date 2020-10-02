@@ -315,7 +315,7 @@
 			SSticker.mode.remove_gangster(user.mind, 0, 2)
 			SSticker.mode.A_bosses += user.mind
 			user.mind.special_role = "[gang_name("A")] Gang (A) Lieutenant"
-			SSticker.mode.update_gang_icons_added(user.mind, "A")
+			add_antag_hud(ANTAG_HUD_GANGSTER, "lieutenant_a", user)
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
 			promoted = 1
 	else if(user.mind in (SSticker.mode.B_gang | SSticker.mode.B_bosses))
@@ -326,7 +326,7 @@
 			SSticker.mode.remove_gangster(user.mind, 0, 2)
 			SSticker.mode.B_bosses += user.mind
 			user.mind.special_role = "[gang_name("B")] Gang (B) Lieutenant"
-			SSticker.mode.update_gang_icons_added(user.mind, "B")
+			add_antag_hud(ANTAG_HUD_GANGSTER, "lieutenant_b", user)
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
 			promoted = 1
 	if(promoted)

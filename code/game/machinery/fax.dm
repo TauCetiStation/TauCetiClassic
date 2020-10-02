@@ -134,6 +134,9 @@ var/list/alldepartments = list("Central Command")
 			if (istype(I, /obj/item/weapon/card/id))
 				usr.drop_from_inventory(I, src)
 				scan = I
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.sec_hud_set_ID()
 		authenticated = 0
 
 	if(href_list["dept"])
@@ -169,6 +172,9 @@ var/list/alldepartments = list("Central Command")
 		if(!scan)
 			usr.drop_from_inventory(idcard, src)
 			scan = idcard
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 	else if(iswrench(O))
 		default_unfasten_wrench(user, O)

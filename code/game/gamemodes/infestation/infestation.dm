@@ -80,6 +80,7 @@ Infestation:
 			apc.overload_lighting()
 
 		var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(start_point))
+		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", FH)
 		var/mob/original = xeno.current
 
 		xeno.transfer_to(FH)

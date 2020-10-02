@@ -48,9 +48,8 @@
 	return
 
 /proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-
 	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
+		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield || istype(L, /obj/item/weapon/implant/mindshield/loyalty))
 			continue
 		if(L.implanted)
 			return TRUE
@@ -393,9 +392,13 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]
+	var/list/sec_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)
 
 /proc/broadcast_medical_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_MEDICAL]
+	var/list/med_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, med_hud_users)
 
 /proc/broadcast_hud_message(message, broadcast_source, list/targets)

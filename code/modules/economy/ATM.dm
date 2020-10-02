@@ -420,6 +420,9 @@ log transactions
 						if (istype(I, /obj/item/weapon/card/id))
 							usr.drop_from_inventory(I, src)
 							held_card = I
+							if(ishuman(usr))
+								var/mob/living/carbon/human/H = usr
+								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
 			if("logout")

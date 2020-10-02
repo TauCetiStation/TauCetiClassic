@@ -121,6 +121,7 @@ VOX HEIST ROUNDTYPE
 		I.imp_in = vox
 		I.implanted = TRUE
 		BP.implants += I
+		vox.sec_hud_set_implants()
 		I.part = BP
 
 		cortical_stacks[raider] = I
