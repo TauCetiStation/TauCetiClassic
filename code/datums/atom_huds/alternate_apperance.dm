@@ -94,6 +94,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
 		theImage.copy_overlays(other, cut_old)
 
+// Fake-image can see everyone
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE
 
@@ -106,6 +107,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
 	return !isobserver(M)
 
+// Fake-image can see only silicon
 /datum/atom_hud/alternate_appearance/basic/silicons
 
 /datum/atom_hud/alternate_appearance/basic/silicons/New()
@@ -119,6 +121,7 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only observers
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 
@@ -131,6 +134,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
 
+// Fake-image can see only noncult
 /datum/atom_hud/alternate_appearance/basic/noncult
 
 /datum/atom_hud/alternate_appearance/basic/noncult/New()
@@ -144,6 +148,7 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only cult
 /datum/atom_hud/alternate_appearance/basic/cult
 
 /datum/atom_hud/alternate_appearance/basic/cult/New()
@@ -157,6 +162,7 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only the specified person
 /datum/atom_hud/alternate_appearance/basic/one_person
 	var/mob/seer
 
