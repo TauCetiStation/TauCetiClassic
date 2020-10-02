@@ -2,31 +2,38 @@
 	gender = NEUTER
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
+	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD)
+
+	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
+	var/list/def_sensor_huds
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
-	var/list/hud_list[9]
+
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 	var/obj/item/device/pda/silicon/pda = null
 
-
-
-
-
-
 	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
 
-	var/sensor_mode = 0 //Determines the current HUD.
-	#define SEC_HUD 1 //Security HUD mode
-	#define MED_HUD 2 //Medical HUD mode
+	var/sensor_mode = FALSE //Determines the current HUD.
 
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src
+	def_sensor_huds = sensor_huds
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_status()
+	diag_hud_set_health()
 
 /mob/living/silicon/Destroy()
 	silicon_list -= src
 	return ..()
+
+/mob/living/silicon/death(gibbed)
+	diag_hud_set_status()
+	diag_hud_set_health()
+	return ..(gibbed)
 
 /mob/living/silicon/proc/show_laws()
 	return
@@ -39,6 +46,12 @@
 
 /mob/living/silicon/drop_item()
 	return
+
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
 
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
@@ -163,20 +176,26 @@
 
 	return
 
+/mob/living/silicon/proc/remove_sensors()
+	for(var/hud in sensor_huds)
+		var/datum/atom_hud/sensor = global.huds[hud]
+		sensor.remove_hud_from(src)
+	sensor_mode = FALSE
+	to_chat(src, "Sensor augmentations disabled.")
+
 /mob/living/silicon/proc/toggle_sensor_mode()
 	//set name = "Set Sensor Augmentation" // Dunno, but it loops if open. ~Zve
 	//set desc = "Augment visual feed with internal sensor overlays."
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
-	switch(sensor_type)
-		if ("Security")
-			sensor_mode = SEC_HUD
-			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
-		if ("Medical")
-			sensor_mode = MED_HUD
-			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
-		if ("Disable")
-			sensor_mode = 0
-			to_chat(src, "Sensor augmentations disabled.")
+	if(sensor_mode)
+		remove_sensors()
+		return
+
+	for(var/hud in sensor_huds)
+		var/datum/atom_hud/sensor = global.huds[hud]
+		sensor.add_hud_to(src)
+
+	sensor_mode = TRUE
+	to_chat(src, "Sensor augmentations enabled.")
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)

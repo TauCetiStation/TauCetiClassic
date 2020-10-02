@@ -103,6 +103,8 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/simple_animal/updatehealth()
+	med_hud_set_health()
+	med_hud_set_status()
 	return
 
 /mob/living/simple_animal/Life()
@@ -386,6 +388,7 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
 	if(!speak.len)

@@ -75,7 +75,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
 
 			usr.mind.transfer_to(H)
-			SSticker.mode.update_all_shadows_icons()
 			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
 
 			qdel(usr)

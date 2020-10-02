@@ -303,6 +303,7 @@
 		else			return 0
 
 	new_xeno.ckey = ckey
+	new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>")
 	return 1
 
@@ -363,7 +364,6 @@ Ccomp's first proc.
 	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
-
 
 /client/proc/toggle_antagHUD_use()
 	set category = "Server"

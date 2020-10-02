@@ -696,18 +696,12 @@
 		to_chat(user, "<span class='notice'>You cannot do this so often.</span>")
 		return
 	if(user == spirit)
-		for(var/image/I in user.client.images)
-			if(I.loc == src && I.icon_state == "agolem_master")
-				user.client.images -= I
-				break
 		spirit = null
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
 		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
-		user.client.images += I
 		spirit = user
 		user.golem_rune = src
 		to_chat(user, "<span class='notice'>You are now queued for golem role.</span>")
@@ -725,10 +719,16 @@
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
 	G.my_master = H
-	G.update_golem_hud_icons()
 	H.my_golem = G
-	H.update_golem_hud_icons()
+	// Master get hud
+	H.add_antag_hud(ANTAG_HUD_GOLEM, "agolem_master", H)
+	// Golom get hud
+	H.set_golem_hud()
+	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_GOLEM]
+	A.add_to_single_hud(G, H)
+
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
+	G.mind.memory += "<B>[H]</B> - your master."
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
@@ -750,17 +750,6 @@
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return result
-
-/mob/living/carbon/human/proc/update_golem_hud_icons()
-	if(client)
-		if(dna && (dna.mutantrace == "adamantine"))
-			if(my_master)
-				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
-				client.images += I
-		else
-			if(my_golem)
-				var/I = image('icons/mob/hud.dmi', loc = my_golem, icon_state = "agolem_master")
-				client.images += I
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

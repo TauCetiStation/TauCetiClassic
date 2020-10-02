@@ -64,9 +64,6 @@
 			clear_fullscreen(scr)
 		for(var/alert in alerts)
 			clear_alert(alert)
-		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state, 1, 4) == "hud")
-				client.images.Remove(hud)
 
 /mob/living/parasite/essence/proc/transfer(atom/new_host)
 	exit_host()
@@ -213,24 +210,10 @@
 	see_in_dark = host.see_in_dark
 	see_invisible = host.see_invisible
 
-	for(var/image/hud in client.images) // hud shit goes here
-		if(copytext(hud.icon_state, 1, 4) == "hud")
-			client.images.Remove(hud)
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
-		set_EyesVision(H.sightglassesmod)
 		if(H.glasses)
-			if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/obj/item/clothing/glasses/sunglasses/sechud/O = H.glasses
-				if(O.hud)
-					O.hud.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/hud))
-				var/obj/item/clothing/glasses/hud/O = H.glasses
-				O.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
-				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = H.glasses
-				O.process_hud(src)
-
+			set_EyesVision(H.sightglassesmod)
 
 		for(var/scr in screens) // screens shit
 			if(!(scr in host.screens))
