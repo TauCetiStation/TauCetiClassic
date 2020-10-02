@@ -634,6 +634,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	supplied_wound.embedded_objects += W
 	implants += W
+	owner.sec_hud_set_implants()
 	owner.embedded_flag = 1
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)

@@ -138,6 +138,9 @@
 
 	var/list/prohibit_roles
 
+	// What movesets do these species grant.
+	var/list/moveset_types
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -208,10 +211,11 @@
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
-	return
+	for(var/moveset in moveset_types)
+		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H)
-	return
+	H.remove_moveset_source(MOVESET_SPECIES)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -324,10 +328,12 @@
 	return O.unathi_equip(H)
 
 /datum/species/unathi/on_gain(mob/living/M)
+	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
 /datum/species/unathi/on_loose(mob/living/M)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
+	..()
 
 /datum/species/tajaran
 	name = TAJARAN
@@ -538,7 +544,7 @@
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -552,7 +558,7 @@
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -816,6 +822,7 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
+	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
@@ -828,6 +835,7 @@
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
+	..()
 
 /datum/species/machine/handle_death(mob/living/carbon/human/H)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
@@ -1080,6 +1088,10 @@
 	max_age = 1000
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
+	..()
+	// Clothing on the Golem is created before the hud_list is generated in the atom
+	H.prepare_huds()
+
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
@@ -1094,8 +1106,6 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
-
-	return ..()
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -1116,7 +1126,7 @@
 			if(is_type_in_list(x, golem_items))
 				qdel(x)
 
-	return ..()
+	..()
 
 /datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_golem_digest(M)
@@ -1166,7 +1176,7 @@
 
 	add_zombie(H)
 
-	return ..()
+	..()
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -1179,7 +1189,7 @@
 
 	remove_zombie(H)
 
-	return ..()
+	..()
 
 
 /datum/species/zombie/tajaran

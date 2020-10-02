@@ -90,6 +90,9 @@
 			user.drop_from_inventory(O, src)
 			giver = O
 			updateUsrDialog()
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.sec_hud_set_ID()
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
@@ -174,6 +177,9 @@
 					if (istype(I, /obj/item/weapon/card/id))
 						usr.drop_from_inventory(I, src)
 						giver = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 				updateUsrDialog()
 
 			if ("print")

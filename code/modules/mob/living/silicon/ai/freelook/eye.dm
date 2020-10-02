@@ -8,6 +8,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "eye"
 	alpha = 127
+	hud_possible = list(ANTAG_HUD)
 	var/list/visibleCameraChunks = list()
 	var/mob/living/master = null
 	invisibility = INVISIBILITY_AI_EYE

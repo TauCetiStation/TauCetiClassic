@@ -10,6 +10,8 @@
 	required_players_secret = 10
 	required_enemies = 1
 	recommended_enemies = 1
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "hudwizard"
 
 	votable = 0
 
@@ -53,7 +55,6 @@
 		greet_wizard(wizard)
 
 	return ..()
-
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	if (config.objectives_disabled)
@@ -129,6 +130,7 @@
 
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", wizard.current)
 	if (you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")

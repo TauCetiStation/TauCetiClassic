@@ -372,6 +372,7 @@
 				A.secondsElectrified = 0
 			else
 				A.secondsElectrified = -1
+			A.diag_hud_set_electrified()
 		else if(specialfunctions == (OPEN_BOLTS))
 			if(A.density)
 				A.unbolt()
@@ -388,6 +389,7 @@
 			else
 				A.bolt()
 				A.secondsElectrified = -1
+			A.diag_hud_set_electrified()
 		else if(specialfunctions == (OPEN_BOLTS_SHOCK))
 			if(A.density)
 				A.unbolt()
@@ -399,6 +401,7 @@
 				A.close_unsafe()
 				A.bolt()
 				A.secondsElectrified = -1
+			A.diag_hud_set_electrified()
 
 /obj/machinery/door_control/proc/toggle_poddoor(obj/machinery/door/poddoor/P)
 	if(P.density)

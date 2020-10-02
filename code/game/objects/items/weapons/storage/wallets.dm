@@ -44,6 +44,10 @@
 			front_id = W
 			name = "[name] ([front_id])"
 			update_icon()
+			if(ishuman(loc))
+				var/mob/living/carbon/human/H = loc
+				if(H.wear_id == src)
+					H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/wallet/update_icon()
 

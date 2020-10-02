@@ -1125,7 +1125,7 @@
 	products = list(/obj/item/stack/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2,
-					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics=2)
+					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics=2,/obj/item/clothing/glasses/hud/diagnostic = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
 
 //This one's from NTstation

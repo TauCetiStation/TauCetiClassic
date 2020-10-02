@@ -702,6 +702,7 @@
 			W.layer = initial(W.layer)
 			W.forceMove(M.loc)
 			W.dropped(M)
+		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 		new_mob.a_intent = INTENT_HARM
 		new_mob.universal_speak = 1

@@ -164,7 +164,9 @@
 			if (istype(I, /obj/item/weapon/card/id))
 				usr.drop_from_inventory(I, src)
 				src.scan = I
-
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					H.sec_hud_set_ID()
 	else if (href_list["logout"])
 		src.authenticated = null
 		src.screen = null
