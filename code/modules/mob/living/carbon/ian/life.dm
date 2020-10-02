@@ -518,6 +518,7 @@
 		stat = CONSCIOUS
 	else
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+		med_hud_set_health()
 
 /mob/living/carbon/ian/proc/handle_regular_status_updates()
 	if(stat == DEAD)
