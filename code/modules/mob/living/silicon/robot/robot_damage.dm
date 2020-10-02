@@ -4,6 +4,8 @@
 		stat = CONSCIOUS
 		return
 	health = 200 - (getBruteLoss() + getFireLoss())
+	diag_hud_set_status()
+	diag_hud_set_health()
 	return
 
 /mob/living/silicon/robot/getBruteLoss()

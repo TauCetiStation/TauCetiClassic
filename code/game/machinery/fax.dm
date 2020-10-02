@@ -135,6 +135,9 @@ var/list/alldepartments = list("Central Command")
 				usr.drop_item()
 				I.loc = src
 				scan = I
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.sec_hud_set_ID()
 		authenticated = 0
 
 	if(href_list["dept"])
@@ -172,6 +175,9 @@ var/list/alldepartments = list("Central Command")
 			usr.drop_item()
 			idcard.loc = src
 			scan = idcard
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
 
 	else if(iswrench(O))
 		default_unfasten_wrench(user, O)

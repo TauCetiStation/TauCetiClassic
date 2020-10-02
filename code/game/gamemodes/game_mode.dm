@@ -45,6 +45,10 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 	var/check_ready = TRUE
+
+	var/antag_hud_type
+	var/antag_hud_name
+
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 20
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -150,7 +154,6 @@ Implants;
 	if(dbcon.IsConnected())
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [round_id]")
 		query_round_game_mode.Execute()
-
 	return 1
 
 
@@ -549,3 +552,15 @@ Implants;
 	var/text = ""
 	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text
+
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, antag_hud_name)
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.leave_hud(mob_override)
+	set_antag_hud(mob_override, null)
