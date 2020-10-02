@@ -200,6 +200,7 @@
 	throwforce = 8.0
 	item_state = "shard-glass"
 	g_amt = 3750
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 
@@ -207,10 +208,6 @@
 	to_chat(viewers(user), pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS)
-
-/obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)

@@ -27,6 +27,11 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
+	///This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = null
+	///HUD images that this atom can provide.
+	var/list/hud_possible
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 

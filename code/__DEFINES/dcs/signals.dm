@@ -184,6 +184,10 @@
 /// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
 #define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
 	#define COMPONENT_ATTACK_SHIELDED 1
+// from mob/living/learn_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_LEARN_COMBO "learn_combo"
+// from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_FORGET_COMBO "forget_combo"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

@@ -73,7 +73,6 @@
 
 /obj/item/weapon/paper/proc/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
-	assets.register()
 	assets.send(user)
 
 	name = sanitize(name)
@@ -152,7 +151,7 @@
 		if(!spam_flag)
 			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
+			VARSET_IN(src, spam_flag, FALSE, 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
