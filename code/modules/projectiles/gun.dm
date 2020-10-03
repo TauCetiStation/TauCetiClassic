@@ -35,6 +35,12 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+/obj/item/weapon/gun/atom_init()
+	. = ..()
+	var/image/I = image('icons/obj/weapons.dmi', src, "watergun")
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/clown, "clown_weapon", I)
+
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time

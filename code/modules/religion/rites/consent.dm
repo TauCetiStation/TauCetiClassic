@@ -177,5 +177,10 @@
 
 	H.mind.holy_role = HOLY_ROLE_PRIEST
 	H.mutations.Add(CLUMSY)
+	H.mind.assigned_role = "Clown"
+	for(var/datum/atom_hud/alternate_appearance/basic/clown/C in global.active_alternate_appearances)
+		if(!C)
+			continue
+		C.update_alt_appearance(H)
 	AOG.sect.on_conversion(H)
 	return TRUE

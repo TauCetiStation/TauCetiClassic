@@ -87,11 +87,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	dead_mob_list += src
 
-	for(var/v in global.active_alternate_appearances)
-		if(!v)
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA)
 			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+		AA.update_alt_appearance(src)
 
 	. = ..()
 

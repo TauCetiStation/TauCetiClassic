@@ -29,7 +29,7 @@ var/global/list/active_alternate_appearances = list()
 	global.active_alternate_appearances -= src
 	return ..()
 
-/datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
+/datum/atom_hud/alternate_appearance/proc/update_alt_appearance(mob/M)
 	if(mobShouldSee(M))
 		add_hud_to(M)
 
@@ -62,6 +62,8 @@ var/global/list/active_alternate_appearances = list()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	theImage = I
 	target = I.loc
+	if(istype(target))
+		I.layer = target.layer
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
@@ -147,4 +149,34 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
 	if(M == seer || isobserver(M))
 		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/mime
+
+/datum/atom_hud/alternate_appearance/basic/mime/New()
+	..()
+	for(var/mob in global.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/mime/mobShouldSee(mob/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.mind.assigned_role == "Mime")
+			return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/clown
+
+/datum/atom_hud/alternate_appearance/basic/clown/New()
+	..()
+	for(var/mob in global.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/clown/mobShouldSee(mob/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.mind.assigned_role == "Clown")
+			return TRUE
 	return FALSE
