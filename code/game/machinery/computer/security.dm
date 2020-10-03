@@ -243,6 +243,9 @@ What a mess.*/
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 
 		if("Log Out")
 			authenticated = null
@@ -541,8 +544,6 @@ What a mess.*/
 
 				if ("Change Criminal Status")
 					if (active2)
-						for(var/mob/living/carbon/human/H in player_list)
-							H.hud_updateflag |= 1 << WANTED_HUD
 						switch(href_list["criminal2"])
 							if("none")
 								active2.fields["criminal"] = "None"
@@ -554,6 +555,10 @@ What a mess.*/
 								active2.fields["criminal"] = "Paroled"
 							if("released")
 								active2.fields["criminal"] = "Released"
+
+						for(var/human in global.human_list)
+							var/mob/living/carbon/human/H = human
+							H.sec_hud_set_security_status()
 
 				if ("Delete Record (Security) Execute")
 					if (active2)

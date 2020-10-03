@@ -1153,25 +1153,6 @@ var/global/list/common_tools = list(
 		return TRUE
 	return FALSE
 
-/proc/reverse_direction(dir)
-	switch(dir)
-		if(NORTH)
-			return SOUTH
-		if(NORTHEAST)
-			return SOUTHWEST
-		if(EAST)
-			return WEST
-		if(SOUTHEAST)
-			return NORTHWEST
-		if(SOUTH)
-			return NORTH
-		if(SOUTHWEST)
-			return NORTHEAST
-		if(WEST)
-			return EAST
-		if(NORTHWEST)
-			return SOUTHEAST
-
 /*
 Checks if that loc and dir has a item on the wall
 */
@@ -1525,3 +1506,11 @@ var/list/WALLITEMS = typecacheof(list(
 		return -1
 	else
 		return 0
+
+/atom/proc/contains(atom/location)
+	if(!location)
+		return 0
+	if(location == src)
+		return 1
+
+	return contains(location.loc)

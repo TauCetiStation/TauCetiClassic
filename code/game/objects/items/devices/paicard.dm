@@ -9,6 +9,7 @@
 	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+	var/searching = FALSE
 
 /obj/item/device/paicard/atom_init()
 	. = ..()
@@ -288,6 +289,9 @@
 // 		WIRE_SIGNAL = 1
 //		WIRE_RECEIVE = 2
 //		WIRE_TRANSMIT = 4
+
+/obj/item/device/paicard/proc/reset_searching()
+	searching = FALSE
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality

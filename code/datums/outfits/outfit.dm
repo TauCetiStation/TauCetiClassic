@@ -280,6 +280,7 @@
 				var/obj/item/weapon/implant/I = new implant_type(H)
 				I.inject(H, implants[implant_type])
 
+	H.sec_hud_set_ID()
 	H.update_body()
 	return TRUE
 

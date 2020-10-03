@@ -7,8 +7,20 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
+	for(var/datum/atom_hud/data/medical/medhud in global.huds)
+		medhud.add_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diaghud.add_to_hud(src)
+	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
+	sechud.add_to_hud(src)
+
+	if(moveset_type)
+		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 /mob/living/Destroy()
+	allowed_combos = null
+	known_combos = null
+	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
@@ -20,11 +32,21 @@
 			else
 				S.be_replaced()
 
+	remove_from_all_data_huds()
+
 	living_list -= src
 	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
@@ -205,6 +227,8 @@
 		stat = CONSCIOUS
 	else
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		med_hud_set_health()
+		med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -457,7 +481,7 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	update_health_hud()
+	med_hud_set_health()
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
@@ -529,8 +553,11 @@
 	// make the icons look correct
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
+
 	regenerate_icons()
-	update_health_hud()
+
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -544,11 +571,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
-/mob/living/proc/update_health_hud()
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
-
 /mob/living/proc/UpdateDamageIcon()
 	return
 

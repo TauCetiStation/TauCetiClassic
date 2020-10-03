@@ -5,6 +5,7 @@
 	stat = DEAD
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
+	hud_possible = list()
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
@@ -77,6 +78,9 @@ commented cause polls are kinda broken now, needs refactoring */
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open()
+	return
+
+/mob/dead/new_player/prepare_huds()
 	return
 
 /mob/dead/new_player/Stat()
@@ -321,6 +325,8 @@ commented cause polls are kinda broken now, needs refactoring */
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+	if(!issilicon(character))
+		SSquirks.AssignQuirks(character, character.client, TRUE)
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
@@ -361,9 +367,6 @@ commented cause polls are kinda broken now, needs refactoring */
 		character.Robotize()
 
 	joined_player_list += character.ckey
-
-	if(!issilicon(character))
-		SSquirks.AssignQuirks(character, character.client, TRUE)
 
 	if(character.client)
 		character.client.guard.time_velocity_spawn = world.timeofday
