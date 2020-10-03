@@ -235,6 +235,7 @@
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\swiping.dm"
+#include "code\datums\components\tactical.dm"
 #include "code\datums\components\waddle.dm"
 #include "code\datums\components\rites\consent.dm"
 #include "code\datums\components\rites\rite.dm"

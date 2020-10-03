@@ -26,12 +26,14 @@
 			H.remove_hud_from(parasit)
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
+	..()
 	if(slot != SLOT_GLASSES)
 		return
 	enable_hud(user)
 	glasses_user = user
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	..()
 	if(!istype(user) || user.glasses)
 		return
 	disable_hud(user)
@@ -116,12 +118,14 @@
 		addtimer(CALLBACK(src, .proc/fix_hud), (90 SECONDS) / severity)
 
 /obj/item/clothing/glasses/sunglasses/hud/equipped(mob/living/carbon/human/user, slot)
+	..()
 	if(slot != SLOT_GLASSES)
 		return
 	glasses_user = user
 	enable_hud(user)
 
 /obj/item/clothing/glasses/sunglasses/hud/dropped(mob/living/carbon/human/user)
+	..()
 	if(!istype(user) || user.glasses)
 		return
 	glasses_user = null

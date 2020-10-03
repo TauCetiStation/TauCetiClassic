@@ -114,6 +114,7 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
+	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/automatic/l6_saw/O = user.get_inactive_hand()

@@ -89,12 +89,14 @@
 	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	..()
 	if(slot == SLOT_SHOES)
 		start_waddling(user)
 	else if(slot_equipped == SLOT_SHOES)
 		stop_waddling(user)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	..()
 	if(slot_equipped == SLOT_SHOES)
 		stop_waddling(user)
 
@@ -130,6 +132,7 @@
 	waddling = FALSE
 
 /obj/item/clothing/shoes/jolly_gravedigger/equipped(mob/user, slot)
+	..()
 	if(slot == SLOT_SHOES)
 		if(user.pulling)
 			check_coffin(user, user.pulling)
@@ -139,6 +142,7 @@
 		stop_waddling(user)
 
 /obj/item/clothing/shoes/jolly_gravedigger/dropped(mob/user)
+	..()
 	if(waddling)
 		stop_waddling(user)
 

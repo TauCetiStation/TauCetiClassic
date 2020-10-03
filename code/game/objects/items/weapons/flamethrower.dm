@@ -229,6 +229,7 @@
 	var/obj/item/weapon/weldpack/M2_fuelback/Connected_tank = null
 
 /obj/item/weapon/flamethrower_M2/dropped(mob/user)
+	..()
 	if(user)
 		Connected_tank.unequip(user)
 		Connected_tank = null

@@ -199,6 +199,7 @@
 	icon_state = "crossbow"
 
 /obj/item/weapon/crossbow/dropped(mob/user)
+	..()
 	if(arrow)
 		var/obj/item/weapon/arrow/A = arrow
 		A.loc = get_turf(src)

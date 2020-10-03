@@ -160,6 +160,7 @@
 	return
 
 /obj/item/clothing/mask/facehugger/equipped(mob/living/carbon/C)
+	..()
 	Attach(C)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)

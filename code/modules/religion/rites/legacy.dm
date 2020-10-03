@@ -22,6 +22,7 @@
 
 
 /datum/religion_rites/legacy/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE
@@ -53,6 +54,7 @@
 	return TRUE
 
 /datum/religion_rites/legacy/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
 	if(on_invocation_spell && prob(invocation_prob))
 		cast_spell(user, AOG, on_invocation_spell)
 

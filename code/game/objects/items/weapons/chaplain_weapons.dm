@@ -340,12 +340,14 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
 
 /obj/item/weapon/nullrod/forcefield_staff/equipped(mob/living/user, slot)
+	..()
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND || slot == SLOT_BACK)
 		activate(user)
 	else if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
 /obj/item/weapon/nullrod/forcefield_staff/dropped(mob/living/user)
+	..()
 	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
@@ -401,11 +403,13 @@
 	return ..()
 
 /obj/item/weapon/claymore/religion/dropped()
+	..()
 	QDEL_NULL(shield)
 	remove_holy_outline()
 	force = def_force
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
+	..()
 	if(user.mind.holy_role)
 		force = holy_force
 		if(!have_outline && can_spawn_shield)

@@ -117,6 +117,10 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/equipped(): (/mob/equipper, slot)
+#define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/dropped(): (mob/user)
+#define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
