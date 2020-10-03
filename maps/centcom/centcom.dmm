@@ -13615,14 +13615,6 @@
 "aWH" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/pickaxe{
-	pixel_x = -2;
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -13649,6 +13641,9 @@
 /obj/item/weapon/dart_cartridge,
 /obj/item/weapon/dart_cartridge,
 /obj/item/weapon/dart_cartridge,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -13800,6 +13795,14 @@
 "aXe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
+"aXf" = (
+/obj/item/trash/cheesie,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -14097,6 +14100,7 @@
 /obj/item/clothing/suit/space/vox/pressure,
 /obj/item/clothing/head/helmet/space/vox/pressure,
 /obj/item/clothing/mask/gas/vox,
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -17089,6 +17093,7 @@
 /area/velocity)
 "dcx" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/circular_saw,
 /turf/simulated/floor{
 	icon_state = "showroomfloor";
@@ -19392,15 +19397,6 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/space,
 /turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"gNz" = (
-/obj/structure/table,
-/obj/item/weapon/moneybag,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23314,7 +23310,7 @@
 "nNM" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
-	desc = "Delicious.";
+	desc = "It's Delicious.";
 	name = "Bob Meat"
 	},
 /turf/simulated/floor{
@@ -23818,20 +23814,6 @@
 	icon_state = "cmo"
 	},
 /area/shuttle/escape/centcom)
-"oOC" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/obj/item/trash/cheesie,
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "oOH" = (
 /obj/structure/stool/bed/chair{
 	dir = 1
@@ -43742,9 +43724,9 @@ ofb
 ofb
 ofb
 alT
-aaM
-aaM
-aaM
+alT
+alT
+alT
 aaM
 aaM
 ahG
@@ -45801,7 +45783,7 @@ ofb
 ofb
 ofb
 alT
-aaM
+alT
 aaM
 ahG
 aaM
@@ -74771,7 +74753,7 @@ bSp
 eTK
 fwr
 ban
-gNz
+nNM
 yfr
 hGc
 aaM
@@ -80433,7 +80415,7 @@ yfr
 mEq
 nCO
 oCj
-aYd
+aXf
 eCv
 anC
 aaM
@@ -80689,7 +80671,7 @@ lMg
 yfr
 mMK
 nHu
-oOC
+oCj
 ban
 eCv
 anC
