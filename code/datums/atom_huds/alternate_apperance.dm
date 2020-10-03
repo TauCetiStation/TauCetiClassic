@@ -165,18 +165,3 @@ var/global/list/active_alternate_appearances = list()
 		if(H.mind && H.mind.assigned_role == "Mime")
 			return TRUE
 	return FALSE
-
-/datum/atom_hud/alternate_appearance/basic/clown
-
-/datum/atom_hud/alternate_appearance/basic/clown/New()
-	..()
-	for(var/mob in global.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/clown/mobShouldSee(mob/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.mind && H.mind.assigned_role == "Clown")
-			return TRUE
-	return FALSE
