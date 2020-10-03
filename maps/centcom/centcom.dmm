@@ -5640,7 +5640,7 @@
 	},
 /area/velocity)
 "auu" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -16306,7 +16306,7 @@
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
 "bAb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -16666,7 +16666,7 @@
 	},
 /area/velocity)
 "ckb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
@@ -16681,7 +16681,7 @@
 	},
 /area/velocity)
 "cmb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
@@ -16795,7 +16795,7 @@
 	},
 /area/velocity)
 "cxb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -16894,7 +16894,7 @@
 	},
 /area/velocity)
 "cJb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -17200,7 +17200,7 @@
 	},
 /area/velocity)
 "dkb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -22452,7 +22452,7 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "omb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "onb" = (
@@ -22978,7 +22978,7 @@
 /area/shuttle/escape/centcom)
 "pxb" = (
 /obj/machinery/light,
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "pyb" = (
@@ -23132,7 +23132,7 @@
 	},
 /area/shuttle/escape/centcom)
 "pTb" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
@@ -23213,7 +23213,7 @@
 /area/shuttle/escape/centcom)
 "qbb" = (
 /obj/machinery/light,
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_y = -32
@@ -23275,7 +23275,7 @@
 	},
 /area/shuttle/supply/velocity)
 "qsd" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -23294,7 +23294,7 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "rkK" = (
-/obj/structure/flora/pottedplant/tropicalfern{
+/obj/item/flora/pottedplant/tropicalfern{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -23393,7 +23393,7 @@
 /area/velocity)
 "voK" = (
 /obj/structure/table/glass,
-/obj/structure/flora/plant/deskleaf{
+/obj/item/flora/deskleaf{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor{
@@ -23477,7 +23477,7 @@
 /area/custom/syndicate_mothership/elite_squad)
 "ygn" = (
 /obj/structure/table/reinforced,
-/obj/structure/flora/plant,
+/obj/item/flora,
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Paper"
 	},

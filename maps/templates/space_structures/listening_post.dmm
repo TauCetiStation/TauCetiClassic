@@ -290,7 +290,7 @@
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aM" = (
-/obj/structure/flora/plant/random,
+/obj/item/flora/random,
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aN" = (

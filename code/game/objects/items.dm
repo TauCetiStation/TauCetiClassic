@@ -359,7 +359,6 @@
 		return
 
 	if(!user.can_pickup(src))
-		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
 	src.pickup(user)
@@ -479,7 +478,6 @@
 		return FALSE
 	if(QDELETED(M))
 		return FALSE
-
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M

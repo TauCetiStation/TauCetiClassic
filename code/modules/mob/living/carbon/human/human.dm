@@ -1394,6 +1394,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
 
+/mob/living/carbon/human/can_pickup(obj/O)
+	// Its worst
+	// I can't put it somewhere else because it would involve too many changes
+	if(istype(O, /obj/item/flora))
+		var/obj/item/flora/F = O
+		if(F.wielded)
+			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
+			return FALSE
+		if(get_inactive_hand())
+			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
+			return FALSE
+	return TRUE
+
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
