@@ -165,13 +165,14 @@ var/global/list/active_alternate_appearances = list()
 // Fake-image can see only the specified person
 /datum/atom_hud/alternate_appearance/basic/one_person
 	var/mob/seer
-
-/datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
-	if(M == seer)
-		return TRUE
-	return FALSE
+	add_ghost_version = TRUE
 
 /datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
 	..(key, I, FALSE)
 	seer = M
 	add_hud_to(seer)
+
+/datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
+	if(M == seer || isobserver(M))
+		return TRUE
+	return FALSE
