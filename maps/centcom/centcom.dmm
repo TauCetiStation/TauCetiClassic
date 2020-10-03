@@ -2859,14 +2859,8 @@
 /turf/space,
 /area/custom/syndicate_mothership)
 "alv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_master,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
+/turf/space,
+/area/shuttle/vox/southeast_solars)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -3615,26 +3609,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/syndicate/start)
-"anF" = (
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_west_sensor";
-	pixel_x = 25
-	},
-/obj/machinery/light/spot{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "anG" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3645,37 +3619,31 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate/start)
 "anH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
+/obj/structure/centcom_barrier,
+/obj/structure/centcom_barrier,
+/turf/space,
 /area/space)
 "anI" = (
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_east_sensor";
-	pixel_x = -25
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/machinery/light/spot{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
 	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/window/shuttle{
+	icon_state = "window_gray";
+	name = "skipjack window"
+	},
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "anK" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/space,
@@ -3863,47 +3831,20 @@
 	},
 /area/velocity)
 "aoO" = (
-/obj/structure/centcom_barrier,
-/obj/structure/centcom_barrier,
-/turf/space,
-/area/space)
-"aoP" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "vox_west_control";
-	pixel_x = 24;
-	req_access = list(150);
-	tag_airpump = "vox_west_vent";
-	tag_chamber_sensor = "vox_west_sensor";
-	tag_exterior_door = "vox_northwest_lock";
-	tag_interior_door = "vox_southwest_lock"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
+/area/shuttle/vox/arkship)
+"aoQ" = (
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northeast_lock";
+	locked = 1;
+	req_access = list(150)
 	},
 /turf/simulated/shuttle/plating{
 	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"aoQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -3920,30 +3861,28 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1331;
 	id_tag = "vox_east_control";
-	pixel_x = -24;
+	pixel_y = 25;
 	req_access = list(150);
 	tag_airpump = "vox_east_vent";
 	tag_chamber_sensor = "vox_east_sensor";
 	tag_exterior_door = "vox_northeast_lock";
 	tag_interior_door = "vox_southeast_lock"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aoT" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/table,
+/obj/item/weapon/gift,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aoU" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3974,15 +3913,21 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "aoX" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/stack/cable_coil/red{
+	amount = 12
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/weapon/screwdriver{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aoZ" = (
 /obj/machinery/door_control{
 	id = "velocity_main2";
@@ -5955,10 +5900,21 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "avv" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall12"
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "vox_east_sensor";
+	pixel_y = 25
 	},
-/area/space)
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1331;
+	id_tag = "vox_east_vent";
+	name = "Vox East Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "avw" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -7291,22 +7247,16 @@
 /turf/unsimulated/wall,
 /area/centcom/living)
 "aAo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+/obj/machinery/access_button{
+	command = "cycle_interior";
 	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
+	master_tag = "vox_east_control";
+	req_one_access = list(150)
 	},
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_west_sensor";
-	pixel_x = -25
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aAr" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -9513,19 +9463,6 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"aHo" = (
-/obj/structure/shuttle/engine/heater{
-	icon_state = "heater1"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "aHp" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -10327,11 +10264,6 @@
 	},
 /turf/space,
 /area/shuttle/supply/velocity)
-"aKj" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
-	},
-/area/space)
 "aKl" = (
 /turf/space,
 /area/shuttle/escape_pod4/centcom)
@@ -10959,8 +10891,6 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aMB" = (
-/obj/item/clothing/head/chicken,
-/obj/item/clothing/head/bowler,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -11036,12 +10966,6 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
-"aNb" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "aNl" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -11686,10 +11610,8 @@
 	},
 /area/centcom/living)
 "aPG" = (
-/obj/item/weapon/storage/toolbox/emergency,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -13665,130 +13587,138 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aWF" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
+/obj/structure/rack,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/weapon/tank/nitrogen,
+/obj/item/weapon/tank/nitrogen,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
-"aWG" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWH" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
+/obj/structure/table/reinforced,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe{
+	pixel_x = 1;
+	pixel_y = -4
 	},
-/area/space)
-"aWI" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/item/weapon/pickaxe{
+	pixel_x = -2;
+	pixel_y = 3
 	},
-/area/space)
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "aWJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall14"
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
-/area/space)
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "aWK" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
+/obj/structure/rack,
+/obj/item/weapon/gun/dartgun/vox/raider,
+/obj/item/weapon/gun/dartgun/vox/medical,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_we";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/rack,
+/obj/item/weapon/storage/pneumatic,
+/obj/item/weapon/harpoon,
+/obj/item/weapon/harpoon,
+/obj/item/weapon/harpoon,
+/obj/item/weapon/harpoon,
+/obj/item/weapon/tank/nitrogen,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_w";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/rack,
+/obj/item/weapon/crossbow/vox,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_e";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/rack,
+/obj/item/weapon/crossbow/vox,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/obj/item/weapon/arrow,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWP" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s5"
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "vox_east_control";
+	req_access = list(150)
 	},
-/area/space)
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/shuttle/vox/arkship)
 "aWQ" = (
-/obj/machinery/computer/vox_station,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1331;
+	id_tag = "vox_east_vent";
+	name = "Vox East Large Air Vent"
+	},
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWR" = (
 /obj/machinery/status_display,
 /turf/unsimulated/wall,
 /area/centcom/evac)
 "aWS" = (
-/obj/machinery/computer/station_alert,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aWU" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -13817,88 +13747,79 @@
 	},
 /area/centcom/tdome)
 "aXa" = (
-/obj/machinery/computer/vox_stealth,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_southeast_lock";
+	locked = 1;
+	req_access = list(150)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXb" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXc" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_east_control";
-	req_one_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXd" = (
-/obj/machinery/door_control{
-	id = "skipjack";
-	pixel_y = 24
+/obj/machinery/door/airlock/hatch{
+	req_access = list(150)
 	},
-/obj/structure/table,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXe" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXf" = (
 /obj/effect/landmark{
-	name = "voxstart"
+	name = "carpspawn"
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"aXg" = (
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
+/turf/space,
 /area/space)
 "aXh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXi" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northeast_lock";
-	locked = 1;
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/item/weapon/spacecash/c50,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXj" = (
 /obj/machinery/light{
 	dir = 4
@@ -13906,40 +13827,34 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aXl" = (
-/obj/structure/table,
-/obj/item/device/radio/off{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/device/radio/off{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/curtain/open/bed,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/centcom,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXm" = (
-/obj/item/weapon/stool,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/life_assist/cardiopulmonary_bypass,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXn" = (
-/obj/item/clothing/head/collectable/petehat{
-	desc = "It smells faintly of reptile.";
-	name = "fancy leader hat"
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/stack/nanopaste,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXt" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomeaxe";
@@ -13995,78 +13910,41 @@
 	},
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
-"aXB" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"aXD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "aXE" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/obj/machinery/light/spot,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/bodyscanner,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aXG" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/obj/machinery/body_scanconsole{
+	known_implants = list(/obj/item/weapon/implant/cortical)
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/belt,
-/obj/item/device/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/item/stack/medical/advanced/ointment{
+	pixel_x = 4;
+	pixel_y = 3
 	},
-/obj/item/device/flashlight,
-/turf/simulated/floor/plating{
+/obj/item/stack/medical/advanced/bruise_pack,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXK" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/dartgun/vox/raider,
-/obj/item/weapon/gun/dartgun/vox/medical,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -14174,196 +14052,132 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aXX" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/pneumatic,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/tank/nitrogen,
-/turf/simulated/floor/plating{
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXY" = (
-/obj/structure/rack,
-/obj/item/weapon/crossbow/vox,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/turf/simulated/floor/plating{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aXZ" = (
-/obj/structure/rack,
-/obj/item/weapon/crossbow/vox,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating{
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/belt,
+/obj/item/device/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/device/flashlight,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aYa" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/rack,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/suit/space/vox/pressure,
+/obj/item/clothing/head/helmet/space/vox/pressure,
+/obj/item/clothing/mask/gas/vox,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYb" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/structure/rack,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/suit/space/vox/medic,
+/obj/item/clothing/head/helmet/space/vox/medic,
+/obj/item/clothing/mask/gas/vox,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
-"aYe" = (
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/weed_extract,
-/obj/item/device/debugger,
-/obj/item/device/debugger,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"aYf" = (
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/robot_parts/chest,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYg" = (
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/broken_device,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/rack,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/suit/space/vox/carapace,
+/obj/item/clothing/head/helmet/space/vox/carapace,
+/obj/item/clothing/mask/gas/vox,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
-"aYh" = (
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/bot/floorbot,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYi" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/structure/window/basic{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/rack,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/suit/space/vox/stealth,
+/obj/item/clothing/head/helmet/space/vox/stealth,
+/obj/item/clothing/mask/gas/vox,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYk" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/circular_saw,
-/obj/structure/window/basic{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/curtain/open/bed,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/gar,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYl" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/scalpel,
-/obj/item/stack/cable_coil,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/structure/window/basic{
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/tank/nitrogen,
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYm" = (
-/obj/machinery/optable,
-/obj/item/brain,
-/obj/structure/window/basic{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYn" = (
-/obj/item/organ/external/r_arm,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYo" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -14382,14 +14196,19 @@
 	},
 /area/centcom/evac)
 "aYs" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/light/spot,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "heater1"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYt" = (
 /obj/machinery/camera{
 	c_tag = "Red Team";
@@ -14425,76 +14244,46 @@
 	name = "plating"
 	},
 /area/centcom/tdome/tdome1)
-"aYw" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "aYx" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYz" = (
-/obj/structure/rack,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
 	},
-/area/space)
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/shuttle/vox/arkship)
 "aYA" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/carapace,
-/obj/item/clothing/head/helmet/space/vox/carapace,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/structure/table/reinforced,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYB" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/dartgun/vox/raider,
-/obj/item/weapon/gun/dartgun/vox/medical,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYC" = (
-/obj/machinery/sleeper{
-	dir = 4
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYF" = (
 /obj/machinery/camera{
 	c_tag = "Arena";
@@ -14524,14 +14313,11 @@
 	},
 /area/centcom/evac)
 "aYP" = (
-/obj/machinery/bodyscanner,
-/obj/machinery/light/spot,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYQ" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -14546,23 +14332,24 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aYT" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/weapon/spacecash/c50,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYV" = (
-/obj/machinery/body_scanconsole{
-	known_implants = list(/obj/item/weapon/implant/cortical)
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/weapon/inflatable_duck,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aYW" = (
 /obj/machinery/door/airlock/command{
 	name = "Thunderdome Administration";
@@ -14587,28 +14374,29 @@
 	},
 /area/custom/beach)
 "aZa" = (
+/obj/effect/decal/cleanable/blood/oil,
 /turf/space,
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall2"
 	},
 /area/shuttle/escape/centcom)
 "aZc" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/medic,
-/obj/item/clothing/head/helmet/space/vox/medic,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/curtain/open/bed,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/syndie,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZd" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -14670,54 +14458,40 @@
 /turf/unsimulated/beach/coastline,
 /area/custom/beach)
 "aZn" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/pneumatic,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/tank/nitrogen,
-/obj/machinery/light/spot{
+/obj/machinery/sleeper{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZo" = (
 /turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
+/turf/space,
 /area/space)
 "aZq" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/pressure,
-/obj/item/clothing/head/helmet/space/vox/pressure,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/clothing/glasses/hud/health,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZr" = (
-/obj/structure/rack,
-/obj/item/weapon/crossbow/vox,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/optable,
+/obj/item/brain{
+	desc = "Poor Bob.";
+	name = "Bob brain"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZs" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -14739,91 +14513,90 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "aZC" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/stealth,
-/obj/item/clothing/head/helmet/space/vox/stealth,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/obj/item/weapon/tank/nitrogen,
+/obj/item/clothing/mask/breath/medical,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZE" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "vox_east_control";
-	req_access = list(150)
+/obj/machinery/door/poddoor/shutters{
+	id = "loot_storage_vox";
+	name = "Loot storage"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aZL" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "aZN" = (
-/obj/item/clothing/head/bowler,
-/obj/item/weapon/broken_bottle,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZP" = (
+/obj/structure/kitchenspike_frame,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
+"aZQ" = (
 /obj/item/clothing/head/bearpelt,
 /obj/item/xenos_claw,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
-"aZQ" = (
-/obj/item/clothing/suit/space/syndicate/civilian,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZR" = (
-/obj/item/clothing/head/collectable/xenom,
 /obj/item/clothing/head/chicken,
-/obj/item/weapon/aiModule/freeform/syndicate,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/clothing/head/bowler,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZS" = (
-/obj/item/weapon/spacecash/c50,
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/clothing/head/helmet/gladiator,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "aZT" = (
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c500,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bab" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -14833,81 +14606,77 @@
 	},
 /area/custom/syndicate_mothership)
 "bag" = (
-/obj/item/weapon/spacecash/c200,
-/obj/item/weapon/spacecash/c50,
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/obj/machinery/light/spot,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bai" = (
-/obj/structure/AIcore,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/toy/griffin,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bam" = (
-/obj/structure/jungle_plant,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomittox_2"
+	},
+/obj/item/pizzabox/meat,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "ban" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/obj/structure/window/reinforced{
+/area/shuttle/vox/arkship)
+"bao" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/spacecash/c200,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
+"bap" = (
+/obj/structure/table,
+/obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/item/weapon/storage/box/syringes,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
-"bao" = (
-/obj/item/weapon/storage/briefcase/inflatable,
-/obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"bap" = (
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "baq" = (
-/obj/item/clothing/head/helmet/space/syndicate/striker,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bar" = (
 /turf/unsimulated/wall,
 /area/custom/wizard_station)
@@ -15323,27 +15092,22 @@
 	},
 /area/custom/wizard_station)
 "bbl" = (
-/obj/structure/stool/bed/chair{
-	dir = 4
-	},
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/effect/decal/cleanable/dirt,
+/obj/item/organ/external/r_arm,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bbm" = (
-/obj/item/clothing/suit/space/syndicate/striker,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bbo" = (
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
@@ -15411,11 +15175,14 @@
 	},
 /area/custom/wizard_station)
 "bbD" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "pwall"
+/obj/machinery/light/small{
+	dir = 4
 	},
-/area/space)
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "bbG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/dice,
@@ -15461,8 +15228,13 @@
 	},
 /area/custom/abductor_ship)
 "bbS" = (
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating{
+/obj/structure/table/reinforced,
+/obj/item/weapon/scalpel,
+/obj/item/stack/cable_coil,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -15730,12 +15502,15 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bdH" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/light{
+	dir = 8
 	},
-/area/space)
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "bdN" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/unsimulated/floor{
@@ -15895,12 +15670,6 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
-"beP" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
 "beQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/melee/baton,
@@ -16204,25 +15973,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"biw" = (
-/obj/structure/closet/crate,
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+"bja" = (
+/obj/item/weapon/spacecash/c50,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
-"bja" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/scalpel,
-/obj/item/stack/cable_coil,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bjb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -16246,14 +16003,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"blH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/stool,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "bmb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor{
@@ -16284,11 +16033,13 @@
 	},
 /area/centcom/specops)
 "boH" = (
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bpb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -16296,9 +16047,12 @@
 	},
 /area/centcom/living)
 "bpA" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/item/clothing/head/santahat,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "bqb" = (
@@ -16324,12 +16078,7 @@
 	},
 /area/custom/syndicate_mothership)
 "bsG" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
+/obj/item/clothing/suit/space/syndicate/civilian,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -16378,18 +16127,6 @@
 	name = "plating"
 	},
 /area/centcom/specops)
-"bxV" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/item/weapon/spacecash/c50,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "byb" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "MechaModule"
@@ -16468,9 +16205,10 @@
 	},
 /area/centcom/specops)
 "bFY" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
+/obj/item/clothing/head/collectable/xenom,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "bGb" = (
@@ -16498,17 +16236,17 @@
 	},
 /area/custom/syndicate_mothership)
 "bHw" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
+/obj/machinery/vending/cola/soda{
+	anchored = 0
 	},
-/obj/effect/landmark{
-	name = "voxstart"
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "bIb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -16640,10 +16378,18 @@
 	},
 /area/velocity)
 "bSp" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/radio/off{
+	pixel_x = -2;
+	pixel_y = 6
 	},
-/turf/simulated/floor/plating{
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -16670,10 +16416,9 @@
 	},
 /area/velocity)
 "bVl" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	layer = 3.1;
-	pixel_y = 5
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
@@ -16703,32 +16448,13 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"bYu" = (
-/obj/machinery/shieldgen,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"bYR" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "bYZ" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor/plating{
+/obj/structure/curtain/open/bed,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/hos,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -16750,11 +16476,13 @@
 	},
 /area/velocity)
 "bZl" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weapon/spacecash/c1000,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "cab" = (
 /obj/effect/landmark/start{
 	name = "Fallback-Start"
@@ -16827,10 +16555,10 @@
 	},
 /area/velocity)
 "ciF" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating{
+/obj/item/weapon/storage/box/ians_box,
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -16902,17 +16630,6 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"cpB" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/medic,
-/obj/item/clothing/head/helmet/space/vox/medic,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
 "cqb" = (
 /obj/structure/closet/crate,
 /turf/unsimulated/floor{
@@ -17008,12 +16725,11 @@
 	},
 /area/velocity)
 "cyZ" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/medic,
-/obj/item/clothing/head/helmet/space/vox/medic,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor/plating{
+/obj/structure/curtain/open/bed,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/wiz,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17082,16 +16798,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"cGL" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "cHb" = (
 /obj/machinery/light{
 	dir = 1
@@ -17115,9 +16821,21 @@
 	},
 /area/velocity)
 "cJD" = (
-/obj/effect/decal/cleanable/vomit,
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/OPlus,
 /turf/simulated/floor{
-	icon_state = "floorgrime";
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17162,10 +16880,10 @@
 /area/velocity)
 "cLC" = (
 /obj/structure/table,
-/obj/item/weapon/wirecutters,
-/obj/item/broken_device,
+/obj/item/weapon/kitchenknife/butch,
+/obj/item/stack/medical/splint,
 /turf/simulated/floor{
-	icon_state = "floorgrime";
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17365,17 +17083,16 @@
 	},
 /area/velocity)
 "dcx" = (
-/obj/structure/table,
-/obj/item/weapon/weldpack,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/weldingtool,
+/obj/structure/table/reinforced,
+/obj/item/weapon/circular_saw,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "showroomfloor";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "dcD" = (
-/obj/item/clothing/head/bearpelt,
-/obj/item/xenos_claw,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -17450,14 +17167,28 @@
 	},
 /area/velocity)
 "djq" = (
-/obj/item/weapon/spacecash/c500,
+/obj/machinery/door_control{
+	id = "loot_storage_vox";
+	name = "Loot Storage Door Control";
+	pixel_x = 25;
+	pixel_y = -28;
+	req_access = list(150)
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "djX" = (
-/obj/machinery/power/smes,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door_control{
+	id = "loot_storage_vox";
+	name = "Loot Storage Door Control";
+	pixel_x = -4;
+	pixel_y = -28;
+	req_access = list(150)
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -17513,15 +17244,6 @@
 	},
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
-/area/space)
-"dpy" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/item/device/debugger,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
 /area/space)
 "dqb" = (
 /obj/structure/rail_centcomm{
@@ -17591,24 +17313,9 @@
 /turf/simulated/shuttle/plating,
 /area/space)
 "dvm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17659,23 +17366,11 @@
 /turf/unsimulated/wall,
 /area/velocity)
 "dBH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "VoxLoad"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17725,9 +17420,8 @@
 	},
 /area/velocity)
 "dGR" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/item/weapon/aiModule/freeform/syndicate,
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -17807,8 +17501,8 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "dMr" = (
-/obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/jungle_plant,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -17945,15 +17639,6 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/velocity)
-"dXI" = (
-/obj/item/weapon/aiModule/freeform/syndicate,
-/obj/item/clothing/head/collectable/wizard,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17968,14 +17653,6 @@
 	icon_state = "delivery"
 	},
 /area/velocity)
-"dYX" = (
-/obj/item/clothing/suit/space/syndicate/civilian,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "dZb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -17990,19 +17667,6 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
-"dZI" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northwest_lock";
-	locked = 1;
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "eab" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -18039,12 +17703,8 @@
 	},
 /area/velocity)
 "edq" = (
-/obj/item/weapon/spacecash/c50,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/item/weapon/spacecash/c500,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -18182,32 +17842,15 @@
 	icon_state = "vel_05"
 	},
 /area/velocity)
-"etI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "eub" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_06"
 	},
 /area/velocity)
 "euA" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northwest_lock";
-	locked = 1;
-	req_access = list(150)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/hydronutrients{
+	anchored = 0
 	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
@@ -18282,10 +17925,23 @@
 	},
 /area/velocity)
 "eCv" = (
-/obj/item/weapon/broken_bottle,
-/obj/item/clothing/head/collectable/wizard,
-/obj/structure/closet/crate,
-/turf/simulated/floor/plating{
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray";
+	name = "skipjack window"
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -18319,8 +17975,10 @@
 	},
 /area/velocity)
 "eGp" = (
-/obj/machinery/biogenerator,
-/obj/item/weapon/grown/nettle,
+/obj/machinery/computer/vox_stealth{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -18454,12 +18112,18 @@
 /turf/space,
 /area/shuttle/officer/velocity)
 "eTK" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/circular_saw,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/door_control{
+	id = "skipjack";
+	pixel_x = -25;
+	pixel_y = 25
 	},
-/area/space)
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "eUb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -18471,42 +18135,17 @@
 /turf/space,
 /area/shuttle/officer/velocity)
 "eUu" = (
-/obj/item/weapon/reagent_containers/blood/AMinus{
-	pixel_x = -7;
-	pixel_y = -3
+/obj/structure/plasticflaps/mining,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "VoxLoad"
 	},
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/structure/table/reinforced,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "eVb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -18648,12 +18287,24 @@
 	},
 /area/shuttle/officer/velocity)
 "fgw" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/pressure,
-/obj/item/clothing/head/helmet/space/vox/pressure,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor/plating{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray";
+	name = "skipjack window"
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -18698,11 +18349,16 @@
 	},
 /area/shuttle/officer/velocity)
 "flV" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/machinery/computer/vox_station{
+	dir = 4
 	},
-/area/space)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "fmb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -18814,9 +18470,15 @@
 /turf/space,
 /area/shuttle/officer/velocity)
 "fwr" = (
-/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair{
+	dir = 8
+	},
+/mob/living/carbon/monkey/diona{
+	name = "Hidry"
+	},
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -18828,14 +18490,6 @@
 	},
 /turf/space,
 /area/shuttle/officer/velocity)
-"fxm" = (
-/obj/item/weapon/spacecash/c500,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "fyb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -18846,10 +18500,10 @@
 	},
 /area/velocity)
 "fyG" = (
-/obj/machinery/seed_extractor,
-/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
-/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
-/obj/effect/decal/cleanable/cobweb,
+/obj/item/clothing/head/collectable/petehat{
+	desc = "It smells faintly of reptile.";
+	name = "fancy leader hat"
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -18885,10 +18539,8 @@
 	},
 /area/velocity)
 "fAm" = (
-/obj/item/clothing/head/collectable/petehat{
-	desc = "It smells faintly of reptile.";
-	name = "fancy leader hat"
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -18905,17 +18557,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"fBq" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/carapace,
-/obj/item/clothing/head/helmet/space/vox/carapace,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
 "fCb" = (
 /obj/structure/sign/mark{
 	icon_state = "yup"
@@ -18937,13 +18578,11 @@
 	},
 /area/centcom/living)
 "fDg" = (
-/obj/structure/stool/bed/chair,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "voxstart"
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19062,11 +18701,13 @@
 	},
 /area/velocity)
 "fPQ" = (
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -19136,14 +18777,14 @@
 	},
 /area/centcom/living)
 "fYD" = (
-/obj/machinery/computer/station_alert{
-	dir = 4
+/obj/item/weapon/broken_bottle,
+/obj/item/clothing/head/collectable/wizard,
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "warndark"
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "fZb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -19200,26 +18841,24 @@
 	},
 /area/centcom/specops)
 "geC" = (
-/obj/item/weapon/hatchet,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "VoxLoad"
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/item/clothing/suit/space/syndicate/striker,
+/obj/item/clothing/head/helmet/space/syndicate/striker,
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "geL" = (
-/obj/item/weapon/minihoe{
-	pixel_x = 3
+/obj/machinery/conveyor_switch/oneway{
+	id = "VoxLoad"
 	},
-/obj/item/weapon/shovel/spade,
-/obj/effect/decal/cleanable/vomit{
-	icon_state = "vomit_4"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19295,22 +18934,11 @@
 	},
 /area/velocity)
 "gji" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/computer/station_alert{
+	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Vox Shuttle APC";
-	pixel_y = 24
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19538,29 +19166,6 @@
 	icon_state = "rubber_floor1"
 	},
 /area/velocity)
-"gzd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "vox_east_control";
-	pixel_x = 24;
-	req_access = list(150);
-	tag_airpump = "vox_east_vent";
-	tag_chamber_sensor = "vox_east_sensor";
-	tag_exterior_door = "vox_northeast_lock";
-	tag_interior_door = "vox_southeast_lock"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "gAb" = (
 /obj/structure/sign/warning/securearea{
 	name = "\improper ARMORY";
@@ -19650,20 +19255,9 @@
 /area/centcom/living)
 "gGJ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/OPlus,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
+/obj/machinery/recharger,
+/obj/item/weapon/crowbar,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19732,9 +19326,10 @@
 	},
 /area/centcom/specops)
 "gKU" = (
-/obj/item/seeds/tomatoseed,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/structure/table,
+/obj/item/weapon/weldpack,
+/obj/item/weapon/weldingtool,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19768,10 +19363,11 @@
 	},
 /area/velocity)
 "gMR" = (
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19788,21 +19384,22 @@
 	},
 /area/velocity)
 "gNx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/bananaseed,
 /obj/effect/decal/cleanable/blood/oil,
+/turf/space,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
+"gNz" = (
+/obj/structure/table,
+/obj/item/weapon/moneybag,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
-"gNz" = (
-/obj/item/robot_parts/chest,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/space)
 "gOb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19839,21 +19436,27 @@
 	},
 /area/velocity)
 "gQv" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "gQV" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/obj/machinery/seed_extractor,
+/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
+/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "gRb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19873,15 +19476,10 @@
 	},
 /area/velocity)
 "gRi" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/advanced/ointment{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/stack/medical/advanced/bruise_pack,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_master,
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -19897,8 +19495,11 @@
 	},
 /area/centcom/living)
 "gSk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/grown/log,
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	layer = 3.1;
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -19970,12 +19571,16 @@
 	},
 /area/velocity)
 "gYL" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
+/obj/structure/window/basic{
+	dir = 8
 	},
-/turf/simulated/floor/plating{
+/obj/structure/window/basic{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/bot/floorbot,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20011,20 +19616,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"hbc" = (
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
-/area/space)
-"hbE" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "hcb" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/unsimulated/floor{
@@ -20114,13 +19705,6 @@
 /obj/machinery/light/small,
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
-"hiO" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "hjb" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/unsimulated/floor{
@@ -20128,28 +19712,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"hjj" = (
-/obj/machinery/shieldgen,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"hjL" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "hkb" = (
 /obj/machinery/light{
 	dir = 8
@@ -20241,11 +19803,17 @@
 /turf/space,
 /area/centcom/evac)
 "hso" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
+/obj/structure/table,
+/obj/structure/window/basic{
+	dir = 1
 	},
-/turf/simulated/floor/plating{
+/obj/item/robot_parts/chest,
+/obj/item/stack/cable_coil/red{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20295,11 +19863,16 @@
 /turf/space,
 /area/centcom/evac)
 "huJ" = (
-/obj/machinery/iv_drip,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/structure/closet/crate,
+/obj/structure/window/basic{
+	dir = 8
 	},
-/area/space)
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "hvb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
@@ -20357,23 +19930,10 @@
 	icon_state = "swall3"
 	},
 /area/centcom/evac)
-"hCh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
 "hCs" = (
-/obj/structure/table,
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/item/robot_parts/chest,
-/obj/item/stack/cable_coil/red{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20400,14 +19960,8 @@
 	},
 /area/centcom/evac)
 "hGc" = (
-/obj/structure/window/basic{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/vox/arkship)
 "hHb" = (
@@ -20438,12 +19992,11 @@
 	},
 /area/centcom/evac)
 "hKc" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/stealth,
-/obj/item/clothing/head/helmet/space/vox/stealth,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor/plating{
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20453,16 +20006,6 @@
 	icon_state = "floor2"
 	},
 /area/centcom/evac)
-"hLc" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/obj/structure/window/basic{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "hMb" = (
 /turf/simulated/shuttle/floor,
 /turf/simulated/shuttle/wall{
@@ -20498,11 +20041,13 @@
 	},
 /area/centcom/evac)
 "hRk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/vomit{
-	icon_state = "vomittox_2"
+/obj/item/weapon/hatchet,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
-/obj/item/pizzabox/meat,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -20510,15 +20055,10 @@
 	},
 /area/shuttle/vox/arkship)
 "hRD" = (
-/obj/machinery/door_control{
-	id = "loot_storage_vox";
-	name = "Loot Storage Door Control";
-	pixel_x = 25;
-	pixel_y = -28;
-	req_access = list(150)
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20553,12 +20093,10 @@
 	},
 /area/centcom/evac)
 "hWC" = (
-/obj/structure/table,
-/obj/item/weed_extract,
-/obj/item/device/debugger,
-/obj/item/device/debugger,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20589,15 +20127,9 @@
 	},
 /area/centcom/evac)
 "hZm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door_control{
-	id = "loot_storage_vox";
-	name = "Loot Storage Door Control";
-	pixel_x = -4;
-	pixel_y = -28;
-	req_access = list(150)
-	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20663,14 +20195,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/specops)
-"ice" = (
-/obj/item/weapon/broken_bottle,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "idb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -20698,9 +20222,9 @@
 	},
 /area/centcom/evac)
 "igu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/jungle_plant,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20714,12 +20238,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"ihS" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
-/area/space)
 "iib" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -20729,12 +20247,6 @@
 	},
 /turf/unsimulated/wall,
 /area/centcom/evac)
-"iiR" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
-	},
-/turf/space,
-/area/space)
 "ijb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -20784,21 +20296,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/control)
-"iqi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "irb" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Infirmary"
@@ -20825,13 +20322,11 @@
 	},
 /area/centcom/control)
 "iuj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
-	},
+/obj/machinery/portable_atmospherics/canister/phoron,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -20845,17 +20340,6 @@
 	icon_state = "green"
 	},
 /area/centcom/evac)
-"ivM" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/item/clothing/head/chicken,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "iwb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -20863,13 +20347,12 @@
 	},
 /area/centcom/control)
 "iwq" = (
-/obj/machinery/sleeper{
-	dir = 4
+/obj/machinery/floodlight,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
+/area/shuttle/vox/arkship)
 "ixb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -20952,14 +20435,6 @@
 	icon_state = "bluecorner"
 	},
 /area/centcom/control)
-"iIe" = (
-/obj/item/clothing/suit/space/syndicate/striker,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "iJb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -20976,14 +20451,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
-"iKe" = (
-/obj/item/clothing/head/helmet/space/syndicate/striker,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "iLb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -21002,20 +20469,20 @@
 	},
 /area/centcom/living)
 "iNm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/hydronutrients{
-	anchored = 0
+/obj/structure/window/basic{
+	dir = 8
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "iNp" = (
-/obj/machinery/iv_drip,
-/obj/item/organ/external/r_arm,
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21067,9 +20534,10 @@
 	},
 /area/centcom/living)
 "iSn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/spot,
-/turf/simulated/floor/plating{
+/obj/machinery/biogenerator,
+/obj/item/weapon/grown/nettle,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21240,8 +20708,11 @@
 	},
 /area/centcom/control)
 "jgi" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/obj/item/seeds/tomatoseed,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "jhb" = (
@@ -21271,11 +20742,15 @@
 	},
 /area/centcom/control)
 "jkr" = (
-/obj/machinery/body_scanconsole{
-	known_implants = list(/obj/item/weapon/implant/cortical)
+/obj/item/weapon/minihoe{
+	pixel_x = 3
+	},
+/obj/item/weapon/shovel/spade,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
 	},
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21287,15 +20762,11 @@
 	},
 /area/centcom/evac)
 "jlq" = (
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_west_sensor";
-	pixel_y = 25
-	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/cleanable/dirt,
+/obj/item/seeds/bananaseed,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21325,22 +20796,14 @@
 	},
 /area/centcom/evac)
 "jnj" = (
-/obj/item/weapon/inflatable_duck,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/grown/log,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
-"jnA" = (
-/obj/machinery/power/smes,
-/obj/structure/window/basic,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "job" = (
 /obj/machinery/smartfridge,
 /turf/unsimulated/floor{
@@ -21417,8 +20880,10 @@
 	},
 /area/centcom/control)
 "jyJ" = (
-/obj/item/weapon/aiModule/freeform/syndicate,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21502,10 +20967,9 @@
 	},
 /area/centcom/evac)
 "jFQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/spacecash/c200,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21540,16 +21004,9 @@
 	},
 /area/centcom/control)
 "jJD" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_southeast_lock";
-	locked = 1;
-	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21560,9 +21017,10 @@
 	},
 /area/centcom/evac)
 "jKj" = (
+/obj/item/weapon/storage/toolbox/emergency,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating{
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21579,15 +21037,6 @@
 	},
 /turf/unsimulated/wall,
 /area/centcom/living)
-"jMM" = (
-/obj/item/clothing/head/bearpelt,
-/obj/item/xenos_claw,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "jNb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -21610,9 +21059,10 @@
 	},
 /area/centcom/evac)
 "jOG" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/item/weapon/crowbar,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -21624,16 +21074,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
-"jPf" = (
-/obj/item/weapon/spacecash/c200,
-/obj/item/weapon/spacecash/c50,
-/obj/machinery/light/spot,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "jQb" = (
 /obj/structure/mineral_door/wood,
 /turf/unsimulated/floor{
@@ -21641,12 +21081,19 @@
 	},
 /area/centcom/holding)
 "jQA" = (
-/obj/machinery/power/terminal{
-	dir = 1
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Vox Shuttle APC";
+	pixel_y = 24
 	},
 /obj/structure/cable{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -21668,13 +21115,24 @@
 	},
 /area/centcom/holding)
 "jSz" = (
-/obj/machinery/computer/security{
-	network = list("Vox")
+/obj/machinery/power/terminal{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/area/space)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "jTb" = (
 /obj/structure/table,
 /obj/item/clothing/head/that{
@@ -21697,13 +21155,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/holding)
-"jUE" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "jVb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
@@ -21739,11 +21190,19 @@
 	},
 /area/centcom/holding)
 "jXt" = (
-/obj/machinery/bodyscanner,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/machinery/power/terminal{
+	dir = 1
 	},
-/area/space)
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "jYb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -21839,7 +21298,14 @@
 	},
 /area/centcom/living)
 "kgh" = (
-/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/item/seeds/berryseed,
+/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/chiliseed,
+/obj/item/seeds/tomatoseed,
+/obj/item/seeds/bananaseed,
+/obj/item/seeds/ambrosiavulgarisseed,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -21899,18 +21365,11 @@
 	icon_state = "warning"
 	},
 /area/centcom/holding)
-"kmz" = (
-/obj/structure/table,
-/obj/machinery/bot/floorbot,
-/obj/item/weed_extract,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "kmN" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/ambrosiavulgarisseed,
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21921,19 +21380,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/holding)
-"knS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "kob" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/unsimulated/floor{
@@ -21951,15 +21397,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/holding)
-"kqE" = (
-/obj/item/clothing/head/santahat,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "krb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -21985,17 +21422,10 @@
 	},
 /area/centcom/living)
 "ktZ" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/off{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/device/radio/off{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/floor/plating{
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22058,15 +21488,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
-"kBX" = (
-/obj/item/clothing/head/collectable/xenom,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "kCb" = (
 /obj/machinery/gateway{
 	dir = 10
@@ -22108,30 +21529,24 @@
 	},
 /area/centcom/living)
 "kGU" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil/red{
-	amount = 12
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/spray/plantbgone{
+	pixel_x = 13;
+	pixel_y = 5
 	},
-/obj/item/weapon/screwdriver,
-/obj/item/device/radio/off{
-	pixel_x = -2;
-	pixel_y = 6
-	},
+/obj/item/weapon/reagent_containers/spray/plantbgone,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "kHb" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "yellow"
 	},
 /area/centcom/holding)
-"kHp" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
-	},
-/area/space)
 "kIb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -22202,11 +21617,11 @@
 	},
 /area/centcom/holding)
 "kQY" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/stack/nanopaste,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22229,14 +21644,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
-"kTF" = (
-/obj/item/weapon/spacecash/c1000,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "kUb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -22258,19 +21665,22 @@
 	},
 /area/centcom/holding)
 "kWc" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "kWl" = (
-/obj/item/clothing/glasses/hud/health,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
+/obj/machinery/door/airlock/hatch{
+	req_access = list(150)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22287,17 +21697,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
-"kYH" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/stealth,
-/obj/item/clothing/head/helmet/space/vox/stealth,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
 "kZb" = (
 /obj/machinery/light{
 	dir = 1
@@ -22308,12 +21707,14 @@
 	},
 /area/centcom/living)
 "kZQ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warndark"
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
-/area/space)
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "lab" = (
 /obj/structure/closet/crate,
 /turf/unsimulated/floor{
@@ -22330,27 +21731,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
-"lbg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Vox Shuttle APC";
-	pixel_y = 24
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "lcb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -22358,8 +21738,10 @@
 	},
 /area/centcom/holding)
 "lcx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool/bed/chair,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -22467,13 +21849,17 @@
 	},
 /area/centcom/holding)
 "loy" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/scalpel,
-/obj/item/stack/cable_coil,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/structure/rack,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/structure/window/basic{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "showroomfloor";
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22519,13 +21905,26 @@
 	},
 /area/centcom/holding)
 "lsr" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/door_control{
-	id = "skipjack";
-	pixel_x = -25;
-	pixel_y = 25
+/obj/structure/table,
+/obj/item/device/assembly/igniter{
+	pixel_x = -5;
+	pixel_y = 3
 	},
-/turf/simulated/floor/plating{
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/weapon/stock_parts/cell/high{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/weapon/screwdriver{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/weapon/wrench,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22546,12 +21945,11 @@
 	},
 /area/centcom/holding)
 "ltX" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 13;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/spray/plantbgone,
+/obj/structure/table,
+/obj/item/weed_extract,
+/obj/item/device/debugger,
+/obj/item/device/debugger,
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -22641,16 +22039,15 @@
 	},
 /area/centcom/holding)
 "lDg" = (
-/obj/structure/rack,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/structure/table,
+/obj/item/weapon/wirecutters,
+/obj/item/broken_device,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "lEb" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
@@ -22723,12 +22120,14 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/escape/centcom)
 "lMg" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "burst_l"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 25
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "lNb" = (
@@ -22769,24 +22168,19 @@
 	},
 /area/centcom/control)
 "lPe" = (
-/obj/structure/stool/bed/chair,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "lPl" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22806,17 +22200,24 @@
 	},
 /area/centcom/control)
 "lQv" = (
-/obj/structure/rack,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/structure/window/basic{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_w";
+	name = "skipjack window"
+	},
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22854,11 +22255,21 @@
 	},
 /area/space)
 "lTQ" = (
-/obj/structure/table,
-/obj/item/weapon/gift,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_we";
+	name = "skipjack window"
+	},
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22961,17 +22372,24 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "lZW" = (
-/obj/structure/table/reinforced,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/mask/breath/medical,
-/obj/machinery/light{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_e";
+	name = "skipjack window"
+	},
+/obj/machinery/door/poddoor{
+	id = "skipjack";
+	name = "Skipjack Blast Shielding"
+	},
+/turf/simulated/shuttle/plating{
+	name = "dark plating";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -22999,10 +22417,8 @@
 	},
 /area/shuttle/escape/centcom)
 "mch" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23050,15 +22466,6 @@
 	icon_state = "warnwhite"
 	},
 /area/centcom/control)
-"mgk" = (
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "mhb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23095,13 +22502,9 @@
 	},
 /area/shuttle/escape/centcom)
 "mkh" = (
-/obj/structure/plasticflaps/mining,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "VoxLoad"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23125,15 +22528,9 @@
 	},
 /area/centcom/control)
 "mmd" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_southwest_lock";
-	locked = 1;
-	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/device/lightreplacer,
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -23169,14 +22566,12 @@
 	},
 /area/centcom/tdome)
 "mqi" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_northeast_lock";
-	locked = 1;
-	req_access = list(150)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/tank/nitrogen{
+	dir = 1
 	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/turf/simulated/floor/plating{
+	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23207,11 +22602,8 @@
 	},
 /area/centcom/tdome)
 "mtx" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human{
-	desc = "Delicious.";
-	name = "Bob Meat"
-	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -23275,25 +22667,6 @@
 	icon_state = "wall3"
 	},
 /area/custom/syndicate_mothership)
-"mBv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray";
-	name = "skipjack window"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "mDb" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor{
@@ -23301,17 +22674,6 @@
 	icon_state = "redbluefull"
 	},
 /area/centcom/tdome/tdomeobserve)
-"mDs" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/pressure,
-/obj/item/clothing/head/helmet/space/vox/pressure,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
 "mEb" = (
 /obj/structure/stool/bed/chair/metal,
 /obj/effect/landmark{
@@ -23323,11 +22685,12 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "mEq" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "VoxLoad"
+/obj/structure/stool/bed/chair,
+/obj/effect/landmark{
+	name = "voxstart"
 	},
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating{
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23385,11 +22748,15 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "mMK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
+/obj/structure/stool/bed/chair,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
-/turf/simulated/floor/plating{
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23465,25 +22832,14 @@
 /obj/structure/sign/mark/symbol_b,
 /turf/unsimulated/wall,
 /area/centcom/evac)
-"mWr" = (
-/obj/structure/AIcore,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "mWB" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor/plating{
+/obj/structure/stool/bed/chair,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23532,28 +22888,14 @@
 /turf/unsimulated/wall,
 /area/centcom/evac)
 "naX" = (
-/obj/structure/table,
-/obj/item/device/assembly/igniter{
-	pixel_x = -5;
-	pixel_y = 3
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "vox_west_control";
+	req_one_access = list(150)
 	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/obj/item/weapon/stock_parts/cell/high{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/weapon/screwdriver{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/weapon/wrench,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
 /area/shuttle/vox/arkship)
 "nbb" = (
@@ -23578,16 +22920,27 @@
 /turf/unsimulated/wall,
 /area/centcom/tdome)
 "neJ" = (
-/obj/machinery/optable,
-/obj/item/brain{
-	desc = "Poor Bob.";
-	name = "Bob brain"
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1331;
+	id_tag = "vox_west_control";
+	pixel_y = 25;
+	req_access = list(150);
+	tag_airpump = "vox_west_vent";
+	tag_chamber_sensor = "vox_west_sensor";
+	tag_exterior_door = "vox_northwest_lock";
+	tag_interior_door = "vox_southwest_lock"
 	},
-/obj/effect/decal/cleanable/blood,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1331;
+	id_tag = "vox_west_vent";
+	name = "Vox West Large Air Vent"
 	},
-/area/space)
+/turf/simulated/floor/plating{
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "nfb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "centcomm_ferry";
@@ -23604,14 +22957,15 @@
 /turf/unsimulated/wall,
 /area/centcom/tdome)
 "ngQ" = (
-/obj/structure/stool/bed/chair{
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "vox_west_sensor";
+	pixel_y = 25
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
 	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23635,8 +22989,15 @@
 	},
 /area/centcom/tdome)
 "njf" = (
-/obj/structure/table,
-/obj/item/weapon/moneybag,
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_southwest_lock";
+	locked = 1;
+	req_access = list(150)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
@@ -23720,9 +23081,10 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nso" = (
-/obj/structure/closet/crate,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
+	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -23734,14 +23096,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"ntF" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "nub" = (
 /obj/structure/table,
 /turf/unsimulated/floor{
@@ -23780,14 +23134,15 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nwv" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "burst_l"
+/obj/machinery/light{
+	dir = 8
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "nwI" = (
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -23853,26 +23208,10 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nCO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_e";
-	name = "skipjack window"
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
+/obj/structure/table,
+/obj/item/stack/medical/bruise_pack/rags,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
 	},
 /area/shuttle/vox/arkship)
 "nDb" = (
@@ -23917,10 +23256,10 @@
 	},
 /area/custom/wizard_station)
 "nHu" = (
+/obj/structure/table,
+/obj/item/toy/gun,
 /turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
+	icon_state = "floorgrime"
 	},
 /area/shuttle/vox/arkship)
 "nIb" = (
@@ -23935,20 +23274,6 @@
 	icon_state = "grimy"
 	},
 /area/custom/wizard_station)
-"nJI" = (
-/obj/structure/closet/crate,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/broken_device,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "nKb" = (
 /obj/item/target,
 /obj/machinery/light{
@@ -23981,11 +23306,13 @@
 	},
 /area/custom/wizard_station)
 "nNM" = (
-/obj/machinery/computer/vox_station{
-	dir = 4
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	desc = "Delicious.";
+	name = "Bob Meat"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -24022,12 +23349,6 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
-"nRw" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
 "nSb" = (
 /obj/structure/table/reinforced,
 /obj/item/robot_parts/head,
@@ -24126,25 +23447,12 @@
 /obj/structure/plasticflaps/explosion_proof,
 /turf/unsimulated/floor,
 /area/centcom/control)
-"obf" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "obo" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
+/obj/structure/computerframe{
+	dir = 8
 	},
-/obj/item/trash/cheesie,
-/obj/effect/landmark{
-	name = "voxstart"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
@@ -24193,18 +23501,6 @@
 "ogb" = (
 /turf/space,
 /area/shuttle/escape_pod4/transit)
-"ohF" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "oib" = (
 /turf/space,
 /area/shuttle/arrival/transit)
@@ -24290,9 +23586,13 @@
 	},
 /area/shuttle/escape/centcom)
 "otl" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
+/obj/machinery/door/airlock/hatch{
+	frequency = 1331;
+	id_tag = "vox_northwest_lock";
+	locked = 1;
+	req_access = list(150)
+	},
 /turf/simulated/floor/plating{
-	icon_state = "platebot";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -24330,22 +23630,26 @@
 	},
 /area/shuttle/escape/centcom)
 "ovm" = (
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "warndark"
-	},
-/area/space)
-"ovF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/mob/living/carbon/monkey/diona{
-	name = "Hidry"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1331;
+	id_tag = "vox_west_vent";
+	name = "Vox West Large Air Vent"
 	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
+"ovF" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "vox_west_control";
+	req_one_access = list(150)
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
 /area/shuttle/vox/arkship)
 "owb" = (
@@ -24401,11 +23705,18 @@
 	},
 /area/shuttle/escape/centcom)
 "oCj" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
+/obj/structure/stool/bed/chair{
+	dir = 1
 	},
-/area/space)
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "oDb" = (
 /turf/simulated/shuttle/plating{
 	dir = 1;
@@ -24457,20 +23768,6 @@
 	icon_state = "whiteblue"
 	},
 /area/shuttle/escape/centcom)
-"oJL" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "heater1"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "oKb" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -24515,17 +23812,30 @@
 	},
 /area/shuttle/escape/centcom)
 "oOC" = (
-/obj/machinery/shieldgen,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
+/obj/item/trash/cheesie,
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "oOH" = (
-/obj/item/clothing/head/helmet/gladiator,
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/turf/space,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -24553,13 +23863,9 @@
 	},
 /area/shuttle/escape/centcom)
 "oRS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
 /area/shuttle/vox/arkship)
 "oSb" = (
@@ -24568,14 +23874,6 @@
 	icon_state = "swall12"
 	},
 /area/shuttle/escape/centcom)
-"oSZ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "oTb" = (
 /obj/machinery/computer/rdconsole/core,
 /turf/simulated/shuttle/floor,
@@ -24602,41 +23900,6 @@
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"oVg" = (
-/obj/structure/jungle_plant,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"oVu" = (
-/obj/machinery/computer/station_alert{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"oVv" = (
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"oVx" = (
-/obj/structure/table,
-/obj/item/device/assembly/signaler,
-/obj/item/weapon/crowbar,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "oWb" = (
 /obj/structure/dispenser/oxygen,
 /turf/simulated/shuttle/plating{
@@ -24650,18 +23913,6 @@
 	icon_state = "delivery"
 	},
 /area/shuttle/escape/centcom)
-"oXL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "oYb" = (
 /obj/machinery/recharge_station,
 /turf/simulated/shuttle/plating{
@@ -24686,15 +23937,6 @@
 /obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
-"paS" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "pbb" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -24730,24 +23972,12 @@
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"peY" = (
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
 "pfb" = (
 /turf/simulated/shuttle/plating{
 	dir = 9;
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"pfm" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "pgb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -24763,12 +23993,6 @@
 	icon_state = "bot"
 	},
 /area/shuttle/escape/centcom)
-"phJ" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
 "pib" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
@@ -24794,14 +24018,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"pjw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "pkb" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Escape Shuttle Cockpit";
@@ -24883,28 +24099,6 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
-"psU" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "vox_west_control";
-	pixel_y = 25;
-	req_access = list(150);
-	tag_airpump = "vox_west_vent";
-	tag_chamber_sensor = "vox_west_sensor";
-	tag_exterior_door = "vox_northwest_lock";
-	tag_interior_door = "vox_southwest_lock"
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "ptb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -24920,21 +24114,6 @@
 /obj/machinery/light,
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
-"puq" = (
-/obj/structure/table,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/device/lightreplacer,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"puI" = (
-/obj/effect/decal/cleanable/blood,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
 "pvb" = (
 /obj/structure/sign/mark{
 	icon_state = "rdn"
@@ -25034,17 +24213,6 @@
 	icon_state = "swall12"
 	},
 /area/shuttle/escape/centcom)
-"pHI" = (
-/obj/structure/rack,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/suit/space/vox/carapace,
-/obj/item/clothing/head/helmet/space/vox/carapace,
-/obj/item/clothing/mask/gas/vox,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "pJb" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock";
@@ -25061,18 +24229,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
-"pLq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "pMb" = (
 /obj/structure/sign/mark{
 	icon_state = "ydn"
@@ -25106,16 +24262,6 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"pPq" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/gar,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "pQb" = (
 /obj/machinery/computer/med_data{
 	dir = 8
@@ -25124,15 +24270,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"pQh" = (
-/obj/machinery/computer/vox_station{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warndark"
-	},
-/area/space)
 "pSb" = (
 /obj/structure/closet/medical_wall,
 /obj/item/weapon/reagent_containers/blood/OMinus,
@@ -25152,15 +24289,6 @@
 	icon_state = "swall2"
 	},
 /area/shuttle/escape/centcom)
-"pSh" = (
-/obj/item/clothing/head/santahat,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "pTb" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/shuttle/floor{
@@ -25258,21 +24386,6 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
-"qcN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/item/seeds/berryseed,
-/obj/item/seeds/ambrosiavulgarisseed,
-/obj/item/seeds/chiliseed,
-/obj/item/seeds/tomatoseed,
-/obj/item/seeds/bananaseed,
-/obj/item/seeds/ambrosiavulgarisseed,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "qeb" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -25311,16 +24424,6 @@
 	icon_state = "0,1"
 	},
 /area/shuttle/supply/velocity)
-"qhO" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "qib" = (
 /obj/machinery/light{
 	dir = 4
@@ -25329,23 +24432,6 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
-"qka" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qoa" = (
-/obj/structure/table,
-/obj/item/toy/gun,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/shuttle/vox/arkship)
 "qsd" = (
 /obj/structure/flora/plant/random,
 /turf/unsimulated/floor{
@@ -25360,155 +24446,11 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"qtG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_w";
-	name = "skipjack window"
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qxv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qxD" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warndark"
-	},
-/area/space)
-"qAh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qFy" = (
-/obj/structure/window/basic{
-	dir = 8
-	},
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/bot/floorbot,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qLb" = (
-/obj/machinery/light/spot{
-	dir = 4
-	},
-/obj/machinery/vending/cola/soda{
-	anchored = 0
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qMW" = (
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_east_sensor";
-	pixel_y = 25
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qNp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/collectable/petehat{
-	desc = "It smells faintly of reptile.";
-	name = "fancy leader hat"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"qTM" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "qTT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
 /area/custom/syndicate_mothership/armory)
-"qXc" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"qXz" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/firstaid/toxin,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"qZH" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/bluegrid{
-	name = "Vox Cyborg Charger";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"rji" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "rkK" = (
 /obj/structure/flora/pottedplant/tropicalfern{
 	pixel_y = 5
@@ -25517,118 +24459,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"ror" = (
-/obj/item/weapon/spacecash/c50,
-/obj/item/clothing/head/helmet/gladiator,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"row" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/circular_saw,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"rqL" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/hos,
-/obj/effect/decal/cleanable/vomit,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"rvN" = (
-/obj/item/weapon/spacecash/c50,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"rvU" = (
-/obj/item/clothing/head/collectable/xenom,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"ryH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/tank/nitrogen,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"rAt" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen,
-/obj/structure/window/basic{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"rEP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "vox_west_control";
-	pixel_x = 24;
-	req_access = list(150);
-	tag_airpump = "vox_west_vent";
-	tag_chamber_sensor = "vox_west_sensor";
-	tag_exterior_door = "vox_northwest_lock";
-	tag_interior_door = "vox_southwest_lock"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"rPK" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "vox_east_control";
-	pixel_y = 25;
-	req_access = list(150);
-	tag_airpump = "vox_east_vent";
-	tag_chamber_sensor = "vox_east_sensor";
-	tag_exterior_door = "vox_northeast_lock";
-	tag_interior_door = "vox_southeast_lock"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"rUb" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -25638,83 +24468,6 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"rYd" = (
-/obj/machinery/computer/vox_stealth{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
-	},
-/area/space)
-"sdj" = (
-/obj/structure/kitchenspike_frame,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sdx" = (
-/obj/machinery/optable,
-/obj/item/brain{
-	desc = "Poor Bob.";
-	name = "Bob brain"
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"seu" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/centcom,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sey" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "heater1"
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sge" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"swx" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"swM" = (
-/obj/item/organ/external/r_arm,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
 "sAN" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/automatic/l6_saw,
@@ -25735,326 +24488,12 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"sBt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "vox_east_vent";
-	name = "Vox East Large Air Vent"
-	},
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "vox_east_sensor";
-	pixel_x = -25
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"sMl" = (
-/obj/structure/computerframe{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sMO" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "vox_west_control";
-	req_one_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
-"sOb" = (
-/obj/item/weapon/spacecash/c1000,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sRc" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"sRr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sRF" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sUQ" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_east_control";
-	req_one_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
-"sWO" = (
-/obj/machinery/computer/vox_stealth{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"sXA" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/seeds/ambrosiavulgarisseed,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"tkd" = (
-/obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"trj" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"trl" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"typ" = (
-/obj/item/clothing/head/bowler,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"tAC" = (
-/obj/structure/stool/bed/chair{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"tCR" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "vox_west_control";
-	req_one_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/vox/arkship)
-"tQG" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "VoxLoad"
-	},
-/obj/item/clothing/suit/space/syndicate/striker,
-/obj/item/clothing/head/helmet/space/syndicate/striker,
-/obj/structure/closet/crate,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"tSf" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_southeast_lock";
-	locked = 1;
-	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"tSE" = (
-/obj/machinery/shieldgen,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"tTp" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/advanced/bruise_pack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/mask/breath/medical,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"tUa" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/dartgun/vox/raider,
-/obj/item/weapon/gun/dartgun/vox/medical,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/obj/item/weapon/dart_cartridge,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
-"tUA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "tWq" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"ugo" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/phoron{
-	amount = 35
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"ujw" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/remains/robot,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ukw" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "vox_east_control";
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
-"ukC" = (
-/obj/structure/rack,
-/obj/item/weapon/crossbow/vox,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/obj/item/weapon/arrow,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
-"uou" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"uuz" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"uuK" = (
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/structure/table/reinforced,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"uwk" = (
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 "uwB" = (
 /obj/structure/rack,
 /obj/item/ammo_casing/a145,
@@ -26075,62 +24514,11 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"uwT" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"uxZ" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/box/syringes,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"uyC" = (
-/obj/structure/stool/bed/chair,
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "uDv" = (
 /turf/unsimulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/custom/syndicate_mothership/armory)
-"uDV" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"uEe" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_west_control";
-	req_one_access = list(150)
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/vox/arkship)
 "uEr" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "shuttle_escape";
@@ -26139,53 +24527,15 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"uJD" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"uNo" = (
-/obj/machinery/body_scanconsole{
-	known_implants = list(/obj/item/weapon/implant/cortical)
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"uUB" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe{
-	pixel_x = 1;
-	pixel_y = -4
-	},
-/obj/item/weapon/pickaxe{
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "uWZ" = (
-/obj/machinery/door/airlock/hatch{
-	frequency = 1331;
-	id_tag = "vox_southwest_lock";
-	locked = 1;
-	req_access = list(150)
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
+/turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -26201,34 +24551,6 @@
 	icon_state = "vault"
 	},
 /area/velocity)
-"vfc" = (
-/obj/machinery/floodlight,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vfo" = (
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "warndark"
-	},
-/area/space)
-"vhO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed";
-	name = "Clothing Storage"
-	},
-/obj/item/clothing/under/vox/vox_robes,
-/obj/item/clothing/under/vox/vox_casual,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "vir" = (
 /obj/structure/closet/wardrobe/grey,
 /turf/unsimulated/floor{
@@ -26236,22 +24558,6 @@
 	icon_state = "vault"
 	},
 /area/velocity)
-"vlz" = (
-/obj/item/clothing/suit/space/syndicate/civilian,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vov" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "voK" = (
 /obj/structure/table/glass,
 /obj/structure/flora/plant/deskleaf{
@@ -26263,221 +24569,20 @@
 	},
 /area/velocity)
 "voP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "vox_west_vent";
-	name = "Vox West Large Air Vent"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"vpF" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "VoxLoad"
+/obj/machinery/power/smes{
+	charge = 5e+006
 	},
 /turf/simulated/floor/plating{
 	nitrogen = 103.984;
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
-"vqW" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vtY" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vwB" = (
-/obj/structure/table,
-/obj/item/weapon/weldpack,
-/obj/item/weapon/weldingtool,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vBM" = (
-/obj/machinery/power/smes,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"vCZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"vFX" = (
-/obj/structure/kitchenspike_frame,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"vPH" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"vRL" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/weapon/tank/nitrogen,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "vSL" = (
 /obj/mecha/combat/marauder/mauler,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
-"vUh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/vox/arkship)
-"vVQ" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/syndie,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"vZu" = (
-/obj/item/weapon/spacecash/c50,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"waM" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/item/stack/sheet/mineral/phoron{
-	amount = 35
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wgo" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/toy/griffin,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wqg" = (
-/obj/item/weapon/storage/box/ians_box,
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wuT" = (
-/obj/machinery/life_assist/cardiopulmonary_bypass,
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wxE" = (
-/obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
-/area/space)
-"wyw" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed";
-	name = "Clothing Storage"
-	},
-/obj/item/clothing/under/vox/vox_robes,
-/obj/item/clothing/under/vox/vox_casual,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wNt" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/item/stack/cable_coil/red{
-	amount = 12
-	},
-/obj/item/weapon/screwdriver{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"wPw" = (
-/obj/structure/stool/bed/chair,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/space)
 "wRz" = (
 /obj/structure/table/glass{
 	pixel_y = 2
@@ -26505,75 +24610,12 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"wVy" = (
-/obj/structure/table,
-/obj/item/stack/medical/bruise_pack/rags,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/shuttle/vox/arkship)
-"wYh" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"xey" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"xfq" = (
-/obj/item/weapon/stool,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
-"xkI" = (
-/obj/structure/table,
-/obj/item/weapon/kitchenknife/butch,
-/obj/item/stack/medical/splint,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"xmS" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
-/area/space)
 "xsM" = (
 /obj/machinery/door/poddoor/shutters/syndi,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
-"xtn" = (
-/obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"xzm" = (
-/obj/machinery/bodyscanner,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "xzP" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -26590,13 +24632,6 @@
 	icon_state = "barber"
 	},
 /area/velocity)
-"xDk" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "xLi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -26608,61 +24643,9 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity)
-"xLS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_we";
-	name = "skipjack window"
-	},
-/obj/machinery/door/poddoor{
-	id = "skipjack";
-	name = "Skipjack Blast Shielding"
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"xWZ" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"yap" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/space)
 "yaw" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
-"ybR" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "loot_storage_vox";
-	name = "Loot storage"
-	},
-/turf/simulated/floor/plating{
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
+/turf/space,
+/area/shuttle/vox/southwest_solars)
 "ycG" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -26671,22 +24654,11 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
-"yeL" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/space)
 "yfr" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_west_control";
-	req_one_access = list(150)
-	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/space)
+/area/shuttle/vox/arkship)
 "ygn" = (
 /obj/structure/table/reinforced,
 /obj/structure/flora/plant,
@@ -26697,27 +24669,6 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
-"ylr" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/pneumatic,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/harpoon,
-/obj/item/weapon/tank/nitrogen,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/space)
-"ylU" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
-/turf/simulated/shuttle/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/space)
 
 (1,1,1) = {"
 ahG
@@ -41166,33 +39117,33 @@ aaM
 aaM
 aaM
 aaM
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
 aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -41423,33 +39374,33 @@ aaM
 aaM
 aaM
 aaM
-ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 ahG
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+ahG
 aaM
 aaM
 aaM
@@ -41681,6 +39632,7 @@ ahG
 ahG
 ahG
 ahG
+ahG
 aaM
 aaM
 aaM
@@ -41706,7 +39658,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -41936,34 +39887,34 @@ aaM
 aaM
 aaM
 aaM
-ahG
-ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 ahG
+ahG
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+ahG
 aaM
 aaM
 aaM
@@ -42177,38 +40128,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-ofb
-ofb
-ofb
-ofb
-ofb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahG
-ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 aaM
 aaM
 aaM
@@ -42220,7 +40146,32 @@ aaM
 aaM
 aaM
 ahG
+ahG
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+ahG
 aaM
 aaM
 aaM
@@ -42433,14 +40384,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
 ofb
 ofb
 ofb
 ofb
 ofb
-ofb
-ofb
+alT
+alT
 aaM
 aaM
 aaM
@@ -42477,7 +40429,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -42689,7 +40640,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
 ofb
 ofb
 ofb
@@ -42697,8 +40649,8 @@ ofb
 ofb
 ofb
 ofb
-ofb
-ofb
+alT
+alT
 aaM
 aaM
 aaM
@@ -42734,7 +40686,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -42946,7 +40897,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -42956,6 +40907,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -42991,7 +40943,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -43203,7 +41154,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -43213,7 +41164,8 @@ ofb
 ofb
 ofb
 ofb
-ofb
+alT
+alT
 aaM
 aaM
 aaM
@@ -43248,7 +41200,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -43458,7 +41409,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
+alT
 ofb
 ofb
 ofb
@@ -43469,9 +41422,8 @@ ofb
 ofb
 ofb
 ofb
-ofb
-ofb
-ofb
+alT
+alT
 aaM
 aaM
 aaM
@@ -43505,7 +41457,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -43715,7 +41666,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -43729,6 +41680,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -43762,7 +41714,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -43972,7 +41923,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -43986,6 +41937,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -44019,7 +41971,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -44228,7 +42179,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
 ofb
 ofb
 ofb
@@ -44242,7 +42194,7 @@ ofb
 ofb
 ofb
 ofb
-ofb
+alT
 aaM
 aaM
 aaM
@@ -44276,7 +42228,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -44485,7 +42436,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -44500,6 +42451,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -44533,7 +42485,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -44742,7 +42693,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -44757,7 +42708,8 @@ ofb
 ofb
 ofb
 ofb
-ofb
+alT
+alT
 aaM
 aaM
 aaM
@@ -44790,7 +42742,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -44999,7 +42950,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -45015,6 +42966,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -45047,7 +42999,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -45256,7 +43207,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -45272,6 +43223,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -45304,7 +43256,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -45513,7 +43464,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -45529,6 +43480,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 aaM
@@ -45561,7 +43513,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -45767,28 +43718,29 @@ ahG
 aaM
 ahG
 aaM
+alT
+alT
+alT
+alT
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
 aaM
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
+aaM
+aaM
 aaM
 aaM
 ahG
@@ -45818,7 +43770,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -46024,7 +43975,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -46046,6 +43997,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -46075,7 +44027,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -46281,7 +44232,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -46303,6 +44254,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -46332,7 +44284,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -46538,7 +44489,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -46560,6 +44511,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -46589,7 +44541,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -46795,7 +44746,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -46817,6 +44768,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -46846,7 +44798,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -47052,7 +45003,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -47074,6 +45025,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -47103,7 +45055,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -47309,7 +45260,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -47331,6 +45282,7 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
@@ -47360,7 +45312,6 @@ aaM
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -47566,29 +45517,30 @@ ahG
 aaM
 ahG
 aaM
+alT
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
 aaM
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-aaM
 aaM
 ahG
 ahG
@@ -47617,7 +45569,6 @@ ahG
 ahG
 ahG
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -47823,32 +45774,32 @@ ahG
 aaM
 ahG
 aaM
+alT
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
 aaM
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -48080,7 +46031,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -48103,9 +46054,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -48337,7 +46288,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -48360,9 +46311,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -48594,7 +46545,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -48617,9 +46568,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -48851,7 +46802,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -48874,9 +46825,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -49108,7 +47059,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -49131,9 +47082,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -49365,7 +47316,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -49388,9 +47339,9 @@ ofb
 ofb
 ofb
 ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -49622,7 +47573,7 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
@@ -49644,10 +47595,10 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -49879,32 +47830,32 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
 ofb
 ofb
 ofb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 ofb
 ofb
 ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
+alT
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -50136,32 +48087,32 @@ ahG
 aaM
 ahG
 aaM
-aaM
+alT
 ofb
 ofb
 ofb
 ofb
 ofb
 ofb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 ofb
 ofb
 ofb
 ofb
 ofb
 ofb
+alT
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -50393,6 +48344,14 @@ ahG
 aaM
 ahG
 aaM
+alT
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
 aaM
 aaM
 aaM
@@ -50400,25 +48359,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+alT
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -50650,6 +48601,14 @@ ahG
 aaM
 ahG
 aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 aaM
 aaM
 aaM
@@ -50657,25 +48616,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 aaM
 aaM
 ahG
-aaM
 aaM
 aaM
 aaM
@@ -50906,33 +48857,33 @@ aaM
 ahG
 aaM
 ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+ahG
 aaM
 aaM
 aaM
@@ -51162,34 +49113,34 @@ ahG
 ahG
 ahG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -57011,7 +54962,7 @@ aaM
 aaM
 aaM
 aaM
-hCh
+aaM
 aaM
 aaM
 aaM
@@ -57267,8 +55218,6 @@ aaM
 aaM
 aaM
 aaM
-hCh
-ahJ
 aaM
 aaM
 aaM
@@ -57276,7 +55225,9 @@ aaM
 aaM
 aaM
 aaM
-hCh
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -57516,16 +55467,6 @@ aaM
 aaM
 aaM
 aaM
-flV
-nwv
-nwv
-nwv
-kHp
-aaM
-aaM
-aaM
-hCh
-ahJ
 aaM
 aaM
 aaM
@@ -57533,16 +55474,26 @@ aaM
 aaM
 aaM
 aaM
-ahJ
-hCh
 aaM
 aaM
 aaM
-flV
-nwv
-nwv
-nwv
-kHp
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -57773,15 +55724,6 @@ aaM
 aaM
 aaM
 aaM
-hCh
-oJL
-oJL
-oJL
-hCh
-aaM
-aaM
-hCh
-ahJ
 aaM
 aaM
 aaM
@@ -57790,16 +55732,25 @@ aaM
 aaM
 aaM
 aaM
-ahJ
-hCh
 aaM
 aaM
 aaM
-hCh
-oJL
-oJL
-oJL
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -58030,15 +55981,6 @@ aaM
 aaM
 aaM
 aaM
-hCh
-hCh
-hCh
-hCh
-hCh
-aaM
-aaM
-hCh
-ahJ
 aaM
 aaM
 aaM
@@ -58048,15 +55990,24 @@ aaM
 aaM
 aaM
 aaM
-ahJ
-hCh
 aaM
 aaM
-hCh
-hCh
-hCh
-hCh
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+aaM
 aaM
 aaM
 aaM
@@ -58287,33 +56238,33 @@ aaM
 aaM
 aaM
 aaM
-hCh
-ujw
-yeL
-kGU
-hCh
 aaM
 aaM
-hCh
-ahJ
-aaM
-flV
-hCh
-nwv
-nwv
-nwv
-hCh
-kHp
-aaM
-ahJ
-hCh
 aaM
 aaM
-hCh
-vBM
-jnA
-ugo
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -58544,33 +56495,33 @@ aaM
 aaM
 aaM
 aaM
-hCh
-yeL
-wPw
-jSz
-hCh
 aaM
 aaM
-hCh
-ahJ
-aaM
-hCh
-hCh
-oJL
-oJL
-oJL
-hCh
-hCh
-aaM
-ahJ
-hCh
 aaM
 aaM
-hCh
-trj
-trj
-oVv
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -58801,34 +56752,34 @@ aaM
 aaM
 aaM
 aaM
-hCh
-vPH
-hCh
-hCh
-hCh
 aaM
 aaM
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
 aaM
 aaM
-hCh
-ohF
-ohF
-oVv
-hCh
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -59058,35 +57009,35 @@ aaM
 aaM
 aaM
 aaM
-hCh
-yeL
-xtn
-dcx
-hCh
 aaM
 aaM
-mBv
-qXz
-tTp
-eUu
-phJ
-iwq
-hCh
-jUE
-oCj
-ihS
-pfm
-pfm
-mBv
 aaM
 aaM
-hCh
-lbg
-nJI
-biw
-hCh
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -59315,35 +57266,35 @@ aaM
 aaM
 aaM
 aaM
-hCh
-qZH
-gNz
-bZl
-hCh
 aaM
 aaM
-mBv
-bja
-swM
-peY
-puI
-uwT
-hCh
-rAt
-bdH
-hbc
-pfm
-pfm
-mBv
 aaM
 aaM
-hCh
-ohF
-bYu
-hbE
-hCh
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -59572,35 +57523,35 @@ aaM
 aaM
 aaM
 aaM
-hCh
-qZH
-yeL
-xtn
-hCh
 aaM
 aaM
-mBv
-eTK
-peY
-neJ
-peY
-uwT
-vPH
-aNb
-aNb
-wxE
-yap
-yap
-mBv
 aaM
 aaM
-hCh
-obf
-hjj
-hbE
-hCh
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -59829,35 +57780,35 @@ aaM
 aaM
 aaM
 aaM
-hCh
-hCh
-hCh
-yaw
-hCh
-hCh
-hCh
-hCh
-uwT
-uwT
-huJ
-peY
-jXt
-hCh
-vRL
-hiO
-ihS
-hLc
-hLc
-hCh
-hCh
-hCh
-hCh
-yaw
-hCh
-hCh
-hCh
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -60086,35 +58037,35 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-oVv
-oSZ
-oSZ
-oVv
-yaw
-uwT
-peY
-peY
-puI
-uNo
-hCh
-lDg
-aNb
-aNb
-hiO
-aNb
-yaw
-oVv
-oSZ
-oSZ
-oVv
-hCh
-hCh
-nRw
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -60344,35 +58295,35 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-yaw
-yaw
-hCh
-hCh
-hCh
-hCh
-hCh
-yaw
-yaw
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -60602,34 +58553,34 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-oVv
-oVv
-hCh
-rYd
-pQh
-fYD
-hCh
-oVv
-oSZ
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -60860,33 +58811,33 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-oSZ
-oSZ
-hCh
-bHw
-gQv
-bHw
-hCh
-oVv
-oVv
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -61118,25 +59069,6 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-oSZ
-oVv
-hCh
-sRc
-qNp
-vCZ
-hCh
-oVv
-oSZ
-hCh
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
@@ -61144,6 +59076,25 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -61376,23 +59327,6 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-oVv
-oVv
-hCh
-vCZ
-aNb
-sRc
-hCh
-oSZ
-oVv
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
@@ -61400,10 +59334,27 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -61634,33 +59585,33 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 yaw
 yaw
-hCh
-hCh
-swx
-hCh
-hCh
 yaw
 yaw
-hCh
-hCh
-nRw
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -61892,32 +59843,32 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-oVv
-oVv
-hCh
-aNb
-aNb
-aNb
-hCh
-oSZ
-oVv
-hCh
-nRw
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -62150,31 +60101,31 @@ aaM
 aaM
 aaM
 aaM
-hCh
-oVv
-oSZ
+aaM
+aaM
+aaM
+aaM
 yaw
-hiO
-hiO
-aNb
-vPH
-oVv
-oSZ
-hCh
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -62407,31 +60358,31 @@ aaM
 aaM
 aaM
 aaM
-hCh
-oVv
-oSZ
-hCh
-blH
-xfq
-xfq
-hCh
-oSZ
-oSZ
-hCh
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -62662,33 +60613,33 @@ aaM
 aaM
 aaM
 aaM
-flV
-hCh
-hCh
-oSZ
-oVv
-hCh
-oVx
-dpy
-kmz
-hCh
-oVv
-oVv
-hCh
-hCh
-kHp
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -62918,34 +60869,34 @@ aaM
 aaM
 aaM
 aaM
-flV
-hCh
-hCh
-hCh
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 yaw
-hCh
-hCh
-hCh
-hCh
-hCh
 yaw
-hCh
-hCh
-hCh
-hCh
-kHp
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -63175,23 +61126,6 @@ aaM
 aaM
 aaM
 aaM
-dZI
-aAo
-qhO
-uWZ
-qxD
-uDV
-uDV
-hjL
-hCh
-jUE
-ntF
-ntF
-xmS
-tSf
-qhO
-sBt
-dZI
 aaM
 aaM
 aaM
@@ -63199,10 +61133,27 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -63432,23 +61383,6 @@ aaM
 aaM
 aaM
 aaM
-sMO
-voP
-ylU
-yfr
-oCj
-hiO
-hiO
-aNb
-vPH
-aNb
-aNb
-hiO
-hbc
-sUQ
-bYR
-knS
-ukw
 aaM
 aaM
 aaM
@@ -63456,11 +61390,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -63689,23 +61640,6 @@ aaM
 aaM
 aaM
 aaM
-dZI
-rEP
-cGL
-uWZ
-qxD
-ntF
-uDV
-hjL
-hCh
-jUE
-uDV
-uDV
-xmS
-tSf
-cGL
-gzd
-dZI
 aaM
 aaM
 aaM
@@ -63713,11 +61647,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -63946,23 +61897,6 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-vPH
-vPH
-hCh
-hCh
-hCh
-vPH
-iiR
-hCh
-hCh
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
@@ -63970,11 +61904,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -64204,34 +62155,34 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-aNb
-aNb
-hiO
-aNb
-vPH
-oVv
-oVv
-oSZ
-oSZ
-hCh
-hCh
-nRw
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -64463,32 +62414,32 @@ aaM
 aaM
 aaM
 aaM
-hCh
-hiO
-aNb
-aNb
-hiO
-iqi
-iIe
-kqE
-ror
-typ
-hCh
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -64720,32 +62671,32 @@ aaM
 aaM
 aaM
 aaM
-hCh
-tUa
-boH
-ovm
-mDs
-pLq
-fxm
-dXI
-kBX
-ice
-hCh
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -64977,32 +62928,32 @@ aaM
 aaM
 aaM
 aaM
-hCh
-ylr
-oCj
-ihS
-cpB
-pLq
-mWr
-dYX
-kTF
-jPf
-hCh
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -65234,31 +63185,31 @@ aaM
 aaM
 aaM
 aaM
-hCh
-ukC
-bdH
-hbc
-fBq
-pLq
-uwk
-iKe
-vFX
-mgk
-hCh
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -65491,17 +63442,16 @@ aaM
 aaM
 aaM
 aaM
-hCh
-ukC
-kZQ
-vfo
-kYH
-etI
-bxV
-jMM
-oVg
-ivM
-hCh
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -65511,11 +63461,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -65748,17 +63699,16 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
+aaM
+aaM
+aaM
+aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -65768,11 +63718,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yaw
+yaw
+yaw
+yaw
+yaw
+yaw
 aaM
 aaM
 aaM
@@ -66006,15 +63957,15 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -66264,13 +64215,13 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-hCh
-hCh
-nRw
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -66522,11 +64473,11 @@ aaM
 aaM
 aaM
 aaM
-gQV
-hCh
-hCh
-hCh
-nRw
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -66788,11 +64739,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -67041,16 +64992,16 @@ aaM
 aaM
 aaM
 aaM
+aXf
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -67300,15 +65251,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -67557,15 +65508,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -67814,16 +65765,16 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -68069,19 +66020,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -68326,19 +66277,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -68583,19 +66534,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -68839,6 +66790,20 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -68852,20 +66817,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
 "}
 (165,1,1) = {"
 aaM
@@ -69096,13 +67047,24 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -69112,17 +67074,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (166,1,1) = {"
 aaM
@@ -69353,15 +67304,25 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -69370,16 +67331,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (167,1,1) = {"
 aaM
@@ -69610,15 +67561,24 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -69628,15 +67588,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (168,1,1) = {"
 aaM
@@ -69867,15 +67818,24 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -69883,17 +67843,8 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
 "}
 (169,1,1) = {"
 aaM
@@ -70124,33 +68075,33 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
 "}
 (170,1,1) = {"
 aaM
@@ -70378,36 +68329,36 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (171,1,1) = {"
 aaM
@@ -70635,6 +68586,27 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -70643,28 +68615,7 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (172,1,1) = {"
 aaM
@@ -70892,6 +68843,27 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -70901,27 +68873,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (173,1,1) = {"
 aaM
@@ -71149,6 +69100,27 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -71158,27 +69130,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (174,1,1) = {"
 aaM
@@ -71406,6 +69357,27 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -71415,27 +69387,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (175,1,1) = {"
 aaM
@@ -71663,6 +69614,27 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -71672,27 +69644,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (176,1,1) = {"
 aaM
@@ -71920,8 +69871,27 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -71931,25 +69901,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (177,1,1) = {"
 aaM
@@ -72176,10 +70127,28 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -72189,24 +70158,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-aaM
-ahF
-ahF
-ahF
-ahF
 "}
 (178,1,1) = {"
 aaM
@@ -72432,11 +70383,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -72445,25 +70415,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (179,1,1) = {"
 aaM
@@ -72689,11 +70640,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -72702,25 +70672,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (180,1,1) = {"
 aaM
@@ -72945,12 +70896,31 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -72959,25 +70929,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (181,1,1) = {"
 aaM
@@ -73203,11 +71154,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -73216,25 +71186,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (182,1,1) = {"
 aaM
@@ -73460,12 +71411,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -73474,24 +71443,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (183,1,1) = {"
 aaM
@@ -73717,12 +71668,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -73731,24 +71700,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
 "}
 (184,1,1) = {"
 aaM
@@ -73974,12 +71925,30 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -73988,24 +71957,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
 "}
 (185,1,1) = {"
 aaM
@@ -74231,12 +72182,29 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -74246,23 +72214,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
 "}
 (186,1,1) = {"
 aaM
@@ -74488,11 +72439,14 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -74502,6 +72456,12 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -74511,15 +72471,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
 "}
 (187,1,1) = {"
 aaM
@@ -74747,10 +72698,12 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -74760,6 +72713,12 @@ aaM
 aaM
 aaM
 aaM
+alv
+alv
+alv
+alv
+alv
+alv
 aaM
 aaM
 aaM
@@ -74769,14 +72728,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
 "}
 (188,1,1) = {"
 aaM
@@ -75006,8 +72957,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -75031,9 +72980,11 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (189,1,1) = {"
 aaM
@@ -75288,9 +73239,9 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
 "}
 (190,1,1) = {"
 aaM
@@ -75545,9 +73496,9 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
 "}
 (191,1,1) = {"
 aaM
@@ -75802,9 +73753,9 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
 "}
 (192,1,1) = {"
 aaM
@@ -76042,6 +73993,9 @@ aaM
 aaM
 aaM
 aaM
+anC
+anC
+anC
 aaM
 aaM
 aaM
@@ -76058,10 +74012,7 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
+aaM
 "}
 (193,1,1) = {"
 aaM
@@ -76267,30 +74218,6 @@ aaM
 aaM
 aaM
 aaM
-anC
-anC
-anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
 aaM
 aaM
 aaM
@@ -76314,11 +74241,35 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+eCv
+fgw
+eCv
+yfr
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (194,1,1) = {"
 aaM
@@ -76523,31 +74474,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-dBH
-dvm
-dBH
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
 aaM
 aaM
 aaM
@@ -76570,12 +74496,37 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aYP
+yfr
+eGp
+flV
+gji
+yfr
+hGc
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (195,1,1) = {"
 aaM
@@ -76779,13 +74730,6 @@ aaM
 aaM
 aaM
 aaM
-bpA
-jgi
-sWO
-nNM
-oVu
-jgi
-vUh
 aaM
 aaM
 aaM
@@ -76803,8 +74747,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -76819,20 +74761,29 @@ aaM
 aaM
 aaM
 aaM
-ahF
+aYP
+yfr
+bSp
+eTK
+fwr
+ban
+gNz
+yfr
+hGc
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (196,1,1) = {"
 aaM
@@ -77035,15 +74986,6 @@ aaM
 aaM
 aaM
 aaM
-bpA
-jgi
-ktZ
-lsr
-ovF
-aXG
-njf
-jgi
-vUh
 aaM
 aaM
 aaM
@@ -77060,8 +75002,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -77076,20 +75016,31 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+yfr
+bag
+bVl
+aYd
+fyG
+aYd
+gQv
+aXY
+yfr
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (197,1,1) = {"
 aaM
@@ -77292,15 +75243,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-lcx
-aXG
-aXh
-fAm
-aXh
-bbS
-oRS
-jgi
 aaM
 aaM
 aaM
@@ -77317,8 +75259,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -77333,20 +75273,31 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+yfr
+yfr
+yfr
+yfr
+aXd
+yfr
+yfr
+yfr
+yfr
+yfr
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (198,1,1) = {"
 aaM
@@ -77549,16 +75500,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-jgi
-jgi
-jgi
-bSp
-jgi
-jgi
-jgi
-jgi
-jgi
 aaM
 aaM
 aaM
@@ -77574,9 +75515,6 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -77589,21 +75527,34 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+yfr
+yfr
+yfr
+bai
+bYZ
+yfr
+aMB
+yfr
+gQV
+hKc
+iSn
+yfr
+yfr
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 "}
 (199,1,1) = {"
 aaM
@@ -77804,19 +75755,52 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aYk
+yfr
+aYd
+bZl
+yfr
+aXc
+yfr
+gRi
+aXe
 jgi
-jgi
-jgi
-wgo
-rqL
-jgi
-aXh
-jgi
-fyG
-nHu
-eGp
-jgi
-jgi
+kgh
+lQv
+anC
 aaM
 aaM
 aaM
@@ -77828,39 +75812,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (200,1,1) = {"
 aaM
@@ -78061,19 +76012,51 @@ aaM
 aaM
 aaM
 aaM
-jgi
-pPq
-jgi
-nHu
-sOb
-jgi
-bbS
-jgi
-alv
-vov
-gKU
-qcN
-qtG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aYd
+aYT
+bam
+ciF
+yfr
+fAm
+yfr
+gSk
+aYd
+jkr
+kmN
+lTQ
 anC
 aaM
 aaM
@@ -78086,38 +76069,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (201,1,1) = {"
 aaM
@@ -78318,19 +76269,51 @@ aaM
 aaM
 aaM
 aaM
-jgi
-nHu
-edq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+yfr
+aYl
+aYV
+bao
+ban
+aXd
+aPG
+yfr
+yfr
 hRk
-wqg
-jgi
-aXG
-jgi
-bVl
-nHu
-geL
-sXA
-xLS
+jlq
+ktZ
+lTQ
 anC
 aaM
 aaM
@@ -78343,38 +76326,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 "}
 (202,1,1) = {"
 aaM
@@ -78574,20 +76525,52 @@ aaM
 aaM
 aaM
 aaM
-jgi
-jgi
-ryH
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aXi
+aYm
+aZc
+yfr
+cyZ
+yfr
+aPG
+aMB
+aXd
+aYd
 jnj
-jFQ
-uuz
-bSp
-aXG
-jgi
-jgi
-geC
-gNx
-lPl
-xLS
+kGU
+lZW
 anC
 aaM
 aaM
@@ -78599,38 +76582,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 "}
 (203,1,1) = {"
@@ -78831,21 +76782,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-rvN
-cJD
-vVQ
-jgi
-rUb
-jgi
-aXG
-aXh
-bSp
-nHu
-gSk
-ltX
-nCO
-anC
 aaM
 aaM
 aaM
@@ -78862,25 +76798,40 @@ aaM
 aaM
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aXl
+yfr
+yfr
+yfr
+yfr
+yfr
+aPG
+aZL
+yfr
+hRD
+yfr
+yfr
+yfr
+yfr
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -79088,53 +77039,53 @@ aaM
 aaM
 aaM
 aaM
-jgi
-seu
-jgi
-jgi
-jgi
-jgi
-jgi
-aXG
-jKj
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+yfr
+yfr
+aZn
+bap
+cJD
+yfr
+fDg
+yfr
+yfr
+yfr
+yfr
+aMB
 mch
-jgi
-jgi
-jgi
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-aaM
-aaM
-aaM
-aaM
-aaM
+yfr
 aaM
 aaM
 aaM
@@ -79345,53 +77296,53 @@ aaM
 aaM
 aaM
 aaM
-jgi
-jgi
-jgi
-wYh
-uxZ
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aXm
+aYn
+aYx
+baq
+cLC
+yfr
+aMB
 gGJ
-jgi
-ciF
-jgi
-jgi
-jgi
-jgi
-aXh
-bYZ
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-ahF
-ahF
-ahF
-ahF
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+yfr
+hWC
+jyJ
+aPG
+mkh
+yfr
 aaM
 aaM
 aaM
@@ -79602,21 +77553,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-wuT
-kmN
-vqW
-fwr
-xkI
-jgi
-aXh
-jOG
-jgi
-uJD
-sge
-aXG
-tUA
-jgi
 aaM
 aaM
 aaM
@@ -79647,10 +77583,25 @@ aaM
 aaM
 aaM
 aaM
+anC
 aaM
+yfr
+aXn
+aYn
+aZq
+bbl
+aYn
+yfr
+aXc
+gKU
+yfr
+hZm
+hZm
+aXc
+mmd
+yfr
 aaM
-aaM
-aaM
+anC
 aaM
 aaM
 aaM
@@ -79857,58 +77808,58 @@ aaM
 aaM
 aaM
 aaM
-anC
 aaM
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aoQ
+aWP
+yfr
+aXE
+aYn
+aZr
+bbm
+aYn
+aXd
+aPG
+gMR
+yfr
+igu
+igu
 kQY
-fwr
-kWl
-vqW
-kmN
-jgi
-bbS
-vwB
-jgi
-xWZ
-xWZ
-bbS
-puq
-jgi
-aaM
-anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+mqi
+yfr
+naX
+otl
+yfr
 aaM
 aaM
 aaM
@@ -80113,59 +78064,59 @@ aaM
 aaM
 aaM
 aaM
-jgi
-mqi
-aZE
-jgi
-xzm
-kmN
-sdx
-iNp
-fwr
-bSp
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aoS
+aWQ
+yfr
 aXG
-dMr
-jgi
-dGR
-dGR
-mMK
-sRr
-jgi
-tCR
-euA
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aYx
+aYn
+aYn
+aYx
+yfr
+aPG
+aMB
+yfr
+iuj
+jFQ
+kWc
+mqi
+yfr
+neJ
+aMB
+yfr
 aaM
 aaM
 aaM
@@ -80370,27 +78321,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-rPK
-oXL
-jgi
-jkr
-vqW
-fwr
-kmN
-vqW
-jgi
-aXG
-aXh
-jgi
-kWc
-otl
-paS
-sRr
-jgi
-psU
-aXh
-jgi
 aaM
 aaM
 aaM
@@ -80423,6 +78353,27 @@ aaM
 aaM
 aaM
 aaM
+yfr
+avv
+aWS
+yfr
+aXI
+aYA
+aZC
+bbS
+dcx
+yfr
+aXd
+yfr
+yfr
+yfr
+yfr
+kWl
+yfr
+yfr
+ngQ
+ovm
+yfr
 aaM
 aaM
 aaM
@@ -80627,27 +78578,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-qMW
-aZL
-jgi
-gRi
-uuK
-lZW
-loy
-row
-jgi
-bSp
-jgi
-jgi
-jgi
-jgi
-bsG
-jgi
-jgi
-jlq
-iuj
-jgi
 aaM
 aaM
 aaM
@@ -80680,6 +78610,27 @@ aaM
 aaM
 aaM
 aaM
+yfr
+aAo
+aXa
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+aMB
+aMB
+yfr
+iwq
+iwq
+kZQ
+aPG
+yfr
+njf
+ovF
+yfr
 aaM
 aaM
 aaM
@@ -80884,60 +78835,60 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXc
-jJD
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+anC
+anI
+aMB
+aXb
 aXh
+aXK
+aYB
+aYB
+bdH
+dcD
+dcD
+dcD
+aYB
 aXh
-jgi
-vfc
-vfc
-qTM
-aXG
-jgi
-mmd
-uEe
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+dcD
+dcD
+lcx
+aYB
+bdH
+nso
+aPG
+anI
+anC
 aaM
 aaM
 aaM
@@ -81140,61 +79091,61 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 anC
-aoQ
-aXh
-xey
-qAh
-qXc
-qAh
-qAh
-xDk
-xDk
-xDk
-xDk
-qAh
-qAh
-xDk
-xDk
-hso
-qAh
-xDk
-uou
-aXG
-aoQ
+anI
+aPG
+aPG
+aMB
+aMB
+aMB
+aPG
+aMB
+djq
+aMB
+aZL
+aMB
+aMB
+aMB
+aPG
+aMB
+aMB
+aMB
+aPG
+aPG
+anI
 anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -81397,61 +79348,61 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+anH
+anI
+aPG
+aXc
+aMB
+aMB
+yfr
+aZE
+aZE
+aZE
+yfr
+aMB
+aMB
+gYL
+iNm
+iNm
+loy
+yfr
+aMB
+aPG
+aXc
+anI
 anC
-aoQ
-aXG
-aXG
-aXh
-aXh
-aXh
-aXG
-aXh
-hRD
-aXh
-jKj
-aXh
-aXh
-aXh
-aXG
-aXh
-aXh
-aXh
-aXG
-aXG
-aoQ
-anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -81654,29 +79605,6 @@ aaM
 aaM
 aaM
 aaM
-aoO
-aoQ
-aXG
-bbS
-aXh
-aXh
-jgi
-ybR
-ybR
-ybR
-jgi
-aXh
-aXh
-qFy
-hGc
-hGc
-lQv
-jgi
-aXh
-aXG
-bbS
-aoQ
-anC
 aaM
 aaM
 aaM
@@ -81708,6 +79636,29 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+yfr
+yfr
+aXd
+aXd
+yfr
+yfr
+aMB
+aMB
+djX
+yfr
+aPG
+aMB
+hso
+iNp
+jJD
+lsr
+yfr
+aXd
+yfr
+yfr
+yfr
 aaM
 aaM
 aaM
@@ -81912,27 +79863,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-jgi
-bSp
-bSp
-jgi
-jgi
-aXh
-aXh
-hZm
-jgi
-aXG
-aXh
-hCs
-tkd
-kgh
-naX
-jgi
-bSp
-jgi
-jgi
-jgi
 aaM
 aaM
 aaM
@@ -81965,7 +79895,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
+yfr
+aWF
+ban
+aYd
+aXX
+yfr
+aZL
+aMB
+dvm
+yfr
+fPQ
+aMB
+ban
+ban
+jKj
+ltX
+yfr
+ban
+nwv
+aYd
+yfr
+yfr
 aaM
 aaM
 aaM
@@ -82169,28 +80120,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-mWB
-aXG
-aXh
-wyw
-jgi
-jKj
-aXh
-iSn
-jgi
-qxv
-aXh
-aXG
-uuz
-aPG
-hWC
-jgi
-uuz
-nHu
-nHu
-jgi
-jgi
 aaM
 aaM
 aaM
@@ -82223,6 +80152,28 @@ aaM
 aaM
 aaM
 aaM
+yfr
+aWH
+aXe
+ban
+aXY
+yfr
+aZN
+bja
+aMB
+yfr
+fYD
+aMB
+aXe
+aYd
+aYd
+lDg
+yfr
+mtx
+ban
+ban
+aYd
+yfr
 aaM
 aaM
 aaM
@@ -82426,61 +80377,61 @@ aaM
 aaM
 aaM
 aaM
-jgi
-uUB
-jKj
-aXG
-vhO
-jgi
-fPQ
-vZu
-aXh
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aWJ
+aYd
+aYd
+aXZ
+yfr
+aZP
+boH
+dBH
+eUu
+geC
+aMB
+huJ
+yfr
+aXd
+yfr
+yfr
+mEq
+nCO
+oCj
+aYd
 eCv
-aXh
-jKj
-nHu
-nHu
-cLC
-jgi
-rji
-uuz
-uuz
-nHu
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+anC
 aaM
 aaM
 aaM
@@ -82683,61 +80634,61 @@ aaM
 aaM
 aaM
 aaM
-jgi
-gYL
-aXh
-aXh
-trl
-jgi
-sdj
-pjw
-vpF
-mkh
-tQG
-aXh
-nso
-jgi
-bSp
-jgi
-jgi
-uyC
-wVy
-ngQ
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aWK
+aYd
+aYd
+aYa
+yfr
+aZQ
+bpA
+dGR
+yfr
+geL
+aMB
+hCs
+yfr
+jOG
+lMg
+yfr
+mMK
 nHu
-dBH
+oOC
+ban
+eCv
 anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -82940,61 +80891,61 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXI
-aXh
-bbS
-trl
-jgi
-dcD
-pSh
-jyJ
-jgi
-mEq
-aXh
-nso
-jgi
-sRF
-oOC
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aWL
+aYd
+aXe
+aYb
+yfr
+aZR
+bsG
+dMr
+yfr
+yfr
+aMB
+yfr
+yfr
+jQA
 lPe
-qoa
-obo
-uuz
-dBH
-anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-bbD
-bbD
-bbD
-aWG
+yfr
+mWB
+nNM
+oOH
 aZa
-aaM
-aaM
+eCv
+anC
 aaM
 aaM
 aaM
@@ -83197,60 +81148,60 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXK
-aXh
-aXG
-fgw
-jgi
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aWM
+aYd
+ban
+aYg
+yfr
+aZS
+bFY
+edq
 aMB
-vlz
-igu
-jgi
-jgi
-aXh
-jgi
-jgi
-gji
-tSE
-jgi
-fDg
-mtx
-tAC
-kgh
-dBH
-anC
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aWG
-hCh
-hCh
-hCh
-hCh
-aXD
+aXd
+gNx
+yfr
+voP
+jSz
+lPl
+yfr
 ban
 aYd
-hCh
-hCh
-aZa
+ban
+aYd
+oRS
 aaM
 aaM
 aaM
@@ -83454,28 +81405,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXX
-aXh
-aXG
-cyZ
-jgi
-oOH
-rvU
-djq
-aXh
-bSp
-bbS
-jgi
-djX
-vtY
-qka
-jgi
-uuz
-nHu
-uuz
-nHu
-jgi
 aaM
 aaM
 aaM
@@ -83497,17 +81426,39 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
+aWO
+ban
+aYd
+aYi
+yfr
+aZT
+bHw
+euA
+aPG
+yfr
 bbD
-sMO
+yfr
 voP
-qhO
+jXt
 uWZ
-aXB
+yfr
 aoT
-aoT
+obo
 aoX
-aHo
-beP
+yfr
+yfr
 aaM
 aaM
 aaM
@@ -83711,28 +81662,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXY
-jKj
-aXh
-pHI
-jgi
-gMR
-qLb
-iNm
-aXG
-jgi
-aXh
-jgi
-djX
-jQA
-waM
-jgi
-lTQ
-sMl
-wNt
-jgi
-jgi
 aaM
 aaM
 aaM
@@ -83753,18 +81682,40 @@ aaM
 aaM
 aaM
 aaM
-aKj
-bbD
-dZI
-anF
-aoP
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 yfr
-oVv
-aYf
-aXg
-aYw
-aHo
-beP
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+yfr
+aaM
 aaM
 aaM
 aaM
@@ -83968,27 +81919,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-aXZ
-aXG
-aXh
-hKc
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
-jgi
 aaM
 aaM
 aaM
@@ -84010,17 +81940,38 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWI
-hCh
-hCh
-hCh
-hCh
-oVv
-aYe
-aXg
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+yfr
 aYs
-hCh
+aYs
+aYs
+aYs
+yfr
+aaM
+aaM
+aaM
+aaM
+aaM
+aZo
+aaM
+aaM
+aaM
+yfr
+aYs
+aYs
+aYs
+aYs
+yfr
 aZo
 aaM
 aaM
@@ -84225,27 +82176,6 @@ aaM
 aaM
 aaM
 aaM
-jgi
-sey
-sey
-sey
-sey
-jgi
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-jgi
-sey
-sey
-sey
-sey
-jgi
 aaM
 aaM
 aaM
@@ -84267,17 +82197,38 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
-bbD
-bbD
-hCh
-oVv
-aYh
-aXg
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aoO
 aYz
-hCh
+aYz
+aYz
+aYz
+aYC
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aoO
+aYz
+aYz
+aYz
+aYz
+aYC
 aaM
 aaM
 aaM
@@ -84482,27 +82433,6 @@ aaM
 aaM
 aaM
 aaM
-aXb
-lMg
-lMg
-lMg
-lMg
-bFY
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aXb
-lMg
-lMg
-lMg
-lMg
-bFY
 aaM
 aaM
 aaM
@@ -84524,17 +82454,38 @@ aaM
 aaM
 aaM
 aaM
-avv
 aaM
-aWG
-aXD
-aYd
-hCh
-oVv
-aYg
-bao
-aYx
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -84779,25 +82730,25 @@ aaM
 aaM
 aaM
 aaM
-aKj
-aWH
-aWK
-aWG
-hCh
-aXm
-aXm
-hCh
-oVv
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-aZa
+aaM
+aaM
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aZo
 aaM
 aaM
 "}
@@ -85036,26 +82987,26 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWG
-hCh
-hCh
-aXd
-aXg
-aXg
-hCh
-aYa
-yaw
-aXg
-aYA
-aZc
-aZq
-aZC
-iqi
-aZN
-bbl
-hCh
-aZa
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aZo
 aaM
 "}
 (228,1,1) = {"
@@ -85293,26 +83244,26 @@ aaM
 aaM
 aaM
 aaM
-aWF
-bbD
-aWM
-aWS
-aXf
-aXf
-aXE
-hCh
-hCh
-hCh
-aXg
-aXg
-aXg
-aXg
-aXg
-etI
-bap
-aZR
-bai
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 "}
 (229,1,1) = {"
@@ -85551,25 +83502,25 @@ aaM
 aaM
 aaM
 aaM
-bbD
-aWL
-aWQ
-aXe
-aXn
-aXg
-yaw
-aYa
-yaw
-aXg
-aXg
-aXg
-aXg
-aXg
-yaw
-aZQ
-bbm
-bag
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 "}
 (230,1,1) = {"
@@ -85807,26 +83758,26 @@ aaM
 aaM
 aaM
 aaM
-aKj
-bbD
-aWO
-aXa
-aXf
-aXf
-aXf
-hCh
-hCh
-hCh
-aXg
-aXg
-aXg
-aXg
-aXg
-iqi
-baq
-aZT
-bam
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 "}
 (231,1,1) = {"
@@ -86064,25 +84015,25 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWI
-hCh
-hCh
-aXl
-aXg
-aXg
-hCh
-aYb
-yaw
-aXg
-aYB
-aZn
-aZr
-aZr
-etI
-aZP
-aZS
-hCh
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aZo
 aaM
 "}
@@ -86321,24 +84272,24 @@ aaM
 aaM
 aaM
 aaM
-aWF
-aWH
-aWP
-aWI
-hCh
-aXm
-aXm
-hCh
-oVv
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
-hCh
+aaM
+aaM
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aZo
 aaM
 aaM
@@ -86580,17 +84531,17 @@ aaM
 aaM
 aaM
 aaM
-avv
 aaM
-aWI
-aXD
-aYd
-hCh
-oVv
-aYi
-aXg
-aYC
-hCh
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -86837,17 +84788,17 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
-bbD
-bbD
-hCh
-oVv
-aYl
-aXg
-aYT
-hCh
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -87094,18 +85045,18 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWG
-hCh
-hCh
-hCh
-hCh
-oVv
-aYk
-aYn
-aYP
-hCh
-aZa
+aaM
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aZo
 aaM
 aaM
 aaM
@@ -87351,18 +85302,18 @@ aaM
 aaM
 aaM
 aaM
-aWF
-bbD
-aXi
-anI
-aoS
-sUQ
-oVv
-aYm
-aXg
-aYV
-aHo
-beP
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -87609,17 +85560,17 @@ aaM
 aaM
 aaM
 aaM
-bbD
-ukw
-anH
-cGL
-tSf
-aXB
-aoT
-aoT
-aoX
-aHo
-beP
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -87866,16 +85817,16 @@ aaM
 aaM
 aaM
 aaM
-aWI
-hCh
-hCh
-hCh
-hCh
-aXD
-ban
-aYd
-hCh
-hCh
+aZo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aZo
 aaM
 aaM
@@ -88128,10 +86079,10 @@ aaM
 aaM
 aaM
 aaM
-bbD
-bbD
-bbD
-aWI
+aaM
+aaM
+aaM
+aZo
 aZo
 aaM
 aaM
