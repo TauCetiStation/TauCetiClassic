@@ -134,34 +134,6 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
 
-// Fake-image can see only noncult
-/datum/atom_hud/alternate_appearance/basic/noncult
-
-/datum/atom_hud/alternate_appearance/basic/noncult/New()
-	..()
-	for(var/mob in global.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!iscultist(M))
-		return TRUE
-	return FALSE
-
-// Fake-image can see only cult
-/datum/atom_hud/alternate_appearance/basic/cult
-
-/datum/atom_hud/alternate_appearance/basic/cult/New()
-	..()
-	for(var/mob in global.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(iscultist(M))
-		return TRUE
-	return FALSE
-
 // Fake-image can see only the specified person
 /datum/atom_hud/alternate_appearance/basic/one_person
 	var/mob/seer
