@@ -162,7 +162,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/mime/mobShouldSee(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind.assigned_role == "Mime")
+		if(H.mind && H.mind.assigned_role == "Mime")
 			return TRUE
 	return FALSE
 
@@ -177,6 +177,6 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/clown/mobShouldSee(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind.assigned_role == "Clown")
+		if(H.mind && H.mind.assigned_role == "Clown")
 			return TRUE
 	return FALSE
