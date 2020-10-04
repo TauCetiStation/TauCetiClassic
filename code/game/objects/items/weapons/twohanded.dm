@@ -19,7 +19,9 @@
  * Twohanded
  */
 /obj/item/weapon/twohanded
-	var/wielded = 0
+	var/wielded = FALSE
+	// When you pick up an item, it will be in two hands at once
+	var/only_twohand = FALSE
 	var/force_unwielded = 0
 	var/force_wielded = 0
 	var/wieldsound = null
@@ -27,13 +29,13 @@
 	var/obj/item/weapon/twohanded/offhand/offhand_item = /obj/item/weapon/twohanded/offhand
 
 /obj/item/weapon/twohanded/proc/unwield()
-	wielded = 0
+	wielded = FALSE
 	force = force_unwielded
 	name = "[initial(name)]"
 	update_icon()
 
 /obj/item/weapon/twohanded/proc/wield()
-	wielded = 1
+	wielded = TRUE
 	force = force_wielded
 	name = "[initial(name)] (Wielded)"
 	update_icon()
@@ -42,9 +44,21 @@
 	//Cannot equip wielded items.
 	if(wielded)
 		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
-		return 0
+		return FALSE
 
 	return ..()
+
+/obj/item/weapon/twohanded/flora/equipped(mob/user, slot)
+	..()
+	if(!only_twohand)
+		return
+
+	if(slot == SLOT_R_HAND || slot == SLOT_L_HAND)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/W = H.wield(src, initial(name), wieldsound)
+			if(W)
+				wield()
 
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
@@ -62,6 +76,9 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
+	if(only_twohand)
+		return
+
 	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return

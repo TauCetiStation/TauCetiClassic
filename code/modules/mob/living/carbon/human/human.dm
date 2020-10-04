@@ -1396,13 +1396,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/can_pickup(obj/O)
 	// Its worst
-	// I can't put it somewhere else because it would involve too many changes
-	if(istype(O, /obj/item/flora))
-		var/obj/item/flora/F = O
+	if(istype(O, /obj/item/weapon/twohanded/flora))
+		var/obj/item/weapon/twohanded/flora/F = O
 		if(F.wielded)
 			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 			return FALSE
-		if(get_inactive_hand())
+		if(get_inactive_hand() && F.only_twohand)
 			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
 			return FALSE
 	return TRUE
