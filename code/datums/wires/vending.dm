@@ -22,14 +22,14 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 		if(V.shock(user, 100))
 			return TRUE
 
-/datum/wires/vending/get_interact_window()
+/datum/wires/vending/get_status()
 	var/obj/machinery/vending/V = holder
 	. += ..()
-	. += "<br>The orange light is [(world.time < V.electrified_until || V.electrified_until < 0) ? "off" : "on"]."
-	. += "<br>The red light is [V.shoot_inventory ? "off" : "blinking"]."
-	. += "<br>The green light is [V.extended_inventory ? "on" : "off"]."
-	. += "<br>The [V.scan_id ? "purple" : "yellow"] light is on."
-	. += "<br>The blue light is [V.shut_up ? "off" : "on"]."
+	. += "The orange light is [(world.time < V.electrified_until || V.electrified_until < 0) ? "off" : "on"]."
+	. += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
+	. += "The green light is [V.extended_inventory ? "on" : "off"]."
+	. += "The [V.scan_id ? "purple" : "yellow"] light is on."
+	. += "The blue light is [V.shut_up ? "off" : "on"]."
 
 /datum/wires/vending/update_cut(index, mended)
 	var/obj/machinery/vending/V = holder

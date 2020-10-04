@@ -125,6 +125,9 @@ var/global/list/wire_daltonism_colors = list()
 		var/index = pick_n_take(indexes_to_pick)
 		wires[color] = index
 
+/datum/wires/proc/get_status()
+	return list()
+
 /**
  * Will return TRUE if wires menu successful opened.
  */
@@ -135,14 +138,9 @@ var/global/list/wire_daltonism_colors = list()
 	if(additional_checks_and_effects(user))
 		return FALSE
 
-	var/see_effect
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(HAS_TRAIT(H, TRAIT_BLIND))
-			see_effect = SEE_BLIND
-
-		else if(H.sightglassesmod)
-			see_effect = H.sightglassesmod
+		if(H.sightglassesmod)
 
 			if(!wire_daltonism_colors)
 				wire_daltonism_colors = list()
@@ -170,33 +168,42 @@ var/global/list/wire_daltonism_colors = list()
 					wire_daltonism_colors[H.sightglassesmod][i] = rgb(new_r, new_g, new_b)
 					qdel(CM)
 
-	var/html = get_interact_window(see_effect)
-
 	user.set_machine(holder)
 
-	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
-	popup.set_content(html)
-	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
-	popup.open()
+	tgui_interact(user, null)
 
 	return TRUE
 
-/**
- * In default variation will display all wires and status of them.
- * So you can override it in next variant to get additional data to display.
- *
- * > /datum/wires/example/get_interact_window()
- * >   var/obj/machinery/example/E = holder
- * >   . += ..()
- * >   . += "<br>Some light is [E.some_status ? "off" : "on"]."
- * >   . += "<br>Another light is [E.another_status ? "off" : "blinking"]."
- */
-/datum/wires/proc/get_interact_window(see_effect)
-	var/html = "<fieldset class='block'>"
-	html += "<legend><h3>Exposed Wires</h3></legend>"
-	html += "<table[table_options]>"
+/datum/wires/tgui_host()
+	return holder
 
-	// Value of colors
+/datum/wires/tgui_status(mob/user)
+	if(can_use(user))
+		return ..()
+	return UI_CLOSE
+
+/datum/wires/tgui_state(mob/user)
+	return global.physical_state
+
+/datum/wires/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Wires", "[holder.name] Wires")
+		ui.open()
+
+/datum/wires/tgui_data(mob/user)
+	var/list/data = list()
+	var/list/payload = list()
+
+	var/see_effect
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, TRAIT_BLIND))
+			see_effect = SEE_BLIND
+
+		else if(H.sightglassesmod)
+			see_effect = H.sightglassesmod
+	
 	var/list/colors_by_num
 	if(see_effect != SEE_BLIND && see_effect != null)
 		colors_by_num = list()
@@ -207,12 +214,15 @@ var/global/list/wire_daltonism_colors = list()
 			colors_by_num[color] = list(r, g, b)
 
 	for(var/color in wires)
-		html += "<tr>"
+		var/shownColor
+		var/shownColorLbl
 		switch(see_effect)
 			if(SEE_BLIND)
-				html += "<td[row_options1]><font color='gray'><b>Wire</b></font></td>"
+				shownColor = "grey"
+				shownColorLbl = null
 			if(null)
-				html += "<td[row_options1]><font color='[color]'><b>[capitalize(color)]</b></font></td>"
+				shownColor = color
+				shownColorLbl = capitalize(shownColor)
 			else
 				var/mcolor
 				if(hex2color(wire_daltonism_colors[see_effect][color])) // Color in color_by_hex list
@@ -228,74 +238,63 @@ var/global/list/wire_daltonism_colors = list()
 						if(!mcolor || d < min_dist)
 							min_dist = d
 							mcolor = colour
+				shownColor = wire_daltonism_colors[see_effect][color]
+				shownColorLbl = capitalize(replacetext(mcolor, "_", " "))
+		payload.Add(list(list(
+			"color" = shownColor,
+			"label" = shownColorLbl,
+			"wire" = color,
+			"cut" = is_color_cut(color),
+			"attached" = is_signaler_attached(color)
+		)))
+	data["wires"] = payload
+	data["status"] = get_status()
+	//data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
+	return data
 
-				html += "<td[row_options1]><font color='[wire_daltonism_colors[see_effect][color]]'><b>[capitalize(replacetext(mcolor, "_", " "))]</b></font></td>"
-		html += "<td[row_options2]>"
-		html += "<a href='?src=\ref[src];action=1;cut=[color]'>[is_color_cut(color) ? "Mend" :  "Cut"]</a>"
-		html += "<a href='?src=\ref[src];action=1;pulse=[color]'>Pulse</a>"
-		html += "<a href='?src=\ref[src];action=1;attach=[color]'>[is_signaler_attached(color) ? "Detach" : "Attach"] Signaller</a>"
-		html += "</td>"
-		html += "</tr>"
-	html += "</table>"
-	html += "</fieldset>"
-
-	return html
-
-/datum/wires/Topic(href, href_list)
-	..()
-
-	if(!can_use(usr) || href_list["close"])
-		usr << browse(null, "window=wires")
-		usr.unset_machine(holder)
-		return FALSE
-
+/datum/wires/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+	
 	if(!(in_range(holder, usr) && isliving(usr)))
-		return FALSE
-
+		return
+	
 	var/mob/living/L = usr
 
-	if(!holder.can_mob_interact(L))
-		return FALSE
-
-	if(href_list["action"])
-		var/obj/item/I = L.get_active_hand()
-		holder.add_hiddenprint(L)
-
-		if(href_list["cut"]) // Toggles the cut/mend status
-			if(iswirecutter(I))
-				var/color = href_list["cut"]
-				cut_wire_color(color)
+	if(!can_use(src) || !holder.can_mob_interact(L))
+		return
+	var/target_wire = params["wire"]
+	var/obj/item/I = L.get_active_hand()
+	switch(action)
+		if("cut")
+			if(I && iswirecutter(I))
+				cut_wire_color(target_wire)
+				I.play_tool_sound(holder, 20)
+				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
-
-		else if(href_list["pulse"])
-			if(ismultitool(I))
-				var/color = href_list["pulse"]
-				pulse_color(color)
+		if("pulse")
+			if(I && ismultitool(I))
+				pulse_color(target_wire)
+				I.play_tool_sound(holder, 20)
+				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")
-
-		else if(href_list["attach"])
-			var/color = href_list["attach"]
-
-			// Detach
-			if(is_signaler_attached(color))
-				var/obj/item/O = detach_signaler(color)
+		if("attach")
+			if(is_signaler_attached(target_wire))
+				var/obj/item/O = detach_signaler(target_wire)
 				if(O)
 					L.put_in_hands(O)
-
-			// Attach
+					. = TRUE
 			else
 				if(issignaler(I))
 					L.drop_item()
-					attach_signaler(color, I)
+					attach_signaler(target_wire, I)
 				else
 					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")
-
-		// Update Window
-		interact(usr)
-
-	return TRUE
+	if(.)
+		holder.add_fingerprint(usr)
 
 ////////////////////
 // Overridable procs

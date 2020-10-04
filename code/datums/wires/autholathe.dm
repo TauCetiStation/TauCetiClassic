@@ -6,12 +6,12 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	holder_type = /obj/machinery/autolathe
 	wire_count = 6
 
-/datum/wires/autolathe/get_interact_window()
+/datum/wires/autolathe/get_status()
 	var/obj/machinery/autolathe/A = holder
 	. += ..()
-	. += "<br>The red light is [A.disabled ? "off" : "on"]."
-	. += "<br>The green light is [A.shocked ? "off" : "on"]."
-	. += "<br>The blue light is [A.hacked ? "off" : "on"]."
+	. += "The red light is [A.disabled ? "off" : "on"]."
+	. += "The green light is [A.shocked ? "off" : "on"]."
+	. += "The blue light is [A.hacked ? "off" : "on"]."
 
 /datum/wires/autolathe/can_use()
 	var/obj/machinery/autolathe/A = holder

@@ -10,6 +10,7 @@
 	hitsound = list('sound/items/tools/device_small-hit.ogg')
 	icon_state = "multitool"
 	flags = CONDUCT
+	usesound = 'sound/items/timer.ogg'
 	force = 1.0
 	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
