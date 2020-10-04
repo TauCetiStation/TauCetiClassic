@@ -132,6 +132,18 @@
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
 
+// hand_like /obj/item signals
+/// check if item is hand_like: ()
+#define COMSIG_HAND_IS "hand_is"
+/// from mob/living/silicon/robot/ClickOn(): (atom/T, mob/user, params)
+#define COMSIG_HAND_ATTACK "hand_attack"
+/// from mob/living/silicon/robot/drop_item(): (atom/T, mob/user)
+#define COMSIG_HAND_DROP_ITEM "hand_drop_item"
+/// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
+#define COMSIG_HAND_PUT_IN "hand_put_in"
+/// from mob/living/silicon/robot/get_active_hand(): (mob/user)
+#define COMSIG_HAND_GET_ITEM "hand_get_item"
+
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"

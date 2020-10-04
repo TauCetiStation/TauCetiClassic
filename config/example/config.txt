@@ -51,6 +51,7 @@ LOG_SQL_ERROR
 LOG_INITIALIZATION
 LOG_QDEL
 LOG_ASSET
+LOG_TGUI
 # LOG_JS_ERROR
 # LOG_HREFS
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.

@@ -27,6 +27,7 @@ var/list/net_announcer_secret = list()
 	var/log_initialization = 0			// same but for debug init logs
 	var/log_qdel = 0						// same but for debug qdel logs
 	var/log_asset = 0
+	var/log_tgui = 0
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/ert_admin_call_only = 0
@@ -349,6 +350,9 @@ var/list/net_announcer_secret = list()
 
 				if ("log_asset")
 					config.log_asset = 1
+
+				if ("log_tgui")
+					config.log_tgui = 1
 
 				if ("log_runtime")
 					config.log_runtime = 1
