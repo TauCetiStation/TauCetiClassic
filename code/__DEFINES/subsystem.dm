@@ -41,6 +41,7 @@
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
 #define SS_INIT_UNIT_TESTS    -100
 
+
 #define SS_PRIORITY_TIMER        700
 #define SS_PRIORITY_OVERLAYS     500
 #define SS_PRIORITY_CHAT         400
