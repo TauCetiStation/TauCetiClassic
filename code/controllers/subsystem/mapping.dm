@@ -206,17 +206,9 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
-
-	var/newyear
-	#ifdef NEWYEARCONTENT
-	global.current_lobby_screen = pick(global.new_year_screens)
-	newyear = TRUE
-	#endif
-	if(!newyear)
-		global.current_lobby_screen = pick(global.lobby_screens)
-	for(var/mob/dead/new_player/N in new_player_list)
-		N.show_titlescreen()
-
+	to_chat(world, "TestCrash")
+	change_titlescreen()
+	to_chat(world, "continue")
 	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
@@ -266,3 +258,14 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+/datum/controller/subsystem/mapping/proc/change_lobbyscreen()
+	var/newyear
+	#ifdef NEWYEARCONTENT
+	global.current_lobby_screen = pick(global.new_year_screens)
+	newyear = TRUE
+	#endif
+	if(!newyear)
+		global.current_lobby_screen = pick(global.lobby_screens)
+	for(var/mob/dead/new_player/N in new_player_list)
+		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
