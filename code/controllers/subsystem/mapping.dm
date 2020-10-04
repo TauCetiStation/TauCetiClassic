@@ -206,9 +206,7 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
-	to_chat(world, "TestCrash")
-	change_titlescreen()
-	to_chat(world, "continue")
+	change_lobbyscreen()
 	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
