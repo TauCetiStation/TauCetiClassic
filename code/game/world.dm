@@ -96,7 +96,8 @@ var/base_commit_sha = 0
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
 	global.access_log = file("[log_directory]/access.log")
-	global.asset_log = file("[log_directory]/asset.log")
+	global.asset_log = file("[log_debug_directory]/asset.log")
+	global.tgui_log = file("[log_debug_directory]/tgui.log")
 
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
@@ -315,6 +316,7 @@ var/shutdown_processed = FALSE
 		join_test_merge = "<strong>Test merged PRs:</strong> "
 		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in prs)
+			test_merges += "#[pr] "
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
 /world/proc/load_regisration_panic_bunker()

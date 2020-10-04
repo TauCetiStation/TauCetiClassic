@@ -24,8 +24,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
-	var/medHUD = 0
-	var/antagHUD = 0
+	var/data_hud = FALSE
+	var/antagHUD = FALSE
 	universal_speak = 1
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
@@ -98,6 +98,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	if(mind && mind.current)
+		mind.current.med_hud_set_status()
 	QDEL_NULL(adminMulti)
 	return ..()
 
@@ -142,55 +144,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 1
-/*
-Transfer_mind is there to check if mob is being deleted/not going to have a body.
-Works together with spawning an observer, noted above.
-*/
-
-/mob/dead/observer/Life()
-	..()
-	if(!loc) return
-	if(!client) return 0
-
-
-	if(client.images.len)
-		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state,1,4) == "hud")
-				client.images.Remove(hud)
-
-	if(antagHUD)
-		var/list/target_list = list()
-		for(var/mob/living/target in oview(src, 14))
-			if(target.mind&&(target.mind.special_role||issilicon(target)) )
-				target_list += target
-		if(target_list.len)
-			assess_targets(target_list, src)
-	if(medHUD)
-		process_medHUD(src)
-
-
-/mob/dead/proc/process_medHUD(mob/M)
-	var/client/C = M.client
-	for(var/mob/living/carbon/human/patient in oview(M, 14))
-		C.images += patient.hud_list[HEALTH_HUD]
-		C.images += patient.hud_list[STATUS_HUD_OOC]
-
-/mob/dead/proc/assess_targets(list/target_list, mob/dead/observer/U)
-	var/client/C = U.client
-	for(var/mob/living/carbon/human/target in target_list)
-		C.images += target.hud_list[SPECIALROLE_HUD]
-
-
-/*
-		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
-			var/mob/living/silicon/silicon_target = target
-			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
-				if(isrobot(silicon_target))//Different icons for robutts and AI.
-					U.client.images += image(tempHud,silicon_target,"hudmalborg")
-				else
-					U.client.images += image(tempHud,silicon_target,"hudmalai")
-*/
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
@@ -299,18 +252,30 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
-/mob/dead/observer/verb/toggle_medHUD()
+/mob/dead/observer/verb/toggle_allHUD() 
 	set category = "Ghost"
-	set name = "Toggle MedicHUD"
-	set desc = "Toggles Medical HUD allowing you to see how everyone is doing."
+	set name = "Toggle HUDs"
+	set desc = "Toggles all HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
-	if(medHUD)
-		medHUD = 0
-		to_chat(src, "<span class='info'><B>Medical HUD Disabled</B></span>")
+
+	if(client.has_antag_hud())
+		to_chat(usr, "Please disable antag-HUD or combo-HUDs in the admin tab.")
+		return
+
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
+	if(data_hud)
+		data_hud = !data_hud
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = global.huds[hudtype]
+			H.remove_hud_from(src)
+		to_chat(src, "<span class='info'><B>HUDs Disabled</B></span>")
 	else
-		medHUD = 1
-		to_chat(src, "<span class='info'><B>Medical HUD Enabled</B></span>")
+		data_hud = !data_hud
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = global.huds[hudtype]
+			H.add_hud_to(src)
+		to_chat(src, "<span class='info'><B>HUDs Enabled</B></span>")
 
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
@@ -330,14 +295,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
 		if(response == "No")
 			return
-		M.can_reenter_corpse = 0
+		M.can_reenter_corpse = FALSE
 	if(!M.has_enabled_antagHUD && !client.holder)
-		M.has_enabled_antagHUD = 1
+		M.has_enabled_antagHUD = TRUE
 	if(M.antagHUD)
-		M.antagHUD = 0
+		M.antagHUD = FALSE
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
-		M.antagHUD = 1
+		M.antagHUD = TRUE
+		for(var/datum/atom_hud/antag/H in global.huds)
+			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
 /mob/dead/observer/proc/dead_tele()

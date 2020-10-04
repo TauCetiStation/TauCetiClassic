@@ -14,6 +14,7 @@
 	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_BATT_HUD)
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -63,6 +64,9 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+	
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
 
 /mob/living/silicon/robot/drone/Destroy()
 	drone_list -= src
@@ -90,6 +94,23 @@
 
 /mob/living/silicon/robot/drone/pick_module()
 	return
+
+/mob/living/simple_animal/drone/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/drone/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(stat == DEAD)
+		holder.icon_state = "huddead2"
+	else if(incapacitated())
+		holder.icon_state = "hudoffline"
+	else
+		holder.icon_state = "hudstat"
 
 //Drones can only use binary and say emotes. NOTHING else.
 //TBD, fix up boilerplate. ~ Z
@@ -244,14 +265,6 @@
 		gib()
 		return
 	..()
-
-/mob/living/silicon/robot/drone/death(gibbed)
-
-	if(module)
-		var/obj/item/weapon/gripper/G = locate(/obj/item/weapon/gripper) in module
-		if(G) G.drop_item()
-
-	..(gibbed)
 
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()

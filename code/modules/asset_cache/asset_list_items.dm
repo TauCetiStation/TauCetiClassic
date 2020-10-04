@@ -7,6 +7,12 @@
 		/datum/asset/simple/fontawesome
 	)
 
+/datum/asset/simple/tgui
+	assets = list(
+		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
+	)
+
 /datum/asset/simple/jquery
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
@@ -24,11 +30,12 @@
 
 /datum/asset/simple/fontawesome
 	assets = list(
-		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
-		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
-		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css'
+		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
+		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css',
+		"font-awesome.css"    = 'html/font-awesome/css/all.min.css'
 	)
 
 /datum/asset/simple/spider_os

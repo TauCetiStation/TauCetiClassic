@@ -515,6 +515,12 @@ SUBSYSTEM_DEF(ticker)
 	//Print a list of antagonists to the server log
 	antagonist_announce()
 
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/m in global.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
+
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
 

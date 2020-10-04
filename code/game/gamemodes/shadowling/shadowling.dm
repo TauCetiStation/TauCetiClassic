@@ -71,6 +71,8 @@ Made by Xhuis
 	required_players_secret = 25
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_name = "hudshadowling"
+	antag_hud_type = ANTAG_HUD_SHADOW
 
 	votable = 0
 
@@ -119,12 +121,12 @@ Made by Xhuis
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
-		update_shadows_icons_added(shadow)
 		//give_shadowling_abilities(shadow)
 
 	return ..()
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
+	add_antag_hud(ANTAG_HUD_SHADOW, "hudshadowling", shadow.current)
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
@@ -157,12 +159,11 @@ Made by Xhuis
 	if (!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
-		update_all_shadows_icons()
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
 		to_chat(new_thrall_mind.current, "<b>The objectives of the shadowlings:</b> [objective_explanation]")
-		H.hud_updateflag |= 1 << SPECIALROLE_HUD
+		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", H)
 		H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 
@@ -232,98 +233,3 @@ Made by Xhuis
 		text = "<div class='block'>[text]</div>"
 
 	return text
-
-/*
-	MISCELLANEOUS
-*/
-// Revs antag icons copypasta
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//Keeps track of players having the correct icons////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_shadows_icons()
-	spawn(0)
-		for(var/datum/mind/shadowling_mind in shadows)
-			if(shadowling_mind.current)
-				if(shadowling_mind.current.client)
-					for(var/image/I in shadowling_mind.current.client.images)
-						if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-							qdel(I)
-
-		for(var/datum/mind/thrall_mind in thralls)
-			if(thrall_mind.current)
-				if(thrall_mind.current.client)
-					for(var/image/I in thrall_mind.current.client.images)
-						if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-							qdel(I)
-
-		for(var/datum/mind/shadowling in shadows)
-			if(shadowling.current)
-				if(shadowling.current.client)
-					for(var/datum/mind/thrall in thralls)
-						if(thrall.current)
-							var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
-							shadowling.current.client.images += I
-					for(var/datum/mind/shadowling_1 in shadows)
-						if(shadowling_1.current)
-							var/I = image('icons/mob/shadowling.dmi', loc = shadowling_1.current, icon_state = "shadowling")
-							shadowling.current.client.images += I
-
-		for(var/datum/mind/thrall in thralls)
-			if(thrall.current)
-				if(thrall.current.client)
-					for(var/datum/mind/shadowling in shadows)
-						if(shadowling.current)
-							var/I = image('icons/mob/shadowling.dmi', loc = shadowling.current, icon_state = "shadowling")
-							thrall.current.client.images += I
-					for(var/datum/mind/thrall_1 in thralls)
-						if(thrall_1.current)
-							var/I = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
-							thrall.current.client.images += I
-
-
-
-/datum/game_mode/proc/update_shadows_icons_added(datum/mind/thrall)
-	spawn(0)
-		for(var/datum/mind/shadowling_mind in shadows)
-			if(shadowling_mind.current)
-				if(shadowling_mind.current.client)
-					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
-					shadowling_mind.current.client.images += I
-			if(thrall.current)
-				if(thrall.current.client)
-					var/image/J = image('icons/mob/shadowling.dmi', loc = shadowling_mind.current, icon_state = "shadowling")
-					thrall.current.client.images += J
-
-		for(var/datum/mind/thrall_1 in thralls)
-			if(thrall_1.current)
-				if(thrall_1.current.client)
-					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
-					thrall_1.current.client.images += I
-			if(thrall.current)
-				if(thrall.current.client)
-					var/image/J = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
-					thrall.current.client.images += J
-
-
-
-/datum/game_mode/proc/update_shadows_icons_removed(datum/mind/thrall)
-	spawn(0)
-		for(var/datum/mind/shadowling_mind in shadows)
-			if(shadowling_mind.current)
-				if(shadowling_mind.current.client)
-					for(var/image/I in shadowling_mind.current.client.images)
-						if((I.icon_state == "thrall" || I.icon_state == "shadowling") && I.loc == thrall.current)
-							qdel(I)
-
-		for(var/datum/mind/thrall_1 in thralls)
-			if(thrall_1.current)
-				if(thrall_1.current.client)
-					for(var/image/I in thrall_1.current.client.images)
-						if((I.icon_state == "thrall" || I.icon_state == "shadowling") && I.loc == thrall.current)
-							qdel(I)
-
-		if(thrall.current)
-			if(thrall.current.client)
-				for(var/image/I in thrall.current.client.images)
-					if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-						qdel(I)

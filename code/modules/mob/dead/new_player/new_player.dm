@@ -5,6 +5,7 @@
 	stat = DEAD
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
+	hud_possible = list()
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
@@ -89,6 +90,9 @@ commented cause polls are kinda broken now, needs refactoring */
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open()
+	return
+
+/mob/dead/new_player/prepare_huds()
 	return
 
 /mob/dead/new_player/Stat()
