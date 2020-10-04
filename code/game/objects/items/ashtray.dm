@@ -77,7 +77,7 @@
 	icon_full  = "ashtray_full_bl"
 	icon_broken  = "ashtray_bork_bl"
 	max_butts = 14
-	health = 24.0
+	maxHealth = 24
 	g_amt = 30
 	m_amt = 30
 	empty_desc = "Cheap plastic ashtray."
@@ -99,7 +99,7 @@
 	icon_full  = "ashtray_full_br"
 	icon_broken  = "ashtray_bork_br"
 	max_butts = 10
-	health = 72.0
+	maxHealth = 72
 	m_amt = 80
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
@@ -120,7 +120,7 @@
 	icon_full  = "ashtray_full_gl"
 	icon_broken  = "ashtray_bork_gl"
 	max_butts = 12
-	health = 12.0
+	maxHealth = 12
 	g_amt = 60
 	empty_desc = "Glass ashtray. Looks fragile."
 	throwforce = 6.0

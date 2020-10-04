@@ -441,23 +441,41 @@
 
 /obj/item/organ/internal/stomach/process()
 	..()
-
+	owner.visible_message("00")
 	if(!is_broken())
+		owner.visible_message("111")
 		reagents.metabolize(owner)
 		for(var/mob/living/M in contents)
-			if(M.stat == DEAD)
+			if(M.stat == DEAD && !M.nutritional_value)
 				qdel(M)
 				continue
+			var/damage = 3
+			if(M.nutritional_value)
+				damage = 1
 
-			M.adjustBruteLoss(3)
-			M.adjustFireLoss(3)
-			M.adjustToxLoss(3)
+			M.adjustBruteLoss(damage)
+			M.adjustFireLoss(damage)
+			M.adjustToxLoss(damage)
+			M.nutritional_value -= max(0, damage * 3)
 			if(M.digestion_product)
 				reagents.add_reagent(M.digestion_product, rand(1,3))
+
+		for(var/obj/item/I in contents)
+			if(I.digest_act(src))
+				reagents.add_reagent("nutrition", 1)
 
 	else if(world.time >= next_cramp)
 		next_cramp = world.time + rand(200,800)
 		owner.custom_pain("Your stomach cramps agonizingly!",1)
+
+/obj/item/proc/digest_act(obj/item/organ/internal/stomach/S)
+	health -= max(0.1, (1 - S.health / S.maxHealth) * 10)
+	if(S.health <= 0)
+		for(var/obj/item/I in contents)
+			I.forceMove(S)
+		qdel(src)
+		return TRUE
+	return prob(10)
 
 /obj/item/organ/internal/stomach/proc/get_devour_time(atom/movable/food)
 	if(iscarbon(food) || isanimal(food))

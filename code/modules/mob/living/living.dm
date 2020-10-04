@@ -1,6 +1,7 @@
 /mob/living/atom_init()
 	. = ..()
 	living_list += src
+	nutritional_value = maxHealth
 
 	default_transform = transform
 	default_pixel_x = pixel_x

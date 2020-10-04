@@ -7,7 +7,8 @@
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
-	var/health = null
+	var/maxHealth
+	var/health
 	var/burn_point = null
 	var/burning = null
 	var/list/hitsound = list()
@@ -78,6 +79,12 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+
+/obj/item/atom_init()
+	. = ..()
+	if(!health)
+		maxHealth = w_class * 50
+		health = maxHealth
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
