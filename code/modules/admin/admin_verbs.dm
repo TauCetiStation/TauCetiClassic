@@ -717,6 +717,9 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Title Screen"
 	set category = "Fun"
 
+	if(!check_rights(R_FUN))
+		return
+
 	var/file = input(usr) as icon|null
 	if(!file)
 		return
