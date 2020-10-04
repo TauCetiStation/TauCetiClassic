@@ -275,6 +275,9 @@
 		ui = new(user, src, "DisposalUnit", name)
 		ui.open()
 
+/obj/machinery/disposal/tgui_close(mob/user)
+	user.unset_machine(src)
+
 /obj/machinery/disposal/tgui_data(mob/user)
 	var/list/data = list()
 
