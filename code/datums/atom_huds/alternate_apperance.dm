@@ -15,10 +15,14 @@ var/global/list/active_alternate_appearances = list()
 		return
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
-
+/**
+  * Allows you to add an alternative sprite to the object in the form "appearance_key" = "image"
+  *
+*/
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 	var/transfer_overlays = FALSE
+	var/atom/alternate_type
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
@@ -57,22 +61,43 @@ var/global/list/active_alternate_appearances = list()
 	var/add_ghost_version = FALSE
 	var/ghost_appearance
 
-/datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
+/**
+  * If you have one sprite superimposed on the second, then in image/I set `I.override = TRUE`
+  * Arguments:
+  * * key - name of the associative array in the form "key" = "image"
+  * * image/I - image of alternate apperance
+  * * options - type of transfer overlays
+  * * atom/_alternate_type - not an important argument if you pass another atom here, alternate apperance will intercept inheads and examine.
+  * * loc - not an important argument if you pass another image here
+  *
+*/
+/datum/atom_hud/alternate_appearance/basic/New(key, image/I, atom/_alternate_type, loc, options = AA_TARGET_SEE_APPEARANCE)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
-	theImage = I
-	target = I.loc
-	if(istype(target))
-		I.layer = target.layer
-	if(transfer_overlays)
-		I.copy_overlays(target)
-
+	alternate_type = _alternate_type
 	hud_icons = list(appearance_key)
-	add_to_hud(target, I)
+
+	if(I)
+		theImage = I
+		target = I.loc
+	else
+		target = loc
+		theImage = image(initial(alternate_type.icon), target, initial(alternate_type.icon_state))
+		//This is necessary so that sprites are not layered
+		theImage.override = TRUE
+
+	theImage.layer = target.layer
+
+	if(transfer_overlays)
+		theImage.copy_overlays(target)
+
+	add_to_hud(target, theImage)
+
 	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
 		add_hud_to(target)
+
 	if(add_ghost_version)
-		var/image/ghost_image = image(icon = I.icon , icon_state = I.icon_state, loc = I.loc)
+		var/image/ghost_image = image(icon = theImage.icon , icon_state = theImage.icon_state, loc = theImage.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
 		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)

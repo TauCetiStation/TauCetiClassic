@@ -17,6 +17,10 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
+/obj/item/device/mmi/atom_init()
+	. = ..()
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/mime, "mmi_rofl", null, /obj/item/weapon/gun, src)
+
 /obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
 		var/obj/item/brain/B = I

@@ -32,7 +32,7 @@
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 	///Current alternate_apperances on atom
-	var/list/alternate_appearances
+	var/list/datum/atom_hud/alternate_appearance/alternate_appearances
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -239,28 +239,41 @@
   * You can override what is returned from this proc by registering to listen for the
   * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
   */
-/atom/proc/get_examine_name(mob/user)
+/atom/proc/get_examine_name(mob/user, atom/alt_obj)
 	var/list/override
 	if(!dirt_overlay)
-		. = "\a [src]."
-		override = list("", gender == PLURAL ? "some" : "a", " ", "[name]", ".")
+		. = "\a [alt_obj ? alt_obj.name : src]."
+		override = list("", gender == PLURAL ? "some" : "a", " ", "[alt_obj ? alt_obj.name : name]", ".")
 	else
 		. = "<span class='danger'> \a [dirt_description()]!</span>"
-		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description()]", "!</span>")
+		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description(alt_obj)]", "!</span>")
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
 ///Generate the full examine string of this atom (including icon for goonchat)
-/atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[bicon(src)] [thats ? "That's ": ""][get_examine_name(user)]"
+/atom/proc/get_examine_string(mob/user, thats = FALSE, atom/alt_obj)
+	return "[bicon(alt_obj ? alt_obj : src)] [thats ? "That's ": ""][get_examine_name(user, alt_obj)]"
 
 /atom/proc/examine(mob/user, distance = -1)
-	to_chat(user, get_examine_string(user, TRUE))
-	if(desc)
+	var/atom/alt_obj
+
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
+			if(!AA.alternate_type || !(user in AA.hudusers))
+				continue
+			alt_obj = new AA.alternate_type
+			break
+
+	to_chat(user, get_examine_string(user, TRUE, alt_obj))
+
+	if(alt_obj)
+		to_chat(user, alt_obj.desc)
+	else if(desc)
 		to_chat(user, desc)
+
 	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
@@ -275,11 +288,11 @@
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
-/atom/proc/dirt_description()
+/atom/proc/dirt_description(atom/alt_obj)
 	if(dirt_overlay)
-		return "[dirt_overlay.name]-covered [name]"
+		return "[dirt_overlay.name]-covered [alt_obj ? alt_obj.name : name]"
 	else
-		return name
+		return "[alt_obj ? alt_obj.name : name]"
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
@@ -667,3 +680,12 @@
 /mob/shake_act(severity, recursive = TRUE)
 	..()
 	shake_camera(src, 0.5 SECONDS, severity)
+
+/atom/proc/set_alt_apperances_layers()
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			if(AA.theImage)
+				AA.theImage.layer = layer
+				AA.theImage.plane = plane
+				AA.theImage.appearance_flags = appearance_flags

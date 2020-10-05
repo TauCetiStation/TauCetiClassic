@@ -1063,24 +1063,53 @@
 	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)
 		if(l_hand)
+			if(l_hand.alternate_appearances)
+				viewing = alternate_attack_animation(l_hand, A, viewing)
 			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
 	else
 		if(r_hand)
+			if(r_hand.alternate_appearances)
+				viewing = alternate_attack_animation(r_hand, A, viewing)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-				viewing |= M.client
+
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
+// returns a new list of viewers without viewers with alternate_appearance
+/mob/living/proc/alternate_attack_animation(obj/item/item, atom/target, list/viewing)
+	if(item.alternate_appearances)
+		var/image/I
+		for(var/key in item.alternate_appearances)
+			var/list/alt_viewing = list()
+			var/datum/atom_hud/alternate_appearance/basic/AA = item.alternate_appearances[key]
+			for(var/client/C in viewing)
+				if(!(C.mob in AA.hudusers))
+					continue
+				alt_viewing += C
+				viewing -= C
+
+			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+			flick_overlay(I, alt_viewing, 5)
+			I.pixel_z = 16
+			animate(I, pixel_z = 0, alpha = 125, time = 3)
+	return viewing
 
 /mob/living/Stat()
 	..()
