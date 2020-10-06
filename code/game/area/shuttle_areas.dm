@@ -224,7 +224,7 @@
 /area/shuttle/vox/transit
 	name = "hyperspace"
 	icon_state = "shuttle"
-	parallax_movedir = NORTH
+	parallax_movedir = WEST
 
 /area/shuttle/vox/southwest_solars
 	name = "Aft port solars"
