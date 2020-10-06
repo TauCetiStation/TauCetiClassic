@@ -1,4 +1,4 @@
-/** 
+/**
   * SMOKE
   *  Summons smoke in radius of user.
   *  Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.

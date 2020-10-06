@@ -320,7 +320,7 @@
 	if(!isanimal(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
- 
+
 	var/mob/living/simple_animal/S = AOG.buckled_mob
 	if(!S.animalistic)
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")

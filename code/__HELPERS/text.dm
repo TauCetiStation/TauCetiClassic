@@ -375,10 +375,10 @@
 
 	return t
 
-// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as 
+// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as
 // ISO-8859-5 -> utf-8 instead of Windows-1251 -> utf-8
 // Byond choises first encoding based on server locale, this fix for ru_RU
-// On you locale this fix may not work and you should change or 
+// On you locale this fix may not work and you should change or
 // drop this proc completly if you not have any pre-513 cyrillics
 // Does nothing with standart latin
 // ...

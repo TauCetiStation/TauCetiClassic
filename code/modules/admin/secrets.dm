@@ -57,7 +57,7 @@
 					"}
 
 		if(1) // IC Events
-			if(check_rights((R_EVENT|R_FUN),0)) 
+			if(check_rights((R_EVENT|R_FUN),0))
 				dat += {"
 					<h2><B>IC Events</B></h2>
 					<b>Teams</b><br>

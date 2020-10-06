@@ -299,7 +299,7 @@
 		break
 
 /mob/living/silicon/robot/drone/transfer_personality(client/candidate)
-	if(!candidate) 
+	if(!candidate)
 		return
 
 	ckey = candidate.ckey

@@ -159,7 +159,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		for(var/enemies_list in SYNDICATE_ENEMIES_LIST to NANOTRASEN_ENEMIES_LIST)//Two lists.
 			if(enemies_list == NANOTRASEN_ENEMIES_LIST) //Which list are we looking at?
 				current_minds = antagonist_list
-			else 
+			else
 				current_minds = protagonist_list
 			for(var/t = 3, (current_minds.len && t > 0), t--)//While the list is not empty and targets remain. Also, 3 targets is good.
 				current_mind = pick(current_minds)//Pick a random person.
