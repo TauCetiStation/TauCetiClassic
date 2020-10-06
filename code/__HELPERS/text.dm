@@ -409,7 +409,7 @@
 				new_char = "р"
 			if(1056 to 1119)
 				new_char = ascii2text(ascii_char - 16)*/
-		
+
 		// win1251 -> unicode
 		if(ascii_char <= 255 && ascii_char >= 192)
 			new_char = ascii2text(ascii_char + 848)

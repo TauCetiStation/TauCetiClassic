@@ -41,7 +41,7 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 		var/asset_file = asset.resource
 		if(!asset_file)
 			continue
-		
+
 		var/asset_md5 = asset.md5
 		if(client.sent_assets[asset_name] == asset_md5)
 			continue

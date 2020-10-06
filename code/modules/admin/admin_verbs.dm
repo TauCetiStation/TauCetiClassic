@@ -873,7 +873,7 @@ var/list/admin_verbs_hideable = list(
 
 	if(!check_rights(R_ADMIN))
 		return
-	
+
 	if(isobserver(usr))
 		var/mob/dead/observer/O = usr
 		if(O.data_hud)

@@ -37,7 +37,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	return TRUE
-	
+
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)

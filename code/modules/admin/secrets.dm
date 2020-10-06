@@ -70,7 +70,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					"}
-			
+
 		if(2) // OOC Events
 			if(check_rights((R_FUN|R_EVENT),0))
 				dat += {"
@@ -693,7 +693,7 @@
 				L.SetSleeping(6000 SECONDS)
 		else
 			to_chat(world, "oof, this is ["secretsadmin"] not worked")
-		
+
 	if (usr)
 		log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 		if (ok)
@@ -739,4 +739,4 @@
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
-	
+

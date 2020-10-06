@@ -279,7 +279,7 @@
 	I.alpha = 150
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.transform = M
-	I.pixel_x = 12	
+	I.pixel_x = 12
 	I.pixel_y = 12
 	user.add_overlay(I)
 	user.set_light(7)

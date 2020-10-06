@@ -405,5 +405,5 @@ SUBSYSTEM_DEF(garbage)
 	var/datum/browser/popup = new(usr, "window=qdeletedlog")
 	popup.set_content(dat)
 	popup.open()
-	
+
 #endif

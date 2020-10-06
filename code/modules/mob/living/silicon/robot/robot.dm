@@ -119,7 +119,7 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-	
+
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)

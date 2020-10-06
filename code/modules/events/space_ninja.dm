@@ -39,7 +39,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "carpspawn")
 				ninjastart.Add(L)
-	
+
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
