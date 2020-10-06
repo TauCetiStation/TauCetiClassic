@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_BACKGROUND
 	wait = SS_WAIT_DEMO
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
