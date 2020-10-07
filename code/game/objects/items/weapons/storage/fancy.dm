@@ -15,11 +15,7 @@
  */
 
 /obj/item/weapon/storage/fancy
-	icon = 'icons/obj/food.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Very tasty donuts. Security staff will rate them."
-	var/icon_type = "donut"
+	var/icon_type
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
@@ -42,18 +38,28 @@
  */
 
 /obj/item/weapon/storage/fancy/donut_box
-	icon = 'icons/obj/food.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Very tasty donuts. Security staff will rate them."
+	icon_state = "donutbox"
+	icon_type = "donut"
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
+
+/obj/item/weapon/storage/fancy/donut_box/update_icon()
+	cut_overlays()
+
+	for(var/i in 1 to contents.len)
+		var/obj/item/weapon/reagent_containers/food/snacks/donut/donut = contents[i]
+		var/icon/new_donut_icon = icon('icons/obj/storage.dmi', "donut_[donut.donut_sprite_type]")
+		new_donut_icon.Shift(EAST, 3 * (i - 1))
+		add_overlay(new_donut_icon)
 
 
 /obj/item/weapon/storage/fancy/donut_box/atom_init()
 	. = ..()
 	for (var/i in 1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
+	update_icon()
 
 /*
  * Egg Box
