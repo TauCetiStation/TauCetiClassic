@@ -32,7 +32,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/atom_init()
 	. = ..()
-	
+
 	if(filter_type != NOTHING_FILTER)
 		filtered_out = list("[filter_type]")
 
@@ -47,7 +47,7 @@
 	for(var/id in gas_data.gases)
 		if(gas_data.gases_knowable[id])
 			filters_dat += "<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	..()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
@@ -121,7 +121,7 @@
 	dat += {"
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
-			<h4>Set Filter Type:</h4>"}	
+			<h4>Set Filter Type:</h4>"}
 	dat += filters_dat
 	dat += {"
 			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>

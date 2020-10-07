@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(vote)
 
 		. += "<hr>"
 		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
- 
+
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
 			. += "<tr><td>"

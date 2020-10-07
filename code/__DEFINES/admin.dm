@@ -76,8 +76,8 @@
 #define BANKEY_TYPE      "type" //The ban's type, if any. It can be "sticky", "session", or "time"
 #define BANKEY_CKEY      "ckey" // Ckey of banned user
 #define BANKEY_REASON    "reason" // The reason the ban was implemented; Admin only
-#define BANKEY_MSG       "message" // A message to display to the user. 
-#define BANKEY_KEYS      "keys" // Other keys caught in a sticky ban. 
+#define BANKEY_MSG       "message" // A message to display to the user.
+#define BANKEY_KEYS      "keys" // Other keys caught in a sticky ban.
 #define BANKEY_IP        "IP" // Other IP addresses caught in a sticky ban.
 #define BANKEY_CID       "computer_id" // Other computer_id values caught in a sticky ban.
 #define BANKEY_TIME      "time" // The number of seconds remaining in the ban.
