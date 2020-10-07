@@ -18522,7 +18522,7 @@
 	dir = 8
 	},
 /mob/living/carbon/monkey/diona{
-	desc = "It's so sweet and wise";
+	flavor_text = "It's so sweet and wise";
 	name = "Hidry"
 	},
 /turf/simulated/floor{
@@ -83392,7 +83392,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -83649,7 +83649,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -83906,7 +83906,7 @@ alF
 als
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
