@@ -40,7 +40,7 @@
 /obj/item/weapon/storage/fancy/donut_box
 	name = "donut box"
 	desc = "Very tasty donuts. Security staff will rate them."
-	icon_state = "donutbox"
+	icon_state = "donutbox_back"
 	icon_type = "donut"
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
@@ -54,6 +54,7 @@
 		new_donut_icon.Shift(EAST, 3 * (i - 1))
 		add_overlay(new_donut_icon)
 
+	add_overlay(icon('icons/obj/storage.dmi', "donutbox_front"))
 
 /obj/item/weapon/storage/fancy/donut_box/atom_init()
 	. = ..()
