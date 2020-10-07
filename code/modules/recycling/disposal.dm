@@ -380,8 +380,6 @@
 				INVOKE_ASYNC(src, .proc/flush)
 		flush_count = 0
 
-	src.updateDialog()
-
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
 		flush()
 
