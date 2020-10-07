@@ -27,6 +27,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 40
 	throwforce = 10
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = ITEM_SIZE_NORMAL
@@ -43,10 +44,6 @@
 	force = 20
 	can_embed = 0
 
-/obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
-
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
@@ -56,6 +53,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 40
 	throwforce = 10
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = ITEM_SIZE_NORMAL
@@ -66,11 +64,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/katana/Get_shield_chance()
-		return 50
-
-/obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
+	return 50
 
 /obj/item/weapon/harpoon
 	name = "harpoon"
@@ -82,7 +76,7 @@
 	force = 20
 	throwforce = 15
 	w_class = ITEM_SIZE_NORMAL
-	attack_verb = list("jabbed","stabbed","ripped")
+	attack_verb = list("jabbed", "stabbed", "ripped")
 
 /obj/item/weapon/switchblade
 	name = "switchblade"
