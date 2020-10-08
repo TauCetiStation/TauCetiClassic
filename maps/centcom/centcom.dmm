@@ -14401,7 +14401,11 @@
 /area/custom/beach)
 "aZa" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -18522,7 +18526,7 @@
 	dir = 8
 	},
 /mob/living/carbon/monkey/diona{
-	flavor_text = "It's so sweet and wise";
+	desc = "It's so sweet and wise";
 	name = "Hidry"
 	},
 /turf/simulated/floor{
@@ -19496,7 +19500,6 @@
 /area/shuttle/vox/arkship)
 "gQV" = (
 /obj/machinery/seed_extractor,
-/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
@@ -23285,7 +23288,9 @@
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack/rags,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "nDb" = (
@@ -23333,7 +23338,9 @@
 /obj/structure/table,
 /obj/item/toy/gun,
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
 "nIb" = (
@@ -23894,7 +23901,11 @@
 /obj/effect/landmark{
 	name = "voxstart"
 	},
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -41186,32 +41197,32 @@ aaM
 aaM
 "}
 (65,1,1) = {"
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 ahG
 aaM
 aaM
