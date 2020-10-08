@@ -228,6 +228,7 @@
 				excavate_find(5, finds[1])
 			else if(prob(50))
 				finds.Remove(finds[1])
+				set_mine_hud()
 				if(prob(50))
 					artifact_debris()
 
@@ -359,7 +360,7 @@
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	
+
 	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
@@ -404,6 +405,7 @@
 				qdel(W)
 
 	finds.Remove(F)
+	set_mine_hud()
 
 
 /turf/simulated/mineral/proc/artifact_debris(severity = 0)
