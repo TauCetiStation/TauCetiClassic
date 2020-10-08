@@ -46,7 +46,7 @@
 
 			if(R.module && (R.modtype == "Security"))
 				active_with_role["Security"]++
-			
+
 			if(R.module && (R.modtype == "Janitor"))
 				active_with_role["Janitor"]++
 

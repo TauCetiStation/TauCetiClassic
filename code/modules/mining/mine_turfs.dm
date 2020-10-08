@@ -360,7 +360,7 @@
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	
+
 	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)

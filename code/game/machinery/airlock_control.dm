@@ -109,7 +109,7 @@
 	if(frequency)
 		set_frequency(frequency)
 	update_icon()
-	
+
 	if(radio_controller)
 		set_frequency(frequency)
 

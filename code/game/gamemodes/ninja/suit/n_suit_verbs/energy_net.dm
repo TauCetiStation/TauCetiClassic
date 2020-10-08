@@ -1,4 +1,4 @@
-/** 
+/**
   * SPACE NINJA NET
   *  It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
   *  It is possible to destroy the net by the occupant or someone else.

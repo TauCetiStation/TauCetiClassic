@@ -12,7 +12,7 @@
 
 	var/list/chat_data = list("cookie_match", "charset")
 	var/chat_processed = FALSE
-	
+
 	var/first_entry = FALSE
 
 	var/time_velocity_spawn
@@ -31,7 +31,7 @@
 /datum/guard/proc/trigger_init()
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
-		
+
 		if(!tests_processed)
 			do_tests()
 
@@ -133,7 +133,7 @@
 
 			if(first_entry)
 				charset_weight += 0.5 // how he know
-			
+
 			new_report += {"<div class='block'><h3>Charset ([charset_weight]):</h3>
 			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
 
@@ -165,7 +165,7 @@
 
 		if(isnum(holder.player_age) && holder.player_age > 60)
 			allowed_amount++
-		
+
 		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='block'><h3>Differents CID's ([multicid_weight]):</h3>
@@ -222,7 +222,7 @@
 		return
 
 	var/cache_path = ("data/player_saves/[holder.ckey[1]]/[holder.ckey]/geoip.sav")
-	
+
 	if(fexists(cache_path) && !force_reload)
 		var/savefile/S = new /savefile(cache_path)
 		S["geoip"] >> geoip_data
@@ -254,7 +254,7 @@
 /datum/guard/proc/get_geoip_data(url)
 	var/attempts = 3
 	var/static/geoip_failed_attempts = 0
-	
+
 	if(geoip_failed_attempts > 15)
 		log_debug("GUARD: multiple get_geoip fails, geoip disabled for round")
 		message_admins("GUARD: multiple get_geoip fails, geoip disabled for round", R_DEBUG)
@@ -302,7 +302,7 @@
 		ban[BANKEY_REASON] = "(AutoBan)(GUARD)"
 		ban[BANKEY_CKEY] = holder.ckey
 		ban[BANKEY_MSG] = "[reason]"
-		
+
 		if(!get_stickyban_from_ckey(holder.ckey))
 			SSstickyban.add(holder.ckey, ban)
 

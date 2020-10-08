@@ -1,4 +1,4 @@
-/** 
+/**
   * EM PULSE
   *  Disables nearby tech equipment.
   */

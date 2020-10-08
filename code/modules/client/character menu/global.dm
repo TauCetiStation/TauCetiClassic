@@ -126,7 +126,7 @@
 
 		if("tgui_fancy")
 			tgui_fancy = !tgui_fancy
-		
+
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
 
