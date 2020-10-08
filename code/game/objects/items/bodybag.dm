@@ -26,11 +26,11 @@
 /obj/structure/closet/body_bag/attackby(W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
-		if(user.get_active_hand() != W)
+		if (user.get_active_hand() != W)
 			return
-		if(!in_range(src, user) && src.loc != user)
+		if (!in_range(src, user) && src.loc != user)
 			return
-		if(t)
+		if (t)
 			src.name = "body bag - "
 			src.name += t
 			src.add_overlay(image(src.icon, "bodybag_label"))
