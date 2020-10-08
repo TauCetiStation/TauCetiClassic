@@ -169,8 +169,6 @@
 	if(current)
 		reset_current()
 
-	src.current = C
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 35, FALSE, -3)
 
 	if(current)
 		var/mob/living/L = current.loc
