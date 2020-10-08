@@ -8,7 +8,7 @@
 	gen_altar_variants()
 	gen_pews_variants()
 	gen_carpet_variants()
-	
+
 /datum/religion/chaplain/proc/religify_chapel()
 	for(var/chap_area in typesof(/area/station/civilian/chapel))
 		religify(chap_area)

@@ -13,7 +13,7 @@
 	r_hand_back = /obj/item/weapon/storage/box/ids
 
 	back_style = BACKPACK_STYLE_CAPTAIN
-	
+
 	implants = list(
 		/obj/item/weapon/implant/mindshield/loyalty
 		)

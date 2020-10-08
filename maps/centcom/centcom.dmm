@@ -18526,7 +18526,6 @@
 	dir = 8
 	},
 /mob/living/carbon/monkey/diona{
-	desc = "It's so sweet and wise";
 	name = "Hidry"
 	},
 /turf/simulated/floor{

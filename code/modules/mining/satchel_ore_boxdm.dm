@@ -101,7 +101,7 @@
 
 	for (var/obj/item/weapon/ore/O in contents)
 		O.Move(src.loc)
-	
+
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return
