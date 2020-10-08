@@ -166,7 +166,9 @@
 				usr.drop_item()
 				I.loc = src
 				src.scan = I
-
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					H.sec_hud_set_ID()
 	else if (href_list["logout"])
 		src.authenticated = null
 		src.screen = null

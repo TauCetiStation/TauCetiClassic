@@ -10,7 +10,6 @@ var/list/admin_verbs_default = list(
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		//shows an interface for all players, with links to various panels,
 	/client/proc/invisimin,				//allows our mob to go invisible/visible,
-//	/datum/admins/proc/show_traitor_panel,	//interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage,
 	/datum/admins/proc/toggleenter,		//toggles whether people can join the current game,
 	/datum/admins/proc/toggleguests,	//toggles whether guests can join the current game,
 	/datum/admins/proc/announce,		//priority announce something to all clients,
@@ -32,7 +31,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/jumptocoord,			//we ghost and jump to a coordinate,
 	/client/proc/Getmob,				//teleports a mob to our location,
 	/client/proc/Getkey,				//teleports a mob with a certain ckey to our location,
-//	/client/proc/sendmob,				//sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage,
 	/client/proc/Jump,
 	/client/proc/jumptokey,				//allows us to jump to the location of a mob with a certain ckey,
 	/client/proc/jumptomob,				//allows us to jump to a specific mob,
@@ -48,7 +46,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/admin_memo,			//admin memo system. show/delete/write. +SERVER needed to delete admin memos of others,
 	/client/proc/dsay,					//talk in deadchat using our ckey/fakekey,
 	/client/proc/toggleprayers,			//toggles prayers on/off,
-//	/client/proc/toggle_hear_deadcast,	//toggles whether we hear deadchat,
 	/client/proc/toggle_hear_radio,		//toggles whether we hear the radio,
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		//toggles ooc on/off for everyone,
@@ -73,7 +70,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/aooc,
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
-	/client/proc/debug_variables 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
+	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
 	)
 var/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -738,14 +736,19 @@ var/list/admin_verbs_hideable = list(
 	set name = "De-admin self"
 	set category = "Admin"
 
-	if(holder)
-		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
-			log_admin("[key_name(usr)] deadmined themself.")
-			message_admins("[key_name_admin(usr)] deadmined themself.")
-			deadmin()
-			to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-			verbs += /client/proc/readmin_self
-			feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!holder)
+		return
+
+	if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
+		if(has_antag_hud())
+			toggle_combo_hud()
+
+		log_admin("[key_name(usr)] deadmined themself.")
+		message_admins("[key_name_admin(usr)] deadmined themself.")
+		deadmin()
+		to_chat(src, "<span class='interface'>You are now a normal player.</span>")
+		verbs += /client/proc/readmin_self
+		feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
@@ -862,6 +865,40 @@ var/list/admin_verbs_hideable = list(
 		if (job)
 			SSjob.FreeRole(job)
 	return
+
+/client/proc/toggle_combo_hud()
+	set name = "Toggle Combo HUD"
+	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
+	set category = "Admin"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(isobserver(usr))
+		var/mob/dead/observer/O = usr
+		if(O.data_hud)
+			to_chat(usr, "Please disable combo-HUDs in the ghost tab.")
+			return
+
+	var/adding_hud = !has_antag_hud()
+
+	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC)) // add data huds
+		var/datum/atom_hud/H = global.huds[hudtype]
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+
+	if(ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		H.update_sight()
+
+	to_chat(usr, "You toggled your admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+	log_admin("[key_name(usr)] toggled their admin combo HUD [adding_hud ? "ON" : "OFF"].")
+
+/client/proc/has_antag_hud()
+	var/datum/atom_hud/A = global.huds[ANTAG_HUD_TRAITOR]
+	return A.hudusers[mob]
 
 /client/proc/toggleattacklogs()
 	set name = "Toggle Attack Log Messages"

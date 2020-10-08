@@ -102,10 +102,12 @@ SUBSYSTEM_DEF(vote)
 			. += "You <b>can remove</b> vote.<br>"
 		else
 			. += "You <b>can't remove</b> vote.<br>"
+		if(active_vote.minimum_win_percentage)
+			. += "A minimum <b>[active_vote.minimum_win_percentage * 100]%</b> is required to win the option."
 
 		. += "<hr>"
 		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
- 
+
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
 			. += "<tr><td>"
@@ -123,30 +125,36 @@ SUBSYSTEM_DEF(vote)
 			. += "(<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>) "
 	else
 		var/any_votes = FALSE
-		. += "<h2>Start a vote:</h2><hr><ul>"
-
+		. += "<h2>Start a vote:</h2><hr>"
+		. += "<table width='auto'>"
 		for(var/P in votes)
 			var/datum/poll/poll = votes[P]
-			. += "<li>"
+			if(poll.only_admin && !admin)
+				continue
+			. += "<tr>"
 			any_votes = TRUE
 
 			if(poll.can_start() && (!poll.only_admin || admin))
-				. += "<a href='?src=\ref[src];start_vote=\ref[poll]'>[poll.name]</a>"
+				. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>[poll.name]</a></td>"
+				. += "<td class='collapsing'></td>"
 			else
-				. += "<s>[poll.name]</s>"
+				. += "<td class='collapsing'><s>[poll.name]</s></td>"
 				if(admin)
-					if(poll.can_force())
-						. += " <a href='?src=\ref[src];start_vote=\ref[poll]'>force</a> "
+					if(!poll.get_force_blocking_reason())
+						. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>force</a></td>"
 					else
-						. += " <s>\[force]</s> "
+						. += "<td class='collapsing'><s>\[force]</s></td>"
+				else
+					. += "<td class='collapsing'></td>"
 			if(admin)
-				. += "\t(<a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin?"Only admin":"Allowed"]</a>)"
-			. += "</li>"
+				. += "<td class='collapsing'><a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin ? "Only admin" : "Allowed"]</a></td>"
+			. += "<td><i>[poll.get_blocking_reason()]</i></td>"
+			. += "</tr>"
 
 		if(!any_votes)
 			. += "<li><i>There is no available votes here now.</i></li>"
 
-		. += "</ul><hr>"
+		. += "</table><hr>"
 	. += "<a href='?src=\ref[src];close=1' style='position:absolute;right:50px'>Close</a>"
 	return .
 

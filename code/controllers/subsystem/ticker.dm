@@ -393,10 +393,10 @@ SUBSYSTEM_DEF(ticker)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 			if(ishuman(player))
 				SSquirks.AssignQuirks(player, player.client, TRUE)
+			if(player.mind.assigned_role != "MODE")
+				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
@@ -514,6 +514,12 @@ SUBSYSTEM_DEF(ticker)
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()
+
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/m in global.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()

@@ -87,7 +87,7 @@
 		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
-	
+
 	return data
 
 /obj/item/weapon/paper/verb/rename()
@@ -151,7 +151,7 @@
 		if(!spam_flag)
 			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
+			VARSET_IN(src, spam_flag, FALSE, 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist

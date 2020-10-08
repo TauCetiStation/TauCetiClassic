@@ -433,7 +433,7 @@ function ehjaxCallback(data) {
 
 function createPopup(contents, width) {
 	opts.popups++;
-	$('body').append('<div class="popup" id="popup'+opts.popups+'" style="width: '+width+'px;">'+contents+' <a href="#" class="close"><i class="icon-remove"></i></a></div>');
+	$('body').append('<div class="popup" id="popup'+opts.popups+'" style="width: '+width+'px;">'+contents+' <a href="#" class="close"><i class="fas fa-times"></i></a></div>');
 
 	//Attach close popup event
 	var $popup = $('#popup'+opts.popups);

@@ -860,7 +860,7 @@
 						break
 
 			var/datum/signal/signal = src.telecomms_process()
-			
+
 			if(signal && signal.data["done"])
 				useTC = TRUE
 			if(!useMS || !useTC)
@@ -1234,6 +1234,11 @@
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
+
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
@@ -1314,6 +1319,10 @@
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
+				if(ishuman(loc))
+					var/mob/living/carbon/human/human_wearer = loc
+					if(human_wearer.wear_id == src)
+						human_wearer.sec_hud_set_ID()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(I, /obj/item/device/paicard) && !src.pai)
