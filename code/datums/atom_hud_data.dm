@@ -257,7 +257,7 @@
 	var/image/holder = hud_list[MINE_HUD]
 	if(finds && finds.len || artifact_find)
 		holder.icon_state = "hudanomaly"
-	if(mineral)
+	else if(mineral)
 		holder.icon_state = "hud[mineral.ore_type]"
 
 /*~~~~~~~~~~~~~~~~~~~~
