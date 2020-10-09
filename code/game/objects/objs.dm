@@ -188,7 +188,9 @@
 	return level == 1
 
 /atom/movable/proc/get_listeners()
-	return list()
+	. = list()
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
 
 /mob/get_listeners()
 	. = list(src)
@@ -218,7 +220,7 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	addtimer(VARSET_CALLBACK(src, being_shocked, FALSE), 10)
+	VARSET_IN(src, being_shocked, FALSE, 10)
 
 //mob - who is being feed
 //user - who is feeding
@@ -243,6 +245,12 @@
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
 				return FALSE
+		if(Feeded.species.flags[IS_SYNTHETIC])
+			if(Feeded == user)
+				to_chat(user, "<span class='warning'>You can't [eatverb] [food], you have a monitor for a head!</span>")
+			else
+				to_chat(user, "<span class='warning'>You can't feed [Feeded] with [food], they have a monitor for a head!</span>")
+			return FALSE
 		return TRUE
 	if(isIAN(mob))
 		var/mob/living/carbon/ian/dumdum = mob

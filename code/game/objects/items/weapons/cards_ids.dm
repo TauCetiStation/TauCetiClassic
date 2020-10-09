@@ -100,6 +100,7 @@
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
+	var/list/disabilities = list()
 
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
@@ -114,6 +115,9 @@
 		blood_type = H.dna.b_type
 		dna_hash = H.dna.unique_enzymes
 		fingerprint_hash = md5(H.dna.uni_identity)
+		for(var/datum/quirk/Q in H.roundstart_quirks)
+			if(Q.disability)
+				disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -124,12 +128,22 @@
 	..()
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption points loaded onto this card.")
+	if(disabilities.len)
+		to_chat(user, GetDisabilities())
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
 
 /obj/item/weapon/card/id/GetID()
 	return src
+
+/obj/item/weapon/card/id/proc/GetDisabilities()
+	if(disabilities.len)
+		var/msg = "Has disability indicators on the card: <span class='warning bold'><B>"
+		for(var/I in 1 to disabilities.len - 1)
+			msg += "[disabilities[I]], "
+		msg += "[disabilities[disabilities.len]].</B></span>"
+		return msg
 
 /obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/id_wallet))
@@ -152,6 +166,8 @@
 	to_chat(usr, "The blood type on the card is [blood_type].")
 	to_chat(usr, "The DNA hash on the card is [dna_hash].")
 	to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
+	if(disabilities.len)
+		to_chat(usr, GetDisabilities())
 	return
 
 
@@ -274,9 +290,9 @@
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
-	var/list/colorlist = list()
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
+	var/list/radial_chooses
 
 
 
@@ -338,14 +354,14 @@
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")
-				for(var/P in typesof(/obj/item/weapon/card/id))
-					var/obj/item/weapon/card/id/C = new P
-					if (C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-						C.name = C.icon_state
-						colorlist += C
+				if(!radial_chooses)
+					radial_chooses = list()
+					for(var/P in typesof(/obj/item/weapon/card/id))
+						var/obj/item/weapon/card/id/C = new P
+						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
+							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
-				var/obj/item/weapon/card/id/newc
-				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state

@@ -729,5 +729,5 @@
 	tool.forceMove(accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
+  target.nutrition = C.charge
 
-	target.nutrition = C.charge

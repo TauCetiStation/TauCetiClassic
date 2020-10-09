@@ -606,6 +606,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"preparation",
 		"death commando",
 		"syndicate commando",
+		"syndicate commando comander",
 		"special ops officer",
 		"blue wizard",
 		"red wizard",
@@ -861,7 +862,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_death_commando()
 
 		if("syndicate commando")
-			M.equip_syndicate_commando()
+			M.equip_syndicate_commando(FALSE)
+
+		if("syndicate commando comander")
+			M.equip_syndicate_commando(TRUE)
 
 		if("nanotrasen representative")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
@@ -953,7 +957,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
 
 			spawned_card = new/obj/item/weapon/card/id/velocity(M)
 			spawned_card.assignment = "Velocity Officer"
@@ -1005,7 +1009,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
 
 			spawned_card = new/obj/item/weapon/card/id/velocity(M)
 			spawned_card.assignment = "Velocity Chief"
@@ -1201,7 +1205,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(M), SLOT_L_STORE)
 
 			var/obj/item/device/pda/heads/hos/pda = new(M)
@@ -1290,7 +1294,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(M), SLOT_L_EAR)
 
 			var/obj/item/device/pda/warden/pda = new(M)
@@ -2116,10 +2120,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	nanomanager.close_user_uis(usr)
 
 	// Re-load the assets.
-	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
-	assets.register()
+	get_asset_datum(/datum/asset/nanoui)
 
-	// Clear the user's cache so they get resent.
-	usr.client.cache = list()
+	// Clear the user's sent_assets so they get resent.
+	usr.client.sent_assets = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")

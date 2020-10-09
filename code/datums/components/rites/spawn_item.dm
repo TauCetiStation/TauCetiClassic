@@ -117,30 +117,31 @@
 		var/atom/fake = spawn_type
 		if(sacrifice_type)
 			for(var/obj/item/real_item in AOG)
-				var/obj/effect/overlay/I = new(AOG.loc)
-				I.icon = initial(fake.icon)
-				I.icon_state = initial(fake.icon_state)
-				I.name = initial(fake.icon_state)
-				spawning_item += I
+				var/atom/A = mimic_item(fake, AOG)
+				spawning_item += A
 				// Set same coordinate
-				I.pixel_w = real_item.pixel_w
-				I.pixel_x = real_item.pixel_x
-				I.pixel_y = real_item.pixel_y
-				I.pixel_z = real_item.pixel_z
-				I.alpha = 20
+				A.pixel_w = real_item.pixel_w
+				A.pixel_x = real_item.pixel_x
+				A.pixel_y = real_item.pixel_y
+				A.pixel_z = real_item.pixel_z
+				A.alpha = 20
 		else
 			for(var/count in 1 to count_items)
 				// Spawn illusion of item
-				var/obj/effect/overlay/I = new(AOG.loc)
-				I.icon = initial(fake.icon)
-				I.icon_state = initial(fake.icon_state)
-				I.name = initial(fake.icon_state)
-				spawning_item += I
-				I.pixel_x = rand(-10, 10)
-				I.pixel_y = rand(0, 13)
-				I.alpha = 20
+				var/atom/A = mimic_item(fake, AOG)
+				spawning_item += A
+				A.pixel_x = rand(-10, 10)
+				A.pixel_y = rand(0, 13)
+				A.alpha = 20
 	else
 		item_restoration(AOG, stage)
+
+/datum/component/rite/spawn_item/proc/mimic_item(atom/fake, obj/structure/altar_of_gods/AOG)
+	var/obj/effect/overlay/I = new(AOG.loc)
+	I.icon = initial(fake.icon)
+	I.icon_state = initial(fake.icon_state)
+	I.name = initial(fake.name)
+	return I
 
 /datum/component/rite/spawn_item/proc/revert_effects(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	if(spawning_item)

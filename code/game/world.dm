@@ -87,7 +87,7 @@ var/base_commit_sha = 0
 /world/proc/SetupLogs()
 	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
 	var/log_date = time2text(world.realtime, "YYYY/MM/DD")
-	
+
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
@@ -96,6 +96,8 @@ var/base_commit_sha = 0
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
 	global.access_log = file("[log_directory]/access.log")
+	global.asset_log = file("[log_debug_directory]/asset.log")
+	global.tgui_log = file("[log_debug_directory]/tgui.log")
 
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
@@ -145,7 +147,6 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
-		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
@@ -171,7 +172,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
-	
+
 	else if (length(T) && istext(T))
 		var/list/packet_data = params2list(T)
 		if (packet_data && packet_data["announce"] == "")
@@ -307,7 +308,7 @@ var/shutdown_processed = FALSE
 				host_announcements += "<hr>"
 
 			host_announcements += trim(file2text("data/announcements/[file]"))
-		
+
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
 /world/proc/load_test_merge()
@@ -315,6 +316,7 @@ var/shutdown_processed = FALSE
 		join_test_merge = "<strong>Test merged PRs:</strong> "
 		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in prs)
+			test_merges += "#[pr] "
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
 /world/proc/load_regisration_panic_bunker()
@@ -400,9 +402,6 @@ var/shutdown_processed = FALSE
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
 
 	if (config && config.allow_ai)
 		features += "AI allowed"

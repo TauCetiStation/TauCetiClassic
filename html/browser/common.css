@@ -41,6 +41,14 @@ a:hover, .spoiler b:hover
 	background: #ffffff;
 }
 
+a.nobg, a.nobg:link, a.nobg:visited, a.nobg:active, a.nobg:hover
+{
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
 a.white, a.white:link, a.white:visited, a.white:active
 {
 	color: #40628a;
@@ -303,6 +311,10 @@ div.notice
 	margin-left: 35px
 }
 
+td.collapsing {
+	width: 1%;
+	white-space: nowrap;
+}
 
 .progressBar
 {

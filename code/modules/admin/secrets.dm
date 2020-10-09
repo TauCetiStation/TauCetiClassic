@@ -57,7 +57,7 @@
 					"}
 
 		if(1) // IC Events
-			if(check_rights((R_EVENT|R_FUN),0)) 
+			if(check_rights((R_EVENT|R_FUN),0))
 				dat += {"
 					<h2><B>IC Events</B></h2>
 					<b>Teams</b><br>
@@ -70,7 +70,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					"}
-			
+
 		if(2) // OOC Events
 			if(check_rights((R_FUN|R_EVENT),0))
 				dat += {"
@@ -281,6 +281,7 @@
 				//traitorize(H, objective, 0)
 				SSticker.mode.traitors += H.mind
 				H.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
@@ -291,6 +292,7 @@
 			for(var/mob/living/silicon/A in player_list)
 				SSticker.mode.traitors += A.mind
 				A.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", A)
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective
@@ -691,7 +693,7 @@
 				L.SetSleeping(6000 SECONDS)
 		else
 			to_chat(world, "oof, this is ["secretsadmin"] not worked")
-		
+
 	if (usr)
 		log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 		if (ok)
@@ -737,4 +739,4 @@
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
-	
+

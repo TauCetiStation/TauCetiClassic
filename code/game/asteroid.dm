@@ -19,9 +19,9 @@ var/global/list/spawned_surprises = list()
 
 	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
 	if(!wall)
-		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/structure/alien/resin/wall)
+		wall = pick(/turf/simulated/wall/r_wall, /turf/simulated/wall, /obj/structure/alien/resin/wall, /turf/simulated/wall/mineral/sandstone)
 	if(!floor)
-		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
+		floor = pick(/turf/simulated/floor, /turf/simulated/floor/engine)
 
 	for(var/x = 0,x<x_size,x++)
 		for(var/y = 0,y<y_size,y++)

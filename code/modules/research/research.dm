@@ -10,7 +10,7 @@ Variables:
 - design_by_id contains all existing /datum/design.
 - known_designs contains all researched /datum/design.
 - experiments contains data related to earning research points, more info in experiment.dm
-- research_points is an ammount of points that can be spend on researching technologies
+- research_points is an amount of points that can be spend on researching technologies
 - design_categories_protolathe stores all unlocked categories for protolathe designs
 - design_categories_imprinter stores all unlocked categories for circuit imprinter designs
 
@@ -28,8 +28,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 - Name:		Pretty obvious. This is often viewable to the players.
 - Desc:		Pretty obvious. Also player viewable.
 - ID:		This is the unique ID of the tech that is used by the various procs to find and/or maniuplate it.
-- Level:	This is the current level of the tech. Based on the ammount of researched technologies
-- MaxLevel: Maxium level possible for this tech. Based on the ammount of technologies of that tech
+- Level:	This is the current level of the tech. Based on the amount of researched technologies
+- MaxLevel: Maxium level possible for this tech. Based on the amount of technologies of that tech
 
 */
 /***************************************************************
@@ -185,8 +185,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
-	design_reliabilities = O.design_reliabilities
-	design_created_prototypes = O.design_created_prototypes
 
 	for(var/tech_tree_id in O.tech_trees)
 		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
@@ -198,6 +196,12 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/tech_id in O.researched_tech)
 		var/datum/technology/T = O.researched_tech[tech_id]
 		UnlockTechology(T, force = TRUE)
+
+		for(var/D in T.unlocks_designs)
+			if(O.design_reliabilities[D] > design_reliabilities[D]) //check, is the reliability better in the downloadable
+				design_reliabilities[D] = O.design_reliabilities[D]
+				design_created_prototypes[D] = O.design_created_prototypes[D]
+
 	experiments.merge_with(O.experiments)
 
 /datum/research/proc/forget_techology(datum/technology/T)
@@ -297,7 +301,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/id = "id"              //An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1              //A simple number scale of the research level. Level 0 = Secret tech.
 	var/rare = 1               //How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
-	var/maxlevel               //Calculated based on the ammount of technologies
+	var/maxlevel               //Calculated based on the amount of technologies
 	var/shown = TRUE           //Used to hide tech that is not supposed to be shown from the start
 	var/item_tech_req          //Deconstructing items with this tech will unlock this tech tree
 

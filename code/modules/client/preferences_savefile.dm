@@ -252,12 +252,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
+	S["chat_ghostsight"]	>> chat_ghostsight
 	S["randomslot"]			>> randomslot
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+
+	//TGUI
+	S["tgui_fancy"]		>> tgui_fancy
+	S["tgui_lock"]		>> tgui_lock
 
 	//Sound preferences
 	S["snd_music_vol"]						>> snd_music_vol
@@ -284,9 +289,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
+	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
@@ -331,11 +339,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
+	S["chat_ghostsight"]	<< chat_ghostsight
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+
+	//TGUI
+	S["tgui_fancy"]		<< tgui_fancy
+	S["tgui_lock"]		<< tgui_lock
 
 	//Sound preferences
 	S["snd_music_vol"]						<< snd_music_vol

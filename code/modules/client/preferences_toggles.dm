@@ -269,3 +269,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","CGSO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_fancy_tgui()
+	set name = "Toggle Fancy TGUI"
+	set category = "Preferences"
+	set desc = "Toggle Fancy TGUI"
+
+	prefs.tgui_fancy = !prefs.tgui_fancy
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TFTGUI")

@@ -556,9 +556,9 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_ammount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
 
-/obj/item/rig_module/device/extinguisher/proc/update_foam_ammount()
+/obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
 		var/obj/item/weapon/reagent_containers/spray/extinguisher/ext = device
 		charges["aqueous_foam"].charges = ext.reagents.total_volume
@@ -576,7 +576,7 @@
 	selectable = TRUE
 	toggleable = FALSE
 	var/per_use = 5
-	var/spray_ammount = 0 // 0 does 1x1 tile
+	var/spray_amount = 0 // 0 does 1x1 tile
 	var/max_volume = 100
 
 /obj/item/rig_module/metalfoam_spray/init_charges()
@@ -618,7 +618,7 @@
 	step_towards(D, T)
 	sleep(5)
 	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(spray_ammount, D.loc, metalfoam = 1)
+	s.set_up(spray_amount, D.loc, metalfoam = 1)
 	s.start()
 	qdel(D)
 
@@ -680,5 +680,45 @@
 
 	holder.canremove = TRUE
 	holder.wearer.alpha = 255
+
+	return TRUE
+
+/obj/item/rig_module/syndiemmessage
+	name = "Syndicate emergency message"
+	desc = "Special syndicate system emergency message."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "syndie_headset"
+	activate_string = "Send syndicate emergency message"
+	deactivate_string = "Transmitting... Don't turn off this"
+	permanent = TRUE
+	show_toggle_button = TRUE
+	usable = TRUE
+	use_power_cost = 10
+	module_cooldown = 50 SECONDS
+	var/transmitting = FALSE
+
+/obj/item/rig_module/syndiemmessage/activate(forced = FALSE)
+	if(!..())
+		return FALSE
+
+	transmitting = TRUE
+	var/mob/living/carbon/human/H = holder.wearer
+	var/input = sanitize(input(H, "Enter a short and important message that will be useful to command to assess the situation and provide further guidance for your work", "To abort, send an empty message.", ""))
+	if(!input)
+		return FALSE
+	Syndicate_announce(input, H)
+	to_chat(H, "<span class='notice'>Message transmitted.</span>")
+	log_say("[key_name(H)] has made a Syndicate announcement: [H]")
+	transmitting = FALSE
+	deactivate()
+
+/obj/item/rig_module/syndiemmessage/deactivate()
+	if(transmitting)
+		var/mob/living/carbon/human/H = holder.wearer
+		to_chat(H, "<span class='warning'>Syndicate message module transmiting your important message. It turns off on its own how you do it</span>")
+		return FALSE
+
+	if(!..())
+		return FALSE
 
 	return TRUE

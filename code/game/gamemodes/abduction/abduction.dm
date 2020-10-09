@@ -12,6 +12,8 @@
 	recommended_enemies = 2
 	required_players = 25
 	required_players_secret = 25
+	antag_hud_type = ANTAG_HUD_ABDUCTOR
+	antag_hud_name = "abductor"
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -127,6 +129,8 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
+		add_antag_hud(antag_hud_type, antag_hud_name, scientist.current)
+		add_antag_hud(antag_hud_type, antag_hud_name, agent.current)
 
 	return ..()
 

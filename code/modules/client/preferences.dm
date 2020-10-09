@@ -38,6 +38,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
+	//TGUI
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
+
 	//sound volume preferences
 	var/snd_music_vol = 100
 	var/snd_ambient_vol = 100

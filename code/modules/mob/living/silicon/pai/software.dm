@@ -128,7 +128,7 @@
 
 
 	// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
-	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	dat = {"<!DOCTYPE html>
 			<html>
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -335,10 +335,24 @@
 						src.securityActive2 = M
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				if(secHUD)
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.add_hud_to(src)
+				else
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.remove_hud_from(src)
+
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				if(medHUD)
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.add_hud_to(src)
+				else
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.remove_hud_from(src)
+
 		if("translator")
 			if(href_list["toggle"])
 				src.translator_toggle()

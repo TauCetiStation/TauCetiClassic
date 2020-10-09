@@ -86,9 +86,9 @@
 	belt = /obj/item/device/pda/lawyer
 
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
-	
+
 	r_pocket = /obj/item/device/flash
-	
+
 	implants = list(
 		/obj/item/weapon/implant/mindshield/loyalty
 		)
