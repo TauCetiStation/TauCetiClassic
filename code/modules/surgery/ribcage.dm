@@ -687,7 +687,6 @@
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in accum
 	C.forceMove(get_turf(target))
-	target.nutrition = 0
 	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
@@ -729,5 +728,6 @@
 	tool.forceMove(accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
-  target.nutrition = C.charge
+	
+	target.nutrition = C.charge
 
