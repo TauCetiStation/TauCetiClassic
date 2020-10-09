@@ -365,6 +365,8 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(next_warning > world.time)
 		return
 	next_warning = world.time + 10 SECONDS

@@ -1873,7 +1873,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
 /mob/living/carbon/human/proc/IPC_change_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
 	if(stat)
@@ -1909,7 +1909,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/proc/IPC_toggle_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
@@ -1932,6 +1932,23 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
+/mob/living/carbon/human/proc/IPC_System_Start()
+	set category = "IPC"
+	set name = "IPC Systems Start"
+	set desc = "Turn on chassis systems"
+	if(stat == CONSCIOUS)
+		return
+	if(nutrition < 251)
+		to_chat(usr, "<span class='warning bold'>%ACCUMULATOR% CHARGE IS TOO LOW.</span>")
+		return
+	if(organs_by_name[O_BRAIN].damage > 30)
+		to_chat(usr, "<span class='warning bold'>%%P05IBR*IH@% $Ys7EMm ER00xr// .</span>")
+		return
+	if(stat == DEAD)
+		to_chat(usr, "<span class='warning bold'>POWERING UP THE SYSTEMS.</span>")
+		stat = CONSCIOUS
+		nutrition -= 250
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
