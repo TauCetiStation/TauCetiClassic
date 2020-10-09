@@ -62,7 +62,7 @@
 		
 	if(cell.charge <= cell.maxcharge*0.1 && warn <= 0)
 		to_chat(H, "<span class='warning'>Cooling unit charge below 10%.</span>")
-		playsound(H, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+		playsound(H, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 		warn = cell.charge
 		
 	if(cell.charge >= cell.maxcharge*0.1 && warn >= 0)
