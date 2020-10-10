@@ -169,9 +169,9 @@
 						qdel(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = null
+						O.moveToNullspace()
 						new_machine.component_parts += O
-					circuit.loc = null
+					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)
 

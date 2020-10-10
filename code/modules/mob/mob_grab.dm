@@ -530,7 +530,7 @@
 						affecting.log_combat(assailant, "headbutted")
 
 						assailant.drop_from_inventory(src)
-						forceMove(null)
+						moveToNullspace()
 						qdel(src)
 						return
 				if(INTENT_PUSH)

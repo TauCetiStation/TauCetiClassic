@@ -354,7 +354,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		powernet.remove_cable(Cable_i)
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
-	loc = null
+	moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	for (i = 2, i <= P_list.len, i++) // propagate network to every powernetless adjacents cables

@@ -402,14 +402,14 @@
 						if(new_gun.loaded.len > num_bullets)
 							if(I in new_gun.loaded)
 								new_gun.loaded.Remove(I)
-								I.loc = null
+								I.moveToNullspace()
 						else
 							break
 			else
 				for(var/obj/item/I in new_gun)
 					if(I in new_gun.loaded)
 						new_gun.loaded.Remove(I)
-						I.loc = null */
+						I.moveToNullspace() */
 			else
 				new_gun.magazine.stored_ammo.len = 0
 

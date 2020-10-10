@@ -79,7 +79,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		var/obj/effect/decal/cleanable/blood/B = locate() in range(2,src)
 		if(B)
 			last_eat = world.time
-			B.loc = null
+			B.moveToNullspace()
 			if(istype(B, /obj/effect/decal/cleanable/blood/drip))
 				charges += 0.25
 			else
@@ -203,7 +203,7 @@ var/list/bad_messages = list("Never take me off, please!",
 			                          'sound/hallucinations/turn_around2.ogg')
 			playsound(src, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE, -3)
 			M.SetSleeping(max(M.AmountSleeping(), rand(5 SECONDS, 10 SECONDS)))
-			loc = null
+			moveToNullspace()
 	else
 		STOP_PROCESSING(SSobj, src)
 

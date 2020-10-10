@@ -42,7 +42,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 /mob/living/parasite/proc/exit_host()
 	host.parasites.Remove(src)
 	host = null
-	loc = null
+	moveToNullspace()
 	return TRUE
 
 

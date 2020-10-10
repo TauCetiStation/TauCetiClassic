@@ -447,7 +447,7 @@
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
-					P.loc = null
+					P.moveToNullspace()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 			if(isscrewdriver(P) && circuit)

@@ -46,14 +46,14 @@
 				if(collided_core.AddParticles(particle_type, 1 + additional_particles))
 					collided_core.owned_field.plasma_temperature += mega_energy
 					collided_core.owned_field.energy += energy
-					loc = null
+					moveToNullspace()
 		else if(istype(A, /obj/effect/fusion_particle_catcher))
 			var/obj/effect/fusion_particle_catcher/PC = A
 			if(particle_type && particle_type != "neutron")
 				if(PC.parent.owned_core.AddParticles(particle_type, 1 + additional_particles))
 					PC.parent.plasma_temperature += mega_energy
 					PC.parent.energy += energy
-					loc = null
+					moveToNullspace()
 	return
 
 

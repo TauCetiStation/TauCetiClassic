@@ -118,7 +118,7 @@
 	if(do_after(user, 50, target = target) && in_range(user, H))
 		user.drop_item()
 		target = H
-		loc = null
+		moveToNullspace()
 		//var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 		playsound(H, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)

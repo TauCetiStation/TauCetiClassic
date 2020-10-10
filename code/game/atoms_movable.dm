@@ -23,6 +23,9 @@
 	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
+	// Pulling through space border handling.
+	var/can_be_z_moved = TRUE
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc
@@ -140,9 +143,10 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
+/atom/movable/proc/doMove(atom/destination)
+	. = FALSE
 	if(destination)
-		if(pulledby && !keep_pulling)
+		if(pulledby)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
 		var/same_loc = (oldloc == destination)
@@ -169,17 +173,36 @@
 
 		Moved(oldloc, 0)
 		return TRUE
-	return FALSE
 
-/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
-	if(!keep_pulling)
-		stop_pulling()
+	else
+	// Moves the item to nullspace (don't do this unless you know what you're doing)
+		. = TRUE
+		if(loc)
+			var/atom/oldloc = loc
+			var/area/old_area = get_area(oldloc)
+			oldloc.Exited(src, null)
+			if(old_area)
+				old_area.Exited(src, null)
+		loc = null
+
+/atom/movable/proc/moveToNullspace()
+	return doMove(null)
+
+/atom/movable/proc/forceMove(atom/destination)
+	. = FALSE
+	if(destination)
+		. = doMove(destination)
+	else
+		CRASH("No valid destination passed into forceMove")
+
+/mob/living/forceMove(atom/destination)
+	stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob()
 	. = ..()
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling)
+/mob/dead/observer/doMove(atom/destination)
 	if(destination)
 		if(loc)
 			loc.Exited(src)

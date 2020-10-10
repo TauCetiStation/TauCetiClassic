@@ -126,7 +126,7 @@
 		B.forceMove(T)
 	else
 		T.blob_act()//If we cant move in hit the turf
-		B.forceMove(null) //So we don't play the splat sound, see Destroy()
+		B.moveToNullspace() //So we don't play the splat sound, see Destroy()
 		qdel(B)
 
 	for(var/atom/A in T)//Hit everything in the turf

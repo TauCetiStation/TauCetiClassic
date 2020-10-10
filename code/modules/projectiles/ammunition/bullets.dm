@@ -153,7 +153,7 @@
 
 /obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
 	if (..())
-		loc = null
+		moveToNullspace()
 		return 1
 	else
 		return 0

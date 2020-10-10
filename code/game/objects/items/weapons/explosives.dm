@@ -23,7 +23,7 @@
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
 		target = target
-		loc = null
+		moveToNullspace()
 		var/location
 		if(ismob(target))
 			var/mob/living/M = target

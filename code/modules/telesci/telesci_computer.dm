@@ -86,7 +86,7 @@
 			return
 		user.drop_from_inventory(W)
 		crystals += W
-		W.loc = null
+		W.moveToNullspace()
 		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
 		updateDialog()
 		return

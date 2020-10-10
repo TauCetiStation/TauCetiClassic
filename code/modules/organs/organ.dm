@@ -32,7 +32,7 @@
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	STOP_PROCESSING(SSobj, src)
 
-	loc = null
+	moveToNullspace()
 	owner = H
 
 	if(parent_bodypart)

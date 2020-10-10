@@ -81,12 +81,17 @@
 
 // Ported from unstable r355
 
-/turf/space/Entered(atom/movable/A as mob|obj)
+/turf/space/Entered(atom/movable/A)
 	if(movement_disabled)
 		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	..()
-	if ((!(A) || src != A.loc))	return
+	if ((!(A) || src != A.loc))
+		return
+
+	// Let the puller handle it all.
+	if(A.pulledby || !A.can_be_z_moved)
+		return
 
 	if(SSticker && SSticker.mode)
 
@@ -134,29 +139,45 @@
 			if(!move_to_z)
 				return
 
-			A.z = move_to_z
-
+			var/tx
+			var/ty
 			if(src.x <= TRANSITIONEDGE)
-				A.x = world.maxx - TRANSITIONEDGE - 2
-				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
+				tx = world.maxx - TRANSITIONEDGE - 2
+				ty = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
-				A.x = TRANSITIONEDGE + 1
-				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
+				tx = TRANSITIONEDGE + 1
+				ty = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (src.y <= TRANSITIONEDGE)
-				A.y = world.maxy - TRANSITIONEDGE -2
-				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+				ty = world.maxy - TRANSITIONEDGE -2
+				tx = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
-				A.y = TRANSITIONEDGE + 1
-				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+				ty = TRANSITIONEDGE + 1
+				tx = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+			var/turf/destination = locate(tx, ty, move_to_z)
 
 			if(ismob(A))
-				var/mob/M = A
-				if(M.pulling)
-					M.pulling.forceMove(get_turf(M), TRUE)
+				var/mob/puller = A
+				var/atom/movable/pulling = puller.pulling
 
+				A.forceMove(destination)
+				while(pulling != null)
+					var/next_pulling = null
+					if(ismob(pulling))
+						var/mob/M = pulling
+						next_pulling = M.pulling
+
+					var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
+					pulling.can_be_z_moved = FALSE
+					pulling.forceMove(T)
+					puller.start_pulling(pulling)
+					pulling.can_be_z_moved = TRUE
+
+					puller = pulling
+					pulling = next_pulling
 
 			stoplag()//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)

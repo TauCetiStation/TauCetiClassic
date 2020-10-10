@@ -474,7 +474,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
 		target = target
-		loc = null
+		moveToNullspace()
 		var/location
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))

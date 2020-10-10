@@ -52,7 +52,7 @@
 			Generator.connect_to_network()
 		else
 			Generator.disconnect_from_network()
-			Generator.loc = null
+			Generator.moveToNullspace()
 
 /obj/structure/stool/bed/chair/pedalgen/attack_hand(mob/user)
 	if(buckled_mob)

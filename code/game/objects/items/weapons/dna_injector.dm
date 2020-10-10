@@ -68,7 +68,6 @@
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M, mob/user)
 	user.remove_from_mob(src)
-	loc = null
 
 	if(istype(M,/mob/living))
 		M.radiation += rand(15,45)

@@ -25,7 +25,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/IMP in src)
 			stored_implants += IMP
-			IMP.loc = null
+			IMP.moveToNullspace()
 			IMP.imp_in = null
 			IMP.implanted = FALSE
 			if(IMP.part)
@@ -160,7 +160,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/IMP in src)
 			stored_implants += IMP
-			IMP.loc = null
+			IMP.moveToNullspace()
 			IMP.imp_in = null
 			IMP.implanted = FALSE
 			if(IMP.part)
