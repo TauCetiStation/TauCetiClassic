@@ -1425,7 +1425,7 @@
 							icon_num = 5
 						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
-		if(nutrition_icon)
+		if(nutrition_icon && !species.flags[IS_SYNTHETIC])
 			switch(get_nutrition())
 				if(NUTRITION_LEVEL_FULL to INFINITY)
 					nutrition_icon.icon_state = "fat"
@@ -1439,6 +1439,22 @@
 					nutrition_icon.icon_state = "hungry"
 				else
 					nutrition_icon.icon_state = "starving"
+		if(nutrition_icon && species.flags[IS_SYNTHETIC])
+			switch(get_nutrition())
+				if(NUTRITION_LEVEL_IPC_FULL to INFINITY)
+					nutrition_icon.icon_state = "lowcell00"
+				if(NUTRITION_LEVEL_IPC_HIGH to NUTRITION_LEVEL_IPC_FULL)
+					nutrition_icon.icon_state = "lowcell0"
+				if(NUTRITION_LEVEL_IPC_NORMAL to NUTRITION_LEVEL_IPC_HIGH)
+					nutrition_icon.icon_state = "lowcell1"
+				if(NUTRITION_LEVEL_IPC_LOW to NUTRITION_LEVEL_IPC_NORMAL)
+					nutrition_icon.icon_state = "lowcell2"
+				if(NUTRITION_LEVEL_IPC_MIN to NUTRITION_LEVEL_IPC_LOW)
+					nutrition_icon.icon_state = "lowcell2.5"
+				if(NUTRITION_LEVEL_IPC_ONE to NUTRITION_LEVEL_IPC_MIN)
+					nutrition_icon.icon_state = "lowcell3"
+				else
+					nutrition_icon.icon_state = "emptycell"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"

@@ -99,6 +99,14 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
+//Nutrition levels for IPC.
+#define NUTRITION_LEVEL_IPC_FULL 500
+#define NUTRITION_LEVEL_IPC_HIGH 400
+#define NUTRITION_LEVEL_IPC_NORMAL 300
+#define NUTRITION_LEVEL_IPC_LOW 150
+#define NUTRITION_LEVEL_IPC_MIN 50
+#define NUTRITION_LEVEL_IPC_ONE 1
+
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
 
