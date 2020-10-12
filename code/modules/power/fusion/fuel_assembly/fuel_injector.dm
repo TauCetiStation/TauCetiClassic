@@ -51,7 +51,6 @@ var/list/fuel_injectors = list()
 		to_chat(usr, "You are incapacitated.")
 		return
 	dir = turn(dir, 90)
-	return
 
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 
