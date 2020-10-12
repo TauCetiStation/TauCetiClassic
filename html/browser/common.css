@@ -12,6 +12,7 @@ html {
 
 body {
 	overflow: auto;
+	font-family: Verdana, Geneva, sans-serif;
 }
 
 *, :after, :before {
@@ -194,7 +195,6 @@ body.theme_light .uiTitle {
 	height: 100%;
 	clear: both;
 	padding: 8px;
-	font-family: Verdana, Geneva, sans-serif;
 }
 
 .good {
