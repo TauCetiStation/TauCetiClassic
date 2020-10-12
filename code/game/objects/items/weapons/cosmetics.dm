@@ -373,7 +373,6 @@
 	dat += haircutlist
 
 	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
-	popup.set_window_options("can_resize=0")
 	popup.set_content(dat)
 	popup.open()
 	return

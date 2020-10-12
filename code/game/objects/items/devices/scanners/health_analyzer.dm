@@ -32,7 +32,6 @@
 			last_scan_name = M.name
 			if(!output_to_chat)
 				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
-				popup.set_window_options("can_resize=1")
 				popup.set_content(message)
 				popup.open()
 			else
@@ -47,7 +46,6 @@
 			last_scan_name = M.name
 			if(!output_to_chat)
 				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
-				popup.set_window_options("can_resize=1")
 				popup.set_content(dat)
 				popup.open()
 			else
@@ -58,7 +56,6 @@
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "[last_scan_name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
-	popup.set_window_options("can_resize=1")
 	popup.set_content(last_scan)
 	popup.open()
 

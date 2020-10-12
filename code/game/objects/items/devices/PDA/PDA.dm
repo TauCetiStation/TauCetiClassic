@@ -342,7 +342,7 @@
 			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 
 	var/datum/browser/popup = new(usr, "log", "AI PDA Message Log", 400, 444)
-	popup.set_window_options("border=1;can_resize=1;can_close=1;can_minimize=0")
+	popup.set_window_options("border=1;can_minimize=0")
 	popup.set_content(HTML)
 	popup.open()
 
