@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(vote)
 	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650)
 	panel.set_window_options("can_close=0")
 	panel.set_content(interface(C))
-	panel.open(0)
+	panel.open()
 
 /datum/controller/subsystem/vote/proc/start_vote(newvote)
 	if(active_vote)

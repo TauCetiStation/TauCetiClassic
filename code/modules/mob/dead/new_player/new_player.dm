@@ -486,7 +486,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
+	popup.open()
 
 
 /mob/dead/new_player/proc/create_character()

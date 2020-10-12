@@ -115,10 +115,7 @@
 
 	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 775)
 	popup.set_content(dat)
-	popup.open(0)
-
-
-
+	popup.open()
 
 
 // SECRETSFUN
