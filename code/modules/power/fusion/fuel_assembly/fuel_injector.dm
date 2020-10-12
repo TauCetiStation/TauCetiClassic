@@ -46,12 +46,12 @@ var/list/fuel_injectors = list()
 
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
-		return 0
+		return
 	if (usr.incapacitated())
 		to_chat(usr, "You are incapacitated.")
-		return 0
+		return
 	dir = turn(dir, 90)
-	return 1
+	return
 
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 
