@@ -249,8 +249,7 @@
 
 	var/datum/browser/popup = new(user, name, name, 400, 400)
 	popup.set_content(dat)
-	popup.open(0)
-	onclose(user, "[name]")
+	popup.open()
 
 /***********************************
 *   Kitchen Machine Handling/Cooking

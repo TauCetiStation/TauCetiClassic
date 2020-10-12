@@ -77,8 +77,6 @@
 	var/datum/browser/popup = new(user, "aicard", "Intelicard")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "aicard")
 	return
 
 /obj/item/device/aicard/Topic(href, href_list)

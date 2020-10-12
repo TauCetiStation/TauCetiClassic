@@ -130,8 +130,6 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 /obj/machinery/computer/vox_station/Topic(href, href_list)
 	. = ..()
 	if(!. || !VOX_CAN_USE(usr))

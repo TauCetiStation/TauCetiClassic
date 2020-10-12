@@ -288,7 +288,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "server_control")
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()

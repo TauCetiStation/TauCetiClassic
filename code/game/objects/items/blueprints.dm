@@ -73,9 +73,6 @@ move an amendment</a> to the drawing.</p>
 	popup.set_content(text)
 	popup.open()
 
-	onclose(usr, "blueprints")
-
-
 /obj/item/blueprints/proc/get_area()
 	var/turf/T = get_turf_loc(usr)
 	var/area/A = T.loc

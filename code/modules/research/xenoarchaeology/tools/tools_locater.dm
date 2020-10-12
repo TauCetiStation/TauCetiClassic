@@ -79,8 +79,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "locater")
-
 /obj/item/device/beacon_locator/Topic(href, href_list)
 	..()
 	usr.set_machine(src)

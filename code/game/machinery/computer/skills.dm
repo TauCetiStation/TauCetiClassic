@@ -148,7 +148,6 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "secure_rec")
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.

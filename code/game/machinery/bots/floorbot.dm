@@ -103,8 +103,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "autorepair")
-
 
 /obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))

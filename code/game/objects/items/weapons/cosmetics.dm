@@ -372,12 +372,10 @@
 	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
 	dat += haircutlist
 
-	var/datum/browser/popup = new(barber, "barber_window", "Grooming", ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
 	popup.set_window_options("can_resize=0")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(barber, "barber_window", src)
 	return
 
 /obj/item/weapon/scissors/proc/dohaircut()

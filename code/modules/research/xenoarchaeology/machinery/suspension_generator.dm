@@ -127,7 +127,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/process()
 	//set background = 1

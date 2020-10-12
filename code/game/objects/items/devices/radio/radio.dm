@@ -813,8 +813,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/datum/browser/popup = new(user, "radio", "[src]")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "radio")
 	return
 
 

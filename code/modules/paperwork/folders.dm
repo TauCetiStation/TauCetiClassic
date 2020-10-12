@@ -60,7 +60,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "folder")
 	add_fingerprint(usr)
 	return
 

@@ -90,8 +90,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "tcommachine")
-
 
 // Off-Site Relays
 //

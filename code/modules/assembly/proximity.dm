@@ -125,8 +125,6 @@
 	var/datum/browser/popup = new(user, "prox", "Proximity Sensor")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "prox")
 	return
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)

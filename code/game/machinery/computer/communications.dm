@@ -321,8 +321,6 @@
 			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 			popup.set_content(dat)
 			popup.open()
-
-			onclose(user, "communications")
 		return
 
 	switch(src.state)
@@ -400,10 +398,6 @@
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "communications")
-
-
 
 
 /obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)

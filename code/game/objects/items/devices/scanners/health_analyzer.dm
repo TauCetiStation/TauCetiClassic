@@ -35,8 +35,6 @@
 				popup.set_window_options("can_resize=1")
 				popup.set_content(message)
 				popup.open()
-
-				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, message)
 
@@ -52,8 +50,6 @@
 				popup.set_window_options("can_resize=1")
 				popup.set_content(dat)
 				popup.open()
-
-				onclose(user, "[M.name]_scan_report")
 			else
 				to_chat(user, dat)
 	else
@@ -65,8 +61,6 @@
 	popup.set_window_options("can_resize=1")
 	popup.set_content(last_scan)
 	popup.open()
-
-	onclose(user, "[last_scan_name]")
 
 /obj/item/device/healthanalyzer/verb/toggle_output()
 	set name = "Toggle Output"

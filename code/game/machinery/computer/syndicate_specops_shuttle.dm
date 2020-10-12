@@ -130,8 +130,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)
 	. = ..()
 	if(!. || !allowed(usr))

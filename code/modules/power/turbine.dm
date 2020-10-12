@@ -239,7 +239,6 @@
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "turbine")
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(href_list["close"])
@@ -298,9 +297,6 @@
 	var/datum/browser/popup = new(user, "computer", "Gas turbine remote control system", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "computer")
-
 
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)

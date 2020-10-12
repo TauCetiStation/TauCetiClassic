@@ -50,8 +50,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "port_gen")
-
 /obj/machinery/power/port_gen/riteg/is_operational_topic()
 	return TRUE
 

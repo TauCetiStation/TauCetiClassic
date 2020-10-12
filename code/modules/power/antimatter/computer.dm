@@ -86,6 +86,3 @@
 	var/datum/browser/popup = new(user, "communications", "Engine Computer", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "communications")
-

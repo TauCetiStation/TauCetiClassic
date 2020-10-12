@@ -60,7 +60,6 @@
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/cargo))
 	popup.set_content(dat)
 	popup.open()
-	onclose(user, "computer")
 
 /obj/machinery/computer/cargo/Topic(href, href_list)
 	. = ..()

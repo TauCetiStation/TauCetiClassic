@@ -24,8 +24,6 @@
 	var/datum/browser/popup = new(user, "scroll", "Teleportation Scroll:", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "scroll")
 	return
 
 /obj/item/weapon/teleportation_scroll/Topic(href, href_list)

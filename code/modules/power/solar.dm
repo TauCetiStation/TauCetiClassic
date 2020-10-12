@@ -404,8 +404,6 @@
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "solcon")
-
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
 	if(href_list["close"])

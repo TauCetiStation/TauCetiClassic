@@ -168,8 +168,6 @@
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "teg")
-
 
 /obj/machinery/power/generator/Topic(href, href_list)
 	. = ..()

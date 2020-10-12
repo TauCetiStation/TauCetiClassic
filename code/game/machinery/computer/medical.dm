@@ -129,8 +129,6 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "med_rec")
-
 /obj/machinery/computer/med_data/Topic(href, href_list)
 	. = ..()
 	if(!.)

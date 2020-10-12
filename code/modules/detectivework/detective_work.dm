@@ -121,8 +121,6 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user,"scanner")
-
 
 /obj/machinery/computer/forensic_scanning/Topic(href,href_list)
 	. = ..()

@@ -106,7 +106,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "depth_scanner")
 
 /obj/item/device/depth_scanner/Topic(href, href_list)
 	..()

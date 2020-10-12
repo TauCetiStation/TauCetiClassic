@@ -991,8 +991,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "pandemic")
-
 
 /obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
@@ -1195,8 +1193,6 @@
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
-
-	onclose(user, "reagentgrinder")
 
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)

@@ -57,8 +57,6 @@
 	popup.set_content(t1)
 	popup.open()
 
-	onclose(user, "airlock")
-
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
 	if (usr.incapacitated() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))

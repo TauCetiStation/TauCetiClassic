@@ -33,8 +33,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	. = ..()
 	if(!.)

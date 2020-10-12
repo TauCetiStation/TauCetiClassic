@@ -290,7 +290,6 @@
 	var/datum/browser/popup = new(user, "AMcontrol", "AntiMatter Control Panel", 420, 500)
 	popup.set_content(dat)
 	popup.open()
-	onclose(user, "AMcontrol")
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)

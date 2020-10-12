@@ -99,8 +99,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "gravgen")
-
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)
 	. = ..()

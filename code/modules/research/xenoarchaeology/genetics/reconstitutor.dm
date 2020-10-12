@@ -169,7 +169,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)
 	if(href_list["close"])

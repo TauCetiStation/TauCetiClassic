@@ -132,8 +132,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(src, "airoster")
-
 //can't inject synths
 /mob/living/silicon/try_inject(mob/user, error_msg)
 	if(error_msg)

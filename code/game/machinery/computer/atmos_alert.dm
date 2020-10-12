@@ -46,8 +46,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 /obj/machinery/computer/atmos_alert/process()
 	if(..())
 		src.updateDialog()

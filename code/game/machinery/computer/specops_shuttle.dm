@@ -214,8 +214,6 @@ var/specops_shuttle_timeleft = 0
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
 	. = ..()
 	if(!. || !allowed(usr))

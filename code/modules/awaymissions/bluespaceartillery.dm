@@ -33,7 +33,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "scroll")
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
 	. = ..()

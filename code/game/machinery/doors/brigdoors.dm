@@ -253,8 +253,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 //Function for using door_timer dialog input, checks if user has permission
 // href_list to
 //  "timing" turns on timer

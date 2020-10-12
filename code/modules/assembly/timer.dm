@@ -93,8 +93,6 @@
 	var/datum/browser/popup = new(user, "timer")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "timer")
 	return
 
 

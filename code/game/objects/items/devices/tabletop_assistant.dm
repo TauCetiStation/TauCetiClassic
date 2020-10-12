@@ -98,8 +98,6 @@
 	popup.set_content(data)
 	popup.open()
 
-	onclose(user, "tabletop_assistant")
-
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
 	..()
 

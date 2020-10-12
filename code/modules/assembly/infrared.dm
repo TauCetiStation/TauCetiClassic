@@ -125,8 +125,6 @@
 		var/datum/browser/popup = new(user, "infra", "Infrared Laser")
 		popup.set_content(dat)
 		popup.open()
-
-		onclose(user, "infra")
 		return
 
 /obj/item/device/assembly/infra/Topic(href, href_list)

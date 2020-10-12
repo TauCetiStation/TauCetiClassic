@@ -100,8 +100,6 @@
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "lockdown")
-
 /obj/machinery/computer/lockdown/Topic(href, href_list)
 	if(href_list["close"])
 		usr << browse(null, "window=lockdown")

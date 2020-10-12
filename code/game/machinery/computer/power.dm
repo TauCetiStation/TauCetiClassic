@@ -81,8 +81,6 @@
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "powcomp")
-
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
 	if(href_list["close"])

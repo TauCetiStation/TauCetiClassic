@@ -39,8 +39,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 
 /obj/machinery/computer/drone_control/Topic(href, href_list)
 	. = ..()

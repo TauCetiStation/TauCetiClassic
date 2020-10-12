@@ -39,7 +39,6 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "flightcomputer")
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)
 	. = ..()

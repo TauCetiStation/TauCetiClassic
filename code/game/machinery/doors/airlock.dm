@@ -545,8 +545,6 @@ var/list/airlock_overlays = list()
 	popup.set_content(t1)
 	popup.open()
 
-	onclose(user, "airlock")
-
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	if(!aiHacking)

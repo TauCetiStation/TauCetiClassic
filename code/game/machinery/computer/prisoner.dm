@@ -53,8 +53,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())

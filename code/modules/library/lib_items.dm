@@ -176,7 +176,6 @@
 		popup.open()
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
-		onclose(user, "book")
 	else
 		to_chat(user, "This book is completely blank!")
 

@@ -63,8 +63,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "computer")
-
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
 	. = ..()

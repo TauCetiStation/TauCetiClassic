@@ -229,5 +229,3 @@
 	var/datum/browser/popup = new(user, "pacontrol", "Particle Accelerator Control Panel", 420,500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "pacontrol")

@@ -239,11 +239,10 @@
 			dat += "<font color='red'>The dart cartridge is empty!</font>"
 		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]"
 
-	var/datum/browser/popup = new(user, "dartgun")
+	var/datum/browser/popup = new(user, "dartgun", nref = src)
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "dartgun", src)
 
 /obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(obj/item/B)
 	if(!mixing || !beakers)

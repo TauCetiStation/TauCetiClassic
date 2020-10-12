@@ -107,7 +107,7 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(use_onclose = 1)
+/datum/browser/proc/open()
 	var/window_size = ""
 	if(width && height)
 		window_size = "size=[width]x[height];"
@@ -118,8 +118,7 @@
 		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
-	if(use_onclose)
-		onclose(user, window_id, ref)
+	onclose(user, window_id, ref)
 
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
@@ -245,7 +244,7 @@
 
 
 
-/proc/popup(user, message, title)
+/datum/proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)
 	P.set_content(message)
 	P.open()

@@ -126,7 +126,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "flamethrower")
 
 /obj/item/weapon/flamethrower/Topic(href,href_list[])
 	if(href_list["close"])

@@ -132,8 +132,6 @@
 	var/datum/browser/popup = new(user, "mob[real_name]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "mob[real_name]")
 	return
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
