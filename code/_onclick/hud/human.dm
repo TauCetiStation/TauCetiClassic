@@ -384,7 +384,6 @@
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
-	
 	mymob.healthdoll = new /obj/screen()
 	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healthdoll.name = "health doll"
