@@ -29,11 +29,6 @@ body.theme_light {
 	color: #000000;
 }
 
-hr {
-	background-color: #40628a;
-	height: 1px;
-}
-
 a, button, a:link, a:visited, a:active, .linkOn, .linkOff, .spoiler b {
 	color: #ffffff;
 	text-decoration: none;
