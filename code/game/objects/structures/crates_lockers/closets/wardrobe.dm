@@ -320,6 +320,10 @@
 
 /obj/structure/closet/wardrobe/medic_white/PopulateContents()
 	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/soft/paramed(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/beret/paramed(src)
+	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/medical(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/medical/skirt(src)
@@ -423,4 +427,3 @@
 	new /obj/item/weapon/storage/belt/security/tactical(src)
 	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/clothing/shoes/boots/work(src)
-

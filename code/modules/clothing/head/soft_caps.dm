@@ -112,3 +112,9 @@
 	icon_state = "nt_pmcsoft"
 	item_state = "necromancer"
 	item_color = "nt_pmc"
+
+/obj/item/clothing/head/soft/paramed
+	name = "first responder cap"
+	desc = "It's first responder hat. Shows who's saving lives here."
+	icon_state = "frsoft"
+	item_color = "fr"

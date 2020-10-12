@@ -72,3 +72,11 @@
 	name = "engineering beret"
 	desc = "A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety."
 	icon_state = "e_beret_badge"
+
+//Medical
+
+
+/obj/item/clothing/head/beret/paramed
+	name = "first responder beret"
+	desc = "A beret with the medical insignia emblazoned on it. Noticable beret for paramedics, shows who's saving lives here."
+	icon_state = "beret_fr"
