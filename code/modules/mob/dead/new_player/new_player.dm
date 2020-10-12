@@ -75,7 +75,7 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
 	var/datum/browser/popup = new(src, "playersetup", null, 210, 240)
-	popup.set_window_options("can_close=0")
+	popup.set_window_options("can_close=0;can_resize=0;")
 	popup.set_content(output)
 	popup.open()
 	return

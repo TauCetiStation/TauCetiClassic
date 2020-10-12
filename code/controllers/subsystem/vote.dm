@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/interface_client(client/C)
 	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650)
-	panel.set_window_options("can_close=0")
+	panel.set_window_options("can_close=0;can_resize=0;")
 	panel.set_content(interface(C))
 	panel.open()
 
