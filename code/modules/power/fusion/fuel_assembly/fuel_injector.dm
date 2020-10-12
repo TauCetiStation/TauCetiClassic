@@ -44,7 +44,7 @@ var/list/fuel_injectors = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored)
+	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
 	if (usr.incapacitated())
