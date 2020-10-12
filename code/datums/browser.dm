@@ -14,7 +14,7 @@
 	var/head_content = ""
 	var/content = ""
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
+/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme)
 	if(ismob(nuser))
 		var/mob/M = nuser
 		nuser = M.client
@@ -24,9 +24,8 @@
 	window_id = nwindow_id
 	if(ntitle)
 		title = ntitle
-	if(nwidth)
+	if(nwidth && nheight)
 		width = nwidth
-	if(nheight)
 		height = nheight
 	if(nref)
 		ref = nref
