@@ -117,6 +117,7 @@
 	if(scripts.len)
 		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	if(use_onclose)
 		onclose(user, window_id, ref)
 
