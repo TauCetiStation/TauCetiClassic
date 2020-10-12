@@ -21,7 +21,7 @@
 
 /datum/surgery_step/glue_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.stage == 0)
+	if(BP.stage == 0)
 		user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [BP.name] with \the [tool]." , \
 		"You start applying medication to the damaged bones in [target]'s [BP.name] with \the [tool].")
 	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!",1)
@@ -61,7 +61,7 @@
 
 /datum/surgery_step/set_bone/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.status & ORGAN_BROKEN)
+	if(BP.status & ORGAN_BROKEN)
 		user.visible_message("<span class='notice'>[user] sets the bone in [target]'s [BP.name] in place with \the [tool].</span>", \
 			"<span class='notice'>You set the bone in [target]'s [BP.name] in place with \the [tool].</span>")
 		BP.stage = 2

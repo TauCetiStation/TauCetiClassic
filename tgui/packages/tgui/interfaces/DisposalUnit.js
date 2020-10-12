@@ -6,16 +6,16 @@ export const DisposalUnit = (props, context) => {
   const { act, data } = useBackend(context);
   let stateColor;
   let stateText;
-  if (data.mode === 2) {
+  if(data.mode === 2) {
     stateColor = "good";
     stateText = "Ready";
-  } else if (data.mode === 0) {
+  } else if(data.mode === 0) {
     stateColor = "bad";
     stateText = "Off";
-  } else if (data.mode < 0) {
+  } else if(data.mode < 0) {
     stateColor = "bad";
     stateText = "N/A";
-  } else if (data.mode === 1) {
+  } else if(data.mode === 1) {
     stateColor = "average";
     stateText = "Pressurizing";
   } else {

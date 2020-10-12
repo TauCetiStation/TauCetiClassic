@@ -26,7 +26,7 @@
 
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
-	if (!SSmapping.has_level(user.z))
+	if(!SSmapping.has_level(user.z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 	if(istype(O, /obj/item/weapon/aiModule))
@@ -42,7 +42,7 @@
 		return
 
 	current = select_active_ai(user)
-	if (!current)
+	if(!current)
 		to_chat(user, "No active AIs detected.")
 	else
 		to_chat(user, "[current.name] selected for law changes.")
@@ -69,7 +69,7 @@
 
 	current = freeborg()
 
-	if (!current)
+	if(!current)
 		to_chat(user, "No free cyborgs detected.")
 	else
 		to_chat(user, "[src.current.name] selected for law changes.")

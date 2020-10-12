@@ -51,7 +51,7 @@ export const setupWebpack = async config => {
   // Start watching
   logger.log('watching for changes');
   compiler.watch({}, (err, stats) => {
-    if (err) {
+    if(err) {
       logger.error('compilation error', err);
       return;
     }

@@ -36,7 +36,7 @@ export const createStore = () => {
 
 const loggingMiddleware = store => next => action => {
   const { type, payload } = action;
-  if (type === 'backend/update') {
+  if(type === 'backend/update') {
     logger.debug('action', { type });
   }
   else {

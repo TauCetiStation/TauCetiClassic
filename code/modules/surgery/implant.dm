@@ -16,21 +16,21 @@
 
 /datum/surgery_step/cavity/proc/get_max_wclass(obj/item/organ/external/BP)
 	switch (BP.body_zone)
-		if (BP_HEAD)
+		if(BP_HEAD)
 			return 1
-		if (BP_CHEST)
+		if(BP_CHEST)
 			return 3
-		if (BP_GROIN)
+		if(BP_GROIN)
 			return 2
 	return 0
 
 /datum/surgery_step/cavity/proc/get_cavity(obj/item/organ/external/BP)
 	switch (BP.body_zone)
-		if (BP_HEAD)
+		if(BP_HEAD)
 			return "cranial"
-		if (BP_CHEST)
+		if(BP_CHEST)
 			return "thoracic"
-		if (BP_GROIN)
+		if(BP_GROIN)
 			return "abdominal"
 	return ""
 
@@ -127,7 +127,7 @@
 
 	user.visible_message("<span class='notice'>[user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>", \
 	"<span class='notice'>You put \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>" )
-	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
+	if(tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
 		to_chat(user, "<span class='warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
 	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
@@ -181,20 +181,20 @@
 
 	var/find_prob = 0
 
-	if (BP.implants.len)
+	if(BP.implants.len)
 
 		var/obj/item/obj = BP.implants[1]
 
 		if(istype(obj,/obj/item/weapon/implant))
 			var/obj/item/weapon/implant/imp = obj
-			if (imp.islegal())
+			if(imp.islegal())
 				find_prob +=60
 			else
 				find_prob +=40
 		else
 			find_prob +=50
 
-		if (prob(find_prob))
+		if(prob(find_prob))
 			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 			BP.implants -= obj
@@ -226,7 +226,7 @@
 		else
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
-	else if (BP.hidden)
+	else if(BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 		BP.hidden.loc = get_turf(target)
@@ -245,10 +245,10 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (BP.implants.len)
+	if(BP.implants.len)
 		var/fail_prob = 10
 		fail_prob += 100 - tool_quality(tool)
-		if (prob(fail_prob))
+		if(prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
 			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
 			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, null, -3)

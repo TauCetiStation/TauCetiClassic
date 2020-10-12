@@ -192,9 +192,9 @@
 
 /mob/living/simple_animal/hulk/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
-	if (src.health < src.maxHealth)
+	if(src.health < src.maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
+		if(src.health >= src.maxHealth/2)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
@@ -211,7 +211,7 @@
 	if(O.force)
 		if(O.force >= 10)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			visible_message("<span class='warning'><b>[src] has been attacked with [O] by [user].</b></span>")
@@ -248,7 +248,7 @@
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
 		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
-		if (!is_busy() && do_after(src, 40, target = D) && D)
+		if(!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
 /mob/living/proc/hulk_scream(obj/target, chance)

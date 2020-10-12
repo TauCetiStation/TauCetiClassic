@@ -394,7 +394,7 @@
 					undershirt_options = undershirt_t
 
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
-					if (new_undershirt)
+					if(new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
 				if("socks")
 					var/list/socks_options

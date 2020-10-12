@@ -9,11 +9,11 @@
 /obj/effect/proc_holder/spell/aoe_turf/hulk_jump/cast(list/targets)
 	//for(var/turf/T in targets)
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if(istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if(istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 
 		for(var/mob/M in range(usr, 1))
 			if(M.pulling == usr)
@@ -85,7 +85,7 @@
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+		if(HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -98,7 +98,7 @@
 		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
@@ -135,11 +135,11 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if(istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if(istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 		for(var/mob/M in range(usr, 1))
 			if(M.pulling == usr)
 				M.stop_pulling()
@@ -258,7 +258,7 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+		if(HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -271,7 +271,7 @@
 		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
@@ -298,11 +298,11 @@
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
-	if (usr.lying || usr.incapacitated())
+	if(usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
-	if (istype(usr.loc,/turf))
+	if(istype(usr.loc,/turf))
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		//for(var/i=0, i<30, i++)
 		//	usr.canmove = 0
@@ -381,7 +381,7 @@
 					qdel(S)
 		usr.canmove = 1
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You smash [container]!</span>")
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
@@ -409,7 +409,7 @@
 	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if (prob(75))
+		if(prob(75))
 			to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 			user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 			new /obj/item/stack/sheet/metal(get_turf(src))
@@ -430,7 +430,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
-	if (usr.lying || usr.incapacitated())
+	if(usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
@@ -469,7 +469,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/clown_joke/cast(list/targets)
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
@@ -494,7 +494,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
-	if (usr.lying || usr.incapacitated())
+	if(usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
@@ -528,7 +528,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
-	if (usr.lying || usr.incapacitated())
+	if(usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 		return
 
@@ -627,7 +627,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
-	if (usr.lying || usr.incapacitated())
+	if(usr.lying || usr.incapacitated())
 		to_chat(usr, "<span class='warning'>You can't right now!</span>")
 		return
 
@@ -658,7 +658,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/HulkHONK/cast(list/target)
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		to_chat(usr, "<span class='red'>You can't right now!</span>")
 		return
 	playsound(usr, 'sound/items/AirHorn.ogg', VOL_EFFECTS_MASTER)

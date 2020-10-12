@@ -43,7 +43,7 @@ window.addEventListener('beforeunload', () => {
   // Cleanly unmount all visible UI elements
   for (let index = 0; index < byondUiStack.length; index++) {
     const id = byondUiStack[index];
-    if (typeof id === 'string') {
+    if(typeof id === 'string') {
       logger.log(`unmounting '${id}' (beforeunload)`);
       byondUiStack[index] = null;
       Byond.winset(id, {
@@ -95,7 +95,7 @@ export class ByondUi extends Component {
 
   componentDidMount() {
     // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
+    if(Byond.IS_LTE_IE10) {
       return;
     }
     window.addEventListener('resize', this.handleResize);
@@ -105,7 +105,7 @@ export class ByondUi extends Component {
 
   componentDidUpdate() {
     // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
+    if(Byond.IS_LTE_IE10) {
       return;
     }
     const {
@@ -123,7 +123,7 @@ export class ByondUi extends Component {
 
   componentWillUnmount() {
     // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
+    if(Byond.IS_LTE_IE10) {
       return;
     }
     window.removeEventListener('resize', this.handleResize);

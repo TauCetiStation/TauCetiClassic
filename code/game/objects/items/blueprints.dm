@@ -42,7 +42,7 @@
 				return
 			create_area()
 		if("edit_area")
-			if (get_area_type()!=AREA_STATION)
+			if(get_area_type()!=AREA_STATION)
 				interact()
 				return
 			edit_area()
@@ -166,7 +166,7 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/set_area_machinery_title(area/A,title,oldtitle)
-	if (!oldtitle) // or replacetext goes to infinite loop
+	if(!oldtitle) // or replacetext goes to infinite loop
 		return
 
 	for(var/obj/machinery/alarm/M in src)

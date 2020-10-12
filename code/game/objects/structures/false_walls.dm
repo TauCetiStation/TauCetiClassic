@@ -107,7 +107,7 @@
 		qdel(src)
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		T = get_turf(src)

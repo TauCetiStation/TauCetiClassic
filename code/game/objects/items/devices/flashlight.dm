@@ -33,14 +33,14 @@
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if (last_button_sound >= world.time)
+	if(last_button_sound >= world.time)
 		return 0
 
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
 		return 0
 
-	if (button_sound)
+	if(button_sound)
 		playsound(user, button_sound, VOL_EFFECTS_MASTER, 20)
 
 	on = !on

@@ -108,7 +108,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 		sorted_row.len = columns.len
 		for (var/column in row)
 			var/index = columns[column]
-			if (!index)
+			if(!index)
 				// New column
 				index = columns.len + 1
 				columns[column] = index
@@ -124,7 +124,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 		for(var/column in columns)
 			column_list += "[column] = VALUES([column])"
 		duplicate_key = "ON DUPLICATE KEY UPDATE [column_list.Join(", ")]\n"
-	else if (duplicate_key == FALSE)
+	else if(duplicate_key == FALSE)
 		duplicate_key = null
 
 	ignore_errors = ignore_errors ? " IGNORE" : null

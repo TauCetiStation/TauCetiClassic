@@ -82,7 +82,7 @@ var/global/datum/book_manager/book_mgr = new()
 	var/version
 	F["version"] >> version
 
-	if (isnull(version) || version < BOOK_VERSION_MIN || version > BOOK_VERSION_MAX)
+	if(isnull(version) || version < BOOK_VERSION_MIN || version > BOOK_VERSION_MAX)
 		fdel(path)
 		to_chat(usr, "What book?")
 		return 0

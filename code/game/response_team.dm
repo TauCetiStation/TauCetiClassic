@@ -63,7 +63,7 @@ var/can_call_ert
 			to_chat(usr, "The emergency response team is already full!")
 
 
-		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
+		for (var/obj/effect/landmark/L in landmarks_list) if(L.name == "Commando")
 			L.name = null//Reserving the place.
 			var/new_name = sanitize_safe(input(usr, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 			if(!new_name)//Somebody changed his mind, place is available again.
@@ -180,7 +180,7 @@ var/can_call_ert
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
-	if (!new_tone)
+	if(!new_tone)
 		new_tone = 35
 	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 	M.s_tone =  -M.s_tone + 35
@@ -196,7 +196,7 @@ var/can_call_ert
 		qdel(H) // delete the hair after it's all done
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
+	if(new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else

@@ -18,7 +18,7 @@
 	return ..()
 
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
-	if (!W || !user || !W.type) return
+	if(!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
 		if(/obj/item/weapon/kitchenknife) qdel(src)
@@ -143,11 +143,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(90))
+			if(prob(90))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 	return

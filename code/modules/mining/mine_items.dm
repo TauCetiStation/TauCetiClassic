@@ -50,7 +50,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	spawn(mining_shuttle_tickstomove*10)
 		var/area/fromArea
 		var/area/toArea
-		if (mining_shuttle_location == 1)
+		if(mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
 
@@ -90,7 +90,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			pest.gib()
 
 		fromArea.move_contents_to(toArea)
-		if (mining_shuttle_location)
+		if(mining_shuttle_location)
 			mining_shuttle_location = 0
 		else
 			mining_shuttle_location = 1
@@ -142,7 +142,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		//		return
 
-		if (!mining_shuttle_moving)
+		if(!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			move_mining_shuttle()
 		else
@@ -151,7 +151,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	updateUsrDialog()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
 		to_chat(usr, "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>")
@@ -462,9 +462,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
-	if (!proximity)
+	if(!proximity)
 		return
-	if (!istype(target, /turf/simulated/mineral))
+	if(!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
 	if(user.is_busy(src))

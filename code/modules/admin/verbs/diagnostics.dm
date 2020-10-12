@@ -48,17 +48,17 @@
 	for (var/fq in radio_controller.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
 		var/datum/radio_frequency/fqs = radio_controller.frequencies[fq]
-		if (!fqs)
+		if(!fqs)
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue
 		for (var/filter in fqs.devices)
 			var/list/f = fqs.devices[filter]
-			if (!f)
+			if(!f)
 				output += "&nbsp;&nbsp;[filters[filter]]: ERROR<br>"
 				continue
 			output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
 			for (var/device in f)
-				if (isobj(device))
+				if(isobj(device))
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([device:x],[device:y],[device:z] in area [get_area(device:loc)])<br>"
 				else
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
@@ -96,7 +96,7 @@
 	set name = "Reload Configuration"
 	set category = "Debug"
 
-	if (!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS))
 		return
 
 	message_admins("[key_name_admin(usr)] manually reloaded configuration")

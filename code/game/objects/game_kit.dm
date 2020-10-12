@@ -47,7 +47,7 @@
 	selected = "CR"
 
 /obj/item/weapon/game_kit/MouseDrop(mob/user)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if(user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
@@ -60,7 +60,7 @@
 			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"		//Color the squares in black and white or black and green in case of the chaplain kit.
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
 			dat += "<td style='background-color:[color]' width=32 height=32>"
-			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
+			if(piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
 				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
 			else		//If it is "BB" - place empty square
 				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
@@ -103,7 +103,7 @@
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
 	assets.send(user)
-	if (!( data ))
+	if(!( data ))
 		update()
 
 	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
@@ -115,19 +115,19 @@
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		if(!istype(usr, /mob/dead/observer) || !istype(src, /obj/item/weapon/game_kit/chaplain))
 			return
 
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
-		if (href_list["s_piece"])
+	if(usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
+		if(href_list["s_piece"])
 			selected = href_list["s_piece"]
-		else if (href_list["mode"])
-			if (href_list["mode"] == "remove")
+		else if(href_list["mode"])
+			if(href_list["mode"] == "remove")
 				selected = "remove"
 			else
 				selected = null
-		else if (href_list["reverse"])
+		else if(href_list["reverse"])
 			var/firstpart
 			var/secondpart
 			for (var/symbol = 65, symbol > 1, symbol-=2)
@@ -138,59 +138,59 @@
 
 			board_stat = secondpart + firstpart
 
-		else if (href_list["s_board"])
-			if (!( selected ))
+		else if(href_list["s_board"])
+			if(!( selected ))
 				selected = href_list["s_board"]
 			else
 				var/tx = text2num(copytext(href_list["s_board"], 1, 2))
 				var/ty = text2num(copytext(href_list["s_board"], 3, 4))
-				if ((copytext(selected, 2, 3) == " " && length(selected) == 3))
+				if((copytext(selected, 2, 3) == " " && length(selected) == 3))
 					var/sx = text2num(copytext(selected, 1, 2))
 					var/sy = text2num(copytext(selected, 3, 4))
 					var/place = ((sy - 1) * 8 + sx) * 2 - 1
 					selected = copytext(board_stat, place, place + 2)
-					if (place == 1)
+					if(place == 1)
 						board_stat = text("BB[]", copytext(board_stat, 3, 129))
 					else
-						if (place == 127)
+						if(place == 127)
 							board_stat = text("[]BB", copytext(board_stat, 1, 127))
 						else
-							if (place)
+							if(place)
 								board_stat = text("[]BB[]", copytext(board_stat, 1, place), copytext(board_stat, place + 2, 129))
 					place = ((ty - 1) * 8 + tx) * 2 - 1
-					if (place == 1)
+					if(place == 1)
 						board_stat = text("[][]", selected, copytext(board_stat, 3, 129))
 					else
-						if (place == 127)
+						if(place == 127)
 							board_stat = text("[][]", copytext(board_stat, 1, 127), selected)
 						else
-							if (place)
+							if(place)
 								board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
 					selected = null
 				else
-					if (selected == "remove")
+					if(selected == "remove")
 						var/place = ((ty - 1) * 8 + tx) * 2 - 1
-						if (place == 1)
+						if(place == 1)
 							board_stat = text("BB[]", copytext(board_stat, 3, 129))
 						else
-							if (place == 127)
+							if(place == 127)
 								board_stat = text("[]BB", copytext(board_stat, 1, 127))
 							else
-								if (place)
+								if(place)
 									board_stat = text("[]BB[]", copytext(board_stat, 1, place), copytext(board_stat, place + 2, 129))
 					else
-						if (length(selected) == 2)
+						if(length(selected) == 2)
 							var/place = ((ty - 1) * 8 + tx) * 2 - 1
-							if (place == 1)
+							if(place == 1)
 								board_stat = text("[][]", selected, copytext(board_stat, 3, 129))
 							else
-								if (place == 127)
+								if(place == 127)
 									board_stat = text("[][]", copytext(board_stat, 1, 127), selected)
 								else
-									if (place)
+									if(place)
 										board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
 		add_fingerprint(usr)
 		update()
 		for(var/mob/M in viewers(1, src.loc))		//If someone is playing with us - they would see that we made a move.
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				interact(M)

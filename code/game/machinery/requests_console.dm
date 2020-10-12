@@ -125,10 +125,10 @@ var/req_console_information = list()
 			if(1)	//req. assistance
 				dat += text("Which department do you need assistance from?<BR><BR>")
 				for(var/dpt in req_console_assistance)
-					if (dpt != department)
+					if(dpt != department)
 						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
 						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
+//						if(hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
@@ -136,10 +136,10 @@ var/req_console_information = list()
 			if(2)	//req. supplies
 				dat += text("Which department do you need supplies from?<BR><BR>")
 				for(var/dpt in req_console_supplies)
-					if (dpt != department)
+					if(dpt != department)
 						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
 						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
+//						if(hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
@@ -147,10 +147,10 @@ var/req_console_information = list()
 			if(3)	//relay information
 				dat += text("Which department would you like to send information to?<BR><BR>")
 				for(var/dpt in req_console_information)
-					if (dpt != department)
+					if(dpt != department)
 						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
 						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
+//						if(hackState == 1)
 //							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
 						dat += text(")<BR>")
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
@@ -165,7 +165,7 @@ var/req_console_information = list()
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in requests_console_list)
-					if (Console.department == department)
+					if(Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
 						Console.set_light(1)
@@ -191,16 +191,16 @@ var/req_console_information = list()
 				else
 					dat += text("Swipe your card to authenticate yourself.<BR><BR>")
 				dat += text("<b>Message: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
-				if (announceAuth && message)
+				if(announceAuth && message)
 					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
 
 			else	//main menu
 				screen = 0
 				announceAuth = 0
-				if (newmessagepriority == 1)
+				if(newmessagepriority == 1)
 					dat += text("<FONT COLOR='RED'>There are new messages</FONT><BR>")
-				if (newmessagepriority == 2)
+				if(newmessagepriority == 2)
 					dat += text("<FONT COLOR='RED'><B>NEW PRIORITY MESSAGES</B></FONT><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>")
 
@@ -209,7 +209,7 @@ var/req_console_information = list()
 				dat += text("<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>")
 				if(announcementConsole)
 					dat += text("<A href='?src=\ref[src];setScreen=10'>Send station-wide announcement</A><BR><BR>")
-				if (silent)
+				if(silent)
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>")
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
@@ -329,20 +329,20 @@ var/req_console_information = list()
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
-	if (istype(O, /obj/item/weapon/card/id))
+	if(istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
 			var/obj/item/weapon/card/id/T = O
 			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.GetAccess())
+			if(access_RC_announce in ID.GetAccess())
 				announceAuth = 1
 			else
 				announceAuth = 0
 				to_chat(user, "<span class='warning'>You are not authorized to send announcements.</span>")
 			updateUsrDialog()
-	if (istype(O, /obj/item/weapon/stamp))
+	if(istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
 			var/obj/item/weapon/stamp/T = O
 			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")

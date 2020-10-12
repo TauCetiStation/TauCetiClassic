@@ -9,19 +9,19 @@ JTGMERGE = 'java -jar ./tools/dmm-merge-tool/JTGMerge.jar'
 def git = Git.open(new File('.'))
 def currentStatus = git.status().call()
 
-if (!currentStatus.conflicting.empty) {
+if(!currentStatus.conflicting.empty) {
     git.close()
     println 'Error: You need to resolve merge conflicts first.'
     System.exit(1)
 }
-if (git.repository.resolve('MERGE_HEAD')) {
+if(git.repository.resolve('MERGE_HEAD')) {
     git.close()
     println 'Not running mapmerge for merge commit.'
     System.exit(0)
 }
 
 currentStatus.added.each { filePath ->
-    if (!filePath.endsWith('.dmm'))
+    if(!filePath.endsWith('.dmm'))
         return
 
     println "Converting new map to TGM: $filePath"
@@ -34,7 +34,7 @@ def objReader = git.repository.newObjectReader()
 def lastCommitId = git.repository.resolve("${git.repository.fullBranch}^{tree}")
 
 currentStatus.changed.each { filePath ->
-    if (!filePath.endsWith('.dmm'))
+    if(!filePath.endsWith('.dmm'))
         return
 
     def treeWalk = TreeWalk.forPath(git.repository, filePath, lastCommitId)

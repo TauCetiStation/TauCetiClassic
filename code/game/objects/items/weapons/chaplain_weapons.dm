@@ -78,19 +78,19 @@
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 
 	M.log_combat(user, "deconvered (attempt) via [name]")
 
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat != DEAD)
+	if(M.stat != DEAD)
 		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
@@ -100,7 +100,7 @@
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
 		power.action(user, 1)
 

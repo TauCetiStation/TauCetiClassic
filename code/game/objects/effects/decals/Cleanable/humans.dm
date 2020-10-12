@@ -42,7 +42,7 @@ var/global/list/image/splatter_cache=list()
 	if(loc) // someone should make blood that drips thru closet or smth like that.
 		for(var/obj/effect/decal/cleanable/blood/B in loc)
 			if(B != src && B.type == type)
-				if (B.blood_DNA)
+				if(B.blood_DNA)
 					blood_DNA |= B.blood_DNA.Copy()
 				qdel(B)
 
@@ -64,7 +64,7 @@ var/global/list/image/splatter_cache=list()
 
 	var/hasfeet = TRUE
 	var/skip = FALSE
-	if (ishuman(perp))
+	if(ishuman(perp))
 		var/mob/living/carbon/human/H = perp
 		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
@@ -83,7 +83,7 @@ var/global/list/image/splatter_cache=list()
 					S.blood_DNA |= blood_DNA.Copy()
 			skip = TRUE
 
-	if (hasfeet && !skip) // Or feet
+	if(hasfeet && !skip) // Or feet
 		if(perp.feet_dirt_color)
 			perp.feet_dirt_color.add_dirt(basedatum)
 		else
@@ -92,7 +92,7 @@ var/global/list/image/splatter_cache=list()
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
 		perp.feet_blood_DNA |= blood_DNA.Copy()
-	else if (perp.buckled && istype(perp.buckled, /obj/structure/stool/bed/chair/wheelchair))
+	else if(perp.buckled && istype(perp.buckled, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/W = perp.buckled
 		W.bloodiness = 4
 
@@ -109,15 +109,15 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
-	if (amount && istype(user))
+	if(amount && istype(user))
 		user.SetNextMove(CLICK_CD_MELEE)
 		add_fingerprint(user)
-		if (user.gloves)
+		if(user.gloves)
 			return
 		var/taken = rand(1,amount)
 		amount -= taken
 		to_chat(user, "<span class='notice'>You get some of \the [src] on your hands.</span>")
-		if (!user.blood_DNA)
+		if(!user.blood_DNA)
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
@@ -223,7 +223,7 @@ var/global/list/image/splatter_cache=list()
 		var/direction = pick(directions)
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
-			if (i > 0)
+			if(i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basedatum = new/datum/dirt_cover(src.basedatum)
 				b.update_icon()
@@ -232,7 +232,7 @@ var/global/list/image/splatter_cache=list()
 					b.viruses += ND
 					ND.holder = b
 
-				if (step_to(src, get_step(src, direction), 0))
+				if(step_to(src, get_step(src, direction), 0))
 					break
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)

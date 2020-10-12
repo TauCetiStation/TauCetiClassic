@@ -42,9 +42,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
@@ -101,7 +101,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
 
-	if (M.client)
+	if(M.client)
 		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformations:</b>"
@@ -181,7 +181,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 				<br>
 			"}
 
-	if (M.client)
+	if(M.client)
 		body += {"<br><br>
 			<b>Other actions:</b>
 			<br>
@@ -367,16 +367,16 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			duration += " and [rounds_ban_counter] rounds"
 		var/description = "([ip_cid.Join(", ")]): [reason]"
 		switch(bantype)
-			if (BANTYPE_JOB_PERMA_STR)
+			if(BANTYPE_JOB_PERMA_STR)
 				// notes_record.content = "Permanent JOB BAN [job] [description]"
 				// already in notes by Adminbot
 				continue
-			if (BANTYPE_JOB_TEMP_STR)
+			if(BANTYPE_JOB_TEMP_STR)
 				// notes_record.content = "Temporal JOB BAN [job] for [duration] [description]"
 				continue
-			if (BANTYPE_PERMA_STR)
+			if(BANTYPE_PERMA_STR)
 				notes_record.content = "Permanent BAN [description]"
-			if (BANTYPE_TEMP_STR)
+			if(BANTYPE_TEMP_STR)
 				notes_record.content = "Temporal BAN for [duration] [description]"
 		if(length(timestamp))
 			notes_record.timestamp = timestamp
@@ -417,9 +417,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if(!istype(src,/datum/admins))
 		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat = ""
@@ -721,7 +721,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
-	if (!usr.client.holder)
+	if(!usr.client.holder)
 		return
 	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -759,7 +759,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
 	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
+	if(ooc_allowed)
 		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 	else
 		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
@@ -772,7 +772,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Globally Toggles LOOC"
 	set name="Toggle LOOC"
 	looc_allowed = !( looc_allowed )
-	if (looc_allowed)
+	if(looc_allowed)
 		to_chat(world, "<B>The LOOC channel has been globally enabled!</B>")
 	else
 		to_chat(world, "<B>The LOOC channel has been globally disabled!</B>")
@@ -785,7 +785,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Globally Toggles DSAY"
 	set name="Toggle DSAY"
 	dsay_allowed = !( dsay_allowed )
-	if (dsay_allowed)
+	if(dsay_allowed)
 		to_chat(world, "<B>Deadchat has been globally enabled!</B>")
 	else
 		to_chat(world, "<B>Deadchat has been globally disabled!</B>")
@@ -836,7 +836,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="People can't enter"
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
+	if(!( enter_allowed ))
 		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>New players may now enter the game.</B>")
@@ -850,7 +850,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="People can't be AI"
 	set name="Toggle AI"
 	config.allow_ai = !( config.allow_ai )
-	if (!( config.allow_ai ))
+	if(!( config.allow_ai ))
 		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
@@ -863,7 +863,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
 	abandon_allowed = !( abandon_allowed )
-	if (abandon_allowed)
+	if(abandon_allowed)
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
@@ -1017,8 +1017,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (is_centcom_level(M.z))
-		if (config.allow_admin_jump)
+	if(is_centcom_level(M.z))
+		if(config.allow_admin_jump)
 			M.loc = pick(latejoin)
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -1033,36 +1033,36 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
 	if(!SSticker || !SSticker.mode)
 		return 0
-	if (!istype(M))
+	if(!istype(M))
 		return 0
 	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "revolution")
+		if(SSticker.mode.config_tag == "revolution")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.cult)
-		if (SSticker.mode.config_tag == "cult")
+		if(SSticker.mode.config_tag == "cult")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
+		if(SSticker.mode.config_tag == "malfunction")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
+		if(SSticker.mode.config_tag == "nuclear")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
+		if(SSticker.mode.config_tag == "wizard")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
+		if(SSticker.mode.config_tag == "changeling")
 			return 2
 		return 1
 
 	for(var/datum/disease/D in M.viruses)
 		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
+			if(SSticker.mode.config_tag == "monkey")
 				return 2
 			return 1
 	if(isrobot(M))
@@ -1148,7 +1148,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
 	tinted_weldhelh = !( tinted_weldhelh )
-	if (tinted_weldhelh)
+	if(tinted_weldhelh)
 		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
@@ -1161,7 +1161,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Guests can't enter"
 	set name="Toggle guests"
 	guests_allowed = !( guests_allowed )
-	if (!( guests_allowed ))
+	if(!( guests_allowed ))
 		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
@@ -1178,14 +1178,14 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		else if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
 			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
-		else if (ispAI(S))
+		else if(ispAI(S))
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
 			var/mob/living/silicon/pai/P = S
 			to_chat(usr, "pAI's master: <b>[P.master ? P.master : "N/A"]</b>" )
 		else
 			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
-		if (S.laws == null)
+		if(S.laws == null)
 			to_chat(usr, "[key_name(S, usr)]'s laws are null?? Contact a coder.")
 		else
 			S.laws.show_laws(usr)
@@ -1197,7 +1197,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -1239,22 +1239,22 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_ADMIN,0))
+	if(!check_rights(R_ADMIN,0))
 		return 0
 
-	if (!frommob.ckey)
+	if(!frommob.ckey)
 		return 0
 
 	var/question = ""
-	if (tomob.ckey)
+	if(tomob.ckey)
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
 	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
-	if (ask != "Yes")
+	if(ask != "Yes")
 		return 1
 
-	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+	if(!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return 1
 
 	tomob.ghostize(can_reenter_corpse = FALSE)
@@ -1281,7 +1281,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 		return
 	moving = TRUE
 
-	if (admin_shuttle_location == 1)
+	if(admin_shuttle_location == 1)
 		fromArea = locate(/area/shuttle/administration/station)
 		toArea = locate(/area/shuttle/administration/centcom)
 
@@ -1296,7 +1296,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 	fromArea.move_contents_to(toArea)
 
-	if (admin_shuttle_location)
+	if(admin_shuttle_location)
 		admin_shuttle_location = 0
 
 		SSshuttle.dock_act(toArea)
@@ -1322,7 +1322,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 		return
 	moving = TRUE
 
-	if (ferry_location == 1)
+	if(ferry_location == 1)
 		fromArea = locate(/area/shuttle/transport1/station)
 		toArea = locate(/area/shuttle/transport1/centcom)
 
@@ -1337,7 +1337,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 	fromArea.move_contents_to(toArea)
 
-	if (ferry_location)
+	if(ferry_location)
 		ferry_location = 0
 
 		SSshuttle.dock_act(toArea)
@@ -1357,14 +1357,14 @@ var/alien_ship_location = 1 // 0 = base , 1 = mine
 /proc/move_alien_ship()
 	var/area/fromArea
 	var/area/toArea
-	if (alien_ship_location == 1)
+	if(alien_ship_location == 1)
 		fromArea = locate(/area/shuttle/alien/mine)
 		toArea = locate(/area/shuttle/alien/base)
 	else
 		fromArea = locate(/area/shuttle/alien/base)
 		toArea = locate(/area/shuttle/alien/mine)
 	fromArea.move_contents_to(toArea)
-	if (alien_ship_location)
+	if(alien_ship_location)
 		alien_ship_location = 0
 	else
 		alien_ship_location = 1

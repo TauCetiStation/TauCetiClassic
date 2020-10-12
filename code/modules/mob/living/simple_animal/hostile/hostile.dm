@@ -276,7 +276,7 @@
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)	return
 
-	if (!istype(target, /turf))
+	if(!istype(target, /turf))
 		qdel(A)
 		return
 	A.current = target

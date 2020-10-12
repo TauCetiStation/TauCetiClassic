@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = mob_list.Copy()
 
 	//cache for sanic speed (lists are references anyways)
@@ -27,5 +27,5 @@ SUBSYSTEM_DEF(mobs)
 			M.Life(seconds)
 		else
 			mob_list -= M
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return

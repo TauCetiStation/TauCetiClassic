@@ -70,13 +70,13 @@
 	log_game("[key_name(src)] accessed file: [path]")
 
 	switch(alert("View (in game), Open (in your system's text editor), or Download?", path, "View", "Open", "Download", "Cancel"))
-		if ("View")
+		if("View")
 			var/datum/browser/popup = new(src, "window=viewfile.[path]", "[path]", ntheme = CSS_THEME_LIGHT)
 			popup.set_content("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>")
 			popup.open()
-		if ("Open")
+		if("Open")
 			src << run(file(path))
-		if ("Download")
+		if("Download")
 			src << ftp(file(path))
 		else
 			return

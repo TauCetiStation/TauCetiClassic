@@ -54,7 +54,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = vol
 	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
 
-	if (vary)
+	if(vary)
 		if(frequency)
 			S.frequency = frequency
 		else
@@ -75,20 +75,20 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		var/datum/gas_mixture/hearer_env = T.return_air()
 		var/datum/gas_mixture/source_env = turf_source.return_air()
 
-		if (hearer_env && source_env)
+		if(hearer_env && source_env)
 			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
 
-			if (pressure < ONE_ATMOSPHERE)
+			if(pressure < ONE_ATMOSPHERE)
 				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE) / (ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
 		else //in space
 			pressure_factor = 0
 
-		if (distance <= 1)
+		if(distance <= 1)
 			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
 
 		S.volume *= pressure_factor
 
-		if (S.volume <= 0)
+		if(S.volume <= 0)
 			return	//no volume means no sound
 
 		if(voluminosity)
@@ -492,7 +492,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			}
 
 			function updateVolume(slider_id) {
-				if (!volumeUpdating) {
+				if(!volumeUpdating) {
 					volumeUpdating = true;
 					setTimeout(function() {
 						setVolume(slider_id);

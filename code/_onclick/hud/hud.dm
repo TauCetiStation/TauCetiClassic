@@ -58,7 +58,7 @@ var/global/list/available_ui_styles = list(
 /datum/hud/New(mob/owner)
 	mymob = owner
 
-	if (!ui_style)
+	if(!ui_style)
 		// will fall back to the default if any of these are null
 		ui_style = ui_style2icon(mymob.client && mymob.client.prefs && mymob.client.prefs.UI_style)
 

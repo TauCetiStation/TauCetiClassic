@@ -27,7 +27,7 @@
 	set invisibility = 0
 	set background = 1
 
-	if (notransform)
+	if(notransform)
 		return
 	if(!loc)
 		return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
@@ -162,20 +162,20 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if ((prob(1) && paralysis < 1))
+	if(disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
+		if((prob(1) && paralysis < 1))
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
-	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
-		if ((prob(5) && paralysis <= 1))
+	if((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
+		if((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
-		if ((prob(10) && paralysis <= 1))
+		if((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )
 				switch(rand(1, 3))
@@ -194,9 +194,9 @@
 				pixel_x = old_x
 				pixel_y = old_y
 				return
-	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
+	if(disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		speech_problem_flag = 1
-		if (prob(10))
+		if(prob(10))
 			stuttering = max(10, stuttering)
 
 	if(stat != DEAD)
@@ -284,7 +284,7 @@
 		if(species.flags[RAD_IMMUNE])
 			return
 
-		if (radiation > 100)
+		if(radiation > 100)
 			radiation = 100
 			if(!species.flags[RAD_ABSORB])
 				Weaken(10)
@@ -292,7 +292,7 @@
 					to_chat(src, "<span class='warning'>You feel weak.</span>")
 					emote("collapse")
 
-		if (radiation < 0)
+		if(radiation < 0)
 			radiation = 0
 
 		else
@@ -338,7 +338,7 @@
 			if(damage)
 				adjustToxLoss(damage)
 				updatehealth()
-				if (bodyparts.len)
+				if(bodyparts.len)
 					var/obj/item/organ/external/BP = pick(bodyparts)
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
@@ -356,7 +356,7 @@
 
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
+		if(prob(10)) //Gasp per 10 ticks? Sounds about right.
 			spawn emote("gasp")
 		if(istype(loc, /obj))
 			var/obj/location_as_object = loc
@@ -431,17 +431,17 @@
 		loc.assume_air(breath)
 
 		//spread some viruses while we are at it
-		if (virus2.len > 0)
-			if (prob(10) && get_infection_chance(src))
+		if(virus2.len > 0)
+			if(prob(10) && get_infection_chance(src))
 //					log_debug("[src] : Exhaling some viruses")
 				for(var/mob/living/carbon/M in view(1,src))
 					src.spread_disease_to(M)
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if(!contents.Find(internal))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+		if(!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 			internal = null
 		if(internal)
 					//internal breath sounds
@@ -610,7 +610,7 @@
 
 		//breathing in hot/cold air also heats/cools you a bit
 		var/temp_adj = breath.temperature - bodytemperature
-		if (temp_adj < 0)
+		if(temp_adj < 0)
 			temp_adj /= (BODYTEMP_COLD_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
 		else
 			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
@@ -618,8 +618,8 @@
 		var/relative_density = breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
 		temp_adj *= relative_density
 
-		if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
-		if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
+		if(temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
+		if(temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
 		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
 		bodytemperature += temp_adj
 
@@ -652,7 +652,7 @@
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
 					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
-			else if (loc_temp > bodytemperature)			//Place is hotter than we are
+			else if(loc_temp > bodytemperature)			//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
 					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
@@ -661,8 +661,8 @@
 			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
 			temp_adj *= relative_density
 
-			if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
-			if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
+			if(temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
+			if(temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
@@ -783,12 +783,12 @@
 */
 
 /mob/living/carbon/human/proc/stabilize_body_temperature()
-	if (species.flags[IS_SYNTHETIC])
+	if(species.flags[IS_SYNTHETIC])
 		return
 
 	var/body_temperature_difference = species.body_temperature - bodytemperature
 
-	if (abs(body_temperature_difference) < 0.5)
+	if(abs(body_temperature_difference) < 0.5)
 		return //fuck this precision
 
 	if(bodytemperature < species.cold_level_1) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
@@ -1010,7 +1010,7 @@
 
 		if(light_amount > 2) //if there's enough light, start dying
 			take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
+		else if(light_amount < 2) //heal in the dark
 			heal_overall_damage(1,1)
 
 	if(dna && dna.mutantrace == "shadowling")
@@ -1024,7 +1024,7 @@
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
 			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+		else if(light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
 			adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
@@ -1054,7 +1054,7 @@
 				update_inv_wear_suit()
 
 	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
+	if(nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
@@ -1062,7 +1062,7 @@
 			if(pain > 0)
 				nutrition = max(0, nutrition - met_factor * pain * 0.01)
 
-	if (nutrition > 450)
+	if(nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
@@ -1074,7 +1074,7 @@
 			take_overall_damage(2,0)
 			traumatic_shock++
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness = max(0, drowsyness - 1)
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
@@ -1219,7 +1219,7 @@
 		if(stuttering)
 			speech_problem_flag = 1
 			stuttering = max(stuttering-1, 0)
-		if (slurring)
+		if(slurring)
 			speech_problem_flag = 1
 			slurring = max(slurring-1, 0)
 		if(silent)
@@ -1376,7 +1376,7 @@
 			see_invisible = SEE_INVISIBLE_MINIMUM
 
 		if(healths)
-			if (analgesic)
+			if(analgesic)
 				healths.icon_state = "health_health_numb"
 			else
 				switch(hal_screwyhud)
@@ -1553,7 +1553,7 @@
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45)
+		if(getToxLoss() >= 45)
 			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
@@ -1654,19 +1654,19 @@
 	if(shock_stage == 40)
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
-	if (shock_stage >= 60)
+	if(shock_stage >= 60)
 		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
-		if (prob(2))
+		if(prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 80)
-		if (prob(5))
+		if(prob(5))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
 
 	if(shock_stage >= 120)
-		if (prob(2))
+		if(prob(2))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 

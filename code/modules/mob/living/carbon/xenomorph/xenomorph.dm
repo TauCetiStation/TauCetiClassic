@@ -120,11 +120,11 @@
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			radiation = 100
 
-		if (radiation < 0)
+		if(radiation < 0)
 			radiation = 0
 
 		switch(radiation)
@@ -219,13 +219,13 @@ Hit Procs
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			b_loss += 500
 			gib()
 			return
 
-		if (2.0)
-			if (!shielded)
+		if(2.0)
+			if(!shielded)
 				b_loss += 60
 
 			f_loss += 60
@@ -235,7 +235,7 @@ Hit Procs
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50) && !shielded)
+			if(prob(50) && !shielded)
 				Paralyse(1)
 			ear_damage += 15
 			ear_deaf += 60
@@ -246,11 +246,11 @@ Hit Procs
 	updatehealth()
 
 /mob/living/carbon/xenomorph/blob_act()
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return
 	var/shielded = 0
 	var/damage = null
-	if (stat != DEAD)
+	if(stat != DEAD)
 		damage = rand(30,40)
 
 	if(shielded)
@@ -294,7 +294,7 @@ Hit Procs
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	/*if (!( src.hand ))
+	/*if(!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH*/

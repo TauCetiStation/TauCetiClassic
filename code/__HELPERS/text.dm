@@ -217,7 +217,7 @@
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
-		if (text2ascii(text, i) > 32)
+		if(text2ascii(text, i) > 32)
 			return copytext(text, i)
 	return ""
 
@@ -225,7 +225,7 @@
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_right(text)
 	for (var/i = length(text), i > 0, i--)
-		if (text2ascii(text, i) > 32)
+		if(text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 
 	return ""

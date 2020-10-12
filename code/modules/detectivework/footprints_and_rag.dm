@@ -37,24 +37,24 @@
 		..()
 
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/target, mob/user, proximity, params)
-	if (!proximity || user.is_busy())
+	if(!proximity || user.is_busy())
 		return
 
 	var/is_glass = istype(target, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass)
 
-	if (!is_glass && (target in user.client.screen))
+	if(!is_glass && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target] off before cleaning it.</span>")
-	else if (src in user)
+	else if(src in user)
 		user.visible_message("<span class='notice'>[user] starts to wipe down [target] with [src].</span>")
 
 		var/new_target = is_glass ? user : target
 
-		if (do_after(user, 30, target = new_target))
+		if(do_after(user, 30, target = new_target))
 			user.visible_message("<span class='notice'>[user] finishes wiping off the [new_target].</span>")
 			target.clean_blood()
 
 /obj/item/weapon/reagent_containers/glass/rag/examine()
-	if (!usr)
+	if(!usr)
 		return
 	to_chat(usr, "That's \a [src].")
 	to_chat(usr, desc)

@@ -104,13 +104,13 @@
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(usr)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
+	if(istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
 		user.drop_item()
 		qdel(W)
 		return
-	else if (iswrench(W) && !user.is_busy(src))
-		if (unwrenched == 0)
+	else if(iswrench(W) && !user.is_busy(src))
+		if(unwrenched == 0)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if(W.use_tool(src, user, 40, volume = 50))
 				user.visible_message( \
@@ -120,9 +120,9 @@
 				src.anchored = 0
 				src.stat |= MAINT
 				src.unwrenched = 1
-				if (usr.machine==src)
+				if(usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
-		else /*if (unwrenched==1)*/
+		else /*if(unwrenched==1)*/
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
 			if(W.use_tool(src, user, 20, volume = 50))
 				user.visible_message( \
@@ -162,10 +162,10 @@ Nah
 		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if(!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
-	if (pipe.anchored)
+	if(pipe.anchored)
 		return
 
 	qdel(pipe)

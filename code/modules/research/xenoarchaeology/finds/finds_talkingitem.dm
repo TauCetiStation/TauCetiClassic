@@ -109,7 +109,7 @@
 
 	var/list/listening = viewers(holder_atom)
 	for(var/mob/M in observer_list)
-		if (!M.client)
+		if(!M.client)
 			continue //skip leavers
 		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening |= M

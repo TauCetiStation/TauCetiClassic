@@ -106,13 +106,13 @@
 				statpanel("[P.panel]","",P)
 
 /mob/living/silicon/pai/check_eye(mob/user)
-	if (!src.current)
+	if(!src.current)
 		return null
 	user.reset_view(src.current)
 	return 1
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != DEAD)
+	if(src.stat != DEAD)
 		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
@@ -156,15 +156,15 @@
 
 	switch(severity)
 		if(1.0)
-			if (src.stat != DEAD)
+			if(src.stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (src.stat != DEAD)
+			if(src.stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (src.stat != DEAD)
+			if(src.stat != DEAD)
 				adjustBruteLoss(30)
 
 	src.updatehealth()
@@ -176,12 +176,12 @@
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr
 		U.cameraFollow = null
-	if (!C)
+	if(!C)
 		unset_machine()
 		reset_view(null)
 		current = null
 		return 0
-	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
+	if(stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 

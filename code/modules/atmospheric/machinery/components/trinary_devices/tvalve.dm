@@ -91,7 +91,7 @@
 	update_icon(TRUE) // Animate, but not change icon yet
 	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
-	if (opened_to_side)
+	if(opened_to_side)
 		go_straight()
 	else
 		go_to_side()

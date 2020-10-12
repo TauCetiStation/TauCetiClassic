@@ -121,8 +121,8 @@
 		updateDialog()
 	else if(is_wire_tool(I))
 		wires.interact(user)
-	else if (iswrench(I))
-		if (src.health < maxhealth)
+	else if(iswrench(I))
+		if(src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
 				"<span class='warning'>[user] repairs [src]!</span>",
@@ -244,10 +244,10 @@
 				to_chat(usr, "<span class='warning'>Access denied.</span>")
 				return FALSE
 		if("power")
-			if (src.on)
+			if(src.on)
 				turn_off()
-			else if (cell && !open)
-				if (!turn_on())
+			else if(cell && !open)
+				if(!turn_on())
 					to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 					return FALSE
 			else
@@ -354,7 +354,7 @@
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 
 	load(AM)
@@ -369,7 +369,7 @@
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if (!istype(AM))
+	if(!istype(AM))
 		return
 
 	load(AM)
@@ -808,9 +808,9 @@
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
 		//world << "sent [key],[keyval[key]] on [freq]"
-	if (signal.data["findbeacon"])
+	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == "mulebot")
+	else if(signal.data["type"] == "mulebot")
 		frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
 	else
 		frequency.post_signal(src, signal)
@@ -832,7 +832,7 @@
 	post_signal_multiple(control_freq, kv)
 
 /obj/machinery/bot/mulebot/emp_act(severity)
-	if (cell)
+	if(cell)
 		cell.emplode(severity)
 	if(load)
 		load.emplode(severity)
@@ -847,7 +847,7 @@
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut/red(Tsec)
-	if (cell)
+	if(cell)
 		cell.loc = Tsec
 		cell.update_icon()
 		cell = null

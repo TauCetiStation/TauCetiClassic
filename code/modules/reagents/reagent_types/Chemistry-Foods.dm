@@ -185,34 +185,34 @@
 			var/eyes_covered = 0
 			var/obj/item/safe_thing = null
 			if(victim.wear_mask)
-				if (victim.wear_mask.flags & MASKCOVERSEYES)
+				if(victim.wear_mask.flags & MASKCOVERSEYES)
 					eyes_covered = 1
 					safe_thing = victim.wear_mask
-				if (victim.wear_mask.flags & MASKCOVERSMOUTH)
+				if(victim.wear_mask.flags & MASKCOVERSMOUTH)
 					mouth_covered = 1
 					safe_thing = victim.wear_mask
 			if(victim.head)
-				if (victim.head.flags & MASKCOVERSEYES)
+				if(victim.head.flags & MASKCOVERSEYES)
 					eyes_covered = 1
 					safe_thing = victim.head
-				if (victim.head.flags & MASKCOVERSMOUTH)
+				if(victim.head.flags & MASKCOVERSMOUTH)
 					mouth_covered = 1
 					safe_thing = victim.head
 			if(victim.glasses)
 				eyes_covered = 1
-				if (!safe_thing)
+				if(!safe_thing)
 					safe_thing = victim.glasses
-			if (eyes_covered && mouth_covered)
+			if(eyes_covered && mouth_covered)
 				to_chat(victim, "<span class='userdanger'>Your [safe_thing] protects you from the pepperspray!</span>")
 				return
-			else if (mouth_covered)	// Reduced effects if partially protected
+			else if(mouth_covered)	// Reduced effects if partially protected
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
 				return
-			else if (eyes_covered) // Eye cover is better than mouth cover
+			else if(eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream")
 				victim.eye_blurry = max(M.eye_blurry, 5)
@@ -294,7 +294,7 @@
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/psilocybin
@@ -348,7 +348,7 @@
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	. = ..()
-	if (!istype(T))
+	if(!istype(T))
 		return
 	if(volume >= 3)
 		T.make_wet_floor(WATER_FLOOR)

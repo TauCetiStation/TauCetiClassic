@@ -245,11 +245,11 @@
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	if(M.wall_smash)
-		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
+		if(istype(src, /turf/simulated/wall/r_wall) && !rotting)
 			to_chat(M, text("<span class='notice'>This wall is far too strong for you to destroy.</span>"))
 			return
 		else
-			if (prob(40) || rotting)
+			if(prob(40) || rotting)
 				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
 				dismantle_wall(1)
 				return
@@ -275,7 +275,7 @@
 			else
 				to_chat(M, "<span class='info'>This wall is far too strong for you to destroy.</span>")
 		else
-			if (prob(40) || rotting)
+			if(prob(40) || rotting)
 				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
 				dismantle_wall(1)
 			else
@@ -307,7 +307,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
+	if(!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -404,7 +404,7 @@
 		return
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")

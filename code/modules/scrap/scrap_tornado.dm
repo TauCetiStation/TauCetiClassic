@@ -49,7 +49,7 @@
 
 
 /obj/singularity/scrap_ball/consume(atom/A)
-	if (!loc)
+	if(!loc)
 		return
 	if(istype(A, /obj) || istype(A, /mob))
 		var/atom/movable/to_add = A

@@ -12,11 +12,11 @@
 
 /datum/directive/terminations/directives_complete()
 	for(var/account_number in accounts_to_suspend)
-		if (!accounts_to_suspend[account_number])
+		if(!accounts_to_suspend[account_number])
 			return 0
 
 	for(var/account_number in accounts_to_revoke)
-		if (!accounts_to_revoke[account_number])
+		if(!accounts_to_revoke[account_number])
 			return 0
 
 	return ids_to_terminate.len == 0

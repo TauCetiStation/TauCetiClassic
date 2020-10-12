@@ -7,7 +7,7 @@
 /* eslint-disable */
 (function(window){
   /*! (C) WebReflection Mit Style License */
-  if (document.createEvent) return;
+  if(document.createEvent) return;
   var
     DUNNOABOUTDOMLOADED = true,
     READYEVENTDISPATCHED = false,
@@ -24,11 +24,11 @@
     // IE8 implemented defineProperty but not the plural...
     function (object, descriptors) {
       for(var key in descriptors) {
-        if (hasOwnProperty.call(descriptors, key)) {
+        if(hasOwnProperty.call(descriptors, key)) {
           try {
             defineProperty(object, key, descriptors[key]);
           } catch(o_O) {
-            if (window.console) {
+            if(window.console) {
               console.log(key + ' failed on object:', object, o_O.message);
             }
           }
@@ -68,18 +68,18 @@
       i = 0, length = handlers.length; i < length; i++
     ) {
       handler = handlers[i];
-      if (typeof handler === 'object') {
-        if (typeof handler.handleEvent === 'function') {
+      if(typeof handler === 'object') {
+        if(typeof handler.handleEvent === 'function') {
           handler.handleEvent(evt);
         }
       } else {
         handler.call(currentTarget, evt);
       }
-      if (evt.stoppedImmediatePropagation) break;
+      if(evt.stoppedImmediatePropagation) break;
     }
     continuePropagation = !evt.stoppedPropagation;
     /*
-    if (continuePropagation && !synthetic && !live(currentTarget)) {
+    if(continuePropagation && !synthetic && !live(currentTarget)) {
       evt.cancelBubble = true;
     }
     */
@@ -137,13 +137,13 @@
   }
 
   function getTextContent() {
-    if (this.tagName === 'BR') return '\n';
+    if(this.tagName === 'BR') return '\n';
     var
       textNode = this.firstChild,
       arrayContent = []
     ;
     while(textNode) {
-      if (textNode.nodeType !== 8 && textNode.nodeType !== 7) {
+      if(textNode.nodeType !== 8 && textNode.nodeType !== 7) {
         arrayContent.push(textNode.textContent);
       }
       textNode = textNode.nextSibling;
@@ -162,7 +162,7 @@
   }
 
   function onReadyState(e) {
-    if (!READYEVENTDISPATCHED && readyStateOK.test(
+    if(!READYEVENTDISPATCHED && readyStateOK.test(
       document.readyState
     )) {
       READYEVENTDISPATCHED = !READYEVENTDISPATCHED;
@@ -185,19 +185,19 @@
       this.removeChild(node);
     }
     /*jshint eqnull:true */
-    if (textContent != null) {
+    if(textContent != null) {
       this.appendChild(document.createTextNode(textContent));
     }
   }
 
   function verify(self, e) {
-    if (!e) {
+    if(!e) {
       e = window.event;
     }
-    if (!e.target) {
+    if(!e.target) {
       e.target = e.srcElement || e.fromElement || document;
     }
-    if (!e.timeStamp) {
+    if(!e.timeStamp) {
       e.timeStamp = (new Date()).getTime();
     }
     return e;
@@ -255,7 +255,7 @@
       set: function(value) {
         this.zoom = 1;
         var found = false;
-        if (value < 1) {
+        if(value < 1) {
           value = ' alpha(opacity=' + Math.round(value * 100) + ')';
         }
         else {
@@ -263,7 +263,7 @@
         }
         this.filter = this.filter.replace(opacityre,
                         function() { found = true; return value; });
-        if (!found && value) {
+        if(!found && value) {
           this.filter += value;
         }
       }
@@ -286,7 +286,7 @@
             i = 0, length = childNodes.length;
             i < length; i++
           ) {
-            if (childNodes[i].nodeType == 1) return childNodes[i];
+            if(childNodes[i].nodeType == 1) return childNodes[i];
           }
         }
       },
@@ -297,7 +297,7 @@
             i = childNodes.length;
             i--;
           ) {
-            if (childNodes[i].nodeType == 1) return childNodes[i];
+            if(childNodes[i].nodeType == 1) return childNodes[i];
           }
         }
       },
@@ -306,10 +306,10 @@
           return this._oninput || null;
         },
         set: function (oninput) {
-          if (this._oninput) {
+          if(this._oninput) {
             this.removeEventListener('input', this._oninput);
             this._oninput = oninput;
-            if (oninput) {
+            if(oninput) {
               this.addEventListener('input', oninput);
             }
           }
@@ -355,7 +355,7 @@
             i = 0, length = childNodes.length;
             i < length; i++
           ) {
-            if (childNodes[i].nodeType == 1) {
+            if(childNodes[i].nodeType == 1) {
               children.push(childNodes[i]);
             }
           }
@@ -365,7 +365,7 @@
       */
       // DOM Level 2 EventTarget methods and events
       addEventListener: valueDesc(function (type, handler, capture) {
-        if (typeof handler !== 'function' && typeof handler !== 'object') return;
+        if(typeof handler !== 'function' && typeof handler !== 'object') return;
         var
           self = this,
           ontype = 'on' + type,
@@ -377,14 +377,14 @@
           handlers  = currentType.h || (currentType.h = []),
           e, attr
         ;
-        if (!hasOwnProperty.call(currentType, 'w')) {
+        if(!hasOwnProperty.call(currentType, 'w')) {
           currentType.w = function (e) {
             // e[SECRET] is a silent notification needed to avoid
             // fired events during live test
             return e[SECRET] || commonEventLoop(self, verify(self, e), handlers, false);
           };
           // if not detected yet
-          if (!hasOwnProperty.call(types, ontype)) {
+          if(!hasOwnProperty.call(types, ontype)) {
             // and potentially a native event
             if(possiblyNativeEvent.test(type)) {
               // do this heavy thing
@@ -399,12 +399,12 @@
                 // document a part if a node has never been
                 // added to any other node, fireEvent might
                 // behave very weirdly (read: trigger unspecified errors)
-                if (self.nodeType != 9) {
+                if(self.nodeType != 9) {
                   /*jshint eqnull:true */
-                  if (self.parentNode == null) {
+                  if(self.parentNode == null) {
                     div.appendChild(self);
                   }
-                  if ((attr = self.getAttribute(ontype))) {
+                  if((attr = self.getAttribute(ontype))) {
                     removeAttribute.call(self, ontype);
                   }
                 }
@@ -416,7 +416,7 @@
                   div.removeChild(div.firstChild);
                 }
               }
-              if (attr != null) {
+              if(attr != null) {
                 setAttribute.call(self, ontype, attr);
               }
             } else {
@@ -425,14 +425,14 @@
               types[ontype] = false;
             }
           }
-          if ((currentType.n = types[ontype])) {
+          if((currentType.n = types[ontype])) {
             self.attachEvent(ontype, currentType.w);
           }
         }
-        if (find(handlers, handler) < 0) {
+        if(find(handlers, handler) < 0) {
           handlers[capture ? 'unshift' : 'push'](handler);
         }
-        if (type === 'input') {
+        if(type === 'input') {
           self.attachEvent('onkeyup', onkeyup);
         }
       }),
@@ -445,7 +445,7 @@
           valid = !!currentType,
           parentNode
         ;
-        if (!e.target) e.target = self;
+        if(!e.target) e.target = self;
         return (valid ? (
           currentType.n /* && live(self) */ ?
             self.fireEvent(ontype, e) :
@@ -462,7 +462,7 @@
         )), !e.defaultPrevented;
       }),
       removeEventListener: valueDesc(function (type, handler, capture) {
-        if (typeof handler !== 'function' && typeof handler !== 'object') return;
+        if(typeof handler !== 'function' && typeof handler !== 'object') return;
         var
           self = this,
           ontype = 'on' + type,
@@ -471,7 +471,7 @@
           handlers = currentType && currentType.h,
           i = handlers ? find(handlers, handler) : -1
         ;
-        if (-1 < i) handlers.splice(i, 1);
+        if(-1 < i) handlers.splice(i, 1);
       })
     }
   );
@@ -507,8 +507,8 @@
           currentType = temple[ontype] || (temple[ontype] = {}),
           handlers  = currentType.h || (currentType.h = [])
         ;
-        if (find(handlers, handler) < 0) {
-          if (!self[ontype]) {
+        if(find(handlers, handler) < 0) {
+          if(!self[ontype]) {
             self[ontype] = function () {
               var e = document.createEvent('Event');
               e.initEvent(type, true, true);
@@ -548,7 +548,7 @@
       bubbles: valueDesc(true),
       cancelable: valueDesc(true),
       preventDefault: valueDesc(function () {
-        if (this.cancelable) {
+        if(this.cancelable) {
           this.returnValue = false;
         }
       }),
@@ -564,7 +564,7 @@
         this.type = type;
         this.bubbles = !!bubbles;
         this.cancelable = !!cancelable;
-        if (!this.bubbles) {
+        if(!this.bubbles) {
           this.stopPropagation();
         }
       }),
@@ -585,9 +585,9 @@
       }},
       relatedTarget: {get: function() {
         var type = this.type;
-        if (type === 'mouseover') {
+        if(type === 'mouseover') {
           return this.fromElement;
-        } else if (type === 'mouseout') {
+        } else if(type === 'mouseout') {
           return this.toElement;
         } else {
           return null;
@@ -609,7 +609,7 @@
           return this.nodeType === 11 ? getTextContent.call(this) : null;
         },
         set: function (textContent) {
-          if (this.nodeType === 11) {
+          if(this.nodeType === 11) {
             setTextContent.call(this, textContent);
           }
         }
@@ -619,7 +619,7 @@
         ElementPrototype.addEventListener.call(self, type, handler, capture);
         // NOTE:  it won't fire if already loaded, this is NOT a $.ready() shim!
         //        this behaves just like standard browsers
-        if (
+        if(
           DUNNOABOUTDOMLOADED &&
           type === DOMCONTENTLOADED &&
           !readyStateOK.test(
@@ -629,7 +629,7 @@
           DUNNOABOUTDOMLOADED = false;
           self.attachEvent(ONREADYSTATECHANGE, onReadyState);
           /* global top */
-          if (window == top) {
+          if(window == top) {
             (function gonna(e){try{
               self.documentElement.doScroll('left');
               onReadyState();
@@ -643,7 +643,7 @@
       removeEventListener: valueDesc(ElementPrototype.removeEventListener),
       createEvent: valueDesc(function(Class){
         var e;
-        if (Class !== 'Event') throw new Error('unsupported ' + Class);
+        if(Class !== 'Event') throw new Error('unsupported ' + Class);
         e = document.createEventObject();
         e.timeStamp = (new Date()).getTime();
         return e;
@@ -679,21 +679,21 @@
             left,
             rtLeft
           ;
-          if (name == 'opacity') {
+          if(name == 'opacity') {
             return style.opacity || '1';
           }
           name = (name === 'float' ? 'style-float' : name).replace(re, place);
           result = currentStyle ? currentStyle[name] : style[name];
-          if (notpixel.test(result) && !position.test(name)) {
+          if(notpixel.test(result) && !position.test(name)) {
             left = style.left;
             rtLeft = runtimeStyle && runtimeStyle.left;
-            if (rtLeft) {
+            if(rtLeft) {
               runtimeStyle.left = currentStyle.left;
             }
             style.left = name === 'fontSize' ? '1em' : result;
             result = style.pixelLeft + 'px';
             style.left = left;
-            if (rtLeft) {
+            if(rtLeft) {
               runtimeStyle.left = rtLeft;
             }
           }
@@ -722,7 +722,7 @@
           ontype = 'on' + type,
           handlers
         ;
-        if (!self[ontype]) {
+        if(!self[ontype]) {
           self[ontype] = function(e) {
             return commonEventLoop(self, verify(self, e), handlers, false) && undefined;
           };
@@ -730,7 +730,7 @@
         handlers = self[ontype][SECRET] || (
           self[ontype][SECRET] = []
         );
-        if (find(handlers, handler) < 0) {
+        if(find(handlers, handler) < 0) {
           handlers[capture ? 'unshift' : 'push'](handler);
         }
       }),
@@ -744,7 +744,7 @@
           handlers = (window[ontype] || Object)[SECRET],
           i = handlers ? find(handlers, handler) : -1
          ;
-        if (-1 < i) handlers.splice(i, 1);
+        if(-1 < i) handlers.splice(i, 1);
       }),
       pageXOffset: {get: getter('scrollLeft')},
       pageYOffset: {get: getter('scrollTop')},
@@ -759,12 +759,12 @@
 
   (function (styleSheets, HTML5Element, i) {
     for (i = 0; i < HTML5Element.length; i++) document.createElement(HTML5Element[i]);
-    if (!styleSheets.length) document.createStyleSheet('');
+    if(!styleSheets.length) document.createStyleSheet('');
     styleSheets[0].addRule(HTML5Element.join(','), 'display:block;');
   }(document.styleSheets, ['header', 'nav', 'section', 'article', 'aside', 'footer']));
 
   (function () {
-    if (document.createRange) return;
+    if(document.createRange) return;
     document.createRange = function createRange() {
       return new Range();
     };

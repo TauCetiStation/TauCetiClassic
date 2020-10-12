@@ -27,7 +27,7 @@
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	. = ..()
 
@@ -36,7 +36,7 @@
 	set category = "Object"
 	set src in view(1)
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
+	if(N)
 		amount_per_transfer_from_this = N
 
 /obj/structure/reagent_dispensers/proc/try_transfer(atom/t_from, atom/t_to, mob/user)
@@ -65,12 +65,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/effect/water(src.loc)
 				qdel(src)
 				return
@@ -101,13 +101,13 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(src in oview(2, user))
-		if (modded)
+		if(modded)
 			to_chat(user, "<span class='red'>Faucet is wrenched open, leaking the contents of [src]!</span>")
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
 /obj/structure/reagent_dispensers/attack_hand(mob/user)
-	if (rig && !user.is_busy())
+	if(rig && !user.is_busy())
 		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(user, 20, target = src))
 			user.visible_message("<span class='notice'>[user] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
@@ -116,19 +116,19 @@
 			cut_overlays()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
 		modded = !modded
-		if (modded)
+		if(modded)
 			START_PROCESSING(SSobj, src)
 			leak(amount_per_transfer_from_this)
 
 		return
-	else if (istype(W,/obj/item/device/assembly_holder))
-		if (rig)
+	else if(istype(W,/obj/item/device/assembly_holder))
+		if(rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return
 		if(user.is_busy()) return
@@ -137,7 +137,7 @@
 			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
+			if(istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
 				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
@@ -167,9 +167,9 @@
 /obj/structure/reagent_dispensers/proc/explode(mob/user)
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
 	if(fuel_am > 0)
-		if (fuel_am > 500)
+		if(fuel_am > 500)
 			explosion(loc, 1, 2, 4)
-		else if (fuel_am > 100)
+		else if(fuel_am > 100)
 			explosion(loc, 0, 1, 3)
 		else
 			explosion(loc, -1, 1, 2)
@@ -189,7 +189,7 @@
 
 /obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if (. && modded)
+	if(. && modded)
 		leak(amount_per_transfer_from_this * 0.1)
 
 

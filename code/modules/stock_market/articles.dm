@@ -61,7 +61,7 @@ var/global/list/FrozenAccounts = list()
 		outlet = pick(outlets)
 
 	var/list/authors = outlets[outlet]
-	if ((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
+	if((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
 		var/AN = generateAuthorName()
 		outlets[outlet] += AN
 		author = AN
@@ -76,18 +76,18 @@ var/global/list/FrozenAccounts = list()
 	var/list/timely = list("Daily", "Hourly", "Weekly", "Biweekly", "Monthly", "Yearly")
 
 	switch(rand(1,2))
-		if (1)
+		if(1)
 			return "The [pick(locations)] [pick(nouns)]"
-		if (2)
+		if(2)
 			return "The [pick(timely)] [pick(nouns)]"
 
 /datum/article/proc/generateAuthorName()
 	switch(rand(1,3))
-		if (1)
+		if(1)
 			return "[consonant()]. [pick(last_names)]"
-		if (2)
+		if(2)
 			return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(last_names)]"
-		if (3)
+		if(3)
 			return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] \"[prob(50) ? pick(first_names_male) : pick(first_names_female)]\" [pick(last_names)]"
 
 /datum/article/proc/formatSpacetime()
@@ -99,7 +99,7 @@ var/global/list/FrozenAccounts = list()
 	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")]2556"
 
 /datum/article/proc/formatArticle()
-	if (spacetime == "")
+	if(spacetime == "")
 		formatSpacetime()
 	var/output = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
 	return output

@@ -9,14 +9,14 @@
 #	x = "bar"
 
 {
-	if ( comma != 1 ) { # No comma/'list('/etc at the end of the previous line
-		if ( $0 ~ /^[\t ]+\/[^\/*]/ ) { # Current line's first non-whitespace character is a slash, followed by something that is not another slash or an asterisk
+	if( comma != 1 ) { # No comma/'list('/etc at the end of the previous line
+		if( $0 ~ /^[\t ]+\/[^\/*]/ ) { # Current line's first non-whitespace character is a slash, followed by something that is not another slash or an asterisk
 			print FILENAME, ":", FNR, ":", $0
 			fail = 1
 		}
 	}
 
-	if ($0 ~ /,[\t ]*\\?\r?$/ || # comma at EOL
+	if($0 ~ /,[\t ]*\\?\r?$/ || # comma at EOL
 	    $0 ~ /list[\t ]*\([\t ]*\\?\r?$/ || # start of a list()
 	    $0 ~ /pick[\t ]*\([\t ]*\\?\r?$/ ) { # start of a pick()
 		comma = 1
@@ -26,7 +26,7 @@
 }
 
 END {
-	if ( fail ) {
+	if( fail ) {
 		exit 1
 	}
 }

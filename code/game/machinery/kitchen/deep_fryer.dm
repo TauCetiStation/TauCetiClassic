@@ -53,7 +53,7 @@
 		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
 			default_unfasten_wrench(user, I)
 			return
-	if (ishuman(user) && !(I.flags & DROPDEL))
+	if(ishuman(user) && !(I.flags & DROPDEL))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
@@ -69,7 +69,7 @@
 		if(fry_time == 30)
 			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 			visible_message("[src] dings!")
-		else if (fry_time == 60)
+		else if(fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
 /obj/machinery/deepfryer/attack_hand(mob/user)

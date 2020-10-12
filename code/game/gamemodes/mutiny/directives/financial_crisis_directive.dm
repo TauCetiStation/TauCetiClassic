@@ -8,7 +8,7 @@
 	var/list/civilians[0]
 	var/list/candidates = civilian_positions - "Head of Personnel"
 	for(var/mob/M in player_list)
-		if (M.is_ready() && candidates.Find(M.mind.assigned_role))
+		if(M.is_ready() && candidates.Find(M.mind.assigned_role))
 			civilians.Add(M)
 	return civilians
 

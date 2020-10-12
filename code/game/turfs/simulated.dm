@@ -43,19 +43,19 @@
 		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
-	if (istype(A, /mob/living/simple_animal/hulk))
+	if(istype(A, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
 			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
-	if (istype(A,/mob/living/carbon))
+	if(istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
 
 		dirt++
-		if (dirt >= 200)
+		if(dirt >= 200)
 			var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
 
-			if (!dirtoverlay)
+			if(!dirtoverlay)
 				dirtoverlay = new/obj/effect/decal/cleanable/dirt(src)
 				dirtoverlay.alpha = 20
 			else
@@ -76,7 +76,7 @@
 				blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
 				M.track_blood--
 
-		if (bloodDNA)
+		if(bloodDNA)
 			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
 			var/turf/simulated/from = get_step(M, turn(M.dir, 180))
 			if(istype(from) && from)
@@ -88,7 +88,7 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /turf/simulated/add_blood(mob/living/carbon/human/M)
-	if (!..())
+	if(!..())
 		return 0
 
 	for(var/obj/effect/decal/cleanable/blood/B in contents)

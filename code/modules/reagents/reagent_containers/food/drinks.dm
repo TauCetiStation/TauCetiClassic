@@ -12,7 +12,7 @@
 	volume = 50
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
-	if (gulp_size < 5)
+	if(gulp_size < 5)
 		gulp_size = 5
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
@@ -24,7 +24,7 @@
 	var/datum/reagents/R = reagents
 	var/fillevel = gulp_size
 
-	if (!src.is_open_container())
+	if(!src.is_open_container())
 		return 0
 
 	if(!R.total_volume || !R)
@@ -70,7 +70,7 @@
 	if(!proximity)
 		return
 
-	if (!is_open_container())
+	if(!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
 
@@ -80,7 +80,7 @@
 		if(!RD.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[RD] is empty.</span>")
 			return
-		if (!reagents.maximum_volume) // Locked or broken container
+		if(!reagents.maximum_volume) // Locked or broken container
 			to_chat(user, "<span class='warning'> [src] can't hold this.</span>")
 			return
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -137,11 +137,11 @@
 	if(src in user)
 		if(!reagents || reagents.total_volume==0)
 			to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
-		else if (reagents.total_volume<=src.volume/4)
+		else if(reagents.total_volume<=src.volume/4)
 			to_chat(user, "<span class='notice'>\The [src] is almost empty!</span>")
-		else if (reagents.total_volume<=src.volume*0.66)
+		else if(reagents.total_volume<=src.volume*0.66)
 			to_chat(user, "<span class='notice'>\The [src] is half full!</span>")
-		else if (reagents.total_volume<=src.volume*0.90)
+		else if(reagents.total_volume<=src.volume*0.90)
 			to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
 		else
 			to_chat(user, "<span class='notice'>\The [src] is full!</span>")
@@ -247,7 +247,7 @@
 		icon_state = "ramen_open"
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
-	if (!is_open_container())
+	if(!is_open_container())
 		flags |= OPENCONTAINER
 		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the [src].</span>")

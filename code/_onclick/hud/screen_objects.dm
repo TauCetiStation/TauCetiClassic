@@ -69,7 +69,7 @@
 		return 1
 	if(usr.incapacitated())
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
@@ -88,9 +88,9 @@
 		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
 		for(var/i=1,i<=S.storage_ui.click_border_start.len,i++)
-			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+			if(S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
 				I = S.contents[i]
-				if (I)
+				if(I)
 					I.Click(location, control, params)
 					return 1
 	return 1
@@ -260,7 +260,7 @@
 			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
-			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+			if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 				return 1
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
@@ -328,7 +328,7 @@
 								for(var/i=1, i<tankcheck.len+1, ++i)
 									if(istype(tankcheck[i], /obj/item/weapon/tank))
 										var/obj/item/weapon/tank/t = tankcheck[i]
-										if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes)) // why check for desc content? just why?
+										if(!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes)) // why check for desc content? just why?
 											contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
 											continue					//in it, so we're going to believe the tank is what it says it is
 										switch(breathes)
@@ -340,14 +340,14 @@
 												else
 													contents.Add(0)
 
-											if ("oxygen")
+											if("oxygen")
 												if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
 													contents.Add(t.air_contents.gas["oxygen"])
 												else
 													contents.Add(0)
 
 											// No races breath this, but never know about downstream servers.
-											if ("carbon dioxide")
+											if("carbon dioxide")
 												if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
 													contents.Add(t.air_contents.gas["carbon_dioxide"])
 												else
@@ -661,7 +661,7 @@
 		return 1
 	if(usr.incapacitated())
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	switch(name)
 		if("r_hand")

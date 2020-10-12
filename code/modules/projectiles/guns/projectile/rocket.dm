@@ -22,15 +22,15 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
+	if(ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (loc != usr)
+		if(loc != usr)
 			return
-		if (!over_object)
+		if(!over_object)
 			return
 
-		if (!usr.incapacitated())
+		if(!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -98,7 +98,7 @@
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")

@@ -323,7 +323,7 @@
 		return
 	if(wires_shocked && !isobserver(user))
 		shock(user)
-	if (panel_open && cell)
+	if(panel_open && cell)
 		to_chat(user, "You take out \the [cell].")
 		cell.updateicon()
 		cell.loc = get_turf(user)

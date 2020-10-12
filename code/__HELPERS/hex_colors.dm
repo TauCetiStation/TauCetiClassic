@@ -40,8 +40,8 @@
 	return final_hex
 
 /proc/adjust_brightness(color, value)
-	if (!color) return "#ffffff"
-	if (!value) return color
+	if(!color) return "#ffffff"
+	if(!value) return color
 
 	var/list/RGB = ReadRGB(color)
 	RGB[1] = clamp(RGB[1]+value,0,255)

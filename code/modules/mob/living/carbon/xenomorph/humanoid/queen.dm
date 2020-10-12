@@ -36,8 +36,8 @@
 	return ..()
 
 /mob/living/carbon/xenomorph/humanoid/queen/handle_hud_icons_health()
-	if (src.healths)
-		if (src.stat != DEAD)
+	if(src.healths)
+		if(src.stat != DEAD)
 			switch(health)
 				if(250 to INFINITY)
 					src.healths.icon_state = "health0"

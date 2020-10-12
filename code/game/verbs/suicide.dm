@@ -3,11 +3,11 @@
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (!SSticker)
+	if(!SSticker)
 		to_chat(src, "You can't commit suicide before the game starts!")
 		return
 
@@ -24,7 +24,7 @@
 		to_chat(src, "No. Adminhelp if there is a legitimate reason.")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -88,15 +88,15 @@
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (!SSticker)
+	if(!SSticker)
 		to_chat(src, "You can't commit suicide before the game starts!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -112,15 +112,15 @@
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (!SSticker)
+	if(!SSticker)
 		to_chat(src, "You can't commit suicide before the game starts!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -139,11 +139,11 @@
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -159,11 +159,11 @@
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -192,11 +192,11 @@
 /mob/living/carbon/xenomorph/humanoid/verb/suicide()
 	set hidden = 1
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
@@ -212,11 +212,11 @@
 
 /mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
-	if (stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 		return
 
-	if (suiciding)
+	if(suiciding)
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 

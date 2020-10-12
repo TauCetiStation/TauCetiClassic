@@ -1,12 +1,12 @@
 //Returns 1 if mob can be infected, 0 otherwise. Checks his clothing.
 /proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 	var/score = 0
-	if (!istype(M))
+	if(!istype(M))
 		return 0
 
 	if(istype(M, /mob/living/carbon/human))
 
-		if (vector == "Airborne")
+		if(vector == "Airborne")
 			if(M.internal)	//not breathing infected air helps greatly
 				score = 30
 			if(M.wear_mask)
@@ -19,7 +19,7 @@
 				score += 30
 
 
-		if (vector == "Contact")
+		if(vector == "Contact")
 			if(M:gloves) score += 15
 			if(istype(M:wear_suit, /obj/item/clothing/suit/space) && istype(M:head, /obj/item/clothing/head/helmet/space))
 				score += 15
@@ -45,7 +45,7 @@
 	return 1
 
 /proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
-	if (!istype(M) || !target_zone)
+	if(!istype(M) || !target_zone)
 		return 0
 
 	if(target_zone && ishuman(M))
@@ -77,7 +77,7 @@
 	if(!istype(M))
 //		log_debug("Bad mob")
 		return
-	if ("[disease.uniqueID]" in M.virus2)
+	if("[disease.uniqueID]" in M.virus2)
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if((M.antibodies & disease.antigen) != 0)
@@ -87,12 +87,12 @@
 
 	if(istype(M,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/chimp = M
-		if (!(chimp.greaterform in disease.affected_species))
+		if(!(chimp.greaterform in disease.affected_species))
 			return
 
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/chump = M
-		if (!(chump.species.name in disease.affected_species))
+		if(!(chump.species.name in disease.affected_species))
 			return
 
 //	log_debug("Infecting [M]")
@@ -127,34 +127,34 @@
 	return(prob(sqrt(p)) && prob(sqrt(p)))
 
 /mob/living/carbon/proc/spread_disease_to(mob/living/carbon/victim, vector = "Airborne")
-	if (src == victim)
+	if(src == victim)
 		return "retardation"
 
 //	log_debug("Spreading [vector] diseases from [src] to [victim]")
-	if (virus2.len > 0)
+	if(virus2.len > 0)
 		for (var/ID in virus2)
 //			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
 			if(V.spreadtype != vector) continue
 
-			if (vector == "Airborne")
+			if(vector == "Airborne")
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 				else
 //					log_debug("Could not reach target")
 
-			if (vector == "Contact")
-				if (in_range(src, victim))
+			if(vector == "Contact")
+				if(in_range(src, victim))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 
 	//contact goes both ways
-	if (victim.virus2.len > 0 && vector == "Contact")
+	if(victim.virus2.len > 0 && vector == "Contact")
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1
 
-		if (ishuman(victim) && zone_sel)
+		if(ishuman(victim) && zone_sel)
 			var/mob/living/carbon/human/H = victim
 			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
@@ -162,7 +162,7 @@
 				if(C && istype(C))
 					if(C.body_parts_covered & BP.body_part)
 						nudity = 0
-		if (nudity)
+		if(nudity)
 			for (var/ID in victim.virus2)
 				var/datum/disease2/disease/V = victim.virus2[ID]
 				if(V && V.spreadtype != vector) continue

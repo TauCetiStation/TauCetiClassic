@@ -218,7 +218,7 @@
 
 /obj/machinery/power/turbine/ui_interact(mob/user)
 
-	if ( !Adjacent(user) || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
+	if( !Adjacent(user) || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
 		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return
@@ -312,9 +312,9 @@
 		usr.client.eye = src.compressor
 	else if( href_list["str"] )
 		src.compressor.starter = !src.compressor.starter
-	else if (href_list["doors"])
+	else if(href_list["doors"])
 		for(var/obj/machinery/door/poddoor/D in src.doors)
-			if (door_status == 0)
+			if(door_status == 0)
 				spawn( 0 )
 					D.open()
 					door_status = 1

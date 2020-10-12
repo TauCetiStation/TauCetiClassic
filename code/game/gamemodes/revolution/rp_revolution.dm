@@ -57,7 +57,7 @@
 				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+		if(antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)	//>lenin LMAO
 		antag_candidates -= lenin
@@ -95,7 +95,7 @@
 /datum/game_mode/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
-	if (you_are)
+	if(you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in rev_mind.objectives)
@@ -316,7 +316,7 @@
 
 /datum/game_mode/rp_revolution/proc/command_report(message)
 	for (var/obj/machinery/computer/communications/comm in communications_list)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message

@@ -8,7 +8,7 @@
 	list_reagents = list("synaptizine" = 5, "hyperzine" = 15, "oxycodone" = 15, "anti_toxin" = 25)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
 	. = ..()
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
 //FIRST-AID KIT
@@ -20,7 +20,7 @@
 
 /obj/item/weapon/storage/firstaid/tactical/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
 	new /obj/item/weapon/storage/pill_bottle/bicaridine(src)
@@ -40,7 +40,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat/atom_init()
 	. = ..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat(src)
@@ -61,7 +61,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space/atom_init()
 	. = ..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/weapon/patcher(src)
@@ -82,7 +82,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/atom_init()
 	. = ..()
 
-	if (empty)
+	if(empty)
 		return
 
 	new /obj/item/stack/medical/ointment(src)
@@ -102,7 +102,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment/atom_init()
 	. = ..()
 
-	if (empty)
+	if(empty)
 		return
 
 	for (var/i in 1 to 7)

@@ -33,7 +33,7 @@ export class DraggableControl extends Component {
     this.flickerTimer = null;
     this.suppressFlicker = () => {
       const { suppressFlicker } = this.props;
-      if (suppressFlicker > 0) {
+      if(suppressFlicker > 0) {
         this.setState({
           suppressingFlicker: true,
         });
@@ -50,7 +50,7 @@ export class DraggableControl extends Component {
         dragMatrix,
       } = this.props;
       const { editing } = this.state;
-      if (editing) {
+      if(editing) {
         return;
       }
       document.body.style['pointer-events'] = 'none';
@@ -69,7 +69,7 @@ export class DraggableControl extends Component {
       this.dragInterval = setInterval(() => {
         const { dragging, value } = this.state;
         const { onDrag } = this.props;
-        if (dragging && onDrag) {
+        if(dragging && onDrag) {
           onDrag(e, value);
         }
       }, 500);
@@ -88,7 +88,7 @@ export class DraggableControl extends Component {
       this.setState(prevState => {
         const state = { ...prevState };
         const offset = getScalarScreenOffset(e, dragMatrix) - state.origin;
-        if (prevState.dragging) {
+        if(prevState.dragging) {
           const stepOffset = Number.isFinite(minValue)
             ? minValue % step
             : 0;
@@ -108,7 +108,7 @@ export class DraggableControl extends Component {
             maxValue);
           state.origin = getScalarScreenOffset(e, dragMatrix);
         }
-        else if (Math.abs(offset) > 4) {
+        else if(Math.abs(offset) > 4) {
           state.dragging = true;
         }
         return state;
@@ -135,16 +135,16 @@ export class DraggableControl extends Component {
       });
       document.removeEventListener('mousemove', this.handleDragMove);
       document.removeEventListener('mouseup', this.handleDragEnd);
-      if (dragging) {
+      if(dragging) {
         this.suppressFlicker();
-        if (onChange) {
+        if(onChange) {
           onChange(e, value);
         }
-        if (onDrag) {
+        if(onDrag) {
           onDrag(e, value);
         }
       }
-      else if (this.inputRef) {
+      else if(this.inputRef) {
         const input = this.inputRef.current;
         input.value = internalValue;
         // IE8: Dies when trying to focus a hidden element
@@ -181,7 +181,7 @@ export class DraggableControl extends Component {
       fontSize,
     } = this.props;
     let displayValue = value;
-    if (dragging || suppressingFlicker) {
+    if(dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
     // Setup a display element
@@ -216,7 +216,7 @@ export class DraggableControl extends Component {
           'font-size': fontSize,
         }}
         onBlur={e => {
-          if (!editing) {
+          if(!editing) {
             return;
           }
           const value = clamp(e.target.value, minValue, maxValue);
@@ -225,30 +225,30 @@ export class DraggableControl extends Component {
             value,
           });
           this.suppressFlicker();
-          if (onChange) {
+          if(onChange) {
             onChange(e, value);
           }
-          if (onDrag) {
+          if(onDrag) {
             onDrag(e, value);
           }
         }}
         onKeyDown={e => {
-          if (e.keyCode === 13) {
+          if(e.keyCode === 13) {
             const value = clamp(e.target.value, minValue, maxValue);
             this.setState({
               editing: false,
               value,
             });
             this.suppressFlicker();
-            if (onChange) {
+            if(onChange) {
               onChange(e, value);
             }
-            if (onDrag) {
+            if(onDrag) {
               onDrag(e, value);
             }
             return;
           }
-          if (e.keyCode === 27) {
+          if(e.keyCode === 27) {
             this.setState({
               editing: false,
             });

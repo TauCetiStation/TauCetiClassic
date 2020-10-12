@@ -16,7 +16,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
-	if (!is_glass)
+	if(!is_glass)
 		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()

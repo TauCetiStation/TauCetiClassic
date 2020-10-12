@@ -89,9 +89,9 @@
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
-		else if (open_panel)
+		else if(open_panel)
 			to_chat(user, "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>")
-		else if (degutted)
+		else if(degutted)
 			to_chat(user, "<span class='notice'>The explosives have already been removed.</span>")
 		else
 			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")

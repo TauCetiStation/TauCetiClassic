@@ -9,14 +9,14 @@
 	blood_level = 1
 
 /datum/surgery_step/appendectomy/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
-	if (target_zone != BP_GROIN)
+	if(target_zone != BP_GROIN)
 		return 0
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-	if (!BP)
+	if(!BP)
 		return 0
-	if (BP.open < 2)
+	if(BP.open < 2)
 		return 0
 	return 1
 
@@ -77,7 +77,7 @@
 		app = 1
 		appendicitis.cure()
 		target.resistances += appendicitis
-	if (app)
+	if(app)
 		new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(target))
 	else
 		new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))

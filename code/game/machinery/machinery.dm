@@ -141,7 +141,7 @@ Class Procs:
 	. = ..()
 	machines += src
 
-	if (speed_process)
+	if(speed_process)
 		START_PROCESSING(SSfastprocess, src)
 	else
 		START_PROCESSING(SSmachines, src)
@@ -156,7 +156,7 @@ Class Procs:
 	set_power_use(NO_POWER_USE)
 	machines -= src
 
-	if (speed_process)
+	if(speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else
 		STOP_PROCESSING(SSmachines, src)
@@ -238,11 +238,11 @@ Class Procs:
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
 		else
@@ -360,14 +360,14 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if ((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
 	if(!is_interactable())
 		return 1
-	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
+	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
-	if (!can_mob_interact(user))
+	if(!can_mob_interact(user))
 		return 1
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
@@ -509,7 +509,7 @@ Class Procs:
 	audible_message("[bicon(src)] <span class = 'notice'>[msg]</span>")
 
 /obj/machinery/proc/ping(text=null)
-	if (!text)
+	if(!text)
 		text = "\The [src] pings."
 
 	state(text, "blue")

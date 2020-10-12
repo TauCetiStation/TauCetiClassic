@@ -4,11 +4,11 @@
 
 /mob/living/captive_brain/say(var/message)
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)
@@ -21,7 +21,7 @@
 		to_chat(B.host, "The captive mind of [src] whispers, \"[message]\"")
 
 		for (var/mob/M in player_list)
-			if (isnewplayer(M))
+			if(isnewplayer(M))
 				continue
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
@@ -120,23 +120,23 @@
 
 	log_say("[key_name(src)] : [message]")
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if(stat)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (message[1] == "*")
+	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if (message[1] == ";") //Brain borer hivemind.
+	if(message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
@@ -147,7 +147,7 @@
 	to_chat(host, "Your own thoughts speak: \"[message]\"")
 
 	for (var/mob/M in player_list)
-		if (isnewplayer(M))
+		if(isnewplayer(M))
 			continue
 		else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			to_chat(M, "[src.truename] whispers to [host], \"[message]\"")
@@ -446,7 +446,7 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Borer"
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else

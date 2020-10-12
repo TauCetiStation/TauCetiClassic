@@ -41,7 +41,7 @@ var/global/list/asset_datums = list()
 	. = list()
 	for (var/asset_name in assets)
 		var/datum/asset_cache_item/ACI = assets[asset_name]
-		if (!ACI)
+		if(!ACI)
 			continue
 		.[asset_name] = ACI.url
 
@@ -155,7 +155,7 @@ var/global/list/asset_datums = list()
 		sprites[sprite_name] = list(size_id, 0)
 
 /datum/asset/spritesheet/get_url_mappings()
-	if (!name)
+	if(!name)
 		return
 	. = list("spritesheet_[name].css" = get_asset_url("spritesheet_[name].css"))
 	for(var/size_id in sizes)

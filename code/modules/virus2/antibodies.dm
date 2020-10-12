@@ -38,9 +38,9 @@ var/global/list/ANTIGENS = list(
 	color = "#0050f0"
 
 /datum/reagent/antibodies/reaction_mob(mob/living/carbon/C, method=TOUCH, volume)
-	if (istype(C) && data && method == INGEST)
+	if(istype(C) && data && method == INGEST)
 		for (var/datum/disease2/disease/V in C.virus2)
-			if (data["antibodies"] & V.antigen)
+			if(data["antibodies"] & V.antigen)
 				V.dead = TRUE
 		C.antibodies |= data["antibodies"]
 

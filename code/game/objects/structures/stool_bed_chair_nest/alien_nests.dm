@@ -35,7 +35,7 @@
 	return
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
 	if(user.is_busy())

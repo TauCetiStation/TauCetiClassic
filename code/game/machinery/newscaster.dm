@@ -84,17 +84,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	g_amt = 15000
 
 /obj/item/newscaster_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if(get_dist(on_wall,usr)>1)
 		return
 	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
+	if(!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/simulated/floor))
 		to_chat(usr, "<span class='alert'>Newscaster cannot be placed on this spot.</span>")
 		return
-	if (A.requires_power == 0 || A.name == "Space")
+	if(A.requires_power == 0 || A.name == "Space")
 		to_chat(usr, "<span class='alert'>Newscaster cannot be placed in this area.</span>")
 		return
 	for(var/obj/machinery/newscaster/T in loc)
@@ -787,7 +787,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["setScreen"]) //Brings us to the main menu and resets all fields~
 		src.screen = text2num(href_list["setScreen"])
-		if (src.screen == 0)
+		if(src.screen == 0)
 			src.scanned_user = "Unknown"
 			msg = ""
 			src.c_locked = 0
@@ -871,7 +871,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
-/*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
+/*	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
 		if(src.screen == 4 || src.screen == 5)
 			if( istype(I, /obj/item/device/pda) )
 				var/obj/item/device/pda/P = I
@@ -893,7 +893,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			qdel(src)
 		return
 
-	if (src.isbroken)
+	if(src.isbroken)
 		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
@@ -938,7 +938,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(!camera)
 			return
 		var/datum/picture/selection = camera.selectpicture()
-		if (!selection)
+		if(!selection)
 			return
 
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
@@ -1053,7 +1053,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
+	if((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
 		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
@@ -1078,7 +1078,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			src.curr_page--
 			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		if (istype(src.loc, /mob))
+		if(istype(src.loc, /mob))
 			src.attack_self(src.loc)
 
 
@@ -1088,9 +1088,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
 			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
-			if (!s)
+			if(!s)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if(!in_range(src, usr) && src.loc != usr)
 				return
 			src.scribble_page = src.curr_page
 			src.scribble = s

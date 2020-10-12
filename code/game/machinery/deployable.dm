@@ -100,7 +100,7 @@ for reference:
 			return
 		if(2.0)
 			src.health -= 25
-			if (src.health <= 0)
+			if(src.health <= 0)
 				visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
@@ -110,7 +110,7 @@ for reference:
 
 /obj/structure/barricade/wooden/blob_act()
 	src.health -= 25
-	if (src.health <= 0)
+	if(src.health <= 0)
 		visible_message("<span class='warning'><B>The blob eats through the barricade!</B></span>")
 		qdel(src)
 	return
@@ -149,16 +149,16 @@ for reference:
 	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id))
-		if (src.allowed(user))
+	if(istype(W, /obj/item/weapon/card/id))
+		if(src.allowed(user))
 			if	(src.emagged < 2.0)
 				src.locked = !src.locked
 				src.anchored = !src.anchored
 				src.icon_state = "barrier[src.locked]"
-				if ((src.locked == 1.0) && (src.emagged < 2.0))
+				if((src.locked == 1.0) && (src.emagged < 2.0))
 					to_chat(user, "Barrier lock toggled on.")
 					return
-				else if ((src.locked == 0.0) && (src.emagged < 2.0))
+				else if((src.locked == 0.0) && (src.emagged < 2.0))
 					to_chat(user, "Barrier lock toggled off.")
 					return
 			else
@@ -168,15 +168,15 @@ for reference:
 				visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (iswrench(W))
+	else if(iswrench(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (src.health < src.maxhealth)
+		if(src.health < src.maxhealth)
 			src.health = src.maxhealth
 			src.emagged = 0
 			src.req_access = list(access_security)
 			visible_message("<span class='warning'>[user] repairs \the [src]!</span>")
 			return
-		else if (src.emagged > 0)
+		else if(src.emagged > 0)
 			src.emagged = 0
 			src.req_access = list(access_security)
 			visible_message("<span class='warning'>[user] repairs \the [src]!</span>")
@@ -190,12 +190,12 @@ for reference:
 			if("brute")
 				src.health -= W.force * 0.5
 			else
-		if (src.health <= 0)
+		if(src.health <= 0)
 			src.explode()
 		..()
 
 /obj/machinery/deployable/barrier/emag_act(mob/user)
-	if (src.emagged == 0)
+	if(src.emagged == 0)
 		src.emagged = 1
 		src.req_access = list()
 		to_chat(user, "You break the ID authentication lock on \the [src].")
@@ -204,7 +204,7 @@ for reference:
 		s.start()
 		visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 		return TRUE
-	else if (src.emagged == 1)
+	else if(src.emagged == 1)
 		src.emagged = 2
 		to_chat(user, "You short out the anchoring mechanism on \the [src].")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -220,7 +220,7 @@ for reference:
 			return
 		if(2.0)
 			src.health -= 25
-			if (src.health <= 0)
+			if(src.health <= 0)
 				src.explode()
 			return
 /obj/machinery/deployable/barrier/emp_act(severity)
@@ -233,7 +233,7 @@ for reference:
 
 /obj/machinery/deployable/barrier/blob_act()
 	src.health -= 25
-	if (src.health <= 0)
+	if(src.health <= 0)
 		src.explode()
 	return
 

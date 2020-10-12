@@ -132,7 +132,7 @@
 		var/turf/T = user.loc
 		if(!istype(T, /turf))
 			return 0
-		if (!dug)
+		if(!dug)
 			if(!user.is_busy() && W.use_tool(src, user, 60))
 				if(!dug) //someone else digged here
 					visible_message("<span class='notice'>\The [user] shovels new grave.</span>")

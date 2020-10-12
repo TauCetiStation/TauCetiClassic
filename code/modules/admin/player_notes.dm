@@ -2,7 +2,7 @@
 	key = ckey(key)
 	note = sanitize(note)
 
-	if (!key || !note)
+	if(!key || !note)
 		return
 
 	if(!(check_rights(R_LOG) && check_rights(R_BAN)))

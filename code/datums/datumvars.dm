@@ -24,7 +24,7 @@
 		title = "[A.name] (\ref[A]) = [A.type]"
 
 		#ifdef VARSICON
-		if (A.icon)
+		if(A.icon)
 			body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
 		#endif
 
@@ -50,7 +50,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									alist = lis\[i\].getElementsByTagName("a")
 									if(alist.length > 0){
@@ -69,7 +69,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i-1) >= 0){
 										var li_new = lis\[i-1\];
@@ -90,7 +90,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
+								if( li.style.backgroundColor == "#ffee88" )
 								{
 									if( (i+1) < lis.length){
 										var li_new = lis\[i+1\];
@@ -120,7 +120,7 @@
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+								if( li.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
 									vars_ol.removeChild(li);
 									i--;
@@ -132,7 +132,7 @@
 					for ( var j = 0; j < lis_new.length; ++j )
 					{
 						var li1 = lis\[j\];
-						if (j == 0){
+						if(j == 0){
 							li1.style.backgroundColor = "#ffee88";
 						}else{
 							li1.style.backgroundColor = "white";
@@ -320,7 +320,7 @@
 	body += "</ol>"
 
 	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
-	if (title)
+	if(title)
 		html += "<title>[title]</title>"
 	html += {"<style>
 body
@@ -358,42 +358,42 @@ body
 	else
 		html += "<li>"
 
-	if (isnull(value))
+	if(isnull(value))
 		html += "[name] = <span class='value'>null</span>"
 
-	else if (istext(value))
+	else if(istext(value))
 		html += "[name] = <span class='value'>\"[value]\"</span>"
 
-	else if (isicon(value))
+	else if(isicon(value))
 		#ifdef VARSICON
 		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
 		html += "[name] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-	else if (istype(value, /image))
+	else if(istype(value, /image))
 		#ifdef VARSICON
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
 		#endif
 
-	else if (isfile(value))
+	else if(isfile(value))
 		html += "[name] = <span class='value'>'[value]'</span>"
 
-	else if (istype(value, /datum))
+	else if(istype(value, /datum))
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if(istype(value, /client))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
-	else if (istype(value, /list))
+	else if(istype(value, /list))
 		var/list/L = value
 		html += "[name] = /list ([L.len])"
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+		if(L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 			html += "<ul>"
 			var/index = 1
 			for (var/entry in L)
@@ -405,10 +405,10 @@ body
 				index++
 			html += "</ul>"
 
-	else if (name in global.bitfields)
+	else if(name in global.bitfields)
 		var/list/flags = list()
 		for (var/i in global.bitfields[name])
-			if (value & global.bitfields[name][i])
+			if(value & global.bitfields[name][i])
 				flags += i
 		html += "[name] = <span class='value'>[jointext(flags, ", ")]</span>"
 

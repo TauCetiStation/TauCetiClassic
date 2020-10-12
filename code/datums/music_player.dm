@@ -196,7 +196,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			var/line_num = text2num(href_list["modifyline"])
 			var/content = sanitize(input("Enter your line: ", "Change line [line_num]", song_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
 
-			if (!content || !instrument.Adjacent(usr))
+			if(!content || !instrument.Adjacent(usr))
 				return
 
 			song_lines[line_num] = content
@@ -207,7 +207,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		else if(href_list["import"])
 			var/song_text = sanitize(input("Please, paste the entire song formatted: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
 
-			if (!song_text || !instrument.Adjacent(usr))
+			if(!song_text || !instrument.Adjacent(usr))
 				return
 
 			parse_song_text(song_text)

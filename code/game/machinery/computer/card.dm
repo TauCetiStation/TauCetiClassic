@@ -112,7 +112,7 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
-	if (modify && is_centcom())
+	if(modify && is_centcom())
 		var/list/all_centcom_access = list()
 		for(var/access in get_all_centcom_access())
 			all_centcom_access.Add(list(list(
@@ -121,12 +121,12 @@
 				"allowed" = (access in modify.access) ? 1 : 0)))
 
 		data["all_centcom_access"] = all_centcom_access
-	else if (modify)
+	else if(modify)
 		var/list/regions = list()
 		for(var/i = 1; i <= 7; i++)
 			var/list/accesses = list()
 			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
+				if(get_access_desc(access))
 					accesses.Add(list(list(
 						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
@@ -139,7 +139,7 @@
 		data["regions"] = regions
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "identification_computer.tmpl", src.name, 600, 700)
 		ui.set_initial_data(data)
 		ui.open()
@@ -150,8 +150,8 @@
 		return
 
 	switch(href_list["choice"])
-		if ("modify")
-			if (modify)
+		if("modify")
+			if(modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
@@ -165,7 +165,7 @@
 					modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/card/id))
+				if(istype(I, /obj/item/weapon/card/id))
 					usr.drop_item()
 					I.loc = src
 					modify = I
@@ -179,8 +179,8 @@
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
 
-		if ("scan")
-			if (scan)
+		if("scan")
+			if(scan)
 				if(ishuman(usr))
 					scan.loc = usr.loc
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -192,7 +192,7 @@
 					scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/card/id))
+				if(istype(I, /obj/item/weapon/card/id))
 					usr.drop_item()
 					I.loc = src
 					scan = I
@@ -211,8 +211,8 @@
 						if(!access_allowed)
 							modify.access += access_type
 
-		if ("assign")
-			if (is_authenticated() && modify)
+		if("assign")
+			if(is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
 				var/new_salary = 0
 				var/datum/job/jobdatum
@@ -248,10 +248,10 @@
 				if(mode)
 					mode.reassign_employee(modify)
 
-		if ("reg")
-			if (is_authenticated())
+		if("reg")
+			if(is_authenticated())
 				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/temp_name = sanitize_name(href_list["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
@@ -259,10 +259,10 @@
 						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 			nanomanager.update_uis(src)
 
-		if ("account")
-			if (is_authenticated())
+		if("account")
+			if(is_authenticated())
 				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/datum/money_account/account = get_account(text2num(href_list["account"]))
 					if(account)
 						modify.associated_account_number = account.account_number
@@ -270,25 +270,25 @@
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
 			nanomanager.update_uis(src)
 
-		if ("mode")
+		if("mode")
 			mode = text2num(href_list["mode_target"])
 
-		if ("print")
-			if (!printing)
+		if("print")
+			if(!printing)
 				printing = 1
 				spawn(50)
 					printing = null
 					nanomanager.update_uis(src)
 
 					var/obj/item/weapon/paper/P = new(loc)
-					if (mode)
+					if(mode)
 						P.name = text("crew manifest ([])", worldtime2text())
 						P.info = {"<h4>Crew Manifest</h4>
 							<br>
 							[data_core ? data_core.get_manifest(0) : ""]
 						"}
 						P.update_icon()
-					else if (modify)
+					else if(modify)
 						P.name = "access report"
 						P.info = {"<h4>Access Report</h4>
 							<u>Prepared By:</u> [scan.registered_name ? scan.registered_name : "Unknown"]<br>
@@ -304,8 +304,8 @@
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
 
-		if ("terminate")
-			if (is_authenticated())
+		if("terminate")
+			if(is_authenticated())
 				modify.assignment = "Terminated"
 				modify.access = list()
 				if(datum_account)
@@ -315,7 +315,7 @@
 				if(mode)
 					mode.terminate_employee(modify)
 
-	if (modify)
+	if(modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
 	return 1

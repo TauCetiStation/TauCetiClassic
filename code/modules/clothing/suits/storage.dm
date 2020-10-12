@@ -12,11 +12,11 @@
 	return ..()
 
 /obj/item/clothing/suit/storage/attack_hand(mob/user)
-	if (pockets && pockets.handle_attack_hand(user))
+	if(pockets && pockets.handle_attack_hand(user))
 		..(user)
 
 /obj/item/clothing/suit/storage/MouseDrop(obj/over_object as obj)
-	if (pockets && pockets.handle_mousedrop(usr, over_object))
+	if(pockets && pockets.handle_mousedrop(usr, over_object))
 		..(over_object)
 
 /obj/item/clothing/suit/storage/attackby(obj/item/I, mob/user, params)

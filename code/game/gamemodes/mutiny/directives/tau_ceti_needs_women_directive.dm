@@ -35,7 +35,7 @@
 /datum/directive/tau_ceti_needs_women/proc/count_heads_reassigned()
 	var/heads_reassigned = 0
 	for(var/obj/item/weapon/card/id in command_targets)
-		if (command_targets[id])
+		if(command_targets[id])
 			heads_reassigned++
 
 	return heads_reassigned

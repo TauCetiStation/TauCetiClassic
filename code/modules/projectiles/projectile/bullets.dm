@@ -16,7 +16,7 @@
 	proj_act_sound = SOUNDIN_BULLETACT
 
 /obj/item/projectile/bullet/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if (..())
+	if(..())
 		var/mob/living/L = target
 		shake_camera(L, 3, 2)
 

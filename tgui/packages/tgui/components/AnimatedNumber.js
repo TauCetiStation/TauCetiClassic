@@ -24,11 +24,11 @@ export class AnimatedNumber extends Component {
       value: 0,
     };
     // Use provided initial state
-    if (isSafeNumber(props.initial)) {
+    if(isSafeNumber(props.initial)) {
       this.state.value = props.initial;
     }
     // Set initial state with value provided in props
-    else if (isSafeNumber(props.value)) {
+    else if(isSafeNumber(props.value)) {
       this.state.value = Number(props.value);
     }
   }
@@ -38,7 +38,7 @@ export class AnimatedNumber extends Component {
     const currentValue = Number(state.value);
     const targetValue = Number(props.value);
     // Avoid poisoning our state with infinities and NaN
-    if (!isSafeNumber(targetValue)) {
+    if(!isSafeNumber(targetValue)) {
       return;
     }
     // Smooth the value using an exponential moving average
@@ -60,12 +60,12 @@ export class AnimatedNumber extends Component {
     const currentValue = state.value;
     const targetValue = props.value;
     // Directly display values which can't be animated
-    if (!isSafeNumber(targetValue)) {
+    if(!isSafeNumber(targetValue)) {
       return targetValue || null;
     }
     let formattedValue = currentValue;
     // Use custom formatter
-    if (format) {
+    if(format) {
       formattedValue = format(currentValue);
     }
     // Fix our animated precision at target value's precision.
@@ -75,7 +75,7 @@ export class AnimatedNumber extends Component {
       formattedValue = toFixed(currentValue, clamp(precision, 0, 8));
     }
     // Use a custom render function
-    if (typeof children === 'function') {
+    if(typeof children === 'function') {
       return children(formattedValue, currentValue);
     }
     return formattedValue;

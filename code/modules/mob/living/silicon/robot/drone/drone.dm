@@ -116,14 +116,14 @@
 //TBD, fix up boilerplate. ~ Z
 /mob/living/silicon/robot/drone/say(var/message)
 
-	if (!message)
+	if(!message)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)
@@ -131,7 +131,7 @@
 	if(!message)
 		return
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return say_dead(message)
 
 	if(message[1] == "*")
@@ -172,11 +172,11 @@
 		to_chat(user, "<span class='warning'>The maintenance drone chassis not compatible with \the [W].</span>")
 		return
 
-	else if (iscrowbar(W))
+	else if(iscrowbar(W))
 		to_chat(user, "The machine is hermetically sealed. You can't open the case.")
 		return
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
 		if(stat == DEAD)
 

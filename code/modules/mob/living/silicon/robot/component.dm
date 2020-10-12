@@ -25,7 +25,7 @@
 
 /datum/robot_component/proc/destroy()
 	var/brokenstate = "broken" // Generic icon
-	if (istype(wrapped, /obj/item/robot_parts/robot_component))
+	if(istype(wrapped, /obj/item/robot_parts/robot_component))
 		var/obj/item/robot_parts/robot_component/comp = wrapped
 		brokenstate = comp.icon_state_broken
 	if(wrapped)

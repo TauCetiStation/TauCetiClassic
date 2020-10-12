@@ -26,9 +26,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/effect/water/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//var/turf/T = src.loc
-	//if (istype(T, /turf))
+	//if(istype(T, /turf))
 	//	T.firelevel = 0 //TODO: FIX
-	if (--src.life < 1)
+	if(--src.life < 1)
 		qdel(src)
 	if(isatom(NewLoc))
 		var/atom/A = NewLoc
@@ -133,20 +133,20 @@ steam.start() -- spawns the effect
 	. = ..()
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	var/turf/T = loc
-	if (istype(T, /turf))
+	if(istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	QDEL_IN(src, 20)
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
-	if (istype(T, /turf))
+	if(istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	return	..()
 
 /obj/effect/effect/sparks/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	var/turf/T = src.loc
-	if (istype(T, /turf))
+	if(istype(T, /turf))
 		T.hotspot_expose(1000,100)
 
 /obj/effect/effect/sparks/get_current_temperature()
@@ -225,9 +225,9 @@ steam.start() -- spawns the effect
 		affect(AM)
 
 /obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
-	if (istype(M))
+	if(istype(M))
 		return 0
-	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+	if(M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		return 0
 	return 1
 
@@ -244,11 +244,11 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/bad/affect(mob/living/carbon/M)
-	if (!..())
+	if(!..())
 		return 0
 	M.drop_item()
 	M.adjustOxyLoss(1)
-	if (M.coughedtime != 1)
+	if(M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
 		spawn ( 20 )
@@ -272,12 +272,12 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M )
-	if (!..())
+	if(!..())
 		return 0
 
 	M.drop_item()
 	M.Sleeping(1 SECOND)
-	if (M.coughedtime != 1)
+	if(M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
 		spawn ( 20 )
@@ -297,13 +297,13 @@ steam.start() -- spawns the effect
 		affect(R)
 
 /obj/effect/effect/smoke/mustard/affect(mob/living/carbon/human/R)
-	if (!..())
+	if(!..())
 		return 0
-	if (R.wear_suit != null)
+	if(R.wear_suit != null)
 		return 0
 
 	R.burn_skin(0.75)
-	if (R.coughedtime != 1)
+	if(R.coughedtime != 1)
 		R.coughedtime = 1
 		R.emote("gasp")
 		spawn (20)
@@ -352,7 +352,7 @@ steam.start() -- spawns the effect
 				sleep(10)
 				step(smoke,direction)
 			spawn(smoke.time_to_live*0.75+rand(10,30))
-				if (smoke) qdel(smoke)
+				if(smoke) qdel(smoke)
 				src.total_smoke--
 
 
@@ -541,7 +541,7 @@ steam.start() -- spawns the effect
 		F.amount = amount
 		if(!metal)
 			F.create_reagents(10)
-			if (reagents)
+			if(reagents)
 				for(var/datum/reagent/R in reagents.reagent_list)
 					F.reagents.add_reagent(R.id, 1, safety = 1)		//added safety check since reagents in the foam have already had a chance to react
 
@@ -648,10 +648,10 @@ steam.start() -- spawns the effect
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if ((HULK in user.mutations) || (prob(75 - metal*25)))
+	if((HULK in user.mutations) || (prob(75 - metal*25)))
 		to_chat(user, "<span class='notice'>You smash through the metal foam wall.</span>")
 		for(var/mob/O in oviewers(user))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 
 		qdel(src)
@@ -664,7 +664,7 @@ steam.start() -- spawns the effect
 		var/obj/item/weapon/grab/G = I
 		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))
-			if (O.client)
+			if(O.client)
 				to_chat(O, "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
 		qdel(I)
 		qdel(src)
@@ -672,7 +672,7 @@ steam.start() -- spawns the effect
 	else if(prob(I.force*20 - metal*25))
 		to_chat(user, "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 		for(var/mob/O in oviewers(user))
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
 		qdel(src)
 	else
@@ -701,7 +701,7 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/reagents_explosion/start()
-	if (amount <= 2)
+	if(amount <= 2)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(2, 1, location)
 		s.start()
@@ -709,7 +709,7 @@ steam.start() -- spawns the effect
 		for(var/mob/M in viewers(5, location))
 			to_chat(M, "<span class='warning'>The solution violently explodes.</span>")
 		for(var/mob/M in viewers(1, location))
-			if (prob (50 * amount))
+			if(prob (50 * amount))
 				to_chat(M, "<span class='warning'>The explosion knocks you down.</span>")
 				M.Weaken(rand(1,5))
 		return
@@ -720,16 +720,16 @@ steam.start() -- spawns the effect
 		var/flash = 0
 
 		// Clamp all values to MAX_EXPLOSION_RANGE
-		if (round(amount/12) > 0)
+		if(round(amount/12) > 0)
 			devastation = min (MAX_EXPLOSION_RANGE, round(amount/12))
 
-		if (round(amount/6) > 0)
+		if(round(amount/6) > 0)
 			heavy = min (MAX_EXPLOSION_RANGE, round(amount/6))
 
-		if (round(amount/3) > 0)
+		if(round(amount/3) > 0)
 			light = min (MAX_EXPLOSION_RANGE, round(amount/3))
 
-		if (flash && flashing_factor)
+		if(flash && flashing_factor)
 			flash += (round(amount/4) * flashing_factor)
 
 		for(var/mob/M in viewers(world.view, location))
@@ -741,11 +741,11 @@ steam.start() -- spawns the effect
 	if(holder)
 		var/dmglevel = 4
 
-		if (round(amount/8) > 0)
+		if(round(amount/8) > 0)
 			dmglevel = 1
-		else if (round(amount/4) > 0)
+		else if(round(amount/4) > 0)
 			dmglevel = 2
-		else if (round(amount/2) > 0)
+		else if(round(amount/2) > 0)
 			dmglevel = 3
 
 		if(dmglevel<4) holder.ex_act(dmglevel)

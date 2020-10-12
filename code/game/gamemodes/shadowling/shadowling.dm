@@ -99,7 +99,7 @@ Made by Xhuis
 				antag_candidates -= player
 
 	var/shadowlings = required_enemies
-	if (antag_candidates.len <= recommended_enemies)
+	if(antag_candidates.len <= recommended_enemies)
 		shadowlings = antag_candidates.len
 
 	while(shadowlings)
@@ -156,7 +156,7 @@ Made by Xhuis
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	var/mob/living/carbon/human/H = new_thrall_mind.current
-	if (!istype(new_thrall_mind))
+	if(!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
 		thralls += new_thrall_mind

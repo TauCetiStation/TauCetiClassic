@@ -81,7 +81,7 @@ var/global/list/drain_atoms = list(
 			to_chat(H, "<span class='warning'><b>ERROR</b>:</span> Remote access channel disabled.")
 			return FALSE
 
-	if (is_type_in_list(A, global.drain_atoms))
+	if(is_type_in_list(A, global.drain_atoms))
 		A.add_fingerprint(H)
 		drain(A, suit)
 		return TRUE

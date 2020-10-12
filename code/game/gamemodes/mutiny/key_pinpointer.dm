@@ -17,13 +17,13 @@
 		to_chat(user, "<span class='danger'>[src] buzzes rudely.</span>")
 		return
 	switch(mode)
-		if (SEARCH_FOR_DISK)
+		if(SEARCH_FOR_DISK)
 			mode = SEARCH_FOR_OBJECT
 			active = TRUE
 			target = mutiny.captains_key
 			START_PROCESSING(SSobj, src)
 			to_chat(usr, "<span class='notice'>You calibrate \the [src] to locate the Captain's Authentication Key.</span>")
-		if (SEARCH_FOR_OBJECT)
+		if(SEARCH_FOR_OBJECT)
 			mode = 2
 			target = mutiny.secondary_key
 			to_chat(user, "<span class='notice'>You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>")
@@ -37,9 +37,9 @@
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/examine(mob/user)
 	..()
 	switch(mode)
-		if (SEARCH_FOR_OBJECT)
+		if(SEARCH_FOR_OBJECT)
 			to_chat(user, "Is is calibrated for the Captain's Authentication Key.")
-		if (2)
+		if(2)
 			to_chat(user, "It is calibrated for the Emergency Secondary Authentication Key.")
 		else
 			to_chat(user, "It is switched off.")
@@ -55,5 +55,5 @@
 
 /datum/supply_pack/key_pinpointer/New()
 	// This crate is only accessible during mutiny rounds
-	if (istype(SSticker.mode,/datum/game_mode/mutiny))
+	if(istype(SSticker.mode,/datum/game_mode/mutiny))
 		..()

@@ -180,7 +180,7 @@
 
 			if(H.dna && H.dna.species && !H.species.flags[IS_SYNTHETIC])
 				if(prob(max(0,100-resist)) && prob(10))
-					if (prob(75))
+					if(prob(75))
 						randmutb(H) // Applies bad mutation
 					else
 						randmutg(H) // Applies good mutation

@@ -30,15 +30,15 @@
 
 /obj/item/weapon/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.incapacitated() || src.loc != usr)
+	if(usr.incapacitated() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if(!( istype(H, /mob/living/carbon/human)))
 		return 1
-	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
+	if((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
-		if (href_list["spell_teleport"])
-			if (src.uses >= 1)
+		if(href_list["spell_teleport"])
+			if(src.uses >= 1)
 				teleportscroll(H)
 	attack_self(H)
 	return
@@ -52,7 +52,7 @@
 		return
 	var/area/thearea = teleportlocs[A]
 
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return

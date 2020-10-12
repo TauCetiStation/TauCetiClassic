@@ -58,7 +58,7 @@ var/const/INGEST = 2
 	return the_id
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if (!target )
+	if(!target )
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
@@ -66,16 +66,16 @@ var/const/INGEST = 2
 	if(istype(target,/datum/reagents))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if(!target.reagents || src.total_volume<=0)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
-		if (!current_reagent)
+		if(!current_reagent)
 			continue
-		if (current_reagent.id == "blood" && ishuman(target))
+		if(current_reagent.id == "blood" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.inject_blood(my_atom, amount)
 			continue
@@ -93,9 +93,9 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
-	if (!target )
+	if(!target )
 		return
-	if (!target.reagents || src.total_volume<=0)
+	if(!target.reagents || src.total_volume<=0)
 		return
 
 	if(amount < 0) return
@@ -149,7 +149,7 @@ var/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	if (!target)
+	if(!target)
 		return
 	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
 		return
@@ -321,26 +321,26 @@ var/const/INGEST = 2
 
 	while(reaction_occured)
 	update_total()
-	if (proccessing_reaction_count > 0)
+	if(proccessing_reaction_count > 0)
 		proccessing_reaction_count -= 1
 	return 0
 
 /datum/reagents/proc/is_reaction_in_proccessing()
-	if (proccessing_reaction_count > 0)
+	if(proccessing_reaction_count > 0)
 		return TRUE
 	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id != reagent)
+		if(R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
 /datum/reagents/proc/del_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			reagent_list -= R
 			qdel(R)
 			update_total()
@@ -415,7 +415,7 @@ var/const/INGEST = 2
 	for(var/A in reagent_list)
 
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume += amount
 			update_total()
 			if(my_atom)
@@ -494,7 +494,7 @@ var/const/INGEST = 2
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -517,7 +517,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if(R.id == reagent)
 			return R.volume
 
 	return 0
@@ -528,7 +528,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if(res != "") res += ","
 		res += A.name
 
 	return res
@@ -581,8 +581,8 @@ var/const/INGEST = 2
 		my_atom.reagents = null
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
-	if (!current_reagent || !current_reagent.data) return null
-	if (!istype(current_reagent.data, /list)) return current_reagent.data
+	if(!current_reagent || !current_reagent.data) return null
+	if(!istype(current_reagent.data, /list)) return current_reagent.data
 
 	var/list/trans_data = current_reagent.data.Copy()
 
@@ -593,7 +593,7 @@ var/const/INGEST = 2
 	// Technically we should probably copy all data lists, but
 	// that could possibly eat up a lot of memory needlessly
 	// if most data lists are read-only.
-	if (trans_data["virus2"])
+	if(trans_data["virus2"])
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
 

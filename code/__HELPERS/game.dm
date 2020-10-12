@@ -486,11 +486,11 @@
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
 
-		if (istype(A, type))
+		if(istype(A, type))
 			found_atoms |= A
 
 		for (var/atom/B in A)
-			if (!processed_list[B])
+			if(!processed_list[B])
 				processing_list |= B
 
 		processing_list.Cut(1, 2)
@@ -499,7 +499,7 @@
 	return found_atoms
 
 /proc/get_contents_in_object(atom/O, type_path = /atom/movable)
-	if (O)
+	if(O)
 		return recursive_type_check(O, type_path) - O
 	else
 		return new/list()

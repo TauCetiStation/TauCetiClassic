@@ -29,9 +29,9 @@
 	if(iswrench(O))
 		if(user.is_busy(src))
 			return
-		if (anchored)
+		if(anchored)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
-			if (O.use_tool(src, user, 40, volume = 50))
+			if(O.use_tool(src, user, 40, volume = 50))
 				user.visible_message(
 					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
 					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",

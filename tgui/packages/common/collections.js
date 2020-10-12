@@ -14,14 +14,14 @@
  * @returns {any[]}
  */
 export const toArray = collection => {
-  if (Array.isArray(collection)) {
+  if(Array.isArray(collection)) {
     return collection;
   }
-  if (typeof collection === 'object') {
+  if(typeof collection === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
     const result = [];
     for (let i in collection) {
-      if (hasOwnProperty.call(collection, i)) {
+      if(hasOwnProperty.call(collection, i)) {
         result.push(collection[i]);
       }
     }
@@ -73,14 +73,14 @@ export const toKeyedArray = (obj, keyProp = 'key') => {
  * @returns {any[]}
  */
 export const filter = iterateeFn => collection => {
-  if (collection === null && collection === undefined) {
+  if(collection === null && collection === undefined) {
     return collection;
   }
-  if (Array.isArray(collection)) {
+  if(Array.isArray(collection)) {
     const result = [];
     for (let i = 0; i < collection.length; i++) {
       const item = collection[i];
-      if (iterateeFn(item, i, collection)) {
+      if(iterateeFn(item, i, collection)) {
         result.push(item);
       }
     }
@@ -100,21 +100,21 @@ export const filter = iterateeFn => collection => {
  * @returns {any[]}
  */
 export const map = iterateeFn => collection => {
-  if (collection === null && collection === undefined) {
+  if(collection === null && collection === undefined) {
     return collection;
   }
-  if (Array.isArray(collection)) {
+  if(Array.isArray(collection)) {
     const result = [];
     for (let i = 0; i < collection.length; i++) {
       result.push(iterateeFn(collection[i], i, collection));
     }
     return result;
   }
-  if (typeof collection === 'object') {
+  if(typeof collection === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
     const result = [];
     for (let i in collection) {
-      if (hasOwnProperty.call(collection, i)) {
+      if(hasOwnProperty.call(collection, i)) {
         result.push(iterateeFn(collection[i], i, collection));
       }
     }
@@ -130,10 +130,10 @@ const COMPARATOR = (objA, objB) => {
   for (let i = 0; i < length; i++) {
     const a = criteriaA[i];
     const b = criteriaB[i];
-    if (a < b) {
+    if(a < b) {
       return -1;
     }
-    if (a > b) {
+    if(a > b) {
       return 1;
     }
   }
@@ -149,7 +149,7 @@ const COMPARATOR = (objA, objB) => {
  * @returns {any[]}
  */
 export const sortBy = (...iterateeFns) => array => {
-  if (!Array.isArray(array)) {
+  if(!Array.isArray(array)) {
     return array;
   }
   let length = array.length;
@@ -178,7 +178,7 @@ export const reduce = (reducerFn, initialValue) => array => {
   const length = array.length;
   let i;
   let result;
-  if (initialValue === undefined) {
+  if(initialValue === undefined) {
     i = 1;
     result = array[0];
   }
@@ -213,20 +213,20 @@ export const uniqBy = iterateeFn => array => {
     let value = array[index];
     const computed = iterateeFn ? iterateeFn(value) : value;
     value = value !== 0 ? value : 0;
-    if (computed === computed) {
+    if(computed === computed) {
       let seenIndex = seen.length;
       while (seenIndex--) {
-        if (seen[seenIndex] === computed) {
+        if(seen[seenIndex] === computed) {
           continue outer;
         }
       }
-      if (iterateeFn) {
+      if(iterateeFn) {
         seen.push(computed);
       }
       result.push(value);
     }
-    else if (!seen.includes(computed)) {
-      if (seen !== result) {
+    else if(!seen.includes(computed)) {
+      if(seen !== result) {
         seen.push(computed);
       }
       result.push(value);
@@ -243,7 +243,7 @@ export const uniqBy = iterateeFn => array => {
  * @returns {any[]}
  */
 export const zip = (...arrays) => {
-  if (arrays.length === 0) {
+  if(arrays.length === 0) {
     return;
   }
   const numArrays = arrays.length;

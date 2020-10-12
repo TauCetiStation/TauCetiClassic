@@ -114,7 +114,7 @@
 	if(!A || !A.smooth)
 		return
 	A.smooth &= ~SMOOTH_QUEUED
-	if (!A.z)
+	if(!A.z)
 		return
 	if(QDELETED(A))
 		return

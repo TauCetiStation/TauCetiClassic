@@ -155,28 +155,28 @@
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
-	if (amount > 0)
-		if (prob(mut_prob))
+	if(amount > 0)
+		if(prob(mut_prob))
 			var/list/candidates = list()
 			for (var/obj/item/organ/external/BP in bodyparts)
 				if(!(BP.status & ORGAN_MUTATED))
 					candidates += BP
-			if (candidates.len)
+			if(candidates.len)
 				var/obj/item/organ/external/BP = pick(candidates)
 				BP.mutate()
 				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
 	else
-		if (prob(heal_prob))
+		if(prob(heal_prob))
 			for (var/obj/item/organ/external/BP in bodyparts)
-				if (BP.status & ORGAN_MUTATED)
+				if(BP.status & ORGAN_MUTATED)
 					BP.unmutate()
 					to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 					return
 
-	if (getCloneLoss() < 1)
+	if(getCloneLoss() < 1)
 		for (var/obj/item/organ/external/BP in bodyparts)
-			if (BP.status & ORGAN_MUTATED)
+			if(BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
 	med_hud_set_health()

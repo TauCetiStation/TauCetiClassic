@@ -162,7 +162,7 @@
 
 	if(istype(host,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		if (H.species)
+		if(H.species)
 			D.affected_species = list(H.species.name)
 
 	infect_virus2(host,D,1)

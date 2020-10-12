@@ -37,7 +37,7 @@
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 		return 1
 
-	else if (!insistinga)
+	else if(!insistinga)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insistinga++
 
@@ -49,13 +49,13 @@
 			if("Power")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				if (!(LASEREYES in user.mutations))
+				if(!(LASEREYES in user.mutations))
 					user.mutations.Add(LASEREYES)
 					user << "<span class='notice'>You feel pressure building behind your eyes.</span>"
-				if (!(COLD_RESISTANCE in user.mutations))
+				if(!(COLD_RESISTANCE in user.mutations))
 					user.mutations.Add(COLD_RESISTANCE)
 					user << "<span class='notice'>Your body feels warm.</span>"
-				if (!(XRAY in user.mutations))
+				if(!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
 					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 					user.see_in_dark = 8

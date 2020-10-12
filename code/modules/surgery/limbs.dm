@@ -10,7 +10,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP)
+	if(BP)
 		return 0
 	if(target_zone in list(O_EYES , O_MOUTH))
 		return 0
@@ -43,7 +43,7 @@
 
 /datum/surgery_step/limb/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
+	if(BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>", \
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
@@ -75,7 +75,7 @@
 
 /datum/surgery_step/limb/mend/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
+	if(BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, tearing flesh on [target]'s [BP.name]!</span>", \
 		"<span class='warning'>Your hand slips, tearing flesh on [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
@@ -108,7 +108,7 @@
 
 /datum/surgery_step/limb/prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
+	if(BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, searing [target]'s [BP.name]!</span>", \
 		"<span class='warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BURN, BP)
@@ -128,7 +128,7 @@
 	if(..())
 		if(istype(tool, /obj/item/robot_parts))
 			var/obj/item/robot_parts/p = tool
-			if (target_zone != p.part)
+			if(target_zone != p.part)
 				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.can_attach())
@@ -137,7 +137,7 @@
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 		if(istype(tool, /obj/item/organ/external))
 			var/obj/item/organ/external/p = tool
-			if (target_zone != p.body_zone)
+			if(target_zone != p.body_zone)
 				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.is_compatible(target))
@@ -178,7 +178,7 @@
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP
-		if (B.brainmob && B.brainmob.mind)
+		if(B.brainmob && B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)
 			target.dna = B.brainmob.dna
 			QDEL_NULL(B.brainmob)
@@ -222,7 +222,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP)
+	if(BP)
 		return 0
 	if(target_zone in list(O_EYES , O_MOUTH))
 		return 0
@@ -255,7 +255,7 @@
 
 /datum/surgery_step/ipc_limb/cut_wires/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
+	if(BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
@@ -285,7 +285,7 @@
 
 /datum/surgery_step/ipc_limb/ipc_prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
+	if(BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]!</span>",
 		"<span class='warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BRUTE, BP)

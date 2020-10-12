@@ -77,7 +77,7 @@ var/list/teleportlocs = list()
 		if(teleportlocs.Find(AR.name))
 			continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (is_station_level(picked.z))
+		if(is_station_level(picked.z))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
@@ -94,7 +94,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (is_station_level(picked.z) || is_mining_level(picked.z))
+		if(is_station_level(picked.z) || is_mining_level(picked.z))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
@@ -135,7 +135,7 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/poweralert(state, obj/source)
-	if (state != poweralm)
+	if(state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
@@ -149,7 +149,7 @@ var/list/ghostteleportlocs = list()
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
-					if (state == 1)
+					if(state == 1)
 						aiPlayer.cancelAlarm("Power", src, source)
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
@@ -164,15 +164,15 @@ var/list/ghostteleportlocs = list()
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
 	for (var/obj/machinery/alarm/AA in src)
-		if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+		if( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 			danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
-		if (danger_level < 1 && atmosalm >= 1)
+		if(danger_level < 1 && atmosalm >= 1)
 			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
 
-		if (danger_level < 2 && atmosalm >= 2)
+		if(danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
 				C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
@@ -182,7 +182,7 @@ var/list/ghostteleportlocs = list()
 			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				a.cancelAlarm("Atmosphere", src, src)
 
-		if (danger_level >= 2 && atmosalm < 2)
+		if(danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
@@ -313,7 +313,7 @@ var/list/ghostteleportlocs = list()
 		M.power_change()				// reverify power status (to update icons etc.)
 	for(var/obj/item/device/radio/intercom/I in src)	// Intercoms are not machinery so we need a different loop
 		I.power_change()
-	if (fire || eject || party)
+	if(fire || eject || party)
 		updateicon()
 
 /area/proc/usage(chan)
@@ -357,44 +357,44 @@ var/list/ghostteleportlocs = list()
 
 
 /area/Entered(A)
-	if (!isliving(A))
+	if(!isliving(A))
 		return
 
 	var/mob/living/L = A
-	if (!L.ckey)
+	if(!L.ckey)
 		return
 
-	if (!L.lastarea)
+	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
 
 	var/area/new_area = get_area(L.loc)
 	var/area/old_area = L.lastarea
 
 	//Jukebox
-	if (new_area != old_area)
-		if (L.client)
+	if(new_area != old_area)
+		if(L.client)
 			L.update_music()
 
 	L.lastarea = new_area
 
 	// Being ready when you change areas gives you a chance to avoid falling all together.
-	if ((old_area.has_gravity == FALSE) && (new_area.has_gravity == TRUE) && (L.m_intent == MOVE_INTENT_RUN))
+	if((old_area.has_gravity == FALSE) && (new_area.has_gravity == TRUE) && (L.m_intent == MOVE_INTENT_RUN))
 		thunk(L)
 
-	if (!L.client || old_area == src)
+	if(!L.client || old_area == src)
 		return
 
-	if (looped_ambience == null)
+	if(looped_ambience == null)
 		L.client.sound_old_looped_ambience = null
 		L.playsound_stop(CHANNEL_AMBIENT_LOOP)
-	else if (L.client.sound_old_looped_ambience != looped_ambience)
+	else if(L.client.sound_old_looped_ambience != looped_ambience)
 		L.client.sound_old_looped_ambience = looped_ambience
 		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
 
-	if (!compare_list(old_area.ambience, new_area.ambience))
+	if(!compare_list(old_area.ambience, new_area.ambience))
 		L.playsound_stop(CHANNEL_AMBIENT)
 
-	if (ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))
+	if(ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))
 		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 

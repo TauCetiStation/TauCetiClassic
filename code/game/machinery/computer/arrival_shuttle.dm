@@ -102,8 +102,8 @@ var/lastMove = 0
 	fromArea.move_contents_to(toArea, null, WEST)
 
 	// Sending message only on EXODUS
-	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
-		if (!radio_message_via_ai(arrival_note))
+	if(destLocation == ARRIVAL_SHUTTLE_EXODUS)
+		if(!radio_message_via_ai(arrival_note))
 			radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
@@ -190,10 +190,10 @@ var/lastMove = 0
 		usr.client.guard.velocity_console_dock = TRUE
 
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
-	if (!msg)
+	if(!msg)
 		return FALSE
 	for (var/mob/living/silicon/ai/A in ai_list)
-		if (A.can_retransmit_messages())
+		if(A.can_retransmit_messages())
 			A.retransmit_message(msg)
 			return TRUE
 	return FALSE

@@ -27,21 +27,21 @@
 			break
 
 /obj/machinery/mineral/unloading_machine/process()
-	if (src.output && src.input)
-		if (locate(/obj/structure/ore_box, input.loc))
+	if(src.output && src.input)
+		if(locate(/obj/structure/ore_box, input.loc))
 			var/obj/structure/ore_box/BOX = locate(/obj/structure/ore_box, input.loc)
 			var/i = 0
 			for (var/obj/item/weapon/ore/O in BOX.contents)
 				O.Move(output.loc)
 				i++
-				if (i>=10)
+				if(i>=10)
 					return
-		if (locate(/obj/item, input.loc))
+		if(locate(/obj/item, input.loc))
 			var/obj/item/O
 			var/i
 			for (i = 0; i<10; i++)
 				O = locate(/obj/item, input.loc)
-				if (O)
+				if(O)
 					O.Move(output.loc)
 				else
 					return

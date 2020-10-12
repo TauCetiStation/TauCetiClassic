@@ -15,11 +15,11 @@
 
 	if(stat == DEAD)
 		icon_state = "larva[state]_dead"
-	else if (handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
+	else if(handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
 		icon_state = "larva[state]_cuff"
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "larva[state]_sleep"
-	else if (stunned)
+	else if(stunned)
 		icon_state = "larva[state]_stun"
 	else
 		icon_state = "larva[state]"
@@ -29,7 +29,7 @@
 
 /mob/living/carbon/xenomorph/larva/update_hud()
 	//TODO
-	if (client)
+	if(client)
 //		if(other)	client.screen |= hud_used.other		//Not used
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents

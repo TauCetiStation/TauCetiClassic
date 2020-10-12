@@ -10,18 +10,18 @@
 	log_whisper("[key_name(src)]: [message]")
 
 	if(src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+		if(src.client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
 
 	if(!speech_allowed && usr == src)
 		to_chat(usr, "<span class='warning'>You can't speak.</span>")
 		return FALSE
 
-	if (src.stat == DEAD)
+	if(src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return FALSE
 		return src.say_dead(message)
@@ -80,7 +80,7 @@
 	if(src.stuttering)
 		message = stutter(message)
 
-	if (speaking)
+	if(speaking)
 		verb = speaking.speech_verb + pick(" quietly", " softly")
 
 	var/list/listening = hearers(message_range, src)
@@ -100,7 +100,7 @@
 	//pass on the message to objects that can hear us.
 	for(var/obj/O in view(message_range, src))
 		spawn (0)
-			if (O)
+			if(O)
 				O.hear_talk(src, message, verb, speaking)
 
 	var/list/eavesdropping = hearers(eavesdropping_range, src)

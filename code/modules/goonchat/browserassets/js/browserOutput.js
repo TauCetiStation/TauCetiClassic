@@ -73,13 +73,13 @@ function outerHTML(el) {
 }
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
-if (!Date.now) {
+if(!Date.now) {
 	Date.now = function now() {
 		return new Date().getTime();
 	};
 }
 //Polyfill for trim() (IE8 and below)
-if (typeof String.prototype.trim !== 'function') {
+if(typeof String.prototype.trim !== 'function') {
 	String.prototype.trim = function () {
 		return this.replace(/^\s+|\s+$/g, '');
 	};
@@ -95,7 +95,7 @@ function linkify(parent, insertBefore, text) {
 		parent.insertBefore(document.createTextNode(text.substring(start, match.index)), insertBefore);
 
 		var href = match[0];
-		if (!/^https?:\/\//i.test(match[0])) {
+		if(!/^https?:\/\//i.test(match[0])) {
 			href = "http://" + match[0];
 		}
 
@@ -107,7 +107,7 @@ function linkify(parent, insertBefore, text) {
 
 		start = regex.lastIndex;
 	}
-	if (start !== 0) {
+	if(start !== 0) {
 		// add the remaining text and remove the original text node
 		parent.insertBefore(document.createTextNode(text.substring(start)), insertBefore);
 		parent.removeChild(insertBefore);
@@ -116,7 +116,7 @@ function linkify(parent, insertBefore, text) {
 
 // Recursively linkify the children of a given node.
 function linkify_node(node) {
-	if (typeof Node === 'undefined') {
+	if(typeof Node === 'undefined') {
 		node.innerHTML = linkify_fallback(node.innerHTML);
 		return;
 	}
@@ -125,10 +125,10 @@ function linkify_node(node) {
 	// work backwards to avoid the risk of looping forever on our own output
 	for (var i = children.length - 1; i >= 0; --i) {
 		var child = children[i];
-		if (child.nodeType == Node.TEXT_NODE) {
+		if(child.nodeType == Node.TEXT_NODE) {
 			// text is to be linkified
 			linkify(node, child, child.textContent);
-		} else if (child.nodeName != "A" && child.nodeName != "a") {
+		} else if(child.nodeName != "A" && child.nodeName != "a") {
 			// do not linkify existing links
 			linkify_node(child);
 		}
@@ -178,10 +178,10 @@ function iconError(E) {
 	var that = this;
 	setTimeout(function() {
 		var attempts = $(that).data('reload_attempts');
-		if (typeof attempts === 'undefined' || !attempts) {
+		if(typeof attempts === 'undefined' || !attempts) {
 			attempts = 1;
 		}
-		if (attempts > opts.imageRetryLimit)
+		if(attempts > opts.imageRetryLimit)
 			return;
 		var src = that.src;
 		that.src = null;
@@ -192,15 +192,15 @@ function iconError(E) {
 
 //Send a message to the client
 function output(message, flag) {
-	if (typeof message === 'undefined') {
+	if(typeof message === 'undefined') {
 		return;
 	}
 
-	if (typeof flag === 'undefined') {
+	if(typeof flag === 'undefined') {
 		flag = '';
 	}
 
-	if (flag !== 'internal') {
+	if(flag !== 'internal') {
 		opts.lastPang = Date.now();
 	}
 
@@ -219,11 +219,11 @@ function output(message, flag) {
 	var trimmed_message = entry.textContent || entry.innerText || "";
 
 	var handled = false;
-	if (opts.messageCombining) {
+	if(opts.messageCombining) {
 		var lastmessages = $messages.children('div.entry:last-child').last();
-		if (lastmessages.length && $last_message && $last_message == trimmed_message) {
+		if(lastmessages.length && $last_message && $last_message == trimmed_message) {
 			var badge = lastmessages.children('.r').last();
-			if (badge.length) {
+			if(badge.length) {
 				badge = badge.detach();
 				badge.text(parseInt(badge.text()) + 1);
 			} else {
@@ -242,7 +242,7 @@ function output(message, flag) {
 		}
 	}
 
-	if (!handled) {
+	if(!handled) {
 		//Actually append the message
 		entry.className = 'entry';
 
@@ -267,25 +267,25 @@ function output(message, flag) {
 
 		//Actually do the snap
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
-		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
+		if(opts.highlightTerms && opts.highlightTerms.length > 0) {
 			highlightTerms(entry);
 		}
 	}
 
 	//Should we snap the output to the bottom?
-	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+	if(bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
 		atBottom = true;
-		if ($('#newMessages').length) {
+		if($('#newMessages').length) {
 			$('#newMessages').remove();
 		}
 	//If not, put the new messages box in
 	} else {
-		if ($('#newMessages').length) {
+		if($('#newMessages').length) {
 			var messages = $('#newMessages .number').text();
 			messages = parseInt(messages);
 			messages++;
 			$('#newMessages .number').text(messages);
-			if (messages == 2) {
+			if(messages == 2) {
 				$('#newMessages .messageWord').append('s');
 			}
 		} else {
@@ -294,14 +294,14 @@ function output(message, flag) {
 	}
 
 	//Pop the top message off if history limit reached
-	if (opts.messageCount >= opts.messageLimit) {
+	if(opts.messageCount >= opts.messageLimit) {
 		var $firstMsg = $messages.children('div.entry:first-child');
 		compensateScroll = $firstMsg.outerHeight();
 		$firstMsg.remove();
 		opts.messageCount--;
 	}
 
-	if (atBottom) {
+	if(atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
 	} else if(compensateScroll) {
 		$('body,html').scrollTop(scrollPos - compensateScroll);
@@ -327,7 +327,7 @@ function getCookie(cname) {
 	for(var i=0; i < ca.length; i++) {
 	var c = ca[i];
 	while (c.charAt(0)==' ') c = c.substring(1);
-		if (c.indexOf(name) === 0) {
+		if(c.indexOf(name) === 0) {
 			return decoder(c.substring(name.length,c.length));
 		}
 	}
@@ -337,7 +337,7 @@ function getCookie(cname) {
 function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B);}
 function toHex(n) {
 	n = parseInt(n,10);
-	if (isNaN(n)) return "00";
+	if(isNaN(n)) return "00";
 	n = Math.max(0,Math.min(n,255));
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
 }
@@ -345,17 +345,17 @@ function toHex(n) {
 function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
-	if (opts.clientData && !$.isEmptyObject(opts.clientData)) {
+	if(opts.clientData && !$.isEmptyObject(opts.clientData)) {
 		runByond('?_src_=chat&proc=analyzeClientData&param[charset]='+document.defaultCharset+'&param[cookie]='+JSON.stringify({'connData': opts.clientData}));
 
 		for (var i = 0; i < opts.clientData.length; i++) {
 			var saved = opts.clientData[i];
-			if (currentData.ckey == saved.ckey && currentData.ip == saved.ip && currentData.compid == saved.compid) {
+			if(currentData.ckey == saved.ckey && currentData.ip == saved.ip && currentData.compid == saved.compid) {
 				return; //Record already exists
 			}
 		}
 
-		if (opts.clientData.length >= opts.clientDataLimit) {
+		if(opts.clientData.length >= opts.clientDataLimit) {
 			opts.clientData.shift();
 		}
 	} else {
@@ -371,14 +371,14 @@ function handleClientData(ckey, ip, compid) {
 //Or, y'know, whenever really
 function ehjaxCallback(data) {
 	opts.lastPang = Date.now();
-	if (data == 'softPang') {
+	if(data == 'softPang') {
 		return;
-	} else if (data == "pang") {
+	} else if(data == "pang") {
 		opts.pingCounter = 0;
 		opts.pingTime = Date.now();
 		runByond('?_src_=chat&proc=ping');
-	} else if (data == 'pong') {
-		if (opts.pingDisabled) {return;}
+	} else if(data == 'pong') {
+		if(opts.pingDisabled) {return;}
 		opts.pongTime = Date.now();
 		var pingDuration = Math.ceil((opts.pongTime - opts.pingTime) / 2);
 		$('#pingMs').text(pingDuration+'ms');
@@ -388,7 +388,7 @@ function ehjaxCallback(data) {
 		var blue = 0;
 		var hex = rgbToHex(red, green, blue);
 		$('#pingDot').css('color', '#'+hex);
-	} else if (data == 'roundrestart') {
+	} else if(data == 'roundrestart') {
 		opts.restarting = true;
 		output('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
 	} else {
@@ -403,19 +403,19 @@ function ehjaxCallback(data) {
 		}
 		data = dataJ;
 
-		if (data.clientData) {
-			if (opts.restarting) {
+		if(data.clientData) {
+			if(opts.restarting) {
 				opts.restarting = false;
 				$('.connectionClosed.restarting:not(.restored)').addClass('restored').text('The round restarted and you successfully reconnected!');
 			}
-			if (!data.clientData.ckey && !data.clientData.ip && !data.clientData.compid) {
+			if(!data.clientData.ckey && !data.clientData.ip && !data.clientData.compid) {
 				//TODO: Call shutdown perhaps
 				return;
 			} else {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
-		} else if (data.firebug) {
-			if (data.trigger) {
+		} else if(data.firebug) {
+			if(data.trigger) {
 				output('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
 			} else {
 				output('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
@@ -425,7 +425,7 @@ function ehjaxCallback(data) {
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
 			document.body.appendChild(firebugEl);
 
-		} else if (data.emoji) {
+		} else if(data.emoji) {
 			emojiList = data.emoji;
 		}
 	}
@@ -456,11 +456,11 @@ function subSlideUp() {
 }
 
 function startSubLoop() {
-	if (opts.selectedSubLoop) {
+	if(opts.selectedSubLoop) {
 		clearInterval(opts.selectedSubLoop);
 	}
 	return setInterval(function() {
-		if (!opts.suppressSubClose && $selectedSub.is(':visible')) {
+		if(!opts.suppressSubClose && $selectedSub.is(':visible')) {
 			$selectedSub.slideUp('fast', subSlideUp);
 			clearInterval(opts.selectedSubLoop);
 		}
@@ -468,11 +468,11 @@ function startSubLoop() {
 }
 
 function handleToggleClick($sub, $toggle) {
-	if ($selectedSub !== $sub && $selectedSub.is(':visible')) {
+	if($selectedSub !== $sub && $selectedSub.is(':visible')) {
 		$selectedSub.slideUp('fast', subSlideUp);
 	}
 	$selectedSub = $sub;
-	if ($selectedSub.is(':visible')) {
+	if($selectedSub.is(':visible')) {
 		$selectedSub.slideUp('fast', subSlideUp);
 		clearInterval(opts.selectedSubLoop);
 	} else {
@@ -482,7 +482,7 @@ function handleToggleClick($sub, $toggle) {
 			var priorSubHeight = $selectedSub.outerHeight();
 			var newSubHeight = windowHeight - toggleHeight;
 			$(this).height(newSubHeight);
-			if (priorSubHeight > (windowHeight - toggleHeight)) {
+			if(priorSubHeight > (windowHeight - toggleHeight)) {
 				$(this).addClass('scroll');
 			}
 		});
@@ -509,7 +509,7 @@ function wingetMacros(macros) {
 	var idRegex = /.*?\.(?!(?:CRTL|ALT|SHIFT)\+)(.*?)(?:\+REP)?\.command/; // Do NOT match macros which need crtl, alt or shift to be held down (saves a ton of headache because I don't give enough of a fuck).
 	for (var key in macros) {
 		match   = idRegex.exec(key);
-		if (match === null)
+		if(match === null)
 			continue;
 		macroID = match[1].toUpperCase();
 
@@ -523,7 +523,7 @@ function wingetMacros(macros) {
 *
 ******************************************/
 
-if (typeof $ === 'undefined') {
+if(typeof $ === 'undefined') {
 	var div = document.getElementById('loading').childNodes[1];
 	div += '<br><br>ERROR: Jquery did not load.';
 }
@@ -535,13 +535,13 @@ $(function() {
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
-		if (opts.lastPang + opts.pangLimit < Date.now() && !opts.restarting) { //Every pingLimit
-			if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
+		if(opts.lastPang + opts.pangLimit < Date.now() && !opts.restarting) { //Every pingLimit
+			if(!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
 				opts.noResponse = true;
 				opts.noResponseCount++;
 				output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either AFK, experiencing lag or the connection has closed.</div>', 'internal');
 			}
-		} else if (opts.noResponse) { //Previous ping attempt failed ohno
+		} else if(opts.noResponse) { //Previous ping attempt failed ohno
 			$('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
 			opts.noResponse = false;
 		}
@@ -562,42 +562,42 @@ $(function() {
 		'smessagecombining': getCookie('messagecombining'),
 	};
 
-	if (savedConfig.sfontSize) {
+	if(savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		output('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
 	}
-	if (savedConfig.slineHeight) {
+	if(savedConfig.slineHeight) {
 		$("body").css('line-height', savedConfig.slineHeight);
 		output('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
-	if (savedConfig.spingDisabled) {
-		if (savedConfig.spingDisabled == 'true') {
+	if(savedConfig.spingDisabled) {
+		if(savedConfig.spingDisabled == 'true') {
 			opts.pingDisabled = true;
 			$('#ping').hide();
 		}
 		output('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
 	}
-	if (savedConfig.shighlightTerms) {
+	if(savedConfig.shighlightTerms) {
 		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
 		var actualTerms = '';
 		for (var i = 0; i < savedTerms.length; i++) {
-			if (savedTerms[i]) {
+			if(savedTerms[i]) {
 				actualTerms += savedTerms[i] + ', ';
 			}
 		}
-		if (actualTerms) {
+		if(actualTerms) {
 			actualTerms = actualTerms.substring(0, actualTerms.length - 2);
 			output('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>', 'internal');
 			opts.highlightTerms = savedTerms;
 		}
 	}
-	if (savedConfig.shighlightColor) {
+	if(savedConfig.shighlightColor) {
 		opts.highlightColor = savedConfig.shighlightColor;
 		output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
 
-	if (savedConfig.smessagecombining) {
-		if (savedConfig.smessagecombining == 'false') {
+	if(savedConfig.smessagecombining) {
+		if(savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
 		} else {
 			opts.messageCombining = true;
@@ -606,7 +606,7 @@ $(function() {
 
 	(function() {
 		var dataCookie = getCookie('connData');
-		if (dataCookie) {
+		if(dataCookie) {
 			var dataJ;
 			try {
 				dataJ = $.parseJSON(dataCookie);
@@ -632,12 +632,12 @@ $(function() {
 	$('body').on('mousedown', function(e) {
 		var $target = $(e.target);
 
-		if ($contextMenu && opts.hasOwnProperty('contextMenuTarget') && opts.contextMenuTarget) {
+		if($contextMenu && opts.hasOwnProperty('contextMenuTarget') && opts.contextMenuTarget) {
 			hideContextMenu();
 			return false;
 		}
 
-		if ($target.is('a') || $target.parent('a').length || $target.is('input') || $target.is('textarea')) {
+		if($target.is('a') || $target.parent('a').length || $target.is('input') || $target.is('textarea')) {
 			opts.preventFocus = true;
 		} else {
 			opts.preventFocus = false;
@@ -647,14 +647,14 @@ $(function() {
 	});
 
 	$messages.on('mousedown', function(e) {
-		if ($selectedSub && $selectedSub.is(':visible')) {
+		if($selectedSub && $selectedSub.is(':visible')) {
 			$selectedSub.slideUp('fast', subSlideUp);
 			clearInterval(opts.selectedSubLoop);
 		}
 	});
 
 	$('body').on('mouseup', function(e) {
-		if (!opts.preventFocus &&
+		if(!opts.preventFocus &&
 			(e.pageX >= opts.mouseDownX - opts.clickTolerance && e.pageX <= opts.mouseDownX + opts.clickTolerance) &&
 			(e.pageY >= opts.mouseDownY - opts.clickTolerance && e.pageY <= opts.mouseDownY + opts.clickTolerance)
 		) {
@@ -667,7 +667,7 @@ $(function() {
 	$messages.on('click', 'a', function(e) {
 		var href = $(this).attr('href');
 		$(this).addClass('visited');
-		if (href[0] == '?' || (href.length >= 8 && href.substring(0,8) == 'byond://')) {
+		if(href[0] == '?' || (href.length >= 8 && href.substring(0,8) == 'byond://')) {
 			runByond(href);
 		} else {
 			href = escaper(href);
@@ -677,11 +677,11 @@ $(function() {
 
 	//Fuck everything about this event. Will look into alternatives.
 	$('body').on('keydown', function(e) {
-		if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA') {
+		if(e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA') {
 			return;
 		}
 
-		if (e.ctrlKey || e.altKey || e.shiftKey) { //Band-aid "fix" for allowing ctrl+c copy paste etc. Needs a proper fix.
+		if(e.ctrlKey || e.altKey || e.shiftKey) { //Band-aid "fix" for allowing ctrl+c copy paste etc. Needs a proper fix.
 			return;
 		}
 
@@ -748,12 +748,12 @@ $(function() {
 		if(opts.macros.hasOwnProperty(c.toUpperCase()))
 			command = opts.macros[c];
 
-		if (command) {
+		if(command) {
 			runByond('byond://winset?mapwindow.map.focus=true;command='+command);
 			return false;
 		}
-		else if (c.length == 0) {
-			if (!e.shiftKey) {
+		else if(c.length == 0) {
+			if(!e.shiftKey) {
 				c = c.toLowerCase();
 			}
 			runByond('byond://winset?mapwindow.map.focus=true;mainwindow.input.text='+c);
@@ -766,7 +766,7 @@ $(function() {
 
 	//Mildly hacky fix for scroll issues on mob change (interface gets resized sometimes, messing up snap-scroll)
 	$(window).on('resize', function(e) {
-		if ($(this).height() !== opts.priorChatHeight) {
+		if($(this).height() !== opts.priorChatHeight) {
 			$('body,html').scrollTop($messages.outerHeight());
 			opts.priorChatHeight = $(this).height();
 		}
@@ -832,7 +832,7 @@ $(function() {
 	});
 
 	$('#togglePing').click(function(e) {
-		if (opts.pingDisabled) {
+		if(opts.pingDisabled) {
 			$('#ping').slideDown('fast');
 			opts.pingDisabled = false;
 		} else {
@@ -844,7 +844,7 @@ $(function() {
 
 	$('#saveLog').click(function(e) {
 		// Supported only under IE 10+.
-		if (window.Blob) {
+		if(window.Blob) {
 			$.ajax({
 				type: 'GET',
 				url: 'browserOutput.css',
@@ -871,7 +871,7 @@ $(function() {
 			output('<span class="internal boldnshit">Highlighting is disabled. You are probably using Internet Explorer 8 and need to update.</span>', 'internal');
 			return;
 		}
-		if ($('.popup .highlightTerm').is(':visible')) {return;}
+		if($('.popup .highlightTerm').is(':visible')) {return;}
 		var termInputs = '';
 		for (var i = 0; i < opts.highlightLimit; i++) {
 			termInputs += '<div><input type="text" name="highlightTermInput'+i+'" id="highlightTermInput'+i+'" class="highlightTermInput'+i+'" maxlength="255" value="'+(opts.highlightTerms[i] ? opts.highlightTerms[i] : '')+'" /></div>';
@@ -892,7 +892,7 @@ $(function() {
 	$('body').on('keyup', '#highlightColor', function() {
 		var color = $('#highlightColor').val();
 		color = color.trim();
-		if (!color || color.charAt(0) != '#') return;
+		if(!color || color.charAt(0) != '#') return;
 		$('#highlightColor').css('background-color', color);
 	});
 
@@ -902,9 +902,9 @@ $(function() {
 		var count = 0;
 		while (count < opts.highlightLimit) {
 			var term = $('#highlightTermInput'+count).val();
-			if (term) {
+			if(term) {
 				term = term.trim();
-				if (term === '') {
+				if(term === '') {
 					opts.highlightTerms[count] = null;
 				} else {
 					opts.highlightTerms[count] = term.toLowerCase();
@@ -917,7 +917,7 @@ $(function() {
 
 		var color = $('#highlightColor').val();
 		color = color.trim();
-		if (color == '' || color.charAt(0) != '#') {
+		if(color == '' || color.charAt(0) != '#') {
 			opts.highlightColor = '#FFFF00';
 		} else {
 			opts.highlightColor = color;
@@ -985,7 +985,7 @@ $(function() {
 	******************************************/
 
 	runByond('?_src_=chat&proc=doneLoading');
-	if ($('#loading').is(':visible')) {
+	if($('#loading').is(':visible')) {
 		$('#loading').remove();
 	}
 	$('#userBar').show();

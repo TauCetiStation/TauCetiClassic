@@ -119,7 +119,7 @@
 /obj/item/organ/external/proc/recolor()
 	if(!owner)
 		return
-	if (owner.species.flags[HAS_SKIN_COLOR])
+	if(owner.species.flags[HAS_SKIN_COLOR])
 		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
 	else if(owner.species.flags[HAS_SKIN_TONE])
 		original_color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
@@ -136,13 +136,13 @@
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
 		g = (gender == FEMALE ? "f" : "m")
 
-	if (!species.has_gendered_icons)
+	if(!species.has_gendered_icons)
 		g = null
 
-	if (HUSK in mutations)
+	if(HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
-	else if (status & ORGAN_MUTATED)
+	else if(status & ORGAN_MUTATED)
 		icon = species.deform
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
 	else
@@ -151,7 +151,7 @@
 
 	if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
-	else if (HUSK in mutations)
+	else if(HUSK in mutations)
 		color = null
 	else if(HULK in mutations)
 		color = HULK_SKIN_COLOR
@@ -251,18 +251,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(burn_dam ==0)
 		tburn =0
-	else if (burn_dam < (max_damage * 0.25 / 2))
+	else if(burn_dam < (max_damage * 0.25 / 2))
 		tburn = 1
-	else if (burn_dam < (max_damage * 0.75 / 2))
+	else if(burn_dam < (max_damage * 0.75 / 2))
 		tburn = 2
 	else
 		tburn = 3
 
-	if (brute_dam == 0)
+	if(brute_dam == 0)
 		tbrute = 0
-	else if (brute_dam < (max_damage * 0.25 / 2))
+	else if(brute_dam < (max_damage * 0.25 / 2))
 		tbrute = 1
-	else if (brute_dam < (max_damage * 0.75 / 2))
+	else if(brute_dam < (max_damage * 0.75 / 2))
 		tbrute = 2
 	else
 		tbrute = 3
@@ -440,14 +440,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /obj/item/organ/external/proc/release_restraints()
-	if (owner.handcuffed && (body_part in list(ARM_LEFT, ARM_RIGHT)))
+	if(owner.handcuffed && (body_part in list(ARM_LEFT, ARM_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && (body_part in list(LEG_LEFT, LEG_RIGHT)))
+	if(owner.legcuffed && (body_part in list(LEG_LEFT, LEG_RIGHT)))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -527,7 +527,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return 0
 
 /obj/item/organ/external/get_icon(icon_layer)
-	if (!owner)
+	if(!owner)
 		return
 
 	update_sprite()
@@ -537,7 +537,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return MA
 
 /obj/item/organ/external/head/get_icon(icon_layer)
-	if (!owner)
+	if(!owner)
 		return
 
 	update_sprite()
@@ -588,7 +588,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //for arms and hands
 /obj/item/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
-	if (!c_hand)
+	if(!c_hand)
 		return
 
 	if(iszombie(owner))
@@ -943,7 +943,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
 		if(brute_dam > 40)
-			if (prob(50))
+			if(prob(50))
 				disfigure("brute")
 		if(burn_dam > 40)
 			disfigure("burn")
@@ -951,7 +951,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return ..()
 
 /obj/item/organ/external/head/proc/disfigure(type = "brute")
-	if (disfigured)
+	if(disfigured)
 		return
 	if(type == "brute")
 		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
@@ -991,7 +991,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/list/wound_descriptors = list()
 	if(open > 1)
 		wound_descriptors["an open incision"] = 1
-	else if (open)
+	else if(open)
 		wound_descriptors["an incision"] = 1
 	for(var/datum/wound/W in wounds)
 		var/this_wound_desc = W.desc

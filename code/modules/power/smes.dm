@@ -168,7 +168,7 @@
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		if(I.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
+			if(prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -355,7 +355,7 @@
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
@@ -449,7 +449,7 @@
 	charging = 0
 	output = 0
 	charge -= 1e6/severity
-	if (charge < 0)
+	if(charge < 0)
 		charge = 0
 	spawn(100)
 		output = initial(output)

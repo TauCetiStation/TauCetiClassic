@@ -41,7 +41,7 @@
 
 /obj/item/toy/balloon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [target].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
@@ -145,13 +145,13 @@
 /obj/item/toy/gun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/ammo/gun))
 		var/obj/item/toy/ammo/gun/G = I
-		if (src.bullets >= 7)
+		if(src.bullets >= 7)
 			to_chat(user, "<span class='notice'>It's already fully loaded!</span>")
 			return 1
-		if (G.amount_left <= 0)
+		if(G.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There is no more caps!</span>")
 			return 1
-		if (G.amount_left < (7 - src.bullets))
+		if(G.amount_left < (7 - src.bullets))
 			src.bullets += G.amount_left
 			to_chat(user, "<span class='warning'>You reload [G.amount_left] caps\s!</span>")
 			G.amount_left = 0
@@ -165,13 +165,13 @@
 	return ..()
 
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
-	if (proximity)
+	if(proximity)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
-	if (src.bullets < 1)
+	if(src.bullets < 1)
 		user.show_message("<span class='warning'>*click* *click*</span>", SHOWMSG_AUDIO)
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 		return
@@ -214,7 +214,7 @@
 
 /obj/item/toy/crossbow/examine(mob/user)
 	..()
-	if (bullets && (src in view(2, user)))
+	if(bullets && (src in view(2, user)))
 		to_chat(user, "<span class='notice'>It is loaded with [bullets] foam darts!</span>")
 
 /obj/item/toy/crossbow/attackby(obj/item/I, mob/user, params)
@@ -233,9 +233,9 @@
 	if(!isturf(target.loc) || target == user) return
 	if(proximity) return
 
-	if (locate (/obj/structure/table, src.loc))
+	if(locate (/obj/structure/table, src.loc))
 		return
-	else if (bullets)
+	else if(bullets)
 		var/turf/trg = get_turf(target)
 		var/obj/effect/foam_dart_dummy/D = new/obj/effect/foam_dart_dummy(get_turf(src))
 		bullets--
@@ -244,7 +244,7 @@
 		playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 
 		for(var/i=0, i<6, i++)
-			if (D)
+			if(D)
 				if(D.loc == trg) break
 				step_towards(D,trg)
 
@@ -270,7 +270,7 @@
 				qdel(D)
 
 		return
-	else if (bullets == 0)
+	else if(bullets == 0)
 		user.Weaken(5)
 		visible_message("<span class='warning'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
@@ -279,7 +279,7 @@
 
 // ******* Check
 
-	if (src.bullets > 0 && M.lying)
+	if(src.bullets > 0 && M.lying)
 
 		visible_message("<span class='warning'><B>[user] casually lines up a shot with [M]'s head and pulls the trigger!</B></span><br>\
 			<span class='warning'>[M] was hit in the head by the foam dart!</span>", "<span class='warning'>You hear the sound of foam against skull</span>")
@@ -287,7 +287,7 @@
 		playsound(user, 'sound/items/syringeproj.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/toy/ammo/crossbow(M.loc)
 		src.bullets--
-	else if (M.lying && src.bullets == 0)
+	else if(M.lying && src.bullets == 0)
 		visible_message("<span class='warning'><B>[user] casually lines up a shot with [M]'s head and pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B></span>", "<span class='warning'>You hear someone fall</span>")
 		user.Weaken(5)
 	return
@@ -324,7 +324,7 @@
 
 /obj/item/toy/sword/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "swordblue"
@@ -838,7 +838,7 @@ Owl & Griffin toys
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (cooldown < world.time)
+	if(cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		spawn(5) //gia said so
@@ -1027,7 +1027,7 @@ Owl & Griffin toys
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(href_list["pick"])
-		if (cardUser.get_item_by_slot(SLOT_L_HAND) == src || cardUser.get_item_by_slot(SLOT_R_HAND) == src)
+		if(cardUser.get_item_by_slot(SLOT_L_HAND) == src || cardUser.get_item_by_slot(SLOT_R_HAND) == src)
 			var/choice = href_list["pick"]
 			var/obj/item/toy/singlecard/C = new/obj/item/toy/singlecard(cardUser.loc)
 			src.currenthand -= choice
@@ -1108,7 +1108,7 @@ Owl & Griffin toys
 		return
 	if(!flipped)
 		src.flipped = 1
-		if (cardname)
+		if(cardname)
 			src.icon_state = "sc_[cardname]"
 			src.name = src.cardname
 		else

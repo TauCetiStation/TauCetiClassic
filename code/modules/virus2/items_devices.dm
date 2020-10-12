@@ -14,7 +14,7 @@
 		return
 
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human))
+	if(istype(C,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)
@@ -24,7 +24,7 @@
 		report("Scan Complete: No antibodies detected.", user)
 		return
 
-	if (CLUMSY in user.mutations && prob(50))
+	if(CLUMSY in user.mutations && prob(50))
 		// I was tempted to be really evil and rot13 the output.
 		report("Antibodies detected: [reverse_text(antigens2string(C.antibodies))]", user)
 	else

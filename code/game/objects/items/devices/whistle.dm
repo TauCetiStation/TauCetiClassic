@@ -12,7 +12,7 @@
 	var/insults = 0//just in case
 
 /obj/item/device/hailer/attack_self(mob/living/carbon/user)
-	if (spamcheck)
+	if(spamcheck)
 		return
 
 	if(emagged)
@@ -28,7 +28,7 @@
 	if(user)
 		var/list/halt_recipients = list()
 		for(var/mob/M in viewers(user, null))
-			if ((M.client && !( M.blinded )))
+			if((M.client && !( M.blinded )))
 				halt_recipients.Add(M.client)
 		var/image/I = image('icons/mob/talk.dmi', user, "halt", MOB_LAYER+1)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA

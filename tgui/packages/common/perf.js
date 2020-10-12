@@ -14,7 +14,7 @@ let markersByLabel = {};
  * Marks a certain spot in the code for later measurements.
  */
 const mark = (label, timestamp) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     markersByLabel[label] = timestamp || Date.now();
   }
 };
@@ -25,7 +25,7 @@ const mark = (label, timestamp) => {
  * Use logger.log() to print the measurement.
  */
 const measure = (markerA, markerB) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     return timeDiff(
       markersByLabel[markerA],
       markersByLabel[markerB]);

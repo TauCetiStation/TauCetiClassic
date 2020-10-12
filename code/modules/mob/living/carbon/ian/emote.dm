@@ -10,7 +10,7 @@
 			if(silent)
 				return
 			if(client)
-				if (client.prefs.muted & MUTE_IC)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='red'>You cannot send IC messages (muted).</span>")
 					return
 				if(client.handle_spam_prevention(message,MUTE_IC))
@@ -19,7 +19,7 @@
 				return
 			return custom_emote(m_type, message)
 
-		if ("blink")
+		if("blink")
 			message = "<B>[src]</B> [pick("blinks", "blinks rapidly")]."
 			m_type = SHOWMSG_VISUAL
 		if("custom")
@@ -46,7 +46,7 @@
 		if("drool")
 			message = "<B>[src]</B> drools."
 			m_type = SHOWMSG_VISUAL
-		if ("eyebrow")
+		if("eyebrow")
 			message = "<B>[src]</B> raises an eyebrow."
 			m_type = SHOWMSG_VISUAL
 		if("paw")
@@ -74,7 +74,7 @@
 		if("twitch")
 			message = "<B>[src]</B> [pick("twitches violently", "twitches")]."
 			m_type = SHOWMSG_VISUAL
-		if ("faint")
+		if("faint")
 			message = "<B>[src]</B> faints."
 			if(IsSleeping())
 				return
@@ -107,7 +107,7 @@
 		if("cough")
 			message = "<B>[src]</B> coughs!"
 			m_type = SHOWMSG_AUDIO
-		if ("pray")
+		if("pray")
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
@@ -126,9 +126,9 @@
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
 				to_chat(M, "<a href='byond://?src=\ref[src];track=\ref[src]'>(F)</a> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
-		if (m_type & SHOWMSG_VISUAL)
+		if(m_type & SHOWMSG_VISUAL)
 			for (var/mob/O in get_mobs_in_view(world.view,src))
 				O.show_message(message, m_type)
-		else if (m_type & SHOWMSG_AUDIO)
+		else if(m_type & SHOWMSG_AUDIO)
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
 				O.show_message(message, m_type)

@@ -515,7 +515,7 @@
 	set src in oview(1)
 
 	// virtual present
-	if (isAI(usr) || ispAI(usr))
+	if(isAI(usr) || ispAI(usr))
 		return
 	// state restrict
 	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
@@ -527,7 +527,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if(!I || !iswrench(I))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 

@@ -127,7 +127,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	BP.fracture()
 	BP.take_damage(20, 0, used_weapon = tool)
-	if (prob(40))
+	if(prob(40))
 		user.visible_message("<span class='warning'>A rib pierces the lung!</span>")
 		target.rupture_lung()
 
@@ -217,10 +217,10 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		tool_name = "regenerative membrane"
-	if (istype(tool, /obj/item/stack/medical/bruise_pack))
-		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
+	if(istype(tool, /obj/item/stack/medical/bruise_pack))
+		if(istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
@@ -239,10 +239,10 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		tool_name = "regenerative membrane"
-	if (istype(tool, /obj/item/stack/medical/bruise_pack))
-		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
+	if(istype(tool, /obj/item/stack/medical/bruise_pack))
+		if(istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
@@ -263,11 +263,11 @@
 	"<span class='warning'>Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!</span>")
 	var/dam_amt = 2
 
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		target.adjustToxLoss(5)
 
-	else if (istype(tool, /obj/item/stack/medical/bruise_pack))
-		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
+	else if(istype(tool, /obj/item/stack/medical/bruise_pack))
+		if(istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 			target.adjustToxLoss(7)
 		else
 			dam_amt = 5
@@ -407,7 +407,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.bloody_body(target)
 		H.bloody_hands(target, 0)
@@ -729,5 +729,5 @@
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
 
-	if (target.nutrition > C.maxcharge)
+	if(target.nutrition > C.maxcharge)
 		target.nutrition = C.maxcharge

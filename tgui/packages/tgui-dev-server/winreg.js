@@ -13,7 +13,7 @@ import { promisify } from 'util';
 const logger = createLogger('winreg');
 
 export const regQuery = async (path, key) => {
-  if (process.platform !== 'win32') {
+  if(process.platform !== 'win32') {
     return null;
   }
   try {
@@ -21,19 +21,19 @@ export const regQuery = async (path, key) => {
     const { stdout } = await promisify(exec)(command);
     const keyPattern = `    ${key}    `;
     const indexOfKey = stdout.indexOf(keyPattern);
-    if (indexOfKey === -1) {
+    if(indexOfKey === -1) {
       logger.error('could not find the registry key');
       return null;
     }
     const indexOfEol = stdout.indexOf('\r\n', indexOfKey);
-    if (indexOfEol === -1) {
+    if(indexOfEol === -1) {
       logger.error('could not find the end of the line');
       return null;
     }
     const indexOfValue = stdout.indexOf(
       '    ',
       indexOfKey + keyPattern.length);
-    if (indexOfValue === -1) {
+    if(indexOfValue === -1) {
       logger.error('could not find the start of the key value');
       return null;
     }

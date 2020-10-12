@@ -12,12 +12,12 @@
 
 /obj/machinery/computer/shuttle/attackby(obj/item/weapon/card/W, mob/user)
 	if(stat & (BROKEN|NOPOWER))	return
-	if ((!( istype(W, /obj/item/weapon/card) ) || !( SSticker ) || SSshuttle.location != 1 || !( user )))	return
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (istype(W, /obj/item/device/pda))
+	if((!( istype(W, /obj/item/weapon/card) ) || !( SSticker ) || SSshuttle.location != 1 || !( user )))	return
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(istype(W, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = W
 			W = pda.id
-		if (!W:access) //no access
+		if(!W:access) //no access
 			to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 			return
 
@@ -37,7 +37,7 @@
 			if("Authorize")
 				src.authorized -= W:registered_name
 				src.authorized += W:registered_name
-				if (src.auth_need - src.authorized.len > 0)
+				if(src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 					log_game("[user.ckey] has authorized early shuttle launch")
 					to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))

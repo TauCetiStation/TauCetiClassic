@@ -21,10 +21,10 @@ var/list/ai_verbs_default = list(
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
 	var/is_in_use = FALSE
-	if (subject!=null)
+	if(subject!=null)
 		for(var/A in ai_list)
 			var/mob/living/silicon/ai/M = A
-			if ((M.client && M.machine == subject))
+			if((M.client && M.machine == subject))
 				is_in_use = TRUE
 				subject.attack_ai(M)
 	return is_in_use
@@ -162,7 +162,7 @@ var/list/ai_verbs_default = list(
 	while(!pickedName)
 		pickedName = pick(ai_names)
 		for (var/mob/living/silicon/ai/A in ai_list)
-			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
+			if(A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
 
@@ -174,7 +174,7 @@ var/list/ai_verbs_default = list(
 	proc_holder_list = new()
 
 	if(L)
-		if (istype(L, /datum/ai_laws))
+		if(istype(L, /datum/ai_laws))
 			laws = L
 	else
 		laws = new base_law_type
@@ -190,7 +190,7 @@ var/list/ai_verbs_default = list(
 
 	aiCamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
-	if (isturf(loc))
+	if(isturf(loc))
 		add_ai_verbs(src)
 
 	//Languages
@@ -209,7 +209,7 @@ var/list/ai_verbs_default = list(
 			empty_playable_ai_cores += new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
 			return INITIALIZE_HINT_QDEL // Delete AI.
 		else
-			if (B.brainmob.mind)
+			if(B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
 			announce_role()
@@ -228,7 +228,7 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
-	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
+	if(!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
 		src.show_laws()
 		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
@@ -301,8 +301,8 @@ var/list/ai_verbs_default = list(
 	if(SSticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
-			if (mind == malfai) // are we the evil one?
-				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
+			if(mind == malfai) // are we the evil one?
+				if(malf.apcs >= APC_MIN_TO_MALF_DECLARE)
 					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
@@ -312,18 +312,18 @@ var/list/ai_verbs_default = list(
 	for (var/cat in alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/alarmlist = alarms[cat]
-		if (alarmlist.len)
+		if(alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
 				dat += "<NOBR>"
 
 				var/cameratext = ""
-				if (alarm.cameras)
+				if(alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
 						cameratext += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (cameratext=="") ? "" : " | ", src, I, I.c_tag)
 				dat += text("-- [] ([])", alarm.area.name, (cameratext)? cameratext : "No Camera")
 
-				if (alarm.sources.len > 1)
+				if(alarm.sources.len > 1)
 					dat += text(" - [] sources", alarm.sources.len)
 				dat += "</NOBR><BR>\n"
 		else
@@ -340,13 +340,13 @@ var/list/ai_verbs_default = list(
 	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
 
 /mob/living/silicon/ai/proc/retransmit_message(message)
-	if (aiRadio)
+	if(aiRadio)
 		aiRadio.talk_into(src, message)
 
 /mob/living/silicon/ai/proc/toggle_retransmit()
 	set category = "AI Commands"
 	set name = "Toggle Auto Messages"
-	if (allow_auto_broadcast_messages)
+	if(allow_auto_broadcast_messages)
 		to_chat(usr, "Your core is <b>disconnected</b> from station information module.")
 	else
 		to_chat(usr, "Your core is <b>connected</b> to station information module.")
@@ -440,13 +440,13 @@ var/list/ai_verbs_default = list(
 		cancel_call_proc(src)
 
 /mob/living/silicon/ai/check_eye(mob/user)
-	if (!camera)
+	if(!camera)
 		return null
 	user.reset_view(camera)
 	return 1
 
 /mob/living/silicon/ai/blob_act()
-	if (stat != DEAD)
+	if(stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -456,7 +456,7 @@ var/list/ai_verbs_default = list(
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
-	if (prob(30))
+	if(prob(30))
 		switch(pick(1,2))
 			if(1)
 				view_core()
@@ -470,15 +470,15 @@ var/list/ai_verbs_default = list(
 
 	switch(severity)
 		if(1.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()
@@ -488,18 +488,18 @@ var/list/ai_verbs_default = list(
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
-		if (href_list["mach_close"] == "aialerts")
+	if(href_list["mach_close"])
+		if(href_list["mach_close"] == "aialerts")
 			viewalerts = 0
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-	if (href_list["switchcamera"])
+	if(href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
-	if (href_list["showalerts"])
+	if(href_list["showalerts"])
 		show_alerts()
 	//Carn: holopad requests
-	if (href_list["jumptoholopad"])
+	if(href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
 			if(H)
@@ -507,15 +507,15 @@ var/list/ai_verbs_default = list(
 			else
 				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+	if(href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
 		switch(lawcheck[L+1])
-			if ("Yes") lawcheck[L+1] = "No"
-			if ("No") lawcheck[L+1] = "Yes"
+			if("Yes") lawcheck[L+1] = "No"
+			if("No") lawcheck[L+1] = "Yes"
 //		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
 		checklaws()
 
-	if (href_list["lawr"]) // Selects on which channel to state laws
+	if(href_list["lawr"]) // Selects on which channel to state laws
 		var/setchannel = input(usr, "Specify channel.", "Channel selection") in list("State","Common","Science","Command","Medical","Engineering","Security","Supply","Binary","Holopad", "Cancel")
 		if(setchannel == "Cancel")
 			return
@@ -529,18 +529,18 @@ var/list/ai_verbs_default = list(
 		return
 */
 
-	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+	if(href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawi"])
 		switch(ioncheck[L])
-			if ("Yes") ioncheck[L] = "No"
-			if ("No") ioncheck[L] = "Yes"
+			if("Yes") ioncheck[L] = "No"
+			if("No") ioncheck[L] = "Yes"
 //		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
 		checklaws()
 
-	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+	if(href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
-	if (href_list["track"])
+	if(href_list["track"])
 		var/mob/target = locate(href_list["track"]) in living_list
 		if(target || html_decode(href_list["trackname"]) == target:get_visible_name())
 			ai_actual_track(target)
@@ -548,14 +548,14 @@ var/list/ai_verbs_default = list(
 			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
 
-	else if (href_list["faketrack"])
+	else if(href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in living_list
 		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in ai_list
 		if(A && target)
 
 			A.cameraFollow = target
 			to_chat(A, text("Now tracking [] on camera.", target.name))
-			if (usr.machine == null)
+			if(usr.machine == null)
 				usr.machine = usr
 
 			while (src.cameraFollow == target)
@@ -589,7 +589,7 @@ var/list/ai_verbs_default = list(
 
 	src.cameraFollow = null
 
-	if (!C || stat == DEAD) //C.can_use())
+	if(!C || stat == DEAD) //C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -602,7 +602,7 @@ var/list/ai_verbs_default = list(
 	return 1
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, list/cameralist, source)
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return 1
 
 	..()
@@ -619,7 +619,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
-	if (!has_alarm)
+	if(!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
 		if(viewalerts)
 			show_alerts()
@@ -853,7 +853,7 @@ var/list/ai_verbs_default = list(
 		return
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
-	if (src.aiRadio)
+	if(src.aiRadio)
 		src.aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)

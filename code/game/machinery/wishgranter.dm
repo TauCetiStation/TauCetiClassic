@@ -29,7 +29,7 @@
 		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
 		return 1
 
-	else if (!insisting)
+	else if(!insisting)
 		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
 		insisting++
 
@@ -40,22 +40,22 @@
 		charges--
 		insisting = 0
 
-		if (!(HULK in user.mutations))
+		if(!(HULK in user.mutations))
 			user.mutations.Add(HULK)
 
-		if (!(LASEREYES in user.mutations))
+		if(!(LASEREYES in user.mutations))
 			user.mutations.Add(LASEREYES)
 
-		if (!(XRAY in user.mutations))
+		if(!(XRAY in user.mutations))
 			user.mutations.Add(XRAY)
 			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			user.see_in_dark = 8
 			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if (!(COLD_RESISTANCE in user.mutations))
+		if(!(COLD_RESISTANCE in user.mutations))
 			user.mutations.Add(COLD_RESISTANCE)
 
-		if (!(TK in user.mutations))
+		if(!(TK in user.mutations))
 			user.mutations.Add(TK)
 
 		user.update_mutations()

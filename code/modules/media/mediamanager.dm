@@ -27,7 +27,7 @@ function SetVolume(volume) {
 
 /mob/living/proc/update_music()
 	//world << "Update start"
-	if (client && client.media)
+	if(client && client.media)
 		//world << "Media Exists"
 		client.media.update_music()
 	//else
@@ -86,7 +86,7 @@ function SetVolume(volume) {
 	var/targetStartTime = 0
 	//var/targetVolume = volume
 
-	if (!owner)
+	if(!owner)
 		//testing("owner is null")
 		return
 	if(!isliving(mob))
@@ -103,7 +103,7 @@ function SetVolume(volume) {
 		//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
 	//else
 	//	testing("M is not playing or null.")
-	if (url != targetURL || abs(targetStartTime - start_time) > 1)
+	if(url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime
 		//volume = targetVolume

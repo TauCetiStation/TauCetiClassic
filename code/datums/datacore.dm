@@ -35,7 +35,7 @@
 	var/real_title = assignment
 
 	for(var/datum/data/record/t in data_core.general)
-		if (t)
+		if(t)
 			if(t.fields["name"] == name)
 				foundrecord = t
 				break

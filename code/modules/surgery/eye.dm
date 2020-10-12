@@ -9,12 +9,12 @@
 	can_infect = 1
 
 /datum/surgery_step/eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (BP.is_stump)
+	if(BP.is_stump)
 		return FALSE
 	return target_zone == O_EYES
 
@@ -130,7 +130,7 @@
 	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
 	user.visible_message("<span class='notice'>[user] cauterizes the incision around [target]'s eyes with \the [tool].</span>", \
 	"<span class='notice'>You cauterize the incision around [target]'s eyes with \the [tool].</span>")
-	if (target.op_stage.eyes == 3)
+	if(target.op_stage.eyes == 3)
 		target.disabilities &= ~NEARSIGHTED
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0
@@ -258,7 +258,7 @@
 	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
 	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
-	if (target.op_stage.eyes == 2)
+	if(target.op_stage.eyes == 2)
 		target.disabilities &= ~NEARSIGHTED
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0

@@ -8,7 +8,7 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				ChangeTurf(basetype)
 				qdel(src)
 				return
@@ -16,7 +16,7 @@
 	return
 
 /turf/simulated/floor/engine/blob_act()
-	if (prob(25))
+	if(prob(25))
 		ChangeTurf(basetype)
 		qdel(src)
 		return

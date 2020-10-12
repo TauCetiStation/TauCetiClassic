@@ -14,11 +14,11 @@ import { computeBoxProps, computeBoxClassName } from '../components/Box';
  */
 export const refocusLayout = () => {
   // IE8: Focus method is seemingly fucked.
-  if (Byond.IS_LTE_IE8) {
+  if(Byond.IS_LTE_IE8) {
     return;
   }
   const element = document.getElementById('Layout__content');
-  if (element) {
+  if(element) {
     element.focus();
   }
 };

@@ -88,7 +88,7 @@
 				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				src.health -= W.force * 0.75
 			else
-		if (src.health <= 0)
+		if(src.health <= 0)
 			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
 			qdel(src)
 		..()

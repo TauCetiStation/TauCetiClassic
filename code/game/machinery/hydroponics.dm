@@ -188,27 +188,27 @@
 				adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 		// Weeeeeeeeeeeeeeedddssss
-		if (weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(planted)
 				if(myseed.plant_type == 0) // If a normal plant
 					weedinvasion()
 			else
 				weedinvasion() // Weed invasion into empty tray
 			needs_update = TRUE
-		if (needs_update)
+		if(needs_update)
 			update_icon()
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
-	if (mutmod == 0)
+	if(mutmod == 0)
 		return
-	if (mutmod == 1)
+	if(mutmod == 1)
 		if(prob(80))		//80%
 			mutate()
 		else if(prob(75))	//15%
 			hardmutate()
 		return
-	if (mutmod == 2)
+	if(mutmod == 2)
 		if(prob(50))		//50%
 			mutate()
 		else if(prob(50))	//25%
@@ -261,11 +261,11 @@
 
 /obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
-	if (planted)
+	if(planted)
 		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
-		if (dead)
+		if(dead)
 			desc += " It's dead."
-		else if (harvest)
+		else if(harvest)
 			desc += " It's ready to harvest."
 
 /obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
@@ -346,7 +346,7 @@
 
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
-	if (weedlevel > 5)
+	if(weedlevel > 5)
 		if(myseed)
 			qdel(myseed)
 		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
@@ -610,7 +610,7 @@
 		update_icon()
 		return TRUE
 
-	else if ( istype(O, /obj/item/seeds) )
+	else if( istype(O, /obj/item/seeds) )
 		if(!planted)
 			user.remove_from_mob(O)
 			to_chat(user, "You plant the [O.name]")
@@ -629,7 +629,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if (istype(O, /obj/item/device/plant_analyzer))
+	else if(istype(O, /obj/item/device/plant_analyzer))
 		if(planted && myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
 			to_chat(user, "-Plant Age: <span class='notice'>[age]</span>")
@@ -655,7 +655,7 @@
 			to_chat(user, "-Nutrition level: <span class='notice'>[nutrilevel]/[maxnutri]</span>")
 			to_chat(user, "")
 
-	else if (istype(O, /obj/item/weapon/minihoe))
+	else if(istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
@@ -664,7 +664,7 @@
 		else
 			to_chat(user, "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
 
-	else if ( istype(O, /obj/item/weapon/weedspray) )
+	else if( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
 		user.remove_from_mob(O)
 		adjustToxic(myWKiller.toxicity)
@@ -674,7 +674,7 @@
 		qdel(O)
 		update_icon()
 
-	else if (istype(O, /obj/item/weapon/storage/bag/plants))
+	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
 		var/obj/item/weapon/storage/bag/plants/S = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
@@ -715,7 +715,7 @@
 			wrenched_change()
 			update_icon()
 
-	else if ( istype(O, /obj/item/weapon/pestspray) )
+	else if( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
 		user.remove_from_mob(O)
 		adjustToxic(myPKiller.toxicity)
@@ -781,7 +781,7 @@
 
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc
-	if (parent.yieldmod == 0)
+	if(parent.yieldmod == 0)
 		return min(yield, 1)//1 if above zero, 0 otherwise
 	return (yield * parent.yieldmod)
 
@@ -807,7 +807,7 @@
 			t_prod.potency = potency
 			t_prod.plant_type = plant_type
 			t_amount++
-	else if (ispath(produce, /obj/item/weapon/grown))
+	else if(ispath(produce, /obj/item/weapon/grown))
 		while ( t_amount < getYield())
 			var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
 			t_prod.seed = mypath

@@ -82,9 +82,9 @@ Passive gate is similar to the regular pump except:
 
 	var/pressure_delta
 	switch (regulate_mode)
-		if (REGULATE_INPUT)
+		if(REGULATE_INPUT)
 			pressure_delta = input_starting_pressure - target_pressure
-		if (REGULATE_OUTPUT)
+		if(REGULATE_OUTPUT)
 			pressure_delta = target_pressure - output_starting_pressure
 
 	//-1 if pump_gas() did not move any gas, >= 0 otherwise
@@ -97,20 +97,20 @@ Passive gate is similar to the regular pump except:
 
 		//Figure out how much gas to transfer to meet the target pressure.
 		switch (regulate_mode)
-			if (REGULATE_INPUT)
+			if(REGULATE_INPUT)
 				var/datum/pipeline/parent1 = PARENT1
 				transfer_moles = min(transfer_moles, calculate_transfer_moles(air2, air1, pressure_delta, (parent1) ? parent1.air.volume : 0))
-			if (REGULATE_OUTPUT)
+			if(REGULATE_OUTPUT)
 				var/datum/pipeline/parent2 = PARENT2
 				transfer_moles = min(transfer_moles, calculate_transfer_moles(air1, air2, pressure_delta, (parent2) ? parent2.air.volume : 0))
 
 		//pump_gas() will return a negative number if no flow occurred
 		returnval = pump_gas_passive(src, air1, air2, transfer_moles)
 
-	if (returnval >= 0)
+	if(returnval >= 0)
 		update_parents()
 
-	if (last_flow_rate)
+	if(last_flow_rate)
 		flowing = TRUE
 
 	update_icon()
@@ -200,7 +200,7 @@ Passive gate is similar to the regular pump except:
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "pressure_regulator.tmpl", name, 470, 370)
@@ -218,27 +218,27 @@ Passive gate is similar to the regular pump except:
 
 	if(href_list["regulate_mode"])
 		switch(href_list["regulate_mode"])
-			if ("off") regulate_mode = REGULATE_NONE
-			if ("input") regulate_mode = REGULATE_INPUT
-			if ("output") regulate_mode = REGULATE_OUTPUT
+			if("off") regulate_mode = REGULATE_NONE
+			if("input") regulate_mode = REGULATE_INPUT
+			if("output") regulate_mode = REGULATE_OUTPUT
 
 	switch(href_list["set_press"])
-		if ("min")
+		if("min")
 			target_pressure = 0
-		if ("max")
+		if("max")
 			target_pressure = max_pressure_setting
-		if ("set")
+		if("set")
 			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)","Pressure Control", target_pressure) as num
 			target_pressure = between(0, new_pressure, max_pressure_setting)
 
 	var/datum/gas_mixture/air1 = AIR1
 
 	switch(href_list["set_flow_rate"])
-		if ("min")
+		if("min")
 			set_flow_rate = 0
-		if ("max")
+		if("max")
 			set_flow_rate = air1.volume
-		if ("set")
+		if("set")
 			var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[air1.volume]kPa)","Flow Rate Control", set_flow_rate) as num
 			set_flow_rate = between(0, new_flow_rate, air1.volume)
 

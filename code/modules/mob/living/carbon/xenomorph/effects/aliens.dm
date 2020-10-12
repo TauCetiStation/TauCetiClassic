@@ -91,7 +91,7 @@
 		if(2.0)
 			health-=50
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				health-=50
 			else
 				health-=25
@@ -120,7 +120,7 @@
 /obj/structure/alien/resin/attack_hand(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (HULK in user.mutations)
+	if(HULK in user.mutations)
 		user.visible_message("<span class='warning'>[user] destroys the [name]!</span>", self_message = "<span class='notice'>You easily destroy the [name].</span>")
 		health = 0
 	else
@@ -135,7 +135,7 @@
 /obj/structure/alien/resin/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (isxenolarva(usr) || isfacehugger(usr))//Safety check for larva. /N
+	if(isxenolarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
 	user.visible_message("<span class='warning'>[usr] claws at the resin!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
@@ -209,7 +209,7 @@
 /obj/structure/alien/weeds/proc/Life()
 	var/turf/U = get_turf(src)
 
-	if (istype(U, /turf/space))
+	if(istype(U, /turf/space))
 		qdel(src)
 		return
 
@@ -220,7 +220,7 @@
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			if(!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 				continue
 
 			for(var/obj/machinery/door/D in T)
@@ -240,10 +240,10 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
@@ -284,7 +284,7 @@
 	return PROJECTILE_FORCE_MISS
 
 /*/obj/structure/alien/weeds/burn(fi_amount)
-	if (fi_amount > 18000)
+	if(fi_amount > 18000)
 		spawn( 0 )
 			qdel(src)
 			return
@@ -308,7 +308,7 @@
 
 /obj/structure/alien/weeds/node/atom_init_late()
 	for (var/obj/structure/alien/weeds/W in loc)
-		if (W != src)
+		if(W != src)
 			qdel(W)
 	set_light(2)
 	..()

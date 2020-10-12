@@ -94,7 +94,7 @@
 
 	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, time, target)
 		else
@@ -105,7 +105,7 @@
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
 			. = FALSE
@@ -169,7 +169,7 @@
 		holdingnull = FALSE //Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, delay, target)
 		else
@@ -180,7 +180,7 @@
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(progress)
 			progbar.update(world.time - starttime)
 
 		if(QDELETED(user) || !target_null && QDELETED(target))

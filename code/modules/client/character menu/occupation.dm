@@ -25,7 +25,7 @@
 
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 	var/datum/job/lastJob
-	if (!SSjob)		return
+	if(!SSjob)		return
 	for(var/datum/job/job in SSjob.occupations)
 
 		index += 1
@@ -111,9 +111,9 @@
 					alternate_option = 0
 				else
 					return 0
-			if ("alt_title")
+			if("alt_title")
 				var/datum/job/job = locate(href_list["job"])
-				if (job)
+				if(job)
 					var/choices = list(job.title) + job.alt_titles
 					var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 					if(choice)

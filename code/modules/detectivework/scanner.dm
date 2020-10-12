@@ -31,16 +31,16 @@
 	return ..()
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
-	if (!ishuman(M))
+	if(!ishuman(M))
 		to_chat(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
 		flick("forensic0",src)
 		return 0
-	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
+	if(( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		to_chat(user, "<span class='notice'>No fingerprints found on [M]</span>")
 		flick("forensic0",src)
 		return 0
 	else
-		if (src.amount < 1)
+		if(src.amount < 1)
 			to_chat(user, text("<span class='notice'>Fingerprints scanned on [M]. Need more cards to print.</span>"))
 		else
 			src.amount--
@@ -52,7 +52,7 @@
 
 			to_chat(user, "<span class='notice'>Done printing.</span>")
 		to_chat(user, "<span class='notice'>[M]'s Fingerprints: [md5(M.dna.uni_identity)]</span>")
-	if ( !M.blood_DNA || !M.blood_DNA.len )
+	if( !M.blood_DNA || !M.blood_DNA.len )
 		to_chat(user, "<span class='notice'>No blood found on [M]</span>")
 		if(M.blood_DNA)
 			M.blood_DNA = null
@@ -78,7 +78,7 @@
 	add_fingerprint(user)
 
 	//Special case for blood splatters, runes and gibs.
-	if (istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
+	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
 		var/obj/effect/OE = target
 		if(!isnull(target.blood_DNA))
 			for(var/blood in OE.blood_DNA)
@@ -87,7 +87,7 @@
 		return
 
 	//General
-	if ((!target.fingerprints || !target.fingerprints.len) && !target.suit_fibers && !target.blood_DNA)
+	if((!target.fingerprints || !target.fingerprints.len) && !target.suit_fibers && !target.blood_DNA)
 		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 		"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target]!</span>",\
 		"You hear a faint hum of electrical equipment.")
@@ -124,7 +124,7 @@
 		flick("forensic2",src)
 
 	//Blood
-	if (target.blood_DNA)
+	if(target.blood_DNA)
 		to_chat(user, "<span class='notice'>Blood found on [target]. Analysing...</span>")
 		spawn(15)
 			for(var/blood in target.blood_DNA)

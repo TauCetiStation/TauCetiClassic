@@ -139,8 +139,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.mutations.Remove(CLUMSY)
 
@@ -154,7 +154,7 @@
 		"right hand" = SLOT_R_HAND,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
+	if(!where)
 		to_chat(mob, "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.")
 	else
 		var/obj/item/weapon/paper/talisman/T2 = new(mob)
@@ -166,7 +166,7 @@
 
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, word)
-	if (!word)
+	if(!word)
 		if(length(startwords) > 0)
 			word = pick_n_take(startwords)
 	return ..(cult_mob, word)
@@ -175,7 +175,7 @@
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!cultwords["travel"])
 		runerandom()
-	if (!word)
+	if(!word)
 		word = pick(cultwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
 	to_chat(cult_mob, "<span class = 'cult'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
@@ -183,7 +183,7 @@
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
-	if (!istype(cult_mind))
+	if(!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
@@ -194,9 +194,9 @@
 
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
-	if (!..(cult_mind))
+	if(!..(cult_mind))
 		return
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
 
 
@@ -234,9 +234,9 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat!=2)
+		if(cult_mind.current && cult_mind.current.stat!=2)
 			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_typecache(A, centcom_areas_typecache))
+			if( is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

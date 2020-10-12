@@ -131,7 +131,7 @@
 		return null
 
 /atom/proc/check_eye(user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+	if(istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
 
@@ -157,7 +157,7 @@
 */
 
 /atom/proc/can_mob_interact(mob/user)
-	if (ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
@@ -303,16 +303,16 @@
 /atom/proc/add_hiddenprint(mob/living/M)
 	if(!M || !M.key)
 		return
-	if (ishuman(M))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if (!istype(H.dna, /datum/dna))
+		if(!istype(H.dna, /datum/dna))
 			return 0
-		if (H.gloves)
+		if(H.gloves)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 0
-		if (!( src.fingerprints ))
+		if(!( src.fingerprints ))
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
@@ -326,7 +326,7 @@
 /atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
-	if (ishuman(M))
+	if(ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
@@ -335,7 +335,7 @@
 		add_fibers(M)
 
 		//He has no prints!
-		if (FINGERPRINTS in M.mutations)
+		if(FINGERPRINTS in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
@@ -348,14 +348,14 @@
 			fingerprintslast = H.key
 			return 0
 
-		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
+		if(!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
 				H.dna.real_name = H.real_name
 		H.check_dna()
 
 		//Now, deal with gloves.
-		if (H.gloves && H.gloves != src)
+		if(H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
@@ -457,13 +457,13 @@
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
-	if (!istype(M))
+	if(!istype(M))
 		return 0
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
 		return 0
 
-	if (!istype(M.dna, /datum/dna))
+	if(!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
@@ -580,7 +580,7 @@
 				var/mob/living/carbon/human/H = C
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
-			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+			if(C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
 				step(C, olddir)
 			else
 				C.inertia_dir = 0

@@ -32,7 +32,7 @@
 	set category = "Object"
 	set src in usr
 
-	if (t)
+	if(t)
 		src.name = text("data disk- '[]'", t)
 	else
 		src.name = "data disk"
@@ -362,7 +362,7 @@
 							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
 
 				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
-				if (newc)
+				if(newc)
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state
 					src.desc = newc.desc

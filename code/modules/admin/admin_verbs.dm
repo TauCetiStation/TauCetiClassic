@@ -486,7 +486,7 @@ var/list/admin_verbs_hideable = list(
 /client/proc/secrets()
 	set name = "Secrets"
 	set category = "Admin"
-	if (holder)
+	if(holder)
 		holder.Secrets()
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -641,9 +641,9 @@ var/list/admin_verbs_hideable = list(
 		var/list/datum/disease2/effect/possible_effects = list()
 		for(var/e in subtypesof(/datum/disease2/effect))
 			var/datum/disease2/effect/f = new e
-			if (f.level > 4) //we don't want such strong effects
+			if(f.level > 4) //we don't want such strong effects
 				continue
-			if (f.level < 1)
+			if(f.level < 1)
 				continue
 			possible_effects += f
 
@@ -674,7 +674,7 @@ var/list/admin_verbs_hideable = list(
 		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
 	else
 		D.makerandom(greater)
-		if (!greater)
+		if(!greater)
 			D.infectionchance = 1
 
 	D.infectionchance = input("How virulent is this disease? (1-100)", "Give Disease", D.infectionchance) as num
@@ -817,12 +817,12 @@ var/list/admin_verbs_hideable = list(
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
-	if (new_tone)
+	if(new_tone)
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
+	if(new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
@@ -856,13 +856,13 @@ var/list/admin_verbs_hideable = list(
 	if(holder)
 		var/list/jobs = list()
 		for (var/datum/job/J in SSjob.occupations)
-			if (J.current_positions >= J.total_positions && J.total_positions != -1)
+			if(J.current_positions >= J.total_positions && J.total_positions != -1)
 				jobs += J.title
-		if (!jobs.len)
+		if(!jobs.len)
 			to_chat(usr, "There are no fully staffed jobs.")
 			return
 		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
-		if (job)
+		if(job)
 			SSjob.FreeRole(job)
 	return
 
@@ -905,7 +905,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_ATTACKLOGS
-	if (prefs.chat_toggles & CHAT_ATTACKLOGS)
+	if(prefs.chat_toggles & CHAT_ATTACKLOGS)
 		to_chat(usr, "You now will get attack log messages")
 	else
 		to_chat(usr, "You now won't get attack log messages")
@@ -915,7 +915,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
-	if (prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
+	if(prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
 		to_chat(usr, "You now will get attack log messages for mobs that don't have a client")
 	else
 		to_chat(usr, "You now won't get attack log messages for mobs that don't have a client")
@@ -953,7 +953,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_DEBUGLOGS
-	if (prefs.chat_toggles & CHAT_DEBUGLOGS)
+	if(prefs.chat_toggles & CHAT_DEBUGLOGS)
 		to_chat(usr, "You now will get debug log messages")
 	else
 		to_chat(usr, "You now won't get debug log messages")
@@ -1092,23 +1092,23 @@ var/list/admin_verbs_hideable = list(
 	var/list/Lines = file2list("maps/event_map_list.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
-		if (!t)
+		if(!t)
 			continue
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (t[1] == "#")
+		else if(t[1] == "#")
 			continue
 		var/pos = findtext(t, " ")
 		var/name = null
-		if (pos)
+		if(pos)
 			// No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
 		//	value = copytext(t, pos + 1)
 		else
 			// No, don't do lowertext here, that breaks paths on linux
 			name = t
-		if (!name)
+		if(!name)
 			continue
 
 		AllowedMaps.Add(name)

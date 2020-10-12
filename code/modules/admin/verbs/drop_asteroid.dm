@@ -88,13 +88,13 @@
 			if(xy<=corner_rad)
 				map += SPACETURF
 			//center
-			else if (i < size_x/2+side_x && i > size_x/2-side_x && j < size_y/2+side_y && j > size_y/2-side_y)
+			else if(i < size_x/2+side_x && i > size_x/2-side_x && j < size_y/2+side_y && j > size_y/2-side_y)
 				if(prob(10))
 					map += ARTTURF
 				else
 					map += prob(80) ? FLOORTURF : MOBTURF
 			//sides
-			else if (min(size_x - i, i) <= side_x || min(size_y - j, j) <= side_y)
+			else if(min(size_x - i, i) <= side_x || min(size_y - j, j) <= side_y)
 				map += prob(40) ? FLOORTURF : CAVETURF
 			else
 				if(prob(5))

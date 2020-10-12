@@ -29,7 +29,7 @@
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
-	if (!BB)
+	if(!BB)
 		BB = new projectile_type(src)
 	return
 
@@ -82,19 +82,19 @@
 	update_icon()
 
 /obj/item/ammo_box/proc/get_round(keep = 0)
-	if (!stored_ammo.len)
+	if(!stored_ammo.len)
 		return null
 	else
 		var/b = stored_ammo[stored_ammo.len]
 		stored_ammo -= b
-		if (keep)
+		if(keep)
 			stored_ammo.Insert(1,b)
 		return b
 
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r)
 	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
+	if(rb)
+		if(stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
 			return 1

@@ -26,14 +26,14 @@
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
-	if (global.config.load_testmap)
+	if(global.config.load_testmap)
 		filename = "maps/testmap.json"
-	if (default_to_box)
+	if(default_to_box)
 		return config
-	if (!config.LoadConfig(filename, error_if_missing))
+	if(!config.LoadConfig(filename, error_if_missing))
 		qdel(config)
 		config = new /datum/map_config  // Fall back to Box
-	if (delete_after)
+	if(delete_after)
 		fdel(filename)
 	return config
 
@@ -68,14 +68,14 @@
 
 	map_file = json["map_file"]
 	// "map_file": "BoxStation.dmm"
-	if (istext(map_file))
-		if (!fexists("maps/[map_path]/[map_file]"))
+	if(istext(map_file))
+		if(!fexists("maps/[map_path]/[map_file]"))
 			error("Map file ([map_path]/[map_file]) does not exist!")
 			return
 	// "map_file": ["Lower.dmm", "Upper.dmm"]
-	else if (islist(map_file))
+	else if(islist(map_file))
 		for (var/file in map_file)
-			if (!fexists("maps/[map_path]/[file]"))
+			if(!fexists("maps/[map_path]/[file]"))
 				error("Map file ([map_path]/[file]) does not exist!")
 				return
 	else
@@ -84,45 +84,45 @@
 
 	traits = json["traits"]
 	// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
-	if (islist(traits))
+	if(islist(traits))
 		// "Station" is set by default, but it's assumed if you're setting
 		// traits you want to customize which level is cross-linked
 		for (var/level in traits)
-			if (!(ZTRAIT_STATION in level))
+			if(!(ZTRAIT_STATION in level))
 				level[ZTRAIT_STATION] = TRUE
 	// "traits": null or absent -> default
-	else if (!isnull(traits))
+	else if(!isnull(traits))
 		error("map_config traits is not a list!")
 		return
 
 	var/temp = json["space_ruin_levels"]
-	if (isnum(temp))
+	if(isnum(temp))
 		space_ruin_levels = temp
-	else if (!isnull(temp))
+	else if(!isnull(temp))
 		error("map_config space_ruin_levels is not a number!")
 		return
 
 	temp = json["space_empty_levels"]
-	if (isnum(temp))
+	if(isnum(temp))
 		space_empty_levels = temp
-	else if (!isnull(temp))
+	else if(!isnull(temp))
 		error("map_config space_empty_levels is not a number!")
 		return
 
 	temp = json["load_junkyard"]
-	if (isnum(temp))
+	if(isnum(temp))
 		load_junkyard = temp
-	else if (!isnull(temp))
+	else if(!isnull(temp))
 		error("map_config load_junkyard is not a number!")
 		return
 
-	if ("minetype" in json)
+	if("minetype" in json)
 		minetype = json["minetype"]
 
-	if ("station_name" in json)
+	if("station_name" in json)
 		station_name = json["station_name"]
 
-	if ("system_name" in json)
+	if("system_name" in json)
 		system_name = json["system_name"]
 
 	if("station_image" in json)
@@ -133,7 +133,7 @@
 #undef CHECK_EXISTS
 
 /datum/map_config/proc/GetFullMapPaths()
-	if (istext(map_file))
+	if(istext(map_file))
 		return list("maps/[map_path]/[map_file]")
 	. = list()
 	for (var/file in map_file)

@@ -137,7 +137,7 @@
 
 /obj/machinery/recharge_station/open_machine()
 	if(occupant)
-		if (occupant.client)
+		if(occupant.client)
 			occupant.client.eye = occupant
 			occupant.client.perspective = MOB_PERSPECTIVE
 		occupant.forceMove(loc)
@@ -193,7 +193,7 @@
 
 /obj/machinery/recharge_station/proc/process_occupant()
 	if(src.occupant)
-		if (istype(occupant, /mob/living/silicon/robot))
+		if(istype(occupant, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = occupant
 			if(R.module)
 				R.module.respawn_consumable(R)

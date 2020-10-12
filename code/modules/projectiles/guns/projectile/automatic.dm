@@ -311,7 +311,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user)
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null

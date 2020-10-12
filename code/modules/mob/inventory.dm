@@ -12,7 +12,7 @@
 			if(slot in C.check_obscured_slots())
 				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 				return
-		if (istype(W, /obj/item/clothing))
+		if(istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
 				to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
@@ -90,10 +90,10 @@ var/list/slot_equipment_priority = list(
 		obscured = check_obscured_slots()
 
 	for(var/slot in slot_equipment_priority)
-		if (slot in obscured)
+		if(slot in obscured)
 			continue
 
-		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
+		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
 			return TRUE
 
 	return FALSE
@@ -279,16 +279,16 @@ var/list/slot_equipment_priority = list(
 	the search through all the slots, without having to duplicate the rest of the item dropping.
 */
 /mob/proc/u_equip(obj/W)
-	if (W == r_hand)
+	if(W == r_hand)
 		r_hand = null
 		update_inv_r_hand()
-	else if (W == l_hand)
+	else if(W == l_hand)
 		l_hand = null
 		update_inv_l_hand()
-	else if (W == back)
+	else if(W == back)
 		back = null
 		update_inv_back()
-	else if (W == wear_mask)
+	else if(W == wear_mask)
 		wear_mask = null
 		update_inv_wear_mask()
 	return
@@ -312,7 +312,7 @@ var/list/slot_equipment_priority = list(
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)
-	if (src.client)
+	if(src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)

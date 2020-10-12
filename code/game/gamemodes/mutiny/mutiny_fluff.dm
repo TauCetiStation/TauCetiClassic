@@ -10,7 +10,7 @@
 
 /datum/mutiny_fluff/proc/announce_directives()
 	for (var/obj/machinery/faxmachine/fax in machines)
-		if (fax.department == "Captain's Office")
+		if(fax.department == "Captain's Office")
 			var/obj/item/weapon/paper/directive_x = new(fax.loc)
 			directive_x.name = "emergency action message"
 			directive_x.info = get_fax_body()
@@ -97,9 +97,9 @@ Both keys are required to activate the <b>Emergency Authentication Device (EAD)<
 	return "<font color='#FFA500'><b>[text]</b></font>"
 
 /datum/mutiny_fluff/proc/their(datum/mind/head)
-	if (head.current.gender == MALE)
+	if(head.current.gender == MALE)
 		return "his"
-	else if (head.current.gender == FEMALE)
+	else if(head.current.gender == FEMALE)
 		return "her"
 
 	return "their"

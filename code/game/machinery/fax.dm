@@ -120,7 +120,7 @@ var/list/alldepartments = list("Central Command")
 				tofax = null
 
 	if(href_list["scan"])
-		if (scan)
+		if(scan)
 			if(ishuman(usr))
 				scan.loc = usr.loc
 				if(!usr.get_active_hand())
@@ -131,7 +131,7 @@ var/list/alldepartments = list("Central Command")
 				scan = null
 		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
+			if(istype(I, /obj/item/weapon/card/id))
 				usr.drop_item()
 				I.loc = src
 				scan = I
@@ -146,8 +146,8 @@ var/list/alldepartments = list("Central Command")
 		if(!dptdest) dptdest = lastdpt
 
 	if(href_list["auth"])
-		if ( (!( authenticated ) && (scan)) )
-			if (check_access(scan))
+		if( (!( authenticated ) && (scan)) )
+			if(check_access(scan))
 				authenticated = 1
 
 	if(href_list["logout"])

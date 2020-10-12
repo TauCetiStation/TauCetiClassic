@@ -6,7 +6,7 @@
 		if(O.friendc)
 			O.friendc = 0
 	if(!isturf(loc))
-		if (client)
+		if(client)
 			client.eye = loc
 			client.perspective = EYE_PERSPECTIVE
 	src.view_core()

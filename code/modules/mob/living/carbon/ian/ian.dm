@@ -299,7 +299,7 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if (bodytemperature < 283.222)
+	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally
 
@@ -350,22 +350,22 @@
 		if(1)
 			gib()
 		if(2)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				updatehealth()
 		if(3)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(30)
 				updatehealth()
-			if (prob(50))
+			if(prob(50))
 				Paralyse(10)
 
 /mob/living/carbon/ian/blob_act()
-	if (stat != DEAD)
+	if(stat != DEAD)
 		adjustFireLoss(60)
 		updatehealth()
-		if (prob(50))
+		if(prob(50))
 			Paralyse(10)
 	else
 		gib()

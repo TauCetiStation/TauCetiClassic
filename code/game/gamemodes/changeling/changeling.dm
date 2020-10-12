@@ -85,7 +85,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	var/datum/objective/absorb/absorb_objective = new
@@ -106,12 +106,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	switch(rand(1,100))
 		if(1 to 80)
-			if (!(locate(/datum/objective/survive) in changeling.objectives))
+			if(!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
 		else
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
+			if(!(locate(/datum/objective/escape) in changeling.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = changeling
 				changeling.objectives += escape_objective
@@ -120,22 +120,22 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", changeling.current)
 	changeling.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	if (you_are)
+	if(you_are)
 		to_chat(changeling.current, "<B><span class='warning'>You are a changeling!</span></B>")
 	to_chat(changeling.current, "<b><span class='warning'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span></b>")
 
 	if(config.objectives_disabled)
 		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		to_chat(changeling.current, "<B>You must complete the following tasks:</B>")
 
-	if (changeling.current.mind)
-		if (changeling.current.mind.assigned_role == "Clown")
+	if(changeling.current.mind)
+		if(changeling.current.mind.assigned_role == "Clown")
 			to_chat(changeling.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			changeling.current.mutations.Remove(CLUMSY)
 
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in changeling.objectives)
 			to_chat(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
@@ -151,11 +151,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			continue
 		changelings_alive++
 
-	if (changelings_alive)
+	if(changelings_alive)
 		changelingdeath = 0
 		return ..()
 	else
-		if (!changelingdeath)
+		if(!changelingdeath)
 			changelingdeathtime = world.time
 			changelingdeath = 1
 		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)

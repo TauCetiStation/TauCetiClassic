@@ -372,7 +372,7 @@ log transactions
 					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 				else
 					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
-			if ("print_transaction")
+			if("print_transaction")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)
 					R.name = "Transaction logs: [authenticated_account.owner_name]"
@@ -418,7 +418,7 @@ log transactions
 						to_chat(usr, "<span class='warning'>[bicon(src)] The ATM card reader rejected your ID because this machine has been sabotaged!</span>")
 					else
 						var/obj/item/I = usr.get_active_hand()
-						if (istype(I, /obj/item/weapon/card/id))
+						if(istype(I, /obj/item/weapon/card/id))
 							usr.drop_item()
 							I.loc = src
 							held_card = I
@@ -478,7 +478,7 @@ log transactions
 	E.owner_name = authenticated_account.owner_name
 
 /obj/machinery/atm/proc/print_money_stock(sum)
-	if (money_stock < sum)
+	if(money_stock < sum)
 		if(money_stock)
 			sum = money_stock
 			money_stock = 0

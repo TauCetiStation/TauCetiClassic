@@ -139,7 +139,7 @@
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
-	if (!pda)
+	if(!pda)
 		pda = new/obj/item/device/pda/silicon/robot(src)
 	pda.set_name_and_job(custom_name,"[modtype] [braintype]")
 
@@ -349,7 +349,7 @@
 	setup_PDA()
 
 	//We also need to update name of internal camera.
-	if (camera)
+	if(camera)
 		camera.c_tag = changed_name
 
 /mob/living/silicon/robot/proc/Namepick()
@@ -358,7 +358,7 @@
 		return 0
 	var/newname
 	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
-	if (newname)
+	if(newname)
 		custom_name = newname
 
 		updatename()
@@ -369,12 +369,12 @@
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/alarmlist = alarms[cat]
-		if (alarmlist.len)
+		if(alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
 				dat += "<NOBR>"
 				dat += text("-- [area_name]")
-				if (alarm.sources.len > 1)
+				if(alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
 				dat += "</NOBR><BR>\n"
 		else
@@ -392,7 +392,7 @@
 		to_chat(src, "<span class='userdanger'>Your self-diagnosis component isn't functioning.</span>")
 		return
 	var/datum/robot_component/CO = get_component("diagnosis unit")
-	if (!cell_use_power(CO.active_usage))
+	if(!cell_use_power(CO.active_usage))
 		to_chat(src, "<span class='userdanger'>Low Power.</span>")
 
 	var/dat = ""
@@ -405,7 +405,7 @@
 	popup.open()
 
 /mob/living/silicon/robot/proc/toggle_lights()
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
@@ -438,7 +438,7 @@
 		to_chat(src, "<span class='warning'>You enable [C.name].</span>")
 
 /mob/living/silicon/robot/blob_act()
-	if (stat != DEAD)
+	if(stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -488,17 +488,17 @@
 
 	switch(severity)
 		if(1.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 				gib()
 				return
 		if(2.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()
@@ -513,7 +513,7 @@
 		spark_system.start()
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
@@ -521,14 +521,14 @@
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
 
-	if (!has_alarm)
+	if(!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-//		if (viewalerts) robot_alerts()
+//		if(viewalerts) robot_alerts()
 	return has_alarm
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if(istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
 	if(opened) // Are they trying to insert something?
@@ -550,17 +550,17 @@
 
 				return
 
-	if (iswelder(W))
-		if (src == user)
+	if(iswelder(W))
+		if(src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
 
-		if (!getBruteLoss())
+		if(!getBruteLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.use(0))
+		if(WT.use(0))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
@@ -570,7 +570,7 @@
 			return
 
 	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
-		if (!getFireLoss())
+		if(!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -581,7 +581,7 @@
 		updatehealth()
 		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (iscrowbar(W))	// crowbar means open or close the cover
+	else if(iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
@@ -641,7 +641,7 @@
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
 			to_chat(user, "Close the panel first.")
@@ -662,8 +662,8 @@
 			C.electronics_damage = 0
 			diag_hud_set_borgcell()
 
-	else if (iswirecutter(W) || ismultitool(W))
-		if (!wires.interact(user))
+	else if(iswirecutter(W) || ismultitool(W))
+		if(!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
 	else if(isscrewdriver(W) && opened && !cell)	// haxing
@@ -685,7 +685,7 @@
 		else
 			to_chat(user, "Unable to locate a radio.")
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
@@ -888,7 +888,7 @@
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
 	updateicon()
-	if (targeted_by && target_locked)
+	if(targeted_by && target_locked)
 		add_overlay(target_locked)
 
 /mob/living/silicon/robot/proc/installed_modules()
@@ -911,13 +911,13 @@
 
 
 	for (var/obj in module.modules)
-		if (!obj)
+		if(!obj)
 			dat += text("<B>Resource depleted</B><BR>")
 		else if(activated(obj))
 			dat += text("[obj]: <B>Activated</B><BR>")
 		else
 			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
-	if (emagged)
+	if(emagged)
 		if(activated(module.emag))
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
@@ -938,18 +938,18 @@
 	if(usr != src)
 		return
 
-	if (href_list["showalerts"])
+	if(href_list["showalerts"])
 		show_alerts()
 		return
 
-	if (href_list["mod"])
+	if(href_list["mod"])
 		var/obj/item/O = locate(href_list["mod"])
-		if (istype(O) && (O.loc == src))
+		if(istype(O) && (O.loc == src))
 			O.attack_self(src)
 
-	if (href_list["act"])
+	if(href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
-		if (!istype(O) || !(O in src.module.modules))
+		if(!istype(O) || !(O in src.module.modules))
 			return
 
 		if(!((O in src.module.modules) || (O == src.module.emag)))
@@ -983,7 +983,7 @@
 			to_chat(src, "You need to disable a module first!")
 		installed_modules()
 
-	if (href_list["deact"])
+	if(href_list["deact"])
 		var/obj/item/O = locate(href_list["deact"])
 		if(activated(O))
 			if(module_state_1 == O)
@@ -1001,23 +1001,23 @@
 			to_chat(src, "Module isn't activated")
 		installed_modules()
 
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+	if(href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
 		switch(lawcheck[L+1])
-			if ("Yes") lawcheck[L+1] = "No"
-			if ("No") lawcheck[L+1] = "Yes"
+			if("Yes") lawcheck[L+1] = "No"
+			if("No") lawcheck[L+1] = "Yes"
 //		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
 		checklaws()
 
-	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+	if(href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawi"])
 		switch(ioncheck[L])
-			if ("Yes") ioncheck[L] = "No"
-			if ("No") ioncheck[L] = "Yes"
+			if("Yes") ioncheck[L] = "No"
+			if("No") ioncheck[L] = "Yes"
 //		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
 		checklaws()
 
-	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+	if(href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 	return
 
@@ -1034,7 +1034,7 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
-				if (istype(tile, /turf/simulated))
+				if(istype(tile, /turf/simulated))
 					var/turf/simulated/S = tile
 					S.dirt = 0
 				for(var/A in tile)
@@ -1070,7 +1070,7 @@
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if (src.connected_ai)
+	if(src.connected_ai)
 		src.connected_ai = null
 	lawupdate = 0
 	lockcharge = 0

@@ -11,9 +11,9 @@
 
 /datum/progressbar/New(mob/User, goal_number, atom/target, my_icon_state="prog_bar", insert_under=FALSE)
 	. = ..()
-	if (!istype(target))
+	if(!istype(target))
 		EXCEPTION("Invalid target given")
-	if (goal_number)
+	if(goal_number)
 		goal = goal_number
 	bar_icon_state = my_icon_state
 
@@ -54,18 +54,18 @@
 
 /datum/progressbar/proc/update(progress)
 	//world << "Update [progress] - [goal] - [(progress / goal)] - [((progress / goal) * 100)] - [round(((progress / goal) * 100), 5)]"
-	if (!user || !user.client)
+	if(!user || !user.client)
 		shown = 0
 		return
-	if (user.client != client)
-		if (client)
+	if(user.client != client)
+		if(client)
 			client.images -= bar
-		if (user.client)
+		if(user.client)
 			user.client.images += bar
 
 	progress = clamp(progress, 0, goal)
 	bar.icon_state = "[bar_icon_state]_[round(((progress / goal) * 100), 5)]"
-	if (!shown)
+	if(!shown)
 		user.client.images += bar
 		shown = 1
 
@@ -80,7 +80,7 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
-	if (client)
+	if(client)
 		client.images -= bar
 
 	QDEL_NULL(bar)

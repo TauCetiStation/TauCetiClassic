@@ -202,7 +202,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(5))
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
-			if (C.stat != DEAD)
+			if(C.stat != DEAD)
 				if(istype(loc, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = loc
 					if(H.species.flags[NO_BREATHE])
@@ -481,7 +481,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
-					if (user.l_hand == src)
+					if(user.l_hand == src)
 						user.apply_damage(2, BURN, BP_L_ARM)
 					else
 						user.apply_damage(2, BURN, BP_R_ARM)

@@ -51,7 +51,7 @@
 
 /obj/machinery/door_timer/atom_init_late()
 	for(var/obj/machinery/door/window/brigdoor/M in brigdoor_list)
-		if (M.id == id)
+		if(M.id == id)
 			targets += M
 
 	for(var/obj/machinery/flasher/F in flasher_list)
@@ -81,7 +81,7 @@
 			src.releasetime = 0
 
 		if(world.timeofday > (src.releasetime - 300)) //30 sec notification before release
-			if (!flag30sec)
+			if(!flag30sec)
 				flag30sec = 1
 				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
 
@@ -116,7 +116,7 @@
 
 	// Set releasetime
 	releasetime = world.timeofday + timetoset
-	if (activator)
+	if(activator)
 		timer_activator = activator
 
 	return
@@ -211,7 +211,7 @@
 			"}
 
 			// Start/Stop timer
-			if (src.timing)
+			if(src.timing)
 				dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 			else
 				dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"

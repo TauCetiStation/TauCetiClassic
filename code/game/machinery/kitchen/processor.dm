@@ -33,10 +33,10 @@
 	var/time = 40
 
 /datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
-	if (output && loc && processor)
+	if(output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
 			new output(loc)
-	if (what)
+	if(what)
 		qdel(what)
 
 	/* objs */
@@ -90,7 +90,7 @@
 
 /datum/food_processor_process/mob/monkey/process_food(loc, what, processor)
 	var/mob/living/carbon/monkey/O = what
-	if (O.client) //grief-proof
+	if(O.client) //grief-proof
 		O.loc = loc
 		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
 				"You jump out from the processor", \
@@ -121,7 +121,7 @@
 /obj/machinery/processor/proc/select_recipe(X)
 	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
-		if (!istype(X, P.input))
+		if(!istype(X, P.input))
 			continue
 		return P
 	return 0
@@ -148,12 +148,12 @@
 		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
 	var/what = O
-	if (istype(O, /obj/item/weapon/grab))
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
 
 	var/datum/food_processor_process/P = select_recipe(what)
-	if (!P)
+	if(!P)
 		to_chat(user, "<span class='warning'>That probably won't blend.</span>")
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
@@ -182,14 +182,14 @@
 	var/total_time = 0
 	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
-		if (!P)
+		if(!P)
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
 			continue
 		total_time += P.time
 	sleep(total_time / rating_speed)
 	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
-		if (!P)
+		if(!P)
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
 		P.process_food(loc, O, src)

@@ -128,7 +128,7 @@
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
-	else if (!active)
+	else if(!active)
 		icon_state = "server-off"
 	else
 		icon_state = "server-on"

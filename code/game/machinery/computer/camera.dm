@@ -22,9 +22,9 @@
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
+	if((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
 		return null
-	if (!current || !current.can_use()) //camera doesn't work
+	if(!current || !current.can_use()) //camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
 	if(isrobot(user) && !viewing.Find(user))
@@ -65,7 +65,7 @@
 		ui.load_cached_data(camera_cache)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 600)
 
 		// adding a template with the key "mapContent" enables the map ui functionality
@@ -100,10 +100,10 @@
 	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if (!network)
+	if(!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
-	if (!istype(network, /list))
+	if(!istype(network, /list))
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 

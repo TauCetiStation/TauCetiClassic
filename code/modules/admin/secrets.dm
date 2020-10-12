@@ -152,7 +152,7 @@
 /*					for(var/obj/machinery/vehicle/pod/O in world)
 				for(var/mob/M in src)
 					M.loc = src.loc
-					if (M.client)
+					if(M.client)
 						M.client.perspective = MOB_PERSPECTIVE
 						M.client.eye = M
 				qdel(O)
@@ -518,7 +518,7 @@
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)
 		log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
-		if (ok)
+		if(ok)
 			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
 
 
@@ -622,7 +622,7 @@
 		if("showgm")
 			if(!SSticker)
 				alert("The game hasn't started yet!")
-			else if (SSticker.mode)
+			else if(SSticker.mode)
 				alert("The game mode is [SSticker.mode.name]")
 			else alert("For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
@@ -694,9 +694,9 @@
 		else
 			to_chat(world, "oof, this is ["secretsadmin"] not worked")
 
-	if (usr)
+	if(usr)
 		log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
-		if (ok)
+		if(ok)
 			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
 
 
@@ -720,13 +720,13 @@
 		// Change all maintenance doors to brig access only
 		if("maint_access_brig")
 			for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)
-				if (access_maint_tunnels in M.req_access)
+				if(access_maint_tunnels in M.req_access)
 					M.req_access = list(access_brig)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		// Change all maintenance doors to engie/brig access only
 		if("maint_access_engiebrig")
 			for(var/obj/machinery/door/airlock/maintenance/M in airlock_list)
-				if (access_maint_tunnels in M.req_access)
+				if(access_maint_tunnels in M.req_access)
 					M.req_access = list()
 					M.req_one_access = list(access_brig,access_engine)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")

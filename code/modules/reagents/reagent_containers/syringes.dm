@@ -57,7 +57,7 @@
 		to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 		return
 
-	if (user.a_intent == INTENT_HARM && ismob(target))
+	if(user.a_intent == INTENT_HARM && ismob(target))
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
 		syringestab(target, user)
@@ -98,7 +98,7 @@
 					else
 						B = T.take_blood(src,amount)
 
-					if (B)
+					if(B)
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
 						src.on_reagent_change()
@@ -118,7 +118,7 @@
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
 				to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
-			if (reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 
@@ -174,7 +174,7 @@
 			else
 				trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
-			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
+			if(reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
 
@@ -190,12 +190,12 @@
 			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
 			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
-			if (!BP)
+			if(!BP)
 				return
 
 			var/hit_area = BP.name
 
-			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+			if(target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
 				qdel(src)
 				return
@@ -227,9 +227,9 @@
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
-			if (SYRINGE_DRAW)
+			if(SYRINGE_DRAW)
 				injoverlay = "draw"
-			if (SYRINGE_INJECT)
+			if(SYRINGE_INJECT)
 				injoverlay = "inject"
 		add_overlay(injoverlay)
 	icon_state = "[rounded_vol]"
@@ -249,7 +249,7 @@
 		var/target_zone = user.zone_sel.selecting
 		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
-		if (!BP)
+		if(!BP)
 			return
 		if(crit_fail)
 			BP.germ_level += germ_level / 7
@@ -317,7 +317,7 @@
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
 				to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
-			if (reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 
@@ -344,7 +344,7 @@
 			spawn(5)
 				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 				to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
-				if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
+				if(reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
 	return
@@ -355,9 +355,9 @@
 	if(ismob(loc))
 		var/mode_t
 		switch(mode)
-			if (SYRINGE_DRAW)
+			if(SYRINGE_DRAW)
 				mode_t = "d"
-			if (SYRINGE_INJECT)
+			if(SYRINGE_INJECT)
 				mode_t = "i"
 		icon_state = "[mode_t][rounded_vol]"
 	else

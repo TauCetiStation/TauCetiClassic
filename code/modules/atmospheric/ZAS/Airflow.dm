@@ -159,9 +159,9 @@ Contains helper procs for airflow, handled in /connection_group.
 			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
 		if(od)
 			density = TRUE
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
+		if((!( src.airflow_dest ) || src.loc == src.airflow_dest))
 			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+		if((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			break
 		if(!istype(loc, /turf))
 			break
@@ -217,9 +217,9 @@ Contains helper procs for airflow, handled in /connection_group.
 				sleep(1 * SSAIR_TICK_MULTIPLIER)
 		else
 			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
+		if((!( src.airflow_dest ) || src.loc == src.airflow_dest))
 			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+		if((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			return
 		if(!istype(loc, /turf))
 			return

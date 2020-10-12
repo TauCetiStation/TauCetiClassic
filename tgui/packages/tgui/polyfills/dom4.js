@@ -19,7 +19,7 @@
   }
 
   function enoughArguments(length, name) {
-    if (!length) throw new Error(
+    if(!length) throw new Error(
       'Failed to construct ' +
         name +
       ': 1 argument required, but only 0 present.'
@@ -27,7 +27,7 @@
   }
 
   function mutationMacro(nodes) {
-    if (nodes.length === 1) {
+    if(nodes.length === 1) {
       return textNodeIfPrimitive(nodes[0]);
     }
     for (var
@@ -53,12 +53,12 @@
     document = window.document,
     hOP = Object.prototype.hasOwnProperty,
     defineProperty = Object.defineProperty || function (object, property, descriptor) {
-      if (hOP.call(descriptor, 'value')) {
+      if(hOP.call(descriptor, 'value')) {
         object[property] = descriptor.value;
       } else {
-        if (hOP.call(descriptor, 'get'))
+        if(hOP.call(descriptor, 'get'))
           object.__defineGetter__(property, descriptor.get);
-        if (hOP.call(descriptor, 'set'))
+        if(hOP.call(descriptor, 'set'))
           object.__defineSetter__(property, descriptor.set);
       }
       return object;
@@ -66,7 +66,7 @@
     indexOf = [].indexOf || function indexOf(value){
       var length = this.length;
       while(length--) {
-        if (this[length] === value) {
+        if(this[length] === value) {
           break;
         }
       }
@@ -74,9 +74,9 @@
     },
     // http://www.w3.org/TR/domcore/#domtokenlist
     verifyToken = function (token) {
-      if (!token) {
+      if(!token) {
         throw 'SyntaxError';
-      } else if (spaces.test(token)) {
+      } else if(spaces.test(token)) {
         throw 'InvalidCharacterError';
       }
       return token;
@@ -92,7 +92,7 @@
           className
         ).replace(trim, '')
       ;
-      if (value.length) {
+      if(value.length) {
         properties.push.apply(
           this,
           value.split(spaces)
@@ -112,8 +112,8 @@
     SPACE = '\x20',
     CLASS_LIST = 'classList',
     toggle = function toggle(token, force) {
-      if (this.contains(token)) {
-        if (!force) {
+      if(this.contains(token)) {
+        if(!force) {
           // force is not true (either false or omitted)
           this.remove(token);
         }
@@ -164,7 +164,7 @@
       'prepend', function prepend() {
         var firstChild = this.firstChild,
             node = mutationMacro(arguments);
-        if (firstChild) {
+        if(firstChild) {
           this.insertBefore(node, firstChild);
         } else {
           this.appendChild(node);
@@ -175,7 +175,7 @@
       },
       'before', function before() {
         var parentNode = this.parentNode;
-        if (parentNode) {
+        if(parentNode) {
           parentNode.insertBefore(
             mutationMacro(arguments), this
           );
@@ -185,8 +185,8 @@
         var parentNode = this.parentNode,
             nextSibling = this.nextSibling,
             node = mutationMacro(arguments);
-        if (parentNode) {
-          if (nextSibling) {
+        if(parentNode) {
+          if(nextSibling) {
             parentNode.insertBefore(node, nextSibling);
           } else {
             parentNode.appendChild(node);
@@ -196,13 +196,13 @@
       // https://dom.spec.whatwg.org/#dom-element-toggleattribute
       'toggleAttribute', function toggleAttribute(name, force) {
         var had = this.hasAttribute(name);
-        if (1 < arguments.length) {
-          if (had && !force)
+        if(1 < arguments.length) {
+          if(had && !force)
             this.removeAttribute(name);
-          else if (force && !had)
+          else if(force && !had)
             this.setAttribute(name, "");
         }
-        else if (had)
+        else if(had)
           this.removeAttribute(name);
         else
           this.setAttribute(name, "");
@@ -214,7 +214,7 @@
       },
       'replaceWith', function replaceWith() {
         var parentNode = this.parentNode;
-        if (parentNode) {
+        if(parentNode) {
           parentNode.replaceChild(
             mutationMacro(arguments),
             this
@@ -223,7 +223,7 @@
       },
       'remove', function remove() {
         var parentNode = this.parentNode;
-        if (parentNode) {
+        if(parentNode) {
           parentNode.removeChild(this);
         }
       }
@@ -232,13 +232,13 @@
     i = properties.length; i; i -= 2
   ) {
     property = properties[i - 2];
-    if (!(property in ElementPrototype)) {
+    if(!(property in ElementPrototype)) {
       ElementPrototype[property] = properties[i - 1];
     }
     // avoid unnecessary re-patch when the script is included
     // gazillion times without any reason whatsoever
     // https://github.com/WebReflection/dom4/pull/48
-    if (property === 'remove' && !selectRemove._dom4) {
+    if(property === 'remove' && !selectRemove._dom4) {
       // see https://github.com/WebReflection/dom4/issues/19
       (HTMLSelectElement.prototype[property] = function () {
         return 0 < arguments.length ?
@@ -247,18 +247,18 @@
       })._dom4 = true;
     }
     // see https://github.com/WebReflection/dom4/issues/18
-    if (/^(?:before|after|replace|replaceWith|remove)$/.test(property)) {
-      if (CharacterData && !(property in CharacterDataPrototype)) {
+    if(/^(?:before|after|replace|replaceWith|remove)$/.test(property)) {
+      if(CharacterData && !(property in CharacterDataPrototype)) {
         CharacterDataPrototype[property] = properties[i - 1];
       }
-      if (DocumentType && !(property in DocumentTypePrototype)) {
+      if(DocumentType && !(property in DocumentTypePrototype)) {
         DocumentTypePrototype[property] = properties[i - 1];
       }
     }
     // see https://github.com/WebReflection/dom4/pull/26
-    if (/^(?:append|prepend)$/.test(property)) {
-      if (DocumentFragmentPrototype) {
-        if (!(property in DocumentFragmentPrototype)) {
+    if(/^(?:append|prepend)$/.test(property)) {
+      if(DocumentFragmentPrototype) {
+        if(!(property in DocumentFragmentPrototype)) {
           DocumentFragmentPrototype[property] = properties[i - 1];
         }
       } else {
@@ -271,7 +271,7 @@
 
   // most likely an IE9 only issue
   // see https://github.com/WebReflection/dom4/issues/6
-  if (!createElement('a').matches('a')) {
+  if(!createElement('a').matches('a')) {
     ElementPrototype[property] = function(matches){
       return function (selector) {
         return matches.call(
@@ -294,7 +294,7 @@
           properties.push.call(this, property);
         }
       }
-      if (this._isSVG) {
+      if(this._isSVG) {
         this._.setAttribute('class', '' + this);
       } else {
         this._.className = '' + this;
@@ -320,7 +320,7 @@
           properties.splice.call(this, i, 1);
         }
       }
-      if (this._isSVG) {
+      if(this._isSVG) {
         this._.setAttribute('class', '' + this);
       } else {
         this._.className = '' + this;
@@ -332,7 +332,7 @@
     }
   };
 
-  if (SVGElement && !(CLASS_LIST in SVGElement.prototype)) {
+  if(SVGElement && !(CLASS_LIST in SVGElement.prototype)) {
     defineProperty(SVGElement.prototype, CLASS_LIST, classListDescriptor);
   }
 
@@ -340,17 +340,17 @@
   // iOS 5.1 has completely screwed this property
   // classList in ElementPrototype is false
   // but it's actually there as getter
-  if (!(CLASS_LIST in document.documentElement)) {
+  if(!(CLASS_LIST in document.documentElement)) {
     defineProperty(ElementPrototype, CLASS_LIST, classListDescriptor);
   } else {
     // iOS 5.1 and Nokia ASHA do not support multiple add or remove
     // trying to detect and fix that in here
     TemporaryTokenList = createElement('div')[CLASS_LIST];
     TemporaryTokenList.add('a', 'b', 'a');
-    if ('a\x20b' != TemporaryTokenList) {
+    if('a\x20b' != TemporaryTokenList) {
       // no other way to reach original methods in iOS 5.1
       TemporaryPrototype = TemporaryTokenList.constructor.prototype;
-      if (!('add' in TemporaryPrototype)) {
+      if(!('add' in TemporaryPrototype)) {
         // ASHA double fails in here
         TemporaryPrototype = window.TemporaryTokenList.prototype;
       }
@@ -369,7 +369,7 @@
     }
   }
 
-  if (!('contains' in NodePrototype)) {
+  if(!('contains' in NodePrototype)) {
     defineProperty(NodePrototype, 'contains', {
       value: function (el) {
         while (el && el !== this) el = el.parentNode;
@@ -378,7 +378,7 @@
     });
   }
 
-  if (!('head' in document)) {
+  if(!('head' in document)) {
     defineProperty(document, 'head', {
       get: function () {
         return head || (
@@ -402,14 +402,14 @@
       cAF = window[prefixes[i] + 'CancelAnimationFrame'] ||
             window[prefixes[i] + 'CancelRequestAnimationFrame'];
     }
-    if (!cAF) {
+    if(!cAF) {
       // some FF apparently implemented rAF but no cAF
-      if (rAF) {
+      if(rAF) {
         raf = rAF;
         rAF = function (callback) {
           var goOn = true;
           raf(function () {
-            if (goOn) callback.apply(this, arguments);
+            if(goOn) callback.apply(this, arguments);
           });
           return function () {
             goOn = false;
@@ -442,13 +442,13 @@
       function CustomEvent(type, eventInitDict) {
         /*jshint eqnull:true */
         var event = document.createEvent(eventName);
-        if (typeof type != 'string') {
+        if(typeof type != 'string') {
           throw new Error('An event name must be provided');
         }
-        if (eventName == 'Event') {
+        if(eventName == 'Event') {
           event.initCustomEvent = initCustomEvent;
         }
-        if (eventInitDict == null) {
+        if(eventInitDict == null) {
           eventInitDict = defaultInitDict;
         }
         event.initCustomEvent(
@@ -494,7 +494,7 @@
       function Event(type, init) {
         enoughArguments(arguments.length, 'Event');
         var out = document.createEvent('Event');
-        if (!init) init = {};
+        if(!init) init = {};
         out.initEvent(
           type,
           !!init.bubbles,
@@ -507,7 +507,7 @@
     }(window.Event || function Event() {}));
     defineProperty(window, 'Event', {value: o_O});
     // Android 4 gotcha
-    if (Event !== o_O) Event = o_O;
+    if(Event !== o_O) Event = o_O;
   }
 
   // window.KeyboardEvent as constructor
@@ -569,7 +569,7 @@
           ],
           i = 0; i < keys.length; i += 2
         ) {
-          if (init[keys[i]])
+          if(init[keys[i]])
             out.push(keys[i + 1]);
         }
         return out.join(' ');
@@ -577,7 +577,7 @@
 
       function withDefaults(target, source) {
         for (var key in source) {
-          if (
+          if(
             source.hasOwnProperty(key) &&
             !source.hasOwnProperty.call(target, key)
           ) target[key] = source[key];
@@ -620,13 +620,13 @@
           view = init.view || window,
           args
         ;
-        if (!init.which) init.which = init.keyCode;
-        if ('initKeyEvent' in out) {
+        if(!init.which) init.which = init.keyCode;
+        if('initKeyEvent' in out) {
           out.initKeyEvent(
             type, bubbles, cancelable, view,
             ctrlKey, altKey, shiftKey, metaKey, keyCode, charCode
           );
-        } else if (0 < initType && 'initKeyboardEvent' in out) {
+        } else if(0 < initType && 'initKeyboardEvent' in out) {
           args = [type, bubbles, cancelable, view];
           switch (initType) {
             case 1:
@@ -649,7 +649,7 @@
           out.initEvent(type, bubbles, cancelable);
         }
         for (key in out) {
-          if (defaults.hasOwnProperty(key) && out[key] !== init[key]) {
+          if(defaults.hasOwnProperty(key) && out[key] !== init[key]) {
             withInitValues(key, out, init);
           }
         }
@@ -660,7 +660,7 @@
     }(window.KeyboardEvent || function KeyboardEvent() {}));
     defineProperty(window, 'KeyboardEvent', {value: o_O});
     // Android 4 gotcha
-    if (KeyboardEvent !== o_O) KeyboardEvent = o_O;
+    if(KeyboardEvent !== o_O) KeyboardEvent = o_O;
   }
 
   // window.MouseEvent as constructor
@@ -670,7 +670,7 @@
       function MouseEvent(type, init) {
         enoughArguments(arguments.length, 'MouseEvent');
         var out = document.createEvent('MouseEvent');
-        if (!init) init = {};
+        if(!init) init = {};
         out.initMouseEvent(
           type,
           !!init.bubbles,
@@ -695,10 +695,10 @@
     }(window.MouseEvent || function MouseEvent() {}));
     defineProperty(window, 'MouseEvent', {value: o_O});
     // Android 4 gotcha
-    if (MouseEvent !== o_O) MouseEvent = o_O;
+    if(MouseEvent !== o_O) MouseEvent = o_O;
   }
 
-  if (!document.querySelectorAll('*').forEach) {
+  if(!document.querySelectorAll('*').forEach) {
     (function () {
       function patch(what) {
         var querySelectorAll = what.querySelectorAll;
@@ -770,7 +770,7 @@
 
     Handler.prototype.handleEvent = function handleEvent(e) {
       dispatched = true;
-      if (drop) {
+      if(drop) {
         e.currentTarget.removeEventListener(e.type, this, false);
       } else {
         value = this.value;
@@ -814,7 +814,7 @@
 
   function createEventListener(type, callback, options) {
     function eventListener(e) {
-      if (eventListener.once) {
+      if(eventListener.once) {
         e.currentTarget.removeEventListener(
           e.type,
           callback,
@@ -822,16 +822,16 @@
         );
         eventListener.removed = true;
       }
-      if (eventListener.passive) {
+      if(eventListener.passive) {
         e.preventDefault = createEventListener.preventDefault;
       }
-      if (typeof eventListener.callback === 'function') {
+      if(typeof eventListener.callback === 'function') {
         /* jshint validthis: true */
         eventListener.callback.call(this, e);
-      } else if (eventListener.callback) {
+      } else if(eventListener.callback) {
         eventListener.callback.handleEvent(e);
       }
-      if (eventListener.passive) {
+      if(eventListener.passive) {
         delete e.preventDefault;
       }
     }
@@ -857,7 +857,7 @@
     indexOf = [].indexOf || function indexOf(value){
       var length = this.length;
       while(length--) {
-        if (this[length] === value) {
+        if(this[length] === value) {
           break;
         }
       }
@@ -880,31 +880,31 @@
     rEL('_', increment, {once: true});
   } catch(o_O) {}
 
-  if (counter !== 1) {
+  if(counter !== 1) {
     (function () {
       var dm = new DOMMap();
       function createAEL(aEL) {
         return function addEventListener(type, handler, options) {
-          if (options && typeof options !== 'boolean') {
+          if(options && typeof options !== 'boolean') {
             var
               info = dm.get(this),
               key = getListenerKey(options),
               i, tmp, wrap
             ;
-            if (!info) dm.set(this, (info = new Dict()));
-            if (!(type in info)) info[type] = {
+            if(!info) dm.set(this, (info = new Dict()));
+            if(!(type in info)) info[type] = {
               handler: [],
               wrap: []
             };
             tmp = info[type];
             i = indexOf.call(tmp.handler, handler);
-            if (i < 0) {
+            if(i < 0) {
               i = tmp.handler.push(handler) - 1;
               tmp.wrap[i] = (wrap = new Dict());
             } else {
               wrap = tmp.wrap[i];
             }
-            if (!(key in wrap)) {
+            if(!(key in wrap)) {
               wrap[key] = createEventListener(type, handler, options);
               aEL.call(this, type, wrap[key], wrap[key].capture);
             }
@@ -915,18 +915,18 @@
       }
       function createREL(rEL) {
         return function removeEventListener(type, handler, options) {
-          if (options && typeof options !== 'boolean') {
+          if(options && typeof options !== 'boolean') {
             var
               info = dm.get(this),
               key, i, tmp, wrap
             ;
-            if (info && (type in info)) {
+            if(info && (type in info)) {
               tmp = info[type];
               i = indexOf.call(tmp.handler, handler);
-              if (-1 < i) {
+              if(-1 < i) {
                 key = getListenerKey(options);
                 wrap = tmp.wrap[i];
-                if (key in wrap) {
+                if(key in wrap) {
                   rEL.call(this, type, wrap[key], wrap[key].capture);
                   delete wrap[key];
                   // return if there are other wraps
@@ -935,7 +935,7 @@
                   tmp.handler.splice(i, 1);
                   tmp.wrap.splice(i, 1);
                   // if there are no other handlers
-                  if (tmp.handler.length === 0)
+                  if(tmp.handler.length === 0)
                     // drop the info[type] entirely
                     delete info[type];
                 }
@@ -948,13 +948,13 @@
       }
 
       augment = function (Constructor) {
-        if (!Constructor) return;
+        if(!Constructor) return;
         var proto = Constructor.prototype;
         proto.addEventListener = createAEL(proto.addEventListener);
         proto.removeEventListener = createREL(proto.removeEventListener);
       };
 
-      if (global.EventTarget) {
+      if(global.EventTarget) {
         augment(EventTarget);
       } else {
         augment(global.Text);

@@ -79,7 +79,7 @@
 		return ..()
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
-		if (mecha.occupant)
+		if(mecha.occupant)
 			var/mob/M = mecha.occupant
 			if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
 			M.last_bumped = world.time
@@ -104,7 +104,7 @@
 		else if(!user.is_busy(src))
 			to_chat(user, "<span class='warning'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			if (do_after(user,40,target = src) && src)
+			if(do_after(user,40,target = src) && src)
 				open(1)
 	return
 

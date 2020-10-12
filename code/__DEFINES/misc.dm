@@ -223,7 +223,7 @@
 
 ///Compile all the overlays for an atom from the cache lists
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
+	if(TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
 		if(length(rm)){\

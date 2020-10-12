@@ -25,7 +25,7 @@ const getTimestamp = () => {
 };
 
 const getPrefix = (() => {
-  if (isNode) {
+  if(isNode) {
     // Escape sequences
     const ESC = {
       dimmed: '\x1b[38;5;240m',
@@ -36,7 +36,7 @@ const getPrefix = (() => {
       `${ESC.dimmed}${getTimestamp()} ${ESC.bright}${ns}${ESC.reset}`,
     ];
   }
-  if (isChrome) {
+  if(isChrome) {
     // Styles
     const styles = {
       dimmed: 'color: #888',

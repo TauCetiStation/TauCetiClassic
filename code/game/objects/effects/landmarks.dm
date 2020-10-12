@@ -32,7 +32,7 @@
 		if("airtunnel_bottom")
 			airtunnel_bottom = y
 
-		if ("awaystart")
+		if("awaystart")
 			awaydestinations += src
 
 		if("monkey")
@@ -177,7 +177,7 @@
 	new /obj/item/clothing/gloves/white(loc)
 	new /obj/item/clothing/shoes/white(loc)
 	new /obj/item/clothing/under/scratch(loc)
-	if (prob(30))
+	if(prob(30))
 		new /obj/item/clothing/head/cueball(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -237,7 +237,7 @@
 /obj/effect/landmark/costume/imperium_monk/atom_init()
 	..()
 	new /obj/item/clothing/suit/imperium_monk(loc)
-	if (prob(25))
+	if(prob(25))
 		new /obj/item/clothing/mask/gas/cyborg(loc)
 	return INITIALIZE_HINT_QDEL
 

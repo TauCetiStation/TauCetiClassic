@@ -13,7 +13,7 @@ import { Box } from './Box';
 
 
 const toInputValue = value => {
-  if (isFalsy(value)) {
+  if(isFalsy(value)) {
     return '';
   }
   return value;
@@ -34,7 +34,7 @@ export class TextArea extends Component {
     // having to hard set rows all the time
     // there has GOT to be a better way though
     this.autoresize = () => {
-      if (this.fillerRef && this.textareaRef) {
+      if(this.fillerRef && this.textareaRef) {
       //  this.fillerRef.current.innerHTML =
       //  this.textareaRef.current.value.replace(/\n/g, '<br/>');
       }
@@ -42,10 +42,10 @@ export class TextArea extends Component {
     this.handleOnInput = e => {
       const { editing } = this.state;
       const { onInput } = this.props;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
-      if (onInput) {
+      if(onInput) {
         onInput(e, e.target.value);
       }
       this.autoresize();
@@ -53,10 +53,10 @@ export class TextArea extends Component {
     this.handleOnChange = e => {
       const { editing } = this.state;
       const { onChange } = this.props;
-      if (editing) {
+      if(editing) {
         this.setEditing(false);
       }
-      if (onChange) {
+      if(onChange) {
         onChange(e, e.target.value);
       }
       this.autoresize();
@@ -64,10 +64,10 @@ export class TextArea extends Component {
     this.handleKeyPress = e => {
       const { editing } = this.state;
       const { onKeyPress } = this.props;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
-      if (onKeyPress) {
+      if(onKeyPress) {
         onKeyPress(e, e.target.value);
       }
       this.autoresize();
@@ -75,12 +75,12 @@ export class TextArea extends Component {
     this.handleKeyDown = e => {
       const { editing } = this.state;
       const { onKeyDown } = this.props;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
-      if (!dontUseTabForIndent) {
+      if(!dontUseTabForIndent) {
         const keyCode = e.keyCode || e.which;
-        if (keyCode === 9) {
+        if(keyCode === 9) {
           e.preventDefault();
           const s = e.target.selectionStart;
           e.target.value
@@ -91,23 +91,23 @@ export class TextArea extends Component {
         }
       }
 
-      if (onKeyDown) {
+      if(onKeyDown) {
         onKeyDown(e, e.target.value);
       }
       this.autoresize();
     };
     this.handleFocus = e => {
       const { editing } = this.state;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
     };
     this.handleBlur = e => {
       const { editing } = this.state;
       const { onChange } = this.props;
-      if (editing) {
+      if(editing) {
         this.setEditing(false);
-        if (onChange) {
+        if(onChange) {
           onChange(e, e.target.value);
         }
       }
@@ -117,7 +117,7 @@ export class TextArea extends Component {
   componentDidMount() {
     const nextValue = this.props.value;
     const input = this.textareaRef.current;
-    if (input) {
+    if(input) {
       input.value = toInputValue(nextValue);
       this.autoresize();
     }
@@ -128,7 +128,7 @@ export class TextArea extends Component {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
     const input = this.textareaRef.current;
-    if (input && !editing && prevValue !== nextValue) {
+    if(input && !editing && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
       this.autoresize();
     }

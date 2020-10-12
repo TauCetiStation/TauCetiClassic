@@ -16,12 +16,12 @@
 	set category = "Object"
 	set src in view(1)
 
-	if (!ishuman(usr) || usr.incapacitated())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
 	if(!usr.is_busy() && do_after(usr, 20, target = src, can_move = TRUE))
 		var/head_name = headobj.name
-		if (extract_head())
+		if(extract_head())
 			to_chat(usr, "<span class='notice'>You have successfully extract [head_name].</span>")
 		else
 			to_chat(usr, "<span class='notice'>Extracting [head_name] was failed.</span>")
@@ -29,13 +29,13 @@
 		to_chat(usr, "<span class='notice'>Extracting [headobj] was interrupted.</span>")
 
 /obj/item/device/biocan/proc/extract_head(brain_destroyed = FALSE)
-	if (headobj)
+	if(headobj)
 		if(brainmob)
 			alive_mob_list -= brainmob
 			brainmob.timeofhostdeath = world.time
-			if (brain_destroyed)
+			if(brain_destroyed)
 				// can be mouse if player have jobban for observer
-				if (brainmob.ghostize(can_reenter_corpse = FALSE))
+				if(brainmob.ghostize(can_reenter_corpse = FALSE))
 					dead_mob_list += brainmob
 			brainmob.container = null
 			brainmob.loc = headobj
@@ -53,7 +53,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if (!ishuman(usr) || usr.incapacitated())
+	if(!ishuman(usr) || usr.incapacitated())
 		return
 	if(commutator_enabled)
 		commutator_enabled = FALSE

@@ -229,7 +229,7 @@
 
 	if(targeted_by && target_locked)
 		overlays_inv[LAYERIAN_TARGETED] = image("icon"=target_locked, "layer"=-LAYERIAN_TARGETED)
-	else if (!targeted_by && target_locked)
+	else if(!targeted_by && target_locked)
 		qdel(target_locked)
 
 	apply_overlay(LAYERIAN_TARGETED)

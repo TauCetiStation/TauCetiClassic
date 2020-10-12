@@ -161,7 +161,7 @@
 
 	//make some randomly pathing rivers
 	for(var/obj/effect/landmark/river_waypoint/W in landmarks_list)
-		if (W.z != src.z || W.connected)
+		if(W.z != src.z || W.connected)
 			continue
 
 		W.connected = 1
@@ -234,12 +234,12 @@
 
 	//get any path nodes placed on the map
 	for(var/obj/effect/landmark/path_waypoint/W in landmarks_list)
-		if (W.z == src.z)
+		if(W.z == src.z)
 			path_nodes.Add(W)
 
 	//make random, connecting paths
 	for(var/obj/effect/landmark/path_waypoint/W in path_nodes)
-		if (W.connected)
+		if(W.connected)
 			continue
 
 		W.connected = 1

@@ -104,19 +104,19 @@
 	var/turf/T
 	if(!istype(get_step(src, NORTH), /turf/unsimulated/jungle/rock) && !istype(get_step(src, NORTH), /turf/unsimulated/wall))
 		T = get_step(src, NORTH)
-		if (T)
+		if(T)
 			T.add_overlay(image('icons/turf/walls.dmi', "rock_side_s"))
 	if(!istype(get_step(src, SOUTH), /turf/unsimulated/jungle/rock) && !istype(get_step(src, SOUTH), /turf/unsimulated/wall))
 		T = get_step(src, SOUTH)
-		if (T)
+		if(T)
 			T.add_overlay(image('icons/turf/walls.dmi', "rock_side_n", layer=6))
 	if(!istype(get_step(src, EAST), /turf/unsimulated/jungle/rock) && !istype(get_step(src, EAST), /turf/unsimulated/wall))
 		T = get_step(src, EAST)
-		if (T)
+		if(T)
 			T.add_overlay(image('icons/turf/walls.dmi', "rock_side_w", layer=6))
 	if(!istype(get_step(src, WEST), /turf/unsimulated/jungle/rock) && !istype(get_step(src, WEST), /turf/unsimulated/wall))
 		T = get_step(src, WEST)
-		if (T)
+		if(T)
 			T.add_overlay(image('icons/turf/walls.dmi', "rock_side_e", layer=6))
 
 /turf/unsimulated/jungle/water

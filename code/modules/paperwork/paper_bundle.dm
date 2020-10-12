@@ -22,9 +22,9 @@
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything")
 			return
-		if (istype(P, /obj/item/weapon/paper/carbon))
+		if(istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
-			if (!C.iscopy && !C.copied)
+			if(!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
@@ -160,7 +160,7 @@
 			update_icon()
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
-	if (istype(src.loc, /mob))
+	if(istype(src.loc, /mob))
 		src.attack_self(src.loc)
 		updateUsrDialog()
 

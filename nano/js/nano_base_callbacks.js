@@ -11,12 +11,12 @@ NanoBaseCallbacks = function ()
 		// it updates the status/visibility icon and adds click event handling to buttons/links		
 		status: function (updateData) {
 			var uiStatusClass;
-			if (updateData['config']['status'] == 2)
+			if(updateData['config']['status'] == 2)
 			{
 				uiStatusClass = 'icon24 uiStatusGood';
 				$('.linkActive').removeClass('inactive');
 			}
-			else if (updateData['config']['status'] == 1)
+			else if(updateData['config']['status'] == 1)
 			{
 				uiStatusClass = 'icon24 uiStatusAverage';
 				$('.linkActive').addClass('inactive');
@@ -36,13 +36,13 @@ NanoBaseCallbacks = function ()
 			    .on('click', function (event) {
                     event.preventDefault();
                     var href = $(this).data('href');
-                    if (href != null && _canClick)
+                    if(href != null && _canClick)
                     {
                         _canClick = false;
                         $('body').oneTime(300, 'enableClick', function () {
                             _canClick = true;
                         });
-                        if (updateData['config']['status'] == 2)
+                        if(updateData['config']['status'] == 2)
                         {
                             $(this).oneTime(300, 'linkPending', function () {
                                 $(this).addClass('linkPending');
@@ -102,14 +102,14 @@ NanoBaseCallbacks = function ()
 		removeCallbacks: function () {
 			for (var callbackKey in _baseBeforeUpdateCallbacks)
 			{
-				if (_baseBeforeUpdateCallbacks.hasOwnProperty(callbackKey))
+				if(_baseBeforeUpdateCallbacks.hasOwnProperty(callbackKey))
 				{
 					NanoStateManager.removeBeforeUpdateCallback(callbackKey);
 				}
 			}
             for (var callbackKey in _baseAfterUpdateCallbacks)
             {
-                if (_baseAfterUpdateCallbacks.hasOwnProperty(callbackKey))
+                if(_baseAfterUpdateCallbacks.hasOwnProperty(callbackKey))
                 {
                     NanoStateManager.removeAfterUpdateCallback(callbackKey);
                 }

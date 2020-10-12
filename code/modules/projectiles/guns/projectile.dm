@@ -41,9 +41,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/proc/chamber_round()
-	if (chambered || !magazine)
+	if(chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.loc = src
 		if(chambered.BB)
@@ -56,7 +56,7 @@
 /obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = I
-		if (!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
+		if(!magazine && (istype(AM, mag_type) || (istype(AM, mag_type2) && mag_type != null)))
 			user.drop_from_inventory(AM, src)
 			magazine = AM
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
@@ -66,7 +66,7 @@
 			update_icon()
 			return TRUE
 
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 			return
 
@@ -77,7 +77,7 @@
 		return 1
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
@@ -106,8 +106,8 @@
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	if(chambered && countchambered)
 		boolets++
-	if (magazine)
+	if(magazine)
 		boolets += magazine.ammo_count()
 	return boolets

@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/proc/update_nightshift(active)
 	nightshift_active = active
 	for(var/obj/machinery/power/apc/APC in apc_list)
-		if (is_station_level(APC.z) || is_mining_level(APC.z))
+		if(is_station_level(APC.z) || is_mining_level(APC.z))
 			var/preset = "soft"
 			if(is_type_in_typecache(get_area(APC), hard_lighting_arealist))
 				preset = "hard"

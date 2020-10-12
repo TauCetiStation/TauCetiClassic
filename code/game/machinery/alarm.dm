@@ -105,14 +105,14 @@
 		update_icon()
 		return // not sure about this, is constructing initializing it same as first_run()?
 
-	if (!master_is_operating())
+	if(!master_is_operating())
 		elect_master()
 	first_run()
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
 	area_uid = alarm_area.uid
-	if (name == "alarm")
+	if(name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
 	if(!wires)
 		wires = new(src)
@@ -150,15 +150,15 @@
 	var/old_pressurelevel = pressure_dangerlevel
 	danger_level = overall_danger_level()
 
-	if (old_level != danger_level)
+	if(old_level != danger_level)
 		apply_danger_level(danger_level)
 
-	if (old_pressurelevel != pressure_dangerlevel)
-		if (breach_detected())
+	if(old_pressurelevel != pressure_dangerlevel)
+		if(breach_detected())
 			mode = AALARM_MODE_OFF
 			apply_mode()
 
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
+	if(mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_FILL
 		apply_mode()
 
@@ -186,14 +186,14 @@
 				"You hear a click and a faint electronic hum.")
 	else
 		//check for when we should stop adjusting temperature
-		if (!allow_regulate || get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
+		if(!allow_regulate || get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
 			set_power_use(IDLE_POWER_USE)
 			regulating_temperature = 0
 			visible_message(
 				"\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",
 				"You hear a click as a faint electronic humming stops.")
 
-	if (regulating_temperature)
+	if(regulating_temperature)
 		if(target_temperature > T0C + MAX_TEMPERATURE)
 			target_temperature = T0C + MAX_TEMPERATURE
 
@@ -204,7 +204,7 @@
 
 		if(gas)
 
-			if (gas.temperature <= target_temperature)	//gas heating
+			if(gas.temperature <= target_temperature)	//gas heating
 				var/energy_used = min(gas.get_thermal_energy_change(target_temperature) , active_power_usage)
 
 				gas.add_thermal_energy(energy_used)
@@ -268,8 +268,8 @@
 	var/environment_pressure = environment.return_pressure()
 	var/pressure_levels = TLV["pressure"]
 
-	if (environment_pressure <= pressure_levels[1])		//low pressures
-		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
+	if(environment_pressure <= pressure_levels[1])		//low pressures
+		if(!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
 			playsound(src, 'sound/machines/alarm_air.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return 1
 
@@ -284,7 +284,7 @@
 /obj/machinery/alarm/proc/elect_master()
 	if(!alarm_area) return
 	for (var/obj/machinery/alarm/AA in alarm_area)
-		if (!(AA.stat & (NOPOWER|BROKEN)))
+		if(!(AA.stat & (NOPOWER|BROKEN)))
 			alarm_area.master_air_alarm = AA
 			return 1
 	return 0
@@ -309,27 +309,27 @@
 		return
 
 	var/icon_level = danger_level
-	if (alarm_area.atmosalm)
+	if(alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 	icon_state = "alarm[icon_level]"
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (alarm_area.master_air_alarm != src)
-		if (master_is_operating())
+	if(alarm_area.master_air_alarm != src)
+		if(master_is_operating())
 			return
 		elect_master()
-		if (alarm_area.master_air_alarm != src)
+		if(alarm_area.master_air_alarm != src)
 			return
 	if(!signal || signal.encryption)
 		return
 	var/id_tag = signal.data["tag"]
-	if (!id_tag)
+	if(!id_tag)
 		return
-	if (signal.data["area"] != area_uid)
+	if(signal.data["area"] != area_uid)
 		return
-	if (signal.data["sigtype"] != "status")
+	if(signal.data["sigtype"] != "status")
 		return
 
 	var/dev_type = signal.data["device"]
@@ -342,10 +342,10 @@
 
 /obj/machinery/alarm/proc/register_env_machine(m_id, device_type)
 	var/new_name
-	if (device_type=="AVP")
+	if(device_type=="AVP")
 		new_name = "[alarm_area.name] Vent Pump #[alarm_area.air_vent_names.len+1]"
 		alarm_area.air_vent_names[m_id] = new_name
-	else if (device_type=="AScr")
+	else if(device_type=="AScr")
 		new_name = "[alarm_area.name] Air Scrubber #[alarm_area.air_scrub_names.len+1]"
 		alarm_area.air_scrub_names[m_id] = new_name
 	else
@@ -356,12 +356,12 @@
 /obj/machinery/alarm/proc/refresh_all()
 	for(var/id_tag in alarm_area.air_vent_names)
 		var/list/I = alarm_area.air_vent_info[id_tag]
-		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
+		if(I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
 			continue
 		send_signal(id_tag, list("status") )
 	for(var/id_tag in alarm_area.air_scrub_names)
 		var/list/I = alarm_area.air_scrub_info[id_tag]
-		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
+		if(I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
 			continue
 		send_signal(id_tag, list("status") )
 
@@ -425,7 +425,7 @@
 				send_signal(device_id, list("power"= 0) )
 
 /obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
-	if (alarm_area.atmosalert(new_danger_level))
+	if(alarm_area.atmosalert(new_danger_level))
 		post_alert(new_danger_level)
 
 	update_icon()
@@ -443,9 +443,9 @@
 
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
-	else if (alert_level==1)
+	else if(alert_level==1)
 		alert_signal.data["alert"] = "minor"
-	else if (alert_level==0)
+	else if(alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(src, alert_signal)
@@ -458,7 +458,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
-	if (electrocute_mob(user, get_area(src), src))
+	if(electrocute_mob(user, get_area(src), src))
 		return 1
 	else
 		return 0
@@ -633,7 +633,7 @@
 
 	if(href_list["temperature"])
 		var/list/selected = TLV["temperature"]
-		var/max_temperature = min(selected[3] - T0C-1, MAX_TEMPERATURE) // (-/+ 1) required because it won't heat/cool, if (target_temperature == TLV)
+		var/max_temperature = min(selected[3] - T0C-1, MAX_TEMPERATURE) // (-/+ 1) required because it won't heat/cool, if(target_temperature == TLV)
 		var/min_temperature = max(selected[2] - T0C+1, MIN_TEMPERATURE)
 		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature] and [max_temperature]C)", "Thermostat Controls", target_temperature - T0C) as num|null
 		if(isnum(input_temperature))
@@ -699,15 +699,15 @@
 					var/list/selected = TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
-					if (isnull(newval))
+					if(isnull(newval))
 						return TRUE
-					if (newval < 0)
+					if(newval < 0)
 						selected[threshold] = -1.0
-					else if (env == "temperature" && newval > 5000)
+					else if(env == "temperature" && newval > 5000)
 						selected[threshold] = 5000
-					else if (env == "pressure" && newval > 50 * ONE_ATMOSPHERE)
+					else if(env == "pressure" && newval > 50 * ONE_ATMOSPHERE)
 						selected[threshold] = 50 * ONE_ATMOSPHERE
-					else if (env != "temperature" && env != "pressure" && newval > 200)
+					else if(env != "temperature" && env != "pressure" && newval > 200)
 						selected[threshold] = 200
 					else
 						newval = round(newval, 0.01)
@@ -757,13 +757,13 @@
 			return FALSE
 
 		if(href_list["atmos_alarm"])
-			if (alarm_area.atmosalert(2, src))
+			if(alarm_area.atmosalert(2, src))
 				apply_danger_level(2)
 			update_icon()
 			return FALSE
 
 		if(href_list["atmos_reset"])
-			if (alarm_area.atmosalert(0, src))
+			if(alarm_area.atmosalert(0, src))
 				apply_danger_level(0)
 			update_icon()
 			return FALSE
@@ -790,7 +790,7 @@
 				update_icon()
 				return
 
-			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
+			if(iswirecutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -798,7 +798,7 @@
 				update_icon()
 				return
 
-			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "It does nothing")
 					return
@@ -870,9 +870,9 @@
 
 /obj/machinery/alarm/examine(mob/user)
 	..()
-	if (buildstage < 2)
+	if(buildstage < 2)
 		to_chat(user, "It is not wired.")
-	if (buildstage < 1)
+	if(buildstage < 1)
 		to_chat(user, "The circuit is missing.")
 /*
 AIR ALARM CIRCUIT
@@ -909,19 +909,19 @@ Code shamelessly copied from apc_frame
 	return ..()
 
 /obj/item/alarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if(get_dist(on_wall,usr)>1)
 		return
 
 	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
+	if(!(ndir in cardinal))
 		return
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/simulated/floor))
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
-	if (A.requires_power == 0 || A.name == "Space")
+	if(A.requires_power == 0 || A.name == "Space")
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed in this area.</span>")
 		return
 
@@ -986,7 +986,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewdriver(W) && buildstage == 2)
+	if(isscrewdriver(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -994,13 +994,13 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (ismultitool(W))
+				if(ismultitool(W))
 					detecting = !detecting
-					if (detecting)
+					if(detecting)
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iswirecutter(W))
+				else if(iswirecutter(W))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -1078,19 +1078,19 @@ FIRE ALARM
 	update_power_use()
 
 /obj/machinery/firealarm/ui_interact(mob/user)
-	if (buildstage != 2)
+	if(buildstage != 2)
 		return
 
 	user.set_machine(src)
 	var/area/A = get_area(src)
 	var/d1
 	var/d2
-	if (ishuman(user) || issilicon(user) || isobserver(user))
-		if (A.fire)
+	if(ishuman(user) || issilicon(user) || isobserver(user))
+		if(A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>Alarm - Lockdown</A>", src)
-		if (timing)
+		if(timing)
 			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
 		else
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
@@ -1103,11 +1103,11 @@ FIRE ALARM
 		popup.open()
 
 	else
-		if (A.fire)
+		if(A.fire)
 			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
 		else
 			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("Alarm - Lockdown"))
-		if (timing)
+		if(timing)
 			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
 		else
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
@@ -1124,18 +1124,18 @@ FIRE ALARM
 	if(!.)
 		return
 
-	if (buildstage != 2)
+	if(buildstage != 2)
 		return FALSE
 
-	if (href_list["reset"])
+	if(href_list["reset"])
 		reset()
-	else if (href_list["alarm"])
+	else if(href_list["alarm"])
 		alarm()
-	else if (href_list["time"])
+	else if(href_list["time"])
 		timing = text2num(href_list["time"])
 		last_process = world.timeofday
 		START_PROCESSING(SSobj, src)
-	else if (href_list["tp"])
+	else if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		time += tp
 		time = min(max(round(time), 0), 120)
@@ -1143,7 +1143,7 @@ FIRE ALARM
 	updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!working)
+	if(!working)
 		return
 	var/area/A = get_area(src)
 	A.firereset()
@@ -1152,7 +1152,7 @@ FIRE ALARM
 		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!working)
+	if(!working)
 		return
 	var/area/A = get_area(src)
 	A.firealert()
@@ -1239,19 +1239,19 @@ Code shamelessly copied from apc_frame
 	return ..()
 
 /obj/item/firealarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr) > 1)
+	if(get_dist(on_wall,usr) > 1)
 		return
 
 	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
+	if(!(ndir in cardinal))
 		return
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/simulated/floor))
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
-	if (A.requires_power == 0 || A.name == "Space")
+	if(A.requires_power == 0 || A.name == "Space")
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed in this area.</span>")
 		return
 

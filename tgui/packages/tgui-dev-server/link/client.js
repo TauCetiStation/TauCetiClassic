@@ -9,11 +9,11 @@ const queue = [];
 const subscribers = [];
 
 const ensureConnection = () => {
-  if (process.env.NODE_ENV !== 'production') {
-    if (!window.WebSocket) {
+  if(process.env.NODE_ENV !== 'production') {
+    if(!window.WebSocket) {
       return;
     }
-    if (!socket || socket.readyState === WebSocket.CLOSED) {
+    if(!socket || socket.readyState === WebSocket.CLOSED) {
       const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
       socket = new WebSocket(`ws://${DEV_SERVER_IP}:3000`);
       socket.onopen = () => {
@@ -33,7 +33,7 @@ const ensureConnection = () => {
   }
 };
 
-if (process.env.NODE_ENV !== 'production') {
+if(process.env.NODE_ENV !== 'production') {
   window.onunload = () => socket && socket.close();
 }
 
@@ -45,12 +45,12 @@ const subscribe = fn => subscribers.push(fn);
 const serializeObject = obj => {
   let refs = [];
   const primitiveReviver = value => {
-    if (typeof value === 'number' && !Number.isFinite(value)) {
+    if(typeof value === 'number' && !Number.isFinite(value)) {
       return {
         __number__: String(value),
       };
     }
-    if (typeof value === 'undefined') {
+    if(typeof value === 'undefined') {
       return {
         __undefined__: true,
       };
@@ -58,17 +58,17 @@ const serializeObject = obj => {
     return value;
   };
   const objectReviver = (key, value) => {
-    if (typeof value === 'object') {
-      if (value === null) {
+    if(typeof value === 'object') {
+      if(value === null) {
         return value;
       }
       // Circular reference
-      if (refs.includes(value)) {
+      if(refs.includes(value)) {
         return '[circular ref]';
       }
       refs.push(value);
       // Error object
-      if (value instanceof Error) {
+      if(value instanceof Error) {
         return {
           __error__: true,
           string: String(value),
@@ -76,7 +76,7 @@ const serializeObject = obj => {
         };
       }
       // Array
-      if (Array.isArray(value)) {
+      if(Array.isArray(value)) {
         return value.map(primitiveReviver);
       }
       return value;
@@ -89,17 +89,17 @@ const serializeObject = obj => {
 };
 
 const sendRawMessage = msg => {
-  if (process.env.NODE_ENV !== 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     const json = serializeObject(msg);
     // Send message using WebSocket
-    if (window.WebSocket) {
+    if(window.WebSocket) {
       ensureConnection();
-      if (socket.readyState === WebSocket.OPEN) {
+      if(socket.readyState === WebSocket.OPEN) {
         socket.send(json);
       }
       else {
         // Keep only 100 latest messages in the queue
-        if (queue.length > 100) {
+        if(queue.length > 100) {
           queue.shift();
         }
         queue.push(json);
@@ -117,7 +117,7 @@ const sendRawMessage = msg => {
 };
 
 export const sendLogEntry = (level, ns, ...args) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     try {
       sendRawMessage({
         type: 'log',
@@ -133,18 +133,18 @@ export const sendLogEntry = (level, ns, ...args) => {
 };
 
 export const setupHotReloading = () => {
-  if (process.env.NODE_ENV !== 'production'
+  if(process.env.NODE_ENV !== 'production'
       && process.env.WEBPACK_HMR_ENABLED
       && window.WebSocket) {
-    if (module.hot) {
+    if(module.hot) {
       ensureConnection();
       sendLogEntry(0, null, 'setting up hot reloading');
       subscribe(msg => {
         const { type } = msg;
         sendLogEntry(0, null, 'received', type);
-        if (type === 'hotUpdate') {
+        if(type === 'hotUpdate') {
           const status = module.hot.status();
-          if (status !== 'idle') {
+          if(status !== 'idle') {
             sendLogEntry(0, null, 'hot reload status:', status);
             return;
           }

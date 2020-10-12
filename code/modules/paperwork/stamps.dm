@@ -182,11 +182,11 @@
 			big_stamp = chosen_stamp.big_stamp
 
 /obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
-	if (P.stamp_text && P.stamp_text != "")
+	if(P.stamp_text && P.stamp_text != "")
 		P.stamp_text += "<br>"
 
 	var/message = stamp_text ? stamp_text : stamp_message
-	if (big_stamp)
+	if(big_stamp)
 		P.stamp_text += "<div style=\"margin-top:20px;\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:5px;border-style:double;padding:3px\">[message]</div></font></div>"
 	else
 		P.stamp_text += "<div style=\"margin-top:20px;margin-left:3px\"><font size=\"5\"><div style=\"border-color:[stamp_border];color:[stamp_color];display:inline;border-width:2px;border-style:solid;padding:3px\">[message]</div></font></div>"

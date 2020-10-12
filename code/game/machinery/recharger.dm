@@ -46,10 +46,10 @@
 			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 
-		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
+		if(istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			to_chat(user, "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>")
 			return
-		if (istype(G, /obj/item/weapon/gun/magic))
+		if(istype(G, /obj/item/weapon/gun/magic))
 			return
 		user.drop_item()
 		G.loc = src
@@ -64,7 +64,7 @@
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-	if (anchored && !charging)
+	if(anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
 

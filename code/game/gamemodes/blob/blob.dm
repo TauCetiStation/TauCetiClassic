@@ -41,7 +41,7 @@ var/global/blobwincount = 500
 				antag_candidates -= player
 
 	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!antag_candidates.len)
+		if(!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
@@ -138,19 +138,19 @@ var/global/blobwincount = 500
 /datum/game_mode/blob/proc/stage(stage)
 
 	switch(stage)
-		if (0)
+		if(0)
 			send_intercept(1)
 			declared = 1
 			return
 
-		if (1)
+		if(1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak. The station crew isolation protocols are now active.", "Biohazard Alert", "outbreak5")
 			return
 
 	return
 
 /mob/living/carbon/human/proc/Blobize()
-	if (notransform)
+	if(notransform)
 		return
 	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
 	if(!client)

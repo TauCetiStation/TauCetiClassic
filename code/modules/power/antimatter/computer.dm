@@ -47,7 +47,7 @@
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (I && istype(I))
+			if(I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
 		if("deactivate")
@@ -61,7 +61,7 @@
 	var/dat = ""
 	switch(src.state)
 		if(STATE_DEFAULT)
-			if (src.authenticated)
+			if(src.authenticated)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<br>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=engine'>Engine Menu</A> \]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=injector'>Injector Menu</A> \]"

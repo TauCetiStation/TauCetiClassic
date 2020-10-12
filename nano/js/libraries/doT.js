@@ -23,9 +23,9 @@
         compile: undefined  //fn, for express
     }, global;
 
-    if (typeof module !== 'undefined' && module.exports) {
+    if(typeof module !== 'undefined' && module.exports) {
         module.exports = doT;
-    } else if (typeof define === 'function' && define.amd) {
+    } else if(typeof define === 'function' && define.amd) {
         define(function () {
             return doT;
         });
@@ -56,15 +56,15 @@
     function resolveDefs(c, block, def) {
         return ((typeof block === 'string') ? block : block.toString())
             .replace(c.define || skip, function (m, code, assign, value) {
-                if (code.indexOf('def.') === 0) {
+                if(code.indexOf('def.') === 0) {
                     code = code.substring(4);
                 }
-                if (!(code in def)) {
-                    if (assign === ':') {
-                        if (c.defineParams) value.replace(c.defineParams, function (m, param, v) {
+                if(!(code in def)) {
+                    if(assign === ':') {
+                        if(c.defineParams) value.replace(c.defineParams, function (m, param, v) {
                             def[code] = {arg: param, text: v};
                         });
-                        if (!(code in def)) def[code] = value;
+                        if(!(code in def)) def[code] = value;
                     } else {
                         new Function("def", "def['" + code + "']=" + value)(def);
                     }
@@ -72,8 +72,8 @@
                 return '';
             })
             .replace(c.use || skip, function (m, code) {
-                if (c.useParams) code = code.replace(c.useParams, function (m, s, d, param) {
-                    if (def[d] && def[d].arg && param) {
+                if(c.useParams) code = code.replace(c.useParams, function (m, s, d, param) {
+                    if(def[d] && def[d].arg && param) {
                         var rw = (d + ":" + param).replace(/'|\\/g, '_');
                         def.__exp = def.__exp || {};
                         def.__exp[rw] = def[d].text.replace(new RegExp("(^|[^\\w$])" + def[d].arg + "([^\\w$])", "g"), "$1" + param + "$2");
@@ -111,7 +111,7 @@
                 return (code ? "';}else if(" + unescape(code) + "){out+='" : "';}else{out+='");
             })
             .replace(c.iterate || skip, function (m, iterate, vname, iname) {
-                if (!iterate) return "';} } out+='";
+                if(!iterate) return "';} } out+='";
                 sid += 1;
                 vname = vname || "value";
                 iname = iname || "index";
@@ -121,13 +121,13 @@
                     + vname + "=" + arrayName + "[" + iname + "+=1];out+='";
             })
             .replace(c.props || skip, function (m, iterate, vname, iname) {
-                if (!iterate) return "';} } out+='";
+                if(!iterate) return "';} } out+='";
                 sid += 1;
                 vname = vname || "value";
                 iname = iname || "key";
                 iterate = unescape(iterate);
                 var objectName = "arr" + sid;
-                return "';var " + objectName + "=" + iterate + ";if(" + objectName + " && Object.size(" + objectName + ") > 0){var " + vname + ";for( var " + iname + " in " + objectName + "){ if (!" + objectName + ".hasOwnProperty(" + iname + ")) continue; " + vname + "=" + objectName + "[" + iname + "];out+='";
+                return "';var " + objectName + "=" + iterate + ";if(" + objectName + " && Object.size(" + objectName + ") > 0){var " + vname + ";for( var " + iname + " in " + objectName + "){ if(!" + objectName + ".hasOwnProperty(" + iname + ")) continue; " + vname + "=" + objectName + "[" + iname + "];out+='";
             })
             .replace(c.empty || skip, function (m) {
                 return "';}}else{if(true){out+='"; // The "if(true)" condition is required to account for the for tag closing with two brackets
@@ -140,13 +140,13 @@
             .replace(/(\s|;|\}|^|\{)out\+='';/g, '$1').replace(/\+''/g, '')
             .replace(/(\s|;|\}|^|\{)out\+=''\+/g, '$1out+=');
 
-        if (needhtmlencode && c.selfcontained) {
+        if(needhtmlencode && c.selfcontained) {
             str = "String.prototype.encodeHTML=(" + encodeHTMLSource.toString() + "());" + str;
         }
         try {
             return new Function(c.varname, str);
         } catch (e) {
-            if (typeof console !== 'undefined') console.log("Could not create a template function: " + str);
+            if(typeof console !== 'undefined') console.log("Could not create a template function: " + str);
             throw e;
         }
     };

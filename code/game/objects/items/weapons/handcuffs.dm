@@ -17,23 +17,23 @@
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
-	if (!ishuman(user) && !isIAN(user))
+	if(!ishuman(user) && !isIAN(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!istype(C))
 		return
-	if ((CLUMSY in usr.mutations) && prob(50))
+	if((CLUMSY in usr.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>Uh ... how do those things work?!</span>")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
-		if (C == user || isIAN(user))
+		if(C == user || isIAN(user))
 			place_handcuffs(C, user)
 			return
 
 		//check for an aggressive grab
 		for (var/obj/item/weapon/grab/G in C.grabbed_by)
-			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
+			if(G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
 		to_chat(user, "<span class='warning'>You need to have a firm grip on [C] before you can put \the [src] on!</span>")
@@ -44,17 +44,17 @@
 
 	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
 
-	if (ishuman(target) || isIAN(target) || ismonkey(target))
+	if(ishuman(target) || isIAN(target) || ismonkey(target))
 		target.log_combat(user, "handcuffed (attempt) with [name]")
 
 		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)
 				var/grabbing = FALSE
 				for (var/obj/item/weapon/grab/G in target.grabbed_by)
-					if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
+					if(G.loc == user && G.state >= GRAB_AGGRESSIVE)
 						grabbing = TRUE
 						break
-				if (!grabbing)
+				if(!grabbing)
 					to_chat(user, "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>")
 					return
 

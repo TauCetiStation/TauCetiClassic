@@ -84,13 +84,13 @@
 
 		var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
 
-		if (pressure_delta > 0.01)
-			if (direction_out)
+		if(pressure_delta > 0.01)
+			if(direction_out)
 				power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 			else
 				power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
 
-	if (power_draw < 0)
+	if(power_draw < 0)
 		last_flow_rate = 0
 		last_power_draw = 0
 	else
@@ -101,7 +101,7 @@
 		update_connected_network()
 
 		//ran out of charge
-		if (!cell.charge)
+		if(!cell.charge)
 			power_change()
 			update_icon()
 
@@ -121,11 +121,11 @@
 	data["on"] = on ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
+	if(holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "portpump.tmpl", "Portable Pump", 480, 410)
 		ui.set_initial_data(data)
 		ui.open()
@@ -144,13 +144,13 @@
 		direction_out = !direction_out
 		update_icon()
 
-	if (href_list["remove_tank"])
+	if(href_list["remove_tank"])
 		if(holding)
 			holding.forceMove(loc)
 			holding = null
 		update_icon()
 
-	if (href_list["pressure_adj"])
+	if(href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		target_pressure = min(10 * ONE_ATMOSPHERE, max(0, target_pressure+diff))
 		update_icon()

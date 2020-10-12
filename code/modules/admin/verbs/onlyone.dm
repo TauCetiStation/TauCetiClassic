@@ -27,7 +27,7 @@
 			obj_count++
 
 		for (var/obj/item/I in H)
-			if (istype(I, /obj/item/weapon/implant))
+			if(istype(I, /obj/item/weapon/implant))
 				continue
 			qdel(I)
 		H.sec_hud_set_implants()

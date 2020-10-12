@@ -283,14 +283,14 @@
 	for (var/i=1 to length(item_quants))
 		var/K = item_quants[i]
 		var/count = item_quants[K]
-		if (count > 0)
+		if(count > 0)
 			items.Add(list(list("display_name" = html_encode(capitalize(K)), "vend" = i, "quantity" = count)))
 
-	if (items.len > 0)
+	if(items.len > 0)
 		data["contents"] = items
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "smartfridge.tmpl", src.name, 400, 500)
 		ui.set_initial_data(data)
 		ui.open()
@@ -303,12 +303,12 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	if (href_list["close"])
+	if(href_list["close"])
 		user.unset_machine()
 		ui.close()
 		return FALSE
 
-	if (href_list["vend"])
+	if(href_list["vend"])
 		var/index = text2num(href_list["vend"])
 		var/amount = text2num(href_list["amount"])
 		var/K = item_quants[index]
@@ -320,10 +320,10 @@
 
 			var/i = amount
 			for(var/obj/O in contents)
-				if (O.name == K)
+				if(O.name == K)
 					O.loc = loc
 					i--
-					if (i <= 0)
+					if(i <= 0)
 						return TRUE
 
 		return TRUE
@@ -369,6 +369,6 @@
 	. = ..()
 	if(!.)
 		return
-	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+	if(!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE

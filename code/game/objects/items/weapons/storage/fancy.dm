@@ -391,7 +391,7 @@
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
 	src.cut_overlays()
-	if (!broken)
+	if(!broken)
 		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)
 			add_overlay(image(icon, src, "cover"))

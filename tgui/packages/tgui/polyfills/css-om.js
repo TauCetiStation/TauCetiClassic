@@ -12,7 +12,7 @@
 (function(Proto) {
   'use strict';
 
-  if (typeof Proto.setAttribute !== 'undefined') {
+  if(typeof Proto.setAttribute !== 'undefined') {
     function toAttr(prop) {
       return prop.replace(/-[a-z]/g, function (bit) {
         return bit[1].toUpperCase();
@@ -21,7 +21,7 @@
 
     Proto.setProperty = function (prop, value) {
       var attr = toAttr(prop);
-      if (!value) {
+      if(!value) {
         return this.removeAttribute(attr);
       }
       var str = String(value);

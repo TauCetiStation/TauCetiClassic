@@ -91,15 +91,15 @@
 	connected_port_parent.update = 1
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/tank))
+	if(istype(W, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))
-			if (holding || !user.drop_item())
+			if(holding || !user.drop_item())
 				return
 			var/obj/item/weapon/tank/T = W
 			T.forceMove(src)
 			holding = T
 			update_icon()
-	else if (iswrench(W))
+	else if(iswrench(W))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -125,7 +125,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>",
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
+	else if(istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
 		return
 	else
 		return ..()

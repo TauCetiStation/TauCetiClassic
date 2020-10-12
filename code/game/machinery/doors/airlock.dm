@@ -579,7 +579,7 @@ var/list/airlock_overlays = list()
 			sleep(10)
 			//bring up airlock dialog
 			aiHacking = FALSE
-			if (user)
+			if(user)
 				attack_ai(user)
 
 /obj/machinery/door/airlock/proc/hack_can_continue(mob/user)
@@ -594,10 +594,10 @@ var/list/airlock_overlays = list()
 	return TRUE
 
 /obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (isElectrified())
-		if (istype(mover, /obj/item))
+	if(isElectrified())
+		if(istype(mover, /obj/item))
 			var/obj/item/i = mover
-			if (i.m_amt)
+			if(i.m_amt)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -643,7 +643,7 @@ var/list/airlock_overlays = list()
 		check_access()
 	if(req_access.len)
 		ae.conf_access = req_access
-	else if (req_one_access.len)
+	else if(req_one_access.len)
 		ae.conf_access = req_one_access
 		ae.one_access = 1
 	ae.loc = da
@@ -793,7 +793,7 @@ var/list/airlock_overlays = list()
 					// Bolt lights
 					if(isWireCut(AIRLOCK_WIRE_LIGHT))
 						to_chat(usr, "Control to door bolt lights has been severed.")
-					else if (lights)
+					else if(lights)
 						lights = 0
 						update_icon()
 					else
@@ -869,11 +869,11 @@ var/list/airlock_overlays = list()
 					else
 						open()
 
-				if (8)
+				if(8)
 					// Safeties!  Maybe we do need some stinking safeties!
-					if (isWireCut(AIRLOCK_WIRE_SAFETY))
+					if(isWireCut(AIRLOCK_WIRE_SAFETY))
 						to_chat(usr, "Control to door sensors is disabled.")
-					else if (!safe)
+					else if(!safe)
 						safe = 1
 					else
 						to_chat(usr, "Firmware reports safeties already in place.")
@@ -882,7 +882,7 @@ var/list/airlock_overlays = list()
 					// Door speed control
 					if(isWireCut(AIRLOCK_WIRE_SPEED))
 						to_chat(usr, "Control to door timing circuitry has been severed.")
-					else if (!normalspeed)
+					else if(!normalspeed)
 						normalspeed = 1
 					else
 						to_chat(usr, "Door timing circurity currently operating normally.")
@@ -891,7 +891,7 @@ var/list/airlock_overlays = list()
 					// Bolt lights
 					if(isWireCut(AIRLOCK_WIRE_LIGHT))
 						to_chat(usr, "Control to door bolt lights has been severed.")
-					else if (!lights)
+					else if(!lights)
 						lights = 1
 						update_icon()
 					else
@@ -980,7 +980,7 @@ var/list/airlock_overlays = list()
 						check_access()
 					if(req_access.len)
 						ae.conf_access = req_access
-					else if (req_one_access.len)
+					else if(req_one_access.len)
 						ae.conf_access = req_one_access
 						ae.one_access = 1
 				else

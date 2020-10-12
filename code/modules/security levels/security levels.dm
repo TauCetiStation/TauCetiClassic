@@ -76,11 +76,11 @@ var/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenance) + ty
 /proc/delta_alarm()
     delta_timer_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/delta_alarm, FALSE), 8 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
     for(var/mob/M in player_list)
-        if (is_station_level(M.z))
+        if(is_station_level(M.z))
             var/area/A = get_area(M)
-            if (is_type_in_typecache(A, quiet_alarm_areas))
+            if(is_type_in_typecache(A, quiet_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
-            else if (is_type_in_typecache(A, loud_alarm_areas))
+            else if(is_type_in_typecache(A, loud_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
     return
 

@@ -88,7 +88,7 @@
 	force = base_force * fisto_setting
 	var/success = ..()
 	force = base_force
-	if (success)
+	if(success)
 		target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>",
 								"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 		new /obj/item/effect/kinetic_blast(target.loc)

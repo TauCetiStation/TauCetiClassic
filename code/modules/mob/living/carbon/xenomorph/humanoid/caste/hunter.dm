@@ -25,8 +25,8 @@
 		adjustToxLoss(-heal_rate)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(150 to INFINITY)
 					healths.icon_state = "health0"

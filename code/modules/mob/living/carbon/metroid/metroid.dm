@@ -119,7 +119,7 @@
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 
-	if (bodytemperature < 183.222)
+	if(bodytemperature < 183.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
@@ -135,7 +135,7 @@
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		tally *= 2
 
-	if (bodytemperature >= 330.23) // 135 F
+	if(bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
 	return tally+config.slime_delay
@@ -210,21 +210,21 @@
 
 /mob/living/carbon/slime/ex_act(severity)
 
-	if (stat == DEAD && client)
+	if(stat == DEAD && client)
 		return
 
-	else if (stat == DEAD && !client)
+	else if(stat == DEAD && !client)
 		qdel(src)
 		return
 
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			b_loss += 500
 			return
 
-		if (2.0)
+		if(2.0)
 
 			b_loss += 60
 			f_loss += 60
@@ -240,12 +240,12 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return
 	var/shielded = 0
 
 	var/damage = null
-	if (stat != DEAD)
+	if(stat != DEAD)
 		damage = rand(10,30)
 
 	if(shielded)
@@ -499,7 +499,7 @@
 	qdel(M)
 	var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
-	if (!newname)
+	if(!newname)
 		newname = "pet slime"
 	pet.name = newname
 	pet.real_name = newname
@@ -527,7 +527,7 @@
 	qdel(M)
 	var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
-	if (!newname)
+	if(!newname)
 		newname = "pet slime"
 	pet.name = newname
 	pet.real_name = newname
@@ -829,7 +829,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
+	if(environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
 		src.Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)

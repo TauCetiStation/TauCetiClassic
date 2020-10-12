@@ -39,7 +39,7 @@
 	events |= E
 
 /datum/stock/proc/addArticle(datum/article/A)
-	if (!(A in articles))
+	if(!(A in articles))
 		articles.Insert(1, A)
 	A.ticks = world.time
 
@@ -56,15 +56,15 @@
 	changeOptimism(rand(0, 100) * 0.003 * boost) //0.003 = 0.01*0.3 (for balance)
 
 /datum/stock/proc/generateIndustry()
-	if (findtext(name, "Farms"))
+	if(findtext(name, "Farms"))
 		industry = new /datum/industry/agriculture
-	else if (findtext(name, "Software") || findtext(name, "Programming")  || findtext(name, "IT Group") || findtext(name, "Electronics") || findtext(name, "Electric") || findtext(name, "Nanotechnology"))
+	else if(findtext(name, "Software") || findtext(name, "Programming")  || findtext(name, "IT Group") || findtext(name, "Electronics") || findtext(name, "Electric") || findtext(name, "Nanotechnology"))
 		industry = new /datum/industry/it
-	else if (findtext(name, "Mobile") || findtext(name, "Communications"))
+	else if(findtext(name, "Mobile") || findtext(name, "Communications"))
 		industry = new /datum/industry/communications
-	else if (findtext(name, "Pharmaceuticals") || findtext(name, "Health"))
+	else if(findtext(name, "Pharmaceuticals") || findtext(name, "Health"))
 		industry = new /datum/industry/health
-	else if (findtext(name, "Wholesale") || findtext(name, "Stores"))
+	else if(findtext(name, "Wholesale") || findtext(name, "Stores"))
 		industry = new /datum/industry/consumer
 	else
 		var/ts = typesof(/datum/industry) - /datum/industry
@@ -109,21 +109,21 @@
 
 /datum/stock/proc/modifyAccount(whose, amount)
 	. = FALSE
-	if (SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
+	if(SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
 		SSshuttle.points += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
 
 /datum/stock/proc/buyShares(who, howmany)
-	if (howmany <= 0)
+	if(howmany <= 0)
 		return
 	howmany = round(howmany)
 	var/loss = howmany * current_value
-	if (available_shares < howmany)
+	if(available_shares < howmany)
 		return 0
-	if (modifyAccount(who, -loss))
+	if(modifyAccount(who, -loss))
 		supplyDrop(howmany)
-		if (!(who in shareholders))
+		if(!(who in shareholders))
 			shareholders[who] = howmany
 		else
 			shareholders[who] += howmany

@@ -15,24 +15,24 @@
 		to_chat(src, "<span class='warning'>You have deadchat muted.</span>")
 		return
 
-	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if(src.handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
 	var/stafftype = null
 
-	if (src.holder.rights & R_ADMIN)
+	if(src.holder.rights & R_ADMIN)
 		stafftype = "ADMIN"
 
 	msg = sanitize(msg)
 	log_admin("[key_name(src)] : [msg]")
 
-	if (!msg)
+	if(!msg)
 		return
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[stafftype]([src.holder.fakekey ? pick("BADMIN", "hornigranny", "TLF", "scaredforshadows", "KSI", "Silnazi", "HerpEs", "BJ69", "SpoofedEdd", "Uhangay", "Wario90900", "Regarity", "MissPhareon", "LastFish", "unMportant", "Deurpyn", "Fatbeaver") : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in player_list)
-		if (isnewplayer(M))
+		if(isnewplayer(M))
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD)) // show the message to admins who have deadchat toggled on

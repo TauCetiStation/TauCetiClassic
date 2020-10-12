@@ -87,7 +87,7 @@
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP
-		if (B.brainmob && B.brainmob.mind)
+		if(B.brainmob && B.brainmob.mind)
 			B.brainmob.mind.transfer_to(H)
 			H.dna = B.brainmob.dna
 			QDEL_NULL(B.brainmob)

@@ -17,10 +17,10 @@ var/global/datum/js_error_manager/js_error_manager = new
 		log_files[D.file_name] = D
 
 /datum/js_error_manager/proc/log_error(name, message, client/C)
-	if (!config.log_js_error || !name || !message)
+	if(!config.log_js_error || !name || !message)
 		return
 
-	if (!log_files[name])
+	if(!log_files[name])
 		warning("JS error handler: not valid file name: '[name]'")
 		log_debug("JS error handler: not valid file name: '[name]'")
 		return

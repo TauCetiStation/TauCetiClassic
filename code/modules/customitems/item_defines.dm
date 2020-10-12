@@ -358,15 +358,15 @@
 	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
-	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
+	if(user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
 		to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 		return
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
-	if (!( istype(M, /mob) ))
+	if(!( istype(M, /mob) ))
 		return
-	if (reagents.total_volume)
+	if(reagents.total_volume)
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)

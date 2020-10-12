@@ -23,7 +23,7 @@
 
 /obj/item/clothing/atom_init()
 	. = ..()
-	if (!species_restricted_locked)
+	if(!species_restricted_locked)
 		update_species_restrictions()
 
 /*
@@ -90,7 +90,7 @@ var/global/list/icon_state_allowed_cache = list()
 				if(!t_state)
 					t_state = icon_state
 
-				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
 					t_state = "[t_state]_s"
 
 				if("[t_state]" in icons_exist)
@@ -111,7 +111,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/mob_can_equip(M, slot)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
-	if (!..())
+	if(!..())
 		return 0
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
@@ -146,13 +146,13 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted = list(target_species)
 
 	//Set icon
-	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
 	//Set icon
-	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
@@ -171,28 +171,28 @@ var/global/list/icon_state_allowed_cache = list()
 		flags &= ~BLOCKHAIR
 
 	//Set icon
-	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+	if(sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
 	//Set icon
-	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
 
 
 /obj/item/clothing/MouseDrop(obj/over_object)
-	if (ishuman(usr) || ismonkey(usr))
+	if(ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (loc != usr)
+		if(loc != usr)
 			return
-		if (!over_object)
+		if(!over_object)
 			return
 
-		if (!usr.incapacitated())
+		if(!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -214,9 +214,9 @@ var/global/list/icon_state_allowed_cache = list()
 	sprite_sheet_slot = SPRITE_SHEET_EARS
 
 /obj/item/clothing/ears/attack_hand(mob/user)
-	if (!user) return
+	if(!user) return
 
-	if (src.loc != user || !istype(user,/mob/living/carbon/human))
+	if(src.loc != user || !istype(user,/mob/living/carbon/human))
 		..()
 		return
 
@@ -242,7 +242,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if(!user.unEquip(src))
 		return
 
-	if (O)
+	if(O)
 		user.put_in_hands(O)
 		O.add_fingerprint(user)
 
@@ -320,7 +320,7 @@ BLIND     // can't see anything
 	if(cell)
 		//why is this not part of the powercell code?
 		cell.charge -= 1000 / severity
-		if (cell.charge < 0)
+		if(cell.charge < 0)
 			cell.charge = 0
 		if(cell.reliability != 100 && prob(50/severity))
 			cell.reliability -= 10 / severity
@@ -522,7 +522,7 @@ BLIND     // can't see anything
 		return FALSE
 	if(accessories.len && (A.slot in list("utility","armband")))
 		for(var/obj/item/clothing/accessory/AC in accessories)
-			if (AC.slot == A.slot)
+			if(AC.slot == A.slot)
 				return FALSE
 
 /obj/item/clothing/under/verb/removetie()
@@ -612,7 +612,7 @@ BLIND     // can't see anything
 			A.attack_hand(user)
 		return
 
-	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
+	if((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
 		return
 
 	..()
@@ -634,8 +634,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
-	if (istype(M, /mob/dead)) return
-	if (usr.incapacitated())
+	if(istype(M, /mob/dead)) return
+	if(usr.incapacitated())
 		return
 	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
@@ -651,7 +651,7 @@ BLIND     // can't see anything
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if(src.loc == usr)
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
 				to_chat(usr, "You disable your suit's remote sensing equipment.")
@@ -665,7 +665,7 @@ BLIND     // can't see anything
 			var/mob/living/carbon/C = M
 			C.update_suit_sensors()
 
-	else if (istype(src.loc, /mob))
+	else if(istype(src.loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
 				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)

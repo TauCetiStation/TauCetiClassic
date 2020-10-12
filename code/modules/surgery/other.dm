@@ -36,7 +36,7 @@
 		"<span class='notice'>You have patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>")
 
 	BP.status &= ~ORGAN_ARTERY_CUT
-	if (ishuman(user) && prob(40))
+	if(ishuman(user) && prob(40))
 		var/mob/living/carbon/human/H = user
 		H.bloody_hands(target, 0)
 
@@ -92,10 +92,10 @@
 
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		tool_name = "regenerative membrane"
-	if (istype(tool, /obj/item/stack/medical/bruise_pack))
-		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
+	if(istype(tool, /obj/item/stack/medical/bruise_pack))
+		if(istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
@@ -117,10 +117,10 @@
 
 /datum/surgery_step/groin_organs/fixing/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		tool_name = "regenerative membrane"
-	if (istype(tool, /obj/item/stack/medical/bruise_pack))
-		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
+	if(istype(tool, /obj/item/stack/medical/bruise_pack))
+		if(istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
 			tool_name = "the poultice"
 		else
 			tool_name = "the bandaid"
@@ -141,7 +141,7 @@
 	"<span class='warning'>Your hand slips, getting mess and tearing the inside of [target]'s groin with \the [tool]!</span>")
 	var/dam_amt = 2
 
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
 		target.adjustToxLoss(5)
 
 	else if(istype(tool, /obj/item/stack/medical/bruise_pack))

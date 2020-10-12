@@ -17,7 +17,7 @@
 
 /obj/item/weapon/storage/toolbox/atom_init()
 	. = ..()
-	if (src.type == /obj/item/weapon/storage/toolbox)
+	if(src.type == /obj/item/weapon/storage/toolbox)
 		to_chat(world, "BAD: [src] ([type]) spawned at [COORD(src)]")
 		return INITIALIZE_HINT_QDEL
 

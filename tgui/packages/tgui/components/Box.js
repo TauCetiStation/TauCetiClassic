@@ -13,15 +13,15 @@ import { CSS_COLORS } from '../constants';
  * Coverts our rem-like spacing unit into a CSS unit.
  */
 export const unit = value => {
-  if (typeof value === 'string') {
+  if(typeof value === 'string') {
     // Transparently convert pixels into rem units
-    if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
+    if(value.endsWith('px') && !Byond.IS_LTE_IE8) {
       return parseFloat(value) / 12 + 'rem';
     }
     return value;
   }
-  if (typeof value === 'number') {
-    if (Byond.IS_LTE_IE8) {
+  if(typeof value === 'number') {
+    if(Byond.IS_LTE_IE8) {
       return value * 12 + 'px';
     }
     return value + 'rem';
@@ -32,10 +32,10 @@ export const unit = value => {
  * Same as `unit`, but half the size for integers numbers.
  */
 export const halfUnit = value => {
-  if (typeof value === 'string') {
+  if(typeof value === 'string') {
     return unit(value);
   }
-  if (typeof value === 'number') {
+  if(typeof value === 'number') {
     return unit(value * 0.5);
   }
 };
@@ -46,25 +46,25 @@ const isColorClass = str => typeof str === 'string'
   && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
-  if (!isFalsy(value)) {
+  if(!isFalsy(value)) {
     style[attrName] = value;
   }
 };
 
 const mapUnitPropTo = (attrName, unit) => (style, value) => {
-  if (!isFalsy(value)) {
+  if(!isFalsy(value)) {
     style[attrName] = unit(value);
   }
 };
 
 const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
-  if (!isFalsy(value)) {
+  if(!isFalsy(value)) {
     style[attrName] = attrValue;
   }
 };
 
 const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
-  if (!isFalsy(value)) {
+  if(!isFalsy(value)) {
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
     }
@@ -72,7 +72,7 @@ const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
 };
 
 const mapColorPropTo = attrName => (style, value) => {
-  if (isColorCode(value)) {
+  if(isColorCode(value)) {
     style[attrName] = value;
   }
 };
@@ -96,7 +96,7 @@ const styleMapperByPropName = {
   fontSize: mapUnitPropTo('font-size', unit),
   fontFamily: mapRawPropTo('font-family'),
   lineHeight: (style, value) => {
-    if (!isFalsy(value)) {
+    if(!isFalsy(value)) {
       style['line-height'] = typeof value === 'number'
         ? value
         : unit(value);
@@ -144,7 +144,7 @@ const styleMapperByPropName = {
   backgroundColor: mapColorPropTo('background-color'),
   // Utility props
   fillPositionedParent: (style, value) => {
-    if (value) {
+    if(value) {
       style['position'] = 'absolute';
       style['top'] = 0;
       style['bottom'] = 0;
@@ -159,12 +159,12 @@ export const computeBoxProps = props => {
   const computedStyles = {};
   // Compute props
   for (let propName of Object.keys(props)) {
-    if (propName === 'style') {
+    if(propName === 'style') {
       continue;
     }
     const propValue = props[propName];
     const mapPropToStyle = styleMapperByPropName[propName];
-    if (mapPropToStyle) {
+    if(mapPropToStyle) {
       mapPropToStyle(computedStyles, propValue);
     }
     else {
@@ -177,13 +177,13 @@ export const computeBoxProps = props => {
     const attrValue = computedStyles[attrName];
     style += attrName + ':' + attrValue + ';';
   }
-  if (props.style) {
+  if(props.style) {
     for (let attrName of Object.keys(props.style)) {
       const attrValue = props.style[attrName];
       style += attrName + ':' + attrValue + ';';
     }
   }
-  if (style.length > 0) {
+  if(style.length > 0) {
     computedProps.style = style;
   }
   return computedProps;
@@ -206,7 +206,7 @@ export const Box = props => {
     ...rest
   } = props;
   // Render props
-  if (typeof children === 'function') {
+  if(typeof children === 'function') {
     return children(computeBoxProps(props));
   }
   const computedClassName = typeof className === 'string'

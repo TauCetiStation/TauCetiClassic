@@ -15,7 +15,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
+	if(istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -27,7 +27,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if(istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
@@ -99,7 +99,7 @@
 							if(i < 3) M.pixel_y += 8
 							else M.pixel_y -= 8
 
-		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+		if(HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -112,7 +112,7 @@
 		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
@@ -148,7 +148,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
+	if(istype(usr.loc,/mob) || usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
@@ -160,7 +160,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if(istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
 				if(M.pulling == usr)
@@ -279,7 +279,7 @@
 				step(usr, cur_dir)
 			sleep(1)
 
-		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
+		if(HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
 			usr.weakened += 10
@@ -292,7 +292,7 @@
 		to_chat(usr, "<span class='warning'>You need a ground to do this!</span>")
 		return
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
 		usr.paralysis += 3
@@ -318,7 +318,7 @@
 		src.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		return
 
-	if (usr.incapacitated() || !usr.canmove)
+	if(usr.incapacitated() || !usr.canmove)
 		to_chat(usr, "<span class='warning'>You can't smash right now!</span>")
 		return
 
@@ -330,7 +330,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf))
+	if(istype(usr.loc,/turf))
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
@@ -407,7 +407,7 @@
 					qdel(S)
 		usr.canmove = 1
 
-	if (istype(usr.loc,/obj))
+	if(istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You smash [container]!</span>")
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
@@ -436,11 +436,11 @@
 	return src.attack_hand(user) //#Z2
 
 /obj/structure/girder/attack_hand(mob/user)
-	if (HULK in user.mutations)
+	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(user.a_intent == INTENT_HARM)
 			playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-			if (prob(75))
+			if(prob(75))
 				to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				new /obj/item/stack/sheet/metal(loc)

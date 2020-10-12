@@ -82,7 +82,7 @@
 	if(href_list["togglep"])
 		src.toggle_power()
 		log_investigate("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)
-		if (active)
+		if(active)
 			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)])",0,1)
 			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
 	else if(href_list["scan"])

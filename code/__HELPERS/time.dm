@@ -73,7 +73,7 @@ var/last_round_duration = 0
 /var/midnight_rollovers = 0
 /var/rollovercheck_last_timeofday = 0
 /proc/update_midnight_rollover()
-	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+	if(world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
 		return midnight_rollovers++
 	return midnight_rollovers
 

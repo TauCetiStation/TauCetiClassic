@@ -18,7 +18,7 @@
 
 /mob/living/carbon/xenomorph/humanoid/drone/handle_hud_icons_health()
 	if(healths)
-		if (stat != DEAD)
+		if(stat != DEAD)
 			switch(health)
 				if(120 to INFINITY)
 					healths.icon_state = "health0"

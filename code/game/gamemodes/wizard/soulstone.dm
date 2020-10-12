@@ -30,7 +30,7 @@
 ///////////////////Options for using captured souls///////////////////////////////////////
 
 /obj/item/device/soulstone/attack_self(mob/user)
-	if (!in_range(src, user))
+	if(!in_range(src, user))
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -46,7 +46,7 @@
 
 /obj/item/device/soulstone/Topic(href, href_list)
 	var/mob/U = usr
-	if (!in_range(src, U)||U.machine!=src)
+	if(!in_range(src, U)||U.machine!=src)
 		U << browse(null, "window=aicard")
 		U.unset_machine()
 		return
@@ -55,12 +55,12 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
+		if("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		if ("Summon")
+		if("Summon")
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE
 				A.canmove = 1
@@ -93,7 +93,7 @@
 			if(C.imprinted != "empty")
 				to_chat(U, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone has already been imprinted with [C.imprinted]'s mind!")
 			else
-				if (T.stat == CONSCIOUS)
+				if(T.stat == CONSCIOUS)
 					to_chat(U, "<span class='warning'><b>Capture failed!</b>:</span> Kill or maim the victim first!")
 				else
 					if(T.client == null)
@@ -118,7 +118,7 @@
 							S.canmove = 0//Can't move out of the soul stone
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
-							if (T.client)
+							if(T.client)
 								T.client.mob = S
 							S.cancel_camera()
 							C.icon_state = "soulstone2"
@@ -131,7 +131,7 @@
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
-			if (T.stat == DEAD)
+			if(T.stat == DEAD)
 				to_chat(U, "<span class='warning'><b>Capture failed!</b>:</span> The shade has already been banished!")
 			else
 				if(C.contents.len)

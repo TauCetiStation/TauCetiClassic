@@ -36,7 +36,7 @@ Infestation:
 	return FALSE
 
 /datum/game_mode/infestation/assign_outsider_antag_roles()
-	if (!..())
+	if(!..())
 		return FALSE
 
 	var/xenomorphs_num = 0

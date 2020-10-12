@@ -7,9 +7,9 @@
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if(chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round(1)
 	return
 
@@ -34,16 +34,16 @@
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	if(chambered && countchambered)
 		boolets++
-	if (magazine)
+	if(magazine)
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
@@ -173,7 +173,7 @@
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
-		if (num_unloaded)
+		if(num_unloaded)
 			to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] is empty.</span>")
@@ -218,14 +218,14 @@
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
-	if (get_ammo() > 0)
+	if(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
 		CB.loc = get_turf(src.loc)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
+	if(num_unloaded)
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")

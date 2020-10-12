@@ -27,7 +27,7 @@ VOX HEIST ROUNDTYPE
 	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows.")
 
 /datum/game_mode/heist/can_start()
-	if (!..())
+	if(!..())
 		return FALSE
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "voxstart")

@@ -652,13 +652,13 @@ var/list/cult_runes = list()
 	if(cultist.buckled)
 		cultist.buckled.unbuckle_mob()
 		is_processed = TRUE
-	if (cultist.handcuffed)
+	if(cultist.handcuffed)
 		cultist.drop_from_inventory(cultist.handcuffed)
 		is_processed = TRUE
-	if (cultist.legcuffed)
+	if(cultist.legcuffed)
 		cultist.drop_from_inventory(cultist.legcuffed)
 		is_processed = TRUE
-	if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
+	if(istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 		cultist.remove_from_mob(cultist.wear_mask)
 		is_processed = TRUE
 	if(istype(cultist.loc, /obj/structure/closet))
@@ -838,7 +838,7 @@ var/list/cult_runes = list()
 /datum/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
 	for(var/datum/mind/H in SSticker.mode.cult)
-		if (iscarbon(H.current))
+		if(iscarbon(H.current))
 			cultists += H.current
 
 	var/list/acolytes = nearest_cultists()

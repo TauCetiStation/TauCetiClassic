@@ -9,12 +9,12 @@
 	icon_off = "secureceoff"
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/eng(src)
 
-	if (prob(70))
+	if(prob(70))
 		new /obj/item/clothing/accessory/storage/brown_vest(src)
 	else
 		new /obj/item/clothing/accessory/storage/webbing(src)
@@ -86,12 +86,12 @@
 	icon_off = "secureengoff"
 
 /obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/eng(src)
 
-	if (prob(70))
+	if(prob(70))
 		new /obj/item/clothing/accessory/storage/brown_vest(src)
 	else
 		new /obj/item/clothing/accessory/storage/webbing(src)
@@ -116,12 +116,12 @@
 	icon_off = "secureatmoff"
 
 /obj/structure/closet/secure_closet/atmos_personal/PopulateContents()
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/eng(src)
 
-	if (prob(70))
+	if(prob(70))
 		new /obj/item/clothing/accessory/storage/brown_vest(src)
 	else
 		new /obj/item/clothing/accessory/storage/webbing(src)

@@ -42,14 +42,14 @@ export const retrace = stack => {
   const header = stack.split(/\n\s.*at/)[0];
   const mappedStack = StackTraceParser.parse(stack)
     .map(frame => {
-      if (!frame.file) {
+      if(!frame.file) {
         return frame;
       }
       // Find the correct source map
       const sourceMap = sourceMaps.find(sourceMap => {
         return frame.file.includes(sourceMap.file);
       });
-      if (!sourceMap) {
+      if(!sourceMap) {
         return frame;
       }
       // Map the frame
@@ -69,7 +69,7 @@ export const retrace = stack => {
     .map(frame => {
       // Stringify the frame
       const { file, methodName, lineNumber } = frame;
-      if (!file) {
+      if(!file) {
         return `  at ${methodName}`;
       }
       const compactPath = file

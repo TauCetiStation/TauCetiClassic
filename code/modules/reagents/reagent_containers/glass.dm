@@ -56,7 +56,7 @@
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
-	if (is_open_container())
+	if(is_open_container())
 		to_chat(usr, "<span class = 'notice'>You put the lid on \the [src].</span>")
 		flags ^= OPENCONTAINER
 	else
@@ -66,7 +66,7 @@
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
-	if (!is_open_container() || !proximity)
+	if(!is_open_container() || !proximity)
 		return
 
 	for(var/type in src.can_be_placed_into)
@@ -211,7 +211,7 @@
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
-	if (!is_open_container())
+	if(!is_open_container())
 		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
 		add_overlay(lid)
 
@@ -314,9 +314,9 @@
 
 /obj/item/weapon/reagent_containers/glass/bucket/update_icon()
 	cut_overlays()
-	if (reagents.total_volume > 1)
+	if(reagents.total_volume > 1)
 		add_overlay("bucket_water")
-	if (!is_open_container())
+	if(!is_open_container())
 		add_overlay("lid_bucket")
 
 /obj/item/weapon/reagent_containers/glass/bucket/on_reagent_change()

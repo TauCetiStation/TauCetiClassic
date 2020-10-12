@@ -71,14 +71,14 @@ var/list/department_radio_keys = list(
 )
 
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
+	if(istype(src, /mob/living/silicon/pai))
 		return
-	if (issilicon(src))
+	if(issilicon(src))
 		return 1
-	if (!ishuman(src))
+	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
+	if(H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
 		if(istype(H.l_ear,/obj/item/device/radio/headset))
 			dongle = H.l_ear
@@ -90,12 +90,12 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/proc/hivecheck()
-	if (isxeno(src))
+	if(isxeno(src))
 		return 1
-	if (!ishuman(src))
+	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
+	if(H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
 		if(istype(H.l_ear,/obj/item/device/radio/headset))
 			dongle = H.l_ear
@@ -107,11 +107,11 @@ var/list/department_radio_keys = list(
 			return 1
 
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if(sanitize)
@@ -126,12 +126,12 @@ var/list/department_radio_keys = list(
 	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 
 	//handle nonverbal and sign languages here
-	if (speaking)
-		if (speaking.flags & NONVERBAL)
-			if (prob(30))
+	if(speaking)
+		if(speaking.flags & NONVERBAL)
+			if(prob(30))
 				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
 
-		if (speaking.flags & SIGNLANG)
+		if(speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return 1
 
@@ -140,11 +140,11 @@ var/list/department_radio_keys = list(
 		italics = 1
 		message_range = 1
 
-		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+		if(!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
-				if (speech_sound)
+				if(speech_sound)
 					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
 		speech_sound = null	//so we don't play it twice.
@@ -157,7 +157,7 @@ var/list/department_radio_keys = list(
 			italics = 1
 			message_range = 1
 
-			if (speech_sound)
+			if(speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
 
 	var/list/listening = list()

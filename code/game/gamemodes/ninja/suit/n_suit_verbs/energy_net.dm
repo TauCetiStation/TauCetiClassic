@@ -98,7 +98,7 @@
 	return
 
 /obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
-	if (HULK in user.mutations)
+	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>[user] rips the energy net apart!</span>", "<span class='notice'>You easily destroy the energy net.</span>")
 		health-=50
@@ -111,7 +111,7 @@
 /obj/effect/energy_net/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (isxenolarva(user) || isfacehugger(user))
+	if(isxenolarva(user) || isfacehugger(user))
 		return
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	health -= rand(10, 20)

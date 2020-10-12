@@ -36,7 +36,7 @@ export const Button = props => {
   } = props;
   const hasContent = !!(content || children);
   // A warning about the lowercase onclick
-  if (onclick) {
+  if(onclick) {
     logger.warn(
       `Lowercase 'onclick' is not supported on Button and lowercase`
       + ` prop names are discouraged in general. Please use a camelCase`
@@ -63,22 +63,22 @@ export const Button = props => {
       unselectable={Byond.IS_LTE_IE8}
       onclick={e => {
         refocusLayout();
-        if (!disabled && onClick) {
+        if(!disabled && onClick) {
           onClick(e);
         }
       }}
       onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
-        if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
+        if(keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
           e.preventDefault();
-          if (!disabled && onClick) {
+          if(!disabled && onClick) {
             onClick(e);
           }
           return;
         }
         // Refocus layout on pressing escape.
-        if (keyCode === KEY_ESCAPE) {
+        if(keyCode === KEY_ESCAPE) {
           e.preventDefault();
           refocusLayout();
           return;
@@ -124,7 +124,7 @@ export class ButtonConfirm extends Component {
       clickedOnce: false,
     };
     this.handleClick = () => {
-      if (this.state.clickedOnce) {
+      if(this.state.clickedOnce) {
         this.setClickedOnce(false);
       }
     };
@@ -134,7 +134,7 @@ export class ButtonConfirm extends Component {
     this.setState({
       clickedOnce,
     });
-    if (clickedOnce) {
+    if(clickedOnce) {
       setTimeout(() => window.addEventListener('click', this.handleClick));
     }
     else {
@@ -182,9 +182,9 @@ export class ButtonInput extends Component {
     this.setState({
       inInput,
     });
-    if (this.inputRef) {
+    if(this.inputRef) {
       const input = this.inputRef.current;
-      if (inInput) {
+      if(inInput) {
         input.value = this.props.currentValue || "";
         try {
           input.focus();
@@ -196,14 +196,14 @@ export class ButtonInput extends Component {
   }
 
   commitResult(e) {
-    if (this.inputRef) {
+    if(this.inputRef) {
       const input = this.inputRef.current;
       const hasValue = (input.value !== "");
-      if (hasValue) {
+      if(hasValue) {
         this.props.onCommit(e, input.value);
         return;
       } else {
-        if (!this.props.defaultValue) {
+        if(!this.props.defaultValue) {
           return;
         }
         this.props.onCommit(e, this.props.defaultValue);
@@ -249,19 +249,19 @@ export class ButtonInput extends Component {
             'text-align': 'left',
           }}
           onBlur={e => {
-            if (!this.state.inInput) {
+            if(!this.state.inInput) {
               return;
             }
             this.setInInput(false);
             this.commitResult(e);
           }}
           onKeyDown={e => {
-            if (e.keyCode === KEY_ENTER) {
+            if(e.keyCode === KEY_ENTER) {
               this.setInInput(false);
               this.commitResult(e);
               return;
             }
-            if (e.keyCode === KEY_ESCAPE) {
+            if(e.keyCode === KEY_ESCAPE) {
               this.setInInput(false);
             }
           }}

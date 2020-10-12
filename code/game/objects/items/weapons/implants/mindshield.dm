@@ -90,7 +90,7 @@
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
 /obj/item/weapon/implant/mindshield/loyalty/process()
-	if (!implanted || !imp_in)
+	if(!implanted || !imp_in)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(imp_in.stat == DEAD)

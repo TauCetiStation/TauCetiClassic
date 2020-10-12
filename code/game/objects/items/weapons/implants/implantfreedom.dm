@@ -14,9 +14,9 @@
 
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
-	if (uses < 1)
+	if(uses < 1)
 		return 0
-	if (emote == activation_emote)
+	if(emote == activation_emote)
 		uses--
 		to_chat(source, "You feel a faint click.")
 		source.uncuff()

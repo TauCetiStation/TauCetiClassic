@@ -91,8 +91,8 @@
 	return TRUE
 
 /obj/machinery/shield_gen/ui_interact(mob/user)
-	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isobserver(user))
+	if( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+		if(!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
@@ -207,7 +207,7 @@
 		icon_state = "broke"
 	else
 		if( powered() )
-			if (src.active)
+			if(src.active)
 				icon_state = "generator1"
 			else
 				icon_state = "generator0"
@@ -217,7 +217,7 @@
 				src.icon_state = "generator0"
 				stat |= NOPOWER
 				update_power_use()
-			if (src.active)
+			if(src.active)
 				toggle()
 	update_power_use()
 
@@ -236,7 +236,7 @@
 	var/turf/T = src.loc
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/net
-	if (C)
+	if(C)
 		net = C.netnum		// find the powernet of the connected cable
 
 	if(!net)

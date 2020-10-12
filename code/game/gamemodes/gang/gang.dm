@@ -120,7 +120,7 @@
 
 /datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		to_chat(boss_mind.current, "<FONT size=3 color=red><B>You are the founding member of the [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang!</B></FONT>")
 	for(var/datum/objective/objective in boss_mind.objectives)
 		to_chat(boss_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
@@ -144,8 +144,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.mutations.Remove(CLUMSY)
 
@@ -164,7 +164,7 @@
 	. = 0
 
 	var/where = mob.equip_in_one_of_slots(gangtool, slots)
-	if (!where)
+	if(!where)
 		to_chat(mob, "Your Syndicate benefactors were unfortunately unable to get you a Gangtool.")
 		. += 1
 	else
@@ -173,14 +173,14 @@
 		to_chat(mob, "You can also promote your gang members to <b>lieutenant</b> by having them use an unregistered gangtool. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools.")
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
-	if (!where2)
+	if(!where2)
 		to_chat(mob, "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen to start.")
 		. += 1
 	else
 		to_chat(mob, "The <b>recruitment pen</b> in your [where2] will help you get your gang started. Stab unsuspecting crew members with it to recruit them.")
 
 	var/where3 = mob.equip_in_one_of_slots(SC, slots)
-	if (!where3)
+	if(!where3)
 		to_chat(mob, "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start.")
 		. += 1
 	else

@@ -100,19 +100,19 @@ const keyState = {};
 
 const createHotkeyString = (ctrlKey, altKey, shiftKey, keyCode) => {
   let str = '';
-  if (ctrlKey) {
+  if(ctrlKey) {
     str += 'Ctrl+';
   }
-  if (altKey) {
+  if(altKey) {
     str += 'Alt+';
   }
-  if (shiftKey) {
+  if(shiftKey) {
     str += 'Shift+';
   }
-  if (keyCode >= 48 && keyCode <= 90) {
+  if(keyCode >= 48 && keyCode <= 90) {
     str += String.fromCharCode(keyCode);
   }
-  else if (keyCode >= KEY_F1 && keyCode <= KEY_F12) {
+  else if(keyCode >= KEY_F1 && keyCode <= KEY_F12) {
     str += 'F' + (keyCode - 111);
   }
   else {
@@ -142,11 +142,11 @@ const getKeyData = e => {
  * in game while the browser window is focused.
  */
 const handlePassthrough = (e, eventType) => {
-  if (e.defaultPrevented) {
+  if(e.defaultPrevented) {
     return;
   }
   const targetName = e.target && e.target.localName;
-  if (targetName === 'input' || targetName === 'textarea') {
+  if(targetName === 'input' || targetName === 'textarea') {
     return;
   }
   const keyData = getKeyData(e);
@@ -155,15 +155,15 @@ const handlePassthrough = (e, eventType) => {
   // modifier (for toggling run/walk) is implemented very shittily
   // in our codebase. We pass no other modifier keys, because they can
   // be used internally as tgui hotkeys.
-  if (ctrlKey || shiftKey || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
+  if(ctrlKey || shiftKey || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
     return;
   }
   // Send this keypress to BYOND
-  if (eventType === 'keydown' && !keyState[keyCode]) {
+  if(eventType === 'keydown' && !keyState[keyCode]) {
     logger.debug('passthrough', eventType, keyData);
     return Byond.topic({ __keydown: keyCode });
   }
-  if (eventType === 'keyup' && keyState[keyCode]) {
+  if(eventType === 'keyup' && keyState[keyCode]) {
     logger.debug('passthrough', eventType, keyData);
     return Byond.topic({ __keyup: keyCode });
   }
@@ -175,7 +175,7 @@ const handlePassthrough = (e, eventType) => {
  */
 export const releaseHeldKeys = () => {
   for (let keyCode of Object.keys(keyState)) {
-    if (keyState[keyCode]) {
+    if(keyState[keyCode]) {
       logger.log(`releasing [${keyCode}] key`);
       keyState[keyCode] = false;
       Byond.topic({ __keyup: keyCode });
@@ -191,9 +191,9 @@ const hotKeySubscribers = [];
  */
 export const subscribeToHotKey = (keyString, fn) => {
   hotKeySubscribers.push((store, keyData) => {
-    if (keyData.keyString === keyString) {
+    if(keyData.keyString === keyString) {
       const action = fn(store);
-      if (action) {
+      if(action) {
         store.dispatch(action);
       }
     }
@@ -201,7 +201,7 @@ export const subscribeToHotKey = (keyString, fn) => {
 };
 
 const handleHotKey = (e, eventType, store) => {
-  if (eventType !== 'keyup') {
+  if(eventType !== 'keyup') {
     return;
   }
   const keyData = getKeyData(e);
@@ -211,7 +211,7 @@ const handleHotKey = (e, eventType, store) => {
     keyString,
   } = keyData;
   // Dispatch a detected hotkey as a store action
-  if (hasModifierKeys && !MODIFIER_KEYS.includes(keyCode)
+  if(hasModifierKeys && !MODIFIER_KEYS.includes(keyCode)
       || keyCode >= KEY_F1 && keyCode <= KEY_F12) {
     logger.log(keyString);
     for (let subscriberFn of hotKeySubscribers) {
@@ -258,13 +258,13 @@ export const hotKeyMiddleware = store => {
   subscribeToKeyPresses((e, eventType) => {
     // IE8: Can't determine the focused element, so by extension it passes
     // keypresses when inputs are focused.
-    if (!Byond.IS_LTE_IE8) {
+    if(!Byond.IS_LTE_IE8) {
       handlePassthrough(e, eventType);
     }
     handleHotKey(e, eventType, store);
   });
   // IE8: focusin/focusout only available on IE9+
-  if (!Byond.IS_LTE_IE8) {
+  if(!Byond.IS_LTE_IE8) {
     // Clean up when browser window completely loses focus
     subscribeToLossOfFocus(() => {
       releaseHeldKeys();

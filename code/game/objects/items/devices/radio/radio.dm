@@ -54,7 +54,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency, maxf)
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
-	else if (frequency < 1441 || frequency > maxf)
+	else if(frequency < 1441 || frequency > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
 		frequency = sanitize_frequency(frequency, maxf)
 
@@ -118,28 +118,28 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat && !IsAdminGhost(usr)) || !on)
+	if((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
-	if (!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
+	if(!(issilicon(usr) || IsAdminGhost(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
-	if (href_list["track"])
+	if(href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 			A.ai_actual_track(target)
 		return
 
-	else if (href_list["faketrack"])
+	else if(href_list["faketrack"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 
 			A:cameraFollow = target
 			to_chat(A, text("Now tracking [] on camera.", target.name))
-			if (usr.machine == null)
+			if(usr.machine == null)
 				usr.machine = usr
 
 			while (usr:cameraFollow == target)
@@ -149,9 +149,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		return
 
-	else if (href_list["freq"])
+	else if(href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if (!freerange || (frequency < 1200 || frequency > 1600))
+		if(!freerange || (frequency < 1200 || frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency, maxf)
 		set_frequency(new_frequency)
 		if(hidden_uplink)
@@ -159,24 +159,24 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				usr << browse(null, "window=radio")
 				return
 
-	else if (href_list["talk"])
+	else if(href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
-	else if (href_list["listen"])
+	else if(href_list["listen"])
 		var/chan_name = href_list["ch_name"]
-		if (!chan_name)
+		if(!chan_name)
 			listening = text2num(href_list["listen"])
 		else
-			if (channels[chan_name] & FREQ_LISTENING)
+			if(channels[chan_name] & FREQ_LISTENING)
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
-	if (!( master ))
-		if (istype(loc, /mob))
+	if(!( master ))
+		if(istype(loc, /mob))
 			interact(loc)
 		else
 			updateDialog()
 	else
-		if (istype(master.loc, /mob))
+		if(istype(master.loc, /mob))
 			interact(master.loc)
 		else
 			updateDialog()
@@ -185,16 +185,16 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459) //BS12 EDIT
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
-		if (channel == "department")
+		if(channel == "department")
 			//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 			channel = channels[1]
 		connection = secure_radio_connections[channel]
 	else
 		connection = radio_connection
 		channel = null
-	if (!istype(connection))
+	if(!istype(connection))
 		return
-	if (!connection)
+	if(!connection)
 		return
 
 	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
@@ -235,20 +235,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			channel = null
 		if(channel) // If a channel is specified, look for it.
 			if(channels && channels.len > 0)
-				if (channel == "department")
+				if(channel == "department")
 					//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 					channel = channels[1]
 				connection = secure_radio_connections[channel]
-				if (!channels[channel]) // if the channel is turned off, don't broadcast
+				if(!channels[channel]) // if the channel is turned off, don't broadcast
 					return
 			else
 				// If we were to send to a channel we don't have, drop it.
 		else // If a channel isn't specified, send to common.
 			connection = radio_connection
 			channel = null
-		if (!istype(connection))
+		if(!istype(connection))
 			return
-		if (!connection)
+		if(!connection)
 			return
 
 		var/turf/position = get_turf(src)
@@ -267,23 +267,23 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/jobname // the mob's "job"
 
 		// --- Human: use their actual job ---
-		if (ishuman(M))
+		if(ishuman(M))
 			jobname = M:get_assignment()
 
 		// --- Carbon Nonhuman ---
-		else if (iscarbon(M)) // Nonhuman carbon mob
+		else if(iscarbon(M)) // Nonhuman carbon mob
 			jobname = "No id"
 
 		// --- AI ---
-		else if (isAI(M))
+		else if(isAI(M))
 			jobname = "AI"
 
 		// --- Cyborg ---
-		else if (isrobot(M))
+		else if(isrobot(M))
 			jobname = "Cyborg"
 
 		// --- Personal AI (pAI) ---
-		else if (istype(M, /mob/living/silicon/pai))
+		else if(istype(M, /mob/living/silicon/pai))
 			jobname = "Personal AI"
 
 		// --- Unidentifiable mob ---
@@ -294,7 +294,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Modifications to the mob's identity ---
 
 		// The mob is disguising their identity:
-		if (ishuman(M) && M.GetVoice() != real_name)
+		if(ishuman(M) && M.GetVoice() != real_name)
 			displayname = M.GetVoice()
 			jobname = "Unknown"
 			voicemask = 1
@@ -422,14 +422,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		var/datum/radio_frequency/connection = null
 		if(channel && channels && channels.len > 0)
-			if (channel == "department")
+			if(channel == "department")
 				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
 				channel = channels[1]
 			connection = secure_radio_connections[channel]
 		else
 			connection = radio_connection
 			channel = null
-		if (!istype(connection))
+		if(!istype(connection))
 			return
 		var/display_freq = connection.frequency
 
@@ -437,20 +437,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		var/eqjobname
 
-		if (ishuman(M))
+		if(ishuman(M))
 			eqjobname = M:get_assignment()
-		else if (iscarbon(M))
+		else if(iscarbon(M))
 			eqjobname = "No id" //only humans can wear ID
-		else if (isAI(M))
+		else if(isAI(M))
 			eqjobname = "AI"
-		else if (isrobot(M))
+		else if(isrobot(M))
 			eqjobname = "Cyborg"//Androids don't really describe these too well, in my opinion.
-		else if (istype(M, /mob/living/silicon/pai))
+		else if(istype(M, /mob/living/silicon/pai))
 			eqjobname = "Personal AI"
 		else
 			eqjobname = "Unknown"
 
-		if (wires.is_index_cut(RADIO_WIRE_TRANSMIT))
+		if(wires.is_index_cut(RADIO_WIRE_TRANSMIT))
 			return
 
 		var/list/receive = list()
@@ -467,17 +467,17 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/list/heard_garbled = list() // garbled message
 
 		for (var/mob/R in receive)
-			if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			if(R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
-			if (R.say_understands(M))
-				if (ishuman(M) && M.GetVoice() != M.real_name)
+			if(R.say_understands(M))
+				if(ishuman(M) && M.GetVoice() != M.real_name)
 					heard_masked += R
 				else
 					heard_normal += R
 			else
 				heard_voice += R
 
-		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
+		if(length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
 
 			//var/part_b = "</span><b> [bicon(src)]\[[format_frequency(frequency)]\]</b> <span class='message'>"
 			var/freq_text
@@ -503,11 +503,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			var/part_a_span = "radio"
 
-			if (display_freq==SYND_FREQ)
+			if(display_freq==SYND_FREQ)
 				part_a_span = "syndradio"
-			else if (display_freq==COMM_FREQ)
+			else if(display_freq==COMM_FREQ)
 				part_a_span = "comradio"
-			else if (display_freq in DEPT_FREQS)
+			else if(display_freq in DEPT_FREQS)
 				part_a_span = "deptradio"
 
 			var/part_a = "<span class='[part_a_span]'><span class='name'>"
@@ -549,7 +549,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			//End of research and feedback code.
 
-			if (length(heard_masked))
+			if(length(heard_masked))
 				var/N = M.name
 				var/J = eqjobname
 				if(ishuman(M) && M.GetVoice() != M.real_name)
@@ -562,7 +562,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
 
-			if (length(heard_normal))
+			if(length(heard_normal))
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
@@ -571,7 +571,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
 
-			if (length(heard_voice))
+			if(length(heard_voice))
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
@@ -580,7 +580,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
 
-			if (length(heard_garbled))
+			if(length(heard_garbled))
 				quotedmsg = M.say_quote(stars(message))
 				var/rendered = "[part_a][M.voice_name][part_b][quotedmsg][part_c]"
 
@@ -592,7 +592,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
 
-	if (broadcasting)
+	if(broadcasting)
 		if(get_dist(src, M) <= canhear_range)
 			talk_into(M, msg,null,verb,speaking)
 
@@ -600,7 +600,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R, message)
 
-	if ((R.frequency == frequency && message))
+	if((R.frequency == frequency && message))
 		return 1
 	else if
 
@@ -615,7 +615,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (wires.is_index_cut(RADIO_WIRE_RECEIVE))
+	if(wires.is_index_cut(RADIO_WIRE_RECEIVE))
 		return -1
 	if(!listening)
 		return -1
@@ -626,20 +626,20 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if (!on)
+	if(!on)
 		return -1
-	if (!freq) //recieved on main frequency
-		if (!listening)
+	if(!freq) //recieved on main frequency
+		if(!listening)
 			return -1
 	else
 		var/accept = (freq==frequency && listening)
-		if (!accept)
+		if(!accept)
 			for (var/ch_name in channels)
 				var/datum/radio_frequency/RF = secure_radio_connections[ch_name]
-				if (RF.frequency==freq && (channels[ch_name]&FREQ_LISTENING))
+				if(RF.frequency==freq && (channels[ch_name]&FREQ_LISTENING))
 					accept = 1
 					break
-		if (!accept)
+		if(!accept)
 			return -1
 	return canhear_range
 
@@ -652,7 +652,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/examine(mob/user)
 	..()
-	if (src in view(1, user))
+	if(src in view(1, user))
 		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/I, mob/user, params)
@@ -675,7 +675,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if (isscrewdriver(I))
+	else if(isscrewdriver(I))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -777,7 +777,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/Topic(href, href_list)
 	if(usr.incapacitated() || !on)
 		return
-	if (href_list["mode"])
+	if(href_list["mode"])
 		if(subspace_transmission != 1)
 			subspace_transmission = 1
 			to_chat(usr, "Subspace Transmission is disabled")

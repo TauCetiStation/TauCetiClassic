@@ -27,7 +27,7 @@
 		act = copytext(act, 1, -1)
 
 	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
+		if(I.implanted)
 			I.trigger(act, src)
 
 	if(stat == DEAD && (act != "deathgasp"))
@@ -54,7 +54,7 @@
 
 // ========== VOICED ==========
 
-		if ("grunt")
+		if("grunt")
 			message_type = SHOWMSG_AUDIO
 			message = pick("grunts slightly.", "groans.")
 			mute_message = "writhes and sighs sligtly."
@@ -86,7 +86,7 @@
 			cloud_emote = "cloud-pain"
 			add_combo_value_all(10)
 
-		if ("scream")
+		if("scream")
 			message_type = SHOWMSG_AUDIO
 			message = pick("screams loudly!", "screams!")
 			mute_message = pick("opens their mouth like a fish gasping for air!", "twists their face into an agonised expression!", "makes a very hurt expression!")
@@ -101,7 +101,7 @@
 			cloud_emote = "cloud-scream"
 			add_combo_value_all(10)
 
-		if ("cough")
+		if("cough")
 			message_type = SHOWMSG_AUDIO
 			message = (get_species() == DIONA) ? "creaks." : "coughs."
 			mute_message = (get_species() == DIONA) ? "creaks." : "coughs."
@@ -114,20 +114,20 @@
 
 // ========== AUDIBLE ==========
 
-		if ("choke")
+		if("choke")
 			message_type = muted ? SHOWMSG_VISUAL : SHOWMSG_AUDIO
 			message = "chokes."
 			mute_message = "clutches their throat desperately!"
 			muzzled_message = "makes a weak noise."
 
-		if ("snore")
+		if("snore")
 			message_type = SHOWMSG_AUDIO
 			message = pick("snores.", "sleeps soundly.")
 			muzzled_message = pick("snores.", "makes a noise.")
 			miming_message = "snores."
 			conditions_for_emote = (!species.flags[NO_BREATHE])
 
-		if ("whimper")
+		if("whimper")
 			message_type = SHOWMSG_AUDIO
 			message = "whimpers."
 			mute_message = "whimpers"
@@ -135,14 +135,14 @@
 			miming_message = "whimpers."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("sniff")
+		if("sniff")
 			message_type = SHOWMSG_AUDIO
 			message = "sniffs."
 			mute_message = "sniffs."
 			muzzled_message = "sniffs."
 			miming_message = "sniffs."
 
-		if ("sneeze")
+		if("sneeze")
 			message_type = SHOWMSG_AUDIO
 			message = "sneezes."
 			mute_message = "sneezes."
@@ -150,7 +150,7 @@
 			miming_message = "sneezes."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("gasp")
+		if("gasp")
 			message_type = SHOWMSG_AUDIO
 			cloud_emote = "cloud-gasp"
 			mute_message = "sucks in air violently!"
@@ -159,7 +159,7 @@
 			message = "gasps!"
 			conditions_for_emote = (!species.flags[NO_BREATHE])
 
-		if ("moan")
+		if("moan")
 			message_type = SHOWMSG_AUDIO
 			mute_message = "moans silently."
 			miming_message = "appears to moan!"
@@ -167,14 +167,14 @@
 			message = "moans!"
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("sigh")
+		if("sigh")
 			message_type = SHOWMSG_AUDIO
 			message = "sighs."
 			muzzled_message = "makes a weak noise."
 			miming_message = "sighs."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("mumble")
+		if("mumble")
 			message_type = SHOWMSG_VISUAL
 			message = pick("grumbles.", "mumbles.")
 			mute_message = "makes an annoyed face!"
@@ -182,7 +182,7 @@
 
 // ========== HYBRID ==========
 
-		if ("laugh")
+		if("laugh")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = "laughs."
 			mute_message = "laughs silently."
@@ -190,13 +190,13 @@
 			miming_message = "acts out a laugh."
 			conditions_for_emote = (get_species() != SKRELL) && HAS_HEAD && (get_species() != ZOMBIE)
 
-		if ("cry")
+		if("cry")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = "cries."
 			muzzled_message = "makes a [pick("sad face", "weak noise")] and frowns."
 			conditions_for_emote = (get_species() != SKRELL) && (get_species() != DIONA) && HAS_HEAD && (get_species() != ZOMBIE)
 
-		if ("giggle")
+		if("giggle")
 			message_type = SHOWMSG_AUDIO | SHOWMSG_VISUAL
 			message = pick("chuckles.", "giggles.")
 			mute_message = "smiles slightly and [pick("chuckles", "giggles")] silently"
@@ -204,117 +204,117 @@
 			miming_message = "appears to [pick("chuckle", "giggle")]."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("clap")
+		if("clap")
 			message_type = SHOWMSG_VISUAL | SHOWMSG_AUDIO
 			message = "claps."
 			conditions_for_emote = BOTH_HANDS_ARE_USABLE && (get_species() != ZOMBIE)
 
 // ========== VISIBLE ==========
 
-		if ("raisehand")
+		if("raisehand")
 			message_type = SHOWMSG_VISUAL
 			message = "raises a hand."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
-		if ("blink")
+		if("blink")
 			message_type = SHOWMSG_VISUAL
 			message = pick("blinks.", "blinks rapidly.")
 			conditions_for_emote = HAS_HEAD
 
-		if ("drool")
+		if("drool")
 			message_type = SHOWMSG_VISUAL
 			message = "drools."
 			conditions_for_emote = HAS_HEAD && (get_species() != DIONA)
 
-		if ("eyebrow")
+		if("eyebrow")
 			message_type = SHOWMSG_VISUAL
 			message = "raises an eyebrow."
 			conditions_for_emote = HAS_HEAD
 
-		if ("twitch")
+		if("twitch")
 			message_type = SHOWMSG_VISUAL
 			message = pick("twitches violently.", "twitches.")
 
-		if ("frown")
+		if("frown")
 			message_type = SHOWMSG_VISUAL
 			message = "frowns."
 			conditions_for_emote = HAS_HEAD
 
-		if ("nod")
+		if("nod")
 			message_type = SHOWMSG_VISUAL
 			message = "nods."
 			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
-		if ("wave")
+		if("wave")
 			message_type = SHOWMSG_VISUAL
 			message = "waves."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
-		if ("deathgasp")
+		if("deathgasp")
 			message_type = SHOWMSG_VISUAL
 			message = "seizes up and falls limp, [his_macro] eyes dead and lifeless..."
 
-		if ("grin")
+		if("grin")
 			message_type = SHOWMSG_VISUAL
 			message = "grins."
 			conditions_for_emote = HAS_HEAD
 
-		if ("shrug")
+		if("shrug")
 			message_type = SHOWMSG_VISUAL
 			message = "shrugs."
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("smile")
+		if("smile")
 			message_type = SHOWMSG_VISUAL
 			message = "smiles."
 			conditions_for_emote = HAS_HEAD
 
-		if ("shiver")
+		if("shiver")
 			message_type = SHOWMSG_VISUAL
 			message = "shivers."
 
-		if ("wink")
+		if("wink")
 			message_type = SHOWMSG_VISUAL
 			message = "winks."
 			conditions_for_emote = HAS_HEAD && (get_species() != ZOMBIE)
 
-		if ("yawn")
+		if("yawn")
 			message_type = SHOWMSG_VISUAL
 			message = "yawns."
 			conditions_for_emote = (!species.flags[NO_BREATHE])
 
-		if ("collapse")
+		if("collapse")
 			message_type = SHOWMSG_VISUAL
 			message = "collapses!"
 			Paralyse(2)
 
-		if ("bow")
+		if("bow")
 			message_type = SHOWMSG_VISUAL
 			message = pick("bows.", "bows in favor.")
 			conditions_for_emote = (get_species() != ZOMBIE)
 
-		if ("salute")
+		if("salute")
 			message_type = SHOWMSG_VISUAL
 			message = "salutes."
 			conditions_for_emote = ONE_HAND_IS_USABLE && (get_species() != ZOMBIE)
 
-		if ("pray")
+		if("pray")
 			message_type = SHOWMSG_VISUAL
 			message = "prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 // ========== SPECIAL ==========
 
-		if ("custom")
+		if("custom")
 			var/input = sanitize(input("Choose an emote to display.") as text|null)
-			if (!input)
+			if(!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 			switch(input2)
-				if ("Visible")
+				if("Visible")
 					message_type = SHOWMSG_VISUAL
-				if ("Hearable")
-					if (!can_make_a_sound)
+				if("Hearable")
+					if(!can_make_a_sound)
 						return
 					message_type = SHOWMSG_AUDIO
 				else
@@ -322,20 +322,20 @@
 					return
 			return custom_emote(message_type, message)
 
-		if ("me")
+		if("me")
 			if(client)
-				if (client.prefs.muted & MUTE_IC)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (MUTED).</span>")
 					return
-				if (client.handle_spam_prevention(message, MUTE_IC))
+				if(client.handle_spam_prevention(message, MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
 			return custom_emote(message_type, message)
 
-		if ("help")
+		if("help")
 			to_chat(src, "<span class='notice'>Voiced in <B>BOLD</B>: grunt, groan, scream, choke, snore, whimper, sniff, sneeze, gasp, moan, sigh, mumble, groan, \
 			                                                          laugh, cry, giggle, clap, blink, drool, eyebrow, twitch, frown, nod, blush, wave, deathgasp, \
 			                                                          grin, raisehand, shrug, signal, smile, shiver, wink, yawn, collapse, bow, salute.</span>")

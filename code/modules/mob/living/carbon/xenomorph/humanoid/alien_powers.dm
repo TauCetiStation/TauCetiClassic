@@ -68,10 +68,10 @@ Doesn't work on other aliens/AI.*/
 
 	if(isxeno(M))
 		var/amount = input("Amount:", "Transfer Plasma to [M]") as num
-		if (amount)
+		if(amount)
 			amount = abs(round(amount))
 			if(powerc(amount))
-				if (get_dist(src,M) <= 1)
+				if(get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
 					to_chat(M, "<span class='noticealien'>[src] has transfered [amount] plasma to you.</span>")
@@ -128,7 +128,7 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-50)
 		to_chat(src, "<span class='notice'>You spit neurotoxin at [target].</span>")
 		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
+			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
@@ -140,7 +140,7 @@ Doesn't work on other aliens/AI.*/
 			U = U.loc
 		if(!istype(T, /turf))
 			return
-		if (U == T)
+		if(U == T)
 			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), ran_zone(zone_sel.selecting)
 			return
 		if(!istype(U, /turf))
@@ -250,7 +250,7 @@ Doesn't work on other aliens/AI.*/
 		U = U.loc
 	if(!istype(T, /turf))
 		return
-	if (U == T)
+	if(U == T)
 		return
 	if(!istype(U, /turf))
 		return

@@ -352,12 +352,12 @@ update_flag
 	data["valveOpen"] = valve_open ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
+	if(holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure()))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "canister.tmpl", "Canister", 480, 400)
@@ -380,18 +380,18 @@ update_flag
 		var/logmsg
 		valve_open = !valve_open
 
-		if (valve_open)
-			if (holding)
+		if(valve_open)
+			if(holding)
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the [holding]<br>"
 			else
 				release_log += "Valve was <b>closed</b> by [usr] ([usr.ckey]), stopping the transfer into the <font color='red'><b>air</b></font><br>"
 		else
-			if (holding)
+			if(holding)
 				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the [holding]<br>"
 			else
 				release_log += "Valve was <b>opened</b> by [usr] ([usr.ckey]), starting the transfer into the <font color='red'><b>air</b></font><br>"
 
-		if (valve_open)
+		if(valve_open)
 			logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 			if(!holding)
 				var/list/danger = list()
@@ -415,22 +415,22 @@ update_flag
 		log_investigate(logmsg, INVESTIGATE_ATMOS)
 		release_log += logmsg
 
-	if (href_list["remove_tank"])
+	if(href_list["remove_tank"])
 		if(holding)
-			if (valve_open)
+			if(valve_open)
 				log_investigate("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name
 			holding.forceMove(get_turf(src))
 			holding = null
 
-	if (href_list["pressure_adj"])
+	if(href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		release_pressure = clamp(release_pressure + diff, can_min_release_pressure, can_max_release_pressure)
 		log_investigate("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
-	if (href_list["relabel"])
-		if (can_label)
+	if(href_list["relabel"])
+		if(can_label)
 			var/list/colors = list(\
 				"\[N2O\]" = "redws", \
 				"\[N2\]" = "red", \
@@ -442,7 +442,7 @@ update_flag
 				"\[H2\]" = "purple", \
 			)
 			var/label = input("Choose canister label", "Gas canister") as null|anything in colors
-			if (label)
+			if(label)
 				src.canister_color = colors[label]
 				src.icon_state = colors[label]
 				src.name = "Canister: [label]"

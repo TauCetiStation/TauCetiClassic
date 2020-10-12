@@ -75,7 +75,7 @@
 	icon = null
 	initial_loc = get_area(loc)
 	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 
@@ -182,9 +182,9 @@
 	last_power_draw = 0
 	last_flow_rate = 0
 
-	if (hibernate > world.time)
+	if(hibernate > world.time)
 		return
-	if (!NODE1)
+	if(!NODE1)
 		set_power_use(NO_POWER_USE)
 	if(!can_pump())
 		return
@@ -217,7 +217,7 @@
 			hibernate = world.time + (rand(100, 200))
 
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 		update_parents()
@@ -298,7 +298,7 @@
 		set_power_use(!use_power)
 
 	if(signal.data["checks"] != null)
-		if (signal.data["checks"] == "default")
+		if(signal.data["checks"] == "default")
 			pressure_checks = pressure_checks_default
 		else
 			pressure_checks = text2num(signal.data["checks"])
@@ -310,7 +310,7 @@
 		pump_direction = text2num(signal.data["direction"])
 
 	if(signal.data["set_internal_pressure"] != null)
-		if (signal.data["set_internal_pressure"] == "default")
+		if(signal.data["set_internal_pressure"] == "default")
 			internal_pressure_bound = internal_pressure_bound_default
 		else
 			internal_pressure_bound = between(
@@ -320,7 +320,7 @@
 			)
 
 	if(signal.data["set_external_pressure"] != null)
-		if (signal.data["set_external_pressure"] == "default")
+		if(signal.data["set_external_pressure"] == "default")
 			external_pressure_bound = external_pressure_bound_default
 		else
 			external_pressure_bound = between(

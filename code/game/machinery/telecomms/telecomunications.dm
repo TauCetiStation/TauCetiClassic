@@ -243,7 +243,7 @@
 			if(removed)
 
 				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
-				if (traffic <= 0)
+				if(traffic <= 0)
 					heat_produced *= 0.30	//if idle, produce less heat.
 
 				removed.add_thermal_energy(heat_produced)

@@ -31,7 +31,7 @@
 		return ..()
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(atom/target, mob/user, proximity, params)
-	if (locate (/obj/structure/table, src.loc))
+	if(locate (/obj/structure/table, src.loc))
 		return
 
 	else if(target == user)

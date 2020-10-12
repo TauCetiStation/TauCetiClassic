@@ -119,9 +119,9 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[O]</font>")
 
 
-	if (istype(O, /obj/item))
+	if(istype(O, /obj/item))
 		var/obj/item/I = target
-		if (src.amount > 1)
+		if(src.amount > 1)
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
 			if(!istype(I.loc, /turf))
 				if(user.client)
@@ -129,9 +129,9 @@
 			P.w_class = I.w_class
 			if(P.w_class <= ITEM_SIZE_TINY)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= ITEM_SIZE_SMALL)
+			else if(P.w_class <= ITEM_SIZE_SMALL)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= ITEM_SIZE_NORMAL)
+			else if(P.w_class <= ITEM_SIZE_NORMAL)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
@@ -143,16 +143,16 @@
 			I.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.amount -= 1
-	else if (istype(O, /obj/structure/closet/crate))
+	else if(istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
-		if (src.amount > 3 && !C.opened)
+		if(src.amount > 3 && !C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate"
 			C.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
-	else if (istype (O, /obj/structure/closet))
+	else if(istype (O, /obj/structure/closet))
 		var/obj/structure/closet/C = target
 		if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
@@ -160,14 +160,14 @@
 		else if(C.welded)
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
-		else if (!C.opened)
+		else if(!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			C.welded = 1
 			C.loc = P
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
-	if (src.amount <= 0)
+	if(src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)
 		return
@@ -200,7 +200,7 @@
 	for(var/i = 1, i <= tagger_locations.len, i++)
 		dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-		if (i%4==0)
+		if(i%4==0)
 			dat += "</tr><tr>"
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"

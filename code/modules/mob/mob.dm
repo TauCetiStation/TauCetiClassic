@@ -222,7 +222,7 @@
 		for(var/obj/item/weapon/grab/G in grabs)
 			if(!L.container.Find(G.affecting))
 				L.container += G.affecting
-				if (G.affecting)
+				if(G.affecting)
 					G.affecting.ret_grab(L, 1)
 		if(!flag)
 			if(L.master == src)
@@ -468,7 +468,7 @@
 		unset_machine()
 		src << browse(null, t1)
 
-	if (href_list["refresh"])
+	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
@@ -669,7 +669,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			if(client.holder)
-				if (config.registration_panic_bunker_age)
+				if(config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
 				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
 					var/datum/game_mode/malfunction/GM = SSticker.mode

@@ -4,7 +4,7 @@
 
 	firerate = !firerate
 
-	if (firerate)
+	if(firerate)
 		to_chat(loc, "You will now continue firing when your target moves.")
 	else
 		to_chat(loc, "You will now only fire once, then lower your aim, when your target moves.")
@@ -23,15 +23,15 @@
 //Removing the lock and the buttons.
 /obj/item/weapon/gun/dropped(mob/user)
 	stop_aim()
-	if (!user) return
-	if (user.client)
+	if(!user) return
+	if(user.client)
 		user.client.remove_gun_icons()
 	return ..()
 
 /obj/item/weapon/gun/equipped(mob/user, slot)
-	if (slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+	if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		stop_aim()
-		if (user.client)
+		if(user.client)
 			user.client.remove_gun_icons()
 	return ..()
 
@@ -94,7 +94,7 @@
 
 	usr.dir = get_cardinal_dir(src, T)
 
-	if (!firerate) // If firerate is set to lower aim after one shot, untarget the target
+	if(!firerate) // If firerate is set to lower aim after one shot, untarget the target
 		T.NotTargeted(src)
 
 /proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
@@ -243,31 +243,31 @@
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 /client/proc/add_gun_icons()
-	if (!usr.item_use_icon)
+	if(!usr.item_use_icon)
 		usr.item_use_icon = new /obj/screen/gun/item(null)
 		usr.item_use_icon.icon_state = "no_item[target_can_click]"
 		usr.item_use_icon.name = "[target_can_click ? "Disallow" : "Allow"] Item Use"
 
-	if (!usr.gun_move_icon)
+	if(!usr.gun_move_icon)
 		usr.gun_move_icon = new /obj/screen/gun/move(null)
 		usr.gun_move_icon.icon_state = "no_walk[target_can_move]"
 		usr.gun_move_icon.name = "[target_can_move ? "Disallow" : "Allow"] Walking"
 
-	if (target_can_move && !usr.gun_run_icon)
+	if(target_can_move && !usr.gun_run_icon)
 		usr.gun_run_icon = new /obj/screen/gun/run(null)
 		usr.gun_run_icon.icon_state = "no_run[target_can_run]"
 		usr.gun_run_icon.name = "[target_can_run ? "Disallow" : "Allow"] Running"
 
 	screen += usr.item_use_icon
 	screen += usr.gun_move_icon
-	if (target_can_move)
+	if(target_can_move)
 		screen += usr.gun_run_icon
 
 /client/proc/remove_gun_icons()
 	if(!usr) return 1 // Runtime prevention on N00k agents spawning with SMG
 	screen -= usr.item_use_icon
 	screen -= usr.gun_move_icon
-	if (target_can_move)
+	if(target_can_move)
 		screen -= usr.gun_run_icon
 
 /client/verb/ToggleGunMode()

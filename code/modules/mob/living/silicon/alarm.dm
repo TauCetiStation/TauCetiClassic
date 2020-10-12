@@ -24,7 +24,7 @@
 	var/list/alarmlist = alarms[class]
 
 	//see if there is already an alarm of this class for this area
-	if (A.name in alarmlist)
+	if(A.name in alarmlist)
 		var/datum/alarm/existing = alarmlist[A.name]
 		existing.sources += source
 		existing.cameras |= cameralist
@@ -35,11 +35,11 @@
 	var/cleared = 0
 	var/list/alarmlist = alarms[class]
 
-	if (A.name in alarmlist)
+	if(A.name in alarmlist)
 		var/datum/alarm/alarm = alarmlist[A.name]
 		alarm.sources -= source
 
-		if (!(alarm.sources.len))
+		if(!(alarm.sources.len))
 			cleared = 1
 			alarmlist -= A.name
 

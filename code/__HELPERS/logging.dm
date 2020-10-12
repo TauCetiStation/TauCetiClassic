@@ -26,21 +26,21 @@
 	game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
-	if (config && config.log_hrefs)
+	if(config && config.log_hrefs)
 		global.hrefs_log << "\[[time_stamp()]]: [text][log_end]"
 
 /proc/log_admin(text)
 	admin_log.Add(text)
-	if (config.log_admin)
+	if(config.log_admin)
 		global.game_log << "\[[time_stamp()]]ADMIN: [text][log_end]"
 
 /proc/log_admin_private(text)
 	admin_log.Add(text)
-	if (config.log_admin)
+	if(config.log_admin)
 		global.game_log << "\[[time_stamp()]]ADMINPRIVATE: [text][log_end]"
 
 /proc/log_debug(text)
-	if (config.log_debug)
+	if(config.log_debug)
 		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
 	for(var/client/C in admins)
@@ -48,11 +48,11 @@
 			to_chat(C, "DEBUG: [text]")
 
 /proc/log_asset(text)
-	if (config && config.log_asset)
+	if(config && config.log_asset)
 		global.asset_log << "\[[time_stamp()]]ASSET: [text][log_end]"
 
 /proc/log_tgui(user_or_client, text)
-	if (config.log_tgui)
+	if(config.log_tgui)
 		var/entry = ""
 		if(!user_or_client)
 			entry += "no user"
@@ -66,48 +66,48 @@
 		global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
 
 /proc/log_game(text)
-	if (config.log_game)
+	if(config.log_game)
 		global.game_log << "\[[time_stamp()]]GAME: [text][log_end]"
 
 /proc/log_vote(text)
-	if (config.log_vote)
+	if(config.log_vote)
 		global.game_log << "\[[time_stamp()]]VOTE: [text][log_end]"
 
 /proc/log_access(text)
-	if (config && config.log_access)
+	if(config && config.log_access)
 		global.access_log << "\[[time_stamp()]]ACCESS: [text][log_end]"
 
 /proc/log_say(text)
-	if (config.log_say)
+	if(config.log_say)
 		global.game_log << "\[[time_stamp()]]SAY: [text][log_end]"
 
 /proc/log_ooc(text)
-	if (config.log_ooc)
+	if(config.log_ooc)
 		global.game_log << "\[[time_stamp()]]OOC: [text][log_end]"
 
 /proc/log_whisper(text)
-	if (config.log_whisper)
+	if(config.log_whisper)
 		global.game_log << "\[[time_stamp()]]WHISPER: [text][log_end]"
 
 /proc/log_emote(text)
-	if (config.log_emote)
+	if(config.log_emote)
 		global.game_log << "\[[time_stamp()]]EMOTE: [text][log_end]"
 
 /proc/log_attack(text)
-	if (config.log_attack)
+	if(config.log_attack)
 		global.game_log << "\[[time_stamp()]]ATTACK: [text][log_end]"
 
 /proc/log_adminsay(text, say_type)
 	admin_log.Add(text)
-	if (config.log_adminchat)
+	if(config.log_adminchat)
 		global.game_log << "\[[time_stamp()]][say_type]: [text][log_end]"
 
 /proc/log_adminwarn(text)
-	if (config.log_adminwarn)
+	if(config.log_adminwarn)
 		global.game_log << "\[[time_stamp()]]ADMINWARN: [text][log_end]"
 
 /proc/log_pda(text)
-	if (config.log_pda)
+	if(config.log_pda)
 		global.game_log << "\[[time_stamp()]]PDA: [text][log_end]"
 
 /proc/log_misc(text)
@@ -123,12 +123,12 @@
 	log_debug(text)
 
 /proc/log_runtime(text)
-	if (config && config.log_runtime)
+	if(config && config.log_runtime)
 		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
 
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
-	if (!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
+	if(!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
 		preconfig_init_log += "[text][log_end]"
 		return
 
@@ -140,7 +140,7 @@
 		global.initialization_log << "[text][log_end]"
 
 /proc/log_qdel(text)
-	if (config.log_qdel)
+	if(config.log_qdel)
 		global.qdel_log << "[text][log_end]"
 
 /atom/proc/log_investigate(message, subject)
@@ -193,7 +193,7 @@
 	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
 
 /proc/log_fax(text)
-	if (config.log_fax)
+	if(config.log_fax)
 		global.game_log << "\[[time_stamp()]]FAX: [text][log_end]"
 
 /proc/datum_info_line(datum/D)

@@ -100,7 +100,7 @@
 	data["fusionData"] = fusionData
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "fusion_control.tmpl", name, 540, 550)
 		ui.set_initial_data(data)
 		ui.open()

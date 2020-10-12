@@ -144,7 +144,7 @@ var/global/ManifestJSON
 
 // Using json manifest for html manifest. One proc for manifest generation
 /obj/effect/datacore/proc/get_manifest(monochrome, OOC)
-	if (PDA_Manifest.len < 1)
+	if(PDA_Manifest.len < 1)
 		get_manifest_json()
 	var/dat = {"
 	<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><style>
@@ -172,9 +172,9 @@ var/global/ManifestJSON
 	)
 	var/list/inactive_players_namejob = new()
 	// Collect inactive players-jobs if OOC
-	if (OOC)
+	if(OOC)
 		for (var/mob/M in player_list)
-			if (M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
+			if(M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
 				inactive_players_namejob.Add("[M.real_name]/[M.job]")
 	// render crew manifest
 	var/list/person = new() // buffer for employ record
@@ -186,7 +186,7 @@ var/global/ManifestJSON
 				dat += "<td>[person["name"]]</td>"
 				dat += "<td>[person["rank"]]</td>"
 				// Show real activity player
-				if (OOC)
+				if(OOC)
 					var/namejob = "[person["name"]]/[person["rank"]]"
 					if(namejob in inactive_players_namejob)
 						dat += "<td>Inactive</td>"

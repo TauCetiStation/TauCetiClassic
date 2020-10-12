@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(ticker)
 
 					drop_round_stats()
 
-					if (mode.station_was_nuked)
+					if(mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
 							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
@@ -176,10 +176,10 @@ SUBSYSTEM_DEF(ticker)
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
-	if (config.is_modeset(master_mode))
+	if(config.is_modeset(master_mode))
 		runnable_modes = config.get_runnable_modes(master_mode)
 
-		if (runnable_modes.len==0)
+		if(runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(ticker)
 		src.mode = config.pick_mode(master_mode)
 
 	// Before assign the crew setup antag roles without crew jobs
-	if (!src.mode.assign_outsider_antag_roles())
+	if(!src.mode.assign_outsider_antag_roles())
 		message_admins("<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed.")
 		qdel(mode)
 		mode = null
@@ -279,7 +279,7 @@ SUBSYSTEM_DEF(ticker)
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
+			if(S.name != "AI")
 				qdel(S)
 
 		//Print a list of antagonists to the server log
@@ -461,13 +461,13 @@ SUBSYSTEM_DEF(ticker)
 			end_icons += flat
 			var/tempstate = end_icons.len
 			var/aikey = aiPlayer.mind ? aiPlayer.mind.key : aiPlayer.key
-			if (aiPlayer.stat != DEAD)
+			if(aiPlayer.stat != DEAD)
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws at the end of the game were:</B>"}
 			else
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws when it was deactivated were:</B>"}
 			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
-			if (aiPlayer.connected_robots.len)
+			if(aiPlayer.connected_robots.len)
 				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
 				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 					var/robokey = robo.mind ? robo.mind.key : robo.key
@@ -486,8 +486,8 @@ SUBSYSTEM_DEF(ticker)
 			end_icons += flat
 			var/tempstate = end_icons.len
 			var/robokey = robo.mind ? robo.mind.key : robo.key
-			if (!robo.connected_ai)
-				if (robo.stat != DEAD)
+			if(!robo.connected_ai)
+				if(robo.stat != DEAD)
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) survived as an AI-less borg! Its laws were:</B>"}
 				else
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
@@ -509,7 +509,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
+		if(findtext("[handler]","auto_declare_completion_"))
 			ai_completions += "[call(mode, handler)()]"
 
 	//Print a list of antagonists to the server log

@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if(notransform)
 		return
 
 	// friendly reminder after updating those procs:
@@ -22,7 +22,7 @@
 	//first implants
 	var/list/stored_implants = list()
 
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/IMP in src)
 			stored_implants += IMP
 			IMP.loc = null
@@ -90,7 +90,7 @@
 			D.affected_mob = O
 
 	//keep damage?
-	if (tr_flags & TR_KEEPDAMAGE)
+	if(tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
 		O.adjustBruteLoss(getBruteLoss())
 		O.adjustOxyLoss(getOxyLoss())
@@ -102,7 +102,7 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
 			IMP.loc = O
@@ -144,7 +144,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if(notransform)
 		return
 
 	for(var/mob/living/simple_animal/borer/B in src)
@@ -157,7 +157,7 @@
 	//first implants
 	var/list/stored_implants = list()
 
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/IMP in src)
 			stored_implants += IMP
 			IMP.loc = null
@@ -227,7 +227,7 @@
 		O.med_hud_set_status()
 
 	//keep damage?
-	if (tr_flags & TR_KEEPDAMAGE)
+	if(tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
 		O.adjustBruteLoss(getBruteLoss())
 		O.adjustOxyLoss(getOxyLoss())
@@ -239,7 +239,7 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if(tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
 			IMP.loc = O
@@ -285,7 +285,7 @@
 	return ..()
 
 /mob/living/carbon/human/AIize(move=1) // 'move' argument needs defining here too because BYOND is dumb
-	if (notransform)
+	if(notransform)
 		return
 	for(var/t in bodyparts)
 		qdel(t)
@@ -293,7 +293,7 @@
 	return ..(move)
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
@@ -311,21 +311,21 @@
 	if(move)
 		var/obj/loc_landmark
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name != "AI")
+			if(sloc.name != "AI")
 				continue
-			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+			if((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
 				continue
 			loc_landmark = sloc
-		if (!loc_landmark)
+		if(!loc_landmark)
 			for(var/obj/effect/landmark/tripai in landmarks_list)
-				if (tripai.name == "tripai")
+				if(tripai.name == "tripai")
 					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
 						continue
 					loc_landmark = tripai
-		if (!loc_landmark)
+		if(!loc_landmark)
 			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
-				if (sloc.name == "AI")
+				if(sloc.name == "AI")
 					loc_landmark = sloc
 
 		newloc = loc_landmark.loc
@@ -357,7 +357,7 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
@@ -412,7 +412,7 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
@@ -444,7 +444,7 @@
 	return
 
 /mob/living/carbon/human/proc/slimeize(adult, reproduce)
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
@@ -480,7 +480,7 @@
 	return
 
 /mob/living/carbon/human/proc/corgize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)

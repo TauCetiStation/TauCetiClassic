@@ -111,7 +111,7 @@
 			qdel(src)
 			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 			return
 		else
@@ -446,7 +446,7 @@
 
 /obj/structure/closet/crate/large/close()
 	. = ..()
-	if (.)//we can hold up to one large item
+	if(.)//we can hold up to one large item
 		var/found = 0
 		for(var/obj/structure/S in src.loc)
 			if(S == src)
@@ -474,7 +474,7 @@
 
 /obj/structure/closet/crate/secure/large/close()
 	. = ..()
-	if (.)//we can hold up to one large item
+	if(.)//we can hold up to one large item
 		var/found = 0
 		for(var/obj/structure/S in src.loc)
 			if(S == src)

@@ -78,7 +78,7 @@
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
-	if (!mover || !isturf(mover.loc))
+	if(!mover || !isturf(mover.loc))
 		return 1
 
 
@@ -104,7 +104,7 @@
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if(!src.CanPass(mover, src))
 		mover.Bump(src, 1)
 		return 0
 
@@ -149,7 +149,7 @@
 	..()
 
 	// If an opaque movable atom moves around we need to potentially update visibility.
-	if (AM && AM.opacity)
+	if(AM && AM.opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
 
@@ -158,7 +158,7 @@
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((O && AM))
+			if((O && AM))
 				O.HasProximity(AM, 1)
 			return
 	return
@@ -166,7 +166,7 @@
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
 
-	if (Obj && Obj.opacity)
+	if(Obj && Obj.opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
 
@@ -211,10 +211,10 @@
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
-	if (!path)
+	if(!path)
 		return
 
-	if (path == type)
+	if(path == type)
 		return src
 
 	/*if(istype(src, path))
@@ -290,7 +290,7 @@
 	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
+		if(istype(W, /turf/simulated/floor))
 			W.RemoveLattice()
 
 	if(SSair)
@@ -307,11 +307,11 @@
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
 		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+		if(old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
-		if (dynamic_lighting != old_dynamic_lighting)
-			if (IS_DYNAMIC_LIGHTING(src))
+		if(dynamic_lighting != old_dynamic_lighting)
+			if(IS_DYNAMIC_LIGHTING(src))
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()

@@ -604,7 +604,7 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		job = trim(job)
-		if (!length(job))
+		if(!length(job))
 			continue
 
 		var/pos = findtext(job, "=")

@@ -43,7 +43,7 @@
 	icon = null
 	initial_loc = get_area(loc)
 	area_uid = initial_loc.uid
-	if (!id_tag)
+	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
 
@@ -57,7 +57,7 @@
 	radio_filter_in = frequency == initial(frequency) ? (RADIO_FROM_AIRALARM) : null
 	radio_filter_out = frequency == initial(frequency) ? (RADIO_TO_AIRALARM) : null
 
-	if (frequency)
+	if(frequency)
 		set_frequency(frequency)
 
 	if(!scrubbing_gas)
@@ -151,9 +151,9 @@
 	last_power_draw = 0
 	last_flow_rate = 0
 
-	if (hibernate > world.time)
+	if(hibernate > world.time)
 		return
-	if (!NODE1)
+	if(!NODE1)
 		set_power_use(NO_POWER_USE)
 	//broadcast_status()
 	if(!use_power || (stat & (NOPOWER|BROKEN)))
@@ -180,7 +180,7 @@
 		//Fucking hibernate because you ain't doing shit.
 		hibernate = world.time + (rand(100, 200))
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
@@ -301,7 +301,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	if(..())
-		if (!(stat & NOPOWER) && use_power)
+		if(!(stat & NOPOWER) && use_power)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return TRUE

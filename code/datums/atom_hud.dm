@@ -55,7 +55,7 @@ var/global/list/huds[22]
 /datum/atom_hud/proc/remove_hud_from(mob/M)
 	if(!M || !hudusers[M])
 		return
-	if (!--hudusers[M])
+	if(!--hudusers[M])
 		hudusers -= M
 		if(queued_to_see[M])
 			queued_to_see -= M

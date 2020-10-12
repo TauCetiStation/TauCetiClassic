@@ -32,13 +32,13 @@
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/ui_interact(mob/user)
-	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+	if((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		user << browse(null, "window=port_gen")
 		return
 
 	var/dat = ""
-	if (active)
+	if(active)
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
@@ -56,7 +56,7 @@
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/Topic(href, href_list)
-	if (href_list["action"] == "close")
+	if(href_list["action"] == "close")
 		usr << browse(null, "window=port_gen")
 		usr.unset_machine(src)
 		return FALSE
@@ -71,7 +71,7 @@
 				active = 1
 				icon_state = icon_state_on
 		if(href_list["action"] == "disable")
-			if (active)
+			if(active)
 				active = 0
 				icon_state = initial(icon_state)
 

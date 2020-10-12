@@ -10,7 +10,7 @@
 		START_PROCESSING(SSobj, src)
 
 /datum/stockMarket/proc/balanceLog(whose, net)
-	if (!(whose in balances))
+	if(!(whose in balances))
 		balances[whose] = net
 	else
 		balances[whose] += net
@@ -99,32 +99,32 @@ var/global/datum/stockMarket/stockExchange = new
 		var/min = points[1]
 		var/max = points[1]
 		for (var/v in points)
-			if (v < min)
+			if(v < min)
 				min = v
-			if (v > max)
+			if(v > max)
 				max = v
 		var/cells = (height - 20) / 20
-		if (cells > round(cells))
+		if(cells > round(cells))
 			cells = round(cells) + 1
 		var/diff = max - min
 		var/ost = diff / cells
-		if (min > 0)
+		if(min > 0)
 			min = max(min - ost, 0)
 		diff = max - min
 		ost = diff / cells
 		var/cval = max
 		var/cwid = width / (points.len + 1)
 		for (var/y = cells, y > 0, y--)
-			if (y == cells)
+			if(y == cells)
 				output += "<tr>"
 			else
 				output += "<tr style='border:none; border-top:1px solid #00ff00; height: 20px'>"
 			for (var/x = 0, x <= points.len, x++)
-				if (x == 0)
+				if(x == 0)
 					output += "<td style='border:none; height: 20px; width: [cwid]px; font-size:10px; color:#00ff00; background:black; text-align:right; vertical-align:bottom'>[round(cval - ost)]</td>"
 				else
 					var/v = points[x]
-					if (v >= cval)
+					if(v >= cval)
 						output += "<td style='border:none; height: 20px; width: [cwid]px; background:#0000ff'>&nbsp;</td>"
 					else
 						output += "<td style='border:none; height: 20px; width: [cwid]px; background:black'>&nbsp;</td>"

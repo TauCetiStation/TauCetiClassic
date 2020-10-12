@@ -334,7 +334,7 @@
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if (ishuman(M))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
 					to_chat(H, "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>")

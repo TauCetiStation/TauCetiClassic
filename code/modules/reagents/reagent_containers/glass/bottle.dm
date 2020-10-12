@@ -24,7 +24,7 @@
 	current_offset = show_filler_on_icon(filler_margin_y, filler_height, current_offset)
 
 	cut_overlays()
-	if (!is_open_container())
+	if(!is_open_container())
 		var/image/lid = image(icon, src, "lid_bottle")
 		add_overlay(lid)
 

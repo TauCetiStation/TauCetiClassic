@@ -225,14 +225,14 @@ var/list/net_announcer_secret = list()
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
 
-		if (M.config_tag)
+		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				if(M.playable_mode)
 					src.modes += M.config_tag
 					src.mode_names[M.config_tag] = M.name
 					src.probabilities[M.config_tag] = M.probability
-				if (M.votable)
+				if(M.votable)
 					src.votable_modes += M.config_tag
 		qdel(M)
 	src.votable_modes += "secret"
@@ -244,221 +244,221 @@ var/list/net_announcer_secret = list()
 		if(!t)	continue
 
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if(copytext(t, 1, 2) == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
 		var/value = null
 
-		if (pos)
+		if(pos)
 			name = lowertext(copytext(t, 1, pos))
 			value = copytext(t, pos + 1)
 		else
 			name = lowertext(t)
 
-		if (!name)
+		if(!name)
 			continue
 
 		if(type == "config")
 			switch (name)
-				if ("resource_urls")
+				if("resource_urls")
 					config.resource_urls = splittext(value, " ")
 
-				if ("admin_legacy_system")
+				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 
-				if ("ban_legacy_system")
+				if("ban_legacy_system")
 					config.ban_legacy_system = 1
 
-				if ("byond_version_min")
+				if("byond_version_min")
 					config.byond_version_min = text2num(value)
 
-				if ("byond_version_recommend")
+				if("byond_version_recommend")
 					config.byond_version_recommend = text2num(value)
 
-				if ("use_age_restriction_for_jobs")
+				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
 
-				if ("use_ingame_minutes_restriction_for_jobs")
+				if("use_ingame_minutes_restriction_for_jobs")
 					config.use_ingame_minutes_restriction_for_jobs = 1
 
-				if ("add_player_age_value")
+				if("add_player_age_value")
 					config.add_player_age_value = text2num(value)
 
-				if ("log_ooc")
+				if("log_ooc")
 					config.log_ooc = 1
 
-				if ("log_access")
+				if("log_access")
 					config.log_access = 1
 
-				if ("sql_enabled")
+				if("sql_enabled")
 					config.sql_enabled = 1
 
-				if ("log_say")
+				if("log_say")
 					config.log_say = 1
 
-				if ("log_admin")
+				if("log_admin")
 					config.log_admin = 1
 
-				if ("log_debug")
+				if("log_debug")
 					config.log_debug = text2num(value)
 
-				if ("log_game")
+				if("log_game")
 					config.log_game = 1
 
-				if ("log_vote")
+				if("log_vote")
 					config.log_vote = 1
 
-				if ("log_whisper")
+				if("log_whisper")
 					config.log_whisper = 1
 
-				if ("log_attack")
+				if("log_attack")
 					config.log_attack = 1
 
-				if ("log_emote")
+				if("log_emote")
 					config.log_emote = 1
 
-				if ("log_adminchat")
+				if("log_adminchat")
 					config.log_adminchat = 1
 
-				if ("log_adminwarn")
+				if("log_adminwarn")
 					config.log_adminwarn = 1
 
-				if ("log_pda")
+				if("log_pda")
 					config.log_pda = 1
 
-				if ("log_fax")
+				if("log_fax")
 					config.log_fax = 1
 
-				if ("log_hrefs")
+				if("log_hrefs")
 					config.log_hrefs = 1
 
-				if ("log_sql_error")
+				if("log_sql_error")
 					config.log_sql_error = 1
 
-				if ("log_js_error")
+				if("log_js_error")
 					config.log_js_error = 1
 
-				if ("log_initialization")
+				if("log_initialization")
 					config.log_initialization = 1
 
-				if ("log_qdel")
+				if("log_qdel")
 					config.log_qdel = 1
 
-				if ("log_asset")
+				if("log_asset")
 					config.log_asset = 1
 
-				if ("log_tgui")
+				if("log_tgui")
 					config.log_tgui = 1
 
-				if ("log_runtime")
+				if("log_runtime")
 					config.log_runtime = 1
 
-				if ("mentors")
+				if("mentors")
 					config.mods_are_mentors = 1
 
 				if("allow_admin_ooccolor")
 					config.allow_admin_ooccolor = 1
 
-				if ("allow_admin_jump")
+				if("allow_admin_jump")
 					config.allow_admin_jump = 1
 
 				if("allow_admin_rev")
 					config.allow_admin_rev = 1
 
-				if ("allow_admin_spawning")
+				if("allow_admin_spawning")
 					config.allow_admin_spawning = 1
 
-				if ("vote_period")
+				if("vote_period")
 					config.vote_period = text2num(value)
 
 				if("ert_admin_only")
 					config.ert_admin_call_only = 1
 
-				if ("allow_ai")
+				if("allow_ai")
 					config.allow_ai = 1
 
-//				if ("authentication")
+//				if("authentication")
 //					config.enable_authentication = 1
 
-				if ("norespawn")
+				if("norespawn")
 					config.respawn = 0
 
-				if ("servername")
+				if("servername")
 					config.server_name = value
 
-				if ("serversuffix")
+				if("serversuffix")
 					config.server_suffix = 1
 
-				if ("hostedby")
+				if("hostedby")
 					config.hostedby = value
 
-				if ("server")
+				if("server")
 					config.server = value
 
-				if ("banappeals")
+				if("banappeals")
 					config.banappeals = value
 
-				if ("wikiurl")
+				if("wikiurl")
 					config.wikiurl = value
 
-				if ("forumurl")
+				if("forumurl")
 					config.forumurl = value
 
-				if ("guest_jobban")
+				if("guest_jobban")
 					config.guest_jobban = 1
 
-				if ("guest_ban")
+				if("guest_ban")
 					guests_allowed = 0
 
-				if ("usewhitelist")
+				if("usewhitelist")
 					config.usewhitelist = 1
 
-				if ("serverwhitelist")
+				if("serverwhitelist")
 					config.serverwhitelist = 1
 
 				if("media_base_url")
 					media_base_url = value
 
-				if ("server_rules_url")
+				if("server_rules_url")
 					server_rules_url = value
 
-				if ("discord_invite_url")
+				if("discord_invite_url")
 					discord_invite_url = value
 
-				if ("customitems_info_url")
+				if("customitems_info_url")
 					customitems_info_url = value
 
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
-				if ("feature_object_spell_system")
+				if("feature_object_spell_system")
 					config.feature_object_spell_system = 1
 
-				if ("allow_metadata")
+				if("allow_metadata")
 					config.allow_Metadata = 1
 
-				if ("traitor_scaling")
+				if("traitor_scaling")
 					config.traitor_scaling = 1
 
-				if ("objectives_disabled")
+				if("objectives_disabled")
 					config.objectives_disabled = 1
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
 
-				if ("probability")
+				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
 					var/prob_value = null
 
-					if (prob_pos)
+					if(prob_pos)
 						prob_name = lowertext(copytext(value, 1, prob_pos))
 						prob_value = copytext(value, prob_pos + 1)
-						if (prob_name in config.modes)
+						if(prob_name in config.modes)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
 							log_misc("Unknown game mode probability configuration definition: [prob_name].")
@@ -471,7 +471,7 @@ var/list/net_announcer_secret = list()
 				if("kick_inactive")
 					config.kick_inactive = 1
 
-				if ("afk_time_bracket")
+				if("afk_time_bracket")
 					config.afk_time_bracket = (text2num(value) MINUTES)
 
 				if("load_jobs_from_txt")
@@ -534,10 +534,10 @@ var/list/net_announcer_secret = list()
 					var/avail_alien_name = null
 					var/avail_alien_ingame_time = null
 
-					if (avail_time_sep)
+					if(avail_time_sep)
 						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
 						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
-						if (avail_alien_name in whitelisted_roles)
+						if(avail_alien_name in whitelisted_roles)
 							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
 						else
 							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
@@ -762,40 +762,40 @@ var/list/net_announcer_secret = list()
 		if(!t)	continue
 
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if(copytext(t, 1, 2) == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
 		var/value = null
 
-		if (pos)
+		if(pos)
 			name = lowertext(copytext(t, 1, pos))
 			value = copytext(t, pos + 1)
 		else
 			name = lowertext(t)
 
-		if (!name)
+		if(!name)
 			continue
 
 		switch (name)
-			if ("address")
+			if("address")
 				sqladdress = value
-			if ("port")
+			if("port")
 				sqlport = value
-			if ("database")
+			if("database")
 				sqldb = value
-			if ("login")
+			if("login")
 				sqllogin = value
-			if ("password")
+			if("password")
 				sqlpass = value
-			if ("feedback_database")
+			if("feedback_database")
 				sqlfdbkdb = value
-			if ("feedback_login")
+			if("feedback_login")
 				sqlfdbklogin = value
-			if ("feedback_password")
+			if("feedback_password")
 				sqlfdbkpass = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
@@ -805,7 +805,7 @@ var/list/net_announcer_secret = list()
 	// their information, but it is the only way (at least that I know of).
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		if (M.config_tag && M.config_tag == mode_name)
+		if(M.config_tag && M.config_tag == mode_name)
 			return M
 		qdel(M)
 	return new /datum/game_mode/extended()
@@ -830,10 +830,10 @@ var/list/net_announcer_secret = list()
 		var/datum/game_mode/M = new T()
 		M.modeset = modeset
 		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
-		if (!is_mode_allowed(M.config_tag))
+		if(!is_mode_allowed(M.config_tag))
 			qdel(M)
 			continue
-		if (is_custom_modeset(M.config_tag))
+		if(is_custom_modeset(M.config_tag))
 			qdel(M)
 			continue
 		if(!modeset || modeset == "random" || modeset == "secret")
@@ -841,10 +841,10 @@ var/list/net_announcer_secret = list()
 				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
 					qdel(M)
 					continue
-			if (probabilities[M.config_tag]<=0)
+			if(probabilities[M.config_tag]<=0)
 				qdel(M)
 				continue
-		else if (is_custom_modeset(modeset))
+		else if(is_custom_modeset(modeset))
 			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
@@ -857,9 +857,9 @@ var/list/net_announcer_secret = list()
 							qdel(M)
 							continue
 		var/mod_prob = probabilities[M.config_tag]
-		if (is_custom_modeset(modeset))
+		if(is_custom_modeset(modeset))
 			mod_prob = 1
-		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
+		if(((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
 			runnable_modes[M] = mod_prob
 			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
 	return runnable_modes
@@ -897,25 +897,25 @@ var/list/net_announcer_secret = list()
 		if(!command)
 			continue
 
-		if (!currentmap && command != "map")
+		if(!currentmap && command != "map")
 			continue
 
 		switch (command)
-			if ("map")
+			if("map")
 				currentmap = load_map_config("maps/[data].json")
 				if(currentmap.defaulted)
 					error("Failed to load map config for [data]!")
 					currentmap = null
-			if ("minplayers","minplayer")
+			if("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
-			if ("maxplayers","maxplayer")
+			if("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
-			if ("default","defaultmap")
+			if("default","defaultmap")
 				defaultmap = currentmap
-			if ("endmap")
+			if("endmap")
 				maplist[currentmap.map_name] = currentmap
 				currentmap = null
-			if ("disabled")
+			if("disabled")
 				currentmap = null
 			else
 				error("Unknown command in map vote config: '[command]'")
@@ -927,12 +927,12 @@ var/list/net_announcer_secret = list()
 	var/list/data = list()
 	var/endline_comment = regex(@"\s+#")
 	for(var/L in file2list(filename))
-		if (copytext(L, 1, 2) == "#")
+		if(copytext(L, 1, 2) == "#")
 			continue
 		var/cut_position = findtext(L, endline_comment)
 		if(cut_position)
 			L = trim(copytext(L, 1, cut_position))
-		if (length(L))
+		if(length(L))
 			data += L
 	return data
 
@@ -958,9 +958,9 @@ var/list/net_announcer_secret = list()
 		if(delimiter_position && length(key))
 			var/value = trim(copytext(L, delimiter_position+1))
 			switch(lowertext(key))
-				if ("receive")
-					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+				if("receive")
+					if(value && (lowertext(value) == "true" || lowertext(value) == "on"))
 						net_announcers["ban_receive"] = TRUE
-				if ("send")
-					if (value && (lowertext(value) == "true" || lowertext(value) == "on"))
+				if("send")
+					if(value && (lowertext(value) == "true" || lowertext(value) == "on"))
 						net_announcers["ban_send"] = TRUE

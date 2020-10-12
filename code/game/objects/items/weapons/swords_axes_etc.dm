@@ -32,11 +32,11 @@
 	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
-	if (active)
+	if(active)
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -92,7 +92,7 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -102,10 +102,10 @@
 			user.take_bodypart_damage(2 * force)
 		return
 
-	if (user.a_intent == INTENT_HARM)
+	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		if(M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
@@ -206,7 +206,7 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.Weaken(3 * force)
 			if(ishuman(user))
@@ -287,7 +287,7 @@
 
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
@@ -310,7 +310,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)

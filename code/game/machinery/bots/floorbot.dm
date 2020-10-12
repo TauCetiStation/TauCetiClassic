@@ -93,7 +93,7 @@
 		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[eattiles ? "Yes" : "No"]</A><BR>"
 		dat += "Make singles pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[maketiles ? "Yes" : "No"]</A><BR>"
 		var/bmode
-		if (targetdirection)
+		if(targetdirection)
 			bmode = dir2text(targetdirection)
 		else
 			bmode = "Disabled"
@@ -142,7 +142,7 @@
 		return
 	switch(href_list["operation"])
 		if("start")
-			if (on)
+			if(on)
 				turn_off()
 			else
 				turn_on()
@@ -448,7 +448,7 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	while (amount)//Dumps the tiles into the appropriate sized stacks
@@ -491,11 +491,11 @@
 		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
 		qdel(src)
 
-	else if (istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)),MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && src.loc != usr)
 			return
 
 		created_name = t
@@ -512,12 +512,12 @@
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		qdel(src)
 
-	else if (istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && src.loc != usr)
 			return
 
 		created_name = t

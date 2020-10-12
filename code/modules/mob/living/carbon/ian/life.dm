@@ -1,5 +1,5 @@
 /mob/living/carbon/ian/Life()
-	if (notransform)
+	if(notransform)
 		return
 
 	..()
@@ -31,13 +31,13 @@
 				step_to(src,movement_target,1)
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
+					if(movement_target.loc.x < src.x)
 						dir = WEST
-					else if (movement_target.loc.x > src.x)
+					else if(movement_target.loc.x > src.x)
 						dir = EAST
-					else if (movement_target.loc.y < src.y)
+					else if(movement_target.loc.y < src.y)
 						dir = SOUTH
-					else if (movement_target.loc.y > src.y)
+					else if(movement_target.loc.y > src.y)
 						dir = NORTH
 					else
 						dir = SOUTH
@@ -99,7 +99,7 @@
 					else
 						emote(pick(emote_hear),2)
 
-	if (stat != DEAD && !IS_IN_STASIS(src))
+	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
@@ -129,13 +129,13 @@
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
+	if(stat == DEAD || (XRAY in mutations))
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
+	else if(stat != DEAD)
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_MOBS
 		sight &= ~SEE_OBJS
@@ -195,7 +195,7 @@
 		losebreath = max(2, losebreath + 1)
 	if(losebreath > 0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if(prob(75)) //High chance of gasping for air
 			emote("gasp")
 		if(isobj(loc))
 			var/obj/location_as_object = loc
@@ -255,7 +255,7 @@
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
 			emote("gasp")
-		if (O2_pp == 0)
+		if(O2_pp == 0)
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min/O2_pp
 		adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
@@ -324,14 +324,14 @@
 				if(1 to 50)
 					adjustFireLoss(-1)
 
-	if ((HULK in mutations) && health <= 25)
+	if((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
 		Weaken(3)
 		emote("collapse")
 
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			radiation = 100
 			Weaken(10)
 			if(!lying)
@@ -374,20 +374,20 @@
 		adjustToxLoss(total_phoronloss)
 
 	// nutrition decrease
-	if (nutrition > 0)
+	if(nutrition > 0)
 		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
 
-	if (nutrition > 450)
+	if(nutrition > 450)
 		if(overeatduration < 600)
 			overeatduration++
 	else
 		if(overeatduration > 1)
 			overeatduration = max(0, overeatduration - 2) //doubled the unfat rate
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
@@ -404,20 +404,20 @@
 		jitteriness = max(0, jitteriness - 1)
 
 /mob/living/carbon/ian/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && paralysis < 10)
+	if(disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
+		if(prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if (prob(5) && paralysis <= 1)
+	if(disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
+		if(prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
-	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if (prob(10) && paralysis <= 1)
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
-	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
-		if (prob(10))
+	if(disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
+		if(prob(10))
 			stuttering = max(10, stuttering)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()

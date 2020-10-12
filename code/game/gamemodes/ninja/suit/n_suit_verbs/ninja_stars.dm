@@ -22,9 +22,9 @@
 
 			var/turf/curloc = U.loc
 			var/atom/targloc = get_turf(target)
-			if (!targloc || !istype(targloc, /turf) || !curloc)
+			if(!targloc || !istype(targloc, /turf) || !curloc)
 				return
-			if (targloc == curloc)
+			if(targloc == curloc)
 				return
 			var/obj/item/projectile/energy/dart/A = new(curloc)
 			A.starting = get_turf(affecting)

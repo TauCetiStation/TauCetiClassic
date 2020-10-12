@@ -127,7 +127,7 @@
 				user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [H]'s [BP.name].</span>", \
 									"<span class='notice'>You bandage [W.desc] on [H]'s [BP.name].</span>")
 				//H.add_side_effect("Itch")
-			else if (istype(W,/datum/wound/bruise))
+			else if(istype(W,/datum/wound/bruise))
 				user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [H]'s [BP.name].</span>", \
 									"<span class='notice'>You place bruise patch over [W.desc] on [H]'s [BP.name].</span>" )
 			else
@@ -257,7 +257,7 @@
 			if(W.current_stage <= W.max_bleeding_stage)
 				user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [H]'s [BP.name] and seals edges with bioglue.</span>", \
 									"<span class='notice'>You clean and seal [W.desc] on [H]'s [BP.name].</span>")
-			else if (istype(W,/datum/wound/bruise))
+			else if(istype(W,/datum/wound/bruise))
 				user.visible_message("<span class='notice'>\The [user] places medicine patch over [W.desc] on [H]'s [BP.name].</span>", \
 									"<span class='notice'>You place medicine patch over [W.desc] on [H]'s [BP.name].</span>")
 			else

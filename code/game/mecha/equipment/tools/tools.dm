@@ -253,7 +253,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Topic(href, href_list)
 	..()
-	if (href_list["switch"])
+	if(href_list["switch"])
 		ext.safety = !ext.safety
 		occupant_message("The [name] now [ext.safety ? "locked" : "ready"].")
 		update_equip_info()
@@ -303,7 +303,7 @@
 	//meh
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
+			if(istype(target, /turf/simulated/wall))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -312,7 +312,7 @@
 					target:ChangeTurf(/turf/simulated/floor/plating)
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
-			else if (istype(target, /turf/simulated/floor))
+			else if(istype(target, /turf/simulated/floor))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -321,7 +321,7 @@
 					target:BreakToBase()
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
-			else if (istype(target, /obj/machinery/door/airlock))
+			else if(istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -474,7 +474,7 @@
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
 	else
-		if (world.time % 3)
+		if(world.time % 3)
 			occupant_message("<span class='warning'>[src] is not ready to fire again!</span>")
 		return 0
 

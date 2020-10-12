@@ -196,7 +196,7 @@ var/global/datum/controller/radio/radio_controller
 		if(!start_point)
 			qdel(signal)
 			return 0
-	if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
+	if(filter) //here goes some copypasta. It is for optimisation. -rastaf0
 		for(var/obj/device in devices[filter])
 			if(device == source)
 				continue
@@ -243,11 +243,11 @@ var/global/datum/controller/radio/radio_controller
 //	qdel(signal)
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter)
-	if (!filter)
+	if(!filter)
 		filter = "_default"
 	//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
 	var/list/obj/devices_line = devices[filter]
-	if (!devices_line)
+	if(!devices_line)
 		devices_line = new
 		devices[filter] = devices_line
 	devices_line+=device
@@ -290,7 +290,7 @@ var/global/datum/controller/radio/radio_controller
 	frequency = model.frequency
 
 /datum/signal/proc/debug_print()
-	if (source)
+	if(source)
 		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
 	else
 		. = "signal = {source = '[source]' ()\n"

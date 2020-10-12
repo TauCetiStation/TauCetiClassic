@@ -50,7 +50,7 @@
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
-	if (buckled || !yes || now_pushing)
+	if(buckled || !yes || now_pushing)
 		return
 	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
@@ -93,11 +93,11 @@
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))
 			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
+				if( !(world.time % 5) )
 					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
 				return 1
 			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
+				if( !(world.time % 5) )
 					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
@@ -215,7 +215,7 @@
 
 /mob/living/verb/succumb()
 	set hidden = 1
-	if ((src.health < 0 && src.health > -95.0))
+	if((src.health < 0 && src.health > -95.0))
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -243,7 +243,7 @@
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(NO_SHOCK in src.mutations) //shockproof
 			return 0
-		if (COLD_RESISTANCE in src.mutations) //fireproof
+		if(COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = burn_amount / H.bodyparts.len
@@ -253,7 +253,7 @@
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
-		if (COLD_RESISTANCE in src.mutations) //fireproof
+		if(COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
@@ -474,11 +474,11 @@
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 
-		if (C.handcuffed && !initial(C.handcuffed))
+		if(C.handcuffed && !initial(C.handcuffed))
 			C.drop_from_inventory(C.handcuffed)
 		C.handcuffed = initial(C.handcuffed)
 
-		if (C.legcuffed && !initial(C.legcuffed))
+		if(C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
 	med_hud_set_health()
@@ -617,26 +617,26 @@
 	return
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (buckled && buckled.loc != NewLoc)
-		if (!buckled.anchored)
+	if(buckled && buckled.loc != NewLoc)
+		if(!buckled.anchored)
 			return buckled.Move(NewLoc, Dir)
 		else
 			return FALSE
 
-	if (restrained())
+	if(restrained())
 		stop_pulling()
 
 
 	var/t7 = 1
-	if (restrained())
+	if(restrained())
 		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == CONSCIOUS && !( M.restrained() )))
+			if((M.pulling == src && M.stat == CONSCIOUS && !( M.restrained() )))
 				t7 = null
 	if(t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
-		if (pulling && pulling.loc)
+		if(pulling && pulling.loc)
 			if(!( isturf(pulling.loc) ))
 				stop_pulling()
 				return
@@ -650,27 +650,27 @@
 			stop_pulling()
 			return
 
-		if (!restrained())
+		if(!restrained())
 			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
+			if((diag - 1) & diag)
 			else
 				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
+			if((get_dist(src, pulling) > 1 || diag))
+				if(isliving(pulling))
 					var/mob/living/M = pulling
 					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
+					if(locate(/obj/item/weapon/grab, M.grabbed_by))
+						if(prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
+							if(istype(G, /obj/item/weapon/grab))
 								M.visible_message("<span class='warning'>[G.affecting] has been pulled from [G.assailant]'s grip by [src].</span>")
 								//G = null
 								qdel(G)
 						else
 							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+						if(locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
-					if (ok)
+					if(ok)
 						var/atom/movable/AM = M.pulling
 						M.stop_pulling()
 
@@ -682,7 +682,7 @@
 								M.adjustBruteLoss(2)
 								visible_message("<span class='warning'>[M]'s wounds worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
-								if (istype(location, /turf/simulated))
+								if(istype(location, /turf/simulated))
 									if(ishuman(M))
 										var/mob/living/carbon/human/H = M
 										var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
@@ -694,13 +694,13 @@
 						if(M && AM)
 							M.start_pulling(AM)
 				else
-					if (pulling)
+					if(pulling)
 						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if(s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
@@ -712,7 +712,7 @@
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if(istype(M.loc, /turf/simulated) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -820,7 +820,7 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if (!L.incapacitated())
+	if(!L.incapacitated())
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
@@ -854,7 +854,7 @@
 	if(L.buckled && (L.last_special <= world.time) )
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			if (istype(C.buckled,/obj/structure/stool/bed/nest))
+			if(istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
 			if( C.handcuffed )

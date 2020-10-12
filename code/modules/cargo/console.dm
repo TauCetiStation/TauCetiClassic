@@ -221,7 +221,7 @@
 			temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
-	else if (href_list["rreq"])
+	else if(href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
 		for(var/i = 1 to SSshuttle.requestlist.len)
@@ -232,7 +232,7 @@
 				break
 		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if (href_list["clearreq"])
+	else if(href_list["clearreq"])
 		SSshuttle.requestlist.Cut()
 		temp = "List cleared.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

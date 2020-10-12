@@ -36,7 +36,7 @@
 	return finalcolor
 
 /proc/mixOneColor(list/weight, list/color)
-	if (!weight || !color || length(weight)!=length(color))
+	if(!weight || !color || length(weight)!=length(color))
 		return 0
 
 	var/contents = length(weight)

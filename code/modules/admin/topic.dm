@@ -28,7 +28,7 @@
 
 	if(href_list["stickyban"])
 		stickyban(href_list["stickyban"], href_list)
-		if (href_list["stickyban"] != "show") // Update window after action
+		if(href_list["stickyban"] != "show") // Update window after action
 			stickyban("show", null)
 
 	if(href_list["makeAntag"])
@@ -273,7 +273,7 @@
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if ((!( SSticker ) || SSshuttle.location))
+				if((!( SSticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
@@ -282,7 +282,7 @@
 				make_maint_all_access(FALSE)
 
 			if("2")
-				if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
+				if((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 					return
 				switch(SSshuttle.direction)
 					if(-1)
@@ -981,7 +981,7 @@
 			return
 
 		var/mob/M = locate(href_list["guard"])
-		if (ismob(M))
+		if(ismob(M))
 			if(!M.client)
 				return
 			M.client.guard.print_report()
@@ -991,7 +991,7 @@
 			return
 		else
 			var/mob/M = locate(href_list["cid_list"])
-			if (ismob(M))
+			if(ismob(M))
 				if(!M.client)
 					return
 				var/client/C = M.client
@@ -1009,7 +1009,7 @@
 			return
 		else
 			var/mob/M = locate(href_list["cid_ignore"])
-			if (ismob(M))
+			if(ismob(M))
 				if(!M.client)
 					return
 				var/client/C = M.client
@@ -1022,7 +1022,7 @@
 			return
 		else
 			var/mob/M = locate(href_list["related_accounts"])
-			if (ismob(M))
+			if(ismob(M))
 				if(!M.client)
 					return
 				var/client/C = M.client
@@ -1038,7 +1038,7 @@
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
-		if (ismob(M))
+		if(ismob(M))
 			if(!check_if_greater_rights_than(M.client))
 				return
 			var/reason = sanitize(input("Please enter reason"))
@@ -1169,7 +1169,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (SSticker && SSticker.mode)
+		if(SSticker && SSticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [master_mode].")
@@ -1553,9 +1553,9 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (0) status = "Alive"
-				if (1) status = "<font color='orange'><b>Unconscious</b></font>"
-				if (2) status = "<font color='red'><b>Dead</b></font>"
+				if(0) status = "Alive"
+				if(1) status = "<font color='orange'><b>Unconscious</b></font>"
+				if(2) status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
 			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
 		else
@@ -1805,9 +1805,9 @@
 		var/atom/loc = usr.loc
 
 		var/dirty_paths
-		if (istext(href_list["object_list"]))
+		if(istext(href_list["object_list"]))
 			dirty_paths = list(href_list["object_list"])
-		else if (istype(href_list["object_list"], /list))
+		else if(istype(href_list["object_list"], /list))
 			dirty_paths = href_list["object_list"]
 
 		var/paths = list()
@@ -1859,13 +1859,13 @@
 		var/obj_name = sanitize(href_list["object_name"])
 		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","inhand","inmarked","dropped") ))
+		if(!( where in list("onfloor","inhand","inmarked","dropped") ))
 			where = "onfloor"
 
 
 		switch(where)
 			if("inhand")
-				if (!iscarbon(usr) && !isrobot(usr))
+				if(!iscarbon(usr) && !isrobot(usr))
 					to_chat(usr, "Can only spawn in hand when you're a carbon mob or cyborg.")
 					where = "onfloor"
 				if(isrobot(usr))
@@ -1876,9 +1876,9 @@
 				target = usr
 			if("onfloor", "dropped")
 				switch(href_list["offset_type"])
-					if ("absolute")
+					if("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
-					if ("relative")
+					if("relative")
 						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
 			if("inmarked")
 				if(!marked_datum)
@@ -1928,7 +1928,7 @@
 				if(stop_main_loop)
 					break
 
-		if (number == 1)
+		if(number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
@@ -2131,7 +2131,7 @@
 
 	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
-		if (src.admincaster_screen == 0)
+		if(src.admincaster_screen == 0)
 			if(src.admincaster_feed_channel)
 				src.admincaster_feed_channel = new /datum/feed_channel
 			if(src.admincaster_feed_message)

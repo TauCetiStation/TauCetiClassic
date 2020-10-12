@@ -45,13 +45,13 @@
 
 	var/strength = convert2energy(mass)
 
-	if (strength < 773.0)
+	if(strength < 773.0)
 		var/turf/T = get_turf(src)
 
-		if (strength > (450+T0C))
+		if(strength > (450+T0C))
 			explosion(T, 0, 1, 2, 4)
 		else
-			if (strength > (300+T0C))
+			if(strength > (300+T0C))
 				explosion(T, 0, 0, 2, 3)
 
 		qdel(src)
@@ -82,6 +82,6 @@
 	return
 
 /obj/item/weapon/fuel/attack(mob/M, mob/user)
-	if (user == M)
+	if(user == M)
 		visible_message("<span class='red'>[M] ate the [content ? content : "empty canister"]!</span>")
 		injest(M)

@@ -27,7 +27,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
 	open_machine()
 	add_fingerprint(usr)
@@ -38,7 +38,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
 	if(!move_inside_checks(usr, usr))
 		return
@@ -108,7 +108,7 @@
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 
 /obj/machinery/body_scanconsole/blob_act()
@@ -154,10 +154,10 @@
 
 	var/dat
 
-	if (src.connected) //Is something connected?
+	if(src.connected) //Is something connected?
 		var/mob/living/carbon/human/occupant = src.connected.occupant
 		dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
-		if (istype(occupant)) //is there REALLY someone in there?
+		if(istype(occupant)) //is there REALLY someone in there?
 			var/t1
 			switch(occupant.stat) // obvious, see what their status is
 				if(0)
@@ -166,7 +166,7 @@
 					t1 = "Unconscious"
 				else
 					t1 = "*dead*"
-			if (!istype(occupant,/mob/living/carbon/human))
+			if(!istype(occupant,/mob/living/carbon/human))
 				dat += "<font color='red'>This device can only scan human occupants.</font>"
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
@@ -256,19 +256,19 @@
 					if(BP.is_rejecting)
 						rejecting = "Genetic Rejection:"
 					switch (BP.germ_level)
-						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+						if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 							infected = "Mild Infection:"
-						if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+						if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 							infected = "Mild Infection+:"
-						if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+						if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 							infected = "Mild Infection++:"
-						if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+						if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 							infected = "Acute Infection:"
-						if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+						if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 							infected = "Acute Infection+:"
-						if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+						if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 							infected = "Acute Infection++:"
-						if (INFECTION_LEVEL_THREE to INFINITY)
+						if(INFECTION_LEVEL_THREE to INFINITY)
 							infected = "Septic:"
 
 					var/unknown_body = 0
@@ -314,19 +314,19 @@
 							organ_status = "Heart Fibrillation:"
 
 					switch (IO.germ_level)
-						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+						if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 							infection = "Mild Infection:"
-						if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+						if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 							infection = "Mild Infection+:"
-						if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+						if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 							infection = "Mild Infection++:"
-						if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+						if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 							infection = "Acute Infection:"
-						if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+						if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 							infection = "Acute Infection+:"
-						if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+						if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 							infection = "Acute Infection++:"
-						if (INFECTION_LEVEL_THREE to INFINITY)
+						if(INFECTION_LEVEL_THREE to INFINITY)
 							infection = "Necrotic:"
 
 					if(!organ_status && !infection)
@@ -361,7 +361,7 @@
 	if(!.)
 		return
 	if(href_list["print"])
-		if (next_print < world.time) //10 sec cooldown
+		if(next_print < world.time) //10 sec cooldown
 			next_print = world.time + 10 SECONDS
 			to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)

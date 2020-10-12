@@ -9,14 +9,14 @@
 	allowed_species = list("exclude", IPC, DIONA)
 
 /datum/surgery_step/gender_reassignment/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
-	if (target_zone != BP_GROIN)
+	if(target_zone != BP_GROIN)
 		return 0
 	var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
-	if (!groin)
+	if(!groin)
 		return 0
-	if (groin.open < 1)
+	if(groin.open < 1)
 		return 0
 	return 1
 

@@ -461,45 +461,45 @@
 			burnpaper(I, user)
 
 	else if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
-		if (istype(I, /obj/item/weapon/paper/carbon))
+		if(istype(I, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = I
-			if (!C.iscopy && !C.copied)
+			if(!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
 		var/old_loc = loc
 		var/obj/item/weapon/paper_bundle/B = new(loc)
-		if (name != "paper")
+		if(name != "paper")
 			B.name = name
 		else if(I.name != "paper" && I.name != "photo")
 			B.name = I.name
 		user.drop_from_inventory(I)
-		if (istype(user, /mob/living/carbon/human))
+		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/h_user = user
-			if (h_user.r_hand == src)
+			if(h_user.r_hand == src)
 				h_user.drop_from_inventory(src)
 				h_user.put_in_r_hand(B)
-			else if (h_user.l_hand == src)
+			else if(h_user.l_hand == src)
 				h_user.drop_from_inventory(src)
 				h_user.put_in_l_hand(B)
-			else if (h_user.l_store == src)
+			else if(h_user.l_store == src)
 				h_user.drop_from_inventory(src)
 				B.loc = h_user
 				B.layer = ABOVE_HUD_LAYER
 				B.plane = ABOVE_HUD_PLANE
 				h_user.l_store = B
 				h_user.update_inv_pockets()
-			else if (h_user.r_store == src)
+			else if(h_user.r_store == src)
 				h_user.drop_from_inventory(src)
 				B.loc = h_user
 				B.layer = ABOVE_HUD_LAYER
 				B.plane = ABOVE_HUD_PLANE
 				h_user.r_store = B
 				h_user.update_inv_pockets()
-			else if (h_user.head == src)
+			else if(h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
-			else if (!istype(loc, /turf))
+			else if(!istype(loc, /turf))
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
@@ -508,12 +508,12 @@
 		I.forceMove(B)
 		B.amount++
 		B.update_icon()
-		if (istype(old_loc, /obj/item/weapon/storage))
+		if(istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
 			s.update_ui_after_item_removal()
 
 	else if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
-		if ( istype(I, /obj/item/weapon/pen/robopen) && I:mode == 2 )
+		if( istype(I, /obj/item/weapon/pen/robopen) && I:mode == 2 )
 			I:RenamePaper(user,src)
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)

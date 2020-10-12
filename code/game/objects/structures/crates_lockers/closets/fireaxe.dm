@@ -26,14 +26,14 @@
 /obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
-	if (user.is_busy(src))
+	if(user.is_busy(src))
 		return
 
-	if (isrobot(usr) || locked)
+	if(isrobot(usr) || locked)
 		if(ismultitool(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
-			if (do_after(user, 50, target = src))
+			if(do_after(user, 50, target = src))
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				update_icon()
@@ -58,7 +58,7 @@
 					locked = FALSE
 					localopened = TRUE
 			update_icon()
-	else if (istype(O, /obj/item/weapon/twohanded/fireaxe) && localopened)
+	else if(istype(O, /obj/item/weapon/twohanded/fireaxe) && localopened)
 		if(!fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/FA = O
 			if(FA.wielded)

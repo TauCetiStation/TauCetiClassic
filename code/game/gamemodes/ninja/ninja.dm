@@ -20,7 +20,7 @@
 	to_chat(world, "<B>The current game mode is Ninja!</B>")
 
 /datum/game_mode/ninja/can_start()
-	if (!..())
+	if(!..())
 		return FALSE
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
@@ -31,7 +31,7 @@
 	if(!..())
 		return FALSE
 	var/ninja_number = required_enemies
-	if (antag_candidates.len <= recommended_enemies)
+	if(antag_candidates.len <= recommended_enemies)
 		ninja_number = antag_candidates.len
 	while(ninja_number > 0)
 		var/datum/mind/ninja = pick(antag_candidates)
@@ -86,14 +86,14 @@
 		if(ninja.current.stat==2)
 			continue
 		ninjas_alive++
-	if (ninjas_alive)
+	if(ninjas_alive)
 		return ..()
 	else
 		finished = 1
 		return 1
 
 /datum/game_mode/ninja/proc/forge_ninja_objectives(datum/mind/ninja)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	if(!ninja.protector_role)

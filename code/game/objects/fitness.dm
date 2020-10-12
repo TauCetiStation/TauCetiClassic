@@ -35,7 +35,7 @@
 			to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
 		while (lifts++ < 6)
-			if (user.loc != src.loc)
+			if(user.loc != src.loc)
 				break
 			sleep(3)
 			animate(user, pixel_y = -2, time = 3)
@@ -97,7 +97,7 @@
 			to_chat(user, "<span class='notice'>You feel unbearable muscle pain, but you like it!</span>")
 
 		while (reps++ < 6)
-			if (user.loc != src.loc)
+			if(user.loc != src.loc)
 				break
 
 			for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)

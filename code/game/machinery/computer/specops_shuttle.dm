@@ -139,10 +139,10 @@ var/specops_shuttle_timeleft = 0
 	specops_shuttle_moving_to_centcom = 0
 
 	specops_shuttle_at_station = 1
-	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
+	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
 		return
 
-	if (!specops_can_move())
+	if(!specops_can_move())
 		to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 		return
 
@@ -203,7 +203,7 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
 	var/dat
-	if (temp)
+	if(temp)
 		dat = temp
 	else
 		dat += {"\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
@@ -221,13 +221,13 @@ var/specops_shuttle_timeleft = 0
 	if(!. || !allowed(usr))
 		return
 
-	if (href_list["sendtodock"])
+	if(href_list["sendtodock"])
 		if(!specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		if (!specops_can_move())
+		if(!specops_can_move())
 			to_chat(usr, "<span class='notice'>Central Command will not allow the Special Operations shuttle to return yet.</span>")
 			if(world.timeofday <= specops_shuttle_timereset)
-				if (((world.timeofday - specops_shuttle_timereset) / 10) > 60)
+				if(((world.timeofday - specops_shuttle_timereset) / 10) > 60)
 					to_chat(usr, "<span class='notice'>[-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!</span>")
 				to_chat(usr, "<span class='notice'>[-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!</span>")
 			return FALSE
@@ -241,10 +241,10 @@ var/specops_shuttle_timeleft = 0
 		spawn(0)
 			specops_return()
 
-	else if (href_list["sendtostation"])
+	else if(href_list["sendtostation"])
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		if (!specops_can_move())
+		if(!specops_can_move())
 			to_chat(usr, "<span class='warning'>The Special Operations shuttle is unable to leave.</span>")
 			return FALSE
 
@@ -258,7 +258,7 @@ var/specops_shuttle_timeleft = 0
 		spawn(0)
 			specops_process()
 
-	else if (href_list["mainmenu"])
+	else if(href_list["mainmenu"])
 		temp = null
 
 	updateUsrDialog()

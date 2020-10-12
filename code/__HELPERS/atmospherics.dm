@@ -25,7 +25,7 @@
 		var/pressure = mixture.return_pressure()
 		var/total_moles = mixture.total_moles
 
-		if (total_moles > 0)
+		if(total_moles > 0)
 			if(abs(pressure - ONE_ATMOSPHERE) < 10)
 				. += "<span class='notice'>Pressure: [round(pressure, 0.1)] kPa</span>"
 			else

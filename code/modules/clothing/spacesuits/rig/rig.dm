@@ -257,7 +257,7 @@
 		data["modules"] = module_list
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, interface_path, interface_title, 480, 550)
 		ui.set_initial_data(data)
 		ui.open()

@@ -115,7 +115,7 @@
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(open)
-			if (src.allowed(user))
+			if(src.allowed(user))
 				src.locked = !src.locked
 				to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
@@ -123,7 +123,7 @@
 			updateDialog()
 		else
 			to_chat(user, "You must open the cover first!")
-	else if (default_unfasten_wrench(user, I))
+	else if(default_unfasten_wrench(user, I))
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "" : "un"]fasten [anchored ? "to" : "from"] the plating")
 	return
@@ -183,7 +183,7 @@
 	if(!. || ((!open || locked) && !issilicon(usr) && !isobserver(usr)))
 		return FALSE
 
-	if (href_list["freq"])
+	if(href_list["freq"])
 		freq = sanitize_frequency(freq + text2num(href_list["freq"]))
 
 	else if(href_list["locedit"])

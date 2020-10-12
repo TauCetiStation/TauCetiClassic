@@ -62,28 +62,28 @@
 	return ..()
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
+	if(ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
 		if(!over_object)
 			return
 
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 			return
 
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 			src.open(usr)
 			return
 
-		if (!( istype(over_object, /obj/screen) ))
+		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 
 		//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
 		//there's got to be a better way of doing this.
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
 
-		if (!usr.incapacitated())
+		if(!usr.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -124,7 +124,7 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
-	if (length(use_sound))
+	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 
 	prepare_ui()
@@ -182,7 +182,7 @@
 				break
 		if(!ok)
 			if(!stop_messages)
-				if (istype(W, /obj/item/weapon/hand_labeler))
+				if(istype(W, /obj/item/weapon/hand_labeler))
 					return FALSE
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
@@ -193,7 +193,7 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
 
-	if (max_w_class != null && W.w_class > max_w_class)
+	if(max_w_class != null && W.w_class > max_w_class)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")
 		return FALSE
@@ -230,18 +230,18 @@
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
-		if (usr.client && usr.s_active != src)
+		if(usr.client && usr.s_active != src)
 			usr.client.screen -= W
 		W.dropped(usr)
 		add_fingerprint(usr)
 
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
-				if (M == usr)
+				if(M == usr)
 					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
-				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
+				else if(M in range(1)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
-				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
+				else if(W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
@@ -337,7 +337,7 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if (src.loc == user)
+	if(src.loc == user)
 		src.open(user)
 	else
 		..()
@@ -409,19 +409,19 @@
 			return
 
 	//Otherwise we'll try to fold it.
-	if ( contents.len )
+	if( contents.len )
 		return
 
-	if ( !ispath(src.foldable) )
+	if( !ispath(src.foldable) )
 		return
 	var/found = 0
 	// Close any open UI windows first
 	for(var/mob/M in range(1))
-		if (M.s_active == src)
+		if(M.s_active == src)
 			src.close(M)
-		if ( M == user )
+		if( M == user )
 			found = 1
-	if ( !found )	// User is too far away
+	if( !found )	// User is too far away
 		return
 	// Now make the cardboard
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
@@ -458,13 +458,13 @@
 	var/atom/cur_atom = src
 
 	while (cur_atom && !(cur_atom in container.contents))
-		if (isarea(cur_atom))
+		if(isarea(cur_atom))
 			return -1
-		if (istype(cur_atom.loc, /obj/item/weapon/storage))
+		if(istype(cur_atom.loc, /obj/item/weapon/storage))
 			depth++
 		cur_atom = cur_atom.loc
 
-	if (!cur_atom)
+	if(!cur_atom)
 		return -1	//inside something with a null loc.
 
 	return depth
@@ -476,13 +476,13 @@
 	var/atom/cur_atom = src
 
 	while (cur_atom && !isturf(cur_atom))
-		if (isarea(cur_atom))
+		if(isarea(cur_atom))
 			return -1
-		if (istype(cur_atom.loc, /obj/item/weapon/storage))
+		if(istype(cur_atom.loc, /obj/item/weapon/storage))
 			depth++
 		cur_atom = cur_atom.loc
 
-	if (!cur_atom)
+	if(!cur_atom)
 		return -1	//inside something with a null loc.
 
 	return depth
@@ -498,7 +498,7 @@
 
 // Useful for spilling the contents of containers all over the floor.
 /obj/item/weapon/storage/proc/spill(dist = 2, turf/T = null)
-	if (!istype(T))
+	if(!istype(T))
 		T = get_turf(src)
 
 	for(var/obj/O in contents)

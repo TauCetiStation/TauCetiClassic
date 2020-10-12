@@ -39,7 +39,7 @@
 /obj/item/stack/Destroy()
 	amount = 0 // lets say anything that wants to use us, that we are empty.
 
-	if (usr && usr.machine == src)
+	if(usr && usr.machine == src)
 		usr << browse(null, "window=stack")
 	if(recipes)
 		recipes = null
@@ -49,7 +49,7 @@
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
 		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
-	else if (amount <= (max_amount * (2 / 3)))
+	else if(amount <= (max_amount * (2 / 3)))
 		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
 	else
 		w_class = full_w_class
@@ -75,62 +75,62 @@
 	list_recipes(user)
 
 /obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
-	if (!recipes)
+	if(!recipes)
 		return
-	if (!src || amount<=0)
+	if(!src || amount<=0)
 		user << browse(null, "window=stack")
 	user.set_machine(src) //for correct work of onclose
 	var/list/recipe_list = recipes
-	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
+	if(recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
 	var/t1 = "<TT>Amount Left: [src.amount]<br>"
 	for(var/i=1;i<=recipe_list.len,i++)
 		var/E = recipe_list[i]
-		if (isnull(E))
+		if(isnull(E))
 			t1 += "<hr>"
 			continue
 
-		if (i>1 && !isnull(recipe_list[i-1]))
+		if(i>1 && !isnull(recipe_list[i-1]))
 			t1+="<br>"
 
-		if (istype(E, /datum/stack_recipe_list))
+		if(istype(E, /datum/stack_recipe_list))
 			var/datum/stack_recipe_list/srl = E
-			if (src.amount >= srl.req_amount)
+			if(src.amount >= srl.req_amount)
 				t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title] ([srl.req_amount] [src.singular_name]\s)</a>"
 			else
 				t1 += "[srl.title] ([srl.req_amount] [src.singular_name]\s)<br>"
 
-		if (istype(E, /datum/stack_recipe))
+		if(istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
 			var/max_multiplier = round(src.amount / R.req_amount)
 			var/title
 			var/can_build = 1
 			can_build = can_build && (max_multiplier>0)
 			/*
-			if (R.one_per_turf)
+			if(R.one_per_turf)
 				can_build = can_build && !(locate(R.result_type) in usr.loc)
-			if (R.on_floor)
+			if(R.on_floor)
 				can_build = can_build && istype(usr.loc, /turf/simulated/floor)
 			*/
-			if (R.res_amount>1)
+			if(R.res_amount>1)
 				title+= "[R.res_amount]x [R.title]\s"
 			else
 				title+= "[R.title]"
 			title+= " ([R.req_amount] [src.singular_name]\s)"
-			if (can_build)
+			if(can_build)
 				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i]'>[title]</A>  ")
 			else
 				t1 += text("[]", title)
 				continue
-			if (R.max_res_amount>1 && max_multiplier>1)
+			if(R.max_res_amount>1 && max_multiplier>1)
 				max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
 				t1 += " |"
 				var/list/multipliers = list(5,10,25)
 				for (var/n in multipliers)
-					if (max_multiplier>=n)
+					if(max_multiplier>=n)
 						t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-				if (!(max_multiplier in multipliers))
+				if(!(max_multiplier in multipliers))
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT>"
@@ -144,53 +144,53 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if(usr.incapacitated() || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
-	if (href_list["sublist"] && !href_list["make"])
+	if(href_list["sublist"] && !href_list["make"])
 		list_recipes(usr, text2num(href_list["sublist"]))
 
-	if (href_list["make"])
+	if(href_list["make"])
 		var/list/recipes_list = recipes
-		if (href_list["sublist"])
+		if(href_list["sublist"])
 			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
 			recipes_list = srl.recipes
 		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier) multiplier = 1
+		if(!multiplier) multiplier = 1
 		if(src.amount < (R.req_amount*multiplier))
-			if (R.req_amount*multiplier>1)
+			if(R.req_amount*multiplier>1)
 				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 			else
 				to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 			return
-		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+		if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 			return
-		if (R.on_floor)
+		if(R.on_floor)
 			usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 			usr << browse(null, "window=stack")
 			return
-		if (R.time)
+		if(R.time)
 			if(usr.is_busy())
 				return
 			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-			if (!do_after(usr, R.time, target = usr))
+			if(!do_after(usr, R.time, target = usr))
 				return
 		if(!src.use(R.req_amount*multiplier))
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
-		if (R.max_res_amount>1)
+		if(R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
+		if( istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
-	if (src && usr.machine==src) //do not reopen closed window
+	if(src && usr.machine==src) //do not reopen closed window
 		INVOKE_ASYNC(src, .proc/interact, usr)
 		return
 	return
@@ -275,13 +275,13 @@
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
 	use(transfer, TRUE)
-	if (istype(old_loc, /obj/item/weapon/storage) && amount < 1 && !is_cyborg())
+	if(istype(old_loc, /obj/item/weapon/storage) && amount < 1 && !is_cyborg())
 		var/obj/item/weapon/storage/s = old_loc
 		s.update_ui_after_item_removal()
 	S.add(transfer)
 
 /obj/item/stack/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if(user.get_inactive_hand() == src)
 		if(zero_amount())
 			return
 		change_stack(user, 1)

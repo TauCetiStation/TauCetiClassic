@@ -20,24 +20,24 @@ NanoBaseHelpers = function ()
 
 				var iconHtml = '';
 				var iconClass = 'noIcon';
-				if (typeof icon != 'undefined' && icon)
+				if(typeof icon != 'undefined' && icon)
 				{
 					iconHtml = '<div class="uiLinkPendingIcon"></div><div class="uiIcon16 icon-' + icon + '"></div>';
 					iconClass = 'hasIcon';
 				}
 
-				if (typeof elementClass == 'undefined' || !elementClass)
+				if(typeof elementClass == 'undefined' || !elementClass)
 				{
 					elementClass = 'link';
 				}
 
 				var elementIdHtml = '';
-				if (typeof elementId != 'undefined' && elementId)
+				if(typeof elementId != 'undefined' && elementId)
 				{
 					elementIdHtml = 'id="' + elementId + '"';
 				}
 
-				if (typeof status != 'undefined' && status)
+				if(typeof status != 'undefined' && status)
 				{
 					return '<div unselectable="on" class="link ' + iconClass + ' ' + elementClass + ' ' + status + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 				}
@@ -62,15 +62,15 @@ NanoBaseHelpers = function ()
 			},
 			// Format a string (~string("Hello {0}, how are {1}?", 'Martin', 'you') becomes "Hello Martin, how are you?")
 			string: function() {
-				if (arguments.length == 0)
+				if(arguments.length == 0)
 				{
 					return '';
 				}
-				else if (arguments.length == 1)
+				else if(arguments.length == 1)
 				{
 					return arguments[0];
 				}
-				else if (arguments.length > 1)
+				else if(arguments.length > 1)
 				{
 					stringArgs = [];
 					for (var i = 1; i < arguments.length; i++)
@@ -94,35 +94,35 @@ NanoBaseHelpers = function ()
 			// Display a bar. Used to show health, capacity, etc.
 			displayBar: function(value, rangeMin, rangeMax, styleClass, showText) {
 
-				if (rangeMin < rangeMax)
+				if(rangeMin < rangeMax)
                 {
-                    if (value < rangeMin)
+                    if(value < rangeMin)
                     {
                         value = rangeMin;
                     }
-                    else if (value > rangeMax)
+                    else if(value > rangeMax)
                     {
                         value = rangeMax;
                     }
                 }
                 else
                 {
-                    if (value > rangeMin)
+                    if(value > rangeMin)
                     {
                         value = rangeMin;
                     }
-                    else if (value < rangeMax)
+                    else if(value < rangeMax)
                     {
                         value = rangeMax;
                     }
                 }
 
-				if (typeof styleClass == 'undefined' || !styleClass)
+				if(typeof styleClass == 'undefined' || !styleClass)
 				{
 					styleClass = '';
 				}
 
-				if (typeof showText == 'undefined' || !showText)
+				if(typeof showText == 'undefined' || !showText)
 				{
 					showText = '';
 				}
@@ -133,7 +133,7 @@ NanoBaseHelpers = function ()
 			},
 			// Display DNA Blocks (for the DNA Modifier UI)
 			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey) {
-			    if (!dnaString)
+			    if(!dnaString)
 				{
 					return '<div class="notice">Please place a valid subject into the DNA modifier.</div>';
 				}
@@ -145,13 +145,13 @@ NanoBaseHelpers = function ()
                 var subblock = 1;
                 for (index in characters)
                 {
-					if (!characters.hasOwnProperty(index) || typeof characters[index] === 'object')
+					if(!characters.hasOwnProperty(index) || typeof characters[index] === 'object')
 					{
 						continue;
 					}
 
 					var parameters;
-					if (paramKey.toUpperCase() == 'UI')
+					if(paramKey.toUpperCase() == 'UI')
 					{
 						parameters = { 'selectUIBlock' : block, 'selectUISubblock' : subblock };
 					}
@@ -161,7 +161,7 @@ NanoBaseHelpers = function ()
 					}
 
                     var status = 'linkActive';
-                    if (block == selectedBlock && subblock == selectedSubblock)
+                    if(block == selectedBlock && subblock == selectedSubblock)
                     {
                         status = 'selected';
                     }
@@ -169,7 +169,7 @@ NanoBaseHelpers = function ()
                     html += '<div class="link ' + status + ' dnaSubBlock" data-href="' + NanoUtility.generateHref(parameters) + '" id="dnaBlock' + index + '">' + characters[index] + '</div>'
 
                     index++;
-                    if (index % blockSize == 0 && index < characters.length)
+                    if(index % blockSize == 0 && index < characters.length)
                     {
 						block++;
                         subblock = 1;
@@ -196,7 +196,7 @@ NanoBaseHelpers = function ()
 		{
 			for (var helperKey in _baseHelpers)
 			{
-				if (_baseHelpers.hasOwnProperty(helperKey))
+				if(_baseHelpers.hasOwnProperty(helperKey))
 				{
 					NanoTemplate.removeHelper(helperKey);
 				}

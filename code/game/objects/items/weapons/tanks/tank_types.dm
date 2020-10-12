@@ -80,7 +80,7 @@
 /obj/item/weapon/tank/phoron/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = I
-		if (!F.status || F.ptank)
+		if(!F.status || F.ptank)
 			return
 
 		master = F

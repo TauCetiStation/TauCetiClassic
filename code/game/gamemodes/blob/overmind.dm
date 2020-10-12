@@ -85,17 +85,17 @@
 	return ..()
 
 /mob/camera/blob/say(var/message)
-	if (!message)
+	if(!message)
 		return
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if(stat)
 		return
 
 	blob_talk(message)
@@ -105,7 +105,7 @@
 
 	log_say("[key_name(src)] : [message]")
 
-	if (!message)
+	if(!message)
 		return
 
 	//var/message_a = say_quote(message)

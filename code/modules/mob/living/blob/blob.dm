@@ -57,7 +57,7 @@
 		ghost.name = ghost_name
 		ghost.real_name = ghost_name
 		ghost.key = key
-		if (ghost.client)
+		if(ghost.client)
 			ghost.client.eye = ghost
 		return ..(gibbed)
 
@@ -240,7 +240,7 @@
 		if(core)
 			B.loc = core.loc
 	B.ghost_name = G_found.real_name
-	if (G_found.client)
+	if(G_found.client)
 		G_found.client.mob = B
 	B.verbs += /mob/living/blob/verb/create_node
 	B.verbs += /mob/living/blob/verb/create_factory

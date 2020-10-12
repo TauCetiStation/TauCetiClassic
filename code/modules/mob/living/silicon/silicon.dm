@@ -97,7 +97,7 @@
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
 		return 0
-	if (bot.connected_ai == ai)
+	if(bot.connected_ai == ai)
 		return 1
 	return 0
 
@@ -147,14 +147,14 @@
 	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
 
 /mob/living/silicon/add_language(language, can_speak=1)
-	if (..(language) && can_speak)
+	if(..(language) && can_speak)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)
 	..(rem_language)
 
 	for (var/datum/language/L in speech_synthesizer_langs)
-		if (L.name == rem_language)
+		if(L.name == rem_language)
 			speech_synthesizer_langs -= L
 
 /mob/living/silicon/check_languages()

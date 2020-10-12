@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(obj)
 	..("P:[processing.len]")
 
 /datum/controller/subsystem/obj/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -25,9 +25,9 @@ SUBSYSTEM_DEF(obj)
 		else
 			thing.process()
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/obj/Recover()
-	if (istype(SSobj.processing))
+	if(istype(SSobj.processing))
 		processing = SSobj.processing

@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(drying)
 	..("P:[drying.len]")
 
 /datum/controller/subsystem/drying/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = drying.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -26,9 +26,9 @@ SUBSYSTEM_DEF(drying)
 		else
 			drying -= thing
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/drying/Recover()
-	if (istype(SSdrying.drying))
+	if(istype(SSdrying.drying))
 		drying = SSdrying.drying

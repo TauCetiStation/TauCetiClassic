@@ -8,7 +8,7 @@
  * Removes excess whitespace and indentation from the string.
  */
 export const multiline = str => {
-  if (Array.isArray(str)) {
+  if(Array.isArray(str)) {
     // Small stub to allow usage as a template tag
     return multiline(str.join(''));
   }
@@ -18,15 +18,15 @@ export const multiline = str => {
   for (let line of lines) {
     for (let indent = 0; indent < line.length; indent++) {
       const char = line[indent];
-      if (char !== ' ') {
-        if (minIndent === undefined || indent < minIndent) {
+      if(char !== ' ') {
+        if(minIndent === undefined || indent < minIndent) {
           minIndent = indent;
         }
         break;
       }
     }
   }
-  if (!minIndent) {
+  if(!minIndent) {
     minIndent = 0;
   }
   // Remove this base indentation and trim the resulting string
@@ -65,11 +65,11 @@ export const createGlobPattern = pattern => {
 export const createSearch = (searchText, stringifier) => {
   const preparedSearchText = searchText.toLowerCase().trim();
   return obj => {
-    if (!preparedSearchText) {
+    if(!preparedSearchText) {
       return true;
     }
     const str = stringifier ? stringifier(obj) : obj;
-    if (!str) {
+    if(!str) {
       return false;
     }
     return str
@@ -80,7 +80,7 @@ export const createSearch = (searchText, stringifier) => {
 
 export const capitalize = str => {
   // Handle array
-  if (Array.isArray(str)) {
+  if(Array.isArray(str)) {
     return str.map(capitalize);
   }
   // Handle string
@@ -89,11 +89,11 @@ export const capitalize = str => {
 
 export const toTitleCase = str => {
   // Handle array
-  if (Array.isArray(str)) {
+  if(Array.isArray(str)) {
     return str.map(toTitleCase);
   }
   // Pass non-string
-  if (typeof str !== 'string') {
+  if(typeof str !== 'string') {
     return str;
   }
   // Handle string
@@ -123,7 +123,7 @@ export const toTitleCase = str => {
  * @return {String} Decoded HTML string
  */
 export const decodeHtmlEntities = str => {
-  if (!str) {
+  if(!str) {
     return str;
   }
   const translate_re = /&(nbsp|amp|quot|lt|gt|apos);/g;

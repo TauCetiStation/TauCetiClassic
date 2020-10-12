@@ -1,7 +1,7 @@
 /mob/living/carbon/xenomorph/larva/Life()
 	set invisibility = 0
 
-	if (notransform)
+	if(notransform)
 		return
 
 	for(var/obj/item/weapon/larva_bite/G in src)
@@ -19,8 +19,8 @@
 	return
 
 /mob/living/carbon/xenomorph/larva/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(25 to INFINITY)
 					healths.icon_state = "health0"

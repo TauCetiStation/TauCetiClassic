@@ -31,14 +31,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
 
 /obj/machinery/zero_point_emitter/update_icon()
-	if (active && !(stat & (NOPOWER|BROKEN)))
+	if(active && !(stat & (NOPOWER|BROKEN)))
 		icon_state = "laser"//"emitter_+a"
 	else
 		icon_state = "laser"//"emitter"

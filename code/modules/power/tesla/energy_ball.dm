@@ -109,7 +109,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy -= orbiting_balls.len * 0.5
 
 /obj/singularity/energy_ball/proc/create_energy_ball()
-	if (!loc)
+	if(!loc)
 		return
 
 	var/obj/singularity/energy_ball/EB = new(loc)

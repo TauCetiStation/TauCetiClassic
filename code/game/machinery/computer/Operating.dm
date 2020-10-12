@@ -21,8 +21,8 @@
 			break
 
 /obj/machinery/computer/operating/ui_interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isobserver(user))
+	if( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if(!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=op")
 			return

@@ -569,7 +569,7 @@
 	data["ticks"]++
 	M.dizziness += 6
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		if (!M.stuttering)
+		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering += 3
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
@@ -1136,7 +1136,7 @@
 
 /datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
+	if(M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -1255,7 +1255,7 @@
 
 /datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
+	if(M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -1354,7 +1354,7 @@
 
 /datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+	if(M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
 		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/consumable/ethanol/devilskiss

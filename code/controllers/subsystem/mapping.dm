@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(mapping)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
-	if (!islist(files))  // handle single-level maps
+	if(!islist(files))  // handle single-level maps
 		files = list(files)
 
 	// check that the total z count of all maps matches the list of traits
@@ -162,18 +162,18 @@ SUBSYSTEM_DEF(mapping)
 		//var/datum/parsed_map/pm = new(file(full_path))
 		var/datum/map_template/pm = new(full_path)
 		var/bounds = pm.bounds
-		if (!bounds)
+		if(!bounds)
 			errorList |= full_path
 			continue
 		parsed_maps[pm] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
-	if (!length(traits))  // null or empty - default
+	if(!length(traits))  // null or empty - default
 		for (var/i in 1 to total_z)
 			traits += list(default_traits)
-	else if (total_z != traits.len)  // mismatch
+	else if(total_z != traits.len)  // mismatch
 		INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [total_z] z-levels in [path]!")
-		if (total_z < traits.len)  // ignore extra traits
+		if(total_z < traits.len)  // ignore extra traits
 			traits.Cut(total_z + 1)
 		while (total_z > traits.len)  // fall back to defaults on extra levels
 			traits += list(default_traits)
@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/map_template/pm = P
-		if (!pm.loadMap(start_z + parsed_maps[P]))
+		if(!pm.loadMap(start_z + parsed_maps[P]))
 			errorList |= pm.mappath
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -218,7 +218,7 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(config.minetype == "asteroid")
 		LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
-	else if (!isnull(config.minetype))
+	else if(!isnull(config.minetype))
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
 	if(config.load_junkyard)

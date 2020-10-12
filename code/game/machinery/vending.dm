@@ -85,11 +85,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				spawn(0)
 					src.malfunction()
 					return
@@ -98,7 +98,7 @@
 	return
 
 /obj/machinery/vending/blob_act()
-	if (prob(50))
+	if(prob(50))
 		spawn(0)
 			src.malfunction()
 			qdel(src)
@@ -197,7 +197,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-				if (!(src.anchored & powered()))
+				if(!(src.anchored & powered()))
 					src.icon_state = "[initial(icon_state)]-off"
 					stat |= NOPOWER
 					set_light(0)
@@ -233,7 +233,7 @@
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
-	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
+	else if(istype(W, /obj/item/weapon/spacecash/ewallet))
 		user.drop_item()
 		W.loc = src
 		ewallet = W
@@ -275,7 +275,7 @@
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending)
 		return
-	if (istype(I, /obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(check_accounts)
@@ -365,7 +365,7 @@
 	dat += "<h3>Select an item</h3>"
 	dat += "<div class='statusDisplay'>"
 
-	if (product_records.len == 0)
+	if(product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
 		dat += "<table>"
@@ -377,10 +377,10 @@
 		dat += "</table>"
 	dat += "</div>"
 
-	if (premium.len > 0)
+	if(premium.len > 0)
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
 
-	if (ewallet)
+	if(ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
@@ -399,7 +399,7 @@
 			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></font></td>"}
 		else
 			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></font></td>"}
-		if (R.amount > 0)
+		if(R.amount > 0)
 			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
 		else
 			dat += "<td nowrap><font color = 'red'>SOLD OUT</font></td>"
@@ -423,7 +423,7 @@
 		coin = null
 
 	else if(href_list["remove_ewallet"] && !issilicon(usr) && !isobserver(usr))
-		if (!ewallet)
+		if(!ewallet)
 			to_chat(usr, "There is no charge card in this machine.")
 			return
 		ewallet.loc = loc
@@ -432,7 +432,7 @@
 		to_chat(usr, "<span class='notice'>You remove the [ewallet] from the [src]</span>")
 		ewallet = null
 
-	else if (href_list["vend"] && vend_ready && !currently_vending)
+	else if(href_list["vend"] && vend_ready && !currently_vending)
 
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/R = usr
@@ -443,20 +443,20 @@
 			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return FALSE
 
-		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+		if(!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny, src)
 			return FALSE
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
-		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+		if(!R || !istype(R) || !R.product_path || R.amount <= 0)
 			return FALSE
 
 		if(R.price == null || isobserver(usr)) //Centcomm buys somethin at himself? Nope, because they can just take this
 			src.vend(R, usr)
 		else
-			if (ewallet)
-				if (R.price <= ewallet.worth)
+			if(ewallet)
+				if(R.price <= ewallet.worth)
 					ewallet.worth -= R.price
 					src.vend(R, usr)
 				else
@@ -468,7 +468,7 @@
 				src.updateUsrDialog()
 		return
 
-	else if (href_list["cancel_buying"])
+	else if(href_list["cancel_buying"])
 		src.currently_vending = null
 		src.updateUsrDialog()
 		return
@@ -476,13 +476,13 @@
 	src.updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
-	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+	if(!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
-	if (R in coin_records)
+	if(R in coin_records)
 		if(!coin)
 			to_chat(user, "<span class='notice'>You need to insert a coin to get this item.</span>")
 			return
@@ -503,7 +503,7 @@
 			src.last_reply = world.time
 
 	use_power(5)
-	if (src.icon_vend) //Show the vending animation if needed
+	if(src.icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
@@ -553,7 +553,7 @@
 	if(stat & NOPOWER)
 		return
 
-	if (!message)
+	if(!message)
 		return
 
 	audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span>")
@@ -578,10 +578,10 @@
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
 	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
+		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
-		if (!dump_path)
+		if(!dump_path)
 			continue
 
 		while(R.amount>0)
@@ -601,16 +601,16 @@
 		return 0
 
 	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
+		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
-		if (!dump_path)
+		if(!dump_path)
 			continue
 
 		R.amount--
 		throw_item = new dump_path(src.loc)
 		break
-	if (!throw_item)
+	if(!throw_item)
 		return 0
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
@@ -624,7 +624,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0

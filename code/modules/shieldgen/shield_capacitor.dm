@@ -72,8 +72,8 @@
 	return TRUE
 
 /obj/machinery/shield_capacitor/ui_interact(mob/user)
-	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isobserver(user))
+	if( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+		if(!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
 			return
@@ -148,7 +148,7 @@
 		icon_state = "broke"
 	else
 		if( powered() )
-			if (src.active)
+			if(src.active)
 				icon_state = "capacitor"
 			else
 				icon_state = "capacitor"
@@ -165,7 +165,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored)
+	if(src.anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
 	src.dir = turn(src.dir, 270)

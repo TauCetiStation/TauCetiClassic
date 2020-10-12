@@ -55,7 +55,7 @@
 	var/damage = P.damage
 	var/flags = P.damage_flags()
 	var/absorb = run_armor_check(def_zone, P.flag)
-	if (prob(absorb))
+	if(prob(absorb))
 		if(flags & DAM_LASER)
 			//the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
 			//this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
@@ -144,7 +144,7 @@
 		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
-		if (armor)
+		if(armor)
 			damage *= blocked_mult(armor)
 
 		//blunt objects should really not be embedding in things unless a huge amount of force is involved
@@ -278,7 +278,7 @@
 
 //Finds the effective temperature that the mob is burning at.
 /mob/living/proc/fire_burn_temperature()
-	if (fire_stacks <= 0)
+	if(fire_stacks <= 0)
 		return 0
 
 	//Scale quadratically so that single digit numbers of fire stacks don't burn ridiculously hot.

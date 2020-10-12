@@ -429,11 +429,11 @@
 	return ..()
 
 /obj/item/door_control_frame/proc/try_build(target)
-	if (get_dist(target, usr) > 1)
+	if(get_dist(target, usr) > 1)
 		return
 
 	var/ndir = get_dir(target, usr)
-	if (!(ndir in cardinal))
+	if(!(ndir in cardinal))
 		return
 
 	var/area/A = get_area(src)
@@ -457,7 +457,7 @@
 	else if(istype(target, /obj/structure/table/reinforced))
 		var/turf/loc = get_turf_loc(target)
 
-		if (!istype(loc, /turf/simulated/floor))
+		if(!istype(loc, /turf/simulated/floor))
 			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 			return
 
@@ -493,7 +493,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/door/poddoor/M in poddoor_list)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.open()
 				return
@@ -507,7 +507,7 @@
 	sleep(50)
 
 	for(var/obj/machinery/door/poddoor/M in poddoor_list)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.close()
 				return

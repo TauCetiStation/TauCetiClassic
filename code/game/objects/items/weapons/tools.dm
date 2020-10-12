@@ -256,16 +256,16 @@
 		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
 		forceMove(F)
 		F.weldtool = src
-		if (user.client)
+		if(user.client)
 			user.client.screen -= src
-		if (user.r_hand == src)
+		if(user.r_hand == src)
 			user.remove_from_mob(src)
 		else
 			user.remove_from_mob(src)
 		src.master = F
 		src.layer = initial(src.layer)
 		user.remove_from_mob(src)
-		if (user.client)
+		if(user.client)
 			user.client.screen -= src
 		src.loc = F
 		src.add_fingerprint(user)
@@ -284,7 +284,7 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
+			if(!istype(src, /obj/item/weapon/weldingtool/experimental))
 				STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -313,7 +313,7 @@
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
-	if (istype(location, /turf))
+	if(istype(location, /turf))
 		location.hotspot_expose(700, 5, src)
 
 
@@ -321,7 +321,7 @@
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src, target) <= 1 && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target
-		if (!welding)
+		if(!welding)
 			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
 			tank.reagents.trans_id_to(src, R.id, max_fuel)
 			to_chat(user, "<span class='notice'>Welder refueled</span>")
@@ -332,10 +332,10 @@
 			log_game("[key_name(user)] triggered a [tank] explosion.")
 			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
 			return
-	if (src.welding)
+	if(src.welding)
 		use(1)
 		var/turf/location = get_turf(user)
-		if (istype(location, /turf))
+		if(istype(location, /turf))
 			location.hotspot_expose(700, 50, src)
 
 			if(isliving(target))				//Welding can ignite mobs, splashed with fuel
@@ -396,7 +396,7 @@
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
 	//If we're turning it on
 	if(temp_welding > 0)
-		if (use(1))
+		if(use(1))
 			hitsound = list('sound/items/Welder2.ogg')
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
@@ -429,8 +429,8 @@
 	if(!status)	return
 	if(!usr) return
 	src.welding = !( src.welding )
-	if (src.welding)
-		if (use(1))
+	if(src.welding)
+		if(use(1))
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			hitsound = list('sound/items/Welder2.ogg')
 			src.force = 15
@@ -487,10 +487,10 @@
 			if(IO.damage > 10)
 				to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 
-			if (IO.damage >= IO.min_broken_damage)
+			if(IO.damage >= IO.min_broken_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.sdisabilities |= BLIND
-			else if (IO.damage >= IO.min_bruised_damage)
+			else if(IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.eye_blurry = 5

@@ -62,12 +62,12 @@
 			return
 		if(2.0)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
+				if(prob(50)) b.loc = (get_turf(src))
 				else del(b)
 			qdel(src)
 			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/obj/item/weapon/book/b in contents)
 					b.loc = (get_turf(src))
 				qdel(src)

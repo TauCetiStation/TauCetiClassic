@@ -47,7 +47,7 @@ const initialState = {
 export const backendReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
-  if (type === 'backend/update') {
+  if(type === 'backend/update') {
     // Merge config
     const config = {
       ...state.config,
@@ -61,10 +61,10 @@ export const backendReducer = (state = initialState, action) => {
     };
     // Merge shared states
     const shared = { ...state.shared };
-    if (payload.shared) {
+    if(payload.shared) {
       for (let key of Object.keys(payload.shared)) {
         const value = payload.shared[key];
-        if (value === '') {
+        if(value === '') {
           shared[key] = undefined;
         }
         else {
@@ -87,7 +87,7 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === 'backend/setSharedState') {
+  if(type === 'backend/setSharedState') {
     const { key, nextState } = payload;
     return {
       ...state,
@@ -98,14 +98,14 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === 'backend/suspendStart') {
+  if(type === 'backend/suspendStart') {
     return {
       ...state,
       suspending: true,
     };
   }
 
-  if (type === 'backend/suspendSuccess') {
+  if(type === 'backend/suspendSuccess') {
     const { timestamp } = payload;
     return {
       ...state,
@@ -132,7 +132,7 @@ export const backendMiddleware = store => {
     const { config, suspended } = selectBackend(store.getState());
     const { type, payload } = action;
 
-    if (type === 'backend/suspendStart' && !suspendInterval) {
+    if(type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${window.__windowId__})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
@@ -143,7 +143,7 @@ export const backendMiddleware = store => {
       suspendInterval = setInterval(suspendFn, 2000);
     }
 
-    if (type === 'backend/suspendSuccess') {
+    if(type === 'backend/suspendSuccess') {
       clearInterval(suspendInterval);
       suspendInterval = undefined;
       releaseHeldKeys();
@@ -152,14 +152,14 @@ export const backendMiddleware = store => {
       });
     }
 
-    if (type === 'backend/update') {
+    if(type === 'backend/update') {
       const fancy = payload.config?.window?.fancy;
       // Initialize fancy state
-      if (fancyState === undefined) {
+      if(fancyState === undefined) {
         fancyState = fancy;
       }
       // React to changes in fancy
-      else if (fancyState !== fancy) {
+      else if(fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
         Byond.winset(window.__windowId__, {
@@ -169,21 +169,21 @@ export const backendMiddleware = store => {
       }
     }
 
-    if (type === 'backend/update' && suspended) {
+    if(type === 'backend/update' && suspended) {
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
       setImmediate(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());
-        if (suspended) {
+        if(suspended) {
           return;
         }
         Byond.winset(window.__windowId__, {
           'is-visible': true,
         });
         perf.mark('resume/finish');
-        if (process.env.NODE_ENV !== 'production') {
+        if(process.env.NODE_ENV !== 'production') {
           logger.log('visible in',
             perf.measure('render/finish', 'resume/finish'));
         }
@@ -207,7 +207,7 @@ export const sendMessage = (message = {}) => {
     ...rest,
   };
   // JSON-encode the payload
-  if (payload !== null && payload !== undefined) {
+  if(payload !== null && payload !== undefined) {
     data.payload = JSON.stringify(payload);
   }
   Byond.topic(data);
@@ -222,7 +222,7 @@ export const sendAct = (action, payload = {}) => {
   const isObject = typeof payload === 'object'
     && payload !== null
     && !Array.isArray(payload);
-  if (!isObject) {
+  if(!isObject) {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }

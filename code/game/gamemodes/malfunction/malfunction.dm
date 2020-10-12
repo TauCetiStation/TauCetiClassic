@@ -32,21 +32,21 @@
 	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it.")
 
 /datum/game_mode/malfunction/can_start()
-	if (!..())
+	if(!..())
 		return FALSE
-	if (config && !config.allow_ai)
+	if(config && !config.allow_ai)
 		return FALSE
 	var/datum/job/ai_job = SSjob.GetJob("AI")
-	if (!ai_job || !ai_job.map_check())
+	if(!ai_job || !ai_job.map_check())
 		return FALSE
 	for(var/mob/dead/new_player/player in new_player_list)
-		if (player.mind in antag_candidates)
+		if(player.mind in antag_candidates)
 			var/malf_possible = FALSE
 			for (var/lvl in 1 to 3)
-				if (player.client.prefs.job_preferences[ai_job.title] == lvl && (!jobban_isbanned(player, ai_job.title)))
+				if(player.client.prefs.job_preferences[ai_job.title] == lvl && (!jobban_isbanned(player, ai_job.title)))
 					malf_possible = TRUE
 					break
-			if (!malf_possible)
+			if(!malf_possible)
 				antag_candidates -= player.mind
 	return length(antag_candidates)
 
@@ -124,7 +124,7 @@
 
 
 /datum/game_mode/malfunction/check_win()
-	if (AI_win_timeleft <= 0 && !station_captured)
+	if(AI_win_timeleft <= 0 && !station_captured)
 		station_captured = TRUE
 		capture_the_station()
 		return TRUE
@@ -158,16 +158,16 @@
 /datum/game_mode/proc/is_malf_ai_dead()
 	var/all_dead = TRUE
 	for(var/datum/mind/AI_mind in malf_ai)
-		if (isAI(AI_mind.current) && AI_mind.current.stat != DEAD)
+		if(isAI(AI_mind.current) && AI_mind.current.stat != DEAD)
 			all_dead = FALSE
 			break
 	return all_dead
 
 
 /datum/game_mode/malfunction/check_finished()
-	if (station_captured && !to_nuke_or_not_to_nuke)
+	if(station_captured && !to_nuke_or_not_to_nuke)
 		return 1
-	if (is_malf_ai_dead())
+	if(is_malf_ai_dead())
 		if(config.continous_rounds)
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = 0
@@ -179,7 +179,7 @@
 
 /datum/game_mode/malfunction/Topic(href, href_list)
 	..()
-	if (href_list["ai_win"])
+	if(href_list["ai_win"])
 		ai_win()
 
 
@@ -198,7 +198,7 @@
 
 
 /datum/game_mode/malfunction/proc/ai_win()
-	if (!to_nuke_or_not_to_nuke)
+	if(!to_nuke_or_not_to_nuke)
 		return
 	remove_ai_win_verb()
 	var/turf/malf_turf

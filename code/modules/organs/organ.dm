@@ -51,12 +51,12 @@
 /obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
-	if (!germ_level || antibiotics < 5)
+	if(!germ_level || antibiotics < 5)
 		return
 
-	if (germ_level < INFECTION_LEVEL_ONE)
+	if(germ_level < INFECTION_LEVEL_ONE)
 		germ_level = 0	//cure instantly
-	else if (germ_level < INFECTION_LEVEL_TWO)
+	else if(germ_level < INFECTION_LEVEL_TWO)
 		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
 	else
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
@@ -135,17 +135,17 @@
 			BP.process()
 			number_wounds += BP.number_wounds
 
-			if (!lying && world.time - l_move_time < 15)
+			if(!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.bodypart_organs.len && prob(15))
+				if(BP.is_broken() && BP.bodypart_organs.len && prob(15))
 					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))
 
 				//Moving makes open wounds get infected much faster
-				if (BP.wounds.len)
+				if(BP.wounds.len)
 					for(var/datum/wound/W in BP.wounds)
-						if (W.infection_check())
+						if(W.infection_check())
 							W.germ_level += 1
 
 /mob/living/carbon/human/proc/handle_stance()
@@ -184,9 +184,9 @@
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
 	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
-	if (l_hand && istype(l_hand, /obj/item/weapon/cane))
+	if(l_hand && istype(l_hand, /obj/item/weapon/cane))
 		stance_damage -= 2
-	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
+	if(r_hand && istype(r_hand, /obj/item/weapon/cane))
 		stance_damage -= 2
 
 	// standing is poor

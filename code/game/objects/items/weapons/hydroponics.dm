@@ -76,7 +76,7 @@
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (force > 0)
+	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else

@@ -81,7 +81,7 @@ var/datum/controller/failsafe/Failsafe
 				else
 					defcon = min(defcon + 1,5)
 					master_iteration = Master.iteration
-			if (defcon <= 1)
+			if(defcon <= 1)
 				sleep(processing_interval * 2)
 			else
 				sleep(processing_interval)

@@ -1,6 +1,6 @@
 
 /datum/admins/proc/player_panel_new()//The new one
-	if (!usr.client.holder)
+	if(!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Admin Player Panel</title></head>"
 
@@ -43,7 +43,7 @@
 								var search = lsearch\[0\];
 								//var inner_span = li.getElementsByTagName("span")\[1\] //Should only ever contain one element.
 								//document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
-								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
+								if( search.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
 									//document.write("a");
 									//ltr.removeChild(tr);
@@ -323,7 +323,7 @@
 
 //The old one
 /datum/admins/proc/player_panel_old()
-	if (!usr.client.holder)
+	if(!usr.client.holder)
 		return
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Player Menu</title></head>"
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
@@ -384,12 +384,12 @@
 	usr << browse(dat, "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+	if(SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
-		if (!SSshuttle.online)
+		if(!SSshuttle.online)
 			dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
 		else
 			switch(SSshuttle.location)
@@ -597,7 +597,7 @@
 	return txt
 
 /proc/check_role_table_row(mob/M, admins=src, show_objectives)
-	if (!istype(M))
+	if(!istype(M))
 		return "<tr><td><i>Not found!</i></td></tr>"
 
 	var/txt = {"
@@ -612,7 +612,7 @@
 			</td>
 	"}
 
-	if (show_objectives)
+	if(show_objectives)
 		txt += {"
 			<td>
 				<a href='?src=\ref[admins];traitor=\ref[M]'>Show Objective</a>

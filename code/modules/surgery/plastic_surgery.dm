@@ -10,7 +10,7 @@
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
 	return target_zone == O_MOUTH
 
@@ -61,7 +61,7 @@
 /datum/surgery_step/plastic_surgery/adjust_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
+	if(H.disfigured == 1)
 		user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
 		"You start mending [target]'s vocal cords with \the [tool].")
 	else
@@ -72,7 +72,7 @@
 /datum/surgery_step/plastic_surgery/adjust_vocal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
+	if(H.disfigured == 1)
 		user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
 		"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
 		H.disfigured = 0
@@ -147,7 +147,7 @@
 	"<span class='notice'>You cauterize theon [target]'s face and neck with \the [tool].</span>")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
-	if (target.op_stage.plasticsur == 2)
+	if(target.op_stage.plasticsur == 2)
 		var/obj/item/organ/external/head/H = BP
 		H.disfigured = 0
 	target.op_stage.plasticsur = 0

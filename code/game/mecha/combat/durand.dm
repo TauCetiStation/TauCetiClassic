@@ -74,7 +74,7 @@
 
 /obj/mecha/combat/durand/Topic(href, href_list)
 	..()
-	if (href_list["toggle_defence_mode"])
+	if(href_list["toggle_defence_mode"])
 		src.defence_mode()
 	return
 

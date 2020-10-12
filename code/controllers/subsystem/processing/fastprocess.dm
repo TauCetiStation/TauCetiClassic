@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(fastprocess)
 	..("FP:[processing.len]")
 
 /datum/controller/subsystem/fastprocess/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -25,9 +25,9 @@ SUBSYSTEM_DEF(fastprocess)
 		else
 			SSfastprocess.processing -= thing
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/fastprocess/Recover()
-	if (istype(SSfastprocess.processing))
+	if(istype(SSfastprocess.processing))
 		processing = SSfastprocess.processing

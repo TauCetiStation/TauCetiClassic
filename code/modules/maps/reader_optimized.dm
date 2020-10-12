@@ -356,7 +356,7 @@ var/global/dmm_suite/preloader/_preloader = new
 //return the filled list
 /dmm_suite/proc/readlist(text, delimiter=",")
 	. = list()
-	if (!text)
+	if(!text)
 		return
 
 	var/position

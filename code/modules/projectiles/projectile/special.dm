@@ -139,7 +139,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			M.nutrition += 30
-	else if (istype(target, /mob/living/carbon))
+	else if(istype(target, /mob/living/carbon))
 		to_chat(M, "<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1

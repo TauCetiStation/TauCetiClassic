@@ -73,7 +73,7 @@
 
 		power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, power_rating)
 
-	if (power_draw < 0)
+	if(power_draw < 0)
 		last_flow_rate = 0
 		last_power_draw = 0
 	else
@@ -84,7 +84,7 @@
 		update_connected_network()
 
 		//ran out of charge
-		if (!cell.charge)
+		if(!cell.charge)
 			power_change()
 			update_icon()
 
@@ -103,11 +103,11 @@
 	data["on"] = on ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
-	if (holding)
+	if(holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "portscrubber.tmpl", "Portable Scrubber", 480, 400)
 		ui.set_initial_data(data)
 		ui.open()
@@ -122,13 +122,13 @@
 		on = !on
 		update_icon()
 
-	if (href_list["remove_tank"])
+	if(href_list["remove_tank"])
 		if(holding)
 			holding.forceMove(loc)
 			holding = null
 		update_icon()
 
-	if (href_list["volume_adj"])
+	if(href_list["volume_adj"])
 		var/diff = text2num(href_list["volume_adj"])
 		volume_rate = clamp(volume_rate+diff, minrate, maxrate)
 		update_icon()
@@ -180,7 +180,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/power_change()
 	var/old_stat = stat
 	..()
-	if (old_stat != stat)
+	if(old_stat != stat)
 		update_icon()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/process_atmos()
@@ -201,7 +201,7 @@
 
 	power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, active_power_usage)
 
-	if (power_draw < 0)
+	if(power_draw < 0)
 		last_flow_rate = 0
 		last_power_draw = 0
 	else
@@ -224,7 +224,7 @@
 	//doesn't use power cells
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		return
-	if (isscrewdriver(I))
+	if(isscrewdriver(I))
 		return
 
 	//doesn't hold tanks

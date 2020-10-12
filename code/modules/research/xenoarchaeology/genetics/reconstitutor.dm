@@ -59,7 +59,7 @@
 				src.visible_message("<span class='notice'>[bicon(src)] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
 				qdel(W)
 				updateDialog()
-	else if (istype(W, /obj/item/weapon/storage))
+	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		S.hide_from(usr)
 		var/numaccepted = 0

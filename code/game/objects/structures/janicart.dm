@@ -121,7 +121,7 @@
 			to_chat(user, "<span class='notice'>There is no bucket mounted here to dip [I] into.</span>")
 		return
 
-	else if (istype(I, /obj/item/weapon/reagent_containers/glass) && mybucket)
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass) && mybucket)
 		I.afterattack(mybucket, usr, 1)
 		update_icon()
 		return

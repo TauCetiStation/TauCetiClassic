@@ -10,16 +10,16 @@ import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 
 const normalizeData = (data, scale, rangeX, rangeY) => {
-  if (data.length === 0) {
+  if(data.length === 0) {
     return [];
   }
   const min = zipWith(Math.min)(...data);
   const max = zipWith(Math.max)(...data);
-  if (rangeX !== undefined) {
+  if(rangeX !== undefined) {
     min[0] = rangeX[0];
     max[0] = rangeX[1];
   }
-  if (rangeY !== undefined) {
+  if(rangeY !== undefined) {
     min[1] = rangeY[0];
     max[1] = rangeY[1];
   }
@@ -78,7 +78,7 @@ class LineChart extends Component {
     const { viewBox } = this.state;
     const normalized = normalizeData(data, viewBox, rangeX, rangeY);
     // Push data outside viewBox and form a fillable polygon
-    if (normalized.length > 0) {
+    if(normalized.length > 0) {
       const first = normalized[0];
       const last = normalized[normalized.length - 1];
       normalized.push([viewBox[0] + strokeWidth, last[1]]);

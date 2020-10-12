@@ -56,15 +56,15 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				for(var/x in verbs)
 					verbs -= x
 				set_broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				for(var/x in verbs)
 					verbs -= x
 				set_broken()
@@ -78,7 +78,7 @@
 
 
 /obj/machinery/computer/blob_act()
-	if (prob(75))
+	if(prob(75))
 		for(var/x in verbs)
 			verbs -= x
 		set_broken()
@@ -136,7 +136,7 @@
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
-			if (src.stat & BROKEN)
+			if(src.stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
@@ -170,7 +170,7 @@
 	set src in oview(1)
 
 	// virtual present
-	if (isAI(usr) || ispAI(usr))
+	if(isAI(usr) || ispAI(usr))
 		return
 	// state restrict
 	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
@@ -182,7 +182,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if(!I || !iswrench(I))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 

@@ -110,20 +110,20 @@
 			env.merge(removed)
 
 /obj/machinery/r_n_d/server/attackby(obj/item/I, mob/user)
-	if (disabled)
+	if(disabled)
 		return
-	if (shocked)
+	if(shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "server_o", "server", I))
+	if(default_deconstruction_screwdriver(user, "server_o", "server", I))
 		return
 	if(exchange_parts(user, I))
 		return
-	if (panel_open)
+	if(panel_open)
 		if(iscrowbar(I))
 			griefProtection()
 			default_deconstruction_crowbar(I)
 			return 1
-		else if (is_wire_tool(I) && wires.interact(user))
+		else if(is_wire_tool(I) && wires.interact(user))
 			return 1
 
 /obj/machinery/r_n_d/server/centcom

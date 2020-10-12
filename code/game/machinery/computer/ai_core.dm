@@ -75,7 +75,7 @@
 						icon_state = "3"
 		if(3)
 			if(iswirecutter(P))
-				if (brain)
+				if(brain)
 					to_chat(user, "Get that brain out of there first")
 				else
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -156,7 +156,7 @@
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
-				if (brain)
+				if(brain)
 					icon_state = "3b"
 				else
 					icon_state = "3"
@@ -219,10 +219,10 @@ That prevents a few funky behaviors.
 						if(C.contents.len)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
+							if(SSticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = SSticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+									if(T.mind == malfai)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
@@ -230,7 +230,7 @@ That prevents a few funky behaviors.
 							T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
 							T.loc = C//Throw AI into the card.
 							C.name = "inteliCard - [T.name]"
-							if (T.stat == DEAD)
+							if(T.stat == DEAD)
 								C.icon_state = "aicard-404"
 							else
 								C.icon_state = "aicard-full"
@@ -242,10 +242,10 @@ That prevents a few funky behaviors.
 						if(C.AI)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
+							if(SSticker.mode.name == "AI malfunction")
 								var/datum/game_mode/malfunction/malf = SSticker.mode
 								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+									if(T.mind == malfai)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
 							if(T.stat)//If the ai is dead/dying.
@@ -295,7 +295,7 @@ That prevents a few funky behaviors.
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
 						if(!T.contents.len)
-							if (!C.contents.len)
+							if(!C.contents.len)
 								to_chat(U, "No AI to copy over!")//Well duh
 							else for(var/mob/living/silicon/ai/A in C)
 								C.icon_state = "aicard"
@@ -304,7 +304,7 @@ That prevents a few funky behaviors.
 								A.loc = T
 								T.occupier = A
 								A.control_disabled = 1
-								if (A.stat == DEAD)
+								if(A.stat == DEAD)
 									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
 									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
@@ -316,7 +316,7 @@ That prevents a few funky behaviors.
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
 								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
-								if (T.occupier.stat == DEAD)
+								if(T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
 									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
@@ -327,16 +327,16 @@ That prevents a few funky behaviors.
 								T.occupier.loc = C
 								T.occupier.cancel_camera()
 								T.occupier = null
-							else if (C.contents.len)
+							else if(C.contents.len)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal.")
-							else if (T.active)
+							else if(T.active)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress.")
-							else if (!T.occupier)
+							else if(!T.occupier)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence.")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(!T.contents.len)
-							if (!C.AI)
+							if(!C.AI)
 								to_chat(U, "No AI to copy over!")
 							else
 								var/mob/living/silicon/ai/A = C.AI
@@ -351,7 +351,7 @@ That prevents a few funky behaviors.
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.AI && T.occupant && !T.active)
-								if (T.occupant.stat)
+								if(T.occupant.stat)
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
 									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
@@ -361,11 +361,11 @@ That prevents a few funky behaviors.
 									T.occupant.loc = C
 									T.occupant.cancel_camera()
 									T.occupant = null
-							else if (C.AI)
+							else if(C.AI)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Artificial intelligence detected on terminal.")
-							else if (T.active)
+							else if(T.active)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Reconstruction in progress.")
-							else if (!T.occupant)
+							else if(!T.occupant)
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Unable to locate artificial intelligence.")
 			if("NINJASUIT")//Ninjasuit
 				var/obj/item/clothing/suit/space/space_ninja/T = target

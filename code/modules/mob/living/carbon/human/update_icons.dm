@@ -161,7 +161,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
-		if (istype(src, /obj/item/clothing) && H.species)
+		if(istype(src, /obj/item/clothing) && H.species)
 			var/obj/item/clothing/C = src
 			var/list/avaiable_icon_states = C.get_sprite_sheet_icon_list(H.species.name, sprite_sheet_slot)
 			if("[t_state][icon_state_appendix]" in avaiable_icon_states)
@@ -388,7 +388,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= image("icon"=target_locked, "layer"=-TARGETED_LAYER)
-	else if (!targeted_by && target_locked)
+	else if(!targeted_by && target_locked)
 		qdel(target_locked)
 
 	apply_overlay(TARGETED_LAYER)
@@ -454,7 +454,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/obj/item/clothing/under/U = w_uniform
-		if (wear_suit && (wear_suit.flags & BLOCKUNIFORM)) // Skip uniform overlay on suit full cover
+		if(wear_suit && (wear_suit.flags & BLOCKUNIFORM)) // Skip uniform overlay on suit full cover
 			return
 
 		if(HAS_TRAIT(src, TRAIT_FAT))

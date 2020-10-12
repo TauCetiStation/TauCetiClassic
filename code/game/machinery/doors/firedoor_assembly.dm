@@ -17,13 +17,13 @@
 /obj/structure/firedoor_assembly/attackby(obj/item/C, mob/user)
 	if(iscoil(C) && !wired && anchored)
 		var/obj/item/stack/cable_coil/cable = C
-		if (cable.get_amount() < 1)
+		if(cable.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
 		if(user.is_busy(src)) return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
 		if(cable.use_tool(src, user, 40, volume = 50) && !wired && anchored)
-			if (cable.use(1))
+			if(cable.use(1))
 				wired = 1
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 

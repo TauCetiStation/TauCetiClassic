@@ -56,13 +56,13 @@
 	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
 	. += 					"<td><b><a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 	switch (parallax)
-		if (PARALLAX_LOW)
+		if(PARALLAX_LOW)
 			. += "Low"
-		if (PARALLAX_MED)
+		if(PARALLAX_MED)
 			. += "Medium"
-		if (PARALLAX_INSANE)
+		if(PARALLAX_INSANE)
 			. += "Insane"
-		if (PARALLAX_DISABLE)
+		if(PARALLAX_DISABLE)
 			. += "Disabled"
 		else
 			. += "High"
@@ -132,12 +132,12 @@
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
+			if(parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
 		if("parallaxdown")
 			parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
+			if(parent && parent.mob && parent.mob.hud_used)
 				parent.mob.hud_used.update_parallax_pref()
 
 		if("ambientocclusion")

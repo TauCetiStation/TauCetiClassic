@@ -57,7 +57,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
-	if (chambered)
+	if(chambered)
 		to_chat(user, "A [chambered.BB ? "live" : "spent"] one is in the chamber.")
 
 /obj/item/weapon/gun/projectile/shotgun/combat
@@ -147,7 +147,7 @@
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
-		if (num_unloaded)
+		if(num_unloaded)
 			to_chat(user, "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
 			//chambered.loc = get_turf(src)//Eject casing
 			//chambered.SpinAnimation(5, 1)
@@ -164,7 +164,7 @@
 //		CB.loc = get_turf(src.loc)
 //		CB.update_icon()
 //		num_unloaded++
-//	if (num_unloaded)
+//	if(num_unloaded)
 //		user << "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>"
 //	else
 //		user << "<span class='notice'>[src] is empty.</span>"
@@ -245,7 +245,7 @@
 			update_icon()
 			return TRUE
 
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a clip in \the [src].</span>")
 			return
 

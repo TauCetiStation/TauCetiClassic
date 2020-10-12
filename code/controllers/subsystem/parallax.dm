@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(parallax)
 	..()
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = clients.Copy()
 
 	//cache for sanic speed (lists are references anyways)
@@ -26,8 +26,8 @@ SUBSYSTEM_DEF(parallax)
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (!C || !C.eye)
-			if (MC_TICK_CHECK)
+		if(!C || !C.eye)
+			if(MC_TICK_CHECK)
 				return
 			continue
 		var/atom/movable/A = C.eye
@@ -42,6 +42,6 @@ SUBSYSTEM_DEF(parallax)
 			LAZYINITLIST(A.client_mobs_in_contents)
 			A.client_mobs_in_contents += C.mob
 			C.movingmob = A
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 	currentrun = null

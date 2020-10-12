@@ -23,7 +23,7 @@
 				mentorhelp(msg)	//admin/mentor we are replying to has vanished, mentorhelp instead
 			return
 
-	if (handle_spam_prevention(msg, MUTE_MENTORHELP))
+	if(handle_spam_prevention(msg, MUTE_MENTORHELP))
 		return
 
 	var/recieve_color = "purple"

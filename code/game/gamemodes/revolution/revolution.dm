@@ -60,7 +60,7 @@
 				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
+		if(antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
@@ -118,7 +118,7 @@
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", rev_mind.current)
 	var/obj_count = 1
-	if (you_are)
+	if(you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in rev_mind.objectives)
@@ -135,8 +135,8 @@
 	if(!istype(mob))
 		return
 
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.mutations.Remove(CLUMSY)
 
@@ -156,7 +156,7 @@
 
 	mob.update_icons()
 
-	if (!where)
+	if(!where)
 		to_chat(mob, "The Syndicate were unfortunately unable to get you a flash.")
 	else
 		to_chat(mob, "The flash in your [where] will help you to persuade the crew to join your cause.")

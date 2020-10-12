@@ -117,12 +117,12 @@
 			if(!camera)
 				return
 			var/datum/picture/selection = camera.selectpicture()
-			if (!selection)
+			if(!selection)
 				return
 
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
 			p.construct(selection)
-			if (p.desc == "")
+			if(p.desc == "")
 				p.desc += "Copied by [tempAI.name]"
 			else
 				p.desc += " - Copied by [tempAI.name]"
@@ -224,11 +224,11 @@
 	P.offset_y = LAZYCOPY(copy.offset_y)
 	var/image/img
 	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
-		if (findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
+		if(findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
-		else if (findtext(copy.ico[i], "deny"))
+		else if(findtext(copy.ico[i], "deny"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
-		else if (findtext(copy.ico[i], "approve"))
+		else if(findtext(copy.ico[i], "approve"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-check")
 		else
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")

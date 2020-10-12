@@ -17,7 +17,7 @@ const loadedStyles = [];
 const loadedMappings = {};
 
 export const loadCSS = url => {
-  if (loadedStyles.includes(url)) {
+  if(loadedStyles.includes(url)) {
     return;
   }
   loadedStyles.push(url);
@@ -31,20 +31,20 @@ export const resolveAsset = name => (
 
 export const assetMiddleware = store => next => action => {
   const { type, payload } = action;
-  if (type === 'asset/stylesheet') {
+  if(type === 'asset/stylesheet') {
     loadCSS(payload);
     return;
   }
-  if (type === 'asset/mappings') {
+  if(type === 'asset/mappings') {
     for (let name of Object.keys(payload)) {
       // Skip anything that matches excluded patterns
-      if (EXCLUDED_PATTERNS.some(regex => regex.test(name))) {
+      if(EXCLUDED_PATTERNS.some(regex => regex.test(name))) {
         continue;
       }
       const url = payload[name];
       const ext = name.split('.').pop();
       loadedMappings[name] = url;
-      if (ext === 'css') {
+      if(ext === 'css') {
         loadCSS(url);
       }
     }

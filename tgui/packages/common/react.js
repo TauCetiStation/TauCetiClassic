@@ -14,7 +14,7 @@ export const classes = classNames => {
   let className = '';
   for (let i = 0; i < classNames.length; i++) {
     const part = classNames[i];
-    if (typeof part === 'string') {
+    if(typeof part === 'string') {
       className += part + ' ';
     }
   }
@@ -26,10 +26,10 @@ export const classes = classNames => {
  * elements.
  */
 export const normalizeChildren = children => {
-  if (Array.isArray(children)) {
+  if(Array.isArray(children)) {
     return children.flat().filter(value => value);
   }
-  if (typeof children === 'object') {
+  if(typeof children === 'object') {
     return [children];
   }
   return [];
@@ -42,12 +42,12 @@ export const normalizeChildren = children => {
 export const shallowDiffers = (a, b) => {
   let i;
   for (i in a) {
-    if (!(i in b)) {
+    if(!(i in b)) {
       return true;
     }
   }
   for (i in b) {
-    if (a[i] !== b[i]) {
+    if(a[i] !== b[i]) {
       return true;
     }
   }

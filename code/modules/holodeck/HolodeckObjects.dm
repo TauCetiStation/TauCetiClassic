@@ -85,7 +85,7 @@
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
 			var/mob/living/M = G.affecting
@@ -98,7 +98,7 @@
 					take_damage(10)
 				if(2)
 					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(25)
@@ -139,7 +139,7 @@
 
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
 
-	if (src.operating == 1)
+	if(src.operating == 1)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
@@ -152,16 +152,16 @@
 		return
 
 	src.add_fingerprint(user)
-	if (!src.requiresID())
+	if(!src.requiresID())
 		user = null
 
-	if (src.allowed(user))
-		if (src.density)
+	if(src.allowed(user))
+		if(src.density)
 			open()
 		else
 			close()
 
-	else if (src.density)
+	else if(src.density)
 		flick(text("[]deny", src.base_state), src)
 
 	return
@@ -221,7 +221,7 @@
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
-	if (active)
+	if(active)
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = ITEM_SIZE_LARGE
@@ -262,7 +262,7 @@
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -273,13 +273,13 @@
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if(istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if(istype(mover,/obj/item) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -341,7 +341,7 @@
 	var/numready = 0
 	for(var/obj/machinery/readybutton/button in currentarea)
 		numbuttons++
-		if (button.ready)
+		if(button.ready)
 			numready++
 
 	if(numbuttons == numready)
@@ -374,7 +374,7 @@
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
@@ -395,7 +395,7 @@
 	set_light(2) //hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
-	if (safe)
+	if(safe)
 		faction = "neutral"
 		melee_damage = 0
 		//wall_smash = 0

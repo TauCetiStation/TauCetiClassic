@@ -90,7 +90,7 @@
 		target_radio = null
 	else if(href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if (frequency < 1200 || frequency > 1600)
+		if(frequency < 1200 || frequency > 1600)
 			new_frequency = sanitize_frequency(new_frequency, 1499)
 		frequency = new_frequency
 

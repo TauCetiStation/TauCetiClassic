@@ -28,7 +28,7 @@ var/const/RND_WIRE_SHOCK   = 4
 			R.disabled = !mended
 			R.shock(usr, 50)
 
-		if (RND_WIRE_SHOCK)
+		if(RND_WIRE_SHOCK)
 			R.shocked = !mended
 			R.shock(usr, 50)
 

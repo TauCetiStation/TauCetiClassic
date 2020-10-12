@@ -51,7 +51,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			to_chat(user, "Nothing happens.")
 			return
 
-		if (!istype(source))
+		if(!istype(source))
 			return
 
 		if(source.ckey)
@@ -122,11 +122,11 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		mode.update_icon(podman.mind)
 
 	switch(SSticker.mode.name)
-		if ("revolution")
-			if (podman.mind in SSticker.mode:revolutionaries)
+		if("revolution")
+			if(podman.mind in SSticker.mode:revolutionaries)
 				SSticker.mode:add_revolutionary(podman.mind)
-		if ("cult")
-			if (podman.mind in SSticker.mode:cult)
+		if("cult")
+			if(podman.mind in SSticker.mode:cult)
 				SSticker.mode:add_cultist(podman.mind)
 		// -- End mode specific stuff
 
@@ -137,7 +137,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
 	if(!realName)
 		var/newname = sanitize_safe(input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
-		if (newname != "")
+		if(newname != "")
 			podman.real_name = newname
 
 	parent.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")

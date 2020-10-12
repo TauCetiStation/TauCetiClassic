@@ -133,12 +133,12 @@
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
 				for (var/datum/article/A in S.articles)
-					if (A.ticks > lrt)
+					if(A.ticks > lrt)
 						news = 1
 						break
 				if(!news)
 					for (var/datum/stockEvent/E in S.events)
-						if (E.last_change > lrt && !E.hidden)
+						if(E.last_change > lrt && !E.hidden)
 							news = 1
 							break
 			dat += "<td>"
@@ -188,7 +188,7 @@
 		return
 
 	var/total = amt * S.current_value
-	if (!S.sellShares(logged_in, amt))
+	if(!S.sellShares(logged_in, amt))
 		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
 	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
@@ -234,21 +234,21 @@
 	if(!.)
 		return
 
-	if (href_list["viewhistory"])
+	if(href_list["viewhistory"])
 		var/datum/stock/S = locate(href_list["viewhistory"])
-		if (S)
+		if(S)
 			S.displayValues(usr)
-	else if (href_list["logout"])
+	else if(href_list["logout"])
 		logged_in = null
-	else if (href_list["buyshares"])
+	else if(href_list["buyshares"])
 		var/datum/stock/S = locate(href_list["buyshares"])
-		if (S)
+		if(S)
 			buy_some_shares(S, usr)
-	else if (href_list["sellshares"])
+	else if(href_list["sellshares"])
 		var/datum/stock/S = locate(href_list["sellshares"])
-		if (S)
+		if(S)
 			sell_some_shares(S, usr)
-	else if (href_list["show_logs"])
+	else if(href_list["show_logs"])
 		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
 		for(var/D in stockExchange.logs)
 			var/datum/stock_log/L = D
@@ -262,25 +262,25 @@
 		popup.set_content(dat)
 		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
-	else if (href_list["archive"])
+	else if(href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
-		if (logged_in && logged_in != "")
+		if(logged_in && logged_in != "")
 			var/list/LR = stockExchange.last_read[S]
 			LR[logged_in] = world.time
 		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
 		for (var/datum/stockEvent/E in S.events)
-			if (E.hidden)
+			if(E.hidden)
 				continue
-			if (p > 0)
+			if(p > 0)
 				dat += "<hr>"
 			dat += "<div><span style='font-size:1.25em'><b>[E.current_title]</b></span><br>[E.current_desc]</div>"
 			p++
 		dat += "</div><hr><div><h3>Articles</h3>"
 		p = 0
 		for (var/datum/article/A in S.articles)
-			if (p > 0)
+			if(p > 0)
 				dat += "<hr>"
 			dat += "<div><span style='font-size:1.25em'><b>[A.headline]</b></span><br><i>[A.subtitle]</i><br><br>[A.article]<br>- [A.author], [A.spacetime] (via <i>[A.outlet]</i>)</div>"
 			p++
@@ -289,9 +289,9 @@
 		popup.set_content(dat)
 		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
-	else if (href_list["cycleview"])
+	else if(href_list["cycleview"])
 		vmode++
-		if (vmode > 1)
+		if(vmode > 1)
 			vmode = 0
 
 	src.updateUsrDialog()

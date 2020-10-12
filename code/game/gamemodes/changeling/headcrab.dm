@@ -25,7 +25,7 @@
 	M.changeling.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in M.changeling.purchasedpowers
 
 	// In case we did it out of stasis
-	if (M.changeling.instatis)
+	if(M.changeling.instatis)
 		M.changeling.instatis = FALSE
 		user.fake_death = FALSE
 

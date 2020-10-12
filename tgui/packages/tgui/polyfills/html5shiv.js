@@ -112,7 +112,7 @@
    */
   function getExpandoData(ownerDocument) {
     var data = expandoData[ownerDocument[expando]];
-    if (!data) {
+    if(!data) {
         data = {};
         expanID++;
         ownerDocument[expando] = expanID;
@@ -129,20 +129,20 @@
    * @returns {Object} The shived element.
    */
   function createElement(nodeName, ownerDocument, data){
-    if (!ownerDocument) {
+    if(!ownerDocument) {
         ownerDocument = document;
     }
     if(supportsUnknownElements){
         return ownerDocument.createElement(nodeName);
     }
-    if (!data) {
+    if(!data) {
         data = getExpandoData(ownerDocument);
     }
     var node;
 
-    if (data.cache[nodeName]) {
+    if(data.cache[nodeName]) {
         node = data.cache[nodeName].cloneNode();
-    } else if (saveClones.test(nodeName)) {
+    } else if(saveClones.test(nodeName)) {
         node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
     } else {
         node = data.createElem(nodeName);
@@ -165,7 +165,7 @@
    * @returns {Object} The shived DocumentFragment.
    */
   function createDocumentFragment(ownerDocument, data){
-    if (!ownerDocument) {
+    if(!ownerDocument) {
         ownerDocument = document;
     }
     if(supportsUnknownElements){
@@ -189,7 +189,7 @@
    * @param {Object} data of the document.
    */
   function shivMethods(ownerDocument, data) {
-    if (!data.cache) {
+    if(!data.cache) {
         data.cache = {};
         data.createElem = ownerDocument.createElement;
         data.createFrag = ownerDocument.createDocumentFragment;
@@ -199,7 +199,7 @@
 
     ownerDocument.createElement = function(nodeName) {
       //abort shiv
-      if (!html5.shivMethods) {
+      if(!html5.shivMethods) {
           return data.createElem(nodeName);
       }
       return createElement(nodeName, ownerDocument, data);
@@ -227,12 +227,12 @@
    * @returns {Document} The shived document.
    */
   function shivDocument(ownerDocument) {
-    if (!ownerDocument) {
+    if(!ownerDocument) {
         ownerDocument = document;
     }
     var data = getExpandoData(ownerDocument);
 
-    if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
+    if(html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
       data.hasCSS = !!addStyleSheet(ownerDocument,
         // corrects block display not defined in IE6/7/8/9
         'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
@@ -242,7 +242,7 @@
         'template{display:none}'
       );
     }
-    if (!supportsUnknownElements) {
+    if(!supportsUnknownElements) {
       shivMethods(ownerDocument, data);
     }
     return ownerDocument;

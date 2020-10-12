@@ -9,7 +9,7 @@
 	blood_level = 1
 
 /datum/surgery_step/brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(isnull(BP))
@@ -119,7 +119,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (ishuman(user))
+	if(ishuman(user))
 		user:bloody_body(target)
 		user:bloody_hands(target, 0)
 
@@ -223,7 +223,7 @@
 	user.visible_message("<span class='notice'>[user] mends hematoma in [target]'s brain with \the [tool].</span>",
 	"<span class='notice'>You mend hematoma in [target]'s brain with \the [tool].</span>")
 	var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
-	if (IO)
+	if(IO)
 		IO.damage = 0
 
 

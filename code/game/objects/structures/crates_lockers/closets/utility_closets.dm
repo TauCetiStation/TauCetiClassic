@@ -24,29 +24,29 @@
 	new /obj/item/clothing/suit/space/sk(src)
 
 	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4)))
-		if ("small")
+		if("small")
 			for (var/i in 1 to 2)
 				new /obj/item/weapon/tank/emergency_oxygen(src)
 				new /obj/item/clothing/mask/breath(src)
-		if ("aid")
+		if("aid")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/weapon/storage/toolbox/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
-		if ("tank")
+		if("tank")
 			for (var/i in 1 to 2)
 				new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 				new /obj/item/clothing/mask/breath(src)
-		if ("both")
+		if("both")
 			new /obj/item/weapon/storage/toolbox/emergency(src)
 			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
-		if ("nothing")
+		if("nothing")
 			return
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
-		/*if ("fire")
+		/*if("fire")
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
 

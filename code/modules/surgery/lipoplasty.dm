@@ -33,7 +33,7 @@
 	if(!target.has_quirk(/datum/quirk/fatness))
 		user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].",
 			"You begin to cut away [target]'s excess fat with \the [tool].")
-		if (target.overeatduration > 0)
+		if(target.overeatduration > 0)
 			target.custom_pain("Something hurts horribly in your chest!", 1)
 	else
 		user.visible_message("[user] starts inspecting [target]'s body.",
@@ -42,7 +42,7 @@
 
 /datum/surgery_step/lipoplasty/cut_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!target.has_quirk(/datum/quirk/fatness))
-		if (target.overeatduration > 0)
+		if(target.overeatduration > 0)
 			user.visible_message("<span class='notice'>[user] cuts [target]'s excess fat loose with \the [tool].</span>",
 				"<span class='notice'>You have cut [target]'s excess fat loose with \the [tool].</span>")
 			target.op_stage.lipoplasty = 1
@@ -78,13 +78,13 @@
 /datum/surgery_step/lipoplasty/remove_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to extract [target]'s loose fat with \the [tool].", \
 	"You begin to extract [target]'s loose fat with \the [tool].")
-	if (target.overeatduration > 0)
+	if(target.overeatduration > 0)
 		target.custom_pain("Something hurts horribly in your chest!",1)
 	..()
 
 /datum/surgery_step/lipoplasty/remove_fat/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	target.op_stage.lipoplasty = 0
-	if (target.overeatduration > 0)
+	if(target.overeatduration > 0)
 		user.visible_message("<span class='notice'>[user] extracts [target]'s fat with \the [tool].</span>",		\
 		"<span class='notice'>You have removed [target]'s fat loose with \the [tool].</span>")
 		var/removednutriment = max(75, (target.nutrition + target.overeatduration) - 450)
@@ -95,7 +95,7 @@
 		P.desc = "Extremely fatty tissue taken from a patient."
 		P.reagents.add_reagent ("nutriment", (removednutriment / 15))
 		var/amount = 0
-		if (target.reagents.total_volume > 0)
+		if(target.reagents.total_volume > 0)
 			amount = target.reagents.total_volume
 			target.reagents.remove_reagent("nutriment",amount)
 		var/obj/item/meatslab = P

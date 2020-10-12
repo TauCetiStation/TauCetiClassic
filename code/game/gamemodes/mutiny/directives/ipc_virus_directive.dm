@@ -16,14 +16,14 @@
 /datum/directive/ipc_virus/proc/get_ipcs()
 	var/list/machines[0]
 	for(var/mob/M in player_list)
-		if (M.is_ready() && M.get_species() == IPC)
+		if(M.is_ready() && M.get_species() == IPC)
 			machines.Add(M)
 	return machines
 
 /datum/directive/ipc_virus/proc/get_roboticists()
 	var/list/roboticists[0]
 	for(var/mob/M in player_list)
-		if (M.is_ready() && roboticist_roles.Find(M.mind.assigned_role))
+		if(M.is_ready() && roboticist_roles.Find(M.mind.assigned_role))
 			roboticists.Add(M)
 	return roboticists
 

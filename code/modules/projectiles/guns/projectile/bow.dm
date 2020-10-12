@@ -156,10 +156,10 @@
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/user, proximity, params)
-	if (target.loc == user.loc)
+	if(target.loc == user.loc)
 		return
 
-	else if (locate (/obj/structure/table, src.loc))
+	else if(locate (/obj/structure/table, src.loc))
 		return
 
 	else if(target == user)
@@ -169,7 +169,7 @@
 		to_chat(user, "You haven't drawn back the bolt!")
 		return 0
 
-	if (!arrow)
+	if(!arrow)
 		to_chat(user, "You have no arrow nocked to [src]!")
 		return 0
 	else
@@ -186,7 +186,7 @@
 
 	var/turf/curloc = get_turf(user)
 	var/turf/targloc = get_turf(target)
-	if (!istype(targloc) || !istype(curloc))
+	if(!istype(targloc) || !istype(curloc))
 		return
 
 	user.visible_message("<span class='danger'>[user] releases [src] and sends [arrow] streaking toward [target]!</span>","<span class='danger'>You release [src] and send [arrow] streaking toward [target]!</span>")

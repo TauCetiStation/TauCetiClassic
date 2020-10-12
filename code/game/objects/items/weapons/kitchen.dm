@@ -29,7 +29,7 @@
 
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
-	if (prob(60))
+	if(prob(60))
 		pixel_y = rand(0, 4)
 
 /obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -214,7 +214,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
@@ -223,16 +223,16 @@
 	M.log_combat(user, "attacked with [name]")
 
 	var/t = user.zone_sel.selecting
-	if (t == BP_HEAD)
+	if(t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
+			if(H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
-				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
+				if(istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
 					to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 					return
 				var/time = rand(2, 6)
-				if (prob(75))
+				if(prob(75))
 					H.Paralyse(time)
 				else
 					H.Stun(time)
@@ -310,7 +310,7 @@
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))
+			if(istype(location, /turf/simulated))
 				location.add_blood(H)     ///Plik plik, the sound of blood
 
 		M.log_combat(user, "attacked with [name]")
@@ -336,14 +336,14 @@
 		to_chat(M, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
 		if(prob(33))
 			src.add_blood(H)
-			if (H.wear_mask)
+			if(H.wear_mask)
 				H.wear_mask.add_blood(H)
-			if (H.head)
+			if(H.head)
 				H.head.add_blood(H)
-			if (H.glasses && prob(33))
+			if(H.glasses && prob(33))
 				H.glasses.add_blood(H)
 			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
+			if(istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
 				location.add_blood(H)
 
 		if(prob(50))
@@ -364,7 +364,7 @@
 		if(prob(33))
 			src.add_blood(M)
 			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))
+			if(istype(location, /turf/simulated))
 				location.add_blood(H)
 
 		if(prob(50))

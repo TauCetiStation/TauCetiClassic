@@ -32,10 +32,10 @@ var/const/APC_WIRE_AI_CONTROL  = 8
 
 		if(APC_WIRE_AI_CONTROL)
 			if(!mended)
-				if (!A.aidisabled)
+				if(!A.aidisabled)
 					A.aidisabled = TRUE
 			else
-				if (A.aidisabled)
+				if(A.aidisabled)
 					A.aidisabled = FALSE
 
 /datum/wires/apc/update_pulsed(index)

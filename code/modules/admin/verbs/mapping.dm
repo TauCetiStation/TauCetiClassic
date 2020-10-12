@@ -87,7 +87,7 @@ var/intercom_range_display_status = 0
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || (W.dir in list(5,6,9,10)) )
+					if(W.dir == turn(C1.dir,180) || (W.dir in list(5,6,9,10)) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -117,7 +117,7 @@ var/intercom_range_display_status = 0
 		for(var/obj/item/device/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
+				if(!(F in view(7,I.loc)))
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -364,30 +364,30 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
 
 	for(var/z in 1 to max(world.maxz, z_list.len))
-		if (z > z_list.len)
+		if(z > z_list.len)
 			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
 			continue
 		var/datum/space_level/S = z_list[z]
-		if (!S)
+		if(!S)
 			messages += "<b>[z]</b>: Unmanaged (null)<br>"
 			continue
 		var/linkage
 		switch (S.linkage)
-			if (UNAFFECTED)
+			if(UNAFFECTED)
 				linkage = "no linkage"
-			if (SELFLOOPING)
+			if(SELFLOOPING)
 				linkage = "self-looping"
-			if (CROSSLINKED)
+			if(CROSSLINKED)
 				linkage = "crosslinked"
 			else
 				linkage = "unknown linkage '[S.linkage]'"
 
 		messages += "<b>[z]</b>: [S.name], [linkage], traits: [json_encode(S.traits)]<br>"
-		if (S.z_value != z)
+		if(S.z_value != z)
 			messages += "-- z_value is [S.z_value], should be [z]<br>"
-		if (S.name == initial(S.name))
+		if(S.name == initial(S.name))
 			messages += "-- name not set<br>"
-		if (z > world.maxz)
+		if(z > world.maxz)
 			messages += "-- exceeds max z"
 
 	to_chat(src, messages.Join(""))
@@ -399,17 +399,17 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
 		var/mapname = VM.map_name
-		if (VM == config.defaultmap)
+		if(VM == config.defaultmap)
 			mapname += " (Default)"
 
-		if (VM.config_min_users > 0 || VM.config_max_users > 0)
+		if(VM.config_min_users > 0 || VM.config_max_users > 0)
 			mapname += " \["
-			if (VM.config_min_users > 0)
+			if(VM.config_min_users > 0)
 				mapname += "[VM.config_min_users]"
 			else
 				mapname += "0"
 			mapname += "-"
-			if (VM.config_max_users > 0)
+			if(VM.config_max_users > 0)
 				mapname += "[VM.config_max_users]"
 			else
 				mapname += "inf"
@@ -421,10 +421,10 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 		return
 
 	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
-	if (!chosenmap)
+	if(!chosenmap)
 		return
 	var/datum/map_config/VM = maprotatechoices[chosenmap]
 	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
-	if (SSmapping.changemap(VM) == 0)
+	if(SSmapping.changemap(VM) == 0)
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")

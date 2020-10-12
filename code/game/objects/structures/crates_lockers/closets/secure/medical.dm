@@ -56,13 +56,13 @@
 
 	for (var/i in 1 to 2)
 		switch(pick("blue", "green", "purple"))
-			if ("blue")
+			if("blue")
 				new /obj/item/clothing/under/rank/medical/blue(src)
 				new /obj/item/clothing/head/surgery/blue(src)
-			if ("green")
+			if("green")
 				new /obj/item/clothing/under/rank/medical/green(src)
 				new /obj/item/clothing/head/surgery/green(src)
-			if ("purple")
+			if("purple")
 				new /obj/item/clothing/under/rank/medical/purple(src)
 				new /obj/item/clothing/head/surgery/purple(src)
 
@@ -99,13 +99,13 @@
 		new /obj/item/weapon/storage/backpack/satchel/med(src)
 
 	switch(pick("blue", "green", "purple"))
-		if ("blue")
+		if("blue")
 			new /obj/item/clothing/under/rank/medical/blue(src)
 			new /obj/item/clothing/head/surgery/blue(src)
-		if ("green")
+		if("green")
 			new /obj/item/clothing/under/rank/medical/green(src)
 			new /obj/item/clothing/head/surgery/green(src)
-		if ("purple")
+		if("purple")
 			new /obj/item/clothing/under/rank/medical/purple(src)
 			new /obj/item/clothing/head/surgery/purple(src)
 

@@ -9,12 +9,12 @@
 	can_infect = 0
 
 /datum/surgery_step/face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
-	if (BP.is_stump)
+	if(BP.is_stump)
 		return FALSE
 	return target_zone == O_MOUTH
 
@@ -132,7 +132,7 @@
 	"<span class='notice'>You cauterize the incision on [target]'s face and neck with \the [tool].</span>")
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
-	if (target.op_stage.face == 3)
+	if(target.op_stage.face == 3)
 		var/obj/item/organ/external/head/H = BP
 		H.disfigured = 0
 	target.op_stage.face = 0
@@ -157,7 +157,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return FALSE
 	return target_zone == O_MOUTH
 
@@ -279,7 +279,7 @@
 	user.visible_message("<span class='notice'>[user] locks in place [target]'s screen with \the [tool].</span>",
 	"<span class='notice'>You lock in place [target]'s screen \the [tool].</span>")
 	BP.open = 0
-	if (target.op_stage.face == 3)
+	if(target.op_stage.face == 3)
 		var/obj/item/organ/external/head/H = BP
 		H.disfigured = FALSE
 	target.op_stage.face = 0

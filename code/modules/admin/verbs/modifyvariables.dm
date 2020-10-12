@@ -286,7 +286,7 @@
 				class = null
 				autodetect_class = null
 
-			else if (variable in global.bitfields)
+			else if(variable in global.bitfields)
 				to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
 				class = "bitfield"
 
@@ -345,7 +345,7 @@
 		if(isnull(var_value))
 			to_chat(usr, "Unable to determine variable type.")
 
-		else if (variable in global.bitfields)
+		else if(variable in global.bitfields)
 			to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
 			class = "bitfield"
 
@@ -418,7 +418,7 @@
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if(!istype(O, /atom))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name

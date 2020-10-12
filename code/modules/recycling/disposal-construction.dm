@@ -191,7 +191,7 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if (!(iswrench(I) && anchored))
+		if(!(iswrench(I) && anchored))
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk))
 					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")

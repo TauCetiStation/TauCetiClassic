@@ -80,7 +80,7 @@
 	..()
 
 /obj/item/weapon/gun/plasma/proc/newshot()
-	if (!magazine || !magazine.power_supply || magazine.power_supply.charge <= 0 || chambered)
+	if(!magazine || !magazine.power_supply || magazine.power_supply.charge <= 0 || chambered)
 		return
 
 	var/obj/item/ammo_casing/energy/shot
@@ -106,7 +106,7 @@
 		chambered.pellets = min(max_projectile_per_fire, magazine.power_supply.charge / PLASMA_PROJECTILE_ENERGY_COST)
 
 	// 50% less damage if there is not enough power for one projectile.
-	if (magazine.power_supply.charge < PLASMA_PROJECTILE_ENERGY_COST)
+	if(magazine.power_supply.charge < PLASMA_PROJECTILE_ENERGY_COST)
 		chambered.BB.damage *= 0.5
 		chambered.BB.alpha = 127
 
@@ -116,7 +116,7 @@
 		return TRUE
 
 /obj/item/weapon/gun/plasma/process_chamber()
-	if (chambered) // incase its out of energy - since then this will be null.
+	if(chambered) // incase its out of energy - since then this will be null.
 		magazine.power_supply.use(PLASMA_SHOT_ENERGY_COST)
 		chambered = null
 
@@ -129,7 +129,7 @@
 		playsound(user, 'sound/weapons/guns/plasma10_unload.ogg', VOL_EFFECTS_MASTER) // yes, no overcharge sound for unload.
 	if(chambered)
 		QDEL_NULL(chambered)
-	if (magazine)
+	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
@@ -156,7 +156,7 @@
 			update_icon(user)
 			return TRUE
 
-		else if (magazine)
+		else if(magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 			return
 

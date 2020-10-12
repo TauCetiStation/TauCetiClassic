@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(quirks)
 	..("P:[processing.len]")
 
 /datum/controller/subsystem/quirks/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(quirks)
 		else
 			thing.process()
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/quirks/proc/SetupQuirks()

@@ -48,7 +48,7 @@
 				antag_candidates -= player
 
 	for(var/j = 0, j < num_traitors, j++)
-		if (!antag_candidates.len)
+		if(!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
@@ -62,7 +62,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		if (!config.objectives_disabled)
+		if(!config.objectives_disabled)
 			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
@@ -71,7 +71,7 @@
 	return ..()
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	if(istype(traitor.current, /mob/living/silicon))
@@ -103,19 +103,19 @@
 
 		switch(rand(1,120))
 			if(1 to 60)
-				if (!(locate(/datum/objective/escape) in traitor.objectives))
+				if(!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new
 					escape_objective.owner = traitor
 					traitor.objectives += escape_objective
 
 			if(61 to 119)
-				if (!(locate(/datum/objective/survive) in traitor.objectives))
+				if(!(locate(/datum/objective/survive) in traitor.objectives))
 					var/datum/objective/survive/survive_objective = new
 					survive_objective.owner = traitor
 					traitor.objectives += survive_objective
 
 			else
-				if (!(locate(/datum/objective/hijack) in traitor.objectives))
+				if(!(locate(/datum/objective/hijack) in traitor.objectives))
 					var/datum/objective/hijack/hijack_objective = new
 					hijack_objective.owner = traitor
 					traitor.objectives += hijack_objective
@@ -147,7 +147,7 @@
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
 	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
-	if (!config.objectives_disabled)
+	if(!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in traitor.objectives)
 			to_chat(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
@@ -158,7 +158,7 @@
 
 
 /datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
-	if (istype(traitor.current, /mob/living/silicon))
+	if(istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
 		traitor.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
@@ -249,11 +249,11 @@
 
 /datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, safety = 0)
 
-	if (!istype(traitor_mob))
+	if(!istype(traitor_mob))
 		return
 	. = 1
-	if (traitor_mob.mind)
-		if (traitor_mob.mind.assigned_role == "Clown")
+	if(traitor_mob.mind)
+		if(traitor_mob.mind.assigned_role == "Clown")
 			to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.mutations.Remove(CLUMSY)
 
@@ -266,7 +266,7 @@
 		if(!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate a Radio, installing in PDA instead!")
-		if (!R)
+		if(!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "PDA")
@@ -274,7 +274,7 @@
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate a PDA, installing into a Radio instead!")
-		if (!R)
+		if(!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "None")
@@ -284,25 +284,25 @@
 	else
 		to_chat(traitor_mob, "You have not selected a location for your relay in the antagonist options! Defaulting to PDA!")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
-		if (!R)
+		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
 			to_chat(traitor_mob, "Could not locate a PDA, installing into a Radio instead!")
-		if (!R)
+		if(!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
-	if (!R)
+	if(!R)
 		. = 0
 	else
-		if (istype(R, /obj/item/device/radio))
+		if(istype(R, /obj/item/device/radio))
 			// generate list of radio freqs
 			var/obj/item/device/radio/target_radio = R
 			var/freq = 1441
 			var/list/freqlist = list()
 			while (freq <= 1489)
-				if (freq < 1451 || freq > 1459)
+				if(freq < 1451 || freq > 1459)
 					freqlist += freq
 				freq += 2
-				if ((freq % 2) == 0)
+				if((freq % 2) == 0)
 					freq += 1
 			freq = freqlist[rand(1, freqlist.len)]
 
@@ -312,7 +312,7 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += target_radio.hidden_uplink.uses
-		else if (istype(R, /obj/item/device/pda))
+		else if(istype(R, /obj/item/device/pda))
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
@@ -333,7 +333,7 @@
 		)
 		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
 		traitor_mob.update_icons()
-		if (!where)
+		if(!where)
 			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
 		else
 			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")

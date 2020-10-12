@@ -306,7 +306,7 @@
 
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "<span class='notice'>The cloaking device is now active.</span>")
 		src.icon_state = "shield1"
 	else

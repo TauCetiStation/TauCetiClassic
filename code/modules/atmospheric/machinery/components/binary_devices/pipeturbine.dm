@@ -59,13 +59,13 @@
 
 /obj/machinery/atmospherics/components/pipeturbine/update_icon()
 	cut_overlays()
-	if (dP > 10)
+	if(dP > 10)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "moto-turb"))
-	if (kin_energy > 100000)
+	if(kin_energy > 100000)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "low-turb"))
-	if (kin_energy > 500000)
+	if(kin_energy > 500000)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "med-turb"))
-	if (kin_energy > 1000000)
+	if(kin_energy > 1000000)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "hi-turb"))
 
 /obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
@@ -112,7 +112,7 @@
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	src.set_dir(turn(src.dir, -90))
@@ -123,7 +123,7 @@
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	src.set_dir(turn(src.dir, 90))
@@ -147,7 +147,7 @@
 	turbine = null
 	if(src.loc && anchored)
 		turbine = locate(/obj/machinery/atmospherics/components/pipeturbine) in get_step(src,dir)
-		if ((turbine.stat & BROKEN) || !turbine.anchored || turn(turbine.dir, 180) != dir)
+		if((turbine.stat & BROKEN) || !turbine.anchored || turn(turbine.dir, 180) != dir)
 			turbine = null
 
 /obj/machinery/power/turbinemotor/process_atmos()
@@ -174,7 +174,7 @@
 	set name = "Rotate Motor Clockwise"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	set_dir(turn(dir, -90))
@@ -184,7 +184,7 @@
 	set name = "Rotate Motor Counterclockwise"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	set_dir(turn(dir, 90))

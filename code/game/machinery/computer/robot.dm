@@ -26,12 +26,12 @@
 	return ..()
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
-	if (!SSmapping.has_level(z))
+	if(!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat
-	if (src.temp)
+	if(src.temp)
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
 	else
 		if(screen == 0)
@@ -43,10 +43,10 @@
 				if(istype(R, /mob/living/silicon/robot/drone))
 					continue //There's a specific console for drones.
 				if(istype(user, /mob/living/silicon/ai))
-					if (R.connected_ai != user)
+					if(R.connected_ai != user)
 						continue
 				if(istype(user, /mob/living/silicon/robot))
-					if (R != user)
+					if(R != user)
 						continue
 				if(R.scrambledcodes)
 					continue
@@ -54,11 +54,11 @@
 				dat += "[R.name] |"
 				if(R.stat)
 					dat += " Not Responding |"
-				else if (!R.canmove)
+				else if(!R.canmove)
 					dat += " Locked Down |"
 				else
 					dat += " Operating Normally |"
-				if (!R.canmove)
+				if(!R.canmove)
 				else if(R.cell)
 					dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
 				else
@@ -71,7 +71,7 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
-				if (istype(user, /mob/living/silicon))
+				if(istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
@@ -107,14 +107,14 @@
 	if(!.)
 		return
 
-	if (href_list["eject"])
+	if(href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
 		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
-	else if (href_list["eject2"])
+	else if(href_list["eject2"])
 		if(allowed(usr))
-			if (!status)
+			if(!status)
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
 				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
@@ -123,23 +123,23 @@
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
-	else if (href_list["stop"])
+	else if(href_list["stop"])
 		src.temp = {"
 		Stop Robot Destruction Sequence?<BR>
 		<BR><A href='?src=\ref[src];stop2=1'>Yes</A><BR>
 		<A href='?src=\ref[src];temp=1'>No</A>"}
 
-	else if (href_list["stop2"])
+	else if(href_list["stop2"])
 		src.stop = 1
 		src.temp = null
 		src.status = 0
 
-	else if (href_list["reset"])
+	else if(href_list["reset"])
 		src.timeleft = 60
 
-	else if (href_list["temp"])
+	else if(href_list["temp"])
 		src.temp = null
-	else if (href_list["screen"])
+	else if(href_list["screen"])
 		switch(href_list["screen"])
 			if("0")
 				screen = 0
@@ -147,7 +147,7 @@
 				screen = 1
 			if("2")
 				screen = 2
-	else if (href_list["killbot"])
+	else if(href_list["killbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(R)
@@ -165,7 +165,7 @@
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
-	else if (href_list["stopbot"])
+	else if(href_list["stopbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(R && istype(R)) // Extra sancheck because of input var references
@@ -175,7 +175,7 @@
 						message_admins("[key_name_admin(usr)] [ADMIN_JMP(usr)] [R.canmove ? "locked down" : "released"] [R.name]! [ADMIN_JMP(R)]")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
-						if (R.lockcharge)
+						if(R.lockcharge)
 							R.clear_alert("locked")
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
@@ -190,7 +190,7 @@
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
-	else if (href_list["magbot"])
+	else if(href_list["magbot"])
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(R)

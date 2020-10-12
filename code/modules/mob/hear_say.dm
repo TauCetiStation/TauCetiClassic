@@ -9,8 +9,8 @@
 		return
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
-	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in viewers(src)))
+	if(language && (language.flags & NONVERBAL))
+		if(!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in viewers(src)))
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
@@ -71,7 +71,7 @@
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+		if(speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
@@ -138,7 +138,7 @@
 		var/jobname // the mob's "job"
 		var/mob/living/carbon/human/impersonating //The crewmember being impersonated, if any.
 
-		if (ishuman(speaker))
+		if(ishuman(speaker))
 			var/mob/living/carbon/human/H = speaker
 
 			if((H.wear_id && istype(H.wear_id,/obj/item/weapon/card/id/syndicate)) && (H.wear_mask && istype(H.wear_mask,/obj/item/clothing/mask/gas/voice)))
@@ -154,13 +154,13 @@
 			else
 				jobname = H.get_assignment()
 
-		else if (iscarbon(speaker)) // Nonhuman carbon mob
+		else if(iscarbon(speaker)) // Nonhuman carbon mob
 			jobname = "No id"
-		else if (isAI(speaker))
+		else if(isAI(speaker))
 			jobname = "AI"
-		else if (isrobot(speaker))
+		else if(isrobot(speaker))
 			jobname = "Cyborg"
-		else if (istype(speaker, /mob/living/silicon/pai))
+		else if(istype(speaker, /mob/living/silicon/pai))
 			jobname = "Personal AI"
 		else
 			jobname = "Unknown"
@@ -215,10 +215,10 @@
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
-	if (language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
+	if(language && ((language.flags & NONVERBAL) || (language.flags & SIGNLANG)))
 		return
 
-	if (sdisabilities & DEAF || ear_deaf)
+	if(sdisabilities & DEAF || ear_deaf)
 		return
 
 	if(prob(15))

@@ -78,8 +78,8 @@
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewdriver(W))
-		if (!open)
+	if(isscrewdriver(W))
+		if(!open)
 			if(unlocked)
 				unlocked = 0
 				to_chat(user, "You screw the battery panel in place.")
@@ -87,7 +87,7 @@
 				unlocked = 1
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (iscrowbar(W))
+	if(iscrowbar(W))
 		if(unlocked)
 			if(open)
 				open = 0
@@ -98,7 +98,7 @@
 					open = 1
 					to_chat(user, "You remove the battery panel.")
 
-	if (istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
 				to_chat(user, "There is a power cell already installed.")

@@ -69,7 +69,7 @@
 		var/transfer_moles = (volume_rate / air_contents.volume) * air_contents.total_moles // apply flow rate limit
 		power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
@@ -80,7 +80,7 @@
 		return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	if (!environment)
+	if(!environment)
 		return FALSE
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -152,7 +152,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	if(..())
-		if (!(stat & NOPOWER|BROKEN) && use_power)
+		if(!(stat & NOPOWER|BROKEN) && use_power)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return TRUE

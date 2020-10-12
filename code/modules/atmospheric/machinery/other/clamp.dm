@@ -152,7 +152,7 @@
 	if(!proximity)
 		return
 
-	if (istype(A, /obj/machinery/atmospherics/pipe/simple))
+	if(istype(A, /obj/machinery/atmospherics/pipe/simple))
 		to_chat(user, "<span class='notice'>You begin to attach \the [src] to \the [A]...</span>")
 		if(A.use_tool(src, user, 30, volume = 50))
 			to_chat(user, "<span class='notice'>You have attached \the [src] to \the [A].</span>")

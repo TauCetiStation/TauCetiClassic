@@ -52,7 +52,7 @@
 	if(issilicon(user) || isobserver(user))
 		dat += "<BR>"
 		if(safety_disabled)
-			if (emagged)
+			if(emagged)
 				dat += "<font color=red><b>ERROR</b>: Cannot re-enable Safety Protocols.</font><BR>"
 			else
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
@@ -127,7 +127,7 @@
 	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
-	if (safety_disabled)
+	if(safety_disabled)
 		item_power_usage = 2500
 		for(var/obj/item/weapon/holo/esword/H in linkedholodeck)
 			H.damtype = BRUTE
@@ -138,7 +138,7 @@
 
 	for(var/mob/living/simple_animal/hostile/carp/holodeck/C in holographic_mobs)
 		C.set_safety(!safety_disabled)
-		if (last_to_emag)
+		if(last_to_emag)
 			C.friends = list(last_to_emag)
 
 /obj/machinery/computer/HolodeckControl/atom_init()
@@ -170,7 +170,7 @@
 /obj/machinery/computer/HolodeckControl/power_change()
 	var/oldstat
 	..()
-	if (stat != oldstat && active && (stat & NOPOWER))
+	if(stat != oldstat && active && (stat & NOPOWER))
 		emergencyShutdown()
 
 /obj/machinery/computer/HolodeckControl/process()
@@ -178,9 +178,9 @@
 		if(!(get_turf(item) in linkedholodeck))
 			derez(item, 0)
 
-	if (!safety_disabled)
+	if(!safety_disabled)
 		for(var/mob/living/simple_animal/hostile/carp/holodeck/C in holographic_mobs)
-			if (get_area(C.loc) != linkedholodeck)
+			if(get_area(C.loc) != linkedholodeck)
 				holographic_mobs -= C
 				C.derez()
 
@@ -285,7 +285,7 @@
 			holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)
 
 		if(L.name=="Holocarp Spawn Random")
-			if (prob(4)) //With 4 spawn points, carp should only appear 15% of the time.
+			if(prob(4)) //With 4 spawn points, carp should only appear 15% of the time.
 				holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)
 
 	update_projections()

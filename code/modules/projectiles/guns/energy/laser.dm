@@ -40,9 +40,9 @@
 
 
 /obj/item/weapon/gun/energy/laser/classic/newshot()
-	if (!ammo_type || !power_supply)	return
+	if(!ammo_type || !power_supply)	return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
+	if(!power_supply.use(shot.e_cost))	return
 	chambered = shot
 	if(chambered && chambered.BB)
 		chambered.BB.damage -= 10

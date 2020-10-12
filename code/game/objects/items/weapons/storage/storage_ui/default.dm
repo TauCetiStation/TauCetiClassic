@@ -75,7 +75,7 @@
 	. = ..()
 
 /datum/storage_ui/default/on_open(var/mob/user)
-	if (user.s_active)
+	if(user.s_active)
 		user.s_active.close(user)
 
 /datum/storage_ui/default/after_close(var/mob/user)
@@ -98,7 +98,7 @@
 
 /datum/storage_ui/default/on_hand_attack(var/mob/user)
 	for(var/mob/M in range(1))
-		if (M.s_active == storage)
+		if(M.s_active == storage)
 			storage.close(M)
 
 /datum/storage_ui/default/show_to(var/mob/user)
@@ -172,7 +172,7 @@
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
 		cx++
-		if (cx > mx)
+		if(cx > mx)
 			cx = tx
 			cy--
 	closer.screen_loc = "[mx+1],[my]"
@@ -204,7 +204,7 @@
 
 	var/row_num = 0
 	var/col_count = min(7,storage.storage_slots) -1
-	if (adjusted_contents > 7)
+	if(adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
 	arrange_item_slots(row_num, col_count, numbered_contents)
 
@@ -225,7 +225,7 @@
 			click_border_start[ND.sample_object_index] = (cx-4)*32
 			click_border_end[ND.sample_object_index] = (cx-4)*32+32
 			cx++
-			if (cx > (4+cols))
+			if(cx > (4+cols))
 				cx = 4
 				cy--
 	else
@@ -237,7 +237,7 @@
 			click_border_start += (cx-4)*32
 			click_border_end += (cx-4)*32+32
 			cx++
-			if (cx > (4+cols))
+			if(cx > (4+cols))
 				cx = 4
 				cy--
 

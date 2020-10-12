@@ -17,7 +17,7 @@ export class Dropdown extends Component {
       open: false,
     };
     this.handleClick = () => {
-      if (this.state.open) {
+      if(this.state.open) {
         this.setOpen(false);
       }
     };
@@ -29,7 +29,7 @@ export class Dropdown extends Component {
 
   setOpen(open) {
     this.setState({ open: open });
-    if (open) {
+    if(open) {
       setTimeout(() => window.addEventListener('click', this.handleClick));
       this.menuRef.focus();
     }
@@ -109,7 +109,7 @@ export class Dropdown extends Component {
           ])}
           {...rest}
           onClick={() => {
-            if (disabled && !this.state.open) {
+            if(disabled && !this.state.open) {
               return;
             }
             this.setOpen(!this.state.open);

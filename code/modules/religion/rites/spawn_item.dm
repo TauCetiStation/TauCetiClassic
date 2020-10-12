@@ -160,7 +160,7 @@
 		M.real_name = M.name
 		candidate.cancel_camera()
 		candidate.reset_view()
-	else if (response == "Never for this round")
+	else if(response == "Never for this round")
 		C.prefs.ignore_question += IGNORE_FAMILIAR
 
 /datum/religion_rites/spawn_item/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)

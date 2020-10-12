@@ -82,8 +82,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-//	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
-//		if (!( locate(/obj/machinery/mass_driver, src) ))
+//	if((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
+//		if(!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
 //	return ..()
 
@@ -94,7 +94,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			src.ChangeTurf(basetype)
 		if(2.0)
 			switch(pick(1,2;75,3))
-				if (1)
+				if(1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
@@ -107,7 +107,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					src.hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 	return
@@ -253,7 +253,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	return src.attack_hand(user)
 
 /turf/simulated/floor/attack_hand(mob/user)
-	if (is_light_floor())
+	if(is_light_floor())
 		toggle_lightfloor_on()
 		update_icon()
 	..()
@@ -406,7 +406,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_type = T.type
-			if (icon_regular_floor)
+			if(icon_regular_floor)
 				icon_state = icon_regular_floor
 			else
 				icon_state = "floor"
@@ -559,8 +559,8 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
-		if (is_plating())
-			if (R.get_amount() >= 2)
+		if(is_plating())
+			if(R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
@@ -570,14 +570,14 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			else
 				to_chat(user, "<span class='warning'>You need more rods.</span>")
-		else if (is_catwalk())
+		else if(is_catwalk())
 			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
 		else
 			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
-		if (is_catwalk())
+		if(is_catwalk())
 			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
 		if(is_plating())
 			if(!broken && !burnt)

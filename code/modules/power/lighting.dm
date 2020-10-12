@@ -30,20 +30,20 @@
 	return ..()
 
 /obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
+	if(get_dist(on_wall,usr)>1)
 		return
 	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
+	if(!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf_loc(usr)
-	if (!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/simulated/floor))
 		to_chat(usr, "<span class='warning'>[src.name] cannot be placed on this spot.</span>")
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
-	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
+	if(usr.is_busy() || !do_after(usr, 30, target = on_wall))
 		return
 	switch(fixture_type)
 		if("bulb")
@@ -82,12 +82,12 @@
 
 /obj/machinery/light_construct/atom_init()
 	. = ..()
-	if (fixture_type == "bulb")
+	if(fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
-	if (src in view(2, user))
+	if(src in view(2, user))
 		switch(src.stage)
 			if(1)
 				to_chat(user, "It's an empty frame.")
@@ -99,8 +99,8 @@
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if (iswrench(W))
-		if (src.stage == 1)
+	if(iswrench(W))
+		if(src.stage == 1)
 			if(user.is_busy(src))
 				return
 			to_chat(user, "You begin deconstructing [src].")
@@ -111,20 +111,20 @@
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			qdel(src)
-		if (src.stage == 2)
+		if(src.stage == 2)
 			to_chat(usr, "You have to remove the wires first.")
 			return
 
-		if (src.stage == 3)
+		if(src.stage == 3)
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
 	if(iswirecutter(W))
-		if (src.stage != 2)
+		if(src.stage != 2)
 			return
 		src.stage = 1
 		switch(fixture_type)
-			if ("tube")
+			if("tube")
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
@@ -135,13 +135,13 @@
 		return
 
 	if(iscoil(W))
-		if (src.stage != 1)
+		if(src.stage != 1)
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		switch(fixture_type)
-			if ("tube")
+			if("tube")
 				src.icon_state = "tube-construct-stage2"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage2"
@@ -151,9 +151,9 @@
 		return
 
 	if(isscrewdriver(W))
-		if (src.stage == 2)
+		if(src.stage == 2)
 			switch(fixture_type)
-				if ("tube")
+				if("tube")
 					src.icon_state = "tube-empty"
 				if("bulb")
 					src.icon_state = "bulb-empty"
@@ -166,7 +166,7 @@
 
 				if("tube")
 					newlight = new /obj/machinery/light/built(src.loc)
-				if ("bulb")
+				if("bulb")
 					newlight = new /obj/machinery/light/small/built(src.loc)
 
 			newlight.dir = src.dir
@@ -316,7 +316,7 @@
 		var/PO = brightness_power
 		var/CO = brightness_color
 
-		if (nightshift_enabled)
+		if(nightshift_enabled)
 			BR = nightshift_light_range
 			PO = nightshift_light_power
 			if(!brightness_color || brightness_color == "#ffffff") // Only white lights are overwritten
@@ -435,7 +435,7 @@
 			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & COLD_RESISTANCE)
-				if (prob(12))
+				if(prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
 
@@ -471,7 +471,7 @@
 			s.set_up(3, 1, src)
 			s.start()
 			//if(!user.mutations & COLD_RESISTANCE)
-			if (prob(75))
+			if(prob(75))
 				electrocute_mob(user, get_area(src), src, rand(70, 100) * 0.01)
 
 
@@ -507,7 +507,7 @@
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(user, "<span class='notice'>That object is useless to you.</span>")
 		return
-	else if (status == LIGHT_OK||status == LIGHT_BURNED)
+	else if(status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[user.name] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
@@ -520,7 +520,7 @@
 	if(status == LIGHT_EMPTY||status == LIGHT_BROKEN)
 		to_chat(attacker, "<span class='warning'>That object is useless to you.</span>")
 		return
-	else if (status == LIGHT_OK||status == LIGHT_BURNED)
+	else if(status == LIGHT_OK||status == LIGHT_BURNED)
 		..()
 		visible_message("<span class='warning'>[attacker] smashed the light!</span>", blind_message = "You hear a tinkle of breaking glass")
 		broken()
@@ -642,10 +642,10 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(75))
+			if(prob(75))
 				broken()
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				broken()
 	return
 

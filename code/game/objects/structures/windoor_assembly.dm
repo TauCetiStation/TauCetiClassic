@@ -65,7 +65,7 @@
 		if("01")
 			if(iswelder(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
-				if (WT.use(0,user))
+				if(WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
 					if(WT.use_tool(src, user, 40, volume = 50))
 						to_chat(user, "<span class='notice'>You dissasembled the windoor assembly!</span>")
@@ -269,7 +269,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored)
+	if(src.anchored)
 		to_chat(usr, "It is fastened to the floor; therefore, you can't rotate it!")
 		return 0
 	if(src.state != "01")

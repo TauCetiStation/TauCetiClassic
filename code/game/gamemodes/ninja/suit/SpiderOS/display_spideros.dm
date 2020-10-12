@@ -85,7 +85,7 @@
 		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
 			var/turf/T = get_turf_or_move(U.loc)
-			if (isnull(T))
+			if(isnull(T))
 				dat += "Unable to obtain a reading."
 			else
 				var/datum/gas_mixture/environment = T.return_air()
@@ -95,7 +95,7 @@
 
 				dat += "Air Pressure: [round(pressure,0.1)] kPa"
 
-				if (total_moles)
+				if(total_moles)
 					var/o2_level = environment.gas["oxygen"] / total_moles
 					var/n2_level = environment.gas["nitrogen"] / total_moles
 					var/co2_level = environment.gas["carbon_dioxide"] / total_moles
@@ -119,13 +119,13 @@
 			dat += "<ul>"
 			var/count = 0
 			for (var/obj/item/device/pda/P in PDAs)
-				if (!P.owner||P.toff)
+				if(!P.owner||P.toff)
 					continue
 				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 				dat += "</li>"
 				count++
 			dat += "</ul>"
-			if (count == 0)
+			if(count == 0)
 				dat += "None detected.<br>"
 		if(32)
 			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
@@ -193,31 +193,31 @@
 				dat += "System integrity: [(A.health+100)/2]%<br>"
 
 				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
-				//if (A.laws.zeroth)
+				//if(A.laws.zeroth)
 				//	laws += "<li>0: [A.laws.zeroth]</li>"
 
 				for (var/index = 1, index <= A.laws.ion.len, index++)
 					var/law = A.laws.ion[index]
-					if (length(law) > 0)
+					if(length(law) > 0)
 						var/num = ionnum()
 						laws += "<li>[num]. [law]</li>"
 
 				var/number = 1
 				for (var/index = 1, index <= A.laws.inherent.len, index++)
 					var/law = A.laws.inherent[index]
-					if (length(law) > 0)
+					if(length(law) > 0)
 						laws += "<li>[number]: [law]</li>"
 						number++
 
 				for (var/index = 1, index <= A.laws.supplied.len, index++)
 					var/law = A.laws.supplied[index]
-					if (length(law) > 0)
+					if(length(law) > 0)
 						laws += "<li>[number]: [law]</li>"
 						number++
 
 				dat += "<h4>Laws:</h4><ul>[laws]<li><a href='byond://?src=\ref[src];choice=Override AI Laws'><i>*Override Laws*</i></a></li></ul>"
 
-				if (!flush)
+				if(!flush)
 					dat += "<A href='byond://?src=\ref[src];choice=Purge AI'>Purge AI</A><br>"
 				else
 					dat += "<b>Purge in progress...</b><br>"

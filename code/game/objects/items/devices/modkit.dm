@@ -19,7 +19,7 @@
 /obj/item/device/modkit/afterattack(atom/target, mob/user, proximity, params)
 	if(get_dist(src,target)>1)
 		return
-	if (!target_species)
+	if(!target_species)
 		return	//it shouldn't be null, okay?
 
 	var/allowed = 0
@@ -28,14 +28,14 @@
 			allowed = 1
 
 	var/obj/item/clothing/I = target
-	if (!istype(I) || !allowed)
+	if(!istype(I) || !allowed)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
 
-	if (excluding ^ in_list)
+	if(excluding ^ in_list)
 		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
 		return
 

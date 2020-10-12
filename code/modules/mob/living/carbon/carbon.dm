@@ -186,7 +186,7 @@
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	/*if (!( src.hand ))
+	/*if(!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH*/
@@ -210,7 +210,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health >= config.health_threshold_crit)
+	if(src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
@@ -262,17 +262,17 @@
 				H.play_xylophone()
 		else
 			var/t_him = "it"
-			if (src.gender == MALE)
+			if(src.gender == MALE)
 				t_him = "him"
-			else if (src.gender == FEMALE)
+			else if(src.gender == FEMALE)
 				t_him = "her"
-			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			if(istype(src,/mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
 			if(lying)
 				AdjustSleeping(-10 SECONDS)
-				if (!M.lying)
+				if(!M.lying)
 					if(!IsSleeping())
 						src.resting = 0
 					if(src.crawling)
@@ -394,7 +394,7 @@
 //Throwing stuff
 
 /mob/living/carbon/proc/toggle_throw_mode()
-	if (src.in_throw_mode)
+	if(src.in_throw_mode)
 		throw_mode_off()
 	else
 		throw_mode_on()
@@ -428,7 +428,7 @@
 		if(!W.canremove || W.flags & NODROP)
 			return
 
-	if (istype(item, /obj/item/weapon/grab))
+	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw_held() //throw the person instead of the grab
 		qdel(G)
@@ -447,7 +447,7 @@
 	src.remove_from_mob(item)
 
 	//actually throw it!
-	if (item)
+	if(item)
 		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		newtonian_move(get_dir(target, src))
@@ -472,20 +472,20 @@
 	return 1
 
 /mob/living/carbon/restrained()
-	if (handcuffed)
+	if(handcuffed)
 		return 1
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)	return 0
 
-	else if (W == handcuffed)
+	else if(W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
-	else if (W == legcuffed)
+	else if(W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
 	else
@@ -645,9 +645,9 @@
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
 		update_inv_legcuffed()
-		if (client)
+		if(client)
 			client.screen -= W
-		if (W)
+		if(W)
 			W.loc = loc
 			W.dropped(src)
 			if(W)
@@ -796,7 +796,7 @@
 			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
 			return
 
-		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
+		if(health > config.health_threshold_dead && health < config.health_threshold_crit)
 			var/suff = min(getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
 			adjustOxyLoss(-suff)
 			visible_message("<span class='warning'>[user] performs AV on [src]!</span>")
@@ -807,7 +807,7 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 
-	if (href_list["item"] && usr.CanUseTopicInventory(src))
+	if(href_list["item"] && usr.CanUseTopicInventory(src))
 		var/slot = text2num(href_list["item"])
 		var/obj/item/item_to_add = usr.get_active_hand()
 
@@ -827,7 +827,7 @@
 		else
 			usr << browse(null, "window=mob\ref[src]")
 
-	if (href_list["internal"] && usr.CanUseTopicInventory(src))
+	if(href_list["internal"] && usr.CanUseTopicInventory(src))
 		var/slot = text2num(href_list["internal"])
 		var/obj/item/weapon/tank/ITEM = get_equipped_item(slot)
 		if(ITEM && istype(ITEM) && wear_mask && (wear_mask.flags & MASKINTERNALS))
@@ -837,10 +837,10 @@
 				var/mob/living/carbon/C = src
 				var/gas_log_string = ""
 				var/internalsound
-				if (internal)
+				if(internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					if (internals)
+					if(internals)
 						internals.icon_state = "internal0"
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
@@ -851,7 +851,7 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					if (internals)
+					if(internals)
 						internals.icon_state = "internal1"
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit

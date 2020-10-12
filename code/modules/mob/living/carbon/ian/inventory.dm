@@ -123,18 +123,18 @@
 		return FALSE
 
 /mob/living/carbon/ian/u_equip(obj/W)
-	if (W == head)
+	if(W == head)
 		facehugger = FALSE
 		head = null
 		update_inv_head()
-	else if (W == neck)
+	else if(W == neck)
 		handcuffed = null
 		neck = null
 		update_inv_neck()
-	else if (W == mouth)
+	else if(W == mouth)
 		mouth = null
 		update_inv_mouth()
-	else if (W == back)
+	else if(W == back)
 		back = null
 		update_inv_back()
 

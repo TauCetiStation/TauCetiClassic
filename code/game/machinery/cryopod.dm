@@ -215,13 +215,13 @@ var/global/list/frozen_items = list()
 			if(PDA_Manifest.len)
 				PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.medical)
-				if ((R.fields["name"] == occupant.real_name))
+				if((R.fields["name"] == occupant.real_name))
 					qdel(R)
 			for(var/datum/data/record/T in data_core.security)
-				if ((T.fields["name"] == occupant.real_name))
+				if((T.fields["name"] == occupant.real_name))
 					qdel(T)
 			for(var/datum/data/record/G in data_core.general)
-				if ((G.fields["name"] == occupant.real_name))
+				if((G.fields["name"] == occupant.real_name))
 					qdel(G)
 
 			if(orient_right)
@@ -294,10 +294,10 @@ var/global/list/frozen_items = list()
 			preserve = TRUE
 			break
 
-	if (preserve && storage)
+	if(preserve && storage)
 		frozen_items += O
 	else
-		if (O.contents.len)
+		if(O.contents.len)
 			for (var/obj/item/object in O.contents)
 				preserve_item(object)
 		qdel(O)

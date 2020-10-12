@@ -31,7 +31,7 @@
 	set category = "Object"
 	set src in range(0)
 	var/N = input("Percentage of tank used per shot:","[src]") as null|anything in possible_pressure_amounts
-	if (N)
+	if(N)
 		pressure_setting = N
 		to_chat(usr, "You dial the pressure valve to [pressure_setting]%.")
 
@@ -73,22 +73,22 @@
 			to_chat(user, "Nothing is attached to the tank valve!")
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
-	if (target.loc == user.loc)
+	if(target.loc == user.loc)
 		return
-	else if (locate (/obj/structure/table, src.loc))
+	else if(locate (/obj/structure/table, src.loc))
 		return
 
 	else if(target == user)
 		return
 
-	if (length(contents) == 0)
+	if(length(contents) == 0)
 		to_chat(user, "There's nothing in [src] to fire!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
-	if (length(contents) > 0)
+	if(length(contents) > 0)
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
@@ -104,11 +104,11 @@
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(H, REACTION_GUN_FIRE)
 
-	if (!tank)
+	if(!tank)
 		to_chat(user, "There is no gas tank in [src]!")
 		return 0
 
-	if (cooldown)
+	if(cooldown)
 		to_chat(user, "The chamber hasn't built up enough pressure yet!")
 		return 0
 
@@ -116,12 +116,12 @@
 
 	var/turf/curloc = get_turf(user)
 	var/turf/targloc = get_turf(target)
-	if (!istype(targloc) || !istype(curloc))
+	if(!istype(targloc) || !istype(curloc))
 		return
 
 	var/fire_pressure = (tank.air_contents.return_pressure()/100)*pressure_setting
 
-	if (fire_pressure < minimum_tank_pressure)
+	if(fire_pressure < minimum_tank_pressure)
 		to_chat(user, "There isn't enough gas in the tank to fire [src].")
 		return 0
 

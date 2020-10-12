@@ -41,10 +41,10 @@
 	. = ..()
 
 	// If we have opacity, make sure to tell (potentially) affected light sources.
-	if (opacity && istype(T))
+	if(opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
 		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
+		if(old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
 // Previously known as HasEntered()
@@ -57,36 +57,36 @@
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
 
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
 	var/atom/oldloc = loc
 
 	if(loc != NewLoc)
-		if (!(Dir & (Dir - 1))) //Cardinal move
+		if(!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (Dir & NORTH)
-				if (Dir & EAST)
-					if (step(src, NORTH))
+			if(Dir & NORTH)
+				if(Dir & EAST)
+					if(step(src, NORTH))
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if(step(src, EAST))
 						. = step(src, NORTH)
-				else if (Dir & WEST)
-					if (step(src, NORTH))
+				else if(Dir & WEST)
+					if(step(src, NORTH))
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if(step(src, WEST))
 						. = step(src, NORTH)
-			else if (Dir & SOUTH)
-				if (Dir & EAST)
-					if (step(src, SOUTH))
+			else if(Dir & SOUTH)
+				if(Dir & EAST)
+					if(step(src, SOUTH))
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if(step(src, EAST))
 						. = step(src, SOUTH)
-				else if (Dir & WEST)
-					if (step(src, SOUTH))
+				else if(Dir & WEST)
+					if(step(src, SOUTH))
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if(step(src, WEST))
 						. = step(src, SOUTH)
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
@@ -109,17 +109,17 @@
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
-	if (!inertia_moving)
+	if(!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
 
-	if (orbiters)
+	if(orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
 			O.Check()
-	if (orbiting)
+	if(orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
 	return 1
@@ -201,34 +201,34 @@
 		Move(get_step(src, turn(dir, 180)))
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
-	if (!target || speed <= 0)
+	if(!target || speed <= 0)
 		return
 
-	if (pulledby)
+	if(pulledby)
 		pulledby.stop_pulling()
 
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
-	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
+	if(thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
 		var/user_momentum = thrower.movement_delay()
-		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
+		if(!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
 			user_momentum = world.tick_lag
 
 		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
 
-		if (get_dir(thrower, target) & last_move)
+		if(get_dir(thrower, target) & last_move)
 			user_momentum = user_momentum //basically a noop, but needed
-		else if (get_dir(target, thrower) & last_move)
+		else if(get_dir(target, thrower) & last_move)
 			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
 		else
 			user_momentum = 0
 
 
-		if (user_momentum)
+		if(user_momentum)
 			//first lets add that momentum to range.
 			range *= (user_momentum / speed) + 1
 			//then lets add it to speed
 			speed += user_momentum
-			if (speed <= 0)
+			if(speed <= 0)
 				return //no throw speed, the user was moving too fast.
 
 	var/datum/thrownthing/TT = new()
@@ -248,7 +248,7 @@
 	var/dx = (target.x > src.x) ? EAST : WEST
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
 
-	if (dist_x == dist_y)
+	if(dist_x == dist_y)
 		TT.pure_diagonal = TRUE
 
 	else if(dist_x <= dist_y)
@@ -275,7 +275,7 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
+	if(SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 	return TRUE
@@ -325,17 +325,17 @@
 		verbs -= x
 
 /atom/movable/overlay/attackby(a, b, params)
-	if (src.master)
+	if(src.master)
 		return src.master.attackby(a, b)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
+	if(src.master)
 		return src.master.attack_paw(a, b, c)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
+	if(src.master)
 		return src.master.attack_hand(a, b, c)
 	return
 

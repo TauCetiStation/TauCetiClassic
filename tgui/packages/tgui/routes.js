@@ -35,13 +35,13 @@ const SuspendedWindow = () => {
 
 export const getRoutedComponent = state => {
   const { suspended, config } = selectBackend(state);
-  if (suspended) {
+  if(suspended) {
     return SuspendedWindow;
   }
-  if (process.env.NODE_ENV !== 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     const debug = selectDebug(state);
     // Show a kitchen sink
-    if (debug.kitchenSink) {
+    if(debug.kitchenSink) {
       return require('./debug/KitchenSink').KitchenSink;
     }
   }
@@ -51,13 +51,13 @@ export const getRoutedComponent = state => {
     esModule = requireInterface(`./${name}.js`);
   }
   catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
+    if(err.code === 'MODULE_NOT_FOUND') {
       return routingError('notFound', name);
     }
     throw err;
   }
   const Component = esModule[name];
-  if (!Component) {
+  if(!Component) {
     return routingError('missingExport', name);
   }
   return Component;

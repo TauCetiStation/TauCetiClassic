@@ -3,11 +3,11 @@ import groovy.io.FileType
 def mapFiles = []
 
 new File('../../maps').traverse (type: FileType.FILES, nameFilter: ~/.*\.dmm$/) { file ->
-    if (new File("${file.path}.backup").exists())
+    if(new File("${file.path}.backup").exists())
         mapFiles << file
 }
 
-if (mapFiles.empty) {
+if(mapFiles.empty) {
     println 'Error: No maps available for cleaning.'
     System.exit(1)
 }
@@ -22,7 +22,7 @@ def mapNumbersToClean = []
 
 try {
     userChoice.tokenize(',').each { 
-        if (it.contains('-')) {
+        if(it.contains('-')) {
             def range = it.split('-')
             ((range[0] as int)..(range[1] as int)).each { mapNumbersToClean << it }
         } else {
@@ -34,12 +34,12 @@ try {
     System.exit(1)
 }
 
-if (mapNumbersToClean.empty) {
+if(mapNumbersToClean.empty) {
     println 'Error: Please specify maps to clean.'
     System.exit(1)
 } else {
     mapNumbersToClean.each {
-        if (it >= mapFiles.size()) {
+        if(it >= mapFiles.size()) {
             println "Error: Provide valid map number (map with number $it does not exists)."
             System.exit(1)
         }
@@ -52,7 +52,7 @@ if (mapNumbersToClean.empty) {
 
     userChoice = System.console().readLine '\nContinue? (y/n): '
 
-    if (!'y'.equalsIgnoreCase(userChoice.trim())) {
+    if(!'y'.equalsIgnoreCase(userChoice.trim())) {
         println 'Aborted by user.'
         System.exit(0)
     }

@@ -145,7 +145,7 @@
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
 		if(C.virus2.len)
 			for (var/ID in C.virus2)
-				if (ID in virusDB)
+				if(ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
 //			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
@@ -226,11 +226,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 				return
 		else
@@ -286,7 +286,7 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user || anchored)
+	if(!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
@@ -369,7 +369,7 @@
 
 
 /obj/item/attack_paw(mob/user)
-	if (!user || anchored)
+	if(!user || anchored)
 		return
 
 	if(istype(loc, /obj/item/weapon/storage))
@@ -377,7 +377,7 @@
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if (src.loc == user)
+	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(istype(src, /obj/item/clothing) && !src:canremove)
 			return
@@ -392,7 +392,7 @@
 	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
 		return
 
-	if (!user.can_pickup(src))
+	if(!user.can_pickup(src))
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
@@ -401,7 +401,7 @@
 	return
 
 /obj/item/attack_ai(mob/user)
-	if (istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user))
 			return
@@ -428,7 +428,7 @@
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
-	if (callback) //call the original callback
+	if(callback) //call the original callback
 		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
@@ -640,7 +640,7 @@
 					return 0
 				return 1
 			if(SLOT_IN_BACKPACK)
-				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+				if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
 					if(B.can_be_inserted(src, M, 1))
 						return 1
@@ -652,7 +652,7 @@
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
 				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
-					if (!disable_warning)
+					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
 				if( !(slot_flags & SLOT_FLAGS_TIE) )
@@ -901,7 +901,7 @@
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
-			if (IO.damage >= IO.min_broken_damage)
+			if(IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -934,7 +934,7 @@
 			add_overlay(blood_overlay)
 
 /obj/item/add_blood(mob/living/carbon/human/M)
-	if (!..())
+	if(!..())
 		return 0
 
 	if(blood_DNA[M.dna.unique_enzymes])

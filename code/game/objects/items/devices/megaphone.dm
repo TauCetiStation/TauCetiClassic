@@ -14,7 +14,7 @@
 	var/list/insultmsg = list("FUCK EVERYONE!", "I'M A TATER!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!")
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
-	if (user.client)
+	if(user.client)
 		if(user.client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
@@ -33,7 +33,7 @@
 	if(!message)
 		return
 	message = (capitalize(message))
-	if ((src.loc == user && usr.stat == CONSCIOUS))
+	if((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
 			if(insults)
 				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")

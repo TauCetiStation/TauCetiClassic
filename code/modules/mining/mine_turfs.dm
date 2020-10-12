@@ -57,7 +57,7 @@
 	for(var/direction_to_check in cardinal)
 		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
 			T = get_step(src, direction_to_check)
-			if (T)
+			if(T)
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 				I.plane = 6
 				T.add_overlay(I)
@@ -76,7 +76,7 @@
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
 		if(2.0)
-			if (prob(70))
+			if(prob(70))
 				mined_ore = 1 // some of the stuff gets blown up
 				GetDrilled()
 		if(1.0)
@@ -156,23 +156,23 @@
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
-	if (istype(W, /obj/item/device/core_sampler))
+	if(istype(W, /obj/item/device/core_sampler))
 		geologic_data.UpdateNearbyArtifactInfo(src)
 		var/obj/item/device/core_sampler/C = W
 		C.sample_item(src, user)
 		return
 
-	if (istype(W, /obj/item/device/depth_scanner))
+	if(istype(W, /obj/item/device/depth_scanner))
 		var/obj/item/device/depth_scanner/C = W
 		C.scan_atom(user, src)
 		return
 
-	if (istype(W, /obj/item/device/measuring_tape))
+	if(istype(W, /obj/item/device/measuring_tape))
 		if(user.is_busy(src))
 			return
 		var/obj/item/device/measuring_tape/P = W
@@ -181,7 +181,7 @@
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
-	if (istype(W, /obj/item/weapon/twohanded/sledgehammer))
+	if(istype(W, /obj/item/weapon/twohanded/sledgehammer))
 		var/obj/item/weapon/twohanded/sledgehammer/S = W
 		if(S.wielded)
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
@@ -189,9 +189,9 @@
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
-	if (istype(W, /obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!( istype(T, /turf) ))
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
@@ -336,7 +336,7 @@
 /turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
-	if (mineral && ore_amount)
+	if(mineral && ore_amount)
 
 		// if the turf has already been excavated, some of it's ore has been removed
 		for (var/i = 1 to ore_amount - mined_ore)
@@ -454,13 +454,13 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/mineral/random/atom_init_late()
-	if (prob(mineralChance) && !mineral)
+	if(prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
 
 		if(!name_to_mineral)
 			SetupMinerals()
 
-		if (mineral_name && (mineral_name in name_to_mineral))
+		if(mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
@@ -636,7 +636,7 @@
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
+	//if(prob(50))
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
@@ -707,12 +707,12 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if((istype(W, /obj/item/weapon/shovel)))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!( istype(T, /turf) ))
 			return
 
-		if (dug)
+		if(dug)
 			to_chat(user, "<span class='danger'>This area has already been dug.</span>")
 			return
 		if(user.is_busy(src))

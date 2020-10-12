@@ -6,7 +6,7 @@
 	//add wires
 	if(iscoil(I))
 		var/obj/item/stack/cable_coil/C = I
-		if (clipped)
+		if(clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
 

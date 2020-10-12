@@ -17,14 +17,14 @@ export class TimeDisplay extends Component {
       value: 0,
     };
     // Set initial state with value provided in props
-    if (isSafeNumber(props.value)) {
+    if(isSafeNumber(props.value)) {
       this.state.value = Number(props.value);
       this.last_seen_value = Number(props.value);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.auto !== undefined) {
+    if(this.props.auto !== undefined) {
       clearInterval(this.timer);
       this.timer = setInterval(() => this.tick(), 1000); // every 1 s
     }
@@ -32,7 +32,7 @@ export class TimeDisplay extends Component {
 
   tick() {
     let current = Number(this.state.value);
-    if (this.props.value !== this.last_seen_value) {
+    if(this.props.value !== this.last_seen_value) {
       this.last_seen_value = this.props.value;
       current = this.props.value;
     }
@@ -42,7 +42,7 @@ export class TimeDisplay extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auto !== undefined) {
+    if(this.props.auto !== undefined) {
       this.timer = setInterval(() => this.tick(), 1000); // every 1 s
     }
   }
@@ -54,7 +54,7 @@ export class TimeDisplay extends Component {
   render() {
     const val = this.state.value;
     // Directly display weird stuff
-    if (!isSafeNumber(val)) {
+    if(!isSafeNumber(val)) {
       return this.state.value || null;
     }
     // THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER

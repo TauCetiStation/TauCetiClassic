@@ -73,7 +73,7 @@
 		else
 			user.update_inv_r_hand()
 
-		if (src.unwieldsound)
+		if(src.unwieldsound)
 			playsound(src, unwieldsound, VOL_EFFECTS_MASTER)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()

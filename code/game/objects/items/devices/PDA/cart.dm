@@ -533,7 +533,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -547,9 +547,9 @@
 			var/datum/data/record/M = locate(href_list["target"])
 			loc:mode = 441
 			mode = 441
-			if (R in data_core.general)
+			if(R in data_core.general)
 				for (var/datum/data/record/E in data_core.medical)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+					if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						M = E
 						break
 				active1 = R
@@ -560,9 +560,9 @@
 			var/datum/data/record/S = locate(href_list["target"])
 			loc:mode = 451
 			mode = 451
-			if (R in data_core.general)
+			if(R in data_core.general)
 				for (var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+					if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						S = E
 						break
 				active1 = R

@@ -155,7 +155,7 @@ Pipelines + Other Objects -> Pipe network
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
-			if (level == 1 && isturf(T) && T.intact)
+			if(level == 1 && isturf(T) && T.intact)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
 				return 1
 
@@ -168,11 +168,11 @@ Pipelines + Other Objects -> Pipe network
 			add_fingerprint(user)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
-			if (internal_pressure > 2 * ONE_ATMOSPHERE)
+			if(internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, 20, volume = 50))
+			if(W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

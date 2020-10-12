@@ -47,10 +47,10 @@ const renderLayout = () => {
   const state = store.getState();
   const { suspended, assets } = selectBackend(state);
   // Initial render setup
-  if (initialRender) {
+  if(initialRender) {
     logger.log('initial render', state);
     // Setup dragging
-    if (initialRender !== 'recycled') {
+    if(initialRender !== 'recycled') {
       setupDrag();
     }
   }
@@ -62,21 +62,21 @@ const renderLayout = () => {
       <Component />
     </StoreProvider>
   );
-  if (!reactRoot) {
+  if(!reactRoot) {
     reactRoot = document.getElementById('react-root');
   }
   render(element, reactRoot);
-  if (suspended) {
+  if(suspended) {
     return;
   }
   perf.mark('render/finish');
   // Report rendering time
-  if (process.env.NODE_ENV !== 'production') {
-    if (initialRender === 'recycled') {
+  if(process.env.NODE_ENV !== 'production') {
+    if(initialRender === 'recycled') {
       logger.log('rendered in',
         perf.measure('render/start', 'render/finish'));
     }
-    else if (initialRender) {
+    else if(initialRender) {
       logger.debug('serving from:', location.href);
       logger.debug('bundle entered in',
         perf.measure('inception', 'init'));
@@ -92,7 +92,7 @@ const renderLayout = () => {
         perf.measure('render/start', 'render/finish'));
     }
   }
-  if (initialRender) {
+  if(initialRender) {
     initialRender = false;
   }
 };
@@ -100,8 +100,8 @@ const renderLayout = () => {
 // Parse JSON and report all abnormal JSON strings coming from BYOND
 const parseStateJson = json => {
   let reviver = (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (value.__number__) {
+    if(typeof value === 'object' && value !== null) {
+      if(value.__number__) {
         return parseFloat(value.__number__);
       }
     }
@@ -109,7 +109,7 @@ const parseStateJson = json => {
   };
   // IE8: No reviver for you!
   // See: https://stackoverflow.com/questions/1288962
-  if (Byond.IS_LTE_IE8) {
+  if(Byond.IS_LTE_IE8) {
     reviver = undefined;
   }
   try {
@@ -139,8 +139,8 @@ const setupApp = () => {
       : messageJson;
     logger.debug(`received message '${message?.type}'`);
     const { type, payload } = message;
-    if (type === 'update') {
-      if (suspended) {
+    if(type === 'update') {
+      if(suspended) {
         logger.log('resuming');
         initialRender = 'recycled';
       }
@@ -148,11 +148,11 @@ const setupApp = () => {
       store.dispatch(backendUpdate(payload));
       return;
     }
-    if (type === 'suspend') {
+    if(type === 'suspend') {
       store.dispatch(backendSuspendSuccess());
       return;
     }
-    if (type === 'ping') {
+    if(type === 'ping') {
       sendMessage({
         type: 'pingReply',
       });
@@ -163,7 +163,7 @@ const setupApp = () => {
   };
 
   // Enable hot module reloading
-  if (module.hot) {
+  if(module.hot) {
     setupHotReloading();
     module.hot.accept([
       './components',
@@ -177,7 +177,7 @@ const setupApp = () => {
   // Process the early update queue
   while (true) {
     let stateJson = window.__updateQueue__.shift();
-    if (!stateJson) {
+    if(!stateJson) {
       break;
     }
     window.update(stateJson);
@@ -204,7 +204,7 @@ window.__logger__ = {
   },
 };
 
-if (document.readyState === 'loading') {
+if(document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupApp);
 }
 else {

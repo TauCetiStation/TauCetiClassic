@@ -13,9 +13,9 @@
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/stack/sheet/metal))
+	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
-		if (src.metal_amount < 150000.0)
+		if(src.metal_amount < 150000.0)
 			var/count = 0
 			src.add_overlay("fab-load-metal")
 			spawn(15)
@@ -34,7 +34,7 @@
 /obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
 
-	if (src.operating)
+	if(src.operating)
 		dat = {"
 			<TT>Building [src.being_built.name].<BR>
 			Please wait until completion...</TT><BR>
@@ -62,8 +62,8 @@
 	if(!.)
 		return
 
-	if (href_list["make"])
-		if (!src.operating)
+	if(href_list["make"])
+		if(!src.operating)
 			var/part_type = text2num(href_list["make"])
 
 			var/build_type = ""
@@ -71,44 +71,44 @@
 			var/build_cost = 25000
 
 			switch (part_type)
-				if (1)
+				if(1)
 					build_type = "/obj/item/robot_parts/l_arm"
 					build_time = 200
 					build_cost = 25000
 
-				if (2)
+				if(2)
 					build_type = "/obj/item/robot_parts/r_arm"
 					build_time = 200
 					build_cost = 25000
 
-				if (3)
+				if(3)
 					build_type = "/obj/item/robot_parts/l_leg"
 					build_time = 200
 					build_cost = 25000
 
-				if (4)
+				if(4)
 					build_type = "/obj/item/robot_parts/r_leg"
 					build_time = 200
 					build_cost = 25000
 
-				if (5)
+				if(5)
 					build_type = "/obj/item/robot_parts/chest"
 					build_time = 350
 					build_cost = 50000
 
-				if (6)
+				if(6)
 					build_type = "/obj/item/robot_parts/head"
 					build_time = 350
 					build_cost = 50000
 
-				if (7)
+				if(7)
 					build_type = "/obj/item/robot_parts/robot_suit"
 					build_time = 600
 					build_cost = 75000
 
 			var/building = text2path(build_type)
-			if (!isnull(building))
-				if (src.metal_amount >= build_cost)
+			if(!isnull(building))
+				if(src.metal_amount >= build_cost)
 					src.operating = 1
 					set_power_use(ACTIVE_POWER_USE)
 
@@ -119,7 +119,7 @@
 					src.add_overlay("fab-active")
 
 					spawn (build_time)
-						if (!isnull(src.being_built))
+						if(!isnull(src.being_built))
 							src.being_built.loc = get_turf(src)
 							src.being_built = null
 						set_power_use(IDLE_POWER_USE)

@@ -108,7 +108,7 @@
 		return
 	if(isliving(user))
 		var/mob/living/M = user
-		if (HULK in M.mutations)
+		if(HULK in M.mutations)
 			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 		if(ishuman(user))
@@ -126,7 +126,7 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if((CLUMSY in H.mutations) && prob(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
@@ -143,8 +143,8 @@
 	if(!special_check(user, target))
 		return
 
-	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
+	if(!ready_to_fire())
+		if(world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
@@ -175,7 +175,7 @@
 	return chambered.BB.check_fire(target,user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
-	if (user)
+	if(user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	else
@@ -184,7 +184,7 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && def_zone == O_MOUTH)
+	if(M == user && def_zone == O_MOUTH)
 		if(user.is_busy())
 			return
 		if(!can_suicide_with)
@@ -197,7 +197,7 @@
 		if(!use_tool(user, user, 40))
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			return
-		if (can_fire())
+		if(can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
 				playsound(user, fire_sound, VOL_EFFECTS_MASTER, 10)
@@ -229,7 +229,7 @@
 			click_empty(user)
 			return
 
-	if (can_fire())
+	if(can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == INTENT_HARM)
 			Fire(M, user, null, null, TRUE)

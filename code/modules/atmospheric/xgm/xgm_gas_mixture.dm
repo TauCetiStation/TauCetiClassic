@@ -33,7 +33,7 @@
 	if(moles == 0)
 		return
 
-	if (group_multiplier != 1)
+	if(group_multiplier != 1)
 		gas[gasid] += moles/group_multiplier
 	else
 		gas[gasid] += moles
@@ -54,7 +54,7 @@
 		if(combined_heat_capacity != 0)
 			temperature = (temp * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 
-	if (group_multiplier != 1)
+	if(group_multiplier != 1)
 		gas[gasid] += moles / group_multiplier
 	else
 		gas[gasid] += moles
@@ -142,12 +142,12 @@
 //Adds or removes thermal energy. Returns the actual thermal energy change, as in the case of removing energy we can't go below TCMB.
 /datum/gas_mixture/proc/add_thermal_energy(thermal_energy)
 
-	if (total_moles == 0)
+	if(total_moles == 0)
 		return 0
 
 	var/heat_capacity = heat_capacity()
-	if (thermal_energy < 0)
-		if (temperature < TCMB)
+	if(thermal_energy < 0)
+		if(temperature < TCMB)
 			return 0
 		var/thermal_energy_limit = -(temperature - TCMB)*heat_capacity	//ensure temperature does not go below TCMB
 		thermal_energy = max( thermal_energy, thermal_energy_limit )	//thermal_energy and thermal_energy_limit are negative here.
@@ -165,7 +165,7 @@
 
 //Returns the ideal gas specific entropy of the whole mix. This is the entropy per mole of /mixed/ gas.
 /datum/gas_mixture/proc/specific_entropy()
-	if (!gas.len || total_moles == 0)
+	if(!gas.len || total_moles == 0)
 		return SPECIFIC_ENTROPY_VACUUM
 
 	. = 0
@@ -186,7 +186,7 @@
 	which is bit more realistic (natural log), and returns a fairly accurate entropy around room temperatures and pressures.
 */
 /datum/gas_mixture/proc/specific_entropy_gas(gasid)
-	if (!(gasid in gas) || gas[gasid] == 0)
+	if(!(gasid in gas) || gas[gasid] == 0)
 		return SPECIFIC_ENTROPY_VACUUM	//that gas isn't here
 
 	//group_multiplier gets divided out in volume/gas[gasid] - also, V/(m*T) = R/(partial pressure)

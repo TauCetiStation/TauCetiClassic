@@ -68,7 +68,7 @@
 		if(ROLE_TRAITOR in applicant.client.prefs.be_role)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if(!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_TRAITOR))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -100,7 +100,7 @@
 		if(ROLE_CHANGELING in applicant.client.prefs.be_role)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if(!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_CHANGELING))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -273,12 +273,12 @@
 			new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
 		for (var/obj/effect/landmark/A in /area/shuttle/syndicate/start)//Because that's the only place it can BE -Sieve
-			if (A.name == "Syndicate-Gear-Closet")
+			if(A.name == "Syndicate-Gear-Closet")
 				new /obj/structure/closet/syndicate/personal(A.loc)
 				qdel(A)
 				continue
 
-			if (A.name == "Syndicate-Bomb")
+			if(A.name == "Syndicate-Bomb")
 				new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
 				qdel(A)
 				continue
@@ -322,7 +322,7 @@
 		for (var/obj/effect/landmark/L in /area/custom/syndicate_mothership/elite_squad)
 			if(numagents<=0)
 				break
-			if (L.name == "Syndicate-Commando")
+			if(L.name == "Syndicate-Commando")
 				syndicate_leader_selected = numagents == 1?1:0
 
 				var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
@@ -350,7 +350,7 @@
 			return 0
 
 		for (var/obj/effect/landmark/L in /area/shuttle/syndicate_elite)
-			if (L.name == "Syndicate-Commando-Bomb")
+			if(L.name == "Syndicate-Commando-Bomb")
 				new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 
 	return 1

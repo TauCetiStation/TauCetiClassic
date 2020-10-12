@@ -59,7 +59,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
-	if (copytext(ID, 1, 2) == "$")
+	if(copytext(ID, 1, 2) == "$")
 		return_name = copytext(ID, 2)
 		switch(return_name)
 			if("metal")
@@ -665,7 +665,7 @@ cause a ton of data to be lost, an admin can go send it back.
 			data["selected_technology"] = technology_data
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "rdconsole.tmpl", "R&D Console", 1000, 700)
 
 		ui.set_initial_data(data)

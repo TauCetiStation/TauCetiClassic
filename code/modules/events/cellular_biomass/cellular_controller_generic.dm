@@ -119,7 +119,7 @@
 		for(var/obj/A in S) //Del everything.
 			qdel(A)
 		spawn_cellular_biomass_piece(S, growing)
-	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
+	if((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
 	for(var/atom/A in S) //Hit everything in the turf
 		A.blob_act()
@@ -166,14 +166,14 @@
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(turf/location, obj/structure/cellular_biomass/parent)
 	var/newgrip = 0
-	if (parent)
+	if(parent)
 		if(istype(location,/turf/simulated))
 			newgrip = grip_streingth
 		else
 			newgrip = parent.grip - 1
 	if(!parent || newgrip > 0)
 		var/obj/structure/cellular_biomass/BM = new walls_type(location)
-		if (istype(location,/turf/space))
+		if(istype(location,/turf/space))
 			location:ChangeTurf(/turf/simulated/floor/plating/ironsand)
 		BM.grip = newgrip
 		growth_queue += BM

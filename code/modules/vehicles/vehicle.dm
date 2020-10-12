@@ -126,7 +126,7 @@
 			healthcheck()
 			return
 		if(3.0)
-			if (prob(50))
+			if(prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff
 				healthcheck()

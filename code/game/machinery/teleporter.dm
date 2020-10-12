@@ -22,7 +22,7 @@
 
 /obj/machinery/computer/teleporter/Destroy()
 	teleporter_list -= src
-	if (power_station)
+	if(power_station)
 		power_station.teleporter_console = null
 		power_station = null
 	return ..()
@@ -157,7 +157,7 @@
 
 		for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 			var/turf/T = get_turf(R)
-			if (!T)
+			if(!T)
 				continue
 			if(is_centcom_level(T.z) || !SSmapping.has_level(T.z))
 				continue
@@ -169,12 +169,12 @@
 			L[tmpname] = R
 
 		for (var/obj/item/weapon/implant/tracking/I in implant_list)
-			if (!I.implanted || !ismob(I.loc))
+			if(!I.implanted || !ismob(I.loc))
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
-					if (M.timeofdeath + 6000 < world.time)
+				if(M.stat == 2)
+					if(M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
@@ -199,7 +199,7 @@
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
-			if (!T || !R.teleporter_hub || !R.teleporter_console)
+			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
 			if(is_centcom_level(T.z))
 				continue
@@ -255,7 +255,7 @@
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
-	if (power_station)
+	if(power_station)
 		power_station.teleporter_hub = null
 		power_station = null
 	return ..()
@@ -294,15 +294,15 @@
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if(!com)
 		return
-	if (!com.target)
+	if(!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if(is_centcom_level(com.target.z))
 		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (istype(M, /atom/movable))
+	if(istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
@@ -393,7 +393,7 @@
 		teleporter_hub.power_station = null
 		teleporter_hub.update_icon()
 		teleporter_hub = null
-	if (teleporter_console)
+	if(teleporter_console)
 		teleporter_console.power_station = null
 		teleporter_console = null
 	return ..()
@@ -440,7 +440,7 @@
 	if(!teleporter_hub || !teleporter_console)
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (teleporter_console.target)
+	if(teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)
 		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")

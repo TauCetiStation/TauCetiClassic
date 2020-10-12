@@ -217,7 +217,7 @@
 				return
 		var/obj/mecha/Mech = M.loc
 		spawn() //this helps prevent clickspam fest.
-			if (Mech)
+			if(Mech)
 				Mech.click_action(object,M)
 //	else
 //		return ..()
@@ -423,7 +423,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if ((HULK in user.mutations) && !prob(src.deflect_chance))
+	if((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		user.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>", "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>")
@@ -554,13 +554,13 @@
 		if(1.0)
 			destroy()
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				destroy()
 			else
 				src.take_damage(initial(src.health)/2)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				destroy()
 			else
 				src.take_damage(initial(src.health)/5)
@@ -724,8 +724,8 @@
 	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		if (WT.use(0,user))
-			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
+		if(WT.use(0,user))
+			if(hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
 				to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		else
@@ -969,9 +969,9 @@
 	set name = "Enter Exosuit"
 	set src in oview(1)
 
-	if (usr.incapacitated() || !ishuman(usr))
+	if(usr.incapacitated() || !ishuman(usr))
 		return
-	if (usr.buckled)
+	if(usr.buckled)
 		to_chat(usr,"<span class='warning'>You can't climb into the exosuit while buckled!</span>")
 		return
 	src.log_message("[usr] tries to move in.")
@@ -980,12 +980,12 @@
 		if(C.handcuffed)
 			to_chat(usr, "<span class='warning'>Kinda hard to climb in while handcuffed don't you think?</span>")
 			return
-	if (src.occupant)
+	if(src.occupant)
 		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
 		src.log_append_to_last("Permission denied.")
 		return
 /*
-	if (usr.abiotic())
+	if(usr.abiotic())
 		to_chat(usr, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
 		return
 */
@@ -1519,7 +1519,7 @@
 		if(usr != src.occupant)	return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		var/new_frequency = (radio.frequency + F.getNum("rfreq"))
-		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
+		if(!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency)
 		radio.set_frequency(new_frequency)
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
@@ -1529,18 +1529,18 @@
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		src.disconnect_from_port()
 		return
-	if (href_list["port_connect"])
+	if(href_list["port_connect"])
 		if(usr != src.occupant)	return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		src.connect_to_port()
 		return
-	if (href_list["view_log"])
+	if(href_list["view_log"])
 		if(usr != src.occupant)	return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
-	if (href_list["change_name"])
+	if(href_list["change_name"])
 		if(usr != src.occupant)	return
 		var/newname = sanitize_safe(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
 		if(newname)
@@ -1549,7 +1549,7 @@
 		else
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
-	if (href_list["toggle_id_upload"])
+	if(href_list["toggle_id_upload"])
 		if(usr != src.occupant)	return
 		add_req_access = !add_req_access
 		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
@@ -1648,7 +1648,7 @@
 
 /*
 
-	if (href_list["ai_take_control"])
+	if(href_list["ai_take_control"])
 		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
 		var/duration = text2num(href_list["duration"])
 		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
@@ -1686,7 +1686,7 @@
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
 			qdel(O)
-			if (!AI.stat)
+			if(!AI.stat)
 				AI.icon_state = "ai"
 			else
 				AI.icon_state = "ai-crash"
@@ -1726,7 +1726,7 @@
 	return 0
 
 /obj/mecha/proc/reset_icon()
-	if (initial_icon)
+	if(initial_icon)
 		icon_state = initial_icon
 	else
 		icon_state = initial(icon_state)

@@ -74,7 +74,7 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_MIXER
 	air3.volume = ATMOS_DEFAULT_VOLUME_MIXER * 1.5
 
-	if (!mixing_inputs)
+	if(!mixing_inputs)
 		mixing_inputs = list(AIR1 = node1_concentration, AIR2 = node2_concentration)
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
@@ -94,7 +94,7 @@
 	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air1] / air2.volume) * air2.total_moles
 
 	var/power_draw = -1
-	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
+	if(transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = mix_gas(src, mixing_inputs, air3, transfer_moles, power_rating)
 
 		if(PARENT1 && mixing_inputs[air1])
@@ -109,7 +109,7 @@
 			var/datum/pipeline/parent3 = PARENT3
 			parent3.update = TRUE
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 

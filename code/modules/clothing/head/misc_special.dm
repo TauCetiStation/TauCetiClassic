@@ -82,13 +82,13 @@ obj/item/clothing/head/cakehat/get_current_temperature()
 		if(M.l_hand == src || M.r_hand == src || M.head == src || M.mouth == src)
 			location = M.loc
 
-	if (istype(location, /turf))
+	if(istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
 /obj/item/clothing/head/cakehat/attack_self(mob/user)
 	if(status > 1)	return
 	src.onfire = !( src.onfire )
-	if (src.onfire)
+	if(src.onfire)
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"

@@ -93,7 +93,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/observer/Destroy()
 	observer_list -= src
-	if (ghostimage)
+	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null
@@ -106,8 +106,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over) return
-	if (isobserver(usr) && usr.client.holder && isliving(over))
-		if (usr.client.holder.cmd_ghost_drag(src,over))
+	if(isobserver(usr) && usr.client.holder && isliving(over))
+		if(usr.client.holder.cmd_ghost_drag(src,over))
 			return
 
 	return ..()
@@ -351,7 +351,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target))
+	if(!istype(target))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -399,7 +399,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		dest += getpois(mobs_only=1) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
-		if (!target)//Make sure we actually have a target
+		if(!target)//Make sure we actually have a target
 			return
 		else
 			var/mob/M = dest[target] //Destination mob
@@ -551,10 +551,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='red'>That verb is not currently permitted.</span>")
 		return
 
-	if (!src.stat)
+	if(!src.stat)
 		return
 
-	if (usr != src)
+	if(usr != src)
 		return 0 //something is terribly wrong
 
 	var/ghosts_can_write
@@ -580,10 +580,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
 	var/turf/simulated/T = src.loc
-	if (direction != "Here")
+	if(direction != "Here")
 		T = get_step(T,text2dir(direction))
 
-	if (!istype(T))
+	if(!istype(T))
 		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")
 		return
 
@@ -595,7 +595,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/num_doodles = 0
 	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
 		num_doodles++
-	if (num_doodles > 4)
+	if(num_doodles > 4)
 		to_chat(src, "<span class='warning'>There is no space to write on!</span>")
 		return
 
@@ -603,9 +603,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
-	if (message)
+	if(message)
 
-		if (length_char(message) > max_length)
+		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
@@ -631,11 +631,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostsight()
 
 /mob/dead/observer/proc/updateghostsight()
-	if (!seedarkness)
+	if(!seedarkness)
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision)
+		if(!ghostvision)
 			see_invisible = SEE_INVISIBLE_LIVING;
 	updateghostimages()
 
@@ -644,16 +644,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
-	if (!client)
+	if(!client)
 		return
-	if (seedarkness || !ghostvision)
+	if(seedarkness || !ghostvision)
 		client.images -= ghost_darkness_images
 		client.images |= ghost_sightless_images
 	else
 		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
 		client.images -= ghost_sightless_images
 		client.images |= ghost_darkness_images
-		if (ghostimage)
+		if(ghostimage)
 			client.images -= ghostimage //remove ourself
 
 /mob/dead/observer/IsAdvancedToolUser()

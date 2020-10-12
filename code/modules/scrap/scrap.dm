@@ -71,7 +71,7 @@ var/global/list/scrap_base_cache = list()
 
 /obj/structure/scrap/ex_act(severity)
 	set waitfor = FALSE
-	if (prob(25))
+	if(prob(25))
 		new /obj/effect/effect/smoke(src.loc)
 	switch(severity)
 		if(1)

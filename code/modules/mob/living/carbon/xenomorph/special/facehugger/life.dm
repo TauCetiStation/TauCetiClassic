@@ -1,7 +1,7 @@
 /mob/living/carbon/xenomorph/facehugger/Life()
 	set invisibility = 0
 
-	if (notransform)
+	if(notransform)
 		return
 
 	for(var/obj/item/weapon/fh_grab/G in src)
@@ -13,9 +13,9 @@
 	return
 
 /mob/living/carbon/xenomorph/facehugger/handle_hud_icons_health()
-	if (!healths)
+	if(!healths)
 		return
-	if (stat != DEAD)
+	if(stat != DEAD)
 		switch(health)
 			if(25 to INFINITY)
 				healths.icon_state = "health0"

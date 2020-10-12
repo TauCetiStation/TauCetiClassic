@@ -122,7 +122,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 
-	if (T == "ping")
+	if(T == "ping")
 		log_href("WTOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 		var/x = 1
@@ -139,7 +139,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				n++
 		return n
 
-	else if (T == "status")
+	else if(T == "status")
 		log_href("WTOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 		var/list/s = list()
@@ -173,9 +173,9 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
-	else if (length(T) && istext(T))
+	else if(length(T) && istext(T))
 		var/list/packet_data = params2list(T)
-		if (packet_data && packet_data["announce"] == "")
+		if(packet_data && packet_data["announce"] == "")
 			return receive_net_announce(packet_data, addr)
 
 	else
@@ -208,18 +208,18 @@ var/world_topic_spam_protect_time = world.timeofday
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "Path: [path]"
-		if (I.failures)
+		if(I.failures)
 			dellog += "\tFailures: [I.failures]"
 		dellog += "\tqdel() Count: [I.qdels]"
 		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
-		if (I.hard_deletes)
+		if(I.hard_deletes)
 			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
-		if (I.slept_destroy)
+		if(I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
-		if (I.no_respect_force)
+		if(I.no_respect_force)
 			dellog += "\tIgnored force: [I.no_respect_force] times"
-		if (I.no_hint)
+		if(I.no_hint)
 			dellog += "\tNo hint: [I.no_hint] times"
 	if(dellog.len)
 		log_qdel(dellog.Join("\n"))
@@ -256,7 +256,7 @@ var/shutdown_processed = FALSE
 
 /world/proc/KickInactiveClients()
 	for (var/client/C in clients)
-		if (!(C.holder || C.supporter) && C.is_afk())
+		if(!(C.holder || C.supporter) && C.is_afk())
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
@@ -379,7 +379,7 @@ var/shutdown_processed = FALSE
 /world/proc/update_status()
 	var/s = ""
 
-	if (config && config.server_name)
+	if(config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
@@ -398,38 +398,38 @@ var/shutdown_processed = FALSE
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if(!enter_allowed)
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
 
-	if (config && config.allow_ai)
+	if(config && config.allow_ai)
 		features += "AI allowed"
 
 	var/n = 0
 	for (var/mob/M in player_list)
-		if (M.client)
+		if(M.client)
 			n++
 
-	if (n > 1)
+	if(n > 1)
 		features += "~[n] players"
-	else if (n > 0)
+	else if(n > 0)
 		features += "~[n] player"
 
 	/*
 	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
+	if(host)
 		features += "hosted by <b>[host]</b>"
 	*/
 
-	if (!host && config && config.hostedby)
+	if(!host && config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
-	if (features)
+	if(features)
 		s += ": [jointext(features, ", ")]"
 
 	/* does this help? I do not know */
-	if (src.status != s)
+	if(src.status != s)
 		src.status = s
 
 /proc/SetRoundID()
@@ -464,7 +464,7 @@ var/failed_old_db_connections = 0
 
 	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	. = dbcon.IsConnected()
-	if ( . )
+	if( . )
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
@@ -499,7 +499,7 @@ var/failed_old_db_connections = 0
 
 	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	. = dbcon_old.IsConnected()
-	if ( . )
+	if( . )
 		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_old_db_connections++		//If it failed, increase the failed connections counter.
@@ -543,10 +543,10 @@ var/failed_old_db_connections = 0
 	// get associated list for message
 	// return associated list with key as server url when receive somthing
 	var/list/response = list()
-	if (length(global.net_announcer_secret) < 2 || !length(msg) || !istext(type) || !length(type))
+	if(length(global.net_announcer_secret) < 2 || !length(msg) || !istext(type) || !length(type))
 		return response
 	var/cargo = list2params(msg)
-	if (!length(cargo))
+	if(!length(cargo))
 		return response
 	for(var/i in 2 to length(global.net_announcer_secret))
 		var/server = global.net_announcer_secret[i]
@@ -554,20 +554,20 @@ var/failed_old_db_connections = 0
 	return response
 
 /world/proc/send_ban_announce(ckey = null, ip = null, cid = null)
-	if (!config.net_announcers["ban_send"])
+	if(!config.net_announcers["ban_send"])
 		return FALSE
 	var/list/data = list()
-	if (ckey)
+	if(ckey)
 		data["ckey"] = ckey
-	if (ip)
+	if(ip)
 		data["ip"] = ip
-	if (cid)
+	if(cid)
 		data["cid"] = cid
-	if (length(data))
+	if(length(data))
 		var/list/received_data = send_net_announce(NET_ANNOUNCE_BAN, data)
 		for(var/R in received_data)
 			var/number_kicked = text2num(received_data[R])
-			if (number_kicked)
+			if(number_kicked)
 				message_admins("Kicked [number_kicked] player(s) on [R]")
 		return TRUE
 	return FALSE
@@ -575,7 +575,7 @@ var/failed_old_db_connections = 0
 /world/proc/receive_net_announce(list/packet_data, sender)
 	// validate message from /world/Topic
 	// actions in proccess_net_announce
-	if (
+	if(
 		!length(global.net_announcer_secret) || \
 		!islist(packet_data) || \
 		packet_data["announce"] != "" || \
@@ -584,19 +584,19 @@ var/failed_old_db_connections = 0
 	)
 		return
 	var/self = global.net_announcer_secret[1]
-	if (!self || packet_data["secret"] != global.net_announcer_secret[self])
+	if(!self || packet_data["secret"] != global.net_announcer_secret[self])
 		// log_misc("Unauthorized connection for net_announce [sender]")
 		return
 	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)
 	var/self_flag = FALSE
-	if (sender == ("127.0.0.1:[world.port]"))
+	if(sender == ("127.0.0.1:[world.port]"))
 		self_flag = TRUE
 	switch(type)
-		if (NET_ANNOUNCE_BAN)
+		if(NET_ANNOUNCE_BAN)
 			// legacy system use files, we need DB for ban check
-			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
+			if(config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
 				return proccess_ban_announce(data, sender)
 	return
 
@@ -604,21 +604,21 @@ var/failed_old_db_connections = 0
 	var/list/to_kick = list()
 	for (var/mob/M in global.player_list)
 		var/list/ban_key = list()
-		if (data["ckey"] && M.ckey && M.ckey == data["ckey"])
+		if(data["ckey"] && M.ckey && M.ckey == data["ckey"])
 			ban_key += "ckey([data["ckey"]])"
-		if (data["cid"] && M.computer_id && M.computer_id == data["cid"])
+		if(data["cid"] && M.computer_id && M.computer_id == data["cid"])
 			ban_key += "cid([data["cid"]])"
-		if (data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
+		if(data["ip"] && M.client && M.client.address && M.client.address == data["ip"])
 			ban_key += "ip([data["ip"]])"
-		if (length(ban_key))
+		if(length(ban_key))
 			var/banned = world.IsBanned(data["ckey"], data["ip"],  data["cid"], real_bans_only = TRUE)
-			if (banned && banned["reason"] && banned["desc"])
+			if(banned && banned["reason"] && banned["desc"])
 				to_kick[M] = banned["desc"]
 				var/notify = text("Player [] kicked by ban announce from []. Reason: []. Matched [].", M.ckey, sender, banned["reason"], ban_key.Join(", "))
 				// message_admins(notify)
 				log_admin(notify)
 	for (var/mob/K in to_kick)
-		if (K.client)
+		if(K.client)
 			// Message queue sometimes slow, setup 2 seconds delay
 			to_chat(K, "<span class='warning'><BIG><B>You kicked from the server.</B></BIG></span>")
 			to_chat(K, "<span class='warning'>[to_kick[K]]</span>")

@@ -84,12 +84,12 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 	// if there are sleep toxins in the host's body, that's bad
 
-	if (meme_death == "bdam")
+	if(meme_death == "bdam")
 		if(host.brainloss > 60)
 			to_chat(src, "<span class='warning'><b>Something in your host's brain makes you lose consciousness.. you fade away..</b></span>")
 			src.death()
 			return
-	else if (meme_death == "burns")
+	else if(meme_death == "burns")
 		if(host.on_fire)
 			to_chat(src, "<span class='warning'><b>Something on your host's skin makes you unstable.. you fade away..</b></span>")
 			src.death()
@@ -411,7 +411,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		return
 
 	// Find out whether we can speak
-	if (host.silent || (host.disabilities & 64))
+	if(host.silent || (host.disabilities & 64))
 		to_chat(src, "<b>Your host can't speak..</b>")
 		return
 
@@ -450,7 +450,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 		return
 
 	// Find out whether we can speak
-	if (host.silent || (host.disabilities & 64))
+	if(host.silent || (host.disabilities & 64))
 		to_chat(src, "<b>Your host can't speak..</b>")
 		return
 

@@ -34,7 +34,7 @@ var/global/sent_syndicate_strike_team = FALSE
 
 	sent_syndicate_strike_team = TRUE
 
-	if (SSshuttle.direction == 1 && SSshuttle.online == 1)
+	if(SSshuttle.direction == 1 && SSshuttle.online == 1)
 		SSshuttle.recall()
 
 	var/syndicate_commando_number = syndicate_commandos_possible //for selecting a leader
@@ -73,7 +73,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	var/list/landmarkpos = list()
 	var/obj/effect/landmark/SCP = null
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if (L.name == "Syndicate-Commando")
+		if(L.name == "Syndicate-Commando")
 			landmarkpos += L
 		if(L.name == "Syndicate-Commando-Paper")
 			SCP = L

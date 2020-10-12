@@ -20,7 +20,7 @@
 	var/list/preloaded_assets = json_decode(json)
 
 	for (var/preloaded_asset in preloaded_assets)
-		if (copytext(preloaded_asset, findlasttext(preloaded_asset, ".")+1) in list("js", "jsm", "htm", "html"))
+		if(copytext(preloaded_asset, findlasttext(preloaded_asset, ".")+1) in list("js", "jsm", "htm", "html"))
 			preloaded_assets -= preloaded_asset
 			continue
 	sent_assets |= preloaded_assets
@@ -28,9 +28,9 @@
 
 ///Updates the client side stored html/json combo file used to keep track of what assets the client has between restarts/reconnects.
 /client/proc/asset_cache_update_json(verify = FALSE, list/new_assets = list())
-	if (world.time - connection_time < 10 SECONDS) //don't override the existing data file on a new connection
+	if(world.time - connection_time < 10 SECONDS) //don't override the existing data file on a new connection
 		return
-	if (!islist(new_assets))
+	if(!islist(new_assets))
 		new_assets = list("[new_assets]" = md5(SSassets.cache[new_assets]))
 
 	src << browse(json_encode(new_assets|sent_assets), "file=asset_data.json&display=0")

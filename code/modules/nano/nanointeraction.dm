@@ -81,9 +81,9 @@
 	return 	STATUS_CLOSE
 
 /mob/living/proc/shared_living_nano_interaction(src_object)
-	if (stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
-	else if (incapacitated())
+	else if(incapacitated())
 		return STATUS_UPDATE					// update only (orange visibility)
 	return STATUS_INTERACTIVE
 
@@ -98,15 +98,15 @@
 		if(contents.Find(src_object.loc))	// A hidden uplink inside an item
 			return STATUS_INTERACTIVE
 
-	if (!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates
+	if(!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates
 		return STATUS_CLOSE
 
 	var/dist = get_dist(src_object, src)
-	if (dist <= 1)
+	if(dist <= 1)
 		return STATUS_INTERACTIVE	// interactive (green visibility)
-	else if (dist <= 2)
+	else if(dist <= 2)
 		return STATUS_UPDATE 		// update only (orange visibility)
-	else if (dist <= 4)
+	else if(dist <= 4)
 		return STATUS_DISABLED 		// no updates, completely disabled (red visibility)
 	return STATUS_CLOSE
 

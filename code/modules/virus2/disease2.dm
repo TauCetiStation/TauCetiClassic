@@ -28,9 +28,9 @@
 	var/list/datum/disease2/effect/possible_effects = list()
 	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
-		if (f.level > maxlevel)	//we don't want such strong effects
+		if(f.level > maxlevel)	//we don't want such strong effects
 			continue
-		if (f.level < minlevel)
+		if(f.level < minlevel)
 			continue
 		if(haseffect(f))
 			continue
@@ -192,7 +192,7 @@
 		if(!(type in types2))
 			equal = 0
 
-	if (antigen != disease.antigen)
+	if(antigen != disease.antigen)
 		equal = 0
 	return equal
 
@@ -208,7 +208,7 @@ var/global/list/virusDB = list()
 
 /datum/disease2/disease/proc/name()
 	.= "stamm #[add_zero("[uniqueID]", 4)]"
-	if ("[uniqueID]" in virusDB)
+	if("[uniqueID]" in virusDB)
 		var/datum/data/record/V = virusDB["[uniqueID]"]
 		.= V.fields["name"]
 
@@ -231,7 +231,7 @@ var/global/list/virusDB = list()
 	return r
 
 /datum/disease2/disease/proc/addToDB()
-	if ("[uniqueID]" in virusDB)
+	if("[uniqueID]" in virusDB)
 		return 0
 	var/datum/data/record/v = new()
 	v.fields["id"] = uniqueID

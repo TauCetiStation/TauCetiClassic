@@ -23,7 +23,7 @@ const DEFAULT_SIZE = [400, 600];
 export class Window extends Component {
   componentDidMount() {
     const { config, suspended } = useBackend(this.context);
-    if (suspended) {
+    if(suspended) {
       return;
     }
     logger.log('mounting');
@@ -31,7 +31,7 @@ export class Window extends Component {
       size: DEFAULT_SIZE,
       ...config.window,
     };
-    if (this.props.width && this.props.height) {
+    if(this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
     }
     setWindowKey(config.window.key);

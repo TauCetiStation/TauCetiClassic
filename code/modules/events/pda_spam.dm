@@ -31,7 +31,7 @@
 			var/obj/item/device/pda/P
 			var/list/viables = list()
 			for(var/obj/item/device/pda/check_pda in sortAtom(PDAs))
-				if (!check_pda.owner||check_pda.toff||check_pda == src||check_pda.hidden)
+				if(!check_pda.owner||check_pda.toff||check_pda == src||check_pda.hidden)
 					continue
 				viables.Add(check_pda)
 
@@ -93,7 +93,7 @@
 
 			useMS.send_pda_message("[P.owner]", sender, message)
 
-			if (prob(50)) //Give the AI an increased chance to intercept the message
+			if(prob(50)) //Give the AI an increased chance to intercept the message
 				for(var/mob/living/silicon/ai/ai in ai_list)
 					// Allows other AIs to intercept the message but the AI won't intercept their own message.
 					if(ai.pda != P && ai.pda != src)
@@ -102,7 +102,7 @@
 			//Commented out because we don't send messages like this anymore.  Instead it will just popup in their chat window.
 			//P.tnote += "<i><b>&larr; From [sender] (Unknown / spam?):</b></i><br>[message]<br>"
 
-			if (!P.message_silent)
+			if(!P.message_silent)
 				playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			if(!P.message_silent)
 				P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)

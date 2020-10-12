@@ -272,13 +272,13 @@
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
 	current_location.assume_gas("oxygen", -0.5)
-	if (current_location.air.temperature >= 393)
+	if(current_location.air.temperature >= 393)
 		current_location.assume_gas("carbon_dioxide", 0.5)
 	else
 		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
-	if ((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
-		if (current_location.air.gas["carbon_dioxide"] > 5)
+	if((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
+		if(current_location.air.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
 
@@ -294,10 +294,10 @@
 
 /obj/structure/bonfire/dynamic/process()
 	..()
-	if (logs < 1 && icon_state != "bonfire_warm")
+	if(logs < 1 && icon_state != "bonfire_warm")
 		icon_state = "bonfire_warm"
-	if (world.time > time_log_burned_out)
-		if (logs > 0)
+	if(world.time > time_log_burned_out)
+		if(logs > 0)
 			logs--
 			if(prob(40))
 				new /obj/effect/decal/cleanable/ash(loc)
@@ -307,7 +307,7 @@
 
 /obj/structure/bonfire/dynamic/examine(mob/user)
 	..()
-	if (get_dist(src, user) <= 2)
+	if(get_dist(src, user) <= 2)
 		to_chat(user, "<span class='notice'>There [logs == 1 ? "is" : "are"] [logs] log[logs == 1 ? "" : "s"] in [src]</span>")
 
 #undef ONE_LOG_BURN_TIME

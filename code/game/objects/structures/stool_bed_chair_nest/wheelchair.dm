@@ -116,26 +116,26 @@
 			occupant.buckled = null
 			occupant.Move(src.loc)
 			occupant.buckled = src
-			if (occupant && (src.loc != occupant.loc))
-				if (propelled)
+			if(occupant && (src.loc != occupant.loc))
+				if(propelled)
 					for (var/mob/O in src.loc)
-						if (O != occupant)
+						if(O != occupant)
 							Bump(O)
 				else
 					unbuckle_mob()
-			if (pulling && (get_dist(src, pulling) > 1))
+			if(pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
 				to_chat(pulling, "<span class='red'>You lost your grip!</span>")
 				pulling = null
 		else
-			if (occupant && (src.loc != occupant.loc))
+			if(occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	else if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
-	if (pulling)
+	if(pulling)
 		MouseDrop(usr)
 	else
 		user_unbuckle_mob(user)
@@ -172,9 +172,9 @@
 
 	if(propelled || (pulling && (pulling.a_intent == INTENT_HARM)))
 		var/mob/living/occupant = unbuckle_mob()
-		if (pulling && (pulling.a_intent == INTENT_HARM))
+		if(pulling && (pulling.a_intent == INTENT_HARM))
 			occupant.throw_at(A, 3, 3, pulling)
-		else if (propelled)
+		else if(propelled)
 			occupant.throw_at(A, 3, propelled)
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)

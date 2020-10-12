@@ -116,7 +116,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(iswirecutter(W))
 
-		if (shock(user, 50))
+		if(shock(user, 50))
 			return
 
 		var/atom/newcable
@@ -149,7 +149,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		shock(user, 5, 0.2)
 
 	else
-		if (W.flags & CONDUCT)
+		if(W.flags & CONDUCT)
 			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
@@ -158,7 +158,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
+	if(electrocute_mob(user, powernet, src, siemens_coeff))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
@@ -172,12 +172,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(1.0)
 			qdel(src)
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				new /obj/item/stack/cable_coil(loc, d1 ? 2 : 1, color)
 				qdel(src)
 
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				new /obj/item/stack/cable_coil(loc, d1 ? 2 : 1, color)
 				qdel(src)
 	return
@@ -514,8 +514,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.mergeConnectedNetworks(C.d2) //merge the powernet with adjacents powernets
 		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) //fail
 				new /obj/item/stack/cable_coil(C.loc, 1, C.color)
 				qdel(C)
 
@@ -575,8 +575,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			NC.mergeConnectedNetworks(NC.d2) //merge the powernet with adjacents powernets
 			NC.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
-			if (NC.shock(user, 50))
-				if (prob(50)) //fail
+			if(NC.shock(user, 50))
+				if(prob(50)) //fail
 					new /obj/item/stack/cable_coil(NC.loc, 1, NC.color)
 					qdel(NC)
 
@@ -615,8 +615,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
 		C.mergeConnectedNetworksOnTurf()
 
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
+		if(C.shock(user, 50))
+			if(prob(50)) //fail
 				new /obj/item/stack/cable_coil(C.loc, 2, C.color)
 				qdel(C)
 				return

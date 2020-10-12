@@ -18,19 +18,19 @@
 	return ..()
 
 /obj/machinery/holosign/proc/toggle()
-	if (stat & (BROKEN|NOPOWER))
+	if(stat & (BROKEN|NOPOWER))
 		return
 	lit = !lit
 	update_icon()
 
 /obj/machinery/holosign/update_icon()
-	if (!lit)
+	if(!lit)
 		icon_state = "sign_off"
 	else
 		icon_state = on_icon
 
 /obj/machinery/holosign/power_change()
-	if (stat & NOPOWER)
+	if(stat & NOPOWER)
 		lit = 0
 	update_icon()
 	update_power_use()
@@ -73,7 +73,7 @@
 		icon_state = "light0"
 
 	for(var/obj/machinery/holosign/M in holosign_list)
-		if (M.id == src.id)
+		if(M.id == src.id)
 			spawn( 0 )
 				M.toggle()
 				return

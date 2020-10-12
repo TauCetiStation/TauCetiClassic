@@ -1,7 +1,7 @@
 // This is the base state class, it is not to be used directly
 
 function NanoStateClass() {
-	/*if (typeof this.key != 'string' || !this.key.length)
+	/*if(typeof this.key != 'string' || !this.key.length)
 	{
 		alert('ERROR: Tried to create a state with an invalid state key: ' + this.key);
 		return;
@@ -48,19 +48,19 @@ NanoStateClass.prototype.onUpdate = function (data) {
 
     try
     {
-        if (!this.layoutRendered || (data['config'].hasOwnProperty('autoUpdateLayout') && data['config']['autoUpdateLayout']))
+        if(!this.layoutRendered || (data['config'].hasOwnProperty('autoUpdateLayout') && data['config']['autoUpdateLayout']))
         {
             $("#uiLayout").html(NanoTemplate.parse('layout', data)); // render the 'mail' template to the #mainTemplate div
             this.layoutRendered = true;
         }
-        if (!this.contentRendered || (data['config'].hasOwnProperty('autoUpdateContent') && data['config']['autoUpdateContent']))
+        if(!this.contentRendered || (data['config'].hasOwnProperty('autoUpdateContent') && data['config']['autoUpdateContent']))
         {
             $("#uiContent").html(NanoTemplate.parse('main', data)); // render the 'mail' template to the #mainTemplate div
             this.contentRendered = true;
         }
-        if (NanoTemplate.templateExists('mapContent'))
+        if(NanoTemplate.templateExists('mapContent'))
         {
-            if (!this.mapInitialised)
+            if(!this.mapInitialised)
             {
                 // Add drag functionality to the map ui
                 $('#uiMap').draggable({
@@ -79,7 +79,7 @@ NanoStateClass.prototype.onUpdate = function (data) {
 
             $("#uiMapContent").html(NanoTemplate.parse('mapContent', data)); // render the 'mapContent' template to the #uiMapContent div
 
-            if (data['config'].hasOwnProperty('showMap') && data['config']['showMap'])
+            if(data['config'].hasOwnProperty('showMap') && data['config']['showMap'])
             {
                 $('#uiContent').addClass('hidden');
                 $('#uiMapWrapper').removeClass('hidden');
@@ -90,11 +90,11 @@ NanoStateClass.prototype.onUpdate = function (data) {
                 $('#uiContent').removeClass('hidden');
             }
         }
-        if (NanoTemplate.templateExists('mapHeader'))
+        if(NanoTemplate.templateExists('mapHeader'))
         {
             $("#uiMapHeader").html(NanoTemplate.parse('mapHeader', data)); // render the 'mapHeader' template to the #uiMapHeader div
         }
-        if (NanoTemplate.templateExists('mapFooter'))
+        if(NanoTemplate.templateExists('mapFooter'))
         {
             $("#uiMapFooter").html(NanoTemplate.parse('mapFooter', data)); // render the 'mapFooter' template to the #uiMapFooter div
         }

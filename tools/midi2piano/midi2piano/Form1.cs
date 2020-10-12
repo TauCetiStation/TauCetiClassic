@@ -47,7 +47,7 @@ namespace midi2piano
 
         private void importMIDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (importDlg.ShowDialog(this)
+            if(importDlg.ShowDialog(this)
                 == System.Windows.Forms.DialogResult.Cancel)
                 return;
 
@@ -72,8 +72,8 @@ namespace midi2piano
                         case MessageType.Channel:
                             {
                                 ChannelMessage m = (ChannelMessage)me.MidiMessage;
-                                if (m.Command == ChannelCommand.ProgramChange)
-                                    if ((GeneralMidiInstrument)m.Data1 == GeneralMidiInstrument.AcousticGrandPiano)
+                                if(m.Command == ChannelCommand.ProgramChange)
+                                    if((GeneralMidiInstrument)m.Data1 == GeneralMidiInstrument.AcousticGrandPiano)
                                     {
                                         piano = it;
                                     }
@@ -82,22 +82,22 @@ namespace midi2piano
                         case MessageType.Meta:
                             {
                                 MetaMessage m = (MetaMessage)me.MidiMessage;
-                                if (m.MetaType == MetaType.Tempo)
+                                if(m.MetaType == MetaType.Tempo)
                                     tempo = (new TempoChangeBuilder(m)).Tempo;
-                                else if (m.MetaType == MetaType.TimeSignature)
+                                else if(m.MetaType == MetaType.TimeSignature)
                                     timeSig = new TimeSignatureBuilder(m).Denominator;
                             }
                             break;
                     }
-                    if (piano >= 0)
+                    if(piano >= 0)
                         break;
                 }
-                if (piano >= 0)
+                if(piano >= 0)
                     break;
             }
 
             // didn't find one, so just try 0th track anyway
-            if (piano == -1)
+            if(piano == -1)
                 piano = 0;
 
             // now, pull all notes (and tempo)
@@ -119,7 +119,7 @@ namespace midi2piano
                                 switch (m.Command)
                                 {
                                     case ChannelCommand.NoteOn:
-                                        if (curNote.Note != "")
+                                        if(curNote.Note != "")
                                         {
                                             curNote.Length = delta / 1000F;
                                             delta = 0;
@@ -134,7 +134,7 @@ namespace midi2piano
                         case MessageType.Meta:
                             {
                                 MetaMessage m = (MetaMessage)me.MidiMessage;
-                                if (m.MetaType == MetaType.Tempo)
+                                if(m.MetaType == MetaType.Tempo)
                                     tempo = (new TempoChangeBuilder(m)).Tempo;
                             }
                             break;
@@ -142,14 +142,14 @@ namespace midi2piano
                 }
 
                 // make sure we get last note
-                if (curNote.Note != "")
+                if(curNote.Note != "")
                 {
                     curNote.Length = delta / 1000F;
                     notes.Add(curNote);
                 }
 
                 // we found a track with content!
-                if (notes.Count > 0)
+                if(notes.Count > 0)
                     break;
             }
 
@@ -169,12 +169,12 @@ namespace midi2piano
                 int oct = int.Parse(noteStr.Substring(2));
 
                 noteStr = noteStr.Substring(0, 1);
-                if (mod != notemods[cur_note])
+                if(mod != notemods[cur_note])
                 {
                     noteStr += new string(mod, 1);
                     notemods[cur_note] = mod;
                 }
-                if (oct != noteocts[cur_note])
+                if(oct != noteocts[cur_note])
                 {
                     noteStr += oct.ToString();
                     noteocts[cur_note] = oct;
@@ -188,8 +188,8 @@ namespace midi2piano
             Dictionary<float, int> scores = new Dictionary<float, int>();
             foreach (PNote n in notes)
             {
-                if (n.Length != 0)
-                    if (scores.Keys.Contains(n.Length))
+                if(n.Length != 0)
+                    if(scores.Keys.Contains(n.Length))
                         scores[n.Length]++;
                     else
                         scores.Add(n.Length, 1);
@@ -198,7 +198,7 @@ namespace midi2piano
             int score = 0;
             foreach (KeyValuePair<float, int> kv in scores)
             {
-                if (kv.Value > score)
+                if(kv.Value > score)
                 {
                     winner = kv.Key;
                     score = kv.Value;
@@ -213,7 +213,7 @@ namespace midi2piano
             // compress chords down
             for (int i = 0; i < notes.Count; i++)
             {
-                if (notes[i].Length == 0 && i < notes.Count - 1)
+                if(notes[i].Length == 0 && i < notes.Count - 1)
                 {
                     notes[i + 1] = new PNote(notes[i + 1].Length, notes[i].Note + "-" + notes[i + 1].Note);
                     notes.RemoveAt(i);
@@ -237,17 +237,17 @@ namespace midi2piano
             int lineCount = 1;
             foreach (PNote n in notes)
             {
-                if (line.Length + n.Note.Length + 1 > 51)
+                if(line.Length + n.Note.Length + 1 > 51)
                 {
                     output += line.Substring(0, line.Length - 1) + "\r\n";
                     line = "";
-                    if (lineCount == 50)
+                    if(lineCount == 50)
                         break;
                     lineCount++;
                 }
                 line += n.Note + ",";
             }
-            if (line.Length > 0)
+            if(line.Length > 0)
                 output += line.Substring(0, line.Length - 1);
             OutputTxt.Text = "BPM: " + rpm.ToString() + "\r\n" + output;
             OutputTxt.SelectAll();
@@ -268,7 +268,7 @@ namespace midi2piano
         {
             string name, arg, octave;
             name = Enum.GetName(typeof(NoteNames), (NoteNames)(n % 12));
-            if (name == null)
+            if(name == null)
             {
                 name = Enum.GetName(typeof(NoteNames), (NoteNames)((n + 1) % 12));
                 arg = "b";

@@ -14,18 +14,18 @@
 	hold.set_slots(slots, max_w_class)
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user)
-	if (has_suit) // if we are part of a suit
+	if(has_suit) // if we are part of a suit
 		hold.open(user)
 		return
 
-	if (hold.handle_attack_hand(user)) // otherwise interact as a regular storage item
+	if(hold.handle_attack_hand(user)) // otherwise interact as a regular storage item
 		..(user)
 
 /obj/item/clothing/accessory/storage/MouseDrop(obj/over_object)
-	if (has_suit)
+	if(has_suit)
 		return
 
-	if (hold.handle_mousedrop(usr, over_object))
+	if(hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
 /obj/item/clothing/accessory/storage/attack_accessory(obj/item/I, mob/user, params)

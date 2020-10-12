@@ -79,19 +79,19 @@
 
 	default_deconstruction_crowbar(O)
 
-	if (src.stat) //NOPOWER etc
+	if(src.stat) //NOPOWER etc
 		return
-	if (istype(O, /obj/item/weapon/holder/monkey))
+	if(istype(O, /obj/item/weapon/holder/monkey))
 		var/mob/living/G
 		for (var/mob/living/M in O.contents)
 			G = M
-		if (G.stat == CONSCIOUS)
+		if(G.stat == CONSCIOUS)
 			to_chat(user, "<span class='warning'>The subject is struggling far too much to put it in the recycler.</span>")
 		else
 			user.drop_item()
 			to_chat(user, "<span class='notice'>You stuff the subject in the machine.</span>")
 			grind(O, user)
-	if (istype(O, /obj/item/weapon/grab))
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed) || isslime(grabbed))

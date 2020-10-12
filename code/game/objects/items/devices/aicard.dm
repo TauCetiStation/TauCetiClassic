@@ -19,14 +19,14 @@
 	return
 
 /obj/item/device/aicard/attack(mob/living/silicon/decoy/M, mob/user)
-	if (!istype (M, /mob/living/silicon/decoy))
+	if(!istype (M, /mob/living/silicon/decoy))
 		return ..()
 	else
 		M.death()
 		to_chat(user, "<b>ERROR ERROR ERROR</b>")
 
 /obj/item/device/aicard/attack_self(mob/user)
-	if (!in_range(src, user))
+	if(!in_range(src, user))
 		return
 	user.set_machine(src)
 	var/dat = "<TT>"
@@ -36,32 +36,32 @@
 
 		for (var/index = 1, index <= A.laws.ion.len, index++)
 			var/law = A.laws.ion[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				var/num = ionnum()
 				laws += "[num]. [law]"
 
-		if (A.laws.zeroth)
+		if(A.laws.zeroth)
 			laws += "0: [A.laws.zeroth]<BR>"
 
 		var/number = 1
 		for (var/index = 1, index <= A.laws.inherent.len, index++)
 			var/law = A.laws.inherent[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++
 
 		for (var/index = 1, index <= A.laws.supplied.len, index++)
 			var/law = A.laws.supplied[index]
-			if (length(law) > 0)
+			if(length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++
 
 		dat += "Laws:<br>[laws]<br>"
 
-		if (A.stat == DEAD)
+		if(A.stat == DEAD)
 			dat += "<b>AI nonfunctional</b>"
 		else
-			if (!src.flush)
+			if(!src.flush)
 				dat += {"<A href='byond://?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
 			else
 				dat += "<b>Wipe in progress</b>"
@@ -83,7 +83,7 @@
 
 /obj/item/device/aicard/Topic(href, href_list)
 	var/mob/U = usr
-	if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
+	if(!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 		U << browse(null, "window=aicard")
 		U.unset_machine()
 		return
@@ -92,18 +92,18 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
+		if("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		if ("Radio")
+		if("Radio")
 			for(var/mob/living/silicon/ai/A in src)
 				A.aiRadio.disabledAi = !A.aiRadio.disabledAi
 				to_chat(A, "Your Subspace Transceiver has been: [A.aiRadio.disabledAi ? "disabled" : "enabled"]")
 				to_chat(U, "You [A.aiRadio.disabledAi ? "Disable" : "Enable"] the AI's Subspace Transceiver")
 
-		if ("Wipe")
+		if("Wipe")
 			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
 			if(confirm == "Yes")
 				if(isnull(src)||!in_range(src, U)||U.machine!=src)
@@ -121,11 +121,11 @@
 							sleep(10)
 						flush = 0
 
-		if ("Wireless")
+		if("Wireless")
 			for(var/mob/living/silicon/ai/A in src)
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
-				if (A.control_disabled)
+				if(A.control_disabled)
 					cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 				else
 					add_overlay(image('icons/obj/pda.dmi', "aicard-on"))

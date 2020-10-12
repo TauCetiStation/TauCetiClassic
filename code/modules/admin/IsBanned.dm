@@ -10,7 +10,7 @@
 	log_access("ISBANNED: '[args.Join("', '")]'")
 
 	// Shunt world topic banchecks to purely to byond's internal ban system
-	if (type == "world")
+	if(type == "world")
 		return ..()
 
 	var/is_admin = FALSE
@@ -19,7 +19,7 @@
 
 	/* Uncomment this for skip connected clients checks. Broke stckybans sometimes
 	// Don't recheck connected clients.
-	if (!real_bans_only && istype(C) && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+	if(!real_bans_only && istype(C) && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
 		return
 	*/
 
@@ -32,9 +32,9 @@
 		message_admins("<span class='notice'>Failed Login: [key] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 	// Admin allowed anyway
-	if (ckey in admin_datums)
+	if(ckey in admin_datums)
 		is_admin = TRUE
-		if (!C) // first connect admin
+		if(!C) // first connect admin
 			turnoff_stickybans_temporary(ckey)
 		return // remove this for admin checks in bans too
 	// Check bans
@@ -90,14 +90,14 @@
 			desc += "This ban was applied by [ackey] on [bantime], [expires]"
 			return list("reason"="[bantype]", "desc"="[desc]")
 
-		if (failedcid)
+		if(failedcid)
 			message_admins("[key] has logged in with a blank computer id in the ban check.")
-		if (failedip)
+		if(failedip)
 			message_admins("[key] has logged in with a blank ip in the ban check.")
 
 /world/proc/stickyban_check(list/byond_ban, key, computer_id, address, real_bans_only, is_admin)
 	. = byond_ban
-	if (!real_bans_only && byond_ban && islist(byond_ban))
+	if(!real_bans_only && byond_ban && islist(byond_ban))
 		// Gather basic data
 		var/ckey = ckey(key)
 		var/client/C = global.directory[ckey]
@@ -107,39 +107,39 @@
 
 		var/newmatch = FALSE
 		var/list/cached_ban = SSstickyban.cache[banned_ckey]
-		if (cached_ban && islist(cached_ban))
+		if(cached_ban && islist(cached_ban))
 			// drop reverting bans.
 			// Timeout will be restored from DB after new round statred
-			if (cached_ban[BANKEY_REVERT] || cached_ban[BANKEY_TIMEOUT])
+			if(cached_ban[BANKEY_REVERT] || cached_ban[BANKEY_TIMEOUT])
 				world.SetConfig("ban", banned_ckey, null)
 				return null
 
-			if (ckey != banned_ckey)
+			if(ckey != banned_ckey)
 				newmatch = TRUE
-				if (cached_ban[BANKEY_KEYS] && cached_ban[BANKEY_KEYS][ckey])
+				if(cached_ban[BANKEY_KEYS] && cached_ban[BANKEY_KEYS][ckey])
 					newmatch = FALSE
-				if (LAZYACCESS(cached_ban[BANKEY_MATCHES_THIS_ROUND], ckey))
+				if(LAZYACCESS(cached_ban[BANKEY_MATCHES_THIS_ROUND], ckey))
 					newmatch = FALSE
 
-			if (newmatch)
+			if(newmatch)
 
-				if (C)
+				if(C)
 					LAZYSET(cached_ban[BANKEY_EXISTING_USER_MATCHES], ckey, ckey)
 					LAZYSET(cached_ban[BANKEY_PENDING_MATCHES], ckey, ckey)
 					sleep(STICKYBAN_ROGUE_CHECK_TIME)
 					LAZYREMOVE(cached_ban[BANKEY_PENDING_MATCHES], ckey)
-				if (is_admin)
+				if(is_admin)
 					LAZYSET(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND], ckey, ckey)
 				LAZYSET(cached_ban[BANKEY_MATCHES_THIS_ROUND], ckey, ckey)
 				// Checking if we have a lot of matches in already connected clients
 				// Then next ban drop from Config after limit
 				// When ban not in DB clearing matches too
 				// DB restore after sometime rouge bans
-				if (length(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + length(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
+				if(length(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + length(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
 					length(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
 					length(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
-					if (byond_ban[BANKEY_FROMDB])
+					if(byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE
 						action = "putting it on timeout for the remainder of the round"
 					else
@@ -153,7 +153,7 @@
 						world.SetConfig("ban", banned_ckey, null)
 						sleep(1)
 						world.SetConfig("ban", banned_ckey, null)
-						if (!byond_ban[BANKEY_FROMDB])
+						if(!byond_ban[BANKEY_FROMDB])
 							cached_ban = cached_ban.Copy()
 							// clearing all matches
 							cached_ban -= BANKEY_MATCHES_THIS_ROUND
@@ -164,14 +164,14 @@
 							SSstickyban.cache[banned_ckey] = cached_ban
 							world.SetConfig("ban", banned_ckey, list2stickyban(cached_ban))
 					return null
-		if (byond_ban[BANKEY_FROMDB])
+		if(byond_ban[BANKEY_FROMDB])
 			// update matches DB cache
 			INVOKE_ASYNC(SSstickyban, /datum/controller/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
-		if (is_admin)
+		if(is_admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null
 		// Ckey is already connected
-		if (C)
+		if(C)
 			to_chat(C, "<span class='warning'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect to see if the match was automatically reversed.</span>")
 		var/desc = "\n"
 		desc += "Reason:(StickyBan) You, or another user of this computer or connection ([banned_ckey]) is banned from playing here. The ban reason is:\n"
@@ -188,11 +188,11 @@
 	// So we instead have to remove every stickyban than later re-add them.
 
 	// Save current Config bans
-	if (!length(global.stickyban_admin_exemptions))
+	if(!length(global.stickyban_admin_exemptions))
 		for (var/banned_ckey in world.GetConfig("ban"))
 			global.stickyban_admin_texts[banned_ckey] = world.GetConfig("ban", banned_ckey)
 			world.SetConfig("ban", banned_ckey, null)
-	if (!SSstickyban || !SSstickyban.initialized)
+	if(!SSstickyban || !SSstickyban.initialized)
 		return
 	global.stickyban_admin_exemptions[admin_ckey] = world.time
 	// Get time for Config update
@@ -210,7 +210,7 @@
 		world.SetConfig("ban", banned_ckey, global.stickyban_admin_texts[banned_ckey])
 	global.stickyban_admin_exemptions = list()
 	global.stickyban_admin_texts = list()
-	if (global.stickyban_admin_exemption_timer_id)
+	if(global.stickyban_admin_exemption_timer_id)
 		deltimer(global.stickyban_admin_exemption_timer_id)
 	global.stickyban_admin_exemption_timer_id = null
 

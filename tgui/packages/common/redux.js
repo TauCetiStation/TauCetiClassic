@@ -11,7 +11,7 @@ import { compose } from './fp';
  */
 export const createStore = (reducer, enhancer) => {
   // Apply a store enhancer (applyMiddleware is one of them).
-  if (enhancer) {
+  if(enhancer) {
     return enhancer(createStore)(reducer);
   }
 
@@ -87,7 +87,7 @@ export const combineReducers = reducersObj => {
       const reducer = reducersObj[key];
       const prevDomainState = prevState[key];
       const nextDomainState = reducer(prevDomainState, action);
-      if (prevDomainState !== nextDomainState) {
+      if(prevDomainState !== nextDomainState) {
         hasChanged = true;
         nextState[key] = nextDomainState;
       }

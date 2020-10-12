@@ -72,7 +72,7 @@
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
 			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")

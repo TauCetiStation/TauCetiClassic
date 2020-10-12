@@ -16,7 +16,7 @@
 	icon_state = "drone_fab_idle"
 
 /obj/machinery/drone_fabricator/power_change()
-	if (powered())
+	if(powered())
 		stat &= ~NOPOWER
 	else
 		icon_state = "drone_fab_nopower"
@@ -86,10 +86,10 @@
 		to_chat(src, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 
-	if (usr != src)
+	if(usr != src)
 		return 0 //something is terribly wrong
 
-	if (!src.stat)
+	if(!src.stat)
 		return
 
 	if(!(config.allow_drone_spawn))
@@ -122,7 +122,7 @@
 		pluralcheck = " [deathtimeminutes] minutes and"
 	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 
-	if (deathtime < 6000)
+	if(deathtime < 6000)
 		to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
 		to_chat(usr, "You must wait 10 minutes to respawn as a drone!")
 		return

@@ -120,7 +120,7 @@
 					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
-					if (istype (src, /obj/structure/girder/reinforced))
+					if(istype (src, /obj/structure/girder/reinforced))
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "<span class='notice'>Now finalising reinforced wall.</span>")
@@ -168,7 +168,7 @@
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
-		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+		if(P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_item()
 			P.loc = src.loc
 			to_chat(user, "<span class='notice'>You fit the pipe into the [src]!</span>")
@@ -187,13 +187,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
@@ -276,12 +276,12 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
 			return

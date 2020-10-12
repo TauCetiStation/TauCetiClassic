@@ -41,7 +41,7 @@
 
 /turf/space/attackby(obj/item/C, mob/user)
 
-	if (istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		user.SetNextMove(CLICK_CD_RAPID)
@@ -64,7 +64,7 @@
 		ReplaceWithLattice()
 		return
 
-	if (istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
@@ -86,7 +86,7 @@
 		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	..()
-	if ((!(A) || src != A.loc))	return
+	if((!(A) || src != A.loc))	return
 
 	if(SSticker && SSticker.mode)
 
@@ -94,7 +94,7 @@
 		// if(SSticker.mode.name == "nuclear emergency")	return
 		if(!SSmapping.has_level(A.z))
 			return
-		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if(A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor))
 				qdel(A)
 				return
@@ -140,15 +140,15 @@
 				A.x = world.maxx - TRANSITIONEDGE - 2
 				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-			else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
+			else if(A.x >= (world.maxx - TRANSITIONEDGE - 1))
 				A.x = TRANSITIONEDGE + 1
 				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-			else if (src.y <= TRANSITIONEDGE)
+			else if(src.y <= TRANSITIONEDGE)
 				A.y = world.maxy - TRANSITIONEDGE -2
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
+			else if(A.y >= (world.maxy - TRANSITIONEDGE - 1))
 				A.y = TRANSITIONEDGE + 1
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
@@ -192,9 +192,9 @@
 			A.z = target_z
 			A.x = world.maxx - 2
 			spawn (0)
-				if ((A && A.loc))
+				if((A && A.loc))
 					A.loc.Entered(A)
-	else if (src.x >= world.maxx)
+	else if(src.x >= world.maxx)
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
@@ -217,9 +217,9 @@
 			A.z = target_z
 			A.x = 3
 			spawn (0)
-				if ((A && A.loc))
+				if((A && A.loc))
 					A.loc.Entered(A)
-	else if (src.y <= 1)
+	else if(src.y <= 1)
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
@@ -241,10 +241,10 @@
 			A.z = target_z
 			A.y = world.maxy - 2
 			spawn (0)
-				if ((A && A.loc))
+				if((A && A.loc))
 					A.loc.Entered(A)
 
-	else if (src.y >= world.maxy)
+	else if(src.y >= world.maxy)
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
@@ -266,7 +266,7 @@
 			A.z = target_z
 			A.y = 3
 			spawn (0)
-				if ((A && A.loc))
+				if((A && A.loc))
 					A.loc.Entered(A)
 	return
 

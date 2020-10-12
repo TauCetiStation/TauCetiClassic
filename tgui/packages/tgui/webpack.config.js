@@ -125,7 +125,7 @@ module.exports = (env = {}, argv) => {
   };
 
   // Add a bundle analyzer to the plugins array
-  if (argv.analyze) {
+  if(argv.analyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     config.plugins = [
       ...config.plugins,
@@ -134,7 +134,7 @@ module.exports = (env = {}, argv) => {
   }
 
   // Production specific options
-  if (argv.mode === 'production') {
+  if(argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     config.optimization.minimizer = [
@@ -167,14 +167,14 @@ module.exports = (env = {}, argv) => {
   }
 
   // Development specific options
-  if (argv.mode !== 'production') {
+  if(argv.mode !== 'production') {
     config.plugins = [
       ...config.plugins,
       new BuildNotifierPlugin({
         suppressSuccess: true,
       }),
     ];
-    if (argv.hot) {
+    if(argv.hot) {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
     config.devtool = 'cheap-module-source-map';

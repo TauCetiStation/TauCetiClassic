@@ -18,10 +18,10 @@
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 
-	if (prob(50))
+	if(prob(50))
 		// Currently unused.  Will revisit. - N3X
 		BLOCKADD = rand(-300,300)
-	if (prob(75))
+	if(prob(75))
 		DIFFMUT = rand(0,20)
 
 	var/list/numsToAssign=new()

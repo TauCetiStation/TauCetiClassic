@@ -52,21 +52,21 @@
 		var/mob/living/carbon/C = M
 		var/fullness = C.get_nutrition()
 		if(C == user)								//If you're eating it yourself
-			if (fullness <= 50)
+			if(fullness <= 50)
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
-			if (fullness > 50 && fullness <= 150)
+			if(fullness > 50 && fullness <= 150)
 				to_chat(C, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 350)
+			if(fullness > 150 && fullness <= 350)
 				to_chat(C, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 350 && fullness <= 550)
+			if(fullness > 350 && fullness <= 550)
 				to_chat(C, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+				if(fullness <= (550 * (1 + M.overeatduration / 1000)))
 					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
 				else
 					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
@@ -108,11 +108,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
 	..()
 	if(src in user)
-		if (bitecount == 0)
+		if(bitecount == 0)
 			return
-		else if (bitecount == 1)
+		else if(bitecount == 1)
 			to_chat(user, "<span class='info'>\The [src] was bitten by someone!</span>")
-		else if (bitecount <= 3)
+		else if(bitecount <= 3)
 			to_chat(user, "<span class='info'>\The [src] was bitten [bitecount] times!</span>")
 		else
 			to_chat(user, "<span class='info'>\The [src] was bitten multiple times!</span>")
@@ -600,7 +600,7 @@
 	list_reagents = list("nutriment" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
-	if (src.warm)
+	if(src.warm)
 		spawn( 4200 )
 			src.warm = 0
 			src.reagents.del_reagent("tricordrazine")
@@ -1324,7 +1324,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/On_Consume(mob/M)
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
 
-	if (istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		//Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
 		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
@@ -1341,13 +1341,13 @@
 		for (var/obj/item/organ/internal/IO in BP.bodypart_organs)
 			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage + 1))
 
-		if (!BP.hidden && prob(60)) //set it snuggly
+		if(!BP.hidden && prob(60)) //set it snuggly
 			BP.hidden = surprise
 			BP.cavity = 0
 		else 		//someone is having a bad day
 			BP.embed(surprise)
 			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
-	else if (ismonkey(M))
+	else if(ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
 		ook.name = "malformed [ook.name]"
@@ -1758,7 +1758,7 @@
 	storage.set_slots(5, w_class - 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/MouseDrop(obj/over_object)
-	if (!storage.handle_mousedrop(usr, over_object))
+	if(!storage.handle_mousedrop(usr, over_object))
 		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
@@ -1780,7 +1780,7 @@
 		inaccurate = 1
 	else
 		return FALSE
-	if ( \
+	if( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/machinery/optable) in src.loc) && \
@@ -1789,16 +1789,16 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return FALSE
 	var/slices_lost = 0
-	if (inaccurate)
+	if(inaccurate)
 		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
-		if (istype(W, /obj/item/weapon/melee/energy/sword))
+		if(istype(W, /obj/item/weapon/melee/energy/sword))
 			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
-	if (do_after(user, 35, target = src, can_move = FALSE))
-		if (!inaccurate)
+	if(do_after(user, 35, target = src, can_move = FALSE))
+		if(!inaccurate)
 			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
 		else
 			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")

@@ -22,7 +22,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if (ismob(M))
+	if(ismob(M))
 		if(istype(M, /mob/living/silicon/ai))
 			alert("The AI can't be sent to prison you jerk!", null, null, null, null, null)
 			return
@@ -49,16 +49,16 @@
 
 	if(!ismob(M))
 		return
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
 	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text)
 
-	if (!msg)
+	if(!msg)
 		return
 	if(usr)
-		if (usr.client)
+		if(usr.client)
 			if(usr.client.holder)
 				to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
 
@@ -110,13 +110,13 @@
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
 	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to everyone:")) as text)
 
-	if (!msg)
+	if(!msg)
 		return
 	to_chat(world, "[msg]")
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
@@ -234,7 +234,7 @@
 				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
 				return
 
-		else if (alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
+		else if(alert("Add a notice for round mute?", "Mute Notice?", "Yes","No") == "Yes")
 			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
 				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
@@ -582,7 +582,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if(ninjastart.len == 0 && latejoin.len > 0)
 					to_chat(new_character, "<B><span class='warning'>Still no spawneable locations could be found. Defaulting to latejoin.</span></B>")
 					new_character.loc = pick(latejoin)
-				else if (ninjastart.len == 0)
+				else if(ninjastart.len == 0)
 					to_chat(new_character, "<B><span class='warning'>Still no spawneable locations could be found. Aborting.</span></B>")
 
 		if("Death Commando")//Leaves them at late-join spawn.
@@ -630,9 +630,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!input)
 		return
 	for(var/mob/living/silicon/ai/M in ai_list)
-		if (M.stat == DEAD)
+		if(M.stat == DEAD)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
-		else if (M.see_in_dark == 0)
+		else if(M.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
 			M.add_ion_law(input)
@@ -707,11 +707,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
+	if(alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -725,7 +725,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "List free slots"
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(SSjob)
@@ -748,9 +748,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
 	if(flash == null) return
 
-	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1))
-		if ((devastation > 20) || (heavy > 20) || (light > 20))
-			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
+	if((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1))
+		if((devastation > 20) || (heavy > 20) || (light > 20))
+			if(alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
 				return
 
 		explosion(O, devastation, heavy, light, flash)
@@ -772,7 +772,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
 	if(light == null) return
 
-	if (heavy || light)
+	if(heavy || light)
 
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
@@ -811,7 +811,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
+		if(istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 			return
 		else
 			mob.gib()
@@ -857,7 +857,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!selection)
 				return
 			M = selection:mob
-			if ((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
+			if((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
 				alert("You cannot perform this action. You must be of a higher administrative rank!")
 				return
 
@@ -1032,7 +1032,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Toggle Deny Shuttle"
 
-	if (!SSticker)
+	if(!SSticker)
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -1060,7 +1060,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_FUN))	return
 
-	if (SSticker && SSticker.mode)
+	if(SSticker && SSticker.mode)
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 

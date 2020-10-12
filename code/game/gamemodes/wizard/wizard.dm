@@ -28,7 +28,7 @@
 	return (..() && wizardstart.len != 0)
 
 /datum/game_mode/wizard/assign_outsider_antag_roles()
-	if (!..())
+	if(!..())
 		return FALSE
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
@@ -57,7 +57,7 @@
 	return ..()
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	switch(rand(1,100))
@@ -68,7 +68,7 @@
 			kill_objective.find_target()
 			wizard.objectives += kill_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if(!(locate(/datum/objective/survive) in wizard.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
 				wizard.objectives += survive_objective
@@ -79,7 +79,7 @@
 			steal_objective.find_target()
 			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if(!(locate(/datum/objective/survive) in wizard.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
 				wizard.objectives += survive_objective
@@ -95,13 +95,13 @@
 			steal_objective.find_target()
 			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if(!(locate(/datum/objective/survive) in wizard.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
 				wizard.objectives += survive_objective
 
 		else
-			if (!(locate(/datum/objective/hijack) in wizard.objectives))
+			if(!(locate(/datum/objective/hijack) in wizard.objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = wizard
 				wizard.objectives += hijack_objective
@@ -116,7 +116,7 @@
 	spawn(0)
 		var/newname = sanitize_safe(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text, MAX_NAME_LEN)
 
-		if (!newname)
+		if(!newname)
 			newname = randomname
 
 		wizard_mob.real_name = newname
@@ -131,7 +131,7 @@
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", wizard.current)
-	if (you_are)
+	if(you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 	if(!config.objectives_disabled)
@@ -145,7 +145,7 @@
 
 
 /*/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
-	if (!istype(wizard_mob))
+	if(!istype(wizard_mob))
 		return
 	if(!config.feature_object_spell_system)
 		wizard_mob.verbs += /client/proc/jaunt
@@ -155,7 +155,7 @@
 */
 
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
-	if (!istype(wizard_mob))
+	if(!istype(wizard_mob))
 		return
 
 	//So zards properly get their items when they are admin-made.
@@ -200,7 +200,7 @@
 			continue
 		wizards_alive++
 
-	if (wizards_alive)
+	if(wizards_alive)
 		return ..()
 	else
 		finished = 1

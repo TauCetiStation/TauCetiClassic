@@ -226,7 +226,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TPX")
 
-	if (mob && mob.hud_used)
+	if(mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
 
 /client/verb/set_parallax_theme()
@@ -243,7 +243,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","SPX")
 
-	if (mob && mob.hud_used)
+	if(mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
 
 

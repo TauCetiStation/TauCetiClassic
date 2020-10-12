@@ -7,16 +7,16 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return FALSE
-	if (target_zone == O_EYES)	//there are specific steps for eye surgery
+	if(target_zone == O_EYES)	//there are specific steps for eye surgery
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return FALSE
-	if (BP.is_stump)
+	if(BP.is_stump)
 		return FALSE
-	if (!BP.is_flesh())
+	if(!BP.is_flesh())
 		return FALSE
 	return TRUE
 
@@ -187,10 +187,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "[user] starts to pry open the incision on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "You start to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == BP_CHEST)
+	if(target_zone == BP_CHEST)
 		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 		self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
@@ -201,10 +201,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "<span class='notice'>[user] keeps the incision open on [target]'s [BP.name] with \the [tool].</span>"
 	var/self_msg = "<span class='notice'>You keep the incision open on [target]'s [BP.name] with \the [tool].</span>"
-	if (target_zone == BP_CHEST)
+	if(target_zone == BP_CHEST)
 		msg = "<span class='notice'>[user] keeps the ribcage open on [target]'s torso with \the [tool].</span>"
 		self_msg = "<span class='notice'>You keep the ribcage open on [target]'s torso with \the [tool].</span>"
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "<span class='notice'>[user] keeps the incision open on [target]'s lower abdomen with \the [tool].</span>"
 		self_msg = "<span class='notice'>You keep the incision open on [target]'s lower abdomen with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
@@ -214,10 +214,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "<span class='warning'>[user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
 	var/self_msg = "<span class='warning'>Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
-	if (target_zone == BP_CHEST)
+	if(target_zone == BP_CHEST)
 		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
 		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
-	if (target_zone == BP_GROIN)
+	if(target_zone == BP_GROIN)
 		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]</span>"
 		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!</span>"
 	user.visible_message(msg, self_msg)
@@ -272,12 +272,12 @@
 	allowed_species = null
 
 /datum/surgery_step/generic/cut_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (target_zone == O_EYES) // there are specific steps for eye surgery
+	if(target_zone == O_EYES) // there are specific steps for eye surgery
 		return 0
-	if (!ishuman(target))
+	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
+	if(!BP)
 		return 0
 	return target_zone != BP_CHEST && target_zone != BP_GROIN && target_zone != BP_HEAD
 

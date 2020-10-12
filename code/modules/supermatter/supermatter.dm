@@ -137,7 +137,7 @@
 		power = min(power, 1600)
 		return 1
 
-	if (!removed)
+	if(!removed)
 		return 1
 
 	damage_archived = damage

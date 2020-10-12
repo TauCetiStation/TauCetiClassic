@@ -54,7 +54,7 @@
 	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )
 		O.mode = 2
-		if (istype(loc, /obj/item/device/aicard))
+		if(istype(loc, /obj/item/device/aicard))
 			loc.icon_state = "aicard-404"
 
 	tod = worldtime2text() //weasellos time of death patch

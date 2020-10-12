@@ -122,7 +122,7 @@
 				gangID = "B"
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if (gangID)
+			if(gangID)
 				territory = get_area(target)
 				if(territory && is_station_level(territory.z) && territory.valid_territory)
 					//Check if this area is already tagged by a gang

@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(diseases)
 	..("P:[processing.len]")
 
 /datum/controller/subsystem/diseases/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)
@@ -25,5 +25,5 @@ SUBSYSTEM_DEF(diseases)
 		else
 			processing -= thing
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return

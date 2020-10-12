@@ -39,12 +39,12 @@
 	to_chat(world, "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>")
 
 /datum/game_mode/meme/assign_outsider_antag_roles()
-	if (!..())
+	if(!..())
 		return FALSE
 
 	var/meme_number = clamp((global.player_list.len/13), required_enemies, recommended_enemies)
 
-	if (antag_candidates.len < meme_number)
+	if(antag_candidates.len < meme_number)
 		meme_number = antag_candidates.len
 
 	while(meme_number > 0)
@@ -103,7 +103,7 @@
 
 
 /datum/game_mode/proc/forge_meme_objectives(datum/mind/meme, datum/mind/first_host)
-	if (config.objectives_disabled)
+	if(config.objectives_disabled)
 		return
 
 	// meme always needs to attune X hosts
@@ -131,20 +131,20 @@
 	return
 
 /datum/game_mode/proc/greet_meme(datum/mind/meme, you_are=1)
-	if (you_are)
+	if(you_are)
 		var/meme_death_explained = "sleep toxin"
 		var/mob/living/parasite/meme/M = meme.current
-		if (M.meme_death == "stoxin")
+		if(M.meme_death == "stoxin")
 			meme_death_explained = "sleep toxin"
-		if (M.meme_death == "bdam")
+		if(M.meme_death == "bdam")
 			meme_death_explained = "brain"
-		if (M.meme_death == "holywater")
+		if(M.meme_death == "holywater")
 			meme_death_explained = "holy water"
-		if (M.meme_death == "mindbreaker")
+		if(M.meme_death == "mindbreaker")
 			meme_death_explained = "mind breaking drug"
-		if (M.meme_death == "beer")
+		if(M.meme_death == "beer")
 			meme_death_explained = "firewater"
-		if (M.meme_death == "burns")
+		if(M.meme_death == "burns")
 			meme_death_explained = "fire"
 		to_chat(meme.current, "<B>You are a <span class = 'red'>meme</span>!</B>")
 		to_chat(meme.current, "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>")
@@ -165,7 +165,7 @@
 			continue
 		memes_alive++
 
-	if (memes_alive)
+	if(memes_alive)
 		return ..()
 	else
 		return 1

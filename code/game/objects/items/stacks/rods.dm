@@ -49,9 +49,9 @@
 
 	if(!istype(user.loc,/turf)) return 0
 
-	if (locate(/obj/structure/grille, usr.loc))
+	if(locate(/obj/structure/grille, usr.loc))
 		for(var/obj/structure/grille/G in usr.loc)
-			if (G.destroyed)
+			if(G.destroyed)
 				if(!use(1))
 					continue
 				G.health = 10
@@ -67,9 +67,9 @@
 		if(user.is_busy(src))
 			return
 		to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-		if (!use_tool(usr, usr, 10))
+		if(!use_tool(usr, usr, 10))
 			return
-		if (!use(2))
+		if(!use(2))
 			return
 		var/obj/structure/grille/F = new /obj/structure/grille( usr.loc )
 		to_chat(usr, "<span class='notice'>You assemble a grille.</span>")

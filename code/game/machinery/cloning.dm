@@ -96,7 +96,7 @@
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(find_key)
-	if (isnull(find_key))
+	if(isnull(find_key))
 		return
 
 	var/mob/selected = null
@@ -142,21 +142,21 @@
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
-	if (!src.implanted)
+	if(!src.implanted)
 		return "ERROR"
 	else
 		if(isliving(src.implanted))
 			var/mob/living/L = src.implanted
 			src.healthstring = "[round(L.getOxyLoss())] - [round(L.getFireLoss())] - [round(L.getToxLoss())] - [round(L.getBruteLoss())]"
-		if (!src.healthstring)
+		if(!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
 
 /obj/machinery/clonepod/examine(mob/user)
 	if(..(user, 3))
-		if ((isnull(occupant)) || (stat & NOPOWER))
+		if((isnull(occupant)) || (stat & NOPOWER))
 			return
-		if ((!isnull(occupant)) && (occupant.stat != DEAD))
+		if((!isnull(occupant)) && (occupant.stat != DEAD))
 			var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
 			to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 
@@ -212,7 +212,7 @@
 	if(mode)
 		mode.update_icon(H)
 
-	if (H.mind in SSticker.mode.cult)
+	if(H.mind in SSticker.mode.cult)
 		SSticker.mode.add_cultist(src.occupant.mind)
 
 	// -- End mode specific stuff
@@ -247,7 +247,7 @@
 /obj/machinery/clonepod/process()
 
 	if(stat & NOPOWER) //Autoeject if power is lost
-		if (src.occupant)
+		if(src.occupant)
 			src.locked = 0
 			src.go_out()
 		return
@@ -270,13 +270,13 @@
 			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
+			if(src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
 			//So clones will remain asleep for long enough to get them into cryo (Bay RP edit)
-			if (src.occupant.reagents.get_reagent_amount("stoxin") < 10)
+			if(src.occupant.reagents.get_reagent_amount("stoxin") < 10)
 				src.occupant.reagents.add_reagent("stoxin", 5)
-			if (src.occupant.reagents.get_reagent_amount("chloralhydrate") < 1)
+			if(src.occupant.reagents.get_reagent_amount("chloralhydrate") < 1)
 				src.occupant.reagents.add_reagent("chloralhydrate", 1)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
@@ -291,11 +291,11 @@
 			src.go_out()
 			return
 
-	else if ((!src.occupant) || (src.occupant.loc != src))
+	else if((!src.occupant) || (src.occupant.loc != src))
 		src.occupant = null
-		if (src.locked)
+		if(src.locked)
 			src.locked = 0
-		if (!src.mess && !panel_open)
+		if(!src.mess && !panel_open)
 			icon_state = "pod_0"
 		use_power(200)
 		return
@@ -313,19 +313,19 @@
 
 	default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(!src.check_access(W))
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
+		if((!src.locked) || (isnull(src.occupant)))
 			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != DEAD))
+		if((src.occupant.health < -20) && (src.occupant.stat != DEAD))
 			to_chat(user, "<span class='danger'>Access Refused.</span>")
 			return
 		else
 			src.locked = 0
 			to_chat(user, "System unlocked.")
-	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
 		biomass += 50
 		user.drop_item()
@@ -345,9 +345,9 @@
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
-	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
+	if((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
-	if (!message)
+	if(!message)
 		return 0
 
 	src.connected.temp = message
@@ -361,25 +361,25 @@
 
 	if(!usr)
 		return
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)
 	return
 
 /obj/machinery/clonepod/proc/go_out()
-	if (src.locked)
+	if(src.locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
+	if(src.mess) //Clean that mess and dump those gibs!
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
 		return
 
-	if (!(src.occupant))
+	if(!(src.occupant))
 		return
-	if (src.occupant.client)
+	if(src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
@@ -405,7 +405,7 @@
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user)
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
 	src.go_out()
 	return
@@ -423,14 +423,14 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)

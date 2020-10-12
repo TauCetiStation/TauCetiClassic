@@ -26,7 +26,7 @@
 
 /datum/artifact_effect/goodfeeling/DoEffectTouch(mob/user)
 	if(user)
-		if (istype(user, /mob/living/carbon/human))
+		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
 			if(prob(50))
 				if(prob(75))

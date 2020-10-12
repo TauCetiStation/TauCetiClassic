@@ -332,7 +332,7 @@
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
-			if (!prize || !(prize in prize_list))
+			if(!prize || !(prize in prize_list))
 				return
 			if(prize.cost > inserted_id.mining_points)
 			else
@@ -775,10 +775,10 @@
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	..()
 	var/msg = null
-	if (src.health < src.maxHealth)
-		if (src.health >= src.maxHealth * 0.7)
+	if(src.health < src.maxHealth)
+		if(src.health >= src.maxHealth * 0.7)
 			msg += "<span class='warning'>It looks slightly dented.</span>\n"
-		else if (src.health <= src.maxHealth * 0.3)
+		else if(src.health <= src.maxHealth * 0.3)
 			msg += "<span class='warning'><B>IT IS FALLING APART!</B></span>\n"
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"

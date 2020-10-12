@@ -2,7 +2,7 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (notransform)
+	if(notransform)
 		return
 
 	..()
@@ -38,8 +38,8 @@
 
 /mob/living/carbon/brain/proc/handle_mutations_and_radiation()
 
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			radiation = 100
 			if(!container)//If it's not in an MMI
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -209,21 +209,21 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in src.mutations))
+	if(stat == DEAD || (XRAY in src.mutations))
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
+	else if(stat != DEAD)
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_MOBS
 		sight &= ~SEE_OBJS
 		see_in_dark = 2
 		see_invisible = SEE_INVISIBLE_LIVING
 
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(100 to INFINITY)
 					healths.icon_state = "health0"

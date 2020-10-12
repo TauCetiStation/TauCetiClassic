@@ -128,7 +128,7 @@
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list(BP_CHEST , BP_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return 0
-	if (prob(hit_reflect_chance))
+	if(prob(hit_reflect_chance))
 		return 1
 
 /obj/item/clothing/suit/armor/swat
@@ -186,7 +186,7 @@
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	src.active = !( src.active )
-	if (src.active)
+	if(src.active)
 		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
 		src.icon_state = "reactive"
 		src.item_state = "reactive"

@@ -16,13 +16,13 @@
 	var/recent_fail = 0
 
 /obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))
 		return
 	var/obj/O = target
-	if (crit_fail)
+	if(crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
 

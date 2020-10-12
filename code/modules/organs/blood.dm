@@ -49,10 +49,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						break
 
 			B.volume += 0.1 // regenerate blood VERY slowly
-			if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+			if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 				B.volume += 0.4
 				reagents.remove_reagent("nutriment", 0.1)
-			if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+			if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 				B.volume += 0.8
 				reagents.remove_reagent("iron", 0.1)
 
@@ -332,7 +332,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	//set reagent data
 	B.data["donor"] = src
-	if (!B.data["virus2"])
+	if(!B.data["virus2"])
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(src.virus2)
 	B.data["antibodies"] = src.antibodies
@@ -366,13 +366,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Transfers blood from container ot vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
-	if (!injected)
+	if(!injected)
 		return
 	var/list/sniffles = virus_copylist(injected.data["virus2"])
 	for(var/ID in sniffles)
 		var/datum/disease2/disease/sniffle = sniffles[ID]
 		infect_virus2(src,sniffle,1)
-	if (injected.data["antibodies"] && prob(5))
+	if(injected.data["antibodies"] && prob(5))
 		antibodies |= injected.data["antibodies"]
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])

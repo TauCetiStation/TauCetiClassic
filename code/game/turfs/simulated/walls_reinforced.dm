@@ -45,7 +45,7 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -114,7 +114,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if (iswirecutter(W))
+			if(iswirecutter(W))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
 				update_icon()
@@ -123,7 +123,7 @@
 				return
 
 		if(SUPPORT_LINES)
-			if (isscrewdriver(W))
+			if(isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
@@ -178,7 +178,7 @@
 				return
 
 		if(CUT_COVER)
-			if (iscrowbar(W))
+			if(iscrowbar(W))
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
 				if(W.use_tool(src, user, 100, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -191,7 +191,7 @@
 				return
 
 		if(ANCHOR_BOLTS)
-			if (iswrench(W))
+			if(iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
 				if(W.use_tool(src, user, 40, volume = 100))
@@ -261,7 +261,7 @@
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))
 		return
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 

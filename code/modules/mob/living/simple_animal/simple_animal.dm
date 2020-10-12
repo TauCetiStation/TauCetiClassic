@@ -290,12 +290,12 @@
 	if(!blinded)
 		flash_eyes()
 	switch (severity)
-		if (1.0)
+		if(1.0)
 			adjustBruteLoss(500)
 			gib()
 			return
 
-		if (2.0)
+		if(2.0)
 			adjustBruteLoss(60)
 
 
@@ -316,15 +316,15 @@
 		death()
 
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
-	if (isliving(target_mob))
+	if(isliving(target_mob))
 		var/mob/living/L = target_mob
 		if(!L.stat && L.health >= 0)
 			return (0)
-	if (istype(target_mob,/obj/mecha))
+	if(istype(target_mob,/obj/mecha))
 		var/obj/mecha/M = target_mob
-		if (M.occupant)
+		if(M.occupant)
 			return (0)
-	if (istype(target_mob,/obj/machinery/bot))
+	if(istype(target_mob,/obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
 			return (0)
@@ -335,7 +335,7 @@
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
 	cut_overlays()
-	if (targeted_by && target_locked)
+	if(targeted_by && target_locked)
 		add_overlay(target_locked)
 
 /mob/living/simple_animal/update_fire()
@@ -348,15 +348,15 @@
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
 		return FALSE
-	if (isliving(the_target))
+	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
-	if (istype(the_target, /obj/mecha))
+	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
-		if (M.occupant)
+		if(M.occupant)
 			return FALSE
 	return TRUE
 
@@ -378,7 +378,7 @@
 	var/verb = "says"
 	var/ending = copytext(message, -1)
 	var/datum/language/speaking = parse_language(message)
-	if (speaking)
+	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
 		message = copytext(message, 2 + length_char(speaking.key))
 	else

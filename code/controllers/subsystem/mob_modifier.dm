@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(mob_modifier)
 	..("P:[processing.len]")
 
 /datum/controller/subsystem/mob_modifier/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(mob_modifier)
 		else
 			thing.process()
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/mob_modifier/Recover()

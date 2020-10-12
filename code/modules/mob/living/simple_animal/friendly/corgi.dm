@@ -132,7 +132,7 @@
 /mob/living/simple_animal/corgi/borgi/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
-	if (!T || !U)
+	if(!T || !U)
 		return
 	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(loc)
 	A.icon = 'icons/effects/genetics.dmi'
@@ -152,7 +152,7 @@
 	if(health <= 0) return
 	if(emagged && prob(25))
 		var/mob/living/carbon/target = locate() in view(10,src)
-		if (target)
+		if(target)
 			shootAt(target)
 
 	//spark for no reason

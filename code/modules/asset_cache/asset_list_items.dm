@@ -139,7 +139,7 @@
 /datum/asset/spritesheet/vending/register()
 	for (var/k in global.vending_products)
 		var/atom/item = k
-		if (!ispath(item, /atom))
+		if(!ispath(item, /atom))
 			continue
 		var/obj/product = new item
 		var/icon/I = getFlatIcon(product)

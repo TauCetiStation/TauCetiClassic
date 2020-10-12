@@ -44,7 +44,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	efficiency_coeff = 2 ** (T - 1)
 
 /obj/machinery/r_n_d/circuit_imprinter/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
@@ -60,9 +60,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return am
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
-	if (shocked)
+	if(shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))
+	if(default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))
 		if(linked_console)
 			linked_console.linked_imprinter = null
 			linked_console = null
@@ -71,7 +71,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if(exchange_parts(user, O))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(iscrowbar(O))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
@@ -87,23 +87,23 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		else
 			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
 			return
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		to_chat(user, "\The [name] must be linked to an R&D console first!")
 		return 1
-	if (O.is_open_container())
+	if(O.is_open_container())
 		return
-	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
+	if(!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
 		to_chat(user, "<span class='warning'>You cannot insert this item into the [name]!</span>")
 		return
-	if (stat)
+	if(stat)
 		return
-	if (busy)
+	if(busy)
 		to_chat(user, "<span class='warning'>The [name] is busy. Please wait for completion of previous operation.</span>")
 		return
 	var/obj/item/stack/sheet/stack = O
-	if ((TotalMaterials() + stack.perunit) > max_material_amount)
+	if((TotalMaterials() + stack.perunit) > max_material_amount)
 		to_chat(user, "<span class='warning'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>")
 		return
 
@@ -151,10 +151,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	for(var/M in D.materials)
 		power += round(D.materials[M] / 5)
 	power = max(2000, power)
-	if (busy)
+	if(busy)
 		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
 		return
-	if (!(D.build_type & IMPRINTER))
+	if(!(D.build_type & IMPRINTER))
 		message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]! [ADMIN_JMP(usr)]")
 		return
 

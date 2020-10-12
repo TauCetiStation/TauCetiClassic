@@ -36,7 +36,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		create_fire(exposed_temperature)
 
 		if(firestarter)
-			if (firestarter.fingerprintslast && istype(firestarter, /obj/item))
+			if(firestarter.fingerprintslast && istype(firestarter, /obj/item))
 				message_admins("Fire started at ([x],[y],[z]) [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
 				log_game("Fire started at ([x],[y],[z]) by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
 			else
@@ -217,7 +217,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 /obj/fire/proc/RemoveFire()
 	var/turf/T = loc
-	if (istype(T))
+	if(istype(T))
 		set_light(0)
 
 		T.fire = null

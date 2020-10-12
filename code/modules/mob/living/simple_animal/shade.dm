@@ -47,7 +47,7 @@
 	else
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
 			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
@@ -153,7 +153,7 @@
 
 	dir = direct
 	if(NewLoc)
-		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return
 
 		forceMove(NewLoc)
@@ -171,7 +171,7 @@
 	else if((direct & WEST) && x > 1)
 		new_x--
 
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, locate(new_x, new_y,  z), direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, locate(new_x, new_y,  z), direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
 	x = new_x

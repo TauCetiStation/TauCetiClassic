@@ -24,7 +24,7 @@
 		desc += " Looks important."
 
 /obj/item/device/gangtool/attack_self(mob/user)
-	if (!can_use(user))
+	if(!can_use(user))
 		return
 
 	var/gang_bosses = ((gang == "A")? SSticker.mode.A_bosses.len : SSticker.mode.B_bosses.len)
@@ -36,7 +36,7 @@
 			dat += "Give this device to another member of your organization to use to promote them.<hr>"
 			dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else if (gang_bosses < 3)
+		else if(gang_bosses < 3)
 			dat += "You have been selected for a promotion!<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 		else

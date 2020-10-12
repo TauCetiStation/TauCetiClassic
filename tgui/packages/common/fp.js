@@ -13,10 +13,10 @@ export const flow = (...funcs) => (input, ...rest) => {
   let output = input;
   for (let func of funcs) {
     // Recurse into the array of functions
-    if (Array.isArray(func)) {
+    if(Array.isArray(func)) {
       output = flow(...func)(output, ...rest);
     }
-    else if (func) {
+    else if(func) {
       output = func(output, ...rest);
     }
   }
@@ -36,10 +36,10 @@ export const flow = (...funcs) => (input, ...rest) => {
  * (input, ...rest) => f(g(h(input, ...rest), ...rest), ...rest)
  */
 export const compose = (...funcs) => {
-  if (funcs.length === 0) {
+  if(funcs.length === 0) {
     return arg => arg;
   }
-  if (funcs.length === 1) {
+  if(funcs.length === 1) {
     return funcs[0];
   }
   return funcs.reduce((a, b) => (value, ...rest) =>

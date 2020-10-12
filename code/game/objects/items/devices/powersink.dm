@@ -42,7 +42,7 @@
 				to_chat(user, "Device must be placed over an exposed cable to attach to it.")
 				return
 		else
-			if (mode == 2)
+			if(mode == 2)
 				STOP_PROCESSING(SSobj, src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
 			anchored = FALSE
 			mode = 0

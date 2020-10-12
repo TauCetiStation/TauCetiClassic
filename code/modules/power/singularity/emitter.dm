@@ -58,7 +58,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if(src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
@@ -71,7 +71,7 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && avail(active_power_usage))
+	if(active && avail(active_power_usage))
 		icon_state = "emitter-active"
 	else if(panel_open)
 		icon_state = "emitter-open"
@@ -208,11 +208,11 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor.</span>")
 			if(1)
 				if(user.is_busy()) return
-				if (WT.use(0,user))
+				if(WT.use(0,user))
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -220,11 +220,11 @@
 					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			if(2)
 				if(user.is_busy()) return
-				if (WT.use(0,user))
+				if(WT.use(0,user))
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, 20, volume = 50))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()

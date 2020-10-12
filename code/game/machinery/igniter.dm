@@ -26,9 +26,9 @@
 	return ..()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (on && !(stat & NOPOWER))
+	if(on && !(stat & NOPOWER))
 		var/turf/location = src.loc
-		if (isturf(location))
+		if(isturf(location))
 			location.hotspot_expose(1000, 500)
 	return 1
 
@@ -57,7 +57,7 @@
 	anchored = 1
 
 /obj/machinery/sparker/power_change()
-	if ( powered() && disable == 0 )
+	if( powered() && disable == 0 )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]"
 	else
@@ -68,14 +68,14 @@
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (isscrewdriver(W))
+	if(isscrewdriver(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (src.disable)
+		if(src.disable)
 			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
-		if (!src.disable)
+		if(!src.disable)
 			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
 			if(src.powered())
 				icon_state = "[base_state]"
@@ -83,16 +83,16 @@
 				icon_state = "[base_state]-p"
 
 /obj/machinery/sparker/attack_ai()
-	if (anchored)
+	if(anchored)
 		return ignite()
 	else
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!powered())
+	if(!powered())
 		return
 
-	if (disable || (last_spark && world.time < last_spark + 50))
+	if(disable || (last_spark && world.time < last_spark + 50))
 		return
 
 
@@ -103,7 +103,7 @@
 	last_spark = world.time
 	use_power(1000)
 	var/turf/location = loc
-	if (isturf(location))
+	if(isturf(location))
 		location.hotspot_expose(1000, 500)
 	return 1
 
@@ -133,7 +133,7 @@
 	log_game("Ignition switch was activated at ([x],[y],[z]) Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)
-		if (M.id == id)
+		if(M.id == id)
 			spawn(0)
 				M.ignite()
 

@@ -36,7 +36,7 @@
 
 /obj/machinery/mineral/processing_unit_console/atom_init_late()
 	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
-	if (machine)
+	if(machine)
 		machine.console = src
 	else
 		qdel(src)
@@ -199,7 +199,7 @@
 
 /obj/machinery/mineral/processing_unit/process()
 
-	if (!src.output || !src.input) return
+	if(!src.output || !src.input) return
 
 	var/list/tick_alloys = list()
 

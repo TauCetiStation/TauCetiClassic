@@ -69,7 +69,7 @@
 
 		var/turf/cur = start
 		var/dir
-		if (start.x == end.x)
+		if(start.x == end.x)
 			var/d = end.y-start.y
 			if(d) d = d/abs(d)
 			end = get_turf(locate(end.x,end.y+d,end.z))
@@ -84,7 +84,7 @@
 		while (cur!=end && can_place)
 			if(cur.density == 1)
 				can_place = 0
-			else if (istype(cur, /turf/space))
+			else if(istype(cur, /turf/space))
 				can_place = 0
 			else
 				for(var/obj/O in cur)
@@ -92,7 +92,7 @@
 						can_place = 0
 						break
 			cur = get_step_towards(cur,end)
-		if (!can_place)
+		if(!can_place)
 			to_chat(usr, "<span class='notice'>You can't run \the [src] through that!</span>")
 			return
 
@@ -109,7 +109,7 @@
 		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
 
 /obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
-	if (istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock))
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class='notice'>You're too far away from \the [target]!</span>")
 			return
@@ -127,7 +127,7 @@
 		return TRUE
 	if(allowed(mover))
 		return TRUE
-	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
+	if(mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)
 		return TRUE
 	else
 		return FALSE
@@ -139,7 +139,7 @@
 
 /obj/item/tape/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (user.a_intent == INTENT_HELP && allowed(user))
+	if(user.a_intent == INTENT_HELP && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		density = 0
 		VARSET_IN(src, density, TRUE, 20 SECONDS)

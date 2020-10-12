@@ -213,7 +213,7 @@
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
-	if (length(status_examines))
+	if(length(status_examines))
 		msg += status_examines
 
 	//Jitters
@@ -243,7 +243,7 @@
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
-	if (src.stat || (iszombie(src) && (crawling || lying || resting)))
+	if(src.stat || (iszombie(src) && (crawling || lying || resting)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
@@ -499,9 +499,9 @@
 			perpname = src.name
 
 		for (var/datum/data/record/E in data_core.general)
-			if (E.fields["name"] == perpname)
+			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.general)
-					if (R.fields["id"] == E.fields["id"])
+					if(R.fields["id"] == E.fields["id"])
 						medical = R.fields["p_stat"]
 
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
@@ -516,7 +516,7 @@
 		msg += applying_pressure
 	else if(busy_with_action)
 		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
-	if (pose)
+	if(pose)
 		if( findtext(pose,".",-1) == 0 && findtext(pose,"!",-1) == 0 && findtext(pose,"?",-1) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"

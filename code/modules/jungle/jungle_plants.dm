@@ -19,10 +19,10 @@
 		opacity = 1
 
 /obj/structure/bush/Bumped(M)
-	if (istype(M, /mob/living/simple_animal))
+	if(istype(M, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = M
 		A.loc = get_turf(src)
-	else if (istype(M, /mob/living/carbon/monkey))
+	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/A = M
 		A.loc = get_turf(src)
 

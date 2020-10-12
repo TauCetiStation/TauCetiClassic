@@ -37,17 +37,17 @@ export const broadcastMessage = (link, msg) => {
 
 const deserializeObject = str => {
   return JSON.parse(str, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (value.__error__) {
-        if (!value.stack) {
+    if(typeof value === 'object' && value !== null) {
+      if(value.__error__) {
+        if(!value.stack) {
           return value.string;
         }
         return retrace(value.stack);
       }
-      if (value.__number__) {
+      if(value.__number__) {
         return parseFloat(value.__number__);
       }
-      if (value.__undefined__) {
+      if(value.__undefined__) {
         // NOTE: You should not rely on deserialized object's undefined,
         // this is purely for inspection purposes.
         return {
@@ -63,14 +63,14 @@ const deserializeObject = str => {
 const handleLinkMessage = msg => {
   const { type, payload } = msg;
 
-  if (type === 'log') {
+  if(type === 'log') {
     const { level, ns, args } = payload;
     // Skip debug messages
-    if (level <= 0 && !DEBUG) {
+    if(level <= 0 && !DEBUG) {
       return;
     }
     directLog(ns, ...args.map(arg => {
-      if (typeof arg === 'object') {
+      if(typeof arg === 'object') {
         return inspect(arg, {
           depth: Infinity,
           colors: true,
@@ -112,7 +112,7 @@ const setupHttpLink = () => {
   const port = 3001;
 
   const server = http.createServer((req, res) => {
-    if (req.method === 'POST') {
+    if(req.method === 'POST') {
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();

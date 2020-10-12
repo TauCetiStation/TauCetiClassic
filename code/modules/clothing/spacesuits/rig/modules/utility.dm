@@ -328,7 +328,7 @@
 
 	var/temp_adj = min(H.bodytemperature - thermostat, max_cooling) //Actually copies the original CU code
 
-	if (temp_adj < 0.5)
+	if(temp_adj < 0.5)
 		return passive_power_cost
 
 	H.bodytemperature -= temp_adj

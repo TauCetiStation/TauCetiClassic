@@ -20,18 +20,18 @@ Buildable meters
 
 /obj/item/pipe/atom_init(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	. = ..()
-	if (make_from)
+	if(make_from)
 		src.set_dir(make_from.dir)
 		src.pipename = make_from.name
 		color = make_from.pipe_color
 
 		var/is_bent
-		if (make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
+		if(make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
 			is_bent = FALSE
 		else
 			is_bent = TRUE
 
-		if (istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction))
+		if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction))
 			src.pipe_type = PIPE_JUNCTION
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_HE
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
@@ -137,19 +137,19 @@ Buildable meters
 	else
 		src.pipe_type = pipe_type
 		src.set_dir(dir)
-		if (pipe_type == PIPE_SUPPLY_STRAIGHT || pipe_type == PIPE_SUPPLY_BENT || pipe_type == PIPE_SUPPLY_MANIFOLD || pipe_type == PIPE_SUPPLY_MANIFOLD4W || pipe_type == PIPE_SUPPLY_CAP)
+		if(pipe_type == PIPE_SUPPLY_STRAIGHT || pipe_type == PIPE_SUPPLY_BENT || pipe_type == PIPE_SUPPLY_MANIFOLD || pipe_type == PIPE_SUPPLY_MANIFOLD4W || pipe_type == PIPE_SUPPLY_CAP)
 			connect_types = CONNECT_TYPE_SUPPLY
 			src.color = PIPE_COLOR_BLUE
-		else if (pipe_type == PIPE_SCRUBBERS_STRAIGHT || pipe_type == PIPE_SCRUBBERS_BENT || pipe_type == PIPE_SCRUBBERS_MANIFOLD || pipe_type == PIPE_SCRUBBERS_MANIFOLD4W || pipe_type == PIPE_SCRUBBERS_CAP)
+		else if(pipe_type == PIPE_SCRUBBERS_STRAIGHT || pipe_type == PIPE_SCRUBBERS_BENT || pipe_type == PIPE_SCRUBBERS_MANIFOLD || pipe_type == PIPE_SCRUBBERS_MANIFOLD4W || pipe_type == PIPE_SCRUBBERS_CAP)
 			connect_types = CONNECT_TYPE_SCRUBBER
 			src.color = PIPE_COLOR_RED
-		else if (pipe_type == PIPE_FUEL_STRAIGHT || pipe_type == PIPE_FUEL_BENT || pipe_type == PIPE_FUEL_MANIFOLD || pipe_type == PIPE_FUEL_MANIFOLD4W || pipe_type == PIPE_FUEL_CAP)
+		else if(pipe_type == PIPE_FUEL_STRAIGHT || pipe_type == PIPE_FUEL_BENT || pipe_type == PIPE_FUEL_MANIFOLD || pipe_type == PIPE_FUEL_MANIFOLD4W || pipe_type == PIPE_FUEL_CAP)
 			src.color = PIPE_COLOR_ORANGE
-		else if (pipe_type == PIPE_HE_STRAIGHT || pipe_type == PIPE_HE_BENT)
+		else if(pipe_type == PIPE_HE_STRAIGHT || pipe_type == PIPE_HE_BENT)
 			connect_types = CONNECT_TYPE_HE
-		else if (pipe_type == PIPE_JUNCTION)
+		else if(pipe_type == PIPE_JUNCTION)
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_HE
-		else if (pipe_type == PIPE_UNIVERSAL)
+		else if(pipe_type == PIPE_UNIVERSAL)
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_SCRUBBER
 
 	update()
@@ -300,24 +300,24 @@ Buildable meters
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
 
 	set_dir(turn(dir, -90))
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	if(pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
 			set_dir(EAST)
-	else if (pipe_type in list (PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_FUEL_MANIFOLD4W))
+	else if(pipe_type in list (PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_FUEL_MANIFOLD4W))
 		set_dir(SOUTH)
 
 /obj/item/pipe/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_HE_BENT, PIPE_FUEL_BENT)) && (dir in cardinal))
+	if((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_HE_BENT, PIPE_FUEL_BENT)) && (dir in cardinal))
 		set_dir(dir|turn(dir, 90))
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	else if(pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
@@ -336,14 +336,14 @@ Buildable meters
 	)
 
 	var/new_pipe_type = mirrored_devices["[pipe_type]"]
-	if (new_pipe_type)
+	if(new_pipe_type)
 		pipe_type = new_pipe_type
 		update()
 
 // returns all pipe's endpoints
 
 /obj/item/pipe/proc/get_pipe_dir()
-	if (!dir)
+	if(!dir)
 		return 0
 
 	var/flip = turn(dir, 180)
@@ -388,7 +388,7 @@ Buildable meters
 
 	var/flip = turn(dir, 180)
 
-	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
+	if(!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
 		return get_pipe_dir()
 	switch(pipe_type)
 		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT)
@@ -413,19 +413,19 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(obj/item/I, mob/user, params)
-	if (isscrewdriver(I))
+	if(isscrewdriver(I))
 		mirror()
 		return
-	if (!iswrench(I))
+	if(!iswrench(I))
 		return ..()
-	if (!isturf(loc))
+	if(!isturf(loc))
 		return TRUE
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	if(pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
 			set_dir(EAST)
-	else if (pipe_type in list(PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_OMNI_MIXER, PIPE_OMNI_FILTER, PIPE_FUEL_MANIFOLD4W))
+	else if(pipe_type in list(PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_OMNI_MIXER, PIPE_OMNI_FILTER, PIPE_FUEL_MANIFOLD4W))
 		set_dir(SOUTH)
 
 	var/pipe_dir = get_pipe_dir()
@@ -497,7 +497,7 @@ Buildable meters
 			C.set_dir(dir)
 			C.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				C.name = pipename
 
 			C.construction()
@@ -573,7 +573,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -584,7 +584,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -594,7 +594,7 @@ Buildable meters
 			D.set_dir(dir)
 			D.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				D.name = pipename
 
 			D.construction()
@@ -604,7 +604,7 @@ Buildable meters
 			S.set_dir(dir)
 			S.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				S.name = pipename
 
 			S.construction()
@@ -615,7 +615,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -625,7 +625,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -635,7 +635,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -645,7 +645,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -655,7 +655,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -665,7 +665,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -675,7 +675,7 @@ Buildable meters
 			S.set_dir(dir)
 			S.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				S.name = pipename
 
 			S.construction()
@@ -685,7 +685,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -695,7 +695,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -705,7 +705,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -715,7 +715,7 @@ Buildable meters
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				V.name = pipename
 
 			V.construction()
@@ -749,7 +749,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -759,7 +759,7 @@ Buildable meters
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				P.name = pipename
 
 			P.construction()
@@ -769,7 +769,7 @@ Buildable meters
 			C.set_dir(dir)
 			C.initialize_directions = pipe_dir
 
-			if (pipename)
+			if(pipename)
 				C.name = pipename
 
 			C.construction()
@@ -804,7 +804,7 @@ Buildable meters
 	w_class = ITEM_SIZE_LARGE
 
 /obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
-	if (!iswrench(I))
+	if(!iswrench(I))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")

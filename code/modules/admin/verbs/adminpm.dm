@@ -47,7 +47,7 @@
 		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
 	var/msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
-	if (!msg)
+	if(!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
 		if(src in mentors)
 			message_mentors("[key_name(src, 0, 0, 0)] has cancelled their reply to [key_name(C, 0, 0, 0)]'s help request.")
@@ -105,7 +105,7 @@
 				current_ticket.MessageNoRecipient(msg)
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	if(recipient.holder)

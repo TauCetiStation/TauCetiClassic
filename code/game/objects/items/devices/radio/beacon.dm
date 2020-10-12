@@ -86,9 +86,9 @@
 	var/atom/target = null
 
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
-	if (!proximity)
+	if(!proximity)
 		return
-	if (!ishuman(target))
+	if(!ishuman(target))
 		to_chat(user, "<span class='notice'>Can only be planted on human.</span>")
 		return
 	var/found = 0
@@ -141,7 +141,7 @@
 			s.start()
 			s2.start()
 			H.forceMove(get_turf(beacon))
-		if (src)
+		if(src)
 			qdel(src)
 		H.cut_overlay(I)
 		qdel(I)

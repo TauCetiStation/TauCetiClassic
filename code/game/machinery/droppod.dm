@@ -154,7 +154,7 @@
 		if(!passed)
 			to_chat(usr, "<span class='warning'>The interface is blocked down with Dna key!</span>")
 			return
-	if (usr.buckled)
+	if(usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
 		return
 	if(intruder)
@@ -196,7 +196,7 @@
 	set src in orange(1)
 	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.incapacitated())
 		return
-	if (usr.buckled)
+	if(usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
 		return
 	if(flags & IS_LOCKED)

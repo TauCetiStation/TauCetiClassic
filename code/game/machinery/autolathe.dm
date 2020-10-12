@@ -153,32 +153,32 @@ var/global/list/autolathe_recipes_hidden = list( \
 	dat += "<table>"
 	var/list/objs = list()
 	objs += src.L
-	if (src.hacked)
+	if(src.hacked)
 		objs += src.LL
 	for(var/obj/t in objs)
 		dat += "<tr>"
 		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[t.type]", "/obj/item/", ""), "/", "-")]"></span></td>"}
 		dat += "<td>"
-		if (istype(t, /obj/item/stack))
+		if(istype(t, /obj/item/stack))
 			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
-			if (m_amount<t.m_amt || g_amount<t.g_amt)
+			if(m_amount<t.m_amt || g_amount<t.g_amt)
 				dat += title
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 
 			var/obj/item/stack/S = t
 			var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
-			if (max_multiplier>1)
+			if(max_multiplier>1)
 				dat += " |"
-			if (max_multiplier>10)
+			if(max_multiplier>10)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
-			if (max_multiplier>25)
+			if(max_multiplier>25)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
-			if (max_multiplier>1)
+			if(max_multiplier>1)
 				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
 		else
 			var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
-			if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
+			if(m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
 				dat += title
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
@@ -201,15 +201,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0
 
 /obj/machinery/autolathe/interact(mob/user)
-	if (shocked && !issilicon(user) && !isobserver(user))
+	if(shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
-	if (disabled)
+	if(disabled)
 		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
 		return
 	..()
@@ -217,7 +217,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/pai_cable))
 		return
-	if (busy)
+	if(busy)
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 
@@ -228,7 +228,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if(exchange_parts(user, I))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(iscrowbar(I))
 			if(m_amount >= 3750)
 				new /obj/item/stack/sheet/metal(loc, round(m_amount / 3750))
@@ -240,16 +240,16 @@ var/global/list/autolathe_recipes_hidden = list( \
 			wires.interact(user)
 			return 1
 
-	if (stat)
+	if(stat)
 		return 1
 
-	if (src.m_amount + I.m_amt > max_m_amount)
+	if(src.m_amount + I.m_amt > max_m_amount)
 		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
 		return 1
-	if (src.g_amount + I.g_amt > max_g_amount)
+	if(src.g_amount + I.g_amt > max_g_amount)
 		to_chat(user, "<span class='warning'>The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>")
 		return 1
-	if (I.m_amt == 0 && I.g_amt == 0)
+	if(I.m_amt == 0 && I.g_amt == 0)
 		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
 		return 1
 
@@ -257,13 +257,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/obj/item/stack/stack
 	var/m_amt = I.m_amt
 	var/g_amt = I.g_amt
-	if (istype(I, /obj/item/stack))
+	if(istype(I, /obj/item/stack))
 		stack = I
 		amount = stack.get_amount()
-		if (m_amt)
+		if(m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
 			flick("autolathe_o",src)//plays metal insertion animation
-		if (g_amt)
+		if(g_amt)
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
 			flick("autolathe_r",src)//plays glass insertion animation
 		stack.use(amount)
@@ -276,7 +276,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
-	if (I && I.loc == src)
+	if(I && I.loc == src)
 		qdel(I)
 	busy = 0
 	src.updateUsrDialog()
@@ -318,7 +318,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 		var/multiplier = text2num(href_list["multiplier"])
 
-		if (!multiplier) multiplier = 1
+		if(!multiplier) multiplier = 1
 		var/max_multiplier = 1
 
 		if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o

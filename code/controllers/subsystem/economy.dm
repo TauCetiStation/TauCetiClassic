@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(economy)
 	set_endtime()
 	if(!global.economy_init)
 		return
-	else if (payment_counter)	//to skip first payment
+	else if(payment_counter)	//to skip first payment
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)

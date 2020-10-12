@@ -56,7 +56,7 @@
 
 /mob/living/carbon/xenomorph/humanoid/regenerate_icons()
 	..()
-	if (notransform)
+	if(notransform)
 		return
 
 	update_inv_head(0)
@@ -77,7 +77,7 @@
 
 /mob/living/carbon/xenomorph/humanoid/update_hud()
 	//TODO
-	if (client)
+	if(client)
 //		if(other)	client.screen |= hud_used.other		//Not used
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents
@@ -98,7 +98,7 @@
 
 		//TODO
 		wear_suit.screen_loc = ui_alien_oclothing
-		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
+		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			drop_from_inventory(handcuffed)
 			drop_r_hand()
 			drop_l_hand()
@@ -110,7 +110,7 @@
 
 
 /mob/living/carbon/xenomorph/humanoid/update_inv_head(var/update_icons=1)
-	if (head)
+	if(head)
 		var/t_state = head.item_state
 		if(!t_state)	t_state = head.icon_state
 		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
@@ -151,11 +151,11 @@
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/xenomorph/humanoid/update_targeted(var/update_icons=1)
-	if (targeted_by && target_locked)
+	if(targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
-	else if (!targeted_by && target_locked)
+	else if(!targeted_by && target_locked)
 		qdel(target_locked)
-	if (!targeted_by)
+	if(!targeted_by)
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 

@@ -28,7 +28,7 @@
 	var/response = ""
 	if(!papers.len > 0)
 		response = alert(user, "Do you take regular paper, or Carbon copy paper?", "Paper type request", "Regular", "Carbon-Copy", "Cancel")
-		if (response != "Regular" && response != "Carbon-Copy")
+		if(response != "Regular" && response != "Carbon-Copy")
 			add_fingerprint(user)
 			return
 	if(amount >= 1)
@@ -48,7 +48,7 @@
 						P.info = "<font face=\"[P.crayonfont]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 						P.rigged = 1
 						P.updateinfolinks()
-			else if (response == "Carbon-Copy")
+			else if(response == "Carbon-Copy")
 				P = new /obj/item/weapon/paper/carbon
 
 		P.loc = user.loc

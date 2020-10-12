@@ -6,9 +6,9 @@
 	to_chat(user, "Timer set for [timer] seconds.")
 
 /obj/item/weapon/plastique/afterattack(atom/target, mob/user, proximity, params)
-	if (!proximity)
+	if(!proximity)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
+	if(istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
 	if(user.is_busy()) return
 	to_chat(user, "Planting explosives...")

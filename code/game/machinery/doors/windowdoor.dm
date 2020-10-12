@@ -17,7 +17,7 @@
 /obj/machinery/door/window/atom_init()
 	. = ..()
 
-	if (req_access && req_access.len)
+	if(req_access && req_access.len)
 		icon_state = "[icon_state]"
 		base_state = icon_state
 
@@ -57,7 +57,7 @@
 				src.check_access()
 			if(src.req_access.len)
 				ae.conf_access = src.req_access
-			else if (src.req_one_access.len)
+			else if(src.req_one_access.len)
 				ae.conf_access = src.req_one_access
 				ae.one_access = 1
 		else
@@ -96,7 +96,7 @@
 /obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
 		return
-	if (!( ismob(AM) ))
+	if(!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
 			if(src.check_access(bot.botcard))
@@ -110,7 +110,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( SSticker ))
+	if(!( SSticker ))
 		return
 	var/mob/M = AM
 	if(!M.restrained())
@@ -250,7 +250,7 @@
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 
 	//If it's in the process of opening/closing, ignore the click
-	if (src.operating == 1)
+	if(src.operating == 1)
 		return
 
 	if(istype(I, /obj/item/weapon/airlock_painter))
@@ -267,7 +267,7 @@
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (density && istype(I, /obj/item/weapon/melee/energy/blade))
+	if(density && istype(I, /obj/item/weapon/melee/energy/blade))
 		flick("[src.base_state]spark", src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		sleep(6)

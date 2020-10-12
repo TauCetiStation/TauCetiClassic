@@ -1,6 +1,6 @@
 /mob/living/carbon/xenomorph/say(message)
 
-	if (silent)
+	if(silent)
 		return
 
 	message = sanitize(message)
@@ -11,31 +11,31 @@
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+	if(length(message) >= 1)
+		if(department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
 			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
-			if (stat == DEAD)
+			if(stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
 		else
-			if (!stat)
+			if(!stat)
 				playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
 			return ..("<span class='alien'>[message]</span>", sanitize = 0)
 
 /mob/living/carbon/xenomorph/facehugger/say(message)
 
-	if (silent)
+	if(silent)
 		return
 
 	message = sanitize(message)
 
-	if (length(message) >= 1)
-		if (department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
+	if(length(message) >= 1)
+		if(department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
 			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
-			if (stat == DEAD)
+			if(stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -45,7 +45,7 @@
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)
 
-	if (!message)
+	if(!message)
 		return
 
 	//var/message_a = sanitize_chat(say_quote(message))
@@ -58,7 +58,7 @@
 			if(S.alien_talk_understand)
 				if(S.alien_talk_understand == alien_talk_understand)
 					S.show_message(rendered, SHOWMSG_AUDIO)
-			else if (S.hivecheck())
+			else if(S.hivecheck())
 				S.show_message(rendered, SHOWMSG_AUDIO)
 
 	var/list/listening = hearers(1, src)
@@ -71,7 +71,7 @@
 			heard += M
 
 
-	if (length(heard))
+	if(length(heard))
 		var/message_b
 
 		//message_b = "hsssss"
@@ -90,7 +90,7 @@
 	rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
 	for (var/mob/M in player_list)
-		if (isnewplayer(M))
+		if(isnewplayer(M))
 			continue
-		if (M.stat > 1)
+		if(M.stat > 1)
 			to_chat(rendered)

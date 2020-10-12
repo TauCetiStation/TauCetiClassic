@@ -11,11 +11,11 @@
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
 		return FALSE
 
-	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
+	if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
 		return FALSE
 
-	if (!I.can_be_holstered)
+	if(!I.can_be_holstered)
 		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
 		return FALSE
 
@@ -48,8 +48,8 @@
 
 
 /obj/item/clothing/accessory/holster/attack_hand(mob/user)
-	if (has_suit)	//if we are part of a suit
-		if (holstered)
+	if(has_suit)	//if we are part of a suit
+		if(holstered)
 			unholster(user)
 		return
 
@@ -59,13 +59,13 @@
 	return holster(I, user)
 
 /obj/item/clothing/accessory/holster/emp_act(severity)
-	if (holstered)
+	if(holstered)
 		holstered.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/holster/examine(mob/user)
 	..()
-	if (holstered)
+	if(holstered)
 		to_chat(user, "A [holstered] is holstered here.")
 	else
 		to_chat(user, "It is empty.")
@@ -90,14 +90,14 @@
 		return
 
 	var/obj/item/clothing/accessory/holster/H = null
-	if (istype(src, /obj/item/clothing/accessory/holster))
+	if(istype(src, /obj/item/clothing/accessory/holster))
 		H = src
-	else if (istype(src, /obj/item/clothing/under))
+	else if(istype(src, /obj/item/clothing/under))
 		var/obj/item/clothing/under/S = src
-		if (S.accessories.len)
+		if(S.accessories.len)
 			H = locate() in S.accessories
 
-	if (!H)
+	if(!H)
 		to_chat(usr, "<span class='warning'>Something is very wrong.</span>")
 
 	if(!H.holstered)

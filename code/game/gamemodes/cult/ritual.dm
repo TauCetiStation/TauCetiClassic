@@ -244,7 +244,7 @@ var/list/cult_datums = list()
 
 /obj/item/weapon/book/tome/atom_init()
 	. = ..()
-	if (icon_state == "book")
+	if(icon_state == "book")
 		icon_state = "book[pick(1,2,3,4,5,6)]"
 
 /obj/item/weapon/book/tome/Topic(href, href_list[])
@@ -252,7 +252,7 @@ var/list/cult_datums = list()
 		usr << browse(null, "window=notes")
 		return
 	var/number = text2num(href_list["number"])
-	if (usr.stat|| usr.restrained())
+	if(usr.stat|| usr.restrained())
 		return
 	switch(href_list["action"])
 		if("clear")
@@ -260,7 +260,7 @@ var/list/cult_datums = list()
 		if("change")
 			words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in cultwords
 			for (var/w in words)
-				if ((words[w] == words[words[number]]) && (w != words[number]))
+				if((words[w] == words[words[number]]) && (w != words[number]))
 					words[w] = w
 	notedat = {"
 	<br><b>Word translation notes</b> <br>
@@ -317,14 +317,14 @@ var/list/cult_datums = list()
 	if(!iscultist(user))
 		to_chat(user, "This book is completely blank!")
 		return
-	if (!isturf(user.loc))
+	if(!isturf(user.loc))
 		to_chat(user, "<span class='userdanger'>You do not have enough space to write a proper rune.</span>")
 		return
 	for(var/obj/structure/obj_to_check in user.loc)
 		if(obj_to_check.density)
 			to_chat(user, "<span class='warning'>There is not enough space to write a proper rune.</span>")
 			return
-	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(SSticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+	if(length(cult_runes) >= CULT_RUNES_LIMIT + length(SSticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 		alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
 		return
 	switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000

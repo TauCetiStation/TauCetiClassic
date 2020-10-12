@@ -37,7 +37,7 @@
 	if(O.force)
 		if(O.force >= 25)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
 			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
@@ -58,7 +58,7 @@
 
 	to_chat(src, "<span class='warning'>You launch a razor-sharp quill at [target]!</span>")
 	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
+		if((O.client && !( O.blinded )))
 			to_chat(O, "<span class='warning'>[src] launches a razor-sharp quill at [target]!</span>")
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
@@ -83,7 +83,7 @@
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
 	text = sanitize(input("What would you like to say?", "Speak to creature", null, null))
 
-	if (!target || !text)
+	if(!target || !text)
 		return
 
 	var/mob/M = targets[target]

@@ -103,7 +103,7 @@ Implants;
 		if(player.client && (!check_ready || player.ready))
 			playerC++
 	// no antag_candidates need
-	if (playerC == 0 && required_players == 0)
+	if(playerC == 0 && required_players == 0)
 		return TRUE
 	// check for minimal player on server
 	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
@@ -267,12 +267,12 @@ Implants;
 										"Meme"
 										)
 		var/special_role = man.mind.special_role
-		if (special_role in invisible_roles)
+		if(special_role in invisible_roles)
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		for(var/spec_role in gang_name_pool)
-			if (special_role == "[spec_role] Gang (A) Boss")
+			if(special_role == "[spec_role] Gang (A) Boss")
 				continue
-			if (special_role == "[spec_role] Gang (B) Boss")
+			if(special_role == "[spec_role] Gang (B) Boss")
 				continue
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
@@ -307,7 +307,7 @@ Implants;
 				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
 	for (var/obj/machinery/computer/communications/comm in communications_list)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Status Summary"
 			intercept.info = intercepttext

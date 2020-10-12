@@ -232,13 +232,13 @@
 	var/t = sanitize(input(U, "Please enter your name", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
-	if (!t)
+	if(!t)
 		return
 
-	if (!in_range(src, U))
+	if(!in_range(src, U))
 		return
 
-	if (!(on))
+	if(!(on))
 		return
 
 	if(U.incapacitated())

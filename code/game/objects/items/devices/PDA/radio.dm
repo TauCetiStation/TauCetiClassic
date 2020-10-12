@@ -10,7 +10,7 @@
 
 /obj/item/radio/integrated/atom_init()
 	. = ..()
-	if (istype(loc.loc, /obj/item/device/pda))
+	if(istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
 
 /obj/item/radio/integrated/proc/post_signal(freq, key, value, key2, value2, key3, value3, s_filter)
@@ -59,7 +59,7 @@
 	for(var/d in signal.data)
 		to_chat(world, "- [d] = [signal.data[d]]")
 	*/
-	if (signal.data["type"] == "secbot")
+	if(signal.data["type"] == "secbot")
 		if(!botlist)
 			botlist = new()
 
@@ -70,7 +70,7 @@
 			var/list/b = signal.data
 			botstatus = b.Copy()
 
-//		if (istype(P)) P.updateSelfDialog()
+//		if(istype(P)) P.updateSelfDialog()
 
 /obj/item/radio/integrated/beepsky/Topic(href, href_list)
 	..()
@@ -222,7 +222,7 @@
 
 /obj/item/radio/integrated/signal/atom_init()
 	. = ..()
-	if (src.frequency < 1441 || src.frequency > 1489)
+	if(src.frequency < 1441 || src.frequency > 1489)
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)

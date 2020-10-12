@@ -87,11 +87,11 @@ Note: Must be placed west/left of and R&D console to function.
 
 
 /obj/machinery/r_n_d/protolathe/attackby(obj/item/I, mob/user)
-	if (shocked)
+	if(shocked)
 		shock(user,50)
-	if (I.is_open_container())
+	if(I.is_open_container())
 		return 1
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
+	if(default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
@@ -100,7 +100,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if(exchange_parts(user, I))
 		return
 
-	if (panel_open)
+	if(panel_open)
 		if(iscrowbar(I))
 			for(var/M in loaded_materials)
 				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
@@ -109,28 +109,28 @@ Note: Must be placed west/left of and R&D console to function.
 					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
-		else if (is_wire_tool(I) && wires.interact(user))
+		else if(is_wire_tool(I) && wires.interact(user))
 			return 1
 		else
 			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
 			return 1
 
-	if (disabled)
+	if(disabled)
 		return
-	if (!linked_console)
+	if(!linked_console)
 		to_chat(user, "\The protolathe must be linked to an R&D console first!")
 		return 1
-	if (busy)
+	if(busy)
 		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
-	if (!istype(I, /obj/item/stack/sheet))
+	if(!istype(I, /obj/item/stack/sheet))
 		to_chat(user, "<span class='warning'>You cannot insert this item into the protolathe!</span>")
 		return 1
-	if (stat)
+	if(stat)
 		return 1
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
-		if (TotalMaterials() + S.perunit > max_material_storage)
+		if(TotalMaterials() + S.perunit > max_material_storage)
 			to_chat(user, "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>")
 			return 1
 
@@ -195,7 +195,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if(busy)
 		to_chat(usr, "<span class='warning'>The [name] is busy right now</span>")
 		return
-	if (!(D.build_type & PROTOLATHE))
+	if(!(D.build_type & PROTOLATHE))
 		message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]! [ADMIN_JMP(usr)]")
 		return
 

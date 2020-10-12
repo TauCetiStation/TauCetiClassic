@@ -1,7 +1,7 @@
 /mob/living/carbon/xenomorph/larva/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(stat == UNCONSCIOUS)
 		return
-	if (findtext(act, "-", 1))
+	if(findtext(act, "-", 1))
 		var/t1 = findtext(act, "-", 1)
 		act = copytext(act, 1, t1)
 
@@ -57,11 +57,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> dances around [pick("happily", "joyfully")]."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> rolls [pick("like a snake", "on the floor", "around itslef")]."
 				m_type = SHOWMSG_VISUAL
 		if("gnarl")
@@ -73,39 +73,39 @@
 				message = "<B>The [src.name]</B> jumps around[pick(" happily", " joyfully", "")]."
 				m_type = SHOWMSG_VISUAL
 		if("scratch")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
-		if ("pray")
+		if("pray")
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 //  ========== SPECIAL ==========
 
-		if ("custom")
+		if("custom")
 			var/input = sanitize(input("Choose an emote to display.") as text|null)
-			if (!input)
+			if(!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-			if (input2 == "Visible")
+			if(input2 == "Visible")
 				m_type = SHOWMSG_VISUAL
-			else if (input2 == "Hearable")
-				if (HAS_TRAIT(src, TRAIT_MUTE))
+			else if(input2 == "Hearable")
+				if(HAS_TRAIT(src, TRAIT_MUTE))
 					return
 				m_type = SHOWMSG_AUDIO
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
-		if ("me")
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
+		if("me")
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return

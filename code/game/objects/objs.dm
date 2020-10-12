@@ -92,7 +92,7 @@
 		var/is_in_use = FALSE
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				is_in_use = TRUE
 				if(ishuman(M)) //most users is humans, so check this first
 					attack_hand(M)
@@ -105,21 +105,21 @@
 					attack_ai(M)
 					continue
 				attack_hand(M)
-		if (isAI(usr) || isrobot(usr))
-			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+		if(isAI(usr) || isrobot(usr))
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = TRUE
 					attack_ai(usr)
 
-		if (isobserver(usr))
-			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+		if(isobserver(usr))
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src)
 					is_in_use = TRUE
 					attack_ghost(usr)
 
 		// check for TK users
 
-		if (ishuman(usr))
+		if(ishuman(usr))
 			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
@@ -133,7 +133,7 @@
 		var/list/nearby = viewers(1, src)
 		var/is_in_use = FALSE
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if((M.client && M.machine == src))
 				is_in_use = TRUE
 				src.interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
@@ -232,7 +232,7 @@
 		if(Feeded.head)
 			var/obj/item/Head = Feeded.head
 			if(Head.flags & HEADCOVERSMOUTH)
-				if (Feeded == user)
+				if(Feeded == user)
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
@@ -240,7 +240,7 @@
 		if(Feeded.wear_mask)
 			var/obj/item/Mask = Feeded.wear_mask
 			if(Mask.flags & MASKCOVERSMOUTH)
-				if (Feeded == user)
+				if(Feeded == user)
 					to_chat(user, "You can't [eatverb] [food] through [Mask]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
@@ -257,7 +257,7 @@
 		if(dumdum.head)
 			var/obj/item/Head = dumdum.head
 			if(Head.flags & HEADCOVERSMOUTH)
-				if (dumdum == user)
+				if(dumdum == user)
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")

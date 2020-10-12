@@ -31,29 +31,29 @@ const SEARCH_LOCATIONS = [
 let cacheRoot;
 
 export const findCacheRoot = async () => {
-  if (cacheRoot) {
+  if(cacheRoot) {
     return cacheRoot;
   }
   logger.log('looking for byond cache');
   // Find BYOND cache folders
   for (let pattern of SEARCH_LOCATIONS) {
-    if (!pattern) {
+    if(!pattern) {
       continue;
     }
     const paths = await resolveGlob(pattern);
-    if (paths.length > 0) {
+    if(paths.length > 0) {
       cacheRoot = paths[0];
       logger.log(`found cache at '${cacheRoot}'`);
       return cacheRoot;
     }
   }
   // Query the Windows Registry
-  if (process.platform === 'win32') {
+  if(process.platform === 'win32') {
     logger.log('querying windows registry');
     let userpath = await regQuery(
       'HKCU\\Software\\Dantom\\BYOND',
       'userpath');
-    if (userpath) {
+    if(userpath) {
       cacheRoot = userpath
         .replace(/\\$/, '')
         .replace(/\\/g, '/')
@@ -67,12 +67,12 @@ export const findCacheRoot = async () => {
 
 export const reloadByondCache = async bundleDir => {
   const cacheRoot = await findCacheRoot();
-  if (!cacheRoot) {
+  if(!cacheRoot) {
     return;
   }
   // Find tmp folders in cache
   const cacheDirs = await resolveGlob(cacheRoot, './tmp*');
-  if (cacheDirs.length === 0) {
+  if(cacheDirs.length === 0) {
     logger.log('found no tmp folder in cache');
     return;
   }

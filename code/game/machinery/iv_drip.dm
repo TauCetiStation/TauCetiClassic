@@ -66,7 +66,7 @@
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
 			to_chat(user, "There is already a reagent container loaded!")
 			return
@@ -130,7 +130,7 @@
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)
 
-			if (B)
+			if(B)
 				beaker.reagents.reagent_list |= B
 				beaker.reagents.update_total()
 				beaker.on_reagent_change()

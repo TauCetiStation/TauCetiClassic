@@ -114,7 +114,7 @@
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
 			var/obj/item/weapon/airlock_electronics/AE
-			if (!electronics)
+			if(!electronics)
 				AE = new /obj/item/weapon/airlock_electronics(loc)
 			else
 				AE = electronics

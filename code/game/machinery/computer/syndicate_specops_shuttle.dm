@@ -61,9 +61,9 @@ var/syndicate_elite_shuttle_timeleft = 0
 	syndicate_elite_shuttle_moving_to_station = FALSE
 	syndicate_elite_shuttle_moving_to_mothership = FALSE
 
-	if (syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
+	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
-	if (!syndicate_elite_can_move())
+	if(!syndicate_elite_can_move())
 		to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
 		return
 
@@ -119,7 +119,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 /obj/machinery/computer/syndicate_elite_shuttle/ui_interact(mob/user)
 	var/dat
-	if (temp)
+	if(temp)
 		dat = temp
 	else
 		dat  = {"\nLocation: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Departing for [station_name] in ([syndicate_elite_shuttle_timeleft] seconds.)":syndicate_elite_shuttle_at_station ? "Station":"Dock"]<BR>
@@ -137,7 +137,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(!. || !allowed(usr))
 		return
 
-	if (href_list["sendtodock"])
+	if(href_list["sendtodock"])
 		if(!syndicate_elite_shuttle_at_station|| syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 		if(backpermission)
@@ -148,10 +148,10 @@ var/syndicate_elite_shuttle_timeleft = 0
 			to_chat(usr, "<span class='notice'>The Syndicate haven't permission to return the Elite Squad shuttle.</span>")
 			return FALSE
 
-	else if (href_list["sendtostation"])
+	else if(href_list["sendtostation"])
 		if(syndicate_elite_shuttle_at_station || syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
-		if (!specops_can_move())
+		if(!specops_can_move())
 			to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
 			return FALSE
 
@@ -163,7 +163,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		syndicate_elite_shuttle_move("station")
 
 
-	else if (href_list["mainmenu"])
+	else if(href_list["mainmenu"])
 		temp = null
 
 	updateUsrDialog()

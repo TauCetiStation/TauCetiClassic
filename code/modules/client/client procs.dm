@@ -54,7 +54,7 @@ var/list/blacklisted_builds = list(
 		//del(usr)
 		return
 
-	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
+	if(href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
 		js_error_manager.log_error(file, message, src)
@@ -109,7 +109,7 @@ var/list/blacklisted_builds = list(
 		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
-		if ("openLink")
+		if("openLink")
 			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
@@ -242,7 +242,7 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 
-	if (supporter)
+	if(supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
 	log_client_to_db(tdata)
@@ -252,7 +252,7 @@ var/list/blacklisted_builds = list(
 	generate_clickcatcher()
 
 	// Set config based title for main window
-	if (config.server_name)
+	if(config.server_name)
 		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
 	else
 		winset(src, "mainwindow", "title='[world.name]'")
@@ -302,7 +302,7 @@ var/list/blacklisted_builds = list(
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
 		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
-			if (config.client_limit_panic_bunker_link)
+			if(config.client_limit_panic_bunker_link)
 				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 				SEND_LINK(src, config.client_limit_panic_bunker_link)
 				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
@@ -342,7 +342,7 @@ var/list/blacklisted_builds = list(
 
 /client/proc/log_client_to_db(connectiontopic)
 
-	if ( IsGuestKey(src.key) )
+	if( IsGuestKey(src.key) )
 		return
 
 	establish_db_connection()
@@ -388,9 +388,9 @@ var/list/blacklisted_builds = list(
 		break
 
 	var/admin_rank = "Player"
-	if (src.holder)
+	if(src.holder)
 		admin_rank = src.holder.rank
-	else if (config.check_randomizer && check_randomizer(connectiontopic))
+	else if(config.check_randomizer && check_randomizer(connectiontopic))
 		return
 
 	//Just the standard check to see if it's actually a number
@@ -425,7 +425,7 @@ var/list/blacklisted_builds = list(
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
-	if (connection != "seeker")
+	if(connection != "seeker")
 		return
 	topic = params2list(topic)
 	var/static/cidcheck = list()
@@ -435,9 +435,9 @@ var/list/blacklisted_builds = list(
 
 	var/oldcid = cidcheck[ckey]
 
-	if (oldcid)
-		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
-			if (!cidcheck_spoofckeys[ckey])
+	if(oldcid)
+		if(!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
+			if(!cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
 				cidcheck_spoofckeys[ckey] = TRUE
 			cidcheck[ckey] = computer_id
@@ -447,13 +447,13 @@ var/list/blacklisted_builds = list(
 			del(src)
 			return TRUE
 
-		if (oldcid != computer_id) //IT CHANGED!!!
+		if(oldcid != computer_id) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
 			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
 
-			if (!cidcheck_failedckeys[ckey])
+			if(!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
 				world.send2bridge(
 					type = list(BRIDGE_ADMINLOG),
@@ -470,7 +470,7 @@ var/list/blacklisted_builds = list(
 			del(src)
 			return TRUE
 		else
-			if (cidcheck_failedckeys[ckey])
+			if(cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
 				world.send2bridge(
 					type = list(BRIDGE_ADMINLOG),
@@ -479,7 +479,7 @@ var/list/blacklisted_builds = list(
 					attachment_color = BRIDGE_COLOR_ADMINLOG,
 				)
 				cidcheck_failedckeys -= ckey
-			if (cidcheck_spoofckeys[ckey])
+			if(cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
@@ -489,10 +489,10 @@ var/list/blacklisted_builds = list(
 		query_cidcheck.Execute()
 
 		var/lastcid
-		if (query_cidcheck.NextRow())
+		if(query_cidcheck.NextRow())
 			lastcid = query_cidcheck.item[1]
 
-		if (computer_id != lastcid)
+		if(computer_id != lastcid)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
@@ -510,7 +510,7 @@ var/list/blacklisted_builds = list(
 	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/log_client_ingame_age_to_db()
-	if ( IsGuestKey(src.key) )
+	if( IsGuestKey(src.key) )
 		return
 
 	establish_db_connection()
@@ -596,7 +596,7 @@ var/list/blacklisted_builds = list(
 
 	var/list/byond_date = get_byond_registration()
 
-	if (!length(byond_date))
+	if(!length(byond_date))
 		return
 
 	bunker_date_regex.Find(config.registration_panic_bunker_age)
@@ -624,7 +624,7 @@ var/list/blacklisted_builds = list(
 
 	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
 
-	if (!user_page)
+	if(!user_page)
 		return
 
 	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")

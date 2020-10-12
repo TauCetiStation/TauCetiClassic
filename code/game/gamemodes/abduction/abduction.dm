@@ -259,7 +259,7 @@
 		for(var/team_number in 1 to abductor_teams)
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
-			if (con.experiment.points >= objective.target_amount)
+			if(con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
 				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
 				finished = 1

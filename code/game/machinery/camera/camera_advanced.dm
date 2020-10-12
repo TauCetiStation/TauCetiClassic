@@ -177,7 +177,7 @@
 		sprint = initial
 
 /mob/camera/Eye/remote/setLoc(turf/T)
-	if (allowed_area_type != null && !istype(get_area(T), allowed_area_type))
+	if(allowed_area_type != null && !istype(get_area(T), allowed_area_type))
 		return
 	..()
 
@@ -221,8 +221,8 @@
 	var/list/T = list()
 
 	for (var/obj/machinery/camera/netcam in L)
-		if (length(netcam.network & origin.networks))
-			if (remote_eye.allowed_area_type != null && !istype(get_area(netcam), remote_eye.allowed_area_type))
+		if(length(netcam.network & origin.networks))
+			if(remote_eye.allowed_area_type != null && !istype(get_area(netcam), remote_eye.allowed_area_type))
 				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 

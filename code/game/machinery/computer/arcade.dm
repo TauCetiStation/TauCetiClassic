@@ -149,7 +149,7 @@
 	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
 
 	dat += "<center><b>"
-	if (src.gameover)
+	if(src.gameover)
 		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
 		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
@@ -169,8 +169,8 @@
 	if(!.)
 		return
 
-	if (!src.blocked && !src.gameover)
-		if (href_list["attack"])
+	if(!src.blocked && !src.gameover)
+		if(href_list["attack"])
 			src.blocked = 1
 			var/attackamt = rand(2,6)
 			playsound(src, pick('sound/machines/arcade/attack1.ogg', 'sound/machines/arcade/attack2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
@@ -183,7 +183,7 @@
 			src.enemy_hp -= attackamt
 			src.arcade_action()
 
-		else if (href_list["heal"])
+		else if(href_list["heal"])
 			src.blocked = 1
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
@@ -199,7 +199,7 @@
 			src.updateUsrDialog()
 			src.arcade_action()
 
-		else if (href_list["charge"])
+		else if(href_list["charge"])
 			src.blocked = 1
 			var/chargeamt = rand(4,7)
 			playsound(src, pick('sound/machines/arcade/+mana1.ogg', 'sound/machines/arcade/+mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
@@ -212,11 +212,11 @@
 			sleep(10)
 			src.arcade_action()
 
-	if (href_list["close"])
+	if(href_list["close"])
 		usr.unset_machine()
 		usr << browse(null, "window=arcade")
 
-	else if (href_list["newgame"]) //Reset everything
+	else if(href_list["newgame"]) //Reset everything
 		temp = "New Round"
 		player_hp = 30
 		player_mp = 10
@@ -232,7 +232,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/arcade/proc/arcade_action()
-	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
+	if((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1
 			playsound(src, 'sound/machines/arcade/e_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
@@ -262,20 +262,20 @@
 				var/atom/movable/prize = pick(contents)
 				prize.loc = src.loc
 
-	else if (emagged && (turtle >= 4))
+	else if(emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		src.player_hp -= boomamt
 
-	else if ((src.enemy_mp <= 5) && (prob(70)))
+	else if((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
 		playsound(src, pick('sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
 		src.player_mp -= stealamt
 		src.updateUsrDialog()
 
-		if (src.player_mp <= 0)
+		if(src.player_mp <= 0)
 			src.gameover = 1
 			sleep(10)
 			playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
@@ -286,7 +286,7 @@
 			else
 				feedback_inc("arcade_loss_mana_normal")
 
-	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
+	else if((src.enemy_hp <= 10) && (src.enemy_mp > 4))
 		playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] heals for 4 health!"
 		src.enemy_hp += 4
@@ -298,7 +298,7 @@
 		src.temp = "[src.enemy_name] attacks for [attackamt] damage!"
 		src.player_hp -= attackamt
 
-	if ((src.player_mp <= 0) || (src.player_hp <= 0))
+	if((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
 		playsound(src, 'sound/machines/arcade/p_death.ogg', VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "You have been crushed! GAME OVER"

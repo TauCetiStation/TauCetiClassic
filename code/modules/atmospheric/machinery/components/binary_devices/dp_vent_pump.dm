@@ -105,11 +105,11 @@
 		if(!T.is_plating() && node1 && node2 && node1.level == PIPE_HIDDEN_LEVEL && node2.level == PIPE_HIDDEN_LEVEL && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 			return
 		else
-			if (node1)
+			if(node1)
 				add_underlay(T, node1, turn(dir, -180), node1.icon_connect_type)
 			else
 				add_underlay(T, node1, turn(dir, -180))
-			if (node2)
+			if(node2)
 				add_underlay(T, node2, dir, node2.icon_connect_type)
 			else
 				add_underlay(T, node2, dir)
@@ -137,7 +137,7 @@
 
 	if(pressure_delta > 0.5)
 		if(pump_direction) //internal -> external
-			if (environment.temperature || air1.temperature)
+			if(environment.temperature || air1.temperature)
 				var/transfer_moles = calculate_transfer_moles(air1, environment, pressure_delta)
 				power_draw = pump_gas(src, air1, environment, transfer_moles, power_rating)
 
@@ -145,7 +145,7 @@
 					var/datum/pipeline/parent1 = PARENT1
 					parent1.update = 1
 		else //external -> internal
-			if (environment.temperature || air2.temperature)
+			if(environment.temperature || air2.temperature)
 				var/datum/pipeline/parent2 = PARENT2
 				var/transfer_moles = calculate_transfer_moles(environment, air2, pressure_delta, (parent2) ? parent2.air.volume : 0)
 
@@ -156,7 +156,7 @@
 				if(power_draw >= 0)
 					parent2.update = 1
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 

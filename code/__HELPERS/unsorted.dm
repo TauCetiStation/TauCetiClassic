@@ -172,7 +172,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	f = round(f)
 	f = max(1441, f) // 144.1
 	f = min(1489, f) // 148.9
-	if ((f % 2) == 0) //Ensure the last digit is an odd number
+	if((f % 2) == 0) //Ensure the last digit is an odd number
 		f += 1
 	return f
 
@@ -281,12 +281,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/select = null
 	var/list/borgs = list()
 	for (var/mob/living/silicon/robot/A in player_list)
-		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
+		if(A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
 			continue
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
 
-	if (borgs.len)
+	if(borgs.len)
 		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
 		return borgs[select]
 
@@ -334,15 +334,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(usr == M)	//skip yourself
 			continue
 		var/name = M.name
-		if (name in names)
+		if(name in names)
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
 			names.Add(name)
 			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
+		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
+		if(M.stat == DEAD)
 			if(istype(M, /mob/dead/observer))
 				name += " \[ghost\]"
 			else
@@ -354,7 +354,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(!A || !A.loc)
 				continue
 			var/name = A.name
-			if (names.Find(name))
+			if(names.Find(name))
 				namecounts[name]++
 				name = "[name] ([namecounts[name]])"
 			else
@@ -799,7 +799,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						if(!istype(O,/obj) || !O.simulated)
 							continue
 						O.loc = X
-						if (length(O.client_mobs_in_contents))
+						if(length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
@@ -1344,7 +1344,7 @@ var/list/WALLITEMS = typecacheof(list(
 */
 
 /proc/find_loc(obj/R)
-	if (!R)	return null
+	if(!R)	return null
 	var/turf/T = R.loc
 	while(!istype(T, /turf))
 		T = T.loc
@@ -1473,10 +1473,10 @@ var/list/WALLITEMS = typecacheof(list(
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 //returns the number of ticks slept
 /proc/stoplag(initial_delay)
-	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+	if(!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
 		sleep(world.tick_lag)
 		return 1
-	if (!initial_delay)
+	if(!initial_delay)
 		initial_delay = world.tick_lag
 	. = 0
 	var/i = DS2TICKS(initial_delay)

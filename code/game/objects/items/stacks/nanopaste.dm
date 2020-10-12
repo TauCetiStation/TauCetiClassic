@@ -8,9 +8,9 @@
 	amount = 10
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
-	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
+	if(istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
 		var/mob/living/silicon/robot/R = M
-		if (R.getBruteLoss() || R.getFireLoss() )
+		if(R.getBruteLoss() || R.getFireLoss() )
 			if(!use(1))
 				to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 				return FALSE

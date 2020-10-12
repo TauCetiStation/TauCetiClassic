@@ -73,21 +73,21 @@
 		var/tabledirs = 0
 		for(var/direction in list(turn(dir, 90), turn(dir, -90)) )
 			var/obj/structure/table/T = locate() in get_step(src, direction)
-			if (canconnect && !QDELETED(T) && T.flipped && src.type == T.type && T.canconnect && T.dir == dir)
+			if(canconnect && !QDELETED(T) && T.flipped && src.type == T.type && T.canconnect && T.dir == dir)
 				type++
 				tabledirs |= direction
 
 		var/base = "table"
-		if (istype(src, /obj/structure/table/woodentable/poker))
+		if(istype(src, /obj/structure/table/woodentable/poker))
 			base = "poker"
-		else if (istype(src, /obj/structure/table/woodentable))
+		else if(istype(src, /obj/structure/table/woodentable))
 			base = "wood"
 
 		icon_state = "[base]flip[type]"
-		if (type == 1)
-			if (tabledirs & turn(dir, 90))
+		if(type == 1)
+			if(tabledirs & turn(dir, 90))
 				icon_state = icon_state + "-"
-			if (tabledirs & turn(dir, -90))
+			if(tabledirs & turn(dir, -90))
 				icon_state = icon_state + "+"
 	else
 		smooth = initial(smooth)
@@ -101,11 +101,11 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				destroy()
 		else
 	return
@@ -175,8 +175,8 @@
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
@@ -185,13 +185,13 @@
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
-	if (get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
+	if(get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
 		return 1
-	if (get_turf(P.original) == cover)
+	if(get_turf(P.original) == cover)
 		var/chance = 20
-		if (ismob(P.original))
+		if(ismob(P.original))
 			var/mob/M = P.original
-			if (M.lying)
+			if(M.lying)
 				chance += 20				//Lying down lets you catch less bullets
 		if(flipped)
 			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
@@ -200,7 +200,7 @@
 				return 1					//But only from one side
 		if(prob(chance))
 			health -= P.damage/2
-			if (health > 0)
+			if(health > 0)
 				visible_message("<span class='warning'>[P] hits \the [src]!</span>")
 				return 0
 			else
@@ -215,8 +215,8 @@
 	if(istype(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
@@ -279,11 +279,11 @@
 		if(T && !T.flipped)
 			return 0
 	T = locate() in get_step(src.loc,direction)
-	if (!T || T.flipped)
+	if(!T || T.flipped)
 		return 1
-	if (istype(T,/obj/structure/table/reinforced))
+	if(istype(T,/obj/structure/table/reinforced))
 		var/obj/structure/table/reinforced/R = T
-		if (R.status == 2)
+		if(R.status == 2)
 			return 0
 	return T.straight_table_check(direction)
 
@@ -293,7 +293,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (!can_touch(usr) || ismouse(usr))
+	if(!can_touch(usr) || ismouse(usr))
 		return
 
 	if(!flip(get_cardinal_dir(usr,src)))
@@ -331,10 +331,10 @@
 	set src in oview(1)
 	if(ismouse(usr))
 		return
-	if (!can_touch(usr))
+	if(!can_touch(usr))
 		return
 
-	if (!unflipping_check())
+	if(!unflipping_check())
 		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 	unflip()
@@ -348,7 +348,7 @@
 
 	var/list/targets = list(get_step(src,dir),get_step(src,turn(dir, 45)),get_step(src,turn(dir, -45)))
 	for (var/atom/movable/A in get_turf(src))
-		if (!A.anchored)
+		if(!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
 	dir = direction
@@ -427,7 +427,7 @@
 
 	var/list/targets = list(get_step(T, dir), get_step(T, turn(dir, 45)), get_step(T, turn(dir, -45)))
 	for (var/atom/movable/A in T)
-		if (!A.anchored)
+		if(!A.anchored)
 			A.throw_at(pick(targets), 1, 1)
 
 /obj/structure/table/glass/on_climb(mob/living/user)
@@ -525,15 +525,15 @@
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir)
 			return !density
 		else
 			return 1
 	return 0
 
 /obj/structure/table/reinforced/flip(direction)
-	if (status == 2)
+	if(status == 2)
 		return 0
 	else
 		return ..()
@@ -625,7 +625,7 @@
 		return 0
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if(iswrench(W))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)

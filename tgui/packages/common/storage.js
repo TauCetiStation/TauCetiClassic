@@ -35,7 +35,7 @@ const createMock = () => {
 const createLocalStorage = () => {
   const get = key => {
     const value = localStorage.getItem(key);
-    if (typeof value !== 'string') {
+    if(typeof value !== 'string') {
       return;
     }
     return JSON.parse(value);

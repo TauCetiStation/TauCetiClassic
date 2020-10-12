@@ -6,7 +6,7 @@
 #define TICK_USAGE world.tick_usage //for general usage
 
 #define TICK_CHECK ( world.tick_usage > CURRENT_TICKLIMIT ? stoplag() : 0 )
-#define CHECK_TICK if (world.tick_usage > CURRENT_TICKLIMIT) stoplag()
+#define CHECK_TICK if(world.tick_usage > CURRENT_TICKLIMIT) stoplag()
 
 
 #define TICKS *world.tick_lag

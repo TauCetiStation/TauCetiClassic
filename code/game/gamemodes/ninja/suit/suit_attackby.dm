@@ -33,7 +33,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
-				if (n_gloves && n_gloves.candrain && do_after(user, s_delay, target = C))
+				if(n_gloves && n_gloves.candrain && do_after(user, s_delay, target = C))
 					user.drop_from_inventory(C, src)
 					C.charge = min(C.charge + cell.charge, C.maxcharge)
 					var/obj/item/weapon/stock_parts/cell/old_cell = cell

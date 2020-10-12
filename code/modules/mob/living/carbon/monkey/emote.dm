@@ -1,7 +1,7 @@
 /mob/living/carbon/monkey/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 	var/param = null
-	if (findtext(act, "-", 1))
+	if(findtext(act, "-", 1))
 		var/t1 = findtext(act, "-", 1)
 		param = copytext(act, t1 + 1)
 		act = copytext(act, 1, t1)
@@ -12,44 +12,44 @@
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
 	switch(act)
-		if ("me")
+		if("me")
 			if(silent)
 				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
 			return custom_emote(m_type, message)
 
 
-		if ("custom")
+		if("custom")
 			return custom_emote(m_type, message)
 
-		if ("chirp")
+		if("chirp")
 			if(istype(src,/mob/living/carbon/monkey/diona))
 				message = "<B>The [src.name]</B> chirps!"
 				playsound(src, 'sound/misc/nymphchirp.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				m_type = SHOWMSG_AUDIO
 		if("sign")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = text("<B>The monkey</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = SHOWMSG_VISUAL
 		if("scratch")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
 		if("whimper")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> whimpers."
 				m_type = SHOWMSG_AUDIO
 		if("roar")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> roars."
 				m_type = SHOWMSG_AUDIO
 		if("tail")
@@ -65,11 +65,11 @@
 			message = "<B>The [src.name]</B> drools."
 			m_type = SHOWMSG_VISUAL
 		if("paw")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> flails his paw."
 				m_type = SHOWMSG_VISUAL
 		if("scretch")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> scretches."
 				m_type = SHOWMSG_AUDIO
 		if("choke")
@@ -94,18 +94,18 @@
 			message = "<B>The [src.name]</B> twitches violently."
 			m_type = SHOWMSG_VISUAL
 		if("dance")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> dances around happily."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> rolls."
 				m_type = SHOWMSG_VISUAL
 		if("shake")
 			message = "<B>The [src.name]</B> shakes his head."
 			m_type = SHOWMSG_VISUAL
 		if("gnarl")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B> gnarls and shows his teeth.."
 				m_type = SHOWMSG_AUDIO
 		if("jump")
@@ -125,7 +125,7 @@
 			else
 				message = "<B>The [src.name]</B> coughs!"
 				m_type = SHOWMSG_AUDIO
-		if ("pray")
+		if("pray")
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
@@ -137,10 +137,10 @@
 			to_chat(src, text)
 		else
 			to_chat(src, text("Invalid Emote: []", act))
-	if ((message && src.stat == CONSCIOUS))
+	if((message && src.stat == CONSCIOUS))
 		if(src.client)
 			log_emote("[key_name(src)] : [message]")
-		if (m_type & SHOWMSG_VISUAL)
+		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 				//Foreach goto(703)

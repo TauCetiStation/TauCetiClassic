@@ -164,7 +164,7 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (user.a_intent == INTENT_HARM)
+	else if(user.a_intent == INTENT_HARM)
 		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
@@ -248,7 +248,7 @@
 
 	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(istype(G.affecting, /mob/living))
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
@@ -262,7 +262,7 @@
 
 					M.log_combat(user, "slammed against [name]")
 				if(2)
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
@@ -550,7 +550,7 @@
 	update_icon()
 
 	for(var/obj/structure/window/reinforced/polarized/W in range(src,range))
-		if ((W.id == src.id || !W.id) && W.anchored)
+		if((W.id == src.id || !W.id) && W.anchored)
 			W.toggle()
 
 /obj/machinery/windowtint/power_change()

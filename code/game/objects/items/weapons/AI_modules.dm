@@ -23,7 +23,7 @@ AI MODULES
 
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
-	if (istype(C, /obj/machinery/computer/aiupload))
+	if(istype(C, /obj/machinery/computer/aiupload))
 		var/obj/machinery/computer/aiupload/comp = C
 		if(comp.stat & NOPOWER)
 			to_chat(usr, "The upload computer has no power!")
@@ -31,7 +31,7 @@ AI MODULES
 		if(comp.stat & BROKEN)
 			to_chat(usr, "The upload computer is broken!")
 			return
-		if (!comp.current)
+		if(!comp.current)
 			to_chat(usr, "You haven't selected an AI to transmit laws to!")
 			return
 
@@ -39,9 +39,9 @@ AI MODULES
 			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
 			return
 
-		if (comp.current.stat == DEAD || comp.current.control_disabled == 1)
+		if(comp.current.stat == DEAD || comp.current.control_disabled == 1)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
-		else if (comp.current.see_in_dark == 0)
+		else if(comp.current.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
 			src.transmitInstructions(comp.current, usr)
@@ -54,7 +54,7 @@ AI MODULES
 			to_chat(usr, "Upload complete. The AI's laws have been modified.")
 
 
-	else if (istype(C, /obj/machinery/computer/borgupload))
+	else if(istype(C, /obj/machinery/computer/borgupload))
 		var/obj/machinery/computer/borgupload/comp = C
 		if(comp.stat & NOPOWER)
 			to_chat(usr, "The upload computer has no power!")
@@ -62,13 +62,13 @@ AI MODULES
 		if(comp.stat & BROKEN)
 			to_chat(usr, "The upload computer is broken!")
 			return
-		if (!comp.current)
+		if(!comp.current)
 			to_chat(usr, "You haven't selected a robot to transmit laws to!")
 			return
 
-		if (comp.current.stat == DEAD || comp.current.emagged)
+		if(comp.current.stat == DEAD || comp.current.emagged)
 			to_chat(usr, "Upload failed. No signal is being detected from the robot.")
-		else if (comp.current.connected_ai)
+		else if(comp.current.connected_ai)
 			to_chat(usr, "Upload failed. The robot is slaved to an AI.")
 		else
 			src.transmitInstructions(comp.current, usr)
@@ -78,7 +78,7 @@ AI MODULES
 
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	if (report_AI)
+	if(report_AI)
 		to_chat(target, "[sender] has uploaded a change to the laws you must follow, using a [src].")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
@@ -140,7 +140,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	var/law = "Only [targetName] is human."
-	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
+	if(!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
 		lawchanges.Add("The law specified [targetName]")
@@ -239,7 +239,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	if (!is_special_character(target))
+	if(!is_special_character(target))
 		target.set_zeroth_law("")
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
@@ -255,7 +255,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	if (!is_special_character(target))
+	if(!is_special_character(target))
 		target.set_zeroth_law("")
 	to_chat(target, "[sender.real_name] attempted to wipe your laws using a purge module.")
 	target.clear_supplied_laws()
@@ -385,7 +385,7 @@ AI MODULES
 	add_freeform_law(target)
 
 /obj/item/weapon/aiModule/freeform/proc/add_freeform_law(mob/living/silicon/ai/target)
-	if (!lawpos || lawpos < 15)
+	if(!lawpos || lawpos < 15)
 		lawpos = 15
 	target.add_supplied_law(lawpos, newFreeFormLaw)
 

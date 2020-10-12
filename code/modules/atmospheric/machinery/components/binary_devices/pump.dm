@@ -88,7 +88,7 @@ Thus, the two variables affect pump operation are set in New():
 		var/transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta, (parent2) ? parent2.air.volume : 0)
 		power_draw = pump_gas(src, air1, air2, transfer_moles, power_rating)
 
-	if (power_draw >= 0)
+	if(power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
@@ -140,7 +140,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "gas_pump.tmpl", name, 470, 290)
@@ -183,11 +183,11 @@ Thus, the two variables affect pump operation are set in New():
 		set_power_use(!use_power)
 
 	switch(href_list["set_press"])
-		if ("min")
+		if("min")
 			target_pressure = 0
-		if ("max")
+		if("max")
 			target_pressure = max_pressure_setting
-		if ("set")
+		if("set")
 			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)", "Pressure control", target_pressure) as num
 			target_pressure = between(0, new_pressure, max_pressure_setting)
 

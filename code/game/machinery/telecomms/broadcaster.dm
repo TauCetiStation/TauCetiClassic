@@ -301,7 +301,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if(R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 		if(isnewplayer(R)) // we don't want new players to hear messages. rare but generates runtimes.
@@ -318,10 +318,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (!M || R.say_understands(M))
+		if(!M || R.say_understands(M))
 
 			// - Not human or wearing a voice mask -
-			if (!M || !ishuman(M) || vmask)
+			if(!M || !ishuman(M) || vmask)
 				heard_masked += R
 
 			// - Human and not wearing voice mask -
@@ -332,7 +332,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		else
 			// - The speaker has a prespecified "voice message" to display if not understood -
-			if (vmessage)
+			if(vmessage)
 				heard_voice += R
 
 			// - Just display a garbled message -
@@ -341,7 +341,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
   /* ###### Begin formatting and sending the message ###### */
-	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_gibberish))
+	if(length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_gibberish))
 
 	  /* --- Some miscellaneous variables to format the string output --- */
 		var/freq_text // the name of the channel
@@ -383,38 +383,38 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/part_a_span = "radio"
 		// syndies!
-		if (display_freq == SYND_FREQ)
+		if(display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
 		// centcomm channels (deathsquid and ert)
-		else if (display_freq in CENT_FREQS)
+		else if(display_freq in CENT_FREQS)
 			part_a_span = "centradio"
 
 		// command channel
-		else if (display_freq == COMM_FREQ)
+		else if(display_freq == COMM_FREQ)
 			part_a_span = "comradio"
 
 		// AI private channel
-		else if (display_freq == 1447)
+		else if(display_freq == 1447)
 			part_a_span = "airadio"
 
 		// department radio formatting (poorly optimized, ugh)
-		else if (display_freq == SEC_FREQ)
+		else if(display_freq == SEC_FREQ)
 			part_a_span = "secradio"
 
-		else if (display_freq == ENG_FREQ)
+		else if(display_freq == ENG_FREQ)
 			part_a_span = "engradio"
 
-		else if (display_freq == SCI_FREQ)
+		else if(display_freq == SCI_FREQ)
 			part_a_span = "sciradio"
 
-		else if (display_freq == MED_FREQ)
+		else if(display_freq == MED_FREQ)
 			part_a_span = "medradio"
 
-		else if (display_freq == SUP_FREQ) // cargo
+		else if(display_freq == SUP_FREQ) // cargo
 			part_a_span = "supradio"
 
 		// If all else fails and it's a dept_freq, color me purple!
-		else if (display_freq in DEPT_FREQS)
+		else if(display_freq in DEPT_FREQS)
 			part_a_span = "deptradio"
 
 		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
@@ -469,33 +469,33 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  	/* --- Process all the mobs that heard a masked voice (understood) --- */
 
-		if (length(heard_masked))
+		if(length(heard_masked))
 			for (var/mob/R in heard_masked)
 				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M, 0, name)
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
-		if (length(heard_normal))
+		if(length(heard_normal))
 			for (var/mob/R in heard_normal)
 				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 0, realname)
 
 		/* --- Process all the mobs that heard the voice normally (did not understand) --- */
 
-		if (length(heard_voice))
+		if(length(heard_voice))
 			for (var/mob/R in heard_voice)
 				R.hear_radio(message,verbage, speaking, part_a, part_b, part_c, M,0, vname)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
-		if (length(heard_garbled))
+		if(length(heard_garbled))
 			for (var/mob/R in heard_garbled)
 				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1, vname)
 
 
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
-		if (length(heard_gibberish))
+		if(length(heard_gibberish))
 			for (var/mob/R in heard_gibberish)
 				R.hear_radio(message, verbage, speaking, part_a, part_b, part_c, M, 1)
 
@@ -569,7 +569,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if(R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 
@@ -581,7 +581,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (R.say_understands(M))
+		if(R.say_understands(M))
 
 			heard_normal += R
 
@@ -594,7 +594,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
   /* ###### Begin formatting and sending the message ###### */
-	if (length(heard_normal) || length(heard_garbled) || length(heard_gibberish))
+	if(length(heard_normal) || length(heard_garbled) || length(heard_gibberish))
 
 	  /* --- Some miscellaneous variables to format the string output --- */
 		var/freq_text // the name of the channel
@@ -631,11 +631,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/part_a_span = "radio"
 
-		if (display_freq == SYND_FREQ)
+		if(display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
-		else if (display_freq == COMM_FREQ)
+		else if(display_freq == COMM_FREQ)
 			part_a_span = "comradio"
-		else if (display_freq in DEPT_FREQS)
+		else if(display_freq in DEPT_FREQS)
 			part_a_span = "deptradio"
 
 		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
@@ -681,7 +681,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
-		if (length(heard_normal))
+		if(length(heard_normal))
 			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
 
 			for (var/mob/R in heard_normal)
@@ -690,7 +690,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
-		if (length(heard_garbled))
+		if(length(heard_garbled))
 			var/quotedmsg = "\"[stars(text)]\""
 			var/rendered = "[part_a][source][part_b][quotedmsg][part_c]"
 
@@ -700,7 +700,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
-		if (length(heard_gibberish))
+		if(length(heard_gibberish))
 			var/quotedmsg = "\"[Gibberish(text, compression + 50)]\""
 			var/rendered = "[part_a][Gibberish(source, compression + 50)][part_b][quotedmsg][part_c]"
 

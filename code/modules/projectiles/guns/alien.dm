@@ -69,11 +69,11 @@
 		Fire(target,user,params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
-	if (M == user && def_zone == O_MOUTH)
+	if(M == user && def_zone == O_MOUTH)
 		M.visible_message("<span class='warning'>[user] attempts without success to fit [src] into their mouth.</span>")
 		return
 
-	if (spikes > 0)
+	if(spikes > 0)
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			Fire(M,user)
@@ -94,7 +94,7 @@
 
 	var/turf/curloc = get_turf(user)
 	var/turf/targloc = get_turf(target)
-	if (!istype(targloc) || !istype(curloc))
+	if(!istype(targloc) || !istype(curloc))
 		return
 
 	if(istype(user,/mob/living/carbon/human))

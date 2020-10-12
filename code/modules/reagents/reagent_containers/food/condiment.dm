@@ -85,7 +85,7 @@
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='rose'> [target] is empty.</span>")
 			return
-		if (!reagents.maximum_volume)
+		if(!reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> [src] can't hold this.</span>")
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> [src] is full.</span>")
@@ -99,7 +99,7 @@
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='rose'> [src] is empty.</span>")
 			return
-		if (!target.reagents.maximum_volume)
+		if(!target.reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> [target] can't hold this.</span>")
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)

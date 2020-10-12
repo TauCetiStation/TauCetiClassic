@@ -76,7 +76,7 @@
 
 /mob/proc/say_understands(mob/other,datum/language/speaking = null)
 
-	if (src.stat == DEAD)		//Dead
+	if(src.stat == DEAD)		//Dead
 		return 1
 
 	//Universal speak makes everything understandable, for obvious reasons.
@@ -84,7 +84,7 @@
 		return 1
 
 	//Languages are handled after.
-	if (!speaking)
+	if(!speaking)
 		if(!other)
 			return 1
 		if(other.universal_speak)
@@ -137,9 +137,9 @@
 
 /proc/say_test(text)
 	var/ending = copytext(text, -1)
-	if (ending == "?")
+	if(ending == "?")
 		return "1"
-	else if (ending == "!")
+	else if(ending == "!")
 		return "2"
 	return "0"
 
@@ -162,7 +162,7 @@
 	if(length_char(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1, 2 + length(message[2])))
 		var/datum/language/L = language_keys[language_prefix]
-		if (can_speak(L))
+		if(can_speak(L))
 			return L
 
 	return null

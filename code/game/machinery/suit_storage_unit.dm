@@ -158,23 +158,23 @@
 	if(!.)
 		return
 
-	if (href_list["toggleUV"])
+	if(href_list["toggleUV"])
 		src.toggleUV(usr)
-	else if (href_list["togglesafeties"])
+	else if(href_list["togglesafeties"])
 		src.togglesafeties(usr)
-	else if (href_list["dispense_helmet"])
+	else if(href_list["dispense_helmet"])
 		src.dispense_helmet(usr)
-	else if (href_list["dispense_suit"])
+	else if(href_list["dispense_suit"])
 		src.dispense_suit(usr)
-	else if (href_list["dispense_mask"])
+	else if(href_list["dispense_mask"])
 		src.dispense_mask(usr)
-	else if (href_list["toggle_open"])
+	else if(href_list["toggle_open"])
 		src.toggle_open(usr)
-	else if (href_list["toggle_lock"])
+	else if(href_list["toggle_lock"])
 		src.toggle_lock(usr)
-	else if (href_list["start_UV"])
+	else if(href_list["start_UV"])
 		src.start_UV(usr)
-	else if (href_list["eject_guy"])
+	else if(href_list["eject_guy"])
 		src.eject_occupant(usr)
 
 	src.updateUsrDialog()
@@ -377,15 +377,15 @@
 
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
-	if (src.islocked)
+	if(src.islocked)
 		return
 
-	if (!src.OCCUPANT)
+	if(!src.OCCUPANT)
 		return
 //	for(var/obj/O in src)
 //		O.loc = src.loc
 
-	if (src.OCCUPANT.client)
+	if(src.OCCUPANT.client)
 		if(user != OCCUPANT)
 			to_chat(OCCUPANT, "<font color='blue'>The machine kicks you out!</font>")
 		if(user.loc != src.loc)
@@ -431,15 +431,15 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
-	if (!src.isopen)
+	if(!src.isopen)
 		to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 		return
-	if (!src.ispowered || src.isbroken)
+	if(!src.ispowered || src.isbroken)
 		to_chat(usr, "<font color='red'>The unit is not operational.</font>")
 		return
-	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
+	if( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
 	if(usr.is_busy()) return
@@ -474,18 +474,18 @@
 		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
 		src.updateUsrDialog()
 		return
-	if ( istype(I, /obj/item/weapon/grab) )
+	if( istype(I, /obj/item/weapon/grab) )
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
 			return
 		user.SetNextMove(CLICK_CD_MELEE)
-		if (!src.isopen)
+		if(!src.isopen)
 			to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 			return
-		if (!src.ispowered || src.isbroken)
+		if(!src.ispowered || src.isbroken)
 			to_chat(usr, "<font color='red'>The unit is not operational.</font>")
 			return
-		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
+		if( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
 		if(user.is_busy()) return
@@ -493,7 +493,7 @@
 		if(I.use_tool(src, user, 20, volume = 50))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
-			if (M.client)
+			if(M.client)
 				M.client.perspective = EYE_PERSPECTIVE
 				M.client.eye = src
 			M.loc = src

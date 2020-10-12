@@ -129,7 +129,7 @@
 		..()
 
 /obj/machinery/power/generator/ui_interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) && !(issilicon(user) || isobserver(user)))
+	if( (get_dist(src, user) > 1 ) && !(issilicon(user) || isobserver(user)))
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
@@ -194,7 +194,7 @@
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, 90)
@@ -204,7 +204,7 @@
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.incapacitated() || anchored)
+	if(usr.incapacitated() || anchored)
 		return
 
 	src.dir = turn(src.dir, -90)

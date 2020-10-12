@@ -121,7 +121,7 @@
 			to_chat(user, "<span class='danger'>[src] is not moving.</span>")
 		if(CONSCIOUS)
 			to_chat(user, "<span class='danger'>[src] seems to be active.</span>")
-	if (sterile)
+	if(sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/I, mob/user, params)

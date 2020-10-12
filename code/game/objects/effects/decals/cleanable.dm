@@ -3,7 +3,7 @@
 	var/targeted_by = null			// Used so cleanbots can't claim a mess.
 
 /obj/effect/decal/cleanable/atom_init()
-	if (random_icon_states && length(random_icon_states) > 0)
+	if(random_icon_states && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
 	. = ..()
 	decal_cleanable += src

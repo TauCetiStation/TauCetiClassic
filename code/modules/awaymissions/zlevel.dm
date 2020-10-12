@@ -7,26 +7,26 @@
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
-		if (!t)
+		if(!t)
 			continue
 
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (t[1] == "#")
+		else if(t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
 
-		if (pos)
+		if(pos)
             // No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
 		else
             // No, don't do lowertext here, that breaks paths on linux
 			name = t
 
-		if (!name)
+		if(!name)
 			continue
 
 		potentialRandomZlevels.Add(name)

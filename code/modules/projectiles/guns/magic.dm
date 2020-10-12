@@ -43,7 +43,7 @@
 	to_chat(user, "The [name] has [charges] charges.")
 
 /obj/item/weapon/gun/magic/proc/newshot()
-	if (charges && chambered)
+	if(charges && chambered)
 		chambered.newshot()
 		charges--
 		charge_tick = 0

@@ -27,14 +27,14 @@
 
 	var/message_mode = parse_message_mode(message, "headset")
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
+	if(istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
 	if(message[1] == "*")
 		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
-	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if(miming && !(message_mode == "changeling" || message_mode == "alientalk"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -42,8 +42,8 @@
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the radio code and consume it
-	if (message_mode)
-		if (message_mode == "headset")
+	if(message_mode)
+		if(message_mode == "headset")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
@@ -57,19 +57,19 @@
 			speaking = USL
 
 	//check if we're muted and not using gestures
-	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
-		if (!(speaking && (speaking.flags & SIGNLANG)))
+	if(HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+		if(!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
 
-	if (speaking && (speaking.flags & SIGNLANG))
+	if(speaking && (speaking.flags & SIGNLANG))
 		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
 		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
-		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
+		if(!(LH && LH.is_usable() && RH && RH.is_usable()))
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (has_lang_prefix)
+	if(has_lang_prefix)
 		message = copytext(message,2+length_char(speaking.key))
 	else if(species.force_racial_language)
 		speaking = all_languages[species.language]
@@ -102,7 +102,7 @@
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	if (speaking)
+	if(speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
@@ -241,7 +241,7 @@
 				return TRUE
 
 	//This is already covered by mob/say_understands()
-	//if (istype(other, /mob/living/simple_animal))
+	//if(istype(other, /mob/living/simple_animal))
 	//	if((other.universal_speak && !speaking) || src.universal_speak || src.universal_understand)
 	//		return 1
 	//	return 0
@@ -331,7 +331,7 @@
 		message = slur(message)
 		verb = pick("stammers","stutters")
 		handled = 1
-	if (stuttering)
+	if(stuttering)
 		message = stutter(message)
 		verb = pick("stammers","stutters")
 		handled = 1

@@ -105,7 +105,7 @@ var/global/ascii_reset = "[global.ascii_esc]\[0m"
 	if(world.time > end_time)
 		test.fail("Unit Tests Ran out of time")   // This should never happen, and if it does either fix your unit tests to be faster or if you can make them async checks.
 		return FALSE
-	if (test.start_test() == null)	// Runtimed.
+	if(test.start_test() == null)	// Runtimed.
 		test.fail("Test Runtimed")
 	return TRUE
 
@@ -186,12 +186,12 @@ SUBSYSTEM_DEF(unit_tests)
 	..()
 
 /datum/controller/subsystem/unit_tests/proc/start_game()
-	if (SSticker.current_state >= GAME_STATE_FINISHED)
+	if(SSticker.current_state >= GAME_STATE_FINISHED)
 		log_unit_test("Unable to start testing - game is finished!")
 		del world
 		return
 
-	if ((SSticker.current_state == GAME_STATE_PREGAME) && !SSticker.start_now())
+	if((SSticker.current_state == GAME_STATE_PREGAME) && !SSticker.start_now())
 		log_unit_test("Unable to start testing - SSticker failed to start the game!")
 		del world
 		return
@@ -208,13 +208,13 @@ SUBSYSTEM_DEF(unit_tests)
 		if(do_unit_test(test, end_unit_tests) && test.async)
 			async_tests += test
 		global.total_unit_tests++
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
-	if (!curr.len)
+	if(!curr.len)
 		stage++
 
 /datum/controller/subsystem/unit_tests/proc/handle_async(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		current_async = async_tests.Copy()
 
 	var/list/async = current_async
@@ -223,30 +223,30 @@ SUBSYSTEM_DEF(unit_tests)
 		async.len--
 		if(check_unit_test(test, end_unit_tests))
 			async_tests -= test
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
-	if (!async_tests.len)
+	if(!async_tests.len)
 		stage++
 
 /datum/controller/subsystem/unit_tests/fire(resumed = 0)
 	switch (stage)
-		if (1)
+		if(1)
 			start_game()
 
-		if (2)	// wait a moment
+		if(2)	// wait a moment
 			if(world.time < tests_start_time)
 				return
 			stage++
 			log_unit_test("Testing Started.")
 			end_unit_tests = world.time + MAX_UNIT_TEST_RUN_TIME
 
-		if (3)	// do normal tests
+		if(3)	// do normal tests
 			handle_tests()
 
-		if (4)
+		if(4)
 			handle_async(resumed)
 
-		if (5)	// Finalization.
+		if(5)	// Finalization.
 			unit_test_final_message()
 			log_unit_test("Caught [global.total_runtimes] Runtime\s.")
 			del world

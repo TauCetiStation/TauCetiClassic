@@ -32,8 +32,8 @@ var/const/AALARM_WIRE_AALARM     = 16
 			A.shorted = !mended
 			A.update_icon()
 
-		if (AALARM_WIRE_AI_CONTROL)
-			if (A.aidisabled == !mended)
+		if(AALARM_WIRE_AI_CONTROL)
+			if(A.aidisabled == !mended)
 				A.aidisabled = mended
 
 		if(AALARM_WIRE_SYPHON)
@@ -53,13 +53,13 @@ var/const/AALARM_WIRE_AALARM     = 16
 		if(AALARM_WIRE_IDSCAN)
 			A.locked = !A.locked
 
-		if (AALARM_WIRE_POWER)
+		if(AALARM_WIRE_POWER)
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_icon()
 				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 1200)
 
-		if (AALARM_WIRE_AI_CONTROL)
+		if(AALARM_WIRE_AI_CONTROL)
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
 				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)

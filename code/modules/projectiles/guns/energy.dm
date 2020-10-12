@@ -38,17 +38,17 @@
 	user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a laser blast!")
 
 /obj/item/weapon/gun/energy/proc/newshot()
-	if (!ammo_type || !power_supply)
+	if(!ammo_type || !power_supply)
 		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (power_supply.charge < shot.e_cost)
+	if(power_supply.charge < shot.e_cost)
 		return
 	chambered = shot
 	chambered.newshot()
 	return
 
 /obj/item/weapon/gun/energy/process_chamber()
-	if (chambered) // incase its out of energy - since then this will be null.
+	if(chambered) // incase its out of energy - since then this will be null.
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)
 	chambered = null
@@ -69,7 +69,7 @@
 
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	if (shot.select_name)
+	if(shot.select_name)
 		to_chat(user, "<span class='warning'>[src] is now set to [shot.select_name].</span>")
 	update_icon()
 
@@ -80,17 +80,17 @@
 		ratio = CEIL(ratio * 4) * 25
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	switch(modifystate)
-		if (0)
+		if(0)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)]100"
 			else
 				icon_state = "[initial(icon_state)][ratio]"
-		if (1)
+		if(1)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)][shot.mod_name]100"
 			else
 				icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
-		if (2)
+		if(2)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)][shot.select_name]100"
 			else

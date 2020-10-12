@@ -16,10 +16,10 @@ SUBSYSTEM_DEF(lighting)
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
-		if (config.starlight)
+		if(config.starlight)
 			for(var/I in global.all_areas)
 				var/area/A = I
-				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+				if(A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 					A.luminosity = 0
 
 		create_all_lighting_objects()
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(lighting)
 
 		if(init_tick_checks)
 			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
 
 
@@ -74,9 +74,9 @@ SUBSYSTEM_DEF(lighting)
 		C.needs_update = FALSE
 		if(init_tick_checks)
 			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
-	if (i)
+	if(i)
 		global.lighting_update_corners.Cut(1, i+1)
 		i = 0
 
@@ -87,16 +87,16 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to global.lighting_update_objects.len)
 		var/atom/movable/lighting_object/O = global.lighting_update_objects[i]
 
-		if (QDELETED(O))
+		if(QDELETED(O))
 			continue
 
 		O.update()
 		O.needs_update = FALSE
 		if(init_tick_checks)
 			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
-	if (i)
+	if(i)
 		global.lighting_update_objects.Cut(1, i+1)
 
 /datum/controller/subsystem/lighting/Recover()

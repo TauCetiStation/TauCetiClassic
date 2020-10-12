@@ -77,7 +77,7 @@
 	if(!.)
 		return
 
-	if (!is_station_level(z))
+	if(!is_station_level(z))
 		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
@@ -94,10 +94,10 @@
 				authenticated = 2
 			else
 				var/obj/item/weapon/card/id/I = M.get_active_hand()
-				if (istype(I, /obj/item/device/pda))
+				if(istype(I, /obj/item/device/pda))
 					var/obj/item/device/pda/pda = I
 					I = pda.id
-				if (I && istype(I))
+				if(I && istype(I))
 					if(src.check_access(I))
 						authenticated = 1
 					if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
@@ -113,10 +113,10 @@
 				return
 			else
 				last_seclevel_change = world.time + 1 MINUTE
-			if (istype(I, /obj/item/device/pda))
+			if(istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && istype(I))
+			if(I && istype(I))
 				if(access_heads in I.access) //Let heads change the alert level.
 					var/old_level = security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
@@ -177,7 +177,7 @@
 			src.state = STATE_MESSAGELIST
 		if("viewmessage")
 			src.state = STATE_VIEWMESSAGE
-			if (!src.currmsg)
+			if(!src.currmsg)
 				if(href_list["message-num"])
 					src.currmsg = text2num(href_list["message-num"])
 				else
@@ -269,7 +269,7 @@
 			src.aistate = STATE_MESSAGELIST
 		if("ai-viewmessage")
 			src.aistate = STATE_VIEWMESSAGE
-			if (!src.aicurrmsg)
+			if(!src.aicurrmsg)
 				if(href_list["message-num"])
 					src.aicurrmsg = text2num(href_list["message-num"])
 				else
@@ -306,15 +306,15 @@
 	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
-	if (!SSmapping.has_level(z))
+	if(!SSmapping.has_level(z))
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
 	var/dat = ""
-	if (SSshuttle.online && SSshuttle.location == 0)
+	if(SSshuttle.online && SSshuttle.location == 0)
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
-	if (issilicon(user))
+	if(issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
@@ -327,9 +327,9 @@
 
 	switch(src.state)
 		if(STATE_DEFAULT)
-			if (src.authenticated)
+			if(src.authenticated)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
-				if (src.authenticated==2)
+				if(src.authenticated==2)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
 					if(src.emagged == 0)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A> \]"
@@ -339,7 +339,7 @@
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A> \]"
 				if(SSshuttle.location==0)
-					if (SSshuttle.online)
+					if(SSshuttle.online)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
@@ -357,16 +357,16 @@
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
-			if (src.currmsg)
+			if(src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
-				if (src.authenticated)
+				if(src.authenticated)
 					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
-			if (src.currmsg)
+			if(src.currmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
 				src.state = STATE_MESSAGELIST
@@ -421,7 +421,7 @@
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
-			if (src.aicurrmsg)
+			if(src.aicurrmsg)
 				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
 				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
 			else
@@ -453,7 +453,7 @@
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
-	if ((!( SSticker ) || SSshuttle.location))
+	if((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(sent_strike_team == 1)
@@ -486,7 +486,7 @@
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( SSticker ) || SSshuttle.location))
+	if((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
@@ -524,7 +524,7 @@
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
+	if((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 		to_chat(user, "The console is not responding.")
 		return
 	if(SSshuttle.timeleft() < 300)

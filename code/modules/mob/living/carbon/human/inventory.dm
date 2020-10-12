@@ -50,9 +50,9 @@
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
-		if (equip_to_slot_if_possible(W, slots[slot], del_on_fail = 0))
+		if(equip_to_slot_if_possible(W, slots[slot], del_on_fail = 0))
 			return slot
-	if (del_on_fail)
+	if(del_on_fail)
 		qdel(W)
 	return null
 
@@ -121,7 +121,7 @@
 /mob/living/carbon/human/u_equip(obj/W)
 	if(!W)	return 0
 
-	if (W == wear_suit)
+	if(W == wear_suit)
 		if(s_store)
 			drop_from_inventory(s_store)
 		wear_suit = null
@@ -137,25 +137,25 @@
 			update_inv_ears()
 			update_inv_wear_mask()
 		update_inv_wear_suit()
-	else if (W == w_uniform)
-		if (r_store)
+	else if(W == w_uniform)
+		if(r_store)
 			drop_from_inventory(r_store)
-		if (l_store)
+		if(l_store)
 			drop_from_inventory(l_store)
-		if (wear_id)
+		if(wear_id)
 			drop_from_inventory(wear_id)
-		if (belt)
+		if(belt)
 			drop_from_inventory(belt)
 		w_uniform = null
 		update_inv_w_uniform()
 		update_suit_sensors()
-	else if (W == gloves)
+	else if(W == gloves)
 		gloves = null
 		update_inv_gloves()
-	else if (W == glasses)
+	else if(W == glasses)
 		glasses = null
 		update_inv_glasses()
-	else if (W == head)
+	else if(W == head)
 		head = null
 
 		var/update_hair = 0
@@ -171,19 +171,19 @@
 			update_inv_wear_mask()
 
 		update_inv_head()
-	else if (W == l_ear)
+	else if(W == l_ear)
 		l_ear = null
 		update_inv_ears()
-	else if (W == r_ear)
+	else if(W == r_ear)
 		r_ear = null
 		update_inv_ears()
-	else if (W == shoes)
+	else if(W == shoes)
 		shoes = null
 		update_inv_shoes()
-	else if (W == belt)
+	else if(W == belt)
 		belt = null
 		update_inv_belt()
-	else if (W == wear_mask)
+	else if(W == wear_mask)
 		wear_mask = null
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair()	//rebuild hair
@@ -192,35 +192,35 @@
 				internals.icon_state = "internal0"
 			internal = null
 		update_inv_wear_mask()
-	else if (W == wear_id)
+	else if(W == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
 		sec_hud_set_security_status()
 		update_inv_wear_id()
-	else if (W == r_store)
+	else if(W == r_store)
 		r_store = null
 		update_inv_pockets()
-	else if (W == l_store)
+	else if(W == l_store)
 		l_store = null
 		update_inv_pockets()
-	else if (W == s_store)
+	else if(W == s_store)
 		s_store = null
 		update_inv_s_store()
-	else if (W == back)
+	else if(W == back)
 		back = null
 		update_inv_back()
-	else if (W == handcuffed)
+	else if(W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
-	else if (W == legcuffed)
+	else if(W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
-	else if (W == r_hand)
+	else if(W == r_hand)
 		r_hand = null
 		update_inv_r_hand()
-	else if (W == l_hand)
+	else if(W == l_hand)
 		l_hand = null
 		update_inv_l_hand()
 	else

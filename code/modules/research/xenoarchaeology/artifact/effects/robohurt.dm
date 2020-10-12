@@ -8,7 +8,7 @@
 
 /datum/artifact_effect/robohurt/DoEffectTouch(mob/user)
 	if(user)
-		if (istype(user, /mob/living/silicon/robot))
+		if(istype(user, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = user
 			to_chat(R, "<span class='warning'>Your systems report severe damage has been inflicted!</span>")
 			R.adjustBruteLoss(rand(10,50))

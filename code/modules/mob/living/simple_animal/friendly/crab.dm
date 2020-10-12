@@ -65,7 +65,7 @@
 				if(MED.use(1))
 					health = min(maxHealth, health + MED.heal_brute)
 					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
+						if((M.client && !( M.blinded )))
 							M.show_messageold("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
 			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
@@ -73,12 +73,12 @@
 		if(O.force)
 			health -= O.force
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_messageold("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
+				if((M.client && !( M.blinded )))
 					M.show_messageold("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/crab/Topic(href, href_list)

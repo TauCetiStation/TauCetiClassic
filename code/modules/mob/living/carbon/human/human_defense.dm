@@ -115,7 +115,7 @@
 
 		if(B.stoping_power)
 			var/force =  (armor/P.damage)*100
-			if (force <= 60 && force > 40)
+			if(force <= 60 && force > 40)
 				apply_effects(B.stoping_power/2,B.stoping_power/2,0,0,B.stoping_power/2,0,0,armor)
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
@@ -132,7 +132,7 @@
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armor = getarmor_organ(BP, "bio")
-		if (armor < 100)
+		if(armor < 100)
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
 			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
 
@@ -177,7 +177,7 @@
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/organ/external/BP)
-	if (!BP)
+	if(!BP)
 		return 1.0
 
 	var/siemens_coefficient = 1.0
@@ -274,7 +274,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if (!BP)
+	if(!BP)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -312,7 +312,7 @@
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
 		var/weapon_sharp = (damage_flags & DAM_SHARP)
 		var/damage = I.force // just the effective damage used for sorting out embedding, no further damage is applied here
-		if (armor)
+		if(armor)
 			damage *= blocked_mult(armor)
 
 		//blunt objects should really not be embedding in things unless a huge amount of force is involved
@@ -393,7 +393,7 @@
 	BP.embed(I, null, null, created_wound)
 
 /mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2)
-	if (gloves)
+	if(gloves)
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
@@ -420,7 +420,7 @@
 	if(w_uniform)
 		w_uniform.add_dirt_cover(floor_blood.basedatum)
 		update_inv_w_uniform()
-	if (gloves)
+	if(gloves)
 		gloves.add_dirt_cover(floor_blood.basedatum)
 	else
 		add_dirt_cover(floor_blood.basedatum)

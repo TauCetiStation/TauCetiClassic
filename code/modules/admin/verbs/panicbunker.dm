@@ -2,7 +2,7 @@
 	set category = "Server"
 	set name = "Toggle Registration Panic Bunker"
 
-	if (config.registration_panic_bunker_age)
+	if(config.registration_panic_bunker_age)
 		config.registration_panic_bunker_age = null
 		fdel("data/regisration_panic_bunker.sav")
 		log_admin("[key_name(src)] disable regisration panic bunker")
@@ -15,12 +15,12 @@
 	var/active_hours = input("Hours from current moment to keep panic bunker active (-1 to enable for current round only)", "Active hours (min: -1 or 1, max: 24)", -1) as num
 	var/panic_age = "[year]-[month]-[day]"
 
-	if (alert("Apply registration bunker, age:[panic_age] active hours: [active_hours]", "Are you sure about that?", "Yes!", "No") != "Yes!")
+	if(alert("Apply registration bunker, age:[panic_age] active hours: [active_hours]", "Are you sure about that?", "Yes!", "No") != "Yes!")
 		return
 
 	config.registration_panic_bunker_age = panic_age
 
-	if (active_hours != -1)
+	if(active_hours != -1)
 		var/savefile/S = new /savefile("data/regisration_panic_bunker.sav")
 		S["enabled_by"] = ckey
 		S["active_until"] = world.realtime + active_hours * 36000

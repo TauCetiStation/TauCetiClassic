@@ -10,9 +10,9 @@
 		change_paintjob(W, user)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
 			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
@@ -22,7 +22,7 @@
 					take_damage(7)
 					visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
 				if(2)
-					if (prob(50))
+					if(prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(9)

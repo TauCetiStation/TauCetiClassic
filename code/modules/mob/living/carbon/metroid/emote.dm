@@ -1,7 +1,7 @@
 /mob/living/carbon/slime/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 
 
-	if (findtext(act, "-", 1))
+	if(findtext(act, "-", 1))
 		var/t1 = findtext(act, "-", 1)
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
@@ -12,22 +12,22 @@
 	var/regenerate_icons
 
 	switch(act)
-		if ("me")
+		if("me")
 			if(silent)
 				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return
 			return custom_emote(m_type, message)
 
-		if ("custom")
+		if("custom")
 			return custom_emote(m_type, message)
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
@@ -61,7 +61,7 @@
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = SHOWMSG_VISUAL
 
-		if ("pray")
+		if("pray")
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
@@ -90,12 +90,12 @@
 			mood = "angry"
 			regenerate_icons = 1
 
-		if ("help") //This is an exception
+		if("help") //This is an exception
 			to_chat(src, "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface")
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
-	if ((message && src.stat == CONSCIOUS))
-		if (m_type & SHOWMSG_VISUAL)
+	if((message && src.stat == CONSCIOUS))
+		if(m_type & SHOWMSG_VISUAL)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 				//Foreach goto(703)
@@ -104,7 +104,7 @@
 				O.show_message(message, m_type)
 				//Foreach goto(746)
 
-	if (regenerate_icons)
+	if(regenerate_icons)
 		regenerate_icons()
 
 	return

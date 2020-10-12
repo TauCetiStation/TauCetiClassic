@@ -70,7 +70,7 @@
 	if(usr.incapacitated())
 		return
 
-	if (src.anchored)
+	if(src.anchored)
 		to_chat(usr, "It is anchored in place!")
 		return 0
 

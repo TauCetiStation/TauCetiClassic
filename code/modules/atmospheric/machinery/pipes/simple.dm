@@ -44,7 +44,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
 	// Don't ask me, it happened somehow.
-	if (!istype(loc, /turf))
+	if(!istype(loc, /turf))
 		return TRUE
 
 	var/datum/gas_mixture/environment = loc.return_air()

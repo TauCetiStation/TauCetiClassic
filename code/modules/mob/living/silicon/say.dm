@@ -1,9 +1,9 @@
 /mob/living/silicon/say_quote(text)
 	var/ending = copytext(text, -1)
 
-	if (ending == "?")
+	if(ending == "?")
 		return "queries"
-	else if (ending == "!")
+	else if(ending == "!")
 		return "declares"
 
 	return "states"
@@ -14,22 +14,22 @@
 
 /mob/living/silicon/say_understands(other,datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()
-	if (!speaking)
-		if (iscarbon(other) && !isIAN(other))
+	if(!speaking)
+		if(iscarbon(other) && !isIAN(other))
 			return 1
-		if (issilicon(other))
+		if(issilicon(other))
 			return 1
-		if (isbrain(other))
+		if(isbrain(other))
 			return 1
 	return ..()
 
 /mob/living/silicon/say(var/message)
 
-	/*if (src.client)
+	/*if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
 	message = sanitize(message)
@@ -37,7 +37,7 @@
 	if(!message)
 		return
 
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return say_dead(message)
 
 	if(message[1] == "*")
@@ -57,15 +57,15 @@
 
 
 	//Must be concious to speak
-	if (stat)
+	if(stat)
 		return
 
 	var/verb = say_quote(message)
 
 	//parse radio key and consume it
 	var/message_mode = parse_message_mode(message, "general")
-	if (message_mode)
-		if (message_mode == "general")
+	if(message_mode)
+		if(message_mode == "general")
 			message = trim(copytext(message,2))
 		else
 			message = trim(copytext(message,2 + length(message[2])))
@@ -75,13 +75,13 @@
 		return
 	if(bot_type == IS_ROBOT && message_mode != "binary")
 		var/datum/robot_component/radio/RA = R.get_component("radio")
-		if (!R.cell_use_power(RA.active_usage))
+		if(!R.cell_use_power(RA.active_usage))
 			to_chat(usr, "<span class='warning'>Not enough power to transmit message.</span>")
 			return
 
 	//parse language key and consume it
 	var/datum/language/speaking = parse_language(message)
-	if (speaking)
+	if(speaking)
 		verb = speaking.speech_verb
 		message = trim(copytext(message,2+length_char(speaking.key)))
 
@@ -119,7 +119,7 @@
 		if("general")
 			switch(bot_type)
 				if(IS_AI)
-					if (AI.aiRadio.disabledAi)
+					if(AI.aiRadio.disabledAi)
 						to_chat(src, "<span class='warning'>System Error - Transceiver Disabled</span>")
 						return
 					else
@@ -137,7 +137,7 @@
 			if(message_mode && (message_mode in radiochannels))
 				switch(bot_type)
 					if(IS_AI)
-						if (AI.aiRadio.disabledAi)
+						if(AI.aiRadio.disabledAi)
 							to_chat(src, "<span class='warning'>System Error - Transceiver Disabled</span>")
 							return
 						else
@@ -160,7 +160,7 @@
 
 	message = trim(message)
 
-	if (!message)
+	if(!message)
 		return
 
 	var/obj/machinery/hologram/holopad/T = src.holo
@@ -197,7 +197,7 @@
 
 	message = trim(message)
 
-	if (!message)
+	if(!message)
 		return
 
 	var/area/A = get_area(src)
@@ -225,7 +225,7 @@
 				S.show_message(rendered, SHOWMSG_AUDIO)
 
 
-		else if (S.binarycheck())
+		else if(S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, SHOWMSG_AUDIO)
@@ -239,7 +239,7 @@
 	for (var/mob/M in listening)
 		if(!istype(M, /mob/living/silicon) && !M.robot_talk_understand)
 			heard += M
-	if (length(heard))
+	if(length(heard))
 		var/message_beep
 		verb = "beeps"
 		message_beep = "beep beep beep"

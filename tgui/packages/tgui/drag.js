@@ -70,10 +70,10 @@ const touchRecents = (recents, touchedItem, limit = 50) => {
   let trimmedItem;
   for (let i = 0; i < recents.length; i++) {
     const item = recents[i];
-    if (item === touchedItem) {
+    if(item === touchedItem) {
       continue;
     }
-    if (nextRecents.length < limit) {
+    if(nextRecents.length < limit) {
       nextRecents.push(item);
     }
     else {
@@ -94,7 +94,7 @@ export const storeWindowGeometry = windowKey => {
   const [geometries, trimmedKey] = touchRecents(
     storage.get('geometries') || [],
     windowKey);
-  if (trimmedKey) {
+  if(trimmedKey) {
     storage.remove(trimmedKey);
   }
   storage.set('geometries', geometries);
@@ -103,26 +103,26 @@ export const storeWindowGeometry = windowKey => {
 export const recallWindowGeometry = async (windowKey, options = {}) => {
   // Only recall geometry in fancy mode
   const geometry = options.fancy && storage.get(windowKey);
-  if (geometry) {
+  if(geometry) {
     logger.log('recalled geometry:', geometry);
   }
   let pos = geometry?.pos || options.pos;
   const size = options.size;
   // Set window size
-  if (size) {
+  if(size) {
     setWindowSize(size);
   }
   // Set window position
-  if (pos) {
+  if(pos) {
     await screenOffsetPromise;
     // Constraint window position if monitor lock was set in preferences.
-    if (size && options.locked) {
+    if(size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
     setWindowPosition(pos);
   }
   // Set window position at the center of the screen.
-  else if (size) {
+  else if(size) {
     await screenOffsetPromise;
     const areaAvailable = [
       window.screen.availWidth - Math.abs(screenOffset[0]),
@@ -159,11 +159,11 @@ const constraintPosition = (pos, size) => {
   for (let i = 0; i < 2; i++) {
     const leftBoundary = screenPos[i];
     const rightBoundary = screenPos[i] + screenSize[i];
-    if (pos[i] < leftBoundary) {
+    if(pos[i] < leftBoundary) {
       nextPos[i] = leftBoundary;
       relocated = true;
     }
-    else if (pos[i] + size[i] > rightBoundary) {
+    else if(pos[i] + size[i] > rightBoundary) {
       nextPos[i] = rightBoundary - size[i];
       relocated = true;
     }
@@ -193,7 +193,7 @@ const dragEndHandler = event => {
 };
 
 const dragMoveHandler = event => {
-  if (!dragging) {
+  if(!dragging) {
     return;
   }
   event.preventDefault();
@@ -229,7 +229,7 @@ const resizeEndHandler = event => {
 };
 
 const resizeMoveHandler = event => {
-  if (!resizing) {
+  if(!resizing) {
     return;
   }
   event.preventDefault();

@@ -532,7 +532,7 @@ const KitchenSinkByondUi = (props, context) => {
             onClick={() => setImmediate(() => {
               try {
                 const result = new Function('return (' + code + ')')();
-                if (result && result.then) {
+                if(result && result.then) {
                   logger.log('Promise');
                   result.then(logger.log);
                 }
@@ -576,7 +576,7 @@ const KitchenSinkThemes = (props, context) => {
 };
 
 const KitchenSinkStorage = (props, context) => {
-  if (!window.localStorage) {
+  if(!window.localStorage) {
     return (
       <NoticeBox>
         Local storage is not available.

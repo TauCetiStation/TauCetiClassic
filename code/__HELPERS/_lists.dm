@@ -12,17 +12,17 @@
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
-	if (!total)
+	if(!total)
 		return "[nothing_text]"
-	else if (total == 1)
+	else if(total == 1)
 		return "[input[1]]"
-	else if (total == 2)
+	else if(total == 2)
 		return "[input[1]][and_text][input[2]]"
 	else
 		var/output = ""
 		var/index = 1
 		while (index < total)
-			if (index == total - 1)
+			if(index == total - 1)
 				comma_text = final_comma_text
 
 			output += "[input[index]][comma_text]"
@@ -127,21 +127,21 @@
 	var/total = 0
 	var/item
 	for (item in L)
-		if (!L[item])
+		if(!L[item])
 			L[item] = 1
 		total += L[item]
 
 	total = rand(1, total)
 	for (item in L)
 		total -=L [item]
-		if (total <= 0)
+		if(total <= 0)
 			return item
 
 	return null
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/listfrom)
-	if (listfrom.len > 0)
+	if(listfrom.len > 0)
 		var/picked = pick(listfrom)
 		listfrom -= picked
 		return picked
@@ -149,7 +149,7 @@
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/listfrom)
-	if (listfrom.len > 0)
+	if(listfrom.len > 0)
 		var/picked = listfrom[listfrom.len]
 		listfrom.len--
 		return picked
@@ -495,15 +495,15 @@
 			// Figure out the midpoint, rounding up for fractions.  (BYOND rounds down, so add 1 if necessary.)
 			midway_calc = (low_index + high_index) / 2
 			current_index = round(midway_calc)
-			if (midway_calc > current_index)
+			if(midway_calc > current_index)
 				current_index++
 			current_item = sorted_list[current_index]
 
 			current_item_value = current_item:dd_SortValue()
 			current_sort_object_value = current_sort_object:dd_SortValue()
-			if (current_sort_object_value < current_item_value)
+			if(current_sort_object_value < current_item_value)
 				high_index = current_index - 1
-			else if (current_sort_object_value > current_item_value)
+			else if(current_sort_object_value > current_item_value)
 				low_index = current_index + 1
 			else
 				// current_sort_object == current_item
@@ -514,7 +514,7 @@
 		insert_index = low_index
 
 		// Special case adding to end of list.
-		if (insert_index > sorted_list.len)
+		if(insert_index > sorted_list.len)
 			sorted_list += current_sort_object
 			continue
 
@@ -551,21 +551,21 @@
 			// Figure out the midpoint, rounding up for fractions.  (BYOND rounds down, so add 1 if necessary.)
 			midway_calc = (low_index + high_index) / 2
 			current_index = round(midway_calc)
-			if (midway_calc > current_index)
+			if(midway_calc > current_index)
 				current_index++
 			current_item = sorted_text[current_index]
 
-			if (case_sensitive)
+			if(case_sensitive)
 				sort_result = sorttextEx(current_sort_text, current_item)
 			else
 				sort_result = sorttext(current_sort_text, current_item)
 
 			switch(sort_result)
-				if (1)
+				if(1)
 					high_index = current_index - 1	// current_sort_text < current_item
-				if (-1)
+				if(-1)
 					low_index = current_index + 1	// current_sort_text > current_item
-				if (0)
+				if(0)
 					low_index = current_index		// current_sort_text == current_item
 					break
 
@@ -573,7 +573,7 @@
 		insert_index = low_index
 
 		// Special case adding to end of list.
-		if (insert_index > sorted_text.len)
+		if(insert_index > sorted_text.len)
 			sorted_text += current_sort_text
 			continue
 
@@ -748,14 +748,14 @@
 	return input_key
 
 /proc/compare_list(list/l, list/d)
-	if (!islist(l) || !islist(d))
+	if(!islist(l) || !islist(d))
 		return FALSE
 
-	if (l.len != d.len)
+	if(l.len != d.len)
 		return FALSE
 
 	for (var/i in 1 to l.len)
-		if (l[i] != d[i])
+		if(l[i] != d[i])
 			return FALSE
 
 	return TRUE
@@ -777,8 +777,8 @@
 
     return FALSE
 
-#define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
+#define LAZYINITLIST(L) if(!L) L = list()
+#define UNSETEMPTY(L) if(L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)

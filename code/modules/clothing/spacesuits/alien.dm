@@ -421,7 +421,7 @@
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/H = user
-		if (H.shoes != src)
+		if(H.shoes != src)
 			to_chat(user, "You will have to put on the [src] before you can do that.")
 			return
 
@@ -443,5 +443,5 @@
 
 /obj/item/clothing/shoes/magboots/vox/examine(mob/user)
 	..()
-	if (magpulse)
+	if(magpulse)
 		to_chat(user, "It would be hard to take these off without relaxing your grip first.")//theoretically this message should only be seen by the wearer when the claws are equipped.

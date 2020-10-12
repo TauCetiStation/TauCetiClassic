@@ -18,7 +18,7 @@
 
 //  ========== SOUNDED ==========
 
-		if ("deathgasp")
+		if("deathgasp")
 			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = SHOWMSG_VISUAL
 			to_chat(src, "<span class='warning'>Pretending to be dead is not a good idea. I must fight for my Queen!</span>")
@@ -84,7 +84,7 @@
 			message = "<B>The [src.name]</B>[pick(" happily", " joyfully", "")] jumps!"
 			m_type = SHOWMSG_VISUAL
 
-		if ("pray")
+		if("pray")
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
@@ -92,11 +92,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> [pick("deftly", "quickly", "erotically", "joyfully")] moves its body."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if(!src.restrained())
 				message = "<B>The [src.name]</B> falls on its back and[pick("", " cheerfully", " awkwardly")] rolls on the floor kinda like a kitten. [pick("Really cute.", "Very cute.", "So cute!")]"
 				m_type = SHOWMSG_VISUAL
 				if(prob(50)) // xenomorphs are not kittens!
@@ -107,20 +107,20 @@
 			if(prob(50)) // xenomorphs are not good girls!
 				to_chat(src, "<span class='warning'>You feel shame. [pick("You want to hunt, not waste time", "You're not an obedient girl", "You're not a good girl")].</span>")
 		if("grin")
-			if (!muzzled)
+			if(!muzzled)
 				message = "<B>The [src.name]</B>[pick(" makes something like a smile and", "")] grinning its white[pick(" and crooked", " and slobbering", "")] teeth."
 				m_type = SHOWMSG_VISUAL
 
 //  ========== SPECIAL ==========
 
-		if ("custom")
+		if("custom")
 			var/input = sanitize(input("Choose an emote to display.") as text|null)
-			if (!input)
+			if(!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible", "Hearable")
-			if (input2 == "Visible")
+			if(input2 == "Visible")
 				m_type = SHOWMSG_VISUAL
-			else if (input2 == "Hearable")
+			else if(input2 == "Hearable")
 				if(HAS_TRAIT(src, TRAIT_MUTE))
 					return
 				m_type = SHOWMSG_AUDIO
@@ -128,14 +128,14 @@
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
-		if ("me")
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
+		if("me")
+			if(src.client)
+				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='danger'>You cannot send IC messages(muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if(src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
+			if(stat)
 				return
 			if(!(message))
 				return

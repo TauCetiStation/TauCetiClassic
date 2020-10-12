@@ -18,14 +18,14 @@
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
-	if (node1)
+	if(node1)
 		universal_underlays(node1)
 		if(node2)
 			universal_underlays(node2)
 		else
 			var/node1_dir = get_dir(node1, src)
 			universal_underlays(, node1_dir)
-	else if (node2)
+	else if(node2)
 		universal_underlays(node2)
 	else
 		universal_underlays(, dir)
@@ -56,14 +56,14 @@
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
-	if (node1)
+	if(node1)
 		universal_underlays(node1)
 		if(node2)
 			universal_underlays(node2)
 		else
 			var/node2_dir = turn(get_dir(src, node1), -180)
 			universal_underlays(, node2_dir)
-	else if (node2)
+	else if(node2)
 		universal_underlays(node2)
 		var/node1_dir = turn(get_dir(src, node2), -180)
 		universal_underlays(, node1_dir)
@@ -83,7 +83,7 @@
 			add_underlay_adapter(T, , node_dir, "")
 			add_underlay_adapter(T, node, node_dir, "-supply")
 			add_underlay_adapter(T, , node_dir, "-scrubbers")
-		else if (node.icon_connect_type == "-scrubbers")
+		else if(node.icon_connect_type == "-scrubbers")
 			add_underlay_adapter(T, , node_dir, "")
 			add_underlay_adapter(T, , node_dir, "-supply")
 			add_underlay_adapter(T, node, node_dir, "-scrubbers")

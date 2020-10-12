@@ -176,11 +176,11 @@
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM)
 	. = ..()
-	if (detonator)
+	if(detonator)
 		detonator.Crossed(AM)
 
 /obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
-	if (detonator)
+	if(detonator)
 		detonator.hear_talk(M,msg)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)

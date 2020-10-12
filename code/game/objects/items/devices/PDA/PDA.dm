@@ -77,23 +77,23 @@
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id && prob(90)) //IDs are kept in 90% of the cases
+	if(src.id && prob(90)) //IDs are kept in 90% of the cases
 		src.id.loc = get_turf(src.loc)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
 	..()
 	if(src in user)
-		if (SSshuttle.online)
+		if(SSshuttle.online)
 			to_chat(user, "The time [worldtime2text()] and shuttle ETA [shuttleeta2text()] are displayed in the corner of the screen.")
 		else
 			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
 
 /obj/item/device/pda/AltClick(mob/user)
-	if (can_use(user) && id)
+	if(can_use(user) && id)
 		remove_id()
 		update_icon()
-	else if (can_use(user))
+	else if(can_use(user))
 		verb_remove_pen()
 
 /obj/item/device/pda/medical
@@ -141,7 +141,7 @@
 	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
 
 /obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
-	if (istype(M) && (M.real_name != owner))
+	if(istype(M) && (M.real_name != owner))
 		var/obj/item/weapon/cartridge/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
@@ -296,9 +296,9 @@
 		to_chat(usr, "You can't send PDA messages because you are dead!")
 		return
 	var/list/plist = available_pdas()
-	if (plist)
+	if(plist)
 		var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
-		if (!c) // if the user hasn't selected a PDA file we can't send a message
+		if(!c) // if the user hasn't selected a PDA file we can't send a message
 			return
 		var/selected = plist[c]
 		create_message(usr, selected)
@@ -352,7 +352,7 @@
 
 
 /obj/item/device/pda/silicon/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 	return
@@ -502,7 +502,7 @@
 	data["securityLevel"] = secLevelStr
 
 	data["new_Message"] = newmessage
-	if (SSshuttle.online)
+	if(SSshuttle.online)
 		data["shuttle_eta"] = shuttleeta2text()
 
 	if(mode==2)
@@ -510,7 +510,7 @@
 		var/pdas[0]
 		var/count = 0
 		for (var/obj/item/device/pda/P in PDAs)
-			if (!P.owner||P.toff||P == src||P.hidden)       continue
+			if(!P.owner||P.toff||P == src||P.hidden)       continue
 			if(conversations.Find("\ref[P]"))
 				convopdas.Add(list(list("Name" = "[P]", "Reference" = "\ref[P]", "Detonate" = "[P.detonate]", "inconvo" = "1")))
 			else
@@ -545,7 +545,7 @@
 			var/pressure = environment.return_pressure()
 			var/total_moles = environment.total_moles
 
-			if (total_moles)
+			if(total_moles)
 				var/o2_level = environment.gas["oxygen"] / total_moles
 				var/n2_level = environment.gas["nitrogen"] / total_moles
 				var/co2_level = environment.gas["carbon_dioxide"] / total_moles
@@ -571,7 +571,7 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "pda.tmpl", title, 520, 400)
@@ -612,7 +612,7 @@
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+	//if((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 	if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
 		U.unset_machine()
 		if(ui)
@@ -647,7 +647,7 @@
 					mode = 0
 				else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
 					cartridge.mode = mode
-		if ("Authenticate")//Checks for ID
+		if("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
 			ownjob = id.assignment
@@ -666,14 +666,14 @@
 				owner_account = null		//clear old account information
 				owner_fingerprints = list()	//remove old fingerprints
 		if("Eject")//Ejects the cart, only done from hub.
-			if (!isnull(cartridge))
+			if(!isnull(cartridge))
 				var/turf/T = loc
 				if(ismob(T))
 					T = T.loc
 				cartridge.loc = T
 				mode = 0
 				scanmode = 0
-				if (cartridge.radio)
+				if(cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
 
@@ -721,7 +721,7 @@
 			else if((!isnull(cartridge)) && (cartridge.access_engine))
 				scanmode = 4
 		if("Honk")
-			if ( !(last_honk && world.time < last_honk + 20) )
+			if( !(last_honk && world.time < last_honk + 20) )
 				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
 				last_honk = world.time
 		if("Gas Scan")
@@ -732,9 +732,9 @@
 
 //MESSENGER/NOTE FUNCTIONS===================================
 
-		if ("Edit")
+		if("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
-			if (in_range(src, U) && loc == U && mode == 1)
+			if(in_range(src, U) && loc == U && mode == 1)
 				note = html_decode(n)
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
@@ -762,7 +762,7 @@
 
 		if("Ringtone")
 			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
-			if (t && in_range(src, U) && loc == U)
+			if(t && in_range(src, U) && loc == U)
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
 					ui.close()
@@ -786,11 +786,11 @@
 				if(P == n)
 					active_conversation=P
 					mode=21
-		if ("Send Honk")//Honk virus
+		if("Send Honk")//Honk virus
 			if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 				var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 				if(!isnull(P))
-					if (!P.toff && cartridge.charges > 0)
+					if(!P.toff && cartridge.charges > 0)
 						cartridge.charges--
 						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.honkamt = (rand(15,20))
@@ -803,7 +803,7 @@
 			if(istype(cartridge, /obj/item/weapon/cartridge/mime))
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
-					if (!P.toff && cartridge.charges > 0)
+					if(!P.toff && cartridge.charges > 0)
 						cartridge.charges--
 						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.message_silent = 1
@@ -940,7 +940,7 @@
 					return
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				if(!isnull(P))
-					if (!P.toff && cartridge.charges > 0)
+					if(!P.toff && cartridge.charges > 0)
 						cartridge.charges--
 
 						var/difficulty = 2
@@ -956,7 +956,7 @@
 
 						if(prob(difficulty))
 							U.show_message("<span class='warning'>An error flashes on your [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
-						else if (prob(difficulty * 7))
+						else if(prob(difficulty * 7))
 							U.show_message("<span class='warning'>Energy feeds back into your [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>You hear a negative *beep*</span>", SHOWMSG_AUDIO)
 							ui.close()
 							detonate_act(src)
@@ -998,11 +998,11 @@
 
 //EXTRA FUNCTIONS===================================
 
-	if (mode == 2||mode == 21)//To clear message overlays.
+	if(mode == 2||mode == 21)//To clear message overlays.
 		newmessage = 0
 		update_icon()
 
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 
@@ -1091,8 +1091,8 @@
 		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
 /obj/item/device/pda/proc/remove_id()
-	if (id)
-		if (ismob(loc))
+	if(id)
+		if(ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
@@ -1107,15 +1107,15 @@
 	var/t = sanitize(input(U, "Please enter message", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
-	if (!t || !istype(P))
+	if(!t || !istype(P))
 		return
-	if (!in_range(src, U) && loc != U)
-		return
-
-	if (isnull(P)||P.toff || toff)
+	if(!in_range(src, U) && loc != U)
 		return
 
-	if (last_text && world.time < last_text + 5)
+	if(isnull(P)||P.toff || toff)
+		return
+
+	if(last_text && world.time < last_text + 5)
 		return
 
 	if(!can_use())
@@ -1164,7 +1164,7 @@
 		if(!P.conversations.Find("\ref[src]"))
 			P.conversations.Add("\ref[src]")
 
-		if (prob(15)) //Give the AI a chance of intercepting the message
+		if(prob(15)) //Give the AI a chance of intercepting the message
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
@@ -1175,7 +1175,7 @@
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
-		if (!P.message_silent)
+		if(!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
@@ -1225,7 +1225,7 @@
 	if(issilicon(usr))
 		return
 
-	if ( can_use(usr) )
+	if( can_use(usr) )
 		if(id)
 			remove_id()
 			update_icon()
@@ -1248,10 +1248,10 @@
 	if(issilicon(usr))
 		return
 
-	if ( can_use(usr) )
+	if( can_use(usr) )
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			if (istype(loc, /mob))
+			if(istype(loc, /mob))
 				var/mob/M = loc
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
@@ -1267,17 +1267,17 @@
 
 /obj/item/device/pda/proc/id_check(mob/user, choice)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
-		if (id)
+		if(id)
 			remove_id()
 		else
 			var/obj/item/I = user.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
+			if(istype(I, /obj/item/weapon/card/id))
 				user.drop_item()
 				I.loc = src
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+		if(istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
 			user.drop_item()
 			I.loc = src
@@ -1341,7 +1341,7 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (istype(L, /mob/living/carbon))
+	if(istype(L, /mob/living/carbon))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
@@ -1375,7 +1375,7 @@
 				to_chat(user, data_message)
 
 			if(2)
-				if (!istype(C.dna, /datum/dna))
+				if(!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
 				else if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
@@ -1383,7 +1383,7 @@
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
 				else
 					data_message += text("<span class='notice'>[C]'s Fingerprints: [md5(C.dna.uni_identity)]</span>")
-				if ( !(C.blood_DNA) )
+				if( !(C.blood_DNA) )
 					data_message += "<span class='notice'>No blood found on [C]</span>"
 					if(C.blood_DNA)
 						C.blood_DNA = null
@@ -1424,7 +1424,7 @@
 		if(5)
 			analyze_gases(target, user)
 
-	if (!scanmode && istype(target, /obj/item/weapon/paper) && owner)
+	if(!scanmode && istype(target, /obj/item/weapon/paper) && owner)
 		var/obj/item/weapon/paper/P = target
 		note = P.info
 		to_chat(user, "<span class='notice'>Paper scanned.</span>")//concept of scanning paper copyright brainoblivion 2009
@@ -1447,22 +1447,22 @@
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if (toff)
+	if(toff)
 		to_chat(usr, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in PDAs)
-		if (!P.owner)
+		if(!P.owner)
 			continue
 		else if(P.hidden)
 			continue
-		else if (P == src)
+		else if(P == src)
 			continue
-		else if (P.toff)
+		else if(P.toff)
 			continue
 
 		var/name = P.owner
-		if (name in names)
+		if(name in names)
 			namecounts[name]++
 			name = text("[name] ([namecounts[name]])")
 		else

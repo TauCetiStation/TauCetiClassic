@@ -83,7 +83,7 @@
 		if(M)
 			to_chat(M, "<span class='warning'>Someone is trying to get you out of the [src].</span>")
 
-		if (do_after(user, 50, target = src) && contents.len)
+		if(do_after(user, 50, target = src) && contents.len)
 			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
 			move_out_content()
 

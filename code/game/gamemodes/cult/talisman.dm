@@ -37,7 +37,7 @@
 	if(!iscultist(user))
 		user.examinate(src)
 		return
-	if (!uses)
+	if(!uses)
 		qdel(src)
 		return
 	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
@@ -58,12 +58,12 @@
 	popup.open()
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if (!src || usr.incapacitated() || !iscultist(usr) || !in_range(src, usr))
+	if(!src || usr.incapacitated() || !iscultist(usr) || !in_range(src, usr))
 		return
 	if(!uses)
 		qdel(src)
 		return
-	if (href_list["rune"])
+	if(href_list["rune"])
 		switch(href_list["rune"])
 			if("newtome")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))

@@ -396,7 +396,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 					scan_process = 0
 					scan_name = scanning.name
 					scan_data = "<u>[scanning]</u><br><br>"
-					if (scanning.blood_DNA)
+					if(scanning.blood_DNA)
 						scan_data += "Blood Found:<br>"
 						for(var/blood in scanning.blood_DNA)
 							scan_data += "Blood type: [scanning.blood_DNA[blood]]\nDNA: [blood]<br><br>"
@@ -414,15 +414,15 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 						scan_data += "Fibers/Materials Found:<br>"
 						for(var/data in scanning.suit_fibers)
 							scan_data += "- [data]<br>"
-					if (istype(scanning, /obj/item/device/detective_scanner))
+					if(istype(scanning, /obj/item/device/detective_scanner))
 						scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
 						add_data_scanner(scanning)
-					if (istype(scanning, /obj/item/device/pda))
+					if(istype(scanning, /obj/item/device/pda))
 						var/obj/item/device/pda/PDA = scanning
-						if (PDA?.cartridge?.access_security)
+						if(PDA?.cartridge?.access_security)
 							scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
 							add_data_scanner(scanning)
-					else if (!scanning.fingerprints)
+					else if(!scanning.fingerprints)
 						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 			else
 				temp = "Scan Failed: No Object"
@@ -467,9 +467,9 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 				var/list/data = D.stored[atom]
 				add_data_master(atom,data[1],data[2],data[3],data[4])
 		D.stored = list()
-	else if (istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/PDA = W
-		if (PDA?.cartridge?.access_security && PDA?.cartridge?.stored_data)
+		if(PDA?.cartridge?.access_security && PDA?.cartridge?.stored_data)
 			for(var/atom in PDA.cartridge.stored_data)
 				var/list/data = PDA.cartridge.stored_data[atom]
 				add_data_master(atom, data[1], data[2], data[3], data[4])

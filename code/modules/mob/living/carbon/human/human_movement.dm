@@ -68,8 +68,8 @@
 	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
 		tally += back.slowdown
 
-	if (shoes)
-		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+	if(shoes)
+		if(shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
 			tally += shoes.slowdown
 	else
 		tally += species.speed_mod_no_shoes

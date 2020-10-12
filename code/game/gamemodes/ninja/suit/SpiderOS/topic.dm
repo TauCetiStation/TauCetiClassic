@@ -76,7 +76,7 @@
 							continue
 						to_chat(M, "<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
-				if (!P.message_silent)
+				if(!P.message_silent)
 					playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 					P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 				P.cut_overlays()

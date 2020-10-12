@@ -11,7 +11,7 @@
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implantcase/proc/update()
-	if (src.imp)
+	if(src.imp)
 		src.icon_state = text("implantcase-[]", src.imp.item_color)
 	else
 		src.icon_state = "implantcase-0"
@@ -22,11 +22,11 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
 
-		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
+		if(user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
 			return
 
 		name = "Glass Case"
-		if (t)
+		if(t)
 			name += " - '[t]'"
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -41,8 +41,8 @@
 
 	else if(istype(I, /obj/item/weapon/implanter))
 		var/obj/item/weapon/implanter/IMP = I
-		if (IMP.imp)
-			if (imp || IMP.imp.implanted)
+		if(IMP.imp)
+			if(imp || IMP.imp.implanted)
 				return
 			IMP.imp.forceMove(src)
 			imp = IMP.imp

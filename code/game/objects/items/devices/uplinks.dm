@@ -88,7 +88,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(!active)
 		return
 
-	if (href_list["buy_item"])
+	if(href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
 		var/list/split = splittext(item, ":") // throw away variable

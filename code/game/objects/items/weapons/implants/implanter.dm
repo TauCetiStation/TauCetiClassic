@@ -9,16 +9,16 @@
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
-	if (imp)
+	if(imp)
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
 
 
 /obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
-	if (!iscarbon(M))
+	if(!iscarbon(M))
 		return
-	if (!user || !imp)
+	if(!user || !imp)
 		return
 
 	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
@@ -84,7 +84,7 @@
 	update()
 
 /obj/item/weapon/implanter/compressed/update()
-	if (imp)
+	if(imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if(!c.scanned)
 			icon_state = "cimplanter1"
@@ -96,8 +96,8 @@
 
 /obj/item/weapon/implanter/compressed/attack(mob/M, mob/user)
 	var/obj/item/weapon/implant/compressed/c = imp
-	if (!c)	return
-	if (c.scanned == null)
+	if(!c)	return
+	if(c.scanned == null)
 		to_chat(user, "Please scan an object with the implanter first.")
 		return
 	..()
@@ -105,7 +105,7 @@
 /obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
-		if (c.scanned)
+		if(c.scanned)
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = target

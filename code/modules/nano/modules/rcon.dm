@@ -40,7 +40,7 @@
 	data["hide_breakers"] = hide_breakers
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "rcon.tmpl", "RCON Console", 600, 400)
 		ui.set_initial_data(data)
 		ui.open()

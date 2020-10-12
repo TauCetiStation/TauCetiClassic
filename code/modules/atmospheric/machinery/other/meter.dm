@@ -15,7 +15,7 @@
 /obj/machinery/meter/atom_init()
 	. = ..()
 	SSair.atmos_machinery += src
-	if (!target)
+	if(!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()
@@ -107,12 +107,12 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!iswrench(W))
+	if(!iswrench(W))
 		return ..()
 	if(user.is_busy(src))
 		return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (W.use_tool(src, user, 40, volume = 50))
+	if(W.use_tool(src, user, 40, volume = 50))
 		user.visible_message(
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",

@@ -153,28 +153,28 @@
 		time += -100
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
-		else if (time < 0)
+		else if(time < 0)
 			time = 0
 	if(href_list["neg_changetime"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += -10
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
-		else if (time < 0)
+		else if(time < 0)
 			time = 0
 	if(href_list["changetime"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += 10
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
-		else if (time < 0)
+		else if(time < 0)
 			time = 0
 	if(href_list["changetime_max"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		time += 100
 		if(time > inserted_battery.capacity)
 			time = inserted_battery.capacity
-		else if (time < 0)
+		else if(time < 0)
 			time = 0
 	if(href_list["startup"])
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
@@ -230,7 +230,7 @@
 	..()
 
 /obj/item/weapon/xenoarch_utilizer/attack(mob/living/M, mob/living/user, def_zone)
-	if (!istype(M))
+	if(!istype(M))
 		return
 
 	if(!isnull(inserted_battery) && activated && inserted_battery.battery_effect && inserted_battery.battery_effect.effect == ARTIFACT_EFFECT_TOUCH )

@@ -15,7 +15,7 @@
 
 /obj/machinery/mineral/stacking_unit_console/atom_init_late()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-	if (machine)
+	if(machine)
 		machine.console = src
 	else
 		qdel(src)
@@ -95,7 +95,7 @@
 			break
 
 /obj/machinery/mineral/stacking_machine/process()
-	if (src.output && src.input)
+	if(src.output && src.input)
 		var/turf/T = get_turf(input)
 		for(var/obj/item/O in T.contents)
 			if(!O) return

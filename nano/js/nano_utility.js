@@ -17,9 +17,9 @@ var NanoUtility = function ()
 
 			for (var key in _urlParameters)
 			{
-				if (_urlParameters.hasOwnProperty(key))
+				if(_urlParameters.hasOwnProperty(key))
 				{
-					if (queryString !== '?')
+					if(queryString !== '?')
 					{
 						queryString += ';';
 					}
@@ -29,9 +29,9 @@ var NanoUtility = function ()
 
 			for (var key in parameters)
 			{
-				if (parameters.hasOwnProperty(key))
+				if(parameters.hasOwnProperty(key))
 				{
-					if (queryString !== '?')
+					if(queryString !== '?')
 					{
 						queryString += ';';
 					}
@@ -43,10 +43,10 @@ var NanoUtility = function ()
     }
 } (); 
 
-if (typeof jQuery == 'undefined') {  
+if(typeof jQuery == 'undefined') {  
 	alert('ERROR: Javascript library failed to load!');
 }
-if (typeof doT == 'undefined') {  
+if(typeof doT == 'undefined') {  
 	alert('ERROR: Template engine failed to load!');
 }	
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
 	NanoTemplate.init();
 });
 
-if (!Array.prototype.indexOf)
+if(!Array.prototype.indexOf)
 {
     Array.prototype.indexOf = function(elt /*, from*/)
     {
@@ -67,12 +67,12 @@ if (!Array.prototype.indexOf)
         from = (from < 0)
             ? Math.ceil(from)
             : Math.floor(from);
-        if (from < 0)
+        if(from < 0)
             from += len;
 
         for (; from < len; from++)
         {
-            if (from in this &&
+            if(from in this &&
                 this[from] === elt)
                 return from;
         }
@@ -80,18 +80,18 @@ if (!Array.prototype.indexOf)
     };
 };
 
-if (!String.prototype.format)
+if(!String.prototype.format)
 {
     String.prototype.format = function (args) {
         var str = this;
         return str.replace(String.prototype.format.regex, function(item) {
             var intVal = parseInt(item.substring(1, item.length - 1));
             var replace;
-            if (intVal >= 0) {
+            if(intVal >= 0) {
                 replace = args[intVal];
-            } else if (intVal === -1) {
+            } else if(intVal === -1) {
                 replace = "{";
-            } else if (intVal === -2) {
+            } else if(intVal === -2) {
                 replace = "}";
             } else {
                 replace = "";
@@ -105,7 +105,7 @@ if (!String.prototype.format)
 Object.size = function(obj) {
     var size = 0, key;
     for (var key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
+        if(obj.hasOwnProperty(key)) size++;
     }
     return size;
 };
@@ -122,13 +122,13 @@ String.prototype.toTitleCase = function () {
     var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|vs?\.?|via)$/i;
 
     return this.replace(/([^\W_]+[^\s-]*) */g, function (match, p1, index, title) {
-        if (index > 0 && index + p1.length !== title.length &&
+        if(index > 0 && index + p1.length !== title.length &&
             p1.search(smallWords) > -1 && title.charAt(index - 2) !== ":" &&
             title.charAt(index - 1).search(/[^\s-]/) < 0) {
             return match.toLowerCase();
         }
 
-        if (p1.substr(1).search(/[A-Z]|\../) > -1) {
+        if(p1.substr(1).search(/[A-Z]|\../) > -1) {
             return match;
         }
 
@@ -147,14 +147,14 @@ Function.prototype.inheritsFrom = function (parentClassOrObject) {
     return this;
 };
 
-if (!String.prototype.trim) {
+if(!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
     };
 }
 
 // Replicate the ckey proc from BYOND
-if (!String.prototype.ckey) {
+if(!String.prototype.ckey) {
     String.prototype.ckey = function () {
         return this.replace(/\W/g, '').toLowerCase();
     };

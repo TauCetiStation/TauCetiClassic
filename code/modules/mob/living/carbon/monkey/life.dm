@@ -1,9 +1,9 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
-	if (notransform)
+	if(notransform)
 		return
-	if (update_muts)
+	if(update_muts)
 		update_muts=0
 		domutcheck(src,null,MUTCHK_FORCED)
 	..()
@@ -12,7 +12,7 @@
 	if(loc)
 		environment = loc.return_air()
 
-	if (stat != DEAD && !IS_IN_STASIS(src))
+	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmobs.times_fired%4==2)
@@ -76,24 +76,24 @@
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if ((prob(1) && paralysis < 10))
+	if(disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
+		if((prob(1) && paralysis < 10))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
-	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if ((prob(5) && paralysis <= 1))
+	if(disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
+		if((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
-	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if ((prob(10) && paralysis <= 1))
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")
 				return
-	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
-		if (prob(10))
+	if(disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
+		if(prob(10))
 			stuttering = max(10, stuttering)
 
 /mob/living/carbon/monkey/proc/handle_mutations_and_radiation()
@@ -106,13 +106,13 @@
 				if(51 to 100)
 					adjustFireLoss(-5)
 
-	if ((HULK in mutations) && health <= 25)
+	if((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
 		Weaken(3)
 		emote("collapse")
 
-	if (radiation)
+	if(radiation)
 
 		if(istype(src,/mob/living/carbon/monkey/diona)) //Filthy check. Dionaea don't take rad damage.
 			var/rads = radiation/25
@@ -123,7 +123,7 @@
 			adjustToxLoss(-(rads))
 			return
 
-		if (radiation > 100)
+		if(radiation > 100)
 			radiation = 100
 			Weaken(10)
 			if(!lying)
@@ -210,7 +210,7 @@
 		losebreath = max(2, losebreath + 1)
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
-		if (prob(75)) //High chance of gasping for air
+		if(prob(75)) //High chance of gasping for air
 			spawn emote("gasp")
 		if(istype(loc, /obj))
 			var/obj/location_as_object = loc
@@ -269,16 +269,16 @@
 
 /mob/living/carbon/monkey/proc/get_breath_from_internal(volume_needed)
 	if(internal)
-		if (!contents.Find(internal))
+		if(!contents.Find(internal))
 			internal = null
-		if (!wear_mask || !(wear_mask.flags|MASKINTERNALS) )
+		if(!wear_mask || !(wear_mask.flags|MASKINTERNALS) )
 			internal = null
 		if(internal)
-			if (internals)
+			if(internals)
 				internals.icon_state = "internal1"
 			return internal.remove_air_volume(volume_needed)
 		else
-			if (internals)
+			if(internals)
 				internals.icon_state = "internal0"
 	return null
 
@@ -312,13 +312,13 @@
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
 			emote("gasp")
-		if (O2_pp == 0)
+		if(O2_pp == 0)
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min / O2_pp
 		adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
 		oxygen_used = breath.gas["oxygen"] * ratio / 6
 		oxygen_alert = max(oxygen_alert, 1)
-	/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
+	/*else if(O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 		spawn(0) emote("cough")
 		var/ratio = O2_pp/safe_oxygen_max
 		oxyloss += 5*ratio
@@ -445,10 +445,10 @@
 	if(reagents && reagents.reagent_list.len)
 		reagents.metabolize(src)
 
-	if (drowsyness)
+	if(drowsyness)
 		drowsyness--
 		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
+		if(prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
@@ -545,13 +545,13 @@
 	if(!client)
 		return 0
 
-	if (stat == DEAD || (XRAY in mutations))
+	if(stat == DEAD || (XRAY in mutations))
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
+	else if(stat != DEAD)
 		if(changeling_aug)
 			sight &= ~SEE_TURFS
 			sight |= SEE_MOBS
@@ -565,8 +565,8 @@
 			see_in_dark = 2
 			see_invisible = SEE_INVISIBLE_LIVING
 
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			switch(health)
 				if(100 to INFINITY)
 					healths.icon_state = "health0"
@@ -593,7 +593,7 @@
 	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
-	if (prob(1) && prob(2))
+	if(prob(1) && prob(2))
 		spawn(0)
 			emote("scratch")
 			return

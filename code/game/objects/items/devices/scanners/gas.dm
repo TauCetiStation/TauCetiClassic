@@ -22,15 +22,15 @@
 	set category = "Object"
 	set src in usr
 
-	if (!user.incapacitated())
+	if(!user.incapacitated())
 		advanced_mode = !advanced_mode
 		to_chat(usr, "You toggle advanced gas analysis [advanced_mode ? "on" : "off"].")
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -40,9 +40,9 @@
 /obj/item/device/analyzer/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))

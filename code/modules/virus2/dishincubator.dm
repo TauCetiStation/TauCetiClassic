@@ -89,12 +89,12 @@
 		data["effects"] = effects
 		data["affected_species"] = jointext(dish.virus2.affected_species, ", ")
 
-	if (beaker)
+	if(beaker)
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
 		data["can_breed_virus"] = dish && dish.virus2 && B
 
-		if (B)
-			if (!B.data["virus2"])
+		if(B)
+			if(!B.data["virus2"])
 				B.data["virus2"] = list()
 
 			var/list/virus = B.data["virus2"]
@@ -102,7 +102,7 @@
 				data["blood_already_infected"] = virus[ID]
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		ui = new(user, src, ui_key, "dish_incubator.tmpl", src.name, 400, 600)
 		ui.set_initial_data(data)
 		ui.open()
@@ -110,7 +110,7 @@
 /obj/machinery/disease2/incubator/process()
 	if(working > 0)
 		working--
-		if (!working)
+		if(!working)
 			nanomanager.update_uis(src)
 			icon_state = "incubator"
 		if(!powered(power_channel))
@@ -137,7 +137,7 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	if (href_list["close"])
+	if(href_list["close"])
 		user.unset_machine(src)
 		ui.close()
 		return FALSE
@@ -146,81 +146,81 @@
 	if(!.)
 		return
 
-	if (href_list["ejectchem"])
-		if (beaker)
+	if(href_list["ejectchem"])
+		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
 		return TRUE
 
-	if (href_list["power"])
-		if (dish)
+	if(href_list["power"])
+		if(dish)
 			on = !on
 			icon_state = on ? "incubator_on" : "incubator"
 		return TRUE
 
-	if (href_list["ejectdish"])
-		if (dish)
+	if(href_list["ejectdish"])
+		if(dish)
 			dish.loc = src.loc
 			dish = null
 		return TRUE
 
-	if (href_list["rad"])
-		if (dish)
+	if(href_list["rad"])
+		if(dish)
 			dish.virus2.radiate()
 
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["food"])
-		if (dish && foodsupply>0)
+	if(href_list["food"])
+		if(dish && foodsupply>0)
 			dish.virus2.reactfood()
 			foodsupply-=1
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["toxin"])
-		if (dish && toxinsupply>0)
+	if(href_list["toxin"])
+		if(dish && toxinsupply>0)
 			dish.virus2.reacttoxin()
 			toxinsupply-=1
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["sleeptoxin"])
-		if (dish && sleeptoxinsupply>0)
+	if(href_list["sleeptoxin"])
+		if(dish && sleeptoxinsupply>0)
 			dish.virus2.reactsleeptoxin()
 			sleeptoxinsupply-=1
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["synaptizine"])
-		if (dish && synaptizinesupply>0)
+	if(href_list["synaptizine"])
+		if(dish && synaptizinesupply>0)
 			dish.virus2.reactsynaptizine()
 			synaptizinesupply-=1
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["phoron"])
-		if (dish && phoronsupply>0)
+	if(href_list["phoron"])
+		if(dish && phoronsupply>0)
 			dish.virus2.reactphoron()
 			phoronsupply-=1
 		working = 1
 		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["symptominfo"])
+	if(href_list["symptominfo"])
 		selected = locate(href_list["symptominfo"])
 		return TRUE
 
-	if (href_list["back"])
+	if(href_list["back"])
 		selected = null
 		return TRUE
 
-	if (href_list["virus"])
+	if(href_list["virus"])
 		if(!dish)
 			return TRUE
 

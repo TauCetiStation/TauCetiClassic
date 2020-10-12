@@ -9,7 +9,7 @@ import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 
 const toInputValue = value => {
-  if (isFalsy(value)) {
+  if(isFalsy(value)) {
     return '';
   }
   return value;
@@ -25,50 +25,50 @@ export class Input extends Component {
     this.handleInput = e => {
       const { editing } = this.state;
       const { onInput } = this.props;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
-      if (onInput) {
+      if(onInput) {
         onInput(e, e.target.value);
       }
     };
     this.handleFocus = e => {
       const { editing } = this.state;
-      if (!editing) {
+      if(!editing) {
         this.setEditing(true);
       }
     };
     this.handleBlur = e => {
       const { editing } = this.state;
       const { onChange } = this.props;
-      if (editing) {
+      if(editing) {
         this.setEditing(false);
-        if (onChange) {
+        if(onChange) {
           onChange(e, e.target.value);
         }
       }
     };
     this.handleKeyDown = e => {
       const { onInput, onChange, onEnter } = this.props;
-      if (e.keyCode === 13) {
+      if(e.keyCode === 13) {
         this.setEditing(false);
-        if (onChange) {
+        if(onChange) {
           onChange(e, e.target.value);
         }
-        if (onInput) {
+        if(onInput) {
           onInput(e, e.target.value);
         }
-        if (onEnter) {
+        if(onEnter) {
           onEnter(e, e.target.value);
         }
-        if (this.props.selfClear) {
+        if(this.props.selfClear) {
           e.target.value = '';
         } else {
           e.target.blur();
         }
         return;
       }
-      if (e.keyCode === 27) {
+      if(e.keyCode === 27) {
         this.setEditing(false);
         e.target.value = toInputValue(this.props.value);
         e.target.blur();
@@ -80,11 +80,11 @@ export class Input extends Component {
   componentDidMount() {
     const nextValue = this.props.value;
     const input = this.inputRef.current;
-    if (input) {
+    if(input) {
       input.value = toInputValue(nextValue);
     }
 
-    if (this.props.autoFocus) {
+    if(this.props.autoFocus) {
       setTimeout(() => input.focus(), 1);
     }
   }
@@ -94,7 +94,7 @@ export class Input extends Component {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
     const input = this.inputRef.current;
-    if (input && !editing && prevValue !== nextValue) {
+    if(input && !editing && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
     }
   }

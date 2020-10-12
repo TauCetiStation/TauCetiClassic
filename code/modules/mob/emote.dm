@@ -17,7 +17,7 @@
 		return
 
 
-	if (message)
+	if(message)
 		log_emote("[key_name(src)] : [message]")
 
 		if(findtext(message," snores.") == 0) // Hearing gasp and such every five seconds is not good emotes were not global for a reason.

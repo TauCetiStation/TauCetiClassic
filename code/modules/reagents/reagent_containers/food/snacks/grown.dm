@@ -22,7 +22,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/atom_init(mapload, newpotency)
-	if (!isnull(newpotency))
+	if(!isnull(newpotency))
 		potency = newpotency
 	. = ..()
 	pixel_x = rand(-5.0, 5)
@@ -718,12 +718,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
 	. = ..()
-	if (iscarbon(AM))
+	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 
-		if (ishuman(C))
+		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+			if((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 				return
 
 		C.stop_pulling()

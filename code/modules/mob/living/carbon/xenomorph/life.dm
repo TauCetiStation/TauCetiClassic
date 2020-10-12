@@ -9,7 +9,7 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	if (stat != DEAD && !IS_IN_STASIS(src)) //still "breathing"
+	if(stat != DEAD && !IS_IN_STASIS(src)) //still "breathing"
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 

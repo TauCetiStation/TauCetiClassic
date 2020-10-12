@@ -37,25 +37,25 @@
 /obj/item/weapon/tank/examine(mob/user)
 	..()
 	var/obj/O = src
-	if (istype(src.loc, /obj/item/assembly))
+	if(istype(src.loc, /obj/item/assembly))
 		O = src.loc
-	if (!in_range(src, usr))
-		if (O == src)
+	if(!in_range(src, usr))
+		if(O == src)
 			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
 
-	if (celsius_temperature < 20)
+	if(celsius_temperature < 20)
 		descriptive = "cold"
-	else if (celsius_temperature < 40)
+	else if(celsius_temperature < 40)
 		descriptive = "room temperature"
-	else if (celsius_temperature < 80)
+	else if(celsius_temperature < 80)
 		descriptive = "lukewarm"
-	else if (celsius_temperature < 100)
+	else if(celsius_temperature < 100)
 		descriptive = "warm"
-	else if (celsius_temperature < 300)
+	else if(celsius_temperature < 300)
 		descriptive = "hot"
 	else
 		descriptive = "furiously hot"
@@ -77,7 +77,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		return
 
-	else if (istype(I,/obj/item/latexballon))
+	else if(istype(I,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = I
 		LB.blow(src)
 		add_fingerprint(user)
@@ -90,7 +90,7 @@
 		return ..()
 
 /obj/item/weapon/tank/attack_self(mob/user)
-	if (!(src.air_contents))
+	if(!(src.air_contents))
 		return
 
 	ui_interact(user)
@@ -118,7 +118,7 @@
 			data["maskConnected"] = 1
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
+	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "tanks.tmpl", "Tank", 500, 300)
@@ -131,21 +131,21 @@
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
-	if (usr.stat|| usr.restrained())
+	if(usr.stat|| usr.restrained())
 		return 0
-	if (src.loc != usr)
+	if(src.loc != usr)
 		return 0
 
-	if (href_list["dist_p"])
-		if (href_list["dist_p"] == "reset")
+	if(href_list["dist_p"])
+		if(href_list["dist_p"] == "reset")
 			src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-		else if (href_list["dist_p"] == "max")
+		else if(href_list["dist_p"] == "max")
 			src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
 		else
 			var/cp = text2num(href_list["dist_p"])
 			src.distribute_pressure += cp
 		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
-	if (href_list["stat"])
+	if(href_list["stat"])
 		if(iscarbon(loc))
 			if(internal_switch > world.time)
 				return
@@ -155,7 +155,7 @@
 				C.internal = null
 				C.internals.icon_state = "internal0"
 				to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
-				if (C.internals)
+				if(C.internals)
 					C.internals.icon_state = "internal0"
 				internalsound = 'sound/misc/internaloff.ogg'
 				if(ishuman(C)) // Because only human can wear a spacesuit
@@ -167,7 +167,7 @@
 				if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 					C.internal = src
 					to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
-					if (C.internals)
+					if(C.internals)
 						C.internals.icon_state = "internal1"
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit

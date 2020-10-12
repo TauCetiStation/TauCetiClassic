@@ -71,8 +71,8 @@
 		return
 
 	var/mob/messagesource = M
-	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M, user, src))
+	if(can_operate(M))        //Checks if mob is lying down on table for surgery
+		if(do_surgery(M, user, src))
 			return 0
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
@@ -103,9 +103,9 @@
 					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if(istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
-	if (length(hitsound))
+	if(length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
 	user.lastattacked = M
@@ -250,7 +250,7 @@
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
 			if("fire")
-				if (!(COLD_RESISTANCE in M.mutations))
+				if(!(COLD_RESISTANCE in M.mutations))
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)
 

@@ -35,7 +35,7 @@ export const scale = (value, min, max) => {
  * @return {number}
  */
 export const round = (value, precision) => {
-  if (!value || isNaN(value)) {
+  if(!value || isNaN(value)) {
     return value;
   }
   // helper variables
@@ -49,7 +49,7 @@ export const round = (value, precision) => {
   // isHalf = value % 1 === 0.5 * sgn;
   isHalf = Math.abs(value % 1) >= 0.4999999999854481;
   f = Math.floor(value);
-  if (isHalf) {
+  if(isHalf) {
     // rounds .5 away from zero
     value = f + (sgn > 0);
   }
@@ -83,7 +83,7 @@ export const inRange = (value, range) => {
 export const keyOfMatchingRange = (value, ranges) => {
   for (let rangeName of Object.keys(ranges)) {
     const range = ranges[rangeName];
-    if (inRange(value, range)) {
+    if(inRange(value, range)) {
       return rangeName;
     }
   }

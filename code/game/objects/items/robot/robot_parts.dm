@@ -260,11 +260,11 @@
 			qdel(src)
 		else
 			to_chat(user, "<span class='info'>The MMI must go in after everything else!</span>")
-	else if (istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t

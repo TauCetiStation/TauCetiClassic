@@ -13,7 +13,7 @@
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
-		if (0)
+		if(0)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)]100"
 				item_state = "[initial(item_state)]100"
@@ -164,7 +164,7 @@
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
-		if (0)
+		if(0)
 			if(ratio > 100)
 				icon_state = "[initial(icon_state)]100"
 				item_state = "[initial(item_state)]100"

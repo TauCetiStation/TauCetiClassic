@@ -16,12 +16,12 @@
 	set category = "Object"
 	set src in range(0)
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
+	if(N)
 		amount_per_transfer_from_this = N
 
 /obj/item/weapon/reagent_containers/atom_init()
 	. = ..()
-	if (!possible_transfer_amounts)
+	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 	var/datum/reagents/R = new/datum/reagents(volume)
 	reagents = R
@@ -64,7 +64,7 @@
 	if(offset == current_offset)	// If height of a liquid column isn't changed
 		return current_offset
 
-	if (offset == filler_margin_y)		// if content exist, but not it is enough to 1 pixel
+	if(offset == filler_margin_y)		// if content exist, but not it is enough to 1 pixel
 		offset++		// let it will be 1 pixel
 
 	var/icon/filler = get_filler(offset)	 // get height of a liquid column from cache or generate it

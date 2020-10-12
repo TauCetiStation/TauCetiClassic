@@ -58,7 +58,7 @@
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	set waitfor = FALSE
 
-	if (locate (/obj/structure/table, src.loc))
+	if(locate (/obj/structure/table, src.loc))
 		return
 	var/turf/trg = get_turf(target)
 	var/obj/effect/syringe_gun_dummy/D = new(get_turf(src))
@@ -106,7 +106,7 @@
 				break
 		sleep(1)
 
-		if (D)
+		if(D)
 			QDEL_IN(D, 10)
 
 /obj/item/weapon/gun/syringe/rapidsyringe

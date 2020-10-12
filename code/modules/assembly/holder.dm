@@ -73,8 +73,8 @@
 
 /obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if (src in view(1, user))
-		if (src.secured)
+	if(src in view(1, user))
+		if(src.secured)
 			to_chat(user, "\The [src] is ready!")
 		else
 			to_chat(user, "\The [src] can be attached!")
@@ -225,7 +225,7 @@
 	set category = "Object"
 	set src in usr
 
-	if (!usr.incapacitated())
+	if(!usr.incapacitated())
 		var/obj/item/device/assembly_holder/holder
 		if(istype(src,/obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
@@ -241,7 +241,7 @@
 			to_chat(usr, "<span class='notice'>Clock is ticking already.</span>")
 		else
 			var/ntime = input("Enter desired time in seconds", "Time", "5") as num
-			if (ntime>0 && ntime<1000)
+			if(ntime>0 && ntime<1000)
 				tmr.time = ntime
 				name = initial(name) + "([tmr.time] secs)"
 				to_chat(usr, "<span class='notice'>Timer set to [tmr.time] seconds.</span>")

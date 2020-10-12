@@ -9,7 +9,7 @@
 		flags &= ~OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
-	if (!canopened)
+	if(!canopened)
 		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		flags |= OPENCONTAINER
@@ -20,7 +20,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "drink")) return
 
-	if (!canopened)
+	if(!canopened)
 		to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 		return
 	var/datum/reagents/R = src.reagents
@@ -43,7 +43,7 @@
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
-	else if (!canopened)
+	else if(!canopened)
 		to_chat(user, "<span class='notice'> You need to open the drink!</span>")
 		return
 
@@ -69,7 +69,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 
-	if (!is_open_container())
+	if(!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
 

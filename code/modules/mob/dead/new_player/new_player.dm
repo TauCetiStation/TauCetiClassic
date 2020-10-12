@@ -307,7 +307,7 @@ commented cause polls are kinda broken now, needs refactoring */
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	if (src != usr)
+	if(src != usr)
 		return 0
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
@@ -374,7 +374,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
-	if (SSticker.current_state == GAME_STATE_PLAYING)
+	if(SSticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title

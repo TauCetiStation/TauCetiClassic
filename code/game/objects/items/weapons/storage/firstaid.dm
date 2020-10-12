@@ -26,7 +26,7 @@
 
 /obj/item/weapon/storage/firstaid/fire/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 
 
@@ -42,7 +42,7 @@
 
 /obj/item/weapon/storage/firstaid/regular/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 	for (var/i in 1 to 2)
 		new /obj/item/stack/medical/bruise_pack(src)
@@ -60,7 +60,7 @@
 
 /obj/item/weapon/storage/firstaid/toxin/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 
 
@@ -78,7 +78,7 @@
 
 /obj/item/weapon/storage/firstaid/o2/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 	for (var/i in 1 to 4)
 		new /obj/item/weapon/reagent_containers/pill/dexalin(src)
@@ -94,7 +94,7 @@
 
 /obj/item/weapon/storage/firstaid/adv/atom_init()
 	. = ..()
-	if (empty)
+	if(empty)
 		return
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 	for (var/i in 1 to 3)

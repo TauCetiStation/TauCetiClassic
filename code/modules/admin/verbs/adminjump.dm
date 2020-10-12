@@ -60,11 +60,11 @@
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	if (config.allow_admin_jump)
+	if(config.allow_admin_jump)
 		if(src.mob)
 			var/mob/A = src.mob
 			A.forceMove(locate(tx,ty,tz))

@@ -51,7 +51,7 @@
 
 	. = ""
 
-	if (istype(back_to))
+	if(istype(back_to))
 		. += back_to.make_link("<b>&lt;&lt;&lt;</b>", null, linear)
 
 	. += "[make_link("Refresh")]<br><br>"
@@ -62,13 +62,13 @@
 
 /datum/error_viewer/proc/make_link(linktext, datum/error_viewer/back_to, linear)
 	var/back_to_param = ""
-	if (!linktext)
+	if(!linktext)
 		linktext = name
 
-	if (istype(back_to))
+	if(istype(back_to))
 		back_to_param = ";viewruntime_backto=\ref[back_to]"
 
-	if (linear)
+	if(linear)
 		back_to_param += ";viewruntime_linear=1"
 
 	return "<a href='?_src_=holder;viewruntime=\ref[src][back_to_param]'>[linktext]</a>"
@@ -81,7 +81,7 @@
 /datum/error_viewer/error_cache/show_to(user, datum/error_viewer/back_to, linear)
 	var/html = build_header()
 	html += "<b>[global.total_runtimes]</b> runtimes, <b>[global.total_runtimes_skipped]</b> skipped<br><br>"
-	if (!linear)
+	if(!linear)
 		html += "organized | [make_link("linear", null, 1)]<hr>"
 		var/datum/error_viewer/error_source/error_source
 		for (var/erroruid in error_sources)
@@ -96,12 +96,12 @@
 	browse_to(user, html)
 
 /datum/error_viewer/error_cache/proc/log_error(exception/e, list/desclines, skip_count)
-	if (!istype(e))
+	if(!istype(e))
 		return // Abnormal exception, don't even bother
 
 	var/erroruid = "[e.file][e.line]"
 	var/datum/error_viewer/error_source/error_source = error_sources[erroruid]
-	if (!error_source)
+	if(!error_source)
 		error_source = new(e)
 		error_sources[erroruid] = error_source
 
@@ -109,12 +109,12 @@
 	error_entry.error_source = error_source
 	errors += error_entry
 	error_source.errors += error_entry
-	if (skip_count)
+	if(skip_count)
 		return // Skip notifying admins about skipped errors.
 
 	// Show the error to admins with debug messages turned on, but only if one
 	//  from the same source hasn't been shown too recently
-	if (error_source.next_message_at <= world.time)
+	if(error_source.next_message_at <= world.time)
 		var/const/viewtext = "\[view]" // Nesting these in other brackets went poorly
 		//log_debug("Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b> [error_entry.make_link(viewtext)]")
 		error_source.next_message_at = world.time + 50 SECONDS
@@ -124,14 +124,14 @@
 	var/next_message_at = 0
 
 /datum/error_viewer/error_source/New(exception/e)
-	if (!istype(e))
+	if(!istype(e))
 		name = "\[[time_stamp()]] Uncaught exceptions"
 		return
 
 	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b>"
 
 /datum/error_viewer/error_source/show_to(user, datum/error_viewer/back_to, linear)
-	if (!istype(back_to))
+	if(!istype(back_to))
 		back_to = error_cache
 
 	var/html = build_header(back_to)
@@ -149,7 +149,7 @@
 	var/is_skip_count
 
 /datum/error_viewer/error_entry/New(exception/e, list/desclines, skip_count)
-	if (!istype(e))
+	if(!istype(e))
 		name = "<b>\[[time_stamp()]]</b> Uncaught exception: <b>[html_encode(e.name)]</b>"
 		return
 
@@ -160,26 +160,26 @@
 
 	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b>"
 	exc = e
-	if (istype(desclines))
+	if(istype(desclines))
 		for (var/line in desclines)
 			// There's probably a better way to do this than non-breaking spaces...
 			desc += "<span class='runtime_line'>[html_encode(line)]</span><br>"
 
-	if (usr)
+	if(usr)
 		usr_ref = "\ref[usr]"
 		usr_loc = get_turf(usr)
 
 /datum/error_viewer/error_entry/show_to(user, datum/error_viewer/back_to, linear)
-	if (!istype(back_to))
+	if(!istype(back_to))
 		back_to = error_source
 
 	var/html = build_header(back_to, linear)
 	html += "[name]<div class='runtime'>[desc]</div>"
-	if (usr_ref)
+	if(usr_ref)
 		html += "<br><b>usr</b>: <a href='?_src_=vars;Vars=[usr_ref]'>VV</a>"
 		html += " <a href='?_src_=holder;adminplayeropts=[usr_ref]'>PP</a>"
 		html += " <a href='?_src_=holder;adminplayerobservefollow=[usr_ref]'>Follow</a>"
-		if (istype(usr_loc))
+		if(istype(usr_loc))
 			html += "<br><b>usr.loc</b>: <a href='?_src_=vars;Vars=\ref[usr_loc]'>VV</a>"
 			html += " <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[usr_loc.x];Y=[usr_loc.y];Z=[usr_loc.z]'>JMP</a>"
 

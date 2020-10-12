@@ -110,7 +110,7 @@
 
 	switch(href_list["operation"])
 		if("start")
-			if (on)
+			if(on)
 				turn_off()
 			else
 				turn_on()
@@ -122,7 +122,7 @@
 			patrol_path = null
 		if("freq")
 			var/freq = input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10)) as num
-			if (freq > 0)
+			if(freq > 0)
 				beacon_freq = freq * 10
 		if("screw")
 			screwloose = !screwloose
@@ -133,7 +133,7 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(usr) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
@@ -191,10 +191,10 @@
 		if(loc != oldloc)
 			oldtarget = null
 
-		if (!should_patrol)
+		if(!should_patrol)
 			return
 
-		if (!patrol_path || patrol_path.len < 1)
+		if(!patrol_path || patrol_path.len < 1)
 			find_patrol_path()
 		else
 			patrol_move()
@@ -251,24 +251,24 @@
 	addtimer(CALLBACK(src, .proc/receive_patrol_path), 5)
 
 /obj/machinery/bot/cleanbot/proc/receive_patrol_path()
-	if (!next_dest_loc)
+	if(!next_dest_loc)
 		next_dest_loc = closest_loc
-	if (next_dest_loc)
+	if(next_dest_loc)
 		patrol_path = get_path_to(src, next_dest_loc, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
 
 /obj/machinery/bot/cleanbot/proc/patrol_move()
-	if (patrol_path.len <= 0)
+	if(patrol_path.len <= 0)
 		return
 
 	var/next = patrol_path[1]
 	patrol_path -= next
-	if (next == loc)
+	if(next == loc)
 		return
 
 	var/moved = step_towards(src, next)
-	if (!moved)
+	if(!moved)
 		failed_steps++
-	if (failed_steps > 4)
+	if(failed_steps > 4)
 		patrol_path = null
 		next_dest = null
 		failed_steps = 0
@@ -282,7 +282,7 @@
 		return
 	var/dist = get_dist(src, signal.source.loc)
 	var/closest_dest = null
-	if (dist < closest_dist && signal.source.loc != src.loc)
+	if(dist < closest_dist && signal.source.loc != src.loc)
 		closest_dist = dist
 		closest_loc = signal.source.loc
 		closest_dest = recv
@@ -348,7 +348,7 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -366,11 +366,11 @@
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
 		qdel(src)
 
-	else if (istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 

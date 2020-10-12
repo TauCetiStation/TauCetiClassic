@@ -162,7 +162,7 @@
 	return zone
 
 /proc/stars(text, probability = 25)
-	if (probability >= 100)
+	if(probability >= 100)
 		return text
 
 	text = html_decode(text)
@@ -242,13 +242,13 @@
 		new_letter = letter
 
 		if(prob(80) && (lowertext(new_letter) in stutter_alphabet))
-			if (prob(10))
+			if(prob(10))
 				new_letter = "[new_letter]-[new_letter]-[new_letter]-[new_letter]"
 			else
-				if (prob(20))
+				if(prob(20))
 					new_letter = "[new_letter]-[new_letter]-[new_letter]"
 				else
-					if (prob(5))
+					if(prob(5))
 						new_letter = ""
 					else
 						new_letter = "[new_letter]-[new_letter]"
@@ -334,7 +334,7 @@
 
 /proc/findname(msg)
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[msg]"))
+		if(M.real_name == text("[msg]"))
 			return 1
 	return 0
 

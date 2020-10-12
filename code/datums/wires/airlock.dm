@@ -106,7 +106,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 					A.secondsElectrified = 0
 			A.diag_hud_set_electrified()
 
-		if (AIRLOCK_WIRE_SAFETY)
+		if(AIRLOCK_WIRE_SAFETY)
 			A.safe = mended
 
 		if(AIRLOCK_WIRE_SPEED)

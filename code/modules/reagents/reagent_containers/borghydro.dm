@@ -72,10 +72,10 @@
 	if(!R.total_volume)
 		to_chat(user, "<span class='warning'>The injector is empty.</span>")
 		return
-	if (!istype(M))
+	if(!istype(M))
 		return
 
-	if (R.total_volume && M.try_inject(user, TRUE, TRUE, TRUE))
+	if(R.total_volume && M.try_inject(user, TRUE, TRUE, TRUE))
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)

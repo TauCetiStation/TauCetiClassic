@@ -76,13 +76,13 @@
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 	else
 		msg += "<span class='warning'>"
-		if (getBruteLoss())
-			if (getBruteLoss() < 30)
+		if(getBruteLoss())
+			if(getBruteLoss() < 30)
 				msg += "It has minor bruising.\n"
 			else
 				msg += "<B>It has severe bruising!</B>\n"
-		if (getFireLoss())
-			if (getFireLoss() < 30)
+		if(getFireLoss())
+			if(getFireLoss() < 30)
 				msg += "It has minor burns.\n"
 			else
 				msg += "<B>It has severe burns!</B>\n"
@@ -90,7 +90,7 @@
 			msg += "[t_He] [t_is] covered in something flammable.\n"
 		if(fire_stacks < 0)
 			msg += "[t_He] look[t_is] a little soaked.\n"
-		if (stat)
+		if(stat)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		msg += "</span>"
 

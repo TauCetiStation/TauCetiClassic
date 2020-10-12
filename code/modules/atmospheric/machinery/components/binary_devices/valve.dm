@@ -84,7 +84,7 @@
 	update_icon(1)
 	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
-	if (open)
+	if(open)
 		close()
 	else
 		open()

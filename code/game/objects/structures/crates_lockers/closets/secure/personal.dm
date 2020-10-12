@@ -100,12 +100,12 @@
 		return
 	if(ishuman(usr))
 		src.add_fingerprint(usr)
-		if (src.locked || !src.registered_name)
+		if(src.locked || !src.registered_name)
 			to_chat(usr, "<span class='warning'>You need to unlock it first.</span>")
-		else if (src.broken)
+		else if(src.broken)
 			to_chat(usr, "<span class='warning'>It appears to be broken.</span>")
 		else
-			if (src.opened)
+			if(src.opened)
 				if(!src.close())
 					return
 			src.locked = 1

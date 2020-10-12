@@ -80,10 +80,10 @@
 		src.update_icon()
 		return 1
 
-	if (iswelder(O))
+	if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (WT.use(0))
+		if(WT.use(0))
 			if(health < maxHealth)
 				health += pick(1,1,1,2,2,3)
 				if(health > maxHealth)
@@ -96,7 +96,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
-		if (!mmi)
+		if(!mmi)
 			to_chat(user, "<span class='warning'>There's no reason to swipe your ID - the spiderbot has no brain to remove.</span>")
 			return 0
 
@@ -125,7 +125,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(O.force)
 			var/damage = O.force
-			if (O.damtype == HALLOSS)
+			if(O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
 			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
@@ -141,7 +141,7 @@
 		src.name = "Spider-bot ([M.brainmob.name])"
 
 /mob/living/simple_animal/spiderbot/emag_act(mob/user)
-	if (emagged)
+	if(emagged)
 		to_chat(user, "<span class='warning'>[src] is already overloaded - better run.</span>")
 		return FALSE
 	else
@@ -218,7 +218,7 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Spiderbot"
 
-	if (layer != TURF_LAYER+0.2)
+	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else

@@ -63,7 +63,7 @@
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
-	if (!(dna))
+	if(!(dna))
 		if(gender == NEUTER)
 			gender = pick(MALE, FEMALE)
 		dna = new /datum/dna( null )
@@ -143,7 +143,7 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if (bodytemperature < 283.222)
+	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
@@ -178,33 +178,33 @@
 
 	switch(severity)
 		if(1.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(200)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(2.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(3.0)
-			if (stat != DEAD)
+			if(stat != DEAD)
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-			if (prob(50))
+			if(prob(50))
 				Paralyse(10)
 		else
 	return
 
 /mob/living/carbon/monkey/blob_act()
-	if (stat != DEAD)
+	if(stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	if (prob(50))
+	if(prob(50))
 		Paralyse(10)
-	if (stat == DEAD && client)
+	if(stat == DEAD && client)
 		gib()
 		return
-	if (stat == DEAD && !client)
+	if(stat == DEAD && !client)
 		gibs(loc, viruses)
 		qdel(src)
 		return

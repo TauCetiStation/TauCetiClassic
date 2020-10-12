@@ -149,12 +149,12 @@
 					\n<b>Slime scan results:</b>\
 					\n<span class='notice'>[T.colour] [istype(T,/mob/living/carbon/slime/adult) ? "adult" : "baby"] slime</span>\
 					\nNutrition: [T.nutrition]/[T.get_max_nutrition()]"
-	if (T.nutrition < T.get_starve_nutrition())
+	if(T.nutrition < T.get_starve_nutrition())
 		to_render += "\n<span class='warning'>Warning: slime is starving!</span>"
-	else if (T.nutrition < T.get_hunger_nutrition())
+	else if(T.nutrition < T.get_hunger_nutrition())
 		to_render += "\n<span class='warning'>Warning: slime is hungry</span>"
 	to_render += "\nElectric charge strength: [T.powerlevel]\nHealth: [round(T.health/T.maxHealth,0.01)*100]%"
-	if (T.cores > 1)
+	if(T.cores > 1)
 		to_render += "\nMultiple cores detected"
 	to_render += "\nGrowth progress: [T.amount_grown]/[T.max_grown]"
 	to_chat(user, to_render + "\n========================")
@@ -247,7 +247,7 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
-			if (!QDELETED(food))
+			if(!QDELETED(food))
 				food.LAssailant = C
 				--X.monkeys
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
@@ -348,14 +348,14 @@
 
 //Scans slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/carbon/slime/S)
-	if (!cameranet.checkTurfVis(get_turf(S)))
+	if(!cameranet.checkTurfVis(get_turf(S)))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 
-	if (istype(get_area(S), E.allowed_area_type))
+	if(istype(get_area(S), E.allowed_area_type))
 		slime_scan(S, C)
 
 //Picks up slime
@@ -367,7 +367,7 @@
 	var/mob/living/C = user
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	if (istype(get_area(S), E.allowed_area_type))
+	if(istype(get_area(S), E.allowed_area_type))
 		if(S.stat)
 			if(!X.connected_recycler)
 				to_chat(C, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
@@ -397,7 +397,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/turfarea = get_area(T)
-	if (istype(turfarea, E.allowed_area_type))
+	if(istype(turfarea, E.allowed_area_type))
 		for(var/mob/living/carbon/slime/S in X.stored_slimes)
 			S.forceMove(T)
 			if(istype(S, /mob/living/carbon/slime/adult))
@@ -417,10 +417,10 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 
-	if (istype(get_area(T), E.allowed_area_type))
+	if(istype(get_area(T), E.allowed_area_type))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
-			if (!QDELETED(food))
+			if(!QDELETED(food))
 				food.LAssailant = C
 				--X.monkeys
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
@@ -441,7 +441,7 @@
 		to_chat(C, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
 
-	if (istype(get_area(M), E.allowed_area_type))
+	if(istype(get_area(M), E.allowed_area_type))
 		if(!M.stat)
 			return
 		M.visible_message("<span class='notice'>[M] vanishes!</span>")

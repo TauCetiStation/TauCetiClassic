@@ -4,8 +4,8 @@
 	invisibility = 70
 
 /obj/machinery/power/dynamo/process()
-	if (raw_power>0)
-		if (raw_power>10)
+	if(raw_power>0)
+		if(raw_power>10)
 			raw_power -= 3
 			add_avail(power_produced * 2)
 		else

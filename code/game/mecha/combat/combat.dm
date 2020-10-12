@@ -40,7 +40,7 @@
 			*/
 			if(istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
-	//			if (M.health <= 0) return
+	//			if(M.health <= 0) return
 
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 				if(BP)

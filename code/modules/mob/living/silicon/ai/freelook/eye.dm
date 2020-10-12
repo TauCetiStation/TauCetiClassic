@@ -34,7 +34,7 @@
 	. = ..()
 
 /mob/camera/Eye/Destroy()
-	if (ghostimage)
+	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
 		qdel(ghostimage)

@@ -16,7 +16,7 @@ const setupServer = async () => {
     hot: !noHot,
   });
   // Reload cache once
-  if (reloadOnce) {
+  if(reloadOnce) {
     const bundleDir = config.output.path;
     await reloadByondCache(bundleDir);
     return;

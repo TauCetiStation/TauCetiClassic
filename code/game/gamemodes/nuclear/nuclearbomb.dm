@@ -43,20 +43,20 @@ var/bomb_set
 	return ..()
 
 /obj/machinery/nuclearbomb/process()
-	if (timing > 0) // because explode() sets it to -1, which is TRUE.
+	if(timing > 0) // because explode() sets it to -1, which is TRUE.
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
-		if (timeleft <= 0)
+		if(timeleft <= 0)
 			explode()
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 
-	if (isscrewdriver(O))
+	if(isscrewdriver(O))
 		src.add_fingerprint(user)
-		if (removal_stage == 5)
-			if (src.opened == 0)
+		if(removal_stage == 5)
+			if(src.opened == 0)
 				src.opened = 1
 				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
@@ -65,8 +65,8 @@ var/bomb_set
 				src.opened = 0
 				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
-		else if (src.auth)
-			if (src.opened == 0)
+		else if(src.auth)
+			if(src.opened == 0)
 				src.opened = 1
 				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
@@ -76,35 +76,35 @@ var/bomb_set
 				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 		else
-			if (src.opened == 0)
+			if(src.opened == 0)
 				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
-			if (src.opened == 1)
+			if(src.opened == 1)
 				src.opened = 0
 				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 			flick("nuclearbombc", src)
 
 		return
-	if (is_wire_tool(O) && opened)
+	if(is_wire_tool(O) && opened)
 		if(wires.interact(user))
 			return
 
-	if (src.extended)
-		if (istype(O, /obj/item/weapon/disk/nuclear))
+	if(src.extended)
+		if(istype(O, /obj/item/weapon/disk/nuclear))
 			usr.drop_item()
 			O.loc = src
 			src.auth = O
 			src.add_fingerprint(user)
 			return
 
-	if (src.anchored)
+	if(src.anchored)
 		switch(removal_stage)
 			if(0)
 				if(iswelder(O))
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
-					if (WT.get_fuel() < 5) // uses up 5 fuel.
+					if(WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
 						return
 					if(user.is_busy())
@@ -131,7 +131,7 @@ var/bomb_set
 
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
-					if (WT.get_fuel() < 5) // uses up 5 fuel.
+					if(WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
 						return
 					if(user.is_busy())
@@ -171,18 +171,18 @@ var/bomb_set
 	if(.)
 		return
 
-	if (!extended)
-		if (!ishuman(user) && !isobserver(user))
+	if(!extended)
+		if(!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
-		if (!istype(get_area(src), /area/station)) // If outside of station
+		if(!istype(get_area(src), /area/station)) // If outside of station
 			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
 			return
-	if (deployable)
+	if(deployable)
 		if(removal_stage < 5)
 			anchored = TRUE
 			visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
@@ -198,20 +198,20 @@ var/bomb_set
 		return
 
 	var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (auth ? "++++++++++" : "----------"))
-	if (auth)
-		if (yes_code)
+	if(auth)
+		if(yes_code)
 			dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\n[] Safety: <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (timing ? "Func/Set" : "Functional"), (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), src, src, src, timeleft, src, src, (safety ? "On" : "Off"), src, (anchored ? "Engaged" : "Off"), src)
 		else
 			dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"), src)
 	else
-		if (timing)
+		if(timing)
 			dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
 		else
 			dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
 	var/message = "AUTH"
-	if (auth)
+	if(auth)
 		message = text("[]", code)
-		if (yes_code)
+		if(yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
 
@@ -224,13 +224,13 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (usr.incapacitated())
+	if(usr.incapacitated())
 		return
-	if (!ishuman(usr))
+	if(!ishuman(usr))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 		return 1
 
-	if (src.deployable)
+	if(src.deployable)
 		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
@@ -249,52 +249,52 @@ var/bomb_set
 	if(!extended)
 		return
 
-	if (href_list["auth"])
-		if (src.auth)
+	if(href_list["auth"])
+		if(src.auth)
 			src.auth.loc = src.loc
 			src.yes_code = 0
 			src.auth = null
 		else
 			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/disk/nuclear))
+			if(istype(I, /obj/item/weapon/disk/nuclear))
 				usr.drop_item()
 				I.loc = src
 				src.auth = I
-	if (src.auth)
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (src.code == src.r_code)
+	if(src.auth)
+		if(href_list["type"])
+			if(href_list["type"] == "E")
+				if(src.code == src.r_code)
 					src.yes_code = 1
 					src.code = null
 				else
 					src.code = "ERROR"
 			else
-				if (href_list["type"] == "R")
+				if(href_list["type"] == "R")
 					src.yes_code = 0
 					src.code = null
 				else
 					lastentered = text("[]", href_list["type"])
-					if (text2num(lastentered) == null)
+					if(text2num(lastentered) == null)
 						var/turf/LOC = get_turf(usr)
 						message_admins("[key_name_admin(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "[ADMIN_JMP(LOC)]" : "null"])", 0)
 						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
 					else
 						src.code += lastentered
-						if (length(src.code) > 5)
+						if(length(src.code) > 5)
 							src.code = "ERROR"
-		if (src.yes_code)
-			if (href_list["time"])
+		if(src.yes_code)
+			if(href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
 				src.timeleft = clamp(round(timeleft), TIMER_MIN, TIMER_MAX)
-			if (href_list["timer"])
-				if (src.timing == -1.0)
+			if(href_list["timer"])
+				if(src.timing == -1.0)
 					return FALSE
-				if (src.safety)
+				if(src.safety)
 					to_chat(usr, "<span class = 'red'>The safety is still on.</span>")
 					return FALSE
 				src.timing = !( src.timing )
-				if (src.timing)
+				if(src.timing)
 					if(!src.lighthack)
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
@@ -308,12 +308,12 @@ var/bomb_set
 					bomb_set = 0
 					if(!src.lighthack)
 						src.icon_state = "nuclearbomb1"
-			if (href_list["safety"])
+			if(href_list["safety"])
 				src.safety = !( src.safety )
 				if(safety)
 					src.timing = 0
 					bomb_set = 0
-		if (href_list["anchor"])
+		if(href_list["anchor"])
 
 			//if(removal_stage == 5)
 			//	src.anchored = 0
@@ -336,14 +336,14 @@ var/bomb_set
 	return
 
 /obj/machinery/nuclearbomb/blob_act()
-	if (src.timing == -1.0)
+	if(src.timing == -1.0)
 		return
 	else
 		return ..()
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
-	if (src.safety)
+	if(src.safety)
 		src.timing = 0
 		return
 	if(detonated)
@@ -355,7 +355,7 @@ var/bomb_set
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
-	if (SSticker && SSticker.mode)
+	if(SSticker && SSticker.mode)
 		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
 

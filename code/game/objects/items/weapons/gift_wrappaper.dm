@@ -42,14 +42,14 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
 	to_chat(user, "<span class='notice'>You cant move.</span>")
 
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!iswirecutter(W))
+	if(!iswirecutter(W))
 		to_chat(user, "<span class='notice'>I need wirecutters for that.</span>")
 		return
 
@@ -57,7 +57,7 @@
 
 	for(var/mob/M in src) //Should only be one but whatever.
 		M.loc = src.loc
-		if (M.client)
+		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
@@ -145,7 +145,7 @@
 	if(I.w_class < ITEM_SIZE_LARGE)
 		if(iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
-			if (src.amount < a_used)
+			if(src.amount < a_used)
 				to_chat(user, "<span class='notice'>You need more paper!</span>")
 				return
 			else
@@ -165,7 +165,7 @@
 				#ifdef NEWYEARCONTENT
 				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
 				#endif
-			if (src.amount <= 0)
+			if(src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)
 				return
@@ -181,15 +181,15 @@
 		to_chat(user, "<span class='notice'>There is about [amount] square units of paper left!</span>")
 
 /obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
-	if (!istype(target, /mob/living/carbon/human)) return
+	if(!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (H.incapacitated())
-		if (src.amount > 2)
+	if(H.incapacitated())
+		if(src.amount > 2)
 			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
 
-			if (H.client)
+			if(H.client)
 				H.client.perspective = EYE_PERSPECTIVE
 				H.client.eye = present
 

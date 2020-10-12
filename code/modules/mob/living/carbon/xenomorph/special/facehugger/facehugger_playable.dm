@@ -55,7 +55,7 @@
 
 /mob/living/carbon/xenomorph/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
+	if(istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
 
@@ -67,7 +67,7 @@
 	if(stat != CONSCIOUS)
 		return
 
-	if (layer != TURF_LAYER + 0.2)
+	if(layer != TURF_LAYER + 0.2)
 		layer = TURF_LAYER + 0.2
 		visible_message("<span class='danger'>[src] scurries to the ground!</span>", "<span class='notice'>You are now hiding.</span>")
 	else
@@ -75,7 +75,7 @@
 		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='notice'>You have stopped hiding.</span>")
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
-	if (W == r_hand)
+	if(W == r_hand)
 		r_hand = null
 		update_inv_r_hand(0)
 
@@ -156,7 +156,7 @@
 
 /mob/living/carbon/xenomorph/facehugger/update_hud()
 	//TODO
-	if (client)
+	if(client)
 //		if(other)	client.screen |= hud_used.other		//Not used
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents

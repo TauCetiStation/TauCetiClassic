@@ -71,7 +71,7 @@
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			qdel(src)
 		return
-	else if (W)
+	else if(W)
 		src.add_fingerprint(user)
 		src.health -= W.force
 		user.SetNextMove(CLICK_CD_MELEE)
@@ -86,7 +86,7 @@
 
 
 /obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
+	if(src.health <= 0)
 		if(!(stat & BROKEN))
 			broken()
 		else
@@ -153,14 +153,14 @@
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
-			if (prob(25))
+			if(prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				broken()
 	return
 
@@ -310,7 +310,7 @@
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))
-			if (src.stat & BROKEN)
+			if(src.stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
@@ -370,7 +370,7 @@
 /obj/machinery/power/solar_control/ui_interact(mob/user)
 	if(stat & (BROKEN | NOPOWER))
 		return
-	if (!in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if(!in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=solcon")
 		return
@@ -487,16 +487,16 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				broken()
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				broken()
 	return
 
 
 /obj/machinery/power/solar_control/blob_act()
-	if (prob(75))
+	if(prob(75))
 		broken()
 		src.density = 0
 

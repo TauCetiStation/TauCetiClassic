@@ -39,7 +39,7 @@ export const formatSiUnit = (
   minBase1000 = -SI_BASE_INDEX,
   unit = ''
 ) => {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+  if(typeof value !== 'number' || !Number.isFinite(value)) {
     return value;
   }
   const realBase10 = Math.floor(Math.log10(value));
@@ -69,24 +69,24 @@ export const formatPower = (value, minBase1000 = 0) => {
 };
 
 export const formatMoney = (value, precision = 0) => {
-  if (!Number.isFinite(value)) {
+  if(!Number.isFinite(value)) {
     return value;
   }
   // Round the number and make it fixed precision
   let fixed = round(value, precision);
-  if (precision > 0) {
+  if(precision > 0) {
     fixed = toFixed(value, precision);
   }
   fixed = String(fixed);
   // Place thousand separators
   const length = fixed.length;
   let indexOfPoint = fixed.indexOf('.');
-  if (indexOfPoint === -1) {
+  if(indexOfPoint === -1) {
     indexOfPoint = length;
   }
   let result = '';
   for (let i = 0; i < length; i++) {
-    if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
+    if(i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
       // Thin space
       result += '\u2009';
     }

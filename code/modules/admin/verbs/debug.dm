@@ -140,7 +140,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!( istype(T, /turf) ))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
@@ -392,7 +392,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	//todo: safe gate ref in map datum
 	for(var/obj/machinery/gateway/center/G in gateways_list)
-		if (G.name == "Junkyard Gateway")
+		if(G.name == "Junkyard Gateway")
 			G.toggleon()
 
 	log_admin("[key_name(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
@@ -432,12 +432,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!SSticker)
+	if(!SSticker)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if (H.wear_id)
+		if(H.wear_id)
 			var/obj/item/weapon/card/id/id = H.wear_id
 			if(istype(H.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = H.wear_id
@@ -664,20 +664,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"marisa wizard"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
-	if (isnull(dresscode))
+	if(isnull(dresscode))
 		return
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
+		if(istype(I, /obj/item/weapon/implant))
 			continue
 		qdel(I)
 
 	var/obj/item/weapon/card/id/spawned_card = null // If you want them to have an account with money.
 
 	switch(dresscode)
-		if ("strip")
+		if("strip")
 			//do nothing
-		if ("standard space gear")
+		if("standard space gear")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
@@ -688,8 +688,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), SLOT_WEAR_MASK)
 			J.Topic(null, list("stat" = 1))
-		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
-			if (dresscode=="tournament standard red")
+		if("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			if(dresscode=="tournament standard red")
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/red(M), SLOT_W_UNIFORM)
 			else
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/color/green(M), SLOT_W_UNIFORM)
@@ -703,7 +703,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), SLOT_R_STORE)
 
 
-		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
+		if("tournament gangster") //gangster are supposed to fight each other. --rastaf0
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 
@@ -714,7 +714,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), SLOT_R_HAND)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), SLOT_L_STORE)
 
-		if ("tournament chef") //Steven Seagal FTW
+		if("tournament chef") //Steven Seagal FTW
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chef(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
@@ -725,7 +725,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), SLOT_R_STORE)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), SLOT_S_STORE)
 
-		if ("tournament janitor")
+		if("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 			var/obj/item/weapon/storage/backpack/backpack = new(M)
@@ -748,14 +748,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), SLOT_IN_BACKPACK)
 			M.equip_to_slot_or_del(new /obj/item/stack/tile/plasteel(M), SLOT_IN_BACKPACK)
 
-		if ("pirate")
+		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), SLOT_HEAD)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), SLOT_R_HAND)
 
-		if ("space pirate")
+		if("space pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(M), SLOT_WEAR_SUIT)
@@ -764,7 +764,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), SLOT_R_HAND)
 
-		if ("soviet soldier")
+		if("soviet soldier")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka(M), SLOT_HEAD)
@@ -2054,18 +2054,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "<li><u>[path]</u><ul>"
-		if (I.failures)
+		if(I.failures)
 			dellog += "<li>Failures: [I.failures]</li>"
 		dellog += "<li>qdel() Count: [I.qdels]</li>"
 		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
-		if (I.hard_deletes)
+		if(I.hard_deletes)
 			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
 			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
-		if (I.slept_destroy)
+		if(I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
-		if (I.no_respect_force)
+		if(I.no_respect_force)
 			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
-		if (I.no_hint)
+		if(I.no_hint)
 			dellog += "<li>No hint: [I.no_hint]</li>"
 		dellog += "</ul></li>"
 

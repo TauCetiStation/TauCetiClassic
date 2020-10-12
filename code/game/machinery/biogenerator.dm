@@ -191,7 +191,7 @@
 		menustat = "void"
 
 /obj/machinery/biogenerator/proc/check_cost(cost)
-	if (cost > points)
+	if(cost > points)
 		menustat = "nopoints"
 		return 1
 	else
@@ -205,28 +205,28 @@
 /obj/machinery/biogenerator/proc/create_product(create)
 	switch(create)
 		if("milk")
-			if (check_cost(20/efficiency)) return 0
+			if(check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
 		if("cream")
-			if (check_cost(30/efficiency)) return 0
+			if(check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
-			if (check_cost(80/efficiency)) return 0
+			if(check_cost(80/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("monkey")
 			if(check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
-			if (check_cost(10/efficiency)) return 0
+			if(check_cost(10/efficiency)) return 0
 			else new/obj/item/nutrient/ez(src.loc)
 		if("l4z")
-			if (check_cost(20/efficiency)) return 0
+			if(check_cost(20/efficiency)) return 0
 			else new/obj/item/nutrient/l4z(src.loc)
 		if("rh")
-			if (check_cost(25/efficiency)) return 0
+			if(check_cost(25/efficiency)) return 0
 			else new/obj/item/nutrient/rh(src.loc)
 		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
-			if (check_cost(50/efficiency)) return 0
+			if(check_cost(50/efficiency)) return 0
 			else
 				new/obj/item/nutrient/ez(src.loc)
 				new/obj/item/nutrient/ez(src.loc)
@@ -234,7 +234,7 @@
 				new/obj/item/nutrient/ez(src.loc)
 				new/obj/item/nutrient/ez(src.loc)
 		if("l4z5")
-			if (check_cost(100/efficiency)) return 0
+			if(check_cost(100/efficiency)) return 0
 			else
 				new/obj/item/nutrient/l4z(src.loc)
 				new/obj/item/nutrient/l4z(src.loc)
@@ -242,7 +242,7 @@
 				new/obj/item/nutrient/l4z(src.loc)
 				new/obj/item/nutrient/l4z(src.loc)
 		if("rh5")
-			if (check_cost(125/efficiency)) return 0
+			if(check_cost(125/efficiency)) return 0
 			else
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
@@ -250,7 +250,7 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 		if("meat5")
-			if (check_cost(400/efficiency)) return 0
+			if(check_cost(400/efficiency)) return 0
 			else
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
@@ -258,37 +258,37 @@
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("wallet")
-			if (check_cost(100/efficiency)) return 0
+			if(check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
 		//if("bkbag")
-		//	if (check_cost(200/efficiency)) return 0
+		//	if(check_cost(200/efficiency)) return 0
 		//	else new/obj/item/weapon/storage/bag/books(src.loc)
 		if("ptbag")
-			if (check_cost(200/efficiency)) return 0
+			if(check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/plants(src.loc)
 		if("mnbag")
-			if (check_cost(200/efficiency)) return 0
+			if(check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/ore(src.loc)
 		if("gloves")
-			if (check_cost(250/efficiency)) return 0
+			if(check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("bshoes")
-			if (check_cost(250/efficiency)) return 0
+			if(check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/shoes/brown(src.loc)
 		if("tbelt")
-			if (check_cost(300/efficiency)) return 0
+			if(check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
 		if("satchel")
-			if (check_cost(400/efficiency)) return 0
+			if(check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("cashbag")
-			if (check_cost(400/efficiency)) return 0
+			if(check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/cash(src.loc)
 		if("jacket")
-			if (check_cost(500/efficiency)) return 0
+			if(check_cost(500/efficiency)) return 0
 			else new/obj/item/clothing/suit/jacket/leather(src.loc)
 		if("overcoat")
-			if (check_cost(1000/efficiency)) return 0
+			if(check_cost(1000/efficiency)) return 0
 			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 	processing = 0
 	menustat = "complete"
