@@ -392,8 +392,8 @@
 
 	mymob.nutrition_icon = new
 	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
-	mymob.nutrition_icon.name = "nutrition"
 	mymob.nutrition_icon.icon_state = "starving"
+	mymob.nutrition_icon.name = "nutrition"
 	mymob.nutrition_icon.screen_loc = ui_nutrition
 
 	mymob.pullin = new /obj/screen/pull()
