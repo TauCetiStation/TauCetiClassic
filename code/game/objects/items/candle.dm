@@ -91,7 +91,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	var/obj/item/candle/C = new faded_candle(loc)
 	if(istype(loc, /mob))
 		var/mob/M = loc
-		M.drop_from_inventory(src, null)
+		M.drop_from_inventory(src)
 		M.put_in_hands(C)
 
 	qdel(src)

@@ -119,7 +119,7 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-	
+
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
@@ -540,7 +540,8 @@
 				C.installed = 1
 				C.wrapped = W
 				C.install()
-				user.drop_from_inventory(W, null)
+				user.drop_from_inventory(W)
+				W.moveToNullspace()
 
 				var/obj/item/robot_parts/robot_component/WC = W
 				if(istype(WC))
