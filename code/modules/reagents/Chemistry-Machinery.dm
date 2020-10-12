@@ -463,7 +463,6 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open(1)
 		return
 
@@ -482,7 +481,6 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open(1)
 		return
 
@@ -533,7 +531,6 @@
 					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
 					var/datum/browser/popup = new(usr, "chem_master", name)
 					popup.set_content(dat)
-					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 					popup.open(1)
 					return
 
@@ -698,7 +695,6 @@
 
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open(1)
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)

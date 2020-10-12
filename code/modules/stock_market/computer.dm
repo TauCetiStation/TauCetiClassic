@@ -157,7 +157,6 @@
 
 	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/S, mob/user)
@@ -260,7 +259,6 @@
 				continue
 		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	else if (href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
@@ -287,7 +285,6 @@
 		dat += "</div></body></html>"
 		var/datum/browser/popup = new(usr, "archive_[S.name]", "Stock News", 600, 400)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	else if (href_list["cycleview"])
 		vmode++

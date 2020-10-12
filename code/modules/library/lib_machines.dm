@@ -85,7 +85,6 @@
 
 	var/datum/browser/popup = new(user, "publiclibrary", "Library Visitor", 600, 600)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
@@ -281,7 +280,6 @@
 
 	var/datum/browser/popup = new(user, "library", "Book Inventory Management", 600, 600)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)

@@ -46,7 +46,6 @@
 
 	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
