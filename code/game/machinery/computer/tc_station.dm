@@ -169,7 +169,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	for(var/entry in transferlog)
 		dat += "<small>[entry]</small><BR>"
 
-	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 

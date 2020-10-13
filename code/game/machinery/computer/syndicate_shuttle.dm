@@ -58,7 +58,7 @@
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
 	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 

@@ -44,7 +44,7 @@
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"
 
-	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
+	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 

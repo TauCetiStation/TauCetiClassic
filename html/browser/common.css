@@ -572,3 +572,11 @@ iframe {
 	background-color:#910101;
 	background-image:repeating-linear-gradient(-45deg,transparent,transparent .8333333333em,rgba(0,0,0,.1) 0,rgba(0,0,0,.1) 1.6666666667em)
 }
+
+.theme_syndicate a, .theme_syndicate a:link, .theme_syndicate a:visited, .theme_syndicate a:active, .theme_syndicate .spoiler b {
+	background-color:#397439;
+}
+
+.theme_syndicate a:hover, .theme_syndicate a:focus {
+	background-color:#478647;
+}
