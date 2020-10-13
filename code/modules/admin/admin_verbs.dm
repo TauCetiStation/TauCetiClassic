@@ -1072,9 +1072,9 @@ var/list/admin_verbs_hideable = list(
 		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
 		if(new_count)
 			blobwincount = new_count
-	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
-	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //////////////////////////////
