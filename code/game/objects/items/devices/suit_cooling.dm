@@ -29,10 +29,13 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
 	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 	cell.loc = src
+
+/obj/item/device/suit_cooling_unit/Destroy()
+	QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/device/suit_cooling_unit/proc/turn_on()
 	if (!cell || cell.charge <= 0)
@@ -43,11 +46,15 @@
 	on = TRUE
 	updateicon()
 
+	START_PROCESSING(SSobj, src)
+
 /obj/item/device/suit_cooling_unit/proc/turn_off()
 	visible_message("<span class='notice'>\The [src] clicks and whines as it powers down.</span>")
 	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 	on = FALSE
 	updateicon()
+
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/suit_cooling_unit/process()
 	if (!on || !cell || !is_attached_to_suit(loc))
