@@ -83,7 +83,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(linkedboss)
 		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
 	else
-		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
+		dat += "<div class='NoticeBox'>No linked management consoles detected. Scan for uplink stations using the management console.</div>"
 
 	if(uplinkholder)
 		dat += "[uplinkholder.hidden_uplink.uses] telecrystals remain in this uplink.<BR>"
@@ -91,7 +91,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			dat += "Donate TC: <a href='byond://?src=\ref[src];donate1=1'>1</a> | <a href='byond://?src=\ref[src];donate5=1'>5</a>"
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
-	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 

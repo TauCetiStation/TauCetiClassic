@@ -200,8 +200,9 @@
 #define MOUSE_OPACITY_OPAQUE        2
 
 // Used in browser.dm for common.css style.
-#define CSS_THEME_LIGHT "theme_light"
-#define CSS_THEME_DARK "theme_dark"
+#define CSS_THEME_LIGHT     "theme_light"
+#define CSS_THEME_DARK      "theme_dark"
+#define CSS_THEME_SYNDICATE "theme_syndicate"
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
