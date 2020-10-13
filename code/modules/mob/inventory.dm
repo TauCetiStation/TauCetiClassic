@@ -321,9 +321,9 @@ var/list/slot_equipment_priority = list(
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
-		if(target)
+		if(!isnull(target))
 			I.forceMove(target)
-		else
+		else if(!isnull(loc))
 			I.forceMove(loc)
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
