@@ -99,10 +99,47 @@ a, button, a:link, a:visited, a:active, .linkOn, .linkOff, .spoiler b {
 	cursor:default;
 	user-select:none;
 	-ms-user-select:none;
+	transition:color 50ms,background-color 50ms;
 }
 
-a:hover, .spoiler b:hover {
+a:hover {
+	transition:color 0ms,background-color 0ms
+}
+
+a:hover, a:focus, .spoiler b:hover {
 	background-color: #4c729d;
+}
+
+a.good, a.good:link, a.good:visited, a.good:active, a.good:hover {
+	background-color:#4d9121;
+}
+
+a.good:hover, a.good:focus {
+	background-color:#5da52d;
+}
+
+a.green, a.green:link, a.green:visited, a.green:active, a.green:hover {
+	background-color:#1b9638;
+}
+
+a.green:hover, a.green:focus {
+	background-color:#27ab46;
+}
+
+a.bad, a.bad:link, a.bad:visited, a.bad:active, a.bad:hover {
+	background-color:#bd2020;
+}
+
+a.bad:hover, a.bad:focus {
+	background-color:#d52b2b;
+}
+
+a.red, a.red:link, a.red:visited, a.red:active, a.red:hover {
+	background-color:#bd2020;
+}
+
+a.red:hover, a.red:focus {
+	background-color:#d52b2b;
 }
 
 a.nobg, a.nobg:link, a.nobg:visited, a.nobg:active, a.nobg:hover {
