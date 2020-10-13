@@ -46,7 +46,7 @@
 
 	if (antag_candidates.len < meme_number)
 		meme_number = antag_candidates.len
-	
+
 	while(meme_number > 0)
 		var/datum/mind/meme = pick(antag_candidates)
 		modePlayer += meme
@@ -205,5 +205,5 @@
 	if(text)
 		antagonists_completion += list(list("mode" = "meme", "html" = text))
 		text = "<div class='block'>[text]</div>"
-		
+
 	return text

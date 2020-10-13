@@ -4,7 +4,7 @@ sudo: false
 env:
   global:
     - BYOND_MAJOR=513
-    - BYOND_MINOR=1528
+    - BYOND_MINOR=1533
 
 cache:
   directories:
@@ -29,11 +29,15 @@ matrix:
         - ~/dreamchecker
 
     - name: "Code and Map Linting"
-      env: TEST=LINTING
+      env: 
+        - TEST=LINTING
+        - NODE_VERSION=12
       addons:
         apt:
           packages:
             - python3.5
+      script:
+        - scripts/build_tgui.sh
 
     - name: "Unit Tests - Box Station"
       env: 

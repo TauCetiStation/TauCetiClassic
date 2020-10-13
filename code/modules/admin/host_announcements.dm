@@ -5,7 +5,7 @@
 
 	var/folder = "data/announcements/"
 	var/edit_path
-	
+
 	var/choice = alert("Do you want to edit an existent announcement or create a new one?", "Host Announcement", "New", "Edit", "Reload", "Cancel")
 
 	if(choice == "Cancel")
@@ -26,7 +26,7 @@
 
 	else
 		var/name = ckey(input("Enter short english name for file", "Name") as null|text)
-		
+
 		if(!name)
 			to_chat(usr, "<span class='warning'>Bad name.</span>")
 			return

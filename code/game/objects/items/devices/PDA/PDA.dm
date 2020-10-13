@@ -1233,7 +1233,7 @@
 			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-	
+
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_id == src)
