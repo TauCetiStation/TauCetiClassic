@@ -243,7 +243,7 @@
 			if(0.25 to 0.5)
 				throw_alert("charge", /obj/screen/alert/lowcell, 40)
 			if(0.01 to 0.25)
-				throw_alert("charge", /obj/screen/alert/lowcell, 0)
+				throw_alert("charge", /obj/screen/alert/lowcell, 20)
 			else
 				throw_alert("charge", /obj/screen/alert/emptycell)
 	else

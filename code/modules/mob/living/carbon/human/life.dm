@@ -1426,21 +1426,15 @@
 						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
-			var/fullness_icon
-			var/full_perc
-			fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
+			var/full_perc // процентовка нутриментов
+			var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
 			if (species.flags[IS_SYNTHETIC])
 				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-				full_perc = (get_nutrition() / I.maxcharge) * 100
+				full_perc = max(min((get_nutrition() / I.maxcharge) * 100, 120),0)
 			else
-				full_perc = (get_nutrition() / 600) * 100
-			if(nutrition > 0)
-				nutrition_icon.icon_state = "[fullness_icon][round(full_perc, 20)]"
-				if(full_perc > 101)
-					nutrition_icon.icon_state = "[fullness_icon]120"
-			else if	(species.flags[IS_SYNTHETIC])
-				nutrition_icon.icon_state = "emptycell"
+				full_perc = max(min((get_nutrition() / 600) * 100, 120),0)
+			nutrition_icon.icon_state = "[fullness_icon][CEIL(full_perc /20)*20]"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
