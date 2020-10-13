@@ -73,9 +73,9 @@
 					dat += " Independent from AI |"
 				if (istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
-						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
+						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
+				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
+				dat += "<A class='red' href='?src=\ref[src];killbot=\ref[R]'><i>Destroy</i></A>"
 				dat += "<BR>"
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 		if(screen == 2)

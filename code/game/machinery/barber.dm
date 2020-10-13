@@ -413,7 +413,7 @@ A proc that does all the animations before mix()-ing.
 		if(error_log.len)
 			dat += "<div class='statusDisplay'>"
 			for(var/error in 1 to error_log.len)
-				dat += "<A href='?src=\ref[src];action=clear_log;entry=[error]'><font color='red'>X</font></A>[error_log[error]]<BR>"
+				dat += "<A class='red' href='?src=\ref[src];action=clear_log;entry=[error]'>X</A>[error_log[error]]<BR>"
 			dat += "</div><BR>"
 		else
 			dat += "<div class='statusDisplay'><b>Log</b> <font color='red'>is empty.</font></div>"

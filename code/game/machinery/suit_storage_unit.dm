@@ -141,13 +141,9 @@
 			dat+= text("Unit status: []",(src.islocked? "<font color ='red'><B>**LOCKED**</B></font><BR>" : "<font color ='green'><B>**UNLOCKED**</B></font><BR>") )
 			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
 			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A></font>", user)
-			//user << browse(dat, "window=Suit Storage Unit;size=400x500")
-			//onclose(user, "Suit Storage Unit")
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"
 			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-			//user << browse(dat, "window=suit_storage_unit;size=400x500")
-			//onclose(user, "suit_storage_unit")
 
 	var/datum/browser/popup = new(user, "window=suit_storage_unit", src.name, 400, 500, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

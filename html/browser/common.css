@@ -110,6 +110,14 @@ a:hover, a:focus, .spoiler b:hover {
 	background-color: #4c729d;
 }
 
+a.violet, a.violet:link, a.violet:visited, a.violet:active, a.violet:hover {
+	background-color:#552dab;
+}
+
+a.violet:hover, a.violet:focus {
+	background-color:#653ac1;
+}
+
 a.good, a.good:link, a.good:visited, a.good:active, a.good:hover {
 	background-color:#4d9121;
 }

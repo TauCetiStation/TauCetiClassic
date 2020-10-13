@@ -84,7 +84,7 @@
 					body += "<a href='?src=\ref[src];subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?src=\ref[src];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a class='red' href='?src=\ref[src];check_antagonist=1'><b>Antagonist</b></a></font>";
 
 					body += "</td></tr></table>";
 

@@ -25,7 +25,12 @@
 	var/dat = ""
 	dat += "Locked on<BR>"
 	dat += "<B>Charge progress: [reload]/180:</B><BR>"
-	dat += "The Bluespace Artillery in mode : <a href='?src=\ref[src];toggle=1'>[intensity ? "<font color=red>Destroy</font>" : "<font color=green>Hurt</font>"]</a><br>"
+	dat += "The Bluespace Artillery in mode: "
+	if(intensity)
+		dat += "<a class='red' href='?src=\ref[src];toggle=1'>Destroy</a>"
+	else
+		dat += "<a class='green' href='?src=\ref[src];toggle=1'>Hurt</a>"
+	dat += "<br>"
 	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
 
