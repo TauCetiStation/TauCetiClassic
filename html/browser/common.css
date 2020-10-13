@@ -23,7 +23,9 @@ body {
 }
 
 body.theme_light {
+	background-color: #fafafa;
 	background-image:none;
+	color: #000000;
 }
 
 body.theme_syndicate {
@@ -41,9 +43,15 @@ body.theme_dark, body.theme_dark * {
 	scrollbar-shadow-color: #3b3b3b;
 }
 
-body.theme_light {
-	background-color: #fafafa;
-	color: #000000;
+
+body.theme_syndicate {
+	scrollbar-base-color:#400202;
+	scrollbar-face-color:#7e0303;
+	scrollbar-3dlight-color:#550202;
+	scrollbar-highlight-color:#550202;
+	scrollbar-track-color:#400202;
+	scrollbar-arrow-color:#fa3030;
+	scrollbar-shadow-color:#7e0303
 }
 
 .uiWrapper, .uiContent {
