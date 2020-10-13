@@ -23,7 +23,7 @@
 	LAZYSET(user.browsers, nwindow_id, src)
 	window_id = nwindow_id
 	if(ntitle)
-		title = ntitle
+		title = capitalize(ntitle)
 	if(nwidth && nheight)
 		width = nwidth
 		height = nheight
