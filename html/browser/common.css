@@ -191,9 +191,9 @@ img, a img {
 }
 
 h1, h2, h3, h4, h5, h6 {
+	display: block;
 	margin: 0;
-	padding: 16px 0 8px 0;
-	color: #517087;
+	padding: .5rem 0;
 }
 
 h1 {font-size: 15px;}
