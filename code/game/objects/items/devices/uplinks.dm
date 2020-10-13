@@ -57,11 +57,11 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			else
 				dat += "<span class='linkOff'>[item.name] [cost_text]</span>"
 			if(item.desc)
-				dat += "<div class='spoiler'><input type='checkbox' id='[item.name]'>"
-				dat += "<label for='[item.name]'><b>\[?\]]</b></label>"
+				dat += "<span class='spoiler'><input type='checkbox' id='[item.name]'>"
+				dat += "<label for='[item.name]'><b>\[?\]</b></label>"
 				dat += "<div>[item.desc]</div>"
-				dat += "</div>"
-			dat += "<BR>"
+				dat += "</span>"
+			dat += "<br>"
 
 		// Break up the categories, if it isn't the last.
 		if(buyable_items.len != index)

@@ -9,8 +9,6 @@
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/head_elements
-	var/body_elements
 	var/head_content = ""
 	var/content = ""
 
