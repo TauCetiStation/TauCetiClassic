@@ -4,9 +4,8 @@
 	w_class = ITEM_SIZE_LARGE
 	icon = 'icons/obj/device.dmi'
 	icon_state = "suitcooler0"
-	slot_flags = SLOT_FLAGS_BACK	//you can carry it on your back if you want, but it won't do anything unless attached to suit storage
+	slot_flags = SLOT_FLAGS_BACK  // you can carry it on your back if you want, but it won't do anything unless attached to suit storage
 
-	//copied from tank.dm
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 10.0
@@ -15,110 +14,99 @@
 
 	origin_tech = "magnets=2;materials=2"
 
-	var/on = 0				//is it turned on?
-	var/cover_open = 0		//is the cover open?
+	var/on = FALSE
+	var/cover_open = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/max_cooling = 12				//in degrees per second - probably don't need to mess with heat capacity here
-	var/charge_consumption = 16.6		//charge per second at max_cooling
+	var/max_cooling = 12            // in degrees per second - probably don't need to mess with heat capacity here
+	var/charge_consumption = 16.6   // charge per second at max_cooling
 	var/thermostat = T20C
 
-	//TODO: make it heat up the surroundings when not in space
+	// TODO: make it heat up the surroundings when not in space
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
+	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 	cell.loc = src
 
+/obj/item/device/suit_cooling_unit/proc/turn_on()
+	if (!cell || cell.charge <= 0)
+		return
+
+	visible_message("<span class='notice'>\The [src] starts to do a quiet buzzling as it powers up.</span>")
+	on = TRUE
+	updateicon()
+
+/obj/item/device/suit_cooling_unit/proc/turn_off()
+	visible_message("<span class='notice'>\The [src] clicks and whines as it powers down.</span>")
+	on = FALSE
+	updateicon()
+
 /obj/item/device/suit_cooling_unit/process()
-	if (!on || !cell)
-		return
-
-	if (!ismob(loc))
-		return
-
-	if (!attached_to_suit(loc))		//make sure they have a suit and we are attached to it
+	if (!on || !cell || !is_attached_to_suit(loc))
 		return
 
 	var/mob/living/carbon/human/H = loc
 
-	var/efficiency = H.get_pressure_protection()		//you need to have a good seal for effective cooling
-	var/env_temp = get_environment_temperature()		//wont save you from a fire
-	var/temp_adj = min(H.bodytemperature - max(thermostat, env_temp), max_cooling)
+	if (try_cool_user(H))
+		check_charge_usage(H)
 
-	if (temp_adj < 0.5)	//only cools, doesn't heat, also we don't need extreme precision
-		return
+/obj/item/device/suit_cooling_unit/proc/is_attached_to_suit(mob/living/carbon/human/user)
+	return istype(user) && user.wear_suit && user.s_store == src
 
-	var/charge_usage = (temp_adj/max_cooling)*charge_consumption
+/obj/item/device/suit_cooling_unit/proc/try_cool_user(mob/living/carbon/human/user)
+	var/efficiency = user.get_pressure_protection()  // you need to have a good seal for effective cooling
+	var/env_temp = get_environment_temperature(user)     // wont save you from a fire
+	var/temp_adj = min(user.bodytemperature - max(thermostat, env_temp), max_cooling)
 
-	H.bodytemperature -= temp_adj*efficiency
+	if (temp_adj < 0.5) // only cools, doesn't heat, also we don't need extreme precision
+		return FALSE
 
+	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
+	user.bodytemperature -= temp_adj * efficiency
 	cell.use(charge_usage)
 
-	if(cell.charge <= 0)
-		turn_off()
+	return TRUE
 
-/obj/item/device/suit_cooling_unit/proc/get_environment_temperature()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(istype(H.loc, /obj/mecha))
-			var/obj/mecha/M = H.loc
-			return M.return_temperature()
-		else if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo = H.loc
-			var/datum/gas_mixture/G = cryo.AIR1
-			return G.temperature
+/obj/item/device/suit_cooling_unit/proc/get_environment_temperature(mob/living/carbon/human/user)
+	if (istype(user.loc, /obj/mecha))
+		var/obj/mecha/M = user.loc
+		return M.return_temperature()
+	else if (istype(user.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo = user.loc
+		var/datum/gas_mixture/G = cryo.AIR1
+		return G.temperature
 
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(user)
+
 	if(istype(T, /turf/space))
-		return 0	//space has no temperature, this just makes sure the cooling unit works in space
+		return 0 //space has no temperature, this just makes sure the cooling unit works in space
 
 	var/datum/gas_mixture/environment = T.return_air()
+
 	if (!environment)
 		return 0
 
 	return environment.temperature
 
-/obj/item/device/suit_cooling_unit/proc/attached_to_suit(mob/M)
-	if (!ishuman(M))
-		return 0
-
-	var/mob/living/carbon/human/H = M
-
-	if (!H.wear_suit || H.s_store != src)
-		return 0
-
-	return 1
-
-/obj/item/device/suit_cooling_unit/proc/turn_on()
-	if(!cell)
+/obj/item/device/suit_cooling_unit/proc/check_charge_usage(mob/living/carbon/human/user)
+	if (cell.charge <= 0)
+		turn_off()
 		return
-	if(cell.charge <= 0)
-		return
-
-	on = 1
-	updateicon()
-
-/obj/item/device/suit_cooling_unit/proc/turn_off()
-	if (ismob(src.loc))
-		var/mob/M = src.loc
-		M.show_message("\The [src] clicks and whines as it powers down.", SHOWMSG_AUDIO)
-	on = 0
-	updateicon()
 
 /obj/item/device/suit_cooling_unit/attack_self(mob/user)
-	if(cover_open && cell)
-		if(ishuman(user))
+	if (cover_open && cell)
+		if (ishuman(user))
 			user.put_in_hands(cell)
 		else
-			cell.loc = get_turf(loc)
+			cell.forceMove(get_turf(loc))
 
 		cell.add_fingerprint(user)
 		cell.updateicon()
+		cell = null
 
-		to_chat(user, "You remove the [src.cell].")
-		src.cell = null
+		to_chat(user, "<span class='info'>You remove \the [cell].</span>")
 		updateicon()
 		return
 
@@ -127,28 +115,26 @@
 		turn_off()
 	else
 		turn_on()
-		if (on)
-			to_chat(user, "You switch on the [src].")
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		if(cover_open)
-			cover_open = 0
-			to_chat(user, "You screw the panel into place.")
+	if (isscrewdriver(I))
+		if (cover_open)
+			cover_open = FALSE
+			to_chat(user, "<span class='info'>You screw the panel into place.</span>")
 		else
-			cover_open = 1
-			to_chat(user, "You unscrew the panel.")
+			cover_open = TRUE
+			to_chat(user, "<span class='info'>You unscrew the panel.</span>")
 		updateicon()
 		return
 
-	if(istype(I, /obj/item/weapon/stock_parts/cell))
-		if(cover_open)
-			if(cell)
-				to_chat(user, "There is a [cell] already installed here.")
+	if (istype(I, /obj/item/weapon/stock_parts/cell))
+		if (cover_open)
+			if (cell)
+				to_chat(user, "<span class='info'>There is a [cell] already installed here.<span>")
 			else
 				user.drop_from_inventory(I, src)
 				cell = I
-				to_chat(user, "You insert the [cell].")
+				to_chat(user, "<span class='info'>You insert the [cell].</span>")
 		updateicon()
 		return
 
@@ -167,7 +153,7 @@
 	..()
 	if (src in view(1, user))
 		if (on)
-			if (attached_to_suit(loc))
+			if (is_attached_to_suit(user))
 				to_chat(user, "It's switched on and running.")
 			else
 				to_chat(user, "It's switched on, but not attached to anything.")
