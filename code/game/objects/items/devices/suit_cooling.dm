@@ -21,7 +21,7 @@
 	var/max_cooling = 12				//in degrees per second - probably don't need to mess with heat capacity here
 	var/charge_consumption = 16.6		//charge per second at max_cooling
 	var/thermostat = T20C
-	var/charge_warning = 0
+	var/charge_warning = FALSE
 
 	//TODO: make it heat up the surroundings when not in space
 
@@ -57,15 +57,14 @@
 
 	cell.use(charge_usage)
 
+	//Sound warning.
+	if(cell.charge <= cell.maxcharge*0.1 && !charge_warning)
+		charge_warning()
+	if(cell.charge >= cell.maxcharge*0.1 && charge_warning)
+		charge_warning = FALSE
+
 	if(cell.charge <= 0)
 		turn_off()
-		
-	if(cell.charge <= cell.maxcharge*0.1 && charge_warning <= 0)
-		to_chat(H, "<span class='warning'>Cooling unit charge below 10%.</span>")
-		playsound(H, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
-		charge_warning = cell.charge	
-	if(cell.charge >= cell.maxcharge*0.1 && charge_warning >= 0)
-		charge_warning = 0
 	
 /obj/item/device/suit_cooling_unit/proc/get_environment_temperature()
 	if(ishuman(loc))
@@ -87,6 +86,13 @@
 		return 0
 
 	return environment.temperature
+
+/obj/item/device/suit_cooling_unit/proc/charge_warning()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		to_chat(H, "<span class='warning'>Cooling unit charge below 10%.</span>")
+		playsound(H, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+	charge_warning = TRUE
 
 /obj/item/device/suit_cooling_unit/proc/attached_to_suit(mob/M)
 	if (!ishuman(M))
