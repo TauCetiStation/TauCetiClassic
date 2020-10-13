@@ -2,15 +2,15 @@
 	var/client/user
 	var/title
 	var/window_id // window_id is used as the window name for browse and onclose
-	var/width = 0
-	var/height = 0
-	var/atom/ref = null
+	var/width
+	var/height
+	var/atom/ref
 	var/theme = CSS_THEME_DARK // or CSS_THEME_LIGHT
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/head_content = ""
-	var/content = ""
+	var/head_content
+	var/content
 
 /datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme)
 	if(ismob(nuser))
@@ -69,8 +69,7 @@
 /datum/browser/proc/add_content(ncontent)
 	content += ncontent
 
-/datum/browser/proc/get_header()
-
+/datum/browser/proc/get_content()
 	for(var/name in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[name]'>"
 
@@ -81,8 +80,6 @@
 	for(var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
 
-	var/title_attributes = "class='uiTitle'"
-
 	return {"<!DOCTYPE html>
 <html>
 	<head>
@@ -92,26 +89,16 @@
 	</head>
 	<body scroll=auto class='[theme]'>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div [title_attributes]>[title]</div></div>" : ""]
+			[title ? "<div class='uiTitleWrapper'><div class='uiTitle'>[title]</div></div>" : ""]
 			<div class='uiContent'>
-	"}
-
-/datum/browser/proc/get_footer()
-	return {"
+				[content]
 			</div>
 		</div>
 	</body>
 </html>"}
 
-/datum/browser/proc/get_content()
-	return {"
-	[get_header()]
-	[content]
-	[get_footer()]
-	"}
-
 /datum/browser/proc/open()
-	var/window_size = ""
+	var/window_size
 	if(width && height)
 		window_size = "size=[width]x[height];"
 	send_asset(user, "error_handler.js")
