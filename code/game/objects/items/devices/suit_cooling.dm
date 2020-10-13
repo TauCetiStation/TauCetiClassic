@@ -39,11 +39,13 @@
 		return
 
 	visible_message("<span class='notice'>\The [src] starts to do a quiet buzzling as it powers up.</span>")
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 	on = TRUE
 	updateicon()
 
 /obj/item/device/suit_cooling_unit/proc/turn_off()
 	visible_message("<span class='notice'>\The [src] clicks and whines as it powers down.</span>")
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 	on = FALSE
 	updateicon()
 
