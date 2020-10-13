@@ -153,10 +153,10 @@
 	opentime = world.time
 
 	if(stealfocus)
-		. = ..(use_onclose = 1)
+		. = ..()
 	else
 		var/focusedwindow = winget(user, null, "focus")
-		. = ..(use_onclose = 1)
+		. = ..()
 
 		//waits for the window to show up client side before attempting to un-focus it
 		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
