@@ -94,7 +94,7 @@
 	</head>
 	<body scroll=auto class='[theme]'>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
+			[title ? "<div class='uiTitleWrapper'><div [title_attributes]>[title]</div></div>" : ""]
 			<div class='uiContent'>
 	"}
 

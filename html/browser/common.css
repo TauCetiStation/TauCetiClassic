@@ -64,6 +64,7 @@ body.theme_light {
 }
 
 .uiTitle {
+	font-size: 14px;
 	padding-left: 6px;
 	padding-right: 6px;
 }
