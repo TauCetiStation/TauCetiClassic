@@ -84,16 +84,12 @@
 				\n<BR>
 				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>\[Reset\]</A><BR>
 				\n<BR>
-				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>"}
 			else
 				dat = {"<B>Emergency Robot Self-Destruct</B><HR>\nStatus: Activated<BR>
 				\n<BR>
 				\nCountdown: [src.timeleft]/60 \[Reset\]<BR>
-				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", null, 400, 500)

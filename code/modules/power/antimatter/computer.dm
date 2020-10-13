@@ -81,7 +81,7 @@
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=activate'>Activate Engine</A> \]"
 			dat += "<BR>Contents:<br>[src.connected_E.H_fuel]kg of Hydrogen<br>[src.connected_E.antiH_fuel]kg of Anti-Hydrogen<br>"
 
-	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
+	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]"
 
 	var/datum/browser/popup = new(user, "communications", "Engine Computer", 400, 500)
 	popup.set_content(dat)

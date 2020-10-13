@@ -123,8 +123,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];solars_fore_starboard=1'>North-east starboard</a><br>
 		<a href='?src=\ref[src];solars_aft_port=1'>South-west solar port</a> |
 		<a href='?src=\ref[src];solars_aft_starboard=1'>South-east starboard</a><br>
-		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>
-		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
+		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>"}
 
 	var/datum/browser/popup = new(user, "computer", null, 575, 450)
 	popup.set_content(dat)

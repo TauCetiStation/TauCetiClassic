@@ -57,7 +57,6 @@
 			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)

@@ -514,9 +514,7 @@
 	if(legcuffed)
 		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
-	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
 	popup.set_content(dat.Join())

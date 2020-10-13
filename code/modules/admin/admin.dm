@@ -436,7 +436,6 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			dat+= {"<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>
 				<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>
 				<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>
-				<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>
 			"}
 
 			var/wanted_already = 0

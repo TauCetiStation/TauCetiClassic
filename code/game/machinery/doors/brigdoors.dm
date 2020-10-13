@@ -236,7 +236,6 @@
 				else
 					dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
-			dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 			dat += "</TT>"
 
 		if(ERROR_SCREEN)

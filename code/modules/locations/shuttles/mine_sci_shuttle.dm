@@ -30,8 +30,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
 		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
-		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>
-		<a href='?src=\ref[user];mach_close=flightcomputer'>Close</a>"}
+		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>"}
 	else
 		dat = "Cannot find shuttle"
 

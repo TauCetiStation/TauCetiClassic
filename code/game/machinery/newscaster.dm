@@ -267,7 +267,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>"
 				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>"
 				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
 				if(src.securityCaster)
 					var/wanted_already = 0
 					if(news_network.wanted_issue)
@@ -994,7 +993,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
+				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'></DIV>"
 			if(1) // X channel pages inbetween.
 				for(var/datum/feed_channel/NP in src.news_content)
 					src.pages++ //Let's get it right again.

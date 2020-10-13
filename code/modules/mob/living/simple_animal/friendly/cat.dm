@@ -98,8 +98,6 @@
 	else
 		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
 
-	//dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
-
 	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
 	popup.open()

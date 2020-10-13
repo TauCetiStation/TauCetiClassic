@@ -152,7 +152,7 @@
 
 		dat += "</table>"
 
-	dat += "<A href='?src=\ref[user];mach_close=stock_comp'>Close</A> <A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += "</body></html>"
 
 	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
