@@ -239,11 +239,11 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge", /obj/screen/alert/lowcell, 1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 60)
 			if(0.25 to 0.5)
-				throw_alert("charge", /obj/screen/alert/lowcell, 2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 40)
 			if(0.01 to 0.25)
-				throw_alert("charge", /obj/screen/alert/lowcell, 3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 0)
 			else
 				throw_alert("charge", /obj/screen/alert/emptycell)
 	else

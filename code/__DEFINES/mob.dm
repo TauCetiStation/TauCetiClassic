@@ -91,22 +91,6 @@
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
-//Nutrition levels for humans.
-#define NUTRITION_LEVEL_FAT 600
-#define NUTRITION_LEVEL_FULL 550
-#define NUTRITION_LEVEL_WELL_FED 450
-#define NUTRITION_LEVEL_FED 350
-#define NUTRITION_LEVEL_HUNGRY 250
-#define NUTRITION_LEVEL_STARVING 150
-
-//Nutrition levels for IPC.
-#define NUTRITION_LEVEL_IPC_FULL 500
-#define NUTRITION_LEVEL_IPC_HIGH 400
-#define NUTRITION_LEVEL_IPC_NORMAL 300
-#define NUTRITION_LEVEL_IPC_LOW 150
-#define NUTRITION_LEVEL_IPC_MIN 50
-#define NUTRITION_LEVEL_IPC_ONE 1
-
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
 
