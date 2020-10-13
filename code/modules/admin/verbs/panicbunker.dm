@@ -8,7 +8,7 @@
 		log_admin("[key_name(src)] disable regisration panic bunker")
 		message_admins("[key_name_admin(src)] disable regisration panic bunker")
 		return
-	
+
 	var/year = sanitize_integer(input("Registration year", "Minimal registration year (min: 2000, max: [game_year])", game_year) as num, 2000, game_year, game_year)
 	var/month = sanitize_integer(input("Registration month", "Minimal registration month (min: 1, max: 12)", 1) as num, 1, 12, 1)
 	var/day = sanitize_integer(input("Registration day", "Minimal registration day (min: 1, max: 31)", 1) as num, 1, 31, 1)

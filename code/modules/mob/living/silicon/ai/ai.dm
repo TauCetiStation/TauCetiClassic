@@ -217,7 +217,7 @@ var/list/ai_verbs_default = list(
 			job = "AI"
 
 	create_eye()
-	
+
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src

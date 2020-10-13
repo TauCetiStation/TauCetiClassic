@@ -50,10 +50,10 @@
 
 	if(canprint && !recording && !playing)
 		icons_available["Print Transcript"] = image(icon = icon_directory, icon_state = "radial_print")
-	
+
 	if(emagged)
 		icons_available["Explode"] = image(icon = icon_directory, icon_state = "radial_hack")
-	
+
 	UNSETEMPTY(icons_available)
 
 /obj/item/device/taperecorder/get_current_temperature()
