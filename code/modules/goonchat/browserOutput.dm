@@ -129,13 +129,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		owner.guard.chat_data["charset"] = src.charset
 
 	if(cookie && cookie != "none")
-
-		var/regex/crashy_thingy = new /regex("\[.*\[")
-		if(crashy_thingy.Find(cookie))
-			message_admins("[key_name_admin(src.owner)] tried to crash the server")
-			log_admin("[key_name(src.owner)] tried to crash the server")
-			return
-
 		var/list/connData = json_decode(cookie)
 		if(connData && islist(connData) && connData.len > 0 && connData["connData"])
 			connectionHistory = connData["connData"]
