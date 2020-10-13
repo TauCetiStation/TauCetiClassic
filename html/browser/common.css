@@ -195,41 +195,16 @@ h1, h2, h3, h4, h5, h6 {
 	color: #517087;
 }
 
-h1 {
-	font-size: 15px;
-}
+h1 {font-size: 15px;}
+h2 {font-size: 14px;}
+h3 {font-size: 13px;}
+h4 {font-size: 12px;}
 
-h2 {
-	font-size: 14px;
-}
-
-h3 {
-	font-size: 13px;
-}
-
-h4 {
-	font-size: 12px;
-}
-
-.good {
-	color: #00ff00;
-}
-
-.average {
-	color: #d09000;
-}
-
-.bad {
-	color: #ff0000;
-}
-
-.highlight {
-	color: #8BA5C4;
-}
-
-.dark {
-	color: #272727;
-}
+.good      {color: #00ff00;}
+.average   {color: #d09000;}
+.bad       {color: #ff0000;}
+.highlight {color: #8BA5C4;}
+.dark      {color: #272727;}
 
 .notice {
 	position: relative;
