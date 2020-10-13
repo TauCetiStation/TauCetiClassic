@@ -1940,9 +1940,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			h_style = "IPC off screen"
 		update_hair()
 
-/mob/living/carbon/human/proc/IPC_System_Start()
+/mob/living/carbon/human/proc/IPC_system_start()
 	set category = "IPC"
-	set name = "IPC Systems Start"
+	set name = "IPC systems start"
 	set desc = "Turn on chassis systems"
 	if(stat == CONSCIOUS)
 		return
