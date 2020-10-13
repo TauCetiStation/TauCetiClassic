@@ -91,7 +91,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		to_chat(H, "<span class='warning'>Cooling unit charge below 10%.</span>")
-		playsound(H, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+		playsound(H, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 	charge_warning = TRUE
 
 /obj/item/device/suit_cooling_unit/proc/attached_to_suit(mob/M)
