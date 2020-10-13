@@ -268,11 +268,16 @@ div.notice {
 }
 
 .statusDisplay {
-	background: #000000;
-	color: #ffffff;
-	border: 1px solid #40628a;
-	padding: 4px;
-	margin: 3px 0;
+	position:relative;
+	margin-bottom:.5em;
+	background-color:#1a1a1a;
+	background-color:rgba(0,0,0,.33);
+	box-shadow:inset 0 0 5px rgba(0,0,0,.5);
+	box-sizing:border-box
+}
+
+.statusDisplay:last-child{
+	margin-bottom:0
 }
 
 .block {
