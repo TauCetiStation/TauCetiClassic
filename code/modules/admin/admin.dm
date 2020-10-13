@@ -52,23 +52,24 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	body += "Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>"
 
 	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
-		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
+		body += " - <A href='?src=\ref[src];revive=\ref[M]'>Heal</A>"
 
 	body += {"
-		<br><br>\[
+		<br><br>
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
-		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] <br>
+		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>
+		<br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A> |
-		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
+		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A>|<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A><br>
 		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
 		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
@@ -79,16 +80,16 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	"}
 
 	if(M.client)
-		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
+		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A><br>"
 		var/muted = M.client.prefs.muted
 		body += {"<br><b>Mute: </b>
-			\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> |
-			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> |
-			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> |
-			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> |
-			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_MENTORHELP]'><font color='[(muted & MUTE_MENTORHELP)?"red":"blue"]'>MENTORHELP</font></a> |
-			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]
-			(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)
+			<A class='[(muted & MUTE_IC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'>IC</a>
+			<A class='[(muted & MUTE_OOC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'>OOC</a>
+			<A class='[(muted & MUTE_PRAY)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'>PRAY</a>
+			<A class='[(muted & MUTE_ADMINHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'>ADMINHELP</a>
+			<A class='[(muted & MUTE_MENTORHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_MENTORHELP]'>MENTORHELP</a>
+			<A class='[(muted & MUTE_DEADCHAT)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'>DEADCHAT</a>
+			<A class='[(muted & MUTE_ALL)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'>ALL</a>
 		"}
 
 	body += {"<br><br>
@@ -103,9 +104,9 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 	if (M.client)
 		if(!isnewplayer(M))
-			body += "<br><br>"
-			body += "<b>Transformations:</b>"
 			body += "<br>"
+			body += "<div class='statusDisplay'>"
+			body += "<h3>Transformations:</h3>"
 
 			//Monkey
 			if(ismonkey(M))
@@ -139,60 +140,63 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			// DNA2 - Admin Hax
 			if(M.dna && iscarbon(M))
 				body += "<br><br>"
-				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
-				var/bname
-				for(var/block=1;block<=DNA_SE_LENGTH;block++)
+				body += "<b>DNA Blocks:</b><br><table>"
+				for(var/block in 1 to DNA_SE_LENGTH)
 					if(((block-1)%5)==0)
-						body += "</tr><tr><th>[block-1]</th>"
-					bname = assigned_blocks[block]
+						body += "</tr><tr>"
+					var/bname = assigned_blocks[block]
 					body += "<td>"
 					if(bname)
 						var/bstate=M.dna.GetSEState(block)
-						var/bcolor="[(bstate)?"#006600":"#ff0000"]"
-						body += "<A href='?src=\ref[src];togmutate=\ref[M];block=[block]' style='color:[bcolor];'>[bname]</A><sub>[block]</sub>"
+						var/bcolor="[(bstate)?"green":"red"]"
+						body += "<A class='[bcolor]' href='?src=\ref[src];togmutate=\ref[M];block=[block]'><font size='0.5em'>[block]</font>.[bname]</A>"
 					else
 						body += "[block]"
 					body+="</td>"
-				body += "</tr></table>"
+				body += "</table>"
 
-			body += {"<br><br>
-				<b>Rudimentary transformations:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
-				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
-				\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>,
-				<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>,
-				<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>,
-				<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>,
-				<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \]
+			body += {"<br>
+				<h4>Rudimentary transformations:</h4><font size=2>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
+				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A>
 				<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
-				\[ Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
-				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \]
-				<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> |
-				<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> |
-				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> |
-				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> |
-				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> |
-				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> |
-				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> |
-				\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> ,
-				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> ,
-				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \]
+				<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A>
+				<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A>
+				<br>
+				Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>
+				<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>
+				<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>
+				<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>
+				<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A>
+				<br>
+				Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>
+				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A>
+				<br>
+				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A>
+				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A>
+				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A>
+				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A>
+				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A>
+				<br>
+				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
+				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
+				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
 				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
+				<br>
 				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
 				<br>
 			"}
-
+			body += "</div>"
 	if (M.client)
-		body += {"<br><br>
-			<b>Other actions:</b>
-			<br>
+		body += {"<br>
+			<h3>Other actions:</h3>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
 			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
 			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
-			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
+			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A>
 		"}
 
-	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key]", 550, 515)
+	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key]", 550, 700)
 	popup.set_content(body)
 	popup.open()
 

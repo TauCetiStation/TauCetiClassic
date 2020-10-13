@@ -110,6 +110,14 @@ a:hover, a:focus, .spoiler b:hover {
 	background-color: #4c729d;
 }
 
+a.blue, a.blue:link, a.blue:visited, a.blue:active, a.blue:hover {
+	background-color:#1c71b1;
+}
+
+a.blue:hover, a.blue:focus {
+	background-color:#2883c8;
+}
+
 a.violet, a.violet:link, a.violet:visited, a.violet:active, a.violet:hover {
 	background-color:#552dab;
 }
@@ -171,8 +179,12 @@ a.white:hover {
 	background: #40628a;
 }
 
-.linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover {
-	background: #2f943c;
+.linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active {
+	background: #1b9638;
+}
+
+a.linkOn:hover, a.linkOn:focus {
+	background-color:#27ab46;
 }
 
 .linkOff, a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover {
@@ -319,7 +331,8 @@ div.notice {
 	background-color:#1a1a1a;
 	background-color:rgba(0,0,0,.33);
 	box-shadow:inset 0 0 5px rgba(0,0,0,.5);
-	box-sizing:border-box
+	box-sizing:border-box;
+	padding:.66em .5em;
 }
 
 .statusDisplay:last-child{
