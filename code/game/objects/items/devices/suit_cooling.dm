@@ -21,6 +21,10 @@
 	var/charge_consumption = 16.6   // charge per second at max_cooling
 	var/thermostat = T20C
 
+	var/low_charge_warning_threshold_percent = 0.1
+	var/last_low_charge_warning_msg = 0
+	var/low_charge_warning_delay = 30 SECONDS
+
 	// TODO: make it heat up the surroundings when not in space
 
 /obj/item/device/suit_cooling_unit/atom_init()
@@ -94,6 +98,11 @@
 	if (cell.charge <= 0)
 		turn_off()
 		return
+	
+	if (cell.charge <= (cell.maxcharge * low_charge_warning_threshold_percent) && last_low_charge_warning_msg < world.time)
+		to_chat(user, "<span class='warning'>Cooling unit charge is below [round(cell.percent())]%.</span>")
+		playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+		last_low_charge_warning_msg = world.time + low_charge_warning_delay
 
 /obj/item/device/suit_cooling_unit/attack_self(mob/user)
 	if (cover_open && cell)
