@@ -3643,12 +3643,9 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate/start)
 "anH" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/structure/table,
+/obj/item/stack/sheet/cardboard{
+	amount = 2
 	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
@@ -13728,7 +13725,7 @@
 /turf/unsimulated/wall,
 /area/centcom/evac)
 "aWS" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/machinery/atmospherics/pipe/manifold/hidden,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -13763,14 +13760,14 @@
 	},
 /area/centcom/tdome)
 "aXa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /obj/machinery/door/airlock/hatch{
 	frequency = 1331;
 	id_tag = "vox_southeast_lock";
 	locked = 1;
 	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
 	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
@@ -13779,7 +13776,7 @@
 	},
 /area/shuttle/vox/arkship)
 "aXb" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
 /turf/simulated/floor/plating{
@@ -13825,7 +13822,7 @@
 /area/shuttle/vox/arkship)
 "aXh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -13967,7 +13964,7 @@
 /area/shuttle/vox/arkship)
 "aXK" = (
 /obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -14297,7 +14294,7 @@
 /area/shuttle/vox/arkship)
 "aYB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -14583,7 +14580,9 @@
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/weapon/tank/emergency_oxygen/double,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "Loot crate"
+	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -15542,7 +15541,7 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bdH" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -16921,7 +16920,7 @@
 /area/velocity)
 "cLC" = (
 /obj/structure/table,
-/obj/item/weapon/kitchenknife/butch,
+/obj/item/weapon/handcuffs/cable,
 /obj/item/stack/medical/splint,
 /turf/simulated/floor{
 	icon_state = "showroomfloor";
@@ -17134,7 +17133,7 @@
 	},
 /area/shuttle/vox/arkship)
 "dcD" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -18833,7 +18832,9 @@
 "fYD" = (
 /obj/item/weapon/broken_bottle,
 /obj/item/clothing/head/collectable/wizard,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "Loot crate"
+	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -18902,7 +18903,9 @@
 	},
 /obj/item/clothing/suit/space/syndicate/striker,
 /obj/item/clothing/head/helmet/space/syndicate/striker,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "Loot crate"
+	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -19528,6 +19531,9 @@
 "gRi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/chem_master,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -19913,7 +19919,9 @@
 /turf/space,
 /area/centcom/evac)
 "huJ" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "Loot crate"
+	},
 /obj/structure/window/basic{
 	dir = 8
 	},
@@ -19981,7 +19989,9 @@
 	},
 /area/centcom/evac)
 "hCs" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "Loot crate"
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot";
 	nitrogen = 103.984;
@@ -20092,11 +20102,8 @@
 /area/centcom/evac)
 "hRk" = (
 /obj/item/weapon/hatchet,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
+/obj/structure/sink/kitchen{
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
@@ -20849,6 +20856,9 @@
 "jnj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/grown/log,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -21110,12 +21120,15 @@
 	},
 /area/centcom/evac)
 "jOG" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	desc = "It's Delicious.";
+	name = "Bob Meat";
+	pixel_y = 4
 	},
-/turf/simulated/floor/plating{
-	name = "dark plating";
+/obj/item/toy/cards,
+/turf/simulated/floor{
+	icon_state = "floorgrime";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -21132,30 +21145,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/holding)
-"jQA" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/power/apc{
-	cell_type = 20000;
-	dir = 1;
-	locked = 0;
-	name = "Vox Shuttle APC";
-	pixel_y = 24
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "jRb" = (
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -21169,31 +21158,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/holding)
-"jSz" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "jTb" = (
 /obj/structure/table,
 /obj/item/clothing/head/that{
@@ -21250,21 +21214,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
-"jXt" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	name = "dark plating";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "jYb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -21680,7 +21629,7 @@
 /area/centcom/holding)
 "kQY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
 /turf/simulated/floor/plating{
@@ -21728,7 +21677,7 @@
 	},
 /area/centcom/holding)
 "kWc" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
+/obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -21738,11 +21687,11 @@
 	},
 /area/shuttle/vox/arkship)
 "kWl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /obj/machinery/door/airlock/hatch{
 	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
 	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
@@ -21772,7 +21721,7 @@
 	},
 /area/centcom/living)
 "kZQ" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -21805,7 +21754,7 @@
 /area/centcom/holding)
 "lcx" = (
 /obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/atmospherics/pipe/manifold/visible{
+/obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -22188,10 +22137,11 @@
 /area/shuttle/escape/centcom)
 "lMg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
-	amount = 25
+	amount = 10;
+	layer = 2.9
 	},
+/obj/structure/closet/crate,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -22237,6 +22187,8 @@
 /area/centcom/control)
 "lPe" = (
 /obj/structure/closet/crate,
+/obj/item/stack/cable_coil/yellow,
+/obj/item/weapon/module/power_control,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -22600,8 +22552,8 @@
 "mmd" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility,
-/obj/item/device/lightreplacer,
 /obj/machinery/light,
+/obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -23035,7 +22987,7 @@
 	id_tag = "vox_west_sensor";
 	pixel_y = 25
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
+/obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -23063,14 +23015,14 @@
 	},
 /area/centcom/tdome)
 "njf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /obj/machinery/door/airlock/hatch{
 	frequency = 1331;
 	id_tag = "vox_southwest_lock";
 	locked = 1;
 	req_access = list(150)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
 	},
 /turf/simulated/floor/plating{
 	name = "dark plating";
@@ -23156,7 +23108,7 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nso" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
 /turf/simulated/floor/plating{
@@ -23387,6 +23339,7 @@
 /area/custom/wizard_station)
 "nNM" = (
 /obj/structure/table,
+/obj/item/weapon/game_kit,
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	desc = "It's Delicious.";
 	name = "Bob Meat";
@@ -24639,18 +24592,9 @@
 	},
 /area/velocity)
 "voP" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell,
 /turf/simulated/floor/plating{
 	name = "dark plating";
 	nitrogen = 103.984;
@@ -80757,7 +80701,7 @@ geL
 aMB
 hCs
 yfr
-jOG
+aMB
 lMg
 yfr
 mMK
@@ -81014,11 +80958,11 @@ yfr
 aMB
 yfr
 yfr
-jQA
+aPG
 lPe
 yfr
 mWB
-nNM
+jOG
 oOH
 aZa
 anC
@@ -81271,7 +81215,7 @@ aXd
 gNx
 yfr
 voP
-jSz
+aPG
 lPl
 yfr
 ban
@@ -81528,7 +81472,7 @@ yfr
 bbD
 yfr
 anH
-jXt
+aPG
 uWZ
 yfr
 aoT
