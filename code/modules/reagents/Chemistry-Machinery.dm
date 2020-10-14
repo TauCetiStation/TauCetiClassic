@@ -458,7 +458,7 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.open(1)
+		popup.open()
 		return
 
 	else if(href_list["changebottle"])
@@ -476,7 +476,7 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.open(1)
+		popup.open()
 		return
 
 	else if(href_list["set"])
@@ -526,7 +526,7 @@
 					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
 					var/datum/browser/popup = new(usr, "chem_master", name)
 					popup.set_content(dat)
-					popup.open(1)
+					popup.open()
 					return
 
 
