@@ -162,7 +162,7 @@
 
 	t += "<BR>"
 	t += "<HR>"
-	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
+	t += "<A href='?src=\ref[src]'>Refresh</A>"
 
 	var/datum/browser/popup = new(user, teg, null, 460, 300)
 	popup.set_content(t)
@@ -173,11 +173,6 @@
 	. = ..()
 	if(!.)
 		return
-
-	if( href_list["close"] )
-		usr << browse(null, "window=teg")
-		usr.unset_machine()
-		return FALSE
 
 	updateDialog()
 

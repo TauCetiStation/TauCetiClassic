@@ -398,7 +398,6 @@
 			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
 		if(1)
 			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 
 	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
 	popup.set_content(t)
@@ -406,11 +405,6 @@
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=solcon")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

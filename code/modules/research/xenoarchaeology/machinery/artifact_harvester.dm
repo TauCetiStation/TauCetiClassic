@@ -70,7 +70,7 @@
 		dat += "<B><font color=red>Unable to locate analysis pad.</font><BR></b>"
 	//
 	dat += "<HR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A>"
 
 	var/datum/browser/popup = new(user, "artharvester", name, 450, 500)
 	popup.set_content(dat)
@@ -123,11 +123,6 @@
 			icon_state = "harvester_battery"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=artharvester")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

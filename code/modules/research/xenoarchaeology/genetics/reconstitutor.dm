@@ -163,7 +163,6 @@
 
 	dat += "<br>"
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "reconstitutor", "Garland Corp genetic reconstitutor", 600, 500)
 	popup.set_content(dat)
@@ -171,11 +170,6 @@
 
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=reconstitutor")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

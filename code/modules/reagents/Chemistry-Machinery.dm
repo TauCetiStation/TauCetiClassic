@@ -426,11 +426,6 @@
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
 
-	else if(href_list["close"])
-		usr << browse(null, "window=chemmaster")
-		usr.unset_machine()
-		return FALSE
-
 	else if(href_list["toggle"])
 		mode = !mode
 
@@ -691,11 +686,10 @@
 			dat += "<LI><span class='linkOff'>Create pack</span> (10 units max)<BR>"
 	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
-	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
 	popup.set_content(dat)
-	popup.open(1)
+	popup.open()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))

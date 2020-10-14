@@ -539,8 +539,6 @@ var/list/airlock_overlays = list()
 		else
 			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-
 	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
 	popup.set_content(t1)
 	popup.open()
@@ -703,11 +701,6 @@ var/list/airlock_overlays = list()
 
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
-	if(href_list["close"])
-		usr << browse(null, "window=airlock")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..(href, href_list)
 	if(!.)
 		return

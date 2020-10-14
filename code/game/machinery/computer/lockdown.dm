@@ -94,18 +94,12 @@
 	if(empty)
 		t += "<span class='warning'>No networks connected.<br></span>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
 	var/datum/browser/popup = new(user, "lockdown", "Lockdown Control", 550, 600)
 	popup.set_content(t)
 	popup.open()
 
 /obj/machinery/computer/lockdown/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=lockdown")
-		usr.unset_machine(src)
-		return
-
 	. = ..()
 	if(!.)
 		return

@@ -120,7 +120,6 @@
 	dat += text("<BR>Range: <A href='?src=\ref[];range=-1'>-</A> [] <A href='?src=\ref[];range=1'>+</A>", src, range, src)
 	dat += "<BR><A href='?src=\ref[src];scanning=1'>[scanning?"Armed":"Unarmed"]</A> (Movement sensor active when armed!)"
 	dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "prox", "Proximity Sensor")
 	popup.set_content(dat)
@@ -170,10 +169,6 @@
 		var/r = text2num(href_list["range"])
 		range += r
 		range = min(max(range, 1), 5)
-
-	if(href_list["close"])
-		usr << browse(null, "window=prox")
-		return
 
 	if(usr)
 		attack_self(usr)

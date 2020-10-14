@@ -121,7 +121,6 @@
 		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
-	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
 
 	var/datum/browser/popup = new(user, "suspension", "Multi-phase mobile suspension field generator MK II \"Steadfast\"", 500, 400)
 	popup.set_content(dat)
@@ -168,11 +167,6 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=suspension")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

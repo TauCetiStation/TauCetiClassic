@@ -141,7 +141,7 @@
 	name = (name_action + name_part1 + name_part2)
 
 /obj/machinery/computer/arcade/ui_interact(mob/user)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+	var/dat
 
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -209,10 +209,6 @@
 			src.updateUsrDialog()
 			sleep(10)
 			src.arcade_action()
-
-	if (href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "New Round"

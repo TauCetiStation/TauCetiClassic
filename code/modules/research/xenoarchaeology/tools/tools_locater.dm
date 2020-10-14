@@ -73,8 +73,6 @@
 				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 				"}
 
-	dat += "<A href='?src=\ref[src];close=1'>Close</a><br>"
-
 	var/datum/browser/popup = new(user, "locater", "Radio frequency tracker", 300, 150)
 	popup.set_content(dat)
 	popup.open()
@@ -91,9 +89,5 @@
 		if (frequency < 1200 || frequency > 1600)
 			new_frequency = sanitize_frequency(new_frequency, 1499)
 		frequency = new_frequency
-
-	else if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=locater")
 
 	updateSelfDialog()

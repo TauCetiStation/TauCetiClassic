@@ -51,8 +51,6 @@
 			else
 				t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-
 	var/datum/browser/popup = new(user, "airlock_electronics", "Access control")
 	popup.set_content(t1)
 	popup.open()
@@ -61,10 +59,6 @@
 	..()
 	if (usr.incapacitated() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))
 		return
-	if (href_list["close"])
-		usr << browse(null, "window=airlock_electronics")
-		return
-
 	if (href_list["login"])
 		if(istype(usr,/mob/living/silicon))
 			src.locked = 0

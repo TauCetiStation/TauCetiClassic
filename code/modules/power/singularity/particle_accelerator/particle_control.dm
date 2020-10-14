@@ -70,11 +70,6 @@
 	return
 
 /obj/machinery/particle_accelerator/control_box/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=pacontrol")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -209,8 +204,7 @@
 		user << browse(null, "window=pacontrol")
 		return
 
-	var/dat = ""
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
+	var/dat
 	dat += "Status:<BR>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"

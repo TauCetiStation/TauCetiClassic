@@ -35,7 +35,6 @@
 		t += "Frequency: <A href = '?src=\ref[laser];freq=-10000'>-</A> <A href = '?src=\ref[laser];freq=-1000'>-</A> [laser.freq] <A href = '?src=\ref[laser];freq=1000'>+</A> <A href = '?src=\ref[laser];freq=10000'>+</A><BR>"
 		t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
 	t += "<hr>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
 	var/datum/browser/popup = new(user, "laser_control", "Laser status monitor", 500, 800)
 	popup.set_content(t)
@@ -43,44 +42,8 @@
 
 	user.machine = src
 
-/*
-/obj/machinery/computer/lasercon/proc/interact(mob/user)
-
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=powcomp")
-			return
-
-
-	user.machine = src
-	var/t = "<TT><B>Laser status monitor</B><HR>"
-
-	var/obj/machinery/engine/laser/laser = src.laser[1]
-
-	if(!laser)
-		t += "<span class='warning'>No laser found</span>"
-	else
-
-
-		t += "Power level:  <A href = '?src=\ref[src];input=-4'>-</A> <A href = '?src=\ref[src];input=-3'>-</A> <A href = '?src=\ref[src];input=-2'>-</A> <A href = '?src=\ref[src];input=-1'>-</A> [add_lspace(laser.power,5)] <A href = '?src=\ref[src];input=1'>+</A> <A href = '?src=\ref[src];input=2'>+</A> <A href = '?src=\ref[src];input=3'>+</A> <A href = '?src=\ref[src];input=4'>+</A><BR>"
-		if(advanced)
-			t += "Frequency:  <A href = '?src=\ref[src];freq=-10000'>-</A> <A href = '?src=\ref[src];freq=-1000'>-</A> [add_lspace(laser.freq,5)] <A href = '?src=\ref[src];freq=1000'>+</A> <A href = '?src=\ref[src];freq=10000'>+</A><BR>"
-
-		t += "Output: [laser.on ? "<B>Online</B> <A href = '?src=\ref[src];online=1'>Offline</A>" : "<A href = '?src=\ref[src];online=1'>Online</A> <B>Offline</B> "]<BR>"
-
-		t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	user << browse(t, "window=lascomp;size=420x700")
-	onclose(user, "lascomp")
-*/
 
 /obj/machinery/computer/lasercon/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=laser_control")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -105,28 +68,3 @@
 			laser.frequency = new_freq
 
 	src.updateDialog()
-
-/*
-/obj/machinery/computer/lasercon/process()
-	if(!(stat & (NOPOWER|BROKEN)) )
-		use_power(250)
-
-	//src.updateDialog()
-*/
-
-/*
-/obj/machinery/computer/lasercon/power_change()
-
-	if(stat & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER
-				update_power_use()
-	update_power_use()
-*/

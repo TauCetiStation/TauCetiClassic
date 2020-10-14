@@ -87,7 +87,7 @@
 		dat += "<br>"
 
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
+	dat += "<a href='?src=\ref[src]'>Refresh</a>"
 
 	var/datum/browser/popup = new(user, "utilizer", name, 400, 500)
 	popup.set_content(dat)
@@ -202,10 +202,6 @@
 				H.put_in_hands(inserted_battery)
 		inserted_battery = null
 		update_icon()
-	if(href_list["close"])
-		usr << browse(null, "window=utilizer")
-		usr.unset_machine(src)
-		return
 	src.interact(usr)
 	..()
 	updateDialog()

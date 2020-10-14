@@ -95,7 +95,6 @@
 		<a href='?src=\ref[src];charge_rate=100000'>\[+++\]</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
 	var/datum/browser/popup = new(user, "shield_capacitor", "Shield Capacitor Control Console", 500, 400)
 	popup.set_content(t)
@@ -119,11 +118,6 @@
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
-	if(href_list["close"])
-		usr << browse(null, "window=shield_capacitor")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
