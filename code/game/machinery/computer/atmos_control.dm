@@ -28,15 +28,13 @@
 		for(var/obj/machinery/alarm/alarm in alarm_list)
 			if(alarm.hidden_from_console)
 				continue
-			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
+			var/color
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
-				if (0)
-					dat += "<font color=green>[alarm]</font>"
 				if (1)
-					dat += "<font color=blue>[alarm]</font>"
+					color = "average"
 				if (2)
-					dat += "<font color=red>[alarm]</font>"
-			dat += "</a><br/>"
+					color = "bad"
+			dat += "<a class='[color]' href='?src=\ref[src]&alarm=\ref[alarm]'>[alarm]</a><br/>"
 
 	var/datum/browser/popup = new(user, "atmoscontrol")
 	popup.set_content(dat)

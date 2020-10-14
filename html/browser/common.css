@@ -137,6 +137,22 @@ a:hover, a:focus, .spoiler b:hover {
 	background-color: #4c729d;
 }
 
+a.average, a.average:link, a.average:visited, a.average:active, a.average:hover {
+	background-color:#cd7a0d;
+}
+
+a.average:hover, a.average:focus {
+	background-color:#e68d18;
+}
+
+a.orange, a.orange:link, a.orange:visited, a.orange:active, a.orange:hover {
+	background-color:#d95e0c;
+}
+
+a.orange:hover, a.orange:focus {
+	background-color:#ed6f1d;
+}
+
 a.blue, a.blue:link, a.blue:visited, a.blue:active, a.blue:hover {
 	background-color:#1c71b1;
 }
