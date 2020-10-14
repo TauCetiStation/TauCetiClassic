@@ -44,7 +44,6 @@
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
-	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 
 	var/datum/browser/popup = new(user, "port_gen", src.name)
 	popup.set_content(dat)
@@ -54,11 +53,6 @@
 	return TRUE
 
 /obj/machinery/power/port_gen/riteg/Topic(href, href_list)
-	if (href_list["action"] == "close")
-		usr << browse(null, "window=port_gen")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

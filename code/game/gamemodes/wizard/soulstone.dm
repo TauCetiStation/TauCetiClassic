@@ -37,8 +37,6 @@
 	for(var/mob/living/simple_animal/shade/A in src)
 		dat += "Captured Soul: [A.name]<br>"
 		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
-		dat += "<br>"
-		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 
 	var/datum/browser/popup = new(user, "window=aicard", "Soul Stone", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -55,11 +53,6 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
-			U << browse(null, "window=aicard")
-			U.unset_machine()
-			return
-
 		if ("Summon")
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE

@@ -71,8 +71,6 @@
 			dat += "Subspace Transceiver is: [A.aiRadio.disabledAi ? "Disabled" : "Enabled"]"
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
-			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 
 	var/datum/browser/popup = new(user, "aicard", "Intelicard")
 	popup.set_content(dat)
@@ -90,11 +88,6 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
-			U << browse(null, "window=aicard")
-			U.unset_machine()
-			return
-
 		if ("Radio")
 			for(var/mob/living/silicon/ai/A in src)
 				A.aiRadio.disabledAi = !A.aiRadio.disabledAi
