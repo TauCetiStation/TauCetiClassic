@@ -5,14 +5,14 @@
 	var/width
 	var/height
 	var/atom/ref
-	var/theme = CSS_THEME_DARK // or CSS_THEME_LIGHT
+	var/theme // CSS_THEME_DARK or CSS_THEME_LIGHT
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
 	var/head_content
 	var/content
 
-/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme)
+/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme = CSS_THEME_DARK)
 	if(ismob(nuser))
 		var/mob/M = nuser
 		nuser = M.client
