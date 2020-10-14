@@ -429,43 +429,14 @@ td.collapsing {
 	overflow: hidden;
 }
 
-.progressFill.good {
-	color: #ffffff;
-	background: #00ff00;
-}
-
-.progressFill.average {
-	color: #ffffff;
-	background: #d09000;
-}
-
-.progressFill.bad {
-	color: #ffffff;
-	background: #ff0000;
-}
-
-.progressFill.highlight {
-	color: #ffffff;
-	background: #8BA5C4;
-}
-
-.clearBoth {
-	clear: both;
-}
-
-.clearLeft {
-	clear: left;
-}
-
-.clearRight {
-	clear: right;
-}
+.clearBoth  {clear: both}
+.clearLeft  {clear: left}
+.clearRight {clear: right}
 
 .line {
 	width: 100%;
 	clear: both;
 }
-
 
 .switch {
   position: relative;
@@ -555,10 +526,6 @@ ul.sparse {
 
 .slider.round:before {
   border-radius: 50%;
-}
-
-.alert {
-	color: #FF0000;
 }
 
 iframe {
