@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(vote)
 			if(get_vote_time() < 0)
 				active_vote.check_winners()
 				for(var/client/C in voters)
-					C << browse(null, "window=vote;can_close=0")
+					C << browse(null, "window=vote")
 				stop_vote()
 			else
 				for(var/client/C in voters)
@@ -28,8 +28,7 @@ SUBSYSTEM_DEF(vote)
 
 
 /datum/controller/subsystem/vote/proc/interface_client(client/C)
-	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650)
-	panel.set_window_options("can_close=0;can_resize=0;")
+	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650, nref = src)
 	panel.set_content(interface(C))
 	panel.open()
 
@@ -122,7 +121,7 @@ SUBSYSTEM_DEF(vote)
 		if(active_vote.description)
 			. += "[active_vote.description]<hr>"
 		if(admin)
-			. += "(<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>) "
+			. += "<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>"
 	else
 		var/any_votes = FALSE
 		. += "<h2>Start a vote:</h2><hr>"
@@ -155,7 +154,6 @@ SUBSYSTEM_DEF(vote)
 			. += "<li><i>There is no available votes here now.</i></li>"
 
 		. += "</table><hr>"
-	. += "<a href='?src=\ref[src];close=1' style='position:absolute;right:50px'>Close</a>"
 	return .
 
 
