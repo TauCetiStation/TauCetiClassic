@@ -130,15 +130,15 @@
 		R.product_name = initial(temp.name)
 	return
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)  //Restocking from TG
+/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
 	var/total = 0
 
 	var/to_restock = 0
-	for(var/datum/data/vending_product/machine_content in machine)
+	for(var/datum/data/vending_product/machine_content in product_records)
 		to_restock += machine_content.max_amount - machine_content.amount
 
 	if(to_restock <= refill.charges)
-		for(var/datum/data/vending_product/machine_content in machine)
+		for(var/datum/data/vending_product/machine_content in product_records)
 			if(machine_content.amount != machine_content.max_amount)
 				to_chat(usr, "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>")
 				machine_content.amount = machine_content.max_amount
@@ -146,7 +146,7 @@
 		total = to_restock
 	else
 		var/tmp_charges = refill.charges
-		for(var/datum/data/vending_product/machine_content in machine)
+		for(var/datum/data/vending_product/machine_content in product_records)
 			var/restock = CEIL(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
@@ -224,7 +224,7 @@
 			if(canister.charges == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
-				var/transfered = refill_inventory(canister,product_records,user)
+				var/transfered = refill_inventory(canister, user)
 				if(transfered)
 					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
