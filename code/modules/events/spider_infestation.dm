@@ -11,7 +11,7 @@
 
 /datum/event/spider_infestation/start()
 	var/list/vents = get_vents()
-	
+
 	if(!vents.len)
 		message_admins("An event attempted to spawn spiders but no suitable vents were found. Shutting down.")
 		return

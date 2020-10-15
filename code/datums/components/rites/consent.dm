@@ -29,7 +29,7 @@
 
 	if(!victim.IsAdvancedToolUser())
 		consent = TRUE
-	else 
+	else
 		if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
 			consent = TRUE
 			to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")

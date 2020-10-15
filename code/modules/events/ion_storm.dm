@@ -17,7 +17,7 @@
 		if(target.mind.special_role == "traitor")
 			continue
 		target.overload_ai_system()
-	
+
 	// Emag bots.
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in bots_list)

@@ -146,7 +146,7 @@ var/global/list/wire_daltonism_colors = list()
 
 			if(!wire_daltonism_colors)
 				wire_daltonism_colors = list()
-			
+
 			// Creates a list of color for people with daltonism and save his
 			if(!wire_daltonism_colors[H.sightglassesmod])
 				wire_daltonism_colors[H.sightglassesmod] = list()

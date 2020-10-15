@@ -214,7 +214,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
 
-/datum/admins/proc/show_player_notes(key as text)
+/datum/admins/proc/show_player_notes(key)
 	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 

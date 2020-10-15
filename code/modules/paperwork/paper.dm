@@ -87,7 +87,7 @@
 		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
-	
+
 	return data
 
 /obj/item/weapon/paper/verb/rename()
