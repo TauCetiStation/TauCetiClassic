@@ -60,7 +60,7 @@ body.theme_syndicate {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	margin: .5rem;
+	margin: .5rem .3rem;
 }
 
 .uiTitleWrapper + .uiContent {
@@ -93,11 +93,9 @@ body.theme_syndicate {
 }
 
 .theme_light .uiTitle {
-	background-color:#fff;
-	border-bottom:1px solid rgba(0,0,0,.25);
-	box-shadow:0 2px 2px rgba(0,0,0,.1);
-	box-shadow:0 .1666666667rem .1666666667rem rgba(0,0,0,.1);
-	color:rgba(0,0,0,.75);
+	border-bottom: 2px solid #e9e9e9;
+	background: #c8c8c8;
+	color: #30373d;
 }
 
 .theme_syndicate .uiTitle {
@@ -135,6 +133,12 @@ a:hover {
 
 a:hover, a:focus, .spoiler b:hover {
 	background-color: #4c729d;
+}
+
+a.fluid {
+	display:block;
+	margin-left:0;
+	margin-right:0;
 }
 
 a.average, a.average:link, a.average:visited, a.average:active, a.average:hover {
@@ -382,13 +386,25 @@ div.notice {
 	margin-bottom:0
 }
 
+.Section__title{
+	position:relative;
+	background-color:#1a1a1a;
+	background-color:rgba(0,0,0,.33);
+	box-shadow:inset 0 0 5px rgba(0,0,0,.5);
+	box-sizing:border-box;
+	padding:.5em;
+	border-bottom:.1666666667em solid #4972a1;
+	font-size:1.1666666667em;
+	font-weight:700;
+}
+
 .blockCargo {
 	overflow: auto;
 	height: 470px;
 	padding: 2px;
 }
 
-.spoiler input, .spoiler div   { 
+.spoiler input, .spoiler div   {
 	display: none; /* Скрываем содержимое */
 }
    /* Открытый спойлер */

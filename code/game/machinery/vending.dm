@@ -362,11 +362,11 @@
 		return
 
 	var/dat
-	dat += "<h3>Select an item</h3>"
+	dat += "<div class='Section__title'>Products</div>"
 	dat += "<div class='Section'>"
 
 	if (product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
+		dat += "<span class='red'>No product loaded!</span>"
 	else
 		dat += "<table>"
 		dat += print_recors(product_records)
@@ -392,17 +392,13 @@
 	var/dat
 	for (var/datum/data/vending_product/R in record)
 		dat += "<tr>"
-		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></span></td>"}
-		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></font></td>"}
-		dat += "<td><font color = '#0c4274'><b>[R.amount]</b> </font></td>"
-		if(R.price)
-			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></font></td>"}
-		else
-			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></font></td>"}
+		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]'></span></td>"
+		dat += "<td><B>[R.product_name]</B></td>"
+		dat += "<td class='collapsing' align='center'><span class='[R.amount > 1 ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
-			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
+			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "$[R.price]" : "FREE"]</A></td>"
 		else
-			dat += "<td nowrap><font color = 'red'>SOLD OUT</font></td>"
+			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "$[R.price]" : "FREE"]</div></td>"
 		dat += "</tr>"
 	return dat
 
