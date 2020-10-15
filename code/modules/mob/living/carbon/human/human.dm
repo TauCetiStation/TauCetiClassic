@@ -1940,22 +1940,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			h_style = "IPC off screen"
 		update_hair()
 
-/mob/living/carbon/human/proc/IPC_system_start()
-	set category = "IPC"
-	set name = "IPC systems start"
-	set desc = "Turn on chassis systems"
-	if(stat == CONSCIOUS)
-		return
-	if(nutrition < 251)
-		to_chat(usr, "<span class='warning bold'>%ACCUMULATOR% CHARGE IS TOO LOW.</span>")
-		return
-	if(organs_by_name[O_BRAIN].damage > 30)
-		to_chat(usr, "<span class='warning bold'>%%P05IBR*IH@% $Ys7EMm ER00xr// .</span>")
-		return
-	if(stat == DEAD)
-		to_chat(usr, "<span class='warning bold'>POWERING UP THE SYSTEMS.</span>")
-		stat = CONSCIOUS
-		nutrition -= 250
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
