@@ -78,7 +78,7 @@
 		if(gizmo && gizmo.marked)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
-			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
+			dat += "<span class='disabled'>Retrieve Mark</span><br>"
 	else
 		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
 
@@ -87,9 +87,9 @@
 		var/mode = vest.mode
 		if(mode == VEST_STEALTH)
 			dat += "<a href='?src=\ref[src];flip_vest=1'>Combat</A>"
-			dat += "<span class='linkOff'>Stealth</span>"
+			dat += "<span class='disabled'>Stealth</span>"
 		else
-			dat += "<span class='linkOff'>Combat</span>"
+			dat += "<span class='disabled'>Combat</span>"
 			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
 
 		dat += "<br>"

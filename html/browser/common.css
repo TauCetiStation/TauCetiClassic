@@ -55,7 +55,7 @@ body {
 	padding-right: 6px;
 }
 
-a, button, a:link, a:visited, a:active, .linkOn, .linkOff, .spoiler b {
+a, button, a:link, a:visited, a:active, .selected, .disabled, .spoiler b {
 	position: relative;
 	display: inline-block;
 	line-height: 1.6666666667em;
@@ -175,24 +175,24 @@ a.white:hover {
 	background: #40628a;
 }
 
-.linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active {
+.selected, a.selected:link, a.selected:visited, a.selected:active {
 	background: #1b9638;
 }
 
-a.linkOn:hover {
+a.selected:hover {
 	background-color:#27ab46;
 }
 
-.linkOff, a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover {
+.disabled, a.disabled:link, a.disabled:visited, a.disabled:active, a.disabled:hover {
 	background: #999999;
 }
 
-a.icon, .linkOn.icon, .linkOff.icon {
+a.icon, .selected.icon, .disabled.icon {
 	position: relative;
 	padding: 1px 4px 2px 20px;
 }
 
-a.icon img, .linkOn.icon img {
+a.icon img, .selected.icon img {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -222,11 +222,11 @@ a.icon img, .linkOn.icon img {
 	border: 1px solid #40628a;
 }
 
-.linkOff:hover .description, a:hover .description {
+.disabled:hover .description, a:hover .description {
 	display: block;
 }
 
-.linkOff:hover .description:hover, a:hover .description:hover {
+.disabled:hover .description:hover, a:hover .description:hover {
 	display: none;
 }
 

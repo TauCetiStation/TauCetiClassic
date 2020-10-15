@@ -71,8 +71,8 @@
 			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
 			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
-			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
-			data += "<span class='linkOff'>Eject GPS device</span><BR>"
+			data += "<BR><span class='disabled'>Get target from memory</span><BR>"
+			data += "<span class='disabled'>Eject GPS device</span><BR>"
 		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)

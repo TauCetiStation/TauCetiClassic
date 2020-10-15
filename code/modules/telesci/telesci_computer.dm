@@ -121,19 +121,19 @@
 			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
 			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
 		else
-			t += "<span class='linkOff'>Eject GPS</span>"
-			t += "<span class='linkOff'>Set GPS memory</span>"
+			t += "<span class='disabled'>Eject GPS</span>"
+			t += "<span class='disabled'>Set GPS memory</span>"
 		t += "<div class='Section'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
 		t += "<div class='Section'>[rotation]°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
 		t += "<div class='Section'>[angle]°</div>"
-		t += "<span class='linkOn'>Set Power</span>"
+		t += "<span class='selected'>Set Power</span>"
 		t += "<div class='Section'>"
 
 		for(var/i = 1; i <= power_options.len; i++)
 			if(power == power_options[i])
-				t += "<span class='linkOn'>[power_options[i]]</span>"
+				t += "<span class='selected'>[power_options[i]]</span>"
 				continue
 			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
 		t += "</div>"
@@ -142,9 +142,9 @@
 		t += "<div class='Section'>[z_co ? z_co : "NULL"]</div>"
 
 		if(active_wormhole)
-			t += "<BR><span class='linkOff'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
+			t += "<BR><span class='disabled'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
 		else
-			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='linkOff'>Close Wormhole</span>"
+			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
 		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport

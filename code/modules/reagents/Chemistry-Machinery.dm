@@ -677,13 +677,13 @@
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
 		else
-			dat += "<LI><span class='linkOff'>Create pill</span> (50 units max)"
-			dat += "<LI><span class='linkOff'>Create multiple pills</span><BR>"
+			dat += "<LI><span class='disabled'>Create pill</span> (50 units max)"
+			dat += "<LI><span class='disabled'>Create multiple pills</span><BR>"
 	else
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"
 		else
-			dat += "<LI><span class='linkOff'>Create pack</span> (10 units max)<BR>"
+			dat += "<LI><span class='disabled'>Create pack</span> (10 units max)<BR>"
 	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
 

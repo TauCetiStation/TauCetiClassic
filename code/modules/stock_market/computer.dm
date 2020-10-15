@@ -143,7 +143,7 @@
 							break
 			dat += "<td>"
 			if(S.bankrupt)
-				dat += "<span class='linkOff'>+</span> <span class='linkOff'>-</span> "
+				dat += "<span class='disabled'>+</span> <span class='disabled'>-</span> "
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
 			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td>"

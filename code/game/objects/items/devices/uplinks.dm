@@ -55,7 +55,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(item.cost <= uses)
 				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
 			else
-				dat += "<span class='linkOff'>[item.name] [cost_text]</span>"
+				dat += "<span class='disabled'>[item.name] [cost_text]</span>"
 			if(item.desc)
 				dat += "<span class='spoiler'><input type='checkbox' id='[item.name]'>"
 				dat += "<label for='[item.name]'><b>\[?\]</b></label>"
