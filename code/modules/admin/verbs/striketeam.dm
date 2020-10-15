@@ -164,7 +164,6 @@ var/global/sent_strike_team = 0
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 
 
 

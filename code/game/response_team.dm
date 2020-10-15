@@ -268,5 +268,4 @@ var/can_call_ert
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 	return 1
