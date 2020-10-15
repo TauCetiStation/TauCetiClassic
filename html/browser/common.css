@@ -131,7 +131,7 @@ a:hover {
 	transition:color 0ms,background-color 0ms
 }
 
-a:hover, a:focus, .spoiler b:hover {
+a:hover, .spoiler b:hover {
 	background-color: #4c729d;
 }
 
@@ -145,7 +145,7 @@ a.average, a.average:link, a.average:visited, a.average:active, a.average:hover 
 	background-color:#cd7a0d;
 }
 
-a.average:hover, a.average:focus {
+a.average:hover {
 	background-color:#e68d18;
 }
 
@@ -153,7 +153,7 @@ a.orange, a.orange:link, a.orange:visited, a.orange:active, a.orange:hover {
 	background-color:#d95e0c;
 }
 
-a.orange:hover, a.orange:focus {
+a.orange:hover {
 	background-color:#ed6f1d;
 }
 
@@ -161,7 +161,7 @@ a.blue, a.blue:link, a.blue:visited, a.blue:active, a.blue:hover {
 	background-color:#1c71b1;
 }
 
-a.blue:hover, a.blue:focus {
+a.blue:hover {
 	background-color:#2883c8;
 }
 
@@ -169,7 +169,7 @@ a.violet, a.violet:link, a.violet:visited, a.violet:active, a.violet:hover {
 	background-color:#552dab;
 }
 
-a.violet:hover, a.violet:focus {
+a.violet:hover {
 	background-color:#653ac1;
 }
 
@@ -177,7 +177,7 @@ a.good, a.good:link, a.good:visited, a.good:active, a.good:hover {
 	background-color:#4d9121;
 }
 
-a.good:hover, a.good:focus {
+a.good:hover {
 	background-color:#5da52d;
 }
 
@@ -185,7 +185,7 @@ a.green, a.green:link, a.green:visited, a.green:active, a.green:hover {
 	background-color:#1b9638;
 }
 
-a.green:hover, a.green:focus {
+a.green:hover {
 	background-color:#27ab46;
 }
 
@@ -193,7 +193,7 @@ a.bad, a.bad:link, a.bad:visited, a.bad:active, a.bad:hover {
 	background-color:#bd2020;
 }
 
-a.bad:hover, a.bad:focus {
+a.bad:hover {
 	background-color:#d52b2b;
 }
 
@@ -201,7 +201,7 @@ a.red, a.red:link, a.red:visited, a.red:active, a.red:hover {
 	background-color:#bd2020;
 }
 
-a.red:hover, a.red:focus {
+a.red:hover {
 	background-color:#d52b2b;
 }
 
@@ -230,7 +230,7 @@ a.white:hover {
 	background: #1b9638;
 }
 
-a.linkOn:hover, a.linkOn:focus {
+a.linkOn:hover {
 	background-color:#27ab46;
 }
 
@@ -573,6 +573,6 @@ iframe {
 	background-color:#397439;
 }
 
-.theme_syndicate a:hover, .theme_syndicate a:focus {
+.theme_syndicate a:hover {
 	background-color:#478647;
 }
