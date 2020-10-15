@@ -98,7 +98,7 @@
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 
-	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
+	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
 	popup.open()
 
