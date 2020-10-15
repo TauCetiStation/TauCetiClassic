@@ -132,10 +132,10 @@
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>")
+		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points</a><br>")
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
+		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>")
 
 	for(var/O in stack_list)
 		s = stack_list[O]
@@ -296,9 +296,9 @@
 	var/dat
 	dat +="<div class='Section'>"
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>"
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
+		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)

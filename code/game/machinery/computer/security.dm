@@ -184,7 +184,7 @@
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 							dat += text("<td>[]</td></tr>", crimstat)
 						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
+						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</a>", src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)

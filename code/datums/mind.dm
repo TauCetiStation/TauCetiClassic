@@ -303,7 +303,7 @@
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
 			if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
+				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance</a>"
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
 //			var/datum/game_mode/changeling/changeling = SSticker.mode
@@ -329,7 +329,7 @@
 					code = bombue.r_code
 					break
 			if (code)
-				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
+				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code</a>"
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
 		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_role))

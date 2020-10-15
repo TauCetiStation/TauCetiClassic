@@ -406,7 +406,7 @@ A proc that does all the animations before mix()-ing.
 	if(menustat == "log")
 		dat += "<center>Log Options.</center><HR>"
 		dat += "<div class='Section'>"
-		dat += "<A href='?src=\ref[src];action=disable_notif'>[disable_notifications ? "Enable" : "Disable"] notifications.</A>"
+		dat += "<A href='?src=\ref[src];action=disable_notif'>[disable_notifications ? "Enable" : "Disable"] notifications</a>"
 		dat += "</div><HR>"
 
 		dat += "<center>Log Entries.</center><HR>"
@@ -458,17 +458,17 @@ A proc that does all the animations before mix()-ing.
 				if(tank_id == "output")
 					dat += "<A href='?src=\ref[src];action=choose_color'>Color to mix:</A> [color_square(hex = chosen_color)]<BR>"
 					dat += "<A href='?src=\ref[src];action=choose_quantity'>Quantity to create:</A> [chosen_quantity]<BR>"
-					dat += "<A href='?src=\ref[src];action=start_mix'>Mix.</A>"
+					dat += "<A href='?src=\ref[src];action=start_mix'>Mix</a>"
 					dat += "<BR>"
-					dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload.</A>"
+					dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
 				else
 					if(filling_tank_id == tank_id)
-						dat += "<A href='?src=\ref[src];action=close_hatch;tank_name=[tank_name]'>Close hatch.</A><BR>"
+						dat += "<A href='?src=\ref[src];action=close_hatch;tank_name=[tank_name]'>Close hatch</a><BR>"
 					else
-						dat += "<A href='?src=\ref[src];action=open_hatch;tank=[tank_id];tank_name=[tank_name]'>Open hatch.</A><BR>"
-						dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload.</A>"
+						dat += "<A href='?src=\ref[src];action=open_hatch;tank=[tank_id];tank_name=[tank_name]'>Open hatch</a><BR>"
+						dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
 			else
-				dat += "<A href='?src=\ref[src];action=load_tank;tank=[tank_id];tank_name=[tank_name]'>Load.</A>"
+				dat += "<A href='?src=\ref[src];action=load_tank;tank=[tank_id];tank_name=[tank_name]'>Load</a>"
 			dat += "</div>"
 
 	var/datum/browser/popup = new(user, "dye mixer", name, 350, 520)

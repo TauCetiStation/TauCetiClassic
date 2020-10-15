@@ -80,7 +80,7 @@
 
 	if(istype(inserted_id))
 		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>")
-		dat += text("<A href='?src=\ref[src];claim=1'>Claim points.</A><br>")
+		dat += text("<A href='?src=\ref[src];claim=1'>Claim points</a><br>")
 	else
 		dat += text("No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>")
 

@@ -54,7 +54,7 @@
 		if (AREA_SPACE)
 			text += {"
 <p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
-<p><a href='?src=\ref[src];action=create_area'>Mark this place as new area.</a></p>
+<p><a href='?src=\ref[src];action=create_area'>Mark this place as new area</a></p>
 "}
 		if (AREA_STATION)
 			text += {"
