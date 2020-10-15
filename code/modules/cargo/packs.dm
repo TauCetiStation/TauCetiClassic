@@ -1013,7 +1013,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Virus sample crate"
-	access = access_cmo
+	access = access_virology
 	group = "Medical / Science"
 
 /datum/supply_pack/coolanttank
