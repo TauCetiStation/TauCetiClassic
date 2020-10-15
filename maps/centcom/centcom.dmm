@@ -13833,7 +13833,15 @@
 	},
 /area/shuttle/vox/arkship)
 "aXi" = (
-/obj/item/weapon/spacecash/c50,
+/obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -13847,9 +13855,9 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aXl" = (
-/obj/structure/curtain/open/bed,
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/centcom,
+/obj/structure/curtain/open/bed,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -14179,6 +14187,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -14186,7 +14195,8 @@
 	},
 /area/shuttle/vox/arkship)
 "aYm" = (
-/obj/effect/decal/cleanable/vomit,
+/obj/structure/table,
+/obj/item/weapon/spacecash/c50,
 /turf/simulated/floor{
 	icon_state = "floorgrime";
 	nitrogen = 103.984;
@@ -15132,14 +15142,6 @@
 "bbl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/organ/external/r_arm,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
-"bbm" = (
-/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	icon_state = "showroomfloor";
 	nitrogen = 103.984;
@@ -16417,23 +16419,6 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"bSp" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/off{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/device/radio/off{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/floor{
-	icon_state = "floorgrime";
-	nitrogen = 103.984;
-	oxygen = 0
-	},
-/area/shuttle/vox/arkship)
 "bTb" = (
 /obj/structure/largecrate,
 /turf/unsimulated/floor{
@@ -16765,11 +16750,10 @@
 	},
 /area/velocity)
 "cyZ" = (
-/obj/structure/curtain/open/bed,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
-	icon_state = "floorgrime";
+	icon_state = "showroomfloor";
 	nitrogen = 103.984;
 	oxygen = 0
 	},
@@ -74269,13 +74253,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aYP
 yfr
 eCv
 fgw
 eCv
 yfr
-aaM
+hGc
 aaM
 aaM
 aaM
@@ -74525,15 +74509,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aYP
+yfr
 yfr
 eGp
 flV
 gji
 yfr
+yfr
 hGc
-aaM
 aaM
 aaM
 aaM
@@ -74781,17 +74765,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aYP
-yfr
-bSp
+abu
+eCv
+aXi
+ban
 eTK
 fwr
 ban
+aYd
 nNM
-yfr
-hGc
-aaM
+eCv
+abu
 aaM
 aaM
 aaM
@@ -75038,8 +75022,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-yfr
+abu
+eCv
 bag
 bVl
 aYd
@@ -75047,8 +75031,8 @@ fyG
 aYd
 gQv
 aXY
-yfr
-aaM
+eCv
+abu
 aaM
 aaM
 aaM
@@ -75295,7 +75279,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aYP
 yfr
 yfr
 yfr
@@ -75305,7 +75289,7 @@ yfr
 yfr
 yfr
 yfr
-yfr
+hGc
 aaM
 aaM
 aaM
@@ -75551,7 +75535,7 @@ aaM
 aaM
 aaM
 aaM
-yfr
+aYP
 yfr
 yfr
 bai
@@ -75563,7 +75547,7 @@ gQV
 hKc
 iSn
 yfr
-yfr
+hGc
 aaM
 aaM
 aaM
@@ -76321,7 +76305,7 @@ aaM
 aaM
 aaM
 aaM
-yfr
+aaM
 yfr
 aYl
 aYV
@@ -76578,12 +76562,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
 yfr
-aXi
 aYm
 aZc
 yfr
-cyZ
+aXl
 yfr
 aPG
 aMB
@@ -76835,8 +76819,8 @@ aaM
 aaM
 aaM
 aaM
+aYP
 yfr
-aXl
 yfr
 yfr
 yfr
@@ -76849,7 +76833,7 @@ hRD
 yfr
 yfr
 yfr
-yfr
+hGc
 aaM
 aaM
 aaM
@@ -77094,7 +77078,7 @@ aaM
 aaM
 yfr
 yfr
-yfr
+cyZ
 aZn
 bap
 cJD
@@ -77860,14 +77844,14 @@ aaM
 aaM
 aaM
 aaM
-yfr
+aYP
 aoQ
 aWP
 yfr
 aXE
 aYx
 aZr
-bbm
+aYn
 aYn
 aXd
 aPG
@@ -77880,7 +77864,7 @@ mqi
 yfr
 naX
 otl
-yfr
+hGc
 aaM
 aaM
 aaM
