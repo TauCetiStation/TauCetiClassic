@@ -5,8 +5,6 @@ SUBSYSTEM_DEF(events)
 	var/report_at_round_end = 0
 
     // UI vars
-	var/window_x = 700
-	var/window_y = 600
 	var/table_options = " align='center'"
 	var/head_options = " style='font-weight:bold;'"
 	var/row_options1 = " width='85px'"
@@ -71,7 +69,7 @@ SUBSYSTEM_DEF(events)
 
 	var/html = GetInteractWindow()
 
-	var/datum/browser/popup = new(user, "event_manager", "Event Manager", window_x, window_y)
+	var/datum/browser/popup = new(user, "event_manager", "Event Manager", 700, 600)
 	popup.set_content(html)
 	popup.open()
 
