@@ -356,7 +356,7 @@
 		var/dat
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 400, 550)
+		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 		popup.set_content(dat)
 		popup.open()
 		return
@@ -383,7 +383,7 @@
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
+	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
