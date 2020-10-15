@@ -678,7 +678,6 @@
 			else
 				L = new /obj/item/weapon/implant/mindshield/loyalty(H)
 				L.inject(H)
-				START_PROCESSING(SSobj, L)
 
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
