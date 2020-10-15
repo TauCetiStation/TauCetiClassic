@@ -261,7 +261,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	if(text)
 		antagonists_completion += list(list("mode" = "changeling", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

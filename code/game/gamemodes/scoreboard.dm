@@ -1,6 +1,6 @@
 /datum/controller/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
-		completions += "<div class='block'>[achievement_declare_completion()]</div>"
+		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
 
 	// Score Calculation and Display
 
@@ -252,7 +252,7 @@
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
-	dat += {"<h2>Round Statistics and Score</h2><div class='block'>"}
+	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
 	if (SSticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0

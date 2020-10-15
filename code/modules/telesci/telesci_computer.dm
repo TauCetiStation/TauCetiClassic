@@ -115,7 +115,7 @@
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
-		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
+		t += "<div class='Section'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
 			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
@@ -123,13 +123,13 @@
 		else
 			t += "<span class='linkOff'>Eject GPS</span>"
 			t += "<span class='linkOff'>Set GPS memory</span>"
-		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
+		t += "<div class='Section'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<div class='Section'>[rotation]°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<div class='Section'>[angle]°</div>"
 		t += "<span class='linkOn'>Set Power</span>"
-		t += "<div class='statusDisplay'>"
+		t += "<div class='Section'>"
 
 		for(var/i = 1; i <= power_options.len; i++)
 			if(power == power_options[i])
@@ -139,7 +139,7 @@
 		t += "</div>"
 
 		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+		t += "<div class='Section'>[z_co ? z_co : "NULL"]</div>"
 
 		if(active_wormhole)
 			t += "<BR><span class='linkOff'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
@@ -148,7 +148,7 @@
 		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
-		t += "<BR><div class='statusDisplay'>"
+		t += "<BR><div class='Section'>"
 		if(!last_tele_data)
 			t += "No teleport data found."
 		else

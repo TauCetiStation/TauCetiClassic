@@ -396,7 +396,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "gang", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

@@ -244,7 +244,7 @@
 			dat += "<A href='?src=\ref[src];action=toggle_recipes'>[!display_craftable_only ? "Showing All Recipes" : "Showing Craftable Recipes"]</A>"
 		dat += "<A href='?src=\ref[src];action=toggle_compact'>[display_compact ? "Compact" : "Detailed"]</A>"
 		dat += "<BR>"
-		dat += "<div class='statusDisplay'>"
+		dat += "<div class='Section'>"
 
 		var/list/surroundings = get_surroundings(user)
 		var/found_any_recipe = FALSE

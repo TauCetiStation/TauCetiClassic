@@ -257,7 +257,7 @@ a.icon img, .linkOn.icon img {
 	width: 250px;
 }
 
-.statusDisplay .description {
+.Section .description {
 	display: none;
 	position: absolute;
 	bottom: 0;
@@ -368,7 +368,7 @@ div.notice {
 	clear: both;
 }
 
-.statusDisplay {
+.Section {
 	position:relative;
 	margin-bottom:.5em;
 	background-color:#1a1a1a;
@@ -378,19 +378,8 @@ div.notice {
 	padding:.66em .5em;
 }
 
-.statusDisplay:last-child{
+.Section:last-child{
 	margin-bottom:0
-}
-
-.block {
-	padding: 8px;
-	margin: 10px 4px 4px 4px;
-	border: 1px solid #40628a;
-	background-color: #202020;
-}
-
-.block h3 {
-	padding: 0;
 }
 
 .blockCargo {

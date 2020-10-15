@@ -107,14 +107,14 @@
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
 	var/data
 	if(!recharge_port)
-		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"
+		data += "<div class='Section'>No recharging port detected.</div><BR>"
 		data += "<A href='?src=\ref[src];reconnect=1'>Reconnect</A>"
 	else
 		data += "<h3>Mech status</h3>"
 		if(!recharge_port.recharging_mech)
-			data += "<div class='statusDisplay'>No mech detected.</div>"
+			data += "<div class='Section'>No mech detected.</div>"
 		else
-			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
+			data += "<div class='Section'>Integrity: [recharge_port.recharging_mech.health]<BR>"
 			if(recharge_port.recharging_mech.cell.crit_fail)
 				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
 			else

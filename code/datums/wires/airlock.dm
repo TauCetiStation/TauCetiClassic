@@ -38,7 +38,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "<br>[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
 	. += "<br>[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
 	. += "<br>[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
-	. += "<br><fieldset class='block'>"
+	. += "<br><fieldset class='Section'>"
 	. += "<legend><h3>Remote control</h3></legend>"
 	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of your multitool</a>"
 	. += "</fieldset>"

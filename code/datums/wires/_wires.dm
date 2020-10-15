@@ -191,7 +191,7 @@ var/global/list/wire_daltonism_colors = list()
  * >   . += "<br>Another light is [E.another_status ? "off" : "blinking"]."
  */
 /datum/wires/proc/get_interact_window(see_effect)
-	var/html = "<fieldset class='block'>"
+	var/html = "<fieldset class='Section'>"
 	html += "<legend><h3>Exposed Wires</h3></legend>"
 	html += "<table[table_options]>"
 

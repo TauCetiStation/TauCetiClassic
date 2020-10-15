@@ -144,7 +144,7 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
+	dat += text("<br><div class='Section'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
@@ -294,7 +294,7 @@
 
 /obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
-	dat +="<div class='statusDisplay'>"
+	dat +="<div class='Section'>"
 	if(istype(inserted_id))
 		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
 	else

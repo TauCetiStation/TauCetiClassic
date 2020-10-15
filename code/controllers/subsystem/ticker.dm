@@ -453,7 +453,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
-		ai_completions += "<div class='block'>"
+		ai_completions += "<div class='Section'>"
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
@@ -505,7 +505,7 @@ SUBSYSTEM_DEF(ticker)
 	ai_completions += "<br><h2>Mode Result</h2>"
 
 	if(mode.completion_text)//extendet has empty completion text
-		ai_completions += "<div class='block'>[mode.completion_text]</div>"
+		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

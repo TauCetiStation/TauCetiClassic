@@ -105,7 +105,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if (M.client)
 		if(!isnewplayer(M))
 			body += "<br>"
-			body += "<div class='statusDisplay'>"
+			body += "<div class='Section'>"
 			body += "<h3>Transformations:</h3>"
 
 			//Monkey
@@ -692,7 +692,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
 	dat += "<small>Globally - this is a change in salary for the profession. New players will enter the round with a changed salary. To return the base salary, select 0.</small><hr>"
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section'>"
 	if(crew.len)
 		dat += "<table>"
 		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"

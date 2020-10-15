@@ -384,7 +384,7 @@ A proc that does all the animations before mix()-ing.
 		return
 
 	var/dat
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section'>"
 	for(var/tab in tabs)
 		if(tab == menustat)
 			continue
@@ -405,18 +405,18 @@ A proc that does all the animations before mix()-ing.
 
 	if(menustat == "log")
 		dat += "<center>Log Options.</center><HR>"
-		dat += "<div class='statusDisplay'>"
+		dat += "<div class='Section'>"
 		dat += "<A href='?src=\ref[src];action=disable_notif'>[disable_notifications ? "Enable" : "Disable"] notifications.</A>"
 		dat += "</div><HR>"
 
 		dat += "<center>Log Entries.</center><HR>"
 		if(error_log.len)
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			for(var/error in 1 to error_log.len)
 				dat += "<A class='red' href='?src=\ref[src];action=clear_log;entry=[error]'>X</A>[error_log[error]]<BR>"
 			dat += "</div><BR>"
 		else
-			dat += "<div class='statusDisplay'><b>Log</b> <font color='red'>is empty.</font></div>"
+			dat += "<div class='Section'><b>Log</b> <font color='red'>is empty.</font></div>"
 
 	else
 		var/tank_name = ""
@@ -437,7 +437,7 @@ A proc that does all the animations before mix()-ing.
 				tank_id = "output"
 				response_wire = COLOR_MIXER_TANK_OUTPUT
 		dat += "<center>Status of <b>[tank_name]</b></center><HR>"
-		dat += "<div class='statusDisplay'>"
+		dat += "<div class='Section'>"
 		if(isWireCut(response_wire))
 			dat += "<font color='red'>Status unavailable.</font>"
 		else
@@ -451,9 +451,9 @@ A proc that does all the animations before mix()-ing.
 
 		dat += "<center>Options of <b>[tank_name]</b></center><HR>"
 		if(processing)
-			dat += "<div class='statusDisplay'><font color='red'>[src] is currently processing and can not give options for</font> <b>[tank_name]</b><font color='red'>.</font></div>"
+			dat += "<div class='Section'><font color='red'>[src] is currently processing and can not give options for</font> <b>[tank_name]</b><font color='red'>.</font></div>"
 		else
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			if(beakers[tank_id])
 				if(tank_id == "output")
 					dat += "<A href='?src=\ref[src];action=choose_color'>Color to mix:</A> [color_square(hex = chosen_color)]<BR>"

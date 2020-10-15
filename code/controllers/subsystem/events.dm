@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(events)
 		var/event_time = max(0, selected_event_container.next_event_time - world.time)
 		html += "<A align='right' href='?src=\ref[src];back=1'>Back</A><br>"
 		html += "Time till start: [round(event_time / 600, 0.1)]<br>"
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Available [severity_to_string[selected_event_container.severity]] Events (queued & running events will not be displayed)</h2>"
 		html += "<table[table_options]>"
 		html += "<tr[head_options]><td[row_options2]>Name </td><td>Weight </td><td>MinWeight </td><td>MaxWeight </td><td>OneShot </td><td>Enabled </td><td><span class='red'>CurrWeight </span></td><td>Remove</td></tr>"
@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(events)
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Add Event</h2>"
 		html += "<table[table_options]>"
 		html += "<tr [head_options]><td[row_options2]>Name</td><td[row_options2]>Type</td><td[row_options1]>Weight</td><td[row_options1]>OneShot</td></tr>"
@@ -143,7 +143,7 @@ SUBSYSTEM_DEF(events)
 		html += "</div>"
 	else
 		html += "<A align='right' href='?src=\ref[src];toggle_report=1'>Round End Report: [report_at_round_end ? "On": "Off"]</A><br>"
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Event Start</h2>"
 
 		html += "<table[table_options]>"
@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(events)
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Next Event</h2>"
 		html += "<table[table_options]>"
 		html += "<tr[head_options]><td[row_options1]>Severity</td><td[row_options2]>Name</td><td[row_options3]>Event Rotation</td><td>Clear</td></tr>"
@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(events)
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Running Events</h2>"
 		html += "Estimated times, affected by master controller delays."
 		html += "<table[table_options]>"

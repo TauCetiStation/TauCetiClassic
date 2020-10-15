@@ -363,7 +363,7 @@
 
 	var/dat
 	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section'>"
 
 	if (product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"

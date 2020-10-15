@@ -192,7 +192,7 @@
 ********************/
 
 /obj/machinery/kitchen_machine/ui_interact(mob/user)
-	var/dat = "<div class='statusDisplay'>"
+	var/dat = "<div class='Section'>"
 	if(src.broken > 0)
 		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
 	else if(src.operating)

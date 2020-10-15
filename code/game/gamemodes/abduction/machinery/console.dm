@@ -66,7 +66,7 @@
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
-			dat += "<div class='statusDisplay'>[get_price_list()]</div>"
+			dat += "<div class='Section'>[get_price_list()]</div>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 

@@ -88,7 +88,7 @@
 
 	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>\[[show_value_list ? "close" : "open"]\]</a><br>"
 	if(show_value_list)
-		dat += "<div class='statusDisplay'>[get_ore_values()]</div>"
+		dat += "<div class='Section'>[get_ore_values()]</div>"
 
 	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
 	popup.set_content(dat)

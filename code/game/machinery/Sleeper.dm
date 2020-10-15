@@ -214,7 +214,7 @@
 /obj/machinery/sleeper/ui_interact(mob/user)
 	var/dat = "<h3>Sleeper Status</h3>"
 
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section'>"
 	if(!occupant)
 		dat += "Sleeper Unoccupied"
 	else

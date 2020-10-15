@@ -51,11 +51,11 @@
 /obj/machinery/computer/teleporter/ui_interact(mob/user)
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
-		data += "<div class='statusDisplay'>No power station linked.</div>"
+		data += "<div class='Section'>No power station linked.</div>"
 	else if(!power_station.teleporter_hub)
-		data += "<div class='statusDisplay'>No hub linked.</div>"
+		data += "<div class='Section'>No hub linked.</div>"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
+		data += "<div class='Section'>Current regime: [regime_set]<BR>"
 		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
