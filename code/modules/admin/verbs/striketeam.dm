@@ -1,17 +1,12 @@
 // STRIKE TEAMS
 
 #define COMMANDOS_POSSIBLE 6
-#define COMMANDOS_DELAY (10 MINUTES)
 
 var/global/sent_strike_team = FALSE
 
-/client/proc/strike_team()
+/client/proc/call_strike_team()
 	if (!SSticker)
 		to_chat(usr, "<span class='red'>The game hasn't started yet!</span>")
-		return FALSE
-
-	if (world.time < COMMANDOS_DELAY)
-		to_chat(usr, "<span class='red'>There are [(COMMANDOS_DELAY - world.time) / 10] seconds remaining before it may be called.</span>")
 		return FALSE
 
 	if (sent_strike_team)
@@ -174,4 +169,3 @@ var/global/sent_strike_team = FALSE
 	equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
 #undef COMMANDOS_POSSIBLE
-#undef COMMANDOS_DELAY
