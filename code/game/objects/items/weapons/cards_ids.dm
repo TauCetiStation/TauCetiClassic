@@ -405,7 +405,7 @@
 
 /obj/item/weapon/card/id/captains_spare/atom_init()
 	. = ..()
-	var/datum/job/captain/J = new/datum/job/captain
+	var/datum/job/captain/J = SSjob.GetJob("Captain")
 	access = J.get_access()
 
 /obj/item/weapon/card/id/centcom
