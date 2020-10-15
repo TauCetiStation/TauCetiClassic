@@ -1176,7 +1176,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
-			START_PROCESSING(SSobj, L)
 			L.inject(M)
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), SLOT_W_UNIFORM)
@@ -1226,7 +1225,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
 			L.inject(M)
-			START_PROCESSING(SSobj, L)
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
@@ -1750,7 +1748,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
 			L.inject(M)
-			START_PROCESSING(SSobj, L)
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
