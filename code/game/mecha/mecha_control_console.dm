@@ -20,14 +20,14 @@
 			if(answer)
 				dat += {"<hr>[answer]<br/>
 						  <a href='?src=\ref[src];send_message=\ref[TR]'>Send message</a><br/>
-						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(EMP pulse)</a><br>"}
+						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>EMP pulse</a><br>"}
 
 	if(screen == 1)
 		dat += "<h3>Log contents</h3>"
 		dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
 		dat += "[stored_data]"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", src.name, 400, 500)
 	popup.set_content(dat)

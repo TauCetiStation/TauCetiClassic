@@ -101,7 +101,7 @@
 	else
 		dat += "Error: Water Tank not Found"
 
-	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>\[[get_total_ferts()]/[Max_Fertilizers]\]</a>"
+	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>[get_total_ferts()]/[Max_Fertilizers]</a>"
 
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 	if(!src.locked || issilicon(user) || isobserver(user))

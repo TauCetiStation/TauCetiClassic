@@ -77,12 +77,12 @@
 				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
 				dat += "<A class='red' href='?src=\ref[src];killbot=\ref[R]'><i>Destroy</i></A>"
 				dat += "<BR>"
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+			dat += "<A href='?src=\ref[src];screen=0'>Return to Main Menu</A><BR>"
 		if(screen == 2)
 			if(!src.status)
 				dat += {"<BR><B>Emergency Robot Self-Destruct</B><HR>\nStatus: Off<BR>
 				\n<BR>
-				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>\[Reset\]</A><BR>
+				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>Reset</A><BR>
 				\n<BR>
 				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>"}
 			else
@@ -90,7 +90,7 @@
 				\n<BR>
 				\nCountdown: [src.timeleft]/60 \[Reset\]<BR>
 				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>"}
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+			dat += "<A href='?src=\ref[src];screen=0'>Return to Main Menu</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", null, 400, 500)
 	popup.set_content(dat)

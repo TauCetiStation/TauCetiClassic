@@ -667,7 +667,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
 	if(master_mode == "secret")
-		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
+		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
 
 	dat += {"
 		<BR>

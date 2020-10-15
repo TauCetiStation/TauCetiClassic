@@ -73,7 +73,7 @@
 							</tr>"}
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
+					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
 				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
@@ -142,7 +142,7 @@
 						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</A>", src)
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
+			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
 
 	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")

@@ -51,7 +51,7 @@
 			<A href='?src=\ref[src];settitle=1'>Filter by Title: [title]</A><BR>
 			<A href='?src=\ref[src];setcategory=1'>Filter by Category: [category]</A><BR>
 			<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>
-			<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"}
+			<A href='?src=\ref[src];search=1'>Start Search</A><BR>"}
 		if(1)
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
@@ -76,12 +76,12 @@
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
 			dat += {"
-			<A href='?src=\ref[src];back=1'>\[Go Back\]</A>
-			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
-			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
-			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
-			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
-			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
+			<A href='?src=\ref[src];back=1'>Go Back</A>
+			 <A href='?src=\ref[src];pageprev=2'><< Page</A>
+			 <A href='?src=\ref[src];pageprev=1'>< Page</A>
+			 <A href='?src=\ref[src];pagereset=1'>Reset</A>
+			 <A href='?src=\ref[src];pagenext=1'>Page ></A>
+			 <A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
 
 	var/datum/browser/popup = new(user, "publiclibrary", "Library Visitor", 600, 600)
 	popup.set_content(dat)
@@ -189,8 +189,8 @@
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
 			for(var/obj/item/weapon/book/b in inventory)
-				dat += "[b.name] <A href='?src=\ref[src];delbook=\ref[b]'>(Delete)</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+				dat += "[b.name] <A href='?src=\ref[src];delbook=\ref[b]'>Delete</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
 		if(2)
 			// Checked Out
 			dat += "<h3>Checked Out Books</h3><BR>"
@@ -207,20 +207,20 @@
 				else
 					timedue = round(timedue)
 				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
-				<A href='?src=\ref[src];checkin=\ref[b]'>(Check In)</A><BR><BR>"}
-			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+				<A href='?src=\ref[src];checkin=\ref[b]'>Check In</A><BR><BR>"}
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
 		if(3)
 			// Check Out a Book
 			dat += {"<h3>Check Out a Book</h3><BR>
 			Book: [src.buffer_book]
-			<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>
+			<A href='?src=\ref[src];editbook=1'>Edit</A><BR>
 			Recipient: [src.buffer_mob]
-			<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>
+			<A href='?src=\ref[src];editmob=1'>Edit</A><BR>
 			Checkout Date : [world.time/600]<BR>
 			Due Date: [(world.time + checkoutperiod)/600]<BR>
 			(Checkout Period: [checkoutperiod] minutes) (<A href='?src=\ref[src];increasetime=1'>+</A>/<A href='?src=\ref[src];decreasetime=1'>-</A>)
-			<A href='?src=\ref[src];checkout=1'>(Commit Entry)</A><BR>
-			<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"}
+			<A href='?src=\ref[src];checkout=1'>Commit Entry</A><BR>
+			<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"}
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			establish_old_db_connection()
@@ -241,18 +241,18 @@
 					var/title = query.item[3]
 					var/category = query.item[4]
 					var/deletereason = query.item[5]
-					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
+					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>Order</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>Send removal request</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
 				dat += "</table>"
 				dat = {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([first_id] - [last_id])<BR><BR>
 				<table>
 				<tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"} + dat
 			dat += {"
-			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
-			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
-			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
-			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
-			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
-			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
+			<BR><A href='?src=\ref[src];switchscreen=0'>Return to main menu</A>
+			 <A href='?src=\ref[src];pageprev=2'><< Page</A>
+			 <A href='?src=\ref[src];pageprev=1'>< Page</A>
+			 <A href='?src=\ref[src];pagereset=1'>Reset</A>
+			 <A href='?src=\ref[src];pagenext=1'>Page ></A>
+			 <A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
@@ -270,8 +270,8 @@
 					scanner.cache.author = "Anonymous"
 				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
 				<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
-				<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"}
-			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+				<A href='?src=\ref[src];upload=1'>Upload</A><BR>"}
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
 		if(7)
 			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
 			Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
@@ -489,12 +489,12 @@
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
 	else
 		dat += "No data stored in memory.<BR>"
-	dat += "<A href='?src=\ref[src];scan=1'>\[Scan\]</A>"
+	dat += "<A href='?src=\ref[src];scan=1'>Scan</A>"
 	if(contents.len)
-		dat += "       <A href='?src=\ref[src];eject=1'>\[Remove Book\]</A><BR>"
+		dat += "<A href='?src=\ref[src];eject=1'>Remove Book</A><BR>"
 
 	if(cache)
-		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR>"
+		dat += "<A href='?src=\ref[src];clear=1'>Clear Memory</A><BR>"
 	else
 		dat += "<BR>"
 

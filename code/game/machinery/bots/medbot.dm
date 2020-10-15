@@ -104,7 +104,7 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Beaker: "
 	if(reagent_glass)
-		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
+		dat += "<A href='?src=\ref[src];eject=1'>Loaded [reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]</a>"
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"

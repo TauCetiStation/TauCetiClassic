@@ -45,7 +45,7 @@
 						<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
 						<BR>
 						<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
-						<BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
+						<BR><A href='?src=\ref[src];logout=1'>Log Out</A><BR>
 						"}
 				if(2.0)
 					dat += "<B>Record List</B>:<HR>"
@@ -123,7 +123,7 @@
 
 				else
 		else
-			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
+			dat += text("<A href='?src=\ref[];login=1'>Log In</A>", src)
 
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
 	popup.set_content("<TT>[dat]</TT>")

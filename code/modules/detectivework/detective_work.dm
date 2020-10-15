@@ -95,27 +95,27 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 		isai = 1
 	if(temp)
 		dat += "<tt>[temp]</tt><br><br>"
-		if(canclear) dat += "<a href='?src=\ref[src];operation=clear'>{Clear Screen}</a>"
+		if(canclear) dat += "<a href='?src=\ref[src];operation=clear'>Clear Screen</a>"
 	else
 		if(!authenticated)
-			dat += "<a href='?src=\ref[src];operation=login'>{Log In}</a>"
+			dat += "<a href='?src=\ref[src];operation=login'>Log In</a>"
 		else
-			dat += "<a href='?src=\ref[src];operation=logout'>{Log Out}</a><br><hr><br>"
+			dat += "<a href='?src=\ref[src];operation=logout'>Log Out</a><br><hr><br>"
 			if(scanning)
 				if(scan_process)
-					dat += {"Scan Object: {[scanning.name]}<br>
-					<a href='?src=\ref[src];operation=cancel'>{Cancel Scan}</a> {Print}<br>"}
+					dat += {"Scan Object: [scanning.name]<br>
+					<a href='?src=\ref[src];operation=cancel'>Cancel Scan</a> {Print}<br>"}
 				else
 					if(isai) dat += "Scan Object: {[scanning.name]}<br>"
-					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>{[scanning.name]}</a><br>"
-					dat += "<a href='?src=\ref[src];operation=scan'>{Scan}</a> <a href='?src=\ref[src];operation=print'>{Print}</a><br>"
+					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>[scanning.name]</a><br>"
+					dat += "<a href='?src=\ref[src];operation=scan'>Scan}/a> <a href='?src=\ref[src];operation=print'>Print</a><br>"
 			else
 				if(isai) dat += "{No Object Inserted}<br>"
-				else dat += "<a href='?src=\ref[src];operation=insert'>{No Object Inserted}</a><br>"
-				dat += "{Scan} <a href='?src=\ref[src];operation=print'>{Print}</a><br>"
-			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
+				else dat += "<a href='?src=\ref[src];operation=insert'>No Object Inserted</a><br>"
+				dat += "{Scan} <a href='?src=\ref[src];operation=print'>Print</a><br>"
+			dat += {"<a href='?src=\ref[src];operation=database'>Access Database</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
-				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
+				dat += "<br><a href='?src=\ref[src];operation=erase'>Erase Data</a>"
 
 	var/datum/browser/popup = new(user, "scanner")
 	popup.set_content(dat)
@@ -191,8 +191,8 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 					temp += "Consolidated data points:<br>"
 					for(var/print in files)
 						var/list/file = files[print]
-						temp += "<a href='?src=\ref[src];operation=record;identifier=[print]'>{[file[2]]}</a><br>"
-					temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card (To complete a Dossier)}</a><br><br><br>"
+						temp += "<a href='?src=\ref[src];operation=record;identifier=[print]'>[file[2]]</a><br>"
+					temp += "<br><a href='?src=\ref[src];operation=card'>Insert Finger Print Card (To complete a Dossier)</a><br><br><br>"
 				else
 					temp = ""
 				if(misc && misc.len)
@@ -200,7 +200,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 					This is where anything without fingerprints goes.<br><br>"}
 					for(var/atom in misc)
 						var/list/data_entry = misc[atom]
-						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>{[data_entry[3]]}</a><br>"
+						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>[data_entry[3]]</a><br>"
 		if("record") //Viewing a record from the "files" database.
 			canclear = 0
 			if(files)
@@ -245,12 +245,12 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 						temp += "&nbsp<b>Blood:</b><br>"
 						for(var/named in blood)
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>{Rename this Dossier}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>Rename this Dossier</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>Delete this Dossier</a>"
+				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
 		if("databaseprint") //Printing from the "files" database.
 			if(files)
 				var/obj/item/weapon/paper/P = new(loc)
@@ -322,11 +322,11 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 					temp += "&nbsp<b>Blood:</b><br>"
 					for(var/named in blood)
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>Delete This Record</a>"
+				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
 		if("auxiliaryprint") //Printing from the "misc" database.
 			if(misc)
 				var/obj/item/weapon/paper/P = new(loc)

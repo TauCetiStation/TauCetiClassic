@@ -81,18 +81,18 @@
 	if(locked && !isobserver(user))
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
-		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
+		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
 		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"
 		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
-		<a href='?src=\ref[src];charge_rate=-100000'>\[----\]</a> \
-		<a href='?src=\ref[src];charge_rate=-10000'>\[---\]</a> \
-		<a href='?src=\ref[src];charge_rate=-1000'>\[--\]</a> \
-		<a href='?src=\ref[src];charge_rate=-100'>\[-\]</a>[charge_rate] Watts/sec \
-		<a href='?src=\ref[src];charge_rate=100'>\[+\]</a> \
-		<a href='?src=\ref[src];charge_rate=1000'>\[++\]</a> \
-		<a href='?src=\ref[src];charge_rate=10000'>\[+++\]</a> \
-		<a href='?src=\ref[src];charge_rate=100000'>\[+++\]</a><br>"
+		<a href='?src=\ref[src];charge_rate=-100000'>----</a> \
+		<a href='?src=\ref[src];charge_rate=-10000'>---</a> \
+		<a href='?src=\ref[src];charge_rate=-1000'>--</a> \
+		<a href='?src=\ref[src];charge_rate=-100'>-</a>[charge_rate] Watts/sec \
+		<a href='?src=\ref[src];charge_rate=100'>+</a> \
+		<a href='?src=\ref[src];charge_rate=1000'>++</a> \
+		<a href='?src=\ref[src];charge_rate=10000'>+++</a> \
+		<a href='?src=\ref[src];charge_rate=100000'>+++</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 

@@ -62,23 +62,23 @@
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<br>"
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=engine'>Engine Menu</A> \]"
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=injector'>Injector Menu</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Log Out</A><br>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=engine'>Engine Menu</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=injector'>Injector Menu</A>"
 			else
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
 		if(STATE_INJECTOR)
 			if(src.connected_I.injecting)
-				dat += "<BR>\[ Injecting \]<br>"
+				dat += "<BR>Injecting<br>"
 			else
-				dat += "<BR>\[ Injecting not in progress \]<br>"
+				dat += "<BR>Injecting not in progress<br>"
 		if(STATE_ENGINE)
 			if(src.connected_E.stopping)
-				dat += "<BR>\[ STOPPING \]"
+				dat += "<BR>STOPPING"
 			else if(src.connected_E.operating && !src.connected_E.stopping)
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=deactivate'>Emergency Stop</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=deactivate'>Emergency Stop</A>"
 			else
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=activate'>Activate Engine</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=activate'>Activate Engine</A>"
 			dat += "<BR>Contents:<br>[src.connected_E.H_fuel]kg of Hydrogen<br>[src.connected_E.antiH_fuel]kg of Anti-Hydrogen<br>"
 
 	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]"
