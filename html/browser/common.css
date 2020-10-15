@@ -67,13 +67,16 @@ body.theme_syndicate {
 	scrollbar-shadow-color:#7e0303
 }
 
+.uiWrapper {
+	margin: .5rem;
+}
+
 .uiWrapper, .uiContent {
 	position: relative;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
-	margin: .5rem .3rem;
 }
 
 .uiTitleWrapper + .uiContent {
