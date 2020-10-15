@@ -325,8 +325,8 @@
 /datum/admins/proc/player_panel_old()
 	if (!usr.client.holder)
 		return
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
+	var/dat
+	dat += "<table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
@@ -379,13 +379,15 @@
 			if(2)
 				dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
 
-	dat += "</table></body></html>"
+	dat += "</table>"
 
-	usr << browse(dat, "window=players;size=640x480")
+	var/datum/browser/popup = new(usr, "players", "Player Menu", 640, 480)
+	popup.set_content(dat)
+	popup.open()
 
 /datum/admins/proc/check_antagonists()
 	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
-		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
+		var/dat = "<h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
@@ -584,8 +586,9 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
-		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=400x500")
+		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
+		popup.set_content(dat)
+		popup.open()
 	else
 		alert("The game hasn't started yet!")
 
