@@ -81,8 +81,8 @@
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
-		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"
+		t += "This capacitor is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "[time_since_fail > 2 ? "<span class='green'>Charging stable.</span>" : "<span class='red'>Warning, low charge!</span>"]<br>"
 		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
 		<a href='?src=\ref[src];charge_rate=-100000'>----</a> \

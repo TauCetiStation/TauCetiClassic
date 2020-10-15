@@ -17,38 +17,7 @@
 	return SSshuttle.points
 
 /obj/machinery/computer/stockexchange/ui_interact(mob/user)
-	var/css={"<style>
-		.change {
-			font-weight: bold;
-			font-family: monospace;
-		}
-		.up {
-			background: #00a000;
-		}
-		.down {
-			background: #a00000;
-		}
-		.stable {
-			width: 100%
-			border-collapse: collapse;
-			border: 1px solid #305260;
-			border-spacing: 4px 4px;
-		}
-		.stable td, .stable th {
-			border: 1px solid #305260;
-			padding: 0px 3px;
-		}
-		.bankrupt {
-			border: 1px solid #a00000;
-			background: #a00000;
-		}
-
-		a.updated {
-			color: red;
-		}
-		</style>"}
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[station_name()] Stock Exchange</title>[css]</head><body>"
-
+	var/dat
 	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
 	dat += "<span><b>Credits:</b> [balance()]</span><br>"
 	dat += "<span><b>Spacetime:</b> [round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</span><br>"
@@ -95,7 +64,7 @@
 	else if(vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'>"
-		dat += "<tr><th>&nbsp;</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th><th>Actions</th></tr>"
+		dat += "<tr><th>&nbsp;</th><th>ID</th><th class='collapsing'>Value</th><th class='collapsing'>Owned</th><th class='collapsing'>Avail</th><th>Actions</th></tr>"
 
 		for(var/datum/stock/S in stockExchange.stocks)
 			var/mystocks = 0
@@ -103,19 +72,18 @@
 				mystocks = S.shareholders[logged_in]
 
 			if(S.bankrupt)
-				dat += "<tr class='bankrupt'>"
+				dat += "<tr class='bgred'>"
 			else
 				dat += "<tr>"
 
 			if(S.disp_value_change > 0)
-				dat += "<td class='change up'>+</td>"
+				dat += "<td class='bggreen'>↑</td>"
 			else if(S.disp_value_change < 0)
-				dat += "<td class='change down'>-</td>"
+				dat += "<td class='bgred'>↓</td>"
 			else
-				dat += "<td class='change'>=</td>"
+				dat += "<td>=</td>"
 
 			dat += "<td><b>[S.short_name]</b></td>"
-			dat += "<td>[S.name]</td>"
 
 			if(!S.bankrupt)
 				dat += "<td>[S.current_value]</td>"
@@ -153,9 +121,8 @@
 		dat += "</table>"
 
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "</body></html>"
 
-	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
+	var/datum/browser/popup = new(user, "stock_comp", "[station_name()] Stock Exchange", 600, 700)
 	popup.set_content(dat)
 	popup.open()
 

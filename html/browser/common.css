@@ -269,6 +269,7 @@ h4 {font-size: 12px;}
 .pink       {color:#e2439c}
 .brown      {color:#af6d43}
 .grey       {color:#7d7d7d}
+.gray       {color:#7d7d7d}
 .good       {color:#62b62a}
 .average    {color:#f1951d}
 .bad        {color:#dd3333}
@@ -290,6 +291,7 @@ h4 {font-size: 12px;}
 .bg-pink    {background-color:#cf2082}
 .bg-brown   {background-color:#8c5836}
 .bg-grey    {background-color:#646464}
+.bg-gray    {background-color:#646464}
 .bg-good    {background-color:#4d9121}
 .bg-average {background-color:#cd7a0d}
 .bg-bad     {background-color:#bd2020}

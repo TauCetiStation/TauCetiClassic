@@ -58,7 +58,7 @@
 	var/output = "<b>Air Status:</b><br>"
 
 	if(total == 0)
-		output += "<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"
+		output += "<span class='red'><b>Warning: Cannot obtain air sample for analysis.</b></span>"
 		return output
 
 	output += {"
@@ -288,9 +288,9 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 <HR>
 "}
 			if (current.mode == AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
+				output += "<span class='red'><B>PANIC SYPHON ACTIVE</B></span><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
-				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
+				output += "<A class='red' href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><B>ACTIVATE PANIC SYPHON IN AREA</B></A>"
 
 			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
@@ -301,10 +301,10 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 					var/list/data = current.alarm_area.air_vent_info[id_tag]
 					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
+						state = "<span class='red'> can not be found!</span>"
 						data = list("external" = 0) //for "0" instead of empty string
 					else if (data["timestamp"] + AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						state = "<span class='red'> not responding!</span>"
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
 <B>Operating:</B>
@@ -344,10 +344,10 @@ siphoning
 					var/list/data = current.alarm_area.air_scrub_info[id_tag]
 					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
+						state = "<span class='red'> can not be found!</span>"
 						data = list("external" = 0) //for "0" instead of empty string
 					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						state = "<span class='red'> not responding!</span>"
 
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
@@ -369,8 +369,8 @@ Nitrous Oxide
 <BR>
 "}
 					sensor_data += {"
-<B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
+<B>Panic syphon:</B> [data["panic"]?"<span class='red'><B>PANIC SYPHON ACTIVATED</B></span>":""]
+<A [data["panic"]? null :" class='red'" ] href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'>[(data["panic"]?"Dea":"A")]ctivate</A><BR>
 <HR>
 "}
 			else
@@ -382,11 +382,11 @@ Nitrous Oxide
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
 			var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
-					AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
-					AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
-					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
-					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
-					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
+					AALARM_MODE_REPLACEMENT = "<span class='blue'>Replace Air - Siphons out air while replacing</span>",\
+					AALARM_MODE_PANIC       = "<span class='red'>Panic - Siphons air out of the room</span>",\
+					AALARM_MODE_CYCLE       = "<span class='red'>Cycle - Siphons air before replacing</span>",\
+					AALARM_MODE_FILL        = "<span class='green'>Fill - Shuts off scrubbers and opens vents</span>",\
+					AALARM_MODE_OFF         = "<span class='blue'>Off - Shuts off vents and scrubbers</span>",)
 			for(var/m in 1 to modes.len)
 				if (current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}

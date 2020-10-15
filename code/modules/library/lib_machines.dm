@@ -241,7 +241,7 @@
 					var/title = query.item[3]
 					var/category = query.item[4]
 					var/deletereason = query.item[5]
-					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>Order</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>Send removal request</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
+					dat += "<tr><td>[last_id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[last_id]'>Order</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[last_id]'>Send removal request</A>" : "<span class='red'>MARKED FOR REMOVAL</span>"]</td></tr>"
 				dat += "</table>"
 				dat = {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([first_id] - [last_id])<BR><BR>
 				<table>

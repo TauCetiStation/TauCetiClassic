@@ -25,15 +25,15 @@
 	dat += "<B>Maintenance Units</B><BR>"
 
 	for(var/mob/living/silicon/robot/drone/D in drone_list)
-		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<font color='red'>INACTIVE</font>" : "<font color='green'>ACTIVE</font>"])"
-		dat += "<font dize = 9><BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
+		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<span class='red'>INACTIVE</span>" : "<span class='green'>ACTIVE</span>"])"
+		dat += "<font size = 9><BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
 		dat += "<BR><A href='?src=\ref[src];resync=\ref[D]'>Resync</A> | <A href='?src=\ref[src];shutdown=\ref[D]'>Shutdown</A></font>"
 
 	dat += "<BR><BR><B>Request drone presence in area:</B> <A href='?src=\ref[src];setarea=1'>[drone_call_area]</A> (<A href='?src=\ref[src];ping=1'>Send ping</A>)"
 
 	dat += "<BR><BR><B>Drone fabricator</B>: "
-	dat += "[dronefab ? "<A href='?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && !(dronefab.stat & NOPOWER)) ? "ACTIVE" : "INACTIVE"]</A>" : "<font color='red'><b>FABRICATOR NOT DETECTED.</b></font> (<A href='?src=\ref[src];search_fab=1'>search</a>)"]"
+	dat += "[dronefab ? "<A href='?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && !(dronefab.stat & NOPOWER)) ? "ACTIVE" : "INACTIVE"]</A>" : "<span class='red'><b>FABRICATOR NOT DETECTED.</b></span> (<A href='?src=\ref[src];search_fab=1'>search</a>)"]"
 
 	var/datum/browser/popup = new(user, "computer", null, 400, 500)
 	popup.set_content(dat)

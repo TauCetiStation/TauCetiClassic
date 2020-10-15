@@ -53,27 +53,27 @@
 		dat += "<BR>"
 		if(safety_disabled)
 			if (emagged)
-				dat += "<font color=red><b>ERROR</b>: Cannot re-enable Safety Protocols.</font><BR>"
+				dat += "<span class='red'><b>ERROR</b>: Cannot re-enable Safety Protocols.</span><BR>"
 			else
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
+				dat += "<A class='green' href='?src=\ref[src];AIoverride=1'>Re-Enable Safety Protocols</A><BR>"
 		else
-			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
+			dat += "<A class='red' href='?src=\ref[src];AIoverride=1'>Override Safety Protocols</A><BR>"
 
 	dat += "<BR>"
 
 	if(safety_disabled)
 		for(var/prog in restricted_programs)
-			dat += "<A href='?src=\ref[src];program=[restricted_programs[prog]]'>(<font color=red>Begin [prog]</font>)</A><BR>"
+			dat += "<A class='red' href='?src=\ref[src];program=[restricted_programs[prog]]'>Begin [prog]</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
-		dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
+		dat += "Safety Protocols are <span class='red'> DISABLED </span><BR>"
 	else
-		dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
+		dat += "Safety Protocols are <span class='green'> ENABLED </span><BR>"
 
 	if(linkedholodeck.has_gravity)
-		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=green>(ON)</font></A><BR>"
+		dat += "Gravity is <A class='green' href='?src=\ref[src];gravity=1'>ON</A><BR>"
 	else
-		dat += "Gravity is <A href='?src=\ref[src];gravity=1'><font color=blue>(OFF)</font></A><BR>"
+		dat += "Gravity is <A class='blue' href='?src=\ref[src];gravity=1'>OFF</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", "Holodeck Control System", 400, 500)
 	popup.set_content(dat)

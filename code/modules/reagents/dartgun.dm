@@ -222,12 +222,12 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					dat += "<br>    [R.volume] units of [R.name], "
 				if (check_beaker_mixing(B))
-					dat += text("<A href='?src=\ref[src];stop_mix=[i]'><font color='green'>Mixing</font></A> ")
+					dat += text("<A class='green' href='?src=\ref[src];stop_mix=[i]'>Mixing</A> ")
 				else
-					dat += text("<A href='?src=\ref[src];mix=[i]'><font color='red'>Not mixing</font></A> ")
+					dat += text("<A class='red' href='?src=\ref[src];mix=[i]'>Not mixing</A> ")
 			else
 				dat += "nothing."
-			dat += " \[<A href='?src=\ref[src];eject=[i]'>Eject</A>\]<br>"
+			dat += " <A href='?src=\ref[src];eject=[i]'>Eject</A><br>"
 			i++
 	else
 		dat += "There are no beakers inserted!<br><br>"
@@ -236,8 +236,8 @@
 		if(cartridge.darts)
 			dat += "The dart cartridge has [cartridge.darts] shots remaining."
 		else
-			dat += "<font color='red'>The dart cartridge is empty!</font>"
-		dat += " \[<A href='?src=\ref[src];eject_cart=1'>Eject</A>\]"
+			dat += "<span class='red'>The dart cartridge is empty!</span>"
+		dat += " <A href='?src=\ref[src];eject_cart=1'>Eject</A>"
 
 	var/datum/browser/popup = new(user, "dartgun", nref = src)
 	popup.set_content(dat)

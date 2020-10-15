@@ -495,7 +495,7 @@
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/list/dat = list()
+	var/dat
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -517,7 +517,7 @@
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
-	popup.set_content(dat.Join())
+	popup.set_content(dat)
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
