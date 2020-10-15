@@ -104,7 +104,7 @@
 		dat += "<b>Energy cell</b>: None<br>"
 		dat += "<hr>"
 	if(locked && !isobserver(user))
-		dat += "<i>Swipe your ID card to begin.</i>"
+		dat += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
 		dat += "Suspension field generator is: [suspension_field ? "<font color=green>Enable</font>" : "<font color=red>Disable</font>" ] <br><b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "\[Disable field\]" : "\[Enable field\]"]</a></b><br>"
 		dat += "<b>Select field mode</b><br>"

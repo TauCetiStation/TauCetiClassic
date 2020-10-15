@@ -79,7 +79,7 @@
 			return
 	var/t = ""
 	if(locked && !isobserver(user))
-		t += "<i>Swipe your ID card to begin.</i>"
+		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
 		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
 		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"

@@ -103,7 +103,7 @@
 
 	if (href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
-		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
+		<BR><B><A href='?src=\ref[src];eject2=1'>Swipe ID to initiate destruction sequence</A></B><BR>
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 	else if (href_list["eject2"])
