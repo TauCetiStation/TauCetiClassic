@@ -4,7 +4,8 @@
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/goonchat,
-		/datum/asset/simple/fontawesome
+		/datum/asset/simple/fontawesome,
+		/datum/asset/simple/cursor
 	)
 
 /datum/asset/simple/tgui
