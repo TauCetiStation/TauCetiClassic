@@ -3,6 +3,7 @@
 		//BLACK MAGIC THINGS//
 		//////////////////////
 	parent_type = /datum
+	mouse_pointer_icon = 'icons/cursors/cursor.dmi'
 
 		////////////////
 		//ADMIN THINGS//

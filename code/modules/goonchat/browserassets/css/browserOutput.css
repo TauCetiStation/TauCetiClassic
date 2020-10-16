@@ -3,6 +3,10 @@
 * GLOBAL STYLES
 *
 ******************************************/
+html, * {
+	cursor: url(cursor.cur), auto !important;
+}
+
 html, body {
 	padding: 0;
 	margin: 0;

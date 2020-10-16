@@ -34,7 +34,10 @@
 	if(ntheme)
 		theme = ntheme
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
+	add_stylesheet("cursor", 'html/cursor/cursor.css')
 	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/cursor)
+	assets.send(user)
 
 /datum/browser/Destroy()
 	user.browsers -= window_id

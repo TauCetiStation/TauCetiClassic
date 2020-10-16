@@ -100,6 +100,9 @@ nanoui is used to open and update nano browser uis
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
 	assets.send(user, ntemplate_filename)
+	
+	assets = get_asset_datum(/datum/asset/simple/cursor)
+	assets.send(user)
 
  /**
   * Use this proc to add assets which are common to (and required by) all nano uis
@@ -117,6 +120,7 @@ nanoui is used to open and update nano browser uis
 	add_script("nano_base_helpers.js") // The NanoBaseHelpers JS, this is used to set up template helpers which are common to all UIs
 	add_stylesheet("shared.css") // this CSS sheet is common to all UIs
 	add_stylesheet("icons.css") // this CSS sheet is common to all UIs
+	add_stylesheet("cursor.css")
 
  /**
   * Set the current status (also known as visibility) of this ui.

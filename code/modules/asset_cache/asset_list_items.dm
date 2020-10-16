@@ -38,6 +38,12 @@
 		"font-awesome.css"    = 'html/font-awesome/css/all.min.css'
 	)
 
+/datum/asset/simple/cursor
+	assets = list(
+		"cursor.cur" = 'html/cursor/cursor.cur',
+		"cursor.css" = 'html/cursor/cursor.css'
+	)
+
 /datum/asset/simple/spider_os
 	assets = list(
 		"sos_1.png" = 'icons/spideros_icons/sos_1.png',

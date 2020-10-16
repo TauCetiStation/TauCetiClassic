@@ -1,3 +1,7 @@
+html, * {
+	cursor: url(cursor.cur), auto !important;
+}
+
 body
 {
 	padding: 0;
