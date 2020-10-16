@@ -94,7 +94,7 @@
 
 		dat += "<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<font color = #7E8D9F><b>Selected: </b></font>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
+		dat += "<span class='gray bold'>Selected: </span>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 

@@ -144,56 +144,56 @@
 			if("menu")
 				tank_name = "Output Tank"
 		if(!beakers[tank])
-			err_log("\[[worldtime2text()]\]<font color='red'>ERR #404</font>(Occured while starting mixing process up)<font color='red'>:</font> [tank_name] not found.")
+			err_log("\[[worldtime2text()]\]<span class='red'>ERR #404</span>(Occured while starting mixing process up)<span class='red'>:</span> [tank_name] not found.")
 			visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 			return
 		if(tank == "output")
 			continue
 		if(beakers[tank].reagents.reagent_list.len > 1)
-			err_log("\[[worldtime2text()]\]<font color='red'>ERR #403</font>(Occured while starting mixing process up)<font color='red'>:</font> Amount of paint in [tank_name] is more than one.")
+			err_log("\[[worldtime2text()]\]<span class='red'>ERR #403</span>(Occured while starting mixing process up)<span class='red'>:</span> Amount of paint in [tank_name] is more than one.")
 			visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 			return
 		if(!beakers[tank].reagents.reagent_list.len)
-			err_log("\[[worldtime2text()]\]<font color='red'>ERR #401</font>(Occured while starting mixing process up)<font color='red'>:</font> Amount of paint in [tank_name] is equal to zero.")
+			err_log("\[[worldtime2text()]\]<span class='red'>ERR #401</span>(Occured while starting mixing process up)<span class='red'>:</span> Amount of paint in [tank_name] is equal to zero.")
 			visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 			return
 		for(var/datum/reagent/R in beakers[tank].reagents.reagent_list)
 			if(!istype(R, /datum/reagent/paint/hair_dye))
-				err_log("\[[worldtime2text()]\]<font color='red'>ERR #402</font>(Occured while starting mixing process up)<font color='red'>:</font> Reagent in [tank_name] is not paint.")
+				err_log("\[[worldtime2text()]\]<span class='red'>ERR #402</span>(Occured while starting mixing process up)<span class='red'>:</span> Reagent in [tank_name] is not paint.")
 				visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 				return
 
 	var/tank_1_col = mix_color_from_reagents(beakers["tank_1"].reagents.reagent_list)
 	if(tank_1_col == "#000000")
-		err_log("\[[worldtime2text()]\]<font color='red'>ERR #501</font>(Occured while analyzing mixing components)<font color='red'>:</font> Paint in Tank 1 is black.")
+		err_log("\[[worldtime2text()]\]<span class='red'>ERR #501</span>(Occured while analyzing mixing components)<span class='red'>:</span> Paint in Tank 1 is black.")
 		visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 		return
 
 	var/tank_2_col = mix_color_from_reagents(beakers["tank_2"].reagents.reagent_list)
 	if(tank_2_col == "#000000")
-		err_log("\[[worldtime2text()]\]<font color='red'>ERR #501</font>(Occured while analyzing mixing components)<font color='red'>:</font> Paint in Tank 2 is black.")
+		err_log("\[[worldtime2text()]\]<span class='red'>ERR #501</span>(Occured while analyzing mixing components)<span class='red'>:</span> Paint in Tank 2 is black.")
 		visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 		return
 
 	var/tank_3_col = mix_color_from_reagents(beakers["tank_3"].reagents.reagent_list)
 	if(tank_3_col == "#000000")
-		err_log("\[[worldtime2text()]\]<font color='red'>ERR #501</font>(Occured while analyzing mixing components)<font color='red'>:</font> Paint in Tank 3 is black.")
+		err_log("\[[worldtime2text()]\]<span class='red'>ERR #501</span>(Occured while analyzing mixing components)<span class='red'>:</span> Paint in Tank 3 is black.")
 		visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 		return
 
 	var/list/quan_req = do_mix_color_from_three(chosen_color, chosen_quantity, col_1 = tank_1_col, col_2 = tank_2_col, col_3 = tank_3_col)
 	if(!quan_req)
-		err_log("\[[worldtime2text()]\]<font color='red'>ERR #503</font>(Occured while analyzing mixing components)<font color='red'>:</font> Mix not possible due to computation error.")
+		err_log("\[[worldtime2text()]\]<span class='red'>ERR #503</span>(Occured while analyzing mixing components)<span class='red'>:</span> Mix not possible due to computation error.")
 		visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 		return
 
 	for(var/i in 1 to quan_req.len)
 		if(beakers["tank_[i]"].reagents.total_volume < quan_req[i])
-			err_log("\[[worldtime2text()]\]<font color='red'>ERR #502</font>(Occured while analyzing mixing components)<font color='red'>:</font> Tank [i] does not have enough paint, required amount: [quan_req[i]].")
+			err_log("\[[worldtime2text()]\]<span class='red'>ERR #502</span>(Occured while analyzing mixing components)<span class='red'>:</span> Tank [i] does not have enough paint, required amount: [quan_req[i]].")
 			visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 			return
 		if(quan_req[i] < 0)
-			err_log("\[[worldtime2text()]\]<font color='red'>ERR #503</font>(Occured while analyzing mixing components)<font color='red'>:</font> Mix not possible due to computation error.")
+			err_log("\[[worldtime2text()]\]<span class='red'>ERR #503</span>(Occured while analyzing mixing components)<span class='red'>:</span> Mix not possible due to computation error.")
 			visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 			return
 
@@ -204,7 +204,7 @@
 	sleep(20 * chosen_quantity / efficiency)
 
 	if(!beakers["output"])
-		err_log("\[[worldtime2text()]\]<font color='red'>ERR #404</font>(Occured after completed mixing)<font color='red'>:</font> Output Tank not found.")
+		err_log("\[[worldtime2text()]\]<span class='red'>ERR #404</span>(Occured after completed mixing)<span class='red'>:</span> Output Tank not found.")
 		visible_message("<span class='notice'>[src] makes a lousy beep.</span>")
 		return
 
@@ -219,7 +219,7 @@
 
 	use_power(50 * chosen_quantity)
 
-	err_log("\[[worldtime2text()]\]<font color='blue'>NOT #201:</font> Mix [color_square(hex = chosen_color)]([chosen_quantity]) created, using [color_square(hex = tank_1_col)]([quan_req[1]]) [color_square(hex = tank_2_col)]([quan_req[2]]) [color_square(hex = tank_3_col)]([quan_req[3]]).", type = "NOT")
+	err_log("\[[worldtime2text()]\]<span class='blue'>NOT #201:</span> Mix [color_square(hex = chosen_color)]([chosen_quantity]) created, using [color_square(hex = tank_1_col)]([quan_req[1]]) [color_square(hex = tank_2_col)]([quan_req[2]]) [color_square(hex = tank_3_col)]([quan_req[3]]).", type = "NOT")
 
 
 /obj/machinery/color_mixer/proc/mix_wrapper()
@@ -297,7 +297,7 @@ A proc that does all the animations before mix()-ing.
 		if(istype(O, /obj/item/weapon/reagent_containers/glass/beaker) && !filling_tank_id)
 			user.drop_from_inventory(O, src)
 			beakers["output"] = O
-			err_log("\[[worldtime2text()]\]<font color='blue'>NOT #103:</font> Output Tank was loaded.", type = "NOT")
+			err_log("\[[worldtime2text()]\]<span class='blue'>NOT #103:</span> Output Tank was loaded.", type = "NOT")
 			to_chat(user, "<span class='notice'>You put [O] inside [src].</span>")
 			updateUsrDialog()
 			update_icon()
@@ -416,7 +416,7 @@ A proc that does all the animations before mix()-ing.
 				dat += "<A class='red' href='?src=\ref[src];action=clear_log;entry=[error]'>X</A>[error_log[error]]<BR>"
 			dat += "</div><BR>"
 		else
-			dat += "<div class='Section'><b>Log</b> <font color='red'>is empty.</font></div>"
+			dat += "<div class='Section'><b>Log</b> <span class='red'>is empty.</span></div>"
 
 	else
 		var/tank_name = ""
@@ -439,19 +439,19 @@ A proc that does all the animations before mix()-ing.
 		dat += "<center>Status of <b>[tank_name]</b></center><HR>"
 		dat += "<div class='Section'>"
 		if(isWireCut(response_wire))
-			dat += "<font color='red'>Status unavailable.</font>"
+			dat += "<span class='red'>Status unavailable.</span>"
 		else
 			if(beakers[tank_id])
 				var/tank_color = mix_color_from_reagents(beakers[tank_id].reagents.reagent_list)
-				dat += "[(tank_id != "output" && tank_color == "#000000") || (tank_id == "output" && tank_color) ? "<font color='red'>Paint color</font>" : "Paint color"]: [color_square(hex = tank_color)]<BR>"
-				dat += "[(tank_id != "output" && beakers[tank_id].reagents.total_volume < 10) || (tank_id == "output" && beakers[tank_id].reagents.total_volume > 0) ? "<font color='red'>Paint quantity</font>" : "Paint quantity"]: [beakers[tank_id].reagents.total_volume]"
+				dat += "[(tank_id != "output" && tank_color == "#000000") || (tank_id == "output" && tank_color) ? "<span class='red'>Paint color</span>" : "Paint color"]: [color_square(hex = tank_color)]<BR>"
+				dat += "[(tank_id != "output" && beakers[tank_id].reagents.total_volume < 10) || (tank_id == "output" && beakers[tank_id].reagents.total_volume > 0) ? "<span class='red'>Paint quantity</span>" : "Paint quantity"]: [beakers[tank_id].reagents.total_volume]"
 			else
-				dat += "<b>[tank_name]</b> <font color='red'>is not loaded into [src].</font><BR>"
+				dat += "<b>[tank_name]</b> <span class='red'>is not loaded into [src].</span><BR>"
 		dat += "</div><HR>"
 
 		dat += "<center>Options of <b>[tank_name]</b></center><HR>"
 		if(processing)
-			dat += "<div class='Section'><font color='red'>[src] is currently processing and can not give options for</font> <b>[tank_name]</b><font color='red'>.</font></div>"
+			dat += "<div class='Section'><span class='red'>[src] is currently processing and can not give options for</span> <b>[tank_name]</b><span class='red'>.</span></div>"
 		else
 			dat += "<div class='Section'>"
 			if(beakers[tank_id])
@@ -496,7 +496,7 @@ A proc that does all the animations before mix()-ing.
 		if("load_tank")
 			var/obj/item/weapon/reagent_containers/glass/beaker/B = user.get_active_hand()
 			if(istype(B))
-				err_log("\[[worldtime2text()]\]<font color='blue'>NOT #103:</font> [href_list["tank_name"]] was loaded.", type = "NOT")
+				err_log("\[[worldtime2text()]\]<span class='blue'>NOT #103:</span> [href_list["tank_name"]] was loaded.", type = "NOT")
 				user.drop_from_inventory(B)
 				B.forceMove(src)
 				beakers[href_list["tank"]] = B
@@ -505,20 +505,20 @@ A proc that does all the animations before mix()-ing.
 			if(!beakers[href_list["tank"]])
 				return
 			if(filling_tank_id == href_list["tank"])
-				err_log("\[[worldtime2text()]\]<font color='red'>ERR #201</font>(Occured while extracting tank)<font color='red'>:</font> Hatch of [href_list["tank_name"]] was not closed before extraction.")
+				err_log("\[[worldtime2text()]\]<span class='red'>ERR #201</span>(Occured while extracting tank)<span class='red'>:</span> Hatch of [href_list["tank_name"]] was not closed before extraction.")
 				return
-			err_log("\[[worldtime2text()]\]<font color='blue'>NOT #104:</font> [href_list["tank_name"]] was extracted.", type = "NOT")
+			err_log("\[[worldtime2text()]\]<span class='blue'>NOT #104:</span> [href_list["tank_name"]] was extracted.", type = "NOT")
 			beakers[href_list["tank"]].forceMove(loc)
 			user.put_in_hands(beakers[href_list["tank"]])
 			beakers[href_list["tank"]] = null
 			update_icon()
 		if("open_hatch")
 			if(href_list["tank"] in tanks)
-				err_log("\[[worldtime2text()]\]<font color='blue'>NOT #101:</font> Hatch of [href_list["tank_name"]] was opened.", type = "NOT")
+				err_log("\[[worldtime2text()]\]<span class='blue'>NOT #101:</span> Hatch of [href_list["tank_name"]] was opened.", type = "NOT")
 				filling_tank_id = href_list["tank"]
 				update_icon()
 		if("close_hatch")
-			err_log("\[[worldtime2text()]\]<font color='blue'>NOT #102:</font> Hatch of [href_list["tank_name"]] was closed.", type = "NOT")
+			err_log("\[[worldtime2text()]\]<span class='blue'>NOT #102:</span> Hatch of [href_list["tank_name"]] was closed.", type = "NOT")
 			filling_tank_id = null
 			update_icon()
 		if("start_mix")

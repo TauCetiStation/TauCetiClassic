@@ -99,9 +99,9 @@
 		pod1 = locate() in orange(1, src)
 
 	if(!pod1)
-		dat += "<b><font color=red>Unable to locate cloning pod.</font></b><br>"
+		dat += "<span class='red bold'>Unable to locate cloning pod.</span><br>"
 	else if(istype(pod1))
-		dat += "<b><font color=green>Cloning pod connected.</font></b><br>"
+		dat += "<span class='green bold'>Cloning pod connected.</span><br>"
 
 	dat += "<table border=1>"
 	dat += "<tr>"
