@@ -371,11 +371,10 @@
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 				dat += text("-- [area_name]")
 				if (alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
