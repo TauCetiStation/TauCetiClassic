@@ -190,7 +190,7 @@
 			dat += "<H3>Inventory</H3><BR>"
 			for(var/obj/item/weapon/book/b in inventory)
 				dat += "[b.name] <A href='?src=\ref[src];delbook=\ref[b]'>Delete</A><BR>"
-			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"
 		if(2)
 			// Checked Out
 			dat += "<h3>Checked Out Books</h3><BR>"
@@ -208,7 +208,7 @@
 					timedue = round(timedue)
 				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
 				<A href='?src=\ref[src];checkin=\ref[b]'>Check In</A><BR><BR>"}
-			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"
 		if(3)
 			// Check Out a Book
 			dat += {"<h3>Check Out a Book</h3><BR>
@@ -220,7 +220,7 @@
 			Due Date: [(world.time + checkoutperiod)/600]<BR>
 			(Checkout Period: [checkoutperiod] minutes) (<A href='?src=\ref[src];increasetime=1'>+</A>/<A href='?src=\ref[src];decreasetime=1'>-</A>)
 			<A href='?src=\ref[src];checkout=1'>Commit Entry</A><BR>
-			<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"}
+			<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"}
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			establish_old_db_connection()
@@ -247,7 +247,7 @@
 				<table>
 				<tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"} + dat
 			dat += {"
-			<BR><A href='?src=\ref[src];switchscreen=0'>Return to main menu</A>
+			<BR><A href='?src=\ref[src];switchscreen=0'>Main Menu</A>
 			 <A href='?src=\ref[src];pageprev=2'><< Page</A>
 			 <A href='?src=\ref[src];pageprev=1'>< Page</A>
 			 <A href='?src=\ref[src];pagereset=1'>Reset</A>
@@ -271,7 +271,7 @@
 				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
 				<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
 				<A href='?src=\ref[src];upload=1'>Upload</A><BR>"}
-			dat += "<A href='?src=\ref[src];switchscreen=0'>Return to main menu</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"
 		if(7)
 			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
 			Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
