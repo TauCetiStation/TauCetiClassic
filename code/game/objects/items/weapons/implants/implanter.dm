@@ -18,9 +18,6 @@
 /obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
 	if (!iscarbon(M))
 		return
-	if (M.isSynthetic())
-		user.visible_message("<span class ='userdanger'>[M] is not an life form that can be implanted.</span>")
-		return
 	if (!user || !imp)
 		return
 
