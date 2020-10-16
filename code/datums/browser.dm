@@ -6,7 +6,7 @@
 	var/height
 	var/atom/ref
 	var/theme // CSS_THEME_DARK or CSS_THEME_LIGHT
-	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;" // window option is set using window_id
+	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;can_resize=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
 	var/head_content
@@ -29,11 +29,6 @@
 		ref = nref
 	if(ntheme)
 		theme = ntheme
-
-	if(user.prefs?.tgui_fancy)
-		window_options += "can_resize=0;"
-	else
-		window_options += "can_resize=1;"
 
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
