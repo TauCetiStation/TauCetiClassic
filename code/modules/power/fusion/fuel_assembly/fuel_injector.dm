@@ -44,11 +44,10 @@ var/list/fuel_injectors = list()
 	set category = "Object"
 	set src in oview(1)
 
-	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
-		return
 	if (usr.incapacitated())
-		to_chat(usr, "You are incapacitated.")
+		return
+	if (anchored)
+		to_chat(usr,"<span class='notice'>It is fastened to the floor!</span>")
 		return
 	dir = turn(dir, 90)
 
