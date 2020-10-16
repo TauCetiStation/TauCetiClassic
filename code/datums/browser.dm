@@ -30,7 +30,7 @@
 	if(ntheme)
 		theme = ntheme
 
-	if(user.prefs.tgui_fancy)
+	if(user.prefs?.tgui_fancy)
 		window_options += "can_resize=0;"
 	else
 		window_options += "can_resize=1;"
