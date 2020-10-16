@@ -55,6 +55,10 @@ body {
 	padding-right: 6px;
 }
 
+.uiContent {
+	line-height: 170%;
+}
+
 a, button, a:link, a:visited, a:active, .selected, .disabled, .spoiler b {
 	position: relative;
 	display: inline-block;
