@@ -233,14 +233,16 @@
 	switch(screen)
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
-
 			for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
-				dat += "[S.name] || "
-				dat += "<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
-				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
-				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
+				dat += "<table><tr>"
+				dat += "<td>[S.name]</td>"
+				dat += "<td><A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A></td>"
+				dat += "<td><A href='?src=\ref[src];data=[S.server_id]'>Data Management</A></td>"
+				if(badmin)
+					dat += "<td><A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A></td>"
+				dat += "</tr></table>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
@@ -250,17 +252,17 @@
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
 				if(C.id in temp_server.id_with_upload)
-					dat += " (Remove)</A><BR>"
+					dat += "Remove</A><BR>"
 				else
-					dat += " (Add)</A><BR>"
+					dat += "Add</A><BR>"
 			dat += "Consoles with Download Access<BR>"
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
 				if(C.id in temp_server.id_with_download)
-					dat += " (Remove)</A><BR>"
+					dat += "Remove</A><BR>"
 				else
-					dat += " (Add)</A><BR>"
+					dat += "Add</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(2) //Data Management menu

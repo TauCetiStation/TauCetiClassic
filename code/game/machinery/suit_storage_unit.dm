@@ -112,7 +112,7 @@
 		dat+= "<span class='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</span></B><BR>"
 	else
 		if(!src.isbroken)
-			dat+= "<span class='blue'><font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></span><BR>"
+			dat+= "<span class='blue'><font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></font><BR>"
 			dat+= "<B>Welcome to the Unit control panel.</B><HR>"
 			dat+= text("Helmet storage compartment: <B>[]</B><BR>",(src.HELMET ? HELMET.name : "<span class='grey'>No helmet detected.</span>") )
 			if(HELMET && src.isopen)

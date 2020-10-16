@@ -447,21 +447,21 @@ var/list/airlock_overlays = list()
 	var/t1 = ""
 	if(secondsMainPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
-			t1 += text("Main power is offline for [] seconds.<br>\n", secondsMainPowerLost)
+			t1 += text("Main power is <span class='bad'>offline</span> for [] seconds.<br>\n", secondsMainPowerLost)
 		else
-			t1 += text("Main power is offline indefinitely.<br>\n")
+			t1 += text("Main power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else
-		t1 += text("Main power is online.")
+		t1 += text("Main power is <span class='green>online</span>.<br>")
 
 	if(secondsBackupPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_BACKUP_POWER1) && !isWireCut(AIRLOCK_WIRE_BACKUP_POWER2))
-			t1 += text("Backup power is offline for [] seconds.<br>\n", secondsBackupPowerLost)
+			t1 += text("Backup power is <span class='bad'>offline</span> for [] seconds.<br>\n", secondsBackupPowerLost)
 		else
-			t1 += text("Backup power is offline indefinitely.<br>\n")
+			t1 += text("Backup power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else if(secondsMainPowerLost > 0)
-		t1 += text("Backup power is online.")
+		t1 += text("Backup power is <span class='green>online</span>.<br>")
 	else
-		t1 += text("Backup power is offline, but will turn on if main power fails.")
+		t1 += text("Backup power is <span class='bad'>offline</span>, but will turn on if main power fails.")
 	t1 += "<br>\n"
 
 	if(isWireCut(AIRLOCK_WIRE_IDSCAN))
@@ -511,11 +511,11 @@ var/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(secondsElectrified == -1)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
+		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
 	else if(secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified, src)
+		t1 += text("Door is electrified temporarily ([]s). <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
+		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
 
 	if(isWireCut(AIRLOCK_WIRE_SAFETY))
 		t1 += text("Door force sensors not responding</a><br>\n")

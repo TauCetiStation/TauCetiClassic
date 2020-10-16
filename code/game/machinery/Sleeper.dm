@@ -212,7 +212,7 @@
 	return
 
 /obj/machinery/sleeper/ui_interact(mob/user)
-	var/dat = "<h3>Sleeper Status</h3>"
+	var/dat = "<div class='Section__title'>Sleeper Status</div>"
 
 	dat += "<div class='Section'>"
 	if(!occupant)
@@ -277,7 +277,7 @@
 			if(C)
 				dat += "<BR><span class='disabled'>Inject [C.name]</span>"
 
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
+	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 605)	//Set up the popup browser window
 	popup.set_content(dat)
 	popup.open()
 
