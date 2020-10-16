@@ -42,7 +42,7 @@
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user)
 	var/dat = return_text()
 
-	var/datum/browser/popup = new(user, "computer", ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "computer")
 	popup.set_content(dat)
 	popup.open()
 
@@ -69,7 +69,7 @@
 
 	if(priority_alarms.len)
 		for(var/zone in priority_alarms)
-			priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
+			priority_text += "<span class='red'><B>[zone]</B></span>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
 	else
 		priority_text = "No priority alerts detected.<BR>"
 

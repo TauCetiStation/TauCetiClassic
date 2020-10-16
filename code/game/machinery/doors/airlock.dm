@@ -451,7 +451,7 @@ var/list/airlock_overlays = list()
 		else
 			t1 += text("Main power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else
-		t1 += text("Main power is <span class='green>online</span>.<br>")
+		t1 += text("Main power is <span class='green'>online</span>.<br>")
 
 	if(secondsBackupPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_BACKUP_POWER1) && !isWireCut(AIRLOCK_WIRE_BACKUP_POWER2))
@@ -459,7 +459,7 @@ var/list/airlock_overlays = list()
 		else
 			t1 += text("Backup power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else if(secondsMainPowerLost > 0)
-		t1 += text("Backup power is <span class='green>online</span>.<br>")
+		t1 += text("Backup power is <span class='green'>online</span>.<br>")
 	else
 		t1 += text("Backup power is <span class='bad'>offline</span>, but will turn on if main power fails.")
 	t1 += "<br>\n"

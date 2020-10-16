@@ -26,15 +26,16 @@ var/global/area/asteroid/mine_sci_curr_location = null
 			shuttle_location = "Mining Station"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
 			shuttle_location = "Research Outpost"
-		dat = {"Location: [shuttle_location]<br>
-		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
-		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
-		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>"}
+		dat += "<ul><li>Location: [shuttle_location]</li>"
+		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
+		dat += "</ul>"
+		dat += "<a href='?src=\ref[src];mine=1'>Mining Station</a> |"
+		dat += "<a href='?src=\ref[src];station=1'>[station_name()]</a> |"
+		dat += "<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>"
 	else
 		dat = "Cannot find shuttle"
 
-	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 365, 200)
 	popup.set_content(dat)
 	popup.open()
 

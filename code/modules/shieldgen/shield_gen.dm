@@ -100,9 +100,9 @@
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
-		t += "This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
-		t += "[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>"
+		t += "[owned_capacitor ? "<span class='green'>Charge capacitor connected.</span>" : "<span class='red'>Unable to locate charge capacitor!</span>"]<br>"
+		t += "This generator is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "[time_since_fail > 2 ? "<span class='green'>Field is stable.</span>" : "<span class='red'>Warning, field is unstable!</span>"]<br>"
 		t += "Coverage diameter (restart required): \
 		<a href='?src=\ref[src];change_radius=-50'>---</a> \
 		<a href='?src=\ref[src];change_radius=-5'>--</a> \
@@ -118,13 +118,13 @@
 		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>"
 		t += "Additional energy required to charge: [field.len * strengthen_rate / energy_conversion_rate] Watts/sec<br>"
 		t += "Maximum field strength: \
-		<a href='?src=\ref[src];target_field_strength=-100'>\[min\]</a> \
+		<a href='?src=\ref[src];target_field_strength=-100'>min</a> \
 		<a href='?src=\ref[src];target_field_strength=-10'>--</a> \
 		<a href='?src=\ref[src];target_field_strength=-1'>-</a> \
 		[target_field_strength] Renwicks \
 		<a href='?src=\ref[src];target_field_strength=1'>+</a> \
 		<a href='?src=\ref[src];target_field_strength=10'>++</a> \
-		<a href='?src=\ref[src];target_field_strength=100'>\[max\]</a><br>"
+		<a href='?src=\ref[src];target_field_strength=100'>max</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 
