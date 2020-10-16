@@ -103,3 +103,10 @@
 /obj/item/clothing/head/det_hat/black
 	name = "detective's black hat"
 	icon_state = "detective_black"
+
+//Warden
+
+/obj/item/clothing/head/campaign
+	name = "warden's campaign hat"
+	desc = "A drill hat issued to Wardens and Sergeants of security forces. Makes you want to yell loudly at your subordinates for some reason."
+	icon_state = "warden_campaign"

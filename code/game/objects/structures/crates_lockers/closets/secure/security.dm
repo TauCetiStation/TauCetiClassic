@@ -159,6 +159,7 @@
 
 	new /obj/item/clothing/head/helmet/warden(src)
 	new /obj/item/clothing/head/beret/sec/warden(src)
+	new /obj/item/clothing/head/campaign(src)
 	new /obj/item/clothing/under/rank/warden(src)
 	new /obj/item/clothing/under/rank/warden_fem(src)
 	new /obj/item/clothing/suit/storage/flak(src)
