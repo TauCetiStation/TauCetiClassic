@@ -538,7 +538,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
 		assets.send(human_or_robot_user)
 
-		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600)
 		popup.set_content(dat)
 		popup.open()
 
