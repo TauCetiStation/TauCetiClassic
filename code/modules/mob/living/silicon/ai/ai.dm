@@ -42,7 +42,6 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
 	var/datum/AI_Module/active_module = null
@@ -330,8 +329,6 @@ var/list/ai_verbs_default = list(
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	viewalerts = 1
-
 	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
 	popup.set_content(dat)
 	popup.open()
@@ -607,16 +604,11 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
-	if(viewalerts)
-		show_alerts()
-
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
-		if(viewalerts)
-			show_alerts()
 
 	return has_alarm
 

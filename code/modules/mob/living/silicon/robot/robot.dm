@@ -52,7 +52,6 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
-	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
@@ -381,8 +380,6 @@
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	viewalerts = 1
-
 	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
 	popup.set_content(dat)
 	popup.open()
@@ -523,7 +520,7 @@
 
 	if (!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-//		if (viewalerts) robot_alerts()
+
 	return has_alarm
 
 
