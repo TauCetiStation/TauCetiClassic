@@ -318,7 +318,7 @@ var/list/ai_verbs_default = list(
 				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += "[!cameratext ? null : "<br>---- "]<A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
 				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
