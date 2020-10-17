@@ -410,6 +410,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(body_zone == BP_HEAD)
 		owner.update_hair()
 		owner.handle_decapitation(src)
+		if(IS_SYNTHETIC)
+			ADD_TRAIT(owner, TRAIT_BLIND, BEHEADING)
+
 
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 	release_restraints()
@@ -941,7 +944,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
-	if(!disfigured)
+	if(!disfigured && !IS_SYNTHETIC)
 		if(brute_dam > 40)
 			if (prob(50))
 				disfigure("brute")

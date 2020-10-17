@@ -395,15 +395,6 @@
 	robotic = 2
 	parent_bodypart = BP_HEAD
 
-/obj/item/organ/internal/eyes/ipc/process()
-	if(istype(owner.bodyparts_by_name[BP_HEAD], /obj/item/organ/external/stump))
-		owner.eye_blind = 20
-	if(is_bruised())
-		owner.eye_blurry = 20
-	if(is_broken())
-		owner.eye_blind = 20
-
-
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
 	if(is_bruised())
