@@ -167,7 +167,7 @@
 			ok = 1
 		// Send in a Deathsquad
 		if("striketeam")
-			if(usr.client.strike_team())
+			if(usr.client.call_strike_team())
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","Strike")
 		// Send in a Syndicate Strike Team
