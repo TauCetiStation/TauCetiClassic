@@ -410,7 +410,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(body_zone == BP_HEAD)
 		owner.update_hair()
 		owner.handle_decapitation(src)
-		if(IS_SYNTHETIC)
+		if(is_robotic())
 			ADD_TRAIT(owner, TRAIT_BLIND, BEHEADING)
 
 
