@@ -75,11 +75,11 @@
 						W = copy(W)
 					else if(istype(W, /obj/item/weapon/photo))
 						W = photocopy(W)
-					W.loc = p
+					W.forceMove(p)
 					p.amount++
 					j++
 				p.amount--
-				p.loc = src.loc
+				p.forceMove(loc)
 				p.update_icon()
 				p.icon_state = "paper_words"
 				p.name = bundle.name
@@ -88,17 +88,17 @@
 				sleep(15 * j)
 	else if(href_list["remove"])
 		if(copy)
-			copy.loc = usr.loc
+			copy.forceMove(usr.loc)
 			usr.put_in_hands(copy)
 			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 			copy = null
 		else if(photocopy)
-			photocopy.loc = usr.loc
+			photocopy.forceMove(usr.loc)
 			usr.put_in_hands(photocopy)
 			to_chat(usr, "<span class='notice'>You take the photo out of \the [src].</span>")
 			photocopy = null
 		else if(bundle)
-			bundle.loc = usr.loc
+			bundle.forceMove(usr.loc)
 			usr.put_in_hands(bundle)
 			to_chat(usr, "<span class='notice'>You take the paper bundle out of \the [src].</span>")
 			bundle = null
@@ -133,9 +133,8 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			copy = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -143,9 +142,8 @@
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/photo))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			photocopy = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the photo into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -153,9 +151,8 @@
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/paper_bundle))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			bundle = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the bundle into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -206,7 +203,7 @@
 		P.info = "<font color = #101010>"
 	else			//no toner? shitty copies for you!
 		P.info = "<font color = #808080>"
-	var/copied = html_decode(copy.info)
+	var/copied = copy.info
 	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
 	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 	copied = replacetext(copied, "<img ", "<img style=\"filter: gray;\"")	//IE is still IE
