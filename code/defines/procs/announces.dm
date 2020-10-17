@@ -36,7 +36,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 
 //station announces: communication console, shuttle(?), departaments
 /proc/captain_announce(message, title = "Priority Announcement", announcer, sound = "announce", subtitle)
-	
+
 	station_announce(message, title, subtitle, announcer, sound)
 
 	add_communication_log(type = "station", title = title ? title : subtitle, author = announcer, content = message)

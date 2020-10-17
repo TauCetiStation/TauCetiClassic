@@ -9,7 +9,7 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	hud_possible = list(MINE_HUD)
+	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
@@ -360,7 +360,7 @@
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	
+
 	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)

@@ -120,7 +120,7 @@
 					for(var/element in N.contains) //let's show what's in the conteiner
 						if(element in check_content)
 							continue
-					//=========count the repetitions=======		
+					//=========count the repetitions=======
 						check_content += element
 						var/amount = 0
 						for(var/check in N.contains)
