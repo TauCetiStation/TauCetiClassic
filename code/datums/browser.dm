@@ -229,7 +229,7 @@
 
 
 
-/datum/proc/popup(user, message, title)
+/proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)
 	P.set_content(message)
 	P.open()
