@@ -78,7 +78,7 @@ var/global/list/wire_daltonism_colors = list()
 	var/window_y = 470
 
 	// All possible wires colors are here.
-	var/static/list/wire_colors = list("red", "blue", "green", "black", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink")
+	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
 
 /datum/wires/New(atom/holder)
 	..()
@@ -256,9 +256,10 @@ var/global/list/wire_daltonism_colors = list()
 	. = ..()
 	if(.)
 		return
-	
+
 	if(!(in_range(holder, usr) && isliving(usr)))
 		return
+
 	var/mob/living/L = usr
 
 	if(!can_use(src) || !holder.can_mob_interact(L))
