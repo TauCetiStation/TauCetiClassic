@@ -259,7 +259,6 @@ var/global/list/wire_daltonism_colors = list()
 	
 	if(!(in_range(holder, usr) && isliving(usr)))
 		return
-	
 	var/mob/living/L = usr
 
 	if(!can_use(src) || !holder.can_mob_interact(L))
