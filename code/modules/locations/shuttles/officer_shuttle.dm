@@ -6,11 +6,11 @@
 	name = "Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/department_note = "Velocity transport shuttle departed from station." //сообщение по отлёту от станции
-	var/arrival_note = "Velocity Transport Shuttle docked with the station." //сообщение по прибытию на станцию
+	var/department_note = "Velocity transport shuttle departed from station."
+	var/arrival_note = "Velocity Transport Shuttle docked with the station."
 	var/obj/item/device/radio/intercom/radio
-	var/moving = 0 //в движении или нет
-	var/area/curr_location //текущая локация
+	var/moving = 0
+	var/area/curr_location
 	var/area/from_area
 	var/lastMove = 0
 
@@ -36,7 +36,7 @@
 	if(curr_location == locate(/area/shuttle/officer/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
-		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии шаттла
+		radio.autosay(department_note, "Arrivals Alert System")
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.undock_act(/area/velocity, "velocity_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
@@ -69,7 +69,7 @@
 	if(dest_location == locate(/area/shuttle/officer/station))
 		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")
-		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об прибытии шаттла
+		radio.autosay(arrival_note, "Arrivals Alert System")
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.dock_act(/area/velocity, "velocity_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")
