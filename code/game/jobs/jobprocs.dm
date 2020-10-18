@@ -38,7 +38,8 @@
 	. = ..()
 	var/image/I = image('icons/turf/walls/riveted.dmi', src, "box")
 	I.override = TRUE
-	I.alpha = 100
+	I.alpha = 160
+	I.layer = INFRONT_MOB_LAYER
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/mime, "mime_wall", I)
 
 ///////////////////////////////

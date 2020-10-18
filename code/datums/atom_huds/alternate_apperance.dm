@@ -63,18 +63,19 @@ var/global/list/active_alternate_appearances = list()
 
 /**
   * If you have one sprite superimposed on the second, then in image/I set `I.override = TRUE`
+  * You can choose to send an image or an entire object type. For items that can be picked up, it is better to pass the type.
   * Arguments:
   * * key - name of the associative array in the form "key" = "image"
-  * * image/I - image of alternate apperance
+  * * image/I - not an important argument, image of alternate apperance
   * * options - type of transfer overlays
-  * * atom/_alternate_obj - not an important argument if you pass another atom here, alternate apperance will intercept inheads and examine.
+  * * alternate_type - not an important argument if you pass another atom here, alternate apperance will intercept examine.
   * * loc - not an important argument if you pass another image here
   *
 */
-/datum/atom_hud/alternate_appearance/basic/New(key, image/I, atom/alternate_type, loc, options = AA_TARGET_SEE_APPEARANCE)
+/datum/atom_hud/alternate_appearance/basic/New(key, image/I, alternate_type, loc, options = AA_TARGET_SEE_APPEARANCE)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
-	if(!alternate_obj)
+	if(!alternate_obj && alternate_type)
 		alternate_obj = new alternate_type
 
 	hud_icons = list(appearance_key)
@@ -84,7 +85,7 @@ var/global/list/active_alternate_appearances = list()
 		target = I.loc
 	else
 		target = loc
-		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state)
+		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
 		//This is necessary so that sprites are not layered
 		theImage.override = TRUE
 

@@ -216,12 +216,12 @@
 				var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
 				if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj))
 					continue
-				var/obj/alternate_obj_type = AA.alternate_obj
+				var/obj/alternate_obj = AA.alternate_obj
 				for(var/mob/alt_viewer in viewers(M))
 					if(!alt_viewer.client || !(alt_viewer in AA.hudusers))
 						continue
 					alt_alpperances_vieawers += alt_viewer
-					alt_viewer.show_message("<span class='warning'><B>[M] has been attacked with [initial(alternate_obj_type.name)][showname] </B></span>", SHOWMSG_VISUAL)
+					alt_viewer.show_message("<span class='warning'><B>[M] has been attacked with [alternate_obj.name][showname] </B></span>", SHOWMSG_VISUAL)
 
 		if(attack_verb.len)
 			messagesource.visible_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>", ignored_mobs = alt_alpperances_vieawers)
