@@ -292,13 +292,14 @@
 			BP.sabotaged = 1
 		return TRUE
 
-	var/list/alt_alpperances_vieawers = list()
+	var/list/alt_alpperances_vieawers
 	if(I.alternate_appearances)
 		for(var/key in I.alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/AA = I.alternate_appearances[key]
 			if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj))
 				continue
 			var/obj/alternate_obj = AA.alternate_obj
+			alt_alpperances_vieawers = list()
 			for(var/mob/alt_viewer in viewers(src))
 				if(!alt_viewer.client || !(alt_viewer in AA.hudusers))
 					continue
