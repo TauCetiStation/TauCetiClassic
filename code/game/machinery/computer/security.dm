@@ -76,19 +76,19 @@
 							var/background
 							switch(crimstat)
 								if("*Arrest*")
-									background = "'background-color:#DC143C;'"
+									background = "'bgbad'"
 								if("Incarcerated")
-									background = "'background-color:#CD853F;'"
+									background = "'bgorange'"
 								if("Paroled")
-									background = "'background-color:#CD853F;'"
+									background = "'bgorange'"
 								if("Released")
-									background = "'background-color:#3BB9FF;'"
+									background = "'bgblue'"
 								if("None")
-									background = "'background-color:#00FF7F;'"
+									background = "'bggood'"
 								if("")
-									background = "'background-color:#FFFFFF;'"
-									crimstat = "No Record."
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+									background = "''"
+									crimstat = "No Record"
+							dat += text("<tr class=[background]><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>")
 							dat += text("<td>[]</td>", R.fields["id"])
 							dat += text("<td>[]</td>", R.fields["rank"])
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
