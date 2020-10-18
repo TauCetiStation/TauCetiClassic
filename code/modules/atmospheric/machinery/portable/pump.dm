@@ -184,3 +184,6 @@
 				holding = null
 				. = TRUE
 	update_icon()
+#undef PUMP_MAX_PRESSURE
+#undef PUMP_MIN_PRESSURE
+#undef PUMP_DEFAULT_PRESSURE

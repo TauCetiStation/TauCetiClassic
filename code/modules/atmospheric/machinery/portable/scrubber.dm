@@ -145,7 +145,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = clamp(round(rate), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				volume_rate = clamp(round(rate), SCRUBBER_MIN_RATE, SCRUBBER_MAX_RATE)
 		if("eject")
 			if(holding)
 				holding.forceMove(loc)
@@ -263,3 +263,7 @@
 		return
 
 	..()
+
+#undef SCRUBBER_MAX_RATE
+#undef SCRUBBER_MIN_RATE
+#undef SCRUBBER_DEFAULT_RATE

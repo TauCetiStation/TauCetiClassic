@@ -461,3 +461,5 @@ update_flag
 				holding = null
 				. = TRUE
 	update_icon()
+
+#undef CAN_DEFAULT_RELEASE_PRESSURE
