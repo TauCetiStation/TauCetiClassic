@@ -86,7 +86,7 @@
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>
 			Ready to move[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];velocity=1'>NTS Velocity</a><br>
+		<a href='?src=\ref[src];velocity=1'>NTS Velocity</a> |
 		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>"}
 
