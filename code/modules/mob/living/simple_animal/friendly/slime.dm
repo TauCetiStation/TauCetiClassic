@@ -54,4 +54,6 @@
 	S2.icon_living = "[src.colour] baby slime"
 	S2.icon_dead = "[src.colour] baby slime dead"
 	S2.colour = "[src.colour]"
+	med_hud_set_health()
+	med_hud_set_status()
 	qdel(src)

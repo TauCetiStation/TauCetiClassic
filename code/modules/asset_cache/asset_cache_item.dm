@@ -1,6 +1,6 @@
 /**
 	* # asset_cache_item
-	* 
+	*
 	* An internal datum containing info on items in the asset cache. Mainly used to cache md5 info for speed.
 **/
 /datum/asset_cache_item

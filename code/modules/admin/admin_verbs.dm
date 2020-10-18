@@ -843,12 +843,10 @@ var/list/admin_verbs_hideable = list(
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/show_player_notes()
+/client/proc/show_player_notes(key as text)
 	set name = "Show Player Notes"
-	set category = "Admin"
-	if(holder)
-		holder.show_player_notes()
-	return
+	set category = "Logs"
+	holder?.show_player_notes(key)
 
 /client/proc/free_slot()
 	set name = "Free Job Slot"
@@ -873,7 +871,7 @@ var/list/admin_verbs_hideable = list(
 
 	if(!check_rights(R_ADMIN))
 		return
-	
+
 	if(isobserver(usr))
 		var/mob/dead/observer/O = usr
 		if(O.data_hud)
@@ -1072,9 +1070,9 @@ var/list/admin_verbs_hideable = list(
 		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
 		if(new_count)
 			blobwincount = new_count
-	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
-	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //////////////////////////////

@@ -53,10 +53,7 @@
 	var/recieve_message = ""
 
 	if(((src in mentors) || holder) && !C.holder)
-		if(config.rus_language)
-			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Нажмите на имя [recieve_pm_type]'а для ответа --</b></font>\n"
-		else
-			recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
+		recieve_message = "<font color='[recieve_color]' size='3'><b>-- Нажмите на имя [recieve_pm_type]'а для ответа --</b></font>\n"
 		if(C.mentorhelped)
 			to_chat(C, recieve_message)
 			C.mentorhelped = FALSE

@@ -101,7 +101,7 @@
 		sacrifice_favor *= 0.5
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
-	
+
 	global.chaplain_religion.adjust_favor(sacrifice_favor)
 
 	L.gib()
@@ -141,7 +141,7 @@
 	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
 		to_chat(user, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
 		return FALSE
-	
+
 	if(!AOG.buckled_mob.mind)
 		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
 		return FALSE
