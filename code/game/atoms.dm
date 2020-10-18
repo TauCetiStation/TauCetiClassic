@@ -261,9 +261,9 @@
 	if(alternate_appearances)
 		for(var/key in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
-			if(!AA.alternate_type || !(user in AA.hudusers))
+			if(!AA.alternate_obj || !(user in AA.hudusers))
 				continue
-			alt_obj = new AA.alternate_type
+			alt_obj = AA.alternate_obj
 			break
 
 	to_chat(user, get_examine_string(user, TRUE, alt_obj))

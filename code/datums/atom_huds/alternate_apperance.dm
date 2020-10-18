@@ -22,7 +22,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 	var/transfer_overlays = FALSE
-	var/atom/alternate_type
+	var/static/atom/alternate_obj
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
@@ -67,14 +67,16 @@ var/global/list/active_alternate_appearances = list()
   * * key - name of the associative array in the form "key" = "image"
   * * image/I - image of alternate apperance
   * * options - type of transfer overlays
-  * * atom/_alternate_type - not an important argument if you pass another atom here, alternate apperance will intercept inheads and examine.
+  * * atom/_alternate_obj - not an important argument if you pass another atom here, alternate apperance will intercept inheads and examine.
   * * loc - not an important argument if you pass another image here
   *
 */
-/datum/atom_hud/alternate_appearance/basic/New(key, image/I, atom/_alternate_type, loc, options = AA_TARGET_SEE_APPEARANCE)
+/datum/atom_hud/alternate_appearance/basic/New(key, image/I, atom/alternate_type, loc, options = AA_TARGET_SEE_APPEARANCE)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
-	alternate_type = _alternate_type
+	if(!alternate_obj)
+		alternate_obj = new alternate_type
+
 	hud_icons = list(appearance_key)
 
 	if(I)
@@ -82,7 +84,7 @@ var/global/list/active_alternate_appearances = list()
 		target = I.loc
 	else
 		target = loc
-		theImage = image(initial(alternate_type.icon), target, initial(alternate_type.icon_state))
+		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state)
 		//This is necessary so that sprites are not layered
 		theImage.override = TRUE
 

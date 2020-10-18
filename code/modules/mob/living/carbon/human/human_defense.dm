@@ -296,9 +296,9 @@
 	if(I.alternate_appearances)
 		for(var/key in I.alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/AA = I.alternate_appearances[key]
-			if(!AA.alternate_type || !ispath(AA.alternate_type, /obj))
+			if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj))
 				continue
-			var/obj/alternate_obj_type = AA.alternate_type
+			var/obj/alternate_obj_type = AA.alternate_obj
 			for(var/mob/alt_viewer in viewers(src))
 				if(!alt_viewer.client || !(alt_viewer in AA.hudusers))
 					continue
