@@ -735,7 +735,7 @@
 		if ("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
 			if (in_range(src, U) && loc == U && mode == 1)
-				note = html_decode(n)
+				note = n
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
 			else
