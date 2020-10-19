@@ -226,6 +226,14 @@
 	state_nopower_preset = null
 	light_color = "#3550b6"
 
+/obj/machinery/computer/security/wooden_tv/miami
+	name = "security camera monitor"
+	desc = "An old TV hooked into the stations camera network."
+	icon_state = "security_det_miami"
+	state_broken_preset = null
+	state_nopower_preset = null
+	light_color = "#f535aa"
+
 /obj/machinery/computer/security/mining
 	name = "outpost camera monitor"
 	desc = "Used to access the various cameras on the outpost."

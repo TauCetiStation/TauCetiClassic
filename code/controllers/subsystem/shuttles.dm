@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(shuttle)
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				shake_mobs_in_area(end_location, EAST)
+				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods

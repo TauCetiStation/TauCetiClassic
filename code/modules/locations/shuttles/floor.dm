@@ -19,6 +19,24 @@
 	icon = 'code/modules/locations/shuttles/cargofloor.dmi'
 	icon_state = "1"
 
+/turf/simulated/shuttle/floor/evac
+	name = "floor"
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "floor"
+
+/turf/simulated/shuttle/floor/evac/medbay
+	icon_state = "floormed"
+
+/turf/simulated/shuttle/floor/evac/eng1
+	icon_state = "flooreng1"
+
+/turf/simulated/shuttle/floor/evac/eng2
+	icon_state = "flooreng2"
+
+/turf/simulated/shuttle/floor4/evac
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "floor"
+
 //Временный и очень грубый костыль для космоса, в шаттлконтроллере он не заменяется на движущийся.
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
 //======

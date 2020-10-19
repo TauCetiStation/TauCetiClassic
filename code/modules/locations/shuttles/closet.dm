@@ -5,8 +5,8 @@
 	icon_state = "WallClosetw"
 	icon_closed = "WallClosetw"
 	icon_opened = "WallClosetw_open"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/closet/wagon/PopulateContents()
 	for (var/i in 1 to 2)
@@ -21,8 +21,8 @@
 	icon_state = "WallClosetMining"
 	icon_closed = "WallClosetMining"
 	icon_opened = "WallClosetMining_open"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/closet/mining/PopulateContents()
 	for (var/i in 1 to 2)
@@ -39,8 +39,8 @@
 	icon_state = "WallClosetMed_1"
 	icon_closed = "WallClosetMed_1"
 	icon_opened = "WallCloset_0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/closet/medical_wall/erokez/PopulateContents()
 	for (var/i in 1 to 3)
@@ -57,5 +57,16 @@
 	icon_state = "WallCloset_1"
 	icon_closed = "WallCloset_1"
 	icon_opened = "WallCloset_0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/closet/evacvent
+	name = "Engine ventilation"
+	desc = "Looks like you can get in this small engine ventilation shaft"
+	icon = 'code/modules/locations/shuttles/closet.dmi'
+	icon_state = "shuttle"
+	icon_closed = "shuttle"
+	icon_opened = "shuttle_open"
+	anchored = TRUE
+	wall_mounted = TRUE
+	density = FALSE
