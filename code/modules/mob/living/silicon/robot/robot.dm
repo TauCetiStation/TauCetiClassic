@@ -636,6 +636,8 @@
 			if(locked)
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
+				if(user.is_busy())
+					return
 				user.SetNextMove(CLICK_CD_INTERACT)
 				if(do_after(user,12,target = src))
 					to_chat(user, "You open the cover.")
