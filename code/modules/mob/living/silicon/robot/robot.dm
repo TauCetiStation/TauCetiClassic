@@ -638,7 +638,7 @@
 			else
 				if(user.is_busy())
 					return
-				if(do_after(user,12,target = src))
+				if(W.use_tool(src, user, 12, volume = 50))
 					to_chat(user, "You open the cover.")
 					playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 					opened = 1
