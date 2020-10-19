@@ -636,10 +636,11 @@
 			if(locked)
 				to_chat(user, "The cover is locked and cannot be opened.")
 			else
-				to_chat(user, "You open the cover.")
-				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-				opened = 1
-				updateicon()
+				if(do_after(user,12,target = src))
+					to_chat(user, "You open the cover.")
+					playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+					opened = 1
+					updateicon()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
