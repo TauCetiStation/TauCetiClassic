@@ -223,6 +223,8 @@
 	desc = "Nothing."
 	var/not_bloody_state
 	var/not_bloody_item_state
+	var/delay_msg = 5 SECONDS
+	var/last_warn_msg = 0
 	force = 8
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 5
@@ -267,7 +269,12 @@
 	return ..()
 
 /obj/item/weapon/transparant/attack_self(mob/user)
-	user.visible_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>")
+	if(last_warn_msg < world.time)
+		user.visible_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>")
+		last_warn_msg = world.time + delay_msg
+	else
+		to_chat(user, "<span class='notice'>You are too tired, to do that.</span>")
+		return
 
 /obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
