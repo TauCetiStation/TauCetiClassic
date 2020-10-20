@@ -178,7 +178,8 @@
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP
-		REMOVE_TRAIT(target, TRAIT_BLIND, BEHEADING)
+		if(target.species.flags[IS_SYNTHETIC])
+			REMOVE_TRAIT(target, TRAIT_BLIND, BEHEADING)
 		if (B.brainmob && B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)
 			target.dna = B.brainmob.dna
