@@ -126,7 +126,7 @@ var/global/list/huds[22]
 	if(!M || !M.client || !A || !A.hud_list)
 		return
 	for(var/i in hud_icons)
-		if(check_key_in_list(A.hud_list, i) && (!hud_exceptions[M] || !(A in hud_exceptions[M])))
+		if(A.hud_list[i] && (!hud_exceptions[M] || !(A in hud_exceptions[M])))
 			M.client.images |= A.hud_list[i]
 
 //MOB PROCS

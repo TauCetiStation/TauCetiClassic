@@ -384,14 +384,6 @@
 		i++
 	return null
 
-// Should prevent "bad index" error.
-/proc/check_key_in_list(list/L, key)
-	if(!L)
-		return FALSE
-	if(L.Find(key))
-		return TRUE
-	return FALSE
-
 /proc/count_by_type(list/L, type)
 	var/i = 0
 	for(var/T in L)

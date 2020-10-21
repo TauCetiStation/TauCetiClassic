@@ -88,8 +88,6 @@
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
-	if(!check_key_in_list(hud_list, HEALTH_HUD))
-		return
 	var/image/holder = hud_list[HEALTH_HUD]
 	holder.icon_state = "hud[RoundHealth(src)]"
 
@@ -99,8 +97,6 @@
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
-	if(!check_key_in_list(hud_list, STATUS_HUD))
-		return
 	var/image/holder = hud_list[STATUS_HUD]
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
@@ -108,8 +104,6 @@
 		holder.icon_state = "hudhealthy"
 
 /mob/living/carbon/med_hud_set_status()
-	if(!check_key_in_list(hud_list, STATUS_HUD))
-		return
 	var/image/holder = hud_list[STATUS_HUD]
 	var/virus_threat = check_virus()
 	if(status_flags & XENO_HOST)
@@ -148,8 +142,6 @@
  Security HUDs! Basic mode shows only the job.
 ************************************************/
 /mob/living/carbon/human/proc/sec_hud_set_ID()
-	if(!check_key_in_list(hud_list, ID_HUD))
-		return
 	var/image/holder = hud_list[ID_HUD]
 	holder.icon_state = "hudunknown"
 	if(wear_id?.GetID())
@@ -158,15 +150,6 @@
 	sec_hud_set_security_status()
 
 /mob/living/proc/sec_hud_set_implants()
-	var/have_hud_list = TRUE
-	for(var/key in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
-		if(!check_key_in_list(hud_list, key))
-			have_hud_list = FALSE
-			break
-
-	if(!have_hud_list)
-		return
-
 	var/image/holder
 	var/y = 0
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD))
@@ -198,8 +181,6 @@
 			y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
-	if(!check_key_in_list(hud_list, WANTED_HUD))
-		return
 	var/image/holder = hud_list[WANTED_HUD]
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && global.data_core)
@@ -244,8 +225,6 @@
 
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()
-	if(!check_key_in_list(hud_list, DIAG_HUD))
-		return
 	var/image/holder = hud_list[DIAG_HUD]
 	if(stat == DEAD)
 		holder.icon_state = "huddiagdead"
@@ -253,8 +232,6 @@
 		holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/silicon/proc/diag_hud_set_status()
-	if(!check_key_in_list(hud_list, DIAG_STAT_HUD))
-		return
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	switch(stat)
 		if(CONSCIOUS)
@@ -266,8 +243,6 @@
 
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
-	if(!check_key_in_list(hud_list, DIAG_BATT_HUD))
-		return
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	if(cell)
 		var/chargelvl = (cell.charge/cell.maxcharge)
@@ -279,15 +254,6 @@
 	MINECRAFT HUDs
 ~~~~~~~~~~~~~~~~~~~~~*/
 /turf/simulated/mineral/proc/set_mine_hud()
-	var/have_hud_list = TRUE
-	for(var/key in list(MINE_ARTIFACT_HUD, MINE_MINERAL_HUD))
-		if(!check_key_in_list(hud_list, key))
-			have_hud_list = FALSE
-			break
-
-	if(!have_hud_list)
-		return
-
 	var/image/holder1 = hud_list[MINE_ARTIFACT_HUD]
 	var/image/holder2 = hud_list[MINE_MINERAL_HUD]
 	var/states = 0
@@ -305,8 +271,6 @@
 	BROKEN HUUDs
 ~~~~~~~~~~~~~~~~~~~~~*/
 /mob/living/carbon/proc/set_broken_hud_icon()
-	if(!check_key_in_list(hud_list, BROKEN_HUD))
-		return
 	var/image/holder = hud_list[BROKEN_HUD]
 	var/list/num = list(1, 2, 3, 4, 5, 6, 7)
 	holder.icon_state = "hudbroken[pick(num)]"
@@ -315,14 +279,10 @@
 	BIG STOMPY MECHS
 ~~~~~~~~~~~~~~~~~~~~~*/
 /obj/mecha/proc/diag_hud_set_mechhealth()
-	if(!check_key_in_list(hud_list, DIAG_MECH_HUD))
-		return
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxhealth)]"
 
 /obj/mecha/proc/diag_hud_set_mechcell()
-	if(!check_key_in_list(hud_list, DIAG_BATT_HUD))
-		return
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	if(cell)
 		var/chargelvl = cell.charge/cell.maxcharge
@@ -331,8 +291,6 @@
 		holder.icon_state = "hudnobatt"
 
 /obj/mecha/proc/diag_hud_set_mechstat()
-	if(!check_key_in_list(hud_list, DIAG_STAT_HUD))
-		return
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	holder.icon_state = null
 	if(internal_damage)
@@ -342,8 +300,6 @@
 	Airlocks!
 ~~~~~~~~~~~~~*/
 /obj/machinery/door/proc/diag_hud_set_electrified()
-	if(!check_key_in_list(hud_list, DIAG_AIRLOCK_HUD))
-		return
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
 	if(secondsElectrified != 0)
 		holder.icon_state = "electrified"

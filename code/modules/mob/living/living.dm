@@ -556,6 +556,9 @@
 
 	regenerate_icons()
 
+	med_hud_set_health()
+	med_hud_set_status()
+
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 	if(istype(BP))
