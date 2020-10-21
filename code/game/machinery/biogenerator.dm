@@ -60,7 +60,7 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>The biogenerator already occuped.</span>")
 		else
-			user.drop_from_inventory(O, src) 
+			user.drop_from_inventory(O, src)
 			beaker = O
 			updateUsrDialog()
 	else if(processing)

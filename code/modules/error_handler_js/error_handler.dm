@@ -24,7 +24,7 @@ var/global/datum/js_error_manager/js_error_manager = new
 		warning("JS error handler: not valid file name: '[name]'")
 		log_debug("JS error handler: not valid file name: '[name]'")
 		return
-	
+
 	var/datum/js_error_file/D = log_files[name]
 	D.write_error(message, C)
 
@@ -44,7 +44,7 @@ var/global/datum/js_error_manager/js_error_manager = new
 	file_name = "browser"
 
 /datum/js_error_file/proc/write_error(message, client/C)
-	
+
 	if(!file)
 		file = file("[global.log_debug_js_directory]/[file_name].log")
 		message_admins("JS error handler: log file '[file_name]' created for errors", reg_flag = R_DEBUG)
@@ -54,7 +54,7 @@ var/global/datum/js_error_manager/js_error_manager = new
 
 	if(length(file) > file_size_limit)
 		blocked = TRUE
-		
+
 		message_admins("JS error handler: File: '[file_name]' has exceeded the filesize limit of: [src.file_size_limit] bytes and will not be written further", reg_flag = R_DEBUG)
 		log_debug("JS error handler: File: '[file_name]' has exceeded the filesize limit of: [src.file_size_limit] bytes and will not be written further")
 

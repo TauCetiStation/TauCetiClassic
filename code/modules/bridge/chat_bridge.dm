@@ -30,7 +30,7 @@
 
 	spawn()
 		var/ext = world.ext_python("get.py", "[shelleo_url_scrub(config.chat_bridge)] --json='[encoded_json]'")
-		
+
 		if(!ext) // ext_python error
 			return
 
