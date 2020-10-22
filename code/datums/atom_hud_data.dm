@@ -257,16 +257,17 @@
 	var/image/holder1 = hud_list[MINE_ARTIFACT_HUD]
 	var/image/holder2 = hud_list[MINE_MINERAL_HUD]
 
-	holder1.icon_state = null
-	holder2.icon_state = null
-
 	var/states = 0
 	if(finds && finds.len || artifact_find)
 		holder1.icon_state = "hudanomaly"
 		states += 1
+	else
+		holder1.icon_state = null
 	if(mineral)
 		holder2.icon_state = "hud[mineral.ore_type]"
 		states += 1
+	else
+		holder2.icon_state = null
 	if(states == 2)
 		holder1.pixel_x = 6
 		holder2.pixel_x = -6
