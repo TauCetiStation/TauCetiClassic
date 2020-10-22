@@ -230,5 +230,5 @@
 /mob/living/pbag/med_hud_set_health()
 	return
 
-/mob/living/pabg/med_hud_set_status()
+/mob/living/pbag/med_hud_set_status()
 	return
