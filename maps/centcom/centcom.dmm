@@ -1424,14 +1424,10 @@
 /turf/space,
 /area/space)
 "adO" = (
-/obj/item/weapon/defibrillator/loaded,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
 	},
-/obj/structure/table,
-/turf/simulated/shuttle/floor/evac/medbay,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adP" = (
 /obj/machinery/vending/boozeomat{
@@ -1482,13 +1478,17 @@
 /turf/simulated/shuttle/floor/evac/inv,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/machinery/door/airlock/erokez{
+/obj/machinery/door/airlock/erokez/sec{
 	req_access = list(1)
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "adX" = (
-/obj/machinery/door/airlock/erokez,
+/obj/machinery/door/airlock/erokez/med{
+	id_tag = "MedbayShuttle";
+	opacity = 0;
+	req_access = list(5)
+	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adY" = (
@@ -1711,7 +1711,7 @@
 /turf/simulated/shuttle/floor/evac,
 /area/space)
 "aeF" = (
-/obj/machinery/door/airlock/erokez,
+/obj/machinery/door/unpowered/shuttle,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aeG" = (
@@ -5758,13 +5758,16 @@
 	},
 /area/velocity)
 "aoL" = (
-/obj/structure/stool/bed/chair/schair/wagon,
-/obj/structure/closet/emergency_wall{
+/obj/machinery/door_control{
+	id = "MedbayShuttle";
 	layer = 3.1;
-	pixel_y = 32
+	name = "Medbay Shuttle Doors Control";
+	pixel_x = 26;
+	pixel_y = 28;
+	range = 8
 	},
-/turf/simulated/shuttle/floor/evac/place,
-/area/space)
+/turf/simulated/shuttle/floor/evac/medbay,
+/area/shuttle/escape/centcom)
 "aoM" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -7038,6 +7041,37 @@
 	opacity = 0
 	},
 /turf/space,
+/area/space)
+"arC" = (
+/obj/structure/closet/emergency_wall{
+	layer = 3.1;
+	pixel_y = 32
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/space)
+"arD" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/weapon/defibrillator/loaded,
+/turf/simulated/shuttle/floor/evac/medbay,
+/area/shuttle/escape/centcom)
+"arE" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/shuttle/floor/evac/sec2,
+/area/shuttle/escape/centcom)
+"arF" = (
+/obj/machinery/door/airlock/erokez/eng{
+	req_one_access = list(11, 24)
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
+"arG" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/space)
 "arJ" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -24933,12 +24967,12 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table,
 /obj/machinery/recharger/wallcharger{
 	layer = 3.1;
 	pixel_x = 34
 	},
+/obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "oUb" = (
@@ -25235,10 +25269,6 @@
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -25247,6 +25277,19 @@
 	layer = 3.1;
 	pixel_x = 32;
 	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
@@ -41555,7 +41598,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+arG
 aaM
 aaM
 aaM
@@ -44868,7 +44911,7 @@ aRG
 aRG
 aRG
 adX
-oLb
+aoL
 oLb
 oLb
 oLb
@@ -45127,7 +45170,7 @@ aRG
 bOb
 oTb
 pHb
-adO
+arD
 aep
 onb
 lMb
@@ -45889,7 +45932,7 @@ psb
 pxb
 iPu
 aRG
-aRG
+adO
 afF
 aWR
 aWR
@@ -46159,7 +46202,7 @@ aRG
 aRG
 aRG
 aRG
-aeF
+arF
 amS
 abG
 afU
@@ -47954,7 +47997,7 @@ aeF
 oJb
 oRb
 pJb
-adW
+arE
 pLb
 pSb
 ovb
@@ -61067,7 +61110,7 @@ afZ
 agc
 ajQ
 amR
-aoL
+ani
 ani
 aeA
 aeA
@@ -61324,7 +61367,7 @@ aeE
 aeA
 aeA
 and
-aeA
+arC
 aeA
 aeA
 aeA

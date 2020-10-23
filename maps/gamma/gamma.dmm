@@ -2238,6 +2238,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"adE" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "warning"
+	},
+/area/station/hallway/secondary/exit)
 "adF" = (
 /obj/structure/flora/plant/random,
 /turf/simulated/floor{
@@ -2247,6 +2258,17 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"adG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "warning"
+	},
+/area/station/hallway/secondary/exit)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
 	anchored = 1;
@@ -2326,6 +2348,18 @@
 	icon_state = "siding8"
 	},
 /area/station/civilian/chapel)
+"adM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Escape Medical Checkpoint";
+	req_access = list(5)
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/station/hallway/secondary/exit)
 "adN" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2363,6 +2397,18 @@
 	icon_state = "warningline"
 	},
 /area/station/rnd/test_area)
+"adS" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "adT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating{
@@ -2388,6 +2434,18 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"adW" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "adX" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -2408,6 +2466,14 @@
 	icon_state = "siding8"
 	},
 /area/station/civilian/chapel)
+"adY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "adZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -2464,6 +2530,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
+"aee" = (
+/obj/structure/sink{
+	pixel_y = 26
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "aef" = (
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
@@ -2489,6 +2564,12 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"aeh" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "aei" = (
 /turf/space,
 /turf/simulated/floor/engine/vacuum,
@@ -3164,11 +3245,208 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"afn" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afo" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/obj/item/weapon/folder/white,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/britcup{
+	pixel_x = -4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afp" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"afq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"afr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"afs" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"aft" = (
+/obj/item/weapon/reagent_containers/blood/AMinus{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afu" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"afw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "white"
+	},
+/area/station/hallway/secondary/exit)
+"afx" = (
+/obj/structure/table/glass,
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_x = -4
+	},
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_y = 4
+	},
+/obj/item/stack/medical/advanced/ointment{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afy" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "afz" = (
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
 /area/station/rnd/xenobiology)
+"afA" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/medical/teleporter{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/machinery/vending/wallmed2{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afB" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -28
+	},
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afC" = (
+/obj/machinery/camera{
+	c_tag = "Escape Medical Checkpoint";
+	dir = 1;
+	network = list("SS13","Medical")
+	},
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
 "afD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -3178,6 +3456,41 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"afE" = (
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afF" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = -4
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/station/hallway/secondary/exit)
+"afG" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/hallway/secondary/exit)
 "afH" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -3196,6 +3509,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
+"afI" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/hallway/secondary/exit)
 "afR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -4994,11 +5314,11 @@
 	},
 /area/station/security/brig)
 "aIk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -41315,6 +41635,12 @@
 	pixel_x = 5;
 	pixel_y = -32
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -44150,6 +44476,12 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -70087,8 +70419,14 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vpM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor{
-	icon_state = "warning"
+	icon_state = "delivery"
 	},
 /area/station/hallway/secondary/exit)
 "vpN" = (
@@ -95460,25 +95798,25 @@ plf
 plf
 plf
 pOf
-cjg
+afG
 cjg
 pOf
 cjg
-cjg
+afI
 pOf
 plf
 pOf
-cjg
+afG
 pOf
 kHU
 kHU
 kHU
 kHU
-kHU
-kHU
-plf
-plf
-plf
+wqE
+smh
+smh
+smh
+smh
 czH
 bHU
 bHU
@@ -95732,10 +96070,10 @@ wqE
 wqE
 wqE
 wqE
-plf
-plf
-plf
-plf
+adS
+afo
+afu
+afy
 jzl
 bHU
 bHU
@@ -95989,10 +96327,10 @@ lZx
 lhG
 luM
 wqE
-plf
-plf
-plf
-plf
+adW
+afp
+afs
+afA
 czH
 bHU
 bHU
@@ -96244,12 +96582,12 @@ vKL
 vKL
 vKL
 vKL
-vKL
-wqE
-plf
-plf
-plf
-plf
+vpM
+adM
+adY
+afq
+afv
+afB
 czH
 bHU
 bHU
@@ -96503,10 +96841,10 @@ vLS
 vLS
 mZm
 wqE
-plf
-plf
-plf
-plf
+aee
+afr
+afw
+afC
 czH
 plf
 bHU
@@ -96760,10 +97098,10 @@ eYu
 qJH
 mdA
 wqE
-plf
-plf
-plf
-plf
+aeh
+afs
+afs
+afE
 czH
 kHU
 wce
@@ -97015,12 +97353,12 @@ ffB
 xSm
 mIC
 czj
-vpM
+adE
 wqE
-plf
-plf
-plf
-plf
+afn
+aft
+afx
+afF
 czH
 wce
 wce
@@ -97272,7 +97610,7 @@ eji
 eji
 eji
 xot
-vpM
+adE
 smh
 wce
 wce
@@ -97529,7 +97867,7 @@ xHd
 xHd
 itx
 pne
-vpM
+adE
 nrI
 mun
 mcz
@@ -97786,7 +98124,7 @@ kRz
 qJH
 qJH
 aIk
-vpM
+adG
 qPA
 mun
 mcz

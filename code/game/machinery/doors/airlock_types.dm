@@ -319,6 +319,24 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
 
+/obj/machinery/door/airlock/erokez/med
+	icon          = 'icons/obj/doors/airlocks/shuttle/med.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
+/obj/machinery/door/airlock/erokez/sec
+	icon          = 'icons/obj/doors/airlocks/shuttle/sec.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
+/obj/machinery/door/airlock/erokez/eng
+	icon          = 'icons/obj/doors/airlocks/shuttle/eng.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 
 /*****************
 * Centcom airlocks

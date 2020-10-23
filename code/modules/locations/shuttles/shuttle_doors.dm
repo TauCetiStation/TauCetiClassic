@@ -11,3 +11,8 @@
 	icon = 'code/modules/locations/shuttles/pod_doors.dmi'
 	name = "door"
 	icon_state = "ofdoor1"
+
+/obj/machinery/door/unpowered/shuttle/eva
+	icon = 'code/modules/locations/shuttles/pod_doors.dmi'
+	name = "door"
+	icon_state = "edoor1"
