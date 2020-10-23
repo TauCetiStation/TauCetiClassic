@@ -326,21 +326,27 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	if(damage && C)
-		C.charge = owner.nutrition
-		if(owner.nutrition > (C.maxcharge - damage * 5))
-			owner.nutrition = C.maxcharge - damage * 5
-	if(owner.nutrition < 1)
-		owner.SetParalysis(2)
-		if(accumulator_warning < world.time)
-			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
-			accumulator_warning = world.time + 15 SECONDS
-	else if(!C)
+	var/turf/T = get_turf(owner.loc)
+	
+	if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
 		owner.SetParalysis(2)
 		owner.eye_blurry = 2
 		owner.silent = 2
+	else if(owner.nutrition > (C.maxcharge/0.8))
+		explosion(T,1,0,1,1)
+		qdel(C)
+	else if(damage)
+		C.charge = owner.nutrition
+		if(owner.nutrition > (C.maxcharge - damage * 5))
+			owner.nutrition = C.maxcharge - damage * 5
+	if(C && owner.nutrition < 1)
+		owner.SetParalysis(2)
+		if(accumulator_warning < world.time)
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+			accumulator_warning = world.time + 15 SECONDS
+	
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
