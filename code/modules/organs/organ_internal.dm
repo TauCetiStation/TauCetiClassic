@@ -334,7 +334,7 @@
 		owner.SetParalysis(2)
 		owner.eye_blurry = 2
 		owner.silent = 2
-	else if(owner.nutrition > (C.maxcharge/0.8))
+	else if(owner.nutrition > (C.maxcharge*1.2))
 		explosion(T,1,0,1,1)
 		qdel(C)
 	else if(damage)
