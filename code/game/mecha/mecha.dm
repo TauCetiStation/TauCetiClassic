@@ -4,6 +4,8 @@
 #define MECHA_INT_TANK_BREACH 8
 #define MECHA_INT_CONTROL_LOST 16
 
+#define MECHA_TIME_TO_ENTER 4 SECOND
+
 #define MELEE 1
 #define RANGED 2
 
@@ -373,7 +375,8 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(occupant)
+		occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	diag_hud_set_mechstat()
 	return
 
@@ -614,17 +617,13 @@
 /obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
-	if(prob(src.deflect_chance))
+	if(prob(src.deflect_chance) || W.force < 10)
 		to_chat(user, "<span class='warning'>\The [W] bounces off [src.name].</span>")
 		src.log_append_to_last("Armor saved.")
-/*
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
-*/
 	else
 		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
 		user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
+		playsound(src, 'sound/mecha/mecha_attacked.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		src.take_damage(W.force,W.damtype)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
@@ -1007,7 +1006,7 @@
 
 	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
-	if(enter_after(40,usr))
+	if(enter_after(MECHA_TIME_TO_ENTER, usr))
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
@@ -1017,7 +1016,7 @@
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
-	if(H && H.client && (H in range(1)))
+	if(H && H.client && H.Adjacent(src))
 		H.reset_view(src)
 		H.forceMove(src)
 		if(H.hud_used)
@@ -1106,7 +1105,7 @@
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
-	src.occupant << browse(src.get_stats_html(), "window=exosuit")
+	src.occupant << browse(src.get_stats_html(), "window=exosuit;size=420x480")
 	return
 
 /*
@@ -1164,6 +1163,7 @@
 			occupant.SetWeakened(5)
 			to_chat(occupant, "You were blown out of the mech!")
 	*/
+		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, -3)
 		src.log_message("[mob_container] moved out.")
 		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
 		occupant.reset_view()
@@ -1240,12 +1240,12 @@
 						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 						<title>[src.name] data</title>
 						<style>
-						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
+						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px; line-height: 14px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
 						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
-						.header {cursor:pointer;}
-						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
+						.header {cursor:pointer; font-family: Arial Black,"Lucida Console",monospace; letter-spacing: 1px; font-size: 15;}
+						.open, .closed {background: #32CD32; color:#000; padding:3px 6px;}
 						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
@@ -1256,7 +1256,7 @@
 						function ticker() {
 						    setInterval(function(){
 						        window.location='byond://?src=\ref[src]&update_content=1';
-						    }, 1000);
+						    }, 750);
 						}
 
 						window.onload = function() {
@@ -1480,7 +1480,7 @@
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])
 		if(usr != src.occupant)	return
-		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
 			src.selected = equip
@@ -1490,7 +1490,6 @@
 		return
 	if(href_list["eject"])
 		if(usr != src.occupant)	return
-		playsound(src, 'sound/mecha/ROBOTIC_Servo_Large_Dual_Servos_Open_mono.ogg', VOL_EFFECTS_MASTER)
 		src.eject()
 		return
 	if(href_list["toggle_lights"])
@@ -1859,3 +1858,5 @@
 	//src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
 */
+
+# undef MECHA_TIME_TO_ENTER
