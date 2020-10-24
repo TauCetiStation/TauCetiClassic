@@ -316,7 +316,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
 	spawning = 1
