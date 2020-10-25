@@ -111,7 +111,7 @@
 	max_duration = 100
 
 /datum/surgery_step/cavity/place_item/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
+	if(..() && !isrobot(user))
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP && !BP.hidden && BP.cavity && tool.w_class <= get_max_wclass(BP)
 
