@@ -1105,7 +1105,7 @@
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
-	src.occupant << browse(src.get_stats_html(), "window=exosuit;size=420x480")
+	src.occupant << browse(src.get_stats_html(), "window=exosuit")
 	return
 
 /*
@@ -1245,7 +1245,7 @@
 						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
-						..open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
+						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
 						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
