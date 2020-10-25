@@ -287,6 +287,10 @@ var/global/list/wire_daltonism_colors = list()
 			// Attach
 			else
 				if(issignaler(I))
+					if(isrobot(L)){
+						to_chat(L, "<span class='notice'>You cannot insert the [I]-module inside this.</span>")
+						return
+					}
 					L.drop_item()
 					attach_signaler(color, I)
 				else

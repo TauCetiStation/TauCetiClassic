@@ -634,7 +634,7 @@
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
+	if(!issignaler(I) || isrobot(user)) //Eh, but we don't want people making secbots out of space helmets.
 		return ..()
 
 	var/obj/item/device/assembly/signaler/S = I

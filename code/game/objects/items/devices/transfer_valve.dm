@@ -36,6 +36,10 @@
 
 //TODO: Have this take an assemblyholder
 	else if(isassembly(I))
+		if(isrobot(user)){
+			to_chat(user, "<span class='notice'>You cannot insert the [I]-module inside this.</span>")
+			return
+		}
 		var/obj/item/device/assembly/A = I
 		if(A.secured)
 			to_chat(user, "<span class='notice'>The device is secured.</span>")

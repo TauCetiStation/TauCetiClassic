@@ -154,6 +154,10 @@
 			drop_assembly(1)
 			qdel(src)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+		if(isrobot(user)){
+			to_chat(user, "<span class='notice'>You cannot insert the [W]-module inside this.</span>")
+			return
+		}
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
