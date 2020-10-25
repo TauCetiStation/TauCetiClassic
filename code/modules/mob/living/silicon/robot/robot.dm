@@ -473,8 +473,8 @@
 		if(module)
 			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
-				stat("Internal Atmosphere Info", current_jetpack.name)
-				stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
+				stat("Internal Atmosphere Info: [current_jetpack.name]")
+				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
