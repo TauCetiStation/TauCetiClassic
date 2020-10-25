@@ -1859,4 +1859,4 @@
 	return
 */
 
-# undef MECHA_TIME_TO_ENTER
+#undef MECHA_TIME_TO_ENTER
