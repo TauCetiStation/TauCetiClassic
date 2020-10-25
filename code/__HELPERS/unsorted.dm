@@ -1506,3 +1506,11 @@ var/list/WALLITEMS = typecacheof(list(
 		return -1
 	else
 		return 0
+
+/atom/proc/contains(atom/location)
+	if(!location)
+		return 0
+	if(location == src)
+		return 1
+
+	return contains(location.loc)

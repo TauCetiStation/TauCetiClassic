@@ -2,7 +2,7 @@
 
 #define PREFERENCE_BACKPACK 1
 #define PREFERENCE_BACKPACK_FORCE 2 // if select "Nothing" => give backpack
-#define DEFAULT_FORCED_BACKPACK 2   // number of default backpack, when PREFERENCE_BACKPACK_FORCE 
+#define DEFAULT_FORCED_BACKPACK 2   // number of default backpack, when PREFERENCE_BACKPACK_FORCE
 
 // default style
 #define BACKPACK_STYLE_COMMON list( \

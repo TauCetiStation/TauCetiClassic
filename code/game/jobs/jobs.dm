@@ -158,7 +158,7 @@ var/list/nonhuman_positions = list(
 	return titles
 
 /proc/my_subordinate_staff(head_rank)	//the function takes a rank, returns a list of subordinate personnel
-	
+
 	var/all_staff = data_core.get_manifest_json()	//crew manifest
 	var/list/data = list()	//it will be returned
 	var/list/own_department = list()

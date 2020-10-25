@@ -37,7 +37,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	return TRUE
-	
+
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
@@ -281,7 +281,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "wizard", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

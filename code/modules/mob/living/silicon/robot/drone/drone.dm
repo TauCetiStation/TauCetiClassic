@@ -64,7 +64,7 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
-	
+
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
@@ -299,7 +299,7 @@
 		break
 
 /mob/living/silicon/robot/drone/transfer_personality(client/candidate)
-	if(!candidate) 
+	if(!candidate)
 		return
 
 	ckey = candidate.ckey

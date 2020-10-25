@@ -58,8 +58,6 @@
 			var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
 			popup.set_content(message)
 			popup.open()
-
-			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, message)
 		return
@@ -117,7 +115,5 @@
 		var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
 		popup.set_content(message)
 		popup.open()
-
-		onclose(user, "[M.name]_scan_report")
 	else
 		to_chat(user, message)

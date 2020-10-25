@@ -53,7 +53,7 @@
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
 /datum/atom_hud/data/mine
-	hud_icons = list(MINE_HUD)
+	hud_icons = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 
 /datum/atom_hud/broken
 	hud_icons = list(BROKEN_HUD)
@@ -254,11 +254,18 @@
 	MINECRAFT HUDs
 ~~~~~~~~~~~~~~~~~~~~~*/
 /turf/simulated/mineral/proc/set_mine_hud()
-	var/image/holder = hud_list[MINE_HUD]
+	var/image/holder1 = hud_list[MINE_ARTIFACT_HUD]
+	var/image/holder2 = hud_list[MINE_MINERAL_HUD]
+	var/states = 0
 	if(finds && finds.len || artifact_find)
-		holder.icon_state = "hudanomaly"
+		holder1.icon_state = "hudanomaly"
+		states += 1
 	if(mineral)
-		holder.icon_state = "hud[mineral.ore_type]"
+		holder2.icon_state = "hud[mineral.ore_type]"
+		states += 1
+	if(states == 2)
+		holder1.pixel_x = 6
+		holder2.pixel_x = -6
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BROKEN HUUDs

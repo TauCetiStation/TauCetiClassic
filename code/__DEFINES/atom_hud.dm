@@ -32,10 +32,12 @@
 #define IMPMINDS_HUD		"14"
 // Broken glasses hud
 #define BROKEN_HUD			"15"
-// Mine huds
-#define MINE_HUD			"16"
+// Mineral hud
+#define MINE_MINERAL_HUD	"16"
 // Hud of the golem that shows its master
 #define GOLEM_MASTER_HUD	"17"
+// Artifact huds
+#define MINE_ARTIFACT_HUD	"18"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
