@@ -10,7 +10,7 @@
 
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
-	result = /obj/item/weapon/grenade/cancasing
+	result = /obj/item/weapon/grenade/fragmentation/cancasing
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/device/assembly/igniter = 1,
@@ -21,7 +21,7 @@
 
 /datum/crafting_recipe/can_grenade_rag
 	name = "Can Grenade (rag)"
-	result = /obj/item/weapon/grenade/cancasing/rag
+	result = /obj/item/weapon/grenade/fragmentation/cancasing/rag
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/medical/bruise_pack/rags = 1,
@@ -206,3 +206,20 @@
 	tools = list(/obj/item/weapon/weldingtool)
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
+
+/datum/crafting_recipe/can_grenade_igniter_imprvd
+	name = "improved can grenade (igniter)"
+	result = /obj/item/weapon/grenade/fragmentation/cancasing/imprvd
+	reqs = list(/obj/item/weapon/grenade/fragmentation/cancasing,
+				/obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/metal = 2)
+	tools = list(/obj/item/weapon/wirecutters)
+	time = 15
+
+/datum/crafting_recipe/can_grenade_rag_imprvd
+	name = "improved can grenade (rag) "
+	result = /obj/item/weapon/grenade/fragmentation/cancasing/rag/imprvd
+	reqs = list(/obj/item/weapon/grenade/fragmentation/cancasing/rag,
+				/obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/metal = 2)
+	tools = list(/obj/item/weapon/wirecutters)
+	parts = list(/obj/item/weapon/grenade/fragmentation/cancasing/rag,/obj/item/stack/cable_coil)
+	time = 15

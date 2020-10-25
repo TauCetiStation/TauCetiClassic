@@ -165,7 +165,7 @@
 	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
-	B1.reagents.add_reagent("glycerol", 15)
+	B1.reagents.add_reagent("glycerol", 10)
 	B1.reagents.add_reagent("pacid", 15)
 	B2.reagents.add_reagent("sacid", 15)
 
@@ -254,3 +254,23 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
+
+//--------------------------------
+//     GRENADE SHRAPNEL
+//--------------------------------
+
+/obj/item/projectile/bullet/buckpellet/fragment
+	name = "grenade shards"
+	icon_state = "shards"
+	damage = 25
+	dispersion = 3
+	muzzle_type = null
+
+/obj/item/projectile/bullet/buckpellet/fragment/atom_init()
+	. = ..()
+	proj_act_sound = null
+
+
+obj/item/projectile/bullet/buckpellet/fragment/weak
+	name = "tiny grenade shards"
+	damage = 10

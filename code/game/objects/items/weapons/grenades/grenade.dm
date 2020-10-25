@@ -26,7 +26,7 @@
 
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
-	if(!istype(src, /obj/item/weapon/grenade/cancasing)) // ghetto bomb examine verb: > You can't tell when it will explode!
+	if(!istype(src, /obj/item/weapon/grenade/fragmentation/cancasing)) // ghetto bomb examine verb: > You can't tell when it will explode!
 		to_chat(user, "The timer is set [det_time == 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
 
 /obj/item/weapon/grenade/attack_self(mob/user)
@@ -88,3 +88,62 @@
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	explosion(src.loc,1,2,4,5)
 	qdel(src)
+////////////////////////fragmentation grenade//////////////////////////
+/obj/item/weapon/grenade/fragmentation
+	desc = "Get down, grenade!"
+	name = "HE grenade"
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "fragmentation"
+	var/numspawned_min = 15
+	var/numspawned_max = 35
+	var/shrapnel_type = /obj/item/projectile/bullet/buckpellet/fragment
+	var/same_turf_hit_chance = 90
+	var/radius_min = 7
+	var/radius_max = 14
+
+/obj/item/weapon/grenade/fragmentation/prime()
+	update_icon()
+	explosion(src.loc,0,0,0,1)
+	fragment_fire()
+	qdel(src)
+
+/obj/item/weapon/grenade/fragmentation/proc/fragment_fire()
+	if(active)
+		var/turf/A = get_turf(src)
+		new /obj/effect/explosion(A)
+		var/numspawned = rand(numspawned_min,numspawned_max)
+		var/list/target_turfs = RANGE_TURFS(rand(radius_min,radius_max), A)
+		var/list/rand_zone = list(BP_CHEST, BP_L_ARM, BP_R_ARM, BP_R_LEG, BP_L_LEG, BP_HEAD, BP_GROIN)
+		for(var/i in 1 to numspawned)
+			var/obj/item/projectile/P = new shrapnel_type(A)
+			P.starting = A
+			P.def_zone = pick(rand_zone)
+			for(var/turf/T in target_turfs)
+				P.original = pick(target_turfs)
+				for(var/mob/living/M in T)
+					if (M.lying && pick(same_turf_hit_chance))
+						P.original = M
+				for(var/mob/living/M in A)
+					if (M.lying)
+						P.original = M
+						P.damage = 45
+					else
+						if (prob(same_turf_hit_chance))
+							target_turfs = RANGE_TURFS(rand(1,7), A)
+							P.original = pick(target_turfs)
+						else
+							P.original = M
+				P.process()
+
+
+/obj/item/weapon/grenade/fragmentation/atom_init()
+	. = ..()
+	fragment_fire(shrapnel_type,numspawned_min, numspawned_max, same_turf_hit_chance, radius_min, radius_max)
+
+
+
+
+
+
+
+

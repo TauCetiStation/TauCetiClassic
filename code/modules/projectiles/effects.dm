@@ -212,3 +212,9 @@
 
 /obj/effect/projectile/pyrometer/impact
 	icon_state = "pyrometer_impact"
+
+//--------------------------------------
+// Fragments for grenade
+//--------------------------------------
+/obj/item/projectile/bullet/buckpellet/fragment
+	icon_state = "shards"
