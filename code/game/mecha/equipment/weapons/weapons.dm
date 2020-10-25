@@ -10,6 +10,7 @@
 	var/fire_sound //Sound played while firing.
 	var/fire_volume = null //How loud it is played (null to use playsound's default value)
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
+	sound_detonation = 'sound/mecha/weapdestr.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))

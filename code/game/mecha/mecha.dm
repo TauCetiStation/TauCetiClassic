@@ -617,7 +617,7 @@
 /obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
-	if(prob(src.deflect_chance) || W.force < 10)
+	if(prob(src.deflect_chance))
 		to_chat(user, "<span class='warning'>\The [W] bounces off [src.name].</span>")
 		src.log_append_to_last("Armor saved.")
 	else
@@ -1244,8 +1244,8 @@
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
 						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
-						.header {cursor:pointer; font-family: Arial Black,"Lucida Console",monospace; letter-spacing: 1px; font-size: 15;}
-						.open, .closed {background: #32CD32; color:#000; padding:3px 6px;}
+						.header {cursor:pointer; font-family:"Lucida Console",monospace; letter-spacing: 1px; font-size: 14;}
+						.open, .closed {background: #32CD32; color:#000; padding:2px 6px;}
 						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
