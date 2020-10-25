@@ -43,6 +43,7 @@
 	name = OUTFIT_JOB_NAME("Detective")
 
 	uniform = /obj/item/clothing/under/det
+	uniform_f = /obj/item/clothing/under/det/skirt
 	suit = /obj/item/clothing/suit/storage/det_suit
 	belt = /obj/item/device/pda/detective
 	gloves = /obj/item/clothing/gloves/black

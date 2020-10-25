@@ -96,6 +96,11 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/det/skirt
+	name = "white hard-worn suit with brown skirt"
+	icon_state = "detective_skirt"
+	item_color = "detective_skirt"
+
 /obj/item/clothing/under/det/max_payne
 	name = "white hard-worn suit with blue jeans"
 	icon_state = "max"

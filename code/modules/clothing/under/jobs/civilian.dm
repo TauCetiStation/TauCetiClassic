@@ -17,6 +17,11 @@
 	item_color = "captain"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/captain/skirt
+	desc = "It's a blue jumpskirt with some gold markings denoting the rank of \"Captain\"."
+	name = "captain's jumpskirt"
+	icon_state = "captain_skirt"
+	item_color = "captain_skirt"
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
@@ -26,6 +31,11 @@
 	item_color = "qm"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/cargo/skirt
+	name = "quartermaster's jumpskirt"
+	desc = "It's a jumpskirt worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
+	icon_state = "qm_skirt"
+	item_color = "qm_skirt"
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -33,8 +43,12 @@
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	item_color = "cargo"
-	flags = ONESIZEFITSALL
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/rank/cargotech/skirt
+	name = "cargo technician's jumpskirt"
+	desc = "Skiiiiirts! They're comfy and easy to wear!"
+	icon_state = "cargotech_skirt"
+	item_color = "cargo_skirt"
 
 /obj/item/clothing/under/rank/recycler
 	name = "recycler's jumpsuit"
@@ -77,6 +91,9 @@
 	item_color = "chef"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/chef/skirt
+	icon_state = "chef_skirt"
+	item_color = "chef_skirt"
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -94,6 +111,12 @@
 	item_state = "b_suit"
 	item_color = "hop"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/head_of_personnel/skirt
+	desc = "It's a jumpskirt worn by someone who works in the position of \"Head of Personnel\"."
+	name = "head of personnel's jumpskirt"
+	icon_state = "hop_skirt"
+	item_color = "hop_skirt"
 
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
 	desc = "A blue jacket and red tie, with matching red cuffs! Snazzy. Wearing this makes you feel more important than your job title does."
@@ -131,6 +154,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/janitor/skirt
+	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
+	name = "janitor's jumpskirt"
+	icon_state = "janitor_skirt"
+	item_color = "janitor_skirt"
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
@@ -176,6 +204,11 @@
 	item_color = "lawyer_purp"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/lawyer/purpsuit/skirt
+	name = "purple suit skirt"
+	icon_state = "lawyer_purp_skirt"
+	item_color = "lawyer_purp_skirt"
+
 /obj/item/clothing/under/lawyer/oldman
 	name = "old man's suit"
 	desc = "A classic suit for the older gentleman with built in back support."
@@ -199,6 +232,11 @@
 	item_state = "mimesuit"
 	item_color = "mimesuit"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/mime/skirt
+	name = "mime's skirt"
+	icon_state = "mimeskirt"
+	item_color = "mimeskirt"
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

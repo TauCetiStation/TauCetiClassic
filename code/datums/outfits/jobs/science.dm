@@ -3,6 +3,7 @@
 	name = OUTFIT_JOB_NAME("Research Director")
 
 	uniform = /obj/item/clothing/under/rank/research_director
+	uniform_f = /obj/item/clothing/under/rank/research_director/skirt
 	shoes = /obj/item/clothing/shoes/brown
 	suit = /obj/item/clothing/suit/storage/labcoat
 
@@ -16,6 +17,7 @@
 	name = OUTFIT_JOB_NAME("Scientist")
 
 	uniform = /obj/item/clothing/under/rank/scientist
+	uniform_f = /obj/item/clothing/under/rank/scientist/skirt
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat/science
 
@@ -29,6 +31,7 @@
 	name = OUTFIT_JOB_NAME("Xenoarchaeologist")
 
 	uniform = /obj/item/clothing/under/rank/scientist
+	uniform_f = /obj/item/clothing/under/rank/scientist/skirt
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat/science
 
@@ -42,6 +45,7 @@
 	name = OUTFIT_JOB_NAME("Xenobiologist")
 
 	uniform = /obj/item/clothing/under/rank/scientist
+	uniform_f = /obj/item/clothing/under/rank/scientist/skirt
 	suit = /obj/item/clothing/suit/storage/labcoat/science
 	shoes = /obj/item/clothing/shoes/white
 

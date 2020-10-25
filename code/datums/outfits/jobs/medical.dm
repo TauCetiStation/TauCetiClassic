@@ -137,6 +137,7 @@
 	name = OUTFIT_JOB_NAME("Psychiatrist")
 
 	uniform = /obj/item/clothing/under/rank/psych
+	uniform_f = /obj/item/clothing/under/rank/psych/skirt
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/storage/labcoat
 

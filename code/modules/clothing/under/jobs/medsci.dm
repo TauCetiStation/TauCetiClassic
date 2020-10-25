@@ -10,6 +10,12 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/research_director/skirt
+	desc = "It's a jumpskirt worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
+	name = "research director's jumpskirt"
+	icon_state = "director_skirt"
+	item_color = "director_skirt"
+
 /obj/item/clothing/under/rank/research_director/rdalt
 	desc = "A dress suit and slacks stained with hard work and dedication to science. Perhaps other things as well, but mostly hard work and dedication."
 	name = "head researcher uniform"
@@ -38,6 +44,10 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/scientist/skirt
+	name = "scientist's jumpskirt"
+	icon_state = "science_skirt"
+	item_color = "sciencewhite_skirt"
 
 /obj/item/clothing/under/rank/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
@@ -51,8 +61,8 @@
 
 /obj/item/clothing/under/rank/chemist/skirt
 	name = "chemist's jumpskirt"
-	icon_state = "skirt_chemistry"
-	item_color = "skirt_chemistry"
+	icon_state = "chemistry_skirt"
+	item_color = "chemistry_skirt"
 
 /*
  * Medical
@@ -69,8 +79,8 @@
 
 /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	name = "chief medical officer's jumpskirt"
-	icon_state = "skirt_cmo"
-	item_color = "skirt_cmo"
+	icon_state = "cmo_skirt"
+	item_color = "cmo_skirt"
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -84,8 +94,8 @@
 
 /obj/item/clothing/under/rank/geneticist/skirt
 	name = "geneticist's jumpskirt"
-	icon_state = "skirt_genetics"
-	item_color = "skirt_genetics"
+	icon_state = "genetics_skirt"
+	item_color = "genetics_skirt"
 
 /obj/item/clothing/under/rank/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -99,8 +109,8 @@
 
 /obj/item/clothing/under/rank/virologist/skirt
 	name = "virologist's jumpskirt"
-	icon_state = "skirt_virology"
-	item_color = "skirt_virology"
+	icon_state = "virology_skirt"
+	item_color = "virology_skirt"
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -144,8 +154,8 @@
 
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"
-	icon_state = "skirt_medical"
-	item_color = "skirt_medical"
+	icon_state = "medical_skirt"
+	item_color = "medical_skirt"
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"
@@ -175,6 +185,12 @@
 	item_state = "w_suit"
 	item_color = "psych"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/psych/skirt
+	desc = "A basic white jumpskirt. It has turqouise markings that denote the wearer as a psychiatrist."
+	name = "psychiatrist's jumpskirt"
+	icon_state = "psych_skirt"
+	item_color = "psych_skirt"
 
 /obj/item/clothing/under/rank/psych/turtleneck
 	desc = "A turqouise turtleneck and a pair of dark blue slacks, belonging to a psychologist."

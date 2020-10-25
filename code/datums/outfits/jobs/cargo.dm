@@ -3,7 +3,7 @@
 	name = OUTFIT_JOB_NAME("Quartermaster")
 
 	uniform = /obj/item/clothing/under/rank/cargo
-	uniform_f = /obj/item/clothing/under/rank/cargo_fem
+	uniform_f = /obj/item/clothing/under/rank/cargo/skirt
 	shoes =  /obj/item/clothing/shoes/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 
@@ -15,6 +15,7 @@
 	name = OUTFIT_JOB_NAME("Cargo Technician")
 
 	uniform = /obj/item/clothing/under/rank/cargotech
+	uniform_f = /obj/item/clothing/under/rank/cargotech/skirt
 	shoes = /obj/item/clothing/shoes/black
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo

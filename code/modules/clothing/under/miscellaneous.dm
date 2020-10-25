@@ -212,6 +212,12 @@
 	item_color = "red_suit"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/suit_jacket/red/skirt
+	name = "red suit skirt"
+	desc = "A red suit with skirt and blue tie. Somewhat formal."
+	icon_state = "red_suit_skirt"
+	item_color = "red_suit_skirt"
+
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
 	desc = "A charcoal suit and red tie. Very professional."

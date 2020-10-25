@@ -19,6 +19,7 @@
 	name = OUTFIT_JOB_NAME("Chef")
 
 	uniform = /obj/item/clothing/under/rank/chef
+	uniform_f = /obj/item/clothing/under/rank/chef/skirt
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chef
@@ -40,6 +41,7 @@
 	name = OUTFIT_JOB_NAME("Janitor")
 
 	uniform = /obj/item/clothing/under/rank/janitor
+	uniform_f = /obj/item/clothing/under/rank/janitor/skirt
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/janitor
@@ -58,6 +60,7 @@
 	name = OUTFIT_JOB_NAME("Stylist")
 
 	uniform = /obj/item/clothing/under/lawyer/purpsuit
+	uniform = /obj/item/clothing/under/lawyer/purpsuit/skirt
 	shoes = /obj/item/clothing/shoes/laceup
 
 	belt = /obj/item/device/pda/barber
@@ -67,6 +70,7 @@
 	name = OUTFIT_JOB_NAME("Librarian")
 
 	uniform = /obj/item/clothing/under/suit_jacket/red
+	uniform_f = /obj/item/clothing/under/suit_jacket/red/skirt
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/weapon/storage/bag/bookbag
@@ -119,6 +123,7 @@
 	name = OUTFIT_JOB_NAME("Mime")
 
 	uniform = /obj/item/clothing/under/mime
+	uniform_f = /obj/item/clothing/under/mime/skirt
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/white
 	mask = /obj/item/clothing/mask/gas/mime
