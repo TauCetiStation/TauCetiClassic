@@ -242,7 +242,7 @@
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 
