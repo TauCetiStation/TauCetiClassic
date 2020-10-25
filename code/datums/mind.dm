@@ -303,7 +303,7 @@
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
 			if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
+				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance</a>"
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
 //			var/datum/game_mode/changeling/changeling = SSticker.mode
@@ -329,7 +329,7 @@
 					code = bombue.r_code
 					break
 			if (code)
-				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
+				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code</a>"
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
 		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_role))
@@ -501,7 +501,7 @@
 	else
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
+			out += "<B>[obj_count]</B>: [objective.explanation_text] <a class='[objective.completed ? "green" : "red"]'> href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'>Toggle Completion</a><br>"
 			obj_count++
 	out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 

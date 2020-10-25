@@ -212,9 +212,9 @@
 	return
 
 /obj/machinery/sleeper/ui_interact(mob/user)
-	var/dat = "<h3>Sleeper Status</h3>"
+	var/dat = "<div class='Section__title'>Sleeper Status</div>"
 
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section'>"
 	if(!occupant)
 		dat += "Sleeper Unoccupied"
 	else
@@ -229,11 +229,11 @@
 
 		dat += "<br />"
 
-		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill bggood'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
@@ -265,7 +265,7 @@
 	if(src.occupant)
 		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
 	else
-		dat += "<span class='linkOff'>Inject Inaprovaline</span>"
+		dat += "<span class='disabled'>Inject Inaprovaline</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
@@ -275,10 +275,9 @@
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
-				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
+				dat += "<BR><span class='disabled'>Inject [C.name]</span>"
 
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 605)	//Set up the popup browser window
 	popup.set_content(dat)
 	popup.open()
 

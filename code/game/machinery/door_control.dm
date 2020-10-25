@@ -202,7 +202,7 @@
 	else
 		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
 		if(!req_one_access.len)
-			setup_menu +="<li><b><a style='color: green' href='?src=\ref[src];none=1'>None</a></b></li>"
+			setup_menu +="<li><b><a class='green' href='?src=\ref[src];none=1'>None</a></b></li>"
 		else
 			setup_menu +="<li><a href='?src=\ref[src];none=1'>None</a></li>"
 		var/list/accesses = get_all_accesses()
@@ -210,7 +210,7 @@
 			var/acc_desc = get_access_desc(acc)
 			if(acc_desc)
 				if(acc in req_one_access)
-					setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
+					setup_menu += "<li><b><a class='green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
 				else
 					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
 		setup_menu += "</ul>"
@@ -219,32 +219,32 @@
 	else
 		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Hide airlock control mode setup</a></b><ul>"
 		if(specialfunctions == OPEN)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN]'>Open</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN]'>Open</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN]'>Open</a></li>"
 
 		if(specialfunctions == BOLTS)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></li>"
 
 		if(specialfunctions == SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></li>"
 
 		if(specialfunctions == OPEN_BOLTS)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></li>"
 
 		if(specialfunctions == BOLTS_SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></li>"
 
 		if(specialfunctions == OPEN_BOLTS_SHOCK)
-			setup_menu += "<li><b><a style='color: green' href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
 		else
 			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></li>"
 

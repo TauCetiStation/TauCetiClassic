@@ -35,7 +35,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "copier")
 
 /obj/machinery/photocopier/is_operational_topic()
 	return TRUE

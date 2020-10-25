@@ -52,7 +52,6 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
-	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
@@ -372,16 +371,13 @@
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 				dat += text("-- [area_name]")
 				if (alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-
-	viewalerts = 1
 
 	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
 	popup.set_content(dat)
@@ -523,7 +519,7 @@
 
 	if (!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-//		if (viewalerts) robot_alerts()
+
 	return has_alarm
 
 
@@ -922,12 +918,7 @@
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-/*
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
+
 	var/datum/browser/popup = new(src, "robotmod", "Modules")
 	popup.set_content(dat)
 	popup.open()
