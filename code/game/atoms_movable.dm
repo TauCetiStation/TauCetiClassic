@@ -356,9 +356,6 @@
 		return 1
 	return ..()
 
-/proc/random_side_dir(dir)
-	return pick(dir, turn(dir, 90), turn(dir, -90))
-
 // Get a turf in which to place target after a push by center.
 /proc/get_force_push(atom/center, atom/target)
 	var/atom/oldLoc = target.loc

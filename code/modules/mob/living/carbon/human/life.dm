@@ -111,7 +111,7 @@
 
 	//Check if we're on fire
 	handle_fire()
-	
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
 	update_canmove()

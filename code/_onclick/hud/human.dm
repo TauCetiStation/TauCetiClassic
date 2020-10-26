@@ -73,7 +73,6 @@
 
 //end intent small hud objects
 	using = new /obj/screen/stamina_bar()
-	using.icon_state = "stam_bar_100"
 	using.screen_loc = ui_stamina
 	src.adding += using
 	staminadisplay = using
