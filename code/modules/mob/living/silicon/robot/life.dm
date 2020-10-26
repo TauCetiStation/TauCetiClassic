@@ -318,25 +318,17 @@
 		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
 
 /mob/living/silicon/robot/proc/retract_robot_tools_back()
-	if(module_state_1 && !module_state_1.loc == src)
+	if(module_state_1 && !Adjacent(module_state_1.loc))
 		retract_module(module_state_1)
-	if(module_state_2 && !module_state_2.loc == src)
+	if(module_state_2 && !Adjacent(module_state_2.loc))
 		retract_module(module_state_2)
-	if(module_state_3 && !module_state_3.loc == src)
+	if(module_state_3 && !Adjacent(module_state_3.loc))
 		retract_module(module_state_3)
 
 /mob/living/silicon/robot/proc/retract_module(var/atom/movable/module)
-
 	//this is for stucked beakers in machinery
-	if(istype(module, /obj/item/weapon/reagent_containers))
-		if(!ismachinery(module.loc))
-			return
-
+	if(istype(module, /obj/item/weapon/reagent_containers) && ismachinery(module.loc))
 		var/obj/machinery/machine = module.loc
-
-		if(Adjacent(machine))
-			return
-
 		var/obj/item/weapon/reagent_containers/beaker = machine.get_beaker()
 
 		if(!islist(beaker))
@@ -354,6 +346,11 @@
 			contents += beaker
 			beaker.loc = src
 			machine.set_beaker(beaker_id)
+	//this is for items when they at turf
+	if(get_turf(module.loc))
+		contents += module
+		module.loc = src
+
 	to_chat(src, "<span class='warning'>Your [module] was returned to you.</span>")
 
 
