@@ -15,6 +15,7 @@ var/global/list/active_alternate_appearances = list()
 		return
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
+
 /**
   * Allows you to add an alternative sprite to the object in the form "appearance_key" = "image"
   *
