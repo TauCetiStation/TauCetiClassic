@@ -382,3 +382,9 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_beaker()
+	return beaker
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker

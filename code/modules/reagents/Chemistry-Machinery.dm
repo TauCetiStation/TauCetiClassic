@@ -210,6 +210,12 @@
 	. = ..()
 	make_old()
 
+/obj/machinery/chem_dispenser/get_beaker()
+	return beaker
+
+/obj/machinery/chem_dispenser/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_dispenser/constructable
@@ -363,6 +369,10 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
+
+/obj/machinery/chem_master/update_icon()
+	icon_state = "mixer"+num2text(!isnull(beaker))
+	return
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
@@ -707,6 +717,12 @@
 	else
 		return 0
 
+/obj/machinery/chem_master/get_beaker()
+	return beaker
+
+/obj/machinery/chem_master/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+	update_icon()
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
@@ -1021,6 +1037,13 @@
 	else
 		..()
 	return
+
+/obj/machinery/computer/pandemic/get_beaker()
+	return beaker
+
+/obj/machinery/computer/pandemic/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/reagentgrinder
@@ -1149,10 +1172,6 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_ai(mob/user)
-	if(IsAdminGhost(user))
-		return ..()
-	return 0
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
@@ -1429,3 +1448,10 @@
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
+
+/obj/machinery/reagentgrinder/get_beaker()
+	return beaker
+
+/obj/machinery/reagentgrinder/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+	update_icon()

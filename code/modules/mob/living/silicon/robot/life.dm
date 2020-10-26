@@ -21,10 +21,10 @@
 		use_power()
 		process_killswitch()
 		process_locks()
+		retract_robot_tools_back()
 	update_canmove()
 
 /mob/living/silicon/robot/proc/clamp_values()
-
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
@@ -316,3 +316,45 @@
 		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
 	else
 		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+
+/mob/living/silicon/robot/proc/retract_robot_tools_back()
+	if(module_state_1)
+		retract_module(module_state_1)
+	if(module_state_1)
+		retract_module(module_state_2)
+	if(module_state_1)
+		retract_module(module_state_3)
+
+/mob/living/silicon/robot/proc/retract_module(var/atom/movable/module)
+
+	//this is for stucked beakers in machinery
+	if(istype(module, /obj/item/weapon/reagent_containers))
+		if(!ismachinery(module.loc))
+			return
+
+		var/obj/machinery/machine = module.loc
+
+		if(Adjacent(machine))
+			return
+
+		var/obj/item/weapon/reagent_containers/beaker = machine.get_beaker()
+
+		if(!islist(beaker))
+			module = beaker
+			contents += beaker
+			beaker.loc = src
+			machine.set_beaker(null)
+		else
+			var/list/L = beaker
+			var/beaker_id
+			for(var/i in L)
+				if(L[i] == module)
+					beaker_id = i
+			beaker = L[beaker_id]
+			contents += beaker
+			beaker.loc = src
+			machine.set_beaker(beaker_id)
+	to_chat(src, "<span class='warning'>Your [module] was returned to you.</span>")
+
+
+

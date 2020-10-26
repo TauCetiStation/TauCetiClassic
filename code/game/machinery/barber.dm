@@ -531,6 +531,12 @@ A proc that does all the animations before mix()-ing.
 
 	updateUsrDialog()
 
+/obj/machinery/color_mixer/get_beaker()
+	return beakers
+
+/obj/machinery/color_mixer/set_beaker(var/id)
+	beakers[id] = null
+
 /*
 Specify "matrix" in list in this format:
 1 2 3

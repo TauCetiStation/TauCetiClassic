@@ -525,3 +525,9 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
+
+/obj/machinery/proc/get_beaker()
+	return null
+
+/obj/machinery/proc/set_beaker(var/recieved_beaker)
+	return

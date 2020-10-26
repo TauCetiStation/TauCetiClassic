@@ -65,7 +65,7 @@
 			client.screen -= module_state_1
 		contents -= module_state_1
 		module_active = null
-		module_state_1:loc = module //So it can be used again later
+		module_state_1.loc = module //So it can be used again later
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	else if(module_state_2 == module_active)
@@ -75,7 +75,7 @@
 			client.screen -= module_state_2
 		contents -= module_state_2
 		module_active = null
-		module_state_2:loc = module
+		module_state_2.loc = module
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	else if(module_state_3 == module_active)
@@ -85,7 +85,7 @@
 			client.screen -= module_state_3
 		contents -= module_state_3
 		module_active = null
-		module_state_3:loc = module
+		module_state_3.loc = module
 		module_state_3 = null
 		inv3.icon_state = "inv3"
 	updateicon()
@@ -99,7 +99,7 @@
 		if (client)
 			client.screen -= module_state_1
 		contents -= module_state_1
-		module_state_1:loc = module
+		module_state_1.loc = module
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	if(module_state_2)
@@ -108,7 +108,7 @@
 		if (client)
 			client.screen -= module_state_2
 		contents -= module_state_2
-		module_state_2:loc = module
+		module_state_2.loc = module
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	if(module_state_3)
@@ -117,7 +117,7 @@
 		if (client)
 			client.screen -= module_state_3
 		contents -= module_state_3
-		module_state_3:loc = module
+		module_state_3.loc = module
 		module_state_3 = null
 		inv3.icon_state = "inv3"
 	updateicon()

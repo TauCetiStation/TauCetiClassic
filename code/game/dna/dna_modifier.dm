@@ -249,6 +249,12 @@
 			A.loc = loc
 		qdel(src)
 
+/obj/machinery/dna_scannernew/get_beaker()
+	return beaker
+
+/obj/machinery/dna_scannernew/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+
 //DNA COMPUTER
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Modifier Access Console"

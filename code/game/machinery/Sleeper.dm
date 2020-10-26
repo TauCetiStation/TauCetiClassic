@@ -329,3 +329,10 @@
 		icon_state = "sleeper-open"
 	else
 		icon_state = "sleeper"
+
+/obj/machinery/sleeper/get_beaker()
+	filtering = 0
+	return beaker
+
+/obj/machinery/sleeper/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker

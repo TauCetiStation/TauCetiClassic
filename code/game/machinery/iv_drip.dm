@@ -174,3 +174,10 @@
 			to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
 
 		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+
+/obj/machinery/iv_drip/get_beaker()
+	return beaker
+
+/obj/machinery/iv_drip/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker
+	update_icon()

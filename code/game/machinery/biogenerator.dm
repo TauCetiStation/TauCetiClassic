@@ -314,3 +314,9 @@
 			menustat = "menu"
 
 	updateUsrDialog()
+
+/obj/machinery/biogenerator/get_beaker()
+	return beaker
+
+/obj/machinery/biogenerator/set_beaker(var/recieved_beaker)
+	beaker = recieved_beaker

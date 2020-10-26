@@ -90,7 +90,7 @@
 				stage = 1
 				active = 0
 
-	else if(is_type_in_list(I, allowed_containers) && (!stage || stage==1) && path != 2)
+	else if(is_type_in_list(I, allowed_containers) && (!stage || stage==1) && path != 2 && !isrobot(user))
 		path = 1
 		if(beakers.len == 2)
 			to_chat(user, "<span class='red'>The grenade can not hold more containers.</span>")
