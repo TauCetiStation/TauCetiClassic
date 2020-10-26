@@ -62,7 +62,7 @@
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
 	if(user == src && zone_sel.selecting == O_MOUTH)
-		if(!check_mouth_coverage(src, src, I, "eat"))
+		if(!CanEat(src, src, I, "eat"))
 			src.visible_message("3")
 			return
 

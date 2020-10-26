@@ -91,7 +91,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/living/M, mob/user, def_zone)
 
-	if(!M.check_mouth_coverage(user, src, "eat"))
+	if(!M.CanEat(user, src, "eat"))
 		return
 	var/obj/item/weapon/shard/shard = locate() in contents
 

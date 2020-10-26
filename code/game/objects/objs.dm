@@ -231,8 +231,8 @@
 
 /mob/living/carbon/human/CanEat(mob/user, atom/movable/food, eatverb = "consume")
 	for(var/obj/item/covered in list(head, wear_mask))
-		if(Feeded.species.flags[IS_SYNTHETIC])
-			to_chat(user, "<span class='warning'>You can't [src == user ? "[eatverb] [food], you" : "feed [Feeded] with [food], they have"] have a monitor for a head!</span>")
+		if(species.flags[IS_SYNTHETIC])
+			to_chat(user, "<span class='warning'>You can't [src == user ? "[eatverb] [food], you" : "feed [src] with [food], they have"] have a monitor for a head!</span>")
 			return FALSE
 
 		if(covered && (covered.flags & HEADCOVERSMOUTH || covered.flags & MASKCOVERSMOUTH))

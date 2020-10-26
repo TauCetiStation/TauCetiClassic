@@ -548,7 +548,7 @@
 			..()
 			return
 	if(reagents.total_volume)
-		if(!target.check_mouth_coverage(user, src, "drink"))
+		if(!target.CanEat(user, src, "drink"))
 			return
 		..()
 		target.visible_message("[target] gulped down the whole [src]. Wow!")

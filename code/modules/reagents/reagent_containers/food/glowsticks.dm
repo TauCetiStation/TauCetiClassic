@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='rose'>None of chemicals left in [src]!</span>")
 		return 0
 
-	if(!M.check_mouth_coverage(user, src, "eat")) return	//tc code
+	if(!M.CanEat(user, src, "eat")) return	//tc code
 
 	if(istype(M, /mob/living/carbon))
 		if(M != user)

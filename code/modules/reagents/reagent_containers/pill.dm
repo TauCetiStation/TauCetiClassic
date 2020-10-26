@@ -19,7 +19,7 @@
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
 /obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
-	if(!M.check_mouth_coverage(user, src, "take")) return
+	if(!M.CanEat(user, src, "take")) return
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow [src].</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Swallow [src.name]. Reagents: [reagentlist(src)]</font>")
