@@ -11,6 +11,7 @@
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
+	item_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
 	max_storage_space = DEFAULT_BOX_STORAGE
@@ -28,7 +29,6 @@
 	if (empty)
 		return
 
-	icon_state = pick("ointment","firefirstaid")
 
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
@@ -63,7 +63,6 @@
 	if (empty)
 		return
 
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )

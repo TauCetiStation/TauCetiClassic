@@ -102,7 +102,6 @@
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
-	assets.register()
 	assets.send(user)
 	if (!( data ))
 		update()
@@ -110,8 +109,6 @@
 	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(data)
 	popup.open()
-
-	onclose(user, "game_kit")
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()

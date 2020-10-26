@@ -1028,7 +1028,6 @@ var/list/cult_runes = list()
 			user.mind.transfer_to(target)
 			ghost.mind.transfer_to(user)
 			user.key = ghost.key
-			SSticker.mode.update_all_cult_icons()
 			brainswapping = FALSE
 			return
 

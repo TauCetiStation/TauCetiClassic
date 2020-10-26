@@ -17,7 +17,6 @@
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/spider_os)
-	assets.register()
 	assets.send(U)
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"

@@ -38,7 +38,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "<br>[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
 	. += "<br>[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
 	. += "<br>[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
-	. += "<br><fieldset class='block'>"
+	. += "<br><fieldset class='Section'>"
 	. += "<legend><h3>Remote control</h3></legend>"
 	. += "<a href='?src=\ref[src];buffer=1'>Save to the buffer of your multitool</a>"
 	. += "</fieldset>"
@@ -104,6 +104,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 			else
 				if(A.secondsElectrified == -1)
 					A.secondsElectrified = 0
+			A.diag_hud_set_electrified()
 
 		if (AIRLOCK_WIRE_SAFETY)
 			A.safe = mended
@@ -156,6 +157,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
 				A.secondsElectrified = 30
+				A.diag_hud_set_electrified()
 				START_PROCESSING(SSmachines, A)
 
 		if(AIRLOCK_WIRE_OPEN_DOOR)

@@ -321,6 +321,7 @@
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
+// KIBORG04: Its game_mode live? If he live, then create huds use atom_hud framework
 /datum/game_mode/mutiny/proc/update_all_icons()
 	spawn(0)
 		for(var/datum/mind/M in mutineers)

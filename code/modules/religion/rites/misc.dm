@@ -279,7 +279,7 @@
 	I.alpha = 150
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.transform = M
-	I.pixel_x = 12	
+	I.pixel_x = 12
 	I.pixel_y = 12
 	user.add_overlay(I)
 	user.set_light(7)
@@ -320,7 +320,7 @@
 	if(!isanimal(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
- 
+
 	var/mob/living/simple_animal/S = AOG.buckled_mob
 	if(!S.animalistic)
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")

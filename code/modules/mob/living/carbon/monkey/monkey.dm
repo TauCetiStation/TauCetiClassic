@@ -26,6 +26,8 @@
 	digestion_product = "protein"
 	mob_size = MOB_SMALL
 
+	moveset_type = /datum/combat_moveset/human
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"

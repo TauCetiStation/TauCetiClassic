@@ -198,12 +198,12 @@
 			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 			BP.implants -= obj
+			target.sec_hud_set_implants()
 			for(var/datum/wound/W in BP.wounds)
 				if(obj in W.embedded_objects)
 					W.embedded_objects -= obj
 					break
 
-			target.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 			//Handle possessive brain borers.
 			if(istype(obj,/mob/living/simple_animal/borer))

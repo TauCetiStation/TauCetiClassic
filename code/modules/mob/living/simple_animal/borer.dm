@@ -334,12 +334,16 @@
 
 /mob/living/simple_animal/borer/proc/detatch()
 
-	if(!host) return
+	if(!host)
+		return
 
-	if(istype(host,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = host
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.implants -= src
+	var/obj/item/organ/external/BP = host.bodyparts_by_name[BP_HEAD]
+	BP.implants -= src
+
+	if(host.glasses.hud_list)
+		for(var/hud in host.glasses.hud_list)
+			var/datum/atom_hud/H = global.huds[hud]
+			H.remove_hud_from(src)
 
 	src.loc = get_turf(host)
 	controlling = 0
@@ -426,6 +430,7 @@
 			var/mob/living/carbon/human/H = M
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 			BP.implants += src
+			H.sec_hud_set_implants()
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name
@@ -512,6 +517,6 @@ var/global/list/datum/mind/borers = list()
 
 	if(text)
 		antagonists_completion += list(list("mode" = "borer", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

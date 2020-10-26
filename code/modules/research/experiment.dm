@@ -103,7 +103,7 @@
 		if(!(temp_tech[T] in saved_tech_levels[T]))
 			saved_tech_levels[T] += temp_tech[T]
 
-// Returns ammount of research points received
+// Returns amount of research points received
 /datum/experiment_data/proc/read_science_tool(obj/item/device/science_tool/I)
 	var/points = 0
 

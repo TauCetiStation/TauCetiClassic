@@ -52,7 +52,7 @@
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
     )
-		
+
 /datum/religion_sect/preset/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."

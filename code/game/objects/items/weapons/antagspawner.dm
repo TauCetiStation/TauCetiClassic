@@ -39,6 +39,6 @@
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
 	SSticker.mode.syndicates += R.mind
-	SSticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", R)
 	R.faction = "syndicate"

@@ -94,7 +94,7 @@
 		else
 			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Stop autoprocess</a>"
 	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
+		dat += "<span class='disabled'>Autoprocess</span>"
 	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
@@ -103,13 +103,13 @@
 			dat += "<h4>Modules</h4>"
 			//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 			if (isnull(src.scanner))
-				dat += " <font color=red>Scanner-ERROR</font><br>"
+				dat += " <span class='red'>Scanner-ERROR</span><br>"
 			else
-				dat += " <font color=green>Scanner-Found!</font><br>"
+				dat += " <span class='green'>Scanner-Found!</span><br>"
 			if (isnull(src.pod1))
-				dat += " <font color=red>Pod-ERROR</font><br>"
+				dat += " <span class='red'>Pod-ERROR</span><br>"
 			else
-				dat += " <font color=green>Pod-Found!</font><br>"
+				dat += " <span class='green'>Pod-Found!</span><br>"
 
 			// Scanner
 			dat += "<h4>Scanner Functions</h4>"
@@ -152,7 +152,7 @@
 			dat += "<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"
 
 			if (!src.active_record)
-				dat += "<font color=red>ERROR: Record not found.</font>"
+				dat += "<span class='red'>ERROR: Record not found.</span>"
 			else
 				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
 					<b>Name:</b> [src.active_record.dna.real_name]<br>"}
@@ -163,7 +163,7 @@
 				if ((H) && (istype(H)))
 					dat += "<b>Health:</b> [H.sensehealth()] | OXY-BURN-TOX-BRUTE<br>"
 				else
-					dat += "<font color=red>Unable to locate implant.</font><br>"
+					dat += "<span class='red'>Unable to locate implant.</span><br>"
 
 				if (!isnull(src.diskette))
 					dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
@@ -195,8 +195,6 @@
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "cloning")
 	return
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
@@ -324,19 +322,22 @@
 				temp = "Error: Unable to initiate cloning cycle."
 
 			else if(pod1.growclone(C))
-				temp = "<font class='good'>Cloning cycle in progress...</font>"
+				temp = "<span class='good'>Cloning cycle in progress...</span>"
 				records.Remove(C)
 				qdel(C)
 				menu = 1
 			else
 				var/mob/selected = find_dead_player("[C.ckey]")
-				selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
-				if(answer != "No" && pod1.growclone(C))
-					temp = "Initiating cloning cycle..."
-					records.Remove(C)
-					qdel(C)
-					menu = 1
+				if(selected)
+					selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
+					var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+					if(answer != "No" && pod1.growclone(C))
+						temp = "Initiating cloning cycle..."
+						records.Remove(C)
+						qdel(C)
+						menu = 1
+					else
+						temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 				else
 					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 
@@ -362,7 +363,7 @@
 		scantemp = "Error: Mental interface failure."
 		return
 	if (NOCLONE in subject.mutations && src.scanner.scan_level < 4)
-		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
+		scantemp = "<span class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</span>"
 		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
@@ -388,6 +389,7 @@
 	if (isnull(imp))
 		imp = new /obj/item/weapon/implant/health(subject)
 		imp.implanted = subject
+		subject.sec_hud_set_implants()
 		R.implant = "\ref[imp]"
 	//Update it if needed
 	else

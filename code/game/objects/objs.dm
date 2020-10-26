@@ -188,7 +188,9 @@
 	return level == 1
 
 /atom/movable/proc/get_listeners()
-	return list()
+	. = list()
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
 
 /mob/get_listeners()
 	. = list(src)
@@ -218,23 +220,27 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	addtimer(VARSET_CALLBACK(src, being_shocked, FALSE), 10)
+	VARSET_IN(src, being_shocked, FALSE, 10)
 
 //mob - who is being feed
 //user - who is feeding
 //food - whai is feeded
 //eatverb - take/drink/eat method
-/mob/living/proc/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+/mob/living/proc/CanEat(mob/user, atom/movable/food, eatverb = "consume")
 	return TRUE
 
-/mob/living/carbon/human/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+/mob/living/carbon/human/CanEat(mob/user, atom/movable/food, eatverb = "consume")
 	for(var/obj/item/covered in list(head, wear_mask))
+		if(Feeded.species.flags[IS_SYNTHETIC])
+			to_chat(user, "<span class='warning'>You can't [src == user ? "[eatverb] [food], you" : "feed [Feeded] with [food], they have"] have a monitor for a head!</span>")
+			return FALSE
+
 		if(covered && (covered.flags & HEADCOVERSMOUTH || covered.flags & MASKCOVERSMOUTH))
 			to_chat(user, "You can't [src == user ? "[eatverb]" : "feed [src] with"] [food] through [covered]")
 			return FALSE
 	return ..()
 
-/mob/living/carbon/ian/check_mouth_coverage(mob/user, atom/movable/food, eatverb = "consume")
+/mob/living/carbon/ian/CanEat(mob/user, atom/movable/food, eatverb = "consume")
 	if(head && head.flags & HEADCOVERSMOUTH)
 		to_chat(user, "You can't [src == user ? "[eatverb]" : "feed [src] with"] [food] through [head]")
 		return FALSE

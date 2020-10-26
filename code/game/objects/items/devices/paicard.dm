@@ -9,6 +9,7 @@
 	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+	var/searching = FALSE
 
 /obj/item/device/paicard/atom_init()
 	. = ..()
@@ -46,7 +47,7 @@
 		return
 	user.set_machine(src)
 	var/dat = {"
-		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<!DOCTYPE html>
 		<html>
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -288,6 +289,9 @@
 // 		WIRE_SIGNAL = 1
 //		WIRE_RECEIVE = 2
 //		WIRE_TRANSMIT = 4
+
+/obj/item/device/paicard/proc/reset_searching()
+	searching = FALSE
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality

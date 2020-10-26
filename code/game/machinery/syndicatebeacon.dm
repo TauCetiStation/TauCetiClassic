@@ -73,6 +73,7 @@
 			SSticker.mode.equip_traitor(N)
 			SSticker.mode.traitors += N.mind
 			N.mind.special_role = "traitor"
+			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", N)
 			var/objective = "Free Objective"
 			switch(rand(1,100))
 				if(1 to 50)

@@ -282,9 +282,9 @@
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-		W.loc = new_location
+		W.Move(new_location)
 	else
-		W.loc = get_turf(src)
+		W.Move(get_turf(src))
 
 	if(usr && !NoUpdate)
 		update_ui_after_item_removal()

@@ -154,6 +154,8 @@
 	var/bruised_loss = 3
 
 /obj/item/organ/internal/heart/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(is_broken())
 		return
 
@@ -236,6 +238,8 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	var/temp_gain = owner.species.synth_temp_gain
 
 	if(refrigerant > 0 && !is_broken())
@@ -276,6 +280,7 @@
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	var/accumulator_warning = 0
 
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
@@ -325,12 +330,17 @@
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
+	if(owner.nutrition < 1)
+		owner.SetParalysis(2)
+		if(accumulator_warning < world.time)
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+			accumulator_warning = world.time + 15 SECONDS
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-		owner.SetParalysis(5)
-		owner.eye_blurry = 5
-		owner.silent = 5
+		owner.SetParalysis(2)
+		owner.eye_blurry = 2
+		owner.silent = 2
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
@@ -355,6 +365,8 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(next_warning > world.time)
 		return
 	next_warning = world.time + 10 SECONDS

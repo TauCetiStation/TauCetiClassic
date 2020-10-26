@@ -2,7 +2,7 @@
 	var/ckey
 	var/admin_ckey
 	var/reason
-	var/ammount
+	var/amount
 
 /proc/get_custom_items_history(ckey)
 	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
@@ -15,11 +15,11 @@
 		return list()
 	return slots[ckey]
 
-/proc/add_custom_items_history(player_ckey, admin_ckey, reason, ammount)
+/proc/add_custom_items_history(player_ckey, admin_ckey, reason, amount)
 	player_ckey = ckey(player_ckey)
 	admin_ckey = ckey(admin_ckey)
 
-	ammount = round(ammount)
+	amount = round(amount)
 
 	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
@@ -32,7 +32,7 @@
 	entry.ckey = player_ckey
 	entry.admin_ckey = admin_ckey
 	entry.reason = reason
-	entry.ammount = ammount
+	entry.amount = amount
 
 	if(!slots[player_ckey])
 		slots[player_ckey] = list()
@@ -64,9 +64,9 @@
 
 /proc/custom_items_calculate_slots(player_ckey)
 	var/list/history = get_custom_items_history(player_ckey)
-	var/ammount = 0
+	var/amount = 0
 	for(var/datum/custom_items_history/entry in history)
-		ammount += entry.ammount
+		amount += entry.amount
 
 	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
@@ -78,7 +78,7 @@
 	if(!(player_ckey in slots))
 		slots[player_ckey] = 0
 
-	slots[player_ckey] = ammount
+	slots[player_ckey] = amount
 
 	customItemsCache["slots"] << slots
 

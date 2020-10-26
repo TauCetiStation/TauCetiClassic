@@ -34,7 +34,6 @@
 			var/datum/browser/popup = new(user, "window=[M.name]_scan_report", "Scan Report", 400, 400)
 			popup.set_content(dat)
 			popup.open()
-			onclose(user, "[M.name]_scan_report")
 		else
 			to_chat(user, dat)
 

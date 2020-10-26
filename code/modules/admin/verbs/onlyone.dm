@@ -9,6 +9,7 @@
 
 		SSticker.mode.traitors += H.mind
 		H.mind.special_role = "traitor"
+		add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind
@@ -29,6 +30,7 @@
 			if (istype(I, /obj/item/weapon/implant))
 				continue
 			qdel(I)
+		H.sec_hud_set_implants()
 
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), SLOT_W_UNIFORM)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), SLOT_L_EAR)

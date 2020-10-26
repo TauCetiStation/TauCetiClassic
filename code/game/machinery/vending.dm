@@ -130,15 +130,15 @@
 		R.product_name = initial(temp.name)
 	return
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)  //Restocking from TG
+/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
 	var/total = 0
 
 	var/to_restock = 0
-	for(var/datum/data/vending_product/machine_content in machine)
+	for(var/datum/data/vending_product/machine_content in product_records)
 		to_restock += machine_content.max_amount - machine_content.amount
 
 	if(to_restock <= refill.charges)
-		for(var/datum/data/vending_product/machine_content in machine)
+		for(var/datum/data/vending_product/machine_content in product_records)
 			if(machine_content.amount != machine_content.max_amount)
 				to_chat(usr, "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>")
 				machine_content.amount = machine_content.max_amount
@@ -146,7 +146,7 @@
 		total = to_restock
 	else
 		var/tmp_charges = refill.charges
-		for(var/datum/data/vending_product/machine_content in machine)
+		for(var/datum/data/vending_product/machine_content in product_records)
 			var/restock = CEIL(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
@@ -224,7 +224,7 @@
 			if(canister.charges == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
-				var/transfered = refill_inventory(canister,product_records,user)
+				var/transfered = refill_inventory(canister, user)
 				if(transfered)
 					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
@@ -356,17 +356,17 @@
 		var/dat
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 400, 550)
+		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 		popup.set_content(dat)
 		popup.open()
 		return
 
 	var/dat
-	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
+	dat += "<div class='Section__title'>Products</div>"
+	dat += "<div class='Section'>"
 
 	if (product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
+		dat += "<span class='red'>No product loaded!</span>"
 	else
 		dat += "<table>"
 		dat += print_recors(product_records)
@@ -383,7 +383,7 @@
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
+	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
@@ -392,17 +392,13 @@
 	var/dat
 	for (var/datum/data/vending_product/R in record)
 		dat += "<tr>"
-		dat += {"<td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></span></td>"}
-		dat += {"<td><font color = '#c9c9b5'><B>[R.product_name]</B></font></td>"}
-		dat += "<td><font color = '#0c4274'><b>[R.amount]</b> </font></td>"
-		if(R.price)
-			dat += {"<td align="center"><font color = '#ffd700'><b>$[R.price]</b></font></td>"}
-		else
-			dat += {"<td align="center"><font color = '#32cd32'><b>Free</b></font></td>"}
+		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]'></span></td>"
+		dat += "<td><B>[R.product_name]</B></td>"
+		dat += "<td class='collapsing' align='center'><span class='[R.amount > 1 ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
-			dat += "<td align='right'><a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A></td>"
+			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] cr." : "FREE"]</A></td>"
 		else
-			dat += "<td nowrap><font color = 'red'>SOLD OUT</font></td>"
+			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "$[R.price]" : "FREE"]</div></td>"
 		dat += "</tr>"
 	return dat
 
@@ -1127,7 +1123,7 @@
 	products = list(/obj/item/stack/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2,
-					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics=2)
+					/obj/item/weapon/gun/energy/pyrometer/engineering/robotics=2,/obj/item/clothing/glasses/hud/diagnostic = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
 
 //This one's from NTstation

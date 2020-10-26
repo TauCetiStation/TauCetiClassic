@@ -283,21 +283,6 @@
 				qdel(A)
 				continue
 
-		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							qdel(I)
-
-		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in SSticker.mode.syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
 		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
@@ -443,6 +428,7 @@
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
 	SSticker.mode.traitors += new_syndicate_commando.mind
@@ -547,6 +533,7 @@
 	I.imp_in = new_vox
 	I.implanted = 1
 	BP.implants += I
+	new_vox.sec_hud_set_implants()
 	I.part = BP
 
 	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist ) ) )

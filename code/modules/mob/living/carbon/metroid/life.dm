@@ -32,9 +32,6 @@
 	//to find it.
 	src.blinded = null
 
-	// Basically just deletes any screen objects :<
-	regular_hud_updates()
-
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
 		handle_environment(environment)

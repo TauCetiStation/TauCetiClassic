@@ -20,6 +20,9 @@
 	implant_list -= src
 	if(part)
 		part.implants.Remove(src)
+		if(isliving(imp_in))
+			var/mob/living/L = imp_in
+			L.sec_hud_set_implants()
 		part = null
 	imp_in = null
 	return ..()
@@ -48,8 +51,8 @@
 		if(!BP)
 			return
 		BP.implants += src
+		C.sec_hud_set_implants()
 		part = BP
-		H.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -67,6 +70,7 @@
 	else
 		var/mob/living/M = imp_in
 		M.apply_damage(15,BURN)
+		M.sec_hud_set_implants()
 	name = "melted implant"
 	desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
 	icon_state = "implant_melted"
