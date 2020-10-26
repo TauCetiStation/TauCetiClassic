@@ -69072,6 +69072,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
+"fBm" = (
+/obj/item/weapon/twohanded/flora/pottedplant/aquatic,
+/turf/simulated/floor,
+/area/station/security/prison)
 "fCb" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -115454,7 +115458,7 @@ amx
 anc
 anQ
 anQ
-anQ
+fBm
 amx
 amx
 asz

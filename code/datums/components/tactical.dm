@@ -1,11 +1,13 @@
 /datum/component/tactical
 	var/allowed_slot
+	var/override // Allows you to hide the previous image
 
-/datum/component/tactical/Initialize(allowed_slot)
+/datum/component/tactical/Initialize(allowed_slot, override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.allowed_slot = allowed_slot
+	src.override = override
 
 /datum/component/tactical/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/modify)
@@ -27,7 +29,7 @@
 	var/obj/item/master = parent
 	var/image/I = image(icon = master.icon, icon_state = master.icon_state, loc = user)
 	I.copy_overlays(master)
-	I.override = TRUE
+	I.override = override
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "tactical_component", I)
 	I.layer = INFRONT_MOB_LAYER
 
