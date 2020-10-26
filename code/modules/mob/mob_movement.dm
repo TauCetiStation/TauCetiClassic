@@ -303,7 +303,7 @@
 		return
 	is_moving = TRUE
 	var/list/L = src.ret_grab()
-	if(istype(L, /list) && L.len > 2)
+	if(islist(L) && L.len > 2)
 		if(locate(/obj/item/weapon/grab, src))
 			for(var/mob/M in L)
 				M.other_mobs = 1
