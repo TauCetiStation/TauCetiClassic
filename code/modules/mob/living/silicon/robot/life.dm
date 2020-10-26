@@ -318,11 +318,11 @@
 		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
 
 /mob/living/silicon/robot/proc/retract_robot_tools_back()
-	if(module_state_1)
+	if(module_state_1 && !module_state_1.loc == src)
 		retract_module(module_state_1)
-	if(module_state_1)
+	if(module_state_2 && !module_state_2.loc == src)
 		retract_module(module_state_2)
-	if(module_state_1)
+	if(module_state_3 && !module_state_3.loc == src)
 		retract_module(module_state_3)
 
 /mob/living/silicon/robot/proc/retract_module(var/atom/movable/module)

@@ -153,10 +153,7 @@
 		if(weld(W, user))
 			drop_assembly(1)
 			qdel(src)
-	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
-		if(isrobot(user))
-			to_chat(user, "<span class='notice'>You cannot insert the [W]-module inside this.</span>")
-			return
+	else if(istype(W, /obj/item/device/analyzer) && panel_open && user.drop_item()) //XRay
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
