@@ -42,7 +42,6 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
 	var/datum/AI_Module/active_module = null
@@ -119,7 +118,6 @@ var/list/ai_verbs_default = list(
 		"Gigyas" = "ai-gigyas",
 		"Yuki" = "ai-yuki",
 		"SyndiCat" = "ai-syndicatmeow",
-		"Yuki" = "ai-yuki",
 		"Hiss!" = "ai-alien",
 		"Alter Ego" = "ai-alterego",
 		"Urist" = "ai-toodeep",
@@ -218,17 +216,8 @@ var/list/ai_verbs_default = list(
 			job = "AI"
 
 	create_eye()
-	
-	new /obj/machinery/ai_powersupply(src)
 
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
 
@@ -320,27 +309,24 @@ var/list/ai_verbs_default = list(
 
 	var/dat = ""
 	for (var/cat in alarms)
-		dat += text("<B>[]</B><BR>\n", cat)
+		dat += "<B>[cat]</B><BR>"
 		var/list/alarmlist = alarms[cat]
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 
-				var/cameratext = ""
+				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (cameratext=="") ? "" : " | ", src, I, I.c_tag)
-				dat += text("-- [] ([])", alarm.area.name, (cameratext)? cameratext : "No Camera")
+						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
 					dat += text(" - [] sources", alarm.sources.len)
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-
-	viewalerts = 1
 
 	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
 	popup.set_content(dat)
@@ -498,12 +484,6 @@ var/list/ai_verbs_default = list(
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
-		if (href_list["mach_close"] == "aialerts")
-			viewalerts = 0
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
@@ -623,16 +603,11 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
-	if(viewalerts)
-		show_alerts()
-
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
-		if(viewalerts)
-			show_alerts()
 
 	return has_alarm
 
@@ -700,20 +675,16 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "HAL")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in machines) //change status
-		if(istype(M, /obj/machinery/ai_status_display))
-			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
-
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
+		AISD.emotion = emote
+	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = TRUE
+	else
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = FALSE
 	return
 
 /mob/living/silicon/ai/proc/gen_ai_uniq_holo()

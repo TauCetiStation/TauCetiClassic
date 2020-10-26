@@ -68,6 +68,7 @@ var/list/cult_datums = list()
 /obj/effect/rune/atom_init()
 	. = ..()
 	cult_runes += src
+	//TODO: rework for alternate apperance
 	blood_overlay = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	blood_overlay.override = 1
 	blood_overlay.color = "#a10808"

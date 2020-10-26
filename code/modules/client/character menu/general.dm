@@ -113,7 +113,7 @@
 			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
-			
+
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
 				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]"

@@ -13,7 +13,7 @@
 /obj/effect/portal/atom_init(mapload, turf/target, creator = null, lifespan = 300)
 	. = ..()
 	portal_list += src
-	
+
 	src.target = target
 	src.creator = creator
 

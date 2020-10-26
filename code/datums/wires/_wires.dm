@@ -146,7 +146,7 @@ var/global/list/wire_daltonism_colors = list()
 
 			if(!wire_daltonism_colors)
 				wire_daltonism_colors = list()
-			
+
 			// Creates a list of color for people with daltonism and save his
 			if(!wire_daltonism_colors[H.sightglassesmod])
 				wire_daltonism_colors[H.sightglassesmod] = list()
@@ -176,7 +176,6 @@ var/global/list/wire_daltonism_colors = list()
 
 	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
 	popup.set_content(html)
-	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
 	popup.open()
 
 	return TRUE
@@ -192,7 +191,7 @@ var/global/list/wire_daltonism_colors = list()
  * >   . += "<br>Another light is [E.another_status ? "off" : "blinking"]."
  */
 /datum/wires/proc/get_interact_window(see_effect)
-	var/html = "<fieldset class='block'>"
+	var/html = "<fieldset class='Section'>"
 	html += "<legend><h3>Exposed Wires</h3></legend>"
 	html += "<table[table_options]>"
 

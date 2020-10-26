@@ -267,83 +267,67 @@
 
 // user interaction
 /obj/machinery/disposal/ui_interact(mob/user)
-	if(stat & BROKEN)
-		user.unset_machine(src)
-		return
+	tgui_interact(user)
 
-	var/dat = ""
+/obj/machinery/disposal/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DisposalUnit", name)
+		ui.open()
 
-	if(!isAI(user))  // AI can't pull flush handle
-		if(flush)
-			dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Disposal handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
+/obj/machinery/disposal/tgui_data(mob/user)
+	var/list/data = list()
 
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
+	data["isAI"] = isAI(user)
+	data["flushing"] = flush
+	data["mode"] = mode
+	data["pressure"] = PERCENT(air_contents.return_pressure() / SEND_PRESSURE)
 
-	if(mode <= 0)
-		dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-	else if(mode == 1)
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-	else
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
+	return data
 
-	var/per
-	if(need_env_pressure)
-		per = 100 * air_contents.return_pressure() / (SEND_PRESSURE)
-
-	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR>"
-
-
-	user.set_machine(src)
-
-	var/datum/browser/popup = new(user, "disposal", "Waste Disposal Unit", 360, 170)
-	popup.set_content(dat)
-	popup.open()
-
-	onclose(user, "disposal")
-
-// handle machine interaction
-
-/obj/machinery/disposal/is_operational_topic()
-	return !(stat & BROKEN)
-
-/obj/machinery/disposal/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=disposal")
-		return FALSE
-
-	. = ..()
-	if(!.)
+/obj/machinery/disposal/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	if(..())
 		return
 
 	if(usr.loc == src)
-		to_chat(usr, "<span class='red'>You cannot reach the controls from inside.</span>")
-		return FALSE
+		to_chat(usr, "<span class='warning'>You cannot reach the controls from inside.</span>")
+		return
 
-	if(mode == -1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		to_chat(usr, "<span class='red'>The disposal units power is disabled.</span>")
-		return FALSE
+	if(mode == -1 && action != "eject") // only allow ejecting if mode is -1
+		to_chat(usr, "<span class='warning'>The disposal units power is disabled.</span>")
+		return
 
-	if(src.flushing)
-		return FALSE
+	if(stat & BROKEN)
+		return
 
-	if(href_list["pump"])
-		if(text2num(href_list["pump"]))
-			mode = 1
-		else
-			mode = 0
-		update()
+	add_fingerprint(usr)
 
-	if(href_list["handle"])
-		flush = text2num(href_list["handle"])
-		update()
+	if(flushing)
+		return
 
-	if(href_list["eject"])
-		eject()
+	if(isturf(loc))
+		if(action == "handle-0")
+			flush = FALSE
+			update()
+		if(action == "handle-1")
+			flush = TRUE
+			update()
 
-	updateUsrDialog()
+		if(!issilicon(usr))
+			if(action == "pump-0")
+				mode = 0
+				update()
+			if(action == "pump-1")
+				mode = 1
+				update()
+
+			if(action == "eject")
+				eject()
+
+	return TRUE
+
+/obj/machinery/disposal/is_operational_topic()
+	return !(stat & BROKEN)
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -395,8 +379,6 @@
 				feedback_inc("disposal_auto_flush",1)
 				INVOKE_ASYNC(src, .proc/flush)
 		flush_count = 0
-
-	src.updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
 		flush()

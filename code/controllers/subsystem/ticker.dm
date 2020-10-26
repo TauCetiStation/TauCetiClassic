@@ -61,12 +61,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	global.syndicate_code_phrase = generate_code_phrase()
 	global.syndicate_code_response = generate_code_phrase()
-	if(config.rus_language)
-		global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
-		global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
-	else
-		global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0061-\u007A") // English chars only
-		global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0061-\u007A") // English chars only
+	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
+	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
 
 	setupFactions()
 	..()
@@ -393,10 +389,10 @@ SUBSYSTEM_DEF(ticker)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 			if(ishuman(player))
 				SSquirks.AssignQuirks(player, player.client, TRUE)
+			if(player.mind.assigned_role != "MODE")
+				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
@@ -453,7 +449,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
-		ai_completions += "<div class='block'>"
+		ai_completions += "<div class='Section'>"
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
@@ -505,7 +501,7 @@ SUBSYSTEM_DEF(ticker)
 	ai_completions += "<br><h2>Mode Result</h2>"
 
 	if(mode.completion_text)//extendet has empty completion text
-		ai_completions += "<div class='block'>[mode.completion_text]</div>"
+		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
@@ -514,6 +510,12 @@ SUBSYSTEM_DEF(ticker)
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()
+
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/m in global.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()

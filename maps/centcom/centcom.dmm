@@ -7775,7 +7775,7 @@
 /obj/item/device/flash,
 /obj/item/weapon/melee/baton,
 /obj/item/weapon/handcuffs,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/device/aicard,
 /obj/item/weapon/pinpointer/advpinpointer,
 /obj/structure/closet/secure_closet,
@@ -8974,7 +8974,7 @@
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
 /obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -12672,7 +12672,7 @@
 "aTr" = (
 /obj/structure/closet/secure_closet,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/device/flash,
 /obj/item/weapon/gun/energy/taser,
 /obj/item/weapon/reagent_containers/spray/pepper,
@@ -12696,7 +12696,7 @@
 "aTt" = (
 /obj/structure/closet/secure_closet,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/device/flash,
 /obj/item/weapon/gun/energy/taser,
 /obj/item/weapon/reagent_containers/spray/pepper,
@@ -13233,7 +13233,7 @@
 "aVh" = (
 /obj/structure/closet/secure_closet,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/device/flash,
 /obj/item/weapon/gun/energy/gun,
 /obj/item/weapon/reagent_containers/spray/pepper,
@@ -15879,7 +15879,7 @@
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
 /obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -15963,7 +15963,7 @@
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
 /obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -16088,7 +16088,7 @@
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/clothing/glasses/night,
 /obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
 /obj/structure/window/reinforced{
 	dir = 1

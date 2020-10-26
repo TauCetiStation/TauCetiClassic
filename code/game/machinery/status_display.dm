@@ -288,8 +288,20 @@
 				set_picture("ai_facepalm")
 			if("Friend Computer")
 				set_picture("ai_friend")
+			if("Beer mug")
+				set_picture("ai_beer")
+			if("Dwarf")
+				set_picture("ai_dwarf")
+			if("Fishtank")
+				set_picture("ai_fishtank")
+			if("Plump Helmet")
+				set_picture("ai_plump")
 			if("HAL")
 				set_picture("ai_hal")
+			if("Tribunal")
+				set_picture("ai_tribunal")
+			if("Tribunal Malfunctioning")
+				set_picture("ai_tribunal_malf")
 
 		return
 

@@ -689,7 +689,7 @@
 	var/turf/over_turf = get_turf(over)
 	var/turf/dropping_turf = get_turf(dropping)
 
-	if(get_dir(user, over_turf) == reverse_direction(get_dir(user, dropping_turf)))
+	if(get_dir(user, over_turf) == turn(get_dir(user, dropping_turf), 180))
 		if(can_spin && sweep_spin(parent, user) != NONE)
 			return COMPONENT_NO_MOUSEDROP
 

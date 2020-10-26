@@ -246,6 +246,7 @@ This function completely restores a damaged organ to perfect condition.
 			BP.implants -= implanted_object
 
 	BP.owner.updatehealth()
+	BP.owner.sec_hud_set_implants()
 
 /datum/bodypart_controller/proc/createwound(type = CUT, damage)
 	if(damage == 0)

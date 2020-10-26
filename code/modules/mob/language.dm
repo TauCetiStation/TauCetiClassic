@@ -36,19 +36,19 @@
 
 	for(var/i in 1 to input_size)
 		scrambled_text += pick(syllables)
-		
+
 		if(i != input_size)
 			if(prob(5))
 				scrambled_text += ", "
 			else if(prob(space_chance))
 				scrambled_text += " "
-	
+
 	scrambled_text = capitalize(trim(scrambled_text))
 
 	var/input_ending = copytext(input, -1)
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
-	
+
 	return scrambled_text
 
 /datum/language/proc/get_spoken_verb(msg_end)
