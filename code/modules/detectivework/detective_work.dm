@@ -108,7 +108,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_asc
 				else
 					if(isai) dat += "Scan Object: {[scanning.name]}<br>"
 					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>[scanning.name]</a><br>"
-					dat += "<a href='?src=\ref[src];operation=scan'>Scan}/a> <a href='?src=\ref[src];operation=print'>Print</a><br>"
+					dat += "<a href='?src=\ref[src];operation=scan'>Scan</a> <a href='?src=\ref[src];operation=print'>Print</a><br>"
 			else
 				if(isai) dat += "{No Object Inserted}<br>"
 				else dat += "<a href='?src=\ref[src];operation=insert'>No Object Inserted</a><br>"
