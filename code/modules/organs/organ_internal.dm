@@ -285,7 +285,7 @@
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
-	RegisterSignal(src, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/check_explosion)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -344,7 +344,7 @@
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
 			accumulator_warning = world.time + 15 SECONDS
 
-/obj/item/organ/internal/liver/ipc/proc/check_explosion()
+/obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
 	var/turf/T = get_turf(owner.loc)
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
 	if(!C)
