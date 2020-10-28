@@ -285,6 +285,7 @@
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
+	RegisterSignal(src, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/check_explosion)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -334,9 +335,6 @@
 		owner.SetParalysis(2)
 		owner.eye_blurry = 2
 		owner.silent = 2
-	else if(owner.nutrition > (C.maxcharge*1.2))
-		explosion(T,1,0,1,1)
-		qdel(C)
 	else if(damage)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
@@ -346,7 +344,15 @@
 		if(accumulator_warning < world.time)
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
 			accumulator_warning = world.time + 15 SECONDS
-	
+
+/obj/item/organ/internal/liver/ipc/proc/check_explosion()
+	var/turf/T = get_turf(owner.loc)
+	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
+	if(!C)
+		UnregisterSignal(parent, COMSIG_ATOM_ELECTROCUTE_ACT)
+	else if(owner.nutrition > (C.maxcharge*1.2))
+		explosion(T,1,0,1,1)
+		qdel(C)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
