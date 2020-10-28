@@ -363,6 +363,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = "Toggle Floating Messages"
 
-	prefs.floating_messages != prefs.floating_messages
+	prefs.floating_messages = !prefs.floating_messages
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "TFM")
