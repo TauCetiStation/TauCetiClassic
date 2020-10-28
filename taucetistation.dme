@@ -1480,6 +1480,7 @@
 #include "code\modules\mob\abilities.dm"
 #include "code\modules\mob\death.dm"
 #include "code\modules\mob\emote.dm"
+#include "code\modules\mob\floating_say.dm"
 #include "code\modules\mob\hear_say.dm"
 #include "code\modules\mob\holder.dm"
 #include "code\modules\mob\indicators.dm"

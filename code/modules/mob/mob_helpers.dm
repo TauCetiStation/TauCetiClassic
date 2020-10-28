@@ -511,3 +511,9 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
+
+/proc/isdeaf(A)
+	if(istype(A, /mob))
+		var/mob/M = A
+		return (M.sdisabilities & DEAF) || M.ear_deaf
+	return FALSE

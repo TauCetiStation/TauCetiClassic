@@ -1636,3 +1636,15 @@ var/list/WALLITEMS = typecacheof(list(
 			return "."
 		if(189)
 			return "-"
+
+/proc/get_random_colour(simple, lower = 0, upper = 255)
+	var/colour
+	if(simple)
+		colour = pick(list("FF0000", "FF7F00", "FFFF00", "00FF00", "0000FF", "4B0082", "8F00FF"))
+	else
+		for(var/i in 1 to 3)
+			var/temp_col = "[num2hex(rand(lower, upper))]"
+			if(length(temp_col) < 2)
+				temp_col = "0[temp_col]"
+			colour += temp_col
+	return "#[colour]"
