@@ -25,6 +25,8 @@
 	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
+	var/list/stored_chat_text // used in floating messages
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc

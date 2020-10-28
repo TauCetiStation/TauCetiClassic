@@ -2,9 +2,6 @@
 // This code was written by Chinsky for Nebula, I just made it compatible with Eris. - Matt
 var/global/list/floating_chat_colors = list()
 
-/atom/movable
-	var/list/stored_chat_text
-
 /atom/movable/proc/animate_chat(message, datum/language/language, small, list/show_to, duration)
 	set waitfor = FALSE
 
