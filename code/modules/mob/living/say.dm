@@ -1,3 +1,93 @@
+proc/isdeaf(A)
+	if(istype(A, /mob))
+		var/mob/M = A
+		return (M.sdisabilities & DEAF) || M.ear_deaf
+	return FALSE
+
+/proc/get_random_colour(simple, lower = 0, upper = 255)
+	var/colour
+	if(simple)
+		colour = pick(list("FF0000", "FF7F00", "FFFF00", "00FF00", "0000FF", "4B0082", "8F00FF"))
+	else
+		for(var/i in 1 to 3)
+			var/temp_col = "[num2hex(rand(lower, upper))]"
+			if(length(temp_col) < 2)
+				temp_col = "0[temp_col]"
+			colour += temp_col
+	return "#[colour]"
+
+// Thanks to Burger from Burgerstation for the foundation for this.
+// This code was written by Chinsky for Nebula, I just made it compatible with Eris. - Matt
+var/global/list/floating_chat_colors = list()
+
+/atom/movable
+	var/list/stored_chat_text
+
+/atom/movable/proc/animate_chat(message, datum/language/language, small, list/show_to, duration)
+	set waitfor = FALSE
+
+	var/style	//additional style params for the message
+	var/fontsize = 6
+	if(small)
+		fontsize = 5
+	var/limit = 50
+	if(copytext(message, length(message) - 1) == "!!")
+		fontsize = 8
+		limit = 30
+		style += "font-weight: bold;"
+
+	if(length(message) > limit)
+		message = "[copytext(message, 1, limit)]..."
+
+	if(!global.floating_chat_colors[name])
+		global.floating_chat_colors[name] = get_random_colour(FALSE, 160, 230)
+	style += "color: [global.floating_chat_colors[name]];"
+	// create 2 messages, one that appears if you know the language, and one that appears when you don't know the language
+	var/image/understood = generate_floating_text(src, capitalize(message), style, fontsize, duration, show_to)
+	var/image/gibberish = language ? generate_floating_text(src, language.scramble(message), style, fontsize, duration, show_to) : understood
+
+	for(var/mob/M in show_to)
+		var/client/C = M.client
+		if(!C)
+			return
+		if(!isdeaf(M))// && C.get_preference_value(/datum/client_preference/floating_messages) == global.PREF_SHOW)
+			if(M.say_understands(null, language))
+				C.images += understood
+			else
+				C.images += gibberish
+
+/proc/generate_floating_text(atom/movable/holder, message, style, size, duration, show_to)
+	var/image/I = image(null, holder)
+	I.layer = FLY_LAYER
+	I.alpha = 0
+	I.maptext_width = 80
+	I.maptext_height = 64
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.pixel_x = -round(I.maptext_width/2) + 16
+
+	style = "font-family: 'Small Fonts'; -dm-text-outline: 1 black; font-size: [size]px; [style]"
+	I.maptext = "<center><span style=\"[style]\">[message]</span></center>"
+	animate(I, 1, alpha = 255, pixel_y = 24)
+
+	for(var/image/old in holder.stored_chat_text)
+		animate(old, 2, pixel_y = old.pixel_y + 8)
+	LAZYADD(holder.stored_chat_text, I)
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_floating_text, holder, I), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_images_from_clients, I, show_to), duration + 2)
+
+	return I
+
+/proc/remove_floating_text(atom/movable/holder, image/I)
+	animate(I, 2, pixel_y = I.pixel_y + 10, alpha = 0)
+	LAZYREMOVE(holder.stored_chat_text, I)
+
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
+		qdel(I)
+
+
 var/list/department_radio_keys = list(
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
@@ -172,6 +262,8 @@ var/list/department_radio_keys = list(
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
+
+	animate_chat(message, speaking, italics, listening, 40)
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
