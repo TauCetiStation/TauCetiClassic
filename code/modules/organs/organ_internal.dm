@@ -327,7 +327,6 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	var/turf/T = get_turf(owner.loc)
 	
 	if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
@@ -346,11 +345,11 @@
 			accumulator_warning = world.time + 15 SECONDS
 
 /obj/item/organ/internal/liver/ipc/proc/check_explosion()
+	var/turf/T = get_turf(owner.loc)
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
 	if(!C)
 		UnregisterSignal(parent, COMSIG_ATOM_ELECTROCUTE_ACT)
 	else if(owner.nutrition > (C.maxcharge*1.2))
-		var/turf/T = get_turf(owner.loc)
 		explosion(T,1,0,1,1)
 		qdel(C)
 
