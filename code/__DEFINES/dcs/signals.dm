@@ -55,6 +55,8 @@
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
+/// electrocute_act()
+#define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
