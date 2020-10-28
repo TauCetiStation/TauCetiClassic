@@ -654,6 +654,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
 		if(species && species.flags[IS_SYNTHETIC])
+			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+			SEND_SIGNAL(IO, COMSIG_ATOM_ELECTROCUTE_ACT)
 			nutrition += . // Electrocute act returns it's shock_damage value.
 		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
 			. = 0
