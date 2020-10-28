@@ -358,3 +358,11 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
 	feedback_add_details("admin_verb", "ED")
+/client/verb/toggle_floating_messages()
+	set name = "Toggle Floating Messages"
+	set category = "Preferences"
+	set desc = "Toggle Floating Messages"
+
+	prefs.floating_messages != prefs.floating_messages
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TFM")

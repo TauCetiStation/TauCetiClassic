@@ -32,7 +32,7 @@ var/global/list/floating_chat_colors = list()
 		var/client/C = M.client
 		if(!C)
 			return
-		if(!isdeaf(M))// && C.get_preference_value(/datum/client_preference/floating_messages) == global.PREF_SHOW)
+		if(!isdeaf(M) && C.prefs.floating_messages)
 			if(M.say_understands(null, language))
 				C.images += understood
 			else

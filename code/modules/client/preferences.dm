@@ -33,6 +33,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+	var/floating_messages = TRUE
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 
