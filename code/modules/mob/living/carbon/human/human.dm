@@ -1970,10 +1970,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		ADD_TRAIT(usr, TRAIT_NO_POWER, TURN_OFF)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
-			set_light(0)
-			update_hair()
-
-
+		r_hair = 15
+		g_hair = 15
+		b_hair = 15
+		set_light(0)
+		update_hair()
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
