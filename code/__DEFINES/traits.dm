@@ -82,11 +82,12 @@
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
-#define TRAIT_NO_POWER            "no_power" // for IPCs
+#define TRAIT_INCAPACITATED       "incapacitated"
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
-#define EMPTY_BATTERY_TRAIT      "empty_accumulator"
+#define EMPTY_BATTERY_TRAIT      "empty_accumulator"  // for IPCs
 #define FEAR_TRAIT         "fear"
+#define TURN_OFF_TRAIT 				"turned_off" //BUTTons for IPCs

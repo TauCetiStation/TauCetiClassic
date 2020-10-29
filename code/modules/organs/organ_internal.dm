@@ -154,7 +154,7 @@
 	var/bruised_loss = 3
 
 /obj/item/organ/internal/heart/ipc/process()
-	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+	if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		return
 	if(is_broken())
 		return
@@ -238,7 +238,7 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
-	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+	if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		return
 	var/temp_gain = owner.species.synth_temp_gain
 
@@ -327,11 +327,11 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/liver/ipc/proc/nopower() 
-	ADD_TRAIT(owner, TRAIT_NO_POWER, EMPTY_BATTERY_TRAIT)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, EMPTY_BATTERY_TRAIT)
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+	if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		owner.eye_blurry = 2
 		owner.eye_blind = 2
 		owner.Weaken(2)
@@ -351,8 +351,8 @@
 	if(owner.nutrition > 1)
 		deltimer(emergency_power)
 		emergency_alert = TRUE
-		if(HAS_TRAIT(owner, TRAIT_NO_POWER))
-			REMOVE_TRAIT(owner, TRAIT_NO_POWER, EMPTY_BATTERY_TRAIT)
+		if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
+			REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, EMPTY_BATTERY_TRAIT)
 			owner.clear_alert("no_power")
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
@@ -384,7 +384,7 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
-	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+	if(HAS_TRAIT(owner, TRAIT_INCAPACITATED))
 		return
 	if(next_warning > world.time)
 		return
