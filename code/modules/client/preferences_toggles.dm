@@ -365,4 +365,5 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.floating_messages = !prefs.floating_messages
 	prefs.save_preferences()
+	to_chat(src, "Floating Messages: [prefs.floating_messages ? "On" : "Off"].")
 	feedback_add_details("admin_verb", "TFM")
