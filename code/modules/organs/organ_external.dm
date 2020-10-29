@@ -411,7 +411,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.update_hair()
 		owner.handle_decapitation(src)
 		if(is_robotic())
-			ADD_TRAIT(owner, TRAIT_BLIND, BEHEADING)
+			ADD_TRAIT(owner, TRAIT_BLIND, BEHEADING_TRAIT)
 
 
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
