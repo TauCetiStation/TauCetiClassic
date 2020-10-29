@@ -238,8 +238,7 @@
 	icon_state = "scavenger"
 	health = 90
 	speed = 4
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 15
 	ranged = 0
 
 /mob/living/simple_animal/hostile/hivebot/robotic_horror
@@ -249,8 +248,7 @@
 	icon_state = "robotic_horror"
 	health = 150
 	speed = 1
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage = 10
 	ranged = 0
 
 			////////////////////
@@ -267,8 +265,7 @@
 	icon_dead = "xenoarchaeologist_twisted_dead"
 	health = 80
 	maxHealth = 80
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 15
 	move_speed = 18
 
 /mob/living/simple_animal/hostile/cellular/meat/maid_twisted
@@ -280,8 +277,7 @@
 	icon_dead = "maid_twisted_dead"
 	health = 70
 	maxHealth = 70
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage = 10
 	move_speed = 8
 
 /mob/living/simple_animal/hostile/cellular/meat/xenoarchaeologist_twisted/death()
@@ -301,8 +297,7 @@
 	desc = "A skeleton, held together by scraps of skin and muscle. It sppears to be feral."
 	icon = 'code/modules/halloween/halloween.dmi'
 	icon_state = "skellington"
-	melee_damage_lower = 2
-	melee_damage_upper = 5
+	melee_damage = 2
 	attacktext = "punches"
 	maxHealth = 50
 	health = 50
