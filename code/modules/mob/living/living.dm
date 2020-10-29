@@ -1006,11 +1006,9 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		spawn(0)
-			sleep(25)
-			if(src)
-				clear_fullscreen("flash", 25)
-		return 1
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/has_brain()
 	return TRUE

@@ -134,7 +134,7 @@
  * public
  *
  * Called on a UI's object when the UI is closed, not to be confused with
- * client/verb/uiclose(), which closes the ui window
+ * client/verb/tguiclose(), which closes the ui window
  */
 /datum/proc/tgui_close(mob/user)
 
