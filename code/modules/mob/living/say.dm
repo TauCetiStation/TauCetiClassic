@@ -170,10 +170,13 @@ var/list/department_radio_keys = list(
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
-	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
-	animate_chat(message, speaking, italics, listening, 40)
+	var/list/listening_floating_message = list()
+	for(var/mob/M in listening)
+		if(M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol))
+			listening_floating_message |= M
+
+	animate_chat(message, speaking, italics, listening_floating_message, 40)
 
 	for(var/obj/O in listening_obj)
 		spawn(0)
