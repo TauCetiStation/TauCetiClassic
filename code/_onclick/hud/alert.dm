@@ -257,6 +257,11 @@
 	icon_state = "newlaw"
 	timeout = 300
 
+/obj/screen/alert/no_power
+	name = "No Power"
+	desc = "Unit accumulator must be has no charge left, or unit has been shutdown"
+	icon_state = "no_power"
+
 //OBJECT-BASED
 
 /obj/screen/alert/buckled

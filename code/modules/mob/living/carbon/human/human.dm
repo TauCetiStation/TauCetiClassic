@@ -1,6 +1,6 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
-
+#define TURN_OFF 				"turned_off"//BUTTons for IPCs
 /mob/living/carbon/human
 	name = "unknown"
 	real_name = "unknown"
@@ -1939,6 +1939,42 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
+/mob/living/carbon/human/proc/IPC_systems_turn_on()
+	set category = "IPC"
+	set name = "Chassis online"
+	set desc = "Turn on chassis systems"
+	if(nutrition < 151)
+		to_chat(usr, "<span class='warning bold'>%ACCUMULATOR% CHARGE IS TOO LOW.</span>")
+		return
+	if(organs_by_name[O_BRAIN].damage > 30)
+		to_chat(usr, "<span class='warning bold'>%%P05IBR*IH@% $Ys7EMm ER00xr// .</span>")
+		return
+	if(HAS_TRAIT(usr, TRAIT_NO_POWER))
+		to_chat(usr, "<span class='warning bold'>POWERING UP THE SYSTEMS.</span>")
+		REMOVE_TRAIT(usr, TRAIT_NO_POWER, TURN_OFF)
+		stat = CONSCIOUS
+		nutrition -= 150
+
+
+/mob/living/carbon/human/proc/IPC_systems_turn_off()
+	set category = "IPC"
+	set name = "Chassis offline"
+	set desc = "Turn off chassis systems"
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(stat == DEAD)
+		return
+	if(organs_by_name[O_BRAIN].damage > 30)
+		to_chat(usr, "<span class='warning bold'>%%P05IBR*IH@% $Ys7EMm ER00xr// .</span>")
+		return
+	if(stat == CONSCIOUS && !HAS_TRAIT(usr, TRAIT_NO_POWER))
+		to_chat(usr, "<span class='warning bold'>SYSTEMS POWER OFFLI-i-ine-e-e.</span>")
+		ADD_TRAIT(usr, TRAIT_NO_POWER, TURN_OFF)
+		if(BP.ipc_head == "Default")
+			h_style = "IPC off screen"
+			set_light(0)
+			update_hair()
+
 
 
 /mob/living/carbon/human/has_brain()

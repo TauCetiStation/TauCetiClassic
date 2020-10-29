@@ -825,6 +825,8 @@
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_systems_turn_on
+	H.verbs += /mob/living/carbon/human/proc/IPC_systems_turn_off
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
@@ -832,6 +834,8 @@
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_systems_turn_on
+	H.verbs -= /mob/living/carbon/human/proc/IPC_systems_turn_off
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)

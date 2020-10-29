@@ -154,7 +154,7 @@
 	var/bruised_loss = 3
 
 /obj/item/organ/internal/heart/ipc/process()
-	if(owner.nutrition < 1)
+	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
 		return
 	if(is_broken())
 		return
@@ -238,7 +238,7 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
-	if(owner.nutrition < 1)
+	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
 		return
 	var/temp_gain = owner.species.synth_temp_gain
 
@@ -281,6 +281,8 @@
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
 	var/accumulator_warning = 0
+	var/emergency_power = 1 MINUTE
+	var/emergency_alert = TRUE
 
 /obj/item/organ/internal/liver/ipc/atom_init()
 	. = ..()
@@ -324,17 +326,34 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
+/obj/item/organ/internal/liver/ipc/proc/nopower() 
+	ADD_TRAIT(owner, TRAIT_NO_POWER, EMPTY_BATTERY_TRAIT)
+
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
+	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+		owner.eye_blurry = 2
+		owner.eye_blind = 2
+		owner.Weaken(2)
+		owner.throw_alert("no_power", /obj/screen/alert/no_power)
 	if(damage && C)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
 	if(owner.nutrition < 1)
-		owner.SetParalysis(2)
 		if(accumulator_warning < world.time)
-			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
-			accumulator_warning = world.time + 15 SECONDS
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE.</span>")
+			accumulator_warning = world.time + 20 SECONDS
+		while(emergency_alert == TRUE)
+			addtimer(CALLBACK(src, .proc/nopower), emergency_power, TIMER_UNIQUE|TIMER_STOPPABLE)
+			to_chat(owner, "<span class='warning bold'>EMERGENCY POWER SUPPLY. SHUTTING DOWN IN 1 MINUTES.</span>")
+			emergency_alert = FALSE
+	if(owner.nutrition > 1)
+		deltimer(emergency_power)
+		emergency_alert = TRUE
+		if(HAS_TRAIT(owner, TRAIT_NO_POWER))
+			REMOVE_TRAIT(owner, TRAIT_NO_POWER, EMPTY_BATTERY_TRAIT)
+			owner.clear_alert("no_power")
 	else if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
@@ -365,7 +384,7 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
-	if(owner.nutrition < 1)
+	if(HAS_TRAIT(owner, TRAIT_NO_POWER))
 		return
 	if(next_warning > world.time)
 		return
