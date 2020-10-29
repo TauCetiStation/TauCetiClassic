@@ -2,7 +2,7 @@
 // This code was written by Chinsky for Nebula, I just made it compatible with Eris. - Matt
 var/global/list/floating_chat_colors = list()
 
-/atom/movable/proc/animate_chat(message, datum/language/language, small, list/show_to, duration)
+/mob/proc/animate_chat(message, datum/language/language, small, list/show_to, duration)
 	set waitfor = FALSE
 
 	var/style	//additional style params for the message
@@ -23,7 +23,7 @@ var/global/list/floating_chat_colors = list()
 	style += "color: [global.floating_chat_colors[name]];"
 	// create 2 messages, one that appears if you know the language, and one that appears when you don't know the language
 	var/image/understood = generate_floating_text(src, capitalize(message), style, fontsize, duration, show_to)
-	var/image/gibberish = language ? generate_floating_text(src, language.scramble(message), style, fontsize, duration, show_to) : understood
+	var/image/gibberish = language ? generate_floating_text(src, get_scrambled_message(message, language), style, fontsize, duration, show_to) : understood
 
 	for(var/mob/M in show_to)
 		var/client/C = M.client
