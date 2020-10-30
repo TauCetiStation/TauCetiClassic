@@ -79,6 +79,7 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/dropped()
+	..()
 	spawn(0)
 		sense()
 		return
