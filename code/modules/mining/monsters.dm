@@ -80,11 +80,7 @@
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
-	loot_list = list(/obj/item/weapon/ore/diamond,
-					/obj/item/weapon/ore/diamond,
-					/obj/item/weapon/ore/diamond,
-					/obj/item/weapon/ore/diamond,
-					/obj/item/weapon/ore/diamond)
+	loot_list = list(/obj/item/weapon/ore/diamond = 5)
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
@@ -142,10 +138,7 @@
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3
-	loot_list = list(/obj/item/weapon/ore/gold,
-					/obj/item/weapon/ore/gold,
-					/obj/item/weapon/ore/gold,
-					/obj/item/weapon/ore/gold)
+	loot_list = list(/obj/item/weapon/ore/gold = 4)
 	move_to_delay = 3
 	friendly = "harmlessly rolls into"
 	maxHealth = 60
