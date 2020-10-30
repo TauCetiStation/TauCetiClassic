@@ -159,6 +159,7 @@
 	if(isliving(usr) && usr.stat != DEAD)
 		mode = !mode
 		to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
+		update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()

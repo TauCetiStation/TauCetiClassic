@@ -506,9 +506,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dat += "<tr><td><B>Bandages:</B></td><td><A href='?src=\ref[src];bandages=1'>Remove</A></td></tr>"
 	dat += "<tr><td><B>Splints:</B></td><td><A href='?src=\ref[src];splints=1'>Remove</A></td></tr>"
 
-	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 640)
 	popup.set_content(dat.Join())
@@ -1892,7 +1890,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
 /mob/living/carbon/human/proc/IPC_change_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
 	if(stat)
@@ -1928,7 +1926,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/proc/IPC_toggle_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
@@ -1951,6 +1949,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])

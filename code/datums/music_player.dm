@@ -137,7 +137,6 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	var/datum/browser/popup = new(user, "musical_instrument_[instrument.name]", instrument.name, 700, 700)
 	popup.set_content(html)
-	popup.set_title_image(user.browse_rsc_icon(instrument.icon, instrument.icon_state))
 	popup.open()
 
 /datum/music_player/Topic(herf, href_list)
