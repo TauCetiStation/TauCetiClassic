@@ -77,9 +77,8 @@
 				I.StopInjecting()
 			else
 				I.BeginInjecting()
-
-	updateDialog()
-
+	if(href_list["refresh"])
+		updateDialog()
 
 /obj/machinery/computer/fusion_fuel_control/attackby(obj/item/W, mob/user)
 	if(ismultitool(W))

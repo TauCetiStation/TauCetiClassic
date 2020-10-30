@@ -192,14 +192,15 @@ var/list/ingredients_source = list(
 				src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 			else
 				to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
+		updateDialog()
 	else if(href_list["make"])
-		make( usr, text2num(href_list["make"]) )
+		make(usr, text2num(href_list["make"]))
+		updateDialog()
 	else if(href_list["eject"])
 		if(held_container)
 			held_container.loc = src.loc
 			held_container = null
-
-	updateDialog()
+		updateDialog()
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream
 	name = "ice cream cone"
