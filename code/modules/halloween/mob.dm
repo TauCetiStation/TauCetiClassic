@@ -57,8 +57,9 @@
 	if(prob(15)) //poltergeist
 		var/obj/item/I = locate(/obj/item) in view(3, src)
 		if(I)
-			var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
-			step(I,direction)
+			if(!I.anchored)
+				var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
+				step(I,direction)
 		return
 
 /mob/living/simple_animal/shade/howling_ghost/attackby(obj/item/O, mob/user)  //Marker -Agouri
