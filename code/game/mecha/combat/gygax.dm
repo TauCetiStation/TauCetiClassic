@@ -10,11 +10,21 @@
 	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
 	max_temperature = 25000
 	infra_luminosity = 6
-	var/overload = 0
 	var/overload_coeff = 2
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 3
+	var/overload = FALSE
+
+	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
+
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Grant(user, src)
+
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Remove(user)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
@@ -63,12 +73,8 @@
 	cell.maxcharge = 30000
 
 
-/obj/mecha/combat/gygax/verb/overload()
-	set category = "Exosuit Interface"
-	set name = "Toggle leg actuators overload"
-	set src = usr.loc
-	set popup_menu = 0
-	if(usr!=src.occupant)
+/obj/mecha/combat/gygax/proc/overload()
+	if(usr != src.occupant)
 		return
 	if(overload)
 		overload = 0
