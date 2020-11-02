@@ -32,11 +32,6 @@
 	if(!gibbed)
 		emote("deathgasp")
 	stat = DEAD
-
-	if(module)
-		for(var/obj/item/I in module)
-			SEND_SIGNAL(I, COMSIG_HAND_DROP_ITEM, null, src)
-
 	update_canmove()
 	if(camera)
 		camera.status = 0

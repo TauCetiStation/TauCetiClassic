@@ -66,6 +66,8 @@
 	var/datum/browser/popup = new(user, "implantpad", "Implant Mini-Computer")
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "implantpad")
 	return
 
 

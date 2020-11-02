@@ -62,9 +62,6 @@
 	/// Species flags that can not do this job.
 	var/list/restricted_species_flags = list()
 
-	// What movesets does this job grant.
-	var/list/moveset_types
-
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
@@ -75,9 +72,6 @@
 	var/outfit_type = get_outfit(H, alt_title)
 	if(outfit_type)
 		H.equipOutfit(outfit_type, visualsOnly)
-
-	for(var/moveset in moveset_types)
-		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	post_equip(H, visualsOnly)
 	return TRUE

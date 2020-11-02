@@ -94,7 +94,7 @@
 		else
 			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Stop autoprocess</a>"
 	else
-		dat += "<span class='disabled'>Autoprocess</span>"
+		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
@@ -103,13 +103,13 @@
 			dat += "<h4>Modules</h4>"
 			//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 			if (isnull(src.scanner))
-				dat += " <span class='red'>Scanner-ERROR</span><br>"
+				dat += " <font color=red>Scanner-ERROR</font><br>"
 			else
-				dat += " <span class='green'>Scanner-Found!</span><br>"
+				dat += " <font color=green>Scanner-Found!</font><br>"
 			if (isnull(src.pod1))
-				dat += " <span class='red'>Pod-ERROR</span><br>"
+				dat += " <font color=red>Pod-ERROR</font><br>"
 			else
-				dat += " <span class='green'>Pod-Found!</span><br>"
+				dat += " <font color=green>Pod-Found!</font><br>"
 
 			// Scanner
 			dat += "<h4>Scanner Functions</h4>"
@@ -152,7 +152,7 @@
 			dat += "<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"
 
 			if (!src.active_record)
-				dat += "<span class='red'>ERROR: Record not found.</span>"
+				dat += "<font color=red>ERROR: Record not found.</font>"
 			else
 				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
 					<b>Name:</b> [src.active_record.dna.real_name]<br>"}
@@ -163,7 +163,7 @@
 				if ((H) && (istype(H)))
 					dat += "<b>Health:</b> [H.sensehealth()] | OXY-BURN-TOX-BRUTE<br>"
 				else
-					dat += "<span class='red'>Unable to locate implant.</span><br>"
+					dat += "<font color=red>Unable to locate implant.</font><br>"
 
 				if (!isnull(src.diskette))
 					dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
@@ -195,6 +195,8 @@
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "cloning")
 	return
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
@@ -322,7 +324,7 @@
 				temp = "Error: Unable to initiate cloning cycle."
 
 			else if(pod1.growclone(C))
-				temp = "<span class='good'>Cloning cycle in progress...</span>"
+				temp = "<font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
 				qdel(C)
 				menu = 1
@@ -363,7 +365,7 @@
 		scantemp = "Error: Mental interface failure."
 		return
 	if (NOCLONE in subject.mutations && src.scanner.scan_level < 4)
-		scantemp = "<span class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</span>"
+		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
@@ -389,7 +391,6 @@
 	if (isnull(imp))
 		imp = new /obj/item/weapon/implant/health(subject)
 		imp.implanted = subject
-		subject.sec_hud_set_implants()
 		R.implant = "\ref[imp]"
 	//Update it if needed
 	else

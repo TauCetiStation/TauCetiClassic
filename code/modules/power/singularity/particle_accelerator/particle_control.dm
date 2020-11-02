@@ -70,6 +70,11 @@
 	return
 
 /obj/machinery/particle_accelerator/control_box/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=pacontrol")
+		return FALSE
+
 	. = ..()
 	if(!.)
 		return
@@ -204,7 +209,8 @@
 		user << browse(null, "window=pacontrol")
 		return
 
-	var/dat
+	var/dat = ""
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
 	dat += "Status:<BR>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"
@@ -223,3 +229,5 @@
 	var/datum/browser/popup = new(user, "pacontrol", "Particle Accelerator Control Panel", 420,500)
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "pacontrol")

@@ -100,7 +100,6 @@
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
-	var/list/disabilities = list()
 
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
@@ -115,9 +114,6 @@
 		blood_type = H.dna.b_type
 		dna_hash = H.dna.unique_enzymes
 		fingerprint_hash = md5(H.dna.uni_identity)
-		for(var/datum/quirk/Q in H.roundstart_quirks)
-			if(Q.disability)
-				disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -128,22 +124,12 @@
 	..()
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption points loaded onto this card.")
-	if(disabilities.len)
-		to_chat(user, GetDisabilities())
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
 
 /obj/item/weapon/card/id/GetID()
 	return src
-
-/obj/item/weapon/card/id/proc/GetDisabilities()
-	if(disabilities.len)
-		var/msg = "Has disability indicators on the card: <span class='warning bold'><B>"
-		for(var/I in 1 to disabilities.len - 1)
-			msg += "[disabilities[I]], "
-		msg += "[disabilities[disabilities.len]].</B></span>"
-		return msg
 
 /obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/id_wallet))
@@ -166,8 +152,6 @@
 	to_chat(usr, "The blood type on the card is [blood_type].")
 	to_chat(usr, "The DNA hash on the card is [dna_hash].")
 	to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
-	if(disabilities.len)
-		to_chat(usr, GetDisabilities())
 	return
 
 
@@ -404,9 +388,9 @@
 	assignment = "Captain"
 
 /obj/item/weapon/card/id/captains_spare/atom_init()
-	. = ..()
-	var/datum/job/captain/J = SSjob.GetJob("Captain")
+	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
+	. = ..()
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom. ID"
@@ -414,12 +398,11 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	rank = "NanoTrasen Representative"
 	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/centcom/atom_init()
+	access = get_all_centcom_access()
 	. = ..()
-	access = get_all_accesses() + get_all_centcom_access()
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
@@ -430,10 +413,17 @@
 	assignment = "General"
 
 /obj/item/weapon/card/id/velocity/atom_init()
-	. = ..()
 	access = get_all_centcom_access()
+	. = ..()
 
-/obj/item/weapon/card/id/centcom/ert
+/obj/item/weapon/card/id/ert
+	name = "CentCom. ID"
 	icon_state = "ert"
+	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
-	rank = "Emergency Response Team"
+	customizable_view = TRAITOR_VIEW
+
+/obj/item/weapon/card/id/ert/atom_init()
+	access = get_all_accesses()
+	access += get_all_centcom_access()
+	. = ..()

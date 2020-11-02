@@ -200,10 +200,8 @@
 #define MOUSE_OPACITY_OPAQUE        2
 
 // Used in browser.dm for common.css style.
-#define CSS_THEME_LIGHT     "theme_light"
-#define CSS_THEME_DARK      "theme_dark"
-#define CSS_THEME_SYNDICATE "theme_syndicate"
-#define CSS_THEME_ABDUCTOR  "theme_abductor"
+#define CSS_THEME_LIGHT "theme_light"
+#define CSS_THEME_DARK "theme_dark"
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
@@ -235,12 +233,6 @@
 		if(length(ad)){\
 			A.overlays |= ad;\
 			ad.Cut();\
-		}\
-		for(var/I in A.alternate_appearances){\
-			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
-			if(AA.transfer_overlays){\
-				AA.copy_overlays(A, TRUE);\
-			}\
 		}\
 		A.flags_2 &= ~OVERLAY_QUEUED_2;\
 		if(isturf(A)){SSdemo.mark_turf(A);}\

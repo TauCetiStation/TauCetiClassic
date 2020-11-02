@@ -192,7 +192,7 @@
 ********************/
 
 /obj/machinery/kitchen_machine/ui_interact(mob/user)
-	var/dat = "<div class='Section'>"
+	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
 		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
 	else if(src.operating)
@@ -249,7 +249,8 @@
 
 	var/datum/browser/popup = new(user, name, name, 400, 400)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(0)
+	onclose(user, "[name]")
 
 /***********************************
 *   Kitchen Machine Handling/Cooking

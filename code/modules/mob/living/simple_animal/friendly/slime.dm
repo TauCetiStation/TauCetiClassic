@@ -1,4 +1,3 @@
-// shouldn't these be deprecated? ~Luduk
 /mob/living/simple_animal/slime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."
@@ -17,7 +16,6 @@
 	ventcrawler = 2
 
 	has_head = TRUE
-	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
@@ -35,7 +33,6 @@
 	var/colour = "grey"
 
 	has_head = TRUE
-	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()
@@ -54,6 +51,4 @@
 	S2.icon_living = "[src.colour] baby slime"
 	S2.icon_dead = "[src.colour] baby slime dead"
 	S2.colour = "[src.colour]"
-	med_hud_set_health()
-	med_hud_set_status()
 	qdel(src)

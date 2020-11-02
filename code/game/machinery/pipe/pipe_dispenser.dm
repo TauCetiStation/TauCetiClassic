@@ -71,6 +71,8 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
+	onclose(user, "pipedispenser")
+
 /obj/machinery/pipedispenser/is_operational_topic()
 	return TRUE
 

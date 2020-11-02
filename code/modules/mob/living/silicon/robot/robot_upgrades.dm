@@ -14,7 +14,6 @@
 	return
 
 
-// Fuck, class-dublicate
 /obj/item/borg/upgrade/reset
 	name = "Borg module reset board"
 	desc = "Used to reset a borg's module. Destroys any other upgrades applied to the borg."
@@ -32,7 +31,6 @@
 	R.hands.icon_state = "nomod"
 	R.base_icon = "robot"
 	R.icon_state = "robot"
-	R.sensor_huds = R.def_sensor_huds
 	R.updateicon()
 	R.languages = list()
 	R.speech_synthesizer_langs = list()

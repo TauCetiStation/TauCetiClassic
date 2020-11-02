@@ -102,6 +102,8 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
+	onclose(user, "juicer")
+
 
 /obj/machinery/juicer/Topic(href, href_list)
 	. = ..()

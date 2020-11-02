@@ -110,6 +110,8 @@
 	popup.set_content(data)
 	popup.open()
 
+	onclose(user, "game_kit")
+
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
 

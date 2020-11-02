@@ -47,6 +47,7 @@
 	var/t = "<TT>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
+	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
 		t += "<span class='warning'>No connection</span>"
@@ -80,8 +81,15 @@
 	popup.set_content(t)
 	popup.open()
 
+	onclose(user, "powcomp")
+
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
+	if(href_list["close"])
+		usr << browse(null, "window=powcomp")
+		usr.unset_machine(src)
+		return FALSE
+
 	. = ..()
 	if(!.)
 		return

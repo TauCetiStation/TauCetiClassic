@@ -40,7 +40,6 @@
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
-	playsound(src, 'sound/mecha/change_defence_mode.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	defence = !defence
 	if(defence)
 		if(animated)

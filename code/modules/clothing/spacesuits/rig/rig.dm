@@ -349,7 +349,6 @@
 	H.update_action_buttons()
 
 /obj/item/clothing/suit/space/rig/equipped(mob/M, slot)
-	..()
 	var/mob/living/carbon/human/H = M
 
 	if(!istype(H))
@@ -371,7 +370,6 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/rig/dropped(mob/user)
-	..()
 	var/old_wearer = wearer
 	wearer = null
 	var/mob/living/carbon/human/H

@@ -385,9 +385,6 @@ Class Procs:
 	interact(user)
 	return 0
 
-/obj/machinery/tgui_close(mob/user)
-	user.unset_machine(src)
-
 /obj/machinery/CheckParts(list/parts_list)
 	..()
 	RefreshParts()

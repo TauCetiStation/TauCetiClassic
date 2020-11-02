@@ -349,6 +349,8 @@
 			dat += "\The [src] is empty."
 	else
 		dat = "<font color='red'> Error: No Body Scanner connected.</font>"
+	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
+
 
 	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 430, 600, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

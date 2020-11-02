@@ -10,7 +10,6 @@
 	var/fire_sound //Sound played while firing.
 	var/fire_volume = null //How loud it is played (null to use playsound's default value)
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
-	sound_detonation = 'sound/mecha/weapdestr.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))
@@ -188,7 +187,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/proc/rearm()
 	if(projectiles < initial(projectiles))
-		playsound(src, 'sound/weapons/guns/plasma10_overcharge_load.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		var/projectiles_to_add = initial(projectiles) - projectiles
 		while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
 			projectiles++
@@ -247,7 +245,7 @@
 	name = "SRM-8 Missile Rack"
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/missile
-	fire_sound = 'sound/mecha/mecha_bang-drop.ogg'
+	fire_sound = 'sound/effects/bang.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
 	equip_cooldown = 60
@@ -275,7 +273,7 @@
 	name = "SGL-6 Grenade Launcher"
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/weapon/grenade/flashbang
-	fire_sound = 'sound/mecha/mecha_bang-drop.ogg'
+	fire_sound = 'sound/effects/bang.ogg'
 	projectiles = 6
 	missile_speed = 1.5
 	projectile_energy_cost = 800

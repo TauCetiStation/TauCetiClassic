@@ -11,8 +11,6 @@
 
 	maxHealth = 100
 
-	hud_possible = null
-
 	var/list/ghosts_were_here = list()
 	// Used so after a swing we fall correctly in async calls.
 	var/my_icon_state = "pbag"
@@ -223,12 +221,3 @@
 
 /mob/living/pbag/is_usable_leg(targetzone = null)
 	return TRUE
-
-/mob/living/pbag/prepare_huds()
-	return
-
-/mob/living/pbag/med_hud_set_health()
-	return
-
-/mob/living/pbag/med_hud_set_status()
-	return

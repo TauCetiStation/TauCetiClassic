@@ -302,7 +302,6 @@
 	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	..()
 	user.set_light(0)
 	src.set_light(2,1)
 

@@ -10,12 +10,12 @@ var/const/RND_WIRE_SHOCK   = 4
 	var/obj/machinery/r_n_d/R = holder
 	return R.panel_open
 
-/datum/wires/rnd/get_status()
+/datum/wires/rnd/get_interact_window()
 	var/obj/machinery/r_n_d/R = holder
 	. += ..()
-	. += "The red light is [R.disabled ? "off" : "on"]."
-	. += "The green light is [R.shocked ? "off" : "on"]."
-	. += "The blue light is [R.hacked ? "off" : "on"]."
+	. += "<br>The red light is [R.disabled ? "off" : "on"]."
+	. += "<br>The green light is [R.shocked ? "off" : "on"]."
+	. += "<br>The blue light is [R.hacked ? "off" : "on"]."
 
 /datum/wires/rnd/update_cut(index, mended)
 	var/obj/machinery/r_n_d/R = holder

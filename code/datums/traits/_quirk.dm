@@ -5,7 +5,6 @@
 	var/desc = "This is a test quirk."
 	var/value = 0
 	var/human_only = TRUE
-	var/disability = FALSE
 	var/gain_text
 	var/lose_text
 	var/mob_trait //if applicable, apply and remove this mob trait

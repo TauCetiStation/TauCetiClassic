@@ -142,7 +142,7 @@
 	if (user.a_intent == INTENT_HELP && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
 		density = 0
-		VARSET_IN(src, density, TRUE, 20 SECONDS)
+		addtimer(VARSET_CALLBACK(src, density, TRUE), 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)
 

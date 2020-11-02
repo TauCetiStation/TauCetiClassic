@@ -17,7 +17,38 @@
 	return SSshuttle.points
 
 /obj/machinery/computer/stockexchange/ui_interact(mob/user)
-	var/dat
+	var/css={"<style>
+		.change {
+			font-weight: bold;
+			font-family: monospace;
+		}
+		.up {
+			background: #00a000;
+		}
+		.down {
+			background: #a00000;
+		}
+		.stable {
+			width: 100%
+			border-collapse: collapse;
+			border: 1px solid #305260;
+			border-spacing: 4px 4px;
+		}
+		.stable td, .stable th {
+			border: 1px solid #305260;
+			padding: 0px 3px;
+		}
+		.bankrupt {
+			border: 1px solid #a00000;
+			background: #a00000;
+		}
+
+		a.updated {
+			color: red;
+		}
+		</style>"}
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[station_name()] Stock Exchange</title>[css]</head><body>"
+
 	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
 	dat += "<span><b>Credits:</b> [balance()]</span><br>"
 	dat += "<span><b>Spacetime:</b> [round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</span><br>"
@@ -64,7 +95,7 @@
 	else if(vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'>"
-		dat += "<tr><th>&nbsp;</th><th>ID</th><th class='collapsing'>Value</th><th class='collapsing'>Owned</th><th class='collapsing'>Avail</th><th>Actions</th></tr>"
+		dat += "<tr><th>&nbsp;</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th><th>Actions</th></tr>"
 
 		for(var/datum/stock/S in stockExchange.stocks)
 			var/mystocks = 0
@@ -72,18 +103,19 @@
 				mystocks = S.shareholders[logged_in]
 
 			if(S.bankrupt)
-				dat += "<tr class='bgred'>"
+				dat += "<tr class='bankrupt'>"
 			else
 				dat += "<tr>"
 
 			if(S.disp_value_change > 0)
-				dat += "<td class='bggreen'>↑</td>"
+				dat += "<td class='change up'>+</td>"
 			else if(S.disp_value_change < 0)
-				dat += "<td class='bgred'>↓</td>"
+				dat += "<td class='change down'>-</td>"
 			else
-				dat += "<td>=</td>"
+				dat += "<td class='change'>=</td>"
 
 			dat += "<td><b>[S.short_name]</b></td>"
+			dat += "<td>[S.name]</td>"
 
 			if(!S.bankrupt)
 				dat += "<td>[S.current_value]</td>"
@@ -111,7 +143,7 @@
 							break
 			dat += "<td>"
 			if(S.bankrupt)
-				dat += "<span class='disabled'>+</span> <span class='disabled'>-</span> "
+				dat += "<span class='linkOff'>+</span> <span class='linkOff'>-</span> "
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
 			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td>"
@@ -120,10 +152,12 @@
 
 		dat += "</table>"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	dat += "<A href='?src=\ref[user];mach_close=stock_comp'>Close</A> <A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	dat += "</body></html>"
 
-	var/datum/browser/popup = new(user, "stock_comp", "[station_name()] Stock Exchange", 600, 700)
+	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
 	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/S, mob/user)
@@ -226,6 +260,7 @@
 				continue
 		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
 		popup.set_content(dat)
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	else if (href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
@@ -252,6 +287,7 @@
 		dat += "</div></body></html>"
 		var/datum/browser/popup = new(usr, "archive_[S.name]", "Stock News", 600, 400)
 		popup.set_content(dat)
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	else if (href_list["cycleview"])
 		vmode++

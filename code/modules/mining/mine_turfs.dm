@@ -9,7 +9,6 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
@@ -61,17 +60,6 @@
 				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 				I.plane = 6
 				T.add_overlay(I)
-
-	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
-		update_hud()
-
-/turf/simulated/mineral/proc/update_hud()
-	if(hud_list)
-		return
-	prepare_huds()
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-	mine.add_to_hud(src)
-	set_mine_hud()
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -139,8 +127,7 @@
 	else
 		name = "Rock"
 		icon_state = "rock"
-
-	update_hud()
+		return
 
 /turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
 	if(mineral)
@@ -228,7 +215,6 @@
 				excavate_find(5, finds[1])
 			else if(prob(50))
 				finds.Remove(finds[1])
-				set_mine_hud()
 				if(prob(50))
 					artifact_debris()
 
@@ -359,12 +345,6 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
-
-
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-	if(src in mine.hudatoms)
-		mine.remove_from_hud(src)
-
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
@@ -405,7 +385,6 @@
 				qdel(W)
 
 	finds.Remove(F)
-	set_mine_hud()
 
 
 /turf/simulated/mineral/proc/artifact_debris(severity = 0)
@@ -641,11 +620,6 @@
 	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid_stone_[rand(1,10)]"
-
-	//I dont know how, but it gets into hudatoms
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
-	if(src in mine.hudatoms)
-		mine.remove_from_hud(src)
 
 	return INITIALIZE_HINT_LATELOAD
 

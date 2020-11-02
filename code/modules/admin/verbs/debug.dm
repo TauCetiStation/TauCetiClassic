@@ -885,6 +885,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Representative"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.item_state = "id_inv"
+			W.access = get_all_accesses()
+			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -907,6 +912,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -930,6 +938,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Captain"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -946,11 +957,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 
 			spawned_card = new/obj/item/weapon/card/id/velocity(M)
 			spawned_card.assignment = "Velocity Officer"
 			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
 			spawned_card.rank = "Velocity Officer"
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
@@ -997,12 +1009,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
 
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 
 			spawned_card = new/obj/item/weapon/card/id/velocity(M)
 			spawned_card.assignment = "Velocity Chief"
 			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
-			spawned_card.access += get_all_accesses()
+			spawned_card.access = get_all_accesses()
+			spawned_card.access += get_all_centcom_access()
 			spawned_card.rank = "Velocity Chief"
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
@@ -1037,6 +1050,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			spawned_card = new/obj/item/weapon/card/id/velocity(M)
 			spawned_card.assignment = "Velocity Medical Doctor"
 			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
+			spawned_card.access = get_all_centcom_access()
 			spawned_card.rank = "Velocity Medical Doctor"
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
@@ -1056,9 +1070,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
 
-			var/obj/item/weapon/card/id/centcom/ert/W = new(M)
+			var/obj/item/weapon/card/id/ert/W = new(M)
 			W.assignment = "Emergency Response Team"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Emergency Response Team"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -1078,6 +1096,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "Special Operations Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
@@ -1154,6 +1176,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			START_PROCESSING(SSobj, L)
 			L.inject(M)
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), SLOT_W_UNIFORM)
@@ -1182,7 +1205,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(M), SLOT_L_STORE)
 
 			var/obj/item/device/pda/heads/hos/pda = new(M)
@@ -1203,6 +1226,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
 			L.inject(M)
+			START_PROCESSING(SSobj, L)
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
@@ -1270,7 +1294,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), SLOT_GLOVES)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), SLOT_GLASSES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(M), SLOT_L_EAR)
 
 			var/obj/item/device/pda/warden/pda = new(M)
@@ -1726,6 +1750,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
 			L.inject(M)
+			START_PROCESSING(SSobj, L)
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)

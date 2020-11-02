@@ -209,6 +209,7 @@
 	popup.set_content(dat)
 	popup.open()
 
+	onclose(user, "destTagScreen")
 
 /obj/item/device/destTagger/attack_self(mob/user)
 	openwindow(user)

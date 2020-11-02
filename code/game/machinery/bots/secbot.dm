@@ -73,7 +73,6 @@
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-
 	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()

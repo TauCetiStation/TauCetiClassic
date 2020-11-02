@@ -91,9 +91,6 @@
 			O.loc = src
 			giver = O
 			updateUsrDialog()
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			H.sec_hud_set_ID()
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
@@ -124,6 +121,8 @@
 	var/datum/browser/popup = new(user, "guestpass", "Guest pass terminal #[uid]", 400, 520)
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "guestpass")
 
 
 /obj/machinery/computer/guestpass/Topic(href, href_list)
@@ -177,9 +176,6 @@
 						usr.drop_item()
 						I.loc = src
 						giver = I
-					if(ishuman(usr))
-						var/mob/living/carbon/human/H = usr
-						H.sec_hud_set_ID()
 				updateUsrDialog()
 
 			if ("print")

@@ -2,17 +2,20 @@
 	var/client/user
 	var/title
 	var/window_id // window_id is used as the window name for browse and onclose
-	var/width
-	var/height
-	var/atom/ref
-	var/theme // CSS_THEME_DARK or CSS_THEME_LIGHT
-	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;titlebar=1;can_resize=1;" // window option is set using window_id
+	var/width = 0
+	var/height = 0
+	var/atom/ref = null
+	var/theme = CSS_THEME_DARK // or CSS_THEME_LIGHT
+	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/head_content
-	var/content
+	var/title_image
+	var/head_elements
+	var/body_elements
+	var/head_content = ""
+	var/content = ""
 
-/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme = CSS_THEME_DARK)
+/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref, ntheme)
 	if(ismob(nuser))
 		var/mob/M = nuser
 		nuser = M.client
@@ -21,15 +24,15 @@
 	LAZYSET(user.browsers, nwindow_id, src)
 	window_id = nwindow_id
 	if(ntitle)
-		title = capitalize(ntitle)
-	if(nwidth && nheight)
+		title = ntitle
+	if(nwidth)
 		width = nwidth
+	if(nheight)
 		height = nheight
 	if(nref)
 		ref = nref
 	if(ntheme)
 		theme = ntheme
-
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
 
@@ -43,6 +46,9 @@
 
 /datum/browser/proc/set_window_options(nwindow_options)
 	window_options = nwindow_options
+
+/datum/browser/proc/set_title_image(ntitle_image)
+	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
 	if(istype(name, /datum/asset/spritesheet))
@@ -64,7 +70,8 @@
 /datum/browser/proc/add_content(ncontent)
 	content += ncontent
 
-/datum/browser/proc/get_content()
+/datum/browser/proc/get_header()
+
 	for(var/name in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[name]'>"
 
@@ -75,6 +82,10 @@
 	for(var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
 
+	var/title_attributes = "class='uiTitle'"
+	if(title_image)
+		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
+
 	return {"<!DOCTYPE html>
 <html>
 	<head>
@@ -84,16 +95,26 @@
 	</head>
 	<body scroll=auto class='[theme]'>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div class='uiTitle'>[title]</div></div>" : ""]
+			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>
-				[content]
+	"}
+
+/datum/browser/proc/get_footer()
+	return {"
 			</div>
 		</div>
 	</body>
 </html>"}
 
-/datum/browser/proc/open()
-	var/window_size
+/datum/browser/proc/get_content()
+	return {"
+	[get_header()]
+	[content]
+	[get_footer()]
+	"}
+
+/datum/browser/proc/open(use_onclose = 1)
+	var/window_size = ""
 	if(width && height)
 		window_size = "size=[width]x[height];"
 	send_asset(user, "error_handler.js")
@@ -102,8 +123,8 @@
 	if(scripts.len)
 		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
-	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
-	onclose(user, window_id, ref)
+	if(use_onclose)
+		onclose(user, window_id, ref)
 
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
@@ -148,10 +169,10 @@
 	opentime = world.time
 
 	if(stealfocus)
-		. = ..()
+		. = ..(use_onclose = 1)
 	else
 		var/focusedwindow = winget(user, null, "focus")
-		. = ..()
+		. = ..(use_onclose = 1)
 
 		//waits for the window to show up client side before attempting to un-focus it
 		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
@@ -264,6 +285,24 @@
 			. |= global.bitfields[bitfield][flag]
 	else
 		return
+
+
+// This will allow you to show an icon in the browse window
+// This is added to mob so that it can be used without a reference to the browser object
+// There is probably a better place for this...
+/mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
+	/*
+	var/icon/I
+	if(dir >= 0)
+		I = new /icon(icon, icon_state, dir)
+	else
+		I = new /icon(icon, icon_state)
+		dir = "default"
+
+	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
+	src << browse_rsc(I, filename)
+	return filename
+	*/
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)

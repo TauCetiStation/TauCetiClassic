@@ -148,7 +148,6 @@
 			drop_from_inventory(belt)
 		w_uniform = null
 		update_inv_w_uniform()
-		update_suit_sensors()
 	else if (W == gloves)
 		gloves = null
 		update_inv_gloves()
@@ -194,8 +193,6 @@
 		update_inv_wear_mask()
 	else if (W == wear_id)
 		wear_id = null
-		sec_hud_set_ID()
-		sec_hud_set_security_status()
 		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
@@ -291,8 +288,6 @@
 		if(SLOT_WEAR_ID)
 			src.wear_id = W
 			W.equipped(src, slot)
-			sec_hud_set_ID()
-			sec_hud_set_security_status()
 			update_inv_wear_id()
 		if(SLOT_L_EAR)
 			src.l_ear = W
@@ -347,7 +342,6 @@
 			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
-			update_suit_sensors()
 			update_inv_w_uniform()
 		if(SLOT_L_STORE)
 			src.l_store = W

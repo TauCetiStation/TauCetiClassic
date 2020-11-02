@@ -359,6 +359,7 @@
 		return
 
 	if(!user.can_pickup(src))
+		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
 	src.pickup(user)
@@ -371,10 +372,11 @@
 	if (!user || anchored)
 		return
 
-	if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
-		S.remove_from_storage(src)
-
+	if (istype(src.loc, /obj/item/weapon/storage))
+		for(var/mob/M in range(1, src.loc))
+			if (M.s_active == src.loc)
+				if (M.client)
+					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
@@ -438,8 +440,6 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(DROPDEL & flags)
 		qdel(src)
 
@@ -465,8 +465,6 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -477,6 +475,7 @@
 		return FALSE
 	if(QDELETED(M))
 		return FALSE
+
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M

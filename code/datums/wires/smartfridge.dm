@@ -20,12 +20,12 @@ var/const/SMARTFRIDGE_WIRE_IDSCAN    = 4
 		if(S.shock(user, 100))
 			return TRUE
 
-/datum/wires/smartfridge/get_status()
+/datum/wires/smartfridge/get_interact_window()
 	var/obj/machinery/smartfridge/S = holder
 	. += ..()
-	. += "The orange light is [S.seconds_electrified ? "off" : "on"]."
-	. += "The red light is [S.shoot_inventory ? "off" : "blinking"]."
-	. += "A [S.locked ? "purple" : "yellow"] light is on."
+	. += "<br>The orange light is [S.seconds_electrified ? "off" : "on"]."
+	. += "<br>The red light is [S.shoot_inventory ? "off" : "blinking"]."
+	. += "<br>A [S.locked ? "purple" : "yellow"] light is on."
 
 /datum/wires/smartfridge/update_cut(index, mended)
 	var/obj/machinery/smartfridge/S = holder

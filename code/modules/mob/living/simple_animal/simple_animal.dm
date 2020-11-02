@@ -63,18 +63,7 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
-	// See atom_init below.
-	moveset_type = null
-
 /mob/living/simple_animal/atom_init()
-	if(!moveset_type)
-		if(animalistic)
-			moveset_type = /datum/combat_moveset/animal
-		else if(has_head && has_arm && has_leg)
-			moveset_type = /datum/combat_moveset/human
-		else
-			moveset_type = /datum/combat_moveset/living
-
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
@@ -114,8 +103,6 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/simple_animal/updatehealth()
-	med_hud_set_health()
-	med_hud_set_status()
 	return
 
 /mob/living/simple_animal/Life()
@@ -284,8 +271,6 @@
 	stat = DEAD
 	health = 0
 	density = 0
-	med_hud_set_health()
-	med_hud_set_status()
 	return ..()
 
 /mob/living/simple_animal/ex_act(severity)
@@ -401,7 +386,6 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
-	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
 	if(!speak.len)

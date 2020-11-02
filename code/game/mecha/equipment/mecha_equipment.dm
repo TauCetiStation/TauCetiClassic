@@ -15,9 +15,6 @@
 	var/range = MELEE //bitflags
 	reliability = 1000
 	var/salvageable = 1
-	var/sound_detonation = 'sound/mecha/critdestr.ogg'
-	var/sound_attach_equip = 'sound/mecha/mecha_attack_equip.ogg'
-	var/sound_detach_equip = 'sound/mecha/mech_detach_equip.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
@@ -51,8 +48,10 @@
 		src.update_chassis_page()
 		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
-		if(chassis.occupant)
-			chassis.occupant.playsound_local(null, sound_detonation, VOL_EFFECTS_MASTER, null, FALSE)
+		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
+			chassis.occupant.playsound_local(null, 'sound/mecha/weapdestr.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		else
+			chassis.occupant.playsound_local(null, 'sound/mecha/critdestr.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
@@ -97,7 +96,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
-	playsound(src, sound_attach_equip, VOL_EFFECTS_MASTER, 100, FALSE, -3)
 	chassis = M
 	src.loc = M
 	M.log_message("[src] initialized.")
@@ -112,7 +110,6 @@
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
-		playsound(src, sound_detach_equip, VOL_EFFECTS_MASTER, 75, FALSE, -3)
 		update_chassis_page()
 		chassis.log_message("[src] removed from equipment.")
 		chassis = null

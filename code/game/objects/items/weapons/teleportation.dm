@@ -42,6 +42,8 @@ Frequency:
 	var/datum/browser/popup = new(user, "radio", "Persistent Signal Locator")
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "radio")
 	return
 
 /obj/item/weapon/locator/Topic(href, href_list)

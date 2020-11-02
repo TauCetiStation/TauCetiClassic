@@ -102,7 +102,6 @@
 		time.equip(user, src)
 
 /obj/item/weapon/weldpack/M2_fuelback/dropped(mob/user)
-	..()
 	if(user)
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)

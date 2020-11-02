@@ -4,7 +4,6 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
-	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
@@ -495,7 +494,7 @@
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat
+	var/list/dat = list()
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -514,10 +513,12 @@
 	if(legcuffed)
 		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
-	dat += "</table>"
+	dat += {"</table>
+	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
@@ -905,7 +906,6 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
-	med_hud_set_status()
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

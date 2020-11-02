@@ -12,8 +12,6 @@
 	required_enemies = 1
 	required_players_secret = 1
 	recommended_enemies = 4
-	antag_hud_type = ANTAG_HUD_TRAITOR
-	antag_hud_name = "traitor"
 
 	votable = 0
 
@@ -69,6 +67,7 @@
 			greet_traitor(traitor)
 	modePlayer += traitors
 	return ..()
+
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
 	if (config.objectives_disabled)
@@ -145,7 +144,6 @@
 			traitor.objectives += dehead_objective
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
 	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
 	if (!config.objectives_disabled)
 		var/obj_count = 1
@@ -169,7 +167,6 @@
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
 	traitors -= M
 	M.special_role = null
-	remove_antag_hud(antag_hud_type, M.current)
 	M.syndicate_awareness = SYNDICATE_UNAWARE
 	if(isAI(M.current))
 		var/mob/living/silicon/ai/A = M.current
@@ -242,7 +239,7 @@
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 	if(text)
 		antagonists_completion += list(list("mode" = "traitor", "html" = text))
-		text = "<div class='Section'>[text]</div>"
+		text = "<div class='block'>[text]</div>"
 
 	return text
 

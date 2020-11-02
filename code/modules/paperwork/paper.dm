@@ -87,7 +87,7 @@
 		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
-
+	
 	return data
 
 /obj/item/weapon/paper/verb/rename()
@@ -151,7 +151,7 @@
 		if(!spam_flag)
 			spam_flag = TRUE
 			playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER)
-			VARSET_IN(src, spam_flag, FALSE, 20)
+			addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 20)
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
@@ -170,8 +170,8 @@
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(def_zone == O_EYES)
-		user.visible_message("<span class='notice'> [user] holds up a paper and shows it to [M]. </span>", \
-			"<span class='notice'>You show the paper to [M]. </span>")
+		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
+			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
 		if(crumpled)
 			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return

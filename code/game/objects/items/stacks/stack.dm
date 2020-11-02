@@ -138,6 +138,8 @@
 	var/datum/browser/popup = new(user, "stack", "Constructions from [src]")
 	popup.set_content(t1)
 	popup.open()
+
+	onclose(user, "stack")
 	return
 
 /obj/item/stack/Topic(href, href_list)

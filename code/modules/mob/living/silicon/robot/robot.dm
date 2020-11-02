@@ -7,7 +7,6 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
@@ -29,7 +28,7 @@
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
-	var/obj/item/module_active = null
+	var/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null
 	var/module_state_3 = null
@@ -52,6 +51,7 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
+	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
@@ -119,7 +119,14 @@
 		cell_component.wrapped = cell
 		cell_component.installed = 1
 
-	diag_hud_set_borgcell()
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -227,8 +234,6 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
-			sensor_huds = def_sensor_huds
-			sensor_huds += DATA_HUD_MINER
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -371,13 +376,16 @@
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
+				dat += "<NOBR>"
 				dat += text("-- [area_name]")
 				if (alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
-				dat += "<BR>\n"
+				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
+
+	viewalerts = 1
 
 	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
 	popup.set_content(dat)
@@ -469,8 +477,8 @@
 		if(module)
 			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
-				stat("Internal Atmosphere Info: [current_jetpack.name]")
-				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
+				stat("Internal Atmosphere Info", current_jetpack.name)
+				stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
@@ -519,7 +527,7 @@
 
 	if (!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-
+//		if (viewalerts) robot_alerts()
 	return has_alarm
 
 
@@ -656,7 +664,6 @@
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
-			diag_hud_set_borgcell()
 
 	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
@@ -794,7 +801,6 @@
 			cell_component.wrapped = null
 			cell_component.installed = 0
 			updateicon()
-			diag_hud_set_borgcell()
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
@@ -918,7 +924,12 @@
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-
+/*
+		if(activated(obj))
+			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
+		else
+			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
+*/
 	var/datum/browser/popup = new(src, "robotmod", "Modules")
 	popup.set_content(dat)
 	popup.open()

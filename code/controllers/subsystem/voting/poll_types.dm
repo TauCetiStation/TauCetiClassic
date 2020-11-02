@@ -14,27 +14,24 @@
 	can_revote = TRUE
 	can_unvote = FALSE
 	see_votes = FALSE
-	detailed_result = FALSE
 
 	cooldown = 60 MINUTES
 	minimum_win_percentage = 0.75
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
-/datum/poll/restart/get_force_blocking_reason()
+/datum/poll/restart/can_force()
 	. = ..()
-	if(!world.has_round_started())
-		return "Round has not started"
-	if(world.has_round_finished())
-		return "Round has finished"
+	if(!world.has_round_started() || world.has_round_finished())
+		return FALSE
 
-/datum/poll/restart/get_blocking_reason()
+/datum/poll/restart/can_start()
 	. = ..()
-	if(.)
-		return
+	if(!world.has_round_started() || world.has_round_finished())
+		return FALSE
 	for(var/client/C in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
-			return "Admins Online"
+			return FALSE
 
 /datum/poll/restart/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
@@ -56,7 +53,7 @@
 		sleep(50)
 		world.Reboot(end_state = "restart vote")
 	else
-		to_chat(world, "<span class='boldannounce'>Notice: Restart vote will not restart the server automatically because there are active admins on.</span>")
+		to_chat(world, "<span class='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 		message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 
@@ -74,32 +71,25 @@
 	can_revote = TRUE
 	can_unvote = TRUE
 	see_votes = FALSE
-	detailed_result = FALSE
 
-	minimum_win_percentage = 0.501
+	minimum_win_percentage = 0.6
 
 	cooldown = 30 MINUTES
 	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
 
-/datum/poll/crew_transfer/get_force_blocking_reason()
+/datum/poll/crew_transfer/can_force()
 	. = ..()
-	if(.)
-		return
-	if(!world.has_round_started())
-		return "Round has not started"
-	if(world.has_round_finished())
-		return "Round has finished"
+	if(!world.has_round_started() || world.has_round_finished())
+		return FALSE
 
-/datum/poll/crew_transfer/get_blocking_reason()
+/datum/poll/crew_transfer/can_start()
 	. = ..()
-	if(.)
-		return
-	if(SSshuttle.online || SSshuttle.location != 0)
-		return "Shuttle is online"
+	if(!world.has_round_started() || world.has_round_finished() || SSshuttle.online || SSshuttle.location != 0)
+		return FALSE
 	if(security_level >= SEC_LEVEL_RED)
-		return "Security Level is RED or higher"
+		return FALSE
 
 /datum/poll/crew_transfer/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
@@ -136,17 +126,15 @@
 
 	var/pregame = FALSE
 
-/datum/poll/gamemode/get_force_blocking_reason()
+/datum/poll/gamemode/can_force()
 	. = ..()
-	if(.)
-		return
 	if(!world.is_round_preparing())
-		return "Pregame only"
+		return FALSE
 
-/datum/poll/gamemode/get_blocking_reason()
+/datum/poll/gamemode/can_start()
 	. = ..()
-	if(.)
-		return
+	if(!world.is_round_preparing())
+		return FALSE
 
 /datum/poll/gamemode/init_choices()
 	for(var/M in config.votable_modes)
@@ -174,8 +162,8 @@
 /datum/poll/gamemode/on_start()
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		pregame = TRUE
-		if(SSticker.timeLeft < config.vote_period + 15 SECONDS)
-			SSticker.timeLeft = config.vote_period + 15 SECONDS
+		if(SSticker.timeLeft < config.vote_period)
+			SSticker.timeLeft = config.vote_period + 10 SECONDS
 			to_chat(world, "<b>Game start has been delayed due to voting.</b>")
 
 /datum/poll/gamemode/on_end()

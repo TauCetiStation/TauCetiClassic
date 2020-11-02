@@ -66,29 +66,31 @@
 /obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
-	var/dat
+	var/dat = ""
+	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(gravity_generator)
 		if(gravity_generator:on)
-			dat += "<span class='green'><br>Gravity Status: ON</span><br>"
+			dat += "<font color=green><br><tt>Gravity Status: ON</tt></font><br>"
 		else
-			dat += "<span class='red'><br>Gravity Status: OFF</span><br>"
+			dat += "<font color=red><br><tt>Gravity Status: OFF</tt></font><br>"
 
-		dat += "<br>Currently Supplying Gravitons To:<br>"
+		dat += "<br><tt>Currently Supplying Gravitons To:</tt><br>"
 
 		for(var/area/A in gravity_generator:localareas)
 			if(A.has_gravity && gravity_generator:on)
-				dat += "<span class='green'>[A]</span><br>"
-			else if (A.has_gravity)
-				dat += "<span class='yellow'>[A]</span><br>"
-			else
-				dat += "<span class='red'>[A]</span><br>"
+				dat += "<tt><font color=green>[A]</tt></font><br>"
 
-		dat += "<br>Maintainence Functions:<br>"
-		dat += "TURN GRAVITY GENERATOR: "
+			else if (A.has_gravity)
+				dat += "<tt><font color=yellow>[A]</tt></font><br>"
+
+			else
+				dat += "<tt><font color=red>[A]</tt></font><br>"
+
+		dat += "<br><tt>Maintainence Functions:</tt><br>"
 		if(gravity_generator:on)
-			dat += "<a class='red' href='byond://?src=\ref[src];gentoggle=1'>OFF</a>"
+			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=red> TURN GRAVITY GENERATOR OFF. </font></a>"
 		else
-			dat += "<a class='green' href='byond://?src=\ref[src];gentoggle=1'>ON</a>"
+			dat += "<a href='byond://?src=\ref[src];gentoggle=1'><font color=green> TURN GRAVITY GENERATOR ON. </font></a>"
 
 	else
 		dat += "No local gravity generator detected!"
@@ -96,6 +98,8 @@
 	var/datum/browser/popup = new(user, "gravgen", "Generator Control System")
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "gravgen")
 
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)

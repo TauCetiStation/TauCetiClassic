@@ -46,11 +46,9 @@
 	qdel(O)
 
 /obj/item/device/chameleon/dropped()
-	..()
 	disrupt()
 
 /obj/item/device/chameleon/equipped()
-	..()
 	disrupt()
 
 /obj/item/device/chameleon/attack_self(mob/living/user)

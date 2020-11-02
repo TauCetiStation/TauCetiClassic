@@ -396,7 +396,6 @@
 		return
 	var/turf/T = get_turf(target)
 	if(T)
-		playsound(src, 'sound/mecha/mecha_teleport.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_teleport(chassis, T, 4)

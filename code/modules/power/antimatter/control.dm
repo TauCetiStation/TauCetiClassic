@@ -263,7 +263,8 @@
 			user << browse(null, "window=AMcontrol")
 			return
 
-	var/dat
+	var/dat = ""
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
 	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
@@ -289,9 +290,15 @@
 	var/datum/browser/popup = new(user, "AMcontrol", "AntiMatter Control Panel", 420, 500)
 	popup.set_content(dat)
 	popup.open()
+	onclose(user, "AMcontrol")
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=AMcontrol")
+		return FALSE
+
 	. = ..()
 	if(!.)
 		return

@@ -91,7 +91,6 @@
 	mind_initialize()
 	mind.assigned_role = "MODE"
 	mind.special_role = "Ninja"
-	add_antag_hud(ANTAG_HUD_NINJA, "hudninja", src)
 
 	//SSticker.mode.ninjas |= mind
 	return 1

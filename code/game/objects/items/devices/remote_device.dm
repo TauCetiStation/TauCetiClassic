@@ -89,7 +89,6 @@
 					D.secondsElectrified = 0
 				else
 					D.secondsElectrified = 10
-				D.diag_hud_set_electrified()
 		D.add_hiddenprint(user)
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")

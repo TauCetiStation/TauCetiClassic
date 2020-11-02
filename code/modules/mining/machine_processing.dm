@@ -55,45 +55,40 @@
 		if(machine.ores_processing[ore])
 			switch(machine.ores_processing[ore])
 				if(0)
-					dat += "<span class='red'>not processing</span>"
+					dat += "<font color='red'>not processing</font>"
 				if(1)
-					dat += "<span class='orange'>smelting</span>"
+					dat += "<font color='orange'>smelting</font>"
 				if(2)
-					dat += "<span class='yellow'>compressing</span>"
+					dat += "<font color='yellow'>compressing</font>"
 				if(3)
-					dat += "<span class='gray'>alloying</span>"
+					dat += "<font color='gray'>alloying</font>"
 				if(4)
-					dat += "<span class='green'>drop</span>"
+					dat += "<font color='green'>drop</font>"
 		else
-			dat += "<span class='red'>not processing</span>"
-		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>change</a></td></tr>"
+			dat += "<font color='red'>not processing</font>"
+		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
 
 	dat += "</table><hr>"
 
-	dat += "Currently displaying [show_all_ores ? "all ore types" : "only available ore types"] <A href='?src=\ref[src];toggle_ores=1'>[show_all_ores ? "show less" : "show more"]</a><br>"
+	dat += "Currently displaying [show_all_ores ? "all ore types" : "only available ore types"] <A href='?src=\ref[src];toggle_ores=1'>\[[show_all_ores ? "show less" : "show more"]\]</a><br>"
+	dat += "The ore processor is currently <A href='?src=\ref[src];toggle_power=1'>[(machine.active ? "<font color='lime'><b>processing</b></font>" : "<font color='maroon'><b>disabled</b></font>")]</a><br>"
 
-	dat += "The ore processor is currently "
-	if(machine.active)
-		dat += "<A class='green' href='?src=\ref[src];toggle_power=1'><b>processing</b></a>"
-	else
-		dat += "<A class='red' href='?src=\ref[src];toggle_power=1'><b>disabled</b></a>"
-
-	dat += "<br><br>"
+	dat += "<br>"
 	dat += "<hr>"
 
-	dat += "<b>Current unclaimed points:</b> [points]<br>"
+	dat += text("<b>Current unclaimed points:</b> [points]<br>")
 
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>"
-		dat += "<A href='?src=\ref[src];claim=1'>Claim points</a><br>"
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>")
+		dat += text("<A href='?src=\ref[src];claim=1'>Claim points.</A><br>")
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>"
+		dat += text("No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>")
 
 	dat += "<br>"
 
-	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>[show_value_list ? "close" : "open"]</a><br>"
+	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>\[[show_value_list ? "close" : "open"]\]</a><br>"
 	if(show_value_list)
-		dat += "<div class='Section'>[get_ore_values()]</div>"
+		dat += "<div class='statusDisplay'>[get_ore_values()]</div>"
 
 	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
 	popup.set_content(dat)

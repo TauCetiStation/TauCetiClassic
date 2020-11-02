@@ -1,6 +1,3 @@
-/mob
-	hud_possible = list(ANTAG_HUD)
-
 /**
   * Delete a mob
   *
@@ -30,19 +27,13 @@
 
 /mob/atom_init()
 	spawn()
-		if(client)
-			animate(client, color = null, time = 0)
+		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
 		alive_mob_list += src
 	. = ..()
-	prepare_huds()
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -470,6 +461,11 @@
 	return
 
 /mob/Topic(href, href_list)
+	if(href_list["mach_close"])
+		var/t1 = text("window=[href_list["mach_close"]]")
+		unset_machine()
+		src << browse(null, t1)
+
 	if (href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
@@ -1010,7 +1006,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					BP = limb
 
 		BP.implants -= selection
-		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
@@ -1033,10 +1028,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 			anchored = 0
 	return 1
 
-///Get the ghost of this mob (from the mind)
-/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
+/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
+		for(var/mob/dead/observer/G in observer_list)
+			if(G.mind == mind)
+				if(G.can_reenter_corpse || even_if_they_cant_reenter)
+					return G
+				break
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
@@ -1157,24 +1155,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Return null if mob of this type can not scramble messages.
 /mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)
-
-/**
-  * Prepare the huds for this atom
-  *
-  * Goes through hud_possible list and adds the images to the hud_list variable (if not already
-  * cached)
-  */
-/atom/proc/prepare_huds()
-	if(hud_list || !hud_possible)
-		return
-
-	hud_list = list()
-	for(var/hud in hud_possible)
-		var/hint = hud_possible[hud]
-		switch(hint)
-			if(HUD_LIST_LIST)
-				hud_list[hud] = list()
-			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-				hud_list[hud] = I

@@ -285,7 +285,10 @@
 	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
 	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (fire_stacks / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
 
-/mob/living/proc/regular_hud_updates()
+//Mobs on Fire end
+
+/mob/living/regular_hud_updates()
+	..()
 	update_action_buttons()
 
 /mob/living/update_action_buttons()

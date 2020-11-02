@@ -132,10 +132,10 @@
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>")
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points</a><br>")
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
+		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>")
+		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
 
 	for(var/O in stack_list)
 		s = stack_list[O]
@@ -144,7 +144,7 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	dat += text("<br><div class='Section'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
+	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
@@ -294,11 +294,11 @@
 
 /obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
-	dat +="<div class='Section'>"
+	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>"
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>"
+		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)

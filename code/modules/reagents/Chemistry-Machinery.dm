@@ -426,6 +426,11 @@
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
 
+	else if(href_list["close"])
+		usr << browse(null, "window=chemmaster")
+		usr.unset_machine()
+		return FALSE
+
 	else if(href_list["toggle"])
 		mode = !mode
 
@@ -458,7 +463,8 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.open()
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
 		return
 
 	else if(href_list["changebottle"])
@@ -476,7 +482,8 @@
 
 		var/datum/browser/popup = new(usr, "chem_master", name)
 		popup.set_content(dat)
-		popup.open()
+		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.open(1)
 		return
 
 	else if(href_list["set"])
@@ -526,7 +533,8 @@
 					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
 					var/datum/browser/popup = new(usr, "chem_master", name)
 					popup.set_content(dat)
-					popup.open()
+					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+					popup.open(1)
 					return
 
 
@@ -677,19 +685,21 @@
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
 			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
 		else
-			dat += "<LI><span class='disabled'>Create pill</span> (50 units max)"
-			dat += "<LI><span class='disabled'>Create multiple pills</span><BR>"
+			dat += "<LI><span class='linkOff'>Create pill</span> (50 units max)"
+			dat += "<LI><span class='linkOff'>Create multiple pills</span><BR>"
 	else
 		if(beaker && reagents.total_volume)
 			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"
 		else
-			dat += "<LI><span class='disabled'>Create pack</span> (10 units max)<BR>"
+			dat += "<LI><span class='linkOff'>Create pack</span> (10 units max)<BR>"
 	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
+	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
 	popup.set_content(dat)
-	popup.open()
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open(1)
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
@@ -902,6 +912,7 @@
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
 	else if(!beaker)
 		dat += "Please insert beaker.<BR>"
+		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 	else
 		var/datum/reagents/R = beaker.reagents
 		var/datum/reagent/blood/Blood = null
@@ -978,10 +989,13 @@
 			else
 				dat += "nothing<BR>"
 		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
+		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
 	var/datum/browser/popup = new(user, "pandemic", src.name, 575, 400)
 	popup.set_content(dat)
 	popup.open()
+
+	onclose(user, "pandemic")
 
 
 /obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
@@ -1185,6 +1199,8 @@
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
+
+	onclose(user, "reagentgrinder")
 
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)

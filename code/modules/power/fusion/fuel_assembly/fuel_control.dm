@@ -56,7 +56,8 @@
 		dat += "</tr>"
 
 	dat += {"</table><hr>
-		<A href='?src=\ref[src];refresh=1'>Refresh</A>"}
+		<A href='?src=\ref[src];refresh=1'>Refresh</A>
+		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
 
 	var/datum/browser/popup = new(user, "fuel_control", "Fusion Fuel Control Console", 800, 400, src)
 	popup.set_content(dat)
@@ -77,6 +78,10 @@
 				I.StopInjecting()
 			else
 				I.BeginInjecting()
+
+	if( href_list["close"] )
+		usr << browse(null, "window=fuel_control")
+		usr.unset_machine()
 
 	updateDialog()
 

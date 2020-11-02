@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(vote)
 			if(get_vote_time() < 0)
 				active_vote.check_winners()
 				for(var/client/C in voters)
-					C << browse(null, "window=vote")
+					C << browse(null, "window=vote;can_close=0")
 				stop_vote()
 			else
 				for(var/client/C in voters)
@@ -28,9 +28,10 @@ SUBSYSTEM_DEF(vote)
 
 
 /datum/controller/subsystem/vote/proc/interface_client(client/C)
-	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650, nref = src)
+	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650)
+	panel.set_window_options("can_close=0")
 	panel.set_content(interface(C))
-	panel.open()
+	panel.open(0)
 
 /datum/controller/subsystem/vote/proc/start_vote(newvote)
 	if(active_vote)
@@ -101,12 +102,10 @@ SUBSYSTEM_DEF(vote)
 			. += "You <b>can remove</b> vote.<br>"
 		else
 			. += "You <b>can't remove</b> vote.<br>"
-		if(active_vote.minimum_win_percentage)
-			. += "A minimum <b>[active_vote.minimum_win_percentage * 100]%</b> is required to win the option."
 
 		. += "<hr>"
 		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
-
+ 
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
 			. += "<tr><td>"
@@ -121,39 +120,34 @@ SUBSYSTEM_DEF(vote)
 		if(active_vote.description)
 			. += "[active_vote.description]<hr>"
 		if(admin)
-			. += "<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>"
+			. += "(<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>) "
 	else
 		var/any_votes = FALSE
-		. += "<h2>Start a vote:</h2><hr>"
-		. += "<table width='auto'>"
+		. += "<h2>Start a vote:</h2><hr><ul>"
+
 		for(var/P in votes)
 			var/datum/poll/poll = votes[P]
-			if(poll.only_admin && !admin)
-				continue
-			. += "<tr>"
+			. += "<li>"
 			any_votes = TRUE
 
 			if(poll.can_start() && (!poll.only_admin || admin))
-				. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>[poll.name]</a></td>"
-				. += "<td class='collapsing'></td>"
+				. += "<a href='?src=\ref[src];start_vote=\ref[poll]'>[poll.name]</a>"
 			else
-				. += "<td class='collapsing'><s>[poll.name]</s></td>"
+				. += "<s>[poll.name]</s>"
 				if(admin)
-					if(!poll.get_force_blocking_reason())
-						. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>force</a></td>"
+					if(poll.can_force())
+						. += " <a href='?src=\ref[src];start_vote=\ref[poll]'>force</a> "
 					else
-						. += "<td class='collapsing'><s>\[force]</s></td>"
-				else
-					. += "<td class='collapsing'></td>"
+						. += " <s>\[force]</s> "
 			if(admin)
-				. += "<td class='collapsing'><a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin ? "Only admin" : "Allowed"]</a></td>"
-			. += "<td><i>[poll.get_blocking_reason()]</i></td>"
-			. += "</tr>"
+				. += "\t(<a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin?"Only admin":"Allowed"]</a>)"
+			. += "</li>"
 
 		if(!any_votes)
 			. += "<li><i>There is no available votes here now.</i></li>"
 
-		. += "</table><hr>"
+		. += "</ul><hr>"
+	. += "<a href='?src=\ref[src];close=1' style='position:absolute;right:50px'>Close</a>"
 	return .
 
 

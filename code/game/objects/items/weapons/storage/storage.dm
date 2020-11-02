@@ -282,10 +282,9 @@
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-		W.set_alt_apperances_layers()
-		W.Move(new_location)
+		W.loc = new_location
 	else
-		W.Move(get_turf(src))
+		W.loc = get_turf(src)
 
 	if(usr && !NoUpdate)
 		update_ui_after_item_removal()
@@ -335,7 +334,6 @@
 	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
-	..()
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)

@@ -32,7 +32,8 @@
 			var/obj/structure/ore_box/BOX = locate(/obj/structure/ore_box, input.loc)
 			var/i = 0
 			for (var/obj/item/weapon/ore/O in BOX.contents)
-				O.Move(output.loc)
+				BOX.contents -= O
+				O.loc = output.loc
 				i++
 				if (i>=10)
 					return
@@ -42,7 +43,7 @@
 			for (i = 0; i<10; i++)
 				O = locate(/obj/item, input.loc)
 				if (O)
-					O.Move(output.loc)
+					O.loc = src.output.loc
 				else
 					return
 	return
