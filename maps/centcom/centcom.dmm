@@ -581,6 +581,18 @@
 	icon_state = "neutral"
 	},
 /area/centcom/holding)
+"abq" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/scalpel,
+/obj/item/stack/cable_coil,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
+	nitrogen = 103.984;
+	oxygen = 0
+	},
+/area/shuttle/vox/arkship)
 "abs" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid10";
@@ -5602,7 +5614,7 @@
 	},
 /area/velocity)
 "auu" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -15269,15 +15281,8 @@
 	},
 /area/custom/abductor_ship)
 "bbS" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/scalpel,
-/obj/item/stack/cable_coil,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/simulated/floor{
-	icon_state = "showroomfloor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
 /area/shuttle/vox/arkship)
 "bbX" = (
@@ -16182,7 +16187,7 @@
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
 "bAb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -16602,7 +16607,7 @@
 	},
 /area/velocity)
 "ckb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
@@ -16617,7 +16622,7 @@
 	},
 /area/velocity)
 "cmb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
@@ -16731,7 +16736,7 @@
 	},
 /area/velocity)
 "cxb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -16839,7 +16844,7 @@
 	},
 /area/velocity)
 "cJb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -17223,7 +17228,7 @@
 	},
 /area/shuttle/vox/arkship)
 "dkb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23513,6 +23518,9 @@
 	},
 /turf/space,
 /area/space)
+"ofb" = (
+/turf/space,
+/area/shuttle/vox/transit)
 "ogb" = (
 /turf/space,
 /area/shuttle/escape_pod4/transit)
@@ -23542,7 +23550,7 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
 "omb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "onb" = (
@@ -24144,7 +24152,7 @@
 /area/shuttle/escape/centcom)
 "pxb" = (
 /obj/machinery/light,
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "pyb" = (
@@ -24298,7 +24306,7 @@
 	},
 /area/shuttle/escape/centcom)
 "pTb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
@@ -24379,7 +24387,7 @@
 /area/shuttle/escape/centcom)
 "qbb" = (
 /obj/machinery/light,
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
 	pixel_y = -32
@@ -24441,7 +24449,7 @@
 	},
 /area/shuttle/supply/velocity)
 "qsd" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -24460,7 +24468,7 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "rkK" = (
-/obj/structure/flora/pottedplant/tropicalfern{
+/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -24567,7 +24575,7 @@
 /area/velocity)
 "voK" = (
 /obj/structure/table/glass,
-/obj/structure/flora/plant/deskleaf{
+/obj/item/weapon/twohanded/flora/deskleaf{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor{
@@ -24666,7 +24674,7 @@
 /area/shuttle/vox/arkship)
 "ygn" = (
 /obj/structure/table/reinforced,
-/obj/structure/flora/plant,
+/obj/item/weapon/twohanded/flora,
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Paper"
 	},
@@ -78365,7 +78373,7 @@ yfr
 aXI
 aYA
 aZC
-bbS
+abq
 dcx
 yfr
 aXd

@@ -38,15 +38,14 @@
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
 		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
-		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
+		dat += "<a [!buyable ? "class='disabled'" : null] href ='?src=\ref[src];buy=\ref[T]'>Buy</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"
 
-	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
+	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)

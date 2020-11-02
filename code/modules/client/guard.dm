@@ -88,7 +88,7 @@
 		geoip_weight += geoip_data["ipintel"]>=0.9 ? geoip_data["ipintel"] : 0
 
 		// todo: button to force new geoip
-		new_report += {"<div class='block'><h3>GeoIP ([geoip_weight]):</h3>
+		new_report += {"<div class='Section'><h3>GeoIP ([geoip_weight]):</h3>
 		[first_entry ? "" : "Cached geoip from [time2text(geoip_data["date"], "DD.MM.YYYY")] for address: [holder.address]<br>"]
 		Connected from ([geoip_data["country"]], [geoip_data["regionName"]], [geoip_data["city"]]) using ISP: ([geoip_data["isp"]])<br>
 		Remember: next flags may be false-positives!<br>
@@ -104,7 +104,7 @@
 		if(!(geoip_data["countryCode"] in config.guard_whitelisted_country_codes))
 			country_weight += 0.5
 
-			new_report += {"<div class='block'><h3>Country ([geoip_data["countryCode"]]/[geoip_data["country"]]): [country_weight]</h3></div>"}
+			new_report += {"<div class='Section'><h3>Country ([geoip_data["countryCode"]]/[geoip_data["country"]]): [country_weight]</h3></div>"}
 
 			new_short_report += "[geoip_data["country"]]; "
 
@@ -116,7 +116,7 @@
 		if(chat_data["cookie_match"])
 			cookie_weight += 2
 
-			new_report += {"<div class='block'><h3>Cookie ([cookie_weight]):</h3>
+			new_report += {"<div class='Section'><h3>Cookie ([cookie_weight]):</h3>
 			Matched: [chat_data["cookie_match"]["ckey"]], [chat_data["cookie_match"]["ip"]], [chat_data["cookie_match"]["compid"]].<br>
 			There may be other accounts, we show only first.</div>"}
 
@@ -134,7 +134,7 @@
 			if(first_entry)
 				charset_weight += 0.5 // how he know
 
-			new_report += {"<div class='block'><h3>Charset ([charset_weight]):</h3>
+			new_report += {"<div class='Section'><h3>Charset ([charset_weight]):</h3>
 			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
 
 			new_short_report += "Charset test failed(tw: [charset_weight]); "
@@ -151,7 +151,7 @@
 
 		related_db_weight += holder.related_accounts_cid ? 0.5 : 0
 
-		new_report += {"<div class='block'><h3>Related accounts ([related_db_weight]):</h3>
+		new_report += {"<div class='Section'><h3>Related accounts ([related_db_weight]):</h3>
 		By CID: [holder.related_accounts_cid ? holder.related_accounts_cid : "none"];<br>
 		By IP:  [holder.related_accounts_ip ? holder.related_accounts_ip : "none"];</div>"}
 
@@ -168,7 +168,7 @@
 
 		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
-		new_report += {"<div class='block'><h3>Differents CID's ([multicid_weight]):</h3>
+		new_report += {"<div class='Section'><h3>Differents CID's ([multicid_weight]):</h3>
 		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
 
 		new_short_report += "Has [holder.prefs.cid_list.len] CID's (tw: [multicid_weight]); "

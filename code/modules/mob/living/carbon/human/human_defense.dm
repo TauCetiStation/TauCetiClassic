@@ -292,10 +292,24 @@
 			BP.sabotaged = 1
 		return TRUE
 
+	var/list/alt_alpperances_vieawers
+	if(I.alternate_appearances)
+		for(var/key in I.alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = I.alternate_appearances[key]
+			if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj))
+				continue
+			var/obj/alternate_obj = AA.alternate_obj
+			alt_alpperances_vieawers = list()
+			for(var/mob/alt_viewer in viewers(src))
+				if(!alt_viewer.client || !(alt_viewer in AA.hudusers))
+					continue
+				alt_alpperances_vieawers += alt_viewer
+				alt_viewer.show_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [alternate_obj.name] by [user]!</span>", SHOWMSG_VISUAL)
+
 	if(I.attack_verb.len)
-		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
+		visible_message("<span class='userdanger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 	else
-		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
+		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
 	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 100 || !I.force)

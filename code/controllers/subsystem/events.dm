@@ -4,15 +4,6 @@ SUBSYSTEM_DEF(events)
 	// Report events at the end of the rouund
 	var/report_at_round_end = 0
 
-    // UI vars
-	var/window_x = 700
-	var/window_y = 600
-	var/table_options = " align='center'"
-	var/head_options = " style='font-weight:bold;'"
-	var/row_options1 = " width='85px'"
-	var/row_options2 = " width='260px'"
-	var/row_options3 = " width='150px'"
-
     // Event vars
 	var/datum/event_container/selected_event_container = null
 	var/list/active_events = list()
@@ -71,7 +62,7 @@ SUBSYSTEM_DEF(events)
 
 	var/html = GetInteractWindow()
 
-	var/datum/browser/popup = new(user, "event_manager", "Event Manager", window_x, window_y)
+	var/datum/browser/popup = new(user, "event_manager", "Event Manager", 700, 600)
 	popup.set_content(html)
 	popup.open()
 
@@ -98,7 +89,7 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/GetInteractWindow()
 	var/html = "<A align='right' href='?src=\ref[src];refresh=1'>Refresh</A>"
 	if(!config.allow_random_events)
-		html = "<span class='alert'>Random events has been disabled by SERVER!</span><br>" + html
+		html = "<span class='red'>Random events has been disabled by SERVER!</span><br>" + html
 	else
 		var/pause_all = FALSE
 		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
@@ -112,10 +103,10 @@ SUBSYSTEM_DEF(events)
 		var/event_time = max(0, selected_event_container.next_event_time - world.time)
 		html += "<A align='right' href='?src=\ref[src];back=1'>Back</A><br>"
 		html += "Time till start: [round(event_time / 600, 0.1)]<br>"
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Available [severity_to_string[selected_event_container.severity]] Events (queued & running events will not be displayed)</h2>"
-		html += "<table[table_options]>"
-		html += "<tr[head_options]><td[row_options2]>Name </td><td>Weight </td><td>MinWeight </td><td>MaxWeight </td><td>OneShot </td><td>Enabled </td><td><span class='alert'>CurrWeight </span></td><td>Remove</td></tr>"
+		html += "<table align='center'>"
+		html += "<tr><th class='collapsing'>Name</th><th>Weight</th><th>MinWeight</th><th>MaxWeight</th><th>OneShot</th><th>Enabled</th><th><span class='red'>CurrWeight</span></th><th>Remove</th></tr>"
 		for(var/datum/event_meta/EM in selected_event_container.available_events)
 			html += "<tr>"
 			html += "<td>[EM.name]</td>"
@@ -124,16 +115,16 @@ SUBSYSTEM_DEF(events)
 			html += "<td>[EM.max_weight]</td>"
 			html += "<td><A align='right' href='?src=\ref[src];toggle_oneshot=\ref[EM]'>[EM.one_shot]</A></td>"
 			html += "<td><A align='right' href='?src=\ref[src];toggle_enabled=\ref[EM]'>[EM.enabled]</A></td>"
-			html += "<td><span class='alert'>[EM.get_weight(number_active_with_role())]</span></td>"
+			html += "<td><span class='red'>[EM.get_weight(number_active_with_role())]</span></td>"
 			html += "<td><A align='right' href='?src=\ref[src];remove=\ref[EM];EC=\ref[selected_event_container]'>Remove</A></td>"
 			html += "</tr>"
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Add Event</h2>"
-		html += "<table[table_options]>"
-		html += "<tr [head_options]><td[row_options2]>Name</td><td[row_options2]>Type</td><td[row_options1]>Weight</td><td[row_options1]>OneShot</td></tr>"
+		html += "<table align='center'>"
+		html += "<tr><th>Name</th><th class='collapsing'>Type</th><th class='collapsing'>Weight</th><th class='collapsing'>OneShot</th></tr>"
 		html += "<tr>"
 		html += "<td><A align='right' href='?src=\ref[src];set_name=\ref[new_event]'>[new_event.name ? new_event.name : "Enter Event"]</A></td>"
 		html += "<td><A align='right' href='?src=\ref[src];set_type=\ref[new_event]'>[new_event.event_type ? new_event.event_type : "Select Type"]</A></td>"
@@ -145,11 +136,11 @@ SUBSYSTEM_DEF(events)
 		html += "</div>"
 	else
 		html += "<A align='right' href='?src=\ref[src];toggle_report=1'>Round End Report: [report_at_round_end ? "On": "Off"]</A><br>"
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Event Start</h2>"
 
-		html += "<table[table_options]>"
-		html += "<tr[head_options]><td[row_options1]>Severity</td><td[row_options1]>Starts At</td><td[row_options1]>Starts In</td><td[row_options3]>Adjust Start</td><td[row_options1]>Pause</td><td[row_options1]>Interval Mod</td></tr>"
+		html += "<table align='center'>"
+		html += "<tr><th>Severity</th><th class='collapsing'>Starts At</th><th class='collapsing'>Starts In</th><th class='collapsing'>Adjust Start</th><th class='collapsing'>Pause</th><th class='collapsing'>Interval Mod</th></tr>"
 		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 			var/datum/event_container/EC = event_containers[severity]
 			var/next_event_at = max(0, EC.next_event_time - world.time)
@@ -173,10 +164,10 @@ SUBSYSTEM_DEF(events)
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Next Event</h2>"
-		html += "<table[table_options]>"
-		html += "<tr[head_options]><td[row_options1]>Severity</td><td[row_options2]>Name</td><td[row_options3]>Event Rotation</td><td>Clear</td></tr>"
+		html += "<table align='center'>"
+		html += "<tr><th>Severity</th><th class='collapsing'>Name</th><th class='collapsing'>Event Rotation</th><th class='collapsing'>Clear</th></tr>"
 		for(var/severity in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 			var/datum/event_container/EC = event_containers[severity]
 			var/datum/event_meta/EM = EC.next_event
@@ -189,11 +180,11 @@ SUBSYSTEM_DEF(events)
 		html += "</table>"
 		html += "</div>"
 
-		html += "<div class='block'>"
+		html += "<div class='Section'>"
 		html += "<h2>Running Events</h2>"
 		html += "Estimated times, affected by master controller delays."
-		html += "<table[table_options]>"
-		html += "<tr[head_options]><td[row_options1]>Severity</td><td[row_options2]>Name</td><td[row_options1]>Ends At</td><td[row_options1]>Ends In</td><td[row_options3]>Stop</td></tr>"
+		html += "<table align='center'>"
+		html += "<tr><th>Severity</th><th class='collapsing'>Name</th><th class='collapsing'>Ends At</th><th class='collapsing'>Ends In</th><th class='collapsing'>Stop</th></tr>"
 		for(var/datum/event/E in active_events)
 			if(!E.event_meta)
 				continue
