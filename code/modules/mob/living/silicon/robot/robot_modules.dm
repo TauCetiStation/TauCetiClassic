@@ -97,7 +97,6 @@
 	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
 	modules += new /obj/item/weapon/scalpel/manager(src)
 	modules += new /obj/item/weapon/FixOVein(src)
@@ -138,7 +137,6 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/chemistry(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/ointment(src, 25)
@@ -218,7 +216,6 @@
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
-	modules += new /obj/item/borg/sight/hud/sec(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
@@ -318,7 +315,6 @@
 
 /obj/item/weapon/robot_module/miner/atom_init()
 	. = ..()
-	modules += new /obj/item/borg/sight/hud/miner(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)

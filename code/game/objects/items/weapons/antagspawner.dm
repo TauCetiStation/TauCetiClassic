@@ -23,9 +23,9 @@
 		to_chat(user, "The teleporter is out of power.")
 		return
 	to_chat(user, "<span class='notice'>Searching for available borg personality. Please wait 30 seconds...</span>")
+	used = TRUE
 	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE)
 	if(borg_candicates.len)
-		used = TRUE
 		var/mob/M = pick(borg_candicates)
 		spawn_antag(M.client, get_turf(src.loc), "syndieborg")
 	else
@@ -39,6 +39,6 @@
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
 	SSticker.mode.syndicates += R.mind
-	SSticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", R)
 	R.faction = "syndicate"

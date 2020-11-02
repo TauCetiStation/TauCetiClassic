@@ -545,9 +545,6 @@ SUBSYSTEM_DEF(job)
 
 //		H.update_icons()
 
-	H.hud_updateflag |= (1 << ID_HUD)
-	H.hud_updateflag |= (1 << IMPLOYAL_HUD)
-	H.hud_updateflag |= (1 << SPECIALROLE_HUD)
 	return 1
 
 /datum/controller/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)

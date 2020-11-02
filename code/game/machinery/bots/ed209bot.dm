@@ -493,7 +493,7 @@
 		if(L.lasertag_color != lasertag_color)
 			disabled = TRUE
 			qdel(Proj)
-			addtimer(VARSET_CALLBACK(src, disabled, FALSE), 100)
+			VARSET_IN(src, disabled, FALSE, 100)
 		return
 	return ..()
 

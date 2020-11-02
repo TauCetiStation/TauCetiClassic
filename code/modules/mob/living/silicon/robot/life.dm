@@ -60,6 +60,7 @@
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
 			set_light(0)
+	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
@@ -185,16 +186,6 @@
 
 	regular_hud_updates()
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)
-		hud.hud.process_hud(src)
-	else
-		switch(src.sensor_mode)
-			if (SEC_HUD)
-				process_sec_hud(src,0)
-			if (MED_HUD)
-				process_med_hud(src,0)
-
 	if (src.healths)
 		if (src.stat != DEAD)
 			if(istype(src,/mob/living/silicon/robot/drone))
@@ -233,17 +224,13 @@
 			src.healths.icon_state = "health7"
 
 	if (src.syndicate && src.client)
-		if(SSticker.mode.name == "traitor")
-			for(var/datum/mind/tra in SSticker.mode.traitors)
-				if(tra.current)
-					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
-					src.client.images += I
 		if(src.connected_ai)
 			src.connected_ai.connected_robots -= src
 			src.connected_ai = null
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", src)
 				SSticker.mode.traitors += src.mind
 
 	if (src.cell)
@@ -252,11 +239,11 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge", /obj/screen/alert/lowcell, 1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 60)
 			if(0.25 to 0.5)
-				throw_alert("charge", /obj/screen/alert/lowcell, 2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 40)
 			if(0.01 to 0.25)
-				throw_alert("charge", /obj/screen/alert/lowcell, 3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 20)
 			else
 				throw_alert("charge", /obj/screen/alert/emptycell)
 	else

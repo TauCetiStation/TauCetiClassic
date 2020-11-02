@@ -25,7 +25,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "radio-recv")
 
 /obj/machinery/media/receiver/boombox/proc/update_on()
 	if(on)

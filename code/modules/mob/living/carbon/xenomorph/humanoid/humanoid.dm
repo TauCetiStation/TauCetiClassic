@@ -42,7 +42,11 @@
 	return (move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
-	return ..() && istype(O, /obj/item/clothing/mask/facehugger)
+	if(..() && istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
+	else
+		to_chat(src, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
+		return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)
 	. = ..()

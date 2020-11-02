@@ -51,6 +51,20 @@
 	if (config && config.log_asset)
 		global.asset_log << "\[[time_stamp()]]ASSET: [text][log_end]"
 
+/proc/log_tgui(user_or_client, text)
+	if (config.log_tgui)
+		var/entry = ""
+		if(!user_or_client)
+			entry += "no user"
+		else if(istype(user_or_client, /mob))
+			var/mob/user = user_or_client
+			entry += "[user.ckey] (as [user])"
+		else if(istype(user_or_client, /client))
+			var/client/client = user_or_client
+			entry += "[client.ckey]"
+		entry += ":\n[text]"
+		global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
+
 /proc/log_game(text)
 	if (config.log_game)
 		global.game_log << "\[[time_stamp()]]GAME: [text][log_end]"

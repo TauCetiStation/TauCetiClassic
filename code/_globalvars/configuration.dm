@@ -4,6 +4,7 @@ var/host = null
 var/join_motd = null
 var/host_announcements
 var/join_test_merge = null
+var/test_merges
 var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"

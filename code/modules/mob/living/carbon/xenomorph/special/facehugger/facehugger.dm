@@ -160,6 +160,7 @@
 	return
 
 /obj/item/clothing/mask/facehugger/equipped(mob/living/carbon/C)
+	..()
 	Attach(C)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
@@ -296,7 +297,9 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
+			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		target.status_flags |= XENO_HOST
+		target.med_hud_set_status()
 
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", "<span class='userdanger'>[src] violates your face!</span>")

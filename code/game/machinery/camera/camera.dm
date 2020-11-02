@@ -40,7 +40,7 @@
 	CA.forceMove(src)
 	assembly = CA
 	assembly.state = 4
-	
+
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network

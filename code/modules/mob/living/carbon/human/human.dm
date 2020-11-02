@@ -6,8 +6,9 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, BROKEN_HUD)
 	//icon_state = "body_m_s"
-	var/list/hud_list[9]
+
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
 	var/heart_beat = 0
@@ -25,6 +26,8 @@
 	var/massages_done_right = 0
 
 	throw_range = 2
+
+	moveset_type = /datum/combat_moveset/human
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -115,16 +118,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	reagents = R
 	R.my_atom = src
 
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
-
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
@@ -143,11 +136,24 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
-	my_master = null
+	if(my_master)
+		my_master.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_master)
+		my_master = null
 	if(my_golem)
+		my_golem.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_golem)
 		my_golem.death()
 	my_golem = null
 	return ..()
+
+/mob/living/carbon/human/prepare_data_huds()
+	//Update med hud images...
+	..()
+	//...sec hud images...
+	sec_hud_set_ID()
+	sec_hud_set_implants()
+	sec_hud_set_security_status()
+	//...and display them.
+	add_to_all_data_huds()
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -500,9 +506,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dat += "<tr><td><B>Bandages:</B></td><td><A href='?src=\ref[src];bandages=1'>Remove</A></td></tr>"
 	dat += "<tr><td><B>Splints:</B></td><td><A href='?src=\ref[src];splints=1'>Remove</A></td></tr>"
 
-	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 640)
 	popup.set_content(dat.Join())
@@ -777,10 +781,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 								if(hasHUD(usr, "security"))
 									if(setcriminal != "Cancel")
 										R.fields["criminal"] = setcriminal
+										sec_hud_set_security_status()
 										modified = 1
 
 										spawn()
-											hud_updateflag |= 1 << WANTED_HUD
+
 											if(istype(usr,/mob/living/carbon/human))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
@@ -1387,6 +1392,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
 
+/mob/living/carbon/human/can_pickup(obj/O)
+	// Its worst
+	if(istype(O, /obj/item/weapon/twohanded))
+		var/obj/item/weapon/twohanded/T = O
+		if(T.wielded)
+			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
+			return FALSE
+		if(get_inactive_hand() && T.only_twohand)
+			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
+			return FALSE
+	return TRUE
+
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
@@ -1873,7 +1890,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
 /mob/living/carbon/human/proc/IPC_change_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
 	if(stat)
@@ -1909,7 +1926,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/proc/IPC_toggle_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
@@ -1932,6 +1949,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
@@ -2026,13 +2044,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
-
-/mob/living/carbon/update_stat()
-	if(stat == DEAD)
-		return
-	if(IsSleeping())
-		stat = UNCONSCIOUS
-		blinded = TRUE
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
@@ -2163,7 +2174,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	tod = null
 	timeofdeath = 0
 	dead_mob_list -= src
-	update_health_hud()
+	med_hud_set_health()
 	apply_brain_damage(deadtime)
 
 /mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)

@@ -25,7 +25,7 @@
 /datum/event/infestation/announce()
 	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
 
-/datum/event/infestation/start()	
+/datum/event/infestation/start()
 	locstring = pick(INFESTATION_LOCATIONS)
 	location = INFESTATION_LOCATIONS[locstring]
 

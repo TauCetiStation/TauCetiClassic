@@ -682,6 +682,7 @@
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
+	desc = "The puddle looks infinitely deep and infinitely lonely on the space station."
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attack_hand(mob/M)

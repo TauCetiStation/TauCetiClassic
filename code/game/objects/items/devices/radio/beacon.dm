@@ -140,13 +140,8 @@
 			s2.set_up(3, 1, beacon)
 			s.start()
 			s2.start()
-			H.loc = get_turf(beacon)
+			H.forceMove(get_turf(beacon))
 		if (src)
 			qdel(src)
 		H.cut_overlay(I)
 		qdel(I)
-
-
-
-
-

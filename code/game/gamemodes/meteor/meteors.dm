@@ -7,7 +7,7 @@ var/global/list/obj/effect/meteor/meteors_normal = list(
 	)
 // for threatening meteor event
 var/global/list/obj/effect/meteor/meteors_threatening = list(
-	/obj/effect/meteor/medium = 4, 
+	/obj/effect/meteor/medium = 4,
 	/obj/effect/meteor/big = 8,
 	)
 // for catastrophic meteor event
@@ -148,7 +148,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/ram_turf(var/turf/T)
 	//first bust whatever is in the turf
-	for(var/obj/structure/window/W in T)	// window protects grille 
+	for(var/obj/structure/window/W in T)	// window protects grille
 		W.ex_act(hitpwr)
 		if(!QDELETED(W))
 			return

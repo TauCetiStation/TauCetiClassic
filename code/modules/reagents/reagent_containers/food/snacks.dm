@@ -303,6 +303,7 @@
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
 	filling_color = "#d9c386"
+	var/donut_sprite_type = "regular"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	name = "donut"
@@ -316,6 +317,7 @@
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted donut"
+		donut_sprite_type = "frosted"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "Chaos Donut"
@@ -357,6 +359,7 @@
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "berryjuice" = 5)
@@ -366,11 +369,13 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "slimejelly" = 5)
@@ -380,11 +385,13 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "cherryjelly" = 5)
@@ -394,6 +401,7 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"

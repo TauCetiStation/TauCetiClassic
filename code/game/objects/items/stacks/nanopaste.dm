@@ -36,5 +36,7 @@
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
 				return TRUE
+			else
+				return FALSE
 
 	return ..()

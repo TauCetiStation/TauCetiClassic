@@ -66,3 +66,9 @@
 #define HOSTILE_STANCE_ATTACK 	 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 	 5
+
+// Combo system.
+// Sources of movesets.
+#define MOVESET_JOB "moveset_job"
+#define MOVESET_SPECIES "moveset_species"
+#define MOVESET_TYPE "moveset_type"

@@ -7,8 +7,20 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
+	for(var/datum/atom_hud/data/medical/medhud in global.huds)
+		medhud.add_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diaghud.add_to_hud(src)
+	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
+	sechud.add_to_hud(src)
+
+	if(moveset_type)
+		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 /mob/living/Destroy()
+	allowed_combos = null
+	known_combos = null
+	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
@@ -20,11 +32,21 @@
 			else
 				S.be_replaced()
 
+	remove_from_all_data_huds()
+
 	living_list -= src
 	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
@@ -205,6 +227,8 @@
 		stat = CONSCIOUS
 	else
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		med_hud_set_health()
+		med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -457,7 +481,7 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	update_health_hud()
+	med_hud_set_health()
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
@@ -529,8 +553,11 @@
 	// make the icons look correct
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
+
 	regenerate_icons()
-	update_health_hud()
+
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -544,11 +571,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
-/mob/living/proc/update_health_hud()
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
-
 /mob/living/proc/UpdateDamageIcon()
 	return
 
@@ -984,11 +1006,9 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		spawn(0)
-			sleep(25)
-			if(src)
-				clear_fullscreen("flash", 25)
-		return 1
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/has_brain()
 	return TRUE
@@ -1041,24 +1061,53 @@
 	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)
 		if(l_hand)
+			if(l_hand.alternate_appearances)
+				viewing = alternate_attack_animation(l_hand, A, viewing)
 			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
 	else
 		if(r_hand)
+			if(r_hand.alternate_appearances)
+				viewing = alternate_attack_animation(r_hand, A, viewing)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-				viewing |= M.client
+
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
+// returns a new list of viewers without viewers with alternate_appearance
+/mob/living/proc/alternate_attack_animation(obj/item/item, atom/target, list/viewing)
+	if(item.alternate_appearances)
+		var/image/I
+		for(var/key in item.alternate_appearances)
+			var/list/alt_viewing = list()
+			var/datum/atom_hud/alternate_appearance/basic/AA = item.alternate_appearances[key]
+			for(var/client/C in viewing)
+				if(!(C.mob in AA.hudusers))
+					continue
+				alt_viewing += C
+				viewing -= C
+
+			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+			flick_overlay(I, alt_viewing, 5)
+			I.pixel_z = 16
+			animate(I, pixel_z = 0, alpha = 125, time = 3)
+	return viewing
 
 /mob/living/Stat()
 	..()

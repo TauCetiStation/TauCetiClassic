@@ -24,6 +24,8 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 	pull_size_ratio = 1.5
 
+	moveset_type = /datum/combat_moveset/human
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"

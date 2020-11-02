@@ -29,7 +29,7 @@
 		product.reagents.add_reagent("blood",30,data)
 
 		virusing = TRUE
-		addtimer(VARSET_CALLBACK(src, virusing, FALSE), 1200)
+		VARSET_IN(src, virusing, FALSE, 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
@@ -63,8 +63,6 @@
 	var/datum/browser/popup = new(user, "computer", "[src.name]", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "computer")
 
 /obj/machinery/computer/curer/process()
 	..()

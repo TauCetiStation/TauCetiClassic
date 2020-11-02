@@ -1,4 +1,4 @@
-/** 
+/**
   * ADRENALINE BOOST
   *  Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
   *  Movement impairing would indicate drugs and the like.

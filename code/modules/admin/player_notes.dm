@@ -15,7 +15,7 @@
 	var/admin_key = admin ? ckey(admin.ckey) : "Adminbot"
 	secret = !!secret
 
-	var/sql = {"INSERT INTO erro_messages (type, targetckey, adminckey, text, timestamp, server_ip, server_port, round_id, secret) 
+	var/sql = {"INSERT INTO erro_messages (type, targetckey, adminckey, text, timestamp, server_ip, server_port, round_id, secret)
 	VALUES ('note', '[key]', '[admin_key]', '[sanitize_sql(note)]', Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[global.round_id]', '[secret]')"}
 	var/DBQuery/new_notes = dbcon.NewQuery(sql)
 	new_notes.Execute()

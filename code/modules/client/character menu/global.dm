@@ -8,6 +8,8 @@
 	. += 				"<tr><td><a href='?_src_=prefs;preference=UIcolor'><b>Change color</b></a> <table border cellspacing='0' style='display:inline;' bgcolor='[UI_style_color]'><tr><td width='20' height='15'></td></tr></table></td></tr>"
 	. += 				"<tr><td>Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a></td></tr>"
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
+	. +=				"<tr><td>TGUI Window Mode:</b> <a href='?_src_=prefs;preference=tgui_fancy'><b>[tgui_fancy ? "Fancy (default)" : "Compatible (slower)"]</a></td></tr>"
+	. += 				"<tr><td>TGUI Window Placement:</b> <a href='?_src_=prefs;preference=tgui_lock'><b>[tgui_lock ? "Primary Monitor" : "Free (default)"]</a></td></tr>"
 	if(config.allow_Metadata)
 		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
@@ -121,6 +123,12 @@
 			var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style) as null|anything in sortList(global.available_ui_styles)
 			if(pickedui)
 				UI_style = pickedui
+
+		if("tgui_fancy")
+			tgui_fancy = !tgui_fancy
+
+		if("tgui_lock")
+			tgui_lock = !tgui_lock
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

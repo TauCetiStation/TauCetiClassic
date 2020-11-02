@@ -13,9 +13,9 @@
 	r_pocket = /obj/item/weapon/plastique
 	l_pocket = /obj/item/weapon/plastique
 	suit_store = /obj/item/weapon/tank/oxygen
-	
+
 	l_ear = /obj/item/device/radio/headset/ninja
-	
+
 	implants = list(/obj/item/weapon/implant/dexplosive = BP_HEAD)
 
 	internals_slot = SLOT_S_STORE

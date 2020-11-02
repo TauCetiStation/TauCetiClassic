@@ -81,6 +81,7 @@
 
 		greet_malf(AI_mind)
 		AI_mind.special_role = "malfunction"
+		add_antag_hud(ANTAG_HUD_MALF, "hudmalai", AI_mind.current)
 
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = TRUE
@@ -303,7 +304,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "malfunction", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

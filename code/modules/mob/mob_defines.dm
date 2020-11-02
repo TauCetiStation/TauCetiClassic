@@ -38,6 +38,7 @@
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
 	var/obj/screen/nutrition_icon = null
+	var/obj/screen/charge_icon = null
 
 	var/obj/screen/xenomorph_plasma_display = null
 	var/obj/screen/nightvisionicon = null

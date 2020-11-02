@@ -17,11 +17,6 @@ var/global/list/rus_occupations
 var/global/list/rus_bays
 var/global/list/rus_local_terms
 
-var/global/list/eng_adjectives
-var/global/list/eng_verbs
-var/global/list/eng_drinks
-var/global/list/eng_nouns
-
 //loaded on startup because of "
 //would include in rsc if ' was used
 

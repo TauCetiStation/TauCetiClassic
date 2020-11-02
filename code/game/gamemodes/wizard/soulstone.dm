@@ -37,8 +37,6 @@
 	for(var/mob/living/simple_animal/shade/A in src)
 		dat += "Captured Soul: [A.name]<br>"
 		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
-		dat += "<br>"
-		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 
 	var/datum/browser/popup = new(user, "window=aicard", "Soul Stone", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -55,11 +53,6 @@
 	U.set_machine(src)
 
 	switch(href_list["choice"])//Now we switch based on choice.
-		if ("Close")
-			U << browse(null, "window=aicard")
-			U.unset_machine()
-			return
-
 		if ("Summon")
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE
@@ -157,12 +150,11 @@
 					if("Juggernaut")
 						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
-						if(global.cult_religion)
-							if(iscultist(U))
-								SSticker.mode.add_cultist(Z.mind)
+						if(iscultist(U))
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								global.cult_religion.members += Z.mind
-							SSticker.mode.update_all_cult_icons()
+								SSticker.mode.cult+=Z.mind
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -172,12 +164,11 @@
 					if("Wraith")
 						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
-						if(global.cult_religion)
-							if(iscultist(U))
-								SSticker.mode.add_cultist(Z.mind)
+						if(iscultist(U))
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								global.cult_religion.members += Z.mind
-							SSticker.mode.update_all_cult_icons()
+								SSticker.mode.cult+=Z.mind
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -187,13 +178,11 @@
 					if("Artificer")
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
-						if(global.cult_religion)
-							if(iscultist(U))
-								SSticker.mode.add_cultist(Z.mind)
+						if(iscultist(U))
+							if(SSticker.mode.name == "cult")
+								SSticker.mode:add_cultist(Z.mind)
 							else
-								global.cult_religion.members+=Z.mind
-							SSticker.mode.update_all_cult_icons()
-						qdel(T)
+								SSticker.mode.cult+=Z.mind
 						to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
 						Z.cancel_camera()
