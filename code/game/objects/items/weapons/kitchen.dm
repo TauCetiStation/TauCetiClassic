@@ -438,6 +438,7 @@
 			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
 /obj/item/weapon/tray/dropped(mob/user)
+	..()
 
 	var/mob/living/M
 	for(M in src.loc) //to handle hand switching

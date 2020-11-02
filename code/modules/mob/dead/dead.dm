@@ -11,6 +11,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	initialized = TRUE
 
 	mob_list += src
+	prepare_huds()
 
 	return INITIALIZE_HINT_NORMAL
 

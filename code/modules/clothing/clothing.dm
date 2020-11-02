@@ -282,6 +282,10 @@ var/global/list/icon_state_allowed_cache = list()
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
+	// Standart hud type
+	var/list/hud_types
+	var/mob/living/carbon/glasses_user
+
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -657,6 +661,10 @@ BLIND     // can't see anything
 				to_chat(usr, "Your suit will now report your vital lifesigns.")
 			if(SUIT_SENSOR_TRACKING)
 				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.update_suit_sensors()
+
 	else if (istype(src.loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
@@ -667,6 +675,9 @@ BLIND     // can't see anything
 				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
 				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(src.loc))
+			var/mob/living/carbon/C = src.loc
+			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

@@ -231,6 +231,7 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
+	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
 	if(!(M.mind in SSticker.minds))
 		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
@@ -249,7 +250,7 @@ var/can_call_ert
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 
 	if(leader_selected)
-		var/obj/item/weapon/card/id/ert/W = new(src)
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
@@ -257,15 +258,11 @@ var/can_call_ert
 		W.icon_state = "ert-leader"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
-		var/obj/item/weapon/card/id/ert/W = new(src)
-		W.assignment = "Emergency Response Team"
-		W.rank = "Emergency Response Team"
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
-		W.icon_state = "ert"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 	return 1

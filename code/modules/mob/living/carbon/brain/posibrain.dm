@@ -7,7 +7,6 @@
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
-	var/askDelay = 10 * 60 * 1
 	mob/living/carbon/brain/brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
@@ -21,35 +20,25 @@
 		//Start the process of searching for a new user.
 		to_chat(user, "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>")
 		icon_state = "posibrain-searching"
-		src.searching = 1
-		src.request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 600)
+		searching = TRUE
+		request_player()
+		addtimer(CALLBACK(src, .proc/reset_search), 300)
 
 /obj/item/device/mmi/posibrain/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			continue
-		if(jobban_isbanned(O, ROLE_PAI))
-			continue
-		if(role_available_in_minutes(O, ROLE_PAI))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_POSBRAIN) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C)
-
-/obj/item/device/mmi/posibrain/proc/question(client/C)
-	if(!C)	return
-	var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
-	if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yes")
-		transfer_personality(C.mob)
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += IGNORE_POSBRAIN
-
+	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 200, TRUE)
+	for(var/mob/M in candidates) // No random
+		transfer_personality(M)
+		break
 
 /obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-"
+	var/number = rand(1, 999)
+	if(number < 10)
+		brainmob.name = "[brainmob.name]00[number]"
+	else if(number < 100)
+		brainmob.name = "[brainmob.name]0[number]"
+	else
+		brainmob.name = "[brainmob.name][number]"
 	brainmob.real_name = brainmob.name
 	brainmob.dna = H.dna
 	brainmob.timeofhostdeath = H.timeofdeath
@@ -66,7 +55,7 @@
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 
-	src.searching = 0
+	src.searching = FALSE
 	src.brainmob.mind = candidate.mind
 	//src.brainmob.key = candidate.key
 	src.brainmob.ckey = candidate.ckey

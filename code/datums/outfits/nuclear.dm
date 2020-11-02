@@ -15,7 +15,7 @@
 		/obj/item/weapon/implant/dexplosive
 		)
 	survival_box = TRUE
-	
+
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 

@@ -117,6 +117,10 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/equipped(): (/mob/equipper, slot)
+#define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/dropped(): (mob/user)
+#define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
@@ -131,6 +135,18 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+
+// hand_like /obj/item signals
+/// check if item is hand_like: ()
+#define COMSIG_HAND_IS "hand_is"
+/// from mob/living/silicon/robot/ClickOn(): (atom/T, mob/user, params)
+#define COMSIG_HAND_ATTACK "hand_attack"
+/// from mob/living/silicon/robot/drop_item(): (atom/T, mob/user)
+#define COMSIG_HAND_DROP_ITEM "hand_drop_item"
+/// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
+#define COMSIG_HAND_PUT_IN "hand_put_in"
+/// from mob/living/silicon/robot/get_active_hand(): (mob/user)
+#define COMSIG_HAND_GET_ITEM "hand_get_item"
 
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
@@ -172,6 +188,10 @@
 /// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
 #define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
 	#define COMPONENT_ATTACK_SHIELDED 1
+// from mob/living/learn_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_LEARN_COMBO "learn_combo"
+// from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_FORGET_COMBO "forget_combo"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

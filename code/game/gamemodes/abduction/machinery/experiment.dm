@@ -114,7 +114,7 @@
 		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
-		dat += "<span class='linkOff'> Experiment </span>"
+		dat += "<span class='disabled'> Experiment </span>"
 	if(!occupant)
 		dat += "<h3>Machine Unoccupied</h3>"
 	else
@@ -133,8 +133,7 @@
 	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
 	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
 
-	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
 	popup.open()
 
@@ -179,6 +178,7 @@
 		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
 		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
+		H.mind.add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductee", H)
 		H.mind.objectives += O
 		var/obj_count = 1
 		to_chat(H, "<span class='notice'>Your current objectives:</span>")

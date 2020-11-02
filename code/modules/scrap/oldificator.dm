@@ -168,15 +168,8 @@
 	..()
 
 /obj/item/clothing/glasses/hud/make_old()
-	if(prob(75) && !istype(src, /obj/item/clothing/glasses/hud/broken))
-		var/obj/item/clothing/glasses/hud/broken/brokenhud= new /obj/item/clothing/glasses/hud/broken
-		brokenhud.name = src.name
-		brokenhud.desc = src.desc
-		brokenhud.icon = src.icon
-		brokenhud.icon_state = src.icon_state
-		brokenhud.item_state = src.item_state
-		brokenhud.make_old()
-		qdel(src)
+	if(prob(75))
+		broke_hud()
 	..()
 
 /obj/item/clothing/glasses/make_old()
@@ -236,10 +229,9 @@
 	if(prob(50))
 		content_mob = /mob/living/simple_animal/hostile/giant_spider
 
-/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+/obj/item/clothing/glasses/sunglasses/hud/sechud/make_old()
 	..()
-	if(hud && prob(75))
-		hud = new /obj/item/clothing/glasses/hud/broken
+	broke_hud()
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8

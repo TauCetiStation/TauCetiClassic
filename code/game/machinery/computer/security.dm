@@ -76,26 +76,26 @@
 							var/background
 							switch(crimstat)
 								if("*Arrest*")
-									background = "'background-color:#DC143C;'"
+									background = "'bgbad'"
 								if("Incarcerated")
-									background = "'background-color:#CD853F;'"
+									background = "'bgorange'"
 								if("Paroled")
-									background = "'background-color:#CD853F;'"
+									background = "'bgorange'"
 								if("Released")
-									background = "'background-color:#3BB9FF;'"
+									background = "'bgblue'"
 								if("None")
-									background = "'background-color:#00FF7F;'"
+									background = "'bggood'"
 								if("")
-									background = "'background-color:#FFFFFF;'"
-									crimstat = "No Record."
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+									background = "''"
+									crimstat = "No Record"
+							dat += text("<tr class=[background]><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>")
 							dat += text("<td>[]</td>", R.fields["id"])
 							dat += text("<td>[]</td>", R.fields["rank"])
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 							dat += text("<td>[]</td></tr>", crimstat)
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
+					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
 				if(2.0)
 					dat += "<B>Records Maintenance</B><HR>"
 					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
@@ -184,16 +184,14 @@
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 							dat += text("<td>[]</td></tr>", crimstat)
 						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
+						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</a>", src)
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
+			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
 
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
-
-	onclose(user, "secure_rec")
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -243,6 +241,9 @@ What a mess.*/
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 
 		if("Log Out")
 			authenticated = null
@@ -541,8 +542,6 @@ What a mess.*/
 
 				if ("Change Criminal Status")
 					if (active2)
-						for(var/mob/living/carbon/human/H in player_list)
-							H.hud_updateflag |= 1 << WANTED_HUD
 						switch(href_list["criminal2"])
 							if("none")
 								active2.fields["criminal"] = "None"
@@ -554,6 +553,10 @@ What a mess.*/
 								active2.fields["criminal"] = "Paroled"
 							if("released")
 								active2.fields["criminal"] = "Released"
+
+						for(var/human in global.human_list)
+							var/mob/living/carbon/human/H = human
+							H.sec_hud_set_security_status()
 
 				if ("Delete Record (Security) Execute")
 					if (active2)

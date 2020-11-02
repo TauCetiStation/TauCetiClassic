@@ -45,8 +45,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "implant")
-
 
 /obj/machinery/implantchair/Topic(href, href_list)
 	if((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))

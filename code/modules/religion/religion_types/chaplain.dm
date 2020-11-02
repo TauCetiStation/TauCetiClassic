@@ -79,7 +79,7 @@
 	gen_altar_variants()
 	gen_pews_variants()
 	gen_carpet_variants()
-	
+
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
 

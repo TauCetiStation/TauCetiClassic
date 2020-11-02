@@ -6,6 +6,7 @@
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
+	var/mob/living/carbon/human/H = mymob
 
 	using = new /obj/screen()
 	using.name = "act_intent"
@@ -384,17 +385,20 @@
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
-
 	mymob.healthdoll = new /obj/screen()
 	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
 	mymob.nutrition_icon = new
-	mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
+	if (H.species.flags[IS_SYNTHETIC])
+		mymob.nutrition_icon.icon = 'icons/mob/screen_alert.dmi'
+	else 
+		mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
 	mymob.nutrition_icon.icon_state = "starving"
 	mymob.nutrition_icon.name = "nutrition"
 	mymob.nutrition_icon.screen_loc = ui_nutrition
+
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style

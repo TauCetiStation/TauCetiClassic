@@ -9,6 +9,8 @@
 	required_players_secret = 20
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "hudheadrevolutionary"
 
 	votable = 0
 
@@ -78,7 +80,7 @@
 				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 				rev_mind.objectives += rev_obj
 
-		update_all_rev_icons()
+
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -92,6 +94,7 @@
 
 /datum/game_mode/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
+	add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 	if (you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
@@ -172,10 +175,9 @@
 	revolutionaries += rev_mind
 	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
+	add_antag_hud(antag_hud_type, "hudrevolutionary", rev_mind.current)
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-	update_all_rev_icons()
-	H.hud_updateflag |= 1 << SPECIALROLE_HUD
 	return 1
 
 //////////////////////////////////////////////////////////////////////
@@ -269,7 +271,6 @@
 					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 					H.mind.objectives += rev_obj
 
-				update_all_rev_icons()
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
 				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")

@@ -8,6 +8,7 @@
 	density = 1
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
@@ -38,6 +39,11 @@
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
+
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
 
 	update_nearby_tiles(need_rebuild=1)
 
@@ -191,8 +197,10 @@
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
+			diag_hud_set_electrified()
 			spawn(300)
 				secondsElectrified = 0
+				diag_hud_set_electrified()
 	..()
 
 

@@ -33,10 +33,7 @@
 /datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
 
-/********************/
-/*    CHAPLAIN      */
-/********************/
-/datum/religion_sect/preset/chaplain/puritanism
+/datum/religion_sect/preset/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
 	convert_opener = "Your run-of-the-mill sect, conserve the purity. Praise normalcy!"
@@ -46,7 +43,7 @@
 		/datum/aspect/mystic = 1,
 	)
 
-/datum/religion_sect/preset/chaplain/bloodgods
+/datum/religion_sect/preset/bloodgods
 	name = "The Slaves of "
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
@@ -54,9 +51,9 @@
 	    /datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
-	)
+    )
 
-/datum/religion_sect/preset/chaplain/technophile
+/datum/religion_sect/preset/technophile
 	name = "The Technomancers of "
 	desc = "A sect oriented around technology."
 	convert_opener = "May you find peace in a metal shell, acolyte."
@@ -66,7 +63,7 @@
 		/datum/aspect/resources = 1,
 	)
 
-/datum/religion_sect/preset/chaplain/clown
+/datum/religion_sect/preset/clown
 	name = "The Jesters of "
 	desc = "Anything a real clown needs!"
 	convert_opener = "Honk for the Honkmother, slip for the Slippy Joe!"
@@ -122,16 +119,3 @@
 			aspects_to_add[aspect_type] += 1
 
 	R.add_aspects(aspects_to_add)
-
-/********************/
-/*        CULT      */
-/********************/
-/datum/religion_sect/preset/cult/blood
-	name = "The cult of blood"
-	desc = "Anything you need, little demon."
-	convert_opener = "Let the Great Harvest begin! Bring more blood!"
-	aspect_preset = list(
-	    /datum/aspect/death = 1,
-		/datum/aspect/lightbending/darkness = 1,
-		/datum/aspect/chaos = 1,
-	)

@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(economy)
 	flags = SS_NO_INIT
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
-	var/payment_counter = 0 
+	var/payment_counter = 0
 
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()

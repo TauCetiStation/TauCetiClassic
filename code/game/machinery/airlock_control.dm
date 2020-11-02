@@ -5,7 +5,6 @@
 	var/id_tag
 	var/suppres_next_status_send = FALSE
 
-
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
@@ -109,12 +108,7 @@
 	. = ..()
 	if(frequency)
 		set_frequency(frequency)
-
 	update_icon()
-
-
-/obj/machinery/door/airlock/atom_init()
-	. = ..()
 
 	if(radio_controller)
 		set_frequency(frequency)
