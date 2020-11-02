@@ -696,8 +696,7 @@
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(src in SSticker.mode.cult)
-				SSticker.mode.cult -= src
+			if(global.cult_religion.remove_member(current))
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				special_role = null
 				var/datum/game_mode/cult/cult = SSticker.mode
@@ -879,8 +878,7 @@
 	else if (href_list["cult"])
 		switch(href_list["cult"])
 			if("clear")
-				if(src in SSticker.mode.cult)
-					SSticker.mode.cult -= src
+				if(global.cult_religion.remove_member(current))
 					special_role = null
 					var/datum/game_mode/cult/cult = SSticker.mode
 					if (istype(cult))
@@ -891,8 +889,7 @@
 					remove_antag_hud(ANTAG_HUD_CULT, current)
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
-				if(!(src in SSticker.mode.cult))
-					SSticker.mode.cult += src
+				if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
 					special_role = "Cultist"
 					add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
@@ -1433,8 +1430,8 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.cult += src
+	if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
+		special_role = "Cultist"
 		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")

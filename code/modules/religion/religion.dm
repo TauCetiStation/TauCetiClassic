@@ -374,19 +374,21 @@
 
 /datum/religion/proc/add_member(mob/M, holy_role)
 	if(M in members)
-		return
+		return FALSE
 
-	members += M
+	members |= M
 	M.mind.my_religion = src
 	M.mind.holy_role = holy_role
+	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
 	if(!(M in members))
-		return
+		return FALSE
 
 	members -= M
 	M.mind.my_religion = null
 	M.mind.holy_role = initial(M.mind.holy_role)
+	return TRUE
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)

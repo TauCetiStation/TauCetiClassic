@@ -151,11 +151,8 @@
 	if(is_convertable_to_cult(cult_mind))
 		global.cult_religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
 		cult_mind.current.Paralyse(5)
-		cult += cult_mind
 		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
-
-		return 1
-
+		return TRUE
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
@@ -164,8 +161,7 @@
 		memoize_cult_objectives(cult_mind)
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
-	if(cult_mind in cult)
-		cult -= cult_mind
+	if(global.cult_religion.remove_member(cult_mind.current))
 		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
