@@ -37,7 +37,7 @@ var/list/cult_datums = list()
 	unacidable = 1
 	layer = TURF_LAYER
 	var/datum/cult/power
-	var/image/blood_overlay
+
 // travel self [word] - Teleport to random [rune with word destination matching]
 // travel other [word] - Portal to rune with word destination matching - kinda doesnt work. At least the icon. No idea why.
 // see blood Hell - Create a new tome
@@ -68,19 +68,16 @@ var/list/cult_datums = list()
 /obj/effect/rune/atom_init()
 	. = ..()
 	cult_runes += src
-	//TODO: rework for alternate apperance
-	blood_overlay = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
-	blood_overlay.override = 1
-	blood_overlay.color = "#a10808"
-	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
-		S.client.images += blood_overlay
+	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
+	I.override = TRUE
+	I.color = "#a10808"
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
 
 /obj/effect/rune/update_icon()
 	color = "#a10808"
 
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
-	QDEL_NULL(blood_overlay)
 	cult_runes -= src
 	return ..()
 
