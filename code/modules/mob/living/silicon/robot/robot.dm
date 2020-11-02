@@ -162,7 +162,7 @@
 				"Engineering" = "Engineering",
 				"Surgeon" = "medicalrobot",
 				"Crisis" = "Medbot",
-				"Miner" = "Miner",
+				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
 				"Security" = "secborg",
