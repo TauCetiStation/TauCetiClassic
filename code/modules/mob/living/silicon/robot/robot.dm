@@ -215,6 +215,7 @@
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
 			module_sprites["Acheron"] = "mechoid-Science"
+			give_hud(DATA_HUD_MINER)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -227,8 +228,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
-			sensor_huds = def_sensor_huds
-			sensor_huds += DATA_HUD_MINER
+			give_hud(DATA_HUD_MINER)
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
