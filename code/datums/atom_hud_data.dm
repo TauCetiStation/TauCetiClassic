@@ -313,7 +313,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.status_flags & FAKEDEATH) || (HAS_TRAIT_FROM(M, TRAIT_INCAPACITATED, TURN_OFF_TRAIT)))
+	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
