@@ -1,5 +1,6 @@
 /mob
 	hud_possible = list(ANTAG_HUD)
+	var/list/datum/input/inputs
 
 /**
   * Delete a mob
@@ -14,6 +15,7 @@
   *
   * Returns QDEL_HINT_HARDDEL (don't change this)
   */
+
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src

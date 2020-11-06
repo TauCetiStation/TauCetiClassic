@@ -49,17 +49,17 @@ export class Input extends Component {
       }
     };
     this.handleKeyDown = e => {
-      const { onInput, onChange, onEnter } = this.props;
+      const { onInput, onChange, onEnter, onEscape } = this.props;
       if (e.keyCode === 13) {
         this.setEditing(false);
         if (onChange) {
           onChange(e, e.target.value);
         }
-        if (onInput) {
-          onInput(e, e.target.value);
-        }
         if (onEnter) {
           onEnter(e, e.target.value);
+        }
+        if (onInput) {
+          onInput(e, e.target.value);
         }
         if (this.props.selfClear) {
           e.target.value = '';
@@ -69,6 +69,9 @@ export class Input extends Component {
         return;
       }
       if (e.keyCode === 27) {
+        if (onEscape) {
+          onEscape(e, e.target.value);
+        }
         this.setEditing(false);
         e.target.value = toInputValue(this.props.value);
         e.target.blur();
@@ -111,6 +114,7 @@ export class Input extends Component {
       onInput,
       onChange,
       onEnter,
+      onEscape,
       value,
       maxLength,
       placeholder,

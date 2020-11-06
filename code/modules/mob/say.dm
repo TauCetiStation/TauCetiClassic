@@ -6,14 +6,24 @@
 	set category = "IC"
 	return
 
-/mob/verb/say_verb(message as text)
+/mob/proc/say_input()
+	if(!inputs)
+		inputs = list()
+	if(!inputs[IC_INPUT])
+		inputs[IC_INPUT] = new /datum/input/ic(usr)
+
+	var/datum/input/ic/IC = inputs[IC_INPUT]
+	IC.interact()
+	return IC.get_message()
+
+/mob/verb/say_verb()
 	set name = "Say"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	usr.say(message)
+	usr.say(say_input())
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"

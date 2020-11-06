@@ -221,6 +221,7 @@
 #include "code\datums\recipe.dm"
 #include "code\datums\space_structures.dm"
 #include "code\datums\spell.dm"
+#include "code\datums\tgut_input.dm"
 #include "code\datums\uplinks_items.dm"
 #include "code\datums\atom_huds\alternate_apperance.dm"
 #include "code\datums\atom_huds\atom_hud.dm"
