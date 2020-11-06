@@ -162,13 +162,10 @@
 		score["crew_total"]++
 	return
 
-
 /proc/get_id_photo(mob/living/carbon/human/H, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
 	return get_flat_human_icon(null, J, P, show_directions)
-
-
 
 /proc/find_general_record(field, value)
 	return find_record(field, value, data_core.general)
@@ -183,3 +180,54 @@
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
 			return R
+
+/proc/add_record(user, datum/data/record/R, message)
+	var/name = ""
+	var/rank = ""
+	var/counter = 1
+	while(R.fields[text("com_[]", counter)])
+		counter++
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/U = user
+		name = U.get_authentification_name()
+		rank = U.get_assignment()
+	if(istype(user, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/U = user
+		name = U.name
+		rank = "[U.modtype] [U.braintype]"
+	if(istype(user, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/U = user
+		name = U.registered_name
+		rank = U.assignment
+	R.fields[text("com_[counter]")] = text("<b>Made by [name] ([rank]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]:</b> <BR>[message]")
+
+/* The function changes the criminal status in the database. Used by securityHUD or machinery
+*author - Who changed the criminal status? We need a name.
+*target_name - Only the target name is given, the database will be searched by name
+*security_record - Target already found in the database
+*used_by_computer - If this function is used in a machinery, set TRUE. Needed for additional checks
+*source - If this function is used in a machinery, pass the src
+*/
+/proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source)
+	var/datum/data/record/S = security_record
+	if(S)
+		target_name = S.fields["name"]
+	else
+		S = find_security_record("name", target_name)
+	if(!S)
+		to_chat(user, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+		return
+	var/criminal_status = input(user, "Specify a new criminal status for this person.", "Security HUD", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
+	if(criminal_status == "Cancel")
+		return
+	var/reason = sanitize(input(user, "Add Reason:", "Reason", "not specified")  as message)
+	if(used_by_computer)
+		if(user.incapacitated() || (!in_range(source, user) && !issilicon(user) && !isobserver(user)))
+			return
+	S.fields["criminal"] = criminal_status
+	add_record(author, S, "The criminal status was changed to <b>[criminal_status]</b><BR><b>Reason:</b> [reason]")
+	for(var/mob/living/carbon/human/H in global.human_list)
+		if(H.real_name == target_name)
+			H.sec_hud_set_security_status()
+
+
