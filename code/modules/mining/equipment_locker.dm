@@ -679,7 +679,7 @@
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
 					health += 15
-					to_chat(user, "<span class='info'>You repaired armor of the [src].</span>")
+					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
 
