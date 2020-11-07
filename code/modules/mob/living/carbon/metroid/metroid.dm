@@ -310,6 +310,8 @@
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/slime/getTrail()
 	return null

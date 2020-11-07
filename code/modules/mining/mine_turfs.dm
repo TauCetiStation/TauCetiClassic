@@ -9,7 +9,7 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	hud_possible = list(MINE_HUD)
+	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0

@@ -14,12 +14,12 @@ var/const/NUKE_WIRE_SAFETY = 4
 /datum/wires/nuclearbomb/additional_checks_and_effects(mob/living/user)
 	return isdrone(user)
 
-/datum/wires/nuclearbomb/get_interact_window()
+/datum/wires/nuclearbomb/get_status()
 	var/obj/machinery/nuclearbomb/N = holder
 	. = ..()
-	. += "<br>The device is [N.timing ? "shaking!" : "still."]"
-	. += "<br>The device is [N.safety ? "quiet" : "whirring"]."
-	. += "<br>The lights are [N.lighthack ? "static" : "functional"]."
+	. += "The device is [N.timing ? "shaking!" : "still."]"
+	. += "The device is [N.safety ? "quiet" : "whirring"]."
+	. += "The lights are [N.lighthack ? "static" : "functional"]."
 
 /datum/wires/nuclearbomb/update_cut(index, mended)
 	var/obj/machinery/nuclearbomb/N = holder

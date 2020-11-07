@@ -284,6 +284,8 @@
 	stat = DEAD
 	health = 0
 	density = 0
+	med_hud_set_health()
+	med_hud_set_status()
 	return ..()
 
 /mob/living/simple_animal/ex_act(severity)

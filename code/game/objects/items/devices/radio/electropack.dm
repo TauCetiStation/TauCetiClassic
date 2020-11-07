@@ -126,6 +126,4 @@ Code:
 	var/datum/browser/popup = new(user, "radio")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "radio")
 	return
