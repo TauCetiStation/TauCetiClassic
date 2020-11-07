@@ -671,7 +671,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				to_chat(user, "<span class='info'>You can't repair the [src], while it moving!</span>")
+				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
