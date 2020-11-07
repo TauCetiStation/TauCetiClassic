@@ -208,3 +208,9 @@
 	if(show_message)
 		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
 	return FALSE
+
+/mob/living/silicon/proc/give_hud(hud, reset_to_def = TRUE)
+	if(reset_to_def)
+		sensor_huds = def_sensor_huds
+
+	sensor_huds += hud
