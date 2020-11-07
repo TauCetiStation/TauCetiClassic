@@ -11,10 +11,13 @@
 		inputs = list()
 	if(!inputs[IC_INPUT])
 		inputs[IC_INPUT] = new /datum/input/ic(usr)
+		RegisterSignal(usr, list(COMSIG_MOB_SAID), .proc/say_phrase)
 
 	var/datum/input/ic/IC = inputs[IC_INPUT]
 	IC.interact()
-	return IC.get_message()
+
+/mob/proc/say_phrase(mob/speaker, message)
+	speaker.say(message)
 
 /mob/verb/say_verb()
 	set name = "Say"
@@ -23,7 +26,7 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
-	usr.say(say_input())
+	say_input()
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"

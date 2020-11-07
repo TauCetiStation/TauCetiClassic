@@ -32,9 +32,6 @@
 	tgui_window = null
 	return ..()
 
-/datum/input/proc/get_message()
-	return message
-
 /datum/input/proc/interact()
 	SHOULD_CALL_PARENT(TRUE)
 	tgui_interact(speaker)
@@ -82,13 +79,13 @@
 
 	switch(action)
 		if("oninput")
-			to_chat(world, "[params["message"]]")
+			to_chat(world, "input - [params["message"]]")
 			oninput(params["message"])
 		if("onenter")
-			to_chat(world, "[params["message"]]")
+			to_chat(world, "enter - [params["message"]]")
 			onenter(params["message"])
 		if("cancel")
-			to_chat(world, "[params["message"]]")
+			to_chat(world, "cancel - [params["message"]]")
 			cancel()
 
 /datum/input/ooc
@@ -98,6 +95,12 @@
 /datum/input/ic
 	title = IC_INPUT
 	place_holder = "Enter a message"
+
+/datum/input/ic/onenter(message)
+	..()
+	to_chat(world, "test")
+	SEND_SIGNAL(speaker, COMSIG_MOB_SAID, src.message)
+	to_chat(world, "gaw")
 
 /datum/input/me
 	title = ME_INPUT

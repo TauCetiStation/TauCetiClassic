@@ -156,6 +156,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+/// from base of mob/say_verb(): ()
+#define COMSIG_MOB_SAID "mob_said"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
