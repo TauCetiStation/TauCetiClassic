@@ -135,8 +135,6 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "atmo_filter")
-
 /obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list) // -- TLE
 	if(!..())
 		return FALSE

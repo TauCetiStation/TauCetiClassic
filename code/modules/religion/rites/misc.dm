@@ -55,6 +55,7 @@
 	return TRUE
 
 /datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
 	if(prob(50))
 		spawn_food(AOG.loc, 1)
 
@@ -99,6 +100,7 @@
 	return TRUE
 
 /datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	..()
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
 
@@ -135,6 +137,7 @@
 	return TRUE
 
 /datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 
@@ -159,6 +162,7 @@
 	)
 
 /datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
 	var/obj/item/anim_item = locate() in AOG.loc
 	if(!anim_item)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
@@ -309,6 +313,7 @@
 	)
 
 /datum/religion_rites/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE

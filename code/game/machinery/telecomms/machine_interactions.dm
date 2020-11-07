@@ -86,11 +86,8 @@
 	temp = ""
 
 	var/datum/browser/popup = new(user, "tcommachine", "[src.name] Access", 520, 500)
-	popup.set_window_options("can_resize=0")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "tcommachine")
 
 
 // Off-Site Relays

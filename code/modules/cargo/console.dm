@@ -53,14 +53,12 @@
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
 		if(!requestonly)
 			dat += "<A href='?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
-		dat += "<A href='?src=\ref[user];mach_close=computer'>Close</A>"
 
 
 	var/datum/browser/popup = new(user, "computer", name, 500, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/cargo))
 	popup.set_content(dat)
 	popup.open()
-	onclose(user, "computer")
 
 /obj/machinery/computer/cargo/Topic(href, href_list)
 	. = ..()
