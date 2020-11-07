@@ -197,6 +197,7 @@ var/list/slot_equipment_priority = list(
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
+		W.set_alt_apperances_layers()
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,SLOT_R_HAND)
@@ -317,6 +318,7 @@ var/list/slot_equipment_priority = list(
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
 	O.appearance_flags = initial(O.appearance_flags)
+	O.set_alt_apperances_layers()
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O

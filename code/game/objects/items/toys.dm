@@ -1012,10 +1012,9 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/interact(mob/user)
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
+		dat += "<A href='?src=\ref[src];pick=[t]'>A [t]</a><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
 

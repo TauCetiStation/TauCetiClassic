@@ -42,16 +42,15 @@
 		dat += "<b><font color=red>Unable to locate analysis pad.</font></b><br>"
 	else if(scan_in_progress)
 		dat += "Please wait. Analysis in progress.<br>"
-		dat += "<a href='?src=\ref[src];halt_scan=1'>Halt scanning.</a><br>"
+		dat += "<a href='?src=\ref[src];halt_scan=1'>Halt scanning</a><br>"
 	else
 		dat += "Scanner is ready.<br>"
-		dat += "<a href='?src=\ref[src];begin_scan=1'>Begin scanning.</a><br>"
+		dat += "<a href='?src=\ref[src];begin_scan=1'>Begin scanning</a><br>"
 
 	dat += "<br>"
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500)
+	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500, nref = src)
 	popup.set_content(dat)
 	popup.open()
 
@@ -97,16 +96,13 @@
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
-	if(href_list["close"])
-		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
-		usr.unset_machine(src)
-		usr << browse(null, "window=artanalyser")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
-
+	if(href_list["close"])
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
+		usr.unset_machine(src)
+		return FALSE
 	if(href_list["begin_scan"])
 		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		if(!owned_scanner)

@@ -3166,6 +3166,7 @@
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
+	item_state = "baton"
 	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/malper
