@@ -5,7 +5,7 @@
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "b" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor/holofloor{
