@@ -93,6 +93,9 @@
 			muzzled_message = pick("makes a loud noise!", "groans soundly!", "screams silently!")
 			miming_message = "acts out a scream!"
 			conditions_for_emote = (get_species() != DIONA)
+			if(inputs && inputs[IC])
+				var/datum/input/ic/IC = inputs[IC]
+				IC.onenter
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
 				sound_priority = SOUND_PRIORITY_HIGH

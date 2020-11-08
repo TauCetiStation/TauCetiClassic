@@ -17,8 +17,6 @@
 	var/message = ""
 	// Gray text written on the input, but it is not a message
 	var/place_holder = ""
-	// Theme of input
-	var/theme
 	// Created window
 	var/datum/tgui/tgui_window
 	// The mob who called this window
@@ -59,7 +57,6 @@
 /datum/input/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		to_chat(world, "Creaass")
 		ui = new(user, src, "SSInput", title)
 		tgui_window = ui
 		ui.open()
@@ -67,9 +64,8 @@
 /datum/input/tgui_data(mob/user)
 	var/list/data = list()
 	data["new_placeholder"] = place_holder
-	data["theme"] = theme
-	var/list/radio_keys = list(global.department_radio_keys.Copy())
-	data["possible_prefix"] = radio_keys
+	data["title"] = title
+	data["possible_prefix"] = global.department_radio_keys
 	return data
 
 /datum/input/tgui_act(action, params)
@@ -98,9 +94,7 @@
 
 /datum/input/ic/onenter(message)
 	..()
-	to_chat(world, "test")
 	SEND_SIGNAL(speaker, COMSIG_MOB_SAID, src.message)
-	to_chat(world, "gaw")
 
 /datum/input/me
 	title = ME_INPUT

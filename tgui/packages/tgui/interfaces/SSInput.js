@@ -4,7 +4,7 @@ import { Window } from "../layouts";
 
 export const SSInput = (props, context) => {
   const { act, data } = useBackend(context);
-  const { new_placeholder, possible_prefix } = data;
+  const { new_placeholder, possible_prefix, title } = data;
 
   const [
     theme,
@@ -16,35 +16,67 @@ export const SSInput = (props, context) => {
     setText,
   ] = useLocalState(context, 'text');
 
-  const set_theme = msg => {
-    const prefix = msg[0] + msg[1]
-    const channel = possible_prefix[0][prefix]
+  const set_ic_theme = msg => {
+    const prefix = msg[0] + msg[1];
+    const channel = possible_prefix[prefix];
     switch (channel) {
       case "changeling":
-        setTheme("abductor")
-        break;
-      case "binary":
-        setTheme("hackerman")
-        break;
-      case "Syndicate":
-        setTheme("syndicate")
+        setTheme("abductor");
         break;
       case "alientalk":
-        setTheme("malfunction")
+        setTheme("malfunction");
+        break;
+      case "Syndicate":
+        setTheme("syndicate");
+        break;
+      case "binary":
+        setTheme("hackerman");
+        break;
+      case "dronechat":
+        setTheme("hackerman");
+        break;
+      case "department":
+        setTheme("ntos_department");
+        break;
+      case "Science":
+        setTheme("ntos_rnd");
+        break;
+      case "Command":
+        setTheme("ntos");
+        break;
+      case "Medical":
+        setTheme("ntos_med");
+        break;
+      case "Engineering":
+        setTheme("ntos_eng");
+        break;
+      case "Security":
+        setTheme("ntos_sec");
+        break;
+      case "Supply":
+        setTheme("ntos_supply");
         break;
       case "whisper":
-        setTheme("retro")
+        setTheme("retro");
         break;
       default:
-        setTheme("")
+        setTheme("");
         break;
+    }
+    prefix = msg[0];
+    if (prefix == "*") {
+      setTheme("retro")
     }
   };
 
   const input_text = msg => {
-    act('oninput', { message: msg })
-    set_theme(msg)
-    setText(msg)
+    act('oninput', { message: msg });
+    setText(msg);
+    switch (title) {
+      case "IC":
+        set_ic_theme(msg);
+        break;
+    }
   };
 
   return (
