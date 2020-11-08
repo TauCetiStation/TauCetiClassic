@@ -93,9 +93,6 @@
 			muzzled_message = pick("makes a loud noise!", "groans soundly!", "screams silently!")
 			miming_message = "acts out a scream!"
 			conditions_for_emote = (get_species() != DIONA)
-			if(inputs && inputs[IC])
-				var/datum/input/ic/IC = inputs[IC]
-				IC.onenter
 			if(auto)
 				conditions_for_emote = (!species.flags[NO_PAIN])
 				sound_priority = SOUND_PRIORITY_HIGH
@@ -103,6 +100,11 @@
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 			cloud_emote = "cloud-scream"
 			add_combo_value_all(10)
+			// Forced to say using a input-window
+			if(inputs && inputs[IC_INPUT])
+				var/datum/input/ic/IC = inputs[IC_INPUT]
+				if(!IC.tgui_window.closing)
+					IC.onenter()
 
 		if ("cough")
 			message_type = SHOWMSG_AUDIO

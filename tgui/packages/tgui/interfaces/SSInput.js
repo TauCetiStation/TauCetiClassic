@@ -16,8 +16,30 @@ export const SSInput = (props, context) => {
     setText,
   ] = useLocalState(context, 'text');
 
+
+  const handleKeyPress = event => {
+    if (event.keyCode === 13) {
+      onEnter(text);
+    }
+    if (event.keyCode === 27) {
+      onCancel();
+    }
+  };
+
+  const onCancel = e => {
+    act('cancel');
+    removeEventListener('keydown', handleKeyPress);
+  };
+
+  const onEnter = msg => {
+    act('onenter', { message: msg });
+    removeEventListener('keydown', handleKeyPress);
+  };
+
+  addEventListener('keydown', handleKeyPress);
+
   const set_ic_theme = msg => {
-    const prefix = msg[0] + msg[1];
+    let prefix = msg[0] + msg[1];
     const channel = possible_prefix[prefix];
     switch (channel) {
       case "changeling":
@@ -64,8 +86,8 @@ export const SSInput = (props, context) => {
         break;
     }
     prefix = msg[0];
-    if (prefix == "*") {
-      setTheme("retro")
+    if (prefix === "*") {
+      setTheme("retro");
     }
   };
 
@@ -91,20 +113,20 @@ export const SSInput = (props, context) => {
             autoFocus
             placeholder={new_placeholder}
             onInput={(e, value) => input_text(value)}
-            onEnter={(e, value) => act('onenter', { message: value })}
-            onEscape={() => act('cancel')}
+            onEnter={(e, value) => onEnter(value)}
+            onEscape={() => onCancel}
           />
         </div>
         <div className="SSInput-Box-Buttons">
           <Button
             className="SSInput-Button"
             content={"Ok"}
-            onClick={() => act('onenter', { message: text })}
+            onClick={() => onEnter(text)}
           />
           <Button
             className="SSInput-Button"
             content={"Cancel"}
-            onClick={() => act('cancel')}
+            onClick={() => onCancel}
           />
         </div>
       </Window.Content>
