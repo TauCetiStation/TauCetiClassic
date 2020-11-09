@@ -161,6 +161,8 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
