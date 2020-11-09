@@ -83,10 +83,8 @@
 		if("oninput")
 			oninput(params["message"])
 		if("onenter")
-			to_chat(world, "enter - [params["message"]]")
 			onenter(params["message"])
 		if("cancel")
-			to_chat(world, "cancel - [params["message"]]")
 			cancel()
 
 /datum/input/ooc
