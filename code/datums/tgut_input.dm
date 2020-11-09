@@ -42,16 +42,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(message)
 		src.message = message
-	// Focus on game-window
-	if(speaker.client)
-		winset(speaker, null, "mapwindow.map.focus=true")
 	tgui_window.close()
 
 /datum/input/proc/cancel()
 	SHOULD_CALL_PARENT(TRUE)
 	src.message = ""
-	if(speaker.client)
-		winset(speaker, null, "mapwindow.map.focus=true")
 	tgui_window.close()
 
 /datum/input/tgui_host(mob/user)
@@ -99,14 +94,15 @@
 	..()
 	speaker.set_typing_indicator(TRUE)
 
+/datum/input/ic/tgui_close(mob/user)
+	speaker.set_typing_indicator(FALSE)
+	// Focus on game-window
+	if(speaker.client)
+		winset(speaker, null, "mapwindow.map.focus=true")
+
 /datum/input/ic/onenter(message)
 	..()
 	SEND_SIGNAL(speaker, COMSIG_MOB_SAID, src.message)
-	speaker.set_typing_indicator(FALSE)
-
-/datum/input/ic/cancel()
-	..()
-	speaker.set_typing_indicator(FALSE)
 
 /datum/input/me
 	title = ME_INPUT
