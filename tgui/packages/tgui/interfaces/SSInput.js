@@ -114,7 +114,7 @@ export const SSInput = (props, context) => {
             placeholder={new_placeholder}
             onInput={(e, value) => input_text(value)}
             onEnter={(e, value) => onEnter(value)}
-            onEscape={() => onCancel}
+            onEscape={() => onCancel()}
           />
         </div>
         <div className="SSInput-Box-Buttons">
@@ -126,7 +126,7 @@ export const SSInput = (props, context) => {
           <Button
             className="SSInput-Button"
             content={"Cancel"}
-            onClick={() => onCancel}
+            onClick={() => onCancel()}
           />
         </div>
       </Window.Content>
