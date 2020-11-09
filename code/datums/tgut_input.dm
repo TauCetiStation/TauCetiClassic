@@ -43,13 +43,15 @@
 	if(message)
 		src.message = message
 	// Focus on game-window
-	winset(speaker, null, "mapwindow.map.focus=true")
+	if(speaker.client)
+		winset(speaker, null, "mapwindow.map.focus=true")
 	tgui_window.close()
 
 /datum/input/proc/cancel()
 	SHOULD_CALL_PARENT(TRUE)
 	src.message = ""
-	winset(speaker, null, "mapwindow.map.focus=true")
+	if(speaker.client)
+		winset(speaker, null, "mapwindow.map.focus=true")
 	tgui_window.close()
 
 /datum/input/tgui_host(mob/user)
