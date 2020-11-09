@@ -12,7 +12,7 @@
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
 	w_class = ITEM_SIZE_NORMAL
-	force = 5.0
+	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 
 /obj/item/clothing/head/helmet/warden
