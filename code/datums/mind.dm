@@ -87,6 +87,7 @@
 //			if(changeling)
 //				current.remove_changeling_powers()
 //				current.verbs -= /datum/changeling/proc/EvolutionMenu
+		SStgui.on_transfer(current, new_character)
 		current.mind = null
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
