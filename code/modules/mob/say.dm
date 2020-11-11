@@ -19,14 +19,27 @@
 /mob/proc/say_phrase(mob/speaker, message)
 	speaker.say(message)
 
-/mob/verb/say_verb()
-	set name = "Say"
+/mob/verb/say_hotkey()
+	set name = "Say-Phrase"
 	set category = "IC"
+
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	say_input()
+
+/mob/verb/say_verb(message as text)
+	set name = "Say"
+	set hidden = TRUE
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
+		return
+
+	// If user writes to the say-input that is at the bottom of the monitor
+	if(message)
+		say_phrase(usr, message)
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"

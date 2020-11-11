@@ -41,50 +41,30 @@ export const SSInput = (props, context) => {
   const set_ic_theme = msg => {
     let prefix = msg[0] + msg[1];
     const channel = possible_prefix[prefix];
-    switch (channel) {
-      case "changeling":
-        setTheme("abductor");
-        break;
-      case "alientalk":
-        setTheme("malfunction");
-        break;
-      case "Syndicate":
-        setTheme("syndicate");
-        break;
-      case "binary":
-        setTheme("hackerman");
-        break;
-      case "dronechat":
-        setTheme("hackerman");
-        break;
-      case "department":
-        setTheme("ntos_department");
-        break;
-      case "Science":
-        setTheme("ntos_rnd");
-        break;
-      case "Command":
-        setTheme("ntos");
-        break;
-      case "Medical":
-        setTheme("ntos_med");
-        break;
-      case "Engineering":
-        setTheme("ntos_eng");
-        break;
-      case "Security":
-        setTheme("ntos_sec");
-        break;
-      case "Supply":
-        setTheme("ntos_supply");
-        break;
-      case "whisper":
-        setTheme("retro");
-        break;
-      default:
-        setTheme("");
-        break;
+    const channel2theme = new Map([
+      ['changeling', 'abductor'],
+      ['alientalk', 'malfunction'],
+      ['Syndicate', 'syndicate'],
+      ['binary', 'hackerman'],
+      ['dronechat', 'hackerman'],
+      ['department', 'ntos_department'],
+      ['Science', 'ntos_rnd'],
+      ['Command', 'ntos'],
+      ['Medical', 'ntos_med'],
+      ['Command', 'ntos'],
+      ['Engineering', 'ntos_eng'],
+      ['Security', 'ntos_sec'],
+      ['Supply', 'ntos_supply'],
+      ['whisper', 'retro'],
+    ]);
+
+    if (channel2theme.has(channel)) {
+      setTheme(channel2theme.get(channel));
     }
+    else {
+      setTheme("");
+    }
+
     prefix = msg[0];
     if (prefix === "*") {
       setTheme("retro");
