@@ -3,7 +3,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
-	var/randomly_selectable = 0
 	var/zeroth = null
 	var/zeroth_borg = null
 	var/list/inherent = list()
@@ -15,7 +14,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/nanotrasen
 	name = "Prime Directives"
-	randomly_selectable = 1
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
