@@ -2101,3 +2101,60 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.client.sent_assets = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")
+
+/client/proc/edit_color_matrix()
+	set category = "Debug"
+	set name = "Edit Color Matrix"
+	set desc = "A little more control over the VFX"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!istype(thething))
+		thething = new
+	thething.edit(src)
+
+/var/datum/debugthing/thething
+
+/datum/debugthing
+
+/datum/debugthing/proc/edit(client/user)
+	var/editor = file2text('html/admin/color_matrix.html')
+	user << browse(editor, "window=colormatrix;can_close=1")
+	spawn(1 SECOND)
+		callJsFunc(usr, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
+
+/datum/debugthing/Topic(href, href_list)
+	if(!islist(usr.client.color))
+		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+
+	// as somepotato pointed out this form is very insecure, so let's do some serverside verification that we got what we wanted
+	var/sanitised = sanitize(strip_html_properly(href_list["matrix"]))
+	var/list/matrixStrings = splittext(sanitised, ",")
+	// we are expecting 12 strings, so abort if we don't have that many
+	if(matrixStrings.len != 20)
+		return
+
+	var/list/matrix = list()
+	for(var/i=1, i<=matrixStrings.len, i++)
+		var/num = text2num(matrixStrings[i])
+		if(isnum(num))
+			matrix += num
+	if(href_list["everyone"] == "y")
+
+		if(href_list["animate"] == "y")
+			for(var/client/c)
+				animate(c, color=matrix, time=5, easing=SINE_EASING)
+		else
+			for(var/client/c)
+				c.color = matrix
+	else
+		if(href_list["animate"] == "y")
+			animate(usr.client, color=matrix, time=5, easing=SINE_EASING)
+		else
+			usr.client.color = matrix
+
+/datum/debugthing/proc/callJsFunc(client, funcName, list/params)
+	var/paramsJS = list2params(params)
+	client << output(paramsJS,"colormatrix.browser:[funcName]")
+	return
