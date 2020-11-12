@@ -2110,21 +2110,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	if(!istype(thething))
-		thething = new
-	thething.edit(src)
+	if(!debug_color_matrix)
+		debug_color_matrix = new
+	debug_color_matrix.edit(src)
 
-/var/datum/debugthing/thething
+var/global/datum/debug_color_matrix/debug_color_matrix
 
-/datum/debugthing
+/datum/debug_color_matrix
 
-/datum/debugthing/proc/edit(client/user)
-	var/editor = file2text('html/admin/color_matrix.html')
-	user << browse(editor, "window=colormatrix;can_close=1")
-	spawn(1 SECOND)
+/datum/debug_color_matrix/proc/edit(client/user)
+	var/static/editor = file2text('html/admin/color_matrix.html')
+	user << browse(editor, "window=colormatrix;size=410x485;")
+	spawn(10)
 		callJsFunc(usr, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 
-/datum/debugthing/Topic(href, href_list)
+/datum/debug_color_matrix/Topic(href, href_list)
 	if(!islist(usr.client.color))
 		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
 
@@ -2136,8 +2136,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 
 	var/list/matrix = list()
-	for(var/i=1, i<=matrixStrings.len, i++)
-		var/num = text2num(matrixStrings[i])
+	for(var/matrixString in matrixStrings)
+		var/num = text2num(matrixString)
 		if(isnum(num))
 			matrix += num
 	if(href_list["everyone"] == "y")
@@ -2154,7 +2154,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else
 			usr.client.color = matrix
 
-/datum/debugthing/proc/callJsFunc(client, funcName, list/params)
+/datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
 	var/paramsJS = list2params(params)
 	client << output(paramsJS,"colormatrix.browser:[funcName]")
 	return
