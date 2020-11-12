@@ -37,7 +37,7 @@
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
 	if(defence)
 		if(world.time - last_message > 20)
-			src.occupant_message("<font color='red'>Unable to move while in defence mode</font>")
+			occupant_message("<font color='red'>Unable to move while in defence mode</font>")
 			last_message = world.time
 		return 0
 	. = ..()
@@ -54,12 +54,12 @@
 			flick("vindicator-lockdown-a",src)
 			icon_state = "vindicator-lockdown"
 		deflect_chance = defence_deflect
-		src.occupant_message("<font color='blue'>You enable [src] defence mode.</font>")
+		occupant_message("<font color='blue'>You enable [src] defence mode.</font>")
 	else
 		deflect_chance = initial(deflect_chance)
 		if(animated)
 			icon_state = reset_icon()
-		src.occupant_message("<font color='red'>You disable [src] defence mode.</font>")
+		occupant_message("<font color='red'>You disable [src] defence mode.</font>")
 	src.log_message("Toggled defence mode.")
 	return
 

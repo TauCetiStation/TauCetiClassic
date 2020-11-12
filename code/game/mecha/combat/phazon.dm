@@ -53,7 +53,7 @@
 
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
-		src.occupant_message("Unable to interact with objects while phasing")
+		occupant_message("Unable to interact with objects while phasing")
 		return
 	else
 		return ..()
@@ -74,13 +74,13 @@
 			new_damtype = "tox"
 			color_message = "green"
 	damtype = new_damtype
-	src.occupant_message("Melee damage type switched to <font color='[color_message]'>[new_damtype].</font>")
+	occupant_message("Melee damage type switched to <font color='[color_message]'>[new_damtype].</font>")
 	return
 
 /obj/mecha/combat/phazon/proc/switch_phasing()
 	phasing = !phasing
 	send_byjax(src.occupant,"exosuit.browser","phasing_command","[phasing?"Dis":"En"]able phasing")
-	src.occupant_message("<font color=\"[phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+	occupant_message("<font color=\"[phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
 
 /obj/mecha/combat/phazon/get_commands()
 	var/output = {"<div class='wr'>

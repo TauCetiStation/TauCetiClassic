@@ -67,20 +67,10 @@
 						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
 						<b>Cabin temperature: </b>[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
-						<b>Thrusters: </b>[thrusters_active?"on":"off"]<br>
 						<b>Strafe mode: </b>[strafe?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 						"}
 	return output
-
-///Returns HTML for mech actions.
-
-
-
-
-
-
-
 
 
 /obj/mecha/proc/report_internal_damage()
@@ -115,7 +105,6 @@
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
-						<a href='?src=\ref[src];toggle_thrusters=1'>Toggle Thrusters</a><br>
 						<a href='?src=\ref[src];toggle_strafe=1'>Toggle Strafe</a><br>
 						<b>Radio settings:</b><br>
 						Microphone: <a href='?src=\ref[src];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
@@ -249,9 +238,9 @@
 		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
-			src.selected = equip
-			src.occupant_message("You switch to [equip]")
-			src.visible_message("[src] raises [equip]")
+			selected = equip
+			occupant_message("You switch to [equip]")
+			visible_message("[src] raises [equip]")
 			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
 		return
 
@@ -267,14 +256,6 @@
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		src.toggle_lights()
 		return
-
-	if(href_list["toggle_thrusters"])
-		if(usr != src.occupant)
-			return
-		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.toggle_thrusters()
-		return
-
 	if(href_list["toggle_strafe"])
 		if(usr != src.occupant)
 			return
@@ -428,7 +409,7 @@
 			return
 		if(src.occupant)
 			src.dna = src.occupant.dna.unique_enzymes
-			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
+			occupant_message("You feel a prick as the needle takes your DNA sample.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(href_list["reset_dna"])
@@ -440,7 +421,7 @@
 	if(href_list["repair_int_control_lost"])
 		if(usr != src.occupant)
 			return
-		src.occupant_message("Recalibrating coordination system.")
+		occupant_message("Recalibrating coordination system.")
 		src.log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		addtimer(CALLBACK(src, .proc/stationary_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
@@ -452,9 +433,9 @@
 	if(location == loc)
 		src.clearInternalDamage(MECHA_INT_CONTROL_LOST)
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.occupant_message("<font color='blue'>Recalibration successful.</font>")
+		occupant_message("<font color='blue'>Recalibration successful.</font>")
 		src.log_message("Recalibration of coordination system finished with 0 errors.")
 	else
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.occupant_message("<font color='red'>Recalibration failed.</font>")
+		occupant_message("<font color='red'>Recalibration failed.</font>")
 		src.log_message("Recalibration of coordination system failed with 1 error.", 1)

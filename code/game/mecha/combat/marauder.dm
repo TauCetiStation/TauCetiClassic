@@ -1,3 +1,5 @@
+#define ENERGY_USE_WITH_THRUSTERS 30
+
 /obj/mecha/combat/marauder
 	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations."
 	name = "Marauder"
@@ -22,17 +24,27 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
+	var/thrusters_active = FALSE
+	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
+
+/obj/mecha/combat/marauder/Process_Spacemove(var/movement_dir = 0)
+	. = ..()
+	if(.)
+		return 1
+	if(thrusters_active && movement_dir && use_power(ENERGY_USE_WITH_THRUSTERS))
+		return 1
 
 /obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Grant(user, src)
 	zoom_action.Grant(user, src)
+	thrusters_action.Grant(user, src)
 
 /obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Remove(user)
 	zoom_action.Remove(user)
-
+	thrusters_action.Remove(user)
 
 /obj/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
@@ -109,11 +121,20 @@
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(zoom_mode)
 		if(world.time - last_message > 20)
-			src.occupant_message("Unable to move while in zoom mode.")
+			occupant_message("Unable to move while in zoom mode.")
 			last_message = world.time
 		return 0
 	return ..()
 
+/obj/mecha/combat/marauder/proc/toggle_thrusters()
+	if(usr != src.occupant)
+		return
+	if(src.occupant)
+		if(get_charge() > 0)
+			thrusters_active = !thrusters_active
+			src.log_message("Toggled thrusters.")
+			occupant_message("<font color='[src.thrusters_active? "blue" : "red"]'>Thrusters [thrusters_active? "en" : "dis"]abled.</font>")
+	return
 
 /obj/mecha/combat/marauder/proc/smoke()
 	if(usr != src.occupant)
@@ -132,7 +153,7 @@
 	if(src.occupant.client)
 		src.zoom_mode = !src.zoom_mode
 		src.log_message("Toggled zoom mode.")
-		src.occupant_message("<font color='[src.zoom_mode?"blue":"red"]'>Zoom mode [zoom_mode?"en":"dis"]abled.</font>")
+		occupant_message("<font color='[src.zoom_mode?"blue":"red"]'>Zoom mode [zoom_mode?"en":"dis"]abled.</font>")
 		if(zoom_mode)
 			src.occupant.client.view = 12
 			occupant.playsound_local(null, 'sound/mecha/imag_enh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -151,6 +172,7 @@
 
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
+	output += {"<b>Thrusters: </b>[thrusters_active? "on" : "off"]<br>"}
 	output += {"<b>Smoke:</b> [smoke]"}
 	return output
 
@@ -159,6 +181,7 @@
 	var/output = {"<div class='wr'>
 						<div class='header'>Special</div>
 						<div class='links'>
+						<a href='?src=\ref[src];toggle_thrusters=1'>Toggle Thrusters</a><br>
 						<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
 						<a href='?src=\ref[src];smoke=1'>Smoke</a>
 						</div>
@@ -169,8 +192,12 @@
 
 /obj/mecha/combat/marauder/Topic(href, href_list)
 	..()
-	if (href_list["smoke"])
+	if(href_list["smoke"])
 		src.smoke()
-	if (href_list["toggle_zoom"])
+	if(href_list["toggle_zoom"])
 		src.zoom()
+	if(href_list["toggle_thrusters"])
+		src.toggle_thrusters()
 	return
+
+#undef ENERGY_USE_WITH_THRUSTERS

@@ -6,7 +6,6 @@
 
 #define MECHA_TIME_TO_ENTER 4 SECOND
 #define TIME_TO_RECALIBRATION 10 SECOND
-#define ENERGY_USE_WITH_THRUSTERS 30
 
 #define MELEE 1
 #define RANGED 2
@@ -83,11 +82,9 @@
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
 	var/datum/action/innate/mecha/strafe/strafing_action = new
-	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
-	//Action vars
+	//Action var
 	var/strafe = FALSE
-	var/thrusters_active = FALSE
 
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
@@ -280,15 +277,10 @@
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
-/obj/mecha/Process_Spacemove(var/movement_dir = 0)
-	. = ..()
-	if(..())
-		return 1
-	if(thrusters_active && movement_dir && use_power(ENERGY_USE_WITH_THRUSTERS))
-		return 1
+/obj/mecha/Process_Spacemove(movement_dir = 0)
 	if(occupant)
-		return occupant.Process_Spacemove(movement_dir)
-	return 0
+		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
+	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
@@ -297,7 +289,7 @@
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("Unable to move while connected to the air system port")
+			occupant_message("Unable to move while connected to the air system port")
 			last_message = world.time
 		return 0
 	if(state)
@@ -480,7 +472,7 @@
 		src.log_append_to_last("Armor saved.")
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>Your claws had no effect!</span>")
-		src.occupant_message("<span class='notice'>The [user]'s claws are stopped by the armor.</span>")
+		occupant_message("<span class='notice'>The [user]'s claws are stopped by the armor.</span>")
 		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
 	return
 
@@ -501,7 +493,7 @@
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-			src.occupant_message("<span class='notice'>The [attacker]'s attack is stopped by the armor.</span>")
+			occupant_message("<span class='notice'>The [attacker]'s attack is stopped by the armor.</span>")
 			visible_message("<span class='notice'>The [attacker] rebounds off [src.name]'s armor!</span>")
 			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
 
@@ -517,7 +509,7 @@
 		src.visible_message("The [AM] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || ismob(AM))
-		src.occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
+		occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
 		src.visible_message("The [AM] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
 		if(isliving(AM))
@@ -539,7 +531,7 @@
 
 /obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))
-		src.occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
+		occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
 		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 		return
@@ -648,7 +640,7 @@
 		to_chat(user, "<span class='warning'>\The [W] bounces off [src.name].</span>")
 		src.log_append_to_last("Armor saved.")
 	else
-		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
+		occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
 		user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 		playsound(src, 'sound/mecha/mecha_attacked.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		src.take_damage(W.force,W.damtype)
@@ -933,13 +925,13 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 	if(possible_port)
 		if(connect(possible_port))
-			src.occupant_message("<span class='notice'>[name] connects to the port.</span>")
+			occupant_message("<span class='notice'>[name] connects to the port.</span>")
 			return
 		else
-			src.occupant_message("<span class='warning'>[name] failed to connect to the port.</span>")
+			occupant_message("<span class='warning'>[name] failed to connect to the port.</span>")
 			return
 	else
-		src.occupant_message("Nothing happens")
+		occupant_message("Nothing happens")
 
 
 /obj/mecha/proc/disconnect_from_port()
@@ -947,9 +939,9 @@
 	if(usr != src.occupant)
 		return
 	if(disconnect())
-		src.occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
+		occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
 	else
-		src.occupant_message("<span class='warning'>[name] is not connected to the port at the moment.</span>")
+		occupant_message("<span class='warning'>[name] is not connected to the port at the moment.</span>")
 
 /obj/mecha/proc/toggle_lights()
 	if(usr != occupant)
@@ -963,7 +955,7 @@
 		set_light(light_range + lights_power)
 	else
 		set_light(light_range - lights_power)
-	src.occupant_message("Toggled lights [lights?"on":"off"].")
+	occupant_message("Toggled lights [lights?"on":"off"].")
 	log_message("Toggled lights [lights?"on":"off"].")
 	return
 
@@ -973,19 +965,8 @@
 		return
 
 	use_internal_tank = !use_internal_tank
-	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
+	occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
-	return
-
-
-/obj/mecha/proc/toggle_thrusters()
-	if(usr != src.occupant)
-		return
-	if(src.occupant)
-		if(get_charge() > 0)
-			thrusters_active = !thrusters_active
-			src.log_message("Toggled thrusters.")
-			src.occupant_message("<font color='[src.thrusters_active?"blue":"red"]'>Thrusters [thrusters_active?"en":"dis"]abled.</font>")
 	return
 
 /obj/mecha/MouseDrop_T(mob/user)
@@ -1075,7 +1056,7 @@
 
 	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
 
-	if(enter_after(40,user))
+	if(enter_after(MECHA_TIME_TO_ENTER, user))
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
@@ -1116,13 +1097,10 @@
 	else
 		return 0
 
-/obj/mecha/verb/view_stats()
-	set name = "View Stats"
-	set category = "Exosuit Interface"
-	set src = usr.loc
-	set popup_menu = 0
+/obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
 		return
+
 	//pr_update_stats.start()
 	src.occupant << browse(src.get_stats_html(), "window=exosuit")
 	return

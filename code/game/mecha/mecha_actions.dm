@@ -8,7 +8,6 @@
 	lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
 	strafing_action.Grant(user, src)
-	thrusters_action.Grant(user, src)
 
 
 /obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
@@ -19,7 +18,6 @@
 	lights_action.Remove(user)
 	stats_action.Remove(user)
 	strafing_action.Remove(user)
-	thrusters_action.Remove(user)
 
 
 /datum/action/innate/mecha
@@ -171,7 +169,8 @@
 	button_icon_state = "strafe_[chassis.strafe? "on" : "off"]"
 	chassis.occupant.update_action_buttons()
 
-///////////////////////////////////////////////
+
+//////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 
 /datum/action/innate/mecha/mech_toggle_thrusters
 	name = "Toggle Thrusters"
@@ -181,15 +180,16 @@
 	if(!availability())
 		return
 
-	chassis.toggle_thrusters()
+	var/obj/mecha/combat/marauder/M = chassis
+	M.toggle_thrusters()
 	updateicon()
 
 /datum/action/innate/mecha/mech_toggle_thrusters/proc/updateicon()
-	button_icon_state = "mech_thrusters_[chassis.thrusters_active? "on" : "off"]"
-	chassis.occupant.update_action_buttons()
+	var/obj/mecha/combat/marauder/M = chassis
+	button_icon_state = "mech_thrusters_[M.thrusters_active? "on" : "off"]"
+	M.occupant.update_action_buttons()
 
-
-//////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 /datum/action/innate/mecha/mech_defence_mode
 	name = "Toggle an defence mod. Blocks some damage"

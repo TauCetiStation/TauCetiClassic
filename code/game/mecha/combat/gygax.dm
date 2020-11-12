@@ -80,7 +80,7 @@
 		overload = 0
 		step_in = initial(step_in)
 		step_energy_drain = initial(step_energy_drain)
-		src.occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
+		occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
 		if(animated)
 			flick("ultra-gofasta-off",src)
 			reset_icon()
@@ -88,7 +88,7 @@
 		overload = 1
 		step_in = min(1, round(step_in/2))
 		step_energy_drain = step_energy_drain*overload_coeff
-		src.occupant_message("<font color='red'>You enable leg actuators overload.</font>")
+		occupant_message("<font color='red'>You enable leg actuators overload.</font>")
 		if(animated)
 			flick("ultra-gofasta-on",src)
 			icon_state = "ultra-gofasta"
@@ -103,7 +103,7 @@
 			overload = 0
 			step_in = initial(step_in)
 			step_energy_drain = initial(step_energy_drain)
-			src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
+			occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
 			if(animated)
 				flick("ultra-gofasta-off",src)
 				reset_icon()
