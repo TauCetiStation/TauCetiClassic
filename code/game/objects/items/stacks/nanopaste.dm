@@ -36,9 +36,13 @@
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
 				return TRUE
-			else if(H.species.flags[IS_SYNTHETIC] && can_operate(H))
-				..()
-				return TRUE
+			else if(can_operate(H))
+				for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+					if(IO.is_bruised())
+						..()
+						return TRUE
+					else
+						return FALSE
 			else
 				to_chat(user, "<span class='notice'>Noting to fix!</span>")
 				return FALSE
