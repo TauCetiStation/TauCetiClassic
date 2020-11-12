@@ -3516,6 +3516,28 @@
 	icon_state = "warnplate"
 	},
 /area/station/hallway/secondary/exit)
+"afJ" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = 32
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/station/hallway/secondary/entry)
+"afK" = (
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arrival"
+	},
+/area/station/hallway/secondary/entry)
 "afR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -9964,6 +9986,9 @@
 /area/station/maintenance/science)
 "cfk" = (
 /obj/machinery/computer/arcade,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -12274,12 +12299,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "cQc" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_x = 32
+/obj/machinery/camera{
+	c_tag = "Docks North";
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -76199,12 +76221,8 @@
 	},
 /area/station/maintenance/brig)
 "xfi" = (
-/obj/machinery/camera{
-	c_tag = "Docks North";
-	dir = 8
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -78349,8 +78367,15 @@
 "xPV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/flasher_button{
-	id = "escapeshutflash"
+	id = "escapeshutflash";
+	pixel_x = 2;
+	pixel_y = 2
 	},
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/flash,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 25
@@ -95547,7 +95572,7 @@ pOf
 eEf
 eEf
 pOf
-kHU
+plf
 pOf
 its
 cck
@@ -97611,7 +97636,7 @@ eji
 eji
 xot
 adE
-smh
+wqE
 wce
 wce
 wce
@@ -98385,13 +98410,13 @@ mda
 mhQ
 lzK
 oxs
-oxs
+xfi
 oxs
 lzK
-oxs
-non
 cQc
-xfi
+non
+afJ
+afK
 teK
 oxs
 bLu
