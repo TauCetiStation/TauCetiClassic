@@ -116,5 +116,5 @@
 /obj/item/clothing/head/soft/paramed
 	name = "first responder cap"
 	desc = "It's first responder hat. Shows who's saving lives here."
-	icon_state = "frsoft"
+	icon_state = "fr_soft"
 	item_color = "fr"
