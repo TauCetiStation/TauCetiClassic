@@ -7368,15 +7368,15 @@
 	},
 /area/station/maintenance/medbay)
 "boW" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/computer/mine_sci_shuttle,
 /obj/item/device/radio/intercom{
 	pixel_x = -25
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor{
-	dir = 6;
+	dir = 10;
 	icon_state = "purple"
 	},
 /area/station/hallway/secondary/entry)
@@ -20576,7 +20576,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 9;
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/entry)
@@ -39398,7 +39398,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "luM" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45854,7 +45854,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
 /area/station/hallway/secondary/entry)
 "nvq" = (
 /obj/structure/cable{
@@ -49198,13 +49201,16 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "oAN" = (
-/obj/item/weapon/twohanded/flora/random,
-/obj/machinery/camera{
-	c_tag = "Vacant Office";
-	dir = 4
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/station/hallway/secondary/entry)
 "oBk" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -58517,7 +58523,7 @@
 	},
 /area/station/rnd/robotics)
 "rAq" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
 	},
@@ -74196,12 +74202,15 @@
 	},
 /area/station/rnd/mixing)
 "wrF" = (
-/obj/item/weapon/twohanded/flora/random,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 28
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/station/hallway/secondary/entry)
 "wrR" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -78716,7 +78725,7 @@
 	},
 /area/station/medical/medbreak)
 "xVK" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor{
@@ -92812,7 +92821,7 @@ nxZ
 kkh
 aeZ
 wce
-afM
+wrF
 aJy
 czH
 tRZ
@@ -94047,7 +94056,7 @@ igP
 igP
 igP
 igP
-oAN
+igP
 igP
 igP
 igP
@@ -94097,7 +94106,7 @@ jsz
 aBX
 aff
 czH
-wce
+oAN
 ahm
 czH
 czH
@@ -94354,7 +94363,7 @@ plf
 plf
 plf
 czH
-mcz
+twf
 rnh
 adD
 trc
@@ -94611,7 +94620,7 @@ trc
 czH
 czH
 czH
-mcz
+twf
 rnh
 adD
 trc
@@ -94865,10 +94874,10 @@ qmE
 dkJ
 fws
 nuY
-mcz
-mcz
-mcz
-mcz
+pYL
+pYL
+pYL
+cXd
 rnh
 pcn
 trc
@@ -95594,10 +95603,10 @@ cck
 igP
 igP
 plf
-plf
-plf
 kHU
-wrF
+kHU
+kHU
+kHU
 kHU
 plf
 czH

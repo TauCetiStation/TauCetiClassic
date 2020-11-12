@@ -7444,10 +7444,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
-"aml" = (
-/obj/structure/flora/plant/random,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "amm" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching Prison Wing holding areas.";
@@ -20159,16 +20155,11 @@
 "aJJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
-"aJK" = (
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
-/area/station/hallway/secondary/exit)
 "aJL" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -20214,7 +20205,6 @@
 /obj/machinery/camera{
 	c_tag = "Arrival Hallway Center"
 	},
-/obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -20224,6 +20214,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -28078,13 +28069,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"aYh" = (
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/station/hallway/secondary/entry)
 "aYi" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -29627,7 +29611,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "baR" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor{
@@ -38445,7 +38429,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "brm" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38739,7 +38723,7 @@
 /area/station/hallway/secondary/exit)
 "brO" = (
 /obj/structure/cable,
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/power/apc{
 	name = "Escape Hallway APC";
 	pixel_y = -24
@@ -39594,7 +39578,7 @@
 	},
 /area/station/bridge)
 "btm" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
@@ -71550,15 +71534,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/bar)
-"hmb" = (
-/obj/item/weapon/twohanded/flora/random,
-/obj/structure/closet/emergency_wall{
-	pixel_x = -30
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/hallway/secondary/exit)
 "hmR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -79684,18 +79659,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/bar)
-"tCb" = (
-/obj/item/weapon/twohanded/flora/random,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/closet/emergency_wall{
-	pixel_x = 30
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/hallway/secondary/exit)
 "tDb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -85854,7 +85817,7 @@ bjn
 hub
 aWt
 aXR
-aml
+aSV
 aDy
 aaa
 aaa
@@ -90994,7 +90957,7 @@ aaa
 aEb
 aCX
 aiK
-aSV
+aEb
 aaa
 aaa
 aaa
@@ -92535,7 +92498,7 @@ aKJ
 aaa
 apT
 bbd
-aYh
+bbt
 atE
 aJT
 bQB
@@ -94317,7 +94280,7 @@ aKJ
 aKJ
 aKJ
 aKJ
-hmb
+aKJ
 aKJ
 aKJ
 aKJ
@@ -94838,7 +94801,7 @@ aKJ
 aKJ
 aKJ
 aKJ
-aJK
+aKJ
 aKJ
 aaa
 aaa
@@ -97401,7 +97364,7 @@ aVq
 aVq
 aVq
 aVq
-tCb
+aVq
 aVq
 aVq
 aVq

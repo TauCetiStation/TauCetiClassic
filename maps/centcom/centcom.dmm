@@ -1480,7 +1480,7 @@
 /area/shuttle/escape/centcom)
 "adW" = (
 /obj/machinery/door/airlock/erokez/sec{
-	req_access = list(1)
+	req_access = list(2)
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
@@ -6631,9 +6631,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "avN" = (
@@ -23057,7 +23055,10 @@
 /turf/space,
 /area/shuttle/arrival/transit)
 "ojb" = (
-/obj/machinery/door/window/brigdoor,
+/obj/machinery/door/window/brigdoor{
+	name = "Security Shuttle Prisoners";
+	req_access = list(2)
+	},
 /turf/simulated/shuttle/floor/evac/sec1,
 /area/shuttle/escape/centcom)
 "okb" = (
@@ -23076,9 +23077,11 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "omb" = (
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/obj/structure/object_wall/erokez{
+	icon_state = "6,1"
+	},
+/turf/space,
+/area/shuttle/transport1/centcom)
 "onb" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -23090,15 +23093,6 @@
 	icon_state = "5,8"
 	},
 /turf/space,
-/area/shuttle/escape/centcom)
-"opb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "oqb" = (
 /obj/structure/object_wall/evac{
@@ -23246,12 +23240,6 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"oGb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor/evac/place,
-/area/shuttle/escape/centcom)
 "oHb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,13"
@@ -23300,9 +23288,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "oPb" = (
@@ -23565,11 +23551,6 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"pxb" = (
-/obj/machinery/light,
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
 "pyb" = (
 /obj/machinery/computer/crew/erokez,
 /turf/simulated/shuttle/floor/evac,
@@ -23683,15 +23664,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"pPb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/evac/place,
-/area/shuttle/escape/centcom)
 "pQb" = (
 /obj/machinery/computer/med_data{
 	dir = 8
@@ -23705,12 +23677,6 @@
 	icon_state = "15,8"
 	},
 /turf/space,
-/area/shuttle/escape/centcom)
-"pTb" = (
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
 /area/shuttle/escape/centcom)
 "pUb" = (
 /obj/machinery/life_assist/artificial_ventilation,
@@ -23754,14 +23720,11 @@
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "qbb" = (
-/obj/machinery/light,
-/obj/item/weapon/twohanded/flora/random,
-/obj/machinery/vending/wallmed1{
-	name = "Emergency NanoMed";
-	pixel_y = -32
+/obj/structure/object_wall/erokez{
+	icon_state = "3,1"
 	},
-/turf/simulated/shuttle/floor,
-/area/shuttle/escape/centcom)
+/turf/space,
+/area/shuttle/transport1/centcom)
 "qcb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,20"
@@ -39117,7 +39080,7 @@ aaM
 aaM
 aaM
 aaM
-pTb
+aaM
 aaM
 aaM
 aaM
@@ -40656,7 +40619,7 @@ aaM
 aaM
 aaM
 aaM
-omb
+aaM
 aaM
 aaM
 aaM
@@ -41435,7 +41398,7 @@ aaM
 aaM
 aaM
 aaM
-pxb
+aaM
 aaM
 aaM
 aHv
@@ -44025,13 +43988,13 @@ aff
 afi
 aRG
 aRG
-oGb
+aWR
 oOb
-oGb
+aWR
 adT
-oGb
-pPb
-oGb
+aWR
+oOb
+aWR
 aad
 akf
 abG
@@ -44282,13 +44245,13 @@ aWR
 aWR
 aRG
 aRG
-oGb
-oGb
-oGb
+aWR
+aWR
+aWR
 aRG
-oGb
-oGb
-oGb
+aWR
+aWR
+aWR
 aeV
 afv
 abG
@@ -44796,13 +44759,13 @@ aWR
 aWR
 aRG
 aRG
-oGb
-oGb
-oGb
+aWR
+aWR
+aWR
 aRG
-oGb
-oGb
-oGb
+aWR
+aWR
+aWR
 aeW
 afw
 abG
@@ -45053,13 +45016,13 @@ aWR
 afp
 aRG
 aRG
-oGb
+aWR
 avJ
-oGb
+aWR
 adU
-oGb
-opb
-oGb
+aWR
+avJ
+aWR
 abq
 afx
 abG
