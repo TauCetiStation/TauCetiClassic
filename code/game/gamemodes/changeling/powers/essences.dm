@@ -263,7 +263,7 @@
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
-		<a href ='?src=\ref[src];permissions=\ref[M]'>(See permissions)</a>\
+		<a href ='?src=\ref[src];permissions=\ref[M]'>See permissions</a>\
 		 <a href ='?src=\ref[src];trusted=\ref[M]'>[changeling.trusted_entity == M ? "T" : "unt"]rusted</a>"
 		if(M.client)
 			dat += " <a href ='?src=\ref[src];share_body=\ref[M]'>Delegate Control</a><BR>"

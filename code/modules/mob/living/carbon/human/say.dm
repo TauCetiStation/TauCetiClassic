@@ -311,10 +311,9 @@
 		if((message_mode != "changeling") && prob(40))
 			if(prob(80))
 				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
-			else if(config.rus_language)
-				message =  "[message]... Но я ГНОМ!"
 			else
-				message =  "[message]... But i'm A GNOME!"
+				message =  "[message]... Но я ГНОМ!"
+
 			verb = pick("yells like an idiot", "says rather loudly")
 			speech_sound = 'sound/magic/GNOMED.ogg'
 

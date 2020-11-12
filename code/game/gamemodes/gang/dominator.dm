@@ -227,8 +227,8 @@
 
 //obj/machinery/dominator/attack_hulk(mob/user)
 //	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-//	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
-//	"<span class='danger'>You punch [src].</span>",\
+//	user.visible_message("<span class='danger'>[user] smashes [src].</span>",
+//	"<span class='danger'>You punch [src].</span>",
 //	"<span class='italics'>You hear metal being slammed.</span>")
 //	healthcheck(5)
 

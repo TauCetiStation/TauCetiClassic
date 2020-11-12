@@ -843,12 +843,10 @@ var/list/admin_verbs_hideable = list(
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/show_player_notes()
+/client/proc/show_player_notes(key as text)
 	set name = "Show Player Notes"
-	set category = "Admin"
-	if(holder)
-		holder.show_player_notes()
-	return
+	set category = "Logs"
+	holder?.show_player_notes(key)
 
 /client/proc/free_slot()
 	set name = "Free Job Slot"

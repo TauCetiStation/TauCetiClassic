@@ -142,7 +142,6 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "atmo_mixer")
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)
 	if(!..())

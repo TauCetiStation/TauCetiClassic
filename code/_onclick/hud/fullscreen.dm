@@ -27,17 +27,21 @@
 		screen.add_screen_part(client)
 	return screen
 
-/mob/proc/clear_fullscreen(category, animate = 10)
-	set waitfor = 0
+/mob/proc/clear_fullscreen(category, animated = 10)
 	var/obj/screen/fullscreen/screen = screens[category]
 	if(!screen)
 		return
-
-	if(animate)
-		animate(screen, alpha = 0, time = animate)
-		sleep(animate)
-
 	screens -= category
+	if(animated)
+		animate(screen, alpha = 0, time = animated)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
+	else
+		if(client)
+			client.screen -= screen
+			screen.remove_screen_part(client)
+		qdel(screen)
+
+/mob/proc/clear_fullscreen_after_animate(obj/screen/fullscreen/screen)
 	if(client)
 		client.screen -= screen
 		screen.remove_screen_part(client)

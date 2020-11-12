@@ -1403,6 +1403,24 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
+"adL" = (
+/obj/structure/object_wall/evac{
+	density = 0;
+	icon_state = "0,7";
+	opacity = 0
+	},
+/turf/space,
+/area/shuttle/escape/centcom)
+"adM" = (
+/obj/machinery/computer/communications/evac,
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
+"adN" = (
+/obj/structure/object_wall/evac{
+	icon_state = "11,21"
+	},
+/turf/space,
+/area/shuttle/escape/centcom)
 "adO" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
@@ -1453,6 +1471,12 @@
 	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
+"adV" = (
+/obj/structure/object_wall/evac{
+	icon_state = "1,8"
+	},
+/turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
 /obj/machinery/door/airlock/erokez/sec{
@@ -4564,12 +4588,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/velocity)
-"aoW" = (
-/obj/structure/object_wall/erokez{
-	icon_state = "3,1"
-	},
-/turf/space,
-/area/shuttle/transport1/centcom)
 "aoX" = (
 /obj/machinery/atmospherics/components/unary/tank/nitrogen{
 	dir = 1
@@ -6210,12 +6228,6 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
-"aul" = (
-/obj/structure/object_wall/erokez{
-	icon_state = "6,1"
-	},
-/turf/space,
-/area/shuttle/transport1/centcom)
 "aum" = (
 /obj/structure/sign/velocity_overlay/reklama/pda_x{
 	pixel_y = 32
@@ -6263,7 +6275,7 @@
 	},
 /area/velocity)
 "auu" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -16934,7 +16946,7 @@
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
 "bAb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17292,7 +17304,7 @@
 	},
 /area/velocity)
 "ckb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 5;
@@ -17307,7 +17319,7 @@
 	},
 /area/velocity)
 "cmb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Maintenance Door Control";
@@ -17421,7 +17433,7 @@
 	},
 /area/velocity)
 "cxb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -17520,7 +17532,7 @@
 	},
 /area/velocity)
 "cJb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -17826,7 +17838,7 @@
 	},
 /area/velocity)
 "dkb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23064,10 +23076,8 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "omb" = (
-/obj/structure/object_wall/evac{
-	icon_state = "1,8"
-	},
-/turf/space,
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "onb" = (
 /obj/machinery/sleeper{
@@ -23556,8 +23566,9 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "pxb" = (
-/obj/machinery/computer/communications/evac,
-/turf/simulated/shuttle/floor/evac,
+/obj/machinery/light,
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "pyb" = (
 /obj/machinery/computer/crew/erokez,
@@ -23696,12 +23707,10 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "pTb" = (
-/obj/structure/object_wall/evac{
-	density = 0;
-	icon_state = "0,7";
-	opacity = 0
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor2"
 	},
-/turf/space,
 /area/shuttle/escape/centcom)
 "pUb" = (
 /obj/machinery/life_assist/artificial_ventilation,
@@ -23745,10 +23754,13 @@
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "qbb" = (
-/obj/structure/object_wall/evac{
-	icon_state = "11,21"
+/obj/machinery/light,
+/obj/item/weapon/twohanded/flora/random,
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_y = -32
 	},
-/turf/space,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
 "qcb" = (
 /obj/structure/object_wall/evac{
@@ -23803,7 +23815,7 @@
 	},
 /area/shuttle/supply/velocity)
 "qsd" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
@@ -23822,7 +23834,7 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "rkK" = (
-/obj/structure/flora/pottedplant/tropicalfern{
+/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -23922,7 +23934,7 @@
 /area/velocity)
 "voK" = (
 /obj/structure/table/glass,
-/obj/structure/flora/plant/deskleaf{
+/obj/item/weapon/twohanded/flora/deskleaf{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor{
@@ -24006,7 +24018,7 @@
 /area/custom/syndicate_mothership/elite_squad)
 "ygn" = (
 /obj/structure/table/reinforced,
-/obj/structure/flora/plant,
+/obj/item/weapon/twohanded/flora,
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Paper"
 	},
@@ -39105,7 +39117,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+pTb
 aaM
 aaM
 aaM
@@ -40644,7 +40656,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+omb
 aaM
 aaM
 aaM
@@ -41423,7 +41435,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+pxb
 aaM
 aaM
 aHv
@@ -42451,7 +42463,7 @@ agT
 awj
 awA
 akZ
-aoW
+qbb
 aaM
 abn
 pbb
@@ -42477,7 +42489,7 @@ aaM
 aaM
 aaM
 olb
-pTb
+adL
 aaM
 aaM
 aaM
@@ -42733,7 +42745,7 @@ bQb
 bQb
 oSb
 pDb
-omb
+adV
 otb
 owb
 aby
@@ -43222,7 +43234,7 @@ ahB
 awz
 awz
 ali
-aul
+omb
 aaM
 aaM
 aaM
@@ -44261,7 +44273,7 @@ aaM
 pib
 pmb
 psb
-pxb
+adM
 iPu
 aRG
 adO
@@ -45290,7 +45302,7 @@ aaM
 aaM
 mOb
 pzb
-qbb
+adN
 mjb
 mpb
 afD
