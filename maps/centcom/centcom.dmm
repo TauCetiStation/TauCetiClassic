@@ -1602,7 +1602,9 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeF" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle/eva{
+	dock_tag = "shuttle_escape"
+	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aeG" = (
