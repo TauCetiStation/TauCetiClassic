@@ -112,6 +112,33 @@
 				sound_priority = SOUND_PRIORITY_MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
+		if("beep")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "beeps."
+			muzzled_message = "beeps."
+			miming_message = "beeps."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+		if("ping")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "pings."
+			muzzled_message = "pings."
+			miming_message = "pings."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+		if("buzz")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "buzzes."
+			muzzled_message = "buzzes."
+			miming_message = "buzzes."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 // ========== AUDIBLE ==========
 
 		if ("choke")
