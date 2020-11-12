@@ -26,7 +26,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
-		if(BP && BP.is_robotic() || H.species.flags[IS_SYNTHETIC])
+		if(BP && BP.is_robotic())
 			if(BP.get_damage())
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
@@ -36,32 +36,11 @@
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
 				return TRUE
+			else if(H.species.flags[IS_SYNTHETIC] && can_operate(H))
+				..()
+				return TRUE
 			else
-				switch(def_zone)
-					if(BP_CHEST)
-						for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-							if(IO.is_bruised() && H.op_stage.ribcage == 2)
-								return ..()
-							else
-								to_chat(user, "<span class='notice'>Nothing to fix!</span>")
-								return FALSE
-					if(BP_GROIN)
-						for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-							if(IO.is_bruised() && BP.open >= 2)
-								return ..()
-							else
-								to_chat(user, "<span class='notice'>Nothing to fix!</span>")
-								return FALSE
-
-					if(O_EYES)
-						for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-							if(IO.is_bruised() && H.op_stage.eyes == 1)
-								return ..()
-							else
-								to_chat(user, "<span class='notice'>Nothing to fix!</span>")
-								return FALSE
-					else
-						to_chat(user, "<span class='notice'>Nothing to fix!</span>")
-						return FALSE
+				to_chat(user, "<span class='notice'>Noting to fix!</span>")
+				return FALSE
 
 	return ..()
