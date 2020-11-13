@@ -1341,14 +1341,10 @@
 /area/shuttle/escape/centcom)
 "adD" = (
 /obj/structure/object_wall/evac{
-	density = 0;
-	icon_state = "8,0";
-	opacity = 0
+	icon_state = "14,20"
 	},
-/obj/structure/closet/evacvent{
-	layer = 3.1;
-	step_x = 0;
-	step_y = 31
+/obj/structure/object_wall/evac{
+	icon_state = "13,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -1479,10 +1475,8 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/machinery/door/airlock/erokez/sec{
-	req_access = list(2)
-	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adX" = (
 /obj/machinery/door/airlock/erokez/med{
@@ -1559,6 +1553,26 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
+"aeg" = (
+/obj/structure/closet/hydrant{
+	layer = 3.1;
+	pixel_y = 30
+	},
+/obj/structure/closet/toolcloset,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/shuttle/escape/centcom)
+"aeh" = (
+/obj/structure/object_wall/evac{
+	density = 0;
+	icon_state = "8,0";
+	opacity = 0
+	},
+/obj/structure/closet/evacvent{
+	layer = 3.1;
+	pixel_y = 31
+	},
+/turf/space,
+/area/shuttle/escape/centcom)
 "aei" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "CentComConv02";
@@ -1602,7 +1616,7 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeF" = (
-/obj/machinery/door/unpowered/shuttle/eva{
+/obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "shuttle_escape"
 	},
 /turf/simulated/shuttle/floor/evac,
@@ -1733,15 +1747,7 @@
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
 "afw" = (
-/obj/structure/closet/toolcloset,
-/turf/simulated/shuttle/floor/evac/eng2,
-/area/shuttle/escape/centcom)
-"afx" = (
 /obj/structure/table,
-/obj/structure/closet/hydrant{
-	layer = 3.1;
-	pixel_y = 30
-	},
 /obj/machinery/cell_charger,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
@@ -1756,6 +1762,13 @@
 	pixel_y = -2
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
+/area/shuttle/escape/centcom)
+"afx" = (
+/obj/machinery/door/airlock/erokez/sec{
+	opacity = 0;
+	req_access = list(2)
+	},
+/turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "afy" = (
 /obj/structure/object_wall/evac{
@@ -3024,10 +3037,6 @@
 /area/shuttle/syndicate/start)
 "akf" = (
 /obj/structure/table,
-/obj/structure/closet/emergency_wall{
-	layer = 3.1;
-	pixel_y = 32
-	},
 /obj/item/weapon/storage/toolbox/electrical{
 	pixel_y = 6
 	},
@@ -5447,7 +5456,9 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "arE" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle/pod{
+	dock_tag = "shuttle_escape"
+	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "arF" = (
@@ -9331,11 +9342,11 @@
 	},
 /area/centcom/creed)
 "aEw" = (
-/obj/structure/object_wall/evac{
-	icon_state = "2,20"
+/obj/machinery/light/small{
+	dir = 4
 	},
-/turf/space,
-/area/shuttle/escape/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/transport1/centcom)
 "aEz" = (
 /turf/unsimulated/wall,
 /area/centcom)
@@ -12650,13 +12661,19 @@
 /area/centcom/holding)
 "aRs" = (
 /obj/structure/object_wall/evac{
-	icon_state = "14,20"
+	icon_state = "13,20"
+	},
+/obj/structure/object_wall/evac{
+	icon_state = "3,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
 "aRt" = (
 /obj/structure/object_wall/evac{
-	icon_state = "13,20"
+	icon_state = "12,20"
+	},
+/obj/structure/object_wall/evac{
+	icon_state = "2,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -13048,7 +13065,10 @@
 /area/shuttle/supply/velocity)
 "aSC" = (
 /obj/structure/object_wall/evac{
-	icon_state = "12,20"
+	icon_state = "4,20"
+	},
+/obj/structure/object_wall/evac{
+	icon_state = "14,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -22164,13 +22184,22 @@
 /area/centcom/control)
 "mcb" = (
 /obj/structure/object_wall/evac{
+	icon_state = "2,20"
+	},
+/obj/structure/object_wall/evac{
 	icon_state = "3,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
 "mdb" = (
 /obj/structure/object_wall/evac{
+	icon_state = "3,20"
+	},
+/obj/structure/object_wall/evac{
 	icon_state = "4,20"
+	},
+/obj/structure/object_wall/evac{
+	icon_state = "13,20"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -42955,12 +42984,12 @@ aaM
 aaM
 aaM
 aaM
-aEw
+mcb
 aac
 aeB
 aac
 afz
-aRG
+adW
 aRG
 oFb
 oKb
@@ -43212,7 +43241,7 @@ aaM
 aaM
 aaM
 aaM
-mcb
+mdb
 abF
 aRG
 aRG
@@ -43469,7 +43498,7 @@ aaM
 aaM
 aaM
 aaM
-mdb
+aSC
 aac
 aeU
 aac
@@ -44517,7 +44546,7 @@ abG
 afU
 acZ
 adw
-adD
+aeh
 aaM
 aaM
 aaM
@@ -44736,9 +44765,9 @@ aaM
 aaM
 aaM
 aha
+aEw
 agT
-agT
-agT
+aEw
 akU
 aHv
 aHv
@@ -45026,7 +45055,7 @@ aWR
 avJ
 aWR
 abq
-afx
+aeg
 abG
 acx
 add
@@ -45525,7 +45554,7 @@ aaM
 aaM
 aaM
 aaM
-aSC
+aRt
 aYJ
 aRG
 aRG
@@ -45782,14 +45811,14 @@ aaM
 aaM
 aaM
 aaM
-aRt
+aRs
 acw
 aRG
 aRG
 aRG
 aRG
 aRG
-adW
+afx
 aeC
 aeC
 aeC
@@ -46039,7 +46068,7 @@ aaM
 aaM
 aaM
 aaM
-aRs
+adD
 aYJ
 aRG
 aRG
