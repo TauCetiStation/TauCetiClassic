@@ -506,9 +506,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dat += "<tr><td><B>Bandages:</B></td><td><A href='?src=\ref[src];bandages=1'>Remove</A></td></tr>"
 	dat += "<tr><td><B>Splints:</B></td><td><A href='?src=\ref[src];splints=1'>Remove</A></td></tr>"
 
-	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 640)
 	popup.set_content(dat.Join())
@@ -1282,6 +1280,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
 
+/mob/living/carbon/human/can_pickup(obj/O)
+	// Its worst
+	if(istype(O, /obj/item/weapon/twohanded))
+		var/obj/item/weapon/twohanded/T = O
+		if(T.wielded)
+			to_chat(src, "<span class='warning'>Unwield the [initial(name)] first!</span>")
+			return FALSE
+		if(get_inactive_hand() && T.only_twohand)
+			to_chat(src, "<span class='warning'>Your other hand is too busy.</span>")
+			return FALSE
+	return TRUE
+
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"
@@ -1768,7 +1778,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
 /mob/living/carbon/human/proc/IPC_change_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
 	if(stat)
@@ -1804,7 +1814,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/proc/IPC_toggle_screen()
-	set category = "IC"
+	set category = "IPC"
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
@@ -1827,6 +1837,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])

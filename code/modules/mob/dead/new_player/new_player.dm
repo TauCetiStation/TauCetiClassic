@@ -48,7 +48,7 @@
 		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 	else
-		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
@@ -75,7 +75,7 @@ commented cause polls are kinda broken now, needs refactoring */
 
 	output += "</div>"
 	var/datum/browser/popup = new(src, "playersetup", null, 210, 240)
-	popup.set_window_options("can_close=0")
+	popup.set_window_options("can_close=0;can_resize=0;")
 	popup.set_content(output)
 	popup.open()
 	return
@@ -316,7 +316,7 @@ commented cause polls are kinda broken now, needs refactoring */
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
 	spawning = 1
@@ -486,7 +486,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
+	popup.open()
 
 
 /mob/dead/new_player/proc/create_character()

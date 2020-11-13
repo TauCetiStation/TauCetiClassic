@@ -132,10 +132,10 @@
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>")
+		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points</a><br>")
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
+		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>")
 
 	for(var/O in stack_list)
 		s = stack_list[O]
@@ -144,7 +144,7 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
+	dat += text("<br><div class='Section'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
@@ -294,11 +294,11 @@
 
 /obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
-	dat +="<div class='statusDisplay'>"
+	dat +="<div class='Section'>"
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>"
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
+		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
@@ -618,7 +618,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
+	desc = "This robot is used to support the miners and can search and collect ore or defend itself from wildlife."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -671,15 +671,15 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
 					health += 15
-					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
+					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
 
@@ -783,7 +783,7 @@
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
 	else
-		msg += "<span class='notice'>It looks without dents.</span>\n"
+		msg += "<span class='notice'>It looks undamaged.</span>\n"
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)

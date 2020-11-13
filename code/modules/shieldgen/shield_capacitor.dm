@@ -79,23 +79,22 @@
 			return
 	var/t = ""
 	if(locked && !isobserver(user))
-		t += "<i>Swipe your ID card to begin.</i>"
+		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
-		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"
+		t += "This capacitor is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "[time_since_fail > 2 ? "<span class='green'>Charging stable.</span>" : "<span class='red'>Warning, low charge!</span>"]<br>"
 		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
-		<a href='?src=\ref[src];charge_rate=-100000'>\[----\]</a> \
-		<a href='?src=\ref[src];charge_rate=-10000'>\[---\]</a> \
-		<a href='?src=\ref[src];charge_rate=-1000'>\[--\]</a> \
-		<a href='?src=\ref[src];charge_rate=-100'>\[-\]</a>[charge_rate] Watts/sec \
-		<a href='?src=\ref[src];charge_rate=100'>\[+\]</a> \
-		<a href='?src=\ref[src];charge_rate=1000'>\[++\]</a> \
-		<a href='?src=\ref[src];charge_rate=10000'>\[+++\]</a> \
-		<a href='?src=\ref[src];charge_rate=100000'>\[+++\]</a><br>"
+		<a href='?src=\ref[src];charge_rate=-100000'>----</a> \
+		<a href='?src=\ref[src];charge_rate=-10000'>---</a> \
+		<a href='?src=\ref[src];charge_rate=-1000'>--</a> \
+		<a href='?src=\ref[src];charge_rate=-100'>-</a>[charge_rate] Watts/sec \
+		<a href='?src=\ref[src];charge_rate=100'>+</a> \
+		<a href='?src=\ref[src];charge_rate=1000'>++</a> \
+		<a href='?src=\ref[src];charge_rate=10000'>+++</a> \
+		<a href='?src=\ref[src];charge_rate=100000'>+++</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
 	var/datum/browser/popup = new(user, "shield_capacitor", "Shield Capacitor Control Console", 500, 400)
 	popup.set_content(t)
@@ -119,11 +118,6 @@
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
-	if(href_list["close"])
-		usr << browse(null, "window=shield_capacitor")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
