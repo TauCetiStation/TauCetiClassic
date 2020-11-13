@@ -2111,7 +2111,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/static/debug_color_matrix = new
+	var/static/datum/debug_color_matrix/debug_color_matrix = new
 	debug_color_matrix.edit(src)
 
 /datum/debug_color_matrix
