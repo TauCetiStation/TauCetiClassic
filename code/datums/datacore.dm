@@ -192,7 +192,7 @@
 	if(!possible_records)
 		return null
 	if(possible_records.len > 1)
-		var/choice = input(user, "Several people with the given name were found.", "Select a person", null) in possible_records
+		var/choice = input(user, "В базе данных найдено несколько человек с таким именем.", "Сделайте выбор", null) in possible_records
 		if(!choice)
 			return null
 		return possible_records[choice]
@@ -216,11 +216,12 @@
 	R.fields[text("com_[counter]")] = text("<b>Made by [name] on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]:</b> <BR>[message]")
 
 /* The function changes the criminal status in the database. Used by securityHUD or machinery
-*author - Who changed the criminal status? We need a name.
-*target_name - Only the target name is given, the database will be searched by name
-*security_record - Target already found in the database
-*used_by_computer - If this function is used in a machinery, set TRUE. Needed for additional checks
-*source - If this function is used in a machinery, pass the src
+ * Arguments:
+ * * author - Who changed the criminal status? We need a name.
+ * * target_name - Only the target name is given, the database will be searched by name
+ * * security_record - Target already found in the database
+ * * used_by_computer - If this function is used in a machinery, set TRUE. Needed for additional checks
+ * * source - If this function is used in a machinery, pass the src
 */
 /proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source)
 	var/datum/data/record/S = security_record
@@ -229,21 +230,21 @@
 	else
 		var/record_id = find_record_by_name(user, target_name)
 		if(!record_id)
-			to_chat(user, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+			to_chat(user, "<span class='warning'>Человек с таким именем не найден в базе данных.</span>")
 			return
 		S = find_security_record("id", record_id)
 	if(!S)
-		to_chat(user, "<span class='warning'>Unable to locate a security record for this person.</span>")
+		to_chat(user, "<span class='warning'>Человек с таким именем не найден в базе данных службы безопасности.</span>")
 		return
-	var/criminal_status = input(user, "Specify a new criminal status for this person.", "Criminal status", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
+	var/criminal_status = input(user, "Укажите новый уголовный статус для этого человека.", "Уголовный статус", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 	if(criminal_status == "Cancel")
 		return
-	var/reason = sanitize(input(user, "Add Reason:", "Reason", "not specified")  as message)
+	var/reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
 	if(used_by_computer)
 		if(user.incapacitated() || (!in_range(source, user) && !issilicon(user) && !isobserver(user)))
 			return
 	S.fields["criminal"] = criminal_status
-	add_record(author, S, "The criminal status was changed to <b>[criminal_status]</b><BR><b>Reason:</b> [reason]")
+	add_record(author, S, "Уголовный статус статус был изменен на <b>[criminal_status]</b><BR><b>Причина:</b> [reason]")
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(H.real_name == target_name)
 			H.sec_hud_set_security_status()
