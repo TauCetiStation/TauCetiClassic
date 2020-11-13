@@ -237,6 +237,11 @@ What a mess.*/
 				else
 					scan.loc = get_turf(src)
 				scan = null
+				//Log Out
+				authenticated = null
+				screen = null
+				active1 = null
+				active2 = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -317,7 +322,7 @@ What a mess.*/
 				temp = "Record Not Found!"
 			else
 				for(var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+					if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 						S = E
 				active1 = R
 				active2 = S

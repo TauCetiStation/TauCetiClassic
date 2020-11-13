@@ -36,7 +36,8 @@
 	var/prisoner_crimes = ""
 	var/prisoner_details = ""
 	var/obj/item/device/radio/intercom/radio // for /s announce
-	var/datum/data/record/security_data
+	var/datum/data/record/security_data = null
+	var/mob/living/carbon/human/prisoner = null //for HUD update
 
 
 	maptext_height = 26
@@ -88,6 +89,10 @@
 
 		if(world.timeofday > src.releasetime)
 			broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
+			if(security_data && prisoner)
+				add_record(null, security_data, "Served a sentence for crimes: [prisoner_crimes]. The criminal status was changed to <b>Released</b>", id)
+				security_data.fields["criminal"] = "Released"
+				prisoner.sec_hud_set_security_status()
 			src.timer_end() // open doors, reset timer, clear status screen
 			cell_open()
 
@@ -149,6 +154,8 @@
 	prisoner_crimes = ""
 	prisoner_details = ""
 	timer_activator = ""
+	security_data = null
+	prisoner = null
 
 	return
 
@@ -269,23 +276,26 @@
 		return
 
 	if(href_list["set_prisoner_name"])
-		var/list/names = list()
-		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, src, "view"))
+		var/list/available_targets = list()
+		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, usr, "view"))
 			if(H)
-				names += H.get_visible_name()
-			else
-				to_chat(usr, "<span class='warning'>No targets found.</span>")
-				return
-			prisoner_name = sanitize(input(usr, "Select the name of the prisoner.", "Prison Timer", "") in names)
-			security_data = find_security_record("name", prisoner_name)
-			if(!security_data)
-				to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person. Enter the name manually.</span>")
+				available_targets[H.get_visible_name(TRUE)] = H
+		if(available_targets.len == 0)
+			alert(usr, "No targets available nearby. Enter the name manually.")
+			return
+		prisoner_name = sanitize(input(usr, "Select the name of the prisoner.", "Prison Timer", "") in available_targets)
+		prisoner = available_targets[prisoner_name]
+		var/record_id = find_record_by_name(usr, prisoner_name)
+		security_data = find_security_record("id", record_id)
+		if(!security_data)
+			alert(usr, "Unable to locate a data core entry for this person. Enter the name manually.")
 
 	if(href_list["set_manually_name"])
 		prisoner_name = sanitize(input(usr, "Enter Name", "Prison Timer", input_default(prisoner_name)), MAX_LNAME_LEN)
-		security_data = find_security_record("name", prisoner_name)
+		var/record_id = find_record_by_name(usr, prisoner_name)
+		security_data = find_security_record("id", record_id)
 		if(!security_data)
-			to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+			alert(usr, "Unable to locate a data core entry for this person.")
 
 	if(href_list["set_prisoner_crimes"])
 		prisoner_crimes = sanitize(input(usr, "Enter Crimes", "Prison Timer", input_default(prisoner_crimes)), MAX_LNAME_LEN)
@@ -305,13 +315,21 @@
 			if(src.timing)
 				src.timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
-				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Prison term: [prison_minute] min.", "Prison Timer", freq = radiochannels["Security"])
-				cell_close()
-				if(security_data)
-					add_record(usr, security_data, "[timer_activator] placed [prisoner_name] into [id].<br><b>Crimes:<b/> [prisoner_crimes].<br><b>Details:</b> [prisoner_details].<br><b>Prison term:<b/> [prison_minute] min.")
+				var/data = ""
+				if(security_data && prisoner)
+					add_record(usr, security_data, "The criminal status was changed to <b>Incarcerated</b>.<br><b>Crimes:</b> [prisoner_crimes].<br><b>Details:</b> [prisoner_details].<br><b>Prison term:</b> [prison_minute] min.")
+					security_data.fields["criminal"] = "Incarcerated"
+					prisoner.sec_hud_set_security_status()
+					data = "The database is updated."
 				else
-					to_chat(usr, "<span class='warning'>The database has not been updated.</span>")
+					data = "The database has not been updated."
+				radio.autosay("[timer_activator] placed [prisoner_name] into [id]. Crimes: [prisoner_crimes]. Details: [prisoner_details]. Prison term: [prison_minute] min. [data]", "Prison Timer", freq = radiochannels["Security"])
+				cell_close()
 			else
+				if(security_data && prisoner)
+					add_record(usr, security_data, "Released early from [id]. The criminal status was changed to <b>Paroled</b>")
+					security_data.fields["criminal"] = "Paroled"
+					prisoner.sec_hud_set_security_status()
 				src.timer_end()
 				cell_open()
 	else

@@ -181,25 +181,39 @@
 		if(R.fields[field] == value)
 			return R
 
-/proc/add_record(user, datum/data/record/R, message)
-	var/name = ""
-	var/rank = ""
+//This proc returns the record ID
+/proc/find_record_by_name(mob/user, target_name)
+	var/list/possible_records = list()
+	var/record_name = null
+	for(var/datum/data/record/E in data_core.general)
+		if(E.fields["name"] == target_name)
+			record_name = "[E.fields["name"]] ([E.fields["rank"]]) ID=[E.fields["id"]]"
+			possible_records[record_name] = E.fields["id"]
+	if(!possible_records)
+		return null
+	if(possible_records.len > 1)
+		var/choice = input(user, "Several people with the given name were found.", "Select a person", null) in possible_records
+		if(!choice)
+			return null
+		return possible_records[choice]
+	else
+		return possible_records[record_name]
+
+/proc/add_record(user, datum/data/record/R, message, name = "Unknown")
 	var/counter = 1
 	while(R.fields[text("com_[]", counter)])
 		counter++
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/U = user
-		name = U.get_authentification_name()
-		rank = U.get_assignment()
-	if(istype(user, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/U = user
-		name = U.name
-		rank = "[U.modtype] [U.braintype]"
-	if(istype(user, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/U = user
-		name = U.registered_name
-		rank = U.assignment
-	R.fields[text("com_[counter]")] = text("<b>Made by [name] ([rank]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]:</b> <BR>[message]")
+	if(user)
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/U = user
+			name = "[U.get_authentification_name()] ([U.get_assignment()])"
+		if(istype(user, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/U = user
+			name = "[U.name] ([U.modtype] [U.braintype])"
+		if(istype(user, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/U = user
+			name = "[U.registered_name] ([U.assignment])"
+	R.fields[text("com_[counter]")] = text("<b>Made by [name] on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]:</b> <BR>[message]")
 
 /* The function changes the criminal status in the database. Used by securityHUD or machinery
 *author - Who changed the criminal status? We need a name.
@@ -213,11 +227,15 @@
 	if(S)
 		target_name = S.fields["name"]
 	else
-		S = find_security_record("name", target_name)
+		var/record_id = find_record_by_name(user, target_name)
+		if(!record_id)
+			to_chat(user, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+			return
+		S = find_security_record("id", record_id)
 	if(!S)
-		to_chat(user, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+		to_chat(user, "<span class='warning'>Unable to locate a security record for this person.</span>")
 		return
-	var/criminal_status = input(user, "Specify a new criminal status for this person.", "Security HUD", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
+	var/criminal_status = input(user, "Specify a new criminal status for this person.", "Criminal status", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 	if(criminal_status == "Cancel")
 		return
 	var/reason = sanitize(input(user, "Add Reason:", "Reason", "not specified")  as message)
@@ -229,5 +247,4 @@
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(H.real_name == target_name)
 			H.sec_hud_set_security_status()
-
 
