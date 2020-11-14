@@ -37,8 +37,6 @@
 	var/prisoner_details = ""
 	var/obj/item/device/radio/intercom/radio // for /s announce
 	var/datum/data/record/security_data = null
-	var/mob/living/carbon/human/prisoner = null //for HUD update
-
 
 	maptext_height = 26
 	maptext_width = 32
@@ -89,10 +87,12 @@
 
 		if(world.timeofday > src.releasetime)
 			broadcast_security_hud_message("<b>[src.name]</b> Заключенный [prisoner_name] отбыл вынесенный приговор. <b>[timer_activator]</b> запрашивается для процедуры освобождения.", src)
-			if(security_data && prisoner)
+			if(security_data)
 				add_record(null, security_data, "Отбыл наказание за преступления по статьям: [prisoner_crimes]. Уголовный статус статус был изменен на <b>Released</b>", id)
 				security_data.fields["criminal"] = "Released"
-				prisoner.sec_hud_set_security_status()
+				for(var/mob/living/carbon/human/H in global.human_list)
+					if(H.real_name == prisoner_name)
+						H.sec_hud_set_security_status()
 			src.timer_end() // open doors, reset timer, clear status screen
 			cell_open()
 
@@ -155,7 +155,6 @@
 	prisoner_details = ""
 	timer_activator = ""
 	security_data = null
-	prisoner = null
 
 	return
 
@@ -276,12 +275,11 @@
 		var/list/available_targets = list()
 		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, usr, "view"))
 			if(H)
-				available_targets[H.get_visible_name(TRUE)] = H
+				available_targets += H.get_visible_name(TRUE)
 		if(available_targets.len == 0)
 			alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
 			return
 		prisoner_name = sanitize(input(usr, "Выберите имя заключенного.", "Таймер камеры", "") in available_targets)
-		prisoner = available_targets[prisoner_name]
 		var/record_id = find_record_by_name(usr, prisoner_name)
 		security_data = find_security_record("id", record_id)
 		if(!security_data)
@@ -313,20 +311,24 @@
 				src.timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
 				var/data = ""
-				if(security_data && prisoner)
+				if(security_data)
 					add_record(usr, security_data, "Уголовный статус статус был изменен на <b>Incarcerated</b>.<br><b>Статья:</b> [prisoner_crimes].<br><b>Подробности:</b> [prisoner_details].<br><b>Время наказания:</b> [prison_minute] min.")
 					security_data.fields["criminal"] = "Incarcerated"
-					prisoner.sec_hud_set_security_status()
+					for(var/mob/living/carbon/human/H in global.human_list)
+						if(H.real_name == prisoner_name)
+							H.sec_hud_set_security_status()
 					data = "База данных обновлена."
 				else
 					data = "База данных не обновлена."
 				radio.autosay("[timer_activator] посадил [prisoner_name] в камеру [id]. Статья: [prisoner_crimes]. Подробности: [prisoner_details]. Время наказания: [prison_minute] min. [data]", "Prison Timer", freq = radiochannels["Security"])
 				cell_close()
 			else
-				if(security_data && prisoner)
+				if(security_data)
 					add_record(usr, security_data, "Освобожден досрочно из камеры [id]. Уголовный статус статус был изменен на <b>Paroled</b>")
 					security_data.fields["criminal"] = "Paroled"
-					prisoner.sec_hud_set_security_status()
+					for(var/mob/living/carbon/human/H in global.human_list)
+						if(H.real_name == prisoner_name)
+							H.sec_hud_set_security_status()
 				src.timer_end()
 				cell_open()
 	else
@@ -351,13 +353,6 @@
 
 	src.updateUsrDialog()
 	src.update_icon()
-
-	/* if(src.timing)
-		src.timer_start()
-
-	else
-		src.timer_end() */
-
 
 //icon update function
 // if NOPOWER, display blank

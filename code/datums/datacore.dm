@@ -239,6 +239,8 @@
 	var/criminal_status = input(user, "Укажите новый уголовный статус для этого человека.", "Уголовный статус", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 	if(criminal_status == "Cancel")
 		return
+	if(criminal_status == S.fields["criminal"]) //if nothing has changed
+		return
 	var/reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
 	if(used_by_computer)
 		if(user.incapacitated() || (!in_range(source, user) && !issilicon(user) && !isobserver(user)))
