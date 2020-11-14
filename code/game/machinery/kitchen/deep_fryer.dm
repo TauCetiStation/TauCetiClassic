@@ -12,6 +12,17 @@
 	var/on = FALSE	//Is it deep frying already?
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/fry_time = 0.0
+	var/static/list/deepfry_blacklisted_items = typecacheof(list(
+		/obj/item/device/multitool,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/wrench,
+		/obj/item/weapon/wirecutters,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/storage,
+		/obj/item/weapon/holder,
+		/obj/item/weapon/tray,
+		/obj/item/smallDelivery))
 
 
 /obj/machinery/deepfryer/atom_init()
@@ -39,27 +50,28 @@
 				to_chat(user, "You fucked up, man.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(!anchored)
-		if(iswrench(I))
-			default_unfasten_wrench(user, I)
-		return
 	if(on)
 		to_chat(user, "<span class='notice'>[src] is still active!</span>")
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	else if(iswrench(I))
-		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
-			default_unfasten_wrench(user, I)
-			return
-	if (ishuman(user) && !(I.flags & DROPDEL))
-		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-		on = TRUE
-		user.drop_item()
-		frying = I
-		frying.loc = src
-		icon_state = "fryer_on"
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))
+		return
+	else if(default_deconstruction_crowbar(I))
+		return
+	else
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.flags & (NODROP | ABSTRACT | DROPDEL))
+			return ..()
+		else if (ishuman(user))
+			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+			on = TRUE
+			user.drop_item()
+			frying = I
+			frying.loc = src
+			icon_state = "fryer_on"
 
 
 /obj/machinery/deepfryer/process()
