@@ -277,7 +277,7 @@ var/global/list/all_objectives = list()
 		return OBJECTIVE_WIN
 	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
 		return OBJECTIVE_LOSS
-	var/list/all_items = owner.current.get_contents()
+	var/list/all_items = owner.current.GetAllContents()
 	for(var/obj/item/device/biocan/B in all_items)
 		if(B.brainmob && B.brainmob == target.current)
 			return OBJECTIVE_WIN
@@ -583,7 +583,7 @@ var/global/list/all_objectives = list()
 /datum/objective/steal/check_completion()
 	if(!steal_target || !owner.current)	return OBJECTIVE_LOSS
 	if(!isliving(owner.current))	return OBJECTIVE_LOSS
-	var/list/all_items = owner.current.get_contents()
+	var/list/all_items = owner.current.GetAllContents()
 	switch (target_name)
 		if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
 			var/target_amount = text2num(target_name)//Non-numbers are ignored.
@@ -895,7 +895,7 @@ var/global/list/all_objectives = list()
 	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
-			for(var/obj/O in raider.current.get_contents())
+			for(var/obj/O in raider.current.GetAllContents())
 				if(istype(O,target))
 					total_amount++
 				if(total_amount >= target_amount)
@@ -936,7 +936,7 @@ var/global/list/all_objectives = list()
 	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
-			for(var/obj/item/O in raider.current.get_contents())
+			for(var/obj/item/O in raider.current.GetAllContents())
 				if(istype(O,/obj/item/stack/sheet))
 					if(O.name == target)
 						var/obj/item/stack/sheet/S = O
