@@ -17,8 +17,8 @@
 	var/on = FALSE
 	var/cover_open = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/max_cooling = 12            // in degrees per second - probably don't need to mess with heat capacity here
-	var/charge_consumption = 16.6   // charge per second at max_cooling
+	var/max_cooling = 10            // in degrees per second - probably don't need to mess with heat capacity here
+	var/charge_consumption = 14   // charge per second at max_cooling
 	var/thermostat = T20C
 
 	var/low_charge_warning_threshold_percent = 0.1
@@ -57,7 +57,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/suit_cooling_unit/process()
-	if (!on || !cell || !is_attached_to_suit(loc))
+	if (!on || !cell || !is_attached(loc))
 		return
 
 	var/mob/living/carbon/human/H = loc
@@ -65,11 +65,11 @@
 	if (try_cool_user(H))
 		check_charge_usage(H)
 
-/obj/item/device/suit_cooling_unit/proc/is_attached_to_suit(mob/living/carbon/human/user)
-	return istype(user) && user.wear_suit && user.s_store == src
+/obj/item/device/suit_cooling_unit/proc/is_attached(mob/living/carbon/human/user)
+	return istype(user) && (user.s_store || user.belt || user.back) == src
+
 
 /obj/item/device/suit_cooling_unit/proc/try_cool_user(mob/living/carbon/human/user)
-	var/efficiency = user.get_pressure_protection()  // you need to have a good seal for effective cooling
 	var/env_temp = get_environment_temperature(user)     // wont save you from a fire
 	var/temp_adj = min(user.bodytemperature - max(thermostat, env_temp), max_cooling)
 
@@ -77,7 +77,7 @@
 		return FALSE
 
 	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj * efficiency
+	user.bodytemperature -= temp_adj 
 	cell.use(charge_usage)
 
 	return TRUE
@@ -171,7 +171,7 @@
 	..()
 	if (src in view(1, user))
 		if (on)
-			if (is_attached_to_suit(user))
+			if (is_attached(user))
 				to_chat(user, "It's switched on and running.")
 			else
 				to_chat(user, "It's switched on, but not attached to anything.")
@@ -195,8 +195,9 @@
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "miniaturesuitcooler0"
-	max_cooling = 8
-	charge_consumption = 10
+	slot_flags = SLOT_FLAGS_BELT
+	max_cooling = 5
+	charge_consumption = 8
 
 /obj/item/device/suit_cooling_unit/miniature/updateicon()
 	if (cover_open)
