@@ -1,0 +1,4 @@
+#define ANNOUNCE_TEXT 1
+#define ANNOUNCE_SOUND 2
+#define ANNOUNCE_COMMS 4
+#define ANNOUNCE_ALL 7

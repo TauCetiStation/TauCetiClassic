@@ -55,6 +55,8 @@ var/req_console_information = list()
 	var/priority = -1 ; //Priority of the message being sent
 	light_range = 0
 
+	var/datum/announcement/announcement = new /datum/announcement/station/command/department
+
 /obj/machinery/requests_console/power_change()
 	..()
 	update_icon()
@@ -263,7 +265,7 @@ var/req_console_information = list()
 		if(!announcementConsole)
 			return FALSE
 
-		captain_announce(message, "[department] announcement")
+		announcement.play(department, message)
 
 		announceAuth = 0
 		message = ""
