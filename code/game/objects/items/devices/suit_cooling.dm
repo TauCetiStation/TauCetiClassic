@@ -17,10 +17,18 @@
 	var/on = FALSE
 	var/cover_open = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/max_cooling = 10            // in degrees per second - probably don't need to mess with heat capacity here
-	var/charge_consumption = 14   // charge per second at max_cooling
+	var/max_cooling = 18            // in degrees per second - probably don't need to mess with heat capacity here
+	var/charge_consumption = 22   // charge per second at max_cooling
 	var/thermostat = T20C
 
+
+	var/coolant_consumption = 0.1
+	var/fresh_coolant = 0
+	var/coolant_purity = 0
+	var/datum/reagents/coolant_reagents
+	var/list/coolant_reagents_purity = list()
+
+	var/low_coolant_warning_threshold_percent = 5
 	var/low_charge_warning_threshold_percent = 0.1
 	var/last_low_charge_warning_msg = 0
 	var/low_charge_warning_delay = 30 SECONDS
@@ -29,13 +37,68 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
+	create_reagents(100)
 	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 	cell.loc = src
+
+	coolant_reagents_purity["fuel"] = -0.5
+	coolant_reagents_purity["whiskey"] = -0.2
+	coolant_reagents_purity["patron"] = -0.2
+	coolant_reagents_purity["rum"] = -0.2
+	coolant_reagents_purity["gin"] = -0.2
+	coolant_reagents_purity["tequilla"] = -0.2
+	coolant_reagents_purity["nothing"] = 0
+	coolant_reagents_purity["kvass"] = 0.1
+	coolant_reagents_purity["pwine"] = 0.1
+	coolant_reagents_purity["champagne"] = 0.2
+	coolant_reagents_purity["vermouth"] = 0.2
+	coolant_reagents_purity["thirteenloko"] = 0.3
+	coolant_reagents_purity["spacemountainwind"] = 0.4
+	coolant_reagents_purity["cola"] = 0.4
+	coolant_reagents_purity["dr_gibb"] = 0.4
+	coolant_reagents_purity["orangejuice"] = 0.4
+	coolant_reagents_purity["space_up"] = 0.4
+	coolant_reagents_purity["sodawater"] = 0.4
+	coolant_reagents_purity["tonic"] = 0.4
+	coolant_reagents_purity["grapejuice"] = 0.4
+	coolant_reagents_purity["beer"] = 0.4
+	coolant_reagents_purity["water"] = 0.5
+	coolant_reagents_purity["holywater"] = 0.6
+	coolant_reagents_purity["icecoffee"] = 0.6
+	coolant_reagents_purity["icetea"] = 0.6
+	coolant_reagents_purity["milkshake"] = 0.6
+	coolant_reagents_purity["leporazine"] = 0.7
+	coolant_reagents_purity["kelotane"] = 0.7
+	coolant_reagents_purity["sterilizine"] = 0.7
+	coolant_reagents_purity["dermaline"] = 0.7
+	coolant_reagents_purity["hyperzine"] = 0.8
+	coolant_reagents_purity["cryoxadone"] = 0.9
+	coolant_reagents_purity["coolant"] = 1
+	coolant_reagents_purity["adminordrazine"] = 2
+
+
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+
+
+/obj/item/device/suit_cooling_unit/proc/update_coolant()
+	var/total_purity = 0
+	fresh_coolant = 0
+	coolant_purity = 0
+	for (var/datum/reagent/current_reagent in src.reagents.reagent_list)
+		if (!current_reagent)
+			continue
+		var/cur_purity = coolant_reagents_purity[current_reagent.id]
+		if(!cur_purity)
+			cur_purity = 0.1
+		total_purity += cur_purity * current_reagent.volume
+		fresh_coolant += current_reagent.volume
+	if(total_purity && fresh_coolant)
+		coolant_purity = total_purity / fresh_coolant
 
 /obj/item/device/suit_cooling_unit/proc/turn_on()
 	if (!cell || cell.charge <= 0)
@@ -75,9 +138,14 @@
 
 	if (temp_adj < 0.5) // only cools, doesn't heat, also we don't need extreme precision
 		return FALSE
+	
+	var/charge_usage = (temp_adj / max_cooling) * charge_consumption 
+	if (fresh_coolant > 0)
+		fresh_coolant -= coolant_consumption 
+		user.bodytemperature -= temp_adj * coolant_purity
+	else
+		user.bodytemperature -= temp_adj * 0.1
 
-	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj 
 	cell.use(charge_usage)
 
 	return TRUE
@@ -113,6 +181,12 @@
 		playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 		last_low_charge_warning_msg = world.time + low_charge_warning_delay
 
+	if (fresh_coolant < low_coolant_warning_threshold_percent && last_low_charge_warning_msg < world.time)
+		to_chat(user, "<span class='warning'>Cooling unit coolant is below [round(fresh_coolant)]%.</span>")
+		playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+		last_low_charge_warning_msg = world.time + low_charge_warning_delay
+
+
 /obj/item/device/suit_cooling_unit/attack_self(mob/user)
 	if (cover_open && cell)
 		if (ishuman(user))
@@ -135,6 +209,25 @@
 		turn_on()
 
 /obj/item/device/suit_cooling_unit/attackby(obj/item/I, mob/user, params)
+
+	if(istype(I, /obj/item/weapon/reagent_containers/))
+		var/choice = alert("What do you want to do?","Cooling unit","Add coolant","Empty coolant")
+		if(choice == "Add coolant")
+			var/obj/item/weapon/reagent_containers/G = I
+			var/amount_transferred = min(src.reagents.maximum_volume - src.reagents.total_volume, G.reagents.total_volume)
+			G.reagents.trans_to(src, amount_transferred)
+			to_chat(user, "<span class='info'>You empty [amount_transferred]u of coolant into [src].</span>")
+			update_coolant()
+			return
+
+		else if(choice == "Empty coolant")
+			var/obj/item/weapon/reagent_containers/G = I
+			var/amount_transferred = min(G.reagents.maximum_volume - G.reagents.total_volume, src.reagents.total_volume)
+			src.reagents.trans_to(G, amount_transferred)
+			to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
+			update_coolant()
+			return
+
 	if (isscrewdriver(I))
 		if (cover_open)
 			cover_open = FALSE
@@ -185,9 +278,10 @@
 				to_chat(user, "The panel is open.")
 
 		if (cell)
-			to_chat(user, "The charge meter reads [round(cell.percent())]%.")
+			to_chat(user, "The charge meter reads [round(cell.percent())]%. Coolant remaining [round(fresh_coolant)]%.")
 		else
-			to_chat(user, "It doesn't have a power cell installed.")
+			to_chat(user, "It doesn't have a power cell installed. Coolant remaining [round(fresh_coolant)]%.")
+		
 
 /obj/item/device/suit_cooling_unit/miniature
 	name = "Miniature suit cooling device"
@@ -196,8 +290,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "miniaturesuitcooler0"
 	slot_flags = SLOT_FLAGS_BELT
-	max_cooling = 5
-	charge_consumption = 8
+	max_cooling = 10
+	charge_consumption = 14
 
 /obj/item/device/suit_cooling_unit/miniature/updateicon()
 	if (cover_open)
