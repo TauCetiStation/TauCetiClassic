@@ -259,7 +259,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(0)
 				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR><FONT SIZE=1> Все системы и Новостные сети функционируют.</FONT>"
-				dat += "<BR><FONT SIZE=1>Собственность Нанотрейзен Корп.</FONT>"
+				dat += "<BR><FONT SIZE=1>Собственность НаноТрейзен Корп.</FONT>"
 				if(news_network.wanted_issue)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Открыть Доску розыска</A>"
 				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Создать Новостной Канал</A>"
@@ -274,7 +274,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="<HR><B>Настройки безопасности:</B><BR>"
 					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Объявить в")] розыск</A>"
 					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Цензурировать Истории</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой Нанотрейзен</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой НаноТрейзен</A>"
 				dat+="<BR><HR>Новостной модуль узнает вас, как: <FONT COLOR='green'>[src.scanned_user]</FONT>"
 				dat+="<BR><A href='?src=\ref[src];refresh=1'>Ре-сканировать пользователя</A>"
 			if(1)
@@ -358,7 +358,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(9)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрожающим благополучию станции, и был отмечен ❌-меткой Нанотрейзен.<BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрожающим благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Во время Д-уведомления невозможно опубликовывать новые Истории.<BR><BR>"
 				else
 					if( isemptylist(src.viewing_channel.messages) )
@@ -381,7 +381,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<A href='?src=\ref[src];refresh=1'>Обновить</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Назад</A>"
 			if(10)
-				dat+="<B>Инструмент цензурирования Нанотрейзен</B><BR>"
+				dat+="<B>Инструмент цензурирования НаноТрейзен</B><BR>"
 				dat+="<FONT SIZE=1>ПРИМЕЧАНИЕ: Из-за строения Новостных сетей полное удаление Историй невозможно.<BR>"
 				dat+="Пользователи, которые пытаются посмотреть цензуренный канал вместо некоторого текста увидят: \"\[██████\]\".</FONT>"
 				dat+="<HR>Выбрать Канал:<BR>"
@@ -392,7 +392,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(11)
-				dat+="<B>Обработчик ❌-меткой Нанотрейзен</B><HR>"
+				dat+="<B>Обработчик ❌-меткой НаноТрейзен</B><HR>"
 				dat+="<FONT SIZE=1>❌-меткой должно быть вручено каналу, если служба безопасности сочтет Канал опасным для морального духа и дисциплины персонала станции."
 				dat+="❌-меткой замораживает Канал, не давая кому-либо изменять или добавлять Истории, но при этом сохраняет всю информацию."
 				dat+="Вы можете наложить или убрать ❌-меткой в любое время, если у вас есть необходимый доступ.</FONT><HR>"
@@ -419,7 +419,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat+="Если вы считаете содержание опасным для станции, вы можете <A href='?src=\ref[src];toggle_d_notice=\ref[src.viewing_channel]'>Наложить ❌-меткой на Канал</A>.<HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрожающим благополучию станции, и был отмечен ❌-меткой Нанотрейзен.<BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрожающим благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Во время Д-уведомления невозможно опубликовывать новые Истории.</FONT><BR><BR>"
 				else
 					if( isemptylist(src.viewing_channel.messages) )
@@ -928,7 +928,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		"Штальский снова позвонил в космос и изменил вообще всё. На карточках",
 		"Патриарх Досифей назвал главной проблемой эволюцию",
 		"Доказано отсутствие синдикатовских солдат на Юпитере",
-		"Треть работников Нанотрейзен высказалась против кибер-огурцов",
+		"Треть работников НаноТрейзен высказалась против кибер-огурцов",
 		"Таяране начали откладывать яйца",
 		"В Ксокслэнсе из-за землетрясения на 10 дней приостановлены изнасилования",
 		"Зрэимцам разрешили съезжать на NanotrasenHub",
@@ -943,7 +943,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		"Хескостен(город в Северном Ваезе) напомнил журналистам о своем гомосексуализме",
 		"Баррингтон попросит вернуть у Кемалова три тысячи детей",
 		"В Еспале из-за угрозы взрыва взорвали более 200 человек",
-		"На Плутоне отказались от празднования Дня Нанотрейзена",
+		"На Плутоне отказались от празднования Дня НаноТрейзена",
 		"Половина страпонианцев считает унатхов суперкомпьютерами",
 		"Физики исламисты стали плохо пить и задушили дождь",
 		"Националисты пожаловались на нехватку сожженных детей в Уфрасе",
@@ -986,7 +986,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>Грифон</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Стандартная газета Нанотрейзен, предназначенная для использования на Космических Объектах Нанотрейзен©</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Стандартная газета НаноТрейзен, предназначенная для использования на Космических Объектах НаноТрейзен©</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Содержание:<BR><ul><B><FONT COLOR='red'>**</FONT>Важные объявление службы безопасности<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[стр. [src.pages+2]\]</FONT><BR></ul>"
