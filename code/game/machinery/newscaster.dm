@@ -293,15 +293,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Создание нового Новостного Канала..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [src.channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Историй от других пользователей</A>:</B> [(src.c_locked) ? ("НЕТ") : ("ДА")]<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Создать</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
+				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Историй от других пользователей</A>:</B> [(src.c_locked) ? ("НЕТ") : ("ДА")]<BR><HR>"
+				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание новой Истории..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Канал</A>:</B> [src.channel_name]<BR>" //MARK
 				dat+="<B>Автор Истории:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
 				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Текст Истории</A>:</B> [src.msg] <BR>"
-				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(src.photo ? "Снимок прикреплён" : "Нет снимка")]</BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
+				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(src.photo ? "Снимок прикреплён" : "Нет снимка")]<BR><HR>"
+				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(4)
 				dat+="История успешно опубликованна в [src.channel_name].<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
@@ -390,7 +390,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(11)
 				dat+="<B>Обработчик ❌-меткой Нанотрейзен</B><HR>"
 				dat+="<FONT SIZE=1>❌-меткой должно быть вручено каналу, если служба безопасности сочтет Канал опасным для морального духа и дисциплины персонала станции."
@@ -402,7 +402,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(12)
 				dat+="<B>[src.viewing_channel.channel_name]: </B>"
 				dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT></A><BR>"
@@ -447,7 +447,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="<B>Розыск создан:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
 					dat+="<B>Розыск будет создан:</B><FONT COLOR='green'> [src.scanned_user]</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Изменить розыск") : ("Опубликовать")]</A>"
+				dat+="<HR><BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Изменить розыск") : ("Опубликовать")]</A>"
 				if(wanted_already)
 					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Удалить розыск</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A>"
@@ -504,7 +504,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(PAGE.comments.len != 0) //perfecto
 					dat+="<HR>"
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="<FONT COLOR='ORANGE'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
 				var/i = 0
 				dat+="<HR>"
@@ -519,7 +519,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Количество комментариев - [MESSAGE.count_comments]<HR>"
 				var/datum/comment_pages/PAGE = src.current_page
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='GREEN'>[COMMENT.author]</FONT></A>"
+					dat+="<A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='ORANGE'>[COMMENT.author]</FONT></A>"
 					dat+=" <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
 					dat+="-<A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'><FONT SIZE=3>[COMMENT.body]</FONT></A><BR>"
 				var/i = 0
