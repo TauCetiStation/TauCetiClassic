@@ -32,6 +32,15 @@
 	..()
 	update_icon()
 
+/obj/item/weapon/reagent_containers/glass/bottle/after_throw(datum/callback/callback)
+	..()
+	if(prob(50))
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		if(reagents && reagents.total_volume)
+			reagents.reaction(loc, TOUCH)
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
 	name = "inaprovaline bottle"
 	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
