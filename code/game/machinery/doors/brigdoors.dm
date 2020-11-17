@@ -273,9 +273,12 @@
 
 	if(href_list["set_prisoner_name"])
 		var/list/available_targets = list()
-		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, usr, "view"))
+		for(var/mob/living/carbon/human/H in oview_or_orange(world.view, src, "view"))
 			if(H)
-				available_targets += H.get_visible_name(TRUE)
+				var/target_name = H.get_visible_name(TRUE)
+				if(target_name == usr.real_name)
+					continue
+				available_targets += target_name
 		if(available_targets.len == 0)
 			alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
 			return
