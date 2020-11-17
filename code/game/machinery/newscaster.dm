@@ -529,23 +529,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[10]'>Вернуться</A>"
 			else
-				var/list/random_imortant_message = list(
-					"В Еуране заблокировали соцсети из-за твита Президента о гомосексуальных грузовиках",
-					"В Слеирстине предложили наказывать за повышение зарплаты",
-					"Таинственные грибы у прокурора НТ в Крокандо закончились",
-					"Штальский снова позвонил в космос и изменил вообще всё. На карточках",
-					"Патриарх Досифей назвал главной проблемой эволюцию",
-					"Доказано отсутствие синдикатовских солдат на Юпитере",
-					"Треть работников Нанотрейзен высказалась против кибер-огурцов",
-					"Таяране начали откладывать яйца",
-					"В Ксокслэнсе из-за землетрясения на 10 дней приостановлены изнасилования",
-					"Зрэимцам разрешили съезжать на NanotrasenHub",
-					"Инспекция Полетного Движения предложила ввести штраф за покупку не летающих автомобилей",
-					"В Свеузе будут штрафовать за отказ от наркотиков",
-					"Николай II выйдет на работу в 2225 году",
-					"Моисей — это мопс. Рассказываем, что нужно знать"
-					)
-				dat+="Ошибка 404.<BR>[pick(random_imortant_message)]."
+				dat+="Ошибка 404.<BR>[return_funny_title()]."
 
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
 		assets.send(human_or_robot_user)
@@ -935,25 +919,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		P.construct(selection)
 		photo = P
 
-
-
-
-//########################################################################################################################
-//###################################### NEWSPAPER! ######################################################################
-//########################################################################################################################
-
-/obj/item/weapon/newspaper
-	name = "Newspaper"
-	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "newspaper"
-	w_class = ITEM_SIZE_SMALL	//Let's make it fit in trashbags!
-	attack_verb = list("bapped")
-	var/screen = 0
-	var/pages = 0
-	var/curr_page = 0
-	var/list/datum/feed_channel/news_content = list()
-	var/datum/feed_message/important_message = null
+/proc/return_funny_title()
 	// Some copied from @neural_meduza with nanotrasen adaptation
 	var/list/random_imortant_message = list(
 		"В Еуране заблокировали соцсети из-за твита Президента о гомосексуальных грузовиках",
@@ -989,6 +955,26 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		"Срочно! В Низком Кудмисте умер народный порноактер",
 		"Во всем Дапако запретили заниматься сексом под Космо-Рок-Н-Ролл",
 		)
+
+	return pick(random_imortant_message)
+
+
+//########################################################################################################################
+//###################################### NEWSPAPER! ######################################################################
+//########################################################################################################################
+
+/obj/item/weapon/newspaper
+	name = "Newspaper"
+	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "newspaper"
+	w_class = ITEM_SIZE_SMALL	//Let's make it fit in trashbags!
+	attack_verb = list("bapped")
+	var/screen = 0
+	var/pages = 0
+	var/curr_page = 0
+	var/list/datum/feed_channel/news_content = list()
+	var/datum/feed_message/important_message = null
 	var/scribble = ""
 	var/scribble_page = null
 
@@ -1005,7 +991,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					if(src.important_message)
 						dat+="Содержание:<BR><ul><B><FONT COLOR='red'>**</FONT>Важные объявление службы безопасности<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[стр. [src.pages+2]\]</FONT><BR></ul>"
 					else
-						dat+="<I>[pick(random_imortant_message)]</I>"
+						dat+="<I>[return_funny_title()]</I>"
 				else
 					dat+="Содержание:<BR><ul>"
 					for(var/datum/feed_channel/NP in src.news_content)
@@ -1059,12 +1045,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					else
 						dat+="Отсутствует"
 				else
-					dat+="<I>[pick(random_imortant_message)]</I>"
+					dat+="<I>[return_funny_title()]</I>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>Маленькая каракуля внизу страницы гласит: \"[src.scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV>"
 			else
-				dat+="[pick(random_imortant_message)]"
+				dat+="[return_funny_title()]"
 
 		dat+="<BR><HR><div align='center'>[src.curr_page+1]</div>"
 
