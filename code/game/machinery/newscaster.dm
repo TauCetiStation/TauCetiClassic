@@ -258,25 +258,25 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		switch(screen)
 			if(0)
-				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR> Интерфейс и Новостные сети функционируют."
-				dat += "<BR><FONT SIZE=1>Собственность Нанотрейзен Инк.</FONT>"
+				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR><FONT SIZE=1> Все системы и Новостные сети функционируют.</FONT>"
+				dat += "<BR><FONT SIZE=1>Собственность Нанотрейзен Корп.</FONT>"
 				if(news_network.wanted_issue)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Открыть Доску розыска</A>"
 				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Создать Новостной Канал</A>"
 				dat+= "<BR><A href='?src=\ref[src];view=1'>Смотреть Новостные Каналы</A>"
 				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Создать Историю</A>"
 				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Распечатать газету</A>"
-				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Сканировать пользователя</A>"
 				if(src.securityCaster)
 					var/wanted_already = 0
 					if(news_network.wanted_issue)
 						wanted_already = 1
 
 					dat+="<HR><B>Настройки безопасности:</B><BR>"
-					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Опубликовать в ")] \"Доску розыска\"</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Цензурить Истории</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Объявить в")] розыск</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Цензурировать Истории</A>"
 					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой Нанотрейзен</A>"
 				dat+="<BR><HR>Новостной модуль узнает вас, как: <FONT COLOR='green'>[src.scanned_user]</FONT>"
+				dat+="<BR><A href='?src=\ref[src];refresh=1'>Ре-сканировать пользователя</A>"
 			if(1)
 				dat+= "Станционные Новостные Каналы<HR>"
 				if( isemptylist(news_network.network_channels) )
@@ -293,7 +293,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Создание нового Новостного Канала..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [src.channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[src.scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Приняте публичных Историй</A>:</B> [(src.c_locked) ? ("НЕТ") : ("ДА")]<BR><BR>"
+				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Историй от других пользователей</A>:</B> [(src.c_locked) ? ("НЕТ") : ("ДА")]<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Создать</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание новой Истории..."
@@ -382,8 +382,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Назад</A>"
 			if(10)
 				dat+="<B>Инструмент цензурирования Нанотрейзен</B><BR>"
-				dat+="<FONT SIZE=1>ПРИМЕЧАНИЕ: Из-за строения Новостных сетей, полное удаление Историй невозможно.<BR>"
-				dat+="Пользователи, которые пытаются посмотреть зацензуренный канал вместо некоторого текста увидят: \[██████\].</FONT>"
+				dat+="<FONT SIZE=1>ПРИМЕЧАНИЕ: Из-за строения Новостных сетей полное удаление Историй невозможно.<BR>"
+				dat+="Пользователи, которые пытаются посмотреть цензуренный канал вместо некоторого текста увидят: \"\[██████\]\".</FONT>"
 				dat+="<HR>Выбрать Канал:<BR>"
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>Активных Каналов не найдено...</I><BR>"
@@ -404,16 +404,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(12)
-				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[██████\]") ? ("Отменить цензуру имени автора") : ("Цензурить имя автора Канала")]</A></FONT><BR>"
+				dat+="<B>[src.viewing_channel.channel_name]: </B>"
+				dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT></A><BR>"
 
 				if( isemptylist(src.viewing_channel.messages) )
 					dat+="<I>Истории не обнаружены в этом Канале...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[██████\]") ? ("Отменить цензуру Истории") : ("Цензурить Историю")]</A>  - \
-						                   <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'> [(MESSAGE.author == "\[██████\]") ? ("Отменить цензуру имени автора") : ("Цензурить имя автора Истории")]</A></FONT><BR>"
+						dat+="-<A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[MESSAGE.body] </A><BR>"
+						dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT></A><BR>"
 						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(src.viewing_channel.lock_comments) ? ("Открыть") : ("Закрыть")]</A></B></FONT><BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Назад</A>"
 			if(13)
@@ -439,39 +438,39 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					end_param = 2
 
 				if(wanted_already)
-					dat+="<FONT SIZE=2><BR><I>Доска розыска уже создана, вы можете редактировать ее ниже.</FONT></I>"
+					dat+="<FONT SIZE=2><BR><I>Розыск уже создан, вы можете редактировать его ниже.</FONT></I>"
 				dat+="<HR>"
 				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Имя</A>: [src.channel_name] <BR>"
 				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Описание</A>: [src.msg] <BR>"
 				dat+="<A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>: [(src.photo ? "Снимок прикреплён" : "Нет снимка")]</BR>"
 				if(wanted_already)
-					dat+="<B>Доска розыска создана:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
+					dat+="<B>Розыск создан:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
-					dat+="<B>Доска розыска будет создана:</B><FONT COLOR='green'> [src.scanned_user]</FONT><BR>"
+					dat+="<B>Розыск будет создан:</B><FONT COLOR='green'> [src.scanned_user]</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Изменить розыск") : ("Опубликовать")]</A>"
 				if(wanted_already)
 					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Удалить розыск</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A>"
 			if(15)
-				dat+="<FONT COLOR='green'>[src.channel_name] был добавлен в Доску розыска.</FONT><BR><BR>"
+				dat+="<FONT COLOR='green'>[src.channel_name] был объявлен розыск.</FONT><BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(16)
-				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать доску розыска.</B></FONT><HR><BR>"
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать розыск.</B></FONT><HR><BR>"
 				if(src.channel_name=="" || src.channel_name == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя разыскиваемого.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
 					dat+="<FONT COLOR='maroon'>Неизвестное имя автора.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[██████\]")
-					dat+="<FONT COLOR='maroon'>Недопустимое описани.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(17)
-				dat+="<B>Доска розыска успешно удалена.</B><BR>"
+				dat+="<B>Розыск успешно удален.</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(18)
 				dat+="<B><FONT COLOR ='maroon'>-- ДОСКА РОЗЫСКА --</B></FONT><BR><FONT SIZE=2>\[Опубликованно: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat+="<B>Имя</B>: [news_network.wanted_issue.author]<BR>"
 				dat+="<B>Описани</B>: [news_network.wanted_issue.body]<BR>"
-				dat+="<B>Снимок:</B>: "
+				dat+="<B>Снимок</B>: "
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
 					dat+="<BR><img src='tmp_photow.png' width = '180'>"
@@ -479,7 +478,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					dat+="Отсутствует"
 				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A><BR>"
 			if(19)
-				dat+="<FONT COLOR='green'>Доска розыска с [src.channel_name] успешно изменена.</FONT><BR><BR>"
+				dat+="<FONT COLOR='green'>Ррозыск с [src.channel_name] успешно изменен.</FONT><BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(20)
 				dat+="<FONT COLOR='green'>Печать завершена. Пожалуйста, заберите вашу газету из нижней части Новостного Модуля</FONT><BR><BR>"
@@ -520,10 +519,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="Количество комментариев - [MESSAGE.count_comments]<HR>"
 				var/datum/comment_pages/PAGE = src.current_page
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<FONT COLOR='GREEN'>[COMMENT.author]</FONT> <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'>[(COMMENT.author == "\[██████\]") ? ("Отменить цензуру имени автора") : ("Цензурить имя автора")]</A></FONT><BR>"
-					dat+="-<FONT SIZE=3>[COMMENT.body]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'>[(COMMENT.body == "\[██████\]") ? ("Отменить цензуру комментария") : ("Цензурить комментарий")]</A></FONT><BR><HR>"
+					dat+="<A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='GREEN'>[COMMENT.author]</FONT></A>"
+					dat+=" <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
+					dat+="-<A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'><FONT SIZE=3>[COMMENT.body]</FONT></A><BR>"
 				var/i = 0
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
 					i++
@@ -683,7 +681,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 			src.screen = 16
 		else
-			var/choice = alert("Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] Доски розыска.","Обработчик Безопасной Сети","Подтвердить","Отменить")
+			var/choice = alert("Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] розыска.","Обработчик Безопасной Сети","Подтвердить","Отменить")
 			if(choice == "Подтвердить")
 				if(input_param == 1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
@@ -712,7 +710,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(news_network.wanted_issue.is_admin_message)
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
-		var/choice = alert("Подтвердите удаление Доски розыска.","Обработчик Безопасной Сети","Подтвердить","Отменить")
+		var/choice = alert("Подтвердите удаление розыска.","Обработчик Безопасной Сети","Подтвердить","Отменить")
 		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
