@@ -258,7 +258,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 		switch(screen)
 			if(0)
-				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR><FONT SIZE=1> Все системы и Новостные сети функционируют.</FONT>"
+				dat += "Добро пожаловать в Новостной Модуль #[src.unit_no].<BR><FONT SIZE=1> Все системы новостной сети функционируют.</FONT>"
 				dat += "<BR><FONT SIZE=1>Собственность НаноТрейзен Корп.</FONT>"
 				if(news_network.wanted_issue)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Открыть Доску розыска</A>"
