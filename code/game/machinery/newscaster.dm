@@ -985,7 +985,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.pages = 0
 		switch(screen)
 			if(0) //Cover
-				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>Гриффон</FONT></B></div>"
+				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>Грифон</FONT></B></div>"
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Стандартная газета Нанотрейзен, предназначенная для использования на Космических Объектах Нанотрейзен©</FONT></div><HR>"
 				if(isemptylist(src.news_content))
 					if(src.important_message)
