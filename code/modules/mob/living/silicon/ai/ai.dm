@@ -349,17 +349,23 @@ var/list/ai_verbs_default = list(
 	allow_auto_broadcast_messages = !allow_auto_broadcast_messages
 
 /mob/living/silicon/ai/var/message_cooldown = 0
+/mob/living/silicon/ai/var/check_input = FALSE
 /mob/living/silicon/ai/proc/ai_announcement()
 	var/input
 	
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
-
-	if(message_cooldown)
+		
+	if(check_input)
+		to_chat(src, "<span class='warning'>NO SPAM ALLOWED!</span>")
+		if(!input)
+			check_input = FALSE
+		return
+	else if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
 	else
-		message_cooldown = 1
+		check_input = TRUE
 		input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
 	
 	if(!input)
@@ -369,8 +375,10 @@ var/list/ai_verbs_default = list(
 		return
 
 	captain_announce(input, "A.I. Announcement", src.name, "aiannounce")
+	check_input = FALSE
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
+	message_cooldown = 1
 	spawn(600)//One minute cooldown
 		message_cooldown = 0
 
