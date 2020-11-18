@@ -1,156 +1,172 @@
-/obj/item/clothing/under/color/black
-	name = "black jumpsuit"
-	icon_state = "black"
-	item_state = "bl_suit"
-	item_color = "black"
+/obj/item/clothing/under/color
+	name = "white jumpsuit"
+	icon_state = "color"
+	item_state = "w_suit"
+	item_color = "color"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/color/blackf
-	name = "feminine black jumpsuit"
+
+/obj/item/clothing/under/color/fem
+	name = "feminine white jumpsuit"
 	desc = "It's very smart and in a ladies-size!"
-	icon_state = "black"
-	item_state = "bl_suit"
-	item_color = "blackf"
+	icon_state = "colorf"
+	item_state = "w_suit"
+	item_color = "colorf"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/color/black
+	name = "black jumpsuit"
+	color = "#626672"
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
-	icon_state = "blue"
-	item_state = "b_suit"
-	item_color = "blue"
-	flags = ONESIZEFITSALL
+	color = "#4ca7fb"
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
-	icon_state = "green"
-	item_state = "g_suit"
-	item_color = "green"
-	flags = ONESIZEFITSALL
+	color = "#59e663"
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
-	icon_state = "grey"
-	item_state = "gy_suit"
-	item_color = "grey"
-	flags = ONESIZEFITSALL
+	color = "#d4d4d2"
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "orange"
-	item_state = "o_suit"
-	item_color = "orange"
+	color = "#ff7314"
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
-	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
-	icon_state = "pink"
-	item_state = "p_suit"
-	item_color = "pink"
-	flags = ONESIZEFITSALL
+	color = "#f657bf"
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
-	icon_state = "red"
-	item_state = "r_suit"
-	item_color = "red"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/color/white
-	name = "white jumpsuit"
-	icon_state = "white"
-	item_state = "w_suit"
-	item_color = "white"
-	flags = ONESIZEFITSALL
+	color = "#f63c45"
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
-	icon_state = "yellow"
-	item_state = "y_suit"
-	item_color = "yellow"
-	flags = ONESIZEFITSALL
+	color = "#ffdb06"
 
 /obj/item/clothing/under/psyche
-	name = "psychedelic"
+	name = "psychedelic jumpsuit"
 	desc = "Groovy!"
 	icon_state = "psyche"
 	item_color = "psyche"
 
-/obj/item/clothing/under/lightblue
-	name = "lightblue"
-	desc = "lightblue"
-	icon_state = "lightblue"
-	item_color = "lightblue"
-	flags = ONESIZEFITSALL
+/obj/item/clothing/under/color/aqua
+	name = "aqua jumpsuit"
+	color = "#55e7f2"
 
-/obj/item/clothing/under/aqua
-	name = "aqua"
-	desc = "aqua"
-	icon_state = "aqua"
-	item_color = "aqua"
-	flags = ONESIZEFITSALL
+/obj/item/clothing/under/color/purple
+	name = "purple jumpsuit"
+	color = "#b26bef"
 
-/obj/item/clothing/under/purple
-	name = "purple"
-	desc = "purple"
-	icon_state = "purple"
-	item_state = "p_suit"
-	item_color = "purple"
+/obj/item/clothing/under/color/lightpurple
+	name = "lightpurple jumpsuit"
+	color = "#d35ce9"
 
-/obj/item/clothing/under/lightpurple
-	name = "lightpurple"
-	desc = "lightpurple"
-	icon_state = "lightpurple"
-	item_color = "lightpurple"
-	flags = ONESIZEFITSALL
+/obj/item/clothing/under/color/lightgreen
+	name = "lightgreen jumpsuit"
+	color = "#9aef67"
 
-/obj/item/clothing/under/lightgreen
-	name = "lightgreen"
-	desc = "lightgreen"
-	icon_state = "lightgreen"
-	item_color = "lightgreen"
+/obj/item/clothing/under/color/lightblue
+	name = "lightblue jumpsuit"
+	color = "#2cb7fb"
 
-/obj/item/clothing/under/lightblue
-	name = "lightblue"
-	desc = "lightblue"
-	icon_state = "lightblue"
-	item_color = "lightblue"
+/obj/item/clothing/under/color/lightbrown
+	name = "lightbrown jumpsuit"
+	color = "#eba349"
 
-/obj/item/clothing/under/lightbrown
-	name = "lightbrown"
-	desc = "lightbrown"
-	icon_state = "lightbrown"
-	item_color = "lightbrown"
+/obj/item/clothing/under/color/brown
+	name = "brown jumpsuit"
+	color = "#db8732"
 
-/obj/item/clothing/under/brown
-	name = "brown"
-	desc = "brown"
-	icon_state = "brown"
-	item_color = "brown"
+/obj/item/clothing/under/color/yellowgreen
+	name = "yellowgreen jumpsuit"
+	color = "#d6ef46"
 
-/obj/item/clothing/under/yellowgreen
-	name = "yellowgreen"
-	desc = "yellowgreen"
-	icon_state = "yellowgreen"
-	item_color = "yellowgreen"
+/obj/item/clothing/under/color/darkblue
+	name = "darkblue jumpsuit"
+	color = "#4e71ed"
 
-/obj/item/clothing/under/darkblue
-	name = "darkblue"
-	desc = "darkblue"
-	icon_state = "darkblue"
-	item_color = "darkblue"
-	flags = ONESIZEFITSALL
+/obj/item/clothing/under/color/lightred
+	name = "lightred jumpsuit"
+	color = "#f25831"
 
-/obj/item/clothing/under/lightred
-	name = "lightred"
-	desc = "lightred"
-	icon_state = "lightred"
-	item_color = "lightred"
+/obj/item/clothing/under/color/darkred
+	name = "darkred jumpsuit"
+	color = "#e03c44"
 
-/obj/item/clothing/under/darkred
-	name = "darkred"
-	desc = "darkred"
-	icon_state = "darkred"
-	item_color = "darkred"
-	flags = ONESIZEFITSALL
+/obj/item/clothing/under/color/fem/black
+	name = "feminine black jumpsuit"
+	color = "#626672"
+
+/obj/item/clothing/under/color/fem/blue
+	name = "feminine blue jumpsuit"
+	color = "#4ca7fb"
+
+/obj/item/clothing/under/color/fem/green
+	name = "feminine green jumpsuit"
+	color = "#59e663"
+
+/obj/item/clothing/under/color/fem/grey
+	name = "feminine grey jumpsuit"
+	color = "#d4d4d2"
+
+/obj/item/clothing/under/color/fem/pink
+	name = "feminine pink jumpsuit"
+	color = "#f657bf"
+
+/obj/item/clothing/under/color/fem/red
+	name = "feminine red jumpsuit"
+	color = "#f63c45"
+
+/obj/item/clothing/under/color/fem/yellow
+	name = "feminine yellow jumpsuit"
+	color = "#ffdb06"
+
+/obj/item/clothing/under/color/fem/aqua
+	name = "feminine aqua jumpsuit"
+	color = "#55e7f2"
+
+/obj/item/clothing/under/color/fem/purple
+	name = "feminine purple jumpsuit"
+	color = "#b26bef"
+
+/obj/item/clothing/under/color/fem/lightpurple
+	name = "feminine lightpurple jumpsuit"
+	color = "#d35ce9"
+
+/obj/item/clothing/under/color/fem/lightgreen
+	name = "feminine lightgreen jumpsuit"
+	color = "#9aef67"
+
+/obj/item/clothing/under/color/fem/lightblue
+	name = "feminine lightblue jumpsuit"
+	color = "#2cb7fb"
+
+/obj/item/clothing/under/color/fem/lightbrown
+	name = "feminine lightbrown jumpsuit"
+	color = "#eba349"
+
+/obj/item/clothing/under/color/fem/brown
+	name = "feminine brown jumpsuit"
+	color = "#db8732"
+
+/obj/item/clothing/under/color/fem/yellowgreen
+	name = "feminine yellowgreen jumpsuit"
+	color = "#d6ef46"
+
+/obj/item/clothing/under/color/fem/darkblue
+	name = "feminine darkblue jumpsuit"
+	color = "#4e71ed"
+
+/obj/item/clothing/under/color/fem/lightred
+	name = "feminine lightred jumpsuit"
+	color = "#f25831"
+
+/obj/item/clothing/under/color/fem/darkred
+	name = "feminine darkred jumpsuit"
+	color = "#e03c44"
