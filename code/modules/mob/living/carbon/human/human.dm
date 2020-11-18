@@ -25,6 +25,9 @@
 	var/last_massage = 0
 	var/massages_done_right = 0
 
+	var/prev_h_style = ""
+	var/prev_h_color
+
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
@@ -1891,65 +1894,64 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/IPC_change_screen()
 	set category = "IPC"
-	set name = "Change IPC Screen"
-	set desc = "Allow change monitor type"
-	if(stat)
-		return
+	set name = "Head screen settings"
+	set desc = "Allows to change color and type of the screen"
+
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump)
-		return
-
-	if(!BP.screen_toggle)
-		set_light(BP.screen_brightness)
-		BP.screen_toggle = TRUE
-
 	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, get_species(), gender, BP.ipc_head)
 	var/new_h_style = ""
-	if(valid_hairstyles.len == 1)
-		new_h_style = valid_hairstyles[1]
-	else
-		new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
-
-	if(new_h_style)
-		var/datum/sprite_accessory/SA = hair_styles_list[new_h_style]
-		if(SA.do_colouration)
-			var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
-			if(new_hair)
-				r_hair = HEX_VAL_RED(new_hair)
-				g_hair = HEX_VAL_GREEN(new_hair)
-				b_hair = HEX_VAL_BLUE(new_hair)
-
-		h_style = new_h_style
-	if(h_style == "IPC off screen")
-		random_hair_style(gender, get_species(), BP.ipc_head)
-
-	update_hair()
-
-/mob/living/carbon/human/proc/IPC_toggle_screen()
-	set category = "IPC"
-	set name = "Toggle IPC Screen"
-	set desc = "Allow toggle monitor"
-
+	
 	if(stat)
 		return
-	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || (BP.is_stump))
+	if(!BP || BP.is_stump)
 		set_light(0)
 		return
+	
+	switch(alert("What we gonna do?", "Head screen settings", "Change screen style", "Toggle On/Off"))
+		if("Change screen style")
+			if(valid_hairstyles.len == 1)
+				new_h_style = valid_hairstyles[1]
+			else
+				new_h_style = input(src, "Choose your IPC screen style:", "Character Preference")  as null|anything in valid_hairstyles
 
-	BP.screen_toggle = !BP.screen_toggle
-	if(BP.screen_toggle)
-		IPC_change_screen()
-		set_light(BP.screen_brightness)
-	else
-		r_hair = 15
-		g_hair = 15
-		b_hair = 15
-		set_light(0)
-		if(BP.ipc_head == "Default")
-			h_style = "IPC off screen"
-		update_hair()
+			if(new_h_style)
+				var/datum/sprite_accessory/SA = hair_styles_list[new_h_style]
+				if(SA.do_colouration)
+					var/new_hair = input(src, "Choose your IPC screen colour:", "Character Preference") as color|null
+					if(new_hair)
+						r_hair = HEX_VAL_RED(new_hair)
+						g_hair = HEX_VAL_GREEN(new_hair)
+						b_hair = HEX_VAL_BLUE(new_hair)
+						prev_h_color = new_hair
 
+				h_style = new_h_style
+				prev_h_style = h_style
+
+			if(h_style == "IPC off screen")
+				random_hair_style(gender, get_species(), BP.ipc_head)
+
+			update_hair()
+
+		if("Toggle On/Off")
+			if(BP.screen_toggle)
+				r_hair = 15
+				g_hair = 15
+				b_hair = 15
+				set_light(0)
+				if(BP.ipc_head == "Default")
+					h_style = "IPC off screen"
+				update_hair()
+				BP.screen_toggle = FALSE
+			else
+				BP.screen_toggle = TRUE
+				if(!(BP.ipc_head == "Default"))
+					r_hair = HEX_VAL_RED(prev_h_color)
+					g_hair = HEX_VAL_GREEN(prev_h_color)
+					b_hair = HEX_VAL_BLUE(prev_h_color)
+				if(h_style == "IPC off screen")
+					h_style = prev_h_style
+				set_light(BP.screen_brightness)
+				update_hair()
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
