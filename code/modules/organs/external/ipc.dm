@@ -12,6 +12,8 @@
 	var/ipc_head = "Default"
 	var/screen_toggle = TRUE
 	var/screen_brightness = 2
+	var/prev_h_style = ""
+	var/prev_h_color	
 
 /obj/item/organ/external/head/robot/ipc/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC)
