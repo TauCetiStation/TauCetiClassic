@@ -66,9 +66,9 @@
 			wash_color = ST.item_color
 
 		if(wash_color)
-			var/new_jumpsuit_icon_state = ""
+			/*var/new_jumpsuit_icon_state = ""
 			var/new_jumpsuit_item_state = ""
-			var/new_jumpsuit_name = ""
+			var/new_jumpsuit_name = ""*/
 			var/new_glove_fingerless_item_state = ""
 			var/new_glove_fingerless_icon_state = ""
 			var/new_glove_fingerless_name = ""
@@ -82,7 +82,7 @@
 			var/new_softcap_icon_state = ""
 			var/new_softcap_name = ""
 			var/new_desc = "The colors are a bit dodgy."
-			for(var/T in typesof(/obj/item/clothing/under))
+			/*for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
 				//world << "DEBUG: [color] == [J.color]"
 				if(wash_color == J.item_color)
@@ -92,7 +92,7 @@
 					qdel(J)
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
-				qdel(J)
+				qdel(J)*/
 			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
 				var/obj/item/clothing/gloves/fingerless/G = new T
 				if(wash_color == G.item_color)
@@ -141,14 +141,14 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(H)
-			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
+			/*if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
 					J.item_state = new_jumpsuit_item_state
 					J.icon_state = new_jumpsuit_icon_state
 					J.item_color = wash_color
 					J.name = new_jumpsuit_name
-					J.desc = new_desc
+					J.desc = new_desc*/
 			if(new_glove_name && new_glove_item_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
 				for(var/obj/item/clothing/gloves/G in contents)
 					if(istype(G, /obj/item/clothing/gloves/fingerless))
