@@ -25,9 +25,6 @@
 	var/last_massage = 0
 	var/massages_done_right = 0
 
-	var/prev_h_style = ""
-	var/prev_h_color
-
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
@@ -1922,10 +1919,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						r_hair = HEX_VAL_RED(new_hair)
 						g_hair = HEX_VAL_GREEN(new_hair)
 						b_hair = HEX_VAL_BLUE(new_hair)
-						prev_h_color = new_hair
+						BP.prev_h_color = new_hair
 
 				h_style = new_h_style
-				prev_h_style = h_style
+				BP.prev_h_style = h_style
 
 			if(h_style == "IPC off screen")
 				random_hair_style(gender, get_species(), BP.ipc_head)
@@ -1945,11 +1942,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			else
 				BP.screen_toggle = TRUE
 				if(!(BP.ipc_head == "Default"))
-					r_hair = HEX_VAL_RED(prev_h_color)
-					g_hair = HEX_VAL_GREEN(prev_h_color)
-					b_hair = HEX_VAL_BLUE(prev_h_color)
+					r_hair = HEX_VAL_RED(BP.prev_h_color)
+					g_hair = HEX_VAL_GREEN(BP.prev_h_color)
+					b_hair = HEX_VAL_BLUE(BP.prev_h_color)
 				if(h_style == "IPC off screen")
-					h_style = prev_h_style
+					h_style = BP.prev_h_style
 				set_light(BP.screen_brightness)
 				update_hair()
 
