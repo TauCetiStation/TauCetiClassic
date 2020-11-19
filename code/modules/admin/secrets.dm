@@ -52,6 +52,7 @@
 					<h4>Coder Secrets</h4>
 					<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 					<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+					<A href='?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
 					"}
 
 		if(1) // IC Events
@@ -729,6 +730,13 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("topicspam")
+			usr.client.deadmin()
+			message_admins("[key_name_admin(usr)] started topic spam.")
+			for(var/i in 1 to config.minutetopiclimit*2)
+				sleep(1)
+				usr.client.Topic("spam=[i]", list())
+			usr.client.readmin_self()
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
 
