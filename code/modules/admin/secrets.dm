@@ -731,12 +731,16 @@
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		if("topicspam")
-			usr.client.deadmin()
-			message_admins("[key_name_admin(usr)] started topic spam.")
-			for(var/i in 1 to config.minutetopiclimit*2)
-				sleep(1)
-				usr.client.Topic("spam=[i]", list())
-			usr.client.readmin_self()
+			var/count = config.minutetopiclimit * 2
+			if(alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,"Yes","No") == "Yes")
+				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
+				usr.client.holder.disassociate()
+				message_admins("[key_name_admin(usr)] started topic spam.")
+				for(var/i in 1 to count)
+					sleep(1)
+					usr.client.Topic("spam=[i]", list())
+				usr.client.deadmin_holder.reassociate()
+				to_chat(usr, "<span class='interface'>You again have the keys to control the planet, or at least a small space station.</span>")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
 

@@ -146,6 +146,13 @@ var/list/blacklisted_builds = list(
 
 	..()	//redirect to hsrc.Topic()
 
+#undef ADMINSWARNED_AT
+#undef MINUTE_COUNT
+#undef CURRENT_MINUTE
+#undef SECOND_COUNT
+#undef CURRENT_SECOND
+#undef LIMITER_SIZE
+
 /client/Destroy()
 	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
