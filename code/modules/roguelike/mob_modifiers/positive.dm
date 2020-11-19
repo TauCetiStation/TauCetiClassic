@@ -375,8 +375,8 @@
 	H.add_overlay(singularity_overlay)
 
 	START_PROCESSING(SSmob_modifier, src)
-	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_processing)
-	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_processing)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_pulling)
 
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
@@ -424,10 +424,10 @@
 		consume(X)
 		CHECK_TICK
 
-/datum/component/mob_modifier/singular/proc/start_processing()
+/datum/component/mob_modifier/singular/proc/start_pulling()
 	START_PROCESSING(SSmob_modifier, src)
 
-/datum/component/mob_modifier/singular/proc/stop_processing()
+/datum/component/mob_modifier/singular/proc/stop_pulling()
 	STOP_PROCESSING(SSmob_modifier, src)
 
 
