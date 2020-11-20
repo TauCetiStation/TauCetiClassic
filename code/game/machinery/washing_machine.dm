@@ -63,9 +63,10 @@
 			C.item_state ="w_suit"
 			C.name = C.colored_name
 		if (istype (C, /obj/item/clothing/shoes))
-			C.item_state =""
+			C.item_state = "w_shoes"
 			C.name = C.colored_name
 		if (istype (C, /obj/item/clothing/gloves))
+			C.item_state = "lgloves"
 			C.name = C.colored_name
 		qdel(crayon)
 		crayon = null
