@@ -59,6 +59,7 @@
 			C.icon_state = "color"
 			C.item_color ="color"
 			C.color = wash_color
+			C.desc = "The colors are a bit dogdy"
 		if (istype (C, /obj/item/clothing/under))
 			C.item_state ="w_suit"
 			C.name = C.colored_name
