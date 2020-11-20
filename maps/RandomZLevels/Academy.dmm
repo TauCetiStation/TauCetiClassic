@@ -2666,16 +2666,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
-"hm" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "hydrofloor"
-	},
-/area/awaymission/academy/academyaft)
 "hn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2683,14 +2673,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/awaymission/academy/academyaft)
-"ho" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
 "hp" = (
 /obj/structure/cable{
@@ -2795,14 +2777,6 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/awaymission/academy/academyaft)
-"hy" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "hz" = (
 /obj/structure/cable{
@@ -2937,7 +2911,7 @@
 /area/awaymission/academy/academyaft)
 "hN" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/clothing/shoes/sandal,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2952,7 +2926,7 @@
 /area/awaymission/academy/academyaft)
 "hQ" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/weapon/staff,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2970,7 +2944,7 @@
 /area/awaymission/academy/academyaft)
 "hT" = (
 /obj/structure/closet,
-/obj/item/clothing/under/purple,
+/obj/item/clothing/under/color/purple,
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -10078,7 +10052,7 @@ bz
 bz
 gE
 gU
-ho
+gZ
 hr
 gX
 hr
@@ -10208,12 +10182,12 @@ gl
 fW
 fy
 gU
-ho
-ho
+gZ
+gZ
 gX
-ho
+gZ
 gX
-ho
+gZ
 gX
 hk
 hk
@@ -10468,7 +10442,7 @@ bx
 bx
 gS
 gU
-hm
+hb
 hg
 hk
 hk
@@ -11379,7 +11353,7 @@ do
 cY
 fB
 hg
-hy
+hn
 hK
 fB
 ic
@@ -11509,7 +11483,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hL
 fB
 ic
@@ -11639,7 +11613,7 @@ cY
 cY
 fB
 hh
-hy
+hn
 hM
 fB
 id
@@ -11769,7 +11743,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hN
 fB
 ic
@@ -11899,7 +11873,7 @@ cY
 cY
 fB
 hg
-hy
+hn
 hO
 fB
 ie
@@ -13329,7 +13303,7 @@ gN
 gf
 fB
 hg
-hy
+hn
 hQ
 fB
 ic
@@ -13459,7 +13433,7 @@ gO
 gf
 fB
 hg
-hy
+hn
 hR
 fB
 ic
@@ -13589,7 +13563,7 @@ gC
 gH
 fB
 hh
-hy
+hn
 hS
 fB
 id
@@ -13719,7 +13693,7 @@ gC
 gH
 fB
 hg
-hy
+hn
 hT
 fB
 ic
@@ -13849,7 +13823,7 @@ gP
 gH
 fB
 hg
-hy
+hn
 hU
 fB
 ic
@@ -14499,7 +14473,7 @@ aN
 aa
 gU
 hk
-hm
+hb
 hV
 ia
 if
@@ -14758,7 +14732,7 @@ aa
 aa
 aa
 gU
-hm
+hb
 hk
 hk
 hk
@@ -14888,7 +14862,7 @@ aa
 aa
 aa
 gU
-hy
+hn
 hg
 hk
 hk
@@ -15018,7 +14992,7 @@ aa
 aa
 aa
 gU
-ho
+gZ
 gX
 gX
 gX
