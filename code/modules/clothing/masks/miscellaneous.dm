@@ -272,6 +272,7 @@
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon_state = "ecig"
 	item_state = "ecig"
+	can_be_colored = FALSE
 	throw_speed = 0.5
 	w_class = ITEM_SIZE_TINY
 	body_parts_covered = null

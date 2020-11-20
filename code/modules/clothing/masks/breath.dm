@@ -3,6 +3,7 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
+	can_be_washed = FALSE
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	body_parts_covered = 0
 	w_class = ITEM_SIZE_SMALL

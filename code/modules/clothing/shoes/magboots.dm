@@ -3,6 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
+	can_be_colored = FALSE
 	species_restricted = null
 	var/magpulse = 0
 	var/magboot_state = "magboots"

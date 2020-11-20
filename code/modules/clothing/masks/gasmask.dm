@@ -3,6 +3,7 @@
 	desc = "A face-covering mask that can be connected to an air supply. Filters harmful gases from the air."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_mask_tc"
+	can_be_washed = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES

@@ -14,6 +14,7 @@
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
 	item_state = "armor"
+	can_be_washed = FALSE
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 
@@ -29,6 +30,7 @@
 	icon_state = "armorsec"
 	item_state = "armor"
 	blood_overlay_type = "armor"
+	can_be_washed = FALSE
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO

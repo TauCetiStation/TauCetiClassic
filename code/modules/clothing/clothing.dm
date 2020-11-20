@@ -7,6 +7,9 @@
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE
+	var/can_be_colored = FALSE
+	var/can_be_washed = TRUE
+	var/colored_name = "colored clothing"
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -210,6 +213,7 @@ var/global/list/icon_state_allowed_cache = list()
 	w_class = ITEM_SIZE_NORMAL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
+	can_be_washed = FALSE
 
 	sprite_sheet_slot = SPRITE_SHEET_EARS
 
@@ -279,6 +283,7 @@ var/global/list/icon_state_allowed_cache = list()
 	w_class = ITEM_SIZE_SMALL
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_FLAGS_EYES
+	can_be_washed = FALSE
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
@@ -304,6 +309,8 @@ BLIND     // can't see anything
 	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
+	can_be_colored = TRUE
+	colored_name = "colored gloves"
 	var/wired = FALSE
 	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = FALSE
@@ -357,6 +364,8 @@ BLIND     // can't see anything
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	siemens_coefficient = 0.9
+	can_be_colored = TRUE
+	colored_name = "colored shoes"
 	body_parts_covered = LEGS
 	slot_flags = SLOT_FLAGS_FEET
 	var/clipped_status = NO_CLIPPING
@@ -435,6 +444,7 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
@@ -443,6 +453,7 @@ BLIND     // can't see anything
 	w_class = ITEM_SIZE_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
+	can_be_washed = FALSE
 	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM
 	flags_pressure = STOPS_PRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -493,6 +504,8 @@ BLIND     // can't see anything
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_FLAGS_ICLOTHING
+	can_be_colored = TRUE
+	colored_name = "colored jumpsuit"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = ITEM_SIZE_NORMAL
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode

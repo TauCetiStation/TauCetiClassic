@@ -4,6 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES | THICKMATERIAL
 	item_state = "helmet"
+	can_be_washed = FALSE
 	armor = list(melee = 50, bullet = 60, laser = 50,energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
