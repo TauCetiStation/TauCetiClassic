@@ -281,16 +281,10 @@
 
 	// Drop all the things. All of them.
 	cut_overlays()
-	for(var/obj/item/I in carrying)
-		I.loc = M.loc
-		carrying.Remove(I)
-		if(isturf(I.loc))
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
-
+	var/list/obj/item/oldContents = contents.Copy()
+	// Make each item scatter a bit
+	for(var/obj/item/I in oldContents)
+		INVOKE_ASYNC(src, .proc/do_scatter, I)
 
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
@@ -386,6 +380,18 @@
 
 /obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
 
+/**
+ * Causes items to scatter
+ *
+ * Arguments:
+ * * item/I - Item to scatter
+ */
+/obj/item/weapon/tray/proc/do_scatter(obj/item/I)
+	for(var/i in 1 to rand(1,2))
+		if(I)
+			step(I, pick(NORTH,SOUTH,EAST,WEST))
+			sleep(rand(2,4))
+
 /obj/item/weapon/tray/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
@@ -395,72 +401,40 @@
 	else
 		return ..()
 
-/*
-===============~~~~~================================~~~~~====================
-=																			=
-=  Code for trays carrying things. By Doohl for Doohl erryday Doohl Doohl~  =
-=																			=
-===============~~~~~================================~~~~~====================
-*/
 /obj/item/weapon/tray/proc/calc_carry()
 	// calculate the weight of the items on the tray
-	var/val = 0 // value to return
-
+	var/val = 0
 	for(var/obj/item/I in carrying)
-		if(I.w_class == 1.0)
-			val ++
-		else if(I.w_class == 2.0)
-			val += 3
-		else
-			val += 5
-
+		val += I.w_class
 	return val
 
 /obj/item/weapon/tray/pickup(mob/living/user)
-
 	if(!isturf(loc))
 		return
-
 	for(var/obj/item/I in loc)
 		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
 			var/add = 0
-			if(I.w_class == 1.0)
-				add = 1
-			else if(I.w_class == 2.0)
-				add = 3
-			else
-				add = 5
+			add += I.w_class
 			if(calc_carry() + add >= max_carry)
 				break
-
 			I.loc = src
 			carrying.Add(I)
 			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
+
 /obj/item/weapon/tray/dropped(mob/user)
-	..()
-
-	var/mob/living/M
-	for(M in src.loc) //to handle hand switching
-		return
-
-	var/foundtable = 0
-	for(var/obj/structure/table/T in loc)
-		foundtable = 1
-		break
-
+	set waitfor = FALSE	//hidden delay somewhere???
+	..() //moving tray from one hand to another causes it to scatter contents, no idea how to fix
+	var/list/obj/item/oldContents = carrying.Copy()
 	cut_overlays()
+	sleep(1) // so the items would actually move to the new tray loc instead of under player
+	for(var/i in 1 to oldContents.len)
+		var/obj/item/P = oldContents[i]
+		P.forceMove(loc)
+		carrying.Remove(P)
+	calc_carry()
 
-	for(var/obj/item/I in carrying)
-		I.loc = loc
-		carrying.Remove(I)
-		if(!foundtable && isturf(loc))
-			// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-			spawn()
-				for(var/i = 1, i <= rand(1,2), i++)
-					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
-						sleep(rand(2,4))
+
 
 ///////////////////NEW//////////////////////
 
