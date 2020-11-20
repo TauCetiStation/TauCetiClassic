@@ -50,152 +50,23 @@
 		I.decontaminate()
 		I.wet = 0
 
-	//Tanning!
-	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
-		qdel(HH)
-
-
-	if(crayon)
-		var/wash_color
-		if(istype(crayon,/obj/item/toy/crayon))
-			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
-		else if(istype(crayon,/obj/item/weapon/stamp))
-			var/obj/item/weapon/stamp/ST = crayon
-			wash_color = ST.item_color
-
-		if(wash_color)
-			/*var/new_jumpsuit_icon_state = ""
-			var/new_jumpsuit_item_state = ""
-			var/new_jumpsuit_name = ""*/
-			var/new_glove_fingerless_item_state = ""
-			var/new_glove_fingerless_icon_state = ""
-			var/new_glove_fingerless_name = ""
-			var/new_glove_item_state = ""
-			var/new_glove_icon_state = ""
-			var/new_glove_name = ""
-			var/new_shoe_icon_state = ""
-			var/new_shoe_name = ""
-			var/new_sheet_icon_state = ""
-			var/new_sheet_name = ""
-			var/new_softcap_icon_state = ""
-			var/new_softcap_name = ""
-			var/new_desc = "The colors are a bit dodgy."
-			/*for(var/T in typesof(/obj/item/clothing/under))
-				var/obj/item/clothing/under/J = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == J.item_color)
-					new_jumpsuit_icon_state = J.icon_state
-					new_jumpsuit_item_state = J.item_state
-					new_jumpsuit_name = J.name
-					qdel(J)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(J)*/
-			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
-				var/obj/item/clothing/gloves/fingerless/G = new T
-				if(wash_color == G.item_color)
-					new_glove_fingerless_icon_state = G.icon_state
-					new_glove_fingerless_item_state = G.item_state
-					new_glove_fingerless_name = G.name
-					qdel(G)
-					break
-				qdel(G)
-			for(var/T in typesof(/obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = new T
-				if(wash_color == G.item_color)
-					new_glove_icon_state = G.icon_state
-					new_glove_item_state = G.item_state
-					new_glove_name = G.name
-					qdel(G)
-					break
-				qdel(G)
-			for(var/T in typesof(/obj/item/clothing/shoes))
-				var/obj/item/clothing/shoes/S = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == S.item_color)
-					new_shoe_icon_state = S.icon_state
-					new_shoe_name = S.name
-					qdel(S)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(S)
-			for(var/T in typesof(/obj/item/weapon/bedsheet))
-				var/obj/item/weapon/bedsheet/B = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == B.item_color)
-					new_sheet_icon_state = B.icon_state
-					new_sheet_name = B.name
-					qdel(B)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(B)
-			for(var/T in typesof(/obj/item/clothing/head/soft))
-				var/obj/item/clothing/head/soft/H = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == H.item_color)
-					new_softcap_icon_state = H.icon_state
-					new_softcap_name = H.name
-					qdel(H)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(H)
-			/*if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
-				for(var/obj/item/clothing/under/J in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					J.item_state = new_jumpsuit_item_state
-					J.icon_state = new_jumpsuit_icon_state
-					J.item_color = wash_color
-					J.name = new_jumpsuit_name
-					J.desc = new_desc*/
-			if(new_glove_name && new_glove_item_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
-				for(var/obj/item/clothing/gloves/G in contents)
-					if(istype(G, /obj/item/clothing/gloves/fingerless))
-						if(new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
-							G.item_state = new_glove_fingerless_item_state
-							G.icon_state = new_glove_fingerless_icon_state
-							G.item_color = wash_color
-							G.name = new_glove_fingerless_name
-							G.desc = new_desc
-					else
-						if (new_glove_name && new_glove_item_state && new_glove_icon_state)
-							G.item_state = new_glove_item_state
-							G.icon_state = new_glove_icon_state
-							G.item_color = wash_color
-							G.name = new_glove_name
-							G.desc = new_desc
-			if(new_shoe_icon_state && new_shoe_name)
-				for(var/obj/item/clothing/shoes/S in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					if (istype(S,/obj/item/clothing/shoes/orange))
-						var/obj/item/clothing/shoes/orange/L = S
-						if (L.chained)
-							L.remove_cuffs()
-					if(new_shoe_icon_state == "orange1")
-						new_shoe_icon_state = "orange"
-					if(new_shoe_name == "shackles")
-						new_shoe_name = "orange shoes"
-					if(S.item_state == "o_shoes1")
-						S.item_state = "o_shoes"
-					S.icon_state = new_shoe_icon_state
-					S.item_color = wash_color
-					S.name = new_shoe_name
-					S.desc = new_desc
-			if(new_sheet_icon_state && new_sheet_name)
-				for(var/obj/item/weapon/bedsheet/B in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					B.icon_state = new_sheet_icon_state
-					B.item_color = wash_color
-					B.name = new_sheet_name
-					B.desc = new_desc
-			if(new_softcap_icon_state && new_softcap_name)
-				for(var/obj/item/clothing/head/soft/H in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					H.icon_state = new_softcap_icon_state
-					H.item_color = wash_color
-					H.name = new_softcap_name
-					H.desc = new_desc
+	var/wash_color
+	if(istype(crayon,/obj/item/toy/crayon))
+		var/obj/item/toy/crayon/CR = crayon
+		wash_color = CR.colour
+	for (var/obj/item/clothing/C in contents)
+		if(C.can_be_colored == TRUE)
+			C.icon_state = "color"
+			C.item_color ="color"
+			C.color = wash_color
+		if (istype (C, /obj/item/clothing/under))
+			C.item_state ="w_suit"
+			C.name = C.colored_name
+		if (istype (C, /obj/item/clothing/shoes))
+			C.item_state =""
+			C.name = C.colored_name
+		if (istype (C, /obj/item/clothing/gloves))
+			C.name = C.colored_name
 		qdel(crayon)
 		crayon = null
 
@@ -224,8 +95,8 @@
 	/*if(isscrewdriver(W))
 		panel = !panel
 		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
-	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
-		if( state in list(	1, 3, 6 ) )
+	if (istype (W, /obj/item/toy/crayon))
+		if( state in list(	1, 3, 6 ))
 			if(!crayon)
 				user.drop_item()
 				crayon = W
@@ -243,6 +114,7 @@
 				state = 3
 		else
 			..()
+
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -252,47 +124,14 @@
 		istype(W,/obj/item/clothing/suit) || \
 		istype(W,/obj/item/weapon/bedsheet))
 
-		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
-		if ( istype(W,/obj/item/clothing/suit/space ) )
-			to_chat(user, "This item does not fit.")
+		var/obj/item/clothing/C = W
+
+
+		if(!C.can_be_washed)
+			to_chat(user, "<span class='notice'>\ You cant put [W] in the washing machine!</span>")
 			return
-		if ( istype(W,/obj/item/clothing/suit/syndicatefake ) )
-			to_chat(user, "This item does not fit.")
-			return
-//		if ( istype(W,/obj/item/clothing/suit/powered ) )
-//			user << "This item does not fit."
-//			return
-		if ( istype(W,/obj/item/clothing/suit/cyborg_suit ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/suit/bomb_suit ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/suit/armor ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/suit/armor ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/mask/gas ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/mask/cigarette ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if ( istype(W,/obj/item/clothing/head/syndicatefake ) )
-			to_chat(user, "This item does not fit.")
-			return
-//		if ( istype(W,/obj/item/clothing/head/powered ) )
-//			user << "This item does not fit."
-//			return
-		if ( istype(W,/obj/item/clothing/head/helmet ) )
-			to_chat(user, "This item does not fit.")
-			return
-		if (istype(W, /obj/item/clothing/gloves/pipboy))
-			to_chat(user, "This item does not fit.")
-			return
-		if(!W.canremove) //if "can't drop" item
+
+		if(!C.canremove)
 			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
 
