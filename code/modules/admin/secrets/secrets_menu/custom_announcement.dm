@@ -91,11 +91,12 @@ var/list/announcement_sounds_cache = list()
 		if("preset_select")
 			if(!(holder.rights & (R_FUN | R_EVENT)))
 				return
-			var/list/announcement_types = typesof(/datum/announcement) - base_announcement_types
+			var/list/announcement_types = typesof(/datum/announcement)
 			var/list/datum/announcement/announcements = list()
 			for(var/announcement_type in announcement_types)
 				var/datum/announcement/A = new announcement_type
-				announcements[A.name] = A
+				if(A.name)
+					announcements[A.name] = A
 			announcements = sortList(announcements)
 			var/user_input = input(admin, "Choose a template.", "Template", A.name) as anything in announcements
 			A.copy(announcements[user_input])
