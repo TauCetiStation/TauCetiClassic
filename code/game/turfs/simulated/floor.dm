@@ -655,13 +655,9 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(user.a_intent == INTENT_HELP)
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/storage/S = C
-			while((S.contents.len > 0) && (src in view(1, user)))
-				if(src in view(1, user))
-					for(var/obj/item/I in S.contents)
-						if(do_after(user, 2, target = user) && (src in view(1, user)))
-							S.remove_from_storage(I,src)
-						else
-							break
+			for(var/obj/item/I in S.contents)
+				if(do_after(user, 2, target = user) && src in view(1, user))
+					S.remove_from_storage(I,src)
 				else
 					break
 
