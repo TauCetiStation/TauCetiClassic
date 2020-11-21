@@ -116,7 +116,6 @@ export const CustomAnnounce = (props, context) => {
                 />
                 <Button ml={1}
                   content="Sample"
-                  disabled={!(data.rights.sound && data.rights.funevent)}
                   icon="closed-captioning"
                   onClick={() => act('test', {
                     source: "sample",
