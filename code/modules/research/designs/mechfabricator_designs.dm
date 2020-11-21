@@ -778,7 +778,7 @@
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
-	materials = list(MAT_METAL=10000)
+	materials = list(MAT_METAL=10000, MAT_GOLD=7500, MAT_SILVER=12500, MAT_PHORON=7000, MAT_URANIUM=12500, MAT_DIAMOND=12500)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -788,7 +788,7 @@
 	id = "mech_teleporter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
-	materials = list(MAT_METAL=10000)
+	materials = list(MAT_METAL=10000, MAT_GOLD=15000, MAT_SILVER=10000, MAT_PHORON=5000, MAT_URANIUM=10000, MAT_DIAMOND=20000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
