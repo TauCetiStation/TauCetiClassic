@@ -642,6 +642,29 @@ var/list/wood_icons = list("wood","wood-broken")
 				else
 					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
+/turf/simulated/floor/MouseDrop_T(obj/item/C, mob/user)
+
+	if(istype(C, /obj/item/weapon/storage))
+		if(usr.incapacitated())
+			return
+		if(get_dist(user, C) > 1 || get_dist(user, src) > 1 || !(src in view(1, user)))
+			return
+		if(user.is_busy())
+			return
+
+		if(user.a_intent == INTENT_HELP)
+			user.SetNextMove(CLICK_CD_MELEE)
+			var/obj/item/weapon/storage/S = C
+			while((S.contents.len > 0) && src in view(1, user))
+				if(src in view(1, user))
+					for(var/obj/item/I in S.contents)
+						if(do_after(user, 2, target = user) && src in view(1, user))
+							S.remove_from_storage(I,src)
+						else
+							break
+				else
+					break
+
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK
