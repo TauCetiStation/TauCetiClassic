@@ -647,7 +647,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(istype(C, /obj/item/weapon/storage))
 		if(user.incapacitated())
 			return
-		if(get_dist(user, C) > 1 || get_dist(user, src) > 1 || !(src in view(1, user)))
+		if(!user.Adjacent(src) || !Adjacent(C) || !Adjacent(user))
 			return
 		if(user.is_busy())
 			return
@@ -656,7 +656,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/storage/S = C
 			for(var/obj/item/I in S.contents)
-				if(do_after(user, 2, target = user) && (src in view(1, user)))
+				if(do_after(user, 2, target = user) && (user.Adjacent(src)))
 					S.remove_from_storage(I,src)
 				else
 					break
