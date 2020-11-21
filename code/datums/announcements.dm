@@ -5,6 +5,10 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
                                                 /area/shuttle/escape_pod4/transit))
 
 #define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_area_transit)
+#define ANNOUNCE_TEXT 1
+#define ANNOUNCE_SOUND 2
+#define ANNOUNCE_COMMS 4
+#define ANNOUNCE_ALL 7
 
 /* Announcement sounds */
 var/list/announcement_sounds = list(
