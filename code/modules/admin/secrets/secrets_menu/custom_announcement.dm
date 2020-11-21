@@ -26,8 +26,8 @@ var/list/announcement_sounds_cache = list()
 		"comms" = A.flags & ANNOUNCE_COMMS,
 	)
 	data["rights"] = list(
-		"funevent" = admin.client.holder.rights & (R_EVENT | R_FUN),
-		"sound" = admin.client.holder.rights & R_SOUNDS
+		"funevent" = holder.rights & (R_EVENT | R_FUN),
+		"sound" = holder.rights & R_SOUNDS
 	)
 	return data
 
@@ -53,12 +53,12 @@ var/list/announcement_sounds_cache = list()
 			A.flags ^= ANNOUNCE_COMMS
 		if("sound_select")
 			var/list/variants = announcement_sounds
-			if(admin.client.holder.rights & R_SOUNDS)
+			if(holder.rights & R_SOUNDS)
 				variants += announcement_sounds_cache
 			var/user_input = input(admin, "Choose a sound for announce.", "Sound", A.sound) as anything in variants
 			A.sound = user_input
 		if("sound_upload")
-			if(!(admin.client.holder.rights & R_SOUNDS))
+			if(!(holder.rights & R_SOUNDS))
 				return
 			var/sound/S = input("Select a sound from the local repository") as null|sound
 			if(!isfile(S))
@@ -89,7 +89,7 @@ var/list/announcement_sounds_cache = list()
 				WARNING("No sound file for [sound_name]")
 			admin.playsound_local(null, sound_file, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 		if("preset_select")
-			if(!(admin.client.holder.rights & (R_FUN | R_EVENT)))
+			if(!(holder.rights & (R_FUN | R_EVENT)))
 				return
 			var/list/announcement_types = typesof(/datum/announcement) - base_announcement_types
 			var/list/datum/announcement/announcements = list()

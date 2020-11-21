@@ -1,6 +1,5 @@
 /mob
 	hud_possible = list(ANTAG_HUD)
-	var/datum/secrets_menu/custom_announce/sm_ca
 
 /**
   * Delete a mob

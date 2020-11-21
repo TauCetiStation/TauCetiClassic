@@ -679,9 +679,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Please wait until the game starts!")
 		return
 
-	if(!usr.sm_ca)
-		usr.sm_ca = new /datum/secrets_menu/custom_announce(usr)
-	usr.sm_ca.interact()
+	if(!holder.secrets_menu["custom_announce"])
+		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr)
+	holder.secrets_menu["custom_announce"].interact()
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	

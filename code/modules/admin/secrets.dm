@@ -1,5 +1,7 @@
 /datum/admins
-	var/current_tab =0
+	var/current_tab = 0
+
+	var/list/datum/secrets_menu/secrets_menu = list()
 
 	var/datum/announcement/announce_gravity_off = new /datum/announcement/station/gravity_off
 	var/datum/announcement/announce_gravity_on = new /datum/announcement/station/gravity_on
