@@ -145,7 +145,7 @@
 			ear_deaf = 0
 		else if(ear_deaf)
 			ear_deaf = 0
-		if(ear_damage < 25)
+		else if(ear_damage < 25)
 			ear_damage = 0
 
 		//Other
