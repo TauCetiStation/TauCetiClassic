@@ -278,12 +278,10 @@
 					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
-
 	// Drop all the things. All of them.
 	cut_overlays()
-	var/list/obj/item/oldContents = contents.Copy()
 	// Make each item scatter a bit
-	for(var/obj/item/I in oldContents)
+	for(var/obj/item/I in carrying)
 		INVOKE_ASYNC(src, .proc/do_scatter, I)
 
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
@@ -391,6 +389,8 @@
 		if(I)
 			step(I, pick(NORTH,SOUTH,EAST,WEST))
 			sleep(rand(2,4))
+			carrying.Remove(I)
+	calc_carry()
 
 /obj/item/weapon/tray/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
@@ -423,15 +423,15 @@
 
 
 /obj/item/weapon/tray/dropped(mob/user)
-	set waitfor = FALSE	//hidden delay somewhere???
-	..() //moving tray from one hand to another causes it to scatter contents, no idea how to fix
-	var/list/obj/item/oldContents = carrying.Copy()
-	cut_overlays()
+	set waitfor = FALSE
+	..()
 	sleep(1) // so the items would actually move to the new tray loc instead of under player
-	for(var/i in 1 to oldContents.len)
-		var/obj/item/P = oldContents[i]
-		P.forceMove(loc)
-		carrying.Remove(P)
+	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) //to handle hand switching
+		return
+	cut_overlays()
+	for(var/obj/item/I in carrying)
+		I.forceMove(loc)
+		carrying.Remove(I)
 	calc_carry()
 
 
