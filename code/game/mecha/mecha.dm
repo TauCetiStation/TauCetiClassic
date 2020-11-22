@@ -109,6 +109,7 @@
 		M.loc.Entered(M)
 		step_rand(M)
 	mechas_list -= src //global mech list
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 ////////////////////////
@@ -351,7 +352,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage || wreckage) 
+		return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
@@ -546,7 +548,7 @@
 	if(prob(60))
 		explosion(T, 0, 0, 1, 3)
 	qdel(src)
-
+	STOP_PROCESSING(SSobj, src)
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
@@ -1749,7 +1751,7 @@
 	delay = 15
 
 /datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
-	if(mecha.internal_tank)
+	if(mecha.internal_tank && !mecha.wreckage)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
 
@@ -1775,11 +1777,11 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 	else
-		return stop()
+		STOP_PROCESSING(SSobj, src)
 	return
 
 /datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
-	if(!mecha.hasInternalDamage())
+	if(!mecha.hasInternalDamage() || mecha.wreckage)
 		return stop()
 	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
 		if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
