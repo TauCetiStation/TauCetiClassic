@@ -101,7 +101,7 @@
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 			if(prob(M.ear_damage - 5))
 				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
-				M.sdisabilities |= DEAF
+				M.ear_deaf = max(M.ear_deaf * 2, 15)
 	else if(M.ear_damage >= 5)
 		to_chat(M, "<span class='warning'>Your ears start to ring!</span>")
 	M.update_icons()

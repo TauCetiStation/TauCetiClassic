@@ -218,9 +218,8 @@
 	if(sting_fail(user,target))
 		return 0
 	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
-	target.sdisabilities |= DEAF
-	spawn(300)	target.sdisabilities &= ~DEAF
 	target.silent += 30
+	target.ear_deaf = max(target.ear_deaf, 15)
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
