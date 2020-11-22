@@ -645,16 +645,6 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/MouseDrop_T(obj/item/C, mob/user)
 	if(!C || !user)
 		return
-
-	for(var/atom/movable/on_turf in src.contents)
-		if(on_turf.density && !(on_turf.checkpass(PASSTABLE)))
-			if(istype(on_turf, /obj/structure/table))
-				continue
-			if(istype(on_turf, /obj/structure/rack))
-				continue
-			if(istype(on_turf, /obj/machinery/door/window))
-				continue
-			return
 			
 	if(istype(C, /obj/item/weapon/storage))
 		if(user.incapacitated())
@@ -663,7 +653,17 @@ var/list/wood_icons = list("wood","wood-broken")
 			return
 		if(user.is_busy())
 			return
-
+		
+		for(var/atom/movable/on_turf in contents)
+			if(on_turf.density && !(on_turf.checkpass(PASSTABLE)))
+				if(istype(on_turf, /obj/structure/table))
+					continue
+				if(istype(on_turf, /obj/structure/rack))
+					continue
+				if(istype(on_turf, /obj/machinery/door/window))
+					continue
+				return
+		
 		if(user.a_intent == INTENT_HELP)
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/storage/S = C
