@@ -27,14 +27,20 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP && BP.is_robotic())
+			if(!use(1))
+				to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
+				return FALSE
 			if(BP.get_damage())
-				if(!use(1))
-					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
-					return FALSE
 				BP.heal_damage(15, 15, robo_repair = 1)
 				H.updatehealth()
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
+				return TRUE	
+			if(H.ear_damage && BP.body_zone == BP_HEAD)
+				H.ear_damage = max(H.ear_damage-10, 0)
+				H.sdisabilities &= ~DEAF
+				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"] sensors with \the [src].</span>",\
+			"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] sensors.</span>")
 				return TRUE
 			else if(can_operate(H))
 				for(var/obj/item/organ/internal/IO in BP.bodypart_organs)

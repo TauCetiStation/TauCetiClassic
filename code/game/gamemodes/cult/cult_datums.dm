@@ -887,7 +887,7 @@ var/list/cult_runes = list()
 		C.playsound_local(null, 'sound/effects/mob/ear_ring_single.ogg', VOL_EFFECTS_MASTER)
 		C.ear_deaf += deafness_modifier
 		to_chat(C, "<span class='userdanger'>The world around you suddenly becomes quiet.</span>")
-		if(prob(1))	
+		if(prob(1))
 			C.sdisabilities |= DEAF
 	qdel(holder)
 
