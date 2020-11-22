@@ -1749,7 +1749,7 @@
 	delay = 15
 
 /datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
-	if(mecha.internal_tank)
+	if(mecha.internal_tank && !mecha.wreckage)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
 
@@ -1775,7 +1775,7 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 	else
-		return stop()
+		return STOP_PROCESSING(SSobj, src)
 	return
 
 /datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
