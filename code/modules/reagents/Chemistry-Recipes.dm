@@ -577,6 +577,14 @@
 	result = "virusfood"
 	required_reagents = list("water" = 5, "milk" = 5, "oxygen" = 5)
 	result_amount = 15
+
+/datum/chemical_reaction/Inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	result = "inacusiate"
+	required_reagents = list("anti_toxin" = 1, "water" = 1, "carbon" = 1)
+	result_amount = 3
+
 /*
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"

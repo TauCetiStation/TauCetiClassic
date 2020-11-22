@@ -732,3 +732,19 @@
 						E.brute_dam = 0
 						E.status &= ~BROKEN
 						holder.remove_reagent("nanocalcium", 10)
+
+/datum/reagent/Inacusiate
+	name = "Inacusiate"
+	id = "inacusiate"
+	description = "Rapidly repairs damage to the patient's ears to cure deafness, assuming the source of said deafness isn't from genetic mutations, chronic deafness, or a total defecit of ears."
+	reagent_state = LIQUID
+	color = "#606060" // rgb: 96, 96, 96
+	overdose = REAGENTS_OVERDOSE
+	taste_message = null
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/Inacusiate/on_general_digest(mob/living/carbon/human/M)
+	..()
+	M.ear_damage = max(M.ear_damage-2, 0)
+	if(M.ear_damage <= 5)
+		M.sdisabilities &= ~DEAF
