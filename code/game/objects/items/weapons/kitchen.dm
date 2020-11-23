@@ -300,10 +300,8 @@
 	if(!target)
 		return
 	if(!proximity)
-		to_chat(world,"not in proximity")
 		return
 	if(collection_mode)
-		to_chat(world,"xd gather_all")
 		gather_all(get_turf(target), user)
 	else
 		dropitems(user = user, target = target, scatter = FALSE)
