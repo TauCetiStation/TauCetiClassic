@@ -151,15 +151,6 @@
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
 
-/obj/structure/closet/crate/secure/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		for(var/obj/O in src)
-			O.forceMove(get_turf(src))
-		qdel(src)
-
 /obj/structure/closet/crate/secure/AltClick(mob/user)
 	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
 		src.togglelock(user)
