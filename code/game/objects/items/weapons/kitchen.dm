@@ -244,139 +244,54 @@
 				H.eye_blurry += 3
 	return ..()
 
-/*
- * Trays - Agouri
- */
 /obj/item/weapon/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
+	force = 5
 	throwforce = 12.0
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
-	/* // NOPE
-	var/food_total= 0
-	var/burger_amt = 0
-	var/cheese_amt = 0
-	var/fries_amt = 0
-	var/classyalcdrink_amt = 0
-	var/alcdrink_amt = 0
-	var/bottle_amt = 0
-	var/soda_amt = 0
-	var/carton_amt = 0
-	var/pie_amt = 0
-	var/meatbreadslice_amt = 0
-	var/salad_amt = 0
-	var/miscfood_amt = 0
-	*/
-	var/list/carrying = list() // List of things on the tray. - Doohl
-	var/max_carry = 10 // w_class = ITEM_SIZE_TINY -- takes up 1
-					   // w_class = ITEM_SIZE_SMALL -- takes up 3
-					   // w_class = ITEM_SIZE_NORMAL -- takes up 5
+	var/gathering_mode = TRUE
+	var/cooldown = 0 //shield bash cooldown. based on world.time
+	var/list/carrying = list()
+	var/holding_weight = 0
+	var/static/list/tray_whitelisted_items = typecacheof(list(
+		/obj/item/weapon/reagent_containers/food,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/food,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/weapon/kitchen/rollingpin,
+		/obj/item/weapon/kitchen/utensil/fork,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
+	var/max_carry = 7 // w_class = ITEM_SIZE_TINY -- takes up 1
+					   // w_class = ITEM_SIZE_SMALL -- takes up 2
+					   // w_class = ITEM_SIZE_NORMAL -- takes up 3
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
-	// Drop all the things. All of them.
-	cut_overlays()
-	// Make each item scatter a bit
-	for(var/obj/item/I in carrying)
+	var/list/obj/item/oldContents = carrying.Copy() //copy so if somebody picks the tray up while do_scatter is still playing items wont get moved back
+	if()
+	for(var/obj/item/I in oldContents)
 		INVOKE_ASYNC(src, .proc/do_scatter, I)
+	playsound(M, pick('sound/items/trayhit1.ogg', 'sound/items/trayhit2.ogg'), VOL_EFFECTS_MASTER)
+	return ..()
 
-	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
-		to_chat(M, "<span class='warning'>You accidentally slam yourself with the [src]!</span>")
-		M.Weaken(1)
-		user.take_bodypart_damage(2)
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			return
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER) //sound playin'
-			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+/obj/item/weapon/tray/attack_self(mob/user)
+	gathering_mode = !gathering_mode
+	to_chat(user, "<span class='notice'>You change gathering mode to [gathering_mode?"load":"unload"]</span>")
+	return
 
-	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
-
-
-	if(!(def_zone == O_EYES || def_zone == BP_HEAD)) //////////////hitting anything else other than the eyes
-		if(prob(33))
-			src.add_blood(H)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))
-				location.add_blood(H)     ///Plik plik, the sound of blood
-
-		M.log_combat(user, "attacked with [name]")
-
-		if(prob(15))
-			M.Weaken(3)
-			M.take_bodypart_damage(3)
-		else
-			M.take_bodypart_damage(5)
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-			return
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
-			M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-			return
-
-
-
-
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		to_chat(M, "<span class='warning'>You get slammed in the face with the tray, against your mask!</span>")
-		if(prob(33))
-			src.add_blood(H)
-			if (H.wear_mask)
-				H.wear_mask.add_blood(H)
-			if (H.head)
-				H.head.add_blood(H)
-			if (H.glasses && prob(33))
-				H.glasses.add_blood(H)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
-				location.add_blood(H)
-
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin'
-		M.visible_message("<span class='warning'><B>[user] slams [M] with the tray!</B></span>")
-		if(prob(10))
-			M.Stun(rand(1,3))
-			M.take_bodypart_damage(3)
-			return
-		else
-			M.take_bodypart_damage(5)
-			return
-
-	else //No eye or head protection, tough luck!
-		to_chat(M, "<span class='warning'>You get slammed in the face with the tray!</span>")
-		if(prob(33))
-			src.add_blood(M)
-			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))
-				location.add_blood(H)
-
-		if(prob(50))
-			playsound(M, 'sound/items/trayhit1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(M, 'sound/items/trayhit2.ogg', VOL_EFFECTS_MASTER)  //sound playin' again
-		M.visible_message("<span class='warning'><B>[user] slams [M] in the face with the tray!</B></span>")
-
-		if(prob(30))
-			M.Stun(rand(2,4))
-			M.take_bodypart_damage(4)
-			return
-		else
-			M.take_bodypart_damage(8)
-			if(prob(30))
-				M.Weaken(2)
-				return
-			return
-
-/obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
+/obj/item/weapon/tray/afterattack(atom/target, mob/user, proximity, params)
+	if(!target)
+		return
+	if(gathering_mode)
+		pickupitems(user, target)
+	else
+		dropitems(user, target)
+	return
 
 /**
  * Causes items to scatter
@@ -385,12 +300,12 @@
  * * item/I - Item to scatter
  */
 /obj/item/weapon/tray/proc/do_scatter(obj/item/I)
+	cut_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
+	carrying.Remove(I)
 	for(var/i in 1 to rand(1,2))
 		if(I)
 			step(I, pick(NORTH,SOUTH,EAST,WEST))
 			sleep(rand(2,4))
-			carrying.Remove(I)
-	calc_carry()
 
 /obj/item/weapon/tray/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
@@ -401,40 +316,40 @@
 	else
 		return ..()
 
-/obj/item/weapon/tray/proc/calc_carry()
-	// calculate the weight of the items on the tray
-	var/val = 0
-	for(var/obj/item/I in carrying)
-		val += I.w_class
-	return val
-
 /obj/item/weapon/tray/pickup(mob/living/user)
-	if(!isturf(loc))
+	pickupitems(user, loc)
+
+/obj/item/weapon/tray/proc/pickupitems(mob/living/user, atom/target)
+	var/turf/T = get_turf(target)
+	if(T.density || !user.Adjacent(T))
 		return
-	for(var/obj/item/I in loc)
-		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-			var/add = 0
-			add += I.w_class
-			if(calc_carry() + add >= max_carry)
+	for(var/obj/item/I in T)
+		if(I != src && !I.anchored && is_type_in_typecache(I, tray_whitelisted_items))
+			if(holding_weight + I.w_class >= max_carry)
 				break
 			I.loc = src
 			carrying.Add(I)
 			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 
-
 /obj/item/weapon/tray/dropped(mob/user)
 	set waitfor = FALSE
 	..()
 	sleep(1) // so the items would actually move to the new tray loc instead of under player
-	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) //to handle hand switching
+	if(slot_equipped) //to handle slot switching
 		return
-	cut_overlays()
+	if(!isturf(loc)) //to stop items from dropping when tray dropped inside of a storage
+		return
+	dropitems(user, loc)
+
+/obj/item/weapon/tray/proc/dropitems(mob/living/user, atom/target)
+	var/turf/T = get_turf(target)
+	if(T.density || !user.Adjacent(T))
+		return
 	for(var/obj/item/I in carrying)
-		I.forceMove(loc)
+		holding_weight -= I.w_class
+		I.forceMove(T)
+		cut_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
 		carrying.Remove(I)
-	calc_carry()
-
-
 
 ///////////////////NEW//////////////////////
 
