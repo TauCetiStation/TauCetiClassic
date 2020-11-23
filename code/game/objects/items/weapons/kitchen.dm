@@ -265,7 +265,7 @@
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/weapon/kitchenknife,
 		/obj/item/weapon/kitchen/rollingpin,
-		/obj/item/weapon/kitchen/utensil/fork,
+		/obj/item/weapon/kitchen/utensil,
 		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
 	var/max_carry = 7 // w_class = ITEM_SIZE_TINY -- takes up 1
 					   // w_class = ITEM_SIZE_SMALL -- takes up 2
@@ -273,9 +273,10 @@
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	var/list/obj/item/oldContents = carrying.Copy() //copy so if somebody picks the tray up while do_scatter is still playing items wont get moved back
-	if()
 	for(var/obj/item/I in oldContents)
 		INVOKE_ASYNC(src, .proc/do_scatter, I)
+		cut_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
+		carrying.Remove(I)
 	playsound(M, pick('sound/items/trayhit1.ogg', 'sound/items/trayhit2.ogg'), VOL_EFFECTS_MASTER)
 	return ..()
 
@@ -297,11 +298,9 @@
  * Causes items to scatter
  *
  * Arguments:
- * * item/I - Item to scatter
+ * * I - Item to scatter
  */
 /obj/item/weapon/tray/proc/do_scatter(obj/item/I)
-	cut_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-	carrying.Remove(I)
 	for(var/i in 1 to rand(1,2))
 		if(I)
 			step(I, pick(NORTH,SOUTH,EAST,WEST))
@@ -319,6 +318,13 @@
 /obj/item/weapon/tray/pickup(mob/living/user)
 	pickupitems(user, loc)
 
+/**
+ * Moves items from a turf to a tray
+ *
+  * Arguments:
+ * * user - The mob that picks up items
+ * * target - Target turf from which items are gonna be taken
+ */
 /obj/item/weapon/tray/proc/pickupitems(mob/living/user, atom/target)
 	var/turf/T = get_turf(target)
 	if(T.density || !user.Adjacent(T))
@@ -341,6 +347,13 @@
 		return
 	dropitems(user, loc)
 
+/**
+ * Moves items from a turf to a tray
+ *
+  * Arguments:
+ * * user - The mob that drops items
+ * * target - Target turf on which items are gonna be dropped
+ */
 /obj/item/weapon/tray/proc/dropitems(mob/living/user, atom/target)
 	var/turf/T = get_turf(target)
 	if(T.density || !user.Adjacent(T))
