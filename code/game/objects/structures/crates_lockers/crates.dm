@@ -102,7 +102,8 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		opened = 1
+		for(var/obj/O in src)
+			O.forceMove(get_turf(src))
 		qdel(src)
 
 /obj/structure/closet/crate/ex_act(severity)
