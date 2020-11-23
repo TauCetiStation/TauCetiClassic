@@ -646,7 +646,9 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(!C || !user)
 		return
 			
-	if(istype(C, /obj/item/weapon/storage))
+	if(!istype(C, /obj/item/weapon/storage))
+		return
+	else
 		if(user.incapacitated())
 			return
 		if(!user.Adjacent(src) || !Adjacent(C) || !Adjacent(user))
