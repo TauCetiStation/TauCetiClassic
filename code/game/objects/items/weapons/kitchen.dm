@@ -244,122 +244,84 @@
 				H.eye_blurry += 3
 	return ..()
 
-/obj/item/weapon/tray
+/obj/item/weapon/storage/visuals/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
-	force = 5
+	force = 8
 	throwforce = 12.0
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
-	var/max_w_class = ITEM_SIZE_NORMAL
-	var/gathering_mode = TRUE
-	var/cooldown = 0 //shield bash cooldown. based on world.time
-	var/list/carrying = list()
-	var/holding_weight = 0
-	var/static/list/tray_whitelisted_items = typecacheof(list(
-		/obj/item/weapon/reagent_containers/food,
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/reagent_containers/food,
-		/obj/item/weapon/kitchenknife,
-		/obj/item/weapon/kitchen/rollingpin,
-		/obj/item/weapon/kitchen/utensil,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
-	var/max_carry = 9 // w_class = ITEM_SIZE_TINY -- takes up 1
-					   // w_class = ITEM_SIZE_SMALL -- takes up 2
-					   // w_class = ITEM_SIZE_NORMAL -- takes up 3
+	max_w_class = ITEM_SIZE_NORMAL
+	opened = TRUE
+	max_storage_space = 18
+	var/cooldown = 0
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+/obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
+	toggle_gathering_mode(user)
+	return
+
+/obj/item/weapon/storage/visuals/tray/toggle_gathering_mode(mob/user)
+	collection_mode = !collection_mode
+	to_chat(user, "<span class='notice'>You change gathering mode to [collection_mode?"load":"unload"]</span>")
+
+/obj/item/weapon/storage/visuals/tray/update_overlays(mob/user)
+	cut_overlays()
+	for(var/obj/item/I in contents)
+		var/image/IO = item_overlays[I]
+		IO.plane = plane
+		IO.layer = layer + 0.05
+		add_overlay(IO)
+
+/obj/item/weapon/storage/visuals/tray/gen_item_overlay(obj/item/I)
+	var/image/IO = image(I.icon, I.icon_state)
+	IO.pixel_x = rand(-8, 8)
+	IO.pixel_y = rand(-8, 8)
+	IO.loc = src
+	return IO
+
+/obj/item/weapon/storage/visuals/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	dropitems(user, target = M, scatter = TRUE)
 	playsound(M, pick('sound/items/trayhit1.ogg', 'sound/items/trayhit2.ogg'), VOL_EFFECTS_MASTER)
 	return ..()
 
-/obj/item/weapon/tray/attack_self(mob/user)
-	gathering_mode = !gathering_mode
-	to_chat(user, "<span class='notice'>You change gathering mode to [gathering_mode?"load":"unload"]</span>")
-	return
+/obj/item/weapon/storage/visuals/tray/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/kitchen/rollingpin) && !contents.len && cooldown < world.time - 25 && user.a_intent == INTENT_HARM)
+		user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
+		playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
+		cooldown = world.time
+	else
+		..()
 
-/obj/item/weapon/tray/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/storage/visuals/tray/afterattack(atom/target, mob/user, proximity, params)
 	if(!target)
 		return
-	if(gathering_mode)
-		pickupitems(user, target)
+	if(!proximity)
+		to_chat(world,"not in proximity")
+		return
+	if(collection_mode)
+		to_chat(world,"xd gather_all")
+		gather_all(get_turf(target), user)
 	else
-		dropitems(user, target, scatter = FALSE)
+		dropitems(user = user, target = target, scatter = FALSE)
 	return
 
-/obj/item/weapon/tray/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
-		if(cooldown < world.time - 25)
-			user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
-			playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
-			cooldown = world.time
-	else
-		return ..()
-
-/obj/item/weapon/tray/pickup(mob/living/user)
-	pickupitems(user, loc)
-
-/**
- * Moves items from a turf to a tray
- *
- * Arguments:
- * * user - The mob that picks up items
- * * target - Target turf from which items are gonna be taken
- */
-/obj/item/weapon/tray/proc/pickupitems(mob/living/user, atom/target)
-	var/turf/T = get_turf(target)
-	if(T.density || !user.Adjacent(T))
-		return
-	for(var/obj/item/I in T)
-		if(!I.anchored && is_type_in_typecache(I, tray_whitelisted_items) && I.w_class <= max_w_class)
-			if(holding_weight + I.w_class > max_carry)
-				break
-			holding_weight += I.w_class
-			I.loc = src
-			carrying.Add(I)
-			add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-
-/obj/item/weapon/tray/dropped(mob/user)
-	set waitfor = FALSE
-	..()
-	sleep(1) // so the items would actually move to the new tray loc instead of under player
-	if(slot_equipped) //to handle slot switching
-		return
-	if(!isturf(loc)) //to stop items from dropping when tray dropped inside of a storage
-		return
-	dropitems(user, target = loc, scatter = FALSE)
-
-/**
- * Moves items from a turf to a tray
- *
- * Arguments:
- * * user - The mob that drops items
- * * target - Target turf on which items are gonna be dropped
- * * scatter - should items be scattered on drop or not
- * * throwed - only used in throw_at so the throwable items would scatter
- */
-/obj/item/weapon/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
-	var/turf/T = get_turf(target)
-	if(!throwed)
-		if(T.density || !user.Adjacent(T))
-			return
-	for(var/obj/item/I in carrying)
-		T = get_turf(target)
-		holding_weight -= I.w_class
-		I.forceMove(T)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
+	for(var/obj/item/I in contents)
+		var/turf/T = get_turf(target)
+		remove_from_storage(I, new_location = T)
 		if(scatter)
+			T = get_turf(target)
 			T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
 			I.throw_at(T, rand(1, 2), 1, user)
-		cut_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer))
-		carrying.Remove(I)
 
-/obj/item/weapon/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
-	dropitems(user = thrower, target = target, scatter = TRUE, throwed = TRUE)
+	dropitems(user = thrower, target = target, scatter = TRUE)
+
 
 ///////////////////NEW//////////////////////
 

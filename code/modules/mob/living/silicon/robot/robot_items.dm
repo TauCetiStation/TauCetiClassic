@@ -1,4 +1,4 @@
-/obj/item/weapon/tray/robotray
+/obj/item/weapon/storage/visuals/tray/robotray
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
 
