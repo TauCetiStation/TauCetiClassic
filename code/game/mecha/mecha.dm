@@ -548,7 +548,6 @@
 	if(prob(60))
 		explosion(T, 0, 0, 1, 3)
 	qdel(src)
-	STOP_PROCESSING(SSobj, src)
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
@@ -1777,7 +1776,7 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 	else
-		STOP_PROCESSING(SSobj, src)
+		return stop()
 	return
 
 /datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
