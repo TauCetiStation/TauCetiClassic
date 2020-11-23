@@ -109,7 +109,6 @@
 		M.loc.Entered(M)
 		step_rand(M)
 	mechas_list -= src //global mech list
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 ////////////////////////
