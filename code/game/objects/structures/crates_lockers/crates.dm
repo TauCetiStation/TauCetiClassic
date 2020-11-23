@@ -97,7 +97,7 @@
 	else
 		return attack_hand(user)
 
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
+/obj/structure/closet/crate/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
