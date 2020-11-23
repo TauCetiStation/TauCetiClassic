@@ -301,19 +301,19 @@
 		return ..()
 
 /obj/item/weapon/tray/pickup(mob/living/user)
-	if(loc.density || !user.Adjacent(loc))
-		return
 	pickupitems(user, loc)
 
 /**
  * Moves items from a turf to a tray
  *
-  * Arguments:
+ * Arguments:
  * * user - The mob that picks up items
  * * target - Target turf from which items are gonna be taken
  */
 /obj/item/weapon/tray/proc/pickupitems(mob/living/user, atom/target)
 	var/turf/T = get_turf(target)
+	if(T.density || !user.Adjacent(T))
+		return
 	for(var/obj/item/I in T)
 		if(!I.anchored && is_type_in_typecache(I, tray_whitelisted_items) && I.w_class <= max_w_class)
 			if(holding_weight + I.w_class > max_carry)
@@ -331,21 +331,24 @@
 		return
 	if(!isturf(loc)) //to stop items from dropping when tray dropped inside of a storage
 		return
-	if(loc.density || !user.Adjacent(loc))
-		return
 	dropitems(user, target = loc, scatter = FALSE)
 
 /**
  * Moves items from a turf to a tray
  *
-  * Arguments:
+ * Arguments:
  * * user - The mob that drops items
  * * target - Target turf on which items are gonna be dropped
  * * scatter - should items be scattered on drop or not
+ * * throwed - only used in throw_at so the throwable items would scatter
  */
-/obj/item/weapon/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
+/obj/item/weapon/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
+	var/turf/T = get_turf(target)
+	if(!throwed)
+		if(T.density || !user.Adjacent(T))
+			return
 	for(var/obj/item/I in carrying)
-		var/turf/T = get_turf(target)
+		T = get_turf(target)
 		holding_weight -= I.w_class
 		I.forceMove(T)
 		if(scatter)
@@ -356,7 +359,7 @@
 
 /obj/item/weapon/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
-	dropitems(user = thrower, target = target, scatter = TRUE)
+	dropitems(user = thrower, target = target, scatter = TRUE, throwed = TRUE)
 
 ///////////////////NEW//////////////////////
 
