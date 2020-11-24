@@ -259,14 +259,14 @@
 	opened = TRUE
 	max_storage_space = 18
 	var/cooldown = 0
-	var/static/list/tray_whitelisted_items = typecacheof(list(
+	can_hold = list(
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/weapon/reagent_containers/glass,
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/weapon/kitchenknife,
 		/obj/item/weapon/kitchen/rollingpin,
 		/obj/item/weapon/kitchen/utensil/fork,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
+		) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
 
 /obj/item/weapon/storage/visuals/tray/update_overlays(mob/user)
 	cut_overlays()
@@ -297,9 +297,6 @@
 	else
 		return ..()
 
-/obj/item/weapon/storage/visuals/tray/can_be_inserted(obj/item/W, stop_messages = FALSE)
-	if(is_type_in_typecache(W, tray_whitelisted_items))
-		return ..()
 
 /**
  * Moves items from a turf to a tray
