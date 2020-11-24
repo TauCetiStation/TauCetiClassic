@@ -13,7 +13,7 @@
 /obj/item/weapon/storage/visuals/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(target.density)
+	if((get_turf(target)).density)
 		return
 	if(collection_mode)
 		gather_all(get_turf(target), user)
