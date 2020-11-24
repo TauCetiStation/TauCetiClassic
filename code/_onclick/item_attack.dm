@@ -122,8 +122,9 @@
 		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		var/list/data = user.get_unarmed_attack()
 		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
-		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
-		playsound(M, data["sound"], VOL_EFFECTS_MASTER)
+		if(user.a_intent != INTENT_HELP)
+			M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
+			playsound(M, data["sound"], VOL_EFFECTS_MASTER)
 		return TRUE
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
