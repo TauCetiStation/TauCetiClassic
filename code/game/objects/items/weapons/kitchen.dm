@@ -259,14 +259,14 @@
 	opened = TRUE
 	max_storage_space = 18
 	var/cooldown = 0
-
-/obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
-	toggle_gathering_mode(user)
-	return
-
-/obj/item/weapon/storage/visuals/tray/toggle_gathering_mode(mob/user)
-	collection_mode = !collection_mode
-	to_chat(user, "<span class='notice'>You change gathering mode to [collection_mode?"load":"unload"]</span>")
+	var/static/list/tray_whitelisted_items = typecacheof(list(
+		/obj/item/weapon/reagent_containers/food,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/food,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/weapon/kitchen/rollingpin,
+		/obj/item/weapon/kitchen/utensil/fork,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
 
 /obj/item/weapon/storage/visuals/tray/update_overlays(mob/user)
 	cut_overlays()
@@ -290,23 +290,25 @@
 
 /obj/item/weapon/storage/visuals/tray/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin) && !contents.len && cooldown < world.time - 25 && user.a_intent == INTENT_HARM)
+		dropitems(user = user, target = user, scatter = TRUE)
 		user.visible_message("<span class='warning'>[user] bashes [src] with [I]!</span>")
 		playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 		cooldown = world.time
 	else
 		return ..()
 
-/obj/item/weapon/storage/visuals/tray/afterattack(atom/target, mob/user, proximity, params)
-	if(!target)
-		return
-	if(!proximity)
-		return
-	if(collection_mode)
-		gather_all(get_turf(target), user)
-	else
-		dropitems(user = user, target = target, scatter = FALSE)
-	return
+/obj/item/weapon/storage/visuals/tray/can_be_inserted(obj/item/W, stop_messages = FALSE)
+	if(is_type_in_typecache(W, tray_whitelisted_items))
+		return ..()
 
+/**
+ * Moves items from a turf to a tray
+ *
+ * Arguments:
+ * * user - The mob that drops items
+ * * target - Target turf on which items are gonna be dropped
+ * * scatter - should items be scattered on drop or not
+ */
 /obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
@@ -319,7 +321,6 @@
 /obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
 	dropitems(user = thrower, target = target, scatter = TRUE)
-
 
 ///////////////////NEW//////////////////////
 

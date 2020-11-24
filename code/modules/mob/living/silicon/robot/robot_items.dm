@@ -2,6 +2,25 @@
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
 
+/obj/item/weapon/storage/visuals/tray/robotray/attack_self(mob/user)
+	toggle_gathering_mode(user)
+	return
+
+/obj/item/weapon/storage/visuals/tray/robotray/toggle_gathering_mode(mob/user)
+	collection_mode = !collection_mode
+	to_chat(user, "<span class='notice'>You change gathering mode to [collection_mode?"load":"unload"]</span>")
+
+/obj/item/weapon/storage/visuals/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
+	if(!target)
+		return
+	if(!proximity)
+		return
+	if(collection_mode)
+		gather_all(get_turf(target), user)
+	else
+		dropitems(user = user, target = target, scatter = FALSE)
+	return
+
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.
 
