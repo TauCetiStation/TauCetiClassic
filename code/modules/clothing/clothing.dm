@@ -124,13 +124,12 @@ var/global/list/icon_state_allowed_cache = list()
 			exclusive = TRUE
 
 		if(H.species)
-			switch(exclusive)
-				if(TRUE)
-					if(!(H.species.name in species_restricted))
-						wearable = TRUE
-				if(FALSE)
-					if(H.species.name in species_restricted)
-						wearable = TRUE
+			if(exclusive)
+				if(!(H.species.name in species_restricted))
+					wearable = TRUE
+			else
+				if(H.species.name in species_restricted)
+					wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
