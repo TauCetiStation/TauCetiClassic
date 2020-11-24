@@ -306,18 +306,28 @@
  * * target - Target turf on which items are gonna be dropped
  * * scatter - should items be scattered on drop or not
  */
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
+	set waitfor = 0
 	for(var/obj/item/I in contents)
+		var/will_pass = TRUE
 		var/turf/T = get_turf(target)
-		remove_from_storage(I, new_location = T)
-		if(scatter)
-			T = get_turf(target)
-			T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
-			I.throw_at(T, rand(1, 2), 1, user)
+		if(!throwed && !T.CanPass(I, T)) // check if target turf can be passed by item
+			will_pass = FALSE
+		for(var/obj/obstacle in T)
+			if(!throwed && obstacle.CanPass(I, T)) // check each obj on a turf if item can pass through it
+				will_pass = TRUE
+		if(will_pass || scatter)
+			T = get_turf(src)
+			remove_from_storage(I, new_location = T)
+			if(scatter)
+				T = get_turf(src)
+				sleep(1)
+				T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
+				I.throw_at(T, rand(1, 2), 1, user)
 
 /obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
-	dropitems(user = thrower, target = target, scatter = TRUE)
+	dropitems(user = thrower, target = target, scatter = TRUE, throwed = TRUE)
 
 ///////////////////NEW//////////////////////
 
