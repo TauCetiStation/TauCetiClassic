@@ -294,7 +294,7 @@
 		playsound(user, 'sound/effects/shieldbash.ogg', VOL_EFFECTS_MASTER)
 		cooldown = world.time
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/storage/visuals/tray/afterattack(atom/target, mob/user, proximity, params)
 	if(!target)
