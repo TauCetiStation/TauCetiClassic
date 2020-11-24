@@ -299,7 +299,7 @@
 
 
 /**
- * Moves items from a turf to a tray
+ * Moves items from tray to the turf
  *
  * Arguments:
  * * user - The mob that drops items
