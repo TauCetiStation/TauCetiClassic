@@ -658,6 +658,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		
 		for(var/atom/movable/on_turf in contents)
 			if(!CanPass(contents, src) && !(on_turf.checkpass(PASSTABLE)))
+				return
 		
 		if(user.a_intent == INTENT_HELP)
 			user.SetNextMove(CLICK_CD_MELEE)
