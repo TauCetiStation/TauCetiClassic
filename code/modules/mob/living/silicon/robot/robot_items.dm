@@ -11,9 +11,9 @@
 	to_chat(user, "<span class='notice'>You change gathering mode to [collection_mode?"load":"unload"]</span>")
 
 /obj/item/weapon/storage/visuals/tray/robotray/afterattack(atom/target, mob/user, proximity, params)
-	if(!target)
-		return
 	if(!proximity)
+		return
+	if(target.density)
 		return
 	if(collection_mode)
 		gather_all(get_turf(target), user)
