@@ -1045,7 +1045,7 @@ var/list/cult_runes = list()
 	else if(!target.mind || !target.key)
 		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.</span>")
 		return FALSE
-	else if(brainswapping)
+	else if(brainswapping && !user)
 		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here.</span>")
 		return FALSE
 	else
