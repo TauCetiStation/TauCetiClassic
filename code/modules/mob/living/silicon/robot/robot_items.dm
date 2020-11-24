@@ -19,7 +19,6 @@
 		gather_all(get_turf(target), user)
 	else
 		dropitems(user = user, target = target, scatter = FALSE)
-	return
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.
