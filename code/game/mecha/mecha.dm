@@ -532,6 +532,8 @@
 	go_out()
 	var/turf/T = get_turf(src)
 	if(wreckage)
+		pr_internal_damage.stop()
+		pr_give_air.stop()
 		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
 		WR.reliability = rand(33) + 15
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
@@ -1749,7 +1751,7 @@
 	delay = 15
 
 /datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
-	if(mecha.internal_tank && !mecha.wreckage)
+	if(mecha.internal_tank)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
 
@@ -1779,7 +1781,7 @@
 	return
 
 /datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
-	if(!mecha.hasInternalDamage() || mecha.wreckage)
+	if(!mecha.hasInternalDamage())
 		return stop()
 	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
 		if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
