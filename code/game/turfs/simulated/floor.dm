@@ -657,7 +657,11 @@ var/list/wood_icons = list("wood","wood-broken")
 			return
 		
 		for(var/atom/movable/on_turf in contents)
-			if(!CanPass(contents, src) && !(on_turf.checkpass(PASSTABLE)))
+			if(!on_turf.CanPass(C, src))
+				if(istype(on_turf, /obj/structure/table))
+					continue
+				if(istype(on_turf, /obj/structure/rack))
+					continue
 				return
 		
 		if(user.a_intent == INTENT_HELP)
