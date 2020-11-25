@@ -657,12 +657,14 @@ var/list/wood_icons = list("wood","wood-broken")
 			return
 		
 		for(var/atom/movable/on_turf in contents)
-			if(!on_turf.CanPass(C, src))
-				if(istype(on_turf, /obj/structure/table))
-					continue
-				if(istype(on_turf, /obj/structure/rack))
-					continue
+			var/turf/T = get_turf(on_turf)
+			
+			if(!T.CanPass(C, T))
 				return
+			
+			for(var/obj/obstacle in T)
+				if(!obstacle.CanPass(C, T))
+					return
 		
 		if(user.a_intent == INTENT_HELP)
 			user.SetNextMove(CLICK_CD_MELEE)
