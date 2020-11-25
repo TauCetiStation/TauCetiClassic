@@ -568,16 +568,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	sleep(max(sleeptime, 15))
 	qdel(animation)
 
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
+/*
+	Gets all contents of contents and returns them all in a list.
+*/
+/atom/proc/GetAllContents()
+	var/list/processing_list = list(src)
+	var/list/assembled = list()
 
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list -= A
 
-	return toReturn
+		processing_list |= (A.contents - assembled)
+
+		assembled |= A
+
+	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
