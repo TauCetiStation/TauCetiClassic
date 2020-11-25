@@ -532,6 +532,7 @@ var/list/slot_equipment_priority = list(
 			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
 			return
 		if(!(C.mob_can_equip(H, slot)))
+			to_chat(H, "<span class='warning'>Your species cannot wear [C].</span>")
 			return 0
 
 	if(usr.is_busy())
