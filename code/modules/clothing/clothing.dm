@@ -132,7 +132,6 @@ var/global/list/icon_state_allowed_cache = list()
 					wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
-				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
 				return 0
 
 	return 1
