@@ -306,27 +306,21 @@
  * * target - Target turf on which items are gonna be dropped
  * * scatter - should items be scattered on drop or not
  * * throwed - if tray was thrown
+ * * will_pass - used in robotray for CanPass() checks
  */
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE, var/will_pass = TRUE)
 	for(var/obj/item/I in contents)
-		var/will_pass = TRUE
 		var/turf/T = get_turf(target)
-		if(!T.CanPass(I, T) && !throwed) // check if target turf can be passed by item
-			will_pass = FALSE
-		for(var/obj/obstacle in T)
-			if(!obstacle.CanPass(I, T) && !throwed) // check each obj on a turf if item can pass through it
-				will_pass = FALSE
 		if(throwed)
-			T = get_turf(src)
 			sleep(1)
-		else
-			T = get_turf(target)
-		if(will_pass || scatter)
-			remove_from_storage(I, new_location = T)
-			if(scatter)
-				T = get_turf(src)
-				T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
-				I.throw_at(T, rand(1, 2), 1, user)
+			T = get_turf(src)
+		if(!will_pass)
+			continue
+		remove_from_storage(I, new_location = T)
+		if(scatter)
+			T = get_turf(src)
+			T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
+			I.throw_at(T, rand(1, 2), 1, user)
 
 /obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
