@@ -18,14 +18,14 @@
 	else
 		dropitems(user = user, target = target, scatter = FALSE)
 
-/obj/item/weapon/storage/visuals/tray/robotray/dropitems(user, target, scatter, throwed, will_pass)
+/obj/item/weapon/storage/visuals/tray/robotray/dropitems(user, target, scatter, throwed)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
 		if(!T.CanPass(I, T)) // check if target turf can be passed by item
-			will_pass = FALSE
+			return
 		for(var/obj/obstacle in T)
 			if(!obstacle.CanPass(I, T)) // check each obj on a turf if item can pass through it
-				will_pass = FALSE
+				return
 	return ..()
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode

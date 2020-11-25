@@ -306,16 +306,13 @@
  * * target - Target turf on which items are gonna be dropped
  * * scatter - should items be scattered on drop or not
  * * throwed - if tray was thrown
- * * will_pass - used in robotray for CanPass() checks
  */
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE, var/will_pass = TRUE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
 		if(throwed)
 			sleep(1)
 			T = get_turf(src)
-		if(!will_pass)
-			continue
 		remove_from_storage(I, new_location = T)
 		if(scatter)
 			T = get_turf(src)
