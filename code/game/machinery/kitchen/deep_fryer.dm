@@ -21,7 +21,6 @@
 		/obj/item/weapon/weldingtool,
 		/obj/item/weapon/storage,
 		/obj/item/weapon/holder,
-		/obj/item/weapon/tray,
 		/obj/item/smallDelivery))
 
 
