@@ -67,7 +67,7 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted |= specie
 
 	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 			species_restricted = null
 		return
 
@@ -104,7 +104,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 			global.icon_state_allowed_cache[cache_key] = TRUE
 
-	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 		species_restricted = null
 
 //BS12: Species-restricted clothing check.
