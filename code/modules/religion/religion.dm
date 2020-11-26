@@ -144,6 +144,29 @@
 	else
 		bible_info = new /datum/bible_info/custom(src)
 
+/datum/religion/proc/gen_altar_variants()
+	altar_skins = list()
+	var/matrix/M = matrix()
+	M.Scale(0.7)
+	for(var/info in altar_info_by_name)
+		var/image/I = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = altar_info_by_name[info])
+		I.transform = M
+		altar_skins[info] = I
+
+/datum/religion/proc/gen_pews_variants()
+	pews_skins = list()
+	for(var/info in pews_info_by_name)
+		pews_skins[info] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "[pews_info_by_name[info]]_left")
+
+/datum/religion/proc/gen_carpet_variants()
+	carpet_skins = list()
+	var/matrix/M = matrix()
+	M.Scale(0.7)
+	for(var/info in carpet_dir_by_name)
+		var/image/I = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol", dir = carpet_dir_by_name[info])
+		I.transform = M
+		carpet_skins[info] = I
+
 // This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
 	name = pick(DEFAULT_RELIGION_NAMES)
@@ -158,6 +181,9 @@
 		deity_names = list("Error")
 
 	gen_bible_info()
+	gen_altar_variants()
+	gen_pews_variants()
+	gen_carpet_variants()
 
 	update_structure_info()
 
@@ -360,7 +386,6 @@
 			aspects[aspect.name] = aspect
 
 	update_aspects()
-
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M

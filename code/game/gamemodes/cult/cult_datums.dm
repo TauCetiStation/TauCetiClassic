@@ -2,6 +2,7 @@
 
 var/list/cult_runes = list()
 
+// This is all a rudiment, please delete this file if I forget
 /datum/cult
 	var/obj/holder
 	var/word1
@@ -193,7 +194,7 @@ var/list/cult_runes = list()
 				The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
 
 			var/passed = TRUE
-			if(!is_convertable_to_cult(M.mind))
+			if(!global.cult_religion.mode.is_convertable_to_cult(M.mind))
 				passed = FALSE
 				to_chat(user, "<span class='cult'The mind of [M] Resists!</span>")
 				to_chat(M, "<span class='userdanger'Your Mind Resists!</span>")
