@@ -290,6 +290,8 @@
 			L.afterattack(corpse, user, TRUE)
 			corpse = null
 			qdel(src)
+	else
+		return ..()
 
 /obj/item/asteroid/hivelord_core/Destroy()
 	QDEL_NULL(corpse)
