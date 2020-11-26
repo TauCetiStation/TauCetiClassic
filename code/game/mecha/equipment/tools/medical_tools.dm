@@ -46,8 +46,7 @@
 	if(occupant)
 		occupant_message("The sleeper is already occupied")
 		return
-	var/mob/living/carbon/human/H = target
-	if(istype(target, /mob/living/carbon/xenomorph) || H.species.flags[IS_SYNTHETIC])
+	if(istype(target, /mob/living/carbon/xenomorph))
 		occupant_message("Warning! Unauthorized life form detected!")
 		return
 	for(var/mob/living/carbon/slime/M in range(1,target))
@@ -225,7 +224,8 @@
 		S.occupant_message("[S] deactivated - no power.")
 		return stop()
 	var/mob/living/carbon/M = S.occupant
-	if(!M)
+	var/mob/living/carbon/human/H = S.occupant
+	if(!M || H.species.flags[IS_SYNTHETIC])
 		return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
