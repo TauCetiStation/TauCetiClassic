@@ -56,7 +56,7 @@
 		if(user && user.put_in_active_hand(AM))
 			AM.add_fingerprint(user)
 		else
-			AM.forceMove(src.loc)
+			AM.forceMove(get_turf(src))
 
 /obj/item/smallDelivery/Destroy()
 	dump()

@@ -18,10 +18,7 @@
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/wrench,
 		/obj/item/weapon/wirecutters,
-		/obj/item/weapon/weldingtool,
-		/obj/item/weapon/storage,
-		/obj/item/weapon/holder,
-		/obj/item/smallDelivery))
+		/obj/item/weapon/weldingtool))
 
 
 /obj/machinery/deepfryer/atom_init()
