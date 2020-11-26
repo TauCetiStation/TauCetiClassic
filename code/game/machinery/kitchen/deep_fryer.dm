@@ -12,13 +12,6 @@
 	var/on = FALSE	//Is it deep frying already?
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/fry_time = 0.0
-	var/static/list/deepfry_blacklisted_items = typecacheof(list(
-		/obj/item/device/multitool,
-		/obj/item/weapon/screwdriver,
-		/obj/item/weapon/crowbar,
-		/obj/item/weapon/wrench,
-		/obj/item/weapon/wirecutters,
-		/obj/item/weapon/weldingtool))
 
 
 /obj/machinery/deepfryer/atom_init()
@@ -52,13 +45,14 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	if(default_unfasten_wrench(user, I))
+	if(user.a_intent != INTENT_HELP)
+	else if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //no open maint panel icon, sad.
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //no open maint panel icon, sad.
 		return
-	if(default_deconstruction_crowbar(I))
+	else if(default_deconstruction_crowbar(I))
 		return
-	if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.flags & (NODROP | ABSTRACT | DROPDEL))
+	if(I.flags & (NODROP | ABSTRACT | DROPDEL))
 		return ..()
 	if(ishuman(user))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
