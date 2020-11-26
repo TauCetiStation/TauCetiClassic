@@ -162,7 +162,9 @@
 /mob/living/carbon/xenomorph/humanoid/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+		if(istype(src, /mob/living/carbon/xenomorph/humanoid/queen))
+			overlays_standing[X_FIRE_LAYER].pixel_x = 16
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
 	else

@@ -140,7 +140,7 @@
 /mob/living/carbon/monkey/update_fire()
 	cut_overlay(overlays_standing[M_FIRE_LAYER])
 	if(on_fire)
-		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
 		add_overlay(overlays_standing[M_FIRE_LAYER])
 		return
 	else
