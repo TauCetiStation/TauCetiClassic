@@ -305,16 +305,22 @@
  * * user - The mob that drops items
  * * target - Target turf on which items are gonna be dropped
  * * scatter - should items be scattered on drop or not
- * * throwed - if tray was thrown
  */
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
 		remove_from_storage(I, new_location = T)
 		if(scatter)
 			scatter_item(I, T)
 
-/obj/item/weapon/storage/visuals/tray/proc/scatter_item(obj/item, atom/target, mob/user)
+/**
+ * Scatters items around
+ *
+ * Arguments:
+ * * item - item to scatter
+ * * target - target turf on which we are gonna scatter item
+ */
+/obj/item/weapon/storage/visuals/tray/proc/scatter_item(obj/item, atom/target)
 	var/turf/T = get_turf(target)
 	T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
 	item.throw_at(T, rand(1, 2), 1)
@@ -323,6 +329,11 @@
 	..()
 	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
 
+
+/**
+ * COMSIG_MOVABLE_MOVED randoms if item should be scattered, scatters it
+ *
+ */
 /obj/item/weapon/storage/visuals/tray/proc/on_move()
 	for(var/obj/item/I in contents)
 		if(prob(50))
