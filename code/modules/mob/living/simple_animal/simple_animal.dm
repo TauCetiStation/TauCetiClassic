@@ -245,6 +245,11 @@
 	..()
 	icon_state = icon_living
 
+/mob/living/simple_animal/revive()
+	..()
+	density = initial(density)
+	mouse_opacity = initial(mouse_opacity)
+
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
