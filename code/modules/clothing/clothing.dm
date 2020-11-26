@@ -115,13 +115,9 @@ var/global/list/icon_state_allowed_cache = list()
 		return 0
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
-
-		var/wearable = FALSE
-		var/exclusive = null
+		var/wearable = null
+		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
-
-		if("exclude" in species_restricted)
-			exclusive = TRUE
 
 		if(H.species)
 			if(exclusive)
@@ -132,6 +128,7 @@ var/global/list/icon_state_allowed_cache = list()
 					wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
+				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
 				return 0
 
 	return 1
