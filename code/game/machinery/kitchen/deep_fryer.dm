@@ -46,7 +46,7 @@
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
 	if(user.a_intent != INTENT_HELP)
-	else if(default_unfasten_wrench(user, I) || default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I) || default_deconstruction_crowbar(I))
+	else if(default_unfasten_wrench(user, I) || default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I) || default_deconstruction_crowbar(I))
 	if(I.flags & (NODROP | ABSTRACT | DROPDEL))
 		return ..()
 	if(ishuman(user))
