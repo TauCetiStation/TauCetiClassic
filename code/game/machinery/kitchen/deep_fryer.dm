@@ -57,20 +57,19 @@
 		return
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))
+	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //no open maint panel icon, sad.
 		return
-	else if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(I))
 		return
-	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.flags & (NODROP | ABSTRACT | DROPDEL))
-			return ..()
-		else if (ishuman(user))
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			on = TRUE
-			user.drop_item()
-			frying = I
-			frying.loc = src
-			icon_state = "fryer_on"
+	if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.flags & (NODROP | ABSTRACT | DROPDEL))
+		return ..()
+	if(ishuman(user))
+		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+		on = TRUE
+		user.drop_item()
+		frying = I
+		frying.loc = src
+		icon_state = "fryer_on"
 
 
 /obj/machinery/deepfryer/process()
