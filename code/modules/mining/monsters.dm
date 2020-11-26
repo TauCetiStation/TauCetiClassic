@@ -287,7 +287,7 @@
 				var/obj/item/asteroid/hivelord_core/C = corpse.loc
 				C.corpse = null
 			corpse.forceMove(get_turf(loc))
-			I.afterattack(corpse, user, proximity=TRUE)
+			L.afterattack(corpse, user, TRUE)
 			corpse = null
 			qdel(src)
 
