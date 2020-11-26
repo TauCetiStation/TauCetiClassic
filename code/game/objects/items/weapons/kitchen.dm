@@ -310,18 +310,26 @@
 /obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE, var/throwed = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
-		if(throwed)
-			sleep(1)
-			T = get_turf(src)
 		remove_from_storage(I, new_location = T)
 		if(scatter)
-			T = get_turf(src)
-			T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
-			I.throw_at(T, rand(1, 2), 1, user)
+			scatter_item(I, T)
+
+/obj/item/weapon/storage/visuals/tray/proc/scatter_item(obj/item, atom/target, mob/user)
+	var/turf/T = get_turf(target)
+	T = locate(T.x + rand(-2, 2), T.y + rand(-2, 2), T.z)
+	item.throw_at(T, rand(1, 2), 1)
 
 /obj/item/weapon/storage/visuals/tray/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	..()
-	dropitems(user = thrower, target = target, scatter = TRUE, throwed = TRUE)
+	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+
+/obj/item/weapon/storage/visuals/tray/proc/on_move()
+	for(var/obj/item/I in contents)
+		if(prob(50))
+			continue
+		remove_from_storage(I, get_turf(src))
+		scatter_item(I, src)
+	UnregisterSignal(src, list(COMSIG_MOVABLE_MOVED))
 
 ///////////////////NEW//////////////////////
 
