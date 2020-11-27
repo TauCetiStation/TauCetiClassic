@@ -63,17 +63,14 @@
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
 	if(user == src && zone_sel.selecting == O_MOUTH)
 		if(!CanEat(src, src, I, "eat"))
-			src.visible_message("3")
 			return
 
 		if(isholder(I))
-			src.visible_message("1")
 			for(var/mob/M in I.contents)
 				if(devour(M))
 					return
 
-		if(isgrab(I))
-			src.visible_message("2")
+		else if(isgrab(I))
 			var/obj/item/weapon/grab/G = I
 			var/grabbed = G.affecting
 			if(ismob(grabbed))
@@ -81,28 +78,20 @@
 				if(devour(target))
 					return
 
-		if(devour(I))
+		else if(devour(I))
 			return
 
 	return ..()
 
 /mob/living/carbon/human/proc/can_devour(atom/movable/victim)
 	if(!should_have_organ(O_STOMACH))
-		src.visible_message("11")
 		return FALSE
 
 	var/obj/item/organ/internal/stomach/stomach = organs_by_name[O_STOMACH]
-	if(!stomach || stomach.is_broken())
-		src.visible_message("12")
+	if(!stomach || stomach.is_broken() || stomach.is_full(victim))
 		return FALSE
 
-	var/time = stomach.can_eat_atom(victim)
-	src.visible_message("[time]")
-	if(stomach.is_full(victim))
-		src.visible_message("13")
-		return FALSE
-
-	return time
+	return stomach.can_eat_atom(victim)
 
 /mob/living/carbon/human/proc/devour(atom/movable/victim)
 	var/eat_speed = can_devour(victim)
@@ -128,6 +117,9 @@
 	var/obj/item/organ/internal/stomach/stomach = organs_by_name[O_STOMACH]
 	if(istype(stomach))
 		victim.forceMove(stomach)
+	if(ismob(victim))
+		var/mob/M = victim
+		M.instant_vision_update(1, src)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

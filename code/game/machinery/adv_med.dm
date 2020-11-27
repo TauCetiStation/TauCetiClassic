@@ -301,6 +301,7 @@
 					var/mech = "Native:"
 					var/organ_status = ""
 					var/infection = ""
+					var/content = ""
 					if(IO.robotic == 1)
 						mech = "Assisted:"
 					if(IO.robotic == 2)
@@ -312,6 +313,12 @@
 							organ_status = "Heart Failure:"
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Heart Fibrillation:"
+					if(istype(IO, /obj/item/organ/internal/stomach))
+						var/content_count = 0
+						for(var/A in IO.contents)
+							content_count += 1
+						if(content_count)
+							content = "Unknown [content_count] body present:"
 
 					switch (IO.germ_level)
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
@@ -332,10 +339,10 @@
 					if(!organ_status && !infection)
 						infection = "None:"
 					dat += "<tr>"
-					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status][content]|[mech]</td><td></td>"
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status][content]|[mech]</td><td></td>"
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"

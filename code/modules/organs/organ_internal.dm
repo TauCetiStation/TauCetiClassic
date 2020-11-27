@@ -427,6 +427,8 @@
 	stomach_capacity = owner.species.stomach_capacity
 
 /obj/item/organ/internal/stomach/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
 	QDEL_NULL(reagents)
 	. = ..()
 
@@ -435,15 +437,14 @@
 
 /obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
 	var/total = round(reagents.total_volume / 10)
-	for(var/a in contents + food)
-		if(ismob(a))
-			var/mob/M = a
+	for(var/A in contents + food)
+		if(ismob(A))
+			var/mob/M = A
 			total += M.mob_size
-		else if(isobj(a))
-			var/obj/item/I = a
+		else if(isobj(A))
+			var/obj/item/I = A
 			total += I.get_storage_cost()
-		else
-			continue
+
 		if(total > stomach_capacity)
 			return TRUE
 	return FALSE
@@ -453,41 +454,73 @@
 
 /obj/item/organ/internal/stomach/process()
 	..()
-	owner.visible_message("00")
 	if(!is_broken())
-		owner.visible_message("111")
 		reagents.metabolize(owner)
-		for(var/mob/living/M in contents)
-			if(M.stat == DEAD && !M.nutritional_value)
-				qdel(M)
-				continue
-			var/damage = 3
-			if(M.nutritional_value)
-				damage = 1
-
-			M.adjustBruteLoss(damage)
-			M.adjustFireLoss(damage)
-			M.adjustToxLoss(damage)
-			M.nutritional_value -= max(0, damage * 3)
-			if(M.digestion_product)
-				reagents.add_reagent(M.digestion_product, rand(1,3))
-
-		for(var/obj/item/I in contents)
-			if(I.digest_act(src))
-				reagents.add_reagent("nutrition", 1)
+		for(var/atom/movable/AM in contents)
+			AM.digest_act(src)
 
 	else if(world.time >= next_cramp)
 		next_cramp = world.time + rand(200,800)
 		owner.custom_pain("Your stomach cramps agonizingly!",1)
 
-/obj/item/proc/digest_act(obj/item/organ/internal/stomach/S)
+/obj/item/organ/internal/stomach/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 1
+	var/obj/item/organ/external/BP = parent
+
+	if(BP.is_broken())
+		breakout_time -= 0.25
+
+	if(is_bruised())
+		breakout_time -= 0.25
+	else if(is_broken())
+		breakout_time -= 0.50
+	else if(is_full())
+		breakout_time += 0.50
+
+	user.SetNextMove(100)
+	user.last_special = world.time + 100
+	to_chat(user, "<span class='notice'>You lean on the back of [src] stomach and start pushing himself out. (this will take about [breakout_time] minutes.)</span>")
+	user.visible_message("<span class='warning'>You hear a gurgles from [src]!</span>")
+
+	if(do_after(user,(breakout_time MINUTE), target = src))
+		if(!user || user.incapacitated() || user.loc != src)
+			return
+
+		user.forceMove(get_turf(src.owner))
+		visible_message("<span class='danger'>[user] successfully broke out from [src]!</span>")
+		to_chat(user, "<span class='notice'>You successfully break out from [src]!</span>")
+
+/atom/movable/proc/digest_act(obj/item/organ/internal/stomach/S)
+	return
+
+/mob/living/digest_act(obj/item/organ/internal/stomach/S)
+	if(stat == DEAD && !nutritional_value)
+		for(var/obj/item/I in contents)
+			I.forceMove(src)
+		qdel(src)
+		return
+
+	var/damage = 3
+	if(nutritional_value)
+		damage = 1
+
+	adjustBruteLoss(damage)
+	adjustFireLoss(damage)
+	nutritional_value = max(0, nutritional_value - (damage * 2))
+	if(digestion_product)
+		S.reagents.add_reagent(digestion_product, rand(1,3))
+
+/obj/item/digest_act(obj/item/organ/internal/stomach/S)
 	health -= max(0.1, (1 - S.health / S.maxHealth) * 10)
+	if(prob(10))
+		reagents.add_reagent("nutrition", 1)
+
 	if(S.health <= 0)
+		reagents.add_reagent("nutrition", 1)
 		for(var/obj/item/I in contents)
 			I.forceMove(S)
 		qdel(src)
-		return TRUE
-	return prob(10)
 
 /obj/item/organ/internal/stomach/proc/get_devour_time(atom/movable/food)
 	if(iscarbon(food) || isanimal(food))
@@ -498,6 +531,7 @@
 			return DEVOUR_SLOW
 		else if(owner.species.gluttonous & GLUT_ANYTHING) // Eat anything ever
 			return DEVOUR_FAST
+
 	else if(istype(food, /obj/item) && !istype(food, /obj/item/weapon/holder)) //Don't eat holders. They are special.
 		var/obj/item/I = food
 		var/cost = I.get_storage_cost()
@@ -508,4 +542,5 @@
 				return DEVOUR_SLOW
 			else if(owner.species.gluttonous & GLUT_ITEM_ANYTHING)
 				return DEVOUR_FAST
+
 	return FALSE

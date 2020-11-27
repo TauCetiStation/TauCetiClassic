@@ -10,6 +10,7 @@
 	if(stat != DEAD)
 		handle_actions()
 		add_ingame_age()
+		nutritional_value = min(nutritional_value + 1, maxHealth)
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0

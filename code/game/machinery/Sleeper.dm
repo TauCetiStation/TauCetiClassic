@@ -237,8 +237,13 @@
 
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
-		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in occupant.reagents.reagent_list)
+		var/obj/item/organ/internal/stomach/stomach
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			stomach = H.organs_by_name[O_STOMACH]
+
+		if(occupant.reagents.reagent_list.len || stomach.reagents.reagent_list.len)
+			for(var/datum/reagent/R in occupant.reagents.reagent_list + stomach.reagents.reagent_list)
 				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
 
 	dat += "</div>"
