@@ -1121,64 +1121,27 @@ var/list/airlock_overlays = list()
 	bolt()
 	return
 
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
-		to_chat(user, "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!")
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user)
+	if(!in_range(src, user) || !painter.can_use(user, 5))
 		return
-
-	if(!W.can_use(user))
+	var/current_paintjob = input(user, "Please select a paintjob for this airlock.") as null|anything in sortList(painter.available_paint_jobs)
+	if(!current_paintjob) // if the user clicked cancel on the popup, return
 		return
-
-	var/list/optionlist
-	if(inner_material == "glass")
-		optionlist = list("Public", "Public2", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance")
-	else
-		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
-
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && loc != usr) || !W.use(10))
+	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
+	var/obj/machinery/door/airlock/airlock = airlock_type // we need to create a new instance of the airlock and assembly to read vars from them
+	var/obj/structure/door_assembly/assembly = initial(airlock.assembly_type)
+	if(initial(airlock.glass) && inner_material == null) // prevents painting glass airlocks with a paint job that doesn't have a glass version, such as the freezer
+		to_chat(user, "<span class='warning'>This paint job can only be applied to glass airlocks.</span>")
+		return	
+	if(!initial(assembly.can_insert_glass) && inner_material == "glass") // prevents painting non glass airlocks with a paint job that doesn't have a non glass version
+		to_chat(user, "<span class='warning'>This paint job can only be applied to non-glass airlocks.</span>")
 		return
-	switch(paintjob)
-		if("Public")
-			icon          = 'icons/obj/doors/airlocks/station/public.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Public2")
-			icon          = 'icons/obj/doors/airlocks/station2/glass.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-		if("Engineering")
-			icon          = 'icons/obj/doors/airlocks/station/engineering.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Atmospherics")
-			icon          = 'icons/obj/doors/airlocks/station/atmos.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Security")
-			icon          = 'icons/obj/doors/airlocks/station/security.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Command")
-			icon          = 'icons/obj/doors/airlocks/station/command.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Medical")
-			icon          = 'icons/obj/doors/airlocks/station/medical.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Research")
-			icon          = 'icons/obj/doors/airlocks/station/research.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			heat_proof    = glass
-		if("Mining")
-			icon          = 'icons/obj/doors/airlocks/station/mining.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("Maintenance")
-			icon          = 'icons/obj/doors/airlocks/station/maintenance.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-		if("External")
-			icon          = 'icons/obj/doors/airlocks/external/external.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-		if("High Security")
-			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
+	
+	if(!in_range(src, user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
+		return
+	painter.use(5)
+	icon = initial(airlock.icon)
+	overlays_file = initial(airlock.overlays_file)
 	update_icon()
 
 /obj/structure/door_scrap
