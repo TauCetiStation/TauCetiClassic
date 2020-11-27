@@ -32,6 +32,7 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	var/powerlvl = 0 //Amount of eaten cheese
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -87,6 +88,29 @@
 	timeofdeath = world.time
 	if(client)
 		client.time_died_as_mouse = world.time
+
+/mob/living/simple_animal/mouse/proc/addcheesepoint()
+	powerlvl += 1
+	var/message = "<span class='notice'>You had improved in your cheesefullness.</span>"
+	switch(powerlvl)
+		if(1)
+			message = "<span class='notice'>You now became more adorable!</span>"
+			desc += " It looks adorable!"
+		if(2)
+			message = "<span class='notice'>You evolved into a mouse with a smooth lighing!</span>"
+			set_light(3)
+			desc += " Also it glows in the dark!"
+		if(3)
+			message = "<span class='notice'>You ate so much cheese that humans will understand you more often from now.</span>"
+			speak_chance *= 2
+		if(4)
+			message = "<span class='notice'>You evolved into a space mouse! Survive in a zero kPA but you still have to do something with pressure.</span>"
+			min_oxy = 0
+		if(5)
+			message = "<span class='notice'>You evolved into a mouse with a cheesepowers!</span>"
+			AddSpell(new /obj/effect/proc_holder/spell/targeted/harmless_sparks)
+	maxHealth += 3
+	to_chat(src, message)
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
