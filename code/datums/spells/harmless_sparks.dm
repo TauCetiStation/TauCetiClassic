@@ -10,3 +10,4 @@
 /obj/effect/proc_holder/spell/targeted/harmless_sparks/choose_targets(mob/user = usr)
 	new /obj/effect/effect/sparks(get_turf(usr))
 	perform()
+	
