@@ -186,7 +186,6 @@ var/list/cult_datums = list()
 				<b>Увидеть невидимое: </b>See Hell Join<br>
 				<b>Конструкт: </b>Technology Blood Travel<br>
 				<b>Смена тел: </b>Travel Blood Other<br>
-				<b>Призыв камня душ: </b><br>
 				</p>
 				<h2>Описание рун</h2>
 				<h3>Телепортировать себя</h3>
