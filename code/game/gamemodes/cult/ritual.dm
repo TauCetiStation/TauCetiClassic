@@ -178,7 +178,7 @@ var/list/cult_datums = list()
 				<b>Призвать культиста: </b>Join Other Self<br>
 				<b>Освободить культиста: </b>Travel technology other<br>
 				<b>Оглушить: </b>Hide Other See<br>
-				<b>Blind: </b>Destroy See Other<br>
+				<b>Ослепить: </b>Destroy See Other<br>
 				<b>Кипящая кровь: </b>Destroy See Blood<br>
 				<b>Общение: </b>Self Other Technology<br>
 				<b>Ошеломление: </b>Join Hide Technology<br>
