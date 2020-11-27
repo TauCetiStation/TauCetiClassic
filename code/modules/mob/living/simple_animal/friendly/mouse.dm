@@ -104,7 +104,7 @@
 			message = "<span class='notice'>You ate so much cheese that humans will understand you more often from now.</span>"
 			speak_chance *= 2
 		if(4)
-			message = "<span class='notice'>You evolved into a space mouse! Survive in a zero kPA but you still have to do something with pressure.</span>"
+			message = "<span class='notice'>You evolved into a space mouse! Survive in almost zero kPA but you still have to do something when it reaches zero.</span>"
 			min_oxy = 0
 		if(5)
 			message = "<span class='notice'>You evolved into a mouse with a cheesepowers!</span>"
