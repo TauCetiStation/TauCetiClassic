@@ -45,9 +45,11 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	if(user.a_intent == INTENT_HELP)
-	    if(default_unfasten_wrench(user, I) || default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I) || default_deconstruction_crowbar(I))
-		return
+	if(user.a_intent != INTENT_HELP)	
+		if(default_unfasten_wrench(user, I) || \
+		default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I) || \
+		default_deconstruction_crowbar(I))
+			return
 	if(I.flags & (NODROP | ABSTRACT | DROPDEL))
 		return ..()
 	if(ishuman(user))
