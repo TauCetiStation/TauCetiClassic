@@ -123,7 +123,7 @@ obj/item/clothing/head/cakehat/get_current_temperature()
 /*
  * Pumpkin head
  */
-/obj/item/clothing/head/pumpkinhead
+/obj/item/clothing/head/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
@@ -132,20 +132,8 @@ obj/item/clothing/head/cakehat/get_current_temperature()
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|EYES
-	var/brightness_on = 2 //luminosity when on
-	var/on = 0
+	brightness_on = 2 //luminosity when on
 	w_class = ITEM_SIZE_NORMAL
-
-/obj/item/clothing/head/pumpkinhead/attack_self(mob/user)
-	if(!isturf(user.loc))
-		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "hardhat[on]_[item_color]"
-	item_state = "hardhat[on]_[item_color]"
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
 
 /*
  * Kitty ears
