@@ -21,8 +21,8 @@
 	. = ..()
 	closet_list += src
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		for(var/obj/I in src.loc)
-			if(I.density || I.anchored || I == src)
+		for(var/obj/O in src.loc)
+			if(O.density || O.anchored || O == src)
 				continue
 			I.forceMove(src)
 	PopulateContents()
