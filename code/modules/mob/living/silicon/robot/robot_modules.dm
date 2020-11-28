@@ -277,7 +277,7 @@
 	L.item_state = L.icon_on
 	modules += L
 
-	modules += new /obj/item/weapon/tray/robotray(src)
+	modules += new /obj/item/weapon/storage/visuals/tray/robotray(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)
