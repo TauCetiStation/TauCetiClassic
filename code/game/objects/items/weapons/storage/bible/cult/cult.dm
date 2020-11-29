@@ -70,7 +70,7 @@
 		return
 
 	for(var/datum/building_agent/B in build_choices_image)
-		B.name = "[initial(B.name)] [B.favor_cost > 0 ? "[B.favor_cost] favors" : ""] [B.piety_cost > 0 ? "[B.piety_cost] piety" : ""]"
+		B.name = "[initial(B.name)] ([B.favor_cost > 0 ? "[B.favor_cost] favors" : ""] [B.piety_cost > 0 ? "[B.piety_cost] piety" : ""])"
 
 	var/datum/building_agent/choice = show_radial_menu(user, src, build_choices_image, tooltips = TRUE, require_near = TRUE)
 	if(!choice)
