@@ -7,12 +7,19 @@
 	origin_tech = "syndicate=3"
 	var/list/headset_choices = list()
 
+/obj/item/device/radio/headset/radio_dummy
+	icon = 'icons/obj/radio.dmi'
+	name = "station bounced radio"
+	suffix = "\[3\]"
+	icon_state = "walkietalkie"
+	item_state = "walkietalkie"
+
 /obj/item/device/radio/headset/chameleon/atom_init()
 	. = ..()
-	var/blocked = list(/obj/item/device/radio/headset/chameleon)//Prevent infinite loops and bad headsets.
-	for(var/U in typesof(/obj/item/device/radio/headset, /obj/item/device/radio/intercom, /obj/item/device/radio)-blocked)
-		var/obj/item/device/radio/headset/V = new U
-		headset_choices[V.name] = U
+	var/blocked = list(/obj/item/device/radio/headset/chameleon)	//Prevent infinite loops and bad headsets.
+	for(var/U in typesof(/obj/item/device/radio/headset, /obj/item/device/radio/intercom,)-blocked)
+		var/obj/item/device/radio/headset/V = U
+		headset_choices[initial(V.name)] = U
 
 /obj/item/device/radio/headset/chameleon/emp_act(severity) 
 	if(!grid)
@@ -51,4 +58,3 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	update_inv_mob()
