@@ -1127,7 +1127,7 @@ var/list/airlock_overlays = list()
  * Arguments:
  * * painter - expected airlock_painter to change paintjob
  * * user - who changes paintjob
- * * newdoor - new painjob
+ * * newdoor - new paintjob
  */
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/obj/machinery/door/airlock/newdoor)
 	if(!painter.can_use(user, 5))
