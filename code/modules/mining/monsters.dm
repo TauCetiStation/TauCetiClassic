@@ -264,10 +264,10 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = 1
-	..(gibbed)
+	..()
 	var/obj/item/asteroid/hivelord_core/core = new /obj/item/asteroid/hivelord_core(loc)
 	core.corpse = src
-	forceMove(core)  //put dead hivelord in droped core
+	loc = core  //put dead hivelord in droped core
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord core"
@@ -286,8 +286,8 @@
 				corpse.death()
 				var/obj/item/asteroid/hivelord_core/C = corpse.loc
 				C.corpse = null
-			corpse.forceMove(get_turf(loc))
-			L.afterattack(corpse, user, TRUE)
+			corpse.loc = get_turf(loc)
+			L.revive(corpse, user)
 			corpse = null
 			qdel(src)
 	else
