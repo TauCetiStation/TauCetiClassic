@@ -84,6 +84,11 @@
 	// The whole composition of beings in religion
 	var/list/members = list()
 
+	// All constructions that religion can build
+	var/list/datum/building_agent/available_buildings = list()
+	// Type of initial construction agent for which available_buildings will be generated
+	var/agent_type
+
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
 	// A list of possible faith reactions.
@@ -185,6 +190,8 @@
 	gen_pews_variants()
 	gen_carpet_variants()
 
+	gen_building_list()
+
 	update_structure_info()
 
 // Update all info regarding structure based on current religion info.
@@ -229,8 +236,8 @@
 			G.update_icon()
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location)
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(location)
+/datum/religion/proc/spawn_bible(atom/location, bible_type = /obj/item/weapon/storage/bible)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
 	B.deity_name = pick(deity_names)
 	B.god_lore = lore
@@ -414,6 +421,9 @@
 	M.mind.my_religion = null
 	M.mind.holy_role = initial(M.mind.holy_role)
 	return TRUE
+
+/datum/religion/proc/gen_building_list()
+	init_subtypes(agent_type, available_buildings)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)

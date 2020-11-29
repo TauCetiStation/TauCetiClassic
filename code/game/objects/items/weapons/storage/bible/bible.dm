@@ -12,6 +12,7 @@
 
 	var/datum/religion/religion
 	var/religify_next = list()
+	var/religify_cd = 3 MINUTE
 
 	var/list/rad_choices
 
@@ -79,17 +80,17 @@
 	return ..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && (user.mind.holy_role))
-		if(religify_next[user.ckey] > world.time)
-			to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
-			return
-		else if(user.mind.my_religion)
-			change_chapel_looks(user)
-			return
+	if(user.mind && user.mind.holy_role && user.mind.my_religion)
+		change_chapel_looks(user)
+		return
 
 	return ..()
 
 /obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
+	if(religify_next[user.ckey] > world.time)
+		to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+		return
+
 	var/done = FALSE
 	var/changes = FALSE
 	var/list/choices = list("Altar", "Pews", "Mat symbol")
@@ -139,13 +140,5 @@
 				choices -= "Mat symbol"
 
 	if(changes)
-		religify_next[user.ckey] = world.time + 3 MINUTE
+		religify_next[user.ckey] = world.time + religify_cd
 		R.religify()
-
-/obj/item/weapon/storage/tome
-	name = "book"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL

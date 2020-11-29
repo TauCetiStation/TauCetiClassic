@@ -127,7 +127,7 @@
 /*        CULT      */
 /********************/
 /datum/religion_sect/preset/cult/blood
-	name = "The cult of blood"
+	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
