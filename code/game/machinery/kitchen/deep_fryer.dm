@@ -55,7 +55,6 @@
 			return ..()
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
-		user.drop_item() 
 		frying = I
 		frying.loc = src
 		icon_state = "fryer_on"
