@@ -104,24 +104,26 @@
 		return
 	switch(state)
 		if("Airlocks")
-			doors = list()
-			for(var/airlock in available_paint_jobs)
-				var/obj/machinery/door/airlock/A = new airlock
-				var/image/img = image(icon = initial(A.icon), icon_state = initial(A.icon_state))
-				img.add_overlay(image(icon_state = "fill_closed"))
-				doors[A] = img
+			if(!doors)
+				doors = list()
+				for(var/airlock in available_paint_jobs)
+					var/obj/machinery/door/airlock/A = new airlock
+					var/image/img = image(icon = initial(A.icon), icon_state = initial(A.icon_state))
+					img.add_overlay(image(icon_state = "fill_closed"))
+					doors[A] = img
 			state = show_radial_menu(user, src, doors, radius = 50, require_near = TRUE, tooltips = TRUE)
 			if(state)
 				current_door_type = state
 			if(!state)
 				return
 		if("Pipes")
-			pipes = list()
-			for(var/C in pipe_colors)
-				var/obj/item/pipe/P = new
-				var/image/img = image(icon = P.icon, icon_state = P.icon_state)
-				img.color = pipe_colors[C]
-				pipes[C] = img
+			if(!pipes)
+				pipes = list()
+				for(var/C in pipe_colors)
+					var/obj/item/pipe/P = new
+					var/image/img = image(icon = P.icon, icon_state = P.icon_state)
+					img.color = pipe_colors[C]
+					pipes[C] = img
 			state =	show_radial_menu(user, src, pipes, radius = 50,  require_near = TRUE, tooltips = TRUE)
 			if(state)
 				current_pipe_color = state
