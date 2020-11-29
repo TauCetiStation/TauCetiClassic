@@ -20,19 +20,19 @@
 	var/static/list/doors /// list of doors used in show_radial_menu
 	var/static/list/pipes /// list of pipes used in show_radial_menu
 	var/available_paint_jobs = list(
-	/obj/machinery/door/airlock/neutral,
-	/obj/machinery/door/airlock/glass,
-	/obj/machinery/door/airlock/engineering,
-	/obj/machinery/door/airlock/atmos,
-	/obj/machinery/door/airlock/security,
-	/obj/machinery/door/airlock/command,
-	/obj/machinery/door/airlock/medical,
-	/obj/machinery/door/airlock/research,
-	/obj/machinery/door/airlock/science,
-	/obj/machinery/door/airlock/mining,
-	/obj/machinery/door/airlock/maintenance,
-	/obj/machinery/door/airlock/external,
-	/obj/machinery/door/airlock/highsecurity)
+		/obj/machinery/door/airlock/neutral,
+		/obj/machinery/door/airlock/glass,
+		/obj/machinery/door/airlock/engineering,
+		/obj/machinery/door/airlock/atmos,
+		/obj/machinery/door/airlock/security,
+		/obj/machinery/door/airlock/command,
+		/obj/machinery/door/airlock/medical,
+		/obj/machinery/door/airlock/research,
+		/obj/machinery/door/airlock/science,
+		/obj/machinery/door/airlock/mining,
+		/obj/machinery/door/airlock/maintenance,
+		/obj/machinery/door/airlock/external,
+		/obj/machinery/door/airlock/highsecurity)
 
 /obj/item/weapon/airlock_painter/atom_init()
 	. = ..()
@@ -76,19 +76,29 @@
 		ink = I
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(ink)
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-		ink.loc = user.loc
-		user.put_in_hands(ink)
-		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
-		return
 	return ..()
+
+/**
+ * Removes toner from painter
+ *
+ * Arguments:
+ * * user - who removes it
+ */
+/obj/item/weapon/airlock_painter/proc/remove_toner(mob/user)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+	ink.loc = user.loc
+	user.put_in_hands(ink)
+	to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
+	ink = null
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	var/list/choices = list(
 		"Airlocks" = image(icon ='icons/obj/doors/airlocks/external/external.dmi', icon_state = "closed"),
 		"Pipes" = image(icon ='icons/obj/atmospherics/mainspipe.dmi', icon_state = "intact"),
 		"Windows" = image(icon ='icons/obj/window.dmi', icon_state = "rwindow0"))
+	if(ink)
+		var/image/img = image(icon = 'icons/obj/device.dmi', icon_state = "tonercartridge")
+		choices += list("Remove toner" = img)
 	var/state = show_radial_menu(user, src, choices, radius = 30, require_near = TRUE, tooltips = TRUE)
 	if(!state)
 		return
@@ -117,6 +127,9 @@
 				current_pipe_color = state
 			if(!state)
 				return
+		if("Remove toner")
+			remove_toner(user)
+			return
 		if("Windows")
 			current_window_color = input(user, "Please select a color for your window.") as color|null
 			return
