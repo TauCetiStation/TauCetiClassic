@@ -564,7 +564,7 @@
  * Arguments:
  * * painter - expected airlock_painter to change paintjob
  * * user - who changes paintjob
- * * new_color - new painjob
+ * * new_color - new paintjob
  */
 /obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/new_color)
 	if(!painter.can_use(user, 1))

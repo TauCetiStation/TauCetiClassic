@@ -45,7 +45,7 @@
 	return TRUE
 
 /**
- * Subtracts used ink value from our ink
+ * Checks for the toner inside, checks if toner have enough ink for the use
  *
  * Arguments:
  * * user - who are we gonna show failed can_use calls

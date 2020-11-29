@@ -80,7 +80,7 @@
  * Arguments:
  * * painter - expected airlock_painter to change paintjob
  * * user - who changes paintjob
- * * window_color - new painjob
+ * * window_color - new paintjob
  */
 /obj/machinery/door/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/window_color)
 	if(!painter.can_use(user, 1))
