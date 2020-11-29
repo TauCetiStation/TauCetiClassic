@@ -1845,7 +1845,7 @@
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religious_alchemy.dm"
 #include "code\modules\religion\altar_types\altar_of_gods.dm"
-#include "code\modules\religion\altar_types\cult\altar_cult.dm"
+#include "code\modules\religion\altar_types\cult\altar_of_gods.dm"
 #include "code\modules\religion\religion_types\chaplain.dm"
 #include "code\modules\religion\religion_types\cult.dm"
 #include "code\modules\religion\rites\consent.dm"
