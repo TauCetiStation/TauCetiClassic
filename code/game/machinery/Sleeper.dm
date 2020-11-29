@@ -15,7 +15,7 @@
 	desc = "Used for the rapid introduction of chemicals from the internal storage."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
-	density = 0
+	density = 1
 	anchored = 1
 	state_open = 1
 	light_color = "#7bf9ff"
