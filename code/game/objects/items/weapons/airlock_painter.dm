@@ -65,7 +65,7 @@
 	if(!ink)
 		to_chat(user, "<span class='notice'>It doesn't have a toner cardridge installed.</span>")
 		return
-	to_chat(user, "<span class='notice'>Ink level is at [ink.charges/ink.max_charges*100] percent.</span>")
+	to_chat(user, "<span class='notice'>Ink level is at [ink.charges / ink.max_charges * 100] percent.</span>")
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/device/toner))
