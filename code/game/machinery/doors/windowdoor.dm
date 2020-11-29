@@ -74,18 +74,19 @@
 		visible_message("[src] shatters!")
 	qdel(src)
 
-// gets called when a player uses an airlock painter on this windowdoor
-/obj/machinery/door/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user)
-	if(!in_range(src, user) || !painter.can_use(user, 1)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
+/**
+ * Change current paintjob
+ *
+ * Arguments:
+ * * painter - expected airlock_painter to change paintjob
+ * * user - who changes paintjob
+ * * window_color - new painjob
+ */
+/obj/machinery/door/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/window_color)
+	if(!painter.can_use(user, 1))
 		return
-	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
-	var/current_paintjob = input(user, "Please select a color for this window.") as color|null
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
-		return
-	if(!in_range(src, user))
-		return
+	color = window_color
 	painter.use(1)
-	color = current_paintjob
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
@@ -246,9 +247,7 @@
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating == 1)
 		return
-
 	if(istype(I, /obj/item/weapon/airlock_painter))
-		change_paintjob(I, user)
 		return
 
 	if( istype(I,/obj/item/weapon/changeling_hammer))

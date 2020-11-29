@@ -1010,7 +1010,7 @@ var/list/airlock_overlays = list()
 					spawn(0)	close(1)
 
 	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
-		change_paintjob(C, user)
+		return
 	else
 		return ..()
 
@@ -1121,23 +1121,24 @@ var/list/airlock_overlays = list()
 	bolt()
 	return
 
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user)
-	if(!in_range(src, user) || !painter.can_use(user, 5))
+/**
+ * Change current paintjob
+ *
+ * Arguments:
+ * * painter - expected airlock_painter to change paintjob
+ * * user - who changes paintjob
+ * * newdoor - new painjob
+ */
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/obj/machinery/door/airlock/newdoor)
+	if(!painter.can_use(user, 5))
 		return
-	var/current_paintjob = input(user, "Please select a paintjob for this airlock.") as null|anything in sortList(painter.available_paint_jobs)
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
-		return
-	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
-	var/obj/machinery/door/airlock/airlock = airlock_type // we need to create a new instance of the airlock and assembly to read vars from them
+	var/obj/machinery/door/airlock/airlock = newdoor // we need to create a new instance of the airlock and assembly to read vars from them
 	var/obj/structure/door_assembly/assembly = initial(airlock.assembly_type)
-	if(initial(airlock.glass) && inner_material == null) // prevents painting glass airlocks with a paint job that doesn't have a glass version, such as the freezer
+	if(initial(airlock.glass) && isnull(inner_material)) // prevents painting glass airlocks with a paint job that doesn't have a glass version, such as the freezer
 		to_chat(user, "<span class='warning'>This paint job can only be applied to glass airlocks.</span>")
-		return	
-	if(!initial(assembly.can_insert_glass) && inner_material == "glass") // prevents painting non glass airlocks with a paint job that doesn't have a non glass version
-		to_chat(user, "<span class='warning'>This paint job can only be applied to non-glass airlocks.</span>")
 		return
-	
-	if(!in_range(src, user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
+	if(!initial(assembly.can_insert_glass) && !isnull(inner_material)) // prevents painting non glass airlocks with a paint job that doesn't have a non glass version
+		to_chat(user, "<span class='warning'>This paint job can only be applied to non-glass airlocks.</span>")
 		return
 	painter.use(5)
 	icon = initial(airlock.icon)

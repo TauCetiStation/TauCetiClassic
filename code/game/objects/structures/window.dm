@@ -219,7 +219,7 @@
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
-		change_paintjob(W, user)
+		return
 
 	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
@@ -296,18 +296,6 @@
 
 /obj/structure/window/proc/fastened_change()
 	return
-
-//painter
-/obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user)
-	if(!in_range(src, user) || !painter.can_use(user, 1)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
-		return
-	var/current_paintjob = input(user, "Please select a color for this window.") as color|null
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
-		return
-	if(!in_range(src, user))
-		return
-	painter.use(1)
-	color = current_paintjob
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
@@ -569,3 +557,17 @@
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
 	return ..()
+
+/**
+ * Change current paintjob
+ *
+ * Arguments:
+ * * painter - expected airlock_painter to change paintjob
+ * * user - who changes paintjob
+ * * new_color - new painjob
+ */
+/obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/new_color)
+	if(!painter.can_use(user, 1))
+		return
+	color = new_color
+	painter.use(1)

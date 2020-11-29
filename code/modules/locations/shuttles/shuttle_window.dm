@@ -7,7 +7,6 @@
 	if(!istype(W)) return//I really wish I did not need this
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
-		change_paintjob(W, user)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)

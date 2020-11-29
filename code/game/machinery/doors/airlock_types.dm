@@ -3,32 +3,37 @@
 */
 
 /obj/machinery/door/airlock/command
+	name = "command airlock"
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_com
 
 /obj/machinery/door/airlock/security
+	name = "security airlock"
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_sec
 
 /obj/machinery/door/airlock/engineering
+	name = "engineering airlock"
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_eng
 
 /obj/machinery/door/airlock/medical
+	name = "medical airlock"
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_med
 
 /obj/machinery/door/airlock/virology
+	name = "virology airlock"
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_viro
 
 /obj/machinery/door/airlock/maintenance
-	name = "maintenance access"
+	name = "maintenance airlock"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_mai
@@ -52,16 +57,19 @@
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 
 /obj/machinery/door/airlock/research
+	name = "research airlock"
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_research
 
 /obj/machinery/door/airlock/science
+	name = "science airlock"
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_science
 
 /obj/machinery/door/airlock/neutral
+	name = "neutral airlock"
 	icon = 'icons/obj/doors/airlocks/station/neutral.dmi'
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
@@ -362,13 +370,6 @@
 	glass         = TRUE
 
 	assembly_type = /obj/structure/door_assembly/multi_tile
-
-/obj/machinery/door/airlock/multi_tile/attackby(C, mob/user)
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		to_chat(user, "<span class='red'>This airlock cannot be painted.</span>")
-	else
-		return ..()
-
 
 /*******************
 * Mutitile2 airlocks

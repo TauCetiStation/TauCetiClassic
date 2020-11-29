@@ -97,6 +97,20 @@
 		return null
 */
 
+/**
+ * Change current paintjob
+ *
+ * Arguments:
+ * * painter - expected airlock_painter to change paintjob
+ * * user - who changes paintjob
+ * * p_color - new painjob
+ */
+/obj/machinery/atmospherics/pipe/proc/change_paintjob(obj/item/weapon/airlock_painter/painter, mob/user, var/p_color)
+	if(!painter.can_use(user, 0.5))
+		return
+	change_color(pipe_colors[p_color])
+	painter.use(0.5)
+
 /obj/machinery/atmospherics/pipe/color_cache_name(obj/machinery/atmospherics/node)
 	if(istype(src, /obj/machinery/atmospherics/components/unary/tank))
 		return ..()
