@@ -53,7 +53,7 @@
  */
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user, cost = 10)
 	if(!ink)
-		to_chat(user, "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>")
+		to_chat(user, "<span class='notice'>There is no toner cardridge installed in \the [name]!</span>")
 		return FALSE
 	if(ink.charges < cost)
 		to_chat(user, "<span class='notice'>Not enough ink!</span>")
