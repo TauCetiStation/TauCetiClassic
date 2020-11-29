@@ -50,12 +50,12 @@
 		default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I) || \
 		default_deconstruction_crowbar(I))
 			return
-	if(I.flags & (NODROP | ABSTRACT | DROPDEL))
-		return ..()
 	if(ishuman(user))
+		if(!user.drop_item() || I.flags & (ABSTRACT | DROPDEL))
+			return ..()
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
-		user.drop_item()
+		user.drop_item() 
 		frying = I
 		frying.loc = src
 		icon_state = "fryer_on"
