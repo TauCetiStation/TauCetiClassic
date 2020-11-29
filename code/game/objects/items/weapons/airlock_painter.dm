@@ -65,7 +65,7 @@
 	if(!ink)
 		to_chat(user, "<span class='notice'>It doesn't have a toner cardridge installed.</span>")
 		return
-	to_chat(user, "<span class='notice'>Ink level is at [ink.charges / ink.max_charges * 100] percent.</span>")
+	to_chat(user, "<span class='notice'>Ink level is at [round(ink.charges / ink.max_charges * 100)] percent.</span>")
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/device/toner))
@@ -79,7 +79,7 @@
 	return ..()
 
 /**
- * Removes toner from painter
+ * Removes toner from the painter
  *
  * Arguments:
  * * user - who removes it
@@ -124,7 +124,7 @@
 					var/image/img = image(icon = P.icon, icon_state = P.icon_state)
 					img.color = pipe_colors[C]
 					pipes[C] = img
-			state =	show_radial_menu(user, src, pipes, radius = 50,  require_near = TRUE, tooltips = TRUE)
+			state =	show_radial_menu(user, src, pipes, radius = 50, require_near = TRUE, tooltips = TRUE)
 			if(state)
 				current_pipe_color = state
 			if(!state)
