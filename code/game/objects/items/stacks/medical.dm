@@ -34,8 +34,11 @@
 		"<span class='notice'>You begin applying \the [src] on [to_self ? "yourself" : L].</span>")
 
 /obj/item/stack/medical/proc/can_heal(mob/living/L, mob/user)
-	if(!istype(L) || (istype(L, /mob/living/simple_animal) && L.stat == DEAD))
+	if(!istype(L) || 
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
+		return FALSE
+	if((istype(L, /mob/living/simple_animal) && L.stat == DEAD)))
+		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L], because it's DEAD.</span>")
 		return FALSE
 	if(user.is_busy())
 		return FALSE
