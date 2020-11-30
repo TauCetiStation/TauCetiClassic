@@ -44,7 +44,7 @@ var/global/blobwincount = 500
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
-		infected_crew += blob
+		infected_crew |= blob
 		blob.special_role = "Blob"
 		log_game("[key_name(blob)] has been selected as a Blob")
 		antag_candidates -= blob
@@ -94,7 +94,7 @@ var/global/blobwincount = 500
 			if(core.overmind && core.overmind.mind)
 				core.overmind.mind.name = blob.name
 				infected_crew -= blob
-				infected_crew += core.overmind.mind
+				infected_crew |= core.overmind.mind
 
 
 /datum/game_mode/blob/post_setup()
