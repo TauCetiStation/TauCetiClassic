@@ -655,17 +655,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Обработчик Сетевой Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
+		src.channel_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Обработчик Сетевой Безопасности", input_default(msg)), extra = FALSE)
+		src.msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", input_default(msg)), extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
 		if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 			src.screen = 16
 		else
-			var/choice = alert("Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Обработчик Сетевой Безопасности","Подтвердить","Отменить")
+			var/choice = alert("Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Сетевой Обработчик Безопасности","Подтвердить","Отменить")
 			if(choice == "Подтвердить")
 				if(input_param == 1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
@@ -694,7 +694,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(news_network.wanted_issue.is_admin_message)
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
-		var/choice = alert("Подтвердите удаление розыска.","Обработчик Сетевой Безопасности","Подтвердить","Отменить")
+		var/choice = alert("Подтвердите удаление розыска.","Сетевой Обработчик Безопасности","Подтвердить","Отменить")
 		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
