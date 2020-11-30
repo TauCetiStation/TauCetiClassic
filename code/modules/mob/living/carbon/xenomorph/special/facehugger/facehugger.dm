@@ -11,12 +11,11 @@
 	layer = ABOVE_WINDOW_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
-	throw_range = 1
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 	var/sterile = 0
 	var/strength = 5
-	var/current_hugger
+	var/current_hugger	//container for playable facehugger
 	var/mob/living/carbon/target = null
 	var/chase_time = 0
 
@@ -39,7 +38,7 @@
 	return ismob(mover) || (stat == DEAD)
 
 /obj/item/clothing/mask/facehugger/process()
-	if(stat)
+	if(stat) //if UNCONSCIOUS or DEAD
 		return
 	if(isturf(loc))
 		if(!target)
@@ -48,7 +47,7 @@
 				V.target = C
 				if(V.check())
 					qdel(V)
-					if(CanHug(C, 0))
+					if(CanHug(C, FALSE))
 						chase_time = 28
 						target = C
 						chase()
@@ -163,6 +162,17 @@
 	..()
 	Attach(C)
 
+/obj/item/clothing/mask/facehugger/dropped()
+	..()
+//If the facehugger was removed from the face and the player controls the facehugger
+	if(current_hugger)
+		var/atom/movable/mob_container = current_hugger
+		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
+		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+		FH.reset_view()
+		qdel(FH.get_active_hand())	//delete a grab
+		qdel(src)
+
 /obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
 	..()
 	return HasProximity(AM)
@@ -199,6 +209,8 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
+	if(!istype(C, /mob/living/carbon)) //without this check, we will get a rantime because in C there will be a turf when throwing a facehugger
+		return FALSE
 	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE
 	if(check)
@@ -287,7 +299,6 @@
 
 	if(!sterile)
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>")
-		target.unEquip(src)
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
@@ -297,7 +308,9 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
+			qdel(current_hugger)
 			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()
 
