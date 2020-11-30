@@ -23,7 +23,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living/carbon))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
-		affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
+		if(affected_mob.mind)
+			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
 	else
 		qdel(src)
 
@@ -31,7 +32,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		if(affected_mob.mind)
+			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
 		affected_mob.med_hud_set_status()
 	affected_mob = null
 	baby = null
@@ -63,7 +65,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		if(affected_mob.mind)
+			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
 		affected_mob.med_hud_set_status()
 		affected_mob = null
 		return FALSE
@@ -81,7 +84,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(stage_counter > 60)
 			stage++
 			stage_counter = 0
-			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
+			if(affected_mob.mind)
+				affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
 	stage_counter++
 
 	switch(stage)
@@ -123,7 +127,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(controlled_by_ai)
 		if(!affected_mob)
 			return
-
+		STOP_PROCESSING(SSobj, src)
 		// To stop clientless larva, we will check that our host has a client
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
@@ -133,7 +137,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		var/client/larva_candidate
 		if(candidates.len)
 			var/mob/candidate = pick(candidates)
-			larva_candidate = candidate.client
+			larva_candidate = candidate.key
 		else if(affected_mob.client)
 			if((ROLE_ALIEN in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, ROLE_ALIEN))
 				larva_candidate = affected_mob.key
@@ -141,6 +145,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(!larva_candidate)
 			stage = 4 // mission failed we'll get em next time
 			stage_counter = 0
+			START_PROCESSING(SSobj, src)
 			return
 
 		affected_mob.death()
@@ -158,10 +163,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
-		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	else
 		if(baby)
+			STOP_PROCESSING(SSobj, src)
 			var/atom/movable/mob_container
 			mob_container = baby
 			mob_container.forceMove(affected_mob)
@@ -171,5 +176,4 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			baby.put_in_active_hand(G)
 			G.last_bite = world.time - 20
 			G.synch()
-			STOP_PROCESSING(SSobj, src)
 			qdel(src)
