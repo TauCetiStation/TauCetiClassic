@@ -221,6 +221,11 @@
 
 #define PLASMAGUN_OVERCHARGE 30100
 
+//gold slime core spawning
+#define NO_SPAWN 0
+#define HOSTILE_SPAWN 1
+#define FRIENDLY_SPAWN 2
+
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists

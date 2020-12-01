@@ -184,6 +184,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/viscerator/death()
 	..()

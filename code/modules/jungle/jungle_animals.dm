@@ -122,6 +122,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 25
 	health = 25
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	harm_intent_damage = 2
 	melee_damage = 7

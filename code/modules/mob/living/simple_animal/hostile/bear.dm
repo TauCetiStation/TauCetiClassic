@@ -21,6 +21,7 @@
 	maxHealth = 60
 	health = 60
 	melee_damage = 25
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	//Space bears aren't affected by atmos.
 	min_oxy = 0
@@ -49,6 +50,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "pokes"
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. =..()

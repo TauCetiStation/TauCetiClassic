@@ -20,6 +20,7 @@
 	melee_damage = 10
 	attacktext = "attack"
 	attack_sound = list('sound/weapons/bite.ogg')
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	min_oxy = 0
 	max_oxy = 0

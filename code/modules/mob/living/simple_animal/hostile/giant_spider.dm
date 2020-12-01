@@ -37,6 +37,7 @@
 	speed = 3
 	environment_smash = 1
 	weather_immunities = list("ash", "acid")
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -55,6 +56,7 @@
 	poison_per_bite = 10
 	var/atom/cocoon_target
 	poison_type = "stoxin"
+	gold_core_spawnable = NO_SPAWN
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey

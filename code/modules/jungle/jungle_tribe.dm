@@ -60,6 +60,7 @@
 	melee_damage = 10
 	turns_per_move = 1
 	stop_automated_movement_when_pulled = 0
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/my_type = 1
 
 /mob/living/simple_animal/hostile/tribesman/atom_init()

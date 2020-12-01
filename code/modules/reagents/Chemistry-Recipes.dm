@@ -1089,46 +1089,33 @@
 	name = "Slime Crit"
 	id = "m_tele"
 	result = null
-	required_reagents = list("phoron" = 5)
+	required_reagents = list("water" = 5)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/gold
+	required_other = 1
+
+/datum/chemical_reaction/slimecrit2
+	name = "Slime Crit"
+	id = "m_tele"
+	result = null
+	required_reagents = list("blood" = 5)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
 
 /datum/chemical_reaction/slimecrit/on_reaction(datum/reagents/holder)
-	/*var/blocked = list(/mob/living/simple_animal/hostile,
-		/mob/living/simple_animal/hostile/pirate,
-		/mob/living/simple_animal/hostile/pirate/ranged,
-		/mob/living/simple_animal/hostile/russian,
-		/mob/living/simple_animal/hostile/russian/ranged,
-		/mob/living/simple_animal/hostile/syndicate,
-		/mob/living/simple_animal/hostile/syndicate/melee,
-		/mob/living/simple_animal/hostile/syndicate/melee/space,
-		/mob/living/simple_animal/hostile/syndicate/ranged,
-		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/xenomorph/queen/large,
-		/mob/living/simple_animal/hostile/faithless,
-		/mob/living/simple_animal/hostile/panther,
-		/mob/living/simple_animal/hostile/snake,
-		/mob/living/simple_animal/hostile/retaliate,
-		/mob/living/simple_animal/hostile/retaliate/clown
-		)//exclusion list for things you don't want the reaction to create.
-	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-
+	holder.my_atom.visible_message("<span class='warning'>Golden slime extact starts shaking!</span>")
+	var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), FRIENDLY_SPAWN)
+	S.faction = "neutral"
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+	holder.my_atom.visible_message("<span class='warning'>Golden slime extact spits out [S]!</span>")
 
-	for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
-		if(M:eyecheck() <= 0)
-			M.flash_eyes()
-
-	for(var/i = 1, i <= 5, i++)
-		var/chosen = pick(critters)
-		var/mob/living/simple_animal/hostile/C = new chosen
-		C.faction = "slimesummon"
-		C.loc = get_turf_loc(holder.my_atom)
-		if(prob(50))
-			for(var/j = 1, j <= rand(1, 3), j++)
-				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
-	holder.my_atom.visible_message("<span class='warning'>The slime core fizzles disappointingly,</span>")
+/datum/chemical_reaction/slimecrit2/on_reaction(datum/reagents/holder)
+	holder.my_atom.visible_message("<span class='warning'>Golden slime extact starts shaking violently!</span>")
+	var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), HOSTILE_SPAWN)
+	S.faction = "neutral"
+	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+	holder.my_atom.visible_message("<span class='warning'>Golden slime extact spits out [S]!</span>")
 
 //Silver
 /datum/chemical_reaction/slimebork

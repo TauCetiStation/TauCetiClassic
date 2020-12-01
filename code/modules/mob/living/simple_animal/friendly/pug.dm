@@ -17,6 +17,7 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	see_in_dark = 5
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE

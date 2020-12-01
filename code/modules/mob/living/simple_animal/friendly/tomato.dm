@@ -15,6 +15,7 @@
 	response_harm   = "smacks the"
 	harm_intent_damage = 5
 	melee_damage = 3
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	has_head = TRUE
 

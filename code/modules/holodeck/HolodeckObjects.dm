@@ -389,6 +389,7 @@
 	icon_gib = null
 	butcher_results = null //we can't butcher it
 	randomify = FALSE
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/carp/holodeck/atom_init()
 	. = ..()

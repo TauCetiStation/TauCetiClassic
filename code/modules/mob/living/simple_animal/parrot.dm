@@ -53,6 +53,8 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+	gold_core_spawnable = FRIENDLY_SPAWN
+
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
@@ -684,6 +686,7 @@
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS LOOSE CALL THE SHUTTLE")
 	speak_chance = 3
+	gold_core_spawnable = NO_SPAWN
 	var/memory_saved = 0
 	var/rounds_survived = 0
 	var/longest_survival = 0

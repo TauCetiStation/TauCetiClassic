@@ -16,6 +16,7 @@
 	speed = 3
 	maxHealth = 40
 	health = 40
+	gold_core_spawnable = HOSTILE_SPAWN
 
 	harm_intent_damage = 8
 	melee_damage = 15
@@ -122,10 +123,12 @@
 	attack_sound = list('sound/weapons/polkan_atk.ogg')
 
 	randomify = FALSE
+	gold_core_spawnable = NO_SPAWN // why are those are carps...
 
 /mob/living/simple_animal/hostile/carp/dog/polkan
 	name = "POLKAN"
 	icon_state = "husky"
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/carp/dog/Life()
 	. = ..()

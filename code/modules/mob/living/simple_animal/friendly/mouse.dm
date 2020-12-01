@@ -32,6 +32,7 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -193,5 +194,6 @@
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help  = "pets"
+	gold_core_spawnable = NO_SPAWN
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"

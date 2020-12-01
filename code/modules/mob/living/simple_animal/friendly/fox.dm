@@ -19,6 +19,7 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -27,3 +28,4 @@
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+	gold_core_spawnable = NO_SPAWN

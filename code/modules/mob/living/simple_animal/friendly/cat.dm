@@ -22,6 +22,7 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -139,6 +140,7 @@
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"
@@ -152,5 +154,6 @@
 	,NO_BREATHE = TRUE
 	)
 	faction = list("syndicate")
+	gold_core_spawnable = NO_SPAWN
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target

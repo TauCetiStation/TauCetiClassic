@@ -62,6 +62,7 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
+	gold_core_spawnable = HOSTILE_SPAWN
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -135,6 +136,7 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
+	gold_core_spawnable = HOSTILE_SPAWN
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3

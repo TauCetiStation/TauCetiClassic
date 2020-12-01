@@ -23,6 +23,7 @@
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE

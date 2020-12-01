@@ -21,6 +21,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	ventcrawler = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -47,6 +48,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
+	gold_core_spawnable = NO_SPAWN
 
 //LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)

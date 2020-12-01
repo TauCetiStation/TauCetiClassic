@@ -20,6 +20,7 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE

@@ -22,6 +22,7 @@
 	melee_damage = 3
 	var/datum/reagents/udder = null
 	footstep_type = FOOTSTEP_MOB_SHOE
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -115,6 +116,7 @@
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -174,6 +176,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -215,6 +218,7 @@ var/global/chicken_count = 0
 	var/body_color
 	pass_flags = PASSTABLE
 	small = 1
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -288,6 +292,7 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -306,6 +311,7 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -324,6 +330,7 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -342,6 +349,7 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -360,6 +368,7 @@ var/global/chicken_count = 0
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
 	health = 50
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	has_head = TRUE
 	has_arm = TRUE
