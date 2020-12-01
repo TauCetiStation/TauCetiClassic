@@ -233,8 +233,8 @@
  *  Generates a random mob based on a given gold_core_spawnable value
  *
  * Arguments:
- * * spawn_location - Relevance of this argument
- * * mob_class - Relevance of this argument
+ * * spawn_location - location to spawn a mob on
+ * * mob_class - spawn pool list
  */
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
