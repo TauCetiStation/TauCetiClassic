@@ -58,3 +58,5 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
+	update_inv_mob()
+
