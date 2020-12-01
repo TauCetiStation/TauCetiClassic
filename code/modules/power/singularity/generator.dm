@@ -40,3 +40,6 @@
 				"You hear a ratchet")
 		return
 	return ..()
+
+/obj/machinery/the_singularitygen/water_act()
+	return
