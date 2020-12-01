@@ -46,9 +46,11 @@
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
 	if(user.a_intent != INTENT_HELP)	
-		if(default_unfasten_wrench(user, I) || \
-		default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I) || \
-		default_deconstruction_crowbar(I))
+		if(default_unfasten_wrench(user, I)
+			return
+		if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I)) // no open panel icon...
+			return
+		if(default_deconstruction_crowbar(I)))
 			return
 	if(ishuman(user))
 		if(!user.drop_item() || I.flags & (ABSTRACT | DROPDEL))
