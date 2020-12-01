@@ -1853,6 +1853,7 @@
 #include "code\modules\religion\rites\misc.dm"
 #include "code\modules\religion\rites\spawn_item.dm"
 #include "code\modules\religion\rites\swap.dm"
+#include "code\modules\religion\rites\pedestals\pedestals.dm"
 #include "code\modules\religion\rites_type\rites.dm"
 #include "code\modules\religion\rites_type\cult\rite.dm"
 #include "code\modules\research\circuitprinter.dm"

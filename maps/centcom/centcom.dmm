@@ -16866,9 +16866,7 @@
 	},
 /area/velocity)
 "cEu" = (
-/obj/structure/altar_of_gods{
-	icon_state = "satanaltar"
-	},
+/obj/structure/altar_of_gods/cult,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cFb" = (
@@ -22697,6 +22695,10 @@
 	icon_state = "whiteblue"
 	},
 /area/shuttle/escape/centcom)
+"oJR" = (
+/obj/item/weapon/nullrod,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "oKb" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -68263,7 +68265,7 @@ sQk
 gAC
 sQk
 sQk
-sQk
+oJR
 cEu
 sQk
 sQk

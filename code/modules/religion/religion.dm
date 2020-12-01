@@ -247,7 +247,8 @@
 // Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
 /datum/religion/proc/adjust_favor(amount = 0, mob/living/L)
 	. = amount
-	piety += amount
+	if(amount > 0)
+		piety += amount
 	if(favor + amount < 0)
 		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
 	if(favor + amount > max_favor)

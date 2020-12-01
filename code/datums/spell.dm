@@ -116,7 +116,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				adjust_var(user, holder_var_type, holder_var_amount)
 
 		if(favor_cost > 0 && usr.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-			global.chaplain_religion.favor -= favor_cost //steals favor from spells per favor
+			global.chaplain_religion.adjust_favor(-favor_cost)  //steals favor from spells per favor
 
 	return 1
 

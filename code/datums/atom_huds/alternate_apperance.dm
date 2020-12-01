@@ -106,7 +106,7 @@ var/global/list/active_alternate_appearances = list()
 		var/image/ghost_image = image(icon = theImage.icon , icon_state = theImage.icon_state, loc = theImage.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
-		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)
+		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
@@ -195,4 +195,18 @@ var/global/list/active_alternate_appearances = list()
 		var/mob/living/carbon/human/H = M
 		if(H.mind && H.mind.assigned_role == "Mime")
 			return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/holy_role
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/holy_role/New()
+	..()
+	for(var/mob/living/carbon/human/H in global.player_list)
+		if(mobShouldSee(H))
+			add_hud_to(H)
+
+/datum/atom_hud/alternate_appearance/basic/holy_role/mobShouldSee(mob/living/carbon/human/H)
+	if(H.mind && H.mind.holy_role)
+		return TRUE
 	return FALSE

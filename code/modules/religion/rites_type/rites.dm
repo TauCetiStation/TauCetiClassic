@@ -43,7 +43,7 @@
 	if(user.is_busy(AOG))
 		return FALSE
 
-	if(global.chaplain_religion && global.chaplain_religion.favor < favor_cost)
+	if(religion && religion.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
 

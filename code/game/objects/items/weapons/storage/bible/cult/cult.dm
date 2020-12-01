@@ -88,7 +88,8 @@
 	else
 		new choice.building_type(targeted_turf)
 
-	religion.favor -= choice.favor_cost
+	religion.adjust_favor(-choice.favor_cost)
+	//TODO: add Adjust_piety procs
 	religion.piety -= choice.piety_cost
 	build_next[user.ckey] = world.time + build_cd
 
