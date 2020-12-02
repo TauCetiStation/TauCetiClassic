@@ -310,7 +310,7 @@
 	clothes_req = FALSE
 
 /obj/item/weapon/magic/heal_touch
-	name = "healing touch"
+	name = "Лечение"
 	invoke = "In Mani"
 	icon_state = "heal_"
 	item_state = "healing"
@@ -338,11 +338,11 @@
 			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
 			touch_spell = FALSE
-			name = "healing ball"
+			name = "Лечащий шар"
 			invoke = "In Vas Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>лечит</b> и можно <b>метнуть</b>.</span>")
 		if(7)
-			name = "regeneration healing ball"
+			name = "Восстанавливающий шар лечения"
 			invoke = "In Vas An Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>восстанавливает конечности</b>, но слабее лечит и можно <b>метнуть</b>.</span>")
 
