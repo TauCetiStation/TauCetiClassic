@@ -65,6 +65,10 @@
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
 		return
+	var/datum/changeling/c = user.mind.changeling
+	if(c.chem_charges<chemical_cost)
+		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
+		return
 	if(locate(/obj/effect/proc_holder/changeling/revive) in user.mind.changeling.purchasedpowers)
 		to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
 		return
