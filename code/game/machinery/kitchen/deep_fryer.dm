@@ -45,21 +45,22 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	if(user.a_intent != INTENT_HELP)	
-		if(default_unfasten_wrench(user, I)
+	if(user.a_intent != INTENT_HELP)
+		if(default_unfasten_wrench(user, I))
 			return
 		if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", I)) // no open panel icon...
 			return
-		if(default_deconstruction_crowbar(I)))
+		if(default_deconstruction_crowbar(I))
 			return
-	if(ishuman(user))
-		if(!user.drop_item() || I.flags & (ABSTRACT | DROPDEL))
-			return ..()
-		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-		on = TRUE
-		frying = I
-		frying.loc = src
-		icon_state = "fryer_on"
+	if(!user.IsAdvancedToolUser())
+		return ..()
+	if(!user.drop_item() || I.flags & (ABSTRACT | DROPDEL))
+		return ..()
+	to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+	on = TRUE
+	frying = I
+	frying.loc = src
+	icon_state = "fryer_on"
 
 
 /obj/machinery/deepfryer/process()

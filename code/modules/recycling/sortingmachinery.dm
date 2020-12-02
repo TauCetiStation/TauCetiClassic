@@ -53,10 +53,8 @@
 
 /obj/item/smallDelivery/proc/dump(mob/user)
 	for(var/atom/movable/AM in contents)
-		if(user && user.put_in_active_hand(AM))
+		if(user && user.put_in_hands(AM))
 			AM.add_fingerprint(user)
-		else if(!isnull(user))
-			AM.forceMove(user.loc)
 		else
 			AM.forceMove(get_turf(src))
 
