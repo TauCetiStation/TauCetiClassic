@@ -78,10 +78,9 @@
 
 
 /obj/machinery/computer/blob_act()
-	if (prob(75))
-		for(var/x in verbs)
-			verbs -= x
-		set_broken()
+	if (prob(50))
+		qdel(src)
+		return
 
 /obj/machinery/computer/update_icon()
 	..()
