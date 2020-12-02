@@ -193,7 +193,7 @@
 	cost = 3
 
 /datum/spellbook_entry/barnyard
-	name = "Животное Curse"
+	name = "Скотоклятье"
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
