@@ -537,13 +537,13 @@
 	var/datum/spellbook_entry/E = null
 	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
-		if(href_list["Купить"])
-			E = entries[text2num(href_list["Купить"])]
+		if(href_list["buy"])
+			E = entries[text2num(href_list["buy"])]
 			if(E && E.CanBuy(H,src))
 				if(E.Buy(H,src))
 					uses -= E.cost
-		else if(href_list["Вернуть"])
-			E = entries[text2num(href_list["Вернуть"])]
+		else if(href_list["refund"])
+			E = entries[text2num(href_list["refund"])]
 			if(E && E.refundable)
 				var/result = E.Refund(H,src)
 				if(result > 0)
