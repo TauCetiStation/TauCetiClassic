@@ -29,6 +29,8 @@
 	light_range = 6
 	pass_flags = PASSTABLE
 
+	var/holy_outline
+
 	var/turf/last_turf
 	var/list/lying_items = list()
 	// illusion = real
@@ -52,12 +54,13 @@
 	lying_items += I
 
 	if(lying_illusions.len)
-		var/obj/effect/overlay/item_illusion/ill = pick(lying_illusions)
-		if(I.type == ill.my_fake_type)
-			I.pixel_x = ill.pixel_x
-			I.pixel_y = ill.pixel_y
-			lying_illusions[ill] = I
-			ill.alpha = 0
+		for(var/obj/effect/overlay/item_illusion/ill in lying_illusions)
+			if(!lying_illusions[ill] && I.type == ill.my_fake_type)
+				I.pixel_x = ill.pixel_x
+				I.pixel_y = ill.pixel_y
+				lying_illusions[ill] = I
+				ill.alpha = 0
+				break
 
 	RegisterSignal(I, list(COMSIG_MOVABLE_MOVED), .proc/moved_item)
 
@@ -76,12 +79,14 @@
 
 /obj/structure/cult/pylon/proc/check_current_items()
 	for(var/obj/effect/overlay/item_illusion/ill in lying_illusions)
+		if(lying_illusions[ill])
+			continue
 		for(var/obj/item/I in lying_items)
 			if(I.type == ill.my_fake_type)
 				lying_illusions[ill] = I
 				I.pixel_x = ill.pixel_x
 				I.pixel_y = ill.pixel_y
-				break
+				ill.alpha = 0
 
 /obj/structure/cult/pylon/proc/get_off_useless_items()
 	for(var/obj/item/I in lying_items)
@@ -109,6 +114,14 @@
 		qdel(k)
 	qdel(lying_illusions)
 	lying_illusions = list()
+
+/obj/structure/cult/pylon/proc/create_holy_outline(_color)
+	holy_outline = filter(type = "outline", size = 2, color = _color)
+	filters += holy_outline
+
+/obj/structure/cult/pylon/proc/del_holy_outline()
+	animate(filters[filters.len], color = "#00000000", time = rand(1 SECONDS, 6 SECONDS))
+	filters -= holy_outline
 
 /obj/structure/cult/pylon/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))

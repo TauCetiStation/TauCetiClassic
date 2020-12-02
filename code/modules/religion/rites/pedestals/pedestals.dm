@@ -1,8 +1,14 @@
+#define MAX_WAITING_TIME 36
+
 /obj/effect/overlay/item_illusion
 	var/my_fake_type
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /datum/religion_rites/pedestals
+	// The number of all items on pedestals must be longer than the length of ritual_invocations
+	// otherwise there will be no phrases
+	ritual_invocations = null
+
 	var/search_radius_of_pedestals = 3
 
 	var/list/pedestals
@@ -54,25 +60,58 @@
 	for(var/type in rules)
 		items += rules[type]
 
-	for(var/i in 1 to items)
-		if(!can_invocate(user, AOG))
-			SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-			return FALSE
-		user.say(i)
-		stage += 1
-		on_invocation(user, AOG, stage)
+	var/rate_phrases = 0
+	if(ritual_invocations)
+		rate_phrases = round(items / ritual_invocations.len)
 
-	// Because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
-	if(!can_invocate(user, AOG))
-		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
+	var/i = 1
+	var/phrase_indx = 1
+	var/waiting_interations = 0
+	for(var/obj/structure/cult/pylon/P in involved_pedestals)
+		if(waiting_interations == MAX_WAITING_TIME)
+			break
+		P.create_holy_outline("#c50404")
+		// place for create .Beam
+		for(var/ill in P.lying_illusions)
+			sleep(ritual_length / items)
+			var/obj/item/item = P.lying_illusions[ill]
+			while(!item || waiting_interations == MAX_WAITING_TIME)
+				item = P.lying_illusions[ill]
+				to_chat(world, "i`am in while - [world.time]")
+				stoplag(5 SECONDS)
+				waiting_interations += 1
+
+			if(waiting_interations == MAX_WAITING_TIME)
+				break
+
+			if(i % rate_phrases == 1)
+				user.say(ritual_invocations[phrase_indx])
+				phrase_indx += 1
+
+			qdel(item)
+			qdel(ill)
+			P.lying_items -= item
+			P.lying_illusions.Remove(ill)
+
+		on_invocation(user, AOG, i)
+		i += 1
+
+	if(waiting_interations == MAX_WAITING_TIME)
+		reset_rite()
 		return FALSE
+
 	if(invoke_msg)
 		user.say(invoke_msg)
 
 	return TRUE
 
 /datum/religion_rites/pedestals/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
+
+
+
 	reset_rite()
+	return TRUE
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
 	qdel(pedestals)
@@ -84,6 +123,7 @@
 /datum/religion_rites/pedestals/proc/reset_rite()
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
 		P.clear_items()
+		P.del_holy_outline()
 	qdel(involved_pedestals)
 	involved_pedestals = list()
 
@@ -99,7 +139,6 @@
 	rules = list(
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
-		/obj/item/weapon/card/id/sci = 1,
 	)
 
 	needed_aspects = list(
@@ -197,3 +236,5 @@
 	needed_aspects = list(
 		ASPECT_DEATH = 1,
 	)
+
+#undef MAX_WAITING_TIME
