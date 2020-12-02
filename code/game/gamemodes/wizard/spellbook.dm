@@ -11,7 +11,7 @@
 	var/refundable = 1
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
-	var/buy_word = "Learn"
+	var/buy_word = "Выучить"
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -29,7 +29,7 @@
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
 	user.AddSpell(S)
-	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
+	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
 	return 1
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
@@ -44,7 +44,7 @@
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
 	if(!istype(get_area(user), /area/custom/wizard_station))
-		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
+		to_chat(user, "<span clas=='warning'>Вернуть очки можно только в убежище.</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -67,7 +67,7 @@
 	return dat
 
 /datum/spellbook_entry/fireball
-	name = "Fireball"
+	name = "Огненный шар"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
@@ -208,7 +208,7 @@
 	log_name = "LS"
 
 /datum/spellbook_entry/charge
-	name = "Charge"
+	name = "Заряд"
 	spell_type = /obj/effect/proc_holder/spell/targeted/charge
 	log_name = "CH"
 	category = "Помощь"
@@ -310,7 +310,7 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Набор мастерской брони"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	desc = "Набор замечательной брони, которая позволит вам колдовать и защитит от опасности как в виде людей, так и в виде космоса."
 	item_path = /obj/item/clothing/suit/space/rig/wizard
 	log_name = "HS"
 	category = "Оборона"
@@ -322,8 +322,8 @@
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
-	name = "Contract of Apprenticeship"
-	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	name = "Контракт ученичества"
+	desc = "Магический контракт, что связывает учителя и ученика."
 	item_path = /obj/item/weapon/contract
 	log_name = "CT"
 	category = "Помощь"
@@ -336,7 +336,7 @@
 	return 1
 
 /datum/spellbook_entry/item/tophat
-	name = "Wabbajack Шляпа"
+	name = "Шляпа Wabbajack"
 	desc = "Магическая шляпа с собственным шляпным измерением."
 	item_path = /obj/item/clothing/head/wizard/tophat
 	log_name = "TH"
@@ -427,9 +427,9 @@
 	if(istype(I, /obj/item/weapon/contract))
 		var/obj/item/weapon/contract/contract = I
 		if(contract.uses != initial(contract.uses))
-			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
+			to_chat(user, "<span class='warning'>Контракт был использован, Вы не можете вернуть очки!</span>")
 		else
-			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
+			to_chat(user, "<span class='notice'>Вы скормили контракт обратно книге. Очки возвращены.</span>")
 			uses += CONTRACT_PRICE
 			qdel(I)
 	else
