@@ -54,7 +54,9 @@
 			return
 	if(!user.IsAdvancedToolUser())
 		return ..()
-	if(!user.drop_item() || I.flags & (ABSTRACT | DROPDEL))
+	if(I.flags & (ABSTRACT | DROPDEL))
+		return ..()
+	if(!user.drop_item())
 		return ..()
 	to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 	on = TRUE
