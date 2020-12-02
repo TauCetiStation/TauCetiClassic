@@ -37,7 +37,7 @@
 	if(!istype(L))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
 		return FALSE
-	if((istype(L, /mob/living/simple_animal) && L.stat == DEAD)))
+	if(istype(L, /mob/living/simple_animal) && L.stat == DEAD)
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L], because it's DEAD.</span>")
 		return FALSE
 	if(user.is_busy())
