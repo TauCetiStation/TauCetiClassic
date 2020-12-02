@@ -214,8 +214,8 @@
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+	name = "Ослепление"
+	desc = "Позволяет временно ослепить одного человека и не требует одежды для использования."
 
 	school = "transmutation"
 	charge_max = 300
@@ -223,7 +223,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	sound = 'sound/magic/Blind.ogg'
-	message = "<span class ='notice'>Your eyes cry out in pain!</span>"
+	message = "<span class ='notice'>Вашим глазам очень больно!</span>"
 
 	action_icon_state = "blind"
 
