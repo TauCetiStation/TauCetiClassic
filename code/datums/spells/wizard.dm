@@ -223,7 +223,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	sound = 'sound/magic/Blind.ogg'
-	message = "<span class ='notice'>Вашим глазам очень больно!</span>"
+	message = "<span class ='notice'>Вы почувствовали сильную боль в глазах.</span>"
 
 	action_icon_state = "blind"
 
