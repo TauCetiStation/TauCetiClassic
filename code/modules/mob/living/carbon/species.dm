@@ -509,8 +509,8 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 
-	min_age = 3
-	max_age = 83
+	min_age = 1
+	max_age = 100
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
