@@ -2118,7 +2118,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /datum/debug_color_matrix/proc/edit(client/user)
 	var/static/editor = file2text('html/admin/color_matrix.html')
-	user << browse(editor, "window=colormatrix;size=410x485;")
+	user << browse(editor, "window=colormatrix;size=410x500;")
 	spawn(10)
 		callJsFunc(usr, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 

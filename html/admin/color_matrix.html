@@ -22,6 +22,8 @@
   </style>
 </head>
 <body>
+    <input type="text" value="" id="current_matrix" readonly class='cell'>
+    <button onclick="copy_matrix()">Copy Matrix</button>
     <form name="matrix" method='GET' action='byond://?src=\ref[src]'>
       <div id="red">
         <div class="cell">
@@ -198,7 +200,15 @@
       document.getElementById(id).value = matrixList[i];
       document.getElementById(id + "_num").value = matrixList[i];
     }
+    var copyText = document.getElementById("current_matrix");
+    copyText.value = matrixList
   }
+
+  function copy_matrix() {
+    var copyText = document.getElementById("current_matrix");
+    copyText.select();
+    document.execCommand("copy");
+}
 
   function randomizeAllValues(range, isAdditive, rgbOnly) {
     var randVal = 0;
@@ -264,6 +274,9 @@
     var forAll = document.getElementById("forAll").checked;
     var newLoc = "?src=" + ref + ";animate=" + (doAnimation ? "y" : "n") + ";matrix=" + matrixData + ";forAll=" + (forAll?"y":"n");
     window.location = newLoc;
+
+    var copyText = document.getElementById("current_matrix");
+    copyText.value = matrixData
   }
 
   function restoreFromURL(url) {
