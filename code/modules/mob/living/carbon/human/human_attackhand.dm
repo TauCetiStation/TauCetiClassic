@@ -40,7 +40,7 @@
 	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, .proc/perform_av, attacker)
 		return TRUE
-	else if(stat == DEAD && target_zone == BP_CHEST)
+	else if(stat == DEAD && ((target_zone == BP_GROIN && species.name == VOX) ||  (target_zone == BP_CHEST && species.name != VOX)))
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 		return TRUE
 	else if(!(attacker == src && apply_pressure(attacker, target_zone)))
