@@ -75,7 +75,7 @@
 		for(var/ill in P.lying_illusions)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
-			while(!item || waiting_interations == MAX_WAITING_TIME)
+			while(!item && waiting_interations != MAX_WAITING_TIME)
 				item = P.lying_illusions[ill]
 				to_chat(world, "i`am in while - [world.time]")
 				stoplag(5 SECONDS)
