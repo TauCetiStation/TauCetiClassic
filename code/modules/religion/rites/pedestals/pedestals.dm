@@ -73,6 +73,7 @@
 		P.create_holy_outline("#c50404")
 		// place for create .Beam
 		for(var/ill in P.lying_illusions)
+			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time=INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
 			while(!item && waiting_interations != MAX_WAITING_TIME)
@@ -92,6 +93,7 @@
 			qdel(ill)
 			P.lying_items -= item
 			P.lying_illusions.Remove(ill)
+			B.End()
 
 		on_invocation(user, AOG, i)
 		i += 1
