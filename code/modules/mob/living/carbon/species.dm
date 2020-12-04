@@ -514,6 +514,9 @@
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
+	/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+		H.gender = NEUTER
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
 			)
