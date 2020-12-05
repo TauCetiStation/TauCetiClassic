@@ -19,6 +19,8 @@
 	var/list/build_choices_image = list()
 	var/list/rune_choices_image = list()
 
+	var/toggle_deconstruct = FALSE
+
 /obj/item/weapon/storage/bible/tome/atom_init()
 	. = ..()
 	rad_choices["Chapel looks"] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
@@ -27,7 +29,7 @@
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
-
+		to_chat(user, "Current count of favor: [religion.favor]; piety: <span class='piety'>[religion.piety]</span>")
 	else
 		..()
 
@@ -43,11 +45,27 @@
 
 	return ..()
 
+/obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(!toggle_deconstruct)
+		return
+
+	for(var/datum/building_agent/B in religion.available_buildings)
+		if(istype(target, B.building_type))
+			if(!religion.check_costs(B.deconstruct_favor_cost, B.deconstruct_piety_cost, user))
+				break
+
+			animate(target, 2 SECONDS, alpha = 0)
+			sleep(2 SECONDS)
+			qdel(target)
+			break
+
 // TODO: do func
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
 	return
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
+	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
 	for(var/datum/building_agent/B in religion.available_buildings)
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
@@ -65,10 +83,6 @@
 		return
 	var/turf/targeted_turf = get_step(src, user.dir)
 
-	if(istype(get_area(targeted_turf), /area/custom/cult))
-		to_chat(user, "<span class='warning'>YOU CANT BUILD HERE!</span>")
-		return
-
 	for(var/datum/building_agent/B in build_choices_image)
 		B.name = "[initial(B.name)] ([B.favor_cost > 0 ? "[B.favor_cost] favors" : ""] [B.piety_cost > 0 ? "[B.piety_cost] piety" : ""])"
 
@@ -76,11 +90,12 @@
 	if(!choice)
 		return
 
-	if(choice.favor_cost > 0 && religion.favor < choice.favor_cost)
-		to_chat(user, "<span class ='warning'>You need [choice.favor_cost - religion.favor] more favors.</span>")
+	if(choice == "Toggle Grind mode")
+		toggle_deconstruct = !toggle_deconstruct
+		to_chat(user, "The mode of destruction of constructed structures is [toggle_deconstruct ? enabled : disabled].")
 		return
-	if(choice.piety_cost > 0 && religion.piety < choice.piety_cost)
-		to_chat(user, "<span class ='warning'>You need [choice.piety_cost - religion.piety] more piety.</span>")
+
+	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
 	if(ispath(choice.building_type, /turf))

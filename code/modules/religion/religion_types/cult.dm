@@ -20,6 +20,8 @@
 		"Islam" = 4
 	)
 
+	favor = 10000
+	piety = 10000
 	max_favor = 10000
 
 	var/datum/game_mode/cult/mode

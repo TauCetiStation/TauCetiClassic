@@ -4,7 +4,9 @@
 	var/name
 	var/building_type
 	var/favor_cost
+	var/deconstruct_favor_cost
 	var/piety_cost
+	var/deconstruct_piety_cost
 	// TODO: Replace Pylon on Pedestal
 
 // For cultists
@@ -14,23 +16,31 @@
 	name = "Wall"
 	building_type = /turf/simulated/wall/cult
 	favor_cost = 0
+	deconstruct_favor_cost = 0
 	piety_cost = 0
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/cult/floor
 	name = "Floor"
 	building_type = /turf/simulated/floor/engine/cult
-	favor_cost = 0
-	piety_cost = 0
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
 
 /datum/building_agent/cult/altar
 	name = "Altar"
 	building_type = /obj/structure/altar_of_gods/cult
-	favor_cost = 0
-	piety_cost = 0
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
 
 /datum/building_agent/cult/pylon
 	name = "Pylon"
 	building_type = /obj/structure/cult/pylon
-	favor_cost = 0
-	piety_cost = 0
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
 
