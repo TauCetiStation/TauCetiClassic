@@ -101,7 +101,7 @@
 	if(is_glowing)
 		to_chat(user, "It glows in the dark!")
 
-#define mouse_abilities list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowy, /datum/component/mob_modifier/mouse/speaky, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
+#define mouse_abilities list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowing, /datum/component/mob_modifier/mouse/chatty, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
 
 /mob/living/simple_animal/mouse/proc/addcheesepoint(cheese)
 	eatencheese += cheese
