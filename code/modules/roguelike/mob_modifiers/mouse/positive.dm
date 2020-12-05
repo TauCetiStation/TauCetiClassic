@@ -37,7 +37,8 @@
 /datum/component/mob_modifier/mouse/sparkly
 	modifier_name = RL_MM_MOUSE_SPARKLY
 	var/obj/effect/proc_holder/spell/targeted/harmless_sparks/spell
-	message = "You evolved into a mouse with a cheesepowers!"
+	message = "You evolved into a mouse with cheesepowers!"
+
 
 /datum/component/mob_modifier/mouse/sparkly/apply(update = FALSE)
 	. = ..()
