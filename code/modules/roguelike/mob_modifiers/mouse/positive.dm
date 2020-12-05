@@ -45,6 +45,8 @@
 		return
 
 	var/mob/living/simple_animal/mouse/M = parent
+	if(spell)
+		QDEL_NULL(spell)
 	spell = new
 	M.AddSpell(spell)
 
