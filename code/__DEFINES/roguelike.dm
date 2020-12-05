@@ -14,8 +14,8 @@
 #define RL_MM_MOUSE_HEALTHY "Healthy"
 #define RL_MM_MOUSE_SPARKLY "Sparkly"
 #define RL_MM_MOUSE_CUTE "Cute"
-#define RL_MM_MOUSE_GLOWY "Glowy"
-#define RL_MM_MOUSE_SPEAKY "Speaky" // Why
+#define RL_MM_MOUSE_GLOWING "Glowing"
+#define RL_MM_MOUSE_CHATTY "Chatty"
 #define RL_MM_MOUSE_SPACE "Space"
 
 /// name_modifier related defines.
