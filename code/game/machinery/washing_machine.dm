@@ -134,7 +134,7 @@
 			return
 
 		if(!C.canremove)
-			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
+			to_chat(user, "<span class='notice'>\The [C] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
 
 		if(contents.len < 5)
