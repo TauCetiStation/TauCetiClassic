@@ -171,19 +171,22 @@
 		/obj/item/weapon/tank,
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,
+		/obj/item/weapon/reagent_containers/food/snacks/monkeycube
 		/obj/item/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/glass,
-
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/glass,
-
+		/obj/item/stack/cable_coil,
         /obj/item/stack/sheet/mineral,
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
-		/mob/living/carbon/brain,
-		/obj/item/weapon/stock_parts
+		/obj/item/brain,
+		/obj/item/device/mmi/posibrain,
+		/obj/item/robot_parts,
+		/obj/item/weapon/stock_parts,
+		/obj/item/mecha_parts,
+		/obj/item/device/flash
 		)
-
 
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
