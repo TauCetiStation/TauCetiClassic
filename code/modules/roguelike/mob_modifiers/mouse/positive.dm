@@ -95,11 +95,11 @@
 
 
 
-/datum/component/mob_modifier/mouse/glowy
-	modifier_name = RL_MM_MOUSE_GLOWY
+/datum/component/mob_modifier/mouse/glowing
+	modifier_name = RL_MM_MOUSE_GLOWING
 	message = "You evolved into a mouse with a smooth lighing!"
 
-/datum/component/mob_modifier/mouse/glowy/apply(update = FALSE)
+/datum/component/mob_modifier/mouse/glowing/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -108,7 +108,7 @@
 	M.set_light(3)
 	M.is_glowing = TRUE
 
-/datum/component/mob_modifier/mouse/glowy/revert(update = FALSE)
+/datum/component/mob_modifier/mouse/glowing/revert(update = FALSE)
 	var/mob/living/simple_animal/mouse/M = parent
 	M.set_light(0)
 	M.is_glowing = FALSE
@@ -116,11 +116,11 @@
 
 
 
-/datum/component/mob_modifier/mouse/speaky
-	modifier_name = RL_MM_MOUSE_SPEAKY
+/datum/component/mob_modifier/mouse/chatty
+	modifier_name = RL_MM_MOUSE_CHATTY
 	message = "You ate so much cheese that humans will understand you more often from now."
 
-/datum/component/mob_modifier/mouse/speaky/apply(update = FALSE)
+/datum/component/mob_modifier/mouse/chatty/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -128,7 +128,7 @@
 	var/mob/living/simple_animal/mouse/M = parent
 	M.speak_chance *= 2
 
-/datum/component/mob_modifier/mouse/speaky/revert(update = FALSE)
+/datum/component/mob_modifier/mouse/chatty/revert(update = FALSE)
 	var/mob/living/simple_animal/mouse/M = parent
 	M.speak_chance /= 2
 	return ..()
