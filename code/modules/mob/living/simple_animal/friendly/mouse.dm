@@ -32,7 +32,12 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
-	var/powerlvl = 0 //Amount of eaten cheese
+
+	var/powerlvl = 0 //Amount of already given abilities
+	var/eatencheese = 0 //units
+	var/is_cute = FALSE
+	var/is_glowing = FALSE
+	var/datum/component/mob_modifier/mouse/healthy/health_modifier
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -89,28 +94,28 @@
 	if(client)
 		client.time_died_as_mouse = world.time
 
-/mob/living/simple_animal/mouse/proc/addcheesepoint()
-	powerlvl += 1
-	var/message = "<span class='notice'>You had improved in your cheesefullness.</span>"
-	switch(powerlvl)
-		if(1)
-			message = "<span class='notice'>You now became more adorable!</span>"
-			desc += " It looks adorable!"
-		if(2)
-			message = "<span class='notice'>You evolved into a mouse with a smooth lighing!</span>"
-			set_light(3)
-			desc += " Also it glows in the dark!"
-		if(3)
-			message = "<span class='notice'>You ate so much cheese that humans will understand you more often from now.</span>"
-			speak_chance *= 2
-		if(4)
-			message = "<span class='notice'>You evolved into a space mouse! Survive in almost zero kPA but you still have to do something when it reaches zero.</span>"
-			min_oxy = 0
-		if(5)
-			message = "<span class='notice'>You evolved into a mouse with a cheesepowers!</span>"
-			AddSpell(new /obj/effect/proc_holder/spell/targeted/harmless_sparks)
-	maxHealth += 3
-	to_chat(src, message)
+/mob/living/simple_animal/mouse/examine(mob/user)
+	..()
+	if(is_cute)
+		to_chat(user, "It looks adorable!")
+	if(is_glowing)
+		to_chat(user, "It glows in the dark!")
+
+#define mouse_abilities list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowy, /datum/component/mob_modifier/mouse/speaky, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
+
+/mob/living/simple_animal/mouse/proc/addcheesepoint(cheese)
+	eatencheese += cheese
+	while(eatencheese >= 20)
+		eatencheese -= 20
+		powerlvl += 1
+		if(!health_modifier)
+			health_modifier = AddComponent(/datum/component/mob_modifier/mouse/healthy, 1)
+		else
+			health_modifier.update(powerlvl)
+		if(length(mouse_abilities) >= powerlvl)
+			AddComponent(mouse_abilities[powerlvl])
+
+#undef mouse_abilities
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
