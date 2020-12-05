@@ -39,7 +39,6 @@
 	var/obj/effect/proc_holder/spell/targeted/harmless_sparks/spell
 	message = "You evolved into a mouse with cheesepowers!"
 
-
 /datum/component/mob_modifier/mouse/sparkly/apply(update = FALSE)
 	. = ..()
 	if(!.)
@@ -54,6 +53,10 @@
 		var/mob/living/simple_animal/mouse/M = parent
 		M.RemoveSpell(spell)
 	return ..()
+
+/datum/component/mob_modifier/mouse/sparkly/Destroy()
+    QDEL_NULL(spell)
+    return ..()
 
 
 
