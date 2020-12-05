@@ -177,7 +177,7 @@
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/glass,
 
-        /obj/item/stack/sheet/mineral,
+            /obj/item/stack/sheet/mineral,
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
 		/mob/living/carbon/brain,
