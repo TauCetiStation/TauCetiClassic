@@ -30,6 +30,7 @@
 	pass_flags = PASSTABLE
 
 	var/holy_outline
+	var/have_outline = FALSE
 
 	var/turf/last_turf
 	var/list/lying_items = list()
@@ -105,6 +106,7 @@
 		var/image/image = image(holo_icon, I, initial(type.icon_state))
 		I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "rite_holo_items", image)
 		lying_illusions[I] = null
+		stoplag() // optimization?
 
 	check_current_items()
 	get_off_useless_items()
@@ -112,16 +114,17 @@
 /obj/structure/cult/pylon/proc/clear_items()
 	for(var/k in lying_illusions)
 		qdel(k)
-	qdel(lying_illusions)
 	lying_illusions = list()
 
 /obj/structure/cult/pylon/proc/create_holy_outline(_color)
 	holy_outline = filter(type = "outline", size = 2, color = _color)
 	filters += holy_outline
+	have_outline = TRUE
 
 /obj/structure/cult/pylon/proc/del_holy_outline()
-	animate(filters[filters.len], color = "#00000000", time = rand(1 SECONDS, 6 SECONDS))
-	filters -= holy_outline
+	if(have_outline)
+		filters -= holy_outline
+		have_outline = FALSE
 
 /obj/structure/cult/pylon/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))

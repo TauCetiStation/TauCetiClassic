@@ -39,7 +39,7 @@
 /obj/item/weapon/storage/bible/proc/can_convert(atom/target, mob/user)
 	if(!user.mind || !user.mind.holy_role)
 		return FALSE
-	if(!global.chaplain_religion || !global.chaplain_religion.faith_reactions.len)
+	if(!religion || !religion.faith_reactions.len)
 		return FALSE
 	if(!target.reagents)
 		return FALSE
@@ -55,8 +55,8 @@
 		return
 
 	var/list/choices = list()
-	for(var/reaction_id in global.chaplain_religion.faith_reactions)
-		var/datum/faith_reaction/FR = global.chaplain_religion.faith_reactions[reaction_id]
+	for(var/reaction_id in religion.faith_reactions)
+		var/datum/faith_reaction/FR = religion.faith_reactions[reaction_id]
 		var/desc = FR.get_description(target, user)
 		if(desc == "")
 			continue
@@ -71,7 +71,7 @@
 
 	var/chosen_id = choices[chosen_reaction]
 
-	var/datum/faith_reaction/FR = global.chaplain_religion.faith_reactions[chosen_id]
+	var/datum/faith_reaction/FR = religion.faith_reactions[chosen_id]
 	FR.react(target, user)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/I, mob/user, params)

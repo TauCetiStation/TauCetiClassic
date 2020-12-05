@@ -154,6 +154,7 @@
 	return TRUE
 
 // Handles holy reagents.
+// TODO: rework for others religions
 /datum/reagent/proc/handle_religions()
 	if(!global.chaplain_religion)
 		return

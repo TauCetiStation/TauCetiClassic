@@ -245,20 +245,26 @@
 	return B
 
 // Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
-/datum/religion/proc/adjust_favor(amount = 0, mob/living/L)
+/datum/religion/proc/adjust_favor(amount = 0)
 	. = amount
-	if(amount > 0)
-		piety += amount
 	if(favor + amount < 0)
 		. = favor //if favor = 5 and we want to subtract 10, we'll only be able to subtract 5
 	if(favor + amount > max_favor)
-		. = (max_favor - favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
-	favor = between(0, favor + amount,  max_favor)
+		. = (max_favor - favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add
+	favor = clamp(favor + amount, 0, max_favor)
+	if(amount > 0)
+		adjust_piety(amount / 100)
 
 // Sets favor to a specific amount. Can provide optional features based on a user.
-/datum/religion/proc/set_favor(amount = 0, mob/living/L)
-	favor = between(0, amount, max_favor)
+/datum/religion/proc/set_favor(amount = 0)
+	favor = clamp(amount, 0, max_favor)
 	return favor
+
+/datum/religion/proc/adjust_piety(amount = 0)
+	. = amount
+	if(piety + amount < 0)
+		. = piety
+	piety = clamp(piety + amount, 0, INFINITY)
 
 /datum/religion/proc/check_costs(favor_cost, piety_cost, mob/user)
 	var/corrects = 0

@@ -26,12 +26,22 @@
 
 	var/look_piety = FALSE
 
+	var/list/mob/mobs_around = list()
+	var/list/turf/turfs_around = list()
+
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
 	experiments = new
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
+	init_turfs_around()
+
+/obj/structure/altar_of_gods/Destroy()
+	mobs_around = null
+	turfs_around = null
+	qdel(experiments)
+	return ..()
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
@@ -251,6 +261,10 @@
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+			if(anchored)
+				init_turfs_around()
+			else
+				clear_turfs_around()
 			return
 
 	if(anchored && use_religion_tools(C, user))
@@ -285,3 +299,23 @@
 	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
+
+/obj/structure/altar_of_gods/proc/init_turfs_around()
+	for(var/turf/T in orange(3, src))
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		turfs_around += T
+
+/obj/structure/altar_of_gods/proc/clear_turfs_around()
+	for(var/turf/T in turfs_around)
+		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+		turfs_around -= T
+	for(var/M in mobs_around)
+		mobs_around -= M
+
+/obj/structure/altar_of_gods/proc/turf_around_enter(datum/source, atom/movable/mover, atom/oldLoc)
+	if(istype(mover, /mob/living))
+		mobs_around += mover
+
+/obj/structure/altar_of_gods/proc/turf_around_exit(datum/source, atom/movable/mover, atom/newLoc)
+	mobs_around -= mover

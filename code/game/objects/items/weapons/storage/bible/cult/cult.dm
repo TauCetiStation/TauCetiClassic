@@ -92,7 +92,7 @@
 
 	if(choice == "Toggle Grind mode")
 		toggle_deconstruct = !toggle_deconstruct
-		to_chat(user, "The mode of destruction of constructed structures is [toggle_deconstruct ? enabled : disabled].")
+		to_chat(user, "The mode of destruction of constructed structures is [toggle_deconstruct ? "enabled" : "disabled"].")
 		return
 
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
@@ -104,8 +104,7 @@
 		new choice.building_type(targeted_turf)
 
 	religion.adjust_favor(-choice.favor_cost)
-	//TODO: add Adjust_piety procs
-	religion.piety -= choice.piety_cost
+	religion.adjust_piety(-choice.piety_cost)
 	build_next[user.ckey] = world.time + build_cd
 
 /obj/item/weapon/storage/bible/tome/proc/choice_bible_func(mob/user)

@@ -76,7 +76,7 @@
 			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time=INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
-			while(!item && waiting_interations != MAX_WAITING_TIME)
+			while(!item && waiting_interations != MAX_WAITING_TIME) // waiting item with antilag system
 				item = P.lying_illusions[ill]
 				to_chat(world, "i`am in while - [world.time]")
 				stoplag(5 SECONDS)
@@ -86,7 +86,9 @@
 				break
 
 			if(i % rate_phrases == 1)
-				user.say(ritual_invocations[phrase_indx])
+				for(var/mob/M in AOG.mobs_around)
+					if(M in religion.members)
+						M.say(ritual_invocations[phrase_indx])
 				phrase_indx += 1
 
 			qdel(item)
@@ -109,14 +111,10 @@
 
 /datum/religion_rites/pedestals/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
-
-
-
 	reset_rite()
 	return TRUE
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
-	qdel(pedestals)
 	pedestals = list()
 	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
 		pedestals += P
@@ -126,7 +124,6 @@
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
 		P.clear_items()
 		P.del_holy_outline()
-	qdel(involved_pedestals)
 	involved_pedestals = list()
 
 /datum/religion_rites/pedestals/test
