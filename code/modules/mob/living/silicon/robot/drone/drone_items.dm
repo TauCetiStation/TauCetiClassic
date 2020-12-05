@@ -178,6 +178,7 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/cable_coil,
         /obj/item/stack/sheet/mineral,
+		/obj/item/stack/sheet/plasteel,
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
 		/obj/item/brain,
