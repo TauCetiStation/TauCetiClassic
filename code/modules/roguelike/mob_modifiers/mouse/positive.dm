@@ -27,7 +27,7 @@
 	M.health = health_proportion * M.maxHealth
 
 	var/matrix/Mtrx = matrix(M.default_transform)
-	Mtrx.Scale(1 - 0.025 * min(strength, 40))
+	Mtrx.Scale(1 / (1 + 0.025 * min(strength, 40)))
 	M.transform = Mtrx
 	M.default_transform = M.transform
 	return ..()
