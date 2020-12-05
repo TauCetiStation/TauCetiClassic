@@ -55,7 +55,7 @@
 		var/obj/item/toy/crayon/CR = crayon
 		wash_color = CR.colour
 	for (var/obj/item/clothing/C in contents)
-		if(C.can_be_colored == TRUE)
+		if(C.can_be_colored)
 			C.icon_state = "color"
 			C.item_color ="color"
 			C.color = wash_color
