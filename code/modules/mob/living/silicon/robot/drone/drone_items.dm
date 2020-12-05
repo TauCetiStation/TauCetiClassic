@@ -161,6 +161,29 @@
 		/obj/item/weapon/reagent_containers/food
 		)
 
+/obj/item/weapon/gripper/science
+	name = "science gripper"
+	desc = "A complex grasping tool for science work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/tank,
+		/obj/item/device/assembly/signaler,
+		/obj/item/device/gps,
+		/obj/item/bluespace_crystal,
+		/obj/item/weapon/reagent_containers/glass,
+
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+
+        /obj/item/stack/sheet/mineral,
+		/obj/item/weapon/circuitboard,
+		/obj/item/device/mmi,
+		/mob/living/carbon/brain,
+		/obj/item/weapon/stock_parts
+		)
+
 
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
