@@ -9,6 +9,15 @@
 #define RL_MM_INVISIBLE "Invisible"
 #define RL_MM_ANGELIC "Angelic"
 
+/// mouse mob_modifier related defines.
+/// All of this wont appear ingame anyway
+#define RL_MM_MOUSE_HEALTHY "Healthy"
+#define RL_MM_MOUSE_SPARKLY "Sparkly"
+#define RL_MM_MOUSE_CUTE "Cute"
+#define RL_MM_MOUSE_GLOWY "Glowy"
+#define RL_MM_MOUSE_SPEAKY "Speaky" // Why
+#define RL_MM_MOUSE_SPACE "Space"
+
 /// name_modifier related defines.
 #define RL_GROUP_PREFIX "prefix"
 #define RL_GROUP_SUFFIX "suffix"
