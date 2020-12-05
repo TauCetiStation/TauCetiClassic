@@ -181,11 +181,16 @@
 		if(M.layer == MOB_LAYER)
 			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
 			N.health = min(N.health + 1, N.maxHealth)
-			reagents.remove_any(0.5 * bitesize)
+			if(reagents.has_reagent("cheese"))
+				var/cheese = reagents.get_reagent_amount("cheese")
+				reagents.remove_any(0.5 * bitesize)
+				cheese -= reagents.get_reagent_amount("cheese")
+
+				N.addcheesepoint(cheese)
+			else
+				reagents.remove_any(0.5 * bitesize)
 			if(reagents.total_volume <= 0)
 				N.visible_message("<span class='notice'><b>[N]</b> just ate \the [src]!</span>", "<span class='notice'>You just ate \the [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
-				if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel))
-					N.addcheesepoint()
 				qdel(src)
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
