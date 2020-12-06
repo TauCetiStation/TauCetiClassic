@@ -109,3 +109,7 @@
 /obj/item/weapon/vending_refill/dinnerware
 	machine_name = "Dinnerware"
 	charges =  12// of 35
+
+/obj/item/weapon/vending_refill/medical/storage
+	machine_name = "NanoMed Storage+"
+	charges =  15 // of 43

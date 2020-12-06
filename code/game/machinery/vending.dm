@@ -1380,9 +1380,10 @@ obj/machinery/vending/medical/storage
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access = list(5)
 	products = list(/obj/item/weapon/storage/firstaid/fire = 4,/obj/item/weapon/storage/firstaid/toxin = 4,
-					obj/item/weapon/storage/firstaid/o2 = 4,/obj/item/weapon/storage/firstaid/adv = 4,
+					/obj/item/weapon/storage/firstaid/o2 = 4,/obj/item/weapon/storage/firstaid/adv = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/clothing/glasses/hud/health = 6,
 					 /obj/item/clothing/accessory/stethoscope = 6, /obj/item/weapon/storage/box/gloves = 2, /obj/item/weapon/storage/box/masks = 2,
 					 /obj/item/weapon/storage/box/syringes = 2, /obj/item/weapon/storage/box/beakers = 1, /obj/item/weapon/storage/box/bodybags = 1)
 	contraband = list(/obj/item/weapon/defibrillator = 1,/obj/item/weapon/stock_parts/cell = 2)
 	refill_canister = /obj/item/weapon/vending_refill/medical/storage
+
