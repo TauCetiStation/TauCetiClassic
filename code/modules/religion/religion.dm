@@ -21,6 +21,8 @@
 
 	// Default is /datum/bible_info/custom, if one is not specified here.
 	var/datum/bible_info/bible_info
+	// Type of bible of religion
+	var/bible_type
 	var/list/bible_info_by_name
 	// Radial menu
 	var/list/bible_skins
@@ -51,7 +53,7 @@
 	var/list/carpet_dir_by_name
 	// Radial menu
 	var/list/carpet_skins
-
+	// Main area with structures
 	var/list/area_types
 
 	/*
@@ -236,7 +238,7 @@
 			G.update_icon()
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, bible_type = /obj/item/weapon/storage/bible)
+/datum/religion/proc/spawn_bible(atom/location)
 	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
 	B.deity_name = pick(deity_names)

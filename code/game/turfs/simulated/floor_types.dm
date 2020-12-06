@@ -72,10 +72,6 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/simulated/floor/engine/cult
-	name = "engraved floor"
-	icon_state = "cult"
-
 /turf/simulated/floor/engine/airmix
 	oxygen = MOLES_O2ATMOS
 	nitrogen = MOLES_N2ATMOS

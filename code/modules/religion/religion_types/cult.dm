@@ -26,7 +26,8 @@
 
 	var/datum/game_mode/cult/mode
 
-	agent_type = /datum/building_agent/cult
+	agent_type = /datum/building_agent/cult/structure
+	bible_type = /obj/item/weapon/storage/bible/tome
 
 /datum/religion/cult/New()
 	..()

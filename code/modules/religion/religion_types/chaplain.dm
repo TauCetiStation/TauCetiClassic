@@ -68,6 +68,8 @@
 		"Islam" = 4,
 	)
 
+	bible_type = /obj/item/weapon/storage/bible
+
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()

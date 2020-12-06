@@ -11,13 +11,15 @@
 
 	var/build_next = list()
 	var/build_cd = 30 SECONDS
+	var/destr_cd = 1 SECOND
+	var/destr_next = list()
 
 	var/rune_next = list()
 	var/rune_cd = 10 SECONDS
 
 	var/list/choices_generated = FALSE
-	var/list/build_choices_image = list()
-	var/list/rune_choices_image = list()
+	var/static/list/build_choices_image = list()
+	var/static/list/rune_choices_image = list()
 
 	var/toggle_deconstruct = FALSE
 
@@ -50,18 +52,31 @@
 	if(!toggle_deconstruct)
 		return
 
+	if(destr_next[user.ckey] > world.time)
+		to_chat(user, "<span class='warning'>YOU CANT DESTROY! Please wait about [round((destr_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+		return
+
 	for(var/datum/building_agent/B in religion.available_buildings)
 		if(istype(target, B.building_type))
 			if(!religion.check_costs(B.deconstruct_favor_cost, B.deconstruct_piety_cost, user))
 				break
 
+			destr_next[user.ckey] = world.time + destr_cd
 			animate(target, 2 SECONDS, alpha = 0)
 			sleep(2 SECONDS)
 			if(istype(target, /turf/simulated/wall/cult))
 				var/turf/simulated/wall/cult/C = target
 				C.dismantle_wall(TRUE)
-				break
+			else if(isturf(target))
+				var/turf/T = target
+				var/type_new_turf = /turf/simulated/floor/plating
+				if(istype(get_area(src), /area/custom/cult))
+					type_new_turf = T.basetype
+				T.ChangeTurf(type_new_turf)
+
 			qdel(target)
+			religion.adjust_favor(-B.deconstruct_favor_cost)
+			religion.adjust_piety(-B.deconstruct_piety_cost)
 			break
 
 // TODO: do func
@@ -98,15 +113,16 @@
 		to_chat(user, "<span class='notice'>The mode of destruction of constructed structures is [toggle_deconstruct ? "enabled" : "disabled"].</span>")
 		return
 
+	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult) && religion.altar)
+		to_chat(user, "<span class='warning'>YOU CANT BUID ANOTHER ALTAR</span>")
+		return
+
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
 	var/turf/targeted_turf = get_step(src, user.dir)
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
-	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult) && religion.altar)
-		to_chat(user, "<span class='warning'>YOU CANT BUID ANOTHER ALTAR</span>")
-		return
 	else
 		new choice.building_type(targeted_turf)
 

@@ -31,7 +31,10 @@
 // For cultists
 /datum/building_agent/cult
 
-/datum/building_agent/cult/wall
+// For tome
+/datum/building_agent/cult/structure
+
+/datum/building_agent/cult/structure/wall
 	name = "Wall"
 	building_type = /turf/simulated/wall/cult
 	favor_cost = 0
@@ -39,7 +42,7 @@
 	piety_cost = 0
 	deconstruct_piety_cost = 0
 
-/datum/building_agent/cult/floor
+/datum/building_agent/cult/structure/floor
 	name = "Floor"
 	building_type = /turf/simulated/floor/engine/cult
 	favor_cost = 100
@@ -47,7 +50,7 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
-/datum/building_agent/cult/altar
+/datum/building_agent/cult/structure/altar
 	name = "Altar"
 	building_type = /obj/structure/altar_of_gods/cult
 	favor_cost = 100
@@ -55,9 +58,19 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
-/datum/building_agent/cult/pylon
+/datum/building_agent/cult/structure/pylon
 	name = "Pylon"
 	building_type = /obj/structure/cult/pylon
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
+// For forge
+/datum/building_agent/cult/tool
+/datum/building_agent/cult/tool/tome
+	name = "Tome"
+	building_type = /obj/item/weapon/storage/bible/tome
 	favor_cost = 100
 	deconstruct_favor_cost = 50
 	piety_cost = 10

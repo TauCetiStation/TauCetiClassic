@@ -217,13 +217,15 @@
 		var/turf/T = A
 		if(istype(T, /turf/simulated/floor/engine/cult))
 			return
+		if(istype(T, /turf/simulated/floor/engine/cult/lava))
+			return
 		if(istype(T, /turf/simulated/wall/cult))
 			return
 		if(istype(T, /obj/structure/object_wall))
 			return
 		if(istype(T, /turf/simulated/floor))
 			if(prob(20))
-				T.ChangeTurf(/turf/simulated/floor/engine/cult)
+				T.ChangeTurf(pick(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava))
 		if(istype(T, /turf/simulated/wall))
 			if(prob(20))
 				T.ChangeTurf(/turf/simulated/wall/cult)

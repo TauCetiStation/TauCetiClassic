@@ -592,7 +592,7 @@
 /mob/living/simple_animal/hostile/creature{
 	name = "Experiment 35b"
 	},
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "abu" = (
 /obj/effect/landmark/blockway,
@@ -13070,7 +13070,7 @@
 /area/shuttle/escape/centcom)
 "aUG" = (
 /obj/structure/cult/shell,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "aUH" = (
 /obj/machinery/door/airlock/centcom{
@@ -16933,7 +16933,7 @@
 /area/velocity)
 "cKX" = (
 /obj/structure/cult/forge,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cLb" = (
 /obj/structure/disposalpipe/segment{
@@ -17383,7 +17383,7 @@
 /area/velocity)
 "dCw" = (
 /obj/structure/cult/pylon,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dDb" = (
 /obj/machinery/door/poddoor{
@@ -18382,7 +18382,7 @@
 /area/centcom/living)
 "fzX" = (
 /obj/structure/cult/spacewhole,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "fAb" = (
 /obj/item/device/flashlight/lamp/green{
@@ -18515,7 +18515,7 @@
 /area/centcom/prison)
 "fMu" = (
 /obj/effect/timewhole,
-/turf/unsimulated/wall/cult,
+/turf/simulated/wall/cult,
 /area/custom/cult)
 "fNb" = (
 /turf/unsimulated/floor{
@@ -21798,7 +21798,7 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "mzq" = (
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "mAb" = (
 /turf/simulated/shuttle/wall{
@@ -22095,6 +22095,10 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"npP" = (
+/obj/structure/cult/shell,
+/turf/simulated/wall/cult,
+/area/custom/cult)
 "nqb" = (
 /obj/machinery/computer/security/telescreen,
 /turf/unsimulated/floor{
@@ -22368,10 +22372,10 @@
 /area/custom/wizard_station)
 "nUb" = (
 /obj/effect/decal/remains/human,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "nVb" = (
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "nWb" = (
 /turf/unsimulated/floor{
@@ -23347,6 +23351,9 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"qDT" = (
+/turf/simulated/wall/cult,
+/area/custom/cult)
 "qTT" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -23401,7 +23408,7 @@
 /area/custom/cult)
 "tyj" = (
 /obj/structure/cult/talisman,
-/turf/unsimulated/floor/lava,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "tWq" = (
 /turf/unsimulated/floor{
@@ -65684,7 +65691,7 @@ sQk
 sQk
 sQk
 dAj
-rXx
+qDT
 sQk
 sQk
 mzq
@@ -65697,7 +65704,7 @@ mzq
 sQk
 sQk
 dDS
-rXx
+qDT
 iGK
 iGK
 oTA
@@ -65954,7 +65961,7 @@ sQk
 mzq
 sQk
 sQk
-rXx
+qDT
 sQk
 sQk
 mzq
@@ -66198,7 +66205,7 @@ mzq
 sQk
 sQk
 sQk
-rXx
+qDT
 sQk
 mzq
 sQk
@@ -66211,7 +66218,7 @@ sQk
 mzq
 sQk
 kYX
-rXx
+qDT
 sQk
 sQk
 sQk
@@ -66455,7 +66462,7 @@ sQk
 sQk
 sQk
 sQk
-rXx
+qDT
 sQk
 sQk
 sQk
@@ -66468,7 +66475,7 @@ sQk
 sQk
 mzq
 sQk
-rXx
+qDT
 kak
 sQk
 iGK
@@ -66712,7 +66719,7 @@ sQk
 mzq
 mzq
 kak
-rXx
+qDT
 kak
 tou
 sQk
@@ -66725,12 +66732,12 @@ sQk
 tou
 sQk
 sQk
-rXx
-rXx
+qDT
+qDT
 sQk
-rXx
-rXx
-rXx
+qDT
+qDT
+qDT
 rXx
 aaM
 aaM
@@ -67483,7 +67490,7 @@ sQk
 sQk
 sQk
 dCw
-rXx
+qDT
 kak
 sQk
 mzq
@@ -67740,7 +67747,7 @@ sQk
 boT
 sQk
 sQk
-rXx
+qDT
 sQk
 dDS
 sQk
@@ -67997,7 +68004,7 @@ sQk
 sQk
 sQk
 sQk
-rXx
+qDT
 sQk
 sQk
 sQk
@@ -68254,7 +68261,7 @@ sQk
 sQk
 sQk
 sQk
-rXx
+qDT
 sQk
 mzq
 sQk
@@ -68507,11 +68514,11 @@ aaM
 aaM
 aaM
 rXx
-rXx
-rXx
-rXx
-rXx
-dDS
+qDT
+qDT
+qDT
+qDT
+npP
 mzq
 sQk
 sQk
@@ -68768,7 +68775,7 @@ dke
 dke
 dke
 dke
-rXx
+qDT
 sQk
 tou
 sQk
@@ -69025,7 +69032,7 @@ sQk
 mzq
 sQk
 sQk
-rXx
+qDT
 sQk
 mzq
 sQk
@@ -69539,7 +69546,7 @@ sQk
 sQk
 mzq
 sQk
-rXx
+qDT
 sQk
 tou
 sQk
@@ -69796,7 +69803,7 @@ dke
 dke
 dke
 dke
-rXx
+qDT
 sQk
 sQk
 sQk
@@ -70049,11 +70056,11 @@ aaM
 aaM
 aaM
 rXx
-rXx
-rXx
-rXx
-rXx
-dDS
+qDT
+qDT
+qDT
+qDT
+npP
 sQk
 mzq
 sQk
@@ -70310,7 +70317,7 @@ aUG
 mzq
 mzq
 mzq
-rXx
+qDT
 sQk
 sQk
 sQk
@@ -70567,7 +70574,7 @@ mzq
 mzq
 mzq
 fzX
-rXx
+qDT
 mzq
 sQk
 sQk
@@ -71081,7 +71088,7 @@ mzq
 mzq
 mzq
 mzq
-rXx
+qDT
 fzX
 mzq
 mzq

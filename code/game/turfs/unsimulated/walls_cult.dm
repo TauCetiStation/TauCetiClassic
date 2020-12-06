@@ -1,15 +1,15 @@
-/turf/simulated/wall/cult
+/turf/unsimulated/wall/cult
 	name = "wall"
 	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "box"
 	canSmoothWith = null
 
-/turf/simulated/floor/engine/cult
+/turf/unsimulated/floor/cult
 	name = "engraved floor"
 	icon_state = "cult"
 
-/turf/simulated/floor/engine/cult/lava
+/turf/unsimulated/floor/cult/lava
 	name = "lava"
 	icon_state = "lava"
 	light_color = "#9c660e"
