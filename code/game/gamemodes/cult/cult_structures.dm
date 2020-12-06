@@ -32,6 +32,8 @@
 	var/holy_outline
 	var/have_outline = FALSE
 
+	var/is_busy = FALSE
+
 	var/turf/last_turf
 	var/list/lying_items = list()
 	// illusion = real

@@ -69,7 +69,6 @@
 	var/waiting_interations = 0
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
 		if(!can_invocate(user, AOG, waiting_interations))
-			to_chat(world, "prekol")
 			break
 		P.create_holy_outline("#c50404")
 		for(var/ill in P.lying_illusions)
@@ -84,7 +83,6 @@
 				waiting_interations += 1
 
 			if(!can_invocate(user, AOG, waiting_interations))
-				to_chat(world, "mem")
 				break
 
 			if(i % rate_phrases == 1)
@@ -103,7 +101,6 @@
 		i += 1
 
 	if(!can_invocate(user, AOG, waiting_interations))
-		to_chat(world, "fawfwa")
 		reset_rite()
 		return FALSE
 
@@ -117,14 +114,6 @@
 	reset_rite()
 	return TRUE
 
-/datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
-	pedestals = list()
-	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
-		if(P.have_outline)
-			continue
-		pedestals += P
-		P.last_turf = get_turf(P)
-
 /datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG, waiting_time)
 	if(!AOG || !AOG.loc) // Due to the working beam, it will not be able to properly delete at this stage
 		return FALSE
@@ -132,10 +121,20 @@
 		return FALSE
 	return TRUE
 
+/datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
+	pedestals = list()
+	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
+		if(P.is_busy)
+			continue
+		P.is_busy = TRUE
+		pedestals += P
+		P.last_turf = get_turf(P)
+
 /datum/religion_rites/pedestals/proc/reset_rite()
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
 		P.clear_items()
 		P.del_holy_outline()
+		P.is_busy = FALSE
 	involved_pedestals = list()
 
 /datum/religion_rites/pedestals/test
