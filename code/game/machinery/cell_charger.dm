@@ -30,12 +30,10 @@
 		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	if(src in view(1, user))
+	if(in_range(user, src))
 		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 		if(charging)
 			to_chat(user, "Current charge: [charging.charge]")
-	else
-		to_chat(user, "It's cell charger. For charging cell's.")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
