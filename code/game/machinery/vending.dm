@@ -1379,7 +1379,8 @@ obj/machinery/vending/medical/storage
 	light_color = "#e6fff2"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access = list(5)
-	products = list(/obj/item/weapon/storage/firstaid/fire = 4,/obj/item/weapon/storage/firstaid/toxin = 4,
+	products = list(
+	/obj/item/weapon/storage/firstaid/regular = 4, /obj/item/weapon/storage/firstaid/fire = 4,/obj/item/weapon/storage/firstaid/toxin = 4,
 					/obj/item/weapon/storage/firstaid/o2 = 4,/obj/item/weapon/storage/firstaid/adv = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/clothing/glasses/hud/health = 6,
 					 /obj/item/clothing/accessory/stethoscope = 6, /obj/item/weapon/storage/box/gloves = 2, /obj/item/weapon/storage/box/masks = 2,
