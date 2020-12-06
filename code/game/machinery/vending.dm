@@ -238,14 +238,16 @@
 		W.loc = src
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
+//
+//	else if(src.panel_open)
+//		for(var/datum/data/vending_product/R in product_records)
+//			if(istype(W, R.product_path))
+//				stock(R, user)
+//				qdel(W)
+//	else
+//		..()
 
-	else if(src.panel_open)
-		for(var/datum/data/vending_product/R in product_records)
-			if(istype(W, R.product_path))
-				stock(R, user)
-				qdel(W)
-	else
-		..()
+// I commited this shit, because this abuse and dupe vendomat products.
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
@@ -1367,3 +1369,20 @@
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
+
+
+obj/machinery/vending/medical/storage
+	name = "NanoMed Storage+"
+	desc = "Wow! This vendomat replaces a bunch of shelves."
+	icon_state = "med-storage"
+	icon_deny = "medstorage-deny"
+	light_color = "#e6fff2"
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+	req_access = list(5)
+	products = list(/obj/item/weapon/storage/firstaid/fire = 4,/obj/item/weapon/storage/firstaid/toxin = 4,
+					obj/item/weapon/storage/firstaid/o2 = 4,/obj/item/weapon/storage/firstaid/adv = 4,
+					/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/clothing/glasses/hud/health = 6,
+					 /obj/item/clothing/accessory/stethoscope = 6, /obj/item/weapon/storage/box/gloves = 2, /obj/item/weapon/storage/box/masks = 2,
+					 /obj/item/weapon/storage/box/syringes = 2, /obj/item/weapon/storage/box/beakers = 1, /obj/item/weapon/storage/box/bodybags = 1)
+	contraband = list(/obj/item/weapon/defibrillator = 1,/obj/item/weapon/stock_parts/cell = 2)
+	refill_canister = /obj/item/weapon/vending_refill/medical/storage
