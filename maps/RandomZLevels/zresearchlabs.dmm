@@ -6811,7 +6811,7 @@
 /area/awaymission/labs/civilian)
 "pH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/tray{
+/obj/item/weapon/storage/visuals/tray{
 	pixel_y = 6
 	},
 /obj/structure/cable{

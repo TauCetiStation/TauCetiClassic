@@ -44278,7 +44278,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics Maintenance";
-	req_one_access = list(35, 28)
+	req_one_access = list(35,28)
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
@@ -47470,7 +47470,7 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/clothing/suit/space/rig/medical,
 /obj/item/clothing/head/helmet/space/rig/medical,
@@ -48828,7 +48828,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/item/clothing/suit/space/rig/medical,
 /obj/item/clothing/head/helmet/space/rig/medical,
