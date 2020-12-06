@@ -396,6 +396,7 @@
 		return
 	var/turf/T = get_turf(target)
 	if(T)
+		playsound(src, 'sound/mecha/mecha_teleport.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_teleport(chassis, T, 4)
@@ -842,7 +843,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator
 	name = "phoron generator"
 	desc = "Generates power using solid phoron as fuel. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "phoron"
 	origin_tech = "phorontech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
@@ -977,7 +978,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	name = "ExoNuclear reactor"
 	desc = "Generates power using uranium. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "uranium"
 	origin_tech = "powerstorage=3;engineering=3"
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10

@@ -124,3 +124,7 @@
 #define ismultitool(A) istype(A, /obj/item/device/multitool)
 
 #define iscoil(A) istype(A, /obj/item/stack/cable_coil)
+
+// OBJECTS
+
+#define isitem(A) (istype(A, /obj/item))

@@ -618,7 +618,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
+	desc = "This robot is used to support the miners and can search and collect ore or defend itself from wildlife."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -673,15 +673,15 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
 					health += 15
-					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
+					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
 
@@ -785,7 +785,7 @@
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
 	else
-		msg += "<span class='notice'>It looks without dents.</span>\n"
+		msg += "<span class='notice'>It looks undamaged.</span>\n"
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
