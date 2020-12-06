@@ -66,7 +66,7 @@
 	icon_state = "secmask"
 	var/cooldown = 0
 	var/aggressiveness = 2
-	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
