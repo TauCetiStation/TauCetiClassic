@@ -172,7 +172,6 @@
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube
-		/obj/item/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/glass,
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/glass,
