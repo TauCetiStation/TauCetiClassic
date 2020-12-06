@@ -57,6 +57,10 @@
 
 			animate(target, 2 SECONDS, alpha = 0)
 			sleep(2 SECONDS)
+			if(istype(target, /turf/simulated/wall/cult))
+				var/turf/simulated/wall/cult/C = target
+				C.dismantle_wall(TRUE)
+				break
 			qdel(target)
 			break
 
@@ -81,10 +85,9 @@
 	if(build_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>YOU CANT BUILD! Please wait about [round((build_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
-	var/turf/targeted_turf = get_step(src, user.dir)
 
 	for(var/datum/building_agent/B in build_choices_image)
-		B.name = "[initial(B.name)] ([B.favor_cost > 0 ? "[B.favor_cost] favors" : ""] [B.piety_cost > 0 ? "[B.piety_cost] piety" : ""])"
+		B.name = "[initial(B.name)] [B.get_costs()]"
 
 	var/datum/building_agent/choice = show_radial_menu(user, src, build_choices_image, tooltips = TRUE, require_near = TRUE)
 	if(!choice)
@@ -92,14 +95,18 @@
 
 	if(choice == "Toggle Grind mode")
 		toggle_deconstruct = !toggle_deconstruct
-		to_chat(user, "The mode of destruction of constructed structures is [toggle_deconstruct ? "enabled" : "disabled"].")
+		to_chat(user, "<span class='notice'>The mode of destruction of constructed structures is [toggle_deconstruct ? "enabled" : "disabled"].</span>")
 		return
 
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
+	var/turf/targeted_turf = get_step(src, user.dir)
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
+	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult) && religion.altar)
+		to_chat(user, "<span class='warning'>YOU CANT BUID ANOTHER ALTAR</span>")
+		return
 	else
 		new choice.building_type(targeted_turf)
 

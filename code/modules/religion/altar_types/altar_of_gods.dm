@@ -40,6 +40,7 @@
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
+	religion.altar = null
 	qdel(experiments)
 	return ..()
 

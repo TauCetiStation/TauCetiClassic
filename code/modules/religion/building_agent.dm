@@ -9,6 +9,25 @@
 	var/deconstruct_piety_cost
 	// TODO: Replace Pylon on Pedestal
 
+/datum/building_agent/proc/get_costs()
+	var/costs = ""
+
+	if(favor_cost || piety_cost)
+		costs += "("
+
+	if(favor_cost > 0)
+		costs += "[favor_cost] favor"
+
+	if(piety_cost > 0)
+		if(favor_cost > 0)
+			costs += " "
+		costs += "[piety_cost] piety"
+
+	if(favor_cost || piety_cost)
+		costs += ")"
+
+	return costs
+
 // For cultists
 /datum/building_agent/cult
 

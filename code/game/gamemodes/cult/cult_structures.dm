@@ -50,6 +50,11 @@
 	clear_items()
 	return ..()
 
+/obj/structure/cult/pylon/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
+		return
+	return ..()
+
 // Tracking items on a pedestal
 /obj/structure/cult/pylon/proc/put_item(atom/pedestal, obj/item/I, mob/user)
 	lying_items += I

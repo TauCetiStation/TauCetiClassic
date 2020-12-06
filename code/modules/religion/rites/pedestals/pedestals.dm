@@ -68,21 +68,23 @@
 	var/phrase_indx = 1
 	var/waiting_interations = 0
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
-		if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
+		if(!can_invocate(user, AOG, waiting_interations))
+			to_chat(world, "prekol")
 			break
 		P.create_holy_outline("#c50404")
-		// place for create .Beam
 		for(var/ill in P.lying_illusions)
 			waiting_interations = 0
-			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time =  INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
+			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
-			while(!item && waiting_interations != MAX_WAITING_TIME && AOG.anchored) // waiting item with antilag system
+			while(!item && can_invocate(user, AOG, waiting_interations)) // waiting item with antilag system
 				item = P.lying_illusions[ill]
 				stoplag(5 SECONDS)
+				to_chat(world, "In while - [world.time]")
 				waiting_interations += 1
 
-			if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
+			if(!can_invocate(user, AOG, waiting_interations))
+				to_chat(world, "mem")
 				break
 
 			if(i % rate_phrases == 1)
@@ -100,7 +102,8 @@
 		on_invocation(user, AOG, i)
 		i += 1
 
-	if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
+	if(!can_invocate(user, AOG, waiting_interations))
+		to_chat(world, "fawfwa")
 		reset_rite()
 		return FALSE
 
@@ -119,6 +122,13 @@
 	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
 		pedestals += P
 		P.last_turf = get_turf(P)
+
+/datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG, waiting_time)
+	if(!AOG.loc)
+		return FALSE
+	if(waiting_time == MAX_WAITING_TIME || !AOG.anchored)
+		return FALSE
+	return TRUE
 
 /datum/religion_rites/pedestals/proc/reset_rite()
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)

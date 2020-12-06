@@ -269,28 +269,28 @@
 /datum/religion/proc/check_costs(favor_cost, piety_cost, mob/user)
 	var/corrects = 0
 
-	if(favor_cost)
+	if(!isnull(favor_cost))
 		if(favor_cost > 0 && favor_cost > favor)
 			if(user)
 				to_chat(user, "<span class ='warning'>You need [favor_cost - favor] more favors.</span>")
 			return FALSE
-	corrects += 1
+		corrects += 1
 
-	if(piety_cost)
+	if(!isnull(piety_cost))
 		if(piety_cost > 0 && piety_cost > piety)
 			if(user)
 				to_chat(user, "<span class ='warning'>You need [piety_cost - piety] more piety.</span>")
 			return FALSE
-	corrects += 1
+		corrects += 1
 
 	switch(corrects)
 		if(1)
-			if(piety_cost && favor_cost)
+			if(!isnull(piety_cost) && !isnull(favor_cost))
 				return FALSE
-			else if(piety_cost || favor_cost)
+			else if(!isnull(piety_cost) || !isnull(favor_cost))
 				return TRUE
 		if(2)
-			if(piety_cost && favor_cost)
+			if(!isnull(piety_cost) && !isnull(favor_cost))
 				return TRUE
 
 // This predicate is used to determine whether this religion meets spells/rites aspect requirements.
