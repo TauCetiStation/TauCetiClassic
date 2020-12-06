@@ -394,7 +394,7 @@
 		dat += "<tr>"
 		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]'></span></td>"
 		dat += "<td><B>[R.product_name]</B></td>"
-		dat += "<td class='collapsing' align='center'><span class='[R.amount > 1 ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
+		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
 			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] cr." : "FREE"]</A></td>"
 		else
