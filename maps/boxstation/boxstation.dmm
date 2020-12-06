@@ -35876,6 +35876,10 @@
 "bmD" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmE" = (
