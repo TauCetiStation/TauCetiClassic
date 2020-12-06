@@ -476,6 +476,18 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "NanoMed Plus supply crate"
 	group = "Hospitality"
 
+
+/datum/supply_pack/vending_medical
+	name = "NanoMed Plus supply crate"
+	contains = list(/obj/item/weapon/vending_refill/medical/storage,
+					/obj/item/weapon/vending_refill/medical/storage,
+					/obj/item/weapon/vending_refill/medical/storage)
+	cost = 7500
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "NanoMed Storage+ supply crate"
+	group = "Hospitality"
+
+
 /datum/supply_pack/vending_chinese
 	name = "Mr. Chang supply crate"
 	contains = list(/obj/item/weapon/vending_refill/chinese,
