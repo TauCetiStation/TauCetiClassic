@@ -98,18 +98,21 @@
 	var/icon/holo_icon = getHologramIcon(icon(initial(type.icon), initial(type.icon_state)))
 
 	for(var/i in 1 to count)
-		var/obj/effect/overlay/item_illusion/I = new(loc)
-		I.my_fake_type = type
-		I.name = initial(type.name)
-		I.pixel_x = rand(-14, 14)
-		I.pixel_y = rand(-12, 12)
-		var/image/image = image(holo_icon, I, initial(type.icon_state))
-		I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "rite_holo_items", image)
-		lying_illusions[I] = null
-		stoplag() // optimization?
+		create_illusion(type, holo_icon)
 
 	check_current_items()
 	get_off_useless_items()
+
+/obj/structure/cult/pylon/proc/create_illusion(atom/type, holo_icon)
+	var/obj/effect/overlay/item_illusion/I = new(loc)
+	I.my_fake_type = type
+	I.name = initial(type.name)
+	I.pixel_x = rand(-14, 14)
+	I.pixel_y = rand(-12, 12)
+	var/image/image = image(holo_icon, I, initial(type.icon_state))
+	I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "rite_holo_items", image)
+	lying_illusions[I] = null
+	stoplag()
 
 /obj/structure/cult/pylon/proc/clear_items()
 	for(var/k in lying_illusions)

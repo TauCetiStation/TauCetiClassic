@@ -31,7 +31,7 @@
 	for(var/i = 1; i <= pedestals.len; i += pedestals.len/rules.len)
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
 		var/obj/structure/cult/pylon/P = pedestals[i]
-		P.create_illusions(rules[rules_indx], rules[rules[rules_indx]])
+		INVOKE_ASYNC(P, /obj/structure/cult/pylon.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
 	return TRUE
@@ -68,21 +68,21 @@
 	var/phrase_indx = 1
 	var/waiting_interations = 0
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
-		if(waiting_interations == MAX_WAITING_TIME)
+		if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
 			break
 		P.create_holy_outline("#c50404")
 		// place for create .Beam
 		for(var/ill in P.lying_illusions)
-			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time=INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
+			waiting_interations = 0
+			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time =  INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
-			while(!item && waiting_interations != MAX_WAITING_TIME) // waiting item with antilag system
+			while(!item && waiting_interations != MAX_WAITING_TIME && AOG.anchored) // waiting item with antilag system
 				item = P.lying_illusions[ill]
-				to_chat(world, "i`am in while - [world.time]")
 				stoplag(5 SECONDS)
 				waiting_interations += 1
 
-			if(waiting_interations == MAX_WAITING_TIME)
+			if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
 				break
 
 			if(i % rate_phrases == 1)
@@ -100,7 +100,7 @@
 		on_invocation(user, AOG, i)
 		i += 1
 
-	if(waiting_interations == MAX_WAITING_TIME)
+	if(waiting_interations == MAX_WAITING_TIME || !AOG.anchored)
 		reset_rite()
 		return FALSE
 
