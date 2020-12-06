@@ -24,7 +24,7 @@
 		for(var/obj/O in src.loc)
 			if(O.density || O.anchored || O == src)
 				continue
-			I.forceMove(src)
+			O.forceMove(src)
 	PopulateContents()
 	update_icon()
 
