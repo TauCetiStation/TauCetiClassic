@@ -116,36 +116,36 @@
 /obj/machinery/biogenerator/ui_interact(mob/user)
 	var/dat
 	if(processing)
-		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
+		dat += "<div class='Section'>Biogenerator is processing! Please wait...</div><BR>"
 	else
 		switch(menustat)
 			if("nopoints")
-				dat += "<div class='statusDisplay'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
+				dat += "<div class='Section'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
 				menustat = "menu"
 			if("complete")
-				dat += "<div class='statusDisplay'>Operation complete.</div>"
+				dat += "<div class='Section'>Operation complete.</div>"
 				menustat = "menu"
 			if("void")
-				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
+				dat += "<div class='Section'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
 				menustat = "menu"
 		if(beaker)
-			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
+			dat += "<div class='Section'>Biomass: [points] units.</div><BR>"
 			dat += "<A href='?src=\ref[src];action=activate'>Activate</A><A href='?src=\ref[src];action=detach'>Detach Container</A>"
 			dat += "<h3>Food:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
 			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=monkey'>Make</A> ([250/efficiency])<BR>"
 			dat += "Meat slice: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([80/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
 			dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
 			dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather:</h3>"
-			dat += "<div class='statusDisplay'>"
+			dat += "<div class='Section'>"
 			dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
 			//dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
@@ -159,7 +159,7 @@
 			dat += "Leather Overcoat: <A href='?src=\ref[src];action=create;item=overcoat'>Make</A> ([1000/efficiency])<BR>"
 			dat += "</div>"
 		else
-			dat += "<div class='statusDisplay'>No beaker inside, please insert beaker.</div>"
+			dat += "<div class='Section'>No beaker inside, please insert beaker.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)

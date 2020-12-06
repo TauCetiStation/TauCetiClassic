@@ -244,11 +244,11 @@
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] has failed!</span>"
+					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
 	if(text)
 		antagonists_completion += list(list("mode" = "ninja", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

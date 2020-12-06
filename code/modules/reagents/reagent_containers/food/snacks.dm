@@ -303,6 +303,7 @@
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
 	filling_color = "#d9c386"
+	var/donut_sprite_type = "regular"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	name = "donut"
@@ -316,6 +317,7 @@
 	if(prob(30))
 		icon_state = "donut2"
 		name = "frosted donut"
+		donut_sprite_type = "frosted"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "Chaos Donut"
@@ -357,6 +359,7 @@
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "berryjuice" = 5)
@@ -366,11 +369,13 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "slimejelly" = 5)
@@ -380,11 +385,13 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	donut_sprite_type = "jelly"
 	filling_color = "#ed1169"
 	bitesize = 5
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3, "cherryjelly" = 5)
@@ -394,6 +401,7 @@
 	if(prob(30))
 		src.icon_state = "jdonut2"
 		src.name = "Frosted Jelly Donut"
+		donut_sprite_type = "frostedjelly"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -1784,7 +1792,7 @@
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/machinery/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/tray) in src.loc) \
+			!(locate(/obj/item/weapon/storage/visuals/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return FALSE
@@ -3158,6 +3166,7 @@
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
+	item_state = "baton"
 	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/malper

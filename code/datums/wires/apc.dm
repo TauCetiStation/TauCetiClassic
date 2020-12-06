@@ -7,12 +7,12 @@ var/const/APC_WIRE_AI_CONTROL  = 8
 	holder_type = /obj/machinery/power/apc
 	wire_count = 4
 
-/datum/wires/apc/get_interact_window()
+/datum/wires/apc/get_status()
 	var/obj/machinery/power/apc/A = holder
 	. += ..()
-	. += "<br>[(A.locked ? "The APC is locked." : "The APC is unlocked.")]"
-	. += "<br>[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]"
-	. += "<br>[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]"
+	. += "[(A.locked ? "The APC is locked." : "The APC is unlocked.")]"
+	. += "[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]"
+	. += "[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]"
 
 /datum/wires/apc/can_use()
 	var/obj/machinery/power/apc/A = holder

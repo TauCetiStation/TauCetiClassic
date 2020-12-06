@@ -1,8 +1,8 @@
 SUBSYSTEM_DEF(parallax)
 	name = "Parallax"
 
-	priority = SS_PRIORITY_PARALAX
-	wait     = SS_WAIT_PARALAX
+	priority = SS_PRIORITY_PARALLAX
+	wait     = SS_WAIT_PARALLAX
 
 	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
 

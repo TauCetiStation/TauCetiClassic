@@ -282,6 +282,7 @@
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
+		W.set_alt_apperances_layers()
 		W.Move(new_location)
 	else
 		W.Move(get_turf(src))
@@ -312,20 +313,6 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = I
-		if(T.calc_carry() > 0)
-			if(prob(85))
-				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
-				return FALSE
-			else
-				I.forceMove(user.loc)
-				if(user.client && user.s_active != src)
-					user.client.screen -= I
-				I.dropped(user)
-				to_chat(user, "<span class='warning'>God damnit!</span>")
-			return
-
 	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
@@ -334,6 +321,7 @@
 	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
+	..()
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)

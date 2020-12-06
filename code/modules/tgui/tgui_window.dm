@@ -75,7 +75,7 @@
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Instruct the client to signal UI when the window is closed.
-	winset(client, id, "on-close=\"uiclose [id]\"")
+	winset(client, id, "on-close=\"tguiclose [id]\"")
 
 /**
  * public

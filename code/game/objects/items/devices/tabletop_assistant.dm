@@ -59,7 +59,7 @@
 		if(CARD_MODE)
 			dat += "<a href='?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
 			dat += "<a href='?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards</a><BR>"
-			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck<BR></a>"
+			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck</a><BR>"
 			dat += "<a href='?src=\ref[src];carddeductlost=1'>Lost Cards Deduction</a><BR>"
 			dat += "<a href='?src=\ref[src];cardtakecertain=1'>Take Certain Card</a><BR>"
 			if(interaction_mode == CARD_PICKUP_MODE)
@@ -97,8 +97,6 @@
 	var/datum/browser/popup = new(user, "tabletop_assistant", "Tabletop Assistant")
 	popup.set_content(data)
 	popup.open()
-
-	onclose(user, "tabletop_assistant")
 
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
 	..()
