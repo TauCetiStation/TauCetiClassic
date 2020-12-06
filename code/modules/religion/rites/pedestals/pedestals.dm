@@ -120,11 +120,13 @@
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
 	pedestals = list()
 	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
+		if(P.have_outline)
+			continue
 		pedestals += P
 		P.last_turf = get_turf(P)
 
 /datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG, waiting_time)
-	if(!AOG.loc)
+	if(!AOG || !AOG.loc) // Due to the working beam, it will not be able to properly delete at this stage
 		return FALSE
 	if(waiting_time == MAX_WAITING_TIME || !AOG.anchored)
 		return FALSE
