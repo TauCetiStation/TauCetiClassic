@@ -97,15 +97,6 @@
 	else
 		return attack_hand(user)
 
-/obj/structure/closet/crate/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		for(var/obj/O in src)
-			O.forceMove(get_turf(src))
-		qdel(src)
-
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
 		if(1.0)
