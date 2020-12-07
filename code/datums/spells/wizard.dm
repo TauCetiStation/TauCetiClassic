@@ -48,7 +48,7 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>вы чувствовать сила! Вы чувствуете давление в области глаз!</span>"
+	message = "<span class='notice'>Вы чувствовать сила! Вы чувствуете давление в области глаз!</span>"
 	range = -1
 	include_user = 1
 	sound = 'sound/magic/Mutate.ogg'
