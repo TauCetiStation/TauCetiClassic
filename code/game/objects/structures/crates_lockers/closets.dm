@@ -176,7 +176,7 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		open()
+		dump_contents()
 		qdel(src)
 
 /obj/structure/closet/blob_act()
