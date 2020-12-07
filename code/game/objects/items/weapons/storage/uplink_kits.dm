@@ -191,6 +191,7 @@
 	new /obj/item/clothing/glasses/chameleon(src)
 	new /obj/item/weapon/gun/projectile/chameleon(src)
 	new /obj/item/ammo_box/magazine/chameleon(src)
+	new /obj/item/device/radio/headset/chameleon(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon

@@ -442,13 +442,6 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
 
-/datum/uplink_item/stealthy_tools/chameleon_headset
-	name = "Chameleon Headset"
-	desc = "A headset with built in golographic projector that can imitate other headsets, and even intercom \
-			and radio. How? Science! Also, keep this thing away from EMP. "
-	item = /obj/item/device/radio/headset/chameleon
-	cost = 1
-
 /datum/uplink_item/stealthy_tools/chameleon_penstamp
 	name = "Fake Bureucracy Set"
 	desc = "This set allows you to forge various documents at the station."
