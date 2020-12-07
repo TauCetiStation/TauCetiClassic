@@ -76,12 +76,6 @@
 		set_broken()
 	..()
 
-
-/obj/machinery/computer/blob_act()
-	if (prob(50))
-		qdel(src)
-		return
-
 /obj/machinery/computer/update_icon()
 	..()
 	icon_state = initial(icon_state)
