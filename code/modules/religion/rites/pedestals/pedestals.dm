@@ -28,7 +28,8 @@
 		return FALSE
 
 	var/rules_indx = 1
-	for(var/i = 1; i <= pedestals.len; i += pedestals.len/rules.len)
+	var/for_step = pedestals.len/rules.len
+	for(var/i in 1 to pedestals.len step for_step)
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
 		var/obj/structure/cult/pylon/P = pedestals[i]
 		INVOKE_ASYNC(P, /obj/structure/cult/pylon.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
@@ -213,7 +214,7 @@
 		/obj/structure/cult/pylon = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
-		/obj/structure/cult/spacewhole = 2,
+		/obj/effect/spacewhole = 2,
 		/obj/structure/cult/talisman = 2,
 	)
 
@@ -237,7 +238,7 @@
 		/obj/structure/cult/pylon = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
-		/obj/structure/cult/spacewhole = 2,
+		/obj/effect/spacewhole = 2,
 		/obj/structure/cult/talisman = 2,
 		/obj/structure/cult/tome= 2,
 		/obj/structure/bonfire/dynamic = 3,

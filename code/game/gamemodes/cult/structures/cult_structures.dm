@@ -27,9 +27,10 @@
 	light_power = 2
 	light_range = 2
 
-/obj/structure/cult/spacewhole
+/obj/effect/spacewhole
 	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "space"
 
 /obj/effect/timewhole

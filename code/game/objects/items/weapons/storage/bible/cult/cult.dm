@@ -56,6 +56,14 @@
 		to_chat(user, "<span class='warning'>YOU CANT DESTROY! Please wait about [round((destr_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
+	if(target.type in religion.strange_anomalies)
+		animate(target, 1 SECONDS, alpha = 0)
+		sleep(1 SECONDS)
+		religion.adjust_favor(rand(1, 5))
+		qdel(target)
+		destr_next[user.ckey] = world.time + destr_cd
+		return
+
 	for(var/datum/building_agent/B in religion.available_buildings)
 		if(istype(target, B.building_type))
 			if(!religion.check_costs(B.deconstruct_favor_cost, B.deconstruct_piety_cost, user))

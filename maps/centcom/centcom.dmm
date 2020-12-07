@@ -13068,10 +13068,6 @@
 	icon_state = "swall12"
 	},
 /area/shuttle/escape/centcom)
-"aUG" = (
-/obj/structure/cult/shell,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "aUH" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -16221,11 +16217,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"boT" = (
-/obj/structure/cult/spacewhole,
-/obj/effect/rune,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "bpb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -17405,10 +17396,6 @@
 	icon_state = "floorgrime"
 	},
 /area/velocity)
-"dDS" = (
-/obj/structure/cult/shell,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "dEb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell3";
@@ -18380,10 +18367,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"fzX" = (
-/obj/structure/cult/spacewhole,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "fAb" = (
 /obj/item/device/flashlight/lamp/green{
 	anchored = 1;
@@ -18513,10 +18496,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/prison)
-"fMu" = (
-/obj/effect/timewhole,
-/turf/simulated/wall/cult,
-/area/custom/cult)
 "fNb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -21049,10 +21028,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
-"kYX" = (
-/obj/structure/cult/spacewhole,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kZb" = (
 /obj/machinery/light{
 	dir = 1
@@ -22095,10 +22070,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"npP" = (
-/obj/structure/cult/shell,
-/turf/simulated/wall/cult,
-/area/custom/cult)
 "nqb" = (
 /obj/machinery/computer/security/telescreen,
 /turf/unsimulated/floor{
@@ -23400,10 +23371,6 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "sQk" = (
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tou" = (
-/obj/effect/timewhole,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "tyj" = (
@@ -65697,13 +65664,13 @@ sQk
 mzq
 mzq
 sQk
-dDS
+sQk
 mzq
-tou
+sQk
 mzq
 sQk
 sQk
-dDS
+sQk
 qDT
 iGK
 iGK
@@ -65948,7 +65915,7 @@ sQk
 sQk
 sQk
 sQk
-fMu
+qDT
 sQk
 mzq
 sQk
@@ -66212,12 +66179,12 @@ sQk
 sQk
 sQk
 sQk
-kYX
+sQk
 sQk
 sQk
 mzq
 sQk
-kYX
+sQk
 qDT
 sQk
 sQk
@@ -66721,7 +66688,7 @@ mzq
 kak
 qDT
 kak
-tou
+sQk
 sQk
 sQk
 sQk
@@ -66729,7 +66696,7 @@ mzq
 sQk
 sQk
 sQk
-tou
+sQk
 sQk
 sQk
 qDT
@@ -66974,7 +66941,7 @@ aaM
 rXx
 mzq
 sQk
-tou
+sQk
 sQk
 sQk
 mzq
@@ -66984,7 +66951,7 @@ sQk
 sQk
 sQk
 sQk
-tou
+sQk
 sQk
 sQk
 sQk
@@ -67238,7 +67205,7 @@ sQk
 sQk
 mzq
 sQk
-tou
+sQk
 sQk
 sQk
 mzq
@@ -67744,12 +67711,12 @@ aaM
 aaM
 rXx
 sQk
-boT
+sQk
 sQk
 sQk
 qDT
 sQk
-dDS
+sQk
 sQk
 mzq
 sQk
@@ -68518,7 +68485,7 @@ qDT
 qDT
 qDT
 qDT
-npP
+qDT
 mzq
 sQk
 sQk
@@ -68777,7 +68744,7 @@ dke
 dke
 qDT
 sQk
-tou
+sQk
 sQk
 sQk
 sQk
@@ -68793,7 +68760,7 @@ kak
 sQk
 sQk
 sQk
-dDS
+sQk
 rXx
 aaM
 aaM
@@ -69294,17 +69261,17 @@ sQk
 sQk
 sQk
 mzq
-tou
+sQk
 sQk
 mzq
 sQk
-dDS
 sQk
 sQk
 sQk
 sQk
 sQk
-tou
+sQk
+sQk
 sQk
 sQk
 sQk
@@ -69548,7 +69515,7 @@ mzq
 sQk
 qDT
 sQk
-tou
+sQk
 sQk
 sQk
 sQk
@@ -69808,7 +69775,7 @@ sQk
 sQk
 sQk
 sQk
-tou
+sQk
 sQk
 sQk
 sQk
@@ -70060,7 +70027,7 @@ qDT
 qDT
 qDT
 qDT
-npP
+qDT
 sQk
 mzq
 sQk
@@ -70313,7 +70280,7 @@ aaM
 aaM
 aaM
 rXx
-aUG
+mzq
 mzq
 mzq
 mzq
@@ -70573,7 +70540,7 @@ rXx
 mzq
 mzq
 mzq
-fzX
+mzq
 qDT
 mzq
 sQk
@@ -70833,7 +70800,7 @@ mzq
 mzq
 mzq
 mzq
-aUG
+mzq
 mzq
 mzq
 mzq
@@ -71089,7 +71056,7 @@ mzq
 mzq
 mzq
 qDT
-fzX
+mzq
 mzq
 mzq
 mzq

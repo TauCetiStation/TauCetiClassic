@@ -10,7 +10,7 @@
 	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
 
-	var/datum/religion/religion
+	var/datum/religion/cult/religion
 	var/religify_next = list()
 	var/religify_cd = 3 MINUTE
 
