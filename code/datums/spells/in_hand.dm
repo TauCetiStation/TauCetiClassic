@@ -147,7 +147,7 @@
 
 /obj/effect/proc_holder/spell/in_hand/tesla
 	name = "Шаровая молния"
-	desc = "Выстреливает молнией в ваших врагов."
+	desc = "Выстрелите молнией в ваших врагов!"
 	school = "evocation"
 	charge_max = 400
 	clothes_req = 1
