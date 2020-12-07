@@ -123,12 +123,6 @@
 
 	// Health
 	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			alive_mob_list += src
-			stat = CONSCIOUS
-			density = 1
 		return 0
 
 	else if(health < 1)
@@ -244,6 +238,11 @@
 /mob/living/simple_animal/rejuvenate()
 	..()
 	icon_state = icon_living
+
+/mob/living/simple_animal/revive()
+	..()
+	density = initial(density)
+	mouse_opacity = initial(mouse_opacity)
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)
