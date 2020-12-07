@@ -2138,19 +2138,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/num = text2num(matrixString)
 		if(isnum(num))
 			matrix += num
-	if(href_list["everyone"] == "y")
 
-		if(href_list["animate"] == "y")
-			for(var/client/c)
-				animate(c, color=matrix, time=5, easing=SINE_EASING)
-		else
-			for(var/client/c)
-				c.color = matrix
+	var/list/show_to = list(usr.client)
+
+	if(href_list["everyone"] == "y")
+		show_to = clients
+
+	if(href_list["animate"] == "y")
+		for(var/client/C in show_to)
+			animate(C, color = matrix, time = 5, easing = SINE_EASING)
 	else
-		if(href_list["animate"] == "y")
-			animate(usr.client, color=matrix, time=5, easing=SINE_EASING)
-		else
-			usr.client.color = matrix
+		for(var/client/C in show_to)
+			C.color = matrix
 
 /datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
 	var/paramsJS = list2params(params)
