@@ -59,10 +59,12 @@
 
 	H.loot_mod = 0.0
 	H.faction = "neutral"
+	H.stop_automated_movement_when_pulled = TRUE
 
 /datum/component/mob_modifier/friendly/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.loot_mod = initial(H.loot_mod)
 	H.faction = initial(H.faction)
+	H.stop_automated_movement_when_pulled = initial(H.stop_automated_movement_when_pulled)
 	return ..()
