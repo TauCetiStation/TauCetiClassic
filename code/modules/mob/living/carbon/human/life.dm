@@ -1457,7 +1457,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/welding) )
 			var/obj/item/clothing/glasses/welding/O = glasses
 			if(!O.up && tinted_weldhelh)
-				impaired = max(impaired, 1)
+				impaired = max(impaired, 2)
 
 		if(eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
