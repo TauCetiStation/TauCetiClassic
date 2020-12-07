@@ -715,16 +715,12 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "abductor_hypo"
 
-/obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user, proximity, params)
-	if(!loaded)
-		return
-	if(isliving(target))
-		var/mob/living/M = target
-		M.revive()
-		loaded = 0
-		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-		icon_state = "abductor_empty"
+/obj/item/weapon/lazarus_injector/alien/revive(mob/living/target, mob/living/user)
+	target.revive()
+	loaded = FALSE
+	user.visible_message("<span class='notice'>[user] injects [target] with [src], fully heal it.</span>")
+	playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien
 	icon = 'icons/obj/abductor.dmi'
