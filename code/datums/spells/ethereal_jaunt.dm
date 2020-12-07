@@ -2,7 +2,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	name = "Выход из тела"
-	desc = "Делает вас прозрачеым и невидимым, позволяя летать и проходить сквозь стены."
+	desc = "Делает вас прозрачным и невидимым, позволяя летать и проходить сквозь стены."
 
 	school = "transmutation"
 	charge_max = 300
