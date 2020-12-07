@@ -2155,4 +2155,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
 	var/paramsJS = list2params(params)
 	client << output(paramsJS,"colormatrix.browser:[funcName]")
-	return
