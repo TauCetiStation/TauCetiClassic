@@ -12,6 +12,8 @@
 
 	var/is_busy = FALSE
 
+	var/datum/religion_rites/pedestals/my_rite
+
 	var/turf/last_turf
 	var/list/lying_items = list()
 	// illusion = real
@@ -28,6 +30,8 @@
 		UnregisterSignal(I, list(COMSIG_MOVABLE_MOVED))
 	qdel(lying_items)
 	clear_items()
+	if(my_rite)
+		my_rite.reset_rite()
 	return ..()
 
 /obj/structure/cult/pylon/attackby(obj/item/W, mob/user, params)

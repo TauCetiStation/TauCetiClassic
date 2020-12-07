@@ -20,117 +20,6 @@
 			if(ghost_sound)
 				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
-/* Old TG code that didn't work
-
-/obj/effect/effect/sleep_smoke
-	name = "smoke"
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 6.0
-	//Remove this bit to use the old smoke
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
-	color = "#9c3636"
-
-/obj/effect/effect/sleep_smoke/atom_init()
-	. = ..()
-	spawn (200+rand(10,30))
-		qdel(src)
-	return
-
-/obj/effect/effect/sleep_smoke/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	. = ..()
-	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
-		else
-			M.drop_item()
-			M:sleeping += 5
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
-
-/obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(istype(M, /mob/living/carbon))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal)) // Work on it later
-			return
-		else
-			M.drop_item()
-			M:sleeping += 5
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
-
-/datum/effect/effect/system/sleep_smoke_spread
-	var/total_smoke = 0 // To stop it being spammed and lagging!
-	var/direction
-
-/datum/effect/effect/system/sleep_smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
-
-
-/datum/effect/effect/proc/fadeOut2(atom/A, frames = 16)
-	if(A.alpha == 0) //Handle already transparent case
-		return
-	if(frames == 0)
-		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
-	var/step = A.alpha / frames
-	for(var/i = 0, i < frames, i++)
-		A.alpha -= step
-		sleep(world.tick_lag)
-	return
-
-/datum/effect/effect/system/sleep_smoke_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				if(smoke)
-					fadeOut2(smoke)
-					qdel(smoke)
-				src.total_smoke--
-
-//////////////////////END?////////////////////////////////////////////
-
-*/
-
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -224,8 +113,11 @@
 		if(istype(T, /obj/structure/object_wall))
 			return
 		if(istype(T, /turf/simulated/floor))
-			if(prob(20))
+			if(prob(50))
 				T.ChangeTurf(pick(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava))
+			if(prob(5))
+				var/obj = pick(/obj/effect/spacewhole, /obj/effect/timewhole, /obj/effect/orb, /obj/structure/cult/shell)
+				new obj(T)
 		if(istype(T, /turf/simulated/wall))
 			if(prob(20))
 				T.ChangeTurf(/turf/simulated/wall/cult)

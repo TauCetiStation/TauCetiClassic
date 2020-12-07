@@ -32,6 +32,7 @@
 	for(var/i in 1 to pedestals.len step for_step)
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
 		var/obj/structure/cult/pylon/P = pedestals[i]
+		P.my_rite = src
 		INVOKE_ASYNC(P, /obj/structure/cult/pylon.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
@@ -77,10 +78,10 @@
 			var/datum/beam/B = AOG.Beam(ill, "drainbeam", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 			sleep(ritual_length / items)
 			var/obj/item/item = P.lying_illusions[ill]
-			while(!item && can_invocate(user, AOG, waiting_interations)) // waiting item with antilag system
+			while(!item && P && can_invocate(user, AOG, waiting_interations)) // waiting item with antilag system
 				item = P.lying_illusions[ill]
 				stoplag(5 SECONDS)
-				to_chat(world, "In while - [world.time]")
+				to_chat(world, "In while - [world.time] - [P]")
 				waiting_interations += 1
 
 			if(!can_invocate(user, AOG, waiting_interations))
@@ -118,16 +119,15 @@
 /datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG, waiting_time)
 	if(!AOG || !AOG.loc) // Due to the working beam, it will not be able to properly delete at this stage
 		return FALSE
-	if(waiting_time == MAX_WAITING_TIME || !AOG.anchored)
+	if(waiting_time == MAX_WAITING_TIME || !AOG.anchored || !involved_pedestals.len)
 		return FALSE
 	return TRUE
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
 	pedestals = list()
 	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
-		if(P.is_busy)
+		if(P.my_rite)
 			continue
-		P.is_busy = TRUE
 		pedestals += P
 		P.last_turf = get_turf(P)
 
@@ -135,7 +135,7 @@
 	for(var/obj/structure/cult/pylon/P in involved_pedestals)
 		P.clear_items()
 		P.del_holy_outline()
-		P.is_busy = FALSE
+		P.my_rite = null
 	involved_pedestals = list()
 
 /datum/religion_rites/pedestals/test
