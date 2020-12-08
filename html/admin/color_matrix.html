@@ -147,8 +147,6 @@
     </form>
 
     <script type="text/javascript">
-  // i present to you the worst structured javascript i've ever written
-  fuckYouByondBrowser();
   var ordering = ["rr", "rg", "rb", "ra", "gr", "gg", "gb", "ga", "br", "bg", "bb", "ba", "ar", "ag", "ab", "aa", "cr", "cg", "cb", "ca"];
   window.onload = restoreFromURL(document.location.href);
   var identityMatrix = [
@@ -307,38 +305,6 @@
     return params;
   }
 
-
-
-  function fuckYouByondBrowser() {
-
-    if(!document.getElementsByClassName) {
-      document.getElementsByClassName = function (cl) {
-        var pattern, i,
-        d = document,
-        results = [];
-
-        if(d.querySelectorAll) {
-          return d.querySelectorAll("." + cl);
-        }
-        if (d.evaluate) {
-          pattern = ".//*[contains(concat(' ', @class, ' '),' " + cl + " ')]";
-          elements = d.evaluate(pattern, d, null, 0, null);
-          while ((i = elements.iterateNext())) {
-            results.push(i)
-          }
-        } else {
-          elements = document.getElementsByTagName("*");
-          pattern = new RegExp("(^|\\s)" + cl + "(\\s|$)");
-          for(i = 0; i < elements.length; i++) {
-            if ( pattern.test(elements[i].className) ) {
-              results.push(elements[i]);
-            }
-          }
-        }
-        return results;
-      };
-    }
-  }
 </script>
 </body>
 </html>
