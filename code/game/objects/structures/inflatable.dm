@@ -155,7 +155,8 @@
 
 	if(isobserver(usr)) //to stop ghosts from deflating
 		return
-
+	if(usr.incapacitated())
+		return
 	deflate()
 
 /obj/item/inflatable/door
