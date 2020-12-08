@@ -5,7 +5,7 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = CONDUCT
-	force = 5.0
+	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
@@ -74,7 +74,8 @@
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
-	force = 7.0
+	force = 15.0
+	throwforce = 15.0
 
 /obj/item/weapon/storage/toolbox/syndicate/atom_init()
 	. = ..()
