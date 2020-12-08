@@ -44,7 +44,7 @@
     else if(stat == DEAD && Heart.parent_bodypart == target_zone)
         INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
         return TRUE
-    else if(!(attacker == src && apply_pressure(attacker, target_zone)))
+    else if(attacker != src || !apply_pressure(attacker, target_zone))
         if(target_zone == O_MOUTH && attacker == src)
             attacker.force_vomit(src)
         else
