@@ -685,12 +685,3 @@
 /mob/shake_act(severity, recursive = TRUE)
 	..()
 	shake_camera(src, 0.5 SECONDS, severity)
-
-/atom/proc/set_alt_apperances_layers()
-	if(alternate_appearances)
-		for(var/key in alternate_appearances)
-			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
-			if(AA.theImage)
-				AA.theImage.layer = layer
-				AA.theImage.plane = plane
-				AA.theImage.appearance_flags = appearance_flags

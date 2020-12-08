@@ -51,6 +51,12 @@
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 
+// /area signals
+///from base of area/Entered(): (atom/movable/M)
+#define COMSIG_AREA_ENTERED "area_entered"
+///from base of area/Exited(): (atom/movable/M)
+#define COMSIG_AREA_EXITED "area_exited"
+
 // /atom signals
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"

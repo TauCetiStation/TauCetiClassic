@@ -356,7 +356,8 @@ var/list/ghostteleportlocs = list()
 			used_environ += amount
 
 
-/area/Entered(A)
+/area/Entered(atom/movable/A)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
 	if (!isliving(A))
 		return
 
@@ -398,6 +399,13 @@ var/list/ghostteleportlocs = list()
 		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
+/**
+  * Called when an atom exits an area
+  *
+  * Sends signals COMSIG_EXIT_AREA (to the atom)
+  */
+/area/Exited(atom/movable/M)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate

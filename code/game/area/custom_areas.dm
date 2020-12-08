@@ -69,8 +69,9 @@
 /area/custom/cult
 	name = "Cult Heaven"
 	icon_state = "cult-heaven"
-	requires_power = 0
+	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	is_force_ambience = TRUE
 	ambience = list(
 		'sound/ambience/ambiruin1.ogg',
 		'sound/ambience/ambiruin2.ogg',

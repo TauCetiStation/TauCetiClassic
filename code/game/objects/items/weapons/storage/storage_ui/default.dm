@@ -171,7 +171,6 @@
 		//O.hud_layerise()
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
-		O.set_alt_apperances_layers()
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -223,7 +222,6 @@
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
-			ND.sample_object.set_alt_apperances_layers()
 			click_border_start[ND.sample_object_index] = (cx-4)*32
 			click_border_end[ND.sample_object_index] = (cx-4)*32+32
 			cx++
@@ -236,7 +234,6 @@
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
-			O.set_alt_apperances_layers()
 			click_border_start += (cx-4)*32
 			click_border_end += (cx-4)*32+32
 			cx++
@@ -305,6 +302,5 @@
 		O.maptext = ""
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = HUD_PLANE
-		O.set_alt_apperances_layers()
 
 	closer.screen_loc = "4:[storage_width+19],2:16"

@@ -442,6 +442,7 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(DROPDEL & flags)
 		qdel(src)
+	set_alt_apperances_layers()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -467,7 +468,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
-	return
+	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -1003,3 +1004,11 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	return
+
+/obj/item/proc/set_alt_apperances_layers()
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			AA.theImage.layer = layer
+			AA.theImage.plane = plane
+			AA.theImage.appearance_flags = appearance_flags

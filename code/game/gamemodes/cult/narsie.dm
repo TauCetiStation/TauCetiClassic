@@ -2,8 +2,8 @@
 	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
-	pixel_x = -89
-	pixel_y = -85
+	pixel_x = -46
+	pixel_y = -43
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?

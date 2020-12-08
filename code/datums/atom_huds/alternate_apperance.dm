@@ -23,7 +23,7 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 	var/transfer_overlays = FALSE
-	var/static/atom/alternate_obj
+	var/atom/alternate_obj
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
@@ -32,6 +32,7 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	global.active_alternate_appearances -= src
+	qdel(alternate_obj)
 	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/update_alt_appearance(mob/M)
@@ -91,8 +92,13 @@ var/global/list/active_alternate_appearances = list()
 		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
 		//This is necessary so that sprites are not layered
 		theImage.override = TRUE
+		theImage.pixel_x = alternate_obj.pixel_x
+		theImage.pixel_y = alternate_obj.pixel_y
 
 	theImage.layer = target.layer
+	theImage.layer = target.layer
+	theImage.plane = target.plane
+	theImage.appearance_flags = target.appearance_flags
 
 	if(transfer_overlays)
 		theImage.copy_overlays(target)
@@ -106,6 +112,8 @@ var/global/list/active_alternate_appearances = list()
 		var/image/ghost_image = image(icon = theImage.icon , icon_state = theImage.icon_state, loc = theImage.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
+		ghost_image.pixel_x = theImage.pixel_x
+		ghost_image.pixel_y = theImage.pixel_y
 		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
@@ -172,13 +180,13 @@ var/global/list/active_alternate_appearances = list()
 	var/mob/seer
 	add_ghost_version = TRUE
 
-/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
-	..(key, I, FALSE)
+/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M, alternate_type, loc)
+	..(key, I, alternate_type, loc)
 	seer = M
 	add_hud_to(seer)
 
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
-	if(M == seer || isobserver(M))
+	if(M == seer)
 		return TRUE
 	return FALSE
 
