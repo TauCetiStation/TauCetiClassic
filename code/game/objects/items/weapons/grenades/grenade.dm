@@ -66,8 +66,6 @@
 	if(isscrewdriver(I))
 		switch(det_time)
 			if(1)
-				det_time = 1 SECOND
-			if(1 SECONDS)
 				det_time = 3 SECONDS
 			if(3 SECONDS)
 				det_time = 5 SECONDS
