@@ -153,7 +153,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isobserver(usr) || usr.incapacitated()) //to stop ghosts from deflating
+	if(usr.incapacitated())
 		return
 	deflate()
 
