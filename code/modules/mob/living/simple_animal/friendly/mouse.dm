@@ -35,9 +35,6 @@
 
 	var/powerlvl = 0 //Amount of already given abilities
 	var/eatencheese = 0 //units
-	var/is_cute = FALSE
-	var/is_glowing = FALSE
-	var/datum/component/mob_modifier/mouse/healthy/health_modifier
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -96,10 +93,6 @@
 
 /mob/living/simple_animal/mouse/examine(mob/user)
 	..()
-	if(is_cute)
-		to_chat(user, "It looks adorable!")
-	if(is_glowing)
-		to_chat(user, "It glows in the dark!")
 
 #define mouse_abilities list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowing, /datum/component/mob_modifier/mouse/chatty, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
 
@@ -108,10 +101,7 @@
 	while(eatencheese >= 20)
 		eatencheese -= 20
 		powerlvl += 1
-		if(!health_modifier)
-			health_modifier = AddComponent(/datum/component/mob_modifier/mouse/healthy, 1)
-		else
-			health_modifier.update(powerlvl)
+		AddComponent(/datum/component/mob_modifier/mouse/healthy, powerlvl)
 		if(length(mouse_abilities) >= powerlvl)
 			AddComponent(mouse_abilities[powerlvl])
 
