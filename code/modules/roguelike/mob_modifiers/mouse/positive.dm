@@ -1,3 +1,5 @@
+#define OXYGEN_KPA_REDUCEMENT 16
+
 /datum/component/mob_modifier/mouse/healthy
 	modifier_name = RL_MM_MOUSE_HEALTHY
 
@@ -13,11 +15,6 @@
 	M.maxHealth += 3 * strength
 	M.health = health_proportion * M.maxHealth
 
-	var/matrix/Mtrx = matrix(M.default_transform)
-	Mtrx.Scale(1 + 0.025 * min(strength, 40))
-	M.transform = Mtrx
-	M.default_transform = M.transform
-
 /datum/component/mob_modifier/mouse/healthy/revert(update = FALSE)
 	var/mob/living/simple_animal/mouse/M = parent
 
@@ -26,10 +23,6 @@
 	M.maxHealth -= 3 * strength
 	M.health = health_proportion * M.maxHealth
 
-	var/matrix/Mtrx = matrix(M.default_transform)
-	Mtrx.Scale(1 / (1 + 0.025 * min(strength, 40)))
-	M.transform = Mtrx
-	M.default_transform = M.transform
 	return ..()
 
 
@@ -45,10 +38,11 @@
 		return
 
 	var/mob/living/simple_animal/mouse/M = parent
-	if(spell)
-		QDEL_NULL(spell)
-	spell = new
-	M.AddSpell(spell)
+	if(!update)
+		if(spell)
+			QDEL_NULL(spell)
+		spell = new
+		M.AddSpell(spell)
 
 /datum/component/mob_modifier/mouse/sparkly/revert(update = FALSE)
 	if(spell)
@@ -72,11 +66,11 @@
 		return
 
 	var/mob/living/simple_animal/mouse/M = parent
-	M.min_oxy -= 16 // Whatever
+	M.min_oxy -= OXYGEN_KPA_REDUCEMENT * strength // Whatever
 
 /datum/component/mob_modifier/mouse/space/revert(update = FALSE)
 	var/mob/living/simple_animal/mouse/M = parent
-	M.min_oxy += 16
+	M.min_oxy += OXYGEN_KPA_REDUCEMENT * strength
 	return ..()
 
 
@@ -90,12 +84,12 @@
 	if(!.)
 		return
 
-	var/mob/living/simple_animal/mouse/M = parent
-	M.is_cute = TRUE
+	var/mob/M = parent
+	M.add_overlay("mouse_cute")
 
 /datum/component/mob_modifier/mouse/cute/revert(update = FALSE)
-	var/mob/living/simple_animal/mouse/M = parent
-	M.is_cute = FALSE
+	var/mob/M = parent
+	M.cut_overlay("mouse_cute")
 	return ..()
 
 
@@ -111,19 +105,17 @@
 
 	var/mob/living/simple_animal/mouse/M = parent
 	M.set_light(3)
-	M.is_glowing = TRUE
 
 /datum/component/mob_modifier/mouse/glowing/revert(update = FALSE)
 	var/mob/living/simple_animal/mouse/M = parent
 	M.set_light(0)
-	M.is_glowing = FALSE
 	return ..()
 
 
 
 /datum/component/mob_modifier/mouse/chatty
 	modifier_name = RL_MM_MOUSE_CHATTY
-	message = "You ate so much cheese that humans will understand you more often from now."
+	message = "You ate so much cheese that you can't hold your excitement."
 
 /datum/component/mob_modifier/mouse/chatty/apply(update = FALSE)
 	. = ..()
@@ -137,3 +129,5 @@
 	var/mob/living/simple_animal/mouse/M = parent
 	M.speak_chance /= 2
 	return ..()
+
+#undef OXYGEN_KPA_REDUCEMENT
