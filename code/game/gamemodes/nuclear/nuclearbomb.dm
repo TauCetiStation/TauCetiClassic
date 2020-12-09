@@ -161,7 +161,7 @@ var/bomb_set
 
 					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
-						//anchored = 0
+						anchored = FALSE
 						removal_stage = 5
 				return
 	..()
@@ -303,10 +303,10 @@ var/bomb_set
 					bomb_set = 0
 		if (href_list["anchor"])
 
-			//if(removal_stage == 5)
+			if(removal_stage >= 5)
 			//	src.anchored = 0
-			//	visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
-			//	return
+				visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
+				return
 
 			src.anchored = !( src.anchored )
 			if(src.anchored)
