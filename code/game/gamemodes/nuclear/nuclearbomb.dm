@@ -12,7 +12,7 @@ var/bomb_set
 	can_buckle = 1
 	use_power = NO_POWER_USE
 	var/deployable = 0.0
-	var/extended = 0.0
+	var/extended = FALSE
 	var/lighthack = 0
 	var/opened = 0.0
 	var/timeleft = TIMER_MAX
@@ -171,28 +171,6 @@ var/bomb_set
 	if(.)
 		return
 
-	if (!extended)
-		if (!ishuman(user) && !isobserver(user))
-			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-			return 1
-		var/turf/current_location = get_turf(user)//What turf is the user on?
-		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
-			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
-			return
-		if (!istype(get_area(src), /area/station)) // If outside of station
-			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
-			return
-	if (deployable)
-		if(removal_stage < 5)
-			anchored = TRUE
-			visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
-		else
-			visible_message("<span class = 'red'>The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
-		if(!lighthack)
-			flick("nuclearbombc", src)
-			icon_state = "nuclearbomb1"
-		extended = TRUE
-
 /obj/machinery/nuclearbomb/ui_interact(mob/user)
 	if(!extended)
 		return
@@ -230,12 +208,22 @@ var/bomb_set
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 		return 1
 
+	var/turf/current_location = get_turf(usr)//What turf is the user on?
+	if((!current_location || is_centcom_level(current_location.z)) && usr.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+		to_chat(usr, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
+		return
+	if (!istype(get_area(src), /area/station)) // If outside of station
+		to_chat(usr, "<span class = 'red'>Bomb cannot be deployed here.</span>")
+		return
+
 	if (src.deployable)
 		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
+		extended = FALSE
 	else
 		to_chat(usr, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
+		extended = TRUE
 	return
 
 /obj/machinery/nuclearbomb/is_operational_topic()
@@ -323,7 +311,12 @@ var/bomb_set
 			src.anchored = !( src.anchored )
 			if(src.anchored)
 				visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring.</span>")
+				anchored = TRUE
+				if(!lighthack)
+					flick("nuclearbombc", src)
+					icon_state = "nuclearbomb1"
 			else
+				anchored = FALSE
 				icon_state = "nuclearbomb1"
 				safety = 1.0
 				timing = -1.0
