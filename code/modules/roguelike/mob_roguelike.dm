@@ -31,29 +31,25 @@
 	)
 	AddComponent(/datum/component/name_modifiers, allowed_name_mods)
 
-	var/static/list/modifiers = subtypesof(/datum/component/mob_modifier)
+	var/static/list/modifiers = subtypesof(/datum/component/mob_modifier/asteroid)
 
 	var/list/pos_modifiers = list() + modifiers
 	var/list/pos_incomps = list() + global.incompatible_mob_modifiers
 
 	while(modifier_amount > 0 && rarity_cost > 0 && pos_modifiers.len > 0)
-		var/datum/component/mob_modifier/MM = pick(pos_modifiers)
+		var/datum/component/mob_modifier/asteroid/MM = pick(pos_modifiers)
 		var/cost = initial(MM.rarity_cost)
 
 		if(cost > rarity_cost)
 			pos_modifiers -= MM
 			continue
-		
-		if(ispath(MM, /datum/component/mob_modifier/mouse))
-			pos_modifiers -= MM
-			continue
 
-		var/datum/component/mob_modifier/existing = GetComponent(MM)
+		var/datum/component/mob_modifier/asteroid/existing = GetComponent(MM)
 		if(existing && existing.strength == existing.max_strength)
 			pos_modifiers -= MM
 			continue
 
-		var/datum/component/mob_modifier/new_mod = AddComponent(MM, 1)
+		var/datum/component/mob_modifier/asteroid/new_mod = AddComponent(MM, 1)
 		if(!new_mod || !new_mod.applied)
 			pos_modifiers -= MM
 			continue
