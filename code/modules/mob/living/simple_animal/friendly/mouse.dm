@@ -94,7 +94,7 @@
 /mob/living/simple_animal/mouse/examine(mob/user)
 	..()
 
-#define mouse_abilities list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowing, /datum/component/mob_modifier/mouse/chatty, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
+var/static/list/mouse_abilities = list(/datum/component/mob_modifier/mouse/cute, /datum/component/mob_modifier/mouse/glowing, /datum/component/mob_modifier/mouse/chatty, /datum/component/mob_modifier/mouse/space, /datum/component/mob_modifier/mouse/sparkly)
 
 /mob/living/simple_animal/mouse/proc/addcheesepoint(cheese)
 	eatencheese += cheese
@@ -104,8 +104,6 @@
 		AddComponent(/datum/component/mob_modifier/mouse/healthy, powerlvl)
 		if(length(mouse_abilities) >= powerlvl)
 			AddComponent(mouse_abilities[powerlvl])
-
-#undef mouse_abilities
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
