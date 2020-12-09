@@ -43,6 +43,10 @@
 		if(cost > rarity_cost)
 			pos_modifiers -= MM
 			continue
+		
+		if(ispath(MM, /datum/component/mob_modifier/mouse))
+			pos_modifiers -= MM
+			continue
 
 		var/datum/component/mob_modifier/existing = GetComponent(MM)
 		if(existing && existing.strength == existing.max_strength)
