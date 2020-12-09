@@ -1,10 +1,10 @@
-/datum/component/mob_modifier/frail
+/datum/component/mob_modifier/asteroid/frail
 	modifier_name = RL_MM_FRAIL
 	name_modifier_type = /datum/name_modifier/prefix/frail
 
 	rarity_cost = -2
 
-/datum/component/mob_modifier/frail/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/frail/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -24,7 +24,7 @@
 	H.transform = M
 	H.default_transform = H.transform
 
-/datum/component/mob_modifier/frail/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/frail/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	var/health_proportion = H.health / H.maxHealth
@@ -42,7 +42,7 @@
 
 
 
-/datum/component/mob_modifier/friendly
+/datum/component/mob_modifier/asteroid/friendly
 	modifier_name = RL_MM_FRIENDLY
 	name_modifier_type = /datum/name_modifier/prefix/friendly
 
@@ -50,7 +50,7 @@
 
 	rarity_cost = -4
 
-/datum/component/mob_modifier/friendly/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/friendly/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -60,7 +60,7 @@
 	H.loot_mod = 0.0
 	H.faction = "neutral"
 
-/datum/component/mob_modifier/friendly/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/friendly/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.loot_mod = initial(H.loot_mod)

@@ -1,10 +1,10 @@
-/datum/component/mob_modifier/healthy
+/datum/component/mob_modifier/asteroid/healthy
 	modifier_name = RL_MM_HEALTHY
 	name_modifier_type = /datum/name_modifier/prefix/healthy
 
 	rarity_cost = 2
 
-/datum/component/mob_modifier/healthy/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/healthy/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -24,7 +24,7 @@
 	H.transform = M
 	H.default_transform = H.transform
 
-/datum/component/mob_modifier/healthy/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/healthy/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	var/health_proportion = H.health / H.maxHealth
@@ -42,7 +42,7 @@
 
 
 
-/datum/component/mob_modifier/ghostly
+/datum/component/mob_modifier/asteroid/ghostly
 	modifier_name = RL_MM_GHOSTLY
 	name_modifier_type = /datum/name_modifier/prefix/ghostly
 
@@ -70,7 +70,7 @@
 	// var/ghostly_filter
 	var/saved_color
 
-/datum/component/mob_modifier/ghostly/Destroy()
+/datum/component/mob_modifier/asteroid/ghostly/Destroy()
 	var/mob/living/simple_animal/hostile/H = parent
 
 	qdel(possessed.GetComponent(/datum/component/bounded))
@@ -84,7 +84,7 @@
 	possessed = null
 	return ..()
 
-/datum/component/mob_modifier/ghostly/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/ghostly/apply(update = FALSE)
 	if(!update)
 		var/obj/randomcatcher/CATCH = new
 		possessed = CATCH.get_item(/obj/random/misc/toy)
@@ -135,7 +135,7 @@
 
 	// H.filters += ghostly_filter
 
-/datum/component/mob_modifier/ghostly/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/ghostly/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.density = initial(H.density)
@@ -159,10 +159,10 @@
 
 	return ..()
 
-/datum/component/mob_modifier/ghostly/proc/on_phylactery_destroyed()
+/datum/component/mob_modifier/asteroid/ghostly/proc/on_phylactery_destroyed()
 	qdel(parent)
 
-/datum/component/mob_modifier/ghostly/proc/retreat(datum/source, gibbed)
+/datum/component/mob_modifier/asteroid/ghostly/proc/retreat(datum/source, gibbed)
 	// How to destroy a ghost 101: meat hooks
 	if(gibbed)
 		return
@@ -175,7 +175,7 @@
 
 	rejuve_timer = addtimer(CALLBACK(src, .proc/come_back), rand(6, 10) MINUTES, TIMER_STOPPABLE)
 
-/datum/component/mob_modifier/ghostly/proc/come_back()
+/datum/component/mob_modifier/asteroid/ghostly/proc/come_back()
 	if(!possessed)
 		return
 
@@ -188,7 +188,7 @@
 
 
 
-/datum/component/mob_modifier/slimy
+/datum/component/mob_modifier/asteroid/slimy
 	modifier_name = RL_MM_SLIMY
 	name_modifier_type = /datum/name_modifier/prefix/slimy
 
@@ -213,12 +213,12 @@
 	// var/slimy_color_filter
 	var/slimy_outline_filter
 
-/datum/component/mob_modifier/slimy/Destroy()
+/datum/component/mob_modifier/asteroid/slimy/Destroy()
 	// QDEL_NULL(slimy_color_filter)
 	QDEL_NULL(slimy_outline_filter)
 	return ..()
 
-/datum/component/mob_modifier/slimy/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/slimy/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -253,7 +253,7 @@
 	//H.filters += slimy_color_filter
 	H.filters += slimy_outline_filter
 
-/datum/component/mob_modifier/slimy/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/slimy/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.density = initial(H.density)
@@ -281,13 +281,13 @@
 
 
 
-/datum/component/mob_modifier/strong
+/datum/component/mob_modifier/asteroid/strong
 	modifier_name = RL_MM_STRONG
 	name_modifier_type = /datum/name_modifier/prefix/strong
 
 	rarity_cost = 2
 
-/datum/component/mob_modifier/strong/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/strong/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -302,7 +302,7 @@
 
 	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/shake_ground)
 
-/datum/component/mob_modifier/strong/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/strong/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.melee_damage *= 1 / (1.5 * strength)
@@ -310,7 +310,7 @@
 
 	return ..()
 
-/datum/component/mob_modifier/strong/proc/shake_ground()
+/datum/component/mob_modifier/asteroid/strong/proc/shake_ground()
 	var/mob/living/simple_animal/hostile/H = parent
 
 	if(H.incapacitated())
@@ -320,7 +320,7 @@
 
 
 
-/datum/component/mob_modifier/singular
+/datum/component/mob_modifier/asteroid/singular
 	modifier_name = RL_MM_SINGULAR
 	name_modifier_type = /datum/name_modifier/prefix/singular
 
@@ -333,12 +333,12 @@
 
 	var/image/singularity_overlay
 
-/datum/component/mob_modifier/singular/Destroy()
+/datum/component/mob_modifier/asteroid/singular/Destroy()
 	STOP_PROCESSING(SSmob_modifier, src)
 	QDEL_NULL(singularity_overlay)
 	return ..()
 
-/datum/component/mob_modifier/singular/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/singular/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -378,7 +378,7 @@
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
 	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_pulling)
 
-/datum/component/mob_modifier/singular/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/singular/revert(update = FALSE)
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
 		H.cut_overlay(singularity_overlay)
@@ -387,10 +387,10 @@
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
 
-/datum/component/mob_modifier/singular/process()
+/datum/component/mob_modifier/asteroid/singular/process()
 	pull()
 
-/datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
+/datum/component/mob_modifier/asteroid/singular/proc/consume(atom/movable/AM)
 	if(!istype(AM, /obj/item))
 		return
 
@@ -400,7 +400,7 @@
 	H.heal_overall_damage(I.w_class, I.w_class)
 	qdel(I)
 
-/datum/component/mob_modifier/singular/proc/pull()
+/datum/component/mob_modifier/asteroid/singular/proc/pull()
 	set background = BACKGROUND_ENABLED
 
 	var/mob/living/simple_animal/hostile/H = parent
@@ -424,15 +424,15 @@
 		consume(X)
 		CHECK_TICK
 
-/datum/component/mob_modifier/singular/proc/start_pulling()
+/datum/component/mob_modifier/asteroid/singular/proc/start_pulling()
 	START_PROCESSING(SSmob_modifier, src)
 
-/datum/component/mob_modifier/singular/proc/stop_pulling()
+/datum/component/mob_modifier/asteroid/singular/proc/stop_pulling()
 	STOP_PROCESSING(SSmob_modifier, src)
 
 
 
-/datum/component/mob_modifier/invisible
+/datum/component/mob_modifier/asteroid/invisible
 	modifier_name = RL_MM_INVISIBLE
 	name_modifier_type = /datum/name_modifier/prefix/invisible
 
@@ -446,7 +446,7 @@
 	var/invisible = FALSE
 	var/invis_timer
 
-/datum/component/mob_modifier/invisible/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/invisible/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -463,7 +463,7 @@
 
 	INVOKE_ASYNC(src, .proc/start_hiding)
 
-/datum/component/mob_modifier/invisible/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/invisible/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
 
 	H.invisibility = initial(H.invisibility)
@@ -474,7 +474,7 @@
 
 	return ..()
 
-/datum/component/mob_modifier/invisible/proc/start_hiding()
+/datum/component/mob_modifier/asteroid/invisible/proc/start_hiding()
 	if(invis_timer)
 		return
 
@@ -483,7 +483,7 @@
 	else
 		add_invis_timer()
 
-/datum/component/mob_modifier/invisible/proc/reveal()
+/datum/component/mob_modifier/asteroid/invisible/proc/reveal()
 	deltimer(invis_timer)
 	invis_timer = null
 
@@ -492,13 +492,13 @@
 	else
 		add_invis_timer()
 
-/datum/component/mob_modifier/invisible/proc/add_vis_timer()
+/datum/component/mob_modifier/asteroid/invisible/proc/add_vis_timer()
 	invis_timer = addtimer(CALLBACK(src, .proc/become_visible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
-/datum/component/mob_modifier/invisible/proc/add_invis_timer()
+/datum/component/mob_modifier/asteroid/invisible/proc/add_invis_timer()
 	invis_timer = addtimer(CALLBACK(src, .proc/become_invisible), rand(10, 30) SECONDS, TIMER_STOPPABLE)
 
-/datum/component/mob_modifier/invisible/proc/become_visible()
+/datum/component/mob_modifier/asteroid/invisible/proc/become_visible()
 	var/mob/living/simple_animal/hostile/H = parent
 
 	invisible = FALSE
@@ -511,7 +511,7 @@
 
 	add_invis_timer()
 
-/datum/component/mob_modifier/invisible/proc/become_invisible()
+/datum/component/mob_modifier/asteroid/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
 
 	if(H.stat)
@@ -530,7 +530,7 @@
 
 
 
-/datum/component/mob_modifier/angelic
+/datum/component/mob_modifier/asteroid/angelic
 	modifier_name = RL_MM_ANGELIC
 	name_modifier_type = /datum/name_modifier/prefix/angelic
 
@@ -538,7 +538,7 @@
 
 	max_strength = 1
 
-/datum/component/mob_modifier/angelic/apply(update = FALSE)
+/datum/component/mob_modifier/asteroid/angelic/apply(update = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -550,7 +550,7 @@
 	AddComponent(/datum/component/forcefield, "AT field", 20, 5 SECONDS, 3 SECONDS, F, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, parent)
 
-/datum/component/mob_modifier/angelic/revert(update = FALSE)
+/datum/component/mob_modifier/asteroid/angelic/revert(update = FALSE)
 	if(!update)
 		qdel(GetComponent(/datum/component/forcefield))
 
