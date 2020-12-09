@@ -1,5 +1,5 @@
 var/global/list/incompatible_mob_modifiers = list(
-	list(/datum/component/mob_modifier/healthy, /datum/component/mob_modifier/frail),
+	list(/datum/component/mob_modifier/asteroid/healthy, /datum/component/mob_modifier/asteroid/frail),
 )
 
 /*
