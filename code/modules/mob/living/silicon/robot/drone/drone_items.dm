@@ -184,7 +184,6 @@
 		/obj/item/device/mmi/posibrain,
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
-		/obj/item/mecha_parts,
 		/obj/item/device/flash
 		)
 
