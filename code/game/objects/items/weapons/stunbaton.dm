@@ -10,7 +10,7 @@
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
-	var/agony = 60
+	var/agony = 50
 
 	sweep_step = 2
 
