@@ -7094,7 +7094,7 @@
 	},
 /obj/item/device/flashlight/lamp/green{
 	anchored = 1;
-	invisibility = 61;
+	invisibility = 101;
 	name = "invisibly light";
 	pixel_x = 1;
 	pixel_y = 5
@@ -17427,7 +17427,7 @@
 	},
 /obj/item/device/flashlight/lamp/green{
 	anchored = 1;
-	invisibility = 61;
+	invisibility = 101;
 	name = "invisibly light";
 	pixel_x = 1;
 	pixel_y = 5
@@ -18360,7 +18360,7 @@
 "fAb" = (
 /obj/item/device/flashlight/lamp/green{
 	anchored = 1;
-	invisibility = 61;
+	invisibility = 101;
 	name = "invisibly light";
 	pixel_x = 1;
 	pixel_y = 5
@@ -23274,6 +23274,14 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
+"qnM" = (
+/obj/effect/step_trigger/thrower{
+	direction = 4;
+	name = "thrower_noghoststop(right)";
+	tiles = 0
+	},
+/turf/space,
+/area/space)
 "qsd" = (
 /obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
@@ -23369,6 +23377,18 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"uEN" = (
+/obj/effect/step_trigger/teleporter/random{
+	name = "escapeshuttle_leave_noghosts";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/space,
+/area/space)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -74967,8 +74987,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75224,8 +75244,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75481,8 +75501,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75738,8 +75758,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75995,8 +76015,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -76252,8 +76272,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -76509,8 +76529,8 @@ aaM
 aaM
 aaM
 aeD
-ahG
-ahG
+uEN
+uEN
 aeD
 aaM
 aaM
