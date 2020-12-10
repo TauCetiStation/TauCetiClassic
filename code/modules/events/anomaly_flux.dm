@@ -4,7 +4,7 @@
 	endWhen = 80
 
 /datum/event/anomaly/anomaly_flux/announce()
-	command_alert("На сканерах дальнего действия локализована гиперэнергетическая волна постоянного потока. Ожидаемое местоположение: [impact_area.name].", "Оповещение Об Аномалии", sound = "fluxanom")
+	command_alert("На сканерах дальнего действия локализована гиперэнергетическая потоковая волна. Ожидаемое местоположение: [impact_area.name].", "Оповещение Об Аномалии", sound = "fluxanom")
 
 /datum/event/anomaly/anomaly_flux/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
