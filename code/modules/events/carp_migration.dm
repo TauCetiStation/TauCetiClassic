@@ -13,9 +13,9 @@
 
 /datum/event/carp_migration/announce()
 	if(severity == EVENT_LEVEL_MAJOR)
-		command_alert("Massive migration of unknown biological entities has been detected near [station_name()], please stand-by.", "Lifesign Alert", "carps")
+		command_alert("Обнаружена массовая миграция неизвестных биологических объектов вблизи [station_name()], экипажу следует приготовиться.", "Био-Сканеры [station_name()]", "carps")
 	else
-		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert", "carps")
+		command_alert("Неизвестные биологические объекты были обнаружены вблизи [station_name()], экипажу следует приготовиться.", "Био-Сканеры [station_name()]", "carps")
 
 /datum/event/carp_migration/start()
 	switch(severity)

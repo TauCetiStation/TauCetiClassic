@@ -4,7 +4,7 @@
 
 
 /datum/event/electrical_storm/announce()
-	command_alert("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert", "estorm")
+	command_alert("В вашем районе обнаружена электрическая буря, пожалуйста, устраните потенциальные электронные перегрузки.", "Система Оповещения [station_name()]", "estorm")
 
 
 /datum/event/electrical_storm/start()

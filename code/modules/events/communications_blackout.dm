@@ -1,9 +1,9 @@
 /datum/event/communications_blackout/announce()
-	var/alert = pick(	"Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you*%fj00)`5vc-BZZT", \
-						"Ionospheric anomalies detected. Temporary telecommunication failu*3mga;b4;'1vďż˝-BZZZT", \
-						"Ionospheric anomalies detected. Temporary telec#MCi46:5.;@63-BZZZZT", \
-						"Ionospheric anomalies dete'fZ\\kg5_0-BZZZZZT", \
-						"Ionospheri:%ďż˝ MCayj^j<.3-BZZZZZZT", \
+	var/alert = pick(	"Обнаружены ионосферные аномалии. Неизбежный временный сбой связи. Пожалуйста, свяжитесь с*%fj00)`5vc-BZZT", \
+						"Обнаружены ионосферные аномалии. Неизбежный сбой свя*3mga;b4;'1vďż˝-BZZZT", \
+						"Обнаружены ионосферные аномалии. Temporary telec#MCi46:5.;@63-BZZZZT", \
+						"Обнаружены ионосферные анома'fZ\\kg5_0-BZZZZZT", \
+						"Ионосфер:%ďż˝ MCayj^j<.3-BZZZZZZT", \
 						"#4nd%;f4y6,>ďż˝%-BZZZZZZZT")
 
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.

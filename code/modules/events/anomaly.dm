@@ -6,10 +6,10 @@
 /datum/event/anomaly/setup()
 	impact_area = findEventArea()
 	if(!impact_area)
-		CRASH("No valid areas for anomaly found.")
+		CRASH("Не найдено подходящей территории для аномалии.")
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
-		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
+		CRASH("Аномалия: не найдено подходящих турфов для [impact_area] - [impact_area.type]")
 
 /datum/event/anomaly/tick()
 	if(QDELETED(newAnomaly))

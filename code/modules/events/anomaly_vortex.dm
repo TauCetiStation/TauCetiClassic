@@ -4,7 +4,7 @@
 	endWhen = 95
 
 /datum/event/anomaly/anomaly_vortex/announce()
-	command_alert("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert", sound = "vortexanom")
+	command_alert("На сканерах дальнего действия локализованна высокоинтенсивная вихревая аномалия. Ожидаемое местоположение: [impact_area.name]", "Оповещение Об Аномалии", sound = "vortexanom")
 
 /datum/event/anomaly/anomaly_vortex/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

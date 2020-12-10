@@ -11,20 +11,20 @@
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
+		command_alert("Обнаружены неопознанные признаки жизни на борту [station_name()]. Обезопасьте любой доступ снаружи, включая воздуховоды и вентиляцию.", "Неизвестные Формы Жизни", "lfesigns")
 
 /datum/event/alien_infestation/start()
 	if(!aliens_allowed)
-		message_admins("An event attempted to spawn an alien but aliens are locked down. Shutting down.")
+		message_admins("Событие попыталось породить чужих, но они заблокированы. Выключение.")
 		kill()
 		return
 	var/list/vents = get_vents()
 
 	if(!vents.len)
-		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
+		message_admins("Событие попыталось создать чужого, но подходящих вентиляционных отверстий не найдено. Выключение.")
 		return
 
-	var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+	var/list/candidates = pollGhostCandidates("Вы хотите быть личинкой?", ROLE_ALIEN)
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)
@@ -32,7 +32,7 @@
 
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new(vent.loc)
 		new_xeno.key = candidate.key
-		message_admins("[new_xeno] has spawned at [new_xeno.x],[new_xeno.y],[new_xeno.z] [ADMIN_JMP(new_xeno)] [ADMIN_FLW(new_xeno)].")
+		message_admins("[new_xeno] появился в [new_xeno.x],[new_xeno.y],[new_xeno.z] [ADMIN_JMP(new_xeno)] [ADMIN_FLW(new_xeno)].")
 
 		candidates -= candidate
 		vents -= vent
