@@ -21,7 +21,7 @@
 	var/list/vents = get_vents()
 
 	if(!vents.len)
-		message_admins("Событие попыталось создать чужого, но подходящих вентиляционных отверстий не найдено. Выключение.")
+		message_admins("Событие попыталось создать чужого, но нет подходящих вентиляционных отверстий. Выключение.")
 		return
 
 	var/list/candidates = pollGhostCandidates("Вы хотите быть личинкой чужого?", ROLE_ALIEN)
