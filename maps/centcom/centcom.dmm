@@ -2855,9 +2855,6 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
-"alt" = (
-/turf/space,
-/area/custom/syndicate_mothership)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -14467,9 +14464,6 @@
 "aYG" = (
 /turf/space,
 /area/shuttle/officer/centcom)
-"aYJ" = (
-/turf/space,
-/area/centcom/evac)
 "aYL" = (
 /obj/structure/stool/bed/chair/metal/white,
 /turf/unsimulated/beach/sand,
@@ -48375,7 +48369,7 @@ aHv
 mRb
 mUb
 aHv
-aYJ
+aaM
 agG
 agV
 ahm
@@ -48632,7 +48626,7 @@ aHv
 mRb
 hRb
 aHv
-aYJ
+aaM
 agL
 agX
 ahp
@@ -80862,7 +80856,7 @@ aaN
 aaN
 aaN
 aie
-alt
+aaM
 aie
 aaN
 aaN
@@ -82161,7 +82155,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82418,7 +82412,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82675,7 +82669,7 @@ alF
 als
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
