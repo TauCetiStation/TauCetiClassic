@@ -8,7 +8,7 @@
 
 
 /datum/event/brand_intelligence/announce()
-	command_alert("На борту [station_name()] обнаружена не зарегистрированная в НаноТрейзен информация о бренде Рампант, пожалуйста, приготовтесь.", "Машинное Обучение", "rampbrand")
+	command_alert("На борту [station_name()] обнаружена аномальная активность торговых автоматов. Пожалуйста, ожидайте", "Машинное Обучение", "rampbrand")
 
 
 /datum/event/brand_intelligence/start()
