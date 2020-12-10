@@ -24,7 +24,7 @@
 		message_admins("Событие попыталось создать чужого, но подходящих вентиляционных отверстий не найдено. Выключение.")
 		return
 
-	var/list/candidates = pollGhostCandidates("Вы хотите быть личинкой?", ROLE_ALIEN)
+	var/list/candidates = pollGhostCandidates("Вы хотите быть личинкой чужого?", ROLE_ALIEN)
 
 	while(spawncount > 0 && candidates.len)
 		var/obj/vent = pick(vents)
