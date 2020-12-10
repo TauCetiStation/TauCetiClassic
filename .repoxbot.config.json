@@ -18,7 +18,9 @@
         "image": "Sprites",
         "bugfix": "Fix",
         "fix": "Fix",
-        "map": "Map Edit"
+        "map": "Map Edit",
+        "localization": "Translation/Localization",
+        "ru": "Translation/Localization"
     },
     "diffPathsLabels": {
         "^diff.+/icons/.+\\.dmi$": "Sprites",
