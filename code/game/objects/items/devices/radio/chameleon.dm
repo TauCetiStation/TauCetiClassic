@@ -36,6 +36,9 @@
 	set name = "Change Headset Appearance"
 	set category = "Headset"
 	set src in usr
+	
+	if(usr.incapacitated())
+		return
 
 	var/picked = input("Select headset to change it to", "Chameleon Headset")as null|anything in headset_choices
 	if(!picked || !headset_choices[picked])
