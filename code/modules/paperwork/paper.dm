@@ -592,7 +592,7 @@
 	icon_state = "scrap_bloodied"
 
 /obj/item/weapon/paper/wires
-	name = "paper - 'Airlock wires documentation'"
+	name = "paper - 'Документация проводов шлюзов'"
 
 /obj/item/weapon/paper/wires/atom_init()
 	. = ..()
@@ -608,19 +608,49 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/brig_arsenal
-	name = "Armory Inventory"
-	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>1 Riot Set:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Marine Sets:<small><ul><li>Marine Jumpsuit<li>Marine Armor<li>Marine Helmet<li>Work Boots<li>Combat Belt<li>Balaclava<li>Tactical Hud<li>Marine Headset<li>Marine Gloves<li>Marine Dufflebag</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>6 Security Masks<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>4 Energy Guns<br>1 Ion Rifle<br>1 L10-c Carbine<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
-
-/obj/item/weapon/paper/firing_range
-	name = "Firing Range Instructions"
-	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
+	name = "Опись дополнительного оборудования оружейной"
+	info = {"<b>Опись оружейной:</b><ul>6 развертываемых барьеров<br>4 Портативных флешера
+	<br><b>3 противоударных комплекта</b>:<small><ul><li>Противоударный щит<li>Оглушающая дубинка<li>Противоударный шлем<li>Противоударная броня
+	</ul></small>
+	<b>3 пулестойких комплекта</b>:<small><ul><li> Bulletproof Helmets<li>3 Bulletproof Vests
+	</ul></small>
+	<br><b>3 комплекта аблятивной брони </b>:<small><ul><li> AАблятивный шлем <li> Аблятивная броня
+	</ui></small>
+	<br><b>Саперный коплект</b>:<small><ul><li> Саперный костюм <li> Саперный шлем
+	</ul></small>
+	<br><b>Комплект ОЗК</b>:<small><ul><li>Изолирующий костюм <li> Изолирующий капюшон
+	</ul></small>
+	<br> Противогаз: 6 шт
+	<br>Магазины (9мм резина): 6 шт</ul>
+	<b>Опись оружейной:</b>
+	<ul> Энергетический пистолет : 4 шт
+	<br> Ионная винтовка: 1шт
+	<br> Импульсный Карабин L-10-c : 1 шт
+	<br> Плазменная батарея(дополнительная обойма к карабину L-10c): 1 шт.
+	<br> Импульсный дробовик 104-SASS : 1 шт
+	<br> Плазменная батарея(дополнительная обойма к дробовику 104-SASS): 1 шт
+	<br> Дробовик: 2шт (заряжен нелетальными боеприпасами типа "соль")
+	<br> Дробовик: 1 шт. (Заряжен боеприпасами типа "Дробь)
+	<br> Магазин 9мм (боевые) : 6 шт
+	<br> Коробка патрон к дробовику (Соль, 20 патрон.): 2 шт.
+	<br> Гранатомет m79: 1 шт
+	<br> Коробка гранат 40x46мм(7 зарядов) (слезоточивые) : 1 шт
+	<br> Коробка гранат 40x46мм(7 зарядов)(EMP) : 1шт
+	<br> Коробка гранат 40x46мм(7 зарядов)(Резина) 1шт
+	<br> Набор химимплантов : 1шт
+	<br>Набор имплантов слежения : 1шт
+	<br>Набор имплантов "защиты разума" : 1шт
+	<br>Набор имплантов оповещения о смерти: 1шт
+	<br>Коробка светошумовых гранат: 1 шт
+	<br>Коробка гранат со слезоточивым газом: 1шт
+	<br>Набор для выхода в космос:<small><ul><li>Охранный риг<li>охранный шлем к ригу<li>Магнитные ботинки<li>Дыхательная маска</ul></small></ul>"}
 
 /obj/item/weapon/paper/space_structures
 	name = "NSS Exodus Sensor Readings"
 
 /obj/item/weapon/paper/space_structures/atom_init()
 	. = ..()
-	name = "[station_name()] Sensor Readings"
+	name = "[station_name()] Показания датчиков"
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
@@ -630,8 +660,8 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/space_structures/proc/get_space_structures_info()
-	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>[station_name()]</b> Sensor Readings:</font></center><br /><hr>"
-	paper_text += "Scan results show the following points of interest:<br />"
+	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3><b>[station_name()]</b> Показания датчиков::</font></center><br /><hr>"
+	paper_text += "результаты сканирования показывают следующие объекты, которые могут быть интересны:<br />"
 	for(var/list/structure in SSmapping.spawned_structures)
 		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
 	return paper_text
