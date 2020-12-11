@@ -59,7 +59,7 @@
 /datum/map_template/space_structure/robostation
 	name = "robostation"
 	structure_id = "robostation"
-	desc = "UНеизвестный огромный объект"
+	desc = "Неизвестный огромный объект"
 	mappath = "maps/templates/space_structures/robostation.dmm"
 
 /datum/map_template/space_structure/planetarium
