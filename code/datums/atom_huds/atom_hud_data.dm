@@ -108,6 +108,12 @@
 	var/virus_threat = check_virus()
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
+	else if(has_brain_worms())
+		var/mob/living/simple_animal/borer/B = has_brain_worms()
+		if(B.controlling)
+			holder.icon_state = "hudbrainworm"
+		else
+			holder.icon_state = "hudhealthy"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		if(key || get_ghost(FALSE, TRUE))
 			holder.icon_state = "huddefib"

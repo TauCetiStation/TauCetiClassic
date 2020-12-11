@@ -508,6 +508,8 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "taryn_kifer_1"
 	body_parts_covered = 0
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/fluff
 	body_parts_covered = 0
