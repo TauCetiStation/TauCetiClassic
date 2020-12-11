@@ -661,8 +661,8 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/space_structures/proc/get_space_structures_info()
-	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3>Показания датчиков с <b>[station_name()]</b>:</font></center><br /><hr>"
-	paper_text += "Результаты сканирования показывают следующие объекты, которые могут быть интересны:<br />"
+	var/paper_text = "<center><img src = bluentlogo.png /><br /><font size = 3>Показания датчиков <b>[station_name()]</b>:</font></center><br /><hr>"
+	paper_text += "Результаты сканирования потенциально интересных мест:<br />"
 	for(var/list/structure in SSmapping.spawned_structures)
 		paper_text += "<li><b>[structure["desc"]]</b>: x = [structure["x"]], y = [structure["y"]], z = [prob(50) ? structure["z"] : "unknown"]</li>"
 	return paper_text
