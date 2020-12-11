@@ -21,10 +21,10 @@
 	. = ..()
 	closet_list += src
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		for(var/obj/item/I in src.loc)
-			if(I.density || I.anchored || I == src)
+		for(var/obj/O in src.loc)
+			if(O.density || O.anchored || O == src)
 				continue
-			I.forceMove(src)
+			O.forceMove(src)
 	PopulateContents()
 	update_icon()
 
@@ -176,7 +176,7 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		open()
+		dump_contents()
 		qdel(src)
 
 /obj/structure/closet/blob_act()
