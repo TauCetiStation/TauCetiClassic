@@ -13,18 +13,17 @@
 	var/image/holder = hud_list[GOLEM_MASTER_HUD]
 	holder.icon_state = "agolem_master"
 
-/datum/atom_hud/antag/proc/join_hud(mob/M)
+/datum/atom_hud/antag/proc/join_hud(mob/M) //adds a mob to the hudusers list
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
-	if(M.mind.antag_hud) //note: please let this runtime if a mob has no mind, as mindless mobs shouldn't be getting antagged
+	if(M.mind && M.mind.antag_hud)
 		M.mind.antag_hud.leave_hud(M)
+		M.mind.antag_hud = src
 
 	if(ANTAG_HUD in M.hud_possible) //Current mob does not support antag huds ie newplayer
 		add_to_hud(M)
 		if(self_visible)
 			add_hud_to(M)
-
-	M.mind.antag_hud = src
 
 /datum/atom_hud/antag/proc/leave_hud(mob/M)
 	if(!M)
@@ -46,7 +45,7 @@
 	if(holder)
 		holder.icon_state = new_icon_state
 		holder.color = specific_hud?.icon_color
-	if(M.mind || new_icon_state) //in mindless mobs, only null is acceptable, otherwise we're antagging a mindless mob, meaning we should runtime
+	if(M.mind && new_icon_state)
 		M.mind.antag_hud_icon_state = new_icon_state
 
 
