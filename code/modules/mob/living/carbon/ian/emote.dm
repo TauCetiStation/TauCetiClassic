@@ -82,7 +82,7 @@
 			m_type = SHOWMSG_VISUAL
 		if("dance")
 			if(!restrained())
-				message = "<B>[src]</B> [pick("пляшет","гоняется за хвостом")]."
+				message = "<B>[src]</B> [pick("пляшет", "гоняется за хвостом")]."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
 			if(!restrained())
