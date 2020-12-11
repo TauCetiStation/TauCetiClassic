@@ -14,6 +14,8 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
+	force = 0
+	hitsound = list()
 
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
@@ -22,6 +24,8 @@
 	icon_state = "santahat"
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	body_parts_covered = HEAD
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -51,6 +55,8 @@
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES | BLOCKHAIR
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
