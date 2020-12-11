@@ -11,13 +11,13 @@
 /datum/map_template/space_structure/derelict_station
 	name = "Derelict Station"
 	structure_id = "derelict_station"
-	desc = "Неизвестный огромный объект"
+	desc = "Неизвестный крупный объект"
 	mappath = "maps/templates/space_structures/derelict_station.dmm"
 
 /datum/map_template/space_structure/dj_station
 	name = "DJ Station"
 	structure_id = "dj_station"
-	desc = "Неизвестный огромный объект"
+	desc = "Неизвестный крупный объект"
 	mappath = "maps/templates/space_structures/dj_station.dmm"
 
 /datum/map_template/space_structure/derelict_teleporter
@@ -59,7 +59,7 @@
 /datum/map_template/space_structure/robostation
 	name = "robostation"
 	structure_id = "robostation"
-	desc = "Неизвестный огромный объект"
+	desc = "Неизвестный крупный объект"
 	mappath = "maps/templates/space_structures/robostation.dmm"
 
 /datum/map_template/space_structure/planetarium
@@ -113,7 +113,7 @@
 /datum/map_template/space_structure/iss
 	name = "iss"
 	structure_id = "iss"
-	desc = "Неизвестный огромный объект"
+	desc = "Неизвестный крупный объект"
 	mappath = "maps/templates/space_structures/iss.dmm"
 
 /datum/map_template/space_structure/NASA_satellite
