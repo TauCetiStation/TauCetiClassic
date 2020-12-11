@@ -83,7 +83,7 @@
 /datum/map_template/space_structure/syndicate_fighter
 	name = "syndicate_fighter"
 	structure_id = "syndicate_fighter"
-	desc = "Неизвестный шаттл"
+	desc = "Неизвестный объект"
 	mappath = "maps/templates/space_structures/syndicate_fighter.dmm"
 
 /datum/map_template/space_structure/delivery_shuttle
