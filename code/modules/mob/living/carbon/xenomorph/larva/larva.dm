@@ -34,7 +34,11 @@
 /mob/living/carbon/xenomorph/larva/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+		if(istype(src.loc, /obj/item/alien_embryo))
+			var/obj/item/alien_embryo/E = loc
+			stat(null, "Embryo progress: [FULL_EMBRYO_GROWTH]/[E.full_growth_counter]")
+		else
+			stat(null, "Larva progress: [amount_grown]/[max_grown]")
 
 /mob/living/carbon/xenomorph/larva/toggle_throw_mode()
 	return
