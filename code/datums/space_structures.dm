@@ -47,7 +47,7 @@
 /datum/map_template/space_structure/abandoned_lab
 	name = "Abandoned Lab"
 	structure_id = "abandoned_lab"
-	desc = "Обломки неизвестно лаборатории"
+	desc = "Обломки неизвестной лаборатории"
 	mappath = "maps/templates/space_structures/abandoned_lab.dmm"
 
 /datum/map_template/space_structure/agrosphere
