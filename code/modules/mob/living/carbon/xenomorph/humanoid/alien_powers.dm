@@ -335,7 +335,8 @@ Doesn't work on other aliens/AI.*/
 		if(stomach_contents.len)
 			for(var/mob/M in src)
 				if(M in stomach_contents)
-					do_mob(usr, usr)
+					if(!do_mob(usr, usr))
+						return
 					stomach_contents.Remove(M)
 					M.loc = loc
 					M.Paralyse(2)
