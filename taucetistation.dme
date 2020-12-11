@@ -72,6 +72,7 @@
 #include "code\__DEFINES\traits.dm"
 #include "code\__DEFINES\varedit.dm"
 #include "code\__DEFINES\xenoarchaeology.dm"
+#include "code\__DEFINES\xenomorph.dm"
 #include "code\__DEFINES\zas.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"

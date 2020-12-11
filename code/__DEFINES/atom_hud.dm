@@ -69,6 +69,7 @@
 #define ANTAG_HUD_ERT           17
 #define ANTAG_HUD_MALF          18
 #define ANTAG_HUD_ZOMB          19
+#define ANTAG_HUD_ALIEN_EMBRYO	23
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

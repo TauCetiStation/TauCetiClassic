@@ -2,8 +2,6 @@
 This is emryo growth procs
 ----------------------------------------*/
 
-var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
-
 /obj/item/alien_embryo
 	name = "alien embryo"
 	desc = "All slimy and yuck."
@@ -12,8 +10,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/mob/living/affected_mob
 	var/mob/living/baby
 	var/controlled_by_ai = TRUE
-	var/stage_counter = 0
+	var/growth_counter = 0
 	var/stage = 0
+	var/full_growth_counter = 0
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -23,8 +22,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(istype(loc, /mob/living/carbon))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
-		if(affected_mob.mind)
-			affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
+		add_infected_hud()
 	else
 		qdel(src)
 
@@ -32,8 +30,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		if(affected_mob.mind)
-			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		remove_infected_hud()
 		affected_mob.med_hud_set_status()
 	affected_mob = null
 	baby = null
@@ -65,13 +62,12 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		if(affected_mob.mind)
-			affected_mob.mind.remove_antag_hud(ANTAG_HUD_ALIEN, affected_mob)
+		remove_infected_hud()
 		affected_mob.med_hud_set_status()
 		affected_mob = null
 		return FALSE
 
-	if(stage < 5)
+	if(stage < MAX_EMBRYO_STAGE)
 		if(affected_mob.stat == DEAD)
 			if(stage < 4)
 				if(!controlled_by_ai)
@@ -81,12 +77,12 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 						baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
 				qdel(src)
 				return
-		if(stage_counter > 60)
+		if(growth_counter > MAX_EMBRYO_GROWTH)
 			stage++
-			stage_counter = 0
-			if(affected_mob.mind)
-				affected_mob.mind.add_antag_hud(ANTAG_HUD_ALIEN, "infected[stage]", affected_mob)
-	stage_counter++
+			growth_counter = 0
+			add_infected_hud()
+	growth_counter++
+	full_growth_counter++
 
 	switch(stage)
 		if(2)
@@ -144,7 +140,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 		if(!larva_candidate)
 			stage = 4 // mission failed we'll get em next time
-			stage_counter = 0
+			growth_counter = 0
 			START_PROCESSING(SSobj, src)
 			return
 
@@ -157,7 +153,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
 		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
 
@@ -177,3 +173,12 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			G.last_bite = world.time - 20
 			G.synch()
 			qdel(src)
+
+//only aliens will see this HUD
+/obj/item/alien_embryo/proc/add_infected_hud()
+	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	hud.add_to_hud(affected_mob)
+	set_antag_hud(affected_mob, "infected[stage]")
+
+/obj/item/alien_embryo/proc/remove_infected_hud()
+	remove_antag_hud(ANTAG_HUD_ALIEN_EMBRYO, affected_mob)
