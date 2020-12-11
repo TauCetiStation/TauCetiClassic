@@ -651,7 +651,7 @@
 
 /obj/item/weapon/paper/space_structures/atom_init()
 	. = ..()
-	name = "Показания датчиков с [station_name()]"
+	name = "Показания датчиков [station_name()]"
 	info = get_space_structures_info()
 
 	var/obj/item/weapon/stamp/centcomm/S = new
