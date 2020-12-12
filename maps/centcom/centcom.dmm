@@ -23322,10 +23322,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"qAP" = (
-/obj/structure/cult/pylon,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "qDT" = (
 /turf/simulated/wall/cult,
 /area/custom/cult)
@@ -23526,6 +23522,10 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"yea" = (
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "ygn" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/twohanded/flora,
@@ -66447,7 +66447,7 @@ sQk
 mzq
 sQk
 qDT
-qAP
+yea
 sQk
 iGK
 iGK
@@ -66689,9 +66689,9 @@ rXx
 sQk
 mzq
 mzq
-qAP
+yea
 qDT
-qAP
+yea
 sQk
 sQk
 sQk
@@ -67462,7 +67462,7 @@ sQk
 sQk
 dCw
 qDT
-qAP
+yea
 sQk
 mzq
 mzq
@@ -67471,11 +67471,11 @@ sQk
 mzq
 sQk
 sQk
-qAP
+yea
 kak
 sQk
 kak
-qAP
+yea
 sQk
 sQk
 sQk
@@ -69013,11 +69013,11 @@ sQk
 mzq
 sQk
 sQk
-qAP
+yea
 kak
 sQk
 kak
-qAP
+yea
 sQk
 sQk
 sQk
@@ -69257,7 +69257,7 @@ aaM
 aaM
 rXx
 sQk
-qAP
+yea
 mzq
 mzq
 mzq
