@@ -114,7 +114,7 @@
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/fireball
-	name = "Огненный шар"
+	name = "Огненный Шар"
 	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
 	school = "evocation"
 	action_icon_state = "fireball"
