@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
-	name = "Магическая ракета"
+	name = "Магическая Ракета"
 	desc = "Заклинание выпускает несколько медленно летящих зарядов с самонаведением в ближайшие цели."
 
 	school = "evocation"
