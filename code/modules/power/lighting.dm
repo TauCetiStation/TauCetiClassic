@@ -8,6 +8,11 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
+#ifdef NEWYEARCONTENT
+    #define LAMP_BRIGHTNESS 1.5
+#else
+    #define LAMP_BRIGHTNESS 2
+#endif
 
 
 
@@ -204,7 +209,7 @@
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
-	var/brightness_power = 2
+	var/brightness_power = LAMP_BRIGHTNESS
 	var/brightness_color = "#ffffff"
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -228,7 +233,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
+	brightness_power = LAMP_BRIGHTNESS
 	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
