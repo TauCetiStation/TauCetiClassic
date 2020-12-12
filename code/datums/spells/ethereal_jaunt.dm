@@ -1,7 +1,7 @@
 #define FLICK_OVERLAY_JAUNT_DURATION 12
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
-	name = "Выход из тела"
+	name = "Выход Из Тела"
 	desc = "Делает вас прозрачным и невидимым, позволяя летать и проходить сквозь стены."
 
 	school = "transmutation"
