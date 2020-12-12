@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
-	name = "Мгновенный призыв"
+	name = "Мгновенный Призыв"
 	desc = "Используется для призыва помеченной вещи в вашу руку откуда угодно."
 	school = "transmutation"
 	charge_max = 100
