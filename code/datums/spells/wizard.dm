@@ -147,7 +147,7 @@
 	smoke_amt = 5
 
 /obj/effect/proc_holder/spell/targeted/forcewall
-	name = "Магическая стена"
+	name = "Магическая Стена"
 	desc = "Создает неразрушимую стену на 30 секунд и не требует одежды для использования."
 	school = "transmutation"
 	charge_max = 600
