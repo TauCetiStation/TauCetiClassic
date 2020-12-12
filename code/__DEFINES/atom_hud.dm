@@ -38,6 +38,8 @@
 #define GOLEM_MASTER_HUD	"17"
 // Artifact huds
 #define MINE_ARTIFACT_HUD	"18"
+//Alien embryo hud
+#define ALIEN_EMBRYO_HUD	"19"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

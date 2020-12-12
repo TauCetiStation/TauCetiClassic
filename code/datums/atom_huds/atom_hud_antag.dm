@@ -13,6 +13,9 @@
 	var/image/holder = hud_list[GOLEM_MASTER_HUD]
 	holder.icon_state = "agolem_master"
 
+/datum/atom_hud/antag/embryo
+	hud_icons = list(ALIEN_EMBRYO_HUD)
+
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")

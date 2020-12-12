@@ -178,7 +178,11 @@ This is emryo growth procs
 /obj/item/alien_embryo/proc/add_infected_hud()
 	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
 	hud.add_to_hud(affected_mob)
-	set_antag_hud(affected_mob, "infected[stage]")
+	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
+	holder.icon_state = "infected[stage]"
 
 /obj/item/alien_embryo/proc/remove_infected_hud()
-	remove_antag_hud(ANTAG_HUD_ALIEN_EMBRYO, affected_mob)
+	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	hud.leave_hud(affected_mob)
+	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
+	holder.icon_state = null

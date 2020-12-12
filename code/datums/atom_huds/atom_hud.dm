@@ -31,7 +31,7 @@ var/global/list/huds[23]
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_MALF] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ZOMB] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_ALIEN_EMBRYO] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_ALIEN_EMBRYO] = new/datum/atom_hud/antag/embryo
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
