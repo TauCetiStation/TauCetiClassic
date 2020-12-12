@@ -177,7 +177,7 @@
 
 /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	name = "Чародейский обстрел"
-	desc = "Выстреливает арканной энергией в ваших врагов. Требует обе руки для использования. Изучение этого заклинания сделает недоступным Lesser Summon Gun."
+	desc = "Выстреливает мистической энергией в ваших врагов. Требует обе руки для использования."
 	charge_max = 600
 	action_icon_state = "arcane_barrage"
 	summon_path = /obj/item/weapon/magic/arcane_barrage
