@@ -122,7 +122,7 @@
 	charge_max = 200
 
 /obj/item/weapon/magic/fireball
-	name = "Огненный шар"
+	name = "огненный шар"
 	invoke = "ONI SOMA"
 	icon_state = "fireball"
 	s_fire = 'sound/magic/Fireball.ogg'
