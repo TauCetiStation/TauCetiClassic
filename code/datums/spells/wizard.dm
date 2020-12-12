@@ -93,7 +93,7 @@
 	smoke_amt = 10
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
-	name = "Отключить технологию"
+	name = "Отключить Технологию"
 	desc = "Отключает всю технологическую мумбу-юмбу в радиусе дейсвия."
 	charge_max = 400
 	clothes_req = 1
