@@ -46,20 +46,13 @@
 	narsie_spawn_animation()
 	invisibility = 60
 
+	var/datum/event_container/portals_event = new /datum/event_container/major
+	for(var/datum/event_meta/E in portals_event.available_events)
+		if(ispath(E.event_type, /datum/event/anomaly/cult_portal/massive))
+			log_debug("Starting event '[E.name]' of severity [severity_to_string[E.severity]].")
+			new E.event_type(E)
+
 	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
-
-/obj/singularity/narsie/large/attack_ghost(mob/living/user)
-	if(!(src in view()))
-		to_chat(user, "Your soul is too far away.")
-		return
-	new /obj/effect/effect/smoke(user.loc)
-	var/mob/living/simple_animal/construct/harvester/G = new /mob/living/simple_animal/construct/harvester(user.loc)
-	G.real_name = pick("harvester([rand(1, 10)])", "reaper([rand(1, 10)])")
-	G.loc = src.loc
-	G.key = user.key
-	to_chat(G, "<span class='warning'>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
-		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth</span>")
-
 
 /obj/singularity/narsie/process()
 	eat()
@@ -143,13 +136,18 @@
 
 
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+	if(!alive_mob_list.len)
+		return
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/mob/living/carbon/food in alive_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
+		if(!pos)
+			break
 		if(pos.z != src.z)
 			continue
-		if(istype(food, /mob/living/carbon/brain)) continue
+		if(istype(food, /mob/living/carbon/brain))
+			continue
 
 		if(iscultist(food))
 			cultists += food

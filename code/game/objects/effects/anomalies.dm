@@ -188,3 +188,91 @@
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return
+
+/////// CULT ///////
+/obj/effect/anomaly/bluespace/cult_portal
+	name = "ужасающий портал"
+	desc = "Никто незнает Что создало этот портал: может самая развитая раса, а может чудовище из глубин галактики."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	color = "#ff0000"
+	light_color = "#ff69b4"
+	var/next_spawn = 0
+	var/spawn_cd = 30 SECONDS
+	var/spawns = -1
+	var/coef_max_size = 0.3333 // When this coefficient decreases, the sprite size increases
+	var/old_size = 1
+	var/need_bound = FALSE
+	var/list/coord_of_pylons = list(1, 1)
+	var/list/beams = list()
+
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound)
+	. = ..()
+	if(!isnull(bound))
+		need_bound = bound
+
+	for(var/i in 1 to 4)
+		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
+		var/turf/F = get_turf(pick(L))
+		if(F && istype(F, /turf/simulated/floor))
+			for(var/obj in L)
+				if(!istype(obj, /turf))
+					qdel(obj)
+			var/obj/structure/cult/pylon/P = new(F)
+			var/datum/beam/B = P.Beam(src, "blood_beam", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			beams += B
+
+		// Iterating through all possible coordinates
+		if(i % 2 == 0)
+			coord_of_pylons[1] *= -1;
+		else
+			coord_of_pylons[2] *= -1;
+
+/obj/effect/anomaly/bluespace/cult_portal/Destroy()
+	for(var/datum/beam/B in beams)
+		B.End()
+	return ..()
+
+/obj/effect/anomaly/bluespace/cult_portal/anomalyEffect()
+	if(prob(20))
+		if(old_size > coef_max_size)
+			var/matrix/M = matrix()
+			M.Scale(1.2)
+			old_size *= 1/1.2
+			transform = M
+
+/obj/effect/anomaly/bluespace/cult_portal/attack_hand(mob/living/user)
+	do_teleport(user, locate(user.x, user.y, user.z), 10)
+
+/obj/effect/anomaly/bluespace/cult_portal/attack_ghost(mob/dead/observer/user)
+	if(spawns == 0)
+		to_chat(user, "<span class='warning'>Нар-Си уже отправил всю свою армию.</span>")
+		return
+	else if(next_spawn > world.time)
+		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
+		return
+
+	var/type = pick(200;/mob/living/simple_animal/construct/harvester, 50;/mob/living/simple_animal/construct/wraith, 30;/mob/living/simple_animal/construct/armoured, 70;/mob/living/simple_animal/construct/builder, 1;/mob/living/simple_animal/construct/behemoth)
+	create_shell(user, type)
+	next_spawn = world.time + spawn_cd
+	spawns -= 1
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
+	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	if(!candidates.len)
+		return
+
+	while(candidates.len || spawns != 0)
+		var/mob/slave = pick_n_take(candidates)
+		var/type = pick(200;/mob/living/simple_animal/construct/harvester, 50;/mob/living/simple_animal/construct/wraith, 30;/mob/living/simple_animal/construct/armoured, 70;/mob/living/simple_animal/construct/builder, 1;/mob/living/simple_animal/construct/behemoth)
+		create_shell(slave, type)
+		spawns -= 1
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/create_shell(mob/slave, type)
+	var/mob/living/simple_animal/construct/C = new type(src.loc)
+	C.key = slave.key
+	var/rand_num = rand(1, 3)
+	for(var/i in 1 to rand_num)
+		step(C, pick(alldirs))
+	if(need_bound)
+		C.AddComponent(/datum/component/bounded, src, 0, 6)

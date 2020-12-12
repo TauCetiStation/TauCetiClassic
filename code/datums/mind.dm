@@ -1690,19 +1690,29 @@
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	mind.special_role = "Cultist"
+	if(global.cult_religion)
+		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
+	if(global.cult_religion)
+		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
+	if(global.cult_religion)
+		mind.special_role = "Cultist"
+	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+
+/mob/living/simple_animal/construct/behemoth/mind_initialize()
+	..()
+	mind.assigned_role = "Behemoth"
+	if(global.cult_religion)
+		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()

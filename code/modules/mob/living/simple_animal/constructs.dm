@@ -10,7 +10,6 @@
 	icon_dead = "shade_dead"
 	speed = -1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 1
 	attack_sound = list('sound/weapons/punch1.ogg')
@@ -179,6 +178,7 @@
 	speed = 5
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch4.ogg')
+	resize = 1.2
 	var/energy = 0
 	var/max_energy = 1000
 
