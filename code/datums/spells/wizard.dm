@@ -240,7 +240,7 @@
 	sound = 'sound/magic/Blind.ogg'
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
-	name = "Огненный шар"
+	name = "Огненный Шар"
 	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
 
 	school = "evocation"
