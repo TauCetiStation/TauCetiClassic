@@ -200,7 +200,7 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
-	name = "Призвать рой существ"
+	name = "Призвать Рой Существ"
 	desc = "Разрывает реальность и позволяет призвать ужасающих созданий."
 
 	school = "conjuration"
