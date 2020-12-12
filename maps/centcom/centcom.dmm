@@ -20630,7 +20630,7 @@
 	},
 /area/centcom/holding)
 "kak" = (
-/obj/structure/cult/pylon,
+/obj/structure/cult/pedestal,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "kbb" = (
@@ -23322,6 +23322,10 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"qAP" = (
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "qDT" = (
 /turf/simulated/wall/cult,
 /area/custom/cult)
@@ -23339,7 +23343,7 @@
 	},
 /area/velocity)
 "rXx" = (
-/turf/unsimulated/wall/cult,
+/turf/simulated/wall/cult/runed/anim,
 /area/custom/cult)
 "rXM" = (
 /obj/machinery/light{
@@ -66443,7 +66447,7 @@ sQk
 mzq
 sQk
 qDT
-kak
+qAP
 sQk
 iGK
 iGK
@@ -66685,9 +66689,9 @@ rXx
 sQk
 mzq
 mzq
-kak
+qAP
 qDT
-kak
+qAP
 sQk
 sQk
 sQk
@@ -67458,7 +67462,7 @@ sQk
 sQk
 dCw
 qDT
-kak
+qAP
 sQk
 mzq
 mzq
@@ -67467,11 +67471,11 @@ sQk
 mzq
 sQk
 sQk
-sQk
+qAP
 kak
 sQk
 kak
-sQk
+qAP
 sQk
 sQk
 sQk
@@ -69009,11 +69013,11 @@ sQk
 mzq
 sQk
 sQk
-sQk
+qAP
 kak
 sQk
 kak
-sQk
+qAP
 sQk
 sQk
 sQk
@@ -69253,7 +69257,7 @@ aaM
 aaM
 rXx
 sQk
-kak
+qAP
 mzq
 mzq
 mzq

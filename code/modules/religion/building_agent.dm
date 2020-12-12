@@ -58,6 +58,14 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
+/datum/building_agent/cult/structure/pedestal
+	name = "Pedestal"
+	building_type = /obj/structure/cult/pedestal
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
 /datum/building_agent/cult/structure/pylon
 	name = "Pylon"
 	building_type = /obj/structure/cult/pylon

@@ -193,9 +193,8 @@
 /obj/effect/anomaly/bluespace/cult_portal
 	name = "ужасающий портал"
 	desc = "Никто незнает Что создало этот портал: может самая развитая раса, а может чудовище из глубин галактики."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
-	color = "#ff0000"
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "portal"
 	light_color = "#ff69b4"
 	var/next_spawn = 0
 	var/spawn_cd = 30 SECONDS
@@ -218,7 +217,8 @@
 			for(var/obj in L)
 				if(!istype(obj, /turf))
 					qdel(obj)
-			var/obj/structure/cult/pylon/P = new(F)
+			var/obj/structure/cult/pedestal/P = new(F)
+			P.icon_state = "pylon_glow"
 			var/datum/beam/B = P.Beam(src, "blood_beam", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
 			beams += B
 
@@ -230,6 +230,7 @@
 
 /obj/effect/anomaly/bluespace/cult_portal/Destroy()
 	for(var/datum/beam/B in beams)
+		B.origin.icon_state = "pylon"
 		B.End()
 	return ..()
 

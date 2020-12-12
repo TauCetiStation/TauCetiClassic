@@ -31,16 +31,16 @@
 	var/for_step = pedestals.len/rules.len
 	for(var/i in 1 to pedestals.len step for_step)
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
-		var/obj/structure/cult/pylon/P = pedestals[i]
+		var/obj/structure/cult/pedestal/P = pedestals[i]
 		P.my_rite = src
-		INVOKE_ASYNC(P, /obj/structure/cult/pylon.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
+		INVOKE_ASYNC(P, /obj/structure/cult/pedestal.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
 	return TRUE
 
 /datum/religion_rites/pedestals/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
-	for(var/obj/structure/cult/pylon/P in involved_pedestals)
+	for(var/obj/structure/cult/pedestal/P in involved_pedestals)
 		if(P.last_turf != get_turf(P))
 			return FALSE
 	return TRUE
@@ -69,7 +69,7 @@
 	var/i = 1
 	var/phrase_indx = 1
 	var/waiting_interations = 0
-	for(var/obj/structure/cult/pylon/P in involved_pedestals)
+	for(var/obj/structure/cult/pedestal/P in involved_pedestals)
 		if(!can_invocate(user, AOG, waiting_interations))
 			break
 		P.create_holy_outline("#c50404")
@@ -125,14 +125,14 @@
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
 	pedestals = list()
-	for(var/obj/structure/cult/pylon/P in spiral_range(search_radius_of_pedestals, AOG))
+	for(var/obj/structure/cult/pedestal/P in spiral_range(search_radius_of_pedestals, AOG))
 		if(P.my_rite)
 			continue
 		pedestals += P
 		P.last_turf = get_turf(P)
 
 /datum/religion_rites/pedestals/proc/reset_rite()
-	for(var/obj/structure/cult/pylon/P in involved_pedestals)
+	for(var/obj/structure/cult/pedestal/P in involved_pedestals)
 		P.clear_items()
 		P.del_holy_outline()
 		P.my_rite = null
@@ -169,7 +169,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pylon = 2,
+		/obj/structure/cult/pedestal = 2,
 	)
 
 	needed_aspects = list(
@@ -189,7 +189,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pylon = 2,
+		/obj/structure/cult/pedestal = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 	)
@@ -211,7 +211,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pylon = 2,
+		/obj/structure/cult/pedestal = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,
@@ -235,7 +235,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pylon = 2,
+		/obj/structure/cult/pedestal = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,

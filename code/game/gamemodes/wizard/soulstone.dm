@@ -114,7 +114,7 @@
 							if (T.client)
 								T.client.mob = S
 							S.cancel_camera()
-							C.icon_state = "soulstone2"
+							C.icon_state = "soulstone_glow_blink"
 							C.name = "Soul Stone: [S.real_name]"
 							to_chat(S, "Your soul has been captured! You are now bound to [U.name]'s and his allies will, help them suceed in their goals at all costs.")
 							to_chat(U, "<span class='notice'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone.")
@@ -137,7 +137,7 @@
 						T.status_flags |= GODMODE
 						T.canmove = 0
 						T.health = T.maxHealth
-						C.icon_state = "soulstone2"
+						C.icon_state = "soulstone_glow_blink"
 						to_chat(T, "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form")
 						to_chat(U, "<span class='notice'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone.")
 		if("CONSTRUCT")

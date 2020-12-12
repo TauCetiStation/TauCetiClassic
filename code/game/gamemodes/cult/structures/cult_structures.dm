@@ -27,6 +27,15 @@
 	light_power = 2
 	light_range = 2
 
+/obj/structure/cult/pylon
+	name = "Pylon"
+	desc = "A floating crystal that hums with an unearthly energy."
+	icon_state = "pylon"
+	light_color = "#ff9595"
+	light_power = 2
+	light_range = 6
+	pass_flags = PASSTABLE
+
 /obj/effect/spacewhole
 	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."

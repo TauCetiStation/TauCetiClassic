@@ -1,7 +1,7 @@
 // TODO: Write normal text gde nado
 /obj/item/weapon/storage/bible/tome
 	name = "book"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
@@ -27,7 +27,7 @@
 	. = ..()
 	rad_choices["Chapel looks"] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
 	rad_choices["Runes"] = image(icon = 'icons/obj/rune.dmi', icon_state = "[rand(1, 6)]")
-	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult_wall.dmi', icon_state = "box")
+	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult/wall.dmi', icon_state = "box")
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if(iscultist(user) || isobserver(user))

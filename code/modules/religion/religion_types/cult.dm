@@ -140,7 +140,7 @@
 	mode = SSticker.mode
 
 /datum/religion/cult/proc/give_tome(mob/living/carbon/human/cultist)
-	var/obj/item/weapon/storage/bible/tome/B = spawn_bible(cultist, /obj/item/weapon/storage/bible/tome)
+	var/obj/item/weapon/storage/bible/tome/B = spawn_bible(cultist)
 	cultist.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
 /datum/religion/cult/proc/area_entered(area/A, atom/movable/AM)

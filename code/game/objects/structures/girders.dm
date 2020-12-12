@@ -227,13 +227,13 @@
 	health = 500
 
 /obj/structure/cultgirder
-	icon= 'icons/obj/cult.dmi'
-	icon_state= "cultgirder"
+	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
+	icon_state= "girder_box"
 	anchored = 1
 	density = 1
 	layer = 2.9
 	var/health = 250
-	smooth = SMOOTH_FALSE
+	smooth = SMOOTH_TRUE
 
 /obj/structure/cultgirder/attackby(obj/item/W, mob/user)
 	if(user.is_busy(src))

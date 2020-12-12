@@ -23,7 +23,6 @@
 	var/obj/effect/anomaly/bluespace/cult_portal/C = newAnomaly
 	for(var/datum/beam/B in C.beams)
 		B.End()
-	C.color = null
 
 /datum/event/anomaly/cult_portal/massive
 
@@ -57,5 +56,5 @@
 	for(var/anom in newAnomaly)
 		var/obj/effect/anomaly/bluespace/cult_portal/C = anom
 		for(var/datum/beam/B in C.beams)
+			B.origin.icon_state = "pylon"
 			B.End()
-		C.color = null
