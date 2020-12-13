@@ -226,7 +226,7 @@
 	var/mob/living/carbon/M = S.occupant
 	if(!M)
 		return
-	if(ishuman(M)
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC])
 			return
