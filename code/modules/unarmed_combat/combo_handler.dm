@@ -191,6 +191,8 @@
 		CC.before_animation(victim, attacker)
 
 	if(!CC.do_combo(victim, attacker, ANIM_DELAY_WINDUP + ANIM_DELAY_RETURN))
+		if(CC.heavy_animation)
+			CC.after_animation(victim, attacker)
 		return
 	CC.animate_combo(victim, attacker)
 
