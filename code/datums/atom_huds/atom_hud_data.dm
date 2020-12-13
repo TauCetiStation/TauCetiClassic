@@ -1,4 +1,3 @@
-#define HIDDEN_SCANNER 1
 /*
  * Data HUDs have been rewritten in a more generic way.
  * In short, they now use an observer-listener pattern.
@@ -72,13 +71,13 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
-	var/severity
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(!D.hidden[HIDDEN_SCANNER])
-			if(!threat || D.severity > threat) //a buffing virus gets an icon
-				threat = D.severity
-				severity = D.severity
+	var/severity = 0
+	for(var/id in virus2)
+		if(id in virusDB)
+			var/datum/disease2/disease/D = virus2[id]
+			if(!threat || D.stage > threat) //a buffing virus gets an icon
+				threat = D.stage
+				severity += D.stage
 	return severity
 
 //called when a human changes suit sensors
@@ -135,8 +134,10 @@
 				holder.icon_state = "hudill0"
 			if(1)
 				holder.icon_state = "hudbuff"
-			else
+			if(0)
 				holder.icon_state = "hudhealthy"
+			else
+				holder.icon_state = "hudill5"
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
@@ -364,5 +365,3 @@
 			return "health-85"
 		else
 			return "health-100"
-
-#undef HIDDEN_SCANNER
