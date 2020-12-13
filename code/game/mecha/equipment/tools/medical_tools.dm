@@ -224,9 +224,12 @@
 		S.occupant_message("[S] deactivated - no power.")
 		return stop()
 	var/mob/living/carbon/M = S.occupant
-	var/mob/living/carbon/human/H = S.occupant
-	if(!istype(H) || H.species.flags[IS_SYNTHETIC])
+	if(!M)
 		return
+	if(ishuman(M)
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
