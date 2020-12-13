@@ -740,7 +740,7 @@
 
 		"powerChannels" = list(
 			list(
-				"title" = "Equipment",
+				"title" = "Оборудование",
 				"powerLoad" = round(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
@@ -750,7 +750,7 @@
 				)
 			),
 			list(
-				"title" = "Lighting",
+				"title" = "Освещение",
 				"powerLoad" = lastused_light,
 				"status" = lighting,
 				"topicParams" = list(
@@ -760,7 +760,7 @@
 				)
 			),
 			list(
-				"title" = "Environment",
+				"title" = "Окружение",
 				"powerLoad" = round(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
@@ -777,7 +777,7 @@
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 505 : 460)
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 505 : 465)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
