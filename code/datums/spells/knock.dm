@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/knock
 	name = "Стук"
-	desc = "Открывает ближайшие, даже закрытые, двери и не требует одежды для использования."
+	desc = "Открывает любые ближайшие двери. Даже запертые. Не требует одежды для использования."
 	sound = 'sound/magic/Knock.ogg'
 	school = "transmutation"
 	charge_max = 100
