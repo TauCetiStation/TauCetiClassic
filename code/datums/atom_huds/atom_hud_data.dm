@@ -119,25 +119,10 @@
 		else
 			holder.icon_state = "huddead"
 	else
-		switch(virus_threat)
-			if(7)
-				holder.icon_state = "hudill5"
-			if(6)
-				holder.icon_state = "hudill4"
-			if(5)
-				holder.icon_state = "hudill3"
-			if(4)
-				holder.icon_state = "hudill2"
-			if(3)
-				holder.icon_state = "hudill1"
-			if(2)
-				holder.icon_state = "hudill0"
-			if(1)
-				holder.icon_state = "hudbuff"
-			if(0)
-				holder.icon_state = "hudhealthy"
-			else
-				holder.icon_state = "hudill5"
+		if(virus_threat == 0)
+			holder.icon_state = "hudhealthy"
+		else
+			holder.icon_state = "hudill[min(virus_threat, 7)]"
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
