@@ -23339,7 +23339,7 @@
 	},
 /area/velocity)
 "rXx" = (
-/turf/simulated/wall/cult/runed/anim,
+/turf/unsimulated/wall/cult/runed/anim,
 /area/custom/cult)
 "rXM" = (
 /obj/machinery/light{

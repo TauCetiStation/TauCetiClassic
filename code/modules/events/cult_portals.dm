@@ -30,7 +30,6 @@
 	startWhen = 5
 	announceWhen = 5
 	endWhen = 300
-	impact_area = findEventArea()
 
 /datum/event/anomaly/cult_portal/massive/announce()
 	command_alert("Внимание! Обнаружено множество неавторизованных блю-спейс сигнатур! Не забудьте сохранить целостность станции.", "Блю-спейс Тревога")
@@ -43,7 +42,8 @@
 
 /datum/event/anomaly/cult_portal/massive/proc/spawn_portals()
 	for(var/i in 1 to 50)
-		var/turf/T = pick(get_area_turfs(findEventArea()))
+		impact_area = findEventArea()
+		var/turf/T = pick(get_area_turfs(impact_area))
 		if(T)
 			var/obj/effect/anomaly/bluespace/cult_portal/C = new(T)
 			newAnomaly += C
