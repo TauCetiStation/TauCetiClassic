@@ -189,24 +189,24 @@
 	..()
 	if(src in oview(1, user))
 		if(stat & BROKEN)
-			to_chat(user, "Looks broken.")
+			to_chat(user, "Выглядит сломанным.")
 			return
 		if(opened)
 			if(has_electronics && terminal)
-				to_chat(user, "The cover is [opened == 2 ? "removed" : "open"] and the power cell is [ cell ? "installed" : "missing"].")
+				to_chat(user, "Крышка [opened == 2 ? "отсутствует" : "открыта"]. Батарея [ cell ? "установлена" : "отсутствует"].")
 			else if(!has_electronics && terminal)
-				to_chat(user, "There are some wires but no any electronics.")
+				to_chat(user, "Там есть терминал, но нет платы.")
 			else if(has_electronics && !terminal)
-				to_chat(user, "Electronics installed but not wired.")
+				to_chat(user, "Плата установлена, но нет терминала.")
 			else /* if(!has_electronics && !terminal) */
-				to_chat(user, "There is no electronics nor connected wires.")
+				to_chat(user, "Отсутствуют плата и терминал.")
 		else
 			if(stat & MAINT)
-				to_chat(user, "The cover is closed. Something wrong with it: it doesn't work.")
+				to_chat(user, "Крышка закрыта. С ней что-то не так, она не работает.")
 			else if(malfhack)
-				to_chat(user, "The cover is broken. It may be hard to force it open.")
+				to_chat(user, "Крышка сломана. Проблематично открыть без лома.")
 			else
-				to_chat(user, "The cover is closed.")
+				to_chat(user, "Крышка закрыта.")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -386,23 +386,23 @@
 	if(iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if(terminal)
-				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
+				to_chat(user, "<span class='warning'>Сначала отсоедините провода.</span>")
 				return
 			if(user.is_busy(src))
 				return
-			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
+			to_chat(user, "Вы пытаетесь вытащить управляющую плату...")//lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
-						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
-						"You broke the charred power control board and remove the remains.",
-						"You hear a crack!")
+						"<span class='warning'>[user.name] сломал управляющую плату внутри [src.name]!</span>",\
+						"Вы сломали обугленную плату управления и извлекли остатки.",
+						"Вы слышите треск!")
 					//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
-						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
-						"You remove the power control board.")
+						"<span class='warning'>[user.name] вытащил управляющую плату из [src.name]!</span>",\
+						"Вы вытащили управляющую плату.")
 					new /obj/item/weapon/module/power_control(loc)
 		else if(opened != 2) //cover isn't removed
 			opened = 0
@@ -410,19 +410,19 @@
 
 	else if(iscrowbar(W) && !opened)
 		if(stat & BROKEN)
-			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
+			user.visible_message("<span class='warning'>[user.name] пытается открыть крышку [src.name].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [src.name].</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
 				opened = TRUE
 				locked = FALSE
 				if(cell)
-					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
+					to_chat(user, "<span class='notice'>Батарейка выпала из [src.name].</span>")
 					cell.forceMove(user.loc)
 					cell = null
 				update_icon()
 
 		else if(!(stat & BROKEN) || !malfhack)
 			if(coverlocked && !(stat & MAINT))
-				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
+				to_chat(user, "<span class='warning'>Крышка заблокирована и не может быть открыта.</span>")
 				return
 			else
 				opened = TRUE
