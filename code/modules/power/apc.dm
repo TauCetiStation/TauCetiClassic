@@ -443,7 +443,7 @@
 			return
 		else
 			if(stat & MAINT)
-				to_chat(user, "<span class='warning'>Нет коннектора для вашей батареи.</span>")
+				to_chat(user, "<span class='warning'>Отсутствует коннектор для батареи.</span>")
 				return
 			user.drop_item()
 			W.loc = src
