@@ -159,7 +159,7 @@
 					<span class='bad'>ВЫКЛ</span>
 				{{/if}}
 			{{else}}
-				{{:helper.link('ВКЛ', 'locked', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}{{:helper.link('Disengaged', 'ВЫКЛ', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
+				{{:helper.link('ВКЛ', 'locked', {'lock' : 1}, data.coverLocked ? 'selected' : null)}}{{:helper.link('ВЫКЛ', 'unlocked', {'lock' : 1}, data.coverLocked ? null : 'selected')}}
 			{{/if}}
 		</div>
 	</div>

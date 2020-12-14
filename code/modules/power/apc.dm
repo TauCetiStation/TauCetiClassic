@@ -740,7 +740,7 @@
 
 		"powerChannels" = list(
 			list(
-				"title" = "Equipment",
+				"title" = "Оборудование",
 				"powerLoad" = round(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
@@ -750,7 +750,7 @@
 				)
 			),
 			list(
-				"title" = "Lighting",
+				"title" = "Освещение",
 				"powerLoad" = lastused_light,
 				"status" = lighting,
 				"topicParams" = list(
@@ -760,7 +760,7 @@
 				)
 			),
 			list(
-				"title" = "Environment",
+				"title" = "Окружение",
 				"powerLoad" = round(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
@@ -997,7 +997,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='warning'>[src.name] внезапно стал дымится и из него вылетают снопы искр!</span>", blind_message = "<span class='warning'>Вы слышите шипение электроники</span>")
+				visible_message("<span class='warning'>[src.name] внезапно задымился и стал искрить!</span>", blind_message = "<span class='warning'>Вы слышите шипение электроники</span>")
 
 
 /obj/machinery/power/apc/surplus()
@@ -1315,14 +1315,14 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
 	if(last_nightshift_switch > world.time - 20) //~2 seconds between each toggle to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		to_chat(usr, "<span class='warning'>Плата ночного освещения [src] все еще перезаряжается!</span>")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
 
 /obj/machinery/power/apc/proc/set_nightshift_preset(preset)
 	if(last_nightshift_switch > world.time - 20) //~2 seconds between each change to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		to_chat(usr, "<span class='warning'>Плата ночного освещения [src] все еще перезаряжается!</span>")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(nightshift_lights, preset)
