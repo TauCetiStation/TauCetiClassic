@@ -193,7 +193,7 @@
 			return
 		if(opened)
 			if(has_electronics && terminal)
-				to_chat(user, "Крышка  [opened == 2 ? "отсутствует" : "открыта] и батарея[ cell ? "установлена" : "отсутствует"].") //дословно батарея "утеряна"
+				to_chat(user, "Крышка [opened == 2 ? "отсутствует" : "открыта"]. Батарея [ cell ? "установлена" : "отсутствует"].") //дословно батарея "утеряна"
 			else if(!has_electronics && terminal)
 				to_chat(user, "Здесь есть провода, но нет платы.")
 			else if(has_electronics && !terminal)
@@ -449,8 +449,8 @@
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[user.name] установил батарею в[src.name]!</span>",\ //Возможно корректно будет "вставить"
-				"Вы установили батарею.")
+				"<span class='warning'>[user.name] установил батарею в[src.name]!</span>",\
+				"Вы установили батарею.")  //Возможно корректно будет "вставить"
 			chargecount = 0
 			update_icon()
 
@@ -822,7 +822,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				to_chat(user, "<span class='warning'>\У [src] выключена функция контроля ИИ!</span>")
+				to_chat(user, "<span class='warning'> У [src] выключена функция контроля ИИ!</span>")
 				nanomanager.close_user_uis(user, src)
 
 			return 0
