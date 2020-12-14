@@ -37,7 +37,7 @@
 			return
 		else
 			new /obj/item/stack/cable_coil/random(loc, 10)
-			to_chat(usr, "Вы перерезаете провода и убираете не используемый терминал питания") // возможно правильно будет ненужный/бесполезный(?)
+			to_chat(usr, "Вы перерезаете кабели и разбираете неиспользуемый терминал питания.)
 			qdel(T)
 	new /obj/machinery/power/apc(loc, ndir, 1)
 	qdel(src)
