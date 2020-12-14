@@ -430,26 +430,26 @@
 
 	else if(iswrench(W) && opened && (stat & BROKEN))
 		if(coverlocked)
-			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
+			to_chat(user, "<span class='notice'>Болты APC подняты.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
 				coverlocked = FALSE
 				update_icon()
 		else
-			to_chat(user, "<span class='warning'>APC bolts alredy removed.</span>")
+			to_chat(user, "<span class='warning'>Болты APC уже подняты.</span>")
 
 	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			to_chat(user, "There is a power cell already installed.")
+			to_chat(user, "Батарея уже установлена.")
 			return
 		else
 			if(stat & MAINT)
-				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
+				to_chat(user, "<span class='warning'>Нет коннектора для вашей батареи.</span>")
 				return
 			user.drop_item()
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
+				"<span class='warning'>[user.name] вставил батарейку в [src.name]!</span>",\
 				"You insert the power cell.")
 			chargecount = 0
 			update_icon()
@@ -457,55 +457,55 @@
 	else if	(isscrewdriver(W))	// haxing
 		if(opened)
 			if(cell)
-				to_chat(user, "<span class='warning'>Close the APC first.</span>")//Less hints more mystery!
+				to_chat(user, "<span class='warning'>Сначала закройте APC.</span>")//Less hints more mystery!
 				return
 			else
 				if(has_electronics == 1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					to_chat(user, "You screw the circuit electronics into place.")
+					to_chat(user, "Вы прикрутили плату на место.")
 				else if(has_electronics == 2)
 					has_electronics = 1
 					stat |= MAINT
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					to_chat(user, "You unfasten the electronics.")
+					to_chat(user, "Вы выкрутили плату.")
 				else /* has_electronics == 0 */
-					to_chat(user, "<span class='warning'>There is nothing to secure.</span>")
+					to_chat(user, "<span class='warning'>Нечего закручивать.</span>")
 					return
 				update_icon()
 
 		else if(emagged)
-			to_chat(user, "The interface is broken.")
+			to_chat(user, "Интерфейс сломан.")
 		else if(!(stat & BROKEN))
 			wiresexposed = !wiresexposed
-			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+			to_chat(user, "Панель проводки [wiresexposed ? "открыта" : "закрыта"].")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
-			to_chat(user, "The interface is broken.")
+			to_chat(user, "Интерфейс сломан.")
 		else if(opened)
-			to_chat(user, "You must close the cover to swipe an ID card.")
+			to_chat(user, "Прежде чем провести картой, крышку надо закрыть.")
 		else if(wiresexposed)
-			to_chat(user, "You must close the panel")
+			to_chat(user, "Нужно закрыть панель проводки.")
 		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "Nothing happens.")
+			to_chat(user, "Ничего не произошло.")
 		else
 			if(src.allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
 				locked = !locked
-				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
+				to_chat(user, "Вы [ locked ? "заблокировали" : "разблокировали"] интерфейс APC.")
 				update_icon()
 			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+				to_chat(user, "<span class='warning'>Доступ запрещен.</span>")
 
 	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
-			to_chat(user, "You must close the cover to swipe an ID card.")
+			to_chat(user, "Прежде чем провести картой, крышку надо закрыть.")
 		else if(wiresexposed)
-			to_chat(user, "You must close the panel first")
+			to_chat(user, "Нужно закрыть панель проводки.")
 		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "Nothing happens.")
+			to_chat(user, "Ничего не произошло.")
 		else
 			if(user.is_busy(src))
 				return
@@ -514,22 +514,22 @@
 				if(prob(50))
 					emagged = 1
 					locked = 0
-					to_chat(user, "You emag the APC interface.")
+					to_chat(user, "Вы замкнули интерфейс.")
 					update_icon()
 				else
-					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
+					to_chat(user, "Не вышло [ locked ? "разблокировать" : "заблокировать"] интерфейс APC.")
 
 	else if(iscoil(W) && !terminal && opened && has_electronics != 2)
 		var/turf/TT = get_turf(src)
 		if(TT.intact)
-			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
+			to_chat(user, "<span class='warning'>Сначала нужно убрать напольную плитку перед APC.</span>")
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if(C.get_amount() < 10)
-			to_chat(user, "<span class='warning'>You need more wires.</span>")
+			to_chat(user, "<span class='warning'>Нужно больше проводов.</span>")
 			return
 		if(user.is_busy()) return
-		to_chat(user, "You start adding cables to the APC frame...")
+		to_chat(user, "Вы начали прокладывать кабель к фрейму APC...")
 		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
@@ -540,42 +540,42 @@
 				return
 			C.use(10)
 			user.visible_message(\
-				"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
-				"You add cables to the APC frame.")
+				"<span class='warning'>[user.name] проложил кабель к фрейму APC!</span>",\
+				"Вы проложили кабель к фрейму APC.")
 			make_terminal()
 			terminal.connect_to_network()
 	else if(iswirecutter(W) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
-		to_chat(user, "You trying to insert the power control board into the frame...")
+		to_chat(user, "Вы пытаетесь вставить управляющую плату во фрейм...")
 		if(W.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
-			to_chat(user, "You place the power control board inside the frame.")
+			to_chat(user, "Вы установили плату во фрейм.")
 			qdel(W)
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == 0 && ((stat & BROKEN) || malfhack))
-		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
+		to_chat(user, "<span class='warning'>Нельзя установить плату в сломанный фрейм.</span>")
 		return
 	else if(iswelder(W) && opened && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='notice'>Нужно больше топлива для сварки.</span>")
 			return
-		to_chat(user, "You start welding the APC frame...")
+		to_chat(user, "Вы начали заваривать фрейм APC...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
 			if(emagged || malfhack || (stat & BROKEN) || opened == 2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-					"You disassembled the broken APC frame.",\
-					"<span class='warning'>You hear welding.</span>")
+					"<span class='warning'>[src] был срезан [user.name] с помощью сварки.</span>",\
+					"Вы разобрали сломанный фрейм APC.",\
+					"<span class='warning'>Вы слышите сварку.</span>")
 			else
 				new /obj/item/apc_frame(loc)
 				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-					"You cut the APC frame from the wall.",\
-					"<span class='warning'>You hear welding.</span>")
+					"<span class='warning'>[src] был срезан со стены [user.name] с помощью сварки.</span>",\
+					"Вы срезали APC со стены.",\
+					"<span class='warning'>Вы слышите сварку.</span>")
 			qdel(src)
 			return
 	else if(istype(W, /obj/item/apc_frame) && opened && emagged)
@@ -583,8 +583,8 @@
 		if(opened == 2)
 			opened = 1
 		user.visible_message(\
-			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
-			"You replace the damaged APC frontal panel with a new one.")
+			"<span class='warning'>[user.name] заменил сломанную переднюю панель на новую.</span>",\
+			"Вы заменили сломанную переднюю панель на новую.")
 		qdel(W)
 		update_icon()
 	else if(istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
