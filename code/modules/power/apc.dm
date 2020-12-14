@@ -997,7 +997,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='warning'>[src.name] внезапно задымился и стал искрить!</span>", blind_message = "<span class='warning'>Вы слышите шипение электроники</span>")
+				visible_message("<span class='warning'>[src.name] внезапно выпускает поток дыма и несколько искр!</span>", blind_message = "<span class='warning'>Вы слышите шипение электроники</span>")
 
 
 /obj/machinery/power/apc/surplus()
