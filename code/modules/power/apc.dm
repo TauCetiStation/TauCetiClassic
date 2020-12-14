@@ -386,7 +386,7 @@
 	if(iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if(terminal)
-				to_chat(user, "<span class='warning'>Сначала отсоедините провода.</span>")
+				to_chat(user, "<span class='warning'>Сначала отсоедините терминал.</span>")
 				return
 			if(user.is_busy(src))
 				return
