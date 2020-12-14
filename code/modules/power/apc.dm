@@ -925,7 +925,7 @@
 						src.malfai = malfai.parent
 					else
 						src.malfai = usr
-					to_chat(malfai, "Взлом завершен. Данный АПЦ находится исключительно под вашим контролем.")
+					to_chat(malfai, "Взлом завершен. APC теперь под вашим эксклюзивным контролем.")
 					update_icon()
 
 	/*else if(href_list["occupyapc"])
