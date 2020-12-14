@@ -29,7 +29,7 @@
 		to_chat(usr, "<span class='warning'>APC не может быть размещен в этой зоне.</span>")
 		return
 	if (A.get_apc())
-		to_chat(usr, "<span class='warning'>Эта зона уже имеет АПЦ.</span>")
+		to_chat(usr, "<span class='warning'>Эта зона уже имеет APC.</span>")
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
