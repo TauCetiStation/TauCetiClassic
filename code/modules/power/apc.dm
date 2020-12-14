@@ -430,7 +430,7 @@
 
 	else if(iswrench(W) && opened && (stat & BROKEN))
 		if(coverlocked)
-			to_chat(user, "<span class='notice'>Болты APC подняты.</span>")
+			to_chat(user, "<span class='notice'>Поднимите болты APC.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
 				coverlocked = FALSE
 				update_icon()
