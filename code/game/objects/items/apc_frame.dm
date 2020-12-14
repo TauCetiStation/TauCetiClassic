@@ -23,21 +23,21 @@
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "<span class='warning'>APC cannot be placed on this spot.</span>")
+		to_chat(usr, "<span class='warning'>APC не может быть размещен в этом месте.</span>")
 		return
 	if (A.requires_power == 0 || istype(A,/area/space))
-		to_chat(usr, "<span class='warning'>APC cannot be placed in this area.</span>")
+		to_chat(usr, "<span class='warning'>APC не может быть размещен в этой зоне.</span>")
 		return
 	if (A.get_apc())
-		to_chat(usr, "<span class='warning'>This area already has APC.</span>")
+		to_chat(usr, "<span class='warning'>Эта зона уже имеет АПЦ.</span>")
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
-			to_chat(usr, "<span class='warning'>There is another network terminal here.</span>")
+			to_chat(usr, "<span class='warning'>Здесь есть еще один сетевой терминал.</span>")
 			return
 		else
 			new /obj/item/stack/cable_coil/random(loc, 10)
-			to_chat(usr, "You cut the cables and disassemble the unused power terminal.")
+			to_chat(usr, "Вы перерезаете провода и убираете не используемый терминал питания") // возможно правильно будет ненужный/бесполезный(?)
 			qdel(T)
 	new /obj/machinery/power/apc(loc, ndir, 1)
 	qdel(src)
