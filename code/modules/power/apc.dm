@@ -202,7 +202,7 @@
 				to_chat(user, "Отсутствуют плата и терминал.")
 		else
 			if(stat & MAINT)
-				to_chat(user, "Крышка закрыта. С ней что-то не так, она не работает.")
+				to_chat(user, "Крышка закрыта. С ней что-то не так, она не открывается.")
 			else if(malfhack)
 				to_chat(user, "Крышка сломана. Проблематично открыть без лома.")
 			else
@@ -390,7 +390,7 @@
 				return
 			if(user.is_busy(src))
 				return
-			to_chat(user, "Вы пытаетесь вытащить управляющую плату...")//lpeters - fixed grammar issues
+			to_chat(user, "Вы пытаетесь вытащить управляющую плату...")
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				if((stat & BROKEN) || malfhack)
@@ -589,14 +589,14 @@
 		update_icon()
 	else if(istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if(has_electronics)
-			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
+			to_chat(user, "Вы не можете починить APC, пока внутри находится плата.")
 			return
 		if(user.is_busy()) return
-		to_chat(user, "You begin to replace the damaged APC frame...")
+		to_chat(user, "Вы начинаете заменять поврежденный фрейм APC...")
 		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
-				"<span class='warning'>[user.name] has replaced the damaged APC frame with new one.</span>",\
-				"You replace the damaged APC frame with new one.")
+				"<span class='warning'>[user.name] заменил поврежденный фрейм APC на новый.</span>",\
+				"Вы заменили сломанный фрейм APC на новый.")
 			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
@@ -609,9 +609,9 @@
 		if(istype(user, /mob/living/silicon))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
-			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
-			"You hear bang")
+		user.visible_message("<span class='warning'>[user.name] ударил [src.name] с помощью [W.name]!</span>", \
+			"<span class='warning'>Вы ударили [src.name] с помощью [W.name]!</span>", \
+			"Вы слышите удар.")
 		return wires.interact(user)
 
 // attack with hand - remove cell (if cover open) or interact with the APC
@@ -630,32 +630,32 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
+				to_chat(H, "<span class='warning'>В APC обнаружены скачки напряжения, которые повредлиои ваш корпус!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 500 && H.a_intent == INTENT_GRAB)
 				if(H.nutrition < C.maxcharge*0.9)
 					if(src.cell.charge)
-						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
+						to_chat(user, "<span class='notice'>Вы вставляете ваши пальцы в слот в APC и начинаете выкачивать энергию для собственных нужд.</span>")
 						while(H.nutrition < C.maxcharge)
 							if(do_after(user,10,target = src) && H.a_intent == INTENT_GRAB)
 								if(!src.cell)
-									to_chat(user, "<span class='notice'>There is no cell.</span>")
+									to_chat(user, "<span class='notice'>Батарея отсутствует.</span>")
 									break
 								else if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
 									break
 								else if(H.nutrition > C.maxcharge*0.9)
-									to_chat(user, "<span class='notice'>You're fully charge.</span>")
+									to_chat(user, "<span class='notice'>Вы полностью заряжены.</span>")
 									break
 								else if(src.cell.charge < src.cell.maxcharge*0.1)
-									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
+									to_chat (user, "<span class='notice'>В этом APC недостаточно энергии.</span>")
 									break
 
 								else if(src.cell.use(500))
 									H.nutrition += C.maxcharge*0.1
-									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
+									to_chat(user, "<span class='notice'>Зарядка... Заряд батареи: [round(100.0*H.nutrition/C.maxcharge)]%.</span>")
 
 							else
-								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+								to_chat (user, "<span class='warning'>Процедура зарядки прервана. Отмена.</span>")
 								break
 					else
 
@@ -670,7 +670,7 @@
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 						s.set_up(3, 1, src)
 						s.start()
-						to_chat (user, "<span class='warning'>Something wrong with that APC.</span>")
+						to_chat (user, "<span class='warning'>С этим APC что-то не так.</span>")
 						H.adjustFireLoss(10,0)
 						return
 
@@ -682,9 +682,9 @@
 					src.charging = 1
 
 				else
-					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
+					to_chat(user, "<span class='notice'>Вы уже полностью заряжены.</span>")
 			else
-				to_chat(user, "There is no charge to draw from that APC.")
+				to_chat(user, "В этом APC недостаточно энергии.")
 			return
 
 	if(usr == user && opened && !issilicon(user) && !isobserver(user))
@@ -694,8 +694,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
-			//user << "You remove the power cell."
+			user.visible_message("<span class='warning'>[user.name] вытащил батарею из [src.name]!</span>", "Вы вытащили батарею.")
 			charging = 0
 			src.update_icon()
 		return
@@ -703,7 +702,7 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
-	to_chat(user, "You don't want to break these things");
+	to_chat(user, "Вы не хотите сломать эту вещь.");
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
@@ -822,7 +821,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
+				to_chat(user, "<span class='warning'>У [src] отключено управление ИИ!</span>")
 				nanomanager.close_user_uis(user, src)
 
 			return 0
@@ -852,7 +851,7 @@
 		toggle_nightshift_lights()
 
 	else if(href_list["change_nightshift"])
-		var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
+		var/new_preset = input(usr, "Пожалуйста, выберите мощность освещения.") as null|anything in lighting_presets
 		if(new_preset && lighting_presets[new_preset])
 			set_nightshift_preset(new_preset)
 
@@ -907,9 +906,9 @@
 		var/mob/living/silicon/ai/malfai = usr
 		if( issilicon(usr) && !src.aidisabled )
 			if(malfai.malfhacking)
-				to_chat(malfai, "You are already hacking an APC.")
+				to_chat(malfai, "Вы уже взламываете APC.")
 				return FALSE
-			to_chat(malfai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
+			to_chat(malfai, "Начинаю переписывать системы APC. Это займет какое-то время и вы не сможете выполнять другие действия во время этого процесса.")
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
@@ -925,7 +924,7 @@
 						src.malfai = malfai.parent
 					else
 						src.malfai = usr
-					to_chat(malfai, "Hack complete. The APC is now under your exclusive control.")
+					to_chat(malfai, "Взлом завершен. APC под вашим контролем.")
 					update_icon()
 
 	/*else if(href_list["occupyapc"])
@@ -942,7 +941,7 @@
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		to_chat(malf, "<span class='warning'>You must evacuate your current apc first.</span>")
+		to_chat(malf, "<span class='warning'>Сначала вы должны эвакуировать нынешний APC.</span>")
 		return
 	if(src.z != ZLEVEL_STATION)
 		return
@@ -972,7 +971,7 @@
 		qdel(src.occupier)
 
 	else
-		to_chat(src.occupier, "<span class='warning'>Primary core damaged, unable to return core processes.</span>")
+		to_chat(src.occupier, "<span class='warning'>Основное ядро повреждено.</span>")
 		if(forced)
 			src.occupier.loc = src.loc
 			src.occupier.death()
@@ -985,7 +984,7 @@
 		if(prob(3))
 			src.locked = 1
 			if(src.cell.charge > 0)
-//				world << "<span class='warning'>blew APC in [src.loc.loc]</span>"
+//				world << "<span class='warning'>APC взоварслся в [src.loc.loc].</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
@@ -997,7 +996,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", blind_message = "<span class='warning'>You hear sizzling electronics.</span>")
+				visible_message("<span class='warning'>[src.name] выпустил клубы дыма и искры!</span>", blind_message = "<span class='warning'>Вы слышите электрический треск.</span>")
 
 
 /obj/machinery/power/apc/surplus()
@@ -1315,14 +1314,14 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
 	if(last_nightshift_switch > world.time - 20) //~2 seconds between each toggle to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		to_chat(usr, "<span class='warning'>Плата ночного освещения [src] все еще перезаряжается.</span>")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
 
 /obj/machinery/power/apc/proc/set_nightshift_preset(preset)
 	if(last_nightshift_switch > world.time - 20) //~2 seconds between each change to prevent spamming
-		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		to_chat(usr, "<span class='warning'>Плата ночного освещения [src] все еще перезаряжается.</span>")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(nightshift_lights, preset)
