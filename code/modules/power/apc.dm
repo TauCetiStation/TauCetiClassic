@@ -479,7 +479,7 @@
 			to_chat(user, "Интерфейс сломан.")
 		else if(!(stat & BROKEN))
 			wiresexposed = !wiresexposed
-			to_chat(user, "Панель с проводкой [wiresexposed ? "открыта" : "закрыта"]")
+			to_chat(user, "Провода [wiresexposed ? "обнажены" : "не обнажены"]")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
