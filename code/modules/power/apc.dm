@@ -422,7 +422,7 @@
 
 		else if(!(stat & BROKEN) || !malfhack)
 			if(coverlocked && !(stat & MAINT))
-				to_chat(user, "<span class='warning'>Крышка закрыта и не открывается.</span>") //Возможно уместнее будет "заперта"
+				to_chat(user, "<span class='warning'>Крышка заблокирована и не может быть открыта.</span>")
 				return
 			else
 				opened = TRUE
