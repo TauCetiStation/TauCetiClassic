@@ -25765,7 +25765,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUa" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -26361,8 +26363,6 @@
 /area/station/medical/cmo)
 "aVd" = (
 /obj/structure/table/glass,
-/obj/item/device/sensor_device,
-/obj/item/clothing/glasses/hud/health,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -26370,6 +26370,8 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
+/obj/item/device/sensor_device,
+/obj/item/clothing/glasses/hud/health,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -32322,7 +32324,6 @@
 	},
 /area/station/rnd/hallway)
 "bfQ" = (
-/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -32375,6 +32376,11 @@
 	id = "Medical_Surgery1";
 	name = "Privacy Shutters";
 	pixel_x = -25
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
+	name = "Surgery Cleaner";
+	pixel_x = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/surgery)
@@ -34444,6 +34450,11 @@
 	name = "Privacy Shutters";
 	pixel_y = 25
 	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
+	name = "Surgery Cleaner";
+	pixel_x = 4
+	},
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "bke" = (
@@ -35650,6 +35661,10 @@
 /area/station/medical/chemistry)
 "bmg" = (
 /obj/machinery/chem_dispenser,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -45593,6 +45608,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_y = 32
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -46501,6 +46517,10 @@
 /obj/item/weapon/storage/firstaid/fire,
 /obj/structure/table/glass,
 /obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -46590,17 +46610,12 @@
 	},
 /area/station/rnd/robotics)
 "bJg" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/item/weapon/storage/visuals/surgery,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -48956,7 +48971,7 @@
 /area/station/medical/hallway)
 "bPz" = (
 /obj/machinery/light,
-/obj/machinery/life_assist/cardiopulmonary_bypass,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50558,7 +50573,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/life_assist/cardiopulmonary_bypass,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50667,6 +50682,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = -32
 	},
+/obj/item/weapon/storage/visuals/surgery,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -62779,16 +62795,11 @@
 /turf/space,
 /area/space)
 "cAf" = (
-/obj/structure/table,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -25
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner"
-	},
-/obj/item/weapon/storage/visuals/surgery,
+/obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -67297,7 +67308,6 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = 28
 	},
-/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -69993,6 +70003,9 @@
 /area/station/cargo/office)
 "gTb" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -73195,6 +73208,9 @@
 /area/station/storage/tech)
 "lSb" = (
 /obj/structure/table/glass,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/item/weapon/cartridge/medical{
 	pixel_x = -4;
 	pixel_y = 6
@@ -73203,9 +73219,6 @@
 /obj/item/weapon/cartridge/chemistry{
 	pixel_x = 4;
 	pixel_y = 3
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -73988,7 +74001,6 @@
 /area/station/civilian/chapel)
 "nhb" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/skills,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -73999,6 +74011,7 @@
 	network = list("Medical");
 	pixel_y = -28
 	},
+/obj/machinery/computer/skills,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -75725,13 +75738,13 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
 /obj/machinery/keycard_auth{
 	dir = 4;
 	pixel_x = 24;
 	pixel_y = -3
+	},
+/obj/machinery/computer/med_data{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -75744,11 +75757,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/crew{
-	dir = 8
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 32
+	},
+/obj/machinery/computer/crew{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -76135,6 +76148,9 @@
 /obj/machinery/camera{
 	c_tag = "Medbay North";
 	network = list("SS13","Medical")
+	},
+/obj/structure/noticeboard{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -77895,7 +77911,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
