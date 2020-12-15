@@ -46684,7 +46684,6 @@
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/structure/table/glass,
-/obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
 	pixel_y = 1
@@ -46777,7 +46776,6 @@
 	},
 /area/station/rnd/robotics)
 "bJg" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24
