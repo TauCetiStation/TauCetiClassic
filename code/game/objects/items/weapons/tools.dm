@@ -439,6 +439,7 @@
 	src.active = !(src.active)
 	if (isOn())
 		if (use(1))
+			playsound(loc, 'sound/items/tools/welderactivate.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			hitsound = SOUNDIN_LASERACT
 			src.force = 15
@@ -450,6 +451,7 @@
 			src.active = FALSE
 			return
 	else
+		playsound(loc, 'sound/items/tools/welderdeactivate.ogg', VOL_EFFECTS_MASTER)
 		if(!message)
 			to_chat(usr, "<span class='notice'>You switch the [src] off.</span>")
 		else
