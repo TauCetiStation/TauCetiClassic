@@ -71,8 +71,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
-	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
-	/client/proc/set_bwoink_sound, // affects only the admin that put it there
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
+	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	)
 var/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
