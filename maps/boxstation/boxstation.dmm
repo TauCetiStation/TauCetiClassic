@@ -28865,9 +28865,6 @@
 	name = "Break Room";
 	req_access = list(47)
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
