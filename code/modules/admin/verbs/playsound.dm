@@ -43,7 +43,7 @@ var/global/list/sounds_cache_local = list()
 	set category = "Fun"
 	set name = "Play Local Sound"
 
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/choice = alert("Category",,"Cache", "File", "Cancel")
