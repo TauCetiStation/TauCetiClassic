@@ -260,7 +260,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
-		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
 		to_chat(X, admin_msg)
 

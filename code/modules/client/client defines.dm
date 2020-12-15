@@ -89,3 +89,5 @@
 	/// Last asset send job id.
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
+
+	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
