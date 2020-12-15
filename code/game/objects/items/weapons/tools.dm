@@ -271,21 +271,21 @@
 /obj/item/weapon/weldingtool/process()
 	if(active)
 		hitsound = SOUNDIN_LASERACT
-		if(src.icon_state != "welder1") // Check that the sprite is correct, if it isnt, it means toggle() was not called
-			src.force = 15
-			src.damtype = "fire"
-			src.icon_state = initial(src.icon_state) + "1"
+		if(icon_state != "welder1") // Check that the sprite is correct, if it isnt, it means toggle() was not called
+			force = 15
+			damtype = "fire"
+			icon_state = initial(icon_state) + "1"
 		if(prob(5)) // passive fuel burning
 			use(1)
 		light_color = LIGHT_COLOR_FIRE
 		set_light(2)
 	else
 		hitsound = initial(hitsound)
-		if(src.icon_state != "welder") // Check that the sprite is correct, if it isnt, it means toggle() was not called
-			src.force = 3
-			src.damtype = "brute"
-			src.icon_state = initial(src.icon_state)
-			src.active = FALSE
+		if(icon_state != "welder") // Check that the sprite is correct, if it isnt, it means toggle() was not called
+			force = 3
+			damtype = "brute"
+			icon_state = initial(icon_state)
+			active = FALSE
 		set_light(0)
 		if(!istype(src, /obj/item/weapon/weldingtool/experimental))
 			STOP_PROCESSING(SSobj, src)
