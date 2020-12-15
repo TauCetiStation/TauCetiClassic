@@ -245,7 +245,7 @@
 			to_chat(user, "<span class='info'>[src] can now be attached and modified.</span>")
 		src.add_fingerprint(user)
 		return
-	if((!secured) && (istype(I, /obj/item/stack/rods)))
+	if(!secured && istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if(!R.use(1))
 			return
@@ -287,7 +287,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.active = FALSE
 		set_light(0)
-		if (!istype(src, /obj/item/weapon/weldingtool/experimental))
+		if(!istype(src, /obj/item/weapon/weldingtool/experimental))
 			STOP_PROCESSING(SSobj, src)
 		return
 
@@ -391,7 +391,7 @@
 
 // Is welding tool currently on?
 /obj/item/weapon/weldingtool/proc/isOn()
-	return src.active
+	return active
 
 /obj/item/weapon/weldingtool/get_current_temperature()
 	if(isOn())
@@ -436,7 +436,7 @@
 /obj/item/weapon/weldingtool/proc/toggle(message = 0)
 	if(!secured) return
 	if(!usr) return
-	src.active = !(src.active)
+	active = !active
 	if (isOn())
 		if (use(1))
 			playsound(loc, 'sound/items/tools/welderactivate.ogg', VOL_EFFECTS_MASTER)

@@ -929,7 +929,7 @@ var/list/airlock_overlays = list()
 			if(W.use_tool(src, user, 30, volume = 100))
 				welded = !welded
 				update_icon()
-				user.visible_message("[user] [welded? "welds":"unwelds"] [src]'s shutters with [W].",
+				user.visible_message("[user] [welded?"welds":"unwelds"] [src]'s shutters with [W].",
 				                     "<span class='notice'>You [welded? "weld":"remove welding from"] [src]'s shutters with [W].</span>")
 				return
 		else
