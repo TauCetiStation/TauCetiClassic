@@ -11,7 +11,7 @@
 	required_enemies = 2
 	recommended_enemies = 2
 	required_players = 25
-	required_players_secret = 25
+	required_players_bundles = 30
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 	var/max_teams = 4

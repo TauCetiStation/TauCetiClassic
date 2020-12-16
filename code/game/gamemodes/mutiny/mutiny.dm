@@ -21,7 +21,7 @@
 	role_type = ROLE_MUTINEER
 	required_players = 7
 	recommended_enemies = 2
-	required_players_secret = 10
+	required_players_bundles = 10
 
 	votable = 0
 
