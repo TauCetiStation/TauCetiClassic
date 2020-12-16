@@ -214,7 +214,7 @@
 	origin_tech = "engineering=1" // R&D tech level
 
 	var/active = FALSE          // Welding tool is off or on
-	var/welding_process = FALSE // While welding something - TRUE
+	var/welding = FALSE         // While welding something - TRUE
 	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20           // The max amount of fuel the welder can hold
 	var/image/welding_sparks    // Welding overlay for targets
@@ -351,15 +351,15 @@
 /obj/item/weapon/weldingtool/proc/start_welding(atom/target) // Process of welding something
 	var/datum/effect/effect/system/spark_spread/spark = new /datum/effect/effect/system/spark_spread()
 	spark.set_up(1, 1, target)
-	welding_process = TRUE
-	while(welding_process == TRUE)
+	welding = TRUE
+	while(welding)
 		sleep(5)
 		spark.start()
 		if(prob(10))
 			use(1)
 
 /obj/item/weapon/weldingtool/proc/stop_welding()
-	welding_process = FALSE
+	welding = FALSE
 
 /obj/item/weapon/weldingtool/proc/check_active_and_extra(datum/callback/extra_checks)
 	if(!isOn() || !check_fuel())
