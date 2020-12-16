@@ -242,7 +242,6 @@
 		religion = B.religion
 		religion.altar = src
 
-	chosen_aspect = TRUE
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)
 		return
@@ -255,6 +254,7 @@
 	sect = available_options[sect_select]
 
 	sect.on_select(user, religion)
+	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	if(iswrench(C))

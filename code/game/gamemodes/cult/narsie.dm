@@ -10,8 +10,6 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
-
 
 /proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
@@ -37,19 +35,20 @@
 	. = ..()
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			to_chat(M, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
+			to_chat(M, "<font size='15' color='red'><b>НАР-СИ ВОССТАЛ</b></font>")
 			M.playsound_local(null, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+		notify_ghosts("Нар-си восстал в [A.name]. По всей станции скоро появятся его порталы, нажмите на него, чтобы получить свою оболочку.")
 	narsie_spawn_animation()
 	invisibility = 60
 
+	// Force event
 	var/datum/event_container/portals_event = new /datum/event_container/major
 	for(var/datum/event_meta/E in portals_event.available_events)
 		if(ispath(E.event_type, /datum/event/anomaly/cult_portal/massive))
-			log_debug("Starting event '[E.name]' of severity [severity_to_string[E.severity]].")
+			log_debug("Force starting event '[E.name]' of severity [severity_to_string[E.severity]].")
 			new E.event_type(E)
 
 	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
@@ -78,9 +77,7 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	//if(is_type_in_list(A, uneatable))
-	//	return 0
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		if(istype(L, /mob/living/simple_animal/construct))
 			return
