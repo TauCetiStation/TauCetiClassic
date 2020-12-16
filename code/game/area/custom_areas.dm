@@ -72,6 +72,7 @@
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	is_force_ambience = TRUE
+	looped_ambience = 'sound/ambience/ambiruin7_looped.ogg'
 	ambience = list(
 		'sound/ambience/ambiruin1.ogg',
 		'sound/ambience/ambiruin2.ogg',
