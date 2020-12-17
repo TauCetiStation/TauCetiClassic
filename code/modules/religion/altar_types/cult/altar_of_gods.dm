@@ -53,16 +53,11 @@
 
 		// TODO: REWORCK FOR CULT RITES!!
 		performing_rite = religion.rites_by_name[choosed_rite]
-		if(!performing_rite.on_chosen(user, src))
-			performing_rite = null
-			return
 
 		if(!performing_rite.perform_rite(user, src))
 			performing_rite = null
 			return
 
-		performing_rite.invoke_effect(user, src)
-		religion.adjust_favor(-performing_rite.favor_cost)
 		performing_rite = null
 
 		for(var/item in src)

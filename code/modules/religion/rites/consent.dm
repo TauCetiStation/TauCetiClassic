@@ -1,8 +1,8 @@
 // This class is used for rites that require conesnt of a mob buckled to altar.
-/datum/religion_rites/consent
+/datum/religion_rites/standing/consent
 	var/consent_msg = ""
 
-/datum/religion_rites/consent/New()
+/datum/religion_rites/standing/consent/New()
 	AddComponent(/datum/component/rite/consent, consent_msg)
 
 
@@ -10,7 +10,7 @@
  * Synthconversion
  * Replace your friendly robotechnicians with this little rite!
  */
-/datum/religion_rites/consent/synthconversion
+/datum/religion_rites/standing/consent/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
 	ritual_length = (50 SECONDS)
@@ -26,7 +26,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/consent/synthconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/synthconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -40,7 +40,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -58,7 +58,7 @@
  * Sacrifice
  * Sacrifice a willing being to get a lot of points. Non-sentient beings who can not consent give points, but a lesser amount.
  */
-/datum/religion_rites/consent/sacrifice
+/datum/religion_rites/standing/consent/sacrifice
 	name = "Sacrifice"
 	desc = "Convert living energy in favor."
 	ritual_length = (50 SECONDS)
@@ -78,7 +78,7 @@
 		ASPECT_DEATH = 1,
 	)
 
-/datum/religion_rites/consent/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -112,7 +112,7 @@
  * Clownconversion
  * Adds clumsy mutation to mob and changes their clothes
  */
-/datum/religion_rites/consent/clownconversion
+/datum/religion_rites/standing/consent/clownconversion
 	name = "Clownconversion"
 	desc = "Convert a just person into a clown."
 	ritual_length = (1.9 MINUTES)
@@ -129,7 +129,7 @@
 		ASPECT_HERD = 1
 	)
 
-/datum/religion_rites/consent/clownconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/clownconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -152,7 +152,7 @@
 
 	return TRUE
 
-/datum/religion_rites/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE

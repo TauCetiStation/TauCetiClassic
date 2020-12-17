@@ -31,7 +31,7 @@
 		src.tip_text = tip_text
 		..()
 	else
-		var/datum/religion_rites/rite = parent
+		var/datum/religion_rites/standing/rite = parent
 		var/list/tips_to_add = list()
 		if(sacrifice_type)
 			var/obj/item/item = sacrifice_type
@@ -68,7 +68,7 @@
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
-			var/datum/religion_rites/rite = parent
+			var/datum/religion_rites/standing/rite = parent
 			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
 			clear_lists()
 			return COMPONENT_CHECK_FAILED
@@ -76,7 +76,7 @@
 
 // Created illustion of spawning item
 /datum/component/rite/spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
-	var/datum/religion_rites/rite = parent
+	var/datum/religion_rites/standing/rite = parent
 	if(sacrifice_type)
 		var/list/L = item_sacrifice(AOG, sacrifice_type)
 		if(L.len == 0)
@@ -98,7 +98,7 @@
 
 // Nice effect for spawn item
 /datum/component/rite/spawn_item/proc/item_restoration(obj/structure/altar_of_gods/AOG, stage)
-	var/datum/religion_rites/rite = parent
+	var/datum/religion_rites/standing/rite = parent
 	var/ratioplus = (255 / rite.ritual_invocations.len) * stage
 	var/ratiominus = 255 / stage
 	if(sacrifice_type)

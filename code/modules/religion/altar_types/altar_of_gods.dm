@@ -213,21 +213,14 @@
 		rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
 
 	var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
-
 	if(!choosed_rite)
 		return
 
 	performing_rite = religion.rites_by_name[choosed_rite]
-	if(!performing_rite.on_chosen(user, src))
-		performing_rite = null
-		return
-
 	if(!performing_rite.perform_rite(user, src))
 		performing_rite = null
 		return
 
-	performing_rite.invoke_effect(user, src)
-	religion.adjust_favor(-performing_rite.favor_cost)
 	performing_rite = null
 
 	for(var/item in src)

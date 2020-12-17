@@ -2,7 +2,7 @@
  * Food summoning
  * Grants a lot of food while you AFK near the altar. Even more food if you finish the ritual.
  */
-/datum/religion_rites/food
+/datum/religion_rites/standing/food
 	name = "Create food"
 	desc = "Create more and more food!"
 	ritual_length = (2.1 MINUTES)
@@ -38,7 +38,7 @@
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
-/datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -54,7 +54,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	if(prob(50))
 		spawn_food(AOG.loc, 1)
@@ -63,7 +63,7 @@
  * Prayer
  * Increases favour while you AFK near altar, heals everybody around if invoked succesfully.
  */
-/datum/religion_rites/pray
+/datum/religion_rites/standing/pray
 	name = "Prayer to god"
 	desc = "Pray for a while in exchange for favor."
 	ritual_length = (4 MINUTES)
@@ -85,7 +85,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -99,7 +99,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	..()
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
@@ -108,7 +108,7 @@
  * Honk
  * The ritual creates a honk that everyone hears.
  */
-/datum/religion_rites/honk
+/datum/religion_rites/standing/honk
 	name = "Clown shriek"
 	desc = "Spread honks throughout the station."
 	ritual_length = (1.9 MINUTES)
@@ -125,7 +125,7 @@
 		ASPECT_WACKY = 1,
 	)
 
-/datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -136,7 +136,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
@@ -145,7 +145,7 @@
  * Revitalizing items.
  * It makes a thing move and say something. You can't pick up a thing until you kill a item-mob.
  */
-/datum/religion_rites/animation
+/datum/religion_rites/standing/animation
 	name = "Animation"
 	desc = "Revives a things on the altar."
 	ritual_length = (50 SECONDS)
@@ -161,7 +161,7 @@
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	var/obj/item/anim_item = locate() in AOG.loc
 	if(!anim_item)
@@ -169,7 +169,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -189,7 +189,7 @@
  * Spook
  * This ritual spooks players: Light lamps pop out, and people start to shake
  */
-/datum/religion_rites/spook
+/datum/religion_rites/standing/spook
 	name = "Spook"
 	desc = "Distributes a jerky sound."
 	ritual_length = (20 SECONDS)
@@ -207,7 +207,7 @@
 		ASPECT_OBSCURE = 1,
 	)
 
-/datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -234,7 +234,7 @@
  * Illuminate
  * The ritual turns on the flash in range, create overlay of "spirit" and the person begins to glow
  */
-/datum/religion_rites/illuminate
+/datum/religion_rites/standing/illuminate
 	name = "Illuminate"
 	desc = "Create wisp of light and turns on the light."
 	ritual_length = (50 SECONDS)
@@ -254,7 +254,7 @@
 		ASPECT_LIGHT = 1,
 	)
 
-/datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -293,7 +293,7 @@
  * Revive
  * Revive animal
  */
-/datum/religion_rites/revive_animal
+/datum/religion_rites/standing/revive_animal
 	name = "Revive"
 	desc = "The animal revives from the better world."
 	ritual_length = (50 SECONDS)
@@ -312,7 +312,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
@@ -337,7 +337,7 @@
 
 	return TRUE
 
-/datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE

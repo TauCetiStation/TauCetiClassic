@@ -35,6 +35,10 @@
 /// from base of religion_rites: (/mob, /obj/structure/altar_of_gods)
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
+/// from base of religion_rites/step(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_IN_STEP "rite_in_step"
+/// from base of religion_rites/step(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_STEP_ENDED "rite_step_ended"
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)

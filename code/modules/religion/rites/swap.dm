@@ -1,8 +1,8 @@
-/datum/religion_rites/swap
+/datum/religion_rites/standing/swap
 	// item = item for which we are changing
 	var/list/swap_list
 
-/datum/religion_rites/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -16,7 +16,7 @@
 			qdel(O)
 	return TRUE
 
-/datum/religion_rites/swap/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/swap/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	..()
 	for(var/obj/O in range(1, AOG.loc))
 		if(!swap_list[O.type])
@@ -29,7 +29,7 @@
  * Devaluation
  * In the radius from the altar, changes the denomination of banknotes one higher
  */
-/datum/religion_rites/swap/devaluation
+/datum/religion_rites/standing/swap/devaluation
 	name = "Devaluation"
 	desc = "Changes the denomination of banknotes one higher."
 	ritual_length = (50 SECONDS)
@@ -53,14 +53,14 @@
 		ASPECT_GREED = 1,
 	)
 
-/datum/religion_rites/swap/devaluation/New()
+/datum/religion_rites/standing/swap/devaluation/New()
 	swap_list = cash_increase_list
 
 /*
  * Upgrade
  * In the radius from the altar, changes stock_parts withs rating to stock_parts with rating + 1
  */
-/datum/religion_rites/swap/upgrade
+/datum/religion_rites/standing/swap/upgrade
 	name = "Upgrade"
 	desc = "Upgrade scientific things."
 	ritual_length = (50 SECONDS)
@@ -76,5 +76,5 @@
 		ASPECT_SCIENCE = 1,
 	)
 
-/datum/religion_rites/swap/upgrade/New()
+/datum/religion_rites/standing/swap/upgrade/New()
 	swap_list = stock_parts_increase_list
