@@ -33,7 +33,7 @@
 	var/list/restricted_species_flags = list()
 
 	var/required_players = 0
-	var/required_players_bundles = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_players_bundles = 0 //Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
