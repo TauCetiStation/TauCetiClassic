@@ -204,12 +204,15 @@
 	while(R.fields[text("com_[]", counter)])
 		counter++
 	if(user)
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
 			name = "[U.get_authentification_name()] ([U.get_assignment()])"
-		if(istype(user, /mob/living/silicon/robot))
+		if(isrobot(user))
 			var/mob/living/silicon/robot/U = user
 			name = "[U.name] ([U.modtype] [U.braintype])"
+		if(isAI(user))
+			var/mob/living/silicon/ai/U = user
+			name = "[U.name]"
 		if(istype(user, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/U = user
 			name = "[U.registered_name] ([U.assignment])"

@@ -375,7 +375,10 @@ What a mess.*/
 			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
 			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
-			add_record(scan, active2, t1)
+			if(scan)
+				add_record(scan, active2, t1)
+			else
+				add_record(usr, active2, t1)
 
 		if("Delete Record (ALL)")
 			if(active1)
@@ -471,7 +474,10 @@ What a mess.*/
 						active2.fields["notes"] = t1
 				if("criminal")
 					if(istype(active2, /datum/data/record))
-						change_criminal_status(usr, scan, null, active2, TRUE, src)
+						if(scan)
+							change_criminal_status(usr, scan, null, active2, TRUE, src)
+						else
+							change_criminal_status(usr, usr, null, active2, TRUE, src)
 				if("rank")
 					var/list/L = list( "Head of Personnel", "Captain", "AI" )
 					//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
