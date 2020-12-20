@@ -501,7 +501,7 @@
 
 	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
-			to_chat(user, "Чтобы провести картой нужно закрыть крышку.")
+			to_chat(user, "Вы должны закрыть крышку, чтобы провести идентификационной картой.")
 		else if(wiresexposed)
 			to_chat(user, "Сначала нужно закрыть панель")
 		else if(stat & (BROKEN|MAINT))
