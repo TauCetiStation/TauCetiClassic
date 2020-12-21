@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
-	name = "Instant Summons"
-	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
+	name = "Мгновенный Призыв"
+	desc = "Используется для призыва помеченной вещи в вашу руку откуда угодно."
 	school = "transmutation"
 	charge_max = 100
 	clothes_req = 0

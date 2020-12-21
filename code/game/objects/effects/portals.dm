@@ -59,7 +59,7 @@
 /obj/effect/portal/tsci_wormhole
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
+	icon_state = "bluespace_wormhole_enter"
 	failchance = 0
 
 	var/obj/effect/portal/tsci_wormhole/linked_portal = null
@@ -67,7 +67,9 @@
 
 /obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/target, creator = null, lifespan = 0, other_side_portal = FALSE)
 	. = ..()
-	if(!other_side_portal)
+	if(other_side_portal)
+		icon_state = "bluespace_wormhole_exit"
+	else
 		linked_portal = new(target, get_turf(src), null, 0, TRUE)
 		linked_portal.linked_portal = src
 		target = linked_portal
