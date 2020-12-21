@@ -507,6 +507,7 @@
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = 0
 
 	if(pinned.len)
 		for(var/obj/O in pinned)
