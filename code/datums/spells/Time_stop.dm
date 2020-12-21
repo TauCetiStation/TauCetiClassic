@@ -71,7 +71,7 @@ var/timestop_count = 0
 				H.LoseTarget()
 
 			M.Stun(10, 1, 1, 1)
-			M.sdisabilities |= MUTE
+			M.silent += duration
 			M.freeze_movement = TRUE
 			stopped_atoms |= M
 
@@ -100,7 +100,7 @@ var/timestop_count = 0
 
 		if(isliving(AM))
 			var/mob/living/M = AM
-			M.sdisabilities &= ~MUTE
+			M.silent = max(M.silent - duration, 0)
 			M.AdjustStunned(-10, 1, 1, 0)
 
 		if(istype(AM, /obj/item/projectile))
