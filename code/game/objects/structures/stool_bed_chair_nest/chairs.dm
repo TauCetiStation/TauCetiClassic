@@ -279,30 +279,15 @@
 	layer = MOB_LAYER
 	var/mutable_appearance/overlay
 
-/obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
-	if(iswirecutter(W) || isnull(W))
-		user.visible_message("[user] cuts the noose.", "<span class='notice'>You cut the noose.</span>")
-		if(has_buckled_mobs())
-			if(buckled_mob.mob_has_gravity())
-				buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
-				to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
-				buckled_mob.adjustBruteLoss(10)
-				unbuckle_mob(buckled_mob)
-		var/obj/item/stack/cable_coil/C = new(get_turf(src))
-		C.amount = 25
-		qdel(src)
-		return
-	..()
-
-/obj/structure/stool/bed/chair/noose/attack_alien(mob/user)
-	..()
-	attackby(null, user)
-
 /obj/structure/stool/bed/chair/noose/atom_init()
 	. = ..()
+
 	pixel_y += 16 //Noose looks like it's "hanging" in the air
 	overlay = image(icon, "noose_overlay")
 	overlay.layer = FLY_LAYER
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
+		overlay.color = C.color
 	add_overlay(overlay)
 
 /obj/structure/stool/bed/chair/noose/Destroy()
@@ -324,35 +309,36 @@
 		M.pixel_y = M.lying? -6 : initial(M.pixel_y)
 
 /obj/structure/stool/bed/chair/noose/user_unbuckle_mob(mob/living/user)
-	if(has_buckled_mobs())
-		if(user.is_busy())
+	if(!has_buckled_mobs())
+		return
+	if(user.is_busy())
+		return
+	if(buckled_mob != user)
+		user.visible_message("<span class='notice'>[user] begins to untie the noose over [buckled_mob]'s neck...</span>")
+		to_chat(user, "<span class='notice'>You begin to untie the noose over [buckled_mob]'s neck...</span>")
+		if(!do_mob(user, buckled_mob, 10 SECONDS))
 			return
-		if(buckled_mob != user)
-			user.visible_message("<span class='notice'>[user] begins to untie the noose over [buckled_mob]'s neck...</span>")
-			to_chat(user, "<span class='notice'>You begin to untie the noose over [buckled_mob]'s neck...</span>")
-			if(!do_mob(user, buckled_mob, 10 SECONDS))
-				return
-			user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
-			to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")
-			buckled_mob.AdjustWeakened(5)
-		else
-			buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to untie the noose over their neck!</span>")
-			to_chat(buckled_mob,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
-			if(!do_after(buckled_mob, 15 SECONDS, target = src))
-				if(buckled_mob && buckled_mob.buckled)
-					to_chat(buckled_mob, "<span class='warning'>You fail to untie yourself!</span>")
-				return
-			if(!buckled_mob.buckled)
-				return
-			buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
-			to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
-			buckled_mob.AdjustWeakened(5)
-		buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
-		pixel_z = initial(pixel_z)
-		buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
-		pixel_x = initial(pixel_x)
-		unbuckle_mob(buckled_mob)
-		add_fingerprint(user)
+		user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
+		to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")
+		buckled_mob.AdjustWeakened(5)
+	else
+		buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to untie the noose over their neck!</span>")
+		to_chat(buckled_mob,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
+		if(!do_after(buckled_mob, 15 SECONDS, target = src))
+			if(buckled_mob && buckled_mob.buckled)
+				to_chat(buckled_mob, "<span class='warning'>You fail to untie yourself!</span>")
+			return
+		if(!buckled_mob.buckled)
+			return
+		buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
+		to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
+		buckled_mob.AdjustWeakened(5)
+	buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
+	pixel_z = initial(pixel_z)
+	buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
+	pixel_x = initial(pixel_x)
+	unbuckle_mob(buckled_mob)
+	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
 	if(!in_range(user, src) || user.stat || user.restrained() || !ishuman(M))
@@ -420,15 +406,42 @@
 			pixel_x = initial(pixel_x)
 			unbuckle_mob(bm)
 
-/obj/structure/stool/bed/chair/noose/attackby(obj/item/weapon/G, mob/user)
-	if(istype(G, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/grab = G
-		if(!ismob(grab.affecting))
-			return
-		var/mob/M = grab.affecting
-		user_buckle_mob(M, user)
-	else
-		..()
+/obj/structure/stool/bed/chair/noose/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
+		overlay.color = C.color
+
+/obj/structure/stool/bed/chair/noose/proc/rip(mob/user)
+	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
+	if(has_buckled_mobs() && buckled_mob.mob_has_gravity())
+		buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
+		to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
+		buckled_mob.adjustBruteLoss(10)
+		unbuckle_mob(buckled_mob)
+	var/obj/item/stack/cable_coil/C = new(get_turf(src))
+	C.amount = 25
+	qdel(src)
+	return
+
+/obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
+	if(iswirecutter(W))
+		rip(user)
+		return
+	if(!istype(W, /obj/item/weapon/grab))
+		return ..()
+	var/obj/item/weapon/grab/grab = W
+	if(!ismob(grab.affecting))
+		return
+	var/mob/M = grab.affecting
+	user_buckle_mob(M, user)
+
+/obj/structure/stool/bed/chair/noose/attack_alien()
+	..()
+
+/obj/structure/stool/bed/chair/noose/attack_paw(mob/user)
+	..()
+	rip(user)
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
