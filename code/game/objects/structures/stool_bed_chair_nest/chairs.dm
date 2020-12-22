@@ -299,7 +299,7 @@
 		src.layer = MOB_LAYER
 		START_PROCESSING(SSobj, src)
 		M.dir = SOUTH
-		animate(M, pixel_y = M.lying? initial(pixel_y) + 14 : initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
+		animate(M, pixel_y = M.lying ? initial(pixel_y) + 14 : initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
 	else
 		layer = initial(layer)
 		STOP_PROCESSING(SSobj, src)
