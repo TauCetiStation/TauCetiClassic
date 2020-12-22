@@ -832,6 +832,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
+		if(O.flags & NODROP || !O.canremove)
+			to_chat(usr, "<span class='warning'>NO_DROP COMPLETE</span>")
+			return 0
 		return 1
 	return 0
 
