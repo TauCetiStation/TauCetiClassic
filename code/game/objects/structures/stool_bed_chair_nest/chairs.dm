@@ -384,7 +384,7 @@
 	if(buckled_mob.mob_has_gravity())
 		var/mob/living/carbon/human/bm = buckled_mob
 		var/obj/item/organ/external/BP = bm.bodyparts_by_name[BP_HEAD]
-		if(BP && (!BP.is_stump))
+		if(BP && !BP.is_stump)
 			if(bm.stat != DEAD)
 				if(!(NO_BREATH in bm.mutations))
 					bm.adjustOxyLoss(5)
