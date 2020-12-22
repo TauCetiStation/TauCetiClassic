@@ -281,7 +281,6 @@
 
 /obj/structure/stool/bed/chair/noose/atom_init()
 	. = ..()
-
 	pixel_y += 16 //Noose looks like it's "hanging" in the air
 	overlay = image(icon, "noose_overlay")
 	overlay.layer = FLY_LAYER
@@ -406,28 +405,27 @@
 			pixel_x = initial(pixel_x)
 			unbuckle_mob(bm)
 
-/obj/structure/stool/bed/chair/noose/CheckParts(list/parts_list)
-	..()
-	for(var/obj/item/stack/cable_coil/C in contents)
-		color = C.color
-		overlay.color = C.color
-
-/obj/structure/stool/bed/chair/noose/proc/rip(mob/user)
+/obj/structure/stool/bed/chair/noose/proc/rip(mob/user, var/forced = FALSE)
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	if(has_buckled_mobs() && buckled_mob.mob_has_gravity())
 		buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
 		to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
 		buckled_mob.adjustBruteLoss(10)
 		unbuckle_mob(buckled_mob)
-	var/obj/item/stack/cable_coil/C = new(get_turf(src))
-	C.amount = 25
+	if(forced)
+		var/obj/item/stack/cable_coil/C = new(get_turf(src))
+		C.color = color
+		C.amount = 20
+	else
+		var/obj/item/weapon/noose/N = new(get_turf(src))
+		N.color = color
 	qdel(src)
 	return
 
 /obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
 	if(iswirecutter(W))
 		rip(user)
-		return
+		return ..()
 	if(!istype(W, /obj/item/weapon/grab))
 		return ..()
 	var/obj/item/weapon/grab/grab = W
@@ -441,7 +439,7 @@
 
 /obj/structure/stool/bed/chair/noose/attack_paw(mob/user)
 	..()
-	rip(user)
+	rip(user, TRUE)
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"

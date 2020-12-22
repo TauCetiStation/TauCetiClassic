@@ -421,14 +421,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return(OXYLOSS)
 
-var/global/list/datum/stack_recipe/cable_recipes = list ( \
-	new/datum/stack_recipe("noose", /obj/structure/stool/bed/chair/noose, 30, time = 80, one_per_turf = TRUE, on_floor = TRUE)
-	)
-
-/obj/item/stack/cable_coil/atom_init()
-	recipes = cable_recipes
-	. = ..()
-
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
