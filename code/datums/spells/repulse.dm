@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse
-	name = "Repulse"
-	desc = "This spell throws everything around the user away."
+	name = "Репульс"
+	desc = "Заклинание отбрасывает все вещи и людей от вас подальше."
 	charge_max = 200
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"
