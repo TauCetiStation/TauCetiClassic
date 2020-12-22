@@ -420,7 +420,6 @@
 		var/obj/item/weapon/noose/N = new(get_turf(src))
 		N.color = color
 	qdel(src)
-	return
 
 /obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
 	if(iswirecutter(W))
