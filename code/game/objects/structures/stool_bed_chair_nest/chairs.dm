@@ -380,11 +380,6 @@
 			else
 				to_chat(M, "<span class='userdanger'>[user] ties \the [src] over your neck!</span>")
 			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
-			for(var/alert in M.alerts)
-				var/obj/screen/alert/A = M.alerts[alert]
-				if(A.master.icon_state == "noose")
-					A.icon_state = "axe1"
-					A.layer = ABOVE_HUD_LAYER
 			M.log_combat(user, "hanged", src)
 			return TRUE
 	user.visible_message("<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>")
