@@ -344,7 +344,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
-	if(!BP || (BP.is_stump))
+	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>[M] has no head!</span>")
 		return FALSE
 
