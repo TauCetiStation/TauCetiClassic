@@ -306,7 +306,7 @@
 		STOP_PROCESSING(SSobj, src)
 		M.pixel_x = initial(M.pixel_x)
 		pixel_x = initial(pixel_x)
-		M.pixel_y = M.lying? -6 : initial(M.pixel_y)
+		M.pixel_y = M.lying ? -6 : initial(M.pixel_y)
 
 /obj/structure/stool/bed/chair/noose/user_unbuckle_mob(mob/living/user)
 	if(!has_buckled_mobs())
