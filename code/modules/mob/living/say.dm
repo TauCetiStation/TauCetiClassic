@@ -112,9 +112,7 @@ var/list/department_radio_keys = list(
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			to_chat(world, "aaaaaaa")
 			return
-	to_chat(world, "[src] - go")
 	if(sanitize)
 		message = sanitize(message)
 		if(!message)

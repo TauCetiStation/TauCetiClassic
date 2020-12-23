@@ -217,14 +217,7 @@
 		return
 
 	performing_rite = religion.rites_by_name[choosed_rite]
-	if(!performing_rite.perform_rite(user, src))
-		performing_rite = null
-		return
-
-	performing_rite = null
-
-	for(var/item in src)
-		qdel(item)
+	performing_rite.perform_rite(user, src)
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 	if(chosen_aspect)
@@ -313,3 +306,10 @@
 
 /obj/structure/altar_of_gods/proc/turf_around_exit(datum/source, atom/movable/mover, atom/newLoc)
 	mobs_around -= mover
+
+// Called from a ritе
+/obj/structure/altar_of_gods/proc/reset_rite()
+	performing_rite = null
+
+	for(var/item in src)
+		qdel(item)

@@ -54,11 +54,4 @@
 		// TODO: REWORCK FOR CULT RITES!!
 		performing_rite = religion.rites_by_name[choosed_rite]
 
-		if(!performing_rite.perform_rite(user, src))
-			performing_rite = null
-			return
-
-		performing_rite = null
-
-		for(var/item in src)
-			qdel(item)
+		performing_rite.perform_rite(user, src)

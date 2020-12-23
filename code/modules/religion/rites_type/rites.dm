@@ -41,6 +41,33 @@
 	return ritual_invocations.len
 
 /datum/religion_rites/proc/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE
+
+/datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return TRUE
+
+/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_RITE_ON_INVOCATION, user, AOG, stage)
+
+/datum/religion_rites/proc/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+	return
+
+// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
+/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
+	return TRUE
+
+/datum/religion_rites/proc/end(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return
+
+/datum/religion_rites/proc/reset_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return
+
+
+
+/datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!required_checks(user, AOG))
 		return FALSE
 
@@ -53,10 +80,14 @@
 		to_chat(world, "if(!before_perform_rite(user, AOG))")
 		return FALSE
 
+	if(!can_start(user, AOG))
+		return FALSE
+
 	return TRUE
 
 /datum/religion_rites/proc/start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), .proc/try_next_step)
+	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
 	try_next_step(src, user, AOG, 1)
 
 /datum/religion_rites/proc/try_next_step(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
@@ -85,27 +116,26 @@
 
 	step_end(user, AOG, current_stage)
 
-/datum/religion_rites/proc/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
-	return
-
 /datum/religion_rites/proc/step_end(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_STEP_ENDED, user, AOG, current_stage + 1)
 	to_chat(world, "step ended")
 
 /datum/religion_rites/proc/end_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
-	UnregisterSignal(src, list(COMSIG_RITE_STEP_ENDED))
 	end(user, AOG)
 	religion.adjust_favor(-favor_cost)
 	invoke_effect(user, AOG)
+	reset_rite_wrapper(src, user, AOG)
 
-/datum/religion_rites/proc/end(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return
+/datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG)
+	UnregisterSignal(src, list(COMSIG_RITE_STEP_ENDED, COMSIG_RITE_FAILED_CHECK))
+	AOG.reset_rite() // Very bad.
+	reset_rite()
 
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!on_chosen(user, AOG))
 		return FALSE
 
-	if(!can_start(user, AOG))
+	if(!can_start_wrapper(user, AOG))
 		return FALSE
 
 	start(user, AOG)
@@ -116,25 +146,11 @@
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	return TRUE
 
-// Does something before the ritual and after checking the favor_cost of a ritual.
+// DEL THIS
 /datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return !(SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG) & COMPONENT_CHECK_FAILED)
 
-// Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
-/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
-	return TRUE
-
-// Will not work if ritual_invocations is null.
-/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_RITE_ON_INVOCATION, user, AOG, stage)
-
-/datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return TRUE
-
-// Additional checks in performing rite
+// DEL THIS
 /datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	SHOULD_CALL_PARENT(TRUE)
 	return !(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)

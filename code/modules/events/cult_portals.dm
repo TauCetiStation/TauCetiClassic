@@ -9,7 +9,7 @@
 	impact_area = findEventArea()
 
 /datum/event/anomaly/cult_portal/announce()
-	command_alert("Обнаружены неизвестные блю-спейс сигнатуры от неверефицированного источника внутри станции. Предполагаемое расположение: [impact_area.name].", "Блю-спейс Тревога")
+	command_alert("Обнаружены неизвестные блюспейс сигнатуры от неверефицированного источника внутри станции. Предполагаемое расположение: [impact_area.name].", "Блюспейс Тревога")
 
 /datum/event/anomaly/cult_portal/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
@@ -32,7 +32,7 @@
 	endWhen = 300
 
 /datum/event/anomaly/cult_portal/massive/announce()
-	command_alert("Внимание! Обнаружено множество неавторизованных блю-спейс сигнатур! Не забудьте сохранить целостность станции.", "Блю-спейс Тревога")
+	command_alert("Внимание! Обнаружено множество неавторизованных блюспейс сигнатур! Не забудьте сохранить целостность станции.", "Блюспейс Тревога")
 
 /datum/event/anomaly/cult_portal/massive/start()
 	if(!newAnomaly)
