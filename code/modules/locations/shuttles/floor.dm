@@ -23,6 +23,8 @@
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
 //======
 //Привет! Как дела?
+//======
+//Привет! Как дела?
 /turf/space/shuttle
 	icon = 'code/modules/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"

@@ -3,6 +3,7 @@
 #define R_IDEAL_GAS_EQUATION	8.31 	//kPa*L/(K*mol)
 #define ONE_ATMOSPHERE			101.325	//kPa
 
+#define TM50C 223.15   // -50degC
 #define T0C 273.15	// 0degC
 #define T20C 293.15	// 20degC
 #define TCMB 2.7	// -270.3degC

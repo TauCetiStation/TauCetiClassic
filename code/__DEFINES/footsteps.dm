@@ -17,6 +17,10 @@
 //misc footstep sounds
 #define FOOTSTEP_GENERIC_HEAVY "heavy"
 
+
+#define FOOTSTEP_SNOWSTEP "snowstep"
+#define FOOTSTEP_ICESTEP  "icestep"
+
 //footstep mob defines
 #define FOOTSTEP_MOB_CLAW 1
 #define FOOTSTEP_MOB_BAREFOOT 2
