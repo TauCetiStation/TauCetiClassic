@@ -399,31 +399,6 @@
 	else
 		return 0
 
-// Sets the welding state of the welding tool. If you see W.welding = TRUE anywhere, please change it to W.setWelding(TRUE)
-// so that the welding tool updates accordingly
-/obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
-	//If we're turning it on
-	if(temp_welding > 0)
-		if (use(1))
-			hitsound = SOUNDIN_LASERACT
-			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
-			src.force = 15
-			src.damtype = "fire"
-			src.icon_state = initial(src.icon_state) + "1"
-			START_PROCESSING(SSobj, src)
-		else
-			to_chat(usr, "<span class='info'>Need more fuel!</span>")
-			src.active = FALSE
-			return
-	//Otherwise
-	else
-		hitsound = initial(hitsound)
-		to_chat(usr, "<span class='info'>The [src] switches off.</span>")
-		src.force = 3
-		src.damtype = "brute"
-		src.icon_state = initial(src.icon_state)
-		src.active = FALSE
-
 // Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weapon/weldingtool/proc/check_fuel()
 	if((get_fuel() <= 0) && active)
