@@ -224,17 +224,18 @@
 
 /obj/item/weapon/noose/attack_self(mob/user)
 	var/turf/user_turf = get_turf(user)
+	var/obj/structure/stool/bed/chair/noose/N
 	if(user_turf.density)
 		to_chat(user, "<span class='notice'>You cant build a noose over that.</span>")
 		return
-	if(locate(/obj/structure/stool/bed/chair/noose) in user_turf)
+	if(locate(N) in user_turf)
 		to_chat(user, "<span class='notice'>You cant build a noose on a tile that has a noose.</span>")
 		return
 	user.visible_message("<span class='notice'>[user] starts constructing a noose</span>")
 	to_chat(user, "<span class='notice'>You begin to construct a noose...</span>")
 	if(!do_after(user, 5 SECONDS, target = user))
 		return
-	var/obj/structure/stool/bed/chair/noose/N = new(user_turf)
+	N = new(user_turf)
 	N.color = src.color
 	qdel(src)
 

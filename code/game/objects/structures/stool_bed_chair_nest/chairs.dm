@@ -277,6 +277,7 @@
 	icon_state = "noose"
 	icon = 'icons/obj/objects.dmi'
 	layer = MOB_LAYER
+	flags = NODECONSTRUCT
 	var/mutable_appearance/overlay
 
 /obj/structure/stool/bed/chair/noose/atom_init()
@@ -331,11 +332,11 @@
 			return
 		buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
 		to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
-		buckled_mob.AdjustWeakened(5)
 	buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
 	pixel_z = initial(pixel_z)
 	buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
 	pixel_x = initial(pixel_x)
+	buckled_mob.AdjustWeakened(5)
 	unbuckle_mob(buckled_mob)
 	add_fingerprint(user)
 
@@ -351,13 +352,16 @@
 	if(M.loc != src.loc)
 		return FALSE
 
-	add_fingerprint(user)
+	if(!can_hang())
+		to_chat(user, "<span class='notice'>You need to have a stool or a chair under the noose to hang someone</span>")
+		return FALSE
 
+	add_fingerprint(user)
 	M.log_combat(user, "attempted to hang", src)
 	M.visible_message("<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>")
 	if(user != M)
 		to_chat(user, "<span class='notice'>It will take 15 seconds and you have to stand still.</span>")
-	if(do_mob(user, M, user == M ? 0 : 15 SECONDS))
+	if(do_mob(user, M, user == M ? 3 : 15 SECONDS))
 		if(buckle_mob(M))
 			user.visible_message("<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>")
 			if(user == M)
@@ -381,6 +385,8 @@
 /obj/structure/stool/bed/chair/noose/process()
 	if(!has_buckled_mobs())
 		STOP_PROCESSING(SSobj, src)
+		return
+	if(can_hang()) //well you have to remove the support first
 		return
 	if(pixel_x >= 0)
 		animate(src, pixel_x = -3, time = 45, easing = ELASTIC_EASING)
@@ -412,12 +418,24 @@
 			pixel_x = initial(pixel_x)
 			unbuckle_mob(bm)
 
+/obj/structure/stool/bed/chair/noose/proc/can_hang()
+	var/turf/src_turf = get_turf(src)
+	for(var/obj/structure/stool/bed/chair/S in src_turf)
+		if(istype(S, /obj/structure/stool/bed/chair/noose))
+			continue
+		if(istype(S, /obj/structure/stool/bed/chair))
+			var/obj/structure/stool/bed/chair/C = S
+			if(!C.flipped)
+				return TRUE
+	return FALSE
+
 /obj/structure/stool/bed/chair/noose/proc/rip(mob/user, var/forced = FALSE)
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	if(has_buckled_mobs() && buckled_mob.mob_has_gravity())
 		buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
 		to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
 		buckled_mob.adjustBruteLoss(10)
+		buckled_mob.AdjustWeakened(5)
 		unbuckle_mob(buckled_mob)
 	if(forced)
 		var/obj/item/stack/cable_coil/C = new(get_turf(src))
