@@ -360,7 +360,7 @@
 	return TRUE
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I, /obj/item/weapon/card/id))
 		if(check_access(I))
 			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
 			switch(src.build_path)
