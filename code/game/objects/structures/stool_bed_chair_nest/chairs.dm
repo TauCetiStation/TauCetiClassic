@@ -455,6 +455,8 @@
 	var/obj/item/weapon/grab/grab = W
 	if(!ismob(grab.affecting))
 		return
+	if(user.is_busy())
+		return
 	var/mob/M = grab.affecting
 	user_buckle_mob(M, user)
 
