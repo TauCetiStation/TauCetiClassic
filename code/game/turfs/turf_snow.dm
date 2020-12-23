@@ -253,7 +253,7 @@
 	if(!name_to_mineral)
 		SetupMinerals()
 
-	if (mineral_name && mineral_name in name_to_mineral)
+	if (mineral_name && (mineral_name in name_to_mineral))
 		mineral = name_to_mineral[mineral_name]
 
 		if(prob(15))
