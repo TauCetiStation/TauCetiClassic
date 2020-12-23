@@ -15,10 +15,10 @@ Infestation:
 	name = "infestation"
 	config_tag = "infestation"
 	role_type = ROLE_ALIEN
-	required_players = 20
+	required_players = 1
 	required_players_secret = 15
-	required_enemies = 2
-	recommended_enemies = 4
+	required_enemies = 1
+	recommended_enemies = 3
 
 	votable = 0
 
@@ -78,18 +78,16 @@ Infestation:
 		greet_xeno(xeno)
 	return ..()
 
-/datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)	//it will need to be changed
-	to_chat(xeno.current, "<span class='notice'><B>You are a Xenomorph.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Your current alien form is a facehugger.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Go find some monkeys, corgi or a sleeping human.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>To leap at someones face, you simply start with left mouse button click.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Then check your tail action button, there will be leap available.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>You target also must be near, after you prepares to leap.</b></span>")
-	to_chat(xeno.current, "<span class='notice'>Use :A to hivetalk.</span>")
+/datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
+	to_chat(xeno.current, "<span class='notice'><B>Вы - ксеноморф. Ваша текущая форма - грудолом.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Сейчас вы очень слабы и вас легко убить.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Прячьтесь под предметами и передвигайтесь по вентиляции, что бы сохранить свою жизнь.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Ваша главная задача - вырасти во взрослого ксеноморфа. Прогресс роста указан во вкладке Status.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Когда прогресс роста дойдет до конца, вы сможете эволюционировать в оду из трех взрослых форм.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Договоритесь со своими сестрами, кто и в какую форму будет эволюционировать.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Для общения внутри улья поставьте :A перед сообщением.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><b>Кто-то обязательно должен стать трутнем, это единственная форма, способная вырасти в королеву.</b></span>")
 	to_chat(xeno.current, "<span class='notice'>------------------</span>")
-	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
-
 
 /*
 	GAME FINISH CHECKS
