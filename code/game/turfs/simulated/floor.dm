@@ -669,11 +669,9 @@ var/list/wood_icons = list("wood","wood-broken")
 		user.SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/weapon/storage/S = C
 		for(var/obj/item/I in S.contents)
-			if(do_after(user, 2, target = user) && (user.Adjacent(src)))
-				S.remove_from_storage(I,src)
-			else
+			if(!do_after(user, 2, target = user) && !user.Adjacent(src))
 				break
-
+			S.remove_from_storage(I,src)
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK
