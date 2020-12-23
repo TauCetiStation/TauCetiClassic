@@ -100,7 +100,7 @@
 	// If there are still hurties to dispense
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
-	if(spillover > 0)
+	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
 		BP.owner.shock_stage += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
 
 	// sync the organ's damage with its wounds
