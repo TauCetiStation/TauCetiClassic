@@ -79,7 +79,6 @@
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	if(current)					//remove ourself from our old body's mind variable
-
 		current.mind = null
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
