@@ -99,8 +99,8 @@ var/list/datum/announcement/announcements_list
 				for(var/announcement_type in announcement_types)
 					var/datum/announcement/A = announcement_type
 					if(initial(A.name))
-						announcements[initial(A.name)] = A
-				announcements_list = sortList(announcements)
+						announcements_list[initial(A.name)] = A
+				announcements_list = sortList(announcements_list)
 
 			var/user_input = input(ui.user, "Choose a template.", "Template", A.name) as anything in announcements_list
 			A.copy(announcements_list[user_input])
