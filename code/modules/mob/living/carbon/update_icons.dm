@@ -54,7 +54,7 @@
 			lying_current = C.flip_angle
 	else if(istype(buckled, /obj/structure/closet/coffin))
 		lying_current = 90
-	else if(locate(/obj/machinery/optable, loc) || locate(/obj/structure/stool/bed, loc))
+	else if(locate(/obj/machinery/optable, loc) || locate(/obj/structure/stool/bed, loc) || locate(/obj/structure/cult/torture_table, loc))
 		lying_current = 90
 	else
 		lying_current = pick(90, 270)

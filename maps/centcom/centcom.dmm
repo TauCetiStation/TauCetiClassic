@@ -17372,10 +17372,6 @@
 /obj/structure/sign/warning/electricshock,
 /turf/unsimulated/wall,
 /area/velocity)
-"dCw" = (
-/obj/structure/cult/pylon,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "dDb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -19793,6 +19789,10 @@
 	icon_state = "blue"
 	},
 /area/centcom/specops)
+"idX" = (
+/obj/structure/mineral_door/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ieb" = (
 /turf/unsimulated/floor{
 	dir = 6;
@@ -19991,10 +19991,6 @@
 	icon_state = "orange"
 	},
 /area/centcom/control)
-"iGK" = (
-/obj/structure/cult/talisman,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "iHb" = (
 /turf/unsimulated/floor{
 	icon_state = "purple"
@@ -22749,11 +22745,6 @@
 /obj/machinery/computer/rdconsole/core,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"oTA" = (
-/obj/structure/cult/talisman,
-/obj/structure/cult/talisman,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oUb" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -23083,6 +23074,10 @@
 	},
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
+"pGu" = (
+/obj/structure/cult/torture_table,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "pHb" = (
 /obj/structure/sign/nanotrasen,
 /turf/simulated/shuttle/wall{
@@ -23372,10 +23367,6 @@
 /area/custom/syndicate_mothership/armory)
 "sQk" = (
 /turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tyj" = (
-/obj/structure/cult/talisman,
-/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "tWq" = (
 /turf/unsimulated/floor{
@@ -65658,10 +65649,10 @@ aaM
 aaM
 aaM
 rXx
+yea
 sQk
 sQk
-sQk
-dAj
+yea
 qDT
 sQk
 sQk
@@ -65676,11 +65667,11 @@ sQk
 sQk
 sQk
 qDT
-iGK
-iGK
-oTA
-tyj
-tyj
+yea
+sQk
+sQk
+sQk
+yea
 rXx
 aaM
 aaM
@@ -65916,28 +65907,28 @@ aaM
 aaM
 rXx
 sQk
-sQk
-sQk
-sQk
-qDT
-sQk
-mzq
-sQk
-sQk
-mzq
-mzq
-sQk
-sQk
-sQk
-mzq
+pGu
 sQk
 sQk
 qDT
 sQk
+mzq
+sQk
+sQk
+mzq
+mzq
+sQk
+sQk
 sQk
 mzq
 sQk
-tyj
+sQk
+qDT
+sQk
+sQk
+sQk
+sQk
+sQk
 rXx
 aaM
 aaM
@@ -66188,13 +66179,13 @@ sQk
 sQk
 mzq
 sQk
-sQk
+mzq
 qDT
 sQk
 sQk
+dAj
 sQk
 sQk
-iGK
 rXx
 aaM
 aaM
@@ -66430,7 +66421,7 @@ aaM
 aaM
 rXx
 sQk
-sQk
+pGu
 sQk
 sQk
 qDT
@@ -66445,13 +66436,13 @@ mzq
 sQk
 sQk
 mzq
+mzq
+mzq
 sQk
-qDT
-yea
 sQk
-iGK
-iGK
-iGK
+sQk
+sQk
+sQk
 rXx
 aaM
 aaM
@@ -66689,7 +66680,7 @@ rXx
 sQk
 mzq
 mzq
-yea
+sQk
 qDT
 yea
 sQk
@@ -66702,13 +66693,13 @@ sQk
 sQk
 sQk
 sQk
+mzq
+mzq
 sQk
-qDT
-qDT
 sQk
-qDT
-qDT
-qDT
+sQk
+sQk
+yea
 rXx
 aaM
 aaM
@@ -66944,7 +66935,7 @@ aaM
 aaM
 rXx
 mzq
-sQk
+pGu
 sQk
 sQk
 sQk
@@ -66960,12 +66951,12 @@ sQk
 sQk
 sQk
 sQk
+mzq
 sQk
 sQk
-sQk
-sQk
-sQk
-sQk
+qDT
+qDT
+qDT
 rXx
 aaM
 aaM
@@ -67458,9 +67449,9 @@ aaM
 aaM
 rXx
 sQk
+pGu
 sQk
-sQk
-dCw
+mzq
 qDT
 yea
 sQk
@@ -67972,7 +67963,7 @@ aaM
 aaM
 rXx
 sQk
-sQk
+pGu
 sQk
 sQk
 qDT
@@ -68228,10 +68219,10 @@ aaM
 aaM
 aaM
 rXx
+yea
 sQk
 sQk
-sQk
-sQk
+yea
 qDT
 sQk
 mzq
@@ -69260,7 +69251,7 @@ sQk
 yea
 mzq
 mzq
-mzq
+idX
 sQk
 sQk
 sQk
@@ -70802,7 +70793,7 @@ mzq
 cKX
 mzq
 mzq
-mzq
+idX
 mzq
 mzq
 mzq

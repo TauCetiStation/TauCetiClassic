@@ -74,6 +74,14 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
+/datum/building_agent/cult/structure/door
+	name = "Door"
+	building_type = /obj/structure/mineral_door/cult
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
 // For forge
 /datum/building_agent/cult/tool
 /datum/building_agent/cult/tool/tome
