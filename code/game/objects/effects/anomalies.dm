@@ -219,7 +219,7 @@
 					qdel(obj)
 			var/obj/structure/cult/pedestal/P = new(F)
 			P.icon_state = "pylon_glow"
-			var/datum/beam/B = P.Beam(src, "blood_beam", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
 			beams += B
 
 		// Iterating through all possible coordinates
@@ -253,7 +253,11 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(200;/mob/living/simple_animal/construct/harvester, 50;/mob/living/simple_animal/construct/wraith, 30;/mob/living/simple_animal/construct/armoured, 70;/mob/living/simple_animal/construct/builder, 1;/mob/living/simple_animal/construct/behemoth)
+	var/type = pick(90;/mob/living/simple_animal/construct/harvester,\
+					50; /mob/living/simple_animal/construct/wraith,\
+					30; /mob/living/simple_animal/construct/armoured,\
+					70; /mob/living/simple_animal/construct/builder,\
+					1;  /mob/living/simple_animal/construct/behemoth)
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
 	spawns -= 1
