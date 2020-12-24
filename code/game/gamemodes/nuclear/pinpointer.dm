@@ -118,10 +118,10 @@
 						if(M.dna.unique_enzymes == DNAstring)
 							target = M
 				if("AI System")
-					for(var/mob/living/silicon/ai/A in ai_list)
-						if(!A)
+					target = locate(/mob/living/silicon/ai) in ai_list
+						if!(target)
+							to_chat(usr, "Failed to locate active AI system!")
 							return
-						target = A
 
 	return attack_self(usr)
 
