@@ -16,7 +16,7 @@
 	consent = def_consent
 
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
-	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
+	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_victim)
 
 // Send ask to victim
 /datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)

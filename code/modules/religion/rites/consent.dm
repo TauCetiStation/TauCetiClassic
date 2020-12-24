@@ -26,9 +26,8 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
 		return FALSE
 
 	if(!ishuman(AOG.buckled_mob))
@@ -129,9 +128,8 @@
 		ASPECT_HERD = 1
 	)
 
-/datum/religion_rites/standing/consent/clownconversion/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
+/datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
 		return FALSE
 
 	if(!ishuman(AOG.buckled_mob))

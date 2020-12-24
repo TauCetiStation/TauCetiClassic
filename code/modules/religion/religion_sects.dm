@@ -135,3 +135,14 @@
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
 	)
+
+/datum/religion_sect/preset/cult/test
+	name = "The Test"
+	desc = "Anything you need, little demon."
+	convert_opener = "Let the Great Harvest begin! Bring more blood!"
+	aspect_preset = list()
+
+/datum/religion_sect/preset/cult/test/New()
+	var/list/L = subtypesof(/datum/aspect)
+	for(var/type in L)
+		aspect_preset[type] = 1

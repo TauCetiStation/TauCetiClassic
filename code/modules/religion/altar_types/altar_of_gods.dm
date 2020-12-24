@@ -20,6 +20,7 @@
 	var/datum/religion_sect/sect //easy access
 	var/datum/religion/chaplain/religion //easy access
 	var/chosen_aspect = FALSE
+	var/choosing_sects = FALSE
 
 	// It's fucking science! I ain't gotta explain this.
 	var/datum/experiment_data/experiments
@@ -220,7 +221,7 @@
 	performing_rite.perform_rite(user, src)
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
-	if(chosen_aspect)
+	if(chosen_aspect || choosing_sects)
 		return
 
 	var/obj/item/weapon/storage/bible/B = I
@@ -232,6 +233,7 @@
 	if(!available_options)
 		return
 
+	choosing_sects = TRUE
 	var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
 	if(!Adjacent(user))
 		to_chat(user, "<span class='warning'>You are too far away!</span>")

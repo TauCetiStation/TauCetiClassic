@@ -20,7 +20,7 @@
 	var/list/involved_pedestals = list()
 	var/items_to_spawn = 0
 	var/item_stage = 0
-	var/phrase_indx = 0
+	var/phrase_indx = 1
 	var/phrase_frequency = 0
 	var/waiting_time = 0
 
@@ -29,7 +29,7 @@
 		items_to_spawn += rules[type]
 
 	if(ritual_invocations)
-		phrase_frequency = round(items_to_spawn / ritual_invocations.len)
+		phrase_frequency = clamp(round(items_to_spawn / ritual_invocations.len), ritual_invocations.len, items_to_spawn)
 
 /datum/religion_rites/pedestals/get_count_steps()
 	return rules.len
@@ -103,7 +103,7 @@
 		if(!can_invocate(user, AOG))
 			break
 
-		if(ritual_invocations && item_stage % phrase_frequency == 1)
+		if(ritual_invocations && (item_stage % phrase_frequency == 1))
 			for(var/mob/M in AOG.mobs_around)
 				if(M in religion.members)
 					M.say(ritual_invocations[phrase_indx])

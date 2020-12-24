@@ -154,19 +154,26 @@
 							  "...They endowed Animation with human passions and feelings...",
 							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
 	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
-	favor_cost = 200
+	favor_cost = 20
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/standing/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
+/datum/religion_rites/standing/animation/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
 	var/obj/item/anim_item = locate() in AOG.loc
 	if(!anim_item)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
+	return TRUE
+
+/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
+	favor_cost = initial(favor_cost) * religion.members
 	return TRUE
 
 /datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -180,7 +187,8 @@
 
 	if(anim_items && anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
-			new /mob/living/simple_animal/hostile/mimic/copy/religion(O.loc, O)
+			var/mob/living/simple_animal/hostile/mimic/copy/religion/R = new(O.loc, O)
+			religion.add_member(R, HOLY_ROLE_PRIEST)
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
@@ -312,8 +320,9 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
+/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE

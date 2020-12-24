@@ -38,7 +38,7 @@
 	update_tip()
 
 /datum/religion_rites/proc/get_count_steps()
-	return ritual_invocations.len
+	return
 
 /datum/religion_rites/proc/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
@@ -68,48 +68,46 @@
 
 
 /datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
+	if(SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)
+		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
+		to_chat(world, "if(!SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)")
+		var/a = SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED
+		to_chat(world, "[SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG)] - [COMPONENT_CHECK_FAILED] - [a]")
 		return FALSE
 
 	if(!religion.check_costs(favor_cost, user = user))
+		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
+		return FALSE
+
+	if(!can_start(user, AOG))
+		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You begin performing the rite of [name]...</span>")
 
-	if(!before_perform_rite(user, AOG))
-		to_chat(world, "if(!before_perform_rite(user, AOG))")
-		return FALSE
-
-	if(!can_start(user, AOG))
-		return FALSE
-
 	return TRUE
 
 /datum/religion_rites/proc/start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	SEND_SIGNAL(src, list(COMSIG_RITE_STARTED), user, AOG)
 	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), .proc/try_next_step)
-	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
 	try_next_step(src, user, AOG, 1)
 
 /datum/religion_rites/proc/try_next_step(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	if(!can_step(user, AOG, current_stage))
-		to_chat(world, "if(!can_step())")
 		return FALSE
 	rite_step_wrapper(user, AOG, current_stage)
 
 /datum/religion_rites/proc/can_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	if(current_stage > get_count_steps())
 		end_wrapper(user, AOG)
-		to_chat(world, "if(current_stage > get_count_steps())")
 		return FALSE
 	if(!can_invocate(user, AOG))
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-		to_chat(world, "!can_invocate(user, AOG)")
 		return FALSE
 	return TRUE
 
 /datum/religion_rites/proc/rite_step_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_IN_STEP, user, AOG, current_stage)
-	to_chat(world, "step started")
 	on_invocation(user, AOG, current_stage)
 
 	rite_step(user, AOG, current_stage)
@@ -118,7 +116,6 @@
 
 /datum/religion_rites/proc/step_end(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_STEP_ENDED, user, AOG, current_stage + 1)
-	to_chat(world, "step ended")
 
 /datum/religion_rites/proc/end_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
 	end(user, AOG)
@@ -131,26 +128,21 @@
 	AOG.reset_rite() // Very bad.
 	reset_rite()
 
-/datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!on_chosen(user, AOG))
-		return FALSE
-
-	if(!can_start_wrapper(user, AOG))
-		return FALSE
-
-	start(user, AOG)
-	return TRUE
-
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	to_chat(user, "<span class='notice'>You begin preparations for the ritual...</span>")
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	return TRUE
 
-// DEL THIS
-/datum/religion_rites/proc/before_perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return !(SEND_SIGNAL(src, COMSIG_RITE_BEFORE_PERFORM, user, AOG) & COMPONENT_CHECK_FAILED)
+/datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
+	if(!on_chosen(user, AOG))
+		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
+		to_chat(world, "if(!on_chosen(user, AOG))")
+		return FALSE
 
-// DEL THIS
-/datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	SHOULD_CALL_PARENT(TRUE)
-	return !(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)
+	if(!can_start_wrapper(user, AOG))
+		to_chat(world, "if(!can_start_wrapper(user, AOG))")
+		return FALSE
+
+	start(user, AOG)
+	return TRUE

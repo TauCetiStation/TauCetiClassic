@@ -17,18 +17,15 @@
 		return FALSE
 
 	if(!ritual_invocations)
-		to_chat(world, "if(!ritual_invocations)")
 		return FALSE
 
 	return TRUE
 
 /datum/religion_rites/standing/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(user.is_busy(AOG))
-		to_chat(world, "if(user.is_busy(AOG))")
 		return FALSE
 
 	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
-		to_chat(world, "if(do_after")
 		return FALSE
 
 	return TRUE

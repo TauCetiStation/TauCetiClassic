@@ -43,8 +43,7 @@
 
 		rite.add_tips(tips_to_add)
 
-	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_items_on_altar)
-	RegisterSignal(parent, list(COMSIG_RITE_BEFORE_PERFORM), .proc/create_fake_of_item)
+	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_items_on_altar)
 	RegisterSignal(parent, list(COMSIG_RITE_ON_INVOCATION), .proc/update_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
@@ -65,34 +64,26 @@
 	return sacrifice_items
 
 /datum/component/rite/spawn_item/proc/check_items_on_altar(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
-	if(sacrifice_type)
-		var/list/L = item_sacrifice(AOG, sacrifice_type)
-		if(L.len == 0)
-			var/datum/religion_rites/standing/rite = parent
-			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
-			clear_lists()
-			return COMPONENT_CHECK_FAILED
-	return NONE
+	if(!sacrifice_type) // For rites without sacrificial objects
+		return NONE
 
-// Created illustion of spawning item
-/datum/component/rite/spawn_item/proc/create_fake_of_item(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
 	var/datum/religion_rites/standing/rite = parent
-	if(sacrifice_type)
-		var/list/L = item_sacrifice(AOG, sacrifice_type)
-		if(L.len == 0)
-			to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
-			clear_lists()
-			return COMPONENT_CHECK_FAILED
 
-		if(adding_favor_per_item)
-			rite.favor_cost = initial(rite.favor_cost) + adding_favor_per_item * L.len
+	var/list/L = item_sacrifice(AOG, sacrifice_type)
+	if(L.len == 0)
+		to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
+		clear_lists()
+		return COMPONENT_CHECK_FAILED
 
-		for(var/obj/item in L)
-			item.forceMove(AOG)
-			// Create illusion of real item
-			var/obj/effect/overlay/I = new(AOG.loc)
-			illusion_to_sacrifice += I
-			I.appearance = item
+	if(adding_favor_per_item)
+		rite.favor_cost = initial(rite.favor_cost) + adding_favor_per_item * L.len
+
+	for(var/obj/item in L)
+		item.forceMove(AOG)
+		// Create illusion of real item
+		var/obj/effect/overlay/I = new(AOG.loc)
+		illusion_to_sacrifice += I
+		I.appearance = item
 
 	return NONE
 
