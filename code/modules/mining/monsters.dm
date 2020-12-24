@@ -466,7 +466,6 @@
 		if(M.stat == DEAD)
 			continue
 		M.Weaken(3)
-		M.adjustBruteLoss(rand(10,15))
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	if(!latched)
 		retract()
