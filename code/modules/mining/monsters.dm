@@ -430,7 +430,9 @@
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
-	icon_state = "Goliath_tentacle"
+	icon_state = "Goliath_tentacle_spawn"
+	layer = BELOW_MOB_LAYER
+	var/timerid = null
 
 /obj/effect/goliath_tentacle/atom_init()
 	. = ..()
@@ -438,7 +440,13 @@
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
-	addtimer(CALLBACK(src, .proc/Trip), 20)
+	deltimer(timerid)
+	timerid = addtimer(CALLBACK(src, .proc/tripanim), 7, TIMER_STOPPABLE)
+
+/obj/effect/goliath_tentacle/proc/tripanim()
+	icon_state = "Goliath_tentacle_wiggle"
+	deltimer(timerid)
+	timerid = addtimer(CALLBACK(src, .proc/trip), 3, TIMER_STOPPABLE)
 
 /obj/effect/goliath_tentacle/original
 
@@ -449,19 +457,27 @@
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src, spawndir)
-		new /obj/effect/goliath_tentacle(T)
+		if(T)
+			new /obj/effect/goliath_tentacle(T)
 
-/obj/effect/goliath_tentacle/proc/Trip()
-	for(var/mob/living/M in src.loc)
+/obj/effect/goliath_tentacle/proc/trip()
+	var/latched = FALSE
+	for(var/mob/living/M in loc)
+		if(M.stat == DEAD)
+			continue
 		M.Weaken(3)
+		M.adjustBruteLoss(rand(10,15))
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	qdel(src)
+	if(!latched)
+		retract()
+	else
+		deltimer(timerid)
+		timerid = addtimer(CALLBACK(src, .proc/retract), 10, TIMER_STOPPABLE)
 
-/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
-	if(isliving(AM))
-		Trip()
-		return
-	. = ..()
+/obj/effect/goliath_tentacle/proc/retract()
+	icon_state = "Goliath_tentacle_retract"
+	deltimer(timerid)
+	timerid = QDEL_IN(src, 7)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
