@@ -317,11 +317,8 @@
 	if (src.isOn())
 		use(1)
 		var/turf/location = get_turf(user)
-		if (istype(location, /turf))
+		if (isturf(location))
 			location.hotspot_expose(700, 50, src)
-			if(isliving(target))
-				var/mob/living/L = target
-				L.IgniteMob()    // Welding can ignite mobs, splashed with fuel
 		if(isturf(target))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, target)
@@ -331,6 +328,10 @@
 			s.set_up(3, 1, target)
 			s.start()
 	return
+
+/obj/item/weapon/weldingtool/attack(mob/living/M, mob/living/user, def_zone)
+	. = ..()
+	M.IgniteMob()
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle()
