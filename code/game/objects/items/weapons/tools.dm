@@ -331,7 +331,9 @@
 
 /obj/item/weapon/weldingtool/attack(mob/living/M, mob/living/user, def_zone)
 	. = ..()
-	M.IgniteMob()
+	if (isOn())
+		use(1)
+		M.IgniteMob()
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle()
