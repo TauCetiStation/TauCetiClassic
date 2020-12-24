@@ -119,7 +119,7 @@
 							target = M
 				if("AI System")
 					target = locate(/mob/living/silicon/ai in ai_list)
-						if!(target)
+						if(!target)
 							to_chat(usr, "Failed to locate active AI system!")
 							return
 
