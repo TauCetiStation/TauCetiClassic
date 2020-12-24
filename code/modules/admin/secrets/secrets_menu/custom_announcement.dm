@@ -67,6 +67,10 @@ var/list/datum/announcement/announcements_list
 			var/user_input = sanitize_safe(input(ui.user, "Pick a name for this sound.", "Announcer") as text)
 			if(!user_input)
 				return
+			while (user_input in (announcement_sounds + announcement_sounds_cache))
+				user_input = sanitize_safe(input(ui.user, "This sound name is already taken. Please, select another name.", "Announcer") as text)
+				if(!user_input)
+					return
 			announcement_sounds_cache[user_input] = S
 			A.sound = user_input
 		if("volume")
