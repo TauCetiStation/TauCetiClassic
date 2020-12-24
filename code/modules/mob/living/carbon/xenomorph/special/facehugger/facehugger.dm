@@ -178,7 +178,7 @@
 	return HasProximity(AM)
 
 /obj/item/clothing/mask/facehugger/HasProximity(mob/living/carbon/C)
-	if(!current_hugger)
+	if(!current_hugger && istype(loc,/turf)) //not in hands
 		return Attach(C)
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
@@ -209,7 +209,7 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!istype(C, /mob/living/carbon)) //without this check, we will get a rantime because in C there will be a turf when throwing a facehugger
+	if(!istype(C, /mob/living/carbon)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
 		return FALSE
 	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE
@@ -219,13 +219,13 @@
 				return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/mouth_is_protected()
-	if(istype(head, /obj/item/clothing/head))
-		if(head.flags & HEADCOVERSMOUTH)
-			return head
-	else if(istype(wear_mask, /obj/item/clothing/mask))
-		if(wear_mask.flags & MASKCOVERSMOUTH)
-			return wear_mask
+/obj/item/clothing/mask/facehugger/proc/mouth_is_protected(obj/item/clothing/I)
+	if(istype(I, /obj/item/clothing/head))
+		if(I.flags & HEADCOVERSMOUTH)
+			return TRUE
+	if(istype(I, /obj/item/clothing/mask))
+		if(I.flags & MASKCOVERSMOUTH)
+			return TRUE
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
@@ -234,55 +234,44 @@
 
 	C.visible_message("<span class='danger'>[src] leaps at [C]'s face!</span>", "<span class='userdanger'>[src] leaps at [C]'s face!</span>")
 
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		var/headgear = H.mouth_is_protected()
-		if(headgear)
-			if(current_hugger) // playable facehugger
-				if(prob(50)) // the playable facehugger successfully rips off the helmet and infects the victim
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
-					H.unEquip(headgear)
-				else // the playable facehugger can't rip the helmet and dies
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-					var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-					to_chat(FH, "<span class='danger'>You died while trying to remove [H]'s [headgear]</span>!")
-					FH.ghostize(can_reenter_corpse = FALSE)
-					Die()
-					qdel(current_hugger)
-					return FALSE
-			else // facehugger with ai
-				if(prob(40))
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and rips it off in the process!</span>", "<span class='userdanger'>[src] smashes against yours [headgear], and rips it off in the process!</span>")
-					H.unEquip(headgear)
-				else
-					H.visible_message("<span class='danger'>[src] smashes against [H]'s [headgear], and fails to rip it off!</span>", "<span class='userdanger'>[src] smashes against yours's [headgear], and fails to rip it off!</span>")
-				if(prob(33))
-					H.visible_message("<span class='danger'>[H]'s [headgear] melts from the acid!</span>", "<span class='userdanger'>Your [headgear] melts from the acid!</span>")
-					qdel(headgear)
-				if(prob(66))
-					Die()
-				else
-					H.visible_message("<span class='danger'>[src] bounces off of the [headgear]!</span>", "<span class='userdanger'>[src] bounces off of the [headgear]!</span>")
-					GoIdle()
-				return FALSE
-	else
-		if(C.wear_mask)
-			if(prob(20))
-				return FALSE
-			var/obj/item/clothing/mask/WM = target.wear_mask
-			if(WM.flags & NODROP)
-				return FALSE
-			target.unEquip(WM)
-			target.visible_message("<span class='danger'>[src] tears [WM] off of [C]'s face!</span>", "<span class='userdanger'>[src] tears [WM] off of [C]'s face!</span>")
+	var/target_head = C.head
+	var/target_mask = C.wear_mask
+	var/fail_rip_off = FALSE
+	if(target_head && mouth_is_protected(target_head))
+		if(prob(50) && C.unEquip(target_head))
+			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
+		else
+			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")
+			fail_rip_off = TRUE
+	if(target_mask && mouth_is_protected(target_mask) && !fail_rip_off)
+		if(prob(50) && C.unEquip(target_mask))
+			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_mask]!</span>", "<span class='userdanger'>[src] rips off your [target_mask]!</span>")
+			target_mask = null
+		else
+			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_mask]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_mask]!</span>")
+			fail_rip_off = TRUE
+	if(fail_rip_off)
+		if(current_hugger) // the playable facehugger can't rip the helmet or mask and dies
+			var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+			to_chat(FH, "<span class='danger'>You died while trying to impregnate [C]</span>!")
+			FH.ghostize(can_reenter_corpse = FALSE)
+			Die()
+			qdel(current_hugger)
+			return FALSE
+		else // facehugger with ai
+			Die()
+			return FALSE
+
 	STOP_PROCESSING(SSobj, src)
-	C.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE)
+	if(target_mask)
+		C.drop_from_inventory(target_mask)
+	if(!C.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE))
+		CRASH("can't equip [src] on [C]. [C]'s have [C.head] in head and [C.wear_mask] in mask")
 
 	if(!sterile)
 		C.Paralyse(MAX_IMPREGNATION_TIME / 8) //something like 30 seconds
 
 	GoIdle() //so it doesn't jump the people that tear it off
-	//if(!sterile)
-	//	src.flags |= NODROP
 	if(!current_hugger)
 		addtimer(CALLBACK(src, .proc/Impregnate, C), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
