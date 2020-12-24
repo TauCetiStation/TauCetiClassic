@@ -207,6 +207,9 @@
 		ASPECT_OBSCURE = 1,
 	)
 
+/datum/religion_rites/spook/proc/remove_spook_effect(mob/living/carbon/M)
+	M.remove_alt_appearance("spookyscary")
+
 /datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 	if(!.)
@@ -222,6 +225,11 @@
 			M.make_jittery(50)
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
+
+		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
+		I.override = TRUE
+		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
+		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
