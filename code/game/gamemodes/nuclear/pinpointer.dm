@@ -96,7 +96,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
+			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "Item" , "DNA", "AI System"))
 				if("Item")
 					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.
@@ -117,7 +117,11 @@
 							continue
 						if(M.dna.unique_enzymes == DNAstring)
 							target = M
-							break
+				if("AI System")
+					for(var/mob/living/silicon/ai/A in ai_list)
+						if(!A)
+							return
+						target = A
 
 	return attack_self(usr)
 
