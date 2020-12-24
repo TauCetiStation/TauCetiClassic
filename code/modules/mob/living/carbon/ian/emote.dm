@@ -92,7 +92,7 @@
 			message = "<B>[src]</B> трясет головой."
 			m_type = SHOWMSG_VISUAL
 		if("gnarl")
-			message = "<B>[src]</B> злится и показывает оскал."
+			message = "<B>[src]</B> злится и оскаливает зубы."
 			m_type = SHOWMSG_AUDIO
 		if("jump")
 			message = "<B>[src]</B> прыгает!"
