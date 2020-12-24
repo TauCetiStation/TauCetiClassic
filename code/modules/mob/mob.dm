@@ -23,8 +23,8 @@
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	if(mind && mind.my_religion)
-		mind.my_religion.remove_member(src)
+	if(my_religion)
+		my_religion.remove_member(src)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 

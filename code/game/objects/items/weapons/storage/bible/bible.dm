@@ -80,7 +80,7 @@
 	return ..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && user.mind.holy_role && user.mind.my_religion)
+	if(user.mind && user.mind.holy_role && user.my_religion)
 		change_chapel_looks(user)
 		return
 
@@ -96,7 +96,7 @@
 	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
-	var/datum/religion/R = user.mind.my_religion
+	var/datum/religion/R = user.my_religion
 	while(!done)
 		if(!choices.len)
 			done = TRUE

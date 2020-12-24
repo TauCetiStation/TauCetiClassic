@@ -66,3 +66,7 @@
 
 	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
 	var/logs_combat = TRUE
+
+	// This is a ref to the religion that the mob is involved in.
+	// Mobs without mind can be member of a religion
+	var/datum/religion/my_religion

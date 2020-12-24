@@ -41,7 +41,7 @@
 		rune_choices()
 		choices_generated = TRUE
 
-	if(user.mind && user.mind.holy_role && istype(user.mind.my_religion, /datum/religion/cult))
+	if(user.mind && user.mind.holy_role && istype(user.my_religion, /datum/religion/cult))
 		choice_bible_func(user)
 		return
 

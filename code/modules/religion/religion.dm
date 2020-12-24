@@ -432,12 +432,12 @@
 
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
-	M.mind.my_religion = src
+	M.my_religion = src
 	give_god_spells(M)
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
-	M.mind.my_religion = null
+	M.my_religion = null
 	remove_god_spells(M)
 
 /datum/religion/proc/add_member(mob/M, holy_role)
@@ -445,8 +445,8 @@
 		return FALSE
 
 	members |= M
-	M.mind.my_religion = src
-	M.mind.holy_role = holy_role
+	M.my_religion = src
+	M.mind?.holy_role = holy_role
 	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
@@ -454,8 +454,8 @@
 		return FALSE
 
 	members -= M
-	M.mind.my_religion = null
-	M.mind.holy_role = initial(M.mind.holy_role)
+	M.my_religion = null
+	M.mind?.holy_role = initial(M.mind.holy_role)
 	return TRUE
 
 /datum/religion/proc/gen_building_list()

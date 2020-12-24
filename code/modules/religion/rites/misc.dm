@@ -161,19 +161,16 @@
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/standing/animation/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!..())
-		return FALSE
-	var/obj/item/anim_item = locate() in AOG.loc
-	if(!anim_item)
-		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
-		return FALSE
-	return TRUE
-
 /datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
-	favor_cost = initial(favor_cost) * religion.members
+	var/list/anim_items = list()
+	for(var/obj/item/O in AOG.loc)
+		anim_items += O
+	if(anim_items.len == 0)
+		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
+		return FALSE
+	favor_cost = initial(favor_cost) * religion.members * anim_items
 	return TRUE
 
 /datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -185,7 +182,7 @@
 	for(var/obj/item/O in AOG.loc)
 		anim_items += O
 
-	if(anim_items && anim_items.len != 0)
+	if(anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
 			var/mob/living/simple_animal/hostile/mimic/copy/religion/R = new(O.loc, O)
 			religion.add_member(R, HOLY_ROLE_PRIEST)

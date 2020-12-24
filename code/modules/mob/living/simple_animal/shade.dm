@@ -100,8 +100,8 @@
 		QDEL_NULL(container.god_image)
 		container = null
 
-	if(mind && mind.my_religion)
-		mind.my_religion.remove_deity(src)
+	if(my_religion)
+		my_religion.remove_deity(src)
 
 	return ..()
 
