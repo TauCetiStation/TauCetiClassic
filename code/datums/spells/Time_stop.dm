@@ -106,8 +106,8 @@ var/timestop_count = 0
 			P.paused = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
-	name = "Stop Time"
-	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
+	name = "Остановка Времени"
+	desc = "Останавливает время для всего, кроме вас и позволяет свободно перемещаться в зоне действия, пока ваши враги застыли на месте."
 	charge_max = 500
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
