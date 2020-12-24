@@ -401,9 +401,9 @@
 			if(bm.stat != DEAD)
 				if(!(NO_BREATH in bm.mutations))
 					bm.adjustOxyLoss(5)
-					BP.take_damage(0.5, null, null, "Noose")
 					if(prob(40))
 						bm.emote("gasp")
+				BP.take_damage(0.5, null, null, "Noose")
 				if(prob(20))
 					var/flavor_text = list("<span class='danger'>[bm]'s legs flail for anything to stand on.</span>",\
 											"<span class='danger'>[bm]'s hands are desperately clutching the noose.</span>",\
