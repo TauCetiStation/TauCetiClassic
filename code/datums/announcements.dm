@@ -83,19 +83,19 @@ var/list/announcement_sounds = list(
 	var/volume = 100
 	var/flags
 
-/datum/announcement/proc/copy(datum/announcement/A)
-	if(!istype(A))
-		return
+/datum/announcement/proc/copy(announce_type)
+	var/datum/announcement/AT = announce_type
+	ASSERT(ispath(AT))
 	
-	name = A.name
-	title = A.title
-	subtitle = A.subtitle
-	message = A.message
-	announcer = A.announcer
-	sound = A.sound
+	name = initial(AT.name)
+	title = initial(AT.title)
+	subtitle = initial(AT.subtitle)
+	message = initial(AT.message)
+	announcer = initial(AT.announcer)
+	sound = initial(AT.sound)
 
-	volume = A.volume
-	flags = A.flags
+	volume = initial(AT.volume)
+	flags = initial(AT.flags)
 
 /datum/announcement/proc/play()
 	var/announce_text
