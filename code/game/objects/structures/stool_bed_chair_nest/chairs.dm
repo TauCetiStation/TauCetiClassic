@@ -274,9 +274,9 @@
 /obj/structure/stool/bed/chair/noose //It's a "chair".
 	name = "noose"
 	desc = "Well this just got a whole lot more morbid."
-	icon_state = "noose"
 	icon = 'icons/obj/objects.dmi'
-	layer = MOB_LAYER
+	icon_state = "noose"
+	layer = FLY_LAYER
 	flags = NODECONSTRUCT
 	var/mutable_appearance/overlay
 
@@ -297,7 +297,7 @@
 
 /obj/structure/stool/bed/chair/noose/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
-		src.layer = MOB_LAYER
+		layer = MOB_LAYER
 		START_PROCESSING(SSobj, src)
 		M.dir = SOUTH
 		animate(M, pixel_y = M.lying ? initial(pixel_y) + 14 : initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
@@ -320,7 +320,6 @@
 			return
 		user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
 		to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")
-		buckled_mob.AdjustWeakened(5)
 	else
 		buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to untie the noose over their neck!</span>")
 		to_chat(buckled_mob,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
@@ -372,11 +371,10 @@
 			M.log_combat(user, "hanged", src)
 			for(var/alert in M.alerts)
 				var/obj/screen/alert/A = M.alerts[alert]
-				if(A.master.icon_state == "noose")
+				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
 					A.cut_overlays()
 					A.add_overlay(image(icon, "noose"))
 					A.add_overlay(image(icon, "noose_overlay"))
-					A.layer = ABOVE_HUD_LAYER
 			return TRUE
 	user.visible_message("<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>")
 	to_chat(user, "<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
@@ -386,7 +384,7 @@
 	if(!has_buckled_mobs())
 		STOP_PROCESSING(SSobj, src)
 		return
-	if(can_hang()) //well you have to remove the support first
+	if(can_hang()) // well you have to remove the support first
 		return
 	if(pixel_x >= 0)
 		animate(src, pixel_x = -3, time = 45, easing = ELASTIC_EASING)

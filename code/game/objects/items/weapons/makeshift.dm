@@ -236,6 +236,7 @@
 	if(!do_after(user, 5 SECONDS, target = user))
 		return
 	N = new(user_turf)
+	N.layer = FLY_LAYER // because of bed/chair/atom_init 
 	N.color = src.color
 	qdel(src)
 
