@@ -1,7 +1,6 @@
 /* Datum for admin secrets */
 
 /datum/secrets_menu
-	var/datum/tgui_window/tgui_window
 	var/client/admin
 	var/datum/admins/holder
 	var/title = "Admin Secrets"
@@ -14,7 +13,6 @@
 /datum/secrets_menu/Destroy()
 	admin = null
 	holder = null
-	tgui_window = null
 	name = null
 	return ..()
 
@@ -29,4 +27,3 @@
 	if(!ui)
 		ui = new(user, src, name, title)
 		ui.open()
-		tgui_window = ui.window
