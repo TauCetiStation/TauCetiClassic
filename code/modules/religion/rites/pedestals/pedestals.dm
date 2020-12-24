@@ -76,7 +76,7 @@
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,
-		/obj/structure/cult/talisman = 2,
+		/obj/structure/cult/tech_table = 2,
 	)
 
 	needed_aspects = list(
@@ -100,7 +100,7 @@
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,
-		/obj/structure/cult/talisman = 2,
+		/obj/structure/cult/tech_table = 2,
 		/obj/structure/cult/tome= 2,
 		/obj/structure/bonfire/dynamic = 3,
 	)

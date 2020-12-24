@@ -255,7 +255,7 @@
 		. = (max_favor - favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add
 	favor = clamp(favor + amount, 0, max_favor)
 	if(amount > 0)
-		adjust_piety(amount / 100)
+		adjust_piety(amount)
 
 // Sets favor to a specific amount. Can provide optional features based on a user.
 /datum/religion/proc/set_favor(amount = 0)
@@ -263,6 +263,7 @@
 	return favor
 
 /datum/religion/proc/adjust_piety(amount = 0)
+	amount = amount / 10
 	. = amount
 	if(piety + amount < 0)
 		. = piety

@@ -31,7 +31,7 @@
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "Current count of favor: [religion.favor]; piety: <span class='piety'>[religion.piety]</span>")
+		to_chat(user, "Current count of favor: [religion.favor] piety: <span class='piety'>[religion.piety]</span>")
 	else
 		..()
 

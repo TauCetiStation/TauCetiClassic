@@ -3,14 +3,6 @@
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
 
-/obj/structure/cult/talisman
-	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie."
-	icon_state = "talismanaltar"
-	light_color = "#2f0e0e"
-	light_power = 2
-	light_range = 3
-
 /obj/structure/cult/tome
 	name = "desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
@@ -18,14 +10,6 @@
 	light_color = "#cc9338"
 	light_power = 2
 	light_range = 3
-
-/obj/structure/cult/shell
-	name = "cursed shell"
-	desc = "It looks at you."
-	icon_state = "shuttlecurse"
-	light_color = "#6d1616"
-	light_power = 2
-	light_range = 2
 
 /obj/structure/cult/pylon
 	name = "pylon"
@@ -81,6 +65,8 @@
 	health = 300
 	sheetAmount = 2
 	sheetType = /obj/item/stack/sheet/metal
+	light_color = "#990000"
+	light_range = 2
 
 /obj/structure/mineral_door/cult/MobChecks(mob/user)
 	if(!..())
@@ -91,6 +77,7 @@
 
 	return TRUE
 
+// Just trash
 /obj/effect/spacewhole
 	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."
@@ -114,3 +101,11 @@
 	desc = "Strange circle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "summoning_orb"
+
+/obj/structure/cult/shell
+	name = "cursed shell"
+	desc = "It looks at you."
+	icon_state = "shuttlecurse"
+	light_color = "#6d1616"
+	light_power = 2
+	light_range = 2

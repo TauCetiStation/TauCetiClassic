@@ -17359,7 +17359,7 @@
 	},
 /area/velocity)
 "dAj" = (
-/obj/structure/cult/tome,
+/obj/structure/cult/tech_table,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "dBb" = (

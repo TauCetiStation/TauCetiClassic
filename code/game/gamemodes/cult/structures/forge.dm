@@ -16,6 +16,11 @@
 	. = ..()
 	init_subtypes(/datum/building_agent/cult/tool, available_items)
 
+/obj/structure/cult/forge/Destroy()
+	QDEL_LIST(available_items)
+	QDEL_LIST_ASSOC(items_image)
+	return ..()
+
 /obj/structure/cult/forge/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, /obj/item/weapon/storage/bible) || !user.mind.holy_role)
 		return
@@ -29,6 +34,8 @@
 		images_gen = TRUE
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
+	if(!user.mind.holy_role)
+		return
 	create_def_items(user)
 
 /obj/structure/cult/forge/proc/gen_images()

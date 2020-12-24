@@ -4,6 +4,7 @@
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "satanaltar"
 
+	look_piety = TRUE
 	change_preset_name = FALSE
 	custom_sect = FALSE
 
