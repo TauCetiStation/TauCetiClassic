@@ -16,7 +16,7 @@ var/global/war_device_activation_forbidden
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
 	var/declaring_war = FALSE
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/nuclear/war
+	var/datum/announcement/centcomm/nuclear/war/announcement = new
 
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)

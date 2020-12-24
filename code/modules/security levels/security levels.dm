@@ -14,7 +14,7 @@
 
 	//Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
-		var/datum/announcement/code_announce
+		var/datum/announcement/station/code/code_announce
 		switch(level)
 			if(SEC_LEVEL_GREEN)
 				security_level = SEC_LEVEL_GREEN

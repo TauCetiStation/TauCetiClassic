@@ -37,7 +37,7 @@
 	var/stat_msg1
 	var/stat_msg2
 
-	var/datum/announcement/announcement = new /datum/announcement/station/command
+	var/datum/announcement/station/command/announcement = new
 
 /obj/machinery/computer/communications/atom_init()
 	. = ..()

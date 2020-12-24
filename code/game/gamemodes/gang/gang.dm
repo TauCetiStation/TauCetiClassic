@@ -38,8 +38,8 @@
 	var/B_dominations = 2
 	votable = 0
 
-	var/datum/announcement/announce_breach = new /datum/announcement/station/gang/breach
-	var/datum/announcement/announce_multiple = new /datum/announcement/station/gang/multiple
+	var/datum/announcement/station/gang/breach/announce_breach = new
+	var/datum/announcement/station/gang/multiple/announce_multiple = new
 
 ///////////////////////////
 //Announces the game type//

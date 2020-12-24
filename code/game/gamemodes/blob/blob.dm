@@ -30,7 +30,7 @@ var/global/blobwincount = 500
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/blob/outbreak5
+	var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 
 /datum/game_mode/blob/pre_setup()
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)

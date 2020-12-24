@@ -141,12 +141,12 @@ var/can_call_ert
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance))
-		var/datum/announcement/announcement = new /datum/announcement/centcomm/noert
+		var/datum/announcement/centcomm/noert/announcement = new
 		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/yesert
+	var/datum/announcement/centcomm/yesert/announcement = new
 	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1

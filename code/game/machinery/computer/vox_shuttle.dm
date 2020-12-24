@@ -57,8 +57,8 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/warning = FALSE // Warning about the end of the round.
 	var/returning = FALSE
 
-	var/datum/announcement/announce_arrival = new /datum/announcement/centcomm/vox/arrival
-	var/datum/announcement/announce_returns = new /datum/announcement/centcomm/vox/returns
+	var/datum/announcement/centcomm/vox/arrival/announce_arrival = new
+	var/datum/announcement/centcomm/vox/returns/announce_returns = new
 
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()

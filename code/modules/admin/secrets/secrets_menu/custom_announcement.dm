@@ -1,6 +1,7 @@
 /* Custom Announcements UI */
 
 var/list/announcement_sounds_cache = list()
+var/list/datum/announcement/announcements_list
 
 /datum/secrets_menu/custom_announce
 	title = "Custom Announce"
@@ -31,20 +32,20 @@ var/list/announcement_sounds_cache = list()
 	)
 	return data
 
-/datum/secrets_menu/custom_announce/tgui_act(action, list/params)
+/datum/secrets_menu/custom_announce/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 	
 	switch(action)
 		if("title")
-			A.title = sanitize_safe(input(admin, "Pick a title for the report.", "Title", A.title) as text)
+			A.title = sanitize_safe(input(ui.user, "Pick a title for the report.", "Title", A.title) as text)
 		if("subtitle")
-			A.subtitle = sanitize_safe(input(admin, "Pick a subtitle for the report.", "Subtitle", A.subtitle) as text)
+			A.subtitle = sanitize_safe(input(ui.user, "Pick a subtitle for the report.", "Subtitle", A.subtitle) as text)
 		if("message")
-			A.message = sanitize(input(admin, "Please enter anything you want. Anything. Serious.", "What?", A.message) as message, MAX_PAPER_MESSAGE_LEN, extra = TRUE)
+			A.message = sanitize(input(ui.user, "Please enter anything you want. Anything. Serious.", "What?", A.message) as message, MAX_PAPER_MESSAGE_LEN, extra = TRUE)
 		if("announcer")
-			A.announcer = sanitize_safe(input(admin, "Pick a announcer for the report.", "Announcer", A.announcer) as text)
+			A.announcer = sanitize_safe(input(ui.user, "Pick a announcer for the report.", "Announcer", A.announcer) as text)
 		if("flag_text")
 			A.flags ^= ANNOUNCE_TEXT
 		if("flag_sound")
@@ -55,7 +56,7 @@ var/list/announcement_sounds_cache = list()
 			var/list/variants = announcement_sounds
 			if(holder.rights & R_SOUNDS)
 				variants += announcement_sounds_cache
-			var/user_input = input(admin, "Choose a sound for announce.", "Sound", A.sound) as anything in variants
+			var/user_input = input(ui.user, "Choose a sound for announce.", "Sound", A.sound) as anything in variants
 			A.sound = user_input
 		if("sound_upload")
 			if(!(holder.rights & R_SOUNDS))
@@ -63,7 +64,7 @@ var/list/announcement_sounds_cache = list()
 			var/sound/S = input("Select a sound from the local repository") as null|sound
 			if(!isfile(S))
 				return
-			var/user_input = sanitize_safe(input(admin, "Pick a name for this sound.", "Announcer") as text)
+			var/user_input = sanitize_safe(input(ui.user, "Pick a name for this sound.", "Announcer") as text)
 			if(!user_input)
 				return
 			announcement_sounds_cache[user_input] = S
@@ -87,21 +88,24 @@ var/list/announcement_sounds_cache = list()
 					sound_file = pick(sound_file)
 			else
 				WARNING("No sound file for [sound_name]")
-			admin.playsound_local(null, sound_file, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+			ui.user.playsound_local(null, sound_file, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 		if("preset_select")
 			if(!(holder.rights & (R_FUN | R_EVENT)))
 				return
 			var/list/announcement_types = typesof(/datum/announcement)
-			var/list/datum/announcement/announcements = list()
-			for(var/announcement_type in announcement_types)
-				var/datum/announcement/A = new announcement_type
-				if(A.name)
-					announcements[A.name] = A
-			announcements = sortList(announcements)
-			var/user_input = input(admin, "Choose a template.", "Template", A.name) as anything in announcements
-			A.copy(announcements[user_input])
+			
+			if (!announcements_list)
+				announcements_list = list()
+				for(var/announcement_type in announcement_types)
+					var/datum/announcement/A = announcement_type
+					if(initial(A.name))
+						announcements[initial(A.name)] = A
+				announcements_list = sortList(announcements)
+
+			var/user_input = input(ui.user, "Choose a template.", "Template", A.name) as anything in announcements_list
+			A.copy(announcements_list[user_input])
 		if("announce")
 			if(alert("Are you sure?", "Announcement", "Yes", "No") == "Yes")
 				A.play()
-				log_admin("[key_name(admin)] has created a command report with sound [A.sound]. [A.title] - [A.subtitle]: [A.message].")
-				message_admins("[key_name_admin(admin)] has created a command report.")
+				log_admin("[key_name(ui.user)] has created a command report with sound [A.sound]. [A.title] - [A.subtitle]: [A.message].")
+				message_admins("[key_name_admin(ui.user)] has created a command report.")

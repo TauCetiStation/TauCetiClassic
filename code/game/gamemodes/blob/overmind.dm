@@ -18,7 +18,7 @@
 	var/victory_in_progress = FALSE
 	var/static/added_to_blobminds = FALSE
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/blob/critical
+	var/datum/announcement/centcomm/blob/critical/announcement = new
 
 /mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"

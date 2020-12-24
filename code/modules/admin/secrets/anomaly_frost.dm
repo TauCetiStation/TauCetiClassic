@@ -6,7 +6,7 @@
 	var/Time = 110
 	var/Speed = 1
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/anomaly/frost
+	var/datum/announcement/centcomm/anomaly/frost/announcement = new
 
 /datum/anomaly_frost/proc/set_params(user)
 	Zlevel = input(user, "Choose Z level to freeze.", "Z level number: ", 1) as num

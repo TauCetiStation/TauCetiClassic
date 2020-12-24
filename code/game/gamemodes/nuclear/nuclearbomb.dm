@@ -30,7 +30,7 @@ var/bomb_set
 	var/spray_icon_state
 	var/nuketype = ""
 
-	var/datum/announcement/announce_nuke = new /datum/announcement/station/nuke
+	var/datum/announcement/station/nuke/announce_nuke = new
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()

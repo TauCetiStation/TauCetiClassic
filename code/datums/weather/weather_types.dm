@@ -164,7 +164,7 @@
 
 	immunity_type = "rad"
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/anomaly/radstorm_passed
+	var/datum/announcement/centcomm/anomaly/radstorm_passed/announcement = new
 
 /datum/weather/rad_storm/telegraph()
 	..()

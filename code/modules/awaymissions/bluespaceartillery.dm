@@ -8,7 +8,7 @@
 	density = 1
 	anchored = 1
 
-	var/datum/announcement/announcement = new /datum/announcement/centcomm/bsa
+	var/datum/announcement/centcomm/bsa/announcement = new
 
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<180)

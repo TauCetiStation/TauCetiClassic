@@ -14,7 +14,7 @@
 	var/stage = 0
 	var/doctors = 0
 
-	var/datum/announcement/announce_cruiser = new /datum/announcement/centcomm/epidemic/cruiser
+	var/datum/announcement/centcomm/epidemic/cruiser/announce_cruiser = new
 
 ///////////////////////////
 //Announces the game type//

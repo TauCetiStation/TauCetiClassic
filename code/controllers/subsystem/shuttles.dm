@@ -55,15 +55,15 @@ SUBSYSTEM_DEF(shuttle)
 	var/status_display_last_mode
 
 		//announce stuff
-	var/datum/announcement/announce_crew_called = new /datum/announcement/station/shuttle/crew_called
-	var/datum/announcement/announce_crew_recalled = new /datum/announcement/station/shuttle/crew_recalled
-	var/datum/announcement/announce_crew_docked = new /datum/announcement/station/shuttle/crew_docked
-	var/datum/announcement/announce_crew_left = new /datum/announcement/station/shuttle/crew_left
+	var/datum/announcement/station/shuttle/crew_called/announce_crew_called = new
+	var/datum/announcement/station/shuttle/crew_recalled/announce_crew_recalled = new
+	var/datum/announcement/station/shuttle/crew_docked/announce_crew_docked = new
+	var/datum/announcement/station/shuttle/crew_left/announce_crew_left = new
 
-	var/datum/announcement/announce_emer_called = new /datum/announcement/station/shuttle/emer_called
-	var/datum/announcement/announce_emer_recalled = new /datum/announcement/station/shuttle/emer_recalled
-	var/datum/announcement/announce_emer_docked = new /datum/announcement/station/shuttle/emer_docked
-	var/datum/announcement/announce_emer_left = new /datum/announcement/station/shuttle/emer_left
+	var/datum/announcement/station/shuttle/emer_called/announce_emer_called = new
+	var/datum/announcement/station/shuttle/emer_recalled/announce_emer_recalled = new
+	var/datum/announcement/station/shuttle/emer_docked/announce_emer_docked = new
+	var/datum/announcement/station/shuttle/emer_left/announce_emer_left = new
 
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 

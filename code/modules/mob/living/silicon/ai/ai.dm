@@ -132,7 +132,7 @@ var/list/ai_verbs_default = list(
 		"Hal 9000" = "ai-hal",
 	)
 
-	var/datum/announcement/announcement = new /datum/announcement/station/command/ai
+	var/datum/announcement/station/command/ai/announcement = new
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default

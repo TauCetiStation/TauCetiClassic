@@ -1,4 +1,4 @@
-/var/datum/announcement/announcement_ion_storm = new /datum/announcement/centcomm/anomaly/istorm
+/var/datum/announcement/centcomm/anomaly/istorm/announcement_ion_storm = new
 
 /datum/event/ionstorm
 	announceWhen = -1 // Never (setup may override)

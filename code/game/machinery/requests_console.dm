@@ -55,7 +55,7 @@ var/req_console_information = list()
 	var/priority = -1 ; //Priority of the message being sent
 	light_range = 0
 
-	var/datum/announcement/announcement = new /datum/announcement/station/command/department
+	var/datum/announcement/station/command/department/announcement = new
 
 /obj/machinery/requests_console/power_change()
 	..()

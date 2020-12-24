@@ -25,11 +25,11 @@
 	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
 
-	var/datum/announcement/announce_first = new /datum/announcement/centcomm/malf/first
-	var/datum/announcement/announce_second = new /datum/announcement/centcomm/malf/second
-	var/datum/announcement/announce_third = new /datum/announcement/centcomm/malf/third
-	var/datum/announcement/announce_forth = new /datum/announcement/centcomm/malf/fourth
-	var/datum/announcement/announce_declared = new /datum/announcement/centcomm/malf/declared
+	var/datum/announcement/centcomm/malf/first/announce_first = new
+	var/datum/announcement/centcomm/malf/second/announce_second = new
+	var/datum/announcement/centcomm/malf/third/announce_third = new
+	var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+	var/datum/announcement/centcomm/malf/declared/announce_declared = new
 
 
 /datum/game_mode/malfunction/announce()

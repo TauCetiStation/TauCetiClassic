@@ -182,7 +182,7 @@ var/global/timer_maint_revoke_id = 0
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-	var/datum/announcement/announcement = new /datum/announcement/station/maint_revoke
+	var/datum/announcement/station/maint_revoke/announcement = new
 	announcement.play()
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
@@ -192,7 +192,7 @@ var/global/timer_maint_revoke_id = 0
 		return
 
 	change_maintenance_access(FALSE)
-	var/datum/announcement/announcement = new /datum/announcement/station/maint_readd
+	var/datum/announcement/station/maint_readd/announcement = new
 	announcement.play()
 
 /proc/change_maintenance_access(allow_state)

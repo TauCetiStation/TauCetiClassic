@@ -2,14 +2,14 @@
 
 /datum/secrets_menu
 	var/datum/tgui_window/tgui_window
-	var/mob/admin
+	var/client/admin
 	var/datum/admins/holder
 	var/title = "Admin Secrets"
 	var/name = "KitchenSink"
 
-/datum/secrets_menu/New(mob/user)
-	admin = user
-	holder = admin.client.holder
+/datum/secrets_menu/New(client/C)
+	admin = C
+	holder = admin.holder
 
 /datum/secrets_menu/Destroy()
 	admin = null
@@ -22,7 +22,7 @@
 	return UI_INTERACTIVE
 
 /datum/secrets_menu/proc/interact()
-	tgui_interact(admin)
+	tgui_interact(admin.mob)
 
 /datum/secrets_menu/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

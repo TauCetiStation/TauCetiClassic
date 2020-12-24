@@ -30,8 +30,8 @@
 	uplink_welcome = "Mutineers Uplink Console:"
 	uplink_uses = 0
 
-	var/datum/announcement/announce_reveal = new /datum/announcement/centcomm/mutiny/reveal
-	var/datum/announcement/announce_ert = new /datum/announcement/centcomm/mutiny/noert
+	var/datum/announcement/centcomm/mutiny/reveal/announce_reveal = new
+	var/datum/announcement/centcomm/mutiny/noert/announce_ert = new
 
 /datum/game_mode/mutiny/New()
 	fluff = new(src)
