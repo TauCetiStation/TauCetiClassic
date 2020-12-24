@@ -117,6 +117,10 @@ var/list/announcement_sounds = list(
 				announce_sound = announcement_sounds[sound]
 				if(islist(announce_sound))
 					announce_sound = pick(announce_sound)
+			else if (sound in announcement_sounds_cache)
+				announce_sound = announcement_sounds_cache[sound]
+				if(islist(announce_sound))
+					announce_sound = pick(announce_sound)
 			else
 				WARNING("No sound file for [sound]")
 
