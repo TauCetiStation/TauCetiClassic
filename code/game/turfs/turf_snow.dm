@@ -407,13 +407,15 @@
 /obj/item/fish_carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
-	icon = 'icons/mob/animal.dmi'
-	icon_state = "carp_dead"
+	icon = 'icons/mob/carp.dmi'
+	icon_state = "purple_dead"
 	var/meat_amount_max = 1
 	var/loot_amount = 1
 
 /obj/item/fish_carp/atom_init(mapload, catch_target_turf)
 	. = ..()
+
+	update_icon()
 
 	appearance_flags |= PIXEL_SCALE
 	var/matrix/Mx = matrix()
@@ -422,6 +424,16 @@
 
 	if(catch_target_turf)
 		INVOKE_ASYNC(src, .proc/play_catch_anim, catch_target_turf)
+
+/obj/item/fish_carp/update_icon()
+	var/carp_color = pick(
+	500;"purple",
+	150;"ashy",
+	150;"blue",
+	150;"white",
+	50;"golden")
+
+	icon_state = "[carp_color]_dead"
 
 /obj/item/fish_carp/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -458,6 +470,9 @@
 	icon_state = "megacarp_dead"
 	meat_amount_max = 4
 	loot_amount = 3
+
+/obj/item/fish_carp/mega/update_icon()
+	return
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
