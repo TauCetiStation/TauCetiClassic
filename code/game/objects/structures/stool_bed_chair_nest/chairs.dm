@@ -401,6 +401,7 @@
 			if(bm.stat != DEAD)
 				if(!(NO_BREATH in bm.mutations))
 					bm.adjustOxyLoss(5)
+					BP.take_damage(0.5, null, null, "Noose")
 					if(prob(40))
 						bm.emote("gasp")
 				if(prob(20))
