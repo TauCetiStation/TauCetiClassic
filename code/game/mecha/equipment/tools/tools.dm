@@ -447,7 +447,7 @@
 	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
 	P.failchance = 0
-	P.icon_state = "anom"
+	P.icon_state = "bluespace_wormhole_enter"
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
