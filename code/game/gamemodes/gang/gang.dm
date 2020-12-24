@@ -24,7 +24,7 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
-	required_players_secret = 15
+	required_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 4
 	antag_hud_type = ANTAG_HUD_GANGSTER
