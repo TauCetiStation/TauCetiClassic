@@ -53,7 +53,7 @@ var/list/datum/announcement/announcements_list
 		if("flag_comms")
 			A.flags ^= ANNOUNCE_COMMS
 		if("sound_select")
-			var/list/variants = announcement_sounds
+			var/list/variants = list() + announcement_sounds
 			if(holder.rights & R_SOUNDS)
 				variants += announcement_sounds_cache
 			var/user_input = input(ui.user, "Choose a sound for announce.", "Sound", A.sound) as anything in variants
@@ -86,8 +86,9 @@ var/list/datum/announcement/announcements_list
 				if("sample")
 					sound_name = "commandreport"
 					volume = 100
-			if(sound_name in announcement_sounds)
-				sound_file = announcement_sounds[sound_name]
+			var/variants = announcement_sounds + announcement_sounds_cache
+			if(sound_name in variants)
+				sound_file = variants[sound_name]
 				if(islist(sound_file))
 					sound_file = pick(sound_file)
 			else

@@ -113,12 +113,9 @@ var/list/announcement_sounds = list(
 
 	if(flags & ANNOUNCE_SOUND)
 		if(sound)
-			if(sound in announcement_sounds)
-				announce_sound = announcement_sounds[sound]
-				if(islist(announce_sound))
-					announce_sound = pick(announce_sound)
-			else if (sound in announcement_sounds_cache)
-				announce_sound = announcement_sounds_cache[sound]
+			var/variants = announcement_sounds + announcement_sounds_cache
+			if(sound in variants)
+				announce_sound = variants[sound]
 				if(islist(announce_sound))
 					announce_sound = pick(announce_sound)
 			else
