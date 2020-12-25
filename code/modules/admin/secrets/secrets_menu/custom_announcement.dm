@@ -56,7 +56,7 @@ var/list/datum/announcement/announcements_list
 			var/list/variants = list() + announcement_sounds
 			if(holder.rights & R_SOUNDS)
 				variants += announcement_sounds_cache
-			var/user_input = input(ui.user, "Choose a sound for announce.", "Sound", A.sound) as anything in variants
+			var/user_input = input(ui.user, "Choose a sound for announce.", "Sound", A.sound) as anything in sortList(variants)
 			A.sound = user_input
 		if("sound_upload")
 			if(!(holder.rights & R_SOUNDS))
