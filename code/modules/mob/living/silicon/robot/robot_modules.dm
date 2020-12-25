@@ -317,9 +317,11 @@
 	. = ..()
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/storage/bag/ore(src)
 	modules += new /obj/item/weapon/pickaxe/drill/borgdrill(src)
+	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/geoscanner(src)
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel

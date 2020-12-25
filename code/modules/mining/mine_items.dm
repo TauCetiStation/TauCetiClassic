@@ -624,9 +624,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/turf/user_turf = get_turf(user)
 	var/datum/gas_mixture/environment = user_turf.return_air()
 	var/pressure = environment.return_pressure()
-	if(pressure > 50)
+	if(pressure > WARNING_LOW_PRESSURE)
 		name = "weakened kinetic force"
 		BB.damage *= PRESSURE_DECREASE
+
+#undef PRESSURE_DECREASE
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
@@ -651,8 +653,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/kinetic/Range()
 	range--
 	if(range <= 0)
-		new /obj/item/effect/kinetic_blast(src.loc)
+		strike_thing(src.loc)
 		qdel(src)
+
 
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	strike_thing(target)
@@ -662,12 +665,16 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
+	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
+		var/list/mods = kinetic_gun.get_modkits()
+		// for(var/obj/item/borg/upgrade/modkit/M in mods)
+		// 	M.projectile_strike_predamage(src, target_turf, target, kinetic_gun)
+		for(var/obj/item/kinetic_upgrade/M in mods)
+			M.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-
-#undef PRESSURE_DECREASE
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
@@ -682,19 +689,25 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/effect/kinetic_blast/atom_init_late()
 	QDEL_IN(src, 4)
 
+/obj/item/effect/kinetic_blast/aoe
+	name = "kinetic explosion"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "explosionfast"
+	pixel_x = -32
+	pixel_y = -32
+
 //Modkits
 /obj/item/kinetic_upgrade
-	// name = "kinetic accelerator modification kit"
-	// desc = "An upgrade for kinetic accelerators."
-	// icon = 'icons/obj/objects.dmi'
-	// icon_state = "modkit"
+	name = "kinetic accelerator modification kit"
+	desc = "An upgrade for kinetic accelerators."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "modkit"
 	name = "upgrade for accelerator"
 	desc = "Speeds up reloading Proto-kinetic accelerator."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "accelerator_speedupgrade"
 	w_class = ITEM_SIZE_SMALL
 	var/maximum_of_type = 1
-	var/cost = 30.0
+	var/denied_type = null
+	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 
 /obj/item/kinetic_upgrade/examine(mob/user)
@@ -702,16 +715,25 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
 
 /obj/item/kinetic_upgrade/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
-		src.install(A, user)
+	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		install(A, user)
 	else
 		..()
 
 /obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
+	if(denied_type)
+		var/number_of_denied = 0
+		for(var/A in KA.get_modkits())
+			var/obj/item/kinetic_upgrade/M = A
+			if(istype(M, denied_type))
+				number_of_denied++
+			if(number_of_denied >= maximum_of_type)
+				. = FALSE
+				break
 	if(KA.get_remaining_mod_capacity() >= cost)
-		user.drop_item(src)
-		src.loc = KA
+		user.drop_from_inventory(src)
+		src.forceMove(KA)
 		to_chat(user, "<span class='notice'>You install the modkit.</span>")
 		playsound(loc, 'sound/items/screwdriver.ogg', VOL_EFFECTS_MASTER)
 		KA.modkits += src
@@ -720,6 +742,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		. = FALSE
 
 /obj/item/kinetic_upgrade/proc/modify_projectile(obj/item/projectile/kinetic/K)
+//this one for things that don't need to trigger before other damage-dealing mods
+/obj/item/kinetic_upgrade/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 
 /obj/item/kinetic_upgrade/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	forceMove(get_turf(KA))
@@ -759,6 +783,53 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	KA.recharge_time += modifier
 	..()
 
+//AoE blasts
+/obj/item/kinetic_upgrade/aoe
+	modifier = 0
+	var/turf_aoe = FALSE
+	var/stats_stolen = FALSE
+
+/obj/item/kinetic_upgrade/aoe/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	. = ..()
+	if(.)
+		for(var/obj/item/kinetic_upgrade/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
+			if(AOE.stats_stolen || AOE == src)
+				continue
+			modifier += AOE.modifier //take its modifiers
+			AOE.modifier = 0
+			turf_aoe = AOE.turf_aoe
+			AOE.turf_aoe = FALSE
+			AOE.stats_stolen = TRUE
+
+/obj/item/kinetic_upgrade/aoe/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	..()
+	modifier = initial(modifier) //get our modifiers back
+	turf_aoe = initial(turf_aoe)
+
+/obj/item/kinetic_upgrade/aoe/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	//new /obj/effect/temp_visual/explosion/fast(target_turf)
+	new /obj/item/effect/kinetic_blast/aoe(target_turf)
+	if(turf_aoe)
+		for(var/turf/simulated/mineral/M in RANGE_TURFS(1, target_turf) - target_turf)
+			M.GetDrilled(K.firer)
+	if(modifier)
+		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
+			var/armor = L.run_armor_check(K.def_zone, "melee")
+			L.apply_damage(K.damage * modifier, K.damage_type, K.def_zone, armor)
+			to_chat(L, "<span class='userdanger'>You're struck by a [K.name]!</span>")
+
+/obj/item/kinetic_upgrade/aoe/turfs
+	name = "mining explosion"
+	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
+	turf_aoe = TRUE
+	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
+
+//I need to fix AoE problems
+/obj/item/kinetic_upgrade/aoe/turfs/andmobs
+	name = "offensive mining explosion"
+	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
+	maximum_of_type = 3
+	modifier = 0.25
 
 /*****************************Survival Pod********************************/
 
