@@ -502,33 +502,113 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
-	var/recharge_time = 20
+	var/recharge_time = 16
 	var/already_improved = FALSE
+	var/overheat = FALSE
+	var/recharge_timerid = null
+	var/mob/holder
+	var/max_mod_capacity = 100
+	var/list/modkits = list()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
+	..()
+	if(max_mod_capacity)
+		to_chat(user, "<span class='notice'><b>[get_remaining_mod_capacity()] %</b> mod capacity remaining.</span>")
+		for(var/A in get_modkits())
+			var/obj/item/kinetic_upgrade/M = A
+			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/reload), recharge_time)
+	attempt_reload()
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	power_supply.give(500)
-	playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
-	update_icon()
+/obj/item/weapon/gun/energy/kinetic_accelerator/equipped(mob/user)
+	. = ..()
+	holder = user
+	if(!power_supply.charge)
+		attempt_reload()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/dropped()
+	. = ..()
+	holder = null
+	if(!QDELING(src) && power_supply.charge)
+		// Put it on a delay because moving item from slot to hand
+		// calls dropped().
+		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/kinetic_upgrade/speed))
-		if(already_improved == FALSE)
-			already_improved = TRUE
-			recharge_time -= 8 //We get 1.2 seconds of reload instead.
-			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
-			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-			qdel(I)
+	if(iscrowbar(I))
+		if(modkits.len)
+			to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
+			I.play_tool_sound(src, 20)
+			for(var/obj/item/kinetic_upgrade/M in modkits)
+				M.uninstall(src)
 		else
-			to_chat(user, "<span class='notice'>Already improved.</span>")
+			to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
+			return
+	if(istype(I, /obj/item/kinetic_upgrade))
+		var/obj/item/kinetic_upgrade/KU = I
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+		KU.install(src, user)
 	else
 		return ..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
+	if(!ismob(loc))
+		empty()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
+	power_supply.give(500)
+	playsound(src, 'sound/weapons/guns/kenetic_reload.ogg', VOL_EFFECTS_MASTER)
+	update_icon()
+	overheat = FALSE
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
+	if(power_supply)
+		power_supply.use(power_supply.charge)
+	update_icon()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload(overheat_time)
+	if(!power_supply)
+		return
+	if(overheat)
+		return
+	if(!overheat_time)
+		overheat_time = recharge_time
+	overheat = TRUE
+
+	var/carried = 0
+	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
+		carried++
+
+	carried = max(carried, 1)
+
+	deltimer(recharge_timerid)
+	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/get_remaining_mod_capacity()
+	var/current_capacity_used = 0
+	for(var/A in get_modkits())
+		var/obj/item/kinetic_upgrade/KU = A
+		current_capacity_used += KU.cost
+	return max_mod_capacity - current_capacity_used
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/get_modkits()
+	. = list()
+	for(var/A in modkits)
+		. += A
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/modify_projectile(obj/item/projectile/kinetic/K)
+	K.kinetic_gun = src //do something special on-hit, easy!
+	for(var/A in get_modkits())
+		var/obj/item/kinetic_upgrade/M = A
+		M.modify_projectile(K)
+
+//Projectiles
+#define PRESSURE_DECREASE 0.25
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -536,25 +616,37 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	e_cost = 500
 	fire_sound = 'sound/weapons/guns/Kenetic_accel.ogg'
 
+/obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet)
+	..()
+	if(loc && istype(loc, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
+		KA.modify_projectile(BB)
+	var/turf/user_turf = get_turf(user)
+	var/datum/gas_mixture/environment = user_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure > 50)
+		name = "weakened kinetic force"
+		BB.damage *= PRESSURE_DECREASE
+
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 10
+	damage = 40
 	damage_type = BRUTE
 	flag = "bomb"
 	var/range = 3
 	var/power = 4
+	var/obj/item/weapon/gun/energy/kinetic_accelerator/kinetic_gun
+
+/obj/item/projectile/kinetic/Destroy()
+	kinetic_gun = null
+	return ..()
 
 /obj/item/projectile/kinetic/atom_init()
 	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return INITIALIZE_HINT_QDEL
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure < 50)
-		name = "full strength kinetic force"
-		damage *= 4
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -563,12 +655,19 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	strike_thing(target)
 	. = ..()
+
+/obj/item/projectile/kinetic/proc/strike_thing(atom/target)
 	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		target_turf = get_turf(src)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
+
+#undef PRESSURE_DECREASE
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
@@ -583,11 +682,83 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/effect/kinetic_blast/atom_init_late()
 	QDEL_IN(src, 4)
 
-/obj/item/kinetic_upgrade/speed
+//Modkits
+/obj/item/kinetic_upgrade
+	// name = "kinetic accelerator modification kit"
+	// desc = "An upgrade for kinetic accelerators."
+	// icon = 'icons/obj/objects.dmi'
+	// icon_state = "modkit"
 	name = "upgrade for accelerator"
 	desc = "Speeds up reloading Proto-kinetic accelerator."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "accelerator_speedupgrade"
+	w_class = ITEM_SIZE_SMALL
+	var/maximum_of_type = 1
+	var/cost = 30.0
+	var/modifier = 1 //For use in any mod kit that has numerical modifiers
+
+/obj/item/kinetic_upgrade/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
+
+/obj/item/kinetic_upgrade/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
+		src.install(A, user)
+	else
+		..()
+
+/obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	. = TRUE
+	if(KA.get_remaining_mod_capacity() >= cost)
+		user.drop_item(src)
+		src.loc = KA
+		to_chat(user, "<span class='notice'>You install the modkit.</span>")
+		playsound(loc, 'sound/items/screwdriver.ogg', VOL_EFFECTS_MASTER)
+		KA.modkits += src
+	else
+		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
+		. = FALSE
+
+/obj/item/kinetic_upgrade/proc/modify_projectile(obj/item/projectile/kinetic/K)
+
+/obj/item/kinetic_upgrade/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	forceMove(get_turf(KA))
+	KA.modkits -= src
+
+//Range
+/obj/item/kinetic_upgrade/range
+	name = "range increase"
+	desc = "Increases the range of a kinetic accelerator when installed."
+	modifier = 1
+	cost = 25
+
+/obj/item/kinetic_upgrade/range/modify_projectile(obj/item/projectile/kinetic/K)
+	K.range += modifier
+
+//Damage
+/obj/item/kinetic_upgrade/damage
+	name = "damage increase"
+	desc = "Increases the damage of kinetic accelerator when installed."
+	modifier = 10
+
+/obj/item/kinetic_upgrade/damage/modify_projectile(obj/item/projectile/kinetic/K)
+	K.damage += modifier
+
+//Cooldown
+/obj/item/kinetic_upgrade/cooldown
+	name = "cooldown decrease"
+	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
+	modifier = 3
+
+/obj/item/kinetic_upgrade/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	. = ..()
+	if(.)
+		KA.recharge_time -= modifier
+
+/obj/item/kinetic_upgrade/cooldown/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.recharge_time += modifier
+	..()
+
 
 /*****************************Survival Pod********************************/
 
