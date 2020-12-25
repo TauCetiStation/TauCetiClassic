@@ -46,7 +46,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	goonchat.send(owner)
 	owner << browse('code/modules/goonchat/browserassets/html/browserOutput.html', "window=browseroutput")
 
-/datum/chatOutput/Topic(var/href, var/list/href_list)
+/datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
 		return 1
 
@@ -107,7 +107,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	ehjax_send(data = emojiJson)
 
 
-/datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
+/datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
@@ -177,7 +177,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(var/icon/icon, var/iconKey = "misc")
+/proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
@@ -185,7 +185,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(var/obj, var/use_class = 1)
+/proc/bicon(obj, use_class = 1)
 	var/class = use_class ? "class='icon misc'" : null
 	if (!obj)
 		return

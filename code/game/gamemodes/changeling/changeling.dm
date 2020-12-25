@@ -291,7 +291,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
 
-/datum/changeling/New(var/gender=FEMALE)
+/datum/changeling/New(gender=FEMALE)
 	..()
 	var/honorific
 	if(gender == FEMALE)	honorific = "Ms."

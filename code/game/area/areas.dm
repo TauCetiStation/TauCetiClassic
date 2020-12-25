@@ -346,7 +346,7 @@ var/list/ghostteleportlocs = list()
 	used_light = 0
 	used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
+/area/proc/use_power(amount, chan)
 	switch(chan)
 		if(STATIC_EQUIP)
 			used_equip += amount

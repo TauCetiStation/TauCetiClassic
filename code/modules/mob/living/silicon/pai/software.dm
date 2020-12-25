@@ -664,7 +664,7 @@
 			"}
 	return dat
 
-/mob/living/silicon/pai/proc/CheckDNA(var/mob/M, var/mob/living/silicon/pai/P)
+/mob/living/silicon/pai/proc/CheckDNA(mob/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		P.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>", blind_message = "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
