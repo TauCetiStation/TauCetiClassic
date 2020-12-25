@@ -278,6 +278,46 @@ datum/design/space_suit_helmet_recycler
 
 //------------SUPPORT------------
 
+/datum/design/modkit_damage
+	name = "Kinetic accelerator damage mod"
+	desc = "A device which allows kinetic accelerators to deal more damage."
+	id = "modkit_damage"
+	build_type = MINEFAB | MECHFAB
+	build_path = /obj/item/kinetic_upgrade/damage
+	materials = list(MAT_METAL=2000,MAT_GLASS=1500,MAT_GOLD=1500,MAT_URANIUM=1000)
+	construction_time = 60
+	category = list("Support", "Cyborg Upgrade Modules")
+	
+/datum/design/modkit_cooldown
+	name = "Kinetic accelerator cooldown mod"
+	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
+	id = "modkit_cooldown"
+	build_type = MINEFAB | MECHFAB
+	build_path = /obj/item/kinetic_upgrade/cooldown
+	materials = list(MAT_METAL=2000,MAT_GLASS=1500,MAT_GOLD=1500,MAT_URANIUM=1000)
+	construction_time = 60
+	category = list("Support", "Cyborg Upgrade Modules")
+
+/datum/design/modkit_range
+	name = "Kinetic accelerator range mod"
+	desc = "A device which allows kinetic accelerators to fire at a further range."
+	id = "modkit_range"
+	build_type = MINEFAB | MECHFAB
+	build_path = /obj/item/kinetic_upgrade/range
+	materials = list(MAT_METAL=2000,MAT_GLASS=1500,MAT_GOLD=1500,MAT_URANIUM=1000)
+	construction_time = 60
+	category = list("Support", "Cyborg Upgrade Modules")
+
+/datum/design/modkit_aoe
+	name = "Kinetic accelerator mining AoE mod"
+	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
+	id = "modkit_aoe"
+	build_type = MINEFAB | MECHFAB
+	build_path = /obj/item/kinetic_upgrade/aoe/turfs
+	materials = list(MAT_METAL=8000,MAT_GLASS=1500,MAT_SILVER=2000,MAT_GOLD=2000,MAT_DIAMOND=2000)
+	construction_time = 100
+	category = list("Support", "Cyborg Upgrade Modules")
+
 /datum/design/mine_radio
 	name = "The supply radio headset"
 	id = "mine_mine_radio"

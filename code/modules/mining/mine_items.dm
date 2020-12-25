@@ -659,7 +659,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	strike_thing(target)
-	. = ..()
+	..()
 
 /obj/item/projectile/kinetic/proc/strike_thing(atom/target)
 	var/turf/target_turf = get_turf(target)
@@ -721,7 +721,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		..()
 
 /obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	. = TRUE
 	if(denied_type)
 		var/number_of_denied = 0
 		for(var/A in KA.get_modkits())
@@ -729,17 +728,17 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			if(istype(M, denied_type))
 				number_of_denied++
 			if(number_of_denied >= maximum_of_type)
-				. = FALSE
-				break
+				to_chat(user, "<span class='notice'>You can only insert [maximum_of_type] of the [M] to [KA].</span>")
+				return FALSE
 	if(KA.get_remaining_mod_capacity() >= cost)
 		user.drop_from_inventory(src)
 		src.forceMove(KA)
 		to_chat(user, "<span class='notice'>You install the modkit.</span>")
 		playsound(loc, 'sound/items/screwdriver.ogg', VOL_EFFECTS_MASTER)
 		KA.modkits += src
-	else
-		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
-		. = FALSE
+		return TRUE
+	to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
+	return FALSE
 
 /obj/item/kinetic_upgrade/proc/modify_projectile(obj/item/projectile/kinetic/K)
 //this one for things that don't need to trigger before other damage-dealing mods
@@ -807,7 +806,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	turf_aoe = initial(turf_aoe)
 
 /obj/item/kinetic_upgrade/aoe/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	//new /obj/effect/temp_visual/explosion/fast(target_turf)
 	new /obj/item/effect/kinetic_blast/aoe(target_turf)
 	if(turf_aoe)
 		for(var/turf/simulated/mineral/M in RANGE_TURFS(1, target_turf) - target_turf)
@@ -822,14 +820,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
 	turf_aoe = TRUE
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
-
-//I need to fix AoE problems
-/obj/item/kinetic_upgrade/aoe/turfs/andmobs
-	name = "offensive mining explosion"
-	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
-	maximum_of_type = 3
-	modifier = 0.25
+	denied_type = /obj/item/kinetic_upgrade/aoe/turfs
 
 /*****************************Survival Pod********************************/
 

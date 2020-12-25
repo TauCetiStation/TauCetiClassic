@@ -501,7 +501,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("ore_redemption", "mining_equipment_vendor", "mining_fabricator", "drill", "excavation_drill", "scaner_imp", "mining_hud", "pick_diamond", "space_suit_science", "space_suit_helmet_science", "space_suit_recycler", "space_suit_helmet_recycler", "space_suit_mining", "space_suit_helmet_mining", "space_suit_engineering", "space_suit_helmet_engineering", "space_suit_atmospherics", "space_suit_helmet_atmospherics", "stimpack_imp")
+	unlocks_designs = list("ore_redemption", "mining_equipment_vendor", "mining_fabricator", "drill", "excavation_drill", "scaner_imp", "mining_hud", "pick_diamond", "space_suit_science", "space_suit_helmet_science", "space_suit_recycler", "space_suit_helmet_recycler", "space_suit_mining", "space_suit_helmet_mining", "space_suit_engineering", "space_suit_helmet_engineering", "space_suit_atmospherics", "space_suit_helmet_atmospherics", "stimpack_imp", "modkit_damage", "modkit_cooldown", "modkit_range")
 
 /datum/technology/advanced_mining
 	name = "Advanced Mining"
@@ -517,7 +517,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv")
+	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv", "modkit_aoe")
 
 /datum/technology/basic_handheld
 	name = "Basic Handheld"
