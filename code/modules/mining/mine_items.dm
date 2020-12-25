@@ -733,7 +733,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/kinetic_upgrade/proc/modify_projectile(obj/item/projectile/kinetic/K)
 //this one for things that don't need to trigger before other damage-dealing mods
-/obj/item/kinetic_upgrade/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 
 /obj/item/kinetic_upgrade/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	forceMove(get_turf(KA))
