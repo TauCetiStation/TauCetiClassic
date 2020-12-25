@@ -17732,20 +17732,6 @@
 "aFg" = (
 /turf/simulated/wall,
 /area/station/cargo/storage)
-"aFh" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf,
-/area/station/maintenance/science)
 "aFi" = (
 /obj/machinery/light{
 	dir = 8
@@ -49423,8 +49409,7 @@
 /area/station/maintenance/atmos)
 "bQb" = (
 /obj/machinery/door/window/eastleft{
-	dir = 8;
-	name = "interior door"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -122284,7 +122269,7 @@ cbD
 aCM
 aCQ
 aJe
-aFh
+aFa
 bGX
 aIi
 bSz
