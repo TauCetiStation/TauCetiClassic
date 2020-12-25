@@ -506,7 +506,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/already_improved = FALSE
 	var/overheat = FALSE
 	var/recharge_timerid = null
-	var/mob/holder
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 
@@ -524,13 +523,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/equipped(mob/user)
 	. = ..()
-	holder = user
 	if(!power_supply.charge)
 		attempt_reload()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/dropped()
 	. = ..()
-	holder = null
 	if(!QDELING(src) && power_supply.charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
@@ -579,13 +576,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(!overheat_time)
 		overheat_time = recharge_time
 	overheat = TRUE
-
 	var/carried = 0
 	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
 		carried++
-
 	carried = max(carried, 1)
-
 	deltimer(recharge_timerid)
 	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
 
@@ -656,7 +650,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		strike_thing(src.loc)
 		qdel(src)
 
-
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	strike_thing(target)
 	..()
@@ -667,8 +660,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		target_turf = get_turf(src)
 	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
 		var/list/mods = kinetic_gun.get_modkits()
-		// for(var/obj/item/borg/upgrade/modkit/M in mods)
-		// 	M.projectile_strike_predamage(src, target_turf, target, kinetic_gun)
 		for(var/obj/item/kinetic_upgrade/M in mods)
 			M.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(istype(target_turf, /turf/simulated/mineral))
