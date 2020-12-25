@@ -685,22 +685,23 @@
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
-	info = {"<b>Dissection for Dummies</b><br>
+	info = {"<b>Препарирование для Чайников!</b><br>
 <br>
- 1.Acquire fresh specimen.<br>
- 2.Put the specimen on operating table.<br>
- 3.Apply surgical drapes preparing for dissection.<br>
- 4.Apply scalpel to specimen torso.<br>
- 5.Stop the bleeders and retract skin<br>
- 6.Make with a circular saw in the chest of subject hole and secure it with retractor.<br>
- 7.Make some space with the drill. Don't worry, it's not so bad for subject as it sounds.<br>
- 8.Insert replacement gland (Retrieve one from gland storage).<br>
- 8.<b>OPTIONAL</b> Close hole in chest of subject, lubricate it with ectoplasm and cauterize the wound.<br>
- 9.Consider dressing the specimen back to not disturb the habitat.<br>
- 10.Put the specimen in the experiment machinery.<br>
- 11.Choose one of the machine options and follow displayed instructions.<br>
+ 1.Добудьте свежую особь.<br>
+ 2.Положите особь на операционный стол.<br>
+ 3.Включите хирургические фиксаторы стола и выполните приготовления к операции.<br>
+ 4.Сделайте надрез скальпелем в области груди особи.<br>
+ 5.Остановите кровотечение с помощью щипцов.<br>
+ 6.Раскройте надрез хирургическим зажимом.<br>
+ 7.Вскройте грудную клетку пилой и зафиксируйте с помощью зажима.<br>
+ 8.Сделайте небольшое углубление во внутренностях особи дрелью. Это не так плохо для субъекта, как звучит.<br>
+ 9.Поместите внутрь разреза гланду. (Их можно получить в раздатчике гланд.)<br>
+ 10.<b>ОПЦИОНАЛЬНО.</b> Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
+ 11.Оденьте особь, чтобы не потревожить среду обитания.<br>
+ 12.Поместите субъект в устройство для экспериментов.<br>
+ 13.Выберите одну из настроек устройства и следуйте показанным там инструкциям.<br>
 <br>
-Congratulations! You are now trained for xenobiology research!"}
+Поздравляем! Теперь вы почти настоящий ксенобиолог!"}
 
 /obj/item/weapon/paper/abductor/atom_init()
 	. = ..()
@@ -715,16 +716,12 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "abductor_hypo"
 
-/obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user, proximity, params)
-	if(!loaded)
-		return
-	if(isliving(target))
-		var/mob/living/M = target
-		M.revive()
-		loaded = 0
-		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-		icon_state = "abductor_empty"
+/obj/item/weapon/lazarus_injector/alien/revive(mob/living/target, mob/living/user)
+	target.revive()
+	loaded = FALSE
+	user.visible_message("<span class='notice'>[user] injects [target] with [src], fully heal it.</span>")
+	playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien
 	icon = 'icons/obj/abductor.dmi'

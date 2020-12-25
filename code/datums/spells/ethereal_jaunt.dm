@@ -1,8 +1,8 @@
 #define FLICK_OVERLAY_JAUNT_DURATION 12
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
-	name = "Ethereal Jaunt"
-	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+	name = "Выход из Тела"
+	desc = "Делает вас прозрачным и невидимым, позволяя летать и проходить сквозь стены."
 
 	school = "transmutation"
 	charge_max = 300
