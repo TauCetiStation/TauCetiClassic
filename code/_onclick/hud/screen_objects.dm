@@ -685,6 +685,47 @@
 				usr.next_move = world.time+6
 	return 1
 
+/obj/item/var/outline_filter //the outline filter on hover
+
+/obj/screen/inventory/MouseEntered()
+	add_stored_outline()
+
+/obj/screen/inventory/MouseExited()
+	remove_stored_outline()
+
+/obj/item/MouseEntered()
+	apply_outline()
+
+/obj/item/MouseExited()
+	remove_outline()
+
+/obj/screen/inventory/proc/add_stored_outline()
+	if(slot_id)
+		var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
+		if(inv_item)
+			if(usr.incapacitated())
+				inv_item.apply_outline(COLOR_RED_GRAY)
+			else
+				inv_item.apply_outline()
+
+/obj/screen/inventory/proc/remove_stored_outline()
+	if(slot_id)
+		var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
+		if(inv_item)
+			inv_item.remove_outline()
+
+/obj/item/proc/apply_outline(color = COLOR_BLUE_GRAY)
+	if(outline_filter)
+		return
+		//filters -= outline_filter
+	outline_filter = filter(type = "outline", size = 1, color = color)
+	filters += outline_filter
+
+/obj/item/proc/remove_outline()
+	if(outline_filter)
+		filters -= outline_filter
+		outline_filter = null
+
 /obj/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen1_Midnight.dmi'
