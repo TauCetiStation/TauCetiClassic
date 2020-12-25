@@ -714,12 +714,11 @@
 		if(inv_item)
 			inv_item.remove_outline()
 
-/obj/item/proc/apply_outline(color = COLOR_BLUE_GRAY)
+/obj/item/proc/apply_outline(color = COLOR_WHITE)
 	if(outline_filter)
-		return
-		//filters -= outline_filter
+		filters -= outline_filter
 	outline_filter = filter(type = "outline", size = 1, color = color)
-	filters += outline_filter
+	filters.Insert(1, outline_filter)
 
 /obj/item/proc/remove_outline()
 	if(outline_filter)
