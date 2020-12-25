@@ -487,7 +487,7 @@ window "mainwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Space Station 13"
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\ss13_64_xmas.png'
 		macro = "macro"
 		menu = "menu"
 	elem "asset_cache_browser"
