@@ -50,19 +50,19 @@
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
-// ROBOTICIST OUTFIT
-/datum/outfit/job/roboticist
-	name = OUTFIT_JOB_NAME("Roboticist")
+// ROBOTICIST OUTFIT // Moved to scientist job and roboticist lockers
+// /datum/outfit/job/roboticist
+// 	name = OUTFIT_JOB_NAME("Roboticist")
 
-	uniform = /obj/item/clothing/under/rank/roboticist
-	uniform_f = /obj/item/clothing/under/rank/roboticist_fem
-	suit = /obj/item/clothing/suit/storage/labcoat
-	shoes = /obj/item/clothing/shoes/black
+// 	uniform = /obj/item/clothing/under/rank/roboticist
+// 	uniform_f = /obj/item/clothing/under/rank/roboticist_fem
+// 	suit = /obj/item/clothing/suit/storage/labcoat
+// 	shoes = /obj/item/clothing/shoes/black
 
-	belt = /obj/item/device/pda/roboticist
-	l_ear = /obj/item/device/radio/headset/headset_sci
+// 	belt = /obj/item/device/pda/roboticist
+// 	l_ear = /obj/item/device/radio/headset/headset_sci
 
-	back_style = BACKPACK_STYLE_RESEARCH
+// 	back_style = BACKPACK_STYLE_RESEARCH
 
 // RESEARCH ASSISTANT OUTFIT
 /datum/outfit/job/research_assistant

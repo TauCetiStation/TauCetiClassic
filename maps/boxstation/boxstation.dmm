@@ -36939,7 +36939,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start{
-	name = "Roboticist"
+	name = "Scientist"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -45538,7 +45538,7 @@
 "bGH" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/landmark/start{
-	name = "Roboticist"
+	name = "Scientist"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -49423,8 +49423,7 @@
 /area/station/maintenance/atmos)
 "bQb" = (
 /obj/machinery/door/window/eastleft{
-	dir = 8;
-	name = "interior door"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"

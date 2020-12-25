@@ -6,7 +6,7 @@
 
 	var/list/roboticist_roles = list(
 		"Research Director",
-		"Roboticist"
+		"Scientist"
 	)
 
 	var/list/brains_to_enslave = list()

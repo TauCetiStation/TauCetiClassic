@@ -237,7 +237,11 @@
 
 /obj/structure/closet/wardrobe/robotics_black/PopulateContents()
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/under/rank/roboticist(src)
+		new /obj/item/clothing/under/rank/roboticist(src)	
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/roboticist_fem(src)
+	for (var/i in 1 to 2)
+		new /obj/item/device/radio/headset/headset_rob(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/suit/storage/labcoat(src)
 	for (var/i in 1 to 2)

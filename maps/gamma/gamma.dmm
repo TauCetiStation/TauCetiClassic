@@ -63519,7 +63519,7 @@
 	pixel_y = 32
 	},
 /obj/effect/landmark/start{
-	name = "Roboticist"
+	name = "Scientist"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -64560,7 +64560,7 @@
 "tBj" = (
 /obj/structure/stool,
 /obj/effect/landmark/start{
-	name = "Roboticist"
+	name = "Scientist"
 	},
 /turf/simulated/floor{
 	icon_state = "white"

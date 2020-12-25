@@ -812,7 +812,7 @@ var/global/list/all_objectives = list()
 	return
 
 /datum/objective/heist/kidnap/choose_target()
-	var/list/roles = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
+	var/list/roles = list("Scientist" , "Medical Doctor" , "Chemist" , "Station Engineer")
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 

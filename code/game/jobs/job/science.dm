@@ -34,13 +34,13 @@
 	flag = SCIENTIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
-	alt_titles = list("Phoron Researcher")
+	access = list(access_tox, access_tox_storage, access_research, access_xenoarch, access_robotics, access_morgue)
+	alt_titles = list("Phoron Researcher", "Roboticist")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
@@ -86,21 +86,21 @@
 	outfit = /datum/outfit/job/xenobiologist
 
 
-/datum/job/roboticist
-	title = "Roboticist"
-	flag = ROBOTICIST
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "research director"
-	selection_color = "#ffeeff"
-	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
-	salary = 180
-	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
-	minimal_player_ingame_minutes = 1560
-	outfit = /datum/outfit/job/roboticist
+// /datum/job/roboticist
+// 	title = "Roboticist"
+// 	flag = ROBOTICIST
+// 	department_flag = MEDSCI
+// 	faction = "Station"
+// 	total_positions = 2
+// 	spawn_positions = 2
+// 	supervisors = "research director"
+// 	selection_color = "#ffeeff"
+// 	idtype = /obj/item/weapon/card/id/sci
+// 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+// 	salary = 180
+// 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
+// 	minimal_player_ingame_minutes = 1560
+// 	outfit = /datum/outfit/job/roboticist
 
 
 /datum/job/research_assistant
