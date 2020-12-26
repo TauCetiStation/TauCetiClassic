@@ -41,12 +41,13 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 	name = "wormhole"
 	desc = "It looks highly unstable; It could close at any moment."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
+	icon_state = "bluespace_wormhole_enter"
 	failchance = 0
 
 /obj/effect/portal/wormhole/atom_init(mapload, turf/target, creator = null, lifespan = 0)
 	. = ..()
 	all_wormholes += src
+	icon_state = pick("bluespace_wormhole_enter", "bluespace_wormhole_exit")
 
 /obj/effect/portal/wormhole/Destroy()
 	. = ..()
