@@ -753,21 +753,20 @@
 	if(!inv_item)
 		return
 	inv_item.remove_outline()
-
+/client/var/image/outlined_item
 /obj/item/proc/apply_outline(color)
 	if(!usr.client.prefs.outline_enabled)
 		return
 	if(!color)
 		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(outline_filter)
-		filters -= outline_filter
 	outline_filter = filter(type = "outline", size = 1, color = color)
-	filters += outline_filter
+	usr.client.outlined_item = image(icon, src, icon_state)
+	usr.client.outlined_item.filters += outline_filter
+	usr.client.images += usr.client.outlined_item
+
 
 /obj/item/proc/remove_outline()
-	if(outline_filter)
-		filters -= outline_filter
-		outline_filter = null
+	usr.client.images -= usr.client.outlined_item
 
 /obj/screen/inventory/craft
 	name = "crafting menu"
