@@ -1,5 +1,5 @@
 /datum/reagent/consumable
-	name = "Consumable"
+	name = "Употребляемое"
 	id = "consumable"
 	custom_metabolism = FOOD_METABOLISM
 	nutriment_factor = 1
@@ -29,14 +29,14 @@
 	return TRUE
 
 /datum/reagent/nutriment
-	name = "Nutriment"
+	name = "Питательное вещество"
 	id = "nutriment"
-	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
+	description = "Все витамины, минералы и углеводы, необходимые организму в чистом виде."
 	reagent_state = SOLID
 	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
 	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
-	taste_message = "bland food"
+	taste_message = "мягкой еды"
 
 /datum/reagent/nutriment/on_general_digest(mob/living/M)
 	..()
@@ -52,11 +52,11 @@
 	return TRUE
 
 /datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
-	name = "Protein"
+	name = "Протеин"
 	id = "protein"
-	description = "Various essential proteins and fats commonly found in animal flesh and blood."
+	description = "Различные незаменимые белки и жиры, обычно содержащиеся в мясе и крови животных."
 	diet_flags = DIET_MEAT
-	taste_message = "meat"
+	taste_message = "мяса"
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
 	..()
@@ -64,25 +64,25 @@
 	return FALSE
 
 /datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
-	name = "Plant-matter"
+	name = "Растительная масса"
 	id = "plantmatter"
-	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
+	description = "Богатые витаминами волокна и натуральные сахара, которые обычно встречаются в свежих продуктах."
 	diet_flags = DIET_PLANT
-	taste_message = "plant matter"
+	taste_message = "растений"
 
 /datum/reagent/nutriment/dairy // Milk-based biomatter.
-	name = "dairy"
+	name = "Молокопродукт"
 	id = "dairy"
-	description = "A tasty substance that comes out of cows who eat lotsa grass"
+	description = "Вкусное вещество, которое получается из коров, которые едят много травы."
 	diet_flags = DIET_DAIRY
-	taste_message = "dairy"
+	taste_message = "молока"
 
 /datum/reagent/consumable/sprinkles
-	name = "Sprinkles"
+	name = "Присыпка"
 	id = "sprinkles"
-	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+	description = "Разноцветные кусочки сахара, которые обычно можно найти на пончиках. Любят копы."
 	color = "#ff00ff" // rgb: 255, 0, 255
-	taste_message = "sweetness"
+	taste_message = "сладости"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
@@ -90,9 +90,9 @@
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/syndicream
-	name = "Cream filling"
+	name = "Кремовая начинка"
 	id = "syndicream"
-	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
+	description = "Вкусная кремовая начинка загадочного происхождения. Вкус криминально хороший."
 	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
@@ -106,42 +106,42 @@
 	return FALSE
 
 /datum/reagent/consumable/soysauce
-	name = "Soysauce"
+	name = "Соевый соус"
 	id = "soysauce"
-	description = "A salty sauce made from the soy plant."
+	description = "Соленый соус из соевого растения."
 	reagent_state = LIQUID
 	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
-	taste_message = "salt"
+	taste_message = "соли"
 	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/ketchup
-	name = "Ketchup"
+	name = "Кетчуп"
 	id = "ketchup"
-	description = "Ketchup, catsup, whatever. It's tomato paste."
+	description = "Кетчуп, кепчук, не важно. Это томатная паста."
 	reagent_state = LIQUID
 	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "ketchup"
+	taste_message = "кетчупа"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/flour
-	name = "Flour"
+	name = "Мука"
 	id = "flour"
-	description = "This is what you rub all over yourself to pretend to be a ghost."
+	description = "Это то, чем вы натираете себя, чтобы притвориться призраком."
 	reagent_state = LIQUID
 	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
-	taste_message = "flour"
+	taste_message = "муки"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/capsaicin
-	name = "Capsaicin Oil"
+	name = "Капсаициновое масло"
 	id = "capsaicin"
-	description = "This is what makes chilis hot."
+	description = "Это то, что делает перец жгучим."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 179, 16, 8
-	taste_message = "<span class='warning'>HOTNESS</span>"
+	taste_message = "<span class='warning'>ЖГУЧЕСТИ</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
@@ -165,12 +165,12 @@
 	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
-	name = "Condensed Capsaicin"
+	name = "Конденсированный капсаицин"
 	id = "condensedcapsaicin"
-	description = "A chemical agent used for self-defense and in police work."
+	description = "Химическое вещество, используемое для самообороны и в полиции."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 179, 16, 8
-	taste_message = "<span class='userdanger'>PURE FIRE</span>"
+	taste_message = "<span class='userdanger'>ЧИСТОГО ОГНЯ</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
@@ -203,23 +203,23 @@
 				if (!safe_thing)
 					safe_thing = victim.glasses
 			if (eyes_covered && mouth_covered)
-				to_chat(victim, "<span class='userdanger'>Your [safe_thing] protects you from the pepperspray!</span>")
+				to_chat(victim, "<span class='userdanger'></span>")
 				return
 			else if (mouth_covered)	// Reduced effects if partially protected
-				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
+				to_chat(victim, "<span class='userdanger'>Ваш [safe_thing] частично защищает вас от перцового аэрозоля!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
-				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
+				to_chat(victim, "<span class='userdanger'>Ваш [safe_thing] защищает ваши глаза от перцового аэрозоля!</span>")
 				victim.emote("scream")
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
 				victim.emote("scream")
-				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
+				to_chat(victim, "<span class='userdanger'>Перцовый аэрозоль попадает вам прямо в глаза!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Stun(5)
@@ -231,12 +231,12 @@
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 
 /datum/reagent/consumable/frostoil
-	name = "Frost Oil"
+	name = "Морозное масло"
 	id = "frostoil"
-	description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
+	description = "Специальное масло, которое заметно охлаждает тело. Добывается из ледяного перца."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
-	taste_message = "<font color='lightblue'>cold</font>"
+	taste_message = "<font color='lightblue'>холода</font>"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
@@ -255,52 +255,37 @@
 		M.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/sodiumchloride
-	name = "Table Salt"
+	name = "Кухонная соль"
 	id = "sodiumchloride"
-	description = "A salt made of sodium chloride. Commonly used to season food."
+	description = "Соль из хлорида натрия. Обычно используется для приправки еды."
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "salt"
+	taste_message = "соли"
 
 /datum/reagent/consumable/blackpepper
-	name = "Black Pepper"
+	name = "Чёрный перец"
 	id = "blackpepper"
-	description = "A powder ground from peppercorns. *AAAACHOOO*"
+	description = "Перемолотые горошины перца. *АААПЧХИИИ*"
 	reagent_state = SOLID
 	// no color (ie, black)
-	taste_message = "pepper"
+	taste_message = "перца"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/coco
-	name = "Coco Powder"
+	name = "Какао-порошок"
 	id = "coco"
-	description = "A fatty, bitter paste made from coco beans."
+	description = "Жирная горькая паста из какао-бобов."
 	reagent_state = SOLID
 	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "cocoa"
+	taste_message = "какао"
 	diet_flags = DIET_PLANT
-
-/datum/reagent/consumable/hot_coco
-	name = "Hot Chocolate"
-	id = "hot_coco"
-	description = "Made with love! And cocoa beans."
-	reagent_state = LIQUID
-	nutriment_factor = 4
-	color = "#403010" // rgb: 64, 48, 16
-	taste_message = "chocolate"
-	diet_flags = DIET_PLANT
-
-/datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
-	..()
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/psilocybin
-	name = "Psilocybin"
+	name = "Псилоцибин"
 	id = "psilocybin"
-	description = "A strong psycotropic derived from certain species of mushroom."
+	description = "Сильный психотроп, полученный из определенных видов грибов."
 	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
@@ -337,13 +322,13 @@
 	data["ticks"]++
 
 /datum/reagent/consumable/cornoil
-	name = "Corn Oil"
+	name = "Кукурузное масло"
 	id = "cornoil"
-	description = "An oil derived from various types of corn."
+	description = "Масло, полученное из различных видов кукурузы."
 	reagent_state = LIQUID
 	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "oil"
+	taste_message = "масла"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
@@ -361,31 +346,31 @@
 		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
-	name = "Universal Enzyme"
+	name = "Универсальный фермент"
 	id = "enzyme"
-	description = "A universal enzyme used in the preperation of certain chemicals and foods."
+	description = "Универсальный фермент, используемый при приготовлении некоторых химикатов и продуктов питания."
 	reagent_state = LIQUID
 	color = "#365e30" // rgb: 54, 94, 48
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/consumable/dry_ramen
-	name = "Dry Ramen"
+	name = "Сухая лапша"
 	id = "dry_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
+	description = "Пища космической эры, с 25 августа 1958 года. Содержит сушеную лапшу, пару крошечных овощей и химические вещества со вкусом курицы, выделяет тепло при контакте с водой."
 	reagent_state = SOLID
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "dry ramen coated with what might just be your tears"
+	taste_message = "сухой лапши покрытой чем-то вроде ваших слез"
 
 /datum/reagent/consumable/hot_ramen
-	name = "Hot Ramen"
+	name = "Горячая лапша"
 	id = "hot_ramen"
-	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+	description = "Лапша отварная, ароматизаторы искусственные, как в школьные времена."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "ramen"
+	taste_message = "лапши"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
@@ -393,13 +378,13 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
-	name = "Spicy Ramen"
+	name = "Острая лапша"
 	id = "hell_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
+	description = "Пища космической эры, с 25 августа 1958 года. Содержит сушеную лапшу, пару крошечных овощей и острые химические вещества, выделяет тепло при контакте с водой."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "dry ramen with SPICY flavor"
+	taste_message = "сухой лапши покрытой чем-то ОСТРЫМ"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
@@ -407,13 +392,13 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hot_hell_ramen
-	name = "Hot Spicy Ramen"
+	name = "Горячая острая лапша"
 	id = "hot_hell_ramen"
-	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+	description = "Лапша отварная, ароматизаторы ЖГУЧИЕ, как в школьные времена."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "SPICY ramen"
+	taste_message = "ЖГУЧЕЙ лапши"
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
@@ -421,61 +406,61 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/rice
-	name = "Rice"
+	name = "Рис"
 	id = "rice"
-	description = "Enjoy the great taste of nothing."
+	description = "Наслаждайтесь прекрасным вкусом ничего."
 	reagent_state = SOLID
 	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
-	taste_message = "rice"
+	taste_message = "риса"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cherryjelly
-	name = "Cherry Jelly"
+	name = "Вишнёвый джем"
 	id = "cherryjelly"
-	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
+	description = "Абсолютно лучший. Только для намазывания на продукты с превосходной боковой симметрией."
 	reagent_state = LIQUID
 	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
-	taste_message = "cherry jelly"
+	taste_message = "вишнёвого джема"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/egg
-	name = "Egg"
+	name = "Яйцо"
 	id = "egg"
-	description = "A runny and viscous mixture of clear and yellow fluids."
+	description = "Жидкая и вязкая смесь прозрачных и желтых жидкостей."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#f0c814"
-	taste_message = "eggs"
+	taste_message = "яиц"
 	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/cheese
-	name = "Cheese"
+	name = "Сыр"
 	id = "cheese"
-	description = "Some cheese. Pour it out to make it solid."
+	description = "Некоторый сыр."
 	reagent_state = SOLID
 	nutriment_factor = 4
 	color = "#ffff00"
-	taste_message = "cheese"
+	taste_message = "сыра"
 	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/beans
-	name = "Refried beans"
+	name = "Пережареные бобы"
 	id = "beans"
-	description = "A dish made of mashed beans cooked with lard."
+	description = "Блюдо из протертой фасоли, приготовленной на сале."
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#684435"
-	taste_message = "burritos"
+	taste_message = "буррито"
 	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/bread
-	name = "Bread"
+	name = "Хлеб"
 	id = "bread"
-	description = "Bread! Yep, bread."
+	description = "Хлеб! Ага, хлеб."
 	reagent_state = SOLID
 	nutriment_factor = 4
 	color = "#9c5013"
-	taste_message = "bread"
+	taste_message = "хлеба"
 	diet_flags = DIET_PLANT

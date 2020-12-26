@@ -1,10 +1,10 @@
 /datum/reagent/blood
 	data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
-	name = "Blood"
+	name = "Кровь"
 	id = "blood"
 	reagent_state = LIQUID
 	color = "#c80000" // rgb: 200, 0, 0
-	taste_message = "<span class='warning'>blood</span>"
+	taste_message = "<span class='warning'>крови</span>"
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
@@ -84,11 +84,11 @@
 
 /datum/reagent/vaccine
 	//data must contain virus type
-	name = "Vaccine"
+	name = "Вакцина"
 	id = "vaccine"
 	reagent_state = LIQUID
 	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "health"
+	taste_message = "здоровья"
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/vaccine/self = src
@@ -106,13 +106,13 @@
 			M.resistances += self.data
 
 /datum/reagent/lube
-	name = "Space Lube"
+	name = "Космическая смазка"
 	id = "lube"
-	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
+	description = "вещество, которое вводится между двумя движущимися поверхностями, чтобы уменьшить трение и износ между ними. Гы-гы-гы."
 	reagent_state = LIQUID
 	color = "#009ca8" // rgb: 0, 156, 168
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "oil"
+	taste_message = "масла"
 
 	needed_aspects = list(ASPECT_WACKY = 1)
 
@@ -124,13 +124,13 @@
 		T.make_wet_floor(LUBE_FLOOR)
 
 /datum/reagent/plasticide
-	name = "Plasticide"
+	name = "Пластицид"
 	id = "plasticide"
-	description = "Liquid plastic, do not eat."
+	description = "Жидкий пластик, не есть."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	taste_message = "plastic"
+	taste_message = "пластика"
 
 /datum/reagent/plasticide/on_general_digest(mob/living/M)
 	..()
@@ -138,27 +138,27 @@
 	M.adjustToxLoss(0.2)
 
 /datum/reagent/glycerol
-	name = "Glycerol"
+	name = "Глицерин"
 	id = "glycerol"
-	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
+	description = "Простой полиол. Имеет сладкий вкус и малотоксичен."
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "sweetness"
+	taste_message = "сладоости"
 	custom_metabolism = 0.01
 
 /datum/reagent/nitroglycerin
-	name = "Nitroglycerin"
+	name = "Нитроглицерин"
 	id = "nitroglycerin"
-	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
+	description = "Тяжелая, бесцветная, маслянистая, взрывоопасная жидкость, полученная нитрованием глицерина."
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
+	taste_message = "масла" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
 	custom_metabolism = 0.01
 
 /datum/reagent/thermite
-	name = "Thermite"
+	name = "Термит"
 	id = "thermite"
-	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
+	description = "Вызывает алюминотермическую реакцию, известную как термитная реакция. Может использоваться для плавления стен."
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
@@ -175,9 +175,9 @@
 	M.adjustFireLoss(1)
 
 /datum/reagent/virus_food
-	name = "Virus Food"
+	name = "Питательная среда"
 	id = "virusfood"
-	description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
+	description = "Смесь воды, молока и кислорода. Вирусные клетки могут использовать эту смесь для размножения."
 	reagent_state = LIQUID
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
@@ -192,13 +192,13 @@
 	return FALSE
 
 /datum/reagent/fuel
-	name = "Welding fuel"
+	name = "Сварочное топливо"
 	id = "fuel"
-	description = "Required for welders. Flamable."
+	description = "Требуется для сварки. Легковоспламеняющееся."
 	reagent_state = LIQUID
 	color = "#660000" // rgb: 102, 0, 0
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "motor oil"
+	taste_message = "моторного масла"
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
 	var/turf/the_turf = get_turf(O)
@@ -221,13 +221,13 @@
 		M.adjust_fire_stacks(volume / 10)
 
 /datum/reagent/space_cleaner
-	name = "Space cleaner"
+	name = "Космический очиститель"
 	id = "cleaner"
-	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
+	description = "Состав, используемый для чистки вещей. Теперь на 50% больше гипохлорита натрия!"
 	reagent_state = LIQUID
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "floor cleaner"
+	taste_message = "средства для мытья полов"
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -294,12 +294,12 @@
 		M.clean_blood()
 
 /datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
+	name = "Ксеномикробы"
 	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
+	description = "Микробы с совершенно чужеродной клеточной структурой."
 	reagent_state = LIQUID
 	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
+	taste_message = "чего-то чужеродного"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
 	src = null
@@ -307,25 +307,25 @@
 		M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
 /datum/reagent/fluorosurfactant//foam precursor
-	name = "Fluorosurfactant"
+	name = "Фторсурфактант"
 	id = "fluorosurfactant"
-	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
+	description = "Перфторированная сульфоновая кислота, образующая пену при смешивании с водой."
 	reagent_state = LIQUID
 	color = "#9e6b38" // rgb: 158, 107, 56
 	taste_message = null
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
-	name = "Foaming agent"
+	name = "Пенообразователь"
 	id = "foaming_agent"
-	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+	description = "Средство, образующее металлическую пену при смешивании с легким металлом и сильной кислотой."
 	reagent_state = SOLID
 	color = "#664b63" // rgb: 102, 75, 99
 	taste_message = null
 
 /datum/reagent/nicotine
-	name = "Nicotine"
+	name = "Никотин"
 	id = "nicotine"
-	description = "A highly addictive stimulant extracted from the tobacco plant."
+	description = "Стимулятор, вызывающий сильное привыкание, извлекаемый из табака."
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
 	custom_metabolism = 0.005
@@ -338,7 +338,7 @@
 	if(!holder.has_reagent("alkysine"))
 		if(volume >= 0.85)
 			if(world.time > (alert_time + 90 SECONDS))
-				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
+				to_chat(M, pick("<span class='danger'>Вы чувствуете головокружение и слабость.</span>"))
 				alert_time = world.time
 			if(prob(60))
 				M.adjustOxyLoss(1)
@@ -361,24 +361,24 @@
 	return TRUE
 
 /datum/reagent/ammonia
-	name = "Ammonia"
+	name = "Аммиак"
 	id = "ammonia"
-	description = "A caustic substance commonly used in fertilizer or household cleaners."
+	description = "Едкое вещество, обычно используемое в удобрениях или бытовых чистящих средствах."
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
-	taste_message = "floor cleaner"
+	taste_message = "средства для мытья полов"
 
 /datum/reagent/ultraglue
-	name = "Ultra Glue"
+	name = "Суперклей"
 	id = "glue"
-	description = "An extremely powerful bonding agent."
+	description = "Чрезвычайно мощное связывающее средство."
 	color = "#ffffcc" // rgb: 255, 255, 204
 	taste_message = null
 
 /datum/reagent/diethylamine
-	name = "Diethylamine"
+	name = "Диэтиламин"
 	id = "diethylamine"
-	description = "A secondary amine, mildly corrosive."
+	description = "Вторичный амин, слегка едкое вещество."
 	reagent_state = LIQUID
 	color = "#604030" // rgb: 96, 64, 48
 
@@ -446,12 +446,12 @@
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/reagent/nanites
-	name = "Nanomachines"
+	name = "Наномашины"
 	id = "nanites"
-	description = "Microscopic construction robots."
+	description = "Микроскопические роботы-строители."
 	reagent_state = LIQUID
 	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
+	taste_message = "наномашин, сынок"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
 	src = null
@@ -459,33 +459,33 @@
 		M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
 
 /datum/reagent/nanites2
-	name = "Friendly Nanites"
+	name = "Дружелюбные наниты"
 	id = "nanites2"
-	description = "Friendly microscopic construction robots."
+	description = "Дружелюбные микроскопические роботы-строители."
 	reagent_state = LIQUID
 	color = "#535e66" //rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
+	taste_message = "наномашин, сынок"
 
 /datum/reagent/nanobots
-	name = "Nanobots"
+	name = "Наноботы"
 	id = "nanobots"
-	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
+	description = "Микроскопические роботы предназначеные для использования в человеке. Должны быть снаряжены лечащими химикатами."
 	reagent_state = LIQUID
 	color = "#3e3959" //rgb: 62, 57, 89
-	taste_message = "nanomachines, son"
+	taste_message = "наномашин, сынок"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
 //Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
 /datum/reagent/mednanobots
-	name = "Medical Nanobots"
+	name = "Медицинские наноботы"
 	id = "mednanobots"
-	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
+	description = "Микроскопические роботы предназначеные для использования в человеке. Настроены на быстрое лечение при попадании в организм."
 	reagent_state = LIQUID
 	color = "#593948" //rgb: 89, 57, 72
 	custom_metabolism = 0.005
 	var/spawning_horror = 0
 	var/percent_machine = 0
-	taste_message = "nanomachines, son"
+	taste_message = "наномашин, сынок"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -501,7 +501,7 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
 				for(var/datum/wound/W in BP.wounds)
 					BP.wounds -= W
-					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					H.visible_message("<span class='warning'>Раны [H] затягиваются в мгновение ока!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
 						H.adjustOxyLoss(-4)
@@ -531,7 +531,7 @@
 					if(holder && holder.has_reagent(id))
 						percent_machine -= 1
 						if(prob(20))
-							to_chat(M, pick("You feel more like yourself again."))
+							to_chat(M, pick("Вы снова чувствуете себя самим собой."))
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
@@ -548,14 +548,14 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
 				for(var/datum/wound/W in BP.wounds)
 					BP.wounds -= W
-					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					H.visible_message("<span class='warning'>Раны [H] затягиваются в мгновение ока!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
 						H.adjustOxyLoss(-4)
 						holder.remove_reagent(id, 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 						percent_machine += 0.5
 						if(prob(20))
-							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+							to_chat(M, pick("<span class='warning'>Что-то двигается внутри вас...</span>", "<span class='warning'>Вы чувствуете себя иначе... как-то...</span>"))
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
@@ -563,7 +563,7 @@
 						holder.remove_reagent(id, 0.125)
 						percent_machine += 0.5
 						if(prob(20))
-							to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+							to_chat(M, pick("<span class='warning'>Что-то двигается внутри вас...</span>", "<span class='warning'>Вы чувствуете себя иначе... как-то...</span>"))
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
@@ -571,7 +571,7 @@
 						holder.remove_reagent(id, 0.125)
 						percent_machine += 0.5
 						if(prob(20))
-							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+							to_chat(M, pick("<span class='warning'>Что-то двигается внутри вас...</span>", "<span class='warning'>Вы чувствуете себя иначе... как-то...</span>"))
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
@@ -579,7 +579,7 @@
 						holder.remove_reagent(id, 0.05)
 						percent_machine += 0.5
 						if(prob(20))
-							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+							to_chat(M, pick("<span class='warning'>Что-то двигается внутри вас...</span>", "<span class='warning'>Вы чувствуете себя иначе... как-то...</span>"))
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
@@ -587,7 +587,7 @@
 						holder.remove_reagent(id, 0.05)
 						percent_machine += 0.5
 						if(prob(20))
-							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+							to_chat(M, pick("<span class='warning'>Что-то двигается внутри вас...</span>", "<span class='warning'>Вы чувствуете себя иначе... как-то...</span>"))
 
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
@@ -602,16 +602,16 @@
 							D.cure(H)
 				if(holder && prob(percent_machine))
 					holder.add_reagent(id, 20)
-					to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
+					to_chat(M, pick("<b><span class='warning'>Ваше тело извивается!</b></span>"))
 				data["ticks"] += 2
 			if(20 to INFINITY)
 				spawning_horror = 1
-				to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
+				to_chat(M, pick("<b><span class='warning'>Вы чувствуее что что-то не так.</span></b>", "<b><span class='warning'>Что-то растёт внутри вас!</span></b>", "<b><span class='warning'>Вы чувствуете перемещения внутри себя!</span></b>"))
 				spawn(60)
 					if(spawning_horror)
-						to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
-						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) [ADMIN_JMP(H)]")
-						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
+						to_chat(M, pick( "<b><span class='warning'>Что-то вырывается из вас!</span></b>"))
+						message_admins("[key_name(H)] гибнулся и заспаунил нового киберхоррора из-за наноботов. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>) [ADMIN_JMP(H)]")
+						log_game("[key_name(H)] гибнулся и заспаунил нового киберхоррора из-за наноботов")
 						new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
 						spawning_horror = 0
 						H.gib()
@@ -619,59 +619,59 @@
 		holder.del_reagent(id)
 
 /datum/reagent/paint
-	name = "Paint"
+	name = "Краска"
 	id = "paint_"
 	reagent_state = LIQUID
 	data = list("r_color"=128,"g_color"=128,"b_color"=128)
-	description = "This paint will only adhere to floor tiles."
+	description = "Эта краска пристаёт только к плитке пола."
 	color = "#808080"
 	color_weight = 20
-	taste_message = "strong liquid colour"
+	taste_message = "сильного жидкого цвета"
 
 /datum/reagent/paint/red
-	name = "Red Paint"
+	name = "Красная краска"
 	id = "paint_red"
 	color = "#fe191a"
 	data = list("r_color"=254,"g_color"=25,"b_color"=26)
 
 /datum/reagent/paint/green
-	name = "Green Paint"
+	name = "Зелёная краска"
 	color = "#18a31a"
 	id = "paint_green"
 	data = list("r_color"=24,"g_color"=163,"b_color"=26)
 
 /datum/reagent/paint/blue
-	name = "Blue Paint"
+	name = "Синяя краска"
 	color = "#247cff"
 	id = "paint_blue"
 	data = list("r_color"=36,"g_color"=124,"b_color"=255)
 
 /datum/reagent/paint/yellow
-	name = "Yellow Paint"
+	name = "Жёлтая краска"
 	color = "#fdfe7d"
 	id = "paint_yellow"
 	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
 /datum/reagent/paint/violet
-	name = "Violet Paint"
+	name = "Фиолетовая краска"
 	color = "#cc0099"
 	id = "paint_violet"
 	data = list("r_color"=253,"g_color"=254,"b_color"=125)
 
 /datum/reagent/paint/black
-	name = "Black Paint"
+	name = "Чёрная краска"
 	color = "#333333"
 	id = "paint_black"
 	data = list("r_color"=51,"g_color"=51,"b_color"=51)
 
 /datum/reagent/paint/white
-	name = "White Paint"
+	name = "Белая краска"
 	color = "#f0f8ff"
 	id = "paint_white"
 	data = list("r_color"=240,"g_color"=248,"b_color"=255)
 
 /datum/reagent/paint/custom
-	name = "Custom Paint"
+	name = "Краска"
 	id = "paint_custom"
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
@@ -764,9 +764,9 @@
 			C.color = color
 
 /datum/reagent/paint_remover
-	name = "Paint Remover"
+	name = "Средство для удаления краски"
 	id = "paint_remover"
-	description = "Paint remover is used to remove floor paint from floor tiles."
+	description = "Используется для удаления краски с плиток пола."
 	reagent_state = 2
 	color = "#808080"
 
@@ -806,61 +806,61 @@
 ///// All the barber's bullshit/////
 ////////////////////////////////////
 /datum/reagent/paint/hair_dye
-	name = "Hair Dye"
+	name = "Краска для волос"
 	id = "whitehairdye"
-	description = "A compound used to dye hair. Any hair."
+	description = "Соединение используемое для покраски волос. Любых волос."
 	data = list("r_color"=255,"g_color"=255,"b_color"=255)
 	reagent_state = LIQUID
 	color = "#ffffff" // to see rgb just look into data!
 	color_weight = 10
-	taste_message = "liquid colour"
+	taste_message = "жидкого цвета"
 
 /*
 TODO: Convert everything to custom hair dye. ~ Luduk.
 */
 
 /datum/reagent/paint/hair_dye/red
-	name = "Red Hair Dye"
+	name = "Красная краска для волос"
 	id = "redhairdye"
 	data = list("r_color"=255,"g_color"=0,"b_color"=0)
 	color = "#ff0000"
 
 /datum/reagent/paint/hair_dye/green
-	name = "Green Hair Dye"
+	name = "Зелёная краска для волос"
 	id = "greenhairdye"
 	data = list("r_color"=0,"g_color"=255,"b_color"=0)
 	color = "#00ff00"
 
 /datum/reagent/paint/hair_dye/blue
-	name = "Blue Hair Dye"
+	name = "Синяя краска для волос"
 	id = "bluehairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=255)
 	color = "#0000ff"
 
 /datum/reagent/paint/hair_dye/black
-	name = "Black Hair Dye"
+	name = "Черная краска для волос"
 	id = "blackhairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=0)
 	color = "#000000"
 
 /datum/reagent/paint/hair_dye/brown
-	name = "Brown Hair Dye"
+	name = "Коричневая краска для волос"
 	id = "brownhairdye"
 	data = list("r_color"=50,"g_color"=0,"b_color"=0)
 	color = "#500000"
 
 /datum/reagent/paint/hair_dye/blond
-	name = "Blond Hair Dye"
+	name = "Белая краска для волос"
 	id = "blondhairdye"
 	data = list("r_color"=255,"g_color"=225,"b_color"=135)
 	color = "#ffe187"
 
 /datum/reagent/paint/hair_dye/custom
-	name = "Custom Hair Dye"
+	name = "Краска для волос"
 	id = "customhairdye"
 
 /datum/reagent/hair_growth_accelerator
-	name = "Hair Growth Accelerator"
+	name = "Ускоритель роста волос"
 	id = "hair_growth_accelerator"
 	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
@@ -904,11 +904,11 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 			H.update_hair()
 
 /datum/reagent/ectoplasm
-	name = "Ectoplasm"
+	name = "Эктоплазма"
 	id = "ectoplasm"
-	description = "A spooky scary substance to explain ghosts and stuff."
+	description = "Жуткое страшное вещество для объяснения призраков и прочего."
 	reagent_state = LIQUID
-	taste_message = "spooky ghosts"
+	taste_message = "страшных призраков"
 	color = "#ffa8e4" // rgb: 255, 168, 228
 
 	data = list()
@@ -926,28 +926,28 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 			M.make_jittery(2)
 			M.hallucination = max(M.hallucination, 3)
 			if(prob(1))
-				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				to_chat(src, "<span class='warning'>Вы видите... [pick(nightmares)] ...</span>")
 				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4)
 			M.druggy = max(M.druggy, 15)
 			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
-				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				to_chat(src, "<span class='warning'>Вы видите... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(45 to 90)
 			M.make_jittery(8)
 			M.druggy = max(M.druggy, 30)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
-				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				to_chat(src, "<span class='warning'>Вы видите... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(90 to 180)
 			M.make_jittery(8)
 			M.druggy = max(M.druggy, 35)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
-				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				to_chat(src, "<span class='warning'>Вы видите... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 			if(prob(5))
 				M.adjustBrainLoss(5)
@@ -956,11 +956,11 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	data["ticks"]++
 
 /datum/reagent/aqueous_foam
-	name = "Aqueous Film Forming Foam"
+	name = "Водная пена"
 	id = "aqueous_foam"
-	description = "Smothers the fire and seals in the flammable vapours."
+	description = "Глушит огонь и задерживает горючие пары."
 	reagent_state = LIQUID
-	taste_message = "fire repellant"
+	taste_message = "содержимого огнетушителя"
 	color = "#c2eaed" // rgb: 194, 234, 237
 
 /datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)

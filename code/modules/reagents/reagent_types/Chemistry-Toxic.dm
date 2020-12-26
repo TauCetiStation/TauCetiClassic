@@ -1,12 +1,12 @@
 /datum/reagent/toxin
-	name = "Toxin"
+	name = "Токсин"
 	id = "toxin"
-	description = "A toxic chemical."
+	description = "Токсинчый химикат."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 	custom_metabolism = 0.1
-	taste_message = "bitterness"
+	taste_message = "горечи"
 	flags = list(IS_ORGANIC = TRUE)
 
 	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
@@ -22,18 +22,18 @@
 	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
-	name = "Amatoxin"
+	name = "Аматоксин"
 	id = "amatoxin"
-	description = "A powerful poison derived from certain species of mushroom."
+	description = "Сильный яд, получаемый из некоторых видов грибов."
 	reagent_state = LIQUID
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 1
 	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/mutagen
-	name = "Unstable mutagen"
+	name = "Нестабильный мутаген"
 	id = "mutagen"
-	description = "Might cause unpredictable mutations. Keep away from children."
+	description = "Может вызвать непредсказуемые мутации. Держать подальше от детей."
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	toxpwr = 0
@@ -59,9 +59,9 @@
 	M.apply_effect(10, IRRADIATE, 0)
 
 /datum/reagent/toxin/phoron
-	name = "Phoron"
+	name = "Форон"
 	id = "phoron"
-	description = "Phoron in its liquid form."
+	description = "Жидкий форон."
 	reagent_state = LIQUID
 	color = "#ef0097" // rgb: 231, 27, 0
 	toxpwr = 3
@@ -104,9 +104,9 @@
 		M.adjust_fire_stacks(volume / 5)
 
 /datum/reagent/toxin/lexorin
-	name = "Lexorin"
+	name = "Лексорин"
 	id = "lexorin"
-	description = "Lexorin temporarily stops respiration. Causes tissue damage."
+	description = "Временно останавливает дыхание. Вызывает повреждение тканей."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	toxpwr = 0
@@ -123,9 +123,9 @@
 		M.emote("gasp")
 
 /datum/reagent/toxin/slimejelly
-	name = "Slime Jelly"
+	name = "Слизневый джем"
 	id = "slimejelly"
-	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
+	description = "Липкая полужидкость, полученная из одной из самых смертоносных форм жизни из существующих. ТАК ПРАВДОПОДОБНО."
 	reagent_state = LIQUID
 	color = "#801e28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -134,15 +134,15 @@
 /datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
 	..()
 	if(prob(10))
-		to_chat(M, "<span class='warning'>Your insides are burning!</span>")
+		to_chat(M, "<span class='warning'>Ваши внутренности горят!</span>")
 		M.adjustToxLoss(rand(20,60) * REM)
 	else if(prob(40))
 		M.heal_bodypart_damage(5 * REM, 0)
 
 /datum/reagent/toxin/cyanide //Fast and Lethal
-	name = "Cyanide"
+	name = "Цианид"
 	id = "cyanide"
-	description = "A highly toxic chemical."
+	description = "Сильно токсичное химическое вещество."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
@@ -166,9 +166,9 @@
 		M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
-	name = "Mint Toxin"
+	name = "Мятный Токсин"
 	id = "minttoxin"
-	description = "Useful for dealing with undesirable customers."
+	description = "Полезно при работы с нежелательными клиентами."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 0
@@ -180,18 +180,18 @@
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
-	name = "Carpotoxin"
+	name = "Карпотоксин"
 	id = "carpotoxin"
-	description = "A deadly neurotoxin produced by the dreaded space carp."
+	description = "Смертельный нейротоксин, вырабатываемый ужасным космическим карпом."
 	reagent_state = LIQUID
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/zombiepowder
-	name = "Zombie Powder"
+	name = "Зомби-порошок"
 	id = "zombiepowder"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "Сильный нейротоксин, который вводит субъекта в состояние, подобное смерти."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
@@ -212,9 +212,9 @@
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
-	name = "Mindbreaker Toxin"
+	name = "ЛСД" // на самом деле это не лсд, but who cares
 	id = "mindbreaker"
-	description = "A powerful hallucinogen, it can cause fatal effects in users."
+	description = "Мощный галлюциноген."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
 	toxpwr = 0
@@ -229,7 +229,7 @@
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
-	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
+	description = "Опасный токсичный гербицид. Не употреблять в пищу!"
 	reagent_state = LIQUID
 	color = "#49002e" // rgb: 73, 0, 46
 	toxpwr = 1
@@ -246,7 +246,7 @@
 				if(E.name == "Wallrot")
 					qdel(E)
 
-			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
+			W.visible_message("<span class='notice'>Грибы полностью растворены жидкостью!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
@@ -273,9 +273,9 @@
 						H.adjustToxLoss(50)
 
 /datum/reagent/toxin/stoxin
-	name = "Sleep Toxin"
+	name = "Снотворное"
 	id = "stoxin"
-	description = "An effective hypnotic used to treat insomnia."
+	description = "Эффективное снотворное для лечения бессонницы."
 	reagent_state = LIQUID
 	color = "#e895cc" // rgb: 232, 149, 204
 	toxpwr = 0
@@ -304,9 +304,9 @@
 	data["ticks"]++
 
 /datum/reagent/toxin/chloralhydrate
-	name = "Chloral Hydrate"
+	name = "Хлоральгидрат"
 	id = "chloralhydrate"
-	description = "A powerful sedative."
+	description = "Сильное успокаивающее средство."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
@@ -331,9 +331,9 @@
 			M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
-	name = "Potassium Chloride"
+	name = "Хлористый калий"
 	id = "potassium_chloride"
-	description = "A delicious salt that stops the heart when injected into cardiac muscle."
+	description = "Восхитительная соль, которая останавливает сердце при введении в сердечную мышцу."
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 0
@@ -350,9 +350,9 @@
 			M.Weaken(10)
 
 /datum/reagent/toxin/potassium_chlorophoride
-	name = "Potassium Chlorophoride"
+	name = "Хлорофорид Калия" // хлор + форон = хлорофорид
 	id = "potassium_chlorophoride"
-	description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
+	description = "Специальное химическое вещество на основе хлорида калия, останавливающее сердце для проведения операций. Не употреблять в пищу!"
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 2
@@ -370,9 +370,9 @@
 			H.Weaken(10)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
-	name = "Beer"
+	name = "Пиво"
 	id = "beer2"
-	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
+	description = "Алкогольный напиток, приготовленный из солодовых зерен, хмеля, дрожжей и воды. Процесс ферментации не завершён." //If the players manage to analyze this, they deserve to know something is wrong.
 	reagent_state = LIQUID
 	color = "#fbbf0d" // rgb: 251, 191, 13
 	custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
@@ -395,9 +395,9 @@
 	data["ticks"]++
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder. @ TG Port
-	name = "Mute Toxin"
+	name = "Заглушающий токсин"
 	id = "mutetoxin"
-	description = "A toxin that temporarily paralyzes the vocal cords."
+	description = "Токсин, временно парализующий голосовые связки."
 	color = "#f0f8ff" // rgb: 240, 248, 255
 	custom_metabolism = 0.4
 	toxpwr = 0
@@ -408,9 +408,9 @@
 	M.silent = max(M.silent, 3)
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Серная кислота"
 	id = "sacid"
-	description = "A very corrosive mineral acid with the molecular formula H2SO4."
+	description = "Очень агрессивная минеральная кислота с молекулярной формулой H2SO4."
 	reagent_state = LIQUID
 	color = "#db5008" // rgb: 219, 80, 8
 	toxpwr = 1
@@ -430,27 +430,27 @@
 
 			if(H.head)
 				if(prob(meltprob) && !H.head.unacidable)
-					to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
+					to_chat(H, "<span class='danger'>Ваш головной убор тает, но защищает вас от кислоты!</span>")
 					qdel(H.head)
 					H.update_inv_head()
 					H.update_hair()
 				else
-					to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
+					to_chat(H, "<span class='warning'>Ваш головной убор защищает вас от кислоты.</span>")
 				return
 
 			if(H.wear_mask)
 				if(prob(meltprob) && !H.wear_mask.unacidable)
-					to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
+					to_chat(H, "<span class='danger'>Ваша маска тает, но защищает вас от кислоты!</span>")
 					qdel(H.wear_mask)
 					H.update_inv_wear_mask()
 					H.update_hair()
 				else
-					to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
+					to_chat(H, "<span class='warning'>Ваша маска защищает вас от кислоты.</span>")
 				return
 
 			if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 				if(prob(meltprob) && !H.glasses.unacidable)
-					to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
+					to_chat(H, "<span class='danger'>Ваши очки тают!</span>")
 					qdel(H.glasses)
 					H.update_inv_glasses()
 
@@ -458,11 +458,11 @@
 			var/mob/living/carbon/monkey/MK = M
 			if(MK.wear_mask)
 				if(!MK.wear_mask.unacidable)
-					to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
+					to_chat(MK, "<span class='danger'>Ваша маска тает, но защищает вас от кислоты!</span>")
 					qdel(MK.wear_mask)
 					MK.update_inv_wear_mask()
 				else
-					to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
+					to_chat(MK, "<span class='warning'>Ваша маска защищает вас от кислоты.</span>")
 				return
 
 		if(!M.unacidable)
@@ -484,15 +484,15 @@
 	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-			I.desc = "Looks like this was \an [O] some time ago."
+			I.desc = "Кажется, когда-то это было [O]" // был была было
 			for(var/mob/M in viewers(5, O))
-				to_chat(M, "<span class='warning'>\the [O] melts.</span>")
+				to_chat(M, "<span class='warning'>[O] тает.</span>")
 			qdel(O)
 
 /datum/reagent/toxin/acid/polyacid
-	name = "Polytrinic acid"
+	name = "Политриновая кислота"
 	id = "pacid"
-	description = "Polytrinic acid is a an extremely corrosive chemical substance."
+	description = "Чрезвычайно агрессивное химическое вещество."
 	reagent_state = LIQUID
 	color = "#8e18a9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -504,9 +504,9 @@
 //////////////////////////////////////////////
 
 /datum/reagent/alphaamanitin
-	name = "Alpha-amanitin"
+	name = "Альфа-аманитин"
 	id = "alphaamanitin"
-	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
+	description = "Смертельный быстро разлагающийся токсин, получаемый из некоторых видов грибов."
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
 
@@ -518,9 +518,9 @@
 	M.adjustBrainLoss(2)
 
 /datum/reagent/aflatoxin
-	name = "Aflatoxin"
+	name = "Афлатоксин"
 	id = "aflatoxin"
-	description = "Deadly toxin delayed action. Causes general poisoning and damage the structure of DNA."
+	description = "Смертельный токсин отложенного действия. Вызывает общее отравление и повреждает структуру ДНК."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
@@ -539,13 +539,13 @@
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
-	name = "Chef's Special"
+	name = "Комплимент от шефа"
 	id = "chefspecial"
-	description = "An extremely toxic chemical that will surely end in death."
+	description = "Чрезвычайно токсичное химическое вещество, которое обязательно приведет к смерти."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	taste_message = "DEATH"
+	taste_message = "СМЕРТИ"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -562,9 +562,9 @@
 	data["ticks"]++
 
 /datum/reagent/dioxin
-	name = "Dioxin"
+	name = "Диоксин"
 	id = "dioxin"
-	description = "A powerful poison with a cumulative effect."
+	description = "Сильный яд с кумулятивным действием."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
@@ -603,9 +603,9 @@
 	data["ticks"]++
 
 /datum/reagent/mulligan
-	name = "Mulligan Toxin"
+	name = "Муллиган"
 	id = "mulligan"
-	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	description = "Этот токсин быстро изменит ДНК человека. Обычно используется шпионами и убийцами Синдиката, которым требуется экстренная смена личности."
 	reagent_state = LIQUID
 	color = "#5eff3b" //RGB: 94, 255, 59
 	custom_metabolism = 1000
@@ -614,8 +614,8 @@
 	..()
 	if(!istype(H) || H.species.flags[NO_DNA])
 		return
-	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
-	H.visible_message("<b>[H]</b> suddenly transforms!")
+	to_chat(H,"<span class='warning'><b>Вы скрипите зубами от боли, пока ваше тело быстро мутирует!</b></span>")
+	H.visible_message("<b>[H]</b> внезапно преображается!")
 	H.gender = pick(MALE, FEMALE)
 	if(H.gender == MALE)
 		H.name = pick(first_names_male)
@@ -627,9 +627,9 @@
 	A.randomize_appearance_for(H)
 
 /datum/reagent/slimetoxin
-	name = "Mutation Toxin"
+	name = "Токсин мутации"
 	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
+	description = "Разрушающий токсин, вырабатываемый слизнями."
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
@@ -648,24 +648,24 @@
 		data["ticks"]++
 		switch(data["ticks"])
 			if(1)
-				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
+				to_chat(H, "<span class='warning'>Вы чувствуете себя иначе, каким-то образом...</span>")
 			if(2 to 11)
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				if(BP.is_flesh())
 					BP.take_damage(10)
 					if(prob(25))
-						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
+						to_chat(H, "<span class='warning'>Ваша плоть начинает таять!</span>")
 						H.emote("scream")
 						BP.sever_artery()
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
 				BP.take_damage(5)
 				if(prob(25))
-					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
+					to_chat(H, "<span class='warning'>Вы чувствуете невыносимую боль внутри себя!</span>")
 					H.emote("scream")
 			if(30)
 				if(H.set_species(SLIME))
-					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
+					to_chat(H, "<span class='warning'>Ваша плоть мутирует, и вы чувствуете себя свободными!</span>")
 					H.dna.mutantrace = "slime"
 					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
@@ -677,9 +677,9 @@
 				M.adjustOxyLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
-	name = "Advanced Mutation Toxin"
+	name = "Продвинутый токсин мутации"
 	id = "amutationtoxin"
-	description = "An advanced corruptive toxin produced by slimes."
+	description = "Продвинутый разрушающий токсин, вырабатываемый слизнями."
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
@@ -687,7 +687,7 @@
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
+		to_chat(M, "<span class='warning'>Ваша плоть быстро мутирует!</span>")
 		if(M.notransform)
 			return
 		M.notransform = TRUE
@@ -716,9 +716,9 @@
 //////////////Harmful reagents that are not quite toxins but I diagress/////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 /datum/reagent/space_drugs
-	name = "Space drugs"
+	name = "Космонаркотики"
 	id = "space_drugs"
-	description = "An illegal chemical compound used as drug."
+	description = "Незаконное химическое соединение, используемое в качестве наркотика."
 	reagent_state = LIQUID
 	color = "#60a584" // rgb: 96, 165, 132
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
@@ -736,9 +736,9 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 
 /datum/reagent/serotrotium
-	name = "Serotrotium"
+	name = "Серотротий"
 	id = "serotrotium"
-	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
+	description = "Химическое соединение, которое способствует сосредоточенному производству нейротрансмиттера серотонина у людей."
 	reagent_state = LIQUID
 	color = "#202040" // rgb: 20, 20, 40
 	custom_metabolism = REAGENTS_METABOLISM * 0.25
@@ -752,9 +752,9 @@
 			M.emote(pick("twitch","drool","moan","gasp"))
 
 /datum/reagent/cryptobiolin
-	name = "Cryptobiolin"
+	name = "Криптобиолин"
 	id = "cryptobiolin"
-	description = "Cryptobiolin causes confusion and dizzyness."
+	description = "Вызывает замешательство и головокружение."
 	reagent_state = LIQUID
 	color = "#000055" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -770,9 +770,9 @@
 	M.confused = max(M.confused, 20)
 
 /datum/reagent/impedrezene
-	name = "Impedrezene"
+	name = "Импедрезен"
 	id = "impedrezene"
-	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
+	description = "Наркотик, который снижает способность человека, замедляя высшие функции клеток мозга."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE

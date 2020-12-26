@@ -1,7 +1,7 @@
 /datum/reagent/water
-	name = "Water"
+	name = "Вода"
 	id = "water"
-	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+	description = "Всюду присутствующее химическое вещество, состоящее из водорода и кислорода."
 	reagent_state = LIQUID
 	color = "#0064c8" // rgb: 0, 100, 200
 	custom_metabolism = 0.01
@@ -86,9 +86,9 @@
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
-	name = "Holy Water"
+	name = "Святая вода"
 	id = "holywater"
-	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
+	description = "Смесь пепла, обсидиана и воды, этот раствор изменит некоторые области рациональности мозга."
 	color = "#e0e8ef" // rgb: 224, 232, 239
 
 	needed_aspects = list(ASPECT_RESCUE = 1)
@@ -99,8 +99,8 @@
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && prob(10))
 		SSticker.mode.remove_cultist(M.mind)
-		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
-				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
+		M.visible_message("<span class='notice'>Глаза [M] мигают и становятся яснее.</span>",
+				          "<span class='notice'>Ощущение прохлады внутри вас приносит вам невыразимое спокойствие.</span>")
 
 /datum/reagent/water/holywater/reaction_obj(obj/O, volume)
 	src = null
@@ -145,9 +145,9 @@
 		G.teleporter_delay += volume
 
 /datum/reagent/water/unholywater
-	name = "Unholy Water"
+	name = "Проклятая вода"
 	id = "unholywater"
-	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
+	description = "Трупно-эктоплазматически-водная смесь, этот раствор может изменить концепции самой реальности."
 	color = "#c80064" // rgb: 200,0, 100
 
 	data = list()
@@ -226,9 +226,9 @@
 		G.teleporter_delay += volume
 
 /datum/reagent/oxygen
-	name = "Oxygen"
+	name = "Кислород"
 	id = "oxygen"
-	description = "A colorless, odorless gas."
+	description = "Газ без цвета и запаха."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
@@ -241,17 +241,17 @@
 	return FALSE
 
 /datum/reagent/copper
-	name = "Copper"
+	name = "Медь"
 	id = "copper"
-	description = "A highly ductile metal."
+	description = "Металл обладающий высокой проводимостью."
 	color = "#6e3b08" // rgb: 110, 59, 8
 	taste_message = null
 	custom_metabolism = 0.01
 
 /datum/reagent/nitrogen
-	name = "Nitrogen"
+	name = "Азот"
 	id = "nitrogen"
-	description = "A colorless, odorless, tasteless gas."
+	description = "Газ без цвета, запаха и вкуса."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
@@ -273,31 +273,33 @@
 	return FALSE
 
 /datum/reagent/hydrogen
-	name = "Hydrogen"
+	name = "Водород"
 	id = "hydrogen"
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
+	description = "Легковоспламеняющийся двухатомный неметаллический газ без цвета, запаха и вкуса."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
 	custom_metabolism = 0.01
 
 /datum/reagent/potassium
-	name = "Potassium"
+	name = "Калий"
 	id = "potassium"
 	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
+	description = "Мягкий метал с низкой температурой плавления который легко может быть разрезан ножом. Бурно реагирует с водой."
 	reagent_state = SOLID
 	color = "#a0a0a0" // rgb: 160, 160, 160
-	taste_message = "bad ideas"
+	taste_message = "плохих идей"
 	custom_metabolism = 0.01
 
 /datum/reagent/mercury
-	name = "Mercury"
+	name = "Ртуть"
 	id = "mercury"
-	description = "A chemical element."
+	description = "Химический элемент."
 	reagent_state = LIQUID
 	color = "#484848" // rgb: 72, 72, 72
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "druggie poison"
+	taste_message = "наркоманского яда"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
@@ -309,21 +311,21 @@
 	M.adjustBrainLoss(2)
 
 /datum/reagent/sulfur
-	name = "Sulfur"
+	name = "Сера"
 	id = "sulfur"
-	description = "A chemical element with a pungent smell."
+	description = "Химический элемент с острым запахом."
 	reagent_state = SOLID
 	color = "#bf8c00" // rgb: 191, 140, 0
-	taste_message = "impulsive decisions"
+	taste_message = "импульсивного решения"
 	custom_metabolism = 0.01
 
 /datum/reagent/carbon
-	name = "Carbon"
+	name = "Углерод"
 	id = "carbon"
-	description = "A chemical element, the builing block of life."
+	description = "Химический элемент, строительный материал всего живого."
 	reagent_state = SOLID
 	color = "#1c1300" // rgb: 30, 20, 0
-	taste_message = "like a pencil or something"
+	taste_message = "карандаша или чего-то такого"
 	custom_metabolism = 0.01
 
 /datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
@@ -337,47 +339,47 @@
 			dirtoverlay.alpha = min(dirtoverlay.alpha + volume * 30, 255)
 
 /datum/reagent/chlorine
-	name = "Chlorine"
+	name = "Хлор"
 	id = "chlorine"
-	description = "A chemical element with a characteristic odour."
+	description = "Химический элемент со специфическим запахом."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "characteristic taste"
+	taste_message = "чего-то специфического"
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M)
 	..()
 	M.take_bodypart_damage(1 * REM, 0)
 
 /datum/reagent/fluorine
-	name = "Fluorine"
+	name = "Фтор"
 	id = "fluorine"
-	description = "A highly-reactive chemical element."
+	description = "Высокореактивный химический элемент."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "toothpaste"
+	taste_message = "зубной пасты"
 
 /datum/reagent/fluorine/on_general_digest(mob/living/M)
 	..()
 	M.adjustToxLoss(REM)
 
 /datum/reagent/sodium
-	name = "Sodium"
+	name = "Натрий"
 	id = "sodium"
-	description = "A chemical element, readily reacts with water."
+	description = "Химический элемент, охотно реагирует с водой."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "horrible misjudgement"
+	taste_message = "ужасной ошибки"
 	custom_metabolism = 0.01
 
 /datum/reagent/phosphorus
-	name = "Phosphorus"
+	name = "Фосфор"
 	id = "phosphorus"
-	description = "A chemical element, the backbone of biological energy carriers."
+	description = "Химический элемент основа биологической передачи энергии."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
-	taste_message = "misguided choices"
+	taste_message = "ошибочного выбора"
 	custom_metabolism = 0.01
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M)
@@ -390,13 +392,13 @@
 	return FALSE
 
 /datum/reagent/lithium
-	name = "Lithium"
+	name = "Литий"
 	id = "lithium"
-	description = "A chemical element, used as antidepressant."
+	description = "Химический элемент, используется как антидепрессант."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "happiness"
+	taste_message = "счастья"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
@@ -407,12 +409,12 @@
 		M.emote(pick("twitch","drool","moan"))
 
 /datum/reagent/sugar
-	name = "Sugar"
+	name = "Сахар"
 	id = "sugar"
-	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
+	description = "Органическое соединение широко известное как столовый сахар и иногда называемое сахароза. Эта белая кристаллическая пыль без запаха имеет приятный сладкий вкус."
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
-	taste_message = "sweetness"
+	taste_message = "сладости"
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
@@ -421,12 +423,12 @@
 	M.nutrition += 4 * REM
 
 /datum/reagent/radium
-	name = "Radium"
+	name = "Радий"
 	id = "radium"
-	description = "Radium is an alkaline earth metal. It is extremely radioactive."
+	description = "Радий это щелочноземельный металл. Он чрезвычайно радиоактивен."
 	reagent_state = SOLID
 	color = "#c7c7c7" // rgb: 199,199,199
-	taste_message = "bonehurting juice"
+	taste_message = "горечи"
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
@@ -458,39 +460,39 @@
 /datum/reagent/iron
 	name = "Iron"
 	id = "iron"
-	description = "Pure iron is a metal."
+	description = "Чистое железо это металл."
 	reagent_state = SOLID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "metal"
+	taste_message = "металла"
 
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
-	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
+	description = "Золото это плотный, мягкий, блестящий металл, самый ковкий и пластичный из известных."
 	reagent_state = SOLID
 	color = "#f7c430" // rgb: 247, 196, 48
-	taste_message = "bling"
+	taste_message = "шика"
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
 /datum/reagent/silver
-	name = "Silver"
+	name = "Серебро"
 	id = "silver"
-	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
+	description = "Мягкий, белый, блестящий переходный металл, он имеет самую высокую электропроводность среди всех элементов и самую высокую теплопроводность среди всех металлов."
 	reagent_state = SOLID
 	color = "#d0d0d0" // rgb: 208, 208, 208
-	taste_message = "sub-par bling"
+	taste_message = "меньшего шика"
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
 /datum/reagent/uranium
-	name ="Uranium"
+	name ="Уран"
 	id = "uranium"
-	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
+	description = "Серебристо-белый металлический химический элемент из ряда актинидов, слаборадиоактивный."
 	reagent_state = SOLID
 	color = "#b8b8c0" // rgb: 184, 184, 192
-	taste_message = "bonehurting juice"
+	taste_message = "альфа-частиц"
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
@@ -505,17 +507,17 @@
 				new /obj/effect/decal/cleanable/greenglow(T)
 
 /datum/reagent/aluminum
-	name = "Aluminum"
+	name = "Алюминий"
 	id = "aluminum"
-	description = "A silvery white and ductile member of the boron group of chemical elements."
+	description = "Серебристо-белый и пластичный член подгруппы химических элементов бора."
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = null
 
 /datum/reagent/silicon
-	name = "Silicon"
+	name = "Кремний"
 	id = "silicon"
-	description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
+	description = "Четырехвалентный металлоид кремний менее активен, чем его химический аналог углерод."
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
-	taste_message = "a CPU"
+	taste_message = "центрального процессора"

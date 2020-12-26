@@ -1,7 +1,7 @@
 /datum/reagent/srejuvenate
-	name = "Soporific Rejuvenant"
+	name = "Лекарственное снотворное"
 	id = "stoxin2"
-	description = "Put people to sleep, and heals them."
+	description = "Усыпляет людей и лечит их."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
@@ -35,9 +35,9 @@
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
-	name = "Inaprovaline"
+	name = "Инапровалин"
 	id = "inaprovaline"
-	description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
+	description = "Синаптический стимулятор и кардиостимулятор. Обычно используется для стабилизации состояния пациентов."
 	reagent_state = LIQUID
 	color = "#00bfff" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
@@ -55,9 +55,9 @@
 	return FALSE // General digest proc shouldn't be called.
 
 /datum/reagent/ryetalyn
-	name = "Ryetalyn"
+	name = "Риеталин"
 	id = "ryetalyn"
-	description = "Ryetalyn can cure all genetic abnomalities via a catalytic process."
+	description = "Излечивает генетические аномалии с помощью каталитического процесса."
 	reagent_state = SOLID
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -81,9 +81,9 @@
 	data["ticks"]++
 
 /datum/reagent/paracetamol
-	name = "Paracetamol"
+	name = "Парацетамол"
 	id = "paracetamol"
-	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
+	description = "Слабое простое болеутолящее средство."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
 	overdose = 60
@@ -95,9 +95,9 @@
 		M.hallucination = max(M.hallucination, 2)
 
 /datum/reagent/tramadol
-	name = "Tramadol"
+	name = "Трамадол"
 	id = "tramadol"
-	description = "A simple, yet effective painkiller."
+	description = "Простое но эффективное обезбаливающее."
 	reagent_state = LIQUID
 	color = "#cb68fc"
 	overdose = 30
@@ -110,9 +110,9 @@
 		M.hallucination = max(M.hallucination, 2)
 
 /datum/reagent/oxycodone
-	name = "Oxycodone"
+	name = "Оксикодон"
 	id = "oxycodone"
-	description = "An effective and very addictive painkiller."
+	description = "Эффективное обезболивающее, вызывающее сильное привыкание."
 	reagent_state = LIQUID
 	color = "#800080"
 	overdose = 20
@@ -126,9 +126,9 @@
 		M.hallucination = max(M.hallucination, 3)
 
 /datum/reagent/sterilizine
-	name = "Sterilizine"
+	name = "Стерилизин"
 	id = "sterilizine"
-	description = "Sterilizes wounds in preparation for surgery."
+	description = "Стерилизует раны перед операцией."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 
@@ -145,9 +145,9 @@
 	T.germ_level -= min(volume*20, T.germ_level)
 
 /datum/reagent/leporazine
-	name = "Leporazine"
+	name = "Лепоразин"
 	id = "leporazine"
-	description = "Leporazine can be use to stabilize an individuals body temperature."
+	description = "Используется для стабилизации температуры пациента."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -161,9 +161,9 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/kelotane
-	name = "Kelotane"
+	name = "Келотан"
 	id = "kelotane"
-	description = "Kelotane is a drug used to treat burns."
+	description = "Препарат использующийся для лечения ожогов."
 	reagent_state = LIQUID
 	color = "#ffc600" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -175,9 +175,9 @@
 	M.heal_bodypart_damage(0,2 * REM)
 
 /datum/reagent/dermaline
-	name = "Dermaline"
+	name = "Дермалин"
 	id = "dermaline"
-	description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
+	description = "Следующий шаг в лечении ожогов. Работает вдвое лучше, чем келотан, и позволяет телу восстанавливать даже самые поврежденные ткани."
 	reagent_state = LIQUID
 	color = "#ff8000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE * 0.5
@@ -193,13 +193,13 @@
 		H.update_body()
 
 /datum/reagent/dexalin
-	name = "Dexalin"
+	name = "Дексалин"
 	id = "dexalin"
-	description = "Dexalin is used in the treatment of oxygen deprivation."
+	description = "Используется при лечении кислородного голодания."
 	reagent_state = LIQUID
 	color = "#0080ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "oxygen"
+	taste_message = "кислорода"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dexalin/on_general_digest(mob/living/M)
@@ -215,14 +215,14 @@
 	return FALSE
 
 /datum/reagent/dextromethorphan
-	name = "Dextromethorphan"
+	name = "Декстрометорфан"
 	id = "dextromethorphan"
-	description = "Analgesic chemical that heals lung damage and coughing."
+	description = "Обезболивающее химическое средство, которое лечит повреждения легких и кашель."
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
 	overdose = 10
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
-	taste_message = "sickening bitterness"
+	taste_message = "тошнотворной горечи"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -254,9 +254,9 @@
 	return FALSE
 
 /datum/reagent/dexalinp
-	name = "Dexalin Plus"
+	name = "Дексалин Плюс"
 	id = "dexalinp"
-	description = "Dexalin Plus is used in the treatment of oxygen deprivation. It is highly effective."
+	description = "Используется при лечении кислородного голодания. Очень эффективен."
 	reagent_state = LIQUID
 	color = "#0040ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE * 0.5
@@ -276,9 +276,9 @@
 	return FALSE
 
 /datum/reagent/tricordrazine
-	name = "Tricordrazine"
+	name = "Трикордразин"
 	id = "tricordrazine"
-	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
+	description = "Трикордразин является сильнодействующим стимулятором, первоначально полученным из кордразина. Может использоваться для лечения широкого спектра травм."
 	reagent_state = LIQUID
 	color = "#00b080" // rgb: 200, 165, 220
 	taste_message = null
@@ -296,9 +296,9 @@
 		M.adjustToxLoss(-1 * REM)
 
 /datum/reagent/anti_toxin
-	name = "Anti-Toxin (Dylovene)"
+	name = "Анти-Токсин (Диловен)"
 	id = "anti_toxin"
-	description = "Dylovene is a broad-spectrum antitoxin."
+	description = "Анти-токсин широкого спектра."
 	reagent_state = LIQUID
 	color = "#00a000" // rgb: 200, 165, 220
 	taste_message = null
@@ -312,12 +312,12 @@
 	M.adjustToxLoss(-2 * REM)
 
 /datum/reagent/thermopsis
-	name = "Thermopsis"
+	name = "Термопсис"
 	id = "thermopsis"
-	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
+	description = "Раздражает рецепторы желудка, что вызывает рефлекторное усиление рвоты."
 	reagent_state = LIQUID
 	color = "#a0a000"
-	taste_message = "vomit"
+	taste_message = "рвоты"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -332,12 +332,12 @@
 		data["ticks"] -= rand(0, 10)
 
 /datum/reagent/adminordrazine //An OP chemical for admins
-	name = "Adminordrazine"
+	name = "Админордразин"
 	id = "adminordrazine"
-	description = "It's magic. We don't have to explain it."
+	description = "Это магия. Мы не должны объяснять это."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	taste_message = "admin abuse"
+	taste_message = "педальной магии"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
 	..()
@@ -370,9 +370,9 @@
 			D.cure()
 
 /datum/reagent/synaptizine
-	name = "Synaptizine"
+	name = "Синаптизин"
 	id = "synaptizine"
-	description = "Synaptizine is used to treat various diseases."
+	description = "Используется для лечения галлюцинаций."
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
@@ -392,9 +392,9 @@
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin
-	name = "Hyronalin"
+	name = "Гироналин"
 	id = "hyronalin"
-	description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
+	description = "Лекарственный препарат, применяемый для противодействия эффекту радиационного отравления."
 	reagent_state = LIQUID
 	color = "#408000" // rgb: 200, 165, 220
 	custom_metabolism = 0.05
@@ -406,9 +406,9 @@
 	M.radiation = max(M.radiation - 3 * REM, 0)
 
 /datum/reagent/arithrazine
-	name = "Arithrazine"
+	name = "Аритразин"
 	id = "arithrazine"
-	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
+	description = "Нестабильный препарат, используемый в самых тяжелых случаях радиационного отравления."
 	reagent_state = LIQUID
 	color = "#008000" // rgb: 200, 165, 220
 	custom_metabolism = 0.05
@@ -423,9 +423,9 @@
 		M.take_bodypart_damage(1, 0)
 
 /datum/reagent/alkysine
-	name = "Alkysine"
+	name = "Алкиcин"
 	id = "alkysine"
-	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
+	description = "Лекарство, используемое для уменьшения повреждения неврологической ткани после катастрофической травмы. Может лечить ткани мозга."
 	reagent_state = LIQUID
 	color = "#8b00ff" // rgb: 200, 165, 220
 	custom_metabolism = 0.05
@@ -437,13 +437,13 @@
 	M.adjustBrainLoss(-3 * REM)
 
 /datum/reagent/imidazoline
-	name = "Imidazoline"
+	name = "Имидазолин"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Лечит повреждения глаз."
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "carrot"
+	taste_message = "моркови"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
@@ -458,9 +458,9 @@
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/peridaxon
-	name = "Peridaxon"
+	name = "Перидаксон"
 	id = "peridaxon"
-	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
+	description = "Используется для восстановления органов и нервной системы. Применяйте с осторожностью."
 	reagent_state = LIQUID
 	color = "#561ec3" // rgb: 200, 165, 220
 	overdose = 10
@@ -484,14 +484,14 @@
 				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/kyphotorin
-	name = "Kyphotorin"
+	name = "Кифоторин"
 	id = "kyphotorin"
-	description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
+	description = "Использует наниты, чтобы стимулировать восстановление частей тела и костей. Применяйте с осторожностью."
 	reagent_state = LIQUID
 	color = "#551a8b" // rgb: 85, 26, 139
 	overdose = 5.1
 	custom_metabolism = 0.07
-	taste_message = "machines"
+	taste_message = "машин"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin/on_general_digest(mob/living/M)
@@ -515,9 +515,9 @@
 		volume += 0.07
 
 /datum/reagent/bicaridine
-	name = "Bicaridine"
+	name = "Бикаридин"
 	id = "bicaridine"
-	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
+	description = "Лекарство используемое для лечения механических повреждений."
 	reagent_state = LIQUID
 	color = "#bf0000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -529,14 +529,14 @@
 	M.heal_bodypart_damage(2 * REM, 0)
 
 /datum/reagent/hyperzine
-	name = "Hyperzine"
+	name = "Гиперзин"
 	id = "hyperzine"
-	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
+	description = "Высокоэффективный, длительный мышечный стимулятор."
 	reagent_state = LIQUID
 	color = "#ff4f00" // rgb: 200, 165, 220
 	custom_metabolism = 0.03
 	overdose = REAGENTS_OVERDOSE * 0.5
-	taste_message = "speed"
+	taste_message = "скорости"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
@@ -545,9 +545,9 @@
 		M.emote(pick("twitch","blink","shiver"))
 
 /datum/reagent/cryoxadone
-	name = "Cryoxadone"
+	name = "Криоксадон"
 	id = "cryoxadone"
-	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
+	description = "Химическая смесь с почти магической целительной силой. Его основным ограничением является то, что для правильного метаболизма температура тела целевой группы должна быть ниже 170 К."
 	reagent_state = LIQUID
 	color = "#80bfff" // rgb: 200, 165, 220
 	taste_message = null
@@ -563,7 +563,7 @@
 /datum/reagent/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
-	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
+	description = "Жидкое соединение, подобное тому, которое используется в процессе клонирования. Может использоваться для «завершения» процесса клонирования при использовании вместе с криотрубой."
 	reagent_state = LIQUID
 	color = "#8080ff" // rgb: 200, 165, 220
 	taste_message = null
@@ -577,9 +577,9 @@
 		M.adjustToxLoss(-3)
 
 /datum/reagent/rezadone
-	name = "Rezadone"
+	name = "Резадон"
 	id = "rezadone"
-	description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
+	description = "Порошок, полученный из рыбного токсина, это вещество может эффективно лечить генетические повреждения у гуманоидов, хотя чрезмерное употребление имеет побочные эффекты."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose = REAGENTS_OVERDOSE
@@ -611,9 +611,9 @@
 			M.make_jittery(5)
 
 /datum/reagent/spaceacillin
-	name = "Spaceacillin"
+	name = "Космоциллин"
 	id = "spaceacillin"
-	description = "An all-purpose antiviral agent."
+	description = "Универсальное противовирусное средство."
 	reagent_state = LIQUID
 	color = "#ffffff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
@@ -621,9 +621,9 @@
 	taste_message = null
 
 /datum/reagent/ethylredoxrazine // FUCK YOU, ALCOHOL
-	name = "Ethylredoxrazine"
+	name = "Этилредоксразин"
 	id = "ethylredoxrazine"
-	description = "A powerful oxidizer that reacts with ethanol."
+	description = "Мощный окислитель, вступающий в реакцию с этанолом."
 	reagent_state = SOLID
 	color = "#605048" // rgb: 96, 80, 72
 	overdose = REAGENTS_OVERDOSE
@@ -638,9 +638,9 @@
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
-	name = "Vitamin"
+	name = "Витамин"
 	id = "vitamin"
-	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	description = "Все лучшие витамины, минералы и углеводы, необходимые организму в чистом виде."
 	reagent_state = SOLID
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = null
@@ -661,9 +661,9 @@
 				B.volume += 0.5
 
 /datum/reagent/lipozine
-	name = "Lipozine" // The anti-nutriment.
+	name = "Липозин" // The anti-nutriment.
 	id = "lipozine"
-	description = "A chemical compound that causes a powerful fat-burning reaction."
+	description = "Химическое соединение, вызывающее мощную реакцию сжигания жира."
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#bbeda4" // rgb: 187, 237, 164
@@ -675,9 +675,9 @@
 	M.overeatduration = 0
 
 /datum/reagent/stimulants
-	name = "Stimulants"
+	name = "Стимуляторы"
 	id = "stimulants"
-	description = "Stimulants to keep you up in a critical moment"
+	description = "Стимуляторы удерживаюие тебя на ногах в важный момент."
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
 	custom_metabolism = 0.5
@@ -695,14 +695,14 @@
 	H.shock_stage -= 20
 
 /datum/reagent/nanocalcium
-	name = "Nano-Calcium"
+	name = "Нанокальций"
 	id = "nanocalcium"
-	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
+	description = "Усовершенствованные наниты, содержащие кальций, предназначены для восстановления костей. Наномашины, сынок."
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.1
-	taste_message = "wholeness"
+	taste_message = "целостности"
 	restrict_species = list(IPC, DIONA)
 	data = list()
 
@@ -718,7 +718,7 @@
 		if(1 to 10)
 			M.make_dizzy(1)
 			if(prob(10))
-				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+				to_chat(M, "<span class='warning'>Ваша кожа кажется горячей, и ваши вены горят!</span>")
 		if(10 to 20)
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
 				M.adjustToxLoss(5)
@@ -728,7 +728,7 @@
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
 					if(prob(50))
-						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
+						to_chat(M, "<span class='notice'>Вы чувствуете жжение в своей [E.name] в то время как она невольно выпрямляется!</span>")
 						E.brute_dam = 0
 						E.status &= ~BROKEN
 						holder.remove_reagent("nanocalcium", 10)
