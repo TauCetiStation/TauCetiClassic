@@ -75,7 +75,7 @@
 			if(prob(90))
 				to_chat(M, "<span class='notice'>Ваш разум становится намного стабильнее.</span>")
 			else
-				to_chat(M, "<span class='warning'>Ваш разум распадается по частям.</span>")
+				to_chat(M, "<span class='warning'>Ваш разум распадается.</span>")
 				M.hallucination += 200
 
 /datum/chemical_reaction/paroxetine
