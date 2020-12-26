@@ -3,7 +3,7 @@
 /datum/reagent/antidepressant/methylphenidate
 	name = "Метилфенидат"
 	id = "methylphenidate"
-	description = "Улучшает способность концентрироваться."
+	description = "Улучшает концентрацию."
 	reagent_state = LIQUID
 	color = "#bf80bf"
 	custom_metabolism = 0.01
