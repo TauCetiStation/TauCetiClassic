@@ -82,6 +82,7 @@
 	..()
 
 /obj/item/weapon/picture_frame/MouseDrop(obj/over_object)
+	. = ..()
 	if(ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		if(!(src.loc == usr))
