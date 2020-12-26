@@ -1209,11 +1209,11 @@
 
 	if(world.time-lasttaste >= 18)//prevent tastes spam
 		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
-			to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
+			to_chat(src, "<span class='notice'>Вы не можете понять какой вкус вы чувствуете</span>")
 			lasttaste = world.time
 			return
 
-		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>Вы чувствуете вкус [english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
 // This proc returns TRUE if less than given percentage is not covered.
