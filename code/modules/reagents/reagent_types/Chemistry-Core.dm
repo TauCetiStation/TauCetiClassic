@@ -1,7 +1,7 @@
 /datum/reagent/water
 	name = "Вода"
 	id = "water"
-	description = "Всюду присутствующее химическое вещество, состоящее из водорода и кислорода."
+	description = "Повсеместно встречающееся химическое вещество, состоящее из водорода и кислорода."
 	reagent_state = LIQUID
 	color = "#0064c8" // rgb: 0, 100, 200
 	custom_metabolism = 0.01
