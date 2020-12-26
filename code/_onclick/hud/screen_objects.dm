@@ -772,7 +772,7 @@
 	if(usr.client.outlined_item[src])
 		return
 
-	var/image/IMG = image(icon, src, icon_state)
+	var/image/IMG = image(icon, src, icon_state, layer = layer)
 	IMG.filters += filter(type = "outline", size = 1, color = color)
 	usr.client.images += IMG
 	usr.client.outlined_item[src] = IMG
