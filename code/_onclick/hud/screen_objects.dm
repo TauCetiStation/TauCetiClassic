@@ -63,6 +63,7 @@
 
 /obj/screen/storage
 	name = "storage"
+	var/obj/item/last_outlined // for removing outline from item
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
@@ -94,6 +95,40 @@
 					I.Click(location, control, params)
 					return 1
 	return 1
+
+/obj/screen/storage/MouseEntered(location, control, params)
+	. = ..()
+	if(master)
+		var/obj/item/weapon/storage/S = master
+		if(!S || !S.storage_ui)
+			return
+		// Taking something out of the storage screen (including clicking on item border overlay)
+		var/list/PM = params2list(params)
+		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
+
+		var/obj/item/I
+		for(var/i in 1 to S.storage_ui.click_border_start.len)
+			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+				I = S.contents[i]
+				if (I)
+					last_outlined = I
+					if(usr.incapacitated() || istype(usr.loc, /obj/mecha))
+						I.apply_outline(COLOR_RED_LIGHT)
+					else
+						I.apply_outline()
+					return
+
+/obj/screen/storage/MouseExited()
+	. = ..()
+	last_outlined?.remove_outline()
+	last_outlined = null
+
+/obj/screen/storage/MouseDrop()
+	. = ..()
+	last_outlined?.remove_outline()
+	last_outlined = null
 
 /obj/screen/gun
 	name = "gun"
@@ -685,8 +720,6 @@
 				usr.next_move = world.time+6
 	return 1
 
-/obj/item/var/outline_filter //the outline filter on hover
-
 /obj/screen/inventory/MouseEntered()
 	add_stored_outline()
 
@@ -699,14 +732,17 @@
 /obj/item/MouseExited()
 	remove_outline()
 
+/obj/item/MouseDrop()
+	remove_outline()
+
 /obj/screen/inventory/proc/add_stored_outline()
-	if(!slot_id)
+	if(!slot_id || !usr.client.prefs.outline_enabled)
 		return
 	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
 	if(!inv_item)
 		return
 	if(usr.incapacitated())
-		inv_item.apply_outline(COLOR_RED_GRAY)
+		inv_item.apply_outline(COLOR_RED_LIGHT)
 	else
 		inv_item.apply_outline()
 
@@ -718,7 +754,11 @@
 		return
 	inv_item.remove_outline()
 
-/obj/item/proc/apply_outline(color = COLOR_WHITE)
+/obj/item/proc/apply_outline(color)
+	if(!usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
 	if(outline_filter)
 		filters -= outline_filter
 	outline_filter = filter(type = "outline", size = 1, color = color)
@@ -727,6 +767,7 @@
 /obj/item/proc/remove_outline()
 	if(outline_filter)
 		filters -= outline_filter
+		outline_filter = null
 
 /obj/screen/inventory/craft
 	name = "crafting menu"

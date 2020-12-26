@@ -36,7 +36,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 	var/outline_enabled = TRUE
-	var/outline_color = COLOR_BLUE_GRAY
+	var/outline_color = COLOR_BLUE_LIGHT
 
 	//TGUI
 	var/tgui_fancy = TRUE
