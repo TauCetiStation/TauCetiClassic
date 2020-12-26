@@ -57,7 +57,7 @@
 /datum/reagent/antidepressant/paroxetine
 	name = "Пароксетин"
 	id = "paroxetine"
-	description = "Сильно стабилизирует разум, но имеет шанс побочных эффектов."
+	description = "Отлично стабилизирует разум, но есть шанс получить побочный эффект."
 	reagent_state = LIQUID
 	color = "#ff80bf"
 	custom_metabolism = 0.01
