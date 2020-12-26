@@ -7,7 +7,6 @@
 	var/deconstruct_favor_cost
 	var/piety_cost
 	var/deconstruct_piety_cost
-	// TODO: Replace Pylon on Pedestal
 
 /datum/building_agent/proc/get_costs()
 	var/costs = ""
@@ -28,11 +27,16 @@
 
 	return costs
 
-// For cultists
+/////////////////////////
+//________CULT_________//
+/////////////////////////
 /datum/building_agent/cult
 
-// For tome
+// Used in tome
 /datum/building_agent/cult/structure
+
+// Remove runes for free
+/datum/building_agent/cult/rune
 
 /datum/building_agent/cult/structure/wall
 	name = "Wall"
@@ -91,4 +95,3 @@
 	deconstruct_favor_cost = 50
 	piety_cost = 10
 	deconstruct_piety_cost = 1
-

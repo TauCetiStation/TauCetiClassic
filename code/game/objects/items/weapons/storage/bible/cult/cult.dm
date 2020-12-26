@@ -48,13 +48,7 @@
 	return ..()
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(!toggle_deconstruct)
-		return
-
-	if(destr_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>YOU CANT DESTROY! Please wait about [round((destr_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
-		return
+	..()
 
 	if(target.type in religion.strange_anomalies)
 		animate(target, 1 SECONDS, alpha = 0)
@@ -62,6 +56,13 @@
 		religion.adjust_favor(rand(1, 5))
 		qdel(target)
 		destr_next[user.ckey] = world.time + destr_cd
+		return
+
+	if(!toggle_deconstruct)
+		return
+
+	if(destr_next[user.ckey] > world.time)
+		to_chat(user, "<span class='warning'>YOU CANT DESTROY! Please wait about [round((destr_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
 	for(var/datum/building_agent/B in religion.available_buildings)
@@ -87,9 +88,10 @@
 			religion.adjust_piety(-B.deconstruct_piety_cost)
 			break
 
-// TODO: do func
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
-	return
+	for(var/datum/building_agent/B in religion.available_runes)
+		var/atom/build = B.building_type
+		rune_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
 	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
@@ -102,6 +104,15 @@
 		to_chat(user, "<span class='warning'>YOU CANT SCRIBE RUNE! Please wait about [round((rune_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
+	var/datum/building_agent/choice = get_agent_radial_menu(rune_choices_image, user)
+
+	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
+		return
+
+	new choice.building_type(get_turf(user))
+
+	religion.adjust_favor(-choice.favor_cost)
+	religion.adjust_piety(-choice.piety_cost)
 	rune_next[user.ckey] = world.time + rune_cd
 
 /obj/item/weapon/storage/bible/tome/proc/building(mob/user)
@@ -109,12 +120,7 @@
 		to_chat(user, "<span class='warning'>YOU CANT BUILD! Please wait about [round((build_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
-	for(var/datum/building_agent/B in build_choices_image)
-		B.name = "[initial(B.name)] [B.get_costs()]"
-
-	var/datum/building_agent/choice = show_radial_menu(user, src, build_choices_image, tooltips = TRUE, require_near = TRUE)
-	if(!choice)
-		return
+	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user)
 
 	if(choice == "Toggle Grind mode")
 		toggle_deconstruct = !toggle_deconstruct
@@ -152,3 +158,13 @@
 			scribe_rune(user)
 		if("Construction")
 			building(user)
+
+/obj/item/weapon/storage/bible/tome/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user)
+	for(var/datum/building_agent/B in BA)
+		B.name = "[initial(B.name)] [B.get_costs()]"
+
+	var/datum/building_agent/choice = show_radial_menu(user, src, BA, tooltips = TRUE, require_near = TRUE)
+	if(!choice)
+		return
+
+	return choice

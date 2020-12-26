@@ -16,8 +16,7 @@
 			qdel(O)
 	return TRUE
 
-/datum/religion_rites/standing/swap/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	..()
+/datum/religion_rites/standing/swap/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	for(var/obj/O in range(1, AOG.loc))
 		if(!swap_list[O.type])
 			continue

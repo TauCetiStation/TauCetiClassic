@@ -54,8 +54,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
+/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(prob(50))
 		spawn_food(AOG.loc, 1)
 
@@ -99,7 +98,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	..()
 	global.chaplain_religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
@@ -136,8 +135,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	..()
+/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 

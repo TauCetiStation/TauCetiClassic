@@ -28,17 +28,15 @@
 #define COMSIG_RITE_CAN_START "rite_can_start"
 /// from base of religion_rites/start(): (/mob, /obj/structure/altar_of_gods)
 #define COMSIG_RITE_STARTED "rite_is_started"
-/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
-/// from base of religion_rites/on_invocation(): (/mob, /obj/structure/altar_of_gods, stage)
-#define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
-/// from base of religion_rites/can_step(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
-	#define COMPONENT_CHECK_FAILED 1
 /// from base of religion_rites/rite_step_wrapper(): (/mob, /obj/structure/altar_of_gods)
 #define COMSIG_RITE_IN_STEP "rite_in_step"
 /// from base of religion_rites/step_end(): (/mob, /obj/structure/altar_of_gods)
 #define COMSIG_RITE_STEP_ENDED "rite_step_ended"
+/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
+/// from base of religion_rites/can_step(): (/mob, /obj/structure/altar_of_gods)
+#define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
+	#define COMPONENT_CHECK_FAILED 1
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)

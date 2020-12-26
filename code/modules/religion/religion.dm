@@ -89,7 +89,11 @@
 	// All constructions that religion can build
 	var/list/datum/building_agent/available_buildings = list()
 	// Type of initial construction agent for which available_buildings will be generated
-	var/agent_type
+	var/build_agent_type
+	// All runes that religion can scribe
+	var/list/datum/building_agent/available_runes = list()
+	// Type of initial runes agent for which available_runes will be generated
+	var/rune_agent_type
 
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
@@ -192,7 +196,7 @@
 	gen_pews_variants()
 	gen_carpet_variants()
 
-	gen_building_list()
+	gen_agent_lists()
 
 	update_structure_info()
 
@@ -459,8 +463,9 @@
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	return TRUE
 
-/datum/religion/proc/gen_building_list()
-	init_subtypes(agent_type, available_buildings)
+/datum/religion/proc/gen_agent_lists()
+	init_subtypes(build_agent_type, available_buildings)
+	init_subtypes(rune_agent_type, available_runes)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)

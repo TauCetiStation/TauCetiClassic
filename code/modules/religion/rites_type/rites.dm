@@ -37,20 +37,24 @@
 	tips -= tip
 	update_tip()
 
+// How many steps there should be
 /datum/religion_rites/proc/get_count_steps()
 	return
 
+// Called after on_chosen and checks on cost
 /datum/religion_rites/proc/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
 
+// The main proc. It allows you to move from one step to the next
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
 
-/datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_RITE_ON_INVOCATION, user, AOG, stage)
-
+// Event after can_invocate execution
 /datum/religion_rites/proc/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+	return
+
+// Event after the end of the ritual, but before removing favor and invoke_effect
+/datum/religion_rites/proc/end(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
@@ -59,9 +63,7 @@
 	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE
 
-/datum/religion_rites/proc/end(mob/living/user, obj/structure/altar_of_gods/AOG)
-	return
-
+// Return the ritual variables to their original state or change them in some way
 /datum/religion_rites/proc/reset_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return
 
@@ -70,9 +72,6 @@
 /datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-		to_chat(world, "if(!SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)")
-		var/a = SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED
-		to_chat(world, "[SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG)] - [COMPONENT_CHECK_FAILED] - [a]")
 		return FALSE
 
 	if(!religion.check_costs(favor_cost, user = user))
@@ -108,7 +107,6 @@
 
 /datum/religion_rites/proc/rite_step_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_IN_STEP, user, AOG, current_stage)
-	on_invocation(user, AOG, current_stage)
 
 	rite_step(user, AOG, current_stage)
 

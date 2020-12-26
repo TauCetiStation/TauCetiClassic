@@ -44,7 +44,7 @@
 		rite.add_tips(tips_to_add)
 
 	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_items_on_altar)
-	RegisterSignal(parent, list(COMSIG_RITE_ON_INVOCATION), .proc/update_fake_item)
+	RegisterSignal(parent, list(COMSIG_RITE_IN_STEP), .proc/update_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
 	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
 
