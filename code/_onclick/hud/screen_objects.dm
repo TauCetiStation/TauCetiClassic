@@ -700,13 +700,15 @@
 	remove_outline()
 
 /obj/screen/inventory/proc/add_stored_outline()
-	if(slot_id)
-		var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
-		if(inv_item)
-			if(usr.incapacitated())
-				inv_item.apply_outline(COLOR_RED_GRAY)
-			else
-				inv_item.apply_outline()
+	if(!slot_id)
+		return
+	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
+	if(!inv_item)
+		return
+	if(usr.incapacitated())
+		inv_item.apply_outline(COLOR_RED_GRAY)
+	else
+		inv_item.apply_outline()
 
 /obj/screen/inventory/proc/remove_stored_outline()
 	if(!slot_id)
@@ -717,12 +719,10 @@
 	inv_item.remove_outline()
 
 /obj/item/proc/apply_outline(color = COLOR_WHITE)
-	var/static/list/outline_filters = list()
-	if(!outline_filters[color])
-		outline_filters[color] = filter(type = "outline", size = 1, color = color)
-	remove_outline()
-	outline_filter = outline_filters[color]
-	filters += outline_filters[color]
+	if(outline_filter)
+		filters -= outline_filter
+	outline_filter = filter(type = "outline", size = 1, color = color)
+	filters += outline_filter
 
 /obj/item/proc/remove_outline()
 	if(outline_filter)
