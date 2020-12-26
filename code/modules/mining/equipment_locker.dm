@@ -866,6 +866,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!loaded)
 		return
 	if(istype(target, /obj/item/clothing/suit/space))

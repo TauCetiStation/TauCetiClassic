@@ -418,7 +418,7 @@
 	if(locate(/obj/structure/table, loc))
 		return
 
-	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && proximity)
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
