@@ -18,7 +18,7 @@
 	else
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
-			to_chat(M, "<span class='notice'>Вы чувствуете себя сосредоточенным и неразделенным.</span>")
+			to_chat(M, "<span class='notice'>Вы чувствуете себя сосредоточенным.</span>")
 
 /datum/chemical_reaction/methylphenidate
 	name = "Methylphenidate"
