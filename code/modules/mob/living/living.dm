@@ -1209,7 +1209,7 @@
 
 	if(world.time-lasttaste >= 18)//prevent tastes spam
 		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
-			to_chat(src, "<span class='notice'>Вы не можете понять какой вкус вы чувствуете</span>")
+			to_chat(src, "<span class='notice'>Вы не можете распробовать это на вкус...</span>")
 			lasttaste = world.time
 			return
 
