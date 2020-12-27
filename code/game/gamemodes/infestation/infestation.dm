@@ -5,7 +5,7 @@
 #define TOTAL_HUMAN		1
 #define TOTAL_ALIEN		2
 #define ALIEN_PERCENT	3
-#define WIN_PERCENT		90
+#define WIN_PERCENT		190
 /datum/game_mode
 
 	var/list/datum/mind/xenomorphs = list()
@@ -118,38 +118,38 @@
 				aliens["F_dead"] ++
 			else
 				aliens["F_live"] ++
-				aliens["F_key"] += "[A.key] "
+				aliens["F_key"] += " [A.key] "
 			continue
 		if(isxenolarva(A))
-			if(A.stat == DEAD)// || !A.key)
+			if(A.stat == DEAD || !A.key)
 				aliens["L_dead"] ++
 			else
 				aliens["L_live"] ++
-				aliens["L_key"] += "[A.key] "
+				aliens["L_key"] += " [A.key] "
 			continue
 		if(isxenohunter(A))
-			if(A.stat == DEAD)// || !A.key)
+			if(A.stat == DEAD || !A.key)
 				aliens["H_dead"] ++
 				continue
 			else
 				aliens["H_live"] ++
-				aliens["H_key"] += "[A.key] "
+				aliens["H_key"] += " [A.key] "
 		if(isxenosentinel(A))
-			if(A.stat == DEAD)// || !A.key)
+			if(A.stat == DEAD || !A.key)
 				aliens["S_dead"] ++
 				continue
 			else
 				aliens["S_live"] ++
-				aliens["S_key"] += "[A.key] "
+				aliens["S_key"] += " [A.key] "
 		if(isxenodrone(A))
-			if(A.stat == DEAD)// || !A.key)
+			if(A.stat == DEAD || !A.key)
 				aliens["D_dead"] ++
 				continue
 			else
 				aliens["D_live"] ++
-				aliens["D_key"] += "[A.key] "
+				aliens["D_key"] += " [A.key] "
 		if(isxenoqueen(A))
-			if(A.stat == DEAD)// || !A.key)
+			if(A.stat == DEAD || !A.key)
 				aliens["Q_dead"] ++
 				continue
 			else
@@ -210,7 +210,7 @@
 	text += "<table>"
 
 	if(!aliens["Q_live"] && !aliens["Q_dead"])
-		text += "<tr><td style='color: orange; font-weight: bold;'>У ксеноморфов не было королевы!</td></tr>"
+		text += "<tr><td colspan='2'; style='color: orange; font-weight: bold;'>У ксеноморфов не было королевы!</td></tr>"
 	else
 		if(aliens["Q_live"])
 			I = icon('icons/mob/alienqueen.dmi', "queen_s", SOUTH)
@@ -281,9 +281,9 @@
 	end_icons += I
 	var/tempstate = end_icons.len
 	text += "<tr><td colspan='2'>Всего [xeno_name] было: [xeno_live + xeno_dead]</td></tr>"
-	text += {"<tr><td><img src="logo_[tempstate].png"></td>"}
+	text += {"<tr><td><img src="logo_[tempstate].png"></td><td>"}
 	if(xeno_live)
-		text += "<td><span style='color: green; font-weight: bold;'>Выжило: [xeno_live]</span> ([xeno_key])<br>"
+		text += "<span style='color: green; font-weight: bold;'>Выжило: [xeno_live]</span> ([xeno_key])<br>"
 	if(xeno_dead)
 		text += "<span style='color: red; font-weight: bold;'>Погибло: [xeno_dead]</span>"
 	text += "</td></tr>"
@@ -291,7 +291,7 @@
 	return text
 
 /datum/game_mode/infestation/proc/check_crew()
-	var/total_human = 3
+	var/total_human = 0
 	var/human_dead = 0
 	var/human_no_client = 0
 	var/outside_station = 0
@@ -314,7 +314,7 @@
 /datum/game_mode/infestation/proc/count_alien_percent()
 	var/total_human = check_crew()
 	var/total_alien = count_hive_power()
-	var/alien_percent = round((total_alien * 100) / total_human)
+	var/alien_percent = total_human ? round((total_alien * 100) / total_human) : round(total_alien * 100)	//do not divide by zero
 	. = list(total_human, total_alien, alien_percent)
 
 /datum/game_mode/infestation/check_finished()
