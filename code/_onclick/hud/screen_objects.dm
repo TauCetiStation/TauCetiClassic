@@ -773,6 +773,10 @@
 		return
 
 	var/image/IMG = image(icon, src, icon_state, layer = layer)
+	IMG.override = TRUE
+	IMG.overlays += overlays
+	IMG.appearance_flags |= KEEP_TOGETHER
+
 	IMG.filters += filter(type = "outline", size = 1, color = color)
 	usr.client.images += IMG
 	usr.client.outlined_item[src] = IMG
