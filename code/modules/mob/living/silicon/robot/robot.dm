@@ -443,7 +443,7 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(SSticker && SSticker.mode.name == "AI malfunction")
+	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
