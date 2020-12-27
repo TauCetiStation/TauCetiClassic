@@ -1213,7 +1213,7 @@
 			lasttaste = world.time
 			return
 
-		to_chat(src, "<span class='notice'>Вы чувствуете вкус [english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>Вы чувствуете [english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
 // This proc returns TRUE if less than given percentage is not covered.

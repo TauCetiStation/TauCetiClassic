@@ -99,8 +99,8 @@
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && prob(10))
 		SSticker.mode.remove_cultist(M.mind)
-		M.visible_message("<span class='notice'>Глаза [M] мигают и становятся яснее.</span>",
-				          "<span class='notice'>Ощущение прохлады внутри вас приносит вам невыразимое спокойствие.</span>")
+		M.visible_message("<span class='notice'>[M] моргает и его глаза становятся чище.</span>",
+				          "<span class='notice'>Ощущение прохлады внутри заставляет вас чувствовать невыразимое спокойствие.</span>")
 
 /datum/reagent/water/holywater/reaction_obj(obj/O, volume)
 	src = null
@@ -147,7 +147,7 @@
 /datum/reagent/water/unholywater
 	name = "Проклятая вода"
 	id = "unholywater"
-	description = "Трупно-эктоплазматически-водная смесь, этот раствор может изменить концепции самой реальности."
+	description = "Смесь мертвечины, эктоплазмы и воды. Этот раствор может изменить концепцию самой реальности."
 	color = "#c80064" // rgb: 200,0, 100
 
 	data = list()
@@ -243,7 +243,7 @@
 /datum/reagent/copper
 	name = "Медь"
 	id = "copper"
-	description = "Металл обладающий высокой проводимостью."
+	description = "Очень податливый металл."
 	color = "#6e3b08" // rgb: 110, 59, 8
 	taste_message = null
 	custom_metabolism = 0.01
@@ -299,7 +299,7 @@
 	reagent_state = LIQUID
 	color = "#484848" // rgb: 72, 72, 72
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "наркоманского яда"
+	taste_message = "наркоманский яд"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
@@ -313,7 +313,7 @@
 /datum/reagent/sulfur
 	name = "Сера"
 	id = "sulfur"
-	description = "Химический элемент с острым запахом."
+	description = "Химический элемент с едким запахом."
 	reagent_state = SOLID
 	color = "#bf8c00" // rgb: 191, 140, 0
 	taste_message = "импульсивного решения"
@@ -322,7 +322,7 @@
 /datum/reagent/carbon
 	name = "Углерод"
 	id = "carbon"
-	description = "Химический элемент, строительный материал всего живого."
+	description = "Химический элемент. Строительный материал всего живого."
 	reagent_state = SOLID
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "карандаша или чего-то такого"
@@ -341,7 +341,7 @@
 /datum/reagent/chlorine
 	name = "Хлор"
 	id = "chlorine"
-	description = "Химический элемент со специфическим запахом."
+	description = "Химический элемент с характерным запахом."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
