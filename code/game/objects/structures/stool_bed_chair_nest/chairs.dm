@@ -348,7 +348,7 @@
 		to_chat(user, "<span class='warning'>[M] has no head!</span>")
 		return FALSE
 
-	if(M.loc != src.loc)
+	if(M.loc != loc)
 		return FALSE
 
 	if(!can_hang())

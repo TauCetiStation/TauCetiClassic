@@ -226,10 +226,10 @@
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/stool/bed/chair/noose/N
 	if(user_turf.density)
-		to_chat(user, "<span class='notice'>You cant build a noose over that.</span>")
+		to_chat(user, "<span class='notice'>You can't build a noose over that.</span>")
 		return
 	if(locate(N) in user_turf)
-		to_chat(user, "<span class='notice'>You cant build a noose on a tile that has a noose.</span>")
+		to_chat(user, "<span class='notice'>You can't build a noose on a tile that has a noose.</span>")
 		return
 	user.visible_message("<span class='notice'>[user] starts constructing a noose</span>")
 	to_chat(user, "<span class='notice'>You begin to construct a noose...</span>")
@@ -237,7 +237,7 @@
 		return
 	N = new(user_turf)
 	N.layer = FLY_LAYER // because of bed/chair/atom_init 
-	N.color = src.color
+	N.color = color
 	qdel(src)
 
 /obj/item/weapon/noose/attackby(obj/item/W, mob/user)
