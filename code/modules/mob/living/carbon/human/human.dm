@@ -2034,12 +2034,16 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
 
 /mob/living/carbon/human/make_dizzy(amount)
+	if(species.flags[IS_SYNTHETIC])
+		return
 	dizziness = min(1000, dizziness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(dizziness > 100 && !is_dizzy)
 		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
 
 /mob/living/carbon/human/make_jittery(amount)
+	if(species.flags[IS_SYNTHETIC])
+		return
 	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)

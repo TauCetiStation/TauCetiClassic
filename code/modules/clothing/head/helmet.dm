@@ -12,6 +12,8 @@
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
 	w_class = ITEM_SIZE_NORMAL
+	force = 5
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
@@ -28,6 +30,8 @@
 	flags_inv = HIDEEARS
 	body_parts_covered = 0
 	siemens_coefficient = 0.8
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/HoS/dermal
 	name = "dermal armour patch"
@@ -157,6 +161,8 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"

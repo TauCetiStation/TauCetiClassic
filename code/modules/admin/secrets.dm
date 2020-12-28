@@ -1,5 +1,11 @@
 /datum/admins
-	var/current_tab =0
+	var/current_tab = 0
+
+	var/list/datum/secrets_menu/secrets_menu = list()
+
+	var/static/datum/announcement/station/gravity_off/announce_gravity_off = new
+	var/static/datum/announcement/station/gravity_on/announce_gravity_on = new
+	var/static/datum/announcement/centcomm/access_override/announce_override = new
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))
@@ -193,11 +199,11 @@
 			if(gravity_is_on)
 				log_admin("[key_name(usr)] toggled gravity on.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity on.</span>")
-				command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.", null, "gravon")
+				announce_gravity_on.play()
 			else
 				log_admin("[key_name(usr)] toggled gravity off.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity off.</span>")
-				command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.", null, "gravoff")
+				announce_gravity_off.play()
 		// Make all areas powered
 		if("power")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -461,7 +467,7 @@
 				W.item_state = "w_suit"
 				W.item_color = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-			station_announce(sound = "animes")
+			announcement_ping.play("animes")
 		// Egalitarian Station Mode
 		if("eagles")//SCRAW
 			feedback_inc("admin_secrets_fun_used",1)
@@ -470,7 +476,7 @@
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/bridge) && !istype(get_area(W), /area/station/civilian/dormitories) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
+			announce_override.play()
 		// Dorf Mode
 		if("dorf")
 			feedback_inc("admin_secrets_fun_used",1)
