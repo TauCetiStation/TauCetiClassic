@@ -75,6 +75,8 @@
 			return
 	if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
 		return
+	if(!..())
+		return
 	user.mind.changeling.instatis = TRUE
 	user.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
 	for(var/mob/M in user.mind.changeling.essences)

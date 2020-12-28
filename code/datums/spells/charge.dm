@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/charge
-	name = "Charge"
-	desc = "This spell can be used to recharge a variety of things in your hands, \
-	 from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
+	name = "Заряд"
+	desc = "Можно использовать для перезарядки разных вещей в ваших руках. \
+	 		Это могут быть как магические артефакты, так и электронные компоненты. Креативные колдуны могут использовать его для зарядки своих друзей магией."
 	school = "transmutation"
 	charge_max = 600
 	clothes_req = 0
