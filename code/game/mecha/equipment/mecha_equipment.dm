@@ -14,6 +14,7 @@
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
 	reliability = 1000
+	var/selectable = TRUE// Set to FALSE for passive equipment such as mining scanner or armor plates
 	var/salvageable = 1
 	var/sound_detonation = 'sound/mecha/critdestr.ogg'
 	var/sound_attach_equip = 'sound/mecha/mecha_attack_equip.ogg'

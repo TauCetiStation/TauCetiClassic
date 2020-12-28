@@ -14,7 +14,7 @@ var/global/blobwincount = 500
 	role_type = ROLE_BLOB
 
 	required_players = 30
-	required_players_secret = 25
+	required_players_bundles = 25
 	required_enemies = 1
 	recommended_enemies = 1
 
