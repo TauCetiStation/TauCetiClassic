@@ -426,7 +426,7 @@
 	n %= 100
 	if(5 <= n && n <= 20)
 		return five
-	n %=10
+	n %= 10
 	switch(n)
 		if(1)
 			return one
