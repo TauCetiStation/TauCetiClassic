@@ -2040,6 +2040,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		INVOKE_ASYNC(src, /mob.proc/dizzy_process)
 
 /mob/living/carbon/human/make_jittery(amount)
+	if(species.flags[IS_SYNTHETIC])
+		return
 	jitteriness = min(1000, jitteriness + amount)	// store what will be new value
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
