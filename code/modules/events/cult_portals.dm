@@ -1,5 +1,6 @@
 /datum/event/anomaly/cult_portal
 	var/max_constructs
+	announcement = new /datum/announcement/centcomm/anomaly/bluespace
 
 /datum/event/anomaly/cult_portal/setup()
 	startWhen = rand(50, 150)
@@ -7,9 +8,6 @@
 	endWhen = startWhen + 300
 	max_constructs = rand(2, 7)
 	impact_area = findEventArea()
-
-/datum/event/anomaly/cult_portal/announce()
-	command_alert("Обнаружены неизвестные блюспейс сигнатуры от неверефицированного источника внутри станции. Предполагаемое расположение: [impact_area.name].", "Блюспейс Тревога")
 
 /datum/event/anomaly/cult_portal/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
@@ -30,9 +28,7 @@
 	startWhen = 5
 	announceWhen = 5
 	endWhen = 300
-
-/datum/event/anomaly/cult_portal/massive/announce()
-	command_alert("Внимание! Обнаружено множество неавторизованных блюспейс сигнатур! Не забудьте сохранить целостность станции.", "Блюспейс Тревога")
+	announcement = new /datum/announcement/centcomm/anomaly/massive_portals
 
 /datum/event/anomaly/cult_portal/massive/start()
 	if(!newAnomaly)
