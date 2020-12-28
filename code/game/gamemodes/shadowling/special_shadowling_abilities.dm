@@ -161,6 +161,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(50)
 			if(!SSticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
-				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+				SSshuttle.announce_emer_called.play()
 			SSticker.mode.shadowling_ascended = 1
 			qdel(usr)

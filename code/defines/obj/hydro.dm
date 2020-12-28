@@ -405,13 +405,13 @@
 	mutatelist = list(/obj/item/seeds/bluespacetomatoseed)
 
 /obj/item/seeds/bluespacetomatoseed
-	name = "pack of blue-space tomato seeds"
-	desc = "These seeds grow into blue-space tomato plants."
+	name = "pack of bluespace tomato seeds"
+	desc = "These seeds grow into bluespace tomato plants."
 	icon_state = "seed-bluespacetomato"
 	mypath = "/obj/item/seeds/bluespacetomatoseed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bluespacetomato"
-	plantname = "Blue-Space Tomato Plants"
+	plantname = "Bluespace Tomato Plants"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato"
 	lifespan = 25
 	endurance = 15
