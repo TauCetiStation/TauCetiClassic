@@ -420,10 +420,10 @@
 
 	return new_text
 
-/proc/russian_plural(n, one, two, five="")
-	if(five == "")
+/proc/russian_plural(n, one, two, five)
+	if(!five)
 		five = two
-	n %= 100
+	n = abs(n) % 100
 	if(5 <= n && n <= 20)
 		return five
 	n %= 10
