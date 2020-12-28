@@ -131,23 +131,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/book/tome))
-		user.SetNextMove(CLICK_CD_MELEE)
-		var/mob/dead/M = src
-		if(src.invisibility != 0)
-			M.invisibility = 0
-			user.visible_message( \
-				"<span class='red'>[user] drags ghost, [M], to our plan of reality!</span>", \
-				"<span class='red'>You drag [M] to our plan of reality!</span>" \
-			)
-		else
-			user.visible_message ( \
-				"<span class='red'>[user] just tried to smash his book into that ghost!  It's not very effective.</span>", \
-				"<span class='red'>You get the feeling that the ghost can't become any more visible.</span>" \
-			)
-
-
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
 

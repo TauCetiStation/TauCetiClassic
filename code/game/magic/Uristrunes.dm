@@ -6,7 +6,7 @@ var/list/word_to_uristrune_table = null
 		word_to_uristrune_table = list()
 
 		var/bit = 1
-		var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "mgar", "balaq", "karazet", "geeri")
+		var/list/words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 		while(length(words))
 			var/w = pick(words)
@@ -20,10 +20,10 @@ var/list/word_to_uristrune_table = null
 
 
 
-/proc/get_uristrune_cult(animated, word1, word2, word3)
-	var/bits = word_to_uristrune_bit(word1) \
-			 | word_to_uristrune_bit(word2) \
-			 | word_to_uristrune_bit(word3)
+/proc/get_uristrune_cult(animated, list/L)
+	var/bits
+	for(var/word in L)
+		bits |= word_to_uristrune_bit(word)
 
 	return get_uristrune(bits, animated)
 

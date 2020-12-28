@@ -35,9 +35,6 @@
 // Used in tome
 /datum/building_agent/cult/structure
 
-// Remove runes for free
-/datum/building_agent/cult/rune
-
 /datum/building_agent/cult/structure/wall
 	name = "Wall"
 	building_type = /turf/simulated/wall/cult
@@ -81,6 +78,21 @@
 /datum/building_agent/cult/structure/door
 	name = "Door"
 	building_type = /obj/structure/mineral_door/cult
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
+// Remove runes for free
+/datum/building_agent/cult/rune
+	building_type = /obj/effect/rune
+	// Type of effect of rune
+	// Apply to the rune after creating the rune
+	var/rune_type
+
+/datum/building_agent/cult/rune/teleport_to_heaven
+	name = "Teleport to HEAVEN"
+	rune_type = /datum/rune/teleport_to_heaven
 	favor_cost = 100
 	deconstruct_favor_cost = 50
 	piety_cost = 10

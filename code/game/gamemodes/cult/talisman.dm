@@ -1,29 +1,30 @@
 /obj/item/weapon/paper/talisman
 	icon_state = "scrap_bloodied"
-	var/datum/cult/power
+	var/datum/rune/power
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.examinate(src)
 		return
-	if(istype(power, /datum/cult/stun))
+	if(istype(power, /datum/rune/stun))
 		to_chat(user, "<span class='userdanger'> To use this talisman, attack your target directly.</span>")
 		return
 	user.adjustBruteLoss(5)
 	if(power)
 		power.action(user)
+
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	..()
 	if(iscultist(user) && power)
-		to_chat(user, "A spell circle drawn in blood. It reads: <i>[power.word1] [power.word2] [power.word3]</i>.")
+		to_chat(user, "A spell circle drawn in blood. It reads: <i>[power?.name]</i>.")
 
 /obj/item/weapon/paper/talisman/attack(mob/living/T, mob/living/user)
 	if(iscultist(user))
-		if(istype(power, /datum/cult/stun))
+		if(istype(power, /datum/rune/stun))
 			user.adjustBruteLoss(5)
 			power.talisman_reaction(user, T)
 			return
-		else if(istype(power, /datum/cult/armor) && ishuman(T) && iscultist(T))
+		else if(istype(power, /datum/rune/armor) && ishuman(T) && iscultist(T))
 			power.action(T)
 	return ..()
 
@@ -65,28 +66,24 @@
 		return
 	if (href_list["rune"])
 		switch(href_list["rune"])
-			if("newtome")
-				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/tome_summon(T)
 			if("teleport")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/teleport(T)
-				T.power.word3 = "[pick(cultwords)]"
+				T.power = new /datum/rune/teleport(T)
 			if("emp")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/emp(T)
+				T.power = new /datum/rune/emp(T)
 			if("conceal")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/obscure(T)
+				T.power = new /datum/rune/obscure(T)
 			if("communicate")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/communicate(T)
+				T.power = new /datum/rune/communicate(T)
 			if("runestun")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/stun(T)
+				T.power = new /datum/rune/stun(T)
 			if("armor")
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
-				T.power = new /datum/cult/armor(T)
+				T.power = new /datum/rune/armor(T)
 			if("soulstone")
 				new /obj/item/device/soulstone(get_turf(usr))
 			if("construct")

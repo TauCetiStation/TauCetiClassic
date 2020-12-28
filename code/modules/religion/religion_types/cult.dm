@@ -77,6 +77,22 @@
 
 	START_PROCESSING(SSreligion, src)
 
+/datum/religion/cult/reset_religion()
+	deity_names = deity_names_by_name[name]
+	if(!deity_names)
+		warning("ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?")
+		deity_names = list("Error")
+
+	gen_bible_info()
+	gen_altar_variants()
+	gen_pews_variants()
+	gen_carpet_variants()
+	gen_agent_lists()
+
+/datum/religion/cult/setup_religions()
+	global.cult_religion = src
+	mode = SSticker.mode
+
 /datum/religion/cult/process()
 	if(next_anomaly < world.time)
 		var/time
@@ -129,22 +145,6 @@
 			H.say(pick(possible_human_phrases))
 
 		next_spook = world.time + spook_cd
-
-/datum/religion/cult/reset_religion()
-	deity_names = deity_names_by_name[name]
-	if(!deity_names)
-		warning("ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?")
-		deity_names = list("Error")
-
-	gen_bible_info()
-	gen_altar_variants()
-	gen_pews_variants()
-	gen_carpet_variants()
-	gen_agent_lists()
-
-/datum/religion/cult/setup_religions()
-	global.cult_religion = src
-	mode = SSticker.mode
 
 /datum/religion/cult/proc/give_tome(mob/living/carbon/human/cultist)
 	var/obj/item/weapon/storage/bible/tome/B = spawn_bible(cultist)

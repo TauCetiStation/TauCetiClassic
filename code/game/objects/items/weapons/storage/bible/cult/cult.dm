@@ -31,9 +31,15 @@
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
+		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
+		Most of these are useless, though.")
 		to_chat(user, "Current count of favor: [religion.favor] piety: <span class='piety'>[religion.piety]</span>")
 	else
 		..()
+
+/obj/item/weapon/storage/bible/tome/pickup(mob/user)
+	if(!religion && user.my_religion)
+		religion = user.my_religion
 
 /obj/item/weapon/storage/bible/tome/attack_self(mob/user)
 	if(religion && !choices_generated)
@@ -89,9 +95,10 @@
 			break
 
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
-	for(var/datum/building_agent/B in religion.available_runes)
-		var/atom/build = B.building_type
-		rune_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
+	for(var/datum/building_agent/cult/rune/B in religion.available_runes)
+		var/datum/rune/R = new B.rune_type
+		rune_choices_image[B] = image(icon = get_uristrune_cult(0, R.words))
+		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
 	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
@@ -104,12 +111,16 @@
 		to_chat(user, "<span class='warning'>YOU CANT SCRIBE RUNE! Please wait about [round((rune_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
-	var/datum/building_agent/choice = get_agent_radial_menu(rune_choices_image, user)
+	var/datum/building_agent/cult/rune/choice = get_agent_radial_menu(rune_choices_image, user)
+	if(!choice)
+		return
 
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
-	new choice.building_type(get_turf(user))
+	var/obj/effect/rune/R = new choice.building_type(get_turf(user))
+	R.icon = rune_choices_image[choice]
+	R.power = new choice.rune_type(R)
 
 	religion.adjust_favor(-choice.favor_cost)
 	religion.adjust_piety(-choice.piety_cost)
@@ -121,6 +132,8 @@
 		return
 
 	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user)
+	if(!choice)
+		return
 
 	if(choice == "Toggle Grind mode")
 		toggle_deconstruct = !toggle_deconstruct
@@ -164,7 +177,5 @@
 		B.name = "[initial(B.name)] [B.get_costs()]"
 
 	var/datum/building_agent/choice = show_radial_menu(user, src, BA, tooltips = TRUE, require_near = TRUE)
-	if(!choice)
-		return
 
 	return choice

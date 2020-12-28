@@ -259,6 +259,8 @@
 		if (SSticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
+		if(!global.cult_religion)
+			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
 		else if (src in global.cult_religion.members)
@@ -876,6 +878,8 @@
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
+			if("religion")
+				create_religion(/datum/religion/cult)
 			if("clear")
 				if(global.cult_religion.remove_member(current))
 					special_role = null
@@ -902,7 +906,9 @@
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
-					var/obj/item/weapon/book/tome/T = new(H)
+					var/obj/item/weapon/storage/bible/tome/T = new(H)
+					if(global.cult_religion)
+						T.religion = global.cult_religion
 
 					var/list/slots = list (
 						"backpack" = SLOT_IN_BACKPACK,
@@ -1446,7 +1452,9 @@
 
 	var/mob/living/carbon/human/H = current
 	if (istype(H))
-		var/obj/item/weapon/book/tome/T = new(H)
+		var/obj/item/weapon/storage/bible/tome/T = new(H)
+		if(global.cult_religion)
+			T.religion = global.cult_religion
 
 		var/list/slots = list (
 			"backpack" = SLOT_IN_BACKPACK,
