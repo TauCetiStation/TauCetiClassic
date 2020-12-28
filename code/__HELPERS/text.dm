@@ -419,3 +419,18 @@
 		new_text += new_char
 
 	return new_text
+
+/proc/russian_plural(n, one, two, five="")
+	if(five == "")
+		five = two
+	n %= 100
+	if(5 <= n && n <= 20)
+		return five
+	n %=10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five

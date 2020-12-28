@@ -241,6 +241,10 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		add_admin_verbs()
 		admin_memo_show()
+		if(holder.rights & R_PERMISSIONS)
+			var/fluff_count = custom_item_premoderation_list().len
+			if(fluff_count)
+				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть их в панели 'Whitelist Custom Items'</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
