@@ -26,7 +26,7 @@
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
-	required_players_secret = 20
+	required_players_bundles = 20
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
 
