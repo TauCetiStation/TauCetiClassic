@@ -15,7 +15,7 @@
 	protected_jobs = list()
 	// TEST FOR DEBUGGING OF THE GAME OF CULT OF BLOOD
 	required_players = 0
-	required_players_secret = 0
+	required_players_bundles = 0
 	// REMEMBER IT!!!!
 	required_enemies = 0
 	recommended_enemies = 1

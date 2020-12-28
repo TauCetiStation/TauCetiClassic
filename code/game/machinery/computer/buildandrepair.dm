@@ -111,7 +111,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	return ..()
 
@@ -193,6 +193,7 @@
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
+	req_access = list(access_heads)
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
@@ -359,33 +360,27 @@
 	return TRUE
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
-		switch(src.build_path)
-
-			if(/obj/machinery/computer/rdconsole/core)
-				src.name = "Circuit Board (RD Console - Robotics)"
-				src.build_path = /obj/machinery/computer/rdconsole/robotics
-				to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
-
-			if(/obj/machinery/computer/rdconsole/robotics)
-				src.name = "Circuit Board (RD Console - Mining)"
-				src.build_path = /obj/machinery/computer/rdconsole/mining
-				to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
-
-			if(/obj/machinery/computer/rdconsole/mining)
-				src.name = "Circuit Board (RD Console)"
-				src.build_path = /obj/machinery/computer/rdconsole/core
-				to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
-
-		/*if(src.build_path == /obj/machinery/computer/rdconsole/core)
-			src.name = "Circuit Board (RD Console - Robotics)"
-			src.build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
+	if(istype(I, /obj/item/weapon/card/id))
+		if(check_access(I))
+			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
+			switch(src.build_path)
+	
+				if(/obj/machinery/computer/rdconsole/core)
+					src.name = "Circuit Board (RD Console - Robotics)"
+					src.build_path = /obj/machinery/computer/rdconsole/robotics
+					to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
+	
+				if(/obj/machinery/computer/rdconsole/robotics)
+					src.name = "Circuit Board (RD Console - Mining)"
+					src.build_path = /obj/machinery/computer/rdconsole/mining
+					to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
+	
+				if(/obj/machinery/computer/rdconsole/mining)
+					src.name = "Circuit Board (RD Console)"
+					src.build_path = /obj/machinery/computer/rdconsole/core
+					to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
 		else
-			src.name = "Circuit Board (RD Console)"
-			src.build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "<span class='notice'>Access protocols set to default.</span>")*/
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else
 		return ..()
 

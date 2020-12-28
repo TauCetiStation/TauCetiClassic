@@ -6,7 +6,7 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
-	required_players_secret = 20
+	required_players_bundles = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_REV
@@ -288,14 +288,14 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			if(person["rank"] in command_positions)
+			if(person["rank"] in excluded_rank)
 				continue
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
@@ -325,7 +325,7 @@
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)

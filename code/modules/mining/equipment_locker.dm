@@ -446,7 +446,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -494,8 +494,8 @@
 
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bluespace_wormhole_enter"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
@@ -618,7 +618,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
+	desc = "This robot is used to support the miners and can search and collect ore or defend itself from wildlife."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -671,15 +671,15 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
 					health += 15
-					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
+					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
 
@@ -783,7 +783,7 @@
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
 	else
-		msg += "<span class='notice'>It looks without dents.</span>\n"
+		msg += "<span class='notice'>It looks undamaged.</span>\n"
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
@@ -814,6 +814,28 @@
 	throw_range = 5
 	var/loaded = 1
 
+/obj/item/weapon/lazarus_injector/proc/revive(mob/living/target, mob/living/user)
+	if(istype(target, /mob/living/simple_animal))
+		var/mob/living/simple_animal/M = target
+		if(M.stat == DEAD)
+			M.faction = "lazarus"
+			M.revive()
+			if(istype(target, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/H = M
+				H.friends += user
+				log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
+			loaded = FALSE
+			user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "lazarus_empty"
+			return
+		else
+			to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
+			return
+	else
+		to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
+		return
+
 /obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
 	if(!..())
 		return TRUE
@@ -821,27 +843,8 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity)
-		if(istype(target, /mob/living/simple_animal))
-			var/mob/living/simple_animal/M = target
-			if(M.stat == DEAD)
-				M.faction = "lazarus"
-				M.revive()
-				if(istype(target, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.friends += user
-					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
-				loaded = 0
-				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-				icon_state = "lazarus_empty"
-				return
-			else
-				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
-				return
-		else
-			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
-			return
+	if(isliving(target) && proximity)
+		revive(target, user)
 
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()

@@ -6,7 +6,7 @@
 	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_secret = 15
+	required_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_NINJA
@@ -244,7 +244,7 @@
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] has failed!</span>"
+					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
 	if(text)

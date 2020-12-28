@@ -447,7 +447,7 @@
 	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
 	P.failchance = 0
-	P.icon_state = "anom"
+	P.icon_state = "bluespace_wormhole_enter"
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
@@ -538,6 +538,7 @@
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
 	origin_tech = "materials=3"
+	selectable = FALSE
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -591,6 +592,7 @@
 	origin_tech = "materials=4"
 	equip_cooldown = 10
 	energy_drain = 50
+	selectable = FALSE
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
@@ -664,6 +666,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
+	selectable = FALSE
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -750,6 +753,7 @@
 	energy_drain = 0
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
+	selectable = FALSE
 	var/coeff = 100
 	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
@@ -843,7 +847,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator
 	name = "phoron generator"
 	desc = "Generates power using solid phoron as fuel. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "phoron"
 	origin_tech = "phorontech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
@@ -978,7 +982,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	name = "ExoNuclear reactor"
 	desc = "Generates power using uranium. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "uranium"
 	origin_tech = "powerstorage=3;engineering=3"
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10

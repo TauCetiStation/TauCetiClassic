@@ -220,7 +220,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		/* Quick introduction:
 			This new radio system uses a very robust FTL signaling technology unoriginally
-			dubbed "subspace" which is somewhat similar to 'blue-space' but can't
+			dubbed "subspace" which is somewhat similar to 'bluespace' but can't
 			actually transmit large mass. Headsets are the only radio devices capable
 			of sending subspace transmissions to the Communications Satellite.
 
