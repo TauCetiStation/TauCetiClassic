@@ -266,7 +266,7 @@
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	if(show_log == "Yes")
-		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
+		announcement_ion_storm.play()
 
 	for(var/mob/living/silicon/ai/target in ai_list)
 		if(target.mind.special_role == "traitor")
@@ -644,7 +644,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	if(show_log == "Yes")
-		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "istorm")
+		announcement_ion_storm.play()
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in mob_list)
@@ -674,34 +674,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
-	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
-	if(!input)
+	
+	if(!(SSticker && SSticker.mode))
+		to_chat(usr, "Please wait until the game starts!")
 		return
-	if(!customname)
-		customname = "NanoTrasen Update"
 
-	switch(alert("Should this be announced to the general population?",,"Yes","No","Cancel"))
-		if("Yes")
-			command_alert(input, customname)
-		if("No")
-			to_chat(world, "<span class='warning'>New NanoTrasen Update available at all communication consoles.</span>")
-			station_announce(sound = "commandreport")
-		if("Cancel")
-			return
+	if(!holder.secrets_menu["custom_announce"])
+		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr.client)
+	holder.secrets_menu["custom_announce"].interact()
 
-	for (var/obj/machinery/computer/communications/C in communications_list)
-		if(! (C.stat & (BROKEN|NOPOWER) ) )
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-			P.name = "'[command_name()] Update.'"
-			P.info = replacetext(input, "\n", "<br/>")
-			P.update_icon()
-			C.messagetitle.Add("[command_name()] Update")
-			C.messagetext.Add(P.info)
-
-	log_admin("[key_name(src)] has created a command report: [input]")
-	message_admins("[key_name_admin(src)] has created a command report")
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in view())
 	set category = "Admin"
@@ -990,11 +973,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(type == "Crew transfer")
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
-		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
+		SSshuttle.announce_crew_called.play()
 	else
 		var/eaccess = alert(src, "Grant acces to maints for everyone?", "Confirm", "Yes", "No")
 		SSshuttle.incall()
-		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+		SSshuttle.announce_emer_called.play()
 
 		if(eaccess == "Yes")
 			make_maint_all_access(FALSE)
