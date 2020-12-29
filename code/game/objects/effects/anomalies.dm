@@ -217,7 +217,7 @@
 			for(var/obj in L)
 				if(!istype(obj, /turf))
 					qdel(obj)
-			var/obj/structure/cult/pedestal/P = new(F)
+			var/obj/structure/pedestal/cult/P = new(F)
 			P.icon_state = "pylon_glow"
 			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
 			beams += B

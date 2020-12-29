@@ -96,7 +96,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
 	for(var/datum/building_agent/cult/rune/B in religion.available_runes)
-		var/datum/rune/R = new B.rune_type
+		var/datum/rune/cult/R = new B.rune_type
 		rune_choices_image[B] = image(icon = get_uristrune_cult(0, R.words))
 		qdel(R)
 

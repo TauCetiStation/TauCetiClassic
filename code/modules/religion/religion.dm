@@ -5,7 +5,7 @@
 
 // Create a religion. You must declare proc/setup_religions() of religion
 /proc/create_religion(type)
-	new type
+	return new type
 
 /datum/religion
 	// The name of this religion.
@@ -84,7 +84,7 @@
 	var/obj/structure/altar_of_gods/altar
 
 	// The whole composition of beings in religion
-	var/list/members = list()
+	var/list/mob/members = list()
 
 	// All constructions that religion can build
 	var/list/datum/building_agent/available_buildings = list()

@@ -12,7 +12,7 @@
 	light_power = 3
 	w_class = ITEM_SIZE_SMALL
 	var/last_process = 0
-	var/datum/rune/reveal/power
+	var/datum/rune/cult/reveal/power
 	var/static/list/scum
 
 	var/tried_replacing = FALSE

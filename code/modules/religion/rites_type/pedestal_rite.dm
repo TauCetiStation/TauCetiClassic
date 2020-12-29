@@ -42,7 +42,7 @@
 		to_chat(user, "<span class='warning'>You need more [rules.len - pedestals.len] pedestals.</span>")
 		return FALSE
 
-	for(var/obj/structure/cult/pedestal/P in involved_pedestals)
+	for(var/obj/structure/pedestal/cult/P in involved_pedestals)
 		if(P.last_turf != get_turf(P))
 			to_chat(user, "<span class='warning'>The pedestal changed its first position.</span>")
 			return FALSE
@@ -63,9 +63,9 @@
 	var/for_step = pedestals.len/rules.len
 	for(var/i in 1 to pedestals.len step for_step)
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
-		var/obj/structure/cult/pedestal/P = pedestals[i]
+		var/obj/structure/pedestal/cult/P = pedestals[i]
 		P.my_rite = src
-		INVOKE_ASYNC(P, /obj/structure/cult/pedestal.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
+		INVOKE_ASYNC(P, /obj/structure/pedestal/cult.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
 	return TRUE
@@ -86,7 +86,7 @@
 	return TRUE
 
 /datum/religion_rites/pedestals/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
-	var/obj/structure/cult/pedestal/P = involved_pedestals[current_stage]
+	var/obj/structure/pedestal/cult/P = involved_pedestals[current_stage]
 	P.create_holy_outline("#c50404")
 	for(var/ill in P.lying_illusions)
 		item_stage += 1
@@ -121,14 +121,14 @@
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
 	pedestals = list()
-	for(var/obj/structure/cult/pedestal/P in spiral_range(search_radius_of_pedestals, AOG))
+	for(var/obj/structure/pedestal/cult/P in spiral_range(search_radius_of_pedestals, AOG))
 		if(P.my_rite)
 			continue
 		pedestals += P
 		P.last_turf = get_turf(P)
 
 /datum/religion_rites/pedestals/reset_rite()
-	for(var/obj/structure/cult/pedestal/P in involved_pedestals)
+	for(var/obj/structure/pedestal/cult/P in involved_pedestals)
 		P.clear_items()
 		P.del_holy_outline()
 		P.my_rite = null

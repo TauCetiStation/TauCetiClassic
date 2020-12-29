@@ -1307,7 +1307,7 @@
 
 		if(seer)
 			var/obj/effect/rune/R = locate() in loc
-			if(R && istype(R.power, /datum/rune/seer))
+			if(R && istype(R.power, /datum/rune/cult/seer))
 				see_invisible = SEE_INVISIBLE_CULT
 			else
 				see_invisible = SEE_INVISIBLE_LIVING

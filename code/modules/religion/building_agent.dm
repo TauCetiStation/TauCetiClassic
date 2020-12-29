@@ -61,7 +61,7 @@
 
 /datum/building_agent/cult/structure/pedestal
 	name = "Pedestal"
-	building_type = /obj/structure/cult/pedestal
+	building_type = /obj/structure/pedestal/cult
 	favor_cost = 100
 	deconstruct_favor_cost = 50
 	piety_cost = 10
@@ -92,7 +92,7 @@
 
 /datum/building_agent/cult/rune/teleport_to_heaven
 	name = "Teleport to HEAVEN"
-	rune_type = /datum/rune/teleport_to_heaven
+	rune_type = /datum/rune/cult/teleport_to_heaven
 	favor_cost = 100
 	deconstruct_favor_cost = 50
 	piety_cost = 10

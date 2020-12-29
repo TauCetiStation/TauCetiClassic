@@ -30,7 +30,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pedestal = 2,
+		/obj/structure/pedestal/cult = 2,
 	)
 
 	needed_aspects = list(
@@ -50,7 +50,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pedestal = 2,
+		/obj/structure/pedestal/cult = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 	)
@@ -72,7 +72,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pedestal = 2,
+		/obj/structure/pedestal/cult = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,
@@ -96,7 +96,7 @@
 		/obj/item/weapon/card/id/sci = 1,
 		/obj/item/device/pda/science = 2,
 		/obj/structure/altar_of_gods = 2,
-		/obj/structure/cult/pedestal = 2,
+		/obj/structure/pedestal/cult = 2,
 		/obj/structure/cult/forge = 2,
 		/obj/structure/cult/shell = 2,
 		/obj/effect/spacewhole = 2,

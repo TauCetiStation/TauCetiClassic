@@ -3,9 +3,11 @@
 	return M && global.cult_religion && (M in global.cult_religion.members)
 
 //Possibles objections
-#define SURVIVE "survive"
 #define SACRIFICE "sacrifice"
-#define SUMMON_GOD "eldergod"
+#define SUMMON_GOD "summon eldergod"
+#define RECRUIT "recruit more people"
+#define PIETY "save up piety"
+#define CAPTURE "capture a church"
 
 /datum/game_mode/cult
 	name = "cult"
@@ -30,37 +32,38 @@
 
 	restricted_species_flags = list(NO_BLOOD)
 
+	var/datum/religion/cult/religion
+
 	var/datum/mind/sacrifice_target = null
 	var/list/datum/mind/started_cultists = list()
-
-	var/finished = 0
-
-	// TODO: DEL IT
-	var/list/startwords = list("blood","join","self","hell")
 
 	var/list/objectives = list()
 	var/list/sacrificed = list()
 
-	var/datum/religion/cult/religion
-
 	var/eldergod = 1 //for the summon god objective
 	var/eldertry = 0
 
-	var/const/acolytes_needed = 5 //for the survive objective
-	var/acolytes_survived = 0
+	var/acolytes_needed = 5 //for the survive objective
+	var/acolytes_out = 0
+
+	var/piety_needed = 100000 // for objective
+
+	var/list/possibles_objectives = list(RECRUIT, SACRIFICE, CAPTURE, SUMMON_GOD, PIETY)
 
 /datum/game_mode/cult/announce()
-	to_chat(world, "<B>The current game mode is - Cult!</B>")
-	to_chat(world, "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>")
+	to_chat(world, "<B>Текущий режим игры - Культ!</B>")
+	to_chat(world, "<B>Некоторые члены экипажа прибыли на станцию, состоя в культе!<BR>\nКультисты - выполняют свои задачи. Заставляйте людей последовать за вами любыми способами. Перемещайте смертных в своё измерение насильно. Запомни - тебя нет, есть только культ.<BR>\nПерсонал - не знает о культе, но при обнаружении кровавых рун и фанатиков будет сопротивляться. Хороший способ борьбы с фанатиками - это промывка мозгов Библией священника в разрешенную ЦентКоммом религию.</B>")
 
 /datum/game_mode/cult/pre_setup()
 	if(!config.objectives_disabled)
-		if(prob(50))
-			objectives += SURVIVE
-			objectives += SACRIFICE
-		else
-			objectives += SUMMON_GOD
-			objectives += SACRIFICE
+		for(var/i in 2 to rand(2, 3))
+			var/object = pick_n_take(possibles_objectives)
+			objectives += object
+
+			if(object == SUMMON_GOD)
+				possibles_objectives -= PIETY
+			else if(object == PIETY)
+				possibles_objectives -= SUMMON_GOD
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -80,27 +83,44 @@
 
 
 /datum/game_mode/cult/post_setup()
-	create_religion(/datum/religion/cult)
+	religion = create_religion(/datum/religion/cult)
 	modePlayer += started_cultists
 
-	if(SACRIFICE in objectives)
-		var/list/possible_targets = get_unconvertables()
-		listclearnulls(possible_targets)
+	for(var/obj in objectives)
+		switch(obj)
+			if(SACRIFICE)
+				var/list/possible_targets = get_unconvertables()
+				listclearnulls(possible_targets)
 
-		if(!possible_targets.len)
-			for(var/mob/living/carbon/human/player in player_list)
-				if(player.mind && !(player.mind in started_cultists))
-					possible_targets += player.mind
+				if(!possible_targets.len)
+					for(var/mob/living/carbon/human/player in player_list)
+						if(player.mind && !(player.mind in started_cultists))
+							possible_targets += player.mind
+				listclearnulls(possible_targets)
 
-		listclearnulls(possible_targets)
+				if(possible_targets.len)
+					sacrifice_target = pick(possible_targets)
+			if(CAPTURE)
+				// I don't think it can be done any other way
+				var/have_chaplain = FALSE
+				for(var/mob/living/carbon/human/player in player_list)
+					if(istype(player.my_religion, /datum/religion/chaplain))
+						have_chaplain = TRUE
+						break
+				if(!have_chaplain)
+					objectives -= CAPTURE
+					objectives += pick_n_take(possibles_objectives)
 
-		if(possible_targets.len)
-			sacrifice_target = pick(possible_targets)
+			if(RECRUIT)
+				acolytes_needed = round(player_list.len / 12) // 70 / 12 = 5
+
+			if(PIETY)
+				piety_needed = round(player_list.len * 10)
 
 	for(var/datum/mind/cult_mind in started_cultists)
-		global.cult_religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
+		religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
 		equip_cultist(cult_mind.current)
-		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
+		to_chat(cult_mind.current, "<span class = 'info'><b>Вы член <font color='red'>культа</font>!</b></span>")
 
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
@@ -116,28 +136,28 @@
 	for(var/obj_count in 1 to objectives.len)
 		var/explanation
 		switch(objectives[obj_count])
-			if(SURVIVE)
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+			if(RECRUIT)
+				explanation = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле, чтобы проложить исследования на других станциях."
 			if(SACRIFICE)
 				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+					explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. Для этого вам понадобится аспект Mortem."
 				else
-					// TODO: Without Free objectives
-					explanation = "Free objective."
+					explanation = "Свободная задача."
 			if(SUMMON_GOD)
-				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции. Он будет работать только в том случае, если девять культистов встанут внутри структуры с 12 пьедесталами."
+			if(CAPTURE)
+				explanation = "Убейте всех представителей религии на станции и захватите их церковь с помощью специальной руны."
+			if(PIETY)
+				explanation = "Накопите и сохраните [piety_needed] piety"
 		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	// TODO: DEL IT
-	to_chat(cult_mind.current, "The convert rune is join blood self")
-	cult_mind.memory += "The convert rune is join blood self<BR>"
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 
-	if (H.mind)
-		if (H.mind.assigned_role == "Clown")
+	if(H.mind)
+		if(H.mind.assigned_role == "Clown")
 			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.mutations.Remove(CLUMSY)
 
@@ -175,7 +195,9 @@
 	if(!istype(mind))
 		return FALSE
 	if(ishuman(mind.current))
-		if((mind.assigned_role in list("Captain", "Chaplain")))
+		if(mind.assigned_role == "Captain")
+			return FALSE
+		if(istype(mind.current.my_religion, /datum/religion/chaplain))
 			return FALSE
 		if(mind.current.get_species() == GOLEM)
 			return FALSE
@@ -192,89 +214,112 @@
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
-	if(objectives.Find(SURVIVE))
-		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
-	if(objectives.Find(SUMMON_GOD))
-		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
-	if(objectives.Find(SACRIFICE))
-		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
-			cult_fail++
+	for(var/obj in objectives)
+		switch(obj)
+			if(RECRUIT)
+				cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
+			if(SUMMON_GOD)
+				cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
+			if(SACRIFICE)
+				if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+					cult_fail++
+			if(CAPTURE)
+				if(!religion.capture_completed)
+					cult_fail++
+			if(PIETY)
+				if(religion.piety < piety_needed)
+					cult_fail++
 
 	return cult_fail //if any objectives aren't met, failure
 
 /datum/game_mode/cult/proc/check_survive()
-	for(var/datum/mind/cult_mind in global.cult_religion.members)
-		if (cult_mind.current && cult_mind.current.stat!=2)
-			var/area/A = get_area(cult_mind.current )
-			if (is_type_in_typecache(A, centcom_areas_typecache))
-				acolytes_survived++
-	if(acolytes_survived >= acolytes_needed)
+	for(var/mob/cultist in religion.members)
+		if(cultist?.stat != DEAD)
+			var/area/A = get_area(cultist)
+			if(is_type_in_typecache(A, centcom_areas_typecache))
+				acolytes_out++
+	if(acolytes_out >= acolytes_needed)
 		return FALSE
 	return TRUE
 
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
-		return 1
-	completion_text += "<h3>Cult mode resume:</h3>"
+		return TRUE
+	completion_text += "<h3>Результаты Культа:</h3>"
 	if(!check_cult_victory())
-		mode_result = "win - cult win"
+		mode_result = "победа - культ выйграл"
 		feedback_set_details("round_end_result", mode_result)
-		feedback_set("round_end_result", acolytes_survived)
-		completion_text += "<span class='color: red; font-weight: bold;'>The cult <span style='color: green'>wins</span>! It has succeeded in serving its dark masters!</span><br>"
+		feedback_set("round_end_result", acolytes_out)
+		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выйгал</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"
 		score["roleswon"]++
 	else
-		mode_result = "loss - staff stopped the cult"
+		mode_result = "поражение - персонал остановил культ"
 		feedback_set_details("round_end_result", mode_result)
-		feedback_set("round_end_result", acolytes_survived)
-		completion_text += "<span class='color: red; font-weight: bold;'>The staff managed to stop the cult!</span><br>"
+		feedback_set("round_end_result", acolytes_out)
+		completion_text += "<span class='color: red; font-weight: bold;'>Персонал смог остановить культ!</span><br>"
 
-	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
+	var/text = "<b>Культистов улетело:</b> [acolytes_out]"
 	if(!config.objectives_disabled)
 		if(objectives.len)
-			text += "<br><b>The cultists' objectives were:</b>"
+			text += "<br><b>Целью культистов было:</b>"
 			for(var/obj_count in 1 to objectives.len)
 				var/explanation
 				switch(objectives[obj_count])
-					if(SURVIVE)
+					if(RECRUIT)
 						if(!check_survive())
-							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <span style='color: green; font-weight: bold;'>Success!</span>"
+							explanation = "Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 						else
-							explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. <span style='color: red; font-weight: bold;'>Fail.</span>"
+							explanation = "Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле. <span style='color: red; font-weight: bold;'>Провал.</span>"
 							feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 					if(SACRIFICE)
 						if(sacrifice_target)
 							if(sacrifice_target in sacrificed)
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: green; font-weight: bold;'>Success!</span>"
+								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: green; font-weight: bold;'>Успех!</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
 							else if(sacrifice_target && sacrifice_target.current)
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Fail.</span>"
+								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал.</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL")
 							else
-								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Fail (Gibbed).</span>"
+								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал (Уничтожено).</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 						else
-							explanation = "Free objective. <span style='color: green; font-weight: bold;'>Success!</span>"
+							explanation = "Свободная цель. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_free_objective|SUCCESS")
 					if(SUMMON_GOD)
 						if(!eldergod)
-							explanation = "Summon Nar-Sie. <span style='color: green; font-weight: bold;'>Success!</span>"
+							explanation = "Призовите Нар-Си. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 						else
-							explanation = "Summon Nar-Sie. <span style='color: red; font-weight: bold;'>Fail.</span>"
-						feedback_add_details("cult_objective","cult_narsie|FAIL")
-				text += "<br><b>Objective #[obj_count]</b>: [explanation]"
+							explanation = "Призовите Нар-Си. <span style='color: red; font-weight: bold;'>Провал.</span>"
+							feedback_add_details("cult_objective","cult_narsie|FAIL")
+					if(CAPTURE)
+						if(religion.capture_completed)
+							explanation = "Убейте всех представителей религии на станции и захватите их церковь. <span style='color: green; font-weight: bold;'>Успех!</span>"
+							feedback_add_details("cult_objective","cult_capture|SUCCESS")
+						else
+							explanation = "Убейте всех представителей религии на станции и захватите их церковь. <span style='color: red; font-weight: bold;'>Провал.</span>"
+							feedback_add_details("cult_objective","cult_capture|FAIL")
+					if(PIETY)
+						if(religion.piety >= piety_needed)
+							explanation = "Накопите и сохраните [piety_needed] piety. <span style='color: green; font-weight: bold;'>Успех!</span>"
+							feedback_add_details("cult_objective","cult_piety|SUCCESS")
+						else
+							explanation = "Накопите и сохраните [piety_needed] piety. <span style='color: red; font-weight: bold;'>Провал.</span>"
+							feedback_add_details("cult_objective","cult_piety|FAIL")
+				text += "<br><b>Задача #[obj_count]</b>: [explanation]"
 
 	completion_text += text
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	if(global.cult_religion.members.len || istype(SSticker.mode, /datum/game_mode/cult))
+	if(global.cult_religion.members.len)
 		text += printlogo("cult", "cultists")
-		for(var/datum/mind/cultist in global.cult_religion.members)
-			text += printplayerwithicon(cultist)
+		for(var/mob/cultist in global.cult_religion.members)
+			if(cultist.mind)
+				text += printplayerwithicon(cultist.mind)
 
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
@@ -282,6 +327,8 @@
 
 	return text
 
-#undef SURVIVE
 #undef SACRIFICE
 #undef SUMMON_GOD
+#undef RECRUIT
+#undef PIETY
+#undef CAPTURE

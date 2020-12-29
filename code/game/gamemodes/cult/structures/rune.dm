@@ -1,10 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-#define CULT_RUNES_LIMIT 26
-
-var/list/cultwords = list() // associated english word = runeword
-var/list/cultwords_reverse = list() // associated runeword = english word
-var/list/cult_datums = list()
-
 /obj/effect/rune
 	name = "blood"
 	desc = ""
@@ -13,7 +6,7 @@ var/list/cult_datums = list()
 	icon_state = "1"
 	unacidable = 1
 	layer = TURF_LAYER
-	var/datum/rune/power
+	var/datum/rune/cult/power
 
 /obj/effect/rune/atom_init()
 	. = ..()
@@ -53,14 +46,14 @@ var/list/cult_datums = list()
 		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
-	if(!istype(power, /datum/rune/teleport) && !istype(power, /datum/rune/item_port))
+	if(!istype(power, /datum/rune/cult/teleport) && !istype(power, /datum/rune/cult/item_port))
 		return ..()
 	var/list/allrunes = list()
 	for(var/obj/effect/rune/R in cult_runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
-		var/datum/rune/teleport/T = R.power
-		var/datum/rune/teleport/self = power
+		var/datum/rune/cult/teleport/T = R.power
+		var/datum/rune/cult/teleport/self = power
 		if(T.id == self.id && !is_centcom_level(R.loc.z))
 			allrunes += R
 	if(length(allrunes) > 0)

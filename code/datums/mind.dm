@@ -1689,6 +1689,7 @@
 	..()
 	mind.assigned_role = "Artificer"
 	if(global.cult_religion)
+		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
 		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
@@ -1696,6 +1697,7 @@
 	..()
 	mind.assigned_role = "Wraith"
 	if(global.cult_religion)
+		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
 		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
@@ -1703,6 +1705,7 @@
 	..()
 	mind.assigned_role = "Juggernaut"
 	if(global.cult_religion)
+		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
 		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
@@ -1710,6 +1713,7 @@
 	..()
 	mind.assigned_role = "Behemoth"
 	if(global.cult_religion)
+		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
 		mind.special_role = "Cultist"
 	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 

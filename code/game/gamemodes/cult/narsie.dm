@@ -79,14 +79,14 @@
 /obj/singularity/narsie/consume(atom/A)
 	if(isliving(A))
 		var/mob/living/L = A
-		if(istype(L, /mob/living/simple_animal/construct))
+		if(iscultist(L))
 			return
 		L.gib()
 		return
 
 	var/mob/living/C = locate(/mob/living) in A
 	if(istype(C))
-		if(istype(C, /mob/living/simple_animal/construct))
+		if(iscultist(C))
 			return
 		C.loc = get_turf(C)
 		C.gib()
@@ -110,7 +110,7 @@
 				new obj(T)
 		if(istype(T, /turf/simulated/wall))
 			if(prob(20))
-				T.ChangeTurf(/turf/simulated/wall/cult)
+				T.ChangeTurf(pick(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim))
 	return
 
 /obj/singularity/narsie/move()

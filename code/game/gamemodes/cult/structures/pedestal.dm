@@ -1,7 +1,4 @@
-/obj/structure/cult/pedestal
-	name = "пьедестал"
-	desc = "Монолит из неизветного камня с нечитаемыми рунами."
-	icon_state = "pedestal"
+/obj/structure/pedestal
 	pass_flags = PASSTABLE
 
 	var/holy_outline
@@ -16,12 +13,12 @@
 	// illusion = real
 	var/list/lying_illusions = list()
 
-/obj/structure/cult/pedestal/atom_init()
+/obj/structure/pedestal/atom_init()
 	. = ..()
 	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/put_item))
 	last_turf = get_turf(src)
 
-/obj/structure/cult/pedestal/Destroy()
+/obj/structure/pedestal/Destroy()
 	last_turf = null
 	for(var/obj/I in lying_items)
 		UnregisterSignal(I, list(COMSIG_MOVABLE_MOVED))
@@ -31,13 +28,13 @@
 		my_rite.reset_rite()
 	return ..()
 
-/obj/structure/cult/pedestal/attackby(obj/item/W, mob/user, params)
+/obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
 		return
 	return ..()
 
 // Tracking items on a pedestal
-/obj/structure/cult/pedestal/proc/put_item(atom/pedestal, obj/item/I, mob/user)
+/obj/structure/pedestal/proc/put_item(atom/pedestal, obj/item/I, mob/user)
 	lying_items += I
 
 	if(lying_illusions.len)
@@ -51,7 +48,7 @@
 
 	RegisterSignal(I, list(COMSIG_MOVABLE_MOVED), .proc/moved_item)
 
-/obj/structure/cult/pedestal/proc/moved_item(atom/movable/I, atom/oldLoc, dir)
+/obj/structure/pedestal/proc/moved_item(atom/movable/I, atom/oldLoc, dir)
 	lying_items -= I
 	var/obj/effect/overlay/item_illusion/ill = get_key(lying_illusions, I)
 	if(ill)
@@ -59,12 +56,12 @@
 		lying_illusions[ill] = null
 	UnregisterSignal(I, list(COMSIG_MOVABLE_MOVED))
 
-/obj/structure/cult/pedestal/proc/get_key(list/L, index)
+/obj/structure/pedestal/proc/get_key(list/L, index)
 	for(var/key in L)
 		if(index == L[key])
 			return key
 
-/obj/structure/cult/pedestal/proc/check_current_items()
+/obj/structure/pedestal/proc/check_current_items()
 	for(var/obj/effect/overlay/item_illusion/ill in lying_illusions)
 		if(lying_illusions[ill])
 			continue
@@ -75,12 +72,12 @@
 				I.pixel_y = ill.pixel_y
 				ill.alpha = 0
 
-/obj/structure/cult/pedestal/proc/get_off_useless_items()
+/obj/structure/pedestal/proc/get_off_useless_items()
 	for(var/obj/item/I in lying_items)
 		if(!get_key(lying_illusions, I))
 			I.throw_at(get_step(src, pick(alldirs)), rand(1, 3), 3)
 
-/obj/structure/cult/pedestal/proc/create_illusions(atom/type, count)
+/obj/structure/pedestal/proc/create_illusions(atom/type, count)
 	var/icon/holo_icon = getHologramIcon(icon(initial(type.icon), initial(type.icon_state)))
 
 	for(var/i in 1 to count)
@@ -89,7 +86,7 @@
 	check_current_items()
 	get_off_useless_items()
 
-/obj/structure/cult/pedestal/proc/create_illusion(atom/type, holo_icon)
+/obj/structure/pedestal/proc/create_illusion(atom/type, holo_icon)
 	var/obj/effect/overlay/item_illusion/I = new(loc)
 	I.my_fake_type = type
 	I.name = initial(type.name)
@@ -100,27 +97,33 @@
 	lying_illusions[I] = null
 	stoplag()
 
-/obj/structure/cult/pedestal/proc/clear_items()
+/obj/structure/pedestal/proc/clear_items()
 	for(var/k in lying_illusions)
 		qdel(k)
 	lying_illusions = list()
 
-/obj/structure/cult/pedestal/proc/create_holy_outline(_color)
+/obj/structure/pedestal/proc/create_holy_outline(_color)
 	holy_outline = filter(type = "outline", size = 2, color = _color)
 	filters += holy_outline
 	have_outline = TRUE
 
-/obj/structure/cult/pedestal/proc/del_holy_outline()
+/obj/structure/pedestal/proc/del_holy_outline()
 	if(have_outline)
 		filters -= holy_outline
 		have_outline = FALSE
 
-/obj/structure/cult/pedestal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 
-/obj/structure/cult/pedestal/CheckExit(atom/movable/AM, target)
+/obj/structure/pedestal/CheckExit(atom/movable/AM, target)
 	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
+
+// CULT! Then move it to the religion module or make it some kind of datum
+/obj/structure/pedestal/cult
+	name = "пьедестал"
+	desc = "Монолит из неизветного камня с нечитаемыми рунами."
+	icon_state = "pedestal"

@@ -20567,7 +20567,7 @@
 	},
 /area/centcom/holding)
 "kak" = (
-/obj/structure/cult/pedestal,
+/obj/structure/pedestal/cult,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "kbb" = (

@@ -25,6 +25,8 @@
 	max_favor = 10000
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
+	// One of the objects. Maybe separate it somehow and put it in /datum/religion
+	var/capture_completed = FALSE
 
 	// Time to creation next anomalies
 	var/next_anomaly
@@ -37,7 +39,7 @@
 	// Instead of storing links to turfs, I store coordinates for optimization
 	var/list/coord_started_anomalies = list()
 
-	// Are they dead or not yet?
+	// Are they dead or not yet? Maybe separate it somehow and put it in /datum/religion
 	var/list/humans_in_heaven = list()
 	// When's the next time you scare people in heaven
 	var/next_spook
@@ -95,17 +97,7 @@
 
 /datum/religion/cult/process()
 	if(next_anomaly < world.time)
-		var/time
-		for(var/datum/coords/C in coord_started_anomalies)
-			var/list/L = locate(C.x_pos, C.y_pos, C.z_pos)
-			var/turf/T = get_step(pick(L), pick(alldirs))
-			if(istype(T, /turf/space))
-				continue
-			var/anom = pick(strange_anomalies)
-			var/rand_time = rand(1 SECOND, 1 MINUTE)
-			time += rand_time
-			addtimer(CALLBACK(src, .proc/create_anomaly, anom, T, C), rand_time)
-		next_anomaly = world.time + spawn_anomaly_cd + time
+		create_anomalys()
 
 	if(next_spook < world.time)
 		if(!humans_in_heaven.len)
@@ -121,9 +113,9 @@
 		else if(prob(20)) // chat_message
 			to_chat(H, "<font size='15' color='red'><b>[pick(possible_god_phrases)]!</b></font>")
 		else if(prob(20)) // receive damage
-			H.take_overall_damage(rand(-3, 10), rand(-3, 10), used_weapon = "Plasma ions") // Its science, baby
+			H.take_overall_damage(rand(-3, clamp(world.time**(1/3), 1, 30)), rand(-3, clamp(world.time**(1/3), 1, 30)), used_weapon = "Plasma ions") // Its science, baby
 		else if(prob(15)) // Heal
-			H.apply_damages(rand(-10, 3), rand(-10, 3), rand(-10, 3))
+			H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
 		else if(prob(5)) // temp alt_apperance of humans or item
 			if(prob(50))
 				var/mob/living/carbon/human/target = pick(humans_in_heaven)
@@ -156,6 +148,21 @@
 
 /datum/religion/cult/proc/area_exited(area/A, atom/movable/AM)
 	humans_in_heaven -= AM
+
+/datum/religion/cult/proc/create_anomalys(force = FALSE)
+	var/time
+	for(var/datum/coords/C in coord_started_anomalies)
+		var/list/L = locate(C.x_pos, C.y_pos, C.z_pos)
+		var/turf/T = get_step(pick(L), pick(alldirs))
+		if(istype(T, /turf/space))
+			continue
+		var/anom = pick(strange_anomalies)
+		var/rand_time = force ? 0 : rand(1 SECOND, 1 MINUTE)
+		time += rand_time
+		addtimer(CALLBACK(src, .proc/create_anomaly, anom, T, C), rand_time)
+
+	if(!force)
+		next_anomaly = world.time + spawn_anomaly_cd + time
 
 /datum/religion/cult/proc/create_anomaly(type, turf/T, datum/coords/C)
 	new type(T)
