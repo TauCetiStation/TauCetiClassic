@@ -22,7 +22,6 @@
 	customItemsCache["premoderation"] << moderation_items
 
 /proc/custom_item_premoderation_list()
-	RETURN_TYPE(/list)
 	var/savefile/customItemsCache = new /savefile(FLUFF_FILE_PATH)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null

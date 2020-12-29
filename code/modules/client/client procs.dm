@@ -242,7 +242,8 @@ var/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 		if(holder.rights & R_PERMISSIONS)
-			var/fluff_count = custom_item_premoderation_list().len
+			var/list/fluff_list = custom_item_premoderation_list()
+			var/fluff_count = fluff_list.len
 			if(fluff_count)
 				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
