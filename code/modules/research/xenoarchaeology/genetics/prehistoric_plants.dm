@@ -38,7 +38,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "thaadra"
 	plantname = "Thaa'dra lichen"
-	// product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/thaadra
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom
 	lifespan = 20
 	endurance = 10
 	maturation = 5
