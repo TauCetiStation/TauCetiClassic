@@ -31,7 +31,6 @@
 	var/delay = 10 // how many process() ticks to delay per heat
 	var/heating_power = 40000
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
-	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
 
@@ -269,7 +268,6 @@
 	idle_power_usage = 30
 	machinetype = 1
 	heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/atom_init()
 	. = ..()
@@ -336,7 +334,6 @@
 	idle_power_usage = 80
 	machinetype = 7
 	heatgen = 40
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
 
@@ -380,7 +377,6 @@
 	idle_power_usage = 30
 	machinetype = 8
 	heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/relay"
 	netspeed = 5
 	long_range_link = 1
 	var/broadcasting = 1
@@ -442,7 +438,6 @@
 	idle_power_usage = 50
 	machinetype = 2
 	heatgen = 20
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
 	netspeed = 40
 	var/change_frequency = 0
 
@@ -505,7 +500,6 @@
 	machinetype = 3
 	heatgen = 100
 	delay = 5
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/atom_init()
@@ -557,7 +551,6 @@
 	idle_power_usage = 15
 	machinetype = 4
 	heatgen = 50
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
