@@ -48,7 +48,7 @@
 	w_class = ITEM_SIZE_SMALL // Makes them pocketable
 	var/hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'//this is now path to plant's overlays (in hydropinic tray)
 	var/plantname = "Plants"
-	var/productname = ""
+	var/product_type
 	var/species = ""
 	var/lifespan = 0
 	var/endurance = 0
@@ -82,7 +82,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "blackpepper"
 	plantname = "Black Pepper"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper
 	lifespan = 55
 	endurance = 35
 	maturation = 10
@@ -99,7 +99,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "chili"
 	plantname = "Chili Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/chili"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -117,7 +117,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "plastellium"
 	plantname = "Plastellium"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium
 	lifespan = 15
 	endurance = 17
 	maturation = 5
@@ -135,7 +135,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "grape"
 	plantname = "Grape Vine"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/grapes"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -153,7 +153,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -170,7 +170,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "cabbage"
 	plantname = "Cabbages"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -186,7 +186,7 @@
 	icon_state = "seed-shand"
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
-	productname = "/obj/item/stack/medical/bruise_pack/tajaran"
+	product_type = /obj/item/stack/medical/bruise_pack/tajaran
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -202,7 +202,7 @@
 	icon_state = "seed-mtear"
 	species = "mtear"
 	plantname = "Messa's Tear"
-	productname = "/obj/item/stack/medical/ointment/tajaran"
+	product_type = /obj/item/stack/medical/ointment/tajaran
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -219,7 +219,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "berry"
 	plantname = "Berry Bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/berries"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -237,7 +237,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "glowberry"
 	plantname = "Glow-Berry Bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	lifespan = 30
 	endurance = 25
 	maturation = 5
@@ -254,7 +254,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "banana"
 	plantname = "Banana Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -271,7 +271,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "honk"
 	plantname = "Honk banana Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
 	lifespan = 50
 	endurance = 30
 	maturation = 6
@@ -287,7 +287,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "eggplant"
 	plantname = "Eggplants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	lifespan = 25
 	endurance = 15
 	maturation = 6
@@ -305,7 +305,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "eggy"
 	plantname = "Eggplants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/egg"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/egg
 	lifespan = 75
 	endurance = 15
 	maturation = 6
@@ -321,7 +321,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	lifespan = 25
 	endurance = 20
 	maturation = 8
@@ -338,7 +338,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "tomato"
 	plantname = "Tomato Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/tomato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -356,7 +356,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "killertomato"
 	plantname = "Killer-Tomato Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -374,7 +374,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bluetomato"
 	plantname = "Blue-Tomato Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -392,7 +392,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bluespacetomato"
 	plantname = "Bluespace Tomato Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -409,7 +409,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "corn"
 	plantname = "Corn Stalks"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/corn"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -426,7 +426,7 @@
 	icon_state = "seed-poppy"
 	species = "poppy"
 	plantname = "Poppy Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/poppy"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	lifespan = 25
 	endurance = 10
 	potency = 20
@@ -444,7 +444,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "potato"
 	plantname = "Potato-Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/potato"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	lifespan = 30
 	endurance = 15
 	maturation = 10
@@ -462,7 +462,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "chiliice"
 	plantname = "Ice-Pepper Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	lifespan = 25
 	endurance = 15
 	maturation = 4
@@ -479,7 +479,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "soybean"
 	plantname = "Soybean Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	lifespan = 25
 	endurance = 15
 	maturation = 4
@@ -495,7 +495,7 @@
 	icon_state = "seed-wheat"
 	species = "wheat"
 	plantname = "Wheat Stalks"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/wheat"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	lifespan = 25
 	endurance = 15
 	maturation = 6
@@ -512,7 +512,7 @@
 	icon_state = "seed-rice"
 	species = "rice"
 	plantname = "Rice Stalks"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk
 	lifespan = 25
 	endurance = 15
 	maturation = 6
@@ -530,7 +530,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "carrot"
 	plantname = "Carrots"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/carrot"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	lifespan = 25
 	endurance = 15
 	maturation = 10
@@ -548,7 +548,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "reishi"
 	plantname = "Reishi"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	lifespan = 35
 	endurance = 35
 	maturation = 10
@@ -566,7 +566,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "amanita"
 	plantname = "Fly Amanitas"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	lifespan = 50
 	endurance = 35
 	maturation = 10
@@ -585,7 +585,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "angel"
 	plantname = "Destroying Angels"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	lifespan = 50
 	endurance = 35
 	maturation = 12
@@ -603,7 +603,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "liberty"
 	plantname = "Liberty-Caps"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	lifespan = 25
 	endurance = 15
 	maturation = 7
@@ -621,7 +621,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "chanter"
 	plantname = "Chanterelle Mushrooms"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	lifespan = 35
 	endurance = 20
 	maturation = 7
@@ -639,7 +639,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "towercap"
 	plantname = "Tower Caps"
-	productname = "/obj/item/weapon/grown/log"
+	product_type = /obj/item/weapon/grown/log
 	lifespan = 80
 	endurance = 50
 	maturation = 15
@@ -657,7 +657,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "glowshroom"
 	plantname = "Glowshrooms"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
@@ -675,7 +675,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "plump"
 	plantname = "Plump-Helmet Mushrooms"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -694,7 +694,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "walkingmushroom"
 	plantname = "Walking Mushrooms"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	lifespan = 30
 	endurance = 30
 	maturation = 5
@@ -711,7 +711,7 @@
 	icon_state = "seed-nettle"
 	species = "nettle"
 	plantname = "Nettles"
-	productname = "/obj/item/weapon/grown/nettle"
+	product_type = /obj/item/weapon/grown/nettle
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	maturation = 6
@@ -729,7 +729,7 @@
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
 	plantname = "Death Nettles"
-	productname = "/obj/item/weapon/grown/deathnettle"
+	product_type = /obj/item/weapon/grown/deathnettle
 	lifespan = 30
 	endurance = 25
 	maturation = 8
@@ -746,7 +746,7 @@
 	icon_state = "seed"
 	species = "weeds"
 	plantname = "Starthistle"
-	productname = ""
+	product_type = null
 	lifespan = 100
 	endurance = 50 // damm pesky weeds
 	maturation = 5
@@ -763,7 +763,7 @@
 	icon_state = "seed-harebell"
 	species = "harebell"
 	plantname = "Harebells"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/harebell"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	lifespan = 100
 	endurance = 20
 	maturation = 7
@@ -780,7 +780,7 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	productname = "/obj/item/weapon/grown/sunflower"
+	product_type = /obj/item/weapon/grown/sunflower
 	lifespan = 25
 	endurance = 20
 	maturation = 6
@@ -797,7 +797,7 @@
 	icon_state = "seed"
 	species = "mold"
 	plantname = "Brown Mold"
-	productname = ""
+	product_type = null
 	lifespan = 50
 	endurance = 30
 	maturation = 10
@@ -815,7 +815,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "apple"
 	plantname = "Apple Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/apple"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	lifespan = 55
 	endurance = 35
 	maturation = 6
@@ -833,7 +833,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "apple"
 	plantname = "Apple Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	lifespan = 55
 	endurance = 35
 	maturation = 6
@@ -850,7 +850,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "goldapple"
 	plantname = "Golden Apple Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
 	lifespan = 55
 	endurance = 35
 	maturation = 10
@@ -866,7 +866,7 @@
 	icon_state = "seed-ambrosiavulgaris"
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -883,7 +883,7 @@
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	lifespan = 60
 	endurance = 25
 	maturation = 6
@@ -900,7 +900,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "whitebeet"
 	plantname = "White-Beet Plants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	lifespan = 60
 	endurance = 50
 	maturation = 6
@@ -917,7 +917,7 @@
 	icon_state = "seed-sugarcane"
 	species = "sugarcane"
 	plantname = "Sugarcane"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	lifespan = 60
 	endurance = 50
 	maturation = 3
@@ -934,7 +934,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "watermelon"
 	plantname = "Watermelon Vines"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	lifespan = 50
 	endurance = 40
 	maturation = 6
@@ -951,7 +951,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "pumpkin"
 	plantname = "Pumpkin Vines"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	lifespan = 50
 	endurance = 40
 	maturation = 6
@@ -969,7 +969,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "lime"
 	plantname = "Lime Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lime"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
 	lifespan = 55
 	endurance = 50
 	maturation = 6
@@ -986,7 +986,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "lemon"
 	plantname = "Lemon Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lemon"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
 	lifespan = 55
 	endurance = 45
 	maturation = 6
@@ -1004,7 +1004,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cashtree"
 	plantname = "Money Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/money"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/money
 	lifespan = 55
 	endurance = 45
 	maturation = 6
@@ -1021,7 +1021,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "orange"
 	plantname = "Orange Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/orange"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
 	lifespan = 60
 	endurance = 50
 	maturation = 6
@@ -1038,7 +1038,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "poisonberry"
 	plantname = "Poison-Berry Bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1056,7 +1056,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "deathberry"
 	plantname = "Death Berry Bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/deathberries"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
 	lifespan = 30
 	endurance = 20
 	maturation = 5
@@ -1072,7 +1072,7 @@
 	icon_state = "seed-grass"
 	species = "grass"
 	plantname = "Grass"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/grass"
+	// product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	lifespan = 60
 	endurance = 50
 	maturation = 2
@@ -1088,7 +1088,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cocoapod"
 	plantname = "Cocoa Tree" //SIC: see above
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	lifespan = 20
 	endurance = 15
 	maturation = 5
@@ -1105,7 +1105,7 @@
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cherry"
 	plantname = "Cherry Tree"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cherries"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
 	lifespan = 35
 	endurance = 35
 	maturation = 5
@@ -1121,7 +1121,7 @@
 	icon_state = "seed-kudzu"
 	species = "kudzu"
 	plantname = "Kudzu"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
 	lifespan = 20
 	endurance = 10
 	maturation = 6

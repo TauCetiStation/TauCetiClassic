@@ -8,7 +8,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "telriis"
 	plantname = "Telriis grass"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump
 	lifespan = 50    //number of ticks
 	endurance = 50
 	maturation = 5   //ticks to full growth stage
@@ -38,7 +38,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "thaadra"
 	plantname = "Thaa'dra lichen"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/thaadra"
+	// product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/thaadra
 	lifespan = 20
 	endurance = 10
 	maturation = 5
@@ -68,7 +68,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "jurlmah"
 	plantname = "jurl'mah reeds"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah
 	lifespan = 20
 	endurance = 12
 	maturation = 8
@@ -97,7 +97,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "amauri"
 	plantname = "amauri plant"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/amauri"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/amauri
 	lifespan = 30
 	endurance = 10
 	maturation = 8
@@ -127,7 +127,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "gelthi"
 	plantname = "gelthi plant"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/gelthi"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gelthi
 	lifespan = 20
 	endurance = 15
 	maturation = 6
@@ -158,7 +158,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "vale"
 	plantname = "vale bush"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/vale"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/vale
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -188,7 +188,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "surik"
 	plantname = "surik vine"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/surik"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/surik
 	lifespan = 30
 	endurance = 18
 	maturation = 7
@@ -217,7 +217,7 @@
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "blackberry"
 	plantname = "black berry nest"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackberry
 	lifespan = 20
 	endurance = 18
 	maturation = 7
