@@ -368,3 +368,50 @@
 		gibs(usr.loc)
 		if(divine_power >= 2)
 			hgibs(usr.loc)
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune
+	name = "Rune"
+	desc = "Scribe the rune you remember"
+
+	charge_max = 1 MINUTE
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "rune"
+
+	var/datum/building_agent/rune/agent
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune/Destroy()
+	agent = null
+	return ..()
+
+/obj/effect/proc_holder/spell/dumbfire/scribe_rune/cast()
+	var/obj/effect/rune/R = new agent.building_type(get_turf(usr))
+	var/datum/rune/rune = new agent.rune_type(R)
+	R.power = rune
+	R.icon = get_uristrune_cult(TRUE, rune.words)
+
+/obj/effect/proc_holder/spell/dumbfire/memorize_rune
+	name = "Memorize rune"
+	desc = "Remember the rune and draw without books"
+
+	range = 0
+	invocation = "none"
+	clothes_req = 0
+
+	action_icon_state = "rune"
+
+/obj/effect/proc_holder/spell/dumbfire/memorize_rune/cast()
+	usr.RemoveSpell(src)
+
+	if(!usr.my_religion)
+		return
+
+	var/datum/building_agent/rune/B = input("Select a rune", name, "") as anything in usr.my_religion.available_runes
+
+	var/obj/effect/proc_holder/spell/dumbfire/scribe_rune/S = new
+	S.agent = B
+	S.name = initial(B.name)
+	usr.AddSpell(S)

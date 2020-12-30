@@ -6,7 +6,7 @@
 	icon_state = "1"
 	unacidable = 1
 	layer = TURF_LAYER
-	var/datum/rune/cult/power
+	var/datum/rune/power
 
 /obj/effect/rune/atom_init()
 	. = ..()

@@ -19,28 +19,26 @@ var/list/cult_runes = list()
 	holder = null
 	return ..()
 
-/datum/rune/cult
-
 /datum/rune/New(holder)
 	..()
 	if(global.cult_religion)
 		religion = global.cult_religion
 
-/datum/rune/cult/proc/action(mob/living/carbon/user)
+/datum/rune/proc/action(mob/living/carbon/user)
 	return
 
-/datum/rune/cult/proc/holder_reaction(mob/living/carbon/user)
+/datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
 		return rune_reaction(user)
 	return talisman_reaction(user)
 
-/datum/rune/cult/proc/rune_reaction(mob/living/carbon/user)
+/datum/rune/proc/rune_reaction(mob/living/carbon/user)
 	return
 
-/datum/rune/cult/proc/talisman_reaction(mob/living/carbon/user)
+/datum/rune/proc/talisman_reaction(mob/living/carbon/user)
 	return
 
-/datum/rune/cult/proc/nearest_cultists(range = 1, message)
+/datum/rune/proc/nearest_cultists(range = 1, message)
 	var/list/acolytes = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/C in range(range, center))
@@ -50,7 +48,7 @@ var/list/cult_runes = list()
 				C.say(message)
 	return acolytes
 
-/datum/rune/cult/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
+/datum/rune/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/heretic in view(range, center))
@@ -63,7 +61,7 @@ var/list/cult_runes = list()
 		heretics += heretic
 	return heretics
 
-/datum/rune/cult/proc/fizzle(mob/living/user)
+/datum/rune/proc/fizzle(mob/living/user)
 	if(istype(holder, /obj/effect/rune))
 		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
@@ -72,7 +70,7 @@ var/list/cult_runes = list()
 	holder.visible_message("<span class='danger'>The markings pulse with a small burst of light, \
 		then fall dark.</span>","<span class='danger'>You hear a faint fizzle.</span>")
 
-
+/datum/rune/cult
 /datum/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
 	words = list("travel", "self", "hell")
@@ -92,7 +90,7 @@ var/list/cult_runes = list()
 	if(user)
 		var/obj/effect/rune/R = new(get_turf(user))
 		R.power = new /datum/rune/cult/teleport_from_heaven(R, get_turf(holder))
-		R.icon = get_uristrune_cult(1, R.power.words)
+		R.icon = get_uristrune_cult(TRUE, R.power.words)
 		qdel(holder)
 		var/datum/religion/cult/C = religion
 		for(var/i in 1 to companions.len + 1) // with usr

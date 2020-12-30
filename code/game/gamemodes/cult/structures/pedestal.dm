@@ -1,4 +1,7 @@
+// Maybe rework on component
 /obj/structure/pedestal
+	density = 1
+	anchored = 1
 	pass_flags = PASSTABLE
 
 	var/holy_outline
@@ -124,6 +127,7 @@
 
 // CULT! Then move it to the religion module or make it some kind of datum
 /obj/structure/pedestal/cult
-	name = "пьедестал"
-	desc = "Монолит из неизветного камня с нечитаемыми рунами."
+	name = "pedestal"
+	desc = "A monolith of unknown stone with unreadable runes."
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "pedestal"

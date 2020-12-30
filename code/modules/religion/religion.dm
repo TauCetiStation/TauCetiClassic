@@ -94,6 +94,10 @@
 	var/list/datum/building_agent/available_runes = list()
 	// Type of initial runes agent for which available_runes will be generated
 	var/rune_agent_type
+	// All tech that religion can research
+	var/list/datum/building_agent/available_techs = list()
+	// Type of initial tech agent for which available_runes will be generated
+	var/tech_agent_type
 
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
@@ -466,6 +470,7 @@
 /datum/religion/proc/gen_agent_lists()
 	init_subtypes(build_agent_type, available_buildings)
 	init_subtypes(rune_agent_type, available_runes)
+	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)

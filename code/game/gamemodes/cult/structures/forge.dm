@@ -14,7 +14,7 @@
 
 /obj/structure/cult/forge/atom_init()
 	. = ..()
-	init_subtypes(/datum/building_agent/cult/tool, available_items)
+	init_subtypes(/datum/building_agent/tool/cult, available_items)
 
 /obj/structure/cult/forge/Destroy()
 	QDEL_LIST(available_items)
@@ -55,7 +55,7 @@
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
-	if(istype(choice, /datum/building_agent/cult/tool/tome))
+	if(istype(choice, /datum/building_agent/tool/cult/tome))
 		religion.spawn_bible(loc)
 	else
 		new choice.building_type(loc)

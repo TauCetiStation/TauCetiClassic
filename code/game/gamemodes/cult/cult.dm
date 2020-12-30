@@ -56,7 +56,7 @@
 
 /datum/game_mode/cult/pre_setup()
 	if(!config.objectives_disabled)
-		for(var/i in 2 to rand(2, 3))
+		for(var/i in 1 to rand(2, 3))
 			var/object = pick_n_take(possibles_objectives)
 			objectives += object
 
@@ -112,7 +112,7 @@
 					objectives += pick_n_take(possibles_objectives)
 
 			if(RECRUIT)
-				acolytes_needed = round(player_list.len / 12) // 70 / 12 = 5
+				acolytes_needed = max(4, round(player_list.len * 0.1))
 
 			if(PIETY)
 				piety_needed = round(player_list.len * 10)
@@ -137,7 +137,7 @@
 		var/explanation
 		switch(objectives[obj_count])
 			if(RECRUIT)
-				explanation = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле, чтобы проложить исследования на других станциях."
+				explanation = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] культистов улетят на шаттле, чтобы проложить исследования на других станциях."
 			if(SACRIFICE)
 				if(sacrifice_target)
 					explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. Для этого вам понадобится аспект Mortem."
@@ -261,7 +261,7 @@
 	var/text = "<b>Культистов улетело:</b> [acolytes_out]"
 	if(!config.objectives_disabled)
 		if(objectives.len)
-			text += "<br><b>Целью культистов было:</b>"
+			text += "<br><b>Целями культистов было:</b>"
 			for(var/obj_count in 1 to objectives.len)
 				var/explanation
 				switch(objectives[obj_count])

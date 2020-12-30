@@ -9,12 +9,13 @@
 
 	religify_cd = 5 MINUTES
 
-	var/build_next = list()
+	var/static/list/build_next = list()
 	var/build_cd = 30 SECONDS
-	var/destr_cd = 1 SECOND
-	var/destr_next = list()
 
-	var/rune_next = list()
+	var/static/list/destr_next = list()
+	var/destr_cd = 1 SECOND
+
+	var/static/list/rune_next = list()
 	var/rune_cd = 10 SECONDS
 
 	var/list/choices_generated = FALSE
@@ -95,7 +96,7 @@
 			break
 
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
-	for(var/datum/building_agent/cult/rune/B in religion.available_runes)
+	for(var/datum/building_agent/rune/cult/B in religion.available_runes)
 		var/datum/rune/cult/R = new B.rune_type
 		rune_choices_image[B] = image(icon = get_uristrune_cult(0, R.words))
 		qdel(R)
@@ -111,7 +112,7 @@
 		to_chat(user, "<span class='warning'>YOU CANT SCRIBE RUNE! Please wait about [round((rune_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
-	var/datum/building_agent/cult/rune/choice = get_agent_radial_menu(rune_choices_image, user)
+	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user)
 	if(!choice)
 		return
 
