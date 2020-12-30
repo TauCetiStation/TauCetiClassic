@@ -7,7 +7,7 @@
 	state_nopower_preset = "power0"
 	light_color = "#b88b2e"
 	req_access = list(access_engine_equip)
-	circuit = "/obj/item/weapon/circuitboard/drone_control"
+	circuit = /obj/item/weapon/circuitboard/drone_control
 
 	//Used when pinging drones.
 	var/drone_call_area = "Engineering"
