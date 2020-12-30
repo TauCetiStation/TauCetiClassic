@@ -227,7 +227,7 @@
 
 	action_icon_state = "blind"
 
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
+	starting_spells = list(/obj/effect/proc_holder/spell/targeted/inflict_handler/blind, /obj/effect/proc_holder/spell/targeted/genetic/blind)
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
