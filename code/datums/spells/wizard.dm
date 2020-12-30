@@ -14,7 +14,7 @@
 	proj_icon_state = "magicm"
 	proj_name = "a magic missile"
 	proj_lingering = 1
-	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile"
+	proj_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 
 	proj_lifespan = 20
 	proj_step_delay = 5
@@ -255,7 +255,7 @@
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
-	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
+	proj_type = /obj/effect/proc_holder/spell/turf/fireball
 
 	proj_lifespan = 200
 	proj_step_delay = 1
