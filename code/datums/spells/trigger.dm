@@ -9,7 +9,7 @@
 	. = ..()
 
 	for(var/spell_type in starting_spells)
-		new spell_type(src) //should result in adding to contents, needs testing
+		new spell_type(src)
 
 /obj/effect/proc_holder/spell/targeted/trigger/Destroy()
 	for(var/spell in contents)
