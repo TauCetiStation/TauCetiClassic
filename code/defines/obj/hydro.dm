@@ -1146,7 +1146,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/weapons.dmi'
-	var/seed = ""
+	var/seed_type
 	var/plantname = ""
 	var/species = ""
 	var/lifespan = 20
@@ -1178,7 +1178,7 @@
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
-	seed = "/obj/item/seeds/towermycelium"
+	seed_type = /obj/item/seeds/towermycelium
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
@@ -1204,7 +1204,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
-	seed = "/obj/item/seeds/sunflower"
+	seed_type = /obj/item/seeds/sunflowerseed
 
 /obj/item/weapon/grown/nettle
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -1219,7 +1219,7 @@
 	throw_range = 3
 	plant_type = 1
 	origin_tech = "combat=1"
-	seed = "/obj/item/seeds/nettleseed"
+	seed_type = /obj/item/seeds/nettleseed
 
 /obj/item/weapon/grown/nettle/atom_init()
 	. = ..()
@@ -1240,7 +1240,7 @@
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
-	seed = "/obj/item/seeds/deathnettleseed"
+	seed_type = /obj/item/seeds/deathnettleseed
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 

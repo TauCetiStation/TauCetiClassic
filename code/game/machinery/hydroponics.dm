@@ -796,7 +796,7 @@
 			result.Add(t_prod) // User gets a consumable
 			if(!t_prod)
 				return
-			t_prod.seed = type
+			t_prod.seed_type = type
 			t_prod.species = species
 			t_prod.lifespan = lifespan
 			t_prod.endurance = endurance
@@ -809,7 +809,7 @@
 	else if (ispath(product_type, /obj/item/weapon/grown))
 		while ( t_amount < getYield())
 			var/obj/item/weapon/grown/t_prod = new product_type(user.loc, potency)
-			t_prod.seed = type
+			t_prod.seed_type = type
 			t_prod.species = species
 			t_prod.lifespan = lifespan
 			t_prod.endurance = endurance
