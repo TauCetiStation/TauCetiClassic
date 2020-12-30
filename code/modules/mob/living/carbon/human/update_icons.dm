@@ -306,11 +306,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
 
-	if(istype(wear_suit, /obj/item/clothing/suit/wintercoat))
-		var/obj/item/clothing/suit/wintercoat/W = wear_suit
-		if(W.hooded) // used for coat hood due to hair layer viewed over the suit
-			overlays_standing[HAIR_LAYER]   = null
-
 	apply_overlay(HAIR_LAYER)
 
 
@@ -664,12 +659,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
-
-		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
-			var/obj/item/clothing/suit/wintercoat/W = wear_suit
-			if(W.hooded) //used for coat hood due to hair layer viewed over the suit
-				overlays_standing[HAIR_LAYER] = null
-				overlays_standing[HEAD_LAYER] = null
 		update_inv_shoes()
 
 	update_inv_w_uniform()
