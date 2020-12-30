@@ -168,7 +168,6 @@ var/global/list/wire_daltonism_colors = list()
 			var/new_b = CM.matrix[3] * r + CM.matrix[6] * g + CM.matrix[9] * b + CM.matrix[12] * 255
 
 			wire_daltonism_colors[sight_mod][i] = rgb(new_r, new_g, new_b)
-			qdel(CM)
 
 /datum/wires/tgui_host()
 	return holder
