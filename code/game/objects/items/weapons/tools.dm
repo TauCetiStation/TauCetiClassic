@@ -331,7 +331,7 @@
 
 /obj/item/weapon/weldingtool/attack(mob/living/M, mob/living/user, def_zone)
 	. = ..()
-	if (isOn())
+	if (isOn() && M)
 		use(1)
 		M.IgniteMob()
 
