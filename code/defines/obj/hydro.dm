@@ -1148,7 +1148,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	var/seed = ""
 	var/plantname = ""
-	var/productname = ""
 	var/species = ""
 	var/lifespan = 20
 	var/endurance = 15

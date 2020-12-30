@@ -10,7 +10,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown
 	var/seed = ""
 	var/plantname = ""
-	var/productname = ""
 	var/species = ""
 	var/lifespan = 0
 	var/endurance = 0
