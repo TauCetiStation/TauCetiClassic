@@ -6,7 +6,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	name = "pack of dionaea-replicant seeds"
 	desc = "These seeds grow into 'replica pods' or 'dionaea', a form of strange sapient plantlife."
 	icon_state = "seed-replicapod"
-	mypath = "/obj/item/seeds/replicapod"
 	species = "replicapod"
 	plantname = "Dionaea"
 	productname = "/mob/living/carbon/human" //verrry special -- Urist

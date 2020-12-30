@@ -5,7 +5,6 @@
 	name = "pack of telriis seeds"
 	desc = "These seeds grow into telriis grass. Not recommended for consumption by sentient species."
 	icon_state = "seed-alien1"
-	mypath = "/obj/item/seeds/telriis"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "telriis"
 	plantname = "Telriis grass"
@@ -36,7 +35,6 @@
 	name = "pack of thaa'dra seeds"
 	desc = "These seeds grow into Thaa'dra lichen. Likes the cold."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/thaadra"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "thaadra"
 	plantname = "Thaa'dra lichen"
@@ -67,7 +65,6 @@
 	name = "pack of jurl'mah seeds"
 	desc = "These seeds grow into jurl'mah reeds, which produce large syrupy pods."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/jurlmah"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "jurlmah"
 	plantname = "jurl'mah reeds"
@@ -97,7 +94,6 @@
 	name = "pack of amauri seeds"
 	desc = "Grows into a straight, dark plant with small round fruit."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/amauri"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "amauri"
 	plantname = "amauri plant"
@@ -128,7 +124,6 @@
 	name = "pack of gelthi seeds"
 	desc = "Grows into a bright, wavy plant with many small fruits."
 	icon_state = "seed-alien2"
-	mypath = "/obj/item/seeds/gelthi"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "gelthi"
 	plantname = "gelthi plant"
@@ -160,7 +155,6 @@
 	name = "pack of vale seeds"
 	desc = "The vale bush is often depicted in ancient heiroglyphs and is similar to cherry blossoms."
 	icon_state = "seed-alien2"
-	mypath = "/obj/item/seeds/vale"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "vale"
 	plantname = "vale bush"
@@ -191,7 +185,6 @@
 	name = "pack of surik seeds"
 	desc = "A spiky blue vine with large fruit resembling pig ears."
 	icon_state = "seed-alien3"
-	mypath = "/obj/item/seeds/surik"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "surik"
 	plantname = "surik vine"
@@ -221,7 +214,6 @@
 	name = "pack of black berry seeds"
 	desc = "Strange black spherical organic formations, glowing in the dark"
 	icon_state = "seed-alien5"
-	mypath = "/obj/item/seeds/blackberry"
 	hydroponictray_icon_path = 'icons/obj/xenoarchaeology/prehistoric_plants.dmi'
 	species = "blackberry"
 	plantname = "black berry nest"
