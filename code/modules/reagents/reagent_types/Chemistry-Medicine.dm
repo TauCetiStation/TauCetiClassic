@@ -199,7 +199,7 @@
 	reagent_state = LIQUID
 	color = "#0080ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "кислорода"
+	taste_message = "кислород"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dexalin/on_general_digest(mob/living/M)
@@ -222,7 +222,7 @@
 	color = "#ffc0cb" // rgb: 255, 192, 203
 	overdose = 10
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
-	taste_message = "тошнотворной горечи"
+	taste_message = "тошнотворную горечь"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -260,7 +260,7 @@
 	reagent_state = LIQUID
 	color = "#0040ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE * 0.5
-	taste_message = "ability to breath"
+	taste_message = "способность дышать"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dexalinp/on_general_digest(mob/living/M)
@@ -317,7 +317,7 @@
 	description = "Раздражает рецепторы желудка, что вызывает рефлекторное усиление рвоты."
 	reagent_state = LIQUID
 	color = "#a0a000"
-	taste_message = "рвоты"
+	taste_message = "рвоту"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -337,7 +337,7 @@
 	description = "Это магия. Мы не должны объяснять это."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	taste_message = "педальной магии"
+	taste_message = "педальную магию"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
 	..()
@@ -443,7 +443,7 @@
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "моркови"
+	taste_message = "морковь"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
@@ -491,7 +491,7 @@
 	color = "#551a8b" // rgb: 85, 26, 139
 	overdose = 5.1
 	custom_metabolism = 0.07
-	taste_message = "машин"
+	taste_message = "машины"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin/on_general_digest(mob/living/M)
@@ -536,7 +536,7 @@
 	color = "#ff4f00" // rgb: 200, 165, 220
 	custom_metabolism = 0.03
 	overdose = REAGENTS_OVERDOSE * 0.5
-	taste_message = "скорости"
+	taste_message = "скорость"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
@@ -702,7 +702,7 @@
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.1
-	taste_message = "целостности"
+	taste_message = "целостность"
 	restrict_species = list(IPC, DIONA)
 	data = list()
 

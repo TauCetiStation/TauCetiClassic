@@ -289,7 +289,7 @@
 	description = "Мягкий метал с низкой температурой плавления который легко может быть разрезан ножом. Бурно реагирует с водой."
 	reagent_state = SOLID
 	color = "#a0a0a0" // rgb: 160, 160, 160
-	taste_message = "плохих идей"
+	taste_message = "плохие идеи"
 	custom_metabolism = 0.01
 
 /datum/reagent/mercury
@@ -316,7 +316,7 @@
 	description = "Химический элемент с едким запахом."
 	reagent_state = SOLID
 	color = "#bf8c00" // rgb: 191, 140, 0
-	taste_message = "импульсивного решения"
+	taste_message = "импульсивные решения"
 	custom_metabolism = 0.01
 
 /datum/reagent/carbon
@@ -325,7 +325,7 @@
 	description = "Химический элемент. Строительный материал всего живого."
 	reagent_state = SOLID
 	color = "#1c1300" // rgb: 30, 20, 0
-	taste_message = "карандаша или чего-то такого"
+	taste_message = "карандаш или что-то такое"
 	custom_metabolism = 0.01
 
 /datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
@@ -345,7 +345,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "чего-то специфического"
+	taste_message = "что-то специфическое"
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M)
 	..()
@@ -358,7 +358,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "зубной пасты"
+	taste_message = "зубную пасту"
 
 /datum/reagent/fluorine/on_general_digest(mob/living/M)
 	..()
@@ -370,7 +370,7 @@
 	description = "Химический элемент, охотно реагирует с водой."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "ужасной ошибки"
+	taste_message = "ужасную ошибку"
 	custom_metabolism = 0.01
 
 /datum/reagent/phosphorus
@@ -379,7 +379,7 @@
 	description = "Химический элемент основа биологической передачи энергии."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
-	taste_message = "ошибочного выбора"
+	taste_message = "ошибочный выбор"
 	custom_metabolism = 0.01
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M)
@@ -398,7 +398,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "счастья"
+	taste_message = "счастье"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
@@ -414,7 +414,7 @@
 	description = "Органическое соединение широко известное как столовый сахар и иногда называемое сахароза. Эта белая кристаллическая пыль без запаха имеет приятный сладкий вкус."
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
-	taste_message = "сладости"
+	taste_message = "сладость"
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
@@ -428,7 +428,7 @@
 	description = "Радий это щелочноземельный металл. Он чрезвычайно радиоактивен."
 	reagent_state = SOLID
 	color = "#c7c7c7" // rgb: 199,199,199
-	taste_message = "горечи"
+	taste_message = "горечь"
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
@@ -458,21 +458,21 @@
 				new /obj/effect/decal/cleanable/greenglow(T)
 
 /datum/reagent/iron
-	name = "Iron"
+	name = "Железо"
 	id = "iron"
 	description = "Чистое железо это металл."
 	reagent_state = SOLID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "металла"
+	taste_message = "металл"
 
 /datum/reagent/gold
-	name = "Gold"
+	name = "Золото"
 	id = "gold"
 	description = "Золото это плотный, мягкий, блестящий металл, самый ковкий и пластичный из известных."
 	reagent_state = SOLID
 	color = "#f7c430" // rgb: 247, 196, 48
-	taste_message = "шика"
+	taste_message = "роскошь"
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -482,7 +482,7 @@
 	description = "Мягкий, белый, блестящий переходный металл. Он имеет самую высокую электропроводность среди всех элементов и самую высокую теплопроводность среди всех металлов."
 	reagent_state = SOLID
 	color = "#d0d0d0" // rgb: 208, 208, 208
-	taste_message = "меньшего шика"
+	taste_message = "немного роскоши"
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
@@ -492,7 +492,7 @@
 	description = "Серебристо-белый металлический химический элемент из ряда актинидов, слаборадиоактивный."
 	reagent_state = SOLID
 	color = "#b8b8c0" // rgb: 184, 184, 192
-	taste_message = "альфа-частиц"
+	taste_message = "альфа-частицы"
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
@@ -520,4 +520,4 @@
 	description = "Четырехвалентный металлоид кремний менее активен, чем его химический аналог углерод."
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
-	taste_message = "центрального процессора"
+	taste_message = "центральный процессор"

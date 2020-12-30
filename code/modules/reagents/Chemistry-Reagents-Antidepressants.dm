@@ -41,11 +41,11 @@
 	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
-		to_chat(M, "<span class='warning'>Ваш разум становится менее стабильным.</span>")
+		to_chat(M, "<span class='warning'>Вы ощущаете потерю устойчивости сознания...</span>")
 	else
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
-			to_chat(M, "<span class='notice'>Ваш разум чувствуется стабильным... немного.</span>")
+			to_chat(M, "<span class='notice'>Вы ощущаете повышение устойчивости вашего сознания.</span>")
 
 /datum/chemical_reaction/citalopram
 	name = "Citalopram"
@@ -57,7 +57,7 @@
 /datum/reagent/antidepressant/paroxetine
 	name = "Пароксетин"
 	id = "paroxetine"
-	description = "Отлично стабилизирует разум, но есть шанс получить побочный эффект."
+	description = "Отлично стабилизирует сознание, но с вероятностью негативного побочного эффекта."
 	reagent_state = LIQUID
 	color = "#ff80bf"
 	custom_metabolism = 0.01
@@ -68,12 +68,12 @@
 	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
-		to_chat(M, "<span class='warning'>Ваш разум становится намного менее стабильным.</span>")
+		to_chat(M, "<span class='warning'>Вы ощущаете значительную потерю устойчивости сознания.</span>")
 	else
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
 			if(prob(90))
-				to_chat(M, "<span class='notice'>Ваш разум становится намного стабильнее.</span>")
+				to_chat(M, "<span class='notice'>Вы ощущаете значительное повышение устойчивости вашего сознания.</span>")
 			else
 				to_chat(M, "<span class='warning'>Ваш разум распадается.</span>")
 				M.hallucination += 200

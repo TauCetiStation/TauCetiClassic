@@ -36,7 +36,7 @@
 	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
 	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
-	taste_message = "мягкой еды"
+	taste_message = "мягкую еду"
 
 /datum/reagent/nutriment/on_general_digest(mob/living/M)
 	..()
@@ -56,7 +56,7 @@
 	id = "protein"
 	description = "Различные незаменимые белки и жиры, обычно содержащиеся в мясе и крови животных."
 	diet_flags = DIET_MEAT
-	taste_message = "мяса"
+	taste_message = "мясо"
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
 	..()
@@ -68,21 +68,21 @@
 	id = "plantmatter"
 	description = "Богатые витаминами волокна и натуральные сахара, которые обычно встречаются в свежих продуктах."
 	diet_flags = DIET_PLANT
-	taste_message = "растений"
+	taste_message = "растение"
 
 /datum/reagent/nutriment/dairy // Milk-based biomatter.
 	name = "Молокопродукт"
 	id = "dairy"
 	description = "Вкусное вещество, которое получается из коров, которые едят много травы."
 	diet_flags = DIET_DAIRY
-	taste_message = "молока"
+	taste_message = "молоко"
 
 /datum/reagent/consumable/sprinkles
 	name = "Присыпка"
 	id = "sprinkles"
 	description = "Разноцветные кусочки сахара, которые обычно можно найти на пончиках. Любят копы."
 	color = "#ff00ff" // rgb: 255, 0, 255
-	taste_message = "сладости"
+	taste_message = "сладость"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
@@ -112,7 +112,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
-	taste_message = "соли"
+	taste_message = "соль"
 	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/ketchup
@@ -122,7 +122,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "кетчупа"
+	taste_message = "кетчуп"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/flour
@@ -132,7 +132,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
-	taste_message = "муки"
+	taste_message = "мука"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/capsaicin
@@ -141,7 +141,7 @@
 	description = "Это то, что делает перец жгучим."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 179, 16, 8
-	taste_message = "<span class='warning'>ЖГУЧЕСТИ</span>"
+	taste_message = "<span class='warning'>ЖЖЕНИЕ</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
@@ -170,7 +170,7 @@
 	description = "Химическое вещество, используемое для самообороны и в полиции."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 179, 16, 8
-	taste_message = "<span class='userdanger'>ЧИСТОГО ОГНЯ</span>"
+	taste_message = "<span class='userdanger'>ЧИСТЫЙ ОГОНЬ</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
@@ -203,7 +203,7 @@
 				if (!safe_thing)
 					safe_thing = victim.glasses
 			if (eyes_covered && mouth_covered)
-				to_chat(victim, "<span class='userdanger'></span>")
+				to_chat(victim, "<span class='userdanger'>Ваш [safe_thing] защищает вас от перцового аэрозоля!</span>")
 				return
 			else if (mouth_covered)	// Reduced effects if partially protected
 				to_chat(victim, "<span class='userdanger'>Ваш [safe_thing] частично защищает вас от перцового аэрозоля!</span>")
@@ -236,7 +236,7 @@
 	description = "Специальное масло, которое заметно охлаждает тело. Добывается из ледяного перца."
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
-	taste_message = "<font color='lightblue'>холода</font>"
+	taste_message = "<font color='lightblue'>холод</font>"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
@@ -261,7 +261,7 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "соли"
+	taste_message = "соль"
 
 /datum/reagent/consumable/blackpepper
 	name = "Чёрный перец"
@@ -269,7 +269,7 @@
 	description = "Перемолотые горошины перца. *АААПЧХИИИ*"
 	reagent_state = SOLID
 	// no color (ie, black)
-	taste_message = "перца"
+	taste_message = "перец"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/coco
@@ -328,7 +328,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "масла"
+	taste_message = "масло"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
@@ -361,7 +361,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "сухой лапши покрытой чем-то вроде ваших слез"
+	taste_message = "сухую лапшу покрытую чем-то вроде ваших слез"
 
 /datum/reagent/consumable/hot_ramen
 	name = "Горячая лапша"
@@ -370,7 +370,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "лапши"
+	taste_message = "лапшу"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
@@ -384,7 +384,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "сухой лапши покрытой чем-то ОСТРЫМ"
+	taste_message = "сухую лапшу покрытую чем-то ОСТРЫМ"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
@@ -398,7 +398,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "ЖГУЧЕЙ лапши"
+	taste_message = "ЖГУЧУЮ лапшу"
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
@@ -412,7 +412,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
-	taste_message = "риса"
+	taste_message = "рис"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cherryjelly
@@ -422,7 +422,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
-	taste_message = "вишнёвого джема"
+	taste_message = "вишнёвый джем"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/egg
@@ -432,7 +432,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 4
 	color = "#f0c814"
-	taste_message = "яиц"
+	taste_message = "яйцо"
 	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/cheese
@@ -442,7 +442,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 4
 	color = "#ffff00"
-	taste_message = "сыра"
+	taste_message = "сыр"
 	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/beans
@@ -462,5 +462,5 @@
 	reagent_state = SOLID
 	nutriment_factor = 4
 	color = "#9c5013"
-	taste_message = "хлеба"
+	taste_message = "хлеб"
 	diet_flags = DIET_PLANT

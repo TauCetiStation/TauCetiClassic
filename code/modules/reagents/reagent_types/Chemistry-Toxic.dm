@@ -6,7 +6,7 @@
 	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 	custom_metabolism = 0.1
-	taste_message = "горечи"
+	taste_message = "горечь"
 	flags = list(IS_ORGANIC = TRUE)
 
 	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
@@ -545,7 +545,7 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	taste_message = "СМЕРТИ"
+	taste_message = "СМЕРТЬ"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()

@@ -4,7 +4,7 @@
 	id = "blood"
 	reagent_state = LIQUID
 	color = "#c80000" // rgb: 200, 0, 0
-	taste_message = "<span class='warning'>крови</span>"
+	taste_message = "<span class='warning'>кровь</span>"
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
@@ -88,7 +88,7 @@
 	id = "vaccine"
 	reagent_state = LIQUID
 	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "здоровья"
+	taste_message = "здоровье"
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/vaccine/self = src
@@ -112,7 +112,7 @@
 	reagent_state = LIQUID
 	color = "#009ca8" // rgb: 0, 156, 168
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "масла"
+	taste_message = "масло"
 
 	needed_aspects = list(ASPECT_WACKY = 1)
 
@@ -130,7 +130,7 @@
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	taste_message = "пластика"
+	taste_message = "пластик"
 
 /datum/reagent/plasticide/on_general_digest(mob/living/M)
 	..()
@@ -143,7 +143,7 @@
 	description = "Простой полиол. Имеет сладкий вкус и малотоксичен."
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "сладоости"
+	taste_message = "сладость"
 	custom_metabolism = 0.01
 
 /datum/reagent/nitroglycerin
@@ -152,7 +152,7 @@
 	description = "Тяжелая, бесцветная, маслянистая, взрывоопасная жидкость, полученная нитрованием глицерина."
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "масла" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
+	taste_message = "масло" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
 	custom_metabolism = 0.01
 
 /datum/reagent/thermite
@@ -198,7 +198,7 @@
 	reagent_state = LIQUID
 	color = "#660000" // rgb: 102, 0, 0
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "моторного масла"
+	taste_message = "моторное масло"
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
 	var/turf/the_turf = get_turf(O)
@@ -227,7 +227,7 @@
 	reagent_state = LIQUID
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
-	taste_message = "средства для мытья полов"
+	taste_message = "средство для мытья полов"
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -299,7 +299,7 @@
 	description = "Микробы с совершенно чужеродной клеточной структурой."
 	reagent_state = LIQUID
 	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "чего-то чужеродного"
+	taste_message = "что-то чужеродное"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
 	src = null
@@ -366,7 +366,7 @@
 	description = "Едкое вещество, обычно используемое в удобрениях или бытовых чистящих средствах."
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
-	taste_message = "средства для мытья полов"
+	taste_message = "средство для мытья полов"
 
 /datum/reagent/ultraglue
 	name = "Суперклей"
@@ -424,7 +424,7 @@
 	nutriment_factor = 0.2
 	color = "#ffffff"
 	custom_metabolism = 0.2
-	taste_message = "bitterness"
+	taste_message = "горечь"
 
 /datum/reagent/luminophore
 	name = "Luminophore"
@@ -433,7 +433,7 @@
 	reagent_state = LIQUID
 	color = "#ffffff"
 	custom_metabolism = 0.2
-	taste_message = "bitterness"
+	taste_message = "горечь"
 
 /datum/reagent/luminophore/on_general_digest(mob/living/M)
 	..()
@@ -451,7 +451,7 @@
 	description = "Микроскопические роботы-строители."
 	reagent_state = LIQUID
 	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "наномашин, сынок"
+	taste_message = "наномашины, сынок"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
 	src = null
@@ -464,7 +464,7 @@
 	description = "Дружелюбные микроскопические роботы-строители."
 	reagent_state = LIQUID
 	color = "#535e66" //rgb: 83, 94, 102
-	taste_message = "наномашин, сынок"
+	taste_message = "наномашины, сынок"
 
 /datum/reagent/nanobots
 	name = "Наноботы"
@@ -472,7 +472,7 @@
 	description = "Микроскопические роботы предназначеные для использования в человеке. Должны быть снаряжены лечащими химикатами."
 	reagent_state = LIQUID
 	color = "#3e3959" //rgb: 62, 57, 89
-	taste_message = "наномашин, сынок"
+	taste_message = "наномашины, сынок"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
 //Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
@@ -485,7 +485,7 @@
 	custom_metabolism = 0.005
 	var/spawning_horror = 0
 	var/percent_machine = 0
-	taste_message = "наномашин, сынок"
+	taste_message = "наномашины, сынок"
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -626,7 +626,7 @@
 	description = "Эта краска пристаёт только к плитке пола."
 	color = "#808080"
 	color_weight = 20
-	taste_message = "сильного жидкого цвета"
+	taste_message = "сильный жидкий цвета"
 
 /datum/reagent/paint/red
 	name = "Красная краска"
@@ -813,7 +813,7 @@
 	reagent_state = LIQUID
 	color = "#ffffff" // to see rgb just look into data!
 	color_weight = 10
-	taste_message = "жидкого цвета"
+	taste_message = "жидкий цвет"
 
 /*
 TODO: Convert everything to custom hair dye. ~ Luduk.
@@ -866,7 +866,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
 	reagent_state = LIQUID
 	color = "#efc769" // rgb: 239, 199, 105
-	taste_message = "hairs inside me"
+	taste_message = "волосы внутри себя"
 
 /datum/reagent/hair_growth_accelerator/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
@@ -960,7 +960,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	id = "aqueous_foam"
 	description = "Глушит огонь и задерживает горючие пары."
 	reagent_state = LIQUID
-	taste_message = "содержимого огнетушителя"
+	taste_message = "содержимое огнетушителя"
 	color = "#c2eaed" // rgb: 194, 234, 237
 
 /datum/reagent/aqueous_foam/reaction_turf(turf/T, method=TOUCH, volume)
