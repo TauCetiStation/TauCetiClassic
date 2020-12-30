@@ -2,7 +2,7 @@
 
 /datum/event/borer_infestation
 	announceWhen = 400
-	announcement = /datum/announcement/centcomm/aliens
+	announcement = new /datum/announcement/centcomm/aliens
 
 	var/spawncount = 1
 	var/successSpawn = FALSE //So we don't make a command report if nothing gets spawned.
