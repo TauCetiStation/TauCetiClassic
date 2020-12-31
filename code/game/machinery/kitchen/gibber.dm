@@ -160,7 +160,7 @@
 		update_icon()
 		return TRUE
 
-/obj/machinery/gibber/proc/check_Adjacent(mob/user,mob/living/victim)
+/obj/machinery/gibber/proc/check_Adjacent(mob/user, mob/living/victim)
 	return victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user)
 
 /obj/machinery/gibber/verb/eject()
