@@ -12,7 +12,7 @@
 	products = list(/obj/item/clothing/head/santa = 50, /obj/item/clothing/head/santahat = 10, /obj/item/clothing/suit/santa = 10, /obj/item/clothing/head/ushanka = 30, /obj/item/clothing/under/sexy_santa = 10, /obj/item/weapon/present = 50,
 	/obj/item/decoration/garland = 30, /obj/item/decoration/tinsel = 30, /obj/item/decoration/snowflake = 10, /obj/item/decoration/snowman = 10, /obj/item/snowball = 500, /obj/item/clothing/suit/hooded/wintercoat = 40, /obj/item/clothing/shoes/winterboots = 40)
 
-	contraband = list(, /obj/item/snowball = 100)
+	contraband = list(/obj/item/snowball = 100)
 
 	premium = list()
 
