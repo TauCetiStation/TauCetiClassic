@@ -85,7 +85,6 @@
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-
 #define isholder(A) (istype(A, /obj/item/weapon/holder)) //gaah, someone can put this on correct places?
 
 #define isgrab(A) (istype(A, /obj/item/weapon/grab)) //gaah, someone can put this on correct places?
