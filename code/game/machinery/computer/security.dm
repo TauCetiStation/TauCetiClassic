@@ -127,17 +127,17 @@
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
-						dat += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: <A href='?src=\ref[];choice=Edit Field;field=criminal'>[]</A><BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[];choice=Edit Field;field=mi_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];choice=Edit Field;field=mi_crim_d'>[]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[];choice=Edit Field;field=ma_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];choice=Edit Field;field=ma_crim_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];choice=Edit Field;field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src, active2.fields["criminal"], src, active2.fields["mi_crim"], src, active2.fields["mi_crim_d"], src, active2.fields["ma_crim"], src, active2.fields["ma_crim_d"], src, decode(active2.fields["notes"]))
+						dat += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: <A href='?src=\ref[];choice=Edit Field;field=criminal'>[]</A><BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[];choice=Edit Field;field=mi_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];choice=Edit Field;field=mi_crim_d'>[]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[];choice=Edit Field;field=ma_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];choice=Edit Field;field=ma_crim_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];choice=Edit Field;field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><HR>", src, active2.fields["criminal"], src, active2.fields["mi_crim"], src, active2.fields["mi_crim_d"], src, active2.fields["ma_crim"], src, active2.fields["ma_crim_d"], src, decode(active2.fields["notes"]))
 						var/counter = 1
 						while(active2.fields[text("com_[]", counter)])
-							dat += text("[]<BR><A href='?src=\ref[];choice=Delete Entry;del_c=[]'>Delete Entry</A><BR><BR>", active2.fields[text("com_[]", counter)], src, counter)
+							dat += text("[]<BR><A href='?src=\ref[];choice=Delete Entry;del_c=[]'>Delete Entry</A><HR>", active2.fields[text("com_[]", counter)], src, counter)
 							counter++
-						dat += text("<A href='?src=\ref[];choice=Add Entry'>Add Entry</A><BR><BR>", src)
-						dat += text("<A href='?src=\ref[];choice=Delete Record (Security)'>Delete Record (Security Only)</A><BR><BR>", src)
+						dat += text("<A href='?src=\ref[];choice=Add Entry'>Add Entry</A><BR>", src)
+						dat += text("<A href='?src=\ref[];choice=Delete Record (Security)'>Delete Record (Security Only)</A><BR>", src)
 					else
 						dat += "<B>Security Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
-					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
 				if(4.0)
 					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
@@ -235,6 +235,11 @@ What a mess.*/
 				else
 					scan.loc = get_turf(src)
 				scan = null
+				//Log Out
+				authenticated = null
+				screen = null
+				active1 = null
+				active2 = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -315,29 +320,11 @@ What a mess.*/
 				temp = "Record Not Found!"
 			else
 				for(var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+					if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 						S = E
 				active1 = R
 				active2 = S
 				screen = 3
-
-/*			if ("Search Fingerprints")
-			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && !issilicon(usr) && !isobserver(usr)))
-				return
-			active1 = null
-			active2 = null
-			t1 = lowertext(t1)
-			for(var/datum/data/record/R in data_core.general)
-				if (lowertext(R.fields["fingerprint"]) == t1)
-					active1 = R
-			if (!( active1 ))
-				temp = text("Could not locate record [].", t1)
-			else
-				for(var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-						active2 = E
-				screen = 3	*/
 
 		if("Print Record")
 			if(!printing)
@@ -388,10 +375,10 @@ What a mess.*/
 			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
 			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
-			var/counter = 1
-			while(active2.fields[text("com_[]", counter)])
-				counter++
-			active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
+			if(scan)
+				add_record(scan, active2, t1)
+			else
+				add_record(usr, active2, t1)
 
 		if("Delete Record (ALL)")
 			if(active1)
@@ -487,14 +474,10 @@ What a mess.*/
 						active2.fields["notes"] = t1
 				if("criminal")
 					if(istype(active2, /datum/data/record))
-						temp = "<h5>Criminal Status:</h5>"
-						temp += "<ul>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Released</a></li>"
-						temp += "</ul>"
+						if(scan)
+							change_criminal_status(usr, scan, null, active2, TRUE, src)
+						else
+							change_criminal_status(usr, usr, null, active2, TRUE, src)
 				if("rank")
 					var/list/L = list( "Head of Personnel", "Captain", "AI" )
 					//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
@@ -539,24 +522,6 @@ What a mess.*/
 						active1.fields["rank"] = href_list["rank"]
 						if(href_list["rank"] in joblist)
 							active1.fields["real_rank"] = href_list["real_rank"]
-
-				if ("Change Criminal Status")
-					if (active2)
-						switch(href_list["criminal2"])
-							if("none")
-								active2.fields["criminal"] = "None"
-							if("arrest")
-								active2.fields["criminal"] = "*Arrest*"
-							if("incarcerated")
-								active2.fields["criminal"] = "Incarcerated"
-							if("paroled")
-								active2.fields["criminal"] = "Paroled"
-							if("released")
-								active2.fields["criminal"] = "Released"
-
-						for(var/human in global.human_list)
-							var/mob/living/carbon/human/H = human
-							H.sec_hud_set_security_status()
 
 				if ("Delete Record (Security) Execute")
 					if (active2)
