@@ -379,6 +379,13 @@
 	cost = 10
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/ammo/chemicals
+	name = "Chemical Warfare Tank"
+	desc = "A tank of chemicals to refuel your urge to deliver slow and painful death to others."
+	item = /obj/item/device/radio/beacon/syndicate_chemicals
+	cost = 10
+	uplink_types = list("nuclear")
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons

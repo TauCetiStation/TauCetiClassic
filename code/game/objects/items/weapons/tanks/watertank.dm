@@ -161,3 +161,36 @@
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1
 	spray_sizes = list(1,3)
+
+/obj/item/weapon/reagent_containers/watertank_backpack/syndie
+	name = "chemical tank"
+	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies with fresh chemical burns."
+	icon_state = "waterbackpacknuke"
+	item_state = "waterbackpacknuke"
+	volume = 1600
+	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
+
+/obj/item/weapon/reagent_containers/watertank_backpack/syndie/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("lexorin", 200)
+	reagents.add_reagent("mindbreaker", 200)
+	reagents.add_reagent("alphaamanitin", 200)
+	reagents.add_reagent("space_drugs", 200)
+	reagents.add_reagent("pacid", 200)
+	reagents.add_reagent("fuel", 200)
+	reagents.add_reagent("condensedcapsaicin", 200)
+	reagents.add_reagent("stoxin", 200)
+
+/obj/item/weapon/reagent_containers/spray/mister/syndie
+	name = "chemical spray nozzle"
+	desc = "Breath of death."
+	icon_state = "misternuke"
+	item_state = "misternuke"
+	triple_shot = TRUE
+	spray_size = 4
+	spray_sizes = list(2)
+
+	spray_cloud_move_delay = 2
+	spray_cloud_react_delay = 0
+	volume = 1600
