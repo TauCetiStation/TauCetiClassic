@@ -330,15 +330,3 @@
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
 
-/obj/item/device/radio/beacon/syndicate_chemicals
-	name = "suspicious beacon"
-	desc = "A label on it reads: <i>Warning: Activating this device will send a container with hazardous chemicals to your location.</i>."
-	origin_tech = "bluespace=1;syndicate=4"
-
-/obj/item/device/radio/beacon/syndicate_chemicals/attack_self(mob/user)
-	if(user)
-		to_chat(user, "<span class='notice'>Locked In</span>")
-		new /obj/structure/reagent_dispensers/hazard( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
-		qdel(src)
-	return
