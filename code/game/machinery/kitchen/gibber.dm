@@ -147,7 +147,7 @@
 	if(user.is_busy(src)) return
 	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
 	src.add_fingerprint(user)
-	var/checks_to_check = CALLBACK(src, .proc/check_Adjacent, user, victim)
+	var/checks_to_check = CALLBACK(src, .proc/do_after_checks, user, victim)
 	if(istype(victim.loc, /obj/item/weapon/holder))
 		checks_to_check = null
 	if(do_after(user, 30, target = src, extra_checks = checks_to_check))
@@ -160,8 +160,8 @@
 		update_icon()
 		return TRUE
 
-/obj/machinery/gibber/proc/check_Adjacent(mob/user, mob/living/victim)
-	return victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user)
+/obj/machinery/gibber/proc/do_after_checks(mob/user, mob/living/victim)
+	return victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
