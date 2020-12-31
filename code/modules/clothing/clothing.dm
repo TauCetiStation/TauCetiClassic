@@ -443,6 +443,7 @@ BLIND     // can't see anything
 	icon_state = "space"
 	item_state = "s_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
+	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM
