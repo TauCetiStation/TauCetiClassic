@@ -393,7 +393,7 @@
 /datum/reagent/lithium
 	name = "Литий"
 	id = "lithium"
-	description = "Химический элемент, используется как антидепрессант."
+	description = "Химический элемент. Используется как антидепрессант."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
