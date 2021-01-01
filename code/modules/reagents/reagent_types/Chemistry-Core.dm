@@ -375,7 +375,7 @@
 /datum/reagent/phosphorus
 	name = "Фосфор"
 	id = "phosphorus"
-	description = "Химический элемент основа биологической передачи энергии."
+	description = "Химический элемент. Основа биологических энергоносителей."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 	taste_message = "ошибочный выбор"
