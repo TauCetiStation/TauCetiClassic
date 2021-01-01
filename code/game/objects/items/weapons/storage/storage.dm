@@ -81,7 +81,7 @@
 			for(var/obj/item/I in contents)
 				if(M.is_busy())
 					return
-				if(!Adjacent(user) || !over_location.Adjacent(src) || !over_location.Adjacent(user))
+				if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
 					return
 				if(!do_after(M, 2, target = M))
 					return
