@@ -61,21 +61,6 @@
 	QDEL_NULL(storage_ui)
 	return ..()
 
-/obj/item/weapon/storage/proc/check_overlocation_drop(obj/item/C, mob/user, turf/T)
-	if(!C || !user)
-		return FALSE
-	if(!istype(C, /obj/item/weapon/storage))
-		return FALSE
-	if(usr.incapacitated())
-		return FALSE
-	if(user.is_busy())
-		return FALSE
-	if(!C.Adjacent(user) || !T.Adjacent(C) || !T.Adjacent(user))
-		return FALSE
-	if((C.loc && C.loc.loc == user))
-		return FALSE
-	return TRUE
-
 /obj/item/weapon/storage/MouseDrop(obj/over_object, src_location, turf/over_location)
 	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
 		return
@@ -83,21 +68,25 @@
 		return
 
 	var/mob/M = usr
-	if(over_location && over_object != usr)
+	if(over_location && over_object != M)
+		if(M.incapacitated())
+			return
 		if(slot_equipped != (SLOT_L_HAND|SLOT_R_HAND))
 			return
 		if(!istype(M.loc, /turf/simulated))
 			return
-		var/dir_target = get_dir(M.loc, over_location)
 		if(M.a_intent == INTENT_HELP)
+			var/dir_target = get_dir(M.loc, over_location)
 			M.SetNextMove(CLICK_CD_MELEE)
-			for(var/obj/item/I in src.contents)
-				if(!check_overlocation_drop(src, M, over_location))
+			for(var/obj/item/I in contents)
+				if(M.is_busy())
+					return
+				if(!Adjacent(user) || !over_location.Adjacent(src) || !over_location.Adjacent(user))
 					return
 				if(!do_after(M, 2, target = M))
-					break
-				src.remove_from_storage(I, M.loc)
-				src.add_fingerprint(usr)
+					return
+				remove_from_storage(I, M.loc)
+				add_fingerprint(M)
 				step(I, dir_target)
 		return
 
@@ -129,8 +118,6 @@
 					return
 				M.put_in_active_hand(src)
 		src.add_fingerprint(usr)
-		return
-	return
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
