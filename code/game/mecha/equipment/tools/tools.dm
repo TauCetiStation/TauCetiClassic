@@ -538,6 +538,7 @@
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
 	origin_tech = "materials=3"
+	selectable = FALSE
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -591,6 +592,7 @@
 	origin_tech = "materials=4"
 	equip_cooldown = 10
 	energy_drain = 50
+	selectable = FALSE
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
@@ -664,6 +666,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
+	selectable = FALSE
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -750,6 +753,7 @@
 	energy_drain = 0
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
+	selectable = FALSE
 	var/coeff = 100
 	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
