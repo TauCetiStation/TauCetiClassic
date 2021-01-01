@@ -285,8 +285,7 @@
 /datum/reagent/potassium
 	name = "Калий"
 	id = "potassium"
-	description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
-	description = "Мягкий метал с низкой температурой плавления который легко может быть разрезан ножом. Бурно реагирует с водой."
+	description = "Мягкий металл с низкой температурой плавления, который может быть легко разрезан ножом. Вызывает сильную реакцию с водой."
 	reagent_state = SOLID
 	color = "#a0a0a0" // rgb: 160, 160, 160
 	taste_message = "плохие идеи"
