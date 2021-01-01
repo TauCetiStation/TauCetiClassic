@@ -437,7 +437,7 @@
 
 /obj/item/fish_carp/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
-	if(is_sharp(W) && !user.is_busy())
+	if(W.is_sharp() && !user.is_busy())
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 		playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 		if(!do_after(user, 80, target = src) || QDELETED(src))
