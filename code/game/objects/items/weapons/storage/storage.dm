@@ -84,6 +84,8 @@
 
 	var/mob/M = usr
 	if(over_location && over_object != usr)
+		if(slot_equipped != (SLOT_L_HAND|SLOT_R_HAND))
+			return
 		if(!istype(M.loc, /turf/simulated))
 			return
 		var/dir_target = get_dir(M.loc, over_location)
