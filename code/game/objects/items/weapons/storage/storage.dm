@@ -76,7 +76,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object, null, turf/over_location)
+/obj/item/weapon/storage/MouseDrop(obj/over_object, src_location, turf/over_location)
 	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
 		return
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
