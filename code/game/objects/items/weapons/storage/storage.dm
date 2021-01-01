@@ -71,7 +71,7 @@
 	if(over_location && over_object != M)
 		if(M.incapacitated())
 			return
-		if(slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND)
+		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
 			return
 		if(!istype(M.loc, /turf/simulated))
 			return
