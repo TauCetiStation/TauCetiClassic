@@ -90,7 +90,7 @@
 		if(M.a_intent == INTENT_HELP)
 			M.SetNextMove(CLICK_CD_MELEE)
 			for(var/obj/item/I in src.contents)
-				if(!check_drop(src, M, over_location))
+				if(!check_overlocation_drop(src, M, over_location))
 					return
 				if(!do_after(M, 2, target = M))
 					break
