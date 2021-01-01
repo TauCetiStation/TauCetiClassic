@@ -126,3 +126,13 @@
 /datum/announcement/station/gang/multiple
 	name = "Gang: Multiple Dominators"
 	message = "Multiple station takeover attempts have made simultaneously. Conflicting hostile runtimes appears to have delayed both attempts."
+
+/* Cult */
+/datum/announcement/station/cult/capture_area
+	name = "Cult: Capture area"
+	subtitle = "Неавторизованная Блюспейс Активность"
+	message = "В зоне было обнаружено неизвестное блюспейс вторжение."
+/datum/announcement/station/cult/capture_area/play(area/A)
+	if(A)
+		message = "В [A] было обнаружено неизвестное блюспейс вторжение."
+	..()

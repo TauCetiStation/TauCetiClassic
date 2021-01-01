@@ -92,6 +92,10 @@
 		C.gib()
 		return
 
+	if(istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door))
+		new /obj/structure/mineral_door/cult(get_turf(A))
+		qdel(A)
+
 	if(isturf(A))
 		var/turf/T = A
 		if(istype(T, /turf/simulated/floor/engine/cult))

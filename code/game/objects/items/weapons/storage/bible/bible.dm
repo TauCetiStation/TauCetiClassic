@@ -141,4 +141,4 @@
 
 	if(changes)
 		religify_next[user.ckey] = world.time + religify_cd
-		R.religify()
+		R.religify(null, null, user)

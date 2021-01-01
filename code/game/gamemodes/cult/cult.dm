@@ -13,7 +13,7 @@
 	name = "cult"
 	config_tag = "cult"
 	role_type = ROLE_CULTIST
-	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	// TEST FOR DEBUGGING OF THE GAME OF CULT OF BLOOD
 	required_players = 0
@@ -46,7 +46,7 @@
 	var/acolytes_needed = 5 //for the survive objective
 	var/acolytes_out = 0
 
-	var/piety_needed = 100000 // for objective
+	var/piety_needed = 0 // for objective
 
 	var/list/possibles_objectives = list(RECRUIT, SACRIFICE, CAPTURE, SUMMON_GOD, PIETY)
 
@@ -88,6 +88,17 @@
 
 	for(var/obj in objectives)
 		switch(obj)
+			if(CAPTURE)
+				// I don't think it can be done any other way
+				var/have_chaplain = FALSE
+				for(var/mob/living/carbon/human/player in player_list)
+					if(istype(player.my_religion, /datum/religion/chaplain))
+						have_chaplain = TRUE
+						break
+				if(!have_chaplain)
+					objectives -= CAPTURE
+					objectives += pick_n_take(possibles_objectives)
+
 			if(SACRIFICE)
 				var/list/possible_targets = get_unconvertables()
 				listclearnulls(possible_targets)
@@ -100,16 +111,6 @@
 
 				if(possible_targets.len)
 					sacrifice_target = pick(possible_targets)
-			if(CAPTURE)
-				// I don't think it can be done any other way
-				var/have_chaplain = FALSE
-				for(var/mob/living/carbon/human/player in player_list)
-					if(istype(player.my_religion, /datum/religion/chaplain))
-						have_chaplain = TRUE
-						break
-				if(!have_chaplain)
-					objectives -= CAPTURE
-					objectives += pick_n_take(possibles_objectives)
 
 			if(RECRUIT)
 				acolytes_needed = max(4, round(player_list.len * 0.1))
@@ -146,7 +147,7 @@
 			if(SUMMON_GOD)
 				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции. Он будет работать только в том случае, если девять культистов встанут внутри структуры с 12 пьедесталами."
 			if(CAPTURE)
-				explanation = "Убейте всех представителей религии на станции и захватите их церковь с помощью специальной руны."
+				explanation = "Убейте всех представителей религии на станции и захватите церковь с помощью специальной руны."
 			if(PIETY)
 				explanation = "Накопите и сохраните [piety_needed] piety"
 		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
@@ -224,7 +225,7 @@
 				if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 					cult_fail++
 			if(CAPTURE)
-				if(!religion.capture_completed)
+				if(!check_capture())
 					cult_fail++
 			if(PIETY)
 				if(religion.piety < piety_needed)
@@ -240,6 +241,16 @@
 				acolytes_out++
 	if(acolytes_out >= acolytes_needed)
 		return FALSE
+	return TRUE
+
+/datum/game_mode/cult/proc/check_capture()
+	var/list/areas = get_areas(/area/station/civilian/chapel)
+	for(var/area/A in areas)
+		if(!istype(A.religion, /datum/religion/cult))
+			return FALSE
+	for(var/mob/M in global.chaplain_religion.members)
+		if(M.stat != DEAD)
+			return FALSE
 	return TRUE
 
 /datum/game_mode/cult/declare_completion()
@@ -281,7 +292,7 @@
 								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал.</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL")
 							else
-								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал (Уничтожено).</span>"
+								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал (Тело уничтожено).</span>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 						else
 							explanation = "Свободная цель. <span style='color: green; font-weight: bold;'>Успех!</span>"
@@ -294,7 +305,7 @@
 							explanation = "Призовите Нар-Си. <span style='color: red; font-weight: bold;'>Провал.</span>"
 							feedback_add_details("cult_objective","cult_narsie|FAIL")
 					if(CAPTURE)
-						if(religion.capture_completed)
+						if(check_capture())
 							explanation = "Убейте всех представителей религии на станции и захватите их церковь. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_capture|SUCCESS")
 						else

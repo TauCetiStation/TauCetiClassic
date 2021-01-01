@@ -48,12 +48,22 @@
 	// Radial menu
 	var/list/altar_skins
 
+	var/carpet_type
+	var/list/carpet_type_by_name
+
+	// Now only for cults
+	var/list/wall_types
+	var/list/floor_types
+	var/list/door_types
+
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
 	var/list/carpet_dir_by_name
 	// Radial menu
 	var/list/carpet_skins
+	var/candle_type
 	// Main area with structures
+	var/area_type
 	var/list/area_types
 
 	/*
@@ -79,6 +89,10 @@
 	var/list/rites_info = list()
 	// Lists of rite name by type. "name = rite"
 	var/list/rites_by_name = list()
+	// All runes on map
+	var/list/runes = list()
+	// Is the rune removed after use
+	var/disposable_rune = TRUE
 
 	// Contains an altar, wherever it is
 	var/obj/structure/altar_of_gods/altar
@@ -98,6 +112,8 @@
 	var/list/datum/building_agent/available_techs = list()
 	// Type of initial tech agent for which available_runes will be generated
 	var/tech_agent_type
+	// Is it possible to build not only within the religious area
+	var/can_build_everywhere = FALSE
 
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
@@ -184,8 +200,6 @@
 
 // This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
-	name = pick(DEFAULT_RELIGION_NAMES)
-
 	lore = lore_by_name[name]
 	if(!lore)
 		lore = ""
@@ -206,11 +220,14 @@
 
 // Update all info regarding structure based on current religion info.
 /datum/religion/proc/update_structure_info()
-	var/carpet_dir = carpet_dir_by_name[name]
-	if(!carpet_dir)
+	var/carpet_symbol_info = carpet_dir_by_name[name]
+	if(carpet_symbol_info)
+		carpet_dir = carpet_dir_by_name["Default"]
+	else
 		carpet_dir = 0
 
 	/*
+	// Luduk when?
 	var/lecturn_info = lecturn_info_by_name[name]
 	if(lecturn_info)
 		lecturn_icon_state = lecturn_info
@@ -230,20 +247,66 @@
 	else
 		altar_icon_state = altar_info_by_name["Default"]
 
-// This proc converts all related objects in areatype to this reigion's liking.
-/datum/religion/proc/religify()
-	var/list/to_religify = get_area_all_atoms(area_types)
+	var/carpet_info = carpet_type_by_name[name]
+	if(carpet_info)
+		carpet_type = carpet_info
+	else
+		carpet_type = carpet_type_by_name["Default"]
+
+// This proc converts all related objects in area_type to this reigion's liking.
+/datum/religion/proc/religify(_area_type = area_type, datum/callback/after_action, mob/user)
+	var/area/area = locate(_area_type)
+	if(!istype(area.religion, type))
+		if(user)
+			to_chat(user, "<span class='warning'>[area] больше не под контролем вашей религии!</span>")
+		return FALSE
+
+	var/list/to_religify = get_area_all_atoms(_area_type)
+	var/i = 0
 	for(var/atom/A in to_religify)
-		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpetsymbol")
-			A.dir = carpet_dir
+		if(istype(A, /turf/simulated))
+			if(istype(A, /turf/simulated/wall))
+				var/turf/simulated/wall/W = A
+				if(wall_types)
+					W.ChangeTurf(pick(wall_types))
+			else if(istype(A, /turf/simulated/floor))
+				var/turf/simulated/floor/F = A
+				if(A.icon_state == "carpetsymbol")
+					A.dir = carpet_dir
+				else if(istype(A, /turf/simulated/floor/carpet))
+					var/turf/simulated/floor/carpet/C = A
+					C.ChangeTurf(carpet_type)
+				else if(floor_types)
+					F.ChangeTurf(pick(floor_types))
 		else if(istype(A, /obj/structure/stool/bed/chair/pew))
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
 		else if(istype(A, /obj/structure/altar_of_gods))
 			var/obj/structure/altar_of_gods/G = A
+			G.religion = src
 			G.icon_state = altar_icon_state
 			G.update_icon()
+		else if(door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
+			var/type = pick(door_types)
+			new type(get_turf(A))
+			qdel(A)
+		i++
+		if(after_action)
+			if(!after_action.Invoke(i, to_religify))
+				return FALSE
+
+	return TRUE
+
+// This proc denotes the area of a particular religion
+/datum/religion/proc/religify_area(_area_type = area_type, datum/callback/after_action)
+	if(!religify(_area_type, after_action))
+		return FALSE
+
+	var/list/areas = get_areas(_area_type)
+	for(var/area/A in areas)
+		A.religion = src
+	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
 /datum/religion/proc/spawn_bible(atom/location)

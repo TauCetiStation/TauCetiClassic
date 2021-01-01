@@ -60,6 +60,11 @@
 		"Druid" = "druidaltar"
 	)
 
+	carpet_type_by_name = list(
+		"Default" = /turf/simulated/floor/carpet,
+		"Scientology" = /turf/simulated/floor/carpet/purple,
+	)
+
 	carpet_dir_by_name = list(
 		"Default" = 0,
 		"Scientology" = 8,
@@ -68,19 +73,24 @@
 		"Islam" = 4,
 	)
 
+	area_type = /area/station/civilian/chapel
 	bible_type = /obj/item/weapon/storage/bible
 
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()
-	area_types = typesof(/area/station/civilian/chapel)
-	religify()
+	area_types = typesof(area_type)
+	religify_area()
 
 	//Radial menu
 	gen_bible_variants()
 
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
+
+/datum/religion/chaplain/create_default()
+	name = pick(DEFAULT_RELIGION_NAMES)
+	..()
 
 /datum/religion/chaplain/proc/gen_pos_bible_variants()
 	var/list/variants = list()
@@ -161,4 +171,4 @@
 
 	// Update the looks of the chapel.
 	update_structure_info()
-	religify()
+	religify(null, null, chaplain)

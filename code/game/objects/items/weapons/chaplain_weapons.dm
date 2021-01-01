@@ -102,7 +102,7 @@
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
-		power.action(user, 1)
+		power.action_wrapper(user, 1)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"

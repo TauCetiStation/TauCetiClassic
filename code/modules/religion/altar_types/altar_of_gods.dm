@@ -162,6 +162,10 @@
 	if(!user.mind)
 		return
 
+	if(user.my_religion != religion)
+		to_chat(user, "Are you a member of another religion.")
+		return
+
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		return
 

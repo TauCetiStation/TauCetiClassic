@@ -6,11 +6,14 @@
 	icon_state = "1"
 	unacidable = 1
 	layer = TURF_LAYER
-	var/datum/rune/power
 
-/obj/effect/rune/atom_init()
+	var/datum/rune/power
+	var/datum/religion/religion
+
+/obj/effect/rune/atom_init(mapload, datum/religion/R)
 	. = ..()
-	cult_runes += src
+	religion = R
+	religion.runes += src
 	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	I.override = TRUE
 	I.color = "#a10808"
@@ -21,7 +24,7 @@
 
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
-	cult_runes -= src
+	religion.runes -= src
 	return ..()
 
 /obj/effect/rune/examine(mob/user)
@@ -49,7 +52,7 @@
 	if(!istype(power, /datum/rune/cult/teleport) && !istype(power, /datum/rune/cult/item_port))
 		return ..()
 	var/list/allrunes = list()
-	for(var/obj/effect/rune/R in cult_runes)
+	for(var/obj/effect/rune/R in religion.runes)
 		if(!istype(R.power, power.type) || R == src)
 			continue
 		var/datum/rune/cult/teleport/T = R.power
@@ -71,4 +74,4 @@
 		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.",\
 		"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 		return
-	power.action(user)
+	power.action_wrapper(user)

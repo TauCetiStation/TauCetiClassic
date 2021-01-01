@@ -48,7 +48,12 @@
 		rune_choices()
 		choices_generated = TRUE
 
-	if(user.mind && user.mind.holy_role && istype(user.my_religion, /datum/religion/cult))
+	var/area/area = get_area(user)
+	if(!religion.can_build_everywhere && !istype(religion, area.religion.type))
+		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
+		return
+
+	if(user.mind?.holy_role && istype(user.my_religion, /datum/religion/cult))
 		choice_bible_func(user)
 		return
 
@@ -98,7 +103,7 @@
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
 	for(var/datum/building_agent/rune/cult/B in religion.available_runes)
 		var/datum/rune/cult/R = new B.rune_type
-		rune_choices_image[B] = image(icon = get_uristrune_cult(0, R.words))
+		rune_choices_image[B] = image(icon = get_uristrune_cult(FALSE, R.words))
 		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
@@ -119,7 +124,7 @@
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
-	var/obj/effect/rune/R = new choice.building_type(get_turf(user))
+	var/obj/effect/rune/R = new choice.building_type(get_turf(user), religion)
 	R.icon = rune_choices_image[choice]
 	R.power = new choice.rune_type(R)
 

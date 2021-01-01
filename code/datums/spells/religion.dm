@@ -388,7 +388,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/dumbfire/scribe_rune/cast()
-	var/obj/effect/rune/R = new agent.building_type(get_turf(usr))
+	var/obj/effect/rune/R = new agent.building_type(get_turf(usr), usr.my_religion)
 	var/datum/rune/rune = new agent.rune_type(R)
 	R.power = rune
 	R.icon = get_uristrune_cult(TRUE, rune.words)

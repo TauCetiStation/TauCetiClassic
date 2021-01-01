@@ -41,6 +41,8 @@
 	var/static_light = 0
 	var/static_environ
 
+	var/datum/religion/religion
+
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area

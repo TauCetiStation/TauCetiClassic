@@ -9,24 +9,35 @@
 	)
 
 	pews_info_by_name = list(
-		"Satanism" = "dead"
+		"Cult of Blood" = "dead"
 	)
 
 	altar_info_by_name = list(
-		"Satanism" = "satanaltar"
+		"Cult of Blood" = "satanaltar"
+	)
+
+	carpet_type_by_name = list(
+		"Cult of Blood" = /turf/simulated/floor/carpet/black
 	)
 
 	carpet_dir_by_name = list(
-		"Islam" = 4
+		"Cult of Blood" = 9
 	)
+
+	bible_type = /obj/item/weapon/storage/bible/tome
+	area_type = /area/custom/cult
+	build_agent_type = /datum/building_agent/structure/cult
+	rune_agent_type = /datum/building_agent/rune/cult
+	tech_agent_type = /datum/building_agent/tech/cult
+	wall_types = list(/turf/simulated/wall/cult)
+	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
+	door_types = list(/obj/structure/mineral_door/cult)
 
 	favor = 10000
 	piety = 10000
 	max_favor = 10000
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
-	// One of the objects. Maybe separate it somehow and put it in /datum/religion
-	var/capture_completed = FALSE
 
 	// Time to creation next anomalies
 	var/next_anomaly
@@ -52,18 +63,15 @@
 	var/list/possible_human_phrases = list("Я убью тебя!", "Ты чё?", "Я вырву твой имплант сердца и сожгу его!", "Я выпью твою кровь!", "Я уничтожу тебя!", "Молись, сука!", "Я вырву и съем твои кишки!", "Моргало выколю!", "Эй ты!", "Я измельчу тебя на мелкие кусочки и выброшу их в чёрную дыру!", "Пошёл нахуй!", "Ты умрешь в ужасных судорогах!", "Ильс'м уль чах!", "Твое призвание - это чистить канализацию на Марсе!", "Тупое животное!", "АХ-ХА-ХА-ХА-ХА-ХА!", "Что б ты бобов объелся!", "Ёбаный в рот этого ада!", "Эй обезьяна свинорылая!", "Обабок бля!", "Ну ты и маслёнок!",\
 	 						"Пиздакряк ты тупой!", "Твои потраха съедят кибер-свиньи вместе с помоями, а мозг будут разрывать на куски бездомные космо-кошки!", "Твою плоть разорвут космо-карпы, а кишки съедят мыши!", "Тупоголовый дегенерат!", "Ты никому не нужный биомусор!", "Ты тупое ничтожество!", "Лучшеб ты у папы на синих трусах засох!", "ААА-Р-Р-Р-Р-Р-Г-Г-Г-Х-Х-Х!")
 
-	build_agent_type = /datum/building_agent/structure/cult
-	rune_agent_type = /datum/building_agent/rune/cult
-	tech_agent_type = /datum/building_agent/tech/cult
-	bible_type = /obj/item/weapon/storage/bible/tome
-
 /datum/religion/cult/New()
 	..()
-	area_types = typesof(/area/custom/cult)
-	religify()
+	area_types = typesof(area_type)
+	religify_area()
+
+	// Init anomalys
+	var/area/area = locate(/area/custom/cult)
 	for(var/i in 1 to max_spawned_anomalies)
-		var/area/A = locate(/area/custom/cult)
-		var/turf/T = get_turf(pick(A.contents))
+		var/turf/T = get_turf(pick(area.contents))
 		var/anom = pick(strange_anomalies)
 		new anom(T)
 		var/datum/coords/C = new
@@ -71,7 +79,6 @@
 		C.y_pos = T.y
 		C.z_pos = T.z
 		coord_started_anomalies += C
-
 	next_anomaly = world.time + spawn_anomaly_cd
 
 	var/area/A = locate(/area/custom/cult)
@@ -79,18 +86,6 @@
 	RegisterSignal(A, list(COMSIG_AREA_EXITED), .proc/area_exited)
 
 	START_PROCESSING(SSreligion, src)
-
-/datum/religion/cult/reset_religion()
-	deity_names = deity_names_by_name[name]
-	if(!deity_names)
-		warning("ERROR IN SETTING UP RELIGION: [name] HAS NO DEITIES WHATSOVER. HAVE YOU SET UP RELIGIONS CORRECTLY?")
-		deity_names = list("Error")
-
-	gen_bible_info()
-	gen_altar_variants()
-	gen_pews_variants()
-	gen_carpet_variants()
-	gen_agent_lists()
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
@@ -105,7 +100,7 @@
 			next_spook = world.time + 5 MINUTES
 			return
 		var/mob/living/carbon/human/H = pick(humans_in_heaven)
-		if(H.mind && H.mind.holy_role && prob(40))
+		if(H.mind?.holy_role && prob(20))
 			return
 
 		if(prob(20)) // sound
@@ -144,7 +139,7 @@
 	cultist.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
 /datum/religion/cult/proc/area_entered(area/A, atom/movable/AM)
-	if(istype(AM, /mob/living/carbon/human))
+	if(ishuman(AM))
 		humans_in_heaven += AM
 
 /datum/religion/cult/proc/area_exited(area/A, atom/movable/AM)

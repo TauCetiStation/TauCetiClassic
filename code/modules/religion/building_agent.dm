@@ -100,6 +100,14 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
+/datum/building_agent/rune/cult/capture_area
+	name = "Capture a area"
+	rune_type = /datum/rune/cult/capture_area
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
 // For tech_table
 /datum/building_agent/tech
 	var/icon
@@ -111,6 +119,22 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
+	favor_cost = 100
+	piety_cost = 10
+
+/datum/building_agent/tech/cult/reusable_runes
+	name = "Reusable runes"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "1"
+	building_type = /datum/religion_tech/cult/reusable_runes
+	favor_cost = 100
+	piety_cost = 10
+
+/datum/building_agent/tech/cult/build_everywhere
+	name = "Build everywhere"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "2"
+	building_type = /datum/religion_tech/cult/build_everywhere
 	favor_cost = 100
 	piety_cost = 10
 
