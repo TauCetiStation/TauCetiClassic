@@ -63,6 +63,9 @@ var/explosion_in_progress = 0
 /turf/space
 	explosion_resistance = 10
 
+/turf/simulated/snow/
+	explosion_resistance = 10
+
 /turf/simulated/floor
 	explosion_resistance = 1
 
