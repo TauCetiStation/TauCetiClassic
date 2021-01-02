@@ -1165,7 +1165,7 @@
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results.len)
+	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)
