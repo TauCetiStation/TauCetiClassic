@@ -331,12 +331,13 @@
 			return
 		buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
 		to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
-	buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
+	if(buckled_mob)
+		buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
+		buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
+		buckled_mob.AdjustWeakened(5)
+		unbuckle_mob(buckled_mob)
 	pixel_z = initial(pixel_z)
-	buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
 	pixel_x = initial(pixel_x)
-	buckled_mob.AdjustWeakened(5)
-	unbuckle_mob(buckled_mob)
 	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
