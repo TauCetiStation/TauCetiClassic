@@ -1,4 +1,3 @@
-// TODO: Write normal text gde nado
 /obj/item/weapon/storage/bible/tome
 	name = "book"
 	icon = 'icons/obj/cult.dmi'
@@ -48,11 +47,6 @@
 		rune_choices()
 		choices_generated = TRUE
 
-	var/area/area = get_area(user)
-	if(!religion.can_build_everywhere && !istype(religion, area.religion.type))
-		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
-		return
-
 	if(user.mind?.holy_role && istype(user.my_religion, /datum/religion/cult))
 		choice_bible_func(user)
 		return
@@ -74,7 +68,7 @@
 		return
 
 	if(destr_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>YOU CANT DESTROY! Please wait about [round((destr_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+		to_chat(user, "<span class='warning'>Ты сможешь уничтожить через [round((destr_next[user.ckey] - world.time) * 0.1)] секунд.</span>")
 		return
 
 	for(var/datum/building_agent/B in religion.available_buildings)
@@ -114,7 +108,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/user)
 	if(rune_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>YOU CANT SCRIBE RUNE! Please wait about [round((rune_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
 	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user)
@@ -134,8 +128,11 @@
 
 /obj/item/weapon/storage/bible/tome/proc/building(mob/user)
 	if(build_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>YOU CANT BUILD! Please wait about [round((build_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
+		to_chat(user, "<span class='warning'>Ты сможешь строить через [round((build_next[user.ckey] - world.time) * 0.1)+1] секунд.</span>")
 		return
+
+	if(!can_build_here(user))
+		return FALSE
 
 	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user)
 	if(!choice)
@@ -143,12 +140,15 @@
 
 	if(choice == "Toggle Grind mode")
 		toggle_deconstruct = !toggle_deconstruct
-		to_chat(user, "<span class='notice'>The mode of destruction of constructed structures is [toggle_deconstruct ? "enabled" : "disabled"].</span>")
+		to_chat(user, "<span class='notice'>Режим разрушения структур [toggle_deconstruct ? "включён" : "выключен"].</span>")
 		return
 
-	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult) && religion.altar)
-		to_chat(user, "<span class='warning'>YOU CANT BUID ANOTHER ALTAR</span>")
-		return
+	else
+		var/turf/targeted_turf = get_step(src, user.dir)
+		for(var/obj/structure/altar_of_gods/altar in religion.altars)
+			if(get_dist(targeted_turf, get_turf(altar)) >= 30)
+				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
+				return
 
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
@@ -185,3 +185,10 @@
 	var/datum/building_agent/choice = show_radial_menu(user, src, BA, tooltips = TRUE, require_near = TRUE)
 
 	return choice
+
+/obj/item/weapon/storage/bible/tome/proc/can_build_here(mob/user, datum/rune/rune)
+	var/area/area = get_area(user)
+	if(!religion.can_build_everywhere && !istype(religion, area.religion?.type))
+		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
+		return FALSE
+	return TRUE

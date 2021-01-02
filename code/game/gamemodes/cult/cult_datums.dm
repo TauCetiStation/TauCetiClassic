@@ -129,25 +129,25 @@
 /datum/rune/cult/capture_area
 	name = "Capture area"
 	words = list("join", "hell", "technology")
-	var/already_use = FALSE
+	var/static/already_use = FALSE
+	var/static/first_area_captured = FALSE
 
 /datum/rune/cult/capture_area/action(mob/living/carbon/user)
+	if(first_area_captured)
+		var/area/area = get_area(user)
+		if(!istype(religion, area.religion?.type) || religion == area.religion)
+			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
+			return
+	else if(already_use)
+		to_chat(user, "<span class='warning'>Вы уже захватываете одну зону.</span>")
+		return
 	already_use = TRUE
 	var/area/A = get_area(holder)
 	var/datum/announcement/station/cult/capture_area/announce = new
 	announce.play(A)
-	religion.religify_area(A.type, CALLBACK(src, .proc/capture_iteration))
-
-/datum/rune/cult/capture_area/proc/capture_effect(i, list/all_items)
-	var/turf = get_turf(all_items[i])
-	var/list/viewing = list()
-	for(var/mob/M in viewers(turf))
-		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-			viewing |= M.client
-
-	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf)
-	flick_overlay(I, viewing, 30)
-	animate(I, alpha = 0, time = 30)
+	if(religion.religify_area(A.type, CALLBACK(src, .proc/capture_iteration)))
+		first_area_captured = TRUE
+	already_use = FALSE
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)
@@ -160,6 +160,17 @@
 	INVOKE_ASYNC(src, .proc/capture_effect, i, all_items)
 	sleep(10)
 	return TRUE
+
+/datum/rune/cult/capture_area/proc/capture_effect(i, list/all_items)
+	var/turf = get_turf(all_items[i])
+	var/list/viewing = list()
+	for(var/mob/M in viewers(turf))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
+	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf)
+	flick_overlay(I, viewing, 30)
+	animate(I, alpha = 0, time = 30)
 
 /datum/rune/cult/teleport
 	words = list("travel", "self", "see")

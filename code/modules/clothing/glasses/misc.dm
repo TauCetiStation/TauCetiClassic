@@ -12,7 +12,7 @@
 
 /obj/item/clothing/glasses/sunglasses/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
 	var/image/I = image('icons/effects/effects.dmi', "holy_land")
-	if(F.holy.religion != global.chaplain_religion)
+	if(F.holy.religion != usr.my_religion)
 		I.color = "#dc143c"
 	I.alpha = 0
 	I.loc = F

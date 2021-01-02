@@ -124,8 +124,9 @@
 
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 3 MINUTES)
 		else if(prob(1)) // temp alt_apperance of nar-sie
-			if(!altar)
+			if(!altars.len)
 				return
+			var/obj/structure/altar_of_gods/altar = pick(altars)
 			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 10 MINUTES)
 

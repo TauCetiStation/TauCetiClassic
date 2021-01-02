@@ -77,13 +77,6 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	if(isliving(A))
-		var/mob/living/L = A
-		if(iscultist(L))
-			return
-		L.gib()
-		return
-
 	var/mob/living/C = locate(/mob/living) in A
 	if(istype(C))
 		if(iscultist(C))
@@ -92,27 +85,36 @@
 		C.gib()
 		return
 
-	if(istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door))
+	else if(isliving(A))
+		var/mob/living/L = A
+		if(iscultist(L))
+			return
+		L.gib()
+		return
+
+	else if(istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door))
 		new /obj/structure/mineral_door/cult(get_turf(A))
 		qdel(A)
 
-	if(isturf(A))
+	else if(isturf(A))
 		var/turf/T = A
 		if(istype(T, /turf/simulated/floor/engine/cult))
 			return
-		if(istype(T, /turf/simulated/floor/engine/cult/lava))
+		else if(istype(T, /turf/simulated/floor/engine/cult/lava))
 			return
-		if(istype(T, /turf/simulated/wall/cult))
+		else if(istype(T, /turf/simulated/wall/cult))
 			return
-		if(istype(T, /obj/structure/object_wall))
+		else if(istype(T, /obj/structure/object_wall))
 			return
-		if(istype(T, /turf/simulated/floor))
+		else if(istype(T, /turf/simulated/floor))
 			if(prob(50))
 				T.ChangeTurf(pick(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava))
 			if(prob(5))
 				var/obj = pick(/obj/effect/spacewhole, /obj/effect/timewhole, /obj/effect/orb, /obj/structure/cult/shell)
 				new obj(T)
-		if(istype(T, /turf/simulated/wall))
+			var/area/area = get_area(A)
+			area.religion = global.cult_religion
+		else if(istype(T, /turf/simulated/wall))
 			if(prob(20))
 				T.ChangeTurf(pick(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim))
 	return

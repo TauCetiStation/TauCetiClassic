@@ -7,7 +7,7 @@
 #define SUMMON_GOD "summon eldergod"
 #define RECRUIT "recruit more people"
 #define PIETY "save up piety"
-#define CAPTURE "capture a church"
+#define CAPTURE "capture a station"
 
 /datum/game_mode/cult
 	name = "cult"
@@ -47,6 +47,8 @@
 	var/acolytes_out = 0
 
 	var/piety_needed = 0 // for objective
+
+	var/need_capture = 4 // areas
 
 	var/list/possibles_objectives = list(RECRUIT, SACRIFICE, CAPTURE, SUMMON_GOD, PIETY)
 
@@ -88,17 +90,6 @@
 
 	for(var/obj in objectives)
 		switch(obj)
-			if(CAPTURE)
-				// I don't think it can be done any other way
-				var/have_chaplain = FALSE
-				for(var/mob/living/carbon/human/player in player_list)
-					if(istype(player.my_religion, /datum/religion/chaplain))
-						have_chaplain = TRUE
-						break
-				if(!have_chaplain)
-					objectives -= CAPTURE
-					objectives += pick_n_take(possibles_objectives)
-
 			if(SACRIFICE)
 				var/list/possible_targets = get_unconvertables()
 				listclearnulls(possible_targets)
@@ -147,7 +138,7 @@
 			if(SUMMON_GOD)
 				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции. Он будет работать только в том случае, если девять культистов встанут внутри структуры с 12 пьедесталами."
 			if(CAPTURE)
-				explanation = "Убейте всех представителей религии на станции и захватите церковь с помощью специальной руны."
+				explanation = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
 			if(PIETY)
 				explanation = "Накопите и сохраните [piety_needed] piety"
 		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
@@ -244,14 +235,14 @@
 	return TRUE
 
 /datum/game_mode/cult/proc/check_capture()
-	var/list/areas = get_areas(/area/station/civilian/chapel)
+	var/list/areas = get_areas(/area/station/)
+	var/captured_areas = 0
 	for(var/area/A in areas)
-		if(!istype(A.religion, /datum/religion/cult))
-			return FALSE
-	for(var/mob/M in global.chaplain_religion.members)
-		if(M.stat != DEAD)
-			return FALSE
-	return TRUE
+		if(istype(A.religion, /datum/religion/cult))
+			captured_areas++
+	if(captured_areas >= need_capture)
+		return TRUE
+	return FALSE
 
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
@@ -306,10 +297,10 @@
 							feedback_add_details("cult_objective","cult_narsie|FAIL")
 					if(CAPTURE)
 						if(check_capture())
-							explanation = "Убейте всех представителей религии на станции и захватите их церковь. <span style='color: green; font-weight: bold;'>Успех!</span>"
+							explanation = "Захватите не менее [need_capture]% станции. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_capture|SUCCESS")
 						else
-							explanation = "Убейте всех представителей религии на станции и захватите их церковь. <span style='color: red; font-weight: bold;'>Провал.</span>"
+							explanation = "Захватите не менее [need_capture]% станции. <span style='color: red; font-weight: bold;'>Провал.</span>"
 							feedback_add_details("cult_objective","cult_capture|FAIL")
 					if(PIETY)
 						if(religion.piety >= piety_needed)

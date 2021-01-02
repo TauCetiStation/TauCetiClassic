@@ -82,8 +82,8 @@
 /mob/living/simple_animal/shade/god/Stat()
 	..()
 	if(statpanel("Status"))
-		if(global.chaplain_religion)
-			stat(null, "Favor: [round(global.chaplain_religion.favor)]/[global.chaplain_religion.max_favor]")
+		if(my_religion)
+			stat(null, "Favor: [round(my_religion.favor)]/[my_religion.max_favor]")
 
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use verbs and stuff like that.
@@ -112,8 +112,8 @@
 
 /mob/living/simple_animal/shade/god/Life()
 	..()
-	if(global.chaplain_religion)
-		global.chaplain_religion.favor += 0.2
+	if(my_religion)
+		my_religion.favor += 0.2
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))
@@ -193,14 +193,19 @@
 /mob/living/simple_animal/shade/god/resist()
 	. = ..()
 	if(. && container)
-		var/mob/M = container.loc
-		if(istype(M))
+		if(ismob(container.loc))
+			var/mob/M = container.loc
 			M.drop_from_inventory(container)
 			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(istype(container.loc, /obj/item))
+		else if(istype(container.loc, /obj/item) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
 			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
 			container.forceMove(get_turf(container.loc))
+		else if(istype(container.loc, /obj/structure/closet))
+			var/obj/structure/closet/C = container.loc
+			if(!C.opened)
+				to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+				container.forceMove(get_turf(container.loc))
 
 /mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
 	if(paralysis || stunned || weakened || buckled || pinned.len)

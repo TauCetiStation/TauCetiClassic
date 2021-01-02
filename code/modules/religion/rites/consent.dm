@@ -30,13 +30,20 @@
 	if(!..())
 		return FALSE
 
-	if(!ishuman(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
-		return FALSE
+	var/mob/living/simple_animal/shade/god/god = locate() in AOG.loc
+	if(!istype(god))
+		if(!ishuman(AOG.buckled_mob))
+			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
+			return FALSE
 
-	if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
-		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
-		return FALSE
+		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_PAI))
+			to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+			return FALSE
+	else
+		if(jobban_isbanned(god, "Cyborg") || role_available_in_minutes(god, ROLE_PAI))
+			to_chat(user, "<span class='warning'>[god] is too weak!</span>")
+			return FALSE
+
 	return TRUE
 
 /datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -44,13 +51,28 @@
 	if(!.)
 		return FALSE
 
+	if(convert_god(AOG))
+		return TRUE
+
 	var/mob/living/carbon/human/human2borg = AOG.buckled_mob
 	if(!istype(human2borg))
 		return FALSE
-
 	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
-	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
-	human2borg.Robotize(global.chaplain_religion.bible_info.borg_name, global.chaplain_religion.bible_info.laws_type, FALSE)
+	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
+	human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE)
+	religion.add_member(human2borg, HOLY_ROLE_PRIEST)
+	return TRUE
+
+/datum/religion_rites/standing/consent/synthconversion/proc/convert_god(obj/structure/altar_of_gods/AOG)
+	var/mob/living/simple_animal/shade/god/god = locate() in AOG.loc
+	if(!istype(god))
+		return FALSE
+	god.visible_message("<span class='notice'>[god] has been converted by the rite of [pick(religion.deity_names)]!</span>")
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(AOG.loc, "Son of Heaven", religion.bible_info.laws_type, FALSE)
+	god.mind.transfer_to(O)
+	O.job = "Cyborg"
+	qdel(god)
+	religion.add_deity(god, HOLY_ROLE_PRIEST)
 	return TRUE
 
 /*
@@ -101,7 +123,7 @@
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
 
-	global.chaplain_religion.adjust_favor(sacrifice_favor)
+	religion.adjust_favor(sacrifice_favor)
 
 	L.gib()
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
@@ -137,7 +159,7 @@
 		return FALSE
 
 	if(jobban_isbanned(AOG.buckled_mob, "Clown"))
-		to_chat(user, "<span class='warning'>[pick(global.chaplain_religion.deity_names)] don't accept this person!</span>")
+		to_chat(user, "<span class='warning'>[pick(religion.deity_names)] don't accept this person!</span>")
 		return FALSE
 
 	if(!AOG.buckled_mob.mind)
@@ -173,7 +195,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
-	global.chaplain_religion.add_member(H, HOLY_ROLE_PRIEST)
+	religion.add_member(H, HOLY_ROLE_PRIEST)
 	H.mutations.Add(CLUMSY)
 	H.mind.assigned_role = "Clown"
 	AOG.sect.on_conversion(H)

@@ -19,6 +19,9 @@
 	var/list/deity_names = list()
 	var/list/deity_names_by_name
 
+	/*
+		Church customization
+	*/
 	// Default is /datum/bible_info/custom, if one is not specified here.
 	var/datum/bible_info/bible_info
 	// Type of bible of religion
@@ -61,9 +64,9 @@
 	var/list/carpet_dir_by_name
 	// Radial menu
 	var/list/carpet_skins
-	var/candle_type
 	// Main area with structures
 	var/area_type
+	// Subtypes of area_type
 	var/list/area_types
 
 	/*
@@ -77,7 +80,6 @@
 	var/max_favor = 3000
 	// The amount of favor generated passively
 	var/passive_favor_gain = 0.0
-
 	// More important than favor, used in very expensive rites
 	var/piety = 0
 
@@ -94,12 +96,17 @@
 	// Is the rune removed after use
 	var/disposable_rune = TRUE
 
+	/*
+		Others
+	*/
 	// Contains an altar, wherever it is
-	var/obj/structure/altar_of_gods/altar
-
+	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion
 	var/list/mob/members = list()
 
+	/*
+		Building
+	*/
 	// All constructions that religion can build
 	var/list/datum/building_agent/available_buildings = list()
 	// Type of initial construction agent for which available_buildings will be generated
@@ -115,6 +122,9 @@
 	// Is it possible to build not only within the religious area
 	var/can_build_everywhere = FALSE
 
+	/*
+		Holy reagents
+	*/
 	// A list of ids of holy reagents from aspects.
 	var/list/holy_reagents = list()
 	// A list of possible faith reactions.
@@ -153,7 +163,7 @@
 	rites_by_name = list()
 	members = list()
 
-	if(altar)
+	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
 		altar.sect = initial(altar.sect)
 		altar.religion = initial(altar.religion)
@@ -165,7 +175,7 @@
 	QDEL_LIST_ASSOC_VAL(holy_turfs)
 	holy_turfs = null
 
-	altar = null
+	altars = null
 	return ..()
 
 /datum/religion/proc/gen_bible_info()
@@ -256,8 +266,8 @@
 // This proc converts all related objects in area_type to this reigion's liking.
 /datum/religion/proc/religify(_area_type = area_type, datum/callback/after_action, mob/user)
 	var/area/area = locate(_area_type)
-	if(!istype(area.religion, type))
-		if(user)
+	if(user)
+		if(!istype(area.religion, type))
 			to_chat(user, "<span class='warning'>[area] больше не под контролем вашей религии!</span>")
 		return FALSE
 
@@ -285,6 +295,7 @@
 		else if(istype(A, /obj/structure/altar_of_gods))
 			var/obj/structure/altar_of_gods/G = A
 			G.religion = src
+			altars += G
 			G.icon_state = altar_icon_state
 			G.update_icon()
 		else if(door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
@@ -299,8 +310,8 @@
 	return TRUE
 
 // This proc denotes the area of a particular religion
-/datum/religion/proc/religify_area(_area_type = area_type, datum/callback/after_action)
-	if(!religify(_area_type, after_action))
+/datum/religion/proc/religify_area(_area_type = area_type, datum/callback/after_action, mob/user)
+	if(!religify(_area_type, after_action, user))
 		return FALSE
 
 	var/list/areas = get_areas(_area_type)
@@ -430,7 +441,8 @@
 			if(RI.favor_cost)
 				name_entry += " ([RI.favor_cost] favor)"
 			if(RI.piety_cost)
-				altar.look_piety = TRUE
+				for(var/obj/structure/altar_of_gods/altar in altars)
+					altar.look_piety = TRUE
 				name_entry += "<span class='piety'> ([RI.piety_cost] piety)</span>"
 
 			rites_info += "[name_entry]"

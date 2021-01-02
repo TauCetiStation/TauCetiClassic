@@ -73,8 +73,8 @@
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
-	// Determines whether any religious activity has been carried out on the item.
-	var/blessed = FALSE
+	// Determines whether additional damage is given to this weapon
+	var/blessed = 0
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE

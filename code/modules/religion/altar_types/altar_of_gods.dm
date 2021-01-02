@@ -41,7 +41,7 @@
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
-	religion.altar = null
+	religion.altars -= src
 	qdel(experiments)
 	return ..()
 
@@ -231,7 +231,7 @@
 	var/obj/item/weapon/storage/bible/B = I
 	if(!religion)
 		religion = B.religion
-		religion.altar = src
+		religion.altars += src
 
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)

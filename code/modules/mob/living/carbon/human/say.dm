@@ -237,7 +237,7 @@
 			return 1
 		if(isgod(other))
 			var/mob/living/simple_animal/shade/god/G = other
-			if(l_hand == G.container || r_hand == G.container)
+			if(src in G.my_religion)
 				return TRUE
 
 	//This is already covered by mob/say_understands()

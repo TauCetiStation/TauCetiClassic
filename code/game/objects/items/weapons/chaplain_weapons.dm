@@ -184,7 +184,7 @@
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(global.chaplain_religion.aspects.len == 0)
+		if(user.my_religion.aspects.len == 0)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
 		if(!brainmob && !searching)
@@ -234,8 +234,8 @@
 		brainmob.mind.memory += god_lore
 	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
-	for(var/aspect in global.chaplain_religion.aspects)
-		var/datum/aspect/asp = global.chaplain_religion.aspects[aspect]
+	for(var/aspect in summoner.my_religion.aspects)
+		var/datum/aspect/asp = summoner.my_religion.aspects[aspect]
 		if(asp.god_desc)
 			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B><BR>[asp.god_desc]"
 
@@ -244,7 +244,7 @@
 
 	brainmob.universal_speak = FALSE
 
-	global.chaplain_religion.add_deity(brainmob)
+	summoner.my_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
@@ -406,16 +406,16 @@
 	..()
 	QDEL_NULL(shield)
 	remove_holy_outline()
-	force = def_force
+	force = def_force + blessed
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
 	..()
 	if(user.mind.holy_role)
-		force = holy_force
+		force = holy_force + blessed
 		if(!have_outline && can_spawn_shield)
 			create_holy_outline()
 	else
-		force = def_force
+		force = def_force + blessed
 
 /obj/item/weapon/claymore/religion/proc/remove_holy_outline()
 	have_outline = FALSE

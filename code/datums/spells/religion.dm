@@ -14,13 +14,13 @@
 	action_icon_state = "spawn_bible"
 	sound = 'sound/effects/phasein.ogg'
 
-/obj/effect/proc_holder/spell/targeted/spawn_bible/cast()
+/obj/effect/proc_holder/spell/targeted/spawn_bible/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
 	for(var/i in 1 to divine_power)
-		global.chaplain_religion.spawn_bible(usr.loc)
+		user.my_religion.spawn_bible(usr.loc)
 
 /obj/effect/proc_holder/spell/targeted/heal
 	name = "Heal"
@@ -71,7 +71,7 @@
 
 	favor_cost = 200
 	charge_max = 1 MINUTES
-	divine_power = 5 //power
+	divine_power = 8 //power
 	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
 
 	range = 0
@@ -86,7 +86,7 @@
 	var/obj/item/weapon/target
 
 	for(var/obj/item/W in orange(3))
-		if(!W.blessed)
+		if(W.blessed != 0)
 			possible_targets += W
 
 	if(possible_targets.len == 0)
@@ -101,7 +101,7 @@
 	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
 	target.filters += holy_outline
 
-	target.blessed = TRUE
+	target.blessed = divine_power
 
 /obj/effect/proc_holder/spell/targeted/charge/religion
 	name = "Electric Charge Pulse"

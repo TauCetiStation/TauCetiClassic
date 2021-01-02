@@ -100,7 +100,7 @@
 
 /datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
 	..()
-	global.chaplain_religion.adjust_favor(15 + adding_favor)
+	religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
 
 /*

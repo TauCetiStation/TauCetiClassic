@@ -149,10 +149,10 @@
 	if(response == "Yes")
 		var/mob/candidate = C.mob
 		var/god_name
-		if(global.chaplain_religion.active_deities.len == 0)
-			god_name = pick(global.chaplain_religion.deity_names)
+		if(religion.active_deities.len == 0)
+			god_name = pick(religion.deity_names)
 		else
-			var/mob/god = pick(global.chaplain_religion.active_deities)
+			var/mob/god = pick(religion.active_deities)
 			god_name = god.name
 		M.mind = candidate.mind
 		M.ckey = candidate.ckey
@@ -201,10 +201,10 @@
 
 /datum/religion_rites/standing/spawn_item/create_sword/modify_item(atom/sword)
 	var/god_name
-	if(global.chaplain_religion.active_deities.len == 0)
-		god_name = pick(global.chaplain_religion.deity_names)
+	if(religion.active_deities.len == 0)
+		god_name = pick(religion.deity_names)
 	else
-		var/mob/god = pick(global.chaplain_religion.active_deities)
+		var/mob/god = pick(religion.active_deities)
 		god_name = god.name
 	sword.name = "[sword.name] of [god_name]"
 
