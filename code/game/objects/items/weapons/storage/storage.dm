@@ -75,6 +75,8 @@
 			return
 		if(!istype(M.loc, /turf/simulated))
 			return
+		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
+			return
 		if(M.a_intent == INTENT_HELP)
 			var/dir_target = get_dir(M.loc, over_location)
 			M.SetNextMove(CLICK_CD_MELEE)
