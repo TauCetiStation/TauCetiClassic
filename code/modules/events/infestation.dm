@@ -17,13 +17,14 @@
 /datum/event/infestation
 	announceWhen = 10
 	endWhen = 11
+	announcement = new /datum/announcement/centcomm/infestation
 	var/location
 	var/locstring
 	var/vermin
 	var/vermstring
 
 /datum/event/infestation/announce()
-	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
+	announcement.play(vermstring, locstring)
 
 /datum/event/infestation/start()
 	locstring = pick(INFESTATION_LOCATIONS)

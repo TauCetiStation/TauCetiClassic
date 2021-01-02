@@ -2,9 +2,7 @@
 	startWhen = 10
 	announceWhen = 3
 	endWhen = 110
-
-/datum/event/anomaly/anomaly_pyro/announce()
-	command_alert("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "pyroanom")
+	announcement = new /datum/announcement/centcomm/anomaly/pyro
 
 /datum/event/anomaly/anomaly_pyro/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
