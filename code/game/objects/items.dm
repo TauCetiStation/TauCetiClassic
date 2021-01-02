@@ -201,7 +201,7 @@
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-		switch(Heart.heart_status)
+		switch(Heart?.heart_status)
 			if(HEART_FAILURE)
 				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
 			if(HEART_FIBR)
