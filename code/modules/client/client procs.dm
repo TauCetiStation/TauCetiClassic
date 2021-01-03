@@ -538,13 +538,7 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers["drag"])
 		return
-	if(TRUE)//prefs.hotkeys)
-		// If hotkey mode is enabled, then clicking the map will automatically
-		// unfocus the text bar. This removes the red color from the text bar
-		// so that the visual focus indicator matches reality.
-		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
-	else
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
