@@ -157,7 +157,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		objs += src.LL
 	for(var/obj/t in objs)
 		dat += "<tr>"
-		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[t.type]", "/obj/item/", ""), "/", "-")]"></span></td>"}
+		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[t.type]", "[/obj/item]/", ""), "/", "-")]"></span></td>"}
 		dat += "<td>"
 		if (istype(t, /obj/item/stack))
 			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
