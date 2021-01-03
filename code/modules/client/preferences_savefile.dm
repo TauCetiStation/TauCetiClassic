@@ -218,6 +218,38 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["faction"]     << faction
 		S["religion"]    << religion
 
+/// checks through keybindings for outdated unbound keys and updates them
+/datum/preferences/proc/check_keybindings()
+	if(!parent)
+		return
+	var/list/user_binds = list()
+	for (var/key in key_bindings)
+		for(var/kb_name in key_bindings[key])
+			user_binds[kb_name] += list(key)
+	var/list/notadded = list()
+	for (var/name in global.keybindings_by_name)
+		var/datum/keybinding/kb = global.keybindings_by_name[name]
+		if(length(user_binds[kb.name]))
+			continue // key is unbound and or bound to something
+		var/addedbind = FALSE
+		for(var/hotkeytobind in kb.hotkey_keys)
+			if(!length(key_bindings[hotkeytobind]))
+				LAZYADD(key_bindings[hotkeytobind], kb.name)
+				addedbind = TRUE
+		if(!addedbind)
+			notadded += kb
+	if(length(notadded))
+		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
+
+/datum/preferences/proc/announce_conflict(list/notadded)
+	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
+	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
+	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+	for(var/item in notadded)
+		var/datum/keybinding/conflicted = item
+		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating")
+		LAZYADD(key_bindings["None"], conflicted.name) // set it to unbound to prevent this from opening up again in the future
+
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
@@ -260,6 +292,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
 
+	// Custom hotkeys
+	S["key_bindings"]		>> key_bindings
+	check_keybindings()
+
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
 	S["tgui_lock"]		>> tgui_lock
@@ -293,6 +329,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	key_bindings 	= sanitize_keybindings(key_bindings)
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
@@ -345,6 +382,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+
+	// Custom hotkeys
+	S["key_bindings"]		<< key_bindings
 
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
@@ -618,6 +658,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uplinklocation"] << uplinklocation
 
 	return 1
+
+/proc/sanitize_keybindings(value)
+	var/list/base_bindings = sanitize_islist(value,list())
+	for(var/key in base_bindings)
+		base_bindings[key] = base_bindings[key] & global.keybindings_by_name
+		if(!length(base_bindings[key]))
+			base_bindings -= key
+	return base_bindings
 
 #undef SAVEFILE_TOO_OLD
 #undef SAVEFILE_UP_TO_DATE

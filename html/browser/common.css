@@ -354,6 +354,10 @@ div.notice {
 	font-weight:700;
 }
 
+.Section.fill {
+    height: 100%;
+}
+
 .blockCargo {
 	overflow: auto;
 	height: 470px;
