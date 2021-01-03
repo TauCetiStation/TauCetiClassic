@@ -154,6 +154,6 @@
 	full_name = "Click On Self"
 	description = ""
 
-/datum/keybinding/mob/prevent_movement/down(client/user)
+/datum/keybinding/mob/click_on_self/down(client/user)
 	var/mob/M = user.mob
 	M.click_on_self()
