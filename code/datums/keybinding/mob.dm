@@ -147,3 +147,13 @@
 
 /datum/keybinding/mob/prevent_movement/up(client/user)
 	user.movement_locked = FALSE
+
+/datum/keybinding/mob/click_on_self
+	hotkey_keys = list("N")
+	name = "click_on_self"
+	full_name = "Click On Self"
+	description = ""
+
+/datum/keybinding/mob/prevent_movement/down(client/user)
+	var/mob/M = user.mob
+	M.click_on_self()
