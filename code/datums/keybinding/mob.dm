@@ -2,19 +2,6 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
-
-/datum/keybinding/mob/prevent_movement
-	hotkey_keys = list("Alt")
-	name = "block_movement"
-	full_name = "Block movement"
-	description = "Prevents you from moving"
-
-/datum/keybinding/mob/prevent_movement/down(client/user)
-	user.movement_locked = TRUE
-
-/datum/keybinding/mob/prevent_movement/up(client/user)
-	user.movement_locked = FALSE
-
 /datum/keybinding/mob/stop_pulling
 	hotkey_keys = list("H", "Delete")
 	name = "stop_pulling"
@@ -148,3 +135,15 @@
 /datum/keybinding/mob/target_left_leg/down(client/user)
 	user.body_l_leg()
 	return TRUE
+
+/datum/keybinding/mob/prevent_movement
+	hotkey_keys = list("Ctrl")
+	name = "block_movement"
+	full_name = "Block movement"
+	description = "Prevents you from moving"
+
+/datum/keybinding/mob/prevent_movement/down(client/user)
+	user.movement_locked = TRUE
+
+/datum/keybinding/mob/prevent_movement/up(client/user)
+	user.movement_locked = FALSE
