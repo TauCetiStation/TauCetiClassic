@@ -1,7 +1,7 @@
 // BYOND lower-cases color values, and thus we do so as well to ensure atom.color == COLOR_X will work correctly
 
-#define COLOR_INPUT_DISABLED   "#F0F0F0"
-#define COLOR_INPUT_ENABLED    "#D3B5B5"
+#define COLOR_INPUT_DISABLED   "#f0f0f0"
+#define COLOR_INPUT_ENABLED    "#d3b5b5"
 
 #define COLOR_BLACK            "#000000"
 #define COLOR_NAVY_BLUE        "#000080"
