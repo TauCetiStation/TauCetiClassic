@@ -205,7 +205,7 @@ SUBSYSTEM_DEF(stickyban)
 
 
 /datum/controller/subsystem/stickyban/proc/add(ckey, list/ban)
-	// Add new stickyban, no cheks input arguments!
+	// Add new stickyban, no checks input arguments!
 	if (import_raw_stickyban_to_db(ckey, ban))
 		ban[BANKEY_FROMDB] = TRUE
 	world.SetConfig("ban", ckey, list2stickyban(ban))

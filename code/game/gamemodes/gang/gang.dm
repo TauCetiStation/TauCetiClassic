@@ -24,7 +24,7 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
-	required_players_secret = 15
+	required_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 4
 	antag_hud_type = ANTAG_HUD_GANGSTER
@@ -37,6 +37,9 @@
 	var/A_dominations = 2
 	var/B_dominations = 2
 	votable = 0
+
+	var/datum/announcement/station/gang/breach/announce_breach = new
+	var/datum/announcement/station/gang/multiple/announce_multiple = new
 
 ///////////////////////////
 //Announces the game type//
@@ -133,7 +136,7 @@
 		B_timer = max(300,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang && dominator)
 		var/area/domloc = get_area(dominator.loc)
-		captain_announce("Network breach detected in [initial(domloc.name)]. The [gang_name(gang)] Gang is attempting to seize control of the station!")
+		announce_breach.play(domloc, gang)
 		set_security_level("delta")
 		//SSshuttle.emergencyNoEscape = 1
 
@@ -268,7 +271,7 @@
 		if(winner == 3) //Edge Case: If both dominators activate at the same time
 			domination("A",0.5)
 			domination("B",0.5)
-			captain_announce("Multiple station takeover attempts have made simultaneously. Conflicting hostile runtimes appears to have delayed both attempts.")
+			announce_multiple.play()
 		else if(winner == 1)
 			finished = "A" //Gang A wins
 		else if(winner == 2)

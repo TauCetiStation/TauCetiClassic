@@ -17,7 +17,7 @@
 	unacidable = 1
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at

@@ -153,88 +153,95 @@ var/list/cult_datums = list()
 				</style>
 				</head>
 				<body>
-				<h1>The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood.</h1>
+				<h1>Писания Нар-Си, Того-Кто-Наблюдает, Геометра крови.</h1>
 
-				<i>The book is written in an unknown dialect, there are lots of pictures of various complex geometric shapes. You find some notes in english that give you basic understanding of the many runes written in the book. The notes give you an understanding what the words for the runes should be. However, you do not know how to write all these words in this dialect.</i><br>
-				<i>Below is the summary of the runes.</i> <br>
+				<i>Книга написана на неизвестном диалекте. В ней много изображений разного рода комплексных, геометрических фигур. Вы находите некоторые похожие слова, благодаря чему можете прочитать большинство рун, описаных в книге. Также, вы можете прочесть слова, из которых состоят руны. Впрочем, вы все еще не можете начертить их, используя этот диалект.</i><br>
+				<i>Список рун.</i> <br>
 
 				<h2>Contents</h2>
 				<p>
-				<b>Teleport self: </b>Travel Self (word)<br>
-				<b>Teleport other: </b>Travel Other (word)<br>
-				<b>Summon new tome: </b>See Blood Hell<br>
-				<b>Convert a person: </b>Join Blood Self<br>
-				<b>Summon Nar-Sie: </b>Hell Join Self<br>
-				<b>Disable technology: </b>Destroy See Technology<br>
-				<b>Drain blood: </b>Travel Blood Self<br>
-				<b>Raise dead: </b>Blood Join Hell<br>
-				<b>Hide runes: </b>Hide See Blood<br>
-				<b>Reveal hidden runes: </b>Blood See Hide<br>
-				<b>Leave your body: </b>Hell travel self<br>
-				<b>Ghost Manifest: </b>Blood See Travel<br>
-				<b>Imbue a talisman: </b>Hell Technology Join<br>
-				<b>Sacrifice: </b>Hell Blood Join<br>
-				<b>Create a wall: </b>Destroy Travel Self<br>
-				<b>Summon cultist: </b>Join Other Self<br>
-				<b>Free a cultist: </b>Travel technology other<br>
-				<b>Deafen: </b>Hide Other See<br>
-				<b>Blind: </b>Destroy See Other<br>
-				<b>Blood Boil: </b>Destroy See Blood<br>
-				<b>Communicate: </b>Self Other Technology<br>
-				<b>Stun: </b>Join Hide Technology<br>
-				<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
-				<b>See Invisible: </b>See Hell Join<br>
-				<b>Construct: </b>Technology Blood Travel<br>
+				<b>Телепортировать себя: </b>Travel Self (word)<br>
+				<b>Телепортировать что-то: </b>Travel Other (word)<br>
+				<b>Призыв нового тома: </b>See Blood Hell<br>
+				<b>Обратить: </b>Join Blood Self<br>
+				<b>Призыв Нар-Си: </b>Hell Join Self<br>
+				<b>Отключить технологию: </b>Destroy See Technology<br>
+				<b>Высосать кровь: </b>Travel Blood Self<br>
+				<b>Поднять мертвеца: </b>Blood Join Hell<br>
+				<b>Скрыть руны: </b>Hide See Blood<br>
+				<b>Проявить руны: </b>Blood See Hide<br>
+				<b>Покинуть тело: </b>Hell travel self<br>
+				<b>Манифест призраков: </b>Blood See Travel<br>
+				<b>Насытить талисман: </b>Hell Technology Join<br>
+				<b>Жертвоприношение: </b>Hell Blood Join<br>
+				<b>Создать стену: </b>Destroy Travel Self<br>
+				<b>Призвать культиста: </b>Join Other Self<br>
+				<b>Освободить культиста: </b>Travel technology other<br>
+				<b>Оглушить: </b>Hide Other See<br>
+				<b>Ослепить: </b>Destroy See Other<br>
+				<b>Кипящая кровь: </b>Destroy See Blood<br>
+				<b>Общение: </b>Self Other Technology<br>
+				<b>Ошеломление: </b>Join Hide Technology<br>
+				<b>Призыв брони: </b>Hell Destroy Other<br>
+				<b>Увидеть невидимое: </b>See Hell Join<br>
+				<b>Конструкт: </b>Technology Blood Travel<br>
+				<b>Смена тел: </b>Travel Blood Other<br>
 				</p>
-				<h2>Rune Descriptions</h2>
-				<h3>Teleport self</h3>
-				Teleport rune is a special rune, as it only needs two words, with the third word being destination. Basically, when you have two runes with the same destination, invoking one will teleport you to the other one. If there are more than 2 runes, you will be teleported to a random one. Runes with different third words will create separate networks. You can imbue this rune into a talisman, giving you a great escape mechanism.<br>
-				<h3>Teleport other</h3>
-				Teleport other allows for teleportation for any movable object to another rune with the same third word. You need 3 cultists chanting the invocation for this rune to work.<br>
-				<h3>Summon new tome</h3>
-				Invoking this rune summons a new arcane tome.
-				<h3>Convert a person</h3>
-				This rune opens target's mind to the realm of Nar-Sie, which usually results in this person joining the cult. However, some people (mostly the ones who posess high authority) have strong enough will to stay true to their old ideals. <br>
-				<h3>Summon Nar-Sie</h3>
-				The ultimate rune. It summons the Avatar of Nar-Sie himself, tearing a huge hole in reality and consuming everything around it. Summoning it is the final goal of any cult.<br>
-				<h3>Disable Technology</h3>
-				Invoking this rune creates a strong electromagnetic pulse in a small radius, making it basically analogic to an EMP grenade. You can imbue this rune into a talisman, making it a decent defensive item.<br>
-				<h3>Drain Blood</h3>
-				This rune instantly heals you of some brute damage at the expense of a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes on the station are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
-				<h3>Raise Dead</h3>
-				This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living, awake human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body to enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
-				<h3>Hide runes</h3>
-				This rune makes all nearby runes completely invisible. They are still there and will work if activated somehow, but you cannot invoke them directly if you do not see them.<br>
-				<h3>Reveal runes</h3>
-				This rune is made to reverse the process of hiding a rune. It reveals all hidden runes in a rather large area around it.
-				<h3>Leave your body</h3>
-				This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or you might never come back.<br>
-				<h3>Manifest a ghost</h3>
-				Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifeforce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on the rune to make the new body look like that person.<br>
-				<h3>Imbue a talisman</h3>
-				This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. You will now have a one-use talisman with the power of the target rune. Using a talisman drains some health, so be careful with it. You can imbue a talisman with power of the following runes: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen, blind and stun.<br>
-				<h3>Sacrifice</h3>
-				Sacrifice rune allows you to sacrifice a living thing or a body to the Geometer of Blood. Monkeys and dead humans are the most basic sacrifices, they might or might not be enough to gain His favor. A living human is what a real sacrifice should be, however, you will need 3 people chanting the invocation to sacrifice a living person.
-				<h3>Create a wall</h3>
-				Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
-				<h3>Summon cultist</h3>
-				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to succesfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
-				<h3>Free a cultist</h3>
-				This rune unhandcuffs and unbuckles any cultist of your choice, no matter where he is. You need to have 3 people invoking the rune for it to work. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
-				<h3>Deafen</h3>
-				This rune temporarily deafens all non-cultists around you.<br>
-				<h3>Blind</h3>
-				This rune temporarily blinds all non-cultists around you. Very robust. Use together with the deafen rune to leave your enemies completely helpless.<br>
-				<h3>Blood boil</h3>
-				This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effect when invoked. It also drains significant amount of your health when succesfully invoked.<br>
-				<h3>Communicate</h3>
-				Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
-				<h3>Stun</h3>
-				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
-				<h3>Equip Armor</h3>
-				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
-				<h3>See Invisible</h3>
-				When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
+				<h2>Описание рун</h2>
+				<h3>Телепортировать себя</h3>
+				Руна телепорта это специальная руна, которой нужны два слова как основа и третье как место назначения. Если у вас есть две руны с одинаковым местом назначения, то активация одной из них телепортирует вас к другой. Если рун больше, чем две, вас телепортирует на случайную. Руны с разными третьими словами создадут разную сеть телепортов. Вы можете перенести эту руну в талисман, который мог быть неплохим средством для побега.<br>
+				<h3>Телепортировать что-то</h3>
+				Эта руна позволяет переместить любой подвижный объект к другой руне, с таким же местом назначения. Вам понадобятся три культиста, произносящих руну, для активации.<br>
+				<h3>Призыв нового тома</h3>
+				Активируйте руну, чтобы призвать новый том.
+				<h3>Обратить</h3>
+				Руна показывает жертве измерение Нар-Си, что обычно приводит к вступлению в культ. Впрочем, некоторые люди (В частности, одержимые властью.) имеют достаточно сильную волю, чтобы оставаться преданными своим идеалам.<br>
+				<h3>Призыв Нар-Си</h3>
+				Ультимативная руна. Ее активация призывает в этот мир аватар самого Нар-Си, создавая огромную дыру в реальности. Призыв аватара финальная цель культа.<br>
+				<h3>Отключить технологию</h3>
+				Активация руны вызывает сильный электромагнитный импульс в небольшом радиусе, который аналогичен ЭМ-гранате. Вы можете перенести эту руну в талисман, что могло сделать его неплохим средством защиты.<br>
+				<h3>Высосать кровь</h3>
+				Руна мгновенно вылечит ваши порезы ценой урона существу, размещенному на ней. Когда вы активируете руну, все остальные руны высасывания также активируются, высасывая кровь из жертв. Вы - не исключение. Если вы встанете на руну и используете ее, ваша же кровь попадет обратно к вам. Это может помочь при поиске слов. Одна активация высасывает до 25HP каждой жертвы, но вы можете активировать руну повторно. Работает только с живыми людьми. Передозировка кровью может вызвать жажду крови.<br>
+				<h3>Поднять мертвеца</h3>
+				Позволяет воскрешать мертвецов. Вам понадобятся мертвое тело и жертвоприношение. Сделайте две руны. Положите живого, бодрствующего на одну и труп на другую. При активации руна перенесет жизненную силу из живого в мертвого, позволяя призраку, стоящему на руне, войти в исцеленное тело. Используйте другую руну для поиска призраков.<br>
+				<h3>Скрыть руны</h3>
+				Делает руны невидимыми. Они останутся на месте и будут работать, но вы не сможете активировать руны, если не видите их.<br>
+				<h3>Проявить руны</h3>
+				Эта руна, при активации, отображает другие руны, которые были скрыты с помощью руны сокрытия, в довольно большом радиусе.
+				<h3>Покинуть тело</h3>
+				Буквально вырывает вашу душу из тела. Вы можете свободно перемещаться как призрак и общаться с мертвыми. Ваше тело получает урон, пока вы находитесь в другом мире, так что лучше вам там не засиживаться, иначе вы можете оттуда и не вернуться.<br>
+				<h3>Манифест призраков</h3>
+				В отличие от руны поднятия мертвеца, эта не требует приготовлений или сосуда. Вместо поглощения жизненной силы из жертвы, она будет высасывать вашу. Встаньте на руну и активируйте ее. Если призрак будет стоять на руне, то он материализуется и будет жить до тех пор, пока вы стоите на ней или пока вы не умрете. Вы можете положить листок с именем на руну, чтобы новое тело выглядело как человек с этим именем.<br>
+				<h3>Насытить талисман</h3>
+				Руна позволяет насыщать магией рун бумажные талисманы. Начертите руну насыщения, положите на нее пустой лист бумаги и активируйте ее. Теперь у вас есть одноразовый талисман с силой целевой руны. Использование этого талисмана может высосать здоровье, так что осторожнее с ним. Вы можете насытить талисман этими рунами: Призыв тома, Проявить руны, Скрыть руны, Телепорт, Отключить технологию, Общение, Оглушить, Ослепить, Ошеломление, Конструкт и Призыв камня душ.<br>
+				<h3>Жертвоприношение</h3>
+				Позволяет принести в жертву Геометру Крови живое существо или тело. Мартышки и трупы - основа жертвоприношения, но этого может быть недостаточно, чтобы удовлетворить Его. Живой человек - то, что Ему нужно. Во всяком случае, вам понадобится три человека, чтобы прочитать и активировать руну с живым человеком на ней.
+				<h3>Создать стену</h3>
+				При активации делает воздух настолько твердым, что через него нельзя пройти. Чтобы убрать стену, активируйте руну снова.
+				<h3>Призвать культиста</h3>
+				Руна позволяет призвать вашего коллегу-культиста. Цель не должна быть закована в наручники и сидеть на чем-либо. Вам также понадобятся три человека, чтобы активировать руну. Ее активация производит сильную нагрузку на тела всех, участвующих в чтении руны.<br>
+				<h3>Освободить культиста</h3>
+				Позволяет снять наручники и отстегнуть от стула культиста, где бы он не находился. Вам понадобятся три человека, для проведения ритуала. Активация руны оказывает сильное воздействие на тела участников ритуала.<br>
+				<h3>Оглушить</h3>
+				Активация руны позволяет временно оглушить всех, кроме культистов, вокруг вас.<br>
+				<h3>Ослепить</h3>
+				Активация позволяет ослепить временно всех, кроме культистов, вокруг вас. Очень опасно. Использование вместе с руной Оглушить сделает ваших врагов беспомощными.<br>
+				<h3>Кипящая кровь</h3>
+				Руна заставляет кровь, в жилах не культистов, кипеть. Урона достаточно для нанесения критических повреждений человеку. Вам понадобятся три человека для активации руны. Ее действие может быть ненадежным и опасным даже для вас. Она также потребляет некоторое количество вашей крови и здоровья для успешной активации.<br>
+				<h3>Общение</h3>
+				Позволяет отправить сообщение всем культистам на станции.
+				<h3>Ошеломление</h3>
+				В отличие от прочих рун, эта предназначена для использования в форме талисмане. Если активировать напрямую - выпускает немного темной энергии и ошеломляет всех вокруг. Если ею насытить талисман, то вы сможете высвободить всю ее энергию и направить в одного человека, ошеломляя его так сильно, что тот даже не сможет говорить. Эффект временный и быстро пропадает.<br>
+				<h3>Призыв брони</h3>
+				При активации, в форме руны или талисмана, материализует броню последователей Нар-Си на теле призывающего. Чтобы использовать полный набор, убедитесь, что вы не носите головной убор, любую другую броню, перчатки и ботинки, а также не держите ничего в руках.<br>
+				<h3>Увидеть невидимое</h3>
+				При активации стоя на ней - позволяет видеть мир мертвых до тех пор, пока вы не двигаетесь.<br>
+				<h3>Конструкт</h3>
+				Может быть активирована только в качестве талисмана. Призывает оболочку конструкта. Для использования оболочки требуется заряженный камень душ.
+				<h3>Призыв камня душ</h3>
+				Может быть активирована только в качестве талисмана. Призывает пустой камень душ, который можно насыть лишь живой душой. Процесс поимки души довольно щепетильный и требует жертвоприношения. В момент последнего вздоха жертвы поднесите камень к телу, чтобы поймать его душу.
+				<h3>Смена тел</h3>
+				Для активации разместите живую, бодрствующую жертву на руне. Не работает ни с кем, кроме живых людей и наносит урон при переходе.
 				</body>
 				</html>
 				"}
