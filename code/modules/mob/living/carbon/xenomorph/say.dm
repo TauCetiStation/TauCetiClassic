@@ -1,11 +1,9 @@
 /mob/living/carbon/xenomorph/say(message)
 
-	if(!message)
-		return
-	if(silent)
-		return
-
 	message = sanitize(message)
+
+	if(!message || silent)
+		return
 
 	var/datum/language/xeno_language = all_languages["Xenomorph language"]
 
@@ -27,12 +25,10 @@
 
 /mob/living/carbon/xenomorph/facehugger/say(message)
 
-	if(!message)
-		return
-	if(silent)
-		return
-
 	message = sanitize(message)
+
+	if(!message || silent)
+		return
 
 	if(stat == DEAD)
 		return say_dead(message)
