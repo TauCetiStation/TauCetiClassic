@@ -112,7 +112,7 @@
 				if(ispath(N.crate_type, /obj/structure/closet/critter))
 					var/obj/structure/closet/critter/C = N.crate_type
 					var/mob/animal = initial(C.content_mob)
-					temp += {"<tr><td><span class="cargo32x32 [replace_characters("[animal]", list("/mob/" = "", "/" = "-"))]"></span></td><td>[initial(animal.name)]</td></tr>"}
+					temp += {"<tr><td><span class="cargo32x32 [replace_characters("[animal]", list("[/mob]/" = "", "/" = "-"))]"></span></td><td>[initial(animal.name)]</td></tr>"}
 				else
 					var/list/check_content = list()
 					for(var/element in N.contains) //let's show what's in the conteiner
