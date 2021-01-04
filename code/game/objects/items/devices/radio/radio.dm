@@ -511,7 +511,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a_span = "deptradio"
 
 			var/part_a = "<span class='[part_a_span]'><span class='name'>"
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)
