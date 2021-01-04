@@ -29,8 +29,8 @@
 
 /obj/effect/rune/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "[bicon(src)] That's <span class='cult'>cult rune!</span>")
-		to_chat(user, "A spell circle drawn in blood. It reads: <i>[power?.name]</i>.")
+		to_chat(user, "[bicon(src)] That's <span class='cult'>руна!</span>")
+		to_chat(user, "Руной написано: <i>[power?.name]</i>.")
 		return
 	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
 	if(issilicon(user))
@@ -40,10 +40,10 @@
 
 /obj/effect/rune/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/weapon/storage/bible/tome) && iscultist(user))
-		to_chat(user, "<span class='cult'>You retrace your steps, carefully undoing the lines of the rune.</span>")
+		to_chat(user, "<span class='cult'>Вы заставляете руну исчезнуть.</span>")
 		qdel(src)
 	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
+		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию мертвящем полем [I].</span>")
 		qdel(src)
 	else
 		return ..()
@@ -65,13 +65,19 @@
 /obj/effect/rune/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!iscultist(user))
-		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
+		if(prob(user.getBrainLoss()))
+			user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
 		return
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-		to_chat(user, "You are unable to speak the words of the rune.")
+		to_chat(user, "Вы не можете произнести слова руны.")
 		return
-	if(!power || prob(user.getBrainLoss()))
-		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.",\
-		"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
+	if(!power)
 		return
+
+	power.action_wrapper(user)
+
+/obj/effect/rune/attack_animal(mob/user)
+	if(!istype(user, /mob/living/simple_animal/construct))
+		return
+
 	power.action_wrapper(user)

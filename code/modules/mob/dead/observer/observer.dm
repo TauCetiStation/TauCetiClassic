@@ -531,7 +531,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
-
 	set category = "Ghost"
 	set name = "Write in blood"
 	set desc = "If the round is sufficiently spooky, write a short message in blood on the floor or a wall. Remember, no IC in OOC or OOC in IC."
@@ -578,7 +577,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!choice || choice.amount == 0 || !(src.Adjacent(choice)))
 		return
 
-	var/datum/dirt_cover/doodle_color = new/datum/dirt_cover(choice.basedatum)
+	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(choice.basedatum)
 
 	var/num_doodles = 0
 	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
@@ -592,7 +591,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
-
 		if (length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")

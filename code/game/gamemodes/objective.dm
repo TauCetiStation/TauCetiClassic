@@ -723,54 +723,6 @@ var/global/list/all_objectives = list()
 	else
 		return OBJECTIVE_LOSS
 
-
-
-/* Isn't suited for global objectives
-//---------CULTIST----------
-/datum/objective/eldergod
-	explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
-
-/datum/objective/eldergod/check_completion()
-	if(eldergod) //global var, defined in rune4.dm
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/survivecult
-	var/num_cult
-	explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
-
-/datum/objective/survivecult/check_completion()
-	if(SSshuttle.location<2)
-		return OBJECTIVE_LOSS
-	var/cultists_escaped = 0
-	var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
-	for(var/turf/T in	get_area_turfs(C.type))
-		for(var/mob/living/carbon/H in T)
-			if(iscultist(H))
-				cultists_escaped++
-	if(cultists_escaped>=5)
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/sacrifice/proc/find_target() //stolen from traitor target objective
- //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
-	var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
-	if(possible_targets.len > 0)
-		sacrifice_target = pick(possible_targets)
-	if(sacrifice_target && sacrifice_target.current)
-		explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
-	else
-		explanation_text = "Free Objective"
-	return sacrifice_target
-
-/datum/objective/sacrifice/check_completion() //again, calling on a global list defined in rune15.dm
-	if(sacrifice_target.current in sacrificed)
-		return OBJECTIVE_WIN
-	else
-		return OBJECTIVE_LOSS
-//-------ENDOF CULTIST------
-*/
-
 //Meme objectives
 /datum/objective/meme_attune/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)

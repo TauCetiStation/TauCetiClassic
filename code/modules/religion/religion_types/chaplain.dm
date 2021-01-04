@@ -63,6 +63,7 @@
 	carpet_type_by_name = list(
 		"Default" = /turf/simulated/floor/carpet,
 		"Scientology" = /turf/simulated/floor/carpet/purple,
+		"Science" = /turf/simulated/floor/carpet/purple,
 	)
 
 	carpet_dir_by_name = list(

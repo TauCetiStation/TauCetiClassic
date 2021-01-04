@@ -1,9 +1,8 @@
 #define BRAINSWAP_TIME 50
 
-// This is all a rudiment, please delete this file if I forget
 /datum/rune
 	var/name
-	var/obj/holder
+	var/obj/effect/rune/holder
 	var/datum/religion/religion
 	var/only_rune = FALSE
 	// Used only for sprite generation
@@ -29,6 +28,8 @@
 	action(user)
 	if(religion.disposable_rune)
 		qdel(holder)
+	fizzle(user)
+	holder_reaction(user)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
@@ -45,7 +46,7 @@
 	var/list/acolytes = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/C in range(range, center))
-		if(iscultist(C) && !C.stat)
+		if(religion.is_member(C) && !C.stat)
 			acolytes += C
 			if(message)
 				C.say(message)
@@ -66,31 +67,25 @@
 
 /datum/rune/proc/fizzle(mob/living/user)
 	if(istype(holder, /obj/effect/rune))
-		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
+		user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
 	else
-		user.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.",\
-			"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
-	holder.visible_message("<span class='danger'>The markings pulse with a small burst of light, \
-		then fall dark.</span>","<span class='danger'>You hear a faint fizzle.</span>")
+		user.whisper(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
+	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слишите тихое шипение.</span>")
 
 /datum/rune/cult
 /datum/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
+	var/turf/destination
 	words = list("travel", "self", "hell")
 
-/datum/rune/cult/teleport_to_heaven/rune_reaction(mob/living/carbon/user)
-	user.say("Sas[pick("'","`")]so c'arta forbici!")
-
-/datum/rune/cult/teleport_to_heaven/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Sas[pick("'","`")]so c'arta forbici!")
-
 /datum/rune/cult/teleport_to_heaven/action(mob/living/carbon/user)
-	var/area/A = locate(/area/custom/cult)
+	var/area/A = locate(religion.area_type)
 	var/turf/T = get_turf(pick(A.contents))
+	destination = T
 	var/list/companions = holder.handle_teleport_grab(T, usr)
 	user.forceMove(T)
 	user.eject_from_wall(TRUE, companions = companions)
-	if(user)
+	if(user && (!destination || locate(/datum/rune/cult) in destination)) // user can gibbed
 		var/obj/effect/rune/R = new(get_turf(user), religion)
 		R.power = new /datum/rune/cult/teleport_from_heaven(R, get_turf(holder))
 		R.icon = get_uristrune_cult(TRUE, R.power.words)
@@ -101,26 +96,18 @@
 		else
 			C.create_anomalys(TRUE)
 
-		return holder_reaction(user)
-
 /datum/rune/cult/teleport_from_heaven
 	name = "Teleport from HEAVEN"
 	var/turf/destination
 	words = list("travel", "self", "technology")
 
-/datum/rune/cult/teleport_from_heaven/New(holder, _destination)
+/datum/rune/cult/teleport_from_heaven/New(holder, turf/_destination)
 	..()
 	destination = _destination
 
 /datum/rune/cult/teleport_from_heaven/Destroy()
 	destination = null
 	return ..()
-
-/datum/rune/cult/teleport_from_heaven/rune_reaction(mob/living/carbon/user)
-	user.say("Sas[pick("'","`")]so c'arta forbici!")
-
-/datum/rune/cult/teleport_from_heaven/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Sas[pick("'","`")]so c'arta forbici!")
 
 /datum/rune/cult/teleport_from_heaven/action(mob/living/carbon/user)
 	holder.handle_teleport_grab(destination, usr)
@@ -132,10 +119,17 @@
 	var/static/already_use = FALSE
 	var/static/first_area_captured = FALSE
 
+/datum/rune/cult/capture_area/Destroy()
+	already_use = FALSE
+	return ..()
+
 /datum/rune/cult/capture_area/action(mob/living/carbon/user)
+	var/area/area = get_area(user)
+	if(religion == area.religion)
+		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
+		return
 	if(first_area_captured)
-		var/area/area = get_area(user)
-		if(!istype(religion, area.religion?.type) || religion == area.religion)
+		if(!istype(religion, area.religion?.type))
 			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
 			return
 	else if(already_use)
@@ -183,12 +177,6 @@
 	else
 		src.id = id
 
-/datum/rune/cult/teleport/rune_reaction(mob/living/carbon/user)
-	user.say("Sas[pick("'","`")]so c'arta forbici!")
-
-/datum/rune/cult/teleport/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Sas[pick("'","`")]so c'arta forbici!")
-
 /datum/rune/cult/teleport/action(mob/living/carbon/user)
 	var/list/allrunes = list()
 	for(var/obj/effect/rune/R in religion.runes)
@@ -210,8 +198,6 @@
 		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 		user.forceMove(get_turf(pick(allrunes)))
 		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
-		return holder_reaction(user)
-	fizzle(user)
 
 /datum/rune/cult/item_port
 	words = list("travel", "other", "see")
@@ -310,57 +296,13 @@
 	in_use = FALSE
 	return fizzle(user)
 
-/datum/rune/cult/tearreality
-	words = list("hell", "join", "self")
-	only_rune = TRUE
-
-/datum/rune/cult/tearreality/action(mob/living/carbon/user)
-	var/acolytes = nearest_cultists(1, "Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
-	if(length(acolytes) < 9)
-		return fizzle(user)
-
-	if(SSticker.mode.nar_sie_has_risen)
-		for(var/mob/living/carbon/C in acolytes)
-			to_chat(C, "<font size='4'><span class='danger'>I am already here!</span></font>")
-			return
-	if(!istype(SSticker.mode, /datum/game_mode/cult))
-		return
-	var/datum/game_mode/cult/cur_mode = SSticker.mode
-	for(var/objective in cur_mode.objectives)
-		if(objective == "eldergod")
-			SSticker.mode.nar_sie_has_risen = TRUE
-			cur_mode.eldergod = FALSE
-			new /obj/singularity/narsie/large(get_turf(holder))
-			return
-	cur_mode.eldertry += 1
-	switch(cur_mode.eldertry)
-		if(1)
-			for(var/mob/living/carbon/C in acolytes)
-				to_chat(C, "<font size='3'><span class='danger'>I have no interest in coming to your world.</span></font>")
-		if(5)
-			for(var/mob/living/carbon/C in acolytes)
-				C.apply_effect(80, AGONY, 0)
-				to_chat(C, "<font size='4'><span class='danger'>I SAID NO!!</span></font>")
-		if(10)
-			for(var/mob/living/carbon/C in acolytes)
-				C.apply_effect(80, AGONY, 0)
-				to_chat(C, "<font size='5'><span class='danger'>LAST WARNING.</span></font>")
-		if(15 to 100)
-			for(var/mob/living/carbon/C in acolytes)
-				C.gib()
-			to_chat(world, "<font size='15'><span class='danger'>FUCK YOU!!!</span></font>")
-			cur_mode.eldertry = 0
-
-
 /datum/rune/cult/emp
 	words = list("destroy", "see", "technology")
 
 /datum/rune/cult/emp/rune_reaction(mob/living/carbon/user)
-	user.say("Ta'gh fara[pick("'","`")]qha fel d'amar det!")
 	return 3
 
 /datum/rune/cult/emp/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Ta'gh fara[pick("'","`")]qha fel d'amar det!")
 	return 5
 
 /datum/rune/cult/emp/action(mob/living/carbon/user)
@@ -500,25 +442,11 @@
 /datum/rune/cult/obscure
 	words = list("hide", "see", "blood")
 
-/datum/rune/cult/obscure/rune_reaction(mob/living/carbon/user)
-	user.say("Kla[pick("'","`")]atu barada nikt'o!")
-	user.visible_message("<span class='danger'>The rune turns into gray dust, veiling the surrounding runes.</span>")
-
-/datum/rune/cult/obscure/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Kla[pick("'","`")]atu barada nikt'o!")
-	user.visible_message("<span class='danger'>Dust emanates from [user]'s hands for a moment.</span>", \
-		"<span class='cult'>Your talisman turns into gray dust, veiling the surrounding runes.</span>")
-
 /datum/rune/cult/obscure/action(mob/living/carbon/user, radius = 4)
-	var/finded = FALSE
 	var/turf/center = get_turf(holder)
 	for(var/obj/effect/rune/R in range(radius, center))
 		if(R != holder)
 			R.invisibility = INVISIBILITY_OBSERVER
-		finded = TRUE
-	if(finded)
-		return holder_reaction(user)
-	fizzle(user)
 
 /datum/rune/cult/ajourney
 	words = list("hell", "travel", "self")
@@ -657,30 +585,11 @@
 /datum/rune/cult/reveal
 	words = list("blood", "see", "hide")
 
-/datum/rune/cult/reveal/holder_reaction(mob/living/carbon/user)
-	if(istype(holder, /obj/item/weapon/nullrod))
-		to_chat(user, "<span class='notice'>Arcane markings suddenly glow from underneath a thin layer of dust!</span>")
-	else
-		return ..()
-
-/datum/rune/cult/reveal/rune_reaction(mob/living/carbon/user)
-	user.say("Nikt[pick("'","`")]o barada kla'atu!")
-	holder.visible_message("<span class='danger'>The rune turns into red dust, reveaing the surrounding runes.</span>")
-
-/datum/rune/cult/reveal/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Nikt[pick("'","`")]o barada kla'atu!")
-	holder.visible_message("<span class='userdanger'>Red dust emanates from [usr]'s hands for a moment.</span>",\
-		"<span class='userdanger'>Your talisman turns into red dust, revealing the surrounding runes.</span>")
-
 /datum/rune/cult/reveal/action(mob/living/carbon/user, radius = 6)
-	var/S = FALSE
 	var/turf/center = get_turf(holder)
 	for(var/obj/effect/rune/R in range(radius, center))
 		if(R != holder)
 			R.invisibility = SEE_INVISIBLE_LIVING
-			S = TRUE
-	if(S)
-		return holder_reaction(user)
 
 /datum/rune/cult/wall
 	words = list("destroy", "travel", "self")
@@ -749,98 +658,6 @@
 	for(var/mob/living/carbon/C in acolytes)
 		user.take_overall_damage(45 / amount_of_acolytes, 0)
 		C.say("Khari[pick("'","`")]d! Gual'te nikka!")
-/datum/rune/cult/sacrifice
-	words = list("hell", "blood", "join")
-	only_rune = TRUE
-
-/datum/rune/cult/sacrifice/action(mob/living/carbon/user)
-	var/list/acolytes = nearest_cultists(1, "Barhah hra zar[pick("'","`")]garis!")
-	var/acolytes_amount = length(acolytes)
-	if(acolytes_amount < 3)
-		for(var/mob/M in acolytes)
-			to_chat(M, "<span class='cult'>You will need more cultists chanting for the sacrifice to succeed.</span>")
-			fizzle(M)
-		return
-
-	var/list/victims = list()
-	var/datum/mind/sacrifice_target
-
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
-		sacrifice_target = cur_mode.sacrifice_target
-
-	for(var/target in holder.loc)
-		if(ishuman(target) && !iscultist(target))
-			victims[target] = 80
-		else if(ismonkey(target))
-			victims[target] = 40
-		else if(isxeno(target))
-			victims[target] = 75
-		else if(isIAN(target))
-			victims[target] = 70
-		else if(istype(target, /obj/item/brain))
-			var/obj/item/brain/B = target
-			victims[B.brainmob] = 60
-		else if(istype(target, /obj/item/device/mmi))
-			var/obj/item/device/mmi/B = target
-			victims[B.brainmob] = 60
-		else if(istype(target, /obj/item/device/aicard))
-			for(var/mob/living/silicon/ai/A in target)
-				victims[A] = 70
-				break
-	if(length(victims) < 1)
-		return fizzle(user)
-	playsound(holder, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
-
-	for(var/mob/H in victims)
-		if(sacrifice_target && sacrifice_target == H.mind)
-			var/datum/game_mode/cult/cur_mode = SSticker.mode // we checked our mode earlier
-			cur_mode.sacrificed += H.mind
-			if(isrobot(H))
-				H.dust() //To prevent the MMI from remaining
-			else
-				H.gib()
-			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
-
-		else
-			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>")
-			if(isrobot(H))
-				H.dust() //To prevent the MMI from remaining
-			else
-				H.gib()
-
-/datum/rune/cult/communicate
-	words = list("self", "other", "technology")
-	var/busy = FALSE
-
-/datum/rune/cult/communicate/holder_reaction(mob/living/carbon/user, input)
-	if(istype(holder, /obj/effect/rune))
-		return rune_reaction(user, input)
-	return talisman_reaction(user, input)
-
-/datum/rune/cult/communicate/rune_reaction(mob/living/user, input)
-	user.say("O bidai nabora se[pick("'","`")]sma!")
-	user.say("[input]")
-	busy = FALSE
-
-/datum/rune/cult/communicate/talisman_reaction(mob/living/user, input)
-	user.whisper("O bidai nabora se[pick("'","`")]sma!")
-	user.whisper("[input]")
-
-/datum/rune/cult/communicate/action(mob/living/user)
-	if(busy)
-		return
-	busy = TRUE
-	var/input = sanitize(input(user, "Please choose a message to tell to the other acolytes.", "Voice of Blood", ""))
-	if(!input)
-		busy = FALSE
-		return fizzle(user)
-	for(var/datum/mind/H in global.cult_religion.members)
-		if(H.current)
-			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
-
-	playsound(holder, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
-	holder_reaction(user, input)
 
 /datum/rune/cult/summon
 	words = list("join", "other", "self")
@@ -877,13 +694,9 @@
 	words = list("hide", "other", "see")
 
 /datum/rune/cult/deafen/rune_reaction(mob/living/carbon/user)
-	user.say("Sti[pick("'","`")] kaliedir!")
-	to_chat(user, "<span class='cult'>The world becomes quiet as the deafening rune dissipates into fine dust.</span>")
 	return 120
 
 /datum/rune/cult/deafen/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Sti[pick("'","`")] kaliedir!")
-	to_chat(user, "<span class='cult'>Your talisman turns into gray dust, deafening everyone around.</span>")
 	return 70
 
 /datum/rune/cult/deafen/action(mob/living/carbon/user)
@@ -901,13 +714,9 @@
 	words = list("destroy", "other", "see")
 
 /datum/rune/cult/blind/rune_reaction(mob/living/carbon/user)
-	user.say("Sti[pick("'","`")] kaliesin!")
-	to_chat(user, "<span class='cult'>The rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust.</span>")
 	return 90
 
 /datum/rune/cult/blind/talisman_reaction(mob/living/carbon/user)
-	user.whisper("Sti[pick("'","`")] kaliesin!")
-	to_chat(user, "<span class='cult'>Your talisman turns into gray dust, blinding those who not follow the Nar-Sie.</span>")
 	return 30
 
 /datum/rune/cult/blind/action(mob/living/carbon/user)
@@ -986,10 +795,6 @@
 			C.Weaken(15)
 			C.Stun(15)
 
-/datum/rune/cult/stun/action(mob/living/carbon/user)
-	if(istype(holder, /obj/effect/rune))
-		rune_reaction(user)
-
 /datum/rune/cult/brainswap
 	words = list("travel", "blood", "other")
 	only_rune = TRUE
@@ -1048,14 +853,7 @@
 /datum/rune/cult/armor
 	words = list("hell", "destroy", "other")
 
-/datum/rune/cult/armor/rune_reaction(mob/living/carbon/user)
-	user.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
-
-/datum/rune/cult/armor/talisman_reaction(mob/living/carbon/user)
-	user.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
-
 /datum/rune/cult/armor/action(mob/living/carbon/user)
-	holder_reaction(user)
 	user.visible_message("<span class='userdanger'>The rune disappears with a flash of red light, and a set of armor appears on [user]...</span>", \
 	"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)

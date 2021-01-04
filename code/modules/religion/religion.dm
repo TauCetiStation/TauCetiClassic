@@ -68,12 +68,12 @@
 	var/area_type
 	// Subtypes of area_type
 	var/list/area_types
+	// Refs
+	var/list/area/captured_areas = list()
 
 	/*
 		Aspects and Rites related
 	*/
-	var/list/active_deities = list()
-
 	// The religion's 'Mana'
 	var/favor = 0
 	// The max amount of favor the religion can have
@@ -87,10 +87,15 @@
 	var/list/aspects = list()
 	// Spells that are determined by aspect combinations, are given to God.
 	var/list/god_spells = list()
+	var/list/active_deities = list()
+
 	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
 	var/list/rites_info = list()
 	// Lists of rite name by type. "name = rite"
 	var/list/rites_by_name = list()
+	// List with the types of all mandatory rites which are always given
+	var/list/binding_rites = list()
+
 	// All runes on map
 	var/list/runes = list()
 	// Is the rune removed after use
@@ -103,6 +108,8 @@
 	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion
 	var/list/mob/members = list()
+	// Easy access
+	var/datum/religion_sect/sect
 
 	/*
 		Building
@@ -165,7 +172,7 @@
 
 	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.sect = initial(altar.sect)
+		altar.choosing_sects = initial(altar.choosing_sects)
 		altar.religion = initial(altar.religion)
 		altar.performing_rite = initial(altar.performing_rite)
 
@@ -303,6 +310,7 @@
 			new type(get_turf(A))
 			qdel(A)
 		i++
+
 		if(after_action)
 			if(!after_action.Invoke(i, to_religify))
 				return FALSE
@@ -316,6 +324,9 @@
 
 	var/list/areas = get_areas(_area_type)
 	for(var/area/A in areas)
+		captured_areas += src
+		if(A.religion)
+			A.religion.captured_areas -= A.religion
 		A.religion = src
 	return TRUE
 
@@ -447,6 +458,13 @@
 
 			rites_info += "[name_entry]"
 
+// Adds all binding rites once
+/datum/religion/proc/give_binding_rites()
+	for(var/rite_type in binding_rites)
+		var/datum/religion_rites/R = new rite_type
+		R.religion = src
+		rites_by_name[R.name] = R
+
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
 	for(var/spell_type in global.spells_by_aspects[asp.name])
@@ -468,7 +486,7 @@
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
 			var/datum/religion_rites/R = new rite_type
 			R.religion = src
-			rites_by_name[RR.name] = R
+			rites_by_name[R.name] = R
 
 		QDEL_NULL(RR)
 
@@ -541,6 +559,9 @@
 	M.my_religion = null
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	return TRUE
+
+/datum/religion/proc/is_member(mob/M)
+	return M in members
 
 /datum/religion/proc/gen_agent_lists()
 	init_subtypes(build_agent_type, available_buildings)

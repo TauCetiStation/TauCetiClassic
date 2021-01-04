@@ -13,6 +13,7 @@
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
+	give_binding_rites(L, R)
 	give_aspects(L, R)
 	// I mean, they did choose the sect.
 	on_conversion(L)
@@ -21,10 +22,13 @@
 /datum/religion_sect/proc/give_aspects(mob/living/L, datum/religion/R)
 	return
 
+// This proc is used to give all binding rites once
+/datum/religion_sect/proc/give_binding_rites(mob/living/L, datum/religion/R)
+	return
+
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
 	to_chat(L, "<span class='notice'>[convert_opener]</span>")
-
 
 /datum/religion_sect/preset
 	/// An assoc list of form aspect_type = aspect power
@@ -32,6 +36,9 @@
 
 /datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
+
+/datum/religion_sect/preset/give_binding_rites(mob/living/L, datum/religion/R)
+	R.give_binding_rites()
 
 /********************/
 /*    CHAPLAIN      */

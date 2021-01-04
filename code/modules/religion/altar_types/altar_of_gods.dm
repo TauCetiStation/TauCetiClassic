@@ -17,8 +17,7 @@
 	var/change_preset_name = TRUE
 
 	var/datum/religion_rites/performing_rite
-	var/datum/religion_sect/sect //easy access
-	var/datum/religion/chaplain/religion //easy access
+	var/datum/religion/religion //easy access
 	var/chosen_aspect = FALSE
 	var/choosing_sects = FALSE
 
@@ -162,7 +161,7 @@
 	if(!user.mind)
 		return
 
-	if(user.my_religion != religion)
+	if(religion && user.my_religion != religion)
 		to_chat(user, "Are you a member of another religion.")
 		return
 
@@ -243,9 +242,9 @@
 		to_chat(user, "<span class='warning'>You are too far away!</span>")
 		return
 
-	sect = available_options[sect_select]
+	religion.sect = available_options[sect_select]
 
-	sect.on_select(user, religion)
+	religion.sect.on_select(user, religion)
 	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
@@ -319,3 +318,9 @@
 
 	for(var/item in src)
 		qdel(item)
+
+/obj/structure/altar_of_gods/proc/setup_altar(datum/religion/R)
+	religion = R
+	religion.altars += src
+	choosing_sects = TRUE
+	chosen_aspect = TRUE

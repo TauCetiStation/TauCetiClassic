@@ -72,7 +72,7 @@
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				to_chat(M, "<span class='warning'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>")
+				to_chat(M, "<span class='warning'>Вы чувствуете, как ваш рассудок мгновенно рассеивается, когда вы посмотрели на [src.name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -179,12 +179,12 @@
 
 
 /obj/singularity/narsie/proc/acquire(mob/food)
-	to_chat(target, "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>")
+	to_chat(target, "<span class='notice'>ТЫ МНЕ БОЛЬШЕ НЕ ИНЕТЕРЕСЕН</span>")
 	target = food
 	if(ishuman(target))
-		to_chat(target, "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>")
+		to_chat(target, "<span class ='userdanger'>МНЕ НУЖНА ТВОЯ ДУША</span>")
 	else
-		to_chat(target, "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>")
+		to_chat(target, "<span class ='userdanger'>ТЫ МЕНЯ ПРИВЕДЕШЬ К СЛЕДУЮЩЕЙ ЖЕРТВЕ</span>")
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()

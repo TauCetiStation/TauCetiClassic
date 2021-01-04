@@ -24,6 +24,11 @@
 		"Cult of Blood" = 9
 	)
 
+	binding_rites = list(
+		/datum/religion_rites/pedestals/narsie,
+		/datum/religion_rites/instant/sacrifice,
+	)
+
 	bible_type = /obj/item/weapon/storage/bible/tome
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
@@ -36,6 +41,7 @@
 	favor = 10000
 	piety = 10000
 	max_favor = 10000
+
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
 
@@ -47,7 +53,7 @@
 	var/max_spawned_anomalies = 12
 	// Types
 	var/static/list/strange_anomalies = list(/obj/effect/spacewhole, /obj/effect/timewhole, /obj/effect/orb, /obj/structure/cult/shell)
-	// Instead of storing links to turfs, I store coordinates for optimization
+	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 
 	// Are they dead or not yet? Maybe separate it somehow and put it in /datum/religion
@@ -106,12 +112,16 @@
 		if(prob(20)) // sound
 			var/list/sounds = pick(SOUNDIN_EXPLOSION, SOUNDIN_SPARKS, SOUNDIN_FEMALE_HEAVY_PAIN, SOUNDIN_MALE_HEAVY_PAIN)
 			playsound(H, pick(sounds), VOL_EFFECTS_INSTRUMENT)
+
 		else if(prob(20)) // chat_message
 			to_chat(H, "<font size='15' color='red'><b>[pick(possible_god_phrases)]!</b></font>")
+
 		else if(prob(20)) // receive damage
 			H.take_overall_damage(rand(-3, clamp(world.time**(1/3), 1, 30)), rand(-3, clamp(world.time**(1/3), 1, 30)), used_weapon = "Plasma ions") // Its science, baby
+
 		else if(prob(15)) // Heal
 			H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
+
 		else if(prob(5)) // temp alt_apperance of humans or item
 			if(prob(50))
 				var/mob/living/carbon/human/target = pick(humans_in_heaven)
@@ -123,6 +133,7 @@
 				I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/effect/decal/remains/human, I)
 
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 3 MINUTES)
+
 		else if(prob(1)) // temp alt_apperance of nar-sie
 			if(!altars.len)
 				return
@@ -130,7 +141,7 @@
 			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
 			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 10 MINUTES)
 
-		else if(prob(1))
+		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
 			H.say(pick(possible_human_phrases))
 
 		next_spook = world.time + spook_cd

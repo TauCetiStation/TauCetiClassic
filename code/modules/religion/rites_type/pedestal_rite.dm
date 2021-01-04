@@ -97,7 +97,6 @@
 		while(!item && P && can_invocate(user, AOG)) // waiting item with antilag
 			item = P.lying_illusions[ill]
 			stoplag(5 SECONDS)
-			to_chat(world, "In while - [world.time] - [P]")
 			waiting_time += 1
 
 		if(!can_invocate(user, AOG))
@@ -105,7 +104,7 @@
 
 		if(ritual_invocations && (item_stage % phrase_frequency == 1))
 			for(var/mob/M in AOG.mobs_around)
-				if(M in religion.members)
+				if(religion.is_member(M))
 					M.say(ritual_invocations[phrase_indx])
 			phrase_indx += 1
 

@@ -1,6 +1,6 @@
 
 /proc/iscultist(mob/living/M)
-	return M && global.cult_religion && (M in global.cult_religion.members)
+	return M && global.cult_religion && global.cult_religion.is_member(M)
 
 //Possibles objections
 #define SACRIFICE "sacrifice"
@@ -40,8 +40,7 @@
 	var/list/objectives = list()
 	var/list/sacrificed = list()
 
-	var/eldergod = 1 //for the summon god objective
-	var/eldertry = 0
+	var/eldergod = FALSE //for the summon god objective
 
 	var/acolytes_needed = 5 //for the survive objective
 	var/acolytes_out = 0
@@ -132,11 +131,11 @@
 				explanation = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] культистов улетят на шаттле, чтобы проложить исследования на других станциях."
 			if(SACRIFICE)
 				if(sacrifice_target)
-					explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. Для этого вам понадобится аспект Mortem."
+					explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]."
 				else
 					explanation = "Свободная задача."
 			if(SUMMON_GOD)
-				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции. Он будет работать только в том случае, если девять культистов встанут внутри структуры с 12 пьедесталами."
+				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
 			if(CAPTURE)
 				explanation = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
 			if(PIETY)
@@ -195,6 +194,8 @@
 			return FALSE
 	if(ismindshielded(mind.current) || isloyal(mind.current))
 		return FALSE
+	if(isrobot(mind.current))
+		return FALSE
 	return TRUE
 
 /datum/game_mode/cult/proc/get_unconvertables()
@@ -211,7 +212,7 @@
 			if(RECRUIT)
 				cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
 			if(SUMMON_GOD)
-				cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
+				cult_fail -= eldergod // 1 if nar-sie has risen
 			if(SACRIFICE)
 				if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 					cult_fail++
@@ -236,11 +237,7 @@
 
 /datum/game_mode/cult/proc/check_capture()
 	var/list/areas = get_areas(/area/station/)
-	var/captured_areas = 0
-	for(var/area/A in areas)
-		if(istype(A.religion, /datum/religion/cult))
-			captured_areas++
-	if(captured_areas >= need_capture)
+	if(religion.captured_areas.len >= need_capture)
 		return TRUE
 	return FALSE
 
@@ -289,7 +286,7 @@
 							explanation = "Свободная цель. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_free_objective|SUCCESS")
 					if(SUMMON_GOD)
-						if(!eldergod)
+						if(eldergod)
 							explanation = "Призовите Нар-Си. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 						else
@@ -317,8 +314,8 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
+	text += printlogo("cult", "cultists")
 	if(global.cult_religion.members.len)
-		text += printlogo("cult", "cultists")
 		for(var/mob/cultist in global.cult_religion.members)
 			if(cultist.mind)
 				text += printplayerwithicon(cultist.mind)

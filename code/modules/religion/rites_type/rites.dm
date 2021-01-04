@@ -135,11 +135,9 @@
 	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
 	if(!on_chosen(user, AOG))
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
-		to_chat(world, "if(!on_chosen(user, AOG))")
 		return FALSE
 
 	if(!can_start_wrapper(user, AOG))
-		to_chat(world, "if(!can_start_wrapper(user, AOG))")
 		return FALSE
 
 	start(user, AOG)

@@ -126,7 +126,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			if (podman.mind in SSticker.mode:revolutionaries)
 				SSticker.mode:add_revolutionary(podman.mind)
 		if ("cult")
-			if (podman in global.cult_religion.members)
+			if (global.cult_religion.is_member(podman))
 				SSticker.mode.add_cultist(podman.mind)
 		// -- End mode specific stuff
 

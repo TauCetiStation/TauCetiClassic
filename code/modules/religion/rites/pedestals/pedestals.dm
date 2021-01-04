@@ -1,110 +1,43 @@
 
-/datum/religion_rites/pedestals/test
-	name = "Test"
-	ritual_length = (20 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 0
+/datum/religion_rites/pedestals/narsie
+	name = "Summon Nar-Sie"
+	desc = "Summons the ancient god, don't be afraid to sacrifice your friend's body parts."
+	ritual_length = (1 MINUTE)
+	invoke_msg = "Venit ad nos!"
+	favor_cost = 2000
 
 	rules = list(
-		/obj/item/weapon/card/id/sci = 1,
-		/obj/item/device/pda/science = 2,
+		/obj/item/organ/external/r_arm = 3,
+		/obj/item/organ/external/l_arm = 3,
+		/obj/item/organ/external/head = 3,
+		/obj/item/weapon/storage/bible/tome = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
 	)
 
-	needed_aspects = list(
-		ASPECT_DEATH = 1,
-	)
+/datum/religion_rites/pedestals/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
 
-/datum/religion_rites/pedestals/test1
-	name = "Test1"
-	ritual_length = (20 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 0
+	if(istype(get_area(AOG), religion.area_type))
+		to_chat(user, "<span class='warning'>Вы можете проводить ритуал только на станции.</span>")
+		return FALSE
 
-	rules = list(
-		/obj/item/weapon/card/id/sci = 1,
-		/obj/item/device/pda/science = 2,
-		/obj/structure/altar_of_gods = 2,
-		/obj/structure/pedestal/cult = 2,
-	)
+	if(religion.members < 3)
+		to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
+		return FALSE
 
-	needed_aspects = list(
-		ASPECT_DEATH = 1,
-	)
+	if(SSticker.mode.nar_sie_has_risen)
+		to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
+		return FALSE
 
-/datum/religion_rites/pedestals/test2
-	name = "Test2"
-	ritual_length = (20 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 0
+	return TRUE
 
-	rules = list(
-		/obj/item/weapon/card/id/sci = 1,
-		/obj/item/device/pda/science = 2,
-		/obj/structure/altar_of_gods = 2,
-		/obj/structure/pedestal/cult = 2,
-		/obj/structure/cult/forge = 2,
-		/obj/structure/cult/shell = 2,
-	)
+/datum/religion_rites/pedestals/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
+	var/datum/religion/cult/C = religion
+	var/datum/game_mode/cult/cur_mode = C.mode
+	cur_mode.nar_sie_has_risen = TRUE
+	cur_mode.eldergod = TRUE
 
-	needed_aspects = list(
-		ASPECT_DEATH = 1,
-	)
-
-/datum/religion_rites/pedestals/test3
-	name = "Test3"
-	ritual_length = (20 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 0
-
-	rules = list(
-		/obj/item/weapon/card/id/sci = 1,
-		/obj/item/device/pda/science = 2,
-		/obj/structure/altar_of_gods = 2,
-		/obj/structure/pedestal/cult = 2,
-		/obj/structure/cult/forge = 2,
-		/obj/structure/cult/shell = 2,
-		/obj/effect/spacewhole = 2,
-		/obj/structure/cult/tech_table = 2,
-	)
-
-	needed_aspects = list(
-		ASPECT_DEATH = 1,
-	)
-
-/datum/religion_rites/pedestals/test4
-	name = "Test4"
-	ritual_length = (20 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 0
-
-	rules = list(
-		/obj/item/weapon/card/id/sci = 1,
-		/obj/item/device/pda/science = 2,
-		/obj/structure/altar_of_gods = 2,
-		/obj/structure/pedestal/cult = 2,
-		/obj/structure/cult/forge = 2,
-		/obj/structure/cult/shell = 2,
-		/obj/effect/spacewhole = 2,
-		/obj/structure/cult/tech_table = 2,
-		/obj/structure/cult/tome= 2,
-		/obj/structure/bonfire/dynamic = 3,
-	)
-
-	needed_aspects = list(
-		ASPECT_DEATH = 1,
-	)
+	new /obj/singularity/narsie/large(get_turf(AOG))
+	return TRUE

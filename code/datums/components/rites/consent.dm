@@ -27,12 +27,9 @@
 	if(!victim)
 		return
 
-	if(!victim.IsAdvancedToolUser())
+	if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
 		consent = TRUE
-	else
-		if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
-			consent = TRUE
-			to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")
+		to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")
 
 // Checks for a victim
 /datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/structure/altar_of_gods/AOG)

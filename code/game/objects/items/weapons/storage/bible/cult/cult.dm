@@ -85,7 +85,7 @@
 			else if(isturf(target))
 				var/turf/T = target
 				var/type_new_turf = /turf/simulated/floor/plating
-				if(istype(get_area(src), /area/custom/cult))
+				if(istype(get_area(src), religion.area_type))
 					type_new_turf = T.basetype
 				T.ChangeTurf(type_new_turf)
 
@@ -142,11 +142,10 @@
 		toggle_deconstruct = !toggle_deconstruct
 		to_chat(user, "<span class='notice'>Режим разрушения структур [toggle_deconstruct ? "включён" : "выключен"].</span>")
 		return
-
-	else
+	else if(ispath(choice.building_type, /obj/structure/altar_of_gods))
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
-			if(get_dist(targeted_turf, get_turf(altar)) >= 30)
+			if(get_dist(targeted_turf, get_turf(altar)) <= 70)
 				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
 				return
 
@@ -156,6 +155,9 @@
 	var/turf/targeted_turf = get_step(src, user.dir)
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
+	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult))
+		var/obj/structure/altar_of_gods/cult/altar = new(targeted_turf)
+		altar.setup_altar(religion)
 	else
 		new choice.building_type(targeted_turf)
 

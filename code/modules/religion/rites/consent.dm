@@ -47,9 +47,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
-		return FALSE
+	..()
 
 	if(convert_god(AOG))
 		return TRUE
@@ -100,9 +98,7 @@
 	)
 
 /datum/religion_rites/standing/consent/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
-		return FALSE
+	..()
 
 	var/mob/living/L = AOG.buckled_mob
 	if(!istype(L))
@@ -173,9 +169,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	. = ..()
-	if(!.)
-		return FALSE
+	..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
 	if(!istype(H))
@@ -198,5 +192,5 @@
 	religion.add_member(H, HOLY_ROLE_PRIEST)
 	H.mutations.Add(CLUMSY)
 	H.mind.assigned_role = "Clown"
-	AOG.sect.on_conversion(H)
+	religion.sect.on_conversion(H)
 	return TRUE

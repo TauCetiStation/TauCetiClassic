@@ -35,4 +35,5 @@
 		user.say(ritual_invocations[current_stage])
 
 /datum/religion_rites/standing/end(mob/living/user, obj/structure/altar_of_gods/AOG)
-	user.say(invoke_msg)
+	if(invoke_msg)
+		user.say(invoke_msg)

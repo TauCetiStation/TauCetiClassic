@@ -252,9 +252,9 @@
 			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if (src in global.cult_religion.members)
+		else if(global.cult_religion.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>."
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -895,26 +895,21 @@
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
-					var/obj/item/weapon/storage/bible/tome/T = new(H)
 					if(global.cult_religion)
-						T.religion = global.cult_religion
+						global.cult_religion.give_tome(H)
+			if("heaven")
+				var/area/A = locate(global.cult_religion.area_type)
+				var/turf/T = get_turf(pick(A.contents))
+				current.forceMove(T)
+			if("cheating_cult")
+				global.cult_religion.favor = 100000
+				global.cult_religion.piety = 100000
+				// All aspects
+				var/list/L = subtypesof(/datum/aspect)
+				for(var/type in L)
+					L[type] = 1
+				global.cult_religion.add_aspects(L)
 
-					var/list/slots = list (
-						"backpack" = SLOT_IN_BACKPACK,
-						"left pocket" = SLOT_L_STORE,
-						"right pocket" = SLOT_R_STORE,
-						"left hand" = SLOT_L_HAND,
-						"right hand" = SLOT_R_HAND,
-					)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
-					else
-						to_chat(H, "A tome, a message from your new master, appears in your [where].")
-
-			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
-					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
 
