@@ -40,7 +40,6 @@
 		////////////
 		//SECURITY//
 		////////////
-	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
@@ -90,6 +89,7 @@
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
 
+
 	///Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
 	///World tick time where client_keysend_amount will reset
@@ -115,3 +115,6 @@
 	var/next_move_dir_add
 	/// On next move, subtract this dir from the move that would otherwise be done
 	var/next_move_dir_sub
+
+	var/list/topiclimiter
+

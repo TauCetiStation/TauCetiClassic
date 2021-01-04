@@ -23,6 +23,6 @@
 	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/hooded/wintercoat(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
