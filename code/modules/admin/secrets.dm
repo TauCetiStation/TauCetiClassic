@@ -58,6 +58,7 @@
 					<h4>Coder Secrets</h4>
 					<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 					<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+					<A href='?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
 					"}
 
 		if(1) // IC Events
@@ -735,6 +736,17 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("topicspam")
+			var/count = config.minutetopiclimit * 2
+			if(alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,"Yes","No") == "Yes")
+				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
+				usr.client.holder.disassociate()
+				message_admins("[key_name_admin(usr)] started topic spam.")
+				for(var/i in 1 to count)
+					sleep(1)
+					usr.client.Topic("spam=[i]", list())
+				usr.client.deadmin_holder.reassociate()
+				to_chat(usr, "<span class='interface'>You again have the keys to control the planet, or at least a small space station.</span>")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
 
