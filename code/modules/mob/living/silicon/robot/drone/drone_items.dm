@@ -33,7 +33,7 @@
 
 
 /obj/item/weapon/gripper/atom_init()
-	..()
+	. = ..()
 	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
 	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
 	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
