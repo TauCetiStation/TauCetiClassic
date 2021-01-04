@@ -304,7 +304,7 @@
 	icon_state = "mist"
 	layer = MOB_LAYER + 1
 	anchored = 1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/machinery/shower/attack_hand(mob/user)
 	. = ..()

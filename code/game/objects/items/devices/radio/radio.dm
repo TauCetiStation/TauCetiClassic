@@ -220,7 +220,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		/* Quick introduction:
 			This new radio system uses a very robust FTL signaling technology unoriginally
-			dubbed "subspace" which is somewhat similar to 'blue-space' but can't
+			dubbed "subspace" which is somewhat similar to 'bluespace' but can't
 			actually transmit large mass. Headsets are the only radio devices capable
 			of sending subspace transmissions to the Communications Satellite.
 
@@ -511,7 +511,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a_span = "deptradio"
 
 			var/part_a = "<span class='[part_a_span]'><span class='name'>"
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)

@@ -6,7 +6,7 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
-	required_players_secret = 20
+	required_players_bundles = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_REV
@@ -325,7 +325,7 @@
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
