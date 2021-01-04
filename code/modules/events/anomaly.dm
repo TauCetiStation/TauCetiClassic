@@ -3,6 +3,10 @@
 	var/obj/effect/anomaly/newAnomaly
 	announceWhen = 1
 
+/datum/event/anomaly/announce()
+	if(announcement)
+		announcement.play(impact_area)
+
 /datum/event/anomaly/setup()
 	impact_area = findEventArea()
 	if(!impact_area)
