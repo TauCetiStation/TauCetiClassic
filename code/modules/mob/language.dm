@@ -34,6 +34,9 @@
 	var/input_size = length_char(input)
 	var/scrambled_text = ""
 
+	if(input_size > 20)
+		input_size = 20	//limitation on abracadabra
+
 	for(var/i in 1 to input_size)
 		scrambled_text += pick(syllables)
 
@@ -207,6 +210,14 @@
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
 
+/datum/language/xenomorph
+	name = "Xenomorph language"
+	desc = "Xenomorph language."
+	speech_verb = "hisses"
+	ask_verb = "hisses"
+	exclaim_verb = "hisses"
+	colour = "alien"
+	syllables = list("сс","хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
 
 // Language handling.
 /mob/proc/add_language(language)
