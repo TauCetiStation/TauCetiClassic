@@ -7543,8 +7543,11 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/drone_fabrication)
 "bye" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -9030,6 +9033,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -21877,10 +21884,6 @@
 	},
 /area/station/maintenance/science)
 "fVW" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -24034,8 +24037,10 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/sppodconstr)
 "gGK" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -39287,6 +39292,10 @@
 /obj/structure/dryer{
 	pixel_y = 22
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -43357,6 +43366,10 @@
 /area/space)
 "mMg" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -48342,6 +48355,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -56926,10 +56943,6 @@
 	},
 /area/station/medical/medbreak)
 "rcN" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -70156,10 +70169,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /mob/living/simple_animal/mouse,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "vqj" = (
@@ -119956,7 +119969,7 @@ hDL
 iTm
 pkh
 bap
-gVR
+byc
 iTm
 xEm
 ewU
@@ -125394,7 +125407,7 @@ aXU
 oTt
 dXI
 qpP
-dXI
+gGE
 wqq
 oGl
 lbU
@@ -127142,7 +127155,7 @@ msG
 erP
 kgl
 tCq
-byc
+kgl
 erP
 neq
 oLP
@@ -127401,7 +127414,7 @@ kgl
 uJt
 kgl
 erP
-gGE
+neq
 taq
 neq
 erP
