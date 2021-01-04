@@ -43,7 +43,7 @@
 	icon = 'icons/effects/wallrot.dmi'
 	anchored = TRUE
 	density = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/overlay/wall_rot/atom_init()
 	..()
