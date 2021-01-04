@@ -192,6 +192,7 @@
 				internals.icon_state = "internal0"
 			internal = null
 		update_inv_wear_mask()
+		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
@@ -268,6 +269,7 @@
 				update_hair()
 			W.equipped(src, slot)
 			update_inv_wear_mask()
+			sec_hud_set_security_status()
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed()

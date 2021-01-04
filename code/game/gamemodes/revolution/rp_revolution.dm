@@ -325,7 +325,7 @@
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)

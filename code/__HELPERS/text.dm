@@ -37,7 +37,7 @@
 		// You should always consider this with any text processing work
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
-		input = stip_non_ascii(input)
+		input = strip_non_ascii(input)
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
@@ -249,7 +249,7 @@
 		M += capitalize(w)
 	return jointext(M, " ")
 
-/proc/stip_non_ascii(text)
+/proc/strip_non_ascii(text)
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
