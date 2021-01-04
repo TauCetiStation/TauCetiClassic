@@ -356,17 +356,15 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
 		
-	if(check_input)
-		to_chat(src, "<span class='warning'>NO SPAM ALLOWED!</span>")
-		if(!input)
-			check_input = FALSE
-		return
-	else if(message_cooldown)
+	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	else
-		check_input = TRUE
-		input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+
+	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+		
+	if(message_cooldown)
+		to_chat(src, "Please allow one minute to pass between announcements.")
+		return
 	
 	if(!input)
 		return
@@ -375,7 +373,6 @@ var/list/ai_verbs_default = list(
 		return
 
 	captain_announce(input, "A.I. Announcement", src.name, "aiannounce")
-	check_input = FALSE
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
