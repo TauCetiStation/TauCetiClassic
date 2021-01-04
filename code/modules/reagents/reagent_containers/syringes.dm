@@ -292,6 +292,8 @@
 	return attack_hand()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!target.reagents) return
 
 	switch(mode)

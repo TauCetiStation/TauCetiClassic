@@ -1,4 +1,6 @@
 /datum/event/wallrot
+	announcement = new /datum/announcement/centcomm/fungi
+
 	var/turf/simulated/wall/center = null
 
 /datum/event/wallrot/setup()
@@ -7,7 +9,7 @@
 
 /datum/event/wallrot/announce()
 	if(center)
-		command_alert("Harmful fungi detected on station. Station structures may be contaminated.", "Biohazard Alert", "fungi")
+		announcement.play()
 
 /datum/event/wallrot/start()
 	// 100 attempts
