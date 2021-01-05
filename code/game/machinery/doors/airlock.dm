@@ -1090,9 +1090,11 @@ var/list/airlock_overlays = list()
 				M.SetWeakened(5)
 
 			var/turf/mob_turf = get_turf(M)
+			if(M.buckled)
+				M.buckled.unbuckle_mob()
 			for(var/dir in cardinal)
 				var/turf/new_turf = get_step(mob_turf, dir)
-				if(M.forceMove(new_turf))
+				if(M.Move(new_turf))
 					break
 
 			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
