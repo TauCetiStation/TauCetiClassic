@@ -20,23 +20,31 @@
 	light_range = 6
 	pass_flags = PASSTABLE
 
-/obj/structure/cult/torture_table
+// For operations
+/obj/machinery/optable/torture_table
 	name = "torture table"
 	desc = "For tortures"
-	icon_state = "torture_table"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "table2-idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
-	climbable = TRUE
 
 	var/image/belt
 	var/belt_icon = 'icons/obj/cult.dmi'
 	var/belt_icon_state = "torture_restraints"
 
-/obj/structure/cult/torture_table/atom_init()
+/obj/machinery/optable/torture_table/atom_init()
 	. = ..()
 	belt = image(belt_icon, belt_icon_state, layer = FLY_LAYER)
 
-/obj/structure/cult/torture_table/buckle_mob(mob/living/M, mob/user)
+/obj/machinery/optable/torture_table/MouseDrop_T(atom/A, mob/user)
+	if(A in loc)
+		if(can_buckle && !buckled_mob)
+			user_buckle_mob(A, user)
+	else
+		return ..()
+
+/obj/machinery/optable/torture_table/buckle_mob(mob/living/M, mob/user)
 	..()
 	if(M.pixel_x != 0)
 		M.pixel_x = 0
@@ -46,18 +54,16 @@
 		M.dir = SOUTH
 	add_overlay(belt)
 
-/obj/structure/cult/torture_table/unbuckle_mob(mob/user)
+/obj/machinery/optable/torture_table/unbuckle_mob(mob/user)
 	..()
 	cut_overlay(belt)
 
-/obj/structure/cult/torture_table/correct_pixel_shift(mob/living/carbon/C)
-	return
-
-/obj/structure/cult/torture_table/attack_hand(mob/living/user)
+/obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)
 		user.resist()
 	else
-		..()
+		if(can_buckle && buckled_mob && istype(user))
+			user_unbuckle_mob(user)
 
 /obj/structure/mineral_door/cult
 	name = "door"

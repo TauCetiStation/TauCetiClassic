@@ -40,6 +40,12 @@
 
 /obj/effect/rune/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/weapon/storage/bible/tome) && iscultist(user))
+		// return favors
+		for(var/datum/building_agent/rune/cult/C in religion.available_runes)
+			if(C.building_type == power?.type)
+				religion.adjust_favor(C.deconstruct_favor_cost)
+				religion.adjust_favor(C.deconstruct_piety_cost)
+				break
 		to_chat(user, "<span class='cult'>Вы заставляете руну исчезнуть.</span>")
 		qdel(src)
 	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)

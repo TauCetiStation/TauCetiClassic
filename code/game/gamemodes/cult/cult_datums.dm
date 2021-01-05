@@ -21,10 +21,16 @@
 	if(global.cult_religion)
 		religion = global.cult_religion
 
+/datum/rune/proc/can_action(mob/living/carbon/user)
+	return TRUE
+
 /datum/rune/proc/action(mob/living/carbon/user)
 	return
 
 /datum/rune/proc/action_wrapper(mob/living/carbon/user)
+	if(!can_action(user))
+		return
+
 	action(user)
 	if(religion.disposable_rune)
 		qdel(holder)
@@ -123,18 +129,24 @@
 	already_use = FALSE
 	return ..()
 
-/datum/rune/cult/capture_area/action(mob/living/carbon/user)
+/datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/area/area = get_area(user)
 	if(religion == area.religion)
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
-		return
+		return FALSE
+
 	if(first_area_captured)
 		if(!istype(religion, area.religion?.type))
 			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
-			return
+			return FALSE
+
 	else if(already_use)
 		to_chat(user, "<span class='warning'>Вы уже захватываете одну зону.</span>")
-		return
+		return FALSE
+
+	return TRUE
+
+/datum/rune/cult/capture_area/action(mob/living/carbon/user)
 	already_use = TRUE
 	var/area/A = get_area(holder)
 	var/datum/announcement/station/cult/capture_area/announce = new

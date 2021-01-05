@@ -88,25 +88,26 @@
 	// Type of effect of rune
 	// Apply to the rune after creating the rune
 	var/datum/rune/rune_type
+	// Deconstruct costs is how much will be returned, not disappear
 
 /datum/building_agent/rune/cult
 	building_type = /obj/effect/rune
+
+/datum/building_agent/rune/cult/New()
+	deconstruct_favor_cost = favor_cost * 0.5
+	deconstruct_piety_cost = piety_cost * 0.5
 
 /datum/building_agent/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
 	rune_type = /datum/rune/cult/teleport_to_heaven
 	favor_cost = 100
-	deconstruct_favor_cost = 50
 	piety_cost = 10
-	deconstruct_piety_cost = 1
 
 /datum/building_agent/rune/cult/capture_area
 	name = "Capture a area"
 	rune_type = /datum/rune/cult/capture_area
 	favor_cost = 100
-	deconstruct_favor_cost = 50
 	piety_cost = 10
-	deconstruct_piety_cost = 1
 
 // For tech_table
 /datum/building_agent/tech

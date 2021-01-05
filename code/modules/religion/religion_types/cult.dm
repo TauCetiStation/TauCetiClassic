@@ -106,7 +106,7 @@
 			next_spook = world.time + 5 MINUTES
 			return
 		var/mob/living/carbon/human/H = pick(humans_in_heaven)
-		if(H.mind?.holy_role && prob(20))
+		if(H.mind?.holy_role && prob(80))
 			return
 
 		if(prob(20)) // sound
@@ -118,9 +118,11 @@
 
 		else if(prob(20)) // receive damage
 			H.take_overall_damage(rand(-3, clamp(world.time**(1/3), 1, 30)), rand(-3, clamp(world.time**(1/3), 1, 30)), used_weapon = "Plasma ions") // Its science, baby
+			log_game("[H] attacked by Cult Heaven")
 
 		else if(prob(15)) // Heal
 			H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
+			log_game("[H] healed by Cult Heaven")
 
 		else if(prob(5)) // temp alt_apperance of humans or item
 			if(prob(50))

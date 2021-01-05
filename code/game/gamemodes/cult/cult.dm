@@ -236,7 +236,6 @@
 	return TRUE
 
 /datum/game_mode/cult/proc/check_capture()
-	var/list/areas = get_areas(/area/station/)
 	if(religion.captured_areas.len >= need_capture)
 		return TRUE
 	return FALSE

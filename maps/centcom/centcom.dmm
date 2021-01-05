@@ -23016,7 +23016,7 @@
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
 "pGu" = (
-/obj/structure/cult/torture_table,
+/obj/machinery/optable/torture_table,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "pHb" = (
