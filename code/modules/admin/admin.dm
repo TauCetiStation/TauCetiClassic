@@ -1037,7 +1037,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		if (SSticker.mode.config_tag == "revolution")
 			return 2
 		return 1
-	if(global.cult_religion.is_member(M))
+	if(global.cult_religion?.is_member(M))
 		if (SSticker.mode.config_tag == "cult")
 			return 2
 		return 1

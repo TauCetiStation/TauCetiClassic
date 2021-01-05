@@ -24,7 +24,7 @@
 /obj/machinery/optable/torture_table
 	name = "torture table"
 	desc = "For tortures"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "table2-idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE

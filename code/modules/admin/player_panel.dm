@@ -576,7 +576,7 @@
 		if(SSticker.mode.ninjas.len)
 			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
 
-		if(global.cult_religion.members.len)
+		if(global.cult_religion?.members.len)
 			dat += check_role_table("Cultists", global.cult_religion.members, src, 0)
 
 		if(SSticker.mode.traitors.len)
