@@ -503,7 +503,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	var/recharge_time = 16
-	var/already_improved = FALSE
 	var/overheat = FALSE
 	var/recharge_timerid = null
 	var/max_mod_capacity = 100
@@ -513,9 +512,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	..()
 	if(max_mod_capacity)
 		to_chat(user, "<span class='notice'><b>[get_remaining_mod_capacity()] %</b> mod capacity remaining.</span>")
-		for(var/A in get_modkits())
-			var/obj/item/kinetic_upgrade/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+		for(var/obj/item/kinetic_upgrade/KU in modkits)
+			to_chat(user, "<span class='notice'>There is \a [KU] installed, using <b>[KU.cost]%</b> capacity.</span>")
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
@@ -548,7 +546,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			return
 	if(istype(I, /obj/item/kinetic_upgrade))
 		var/obj/item/kinetic_upgrade/KU = I
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		KU.install(src, user)
 	else
 		return ..()
@@ -585,21 +582,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
-	for(var/A in get_modkits())
-		var/obj/item/kinetic_upgrade/KU = A
+	for(var/obj/item/kinetic_upgrade/KU in modkits)
 		current_capacity_used += KU.cost
 	return max_mod_capacity - current_capacity_used
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/get_modkits()
-	. = list()
-	for(var/A in modkits)
-		. += A
-
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/modify_projectile(obj/item/projectile/kinetic/K)
 	K.kinetic_gun = src //do something special on-hit, easy!
-	for(var/A in get_modkits())
-		var/obj/item/kinetic_upgrade/M = A
-		M.modify_projectile(K)
+	for(var/obj/item/kinetic_upgrade/KU in modkits)
+		KU.modify_projectile(K)
 
 //Projectiles
 #define PRESSURE_DECREASE 0.25
@@ -659,9 +649,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(!target_turf)
 		target_turf = get_turf(src)
 	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
-		var/list/mods = kinetic_gun.get_modkits()
-		for(var/obj/item/kinetic_upgrade/M in mods)
-			M.projectile_strike(src, target_turf, target, kinetic_gun)
+		for(var/obj/item/kinetic_upgrade/KU in kinetic_gun.modkits)
+			KU.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
@@ -714,12 +703,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
 	if(denied_type)
 		var/number_of_denied = 0
-		for(var/A in KA.get_modkits())
-			var/obj/item/kinetic_upgrade/M = A
-			if(istype(M, denied_type))
+		for(var/obj/item/kinetic_upgrade/KU in KA.modkits)
+			if(istype(KU, denied_type))
 				number_of_denied++
 			if(number_of_denied >= maximum_of_type)
-				to_chat(user, "<span class='notice'>You can only insert [maximum_of_type] of the [M] to [KA].</span>")
+				to_chat(user, "<span class='notice'>You can only insert [maximum_of_type] of the [KU] to [KA].</span>")
 				return FALSE
 	if(KA.get_remaining_mod_capacity() >= cost)
 		user.drop_from_inventory(src)
