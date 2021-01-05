@@ -216,9 +216,7 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
 		adjustOxyLoss(health - config.health_threshold_dead)
-		updatehealth()
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
