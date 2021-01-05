@@ -518,6 +518,10 @@ Implants;
 		count++
 	return text
 
+// Should return additional statistics for the gamemode
+/datum/game_mode/proc/modestat()
+	return
+
 //Used for printing player with there icons in round ending staticstic
 /datum/game_mode/proc/printplayerwithicon(datum/mind/ply)
 	var/text = ""

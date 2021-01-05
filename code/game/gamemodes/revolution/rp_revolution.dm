@@ -215,6 +215,45 @@
 	..()
 	return 1
 
+/datum/game_mode/rp_revolution/modestat()
+	var/dat = ""
+	var/foecount = 0
+	var/comcount = 0
+	var/revcount = 0
+	var/loycount = 0
+	var/datum/game_mode/rp_revolution/GM = SSticker.mode
+	for(var/datum/mind/M in GM.head_revolutionaries)
+		if (M.current && M.current.stat != DEAD) foecount++
+	for(var/datum/mind/M in GM.revolutionaries)
+		if (M.current && M.current.stat != DEAD) revcount++
+	for(var/mob/living/carbon/human/player in human_list)
+		if(player.mind)
+			var/role = player.mind.assigned_role
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
+				if (player.stat != DEAD)
+					comcount++
+			else
+				if(player.mind in GM.revolutionaries)
+					continue
+				loycount++
+	for(var/mob/living/silicon/X in silicon_list)
+		if(X.stat == DEAD)
+			continue
+		loycount++
+	var/revpenalty = 10000
+	dat += {"<B><U>MODE STATS</U></B><BR>
+	<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
+	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
+	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
+	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
+	<B>Revolution Heads Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+	<B>Revolution Heads Slain:</B> [score["opkilled"]] ([score["opkilled"] * 500] Points)<BR>
+	<B>Command Staff Slain:</B> [score["deadcommand"]] (-[score["deadcommand"] * 500] Points)<BR>
+	<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
+	<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
+	<HR>"}
+	return dat
+
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
 	set category = "IC"

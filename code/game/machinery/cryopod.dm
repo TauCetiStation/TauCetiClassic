@@ -198,6 +198,11 @@ var/global/list/frozen_items = list()
 								O.owner.objectives -= O
 								qdel(O)
 
+			if(istype(SSticker.mode, /datum/game_mode/cult))
+				var/datum/game_mode/cult/mode = SSticker.mode
+				if(occupant.mind == mode.sacrifice_target)
+					mode.find_sacrifice_target()
+
 			//Handle job slot/tater cleanup.
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role

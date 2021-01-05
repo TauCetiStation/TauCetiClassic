@@ -61,11 +61,6 @@
 			var/object = pick_n_take(possibles_objectives)
 			objectives += object
 
-			if(object == SUMMON_GOD)
-				possibles_objectives -= PIETY
-			else if(object == PIETY)
-				possibles_objectives -= SUMMON_GOD
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -90,17 +85,7 @@
 	for(var/obj in objectives)
 		switch(obj)
 			if(SACRIFICE)
-				var/list/possible_targets = get_unconvertables()
-				listclearnulls(possible_targets)
-
-				if(!possible_targets.len)
-					for(var/mob/living/carbon/human/player in player_list)
-						if(player.mind && !(player.mind in started_cultists))
-							possible_targets += player.mind
-				listclearnulls(possible_targets)
-
-				if(possible_targets.len)
-					sacrifice_target = pick(possible_targets)
+				find_sacrifice_target()
 
 			if(RECRUIT)
 				acolytes_needed = max(4, round(player_list.len * 0.1))
@@ -188,19 +173,17 @@
 	if(ishuman(mind.current))
 		if(mind.assigned_role == "Captain")
 			return FALSE
-		if(istype(mind.current.my_religion, /datum/religion/chaplain))
+		if(mind.current.my_religion)
 			return FALSE
 		if(mind.current.get_species() == GOLEM)
 			return FALSE
 	if(ismindshielded(mind.current) || isloyal(mind.current))
 		return FALSE
-	if(isrobot(mind.current))
-		return FALSE
 	return TRUE
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in human_list)
+	for(var/mob/living/carbon/human/player in player_list)
 		if(!is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
@@ -239,6 +222,12 @@
 	if(religion.captured_areas.len >= need_capture)
 		return TRUE
 	return FALSE
+
+/datum/game_mode/cult/proc/find_sacrifice_target()
+	var/list/possible_targets = get_unconvertables()
+
+	if(possible_targets.len)
+		sacrifice_target = pick(possible_targets)
 
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
@@ -310,6 +299,18 @@
 	completion_text += text
 	..()
 	return TRUE
+
+/datum/game_mode/cult/modestat()
+	var/dat = ""
+
+	dat += {"<B><U>MODE STATS</U></B><BR>
+	<B>Members of Cult:</B> [religion.members.len]<BR>
+	<B>Captured areas:</B> [religion.captured_areas.len]<BR>
+	<B>Accumulated Favor/Piety:</B> [religion.favor]/[religion.piety]<BR><BR>
+	<B>Runes on the map:</B> [religion.runes.len]<BR>
+	<HR>"}
+
+	return dat
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
