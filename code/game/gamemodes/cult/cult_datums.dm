@@ -32,10 +32,10 @@
 		return
 
 	action(user)
-	if(religion.disposable_rune)
-		qdel(holder)
 	fizzle(user)
 	holder_reaction(user)
+	if(religion.disposable_rune)
+		qdel(holder)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
@@ -177,6 +177,41 @@
 	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf)
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
+
+/datum/rune/cult/portal_beacon
+	name = "Beacon of Cult Portal"
+	words = list("travel", "hell", "technology")
+
+// Work only for rite
+/datum/rune/cult/portal_beacon/can_action(mob/living/carbon/user)
+	return FALSE
+
+/datum/rune/cult/look_to_future
+	name = "Look to future"
+	words = list("see", "hell", "self")
+
+/datum/rune/cult/look_to_future/can_action(mob/living/carbon/user)
+	var/mob/living/carbon/human/H = locate() in holder.loc
+	if(!H)
+		to_chat(user, "<span class='warning'>На руне должен быть человек.</span>")
+		return FALSE
+	return TRUE
+
+/datum/rune/cult/look_to_future/action(mob/living/carbon/user)
+	var/mob/living/carbon/human/H = locate() in holder.loc
+	for(var/atom/A in range(3))
+		if(istype(A, /turf/simulated/wall))
+			if(religion.wall_types)
+				var/atom/type = pick(religion.wall_types)
+				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall", I, H)
+		else if(istype(A, /turf/simulated/floor))
+			if(religion.floor_types)
+				var/atom/type = pick(religion.floor_types)
+				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor", I, H)
+		else if(religion.door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
+			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door", null, H, pick(religion.door_types), A)
 
 /datum/rune/cult/teleport
 	words = list("travel", "self", "see")

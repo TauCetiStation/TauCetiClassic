@@ -40,6 +40,7 @@ var/list/score=list(
 	"opkilled"       = 0, // used during nuke mode, how many operatives died?
 	"disc"           = 0, // is the disc safe and secure?
 	"nuked"          = 0, // was the station blown into little bits?
+	"destranomaly"   = 0, // anomaly of cult
 
 	//crew
 	"crew_escaped"   = 0,      // how many people got out alive?

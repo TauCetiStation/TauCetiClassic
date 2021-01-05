@@ -109,6 +109,18 @@
 	favor_cost = 100
 	piety_cost = 10
 
+/datum/building_agent/rune/cult/portal_beacon
+	name = "Beacon of Cult Portal"
+	rune_type = /datum/rune/cult/portal_beacon
+	favor_cost = 100
+	piety_cost = 10
+
+/datum/building_agent/rune/cult/look_to_future
+	name = "Back to the Future"
+	rune_type = /datum/rune/cult/look_to_future
+	favor_cost = 100
+	piety_cost = 10
+
 // For tech_table
 /datum/building_agent/tech
 	var/icon

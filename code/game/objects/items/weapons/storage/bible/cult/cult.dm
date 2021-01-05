@@ -62,6 +62,8 @@
 		religion.adjust_favor(rand(1, 5))
 		qdel(target)
 		destr_next[user.ckey] = world.time + destr_cd
+		// statistics!
+		score["destranomaly"]++
 		return
 
 	if(!toggle_deconstruct)

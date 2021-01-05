@@ -97,7 +97,7 @@
 	var/list/binding_rites = list()
 
 	// All runes on map
-	var/list/runes = list()
+	var/list/obj/effect/rune/runes = list()
 	// Is the rune removed after use
 	var/disposable_rune = TRUE
 
@@ -480,7 +480,8 @@
 	for(var/rite_type in global.rites_by_aspects[asp.name])
 		var/datum/religion_rites/RR = new rite_type
 
-		if(rites_by_name[RR.name])
+		if(rites_by_name[RR.name] || (RR.religion_type && !istype(src, RR.religion_type)))
+			QDEL_NULL(RR)
 			continue
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))

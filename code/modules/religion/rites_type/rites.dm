@@ -10,6 +10,8 @@
 	var/desc = "immm gonna rooon"
 	/// Rite of this religion
 	var/datum/religion/religion
+	// Ritе only for a certain religion
+	var/religion_type
 	/// Just unique tip when examine altar
 	var/list/tips = list()
 	/// Length it takes to complete the ritual
@@ -45,6 +47,10 @@
 /datum/religion_rites/proc/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
 
+// Called before start()
+/datum/religion_rites/proc/pre_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	return
+
 // The main proc. It allows you to move from one step to the next
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	return TRUE
@@ -71,15 +77,12 @@
 
 /datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)
-		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE
 
 	if(!religion.check_costs(favor_cost, user = user))
-		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE
 
 	if(!can_start(user, AOG))
-		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You begin performing the rite of [name]...</span>")
@@ -117,8 +120,8 @@
 
 /datum/religion_rites/proc/end_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
 	end(user, AOG)
-	religion.adjust_favor(-favor_cost)
-	invoke_effect(user, AOG)
+	if(invoke_effect(user, AOG))
+		religion.adjust_favor(-favor_cost)
 	reset_rite_wrapper(src, user, AOG)
 
 /datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -138,7 +141,9 @@
 		return FALSE
 
 	if(!can_start_wrapper(user, AOG))
+		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE
 
+	pre_start(user, AOG)
 	start(user, AOG)
 	return TRUE

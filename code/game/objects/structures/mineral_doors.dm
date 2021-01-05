@@ -74,6 +74,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_opening", src)
+	change_alt_apperance("_opening")
 	sleep(10)
 	density = FALSE
 	set_opacity(FALSE)
@@ -86,6 +87,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_closing", src)
+	change_alt_apperance("_closing")
 	sleep(10)
 	density = TRUE
 	set_opacity(TRUE)
@@ -97,8 +99,18 @@
 /obj/structure/mineral_door/update_icon()
 	if(close_state)
 		icon_state = initial(icon_state)
+		change_alt_apperance("")
 	else
 		icon_state = "[initial(icon_state)]_open"
+		change_alt_apperance("_open")
+
+/obj/structure/mineral_door/proc/change_alt_apperance(icon_state_postfix)
+	if(alternate_appearances)
+		for(var/name in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[name]
+			if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj/structure/mineral_door))
+				continue
+			AA.theImage.icon_state = "[initial(AA.alternate_obj.icon_state)][icon_state_postfix]"
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))

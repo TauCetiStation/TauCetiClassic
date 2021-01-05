@@ -282,10 +282,10 @@
 							feedback_add_details("cult_objective","cult_narsie|FAIL")
 					if(CAPTURE)
 						if(check_capture())
-							explanation = "Захватите не менее [need_capture]% станции. <span style='color: green; font-weight: bold;'>Успех!</span>"
+							explanation = "Захватите не менее [need_capture] отсеков станции. <span style='color: green; font-weight: bold;'>Успех!</span>"
 							feedback_add_details("cult_objective","cult_capture|SUCCESS")
 						else
-							explanation = "Захватите не менее [need_capture]% станции. <span style='color: red; font-weight: bold;'>Провал.</span>"
+							explanation = "Захватите не менее [need_capture] отсеков станции. <span style='color: red; font-weight: bold;'>Провал.</span>"
 							feedback_add_details("cult_objective","cult_capture|FAIL")
 					if(PIETY)
 						if(religion.piety >= piety_needed)
@@ -306,8 +306,9 @@
 	dat += {"<B><U>MODE STATS</U></B><BR>
 	<B>Members of Cult:</B> [religion.members.len]<BR>
 	<B>Captured areas:</B> [religion.captured_areas.len]<BR>
-	<B>Accumulated Favor/Piety:</B> [religion.favor]/[religion.piety]<BR><BR>
+	<B>Accumulated Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Runes on the map:</B> [religion.runes.len]<BR>
+	<B>Anomaly destroyed:</B> [score["destranomaly"]]<BR>
 	<HR>"}
 
 	return dat

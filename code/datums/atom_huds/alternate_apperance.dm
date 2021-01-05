@@ -89,11 +89,7 @@ var/global/list/active_alternate_appearances = list()
 		target = I.loc
 	else
 		target = loc
-		theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
-		//This is necessary so that sprites are not layered
-		theImage.override = TRUE
-		theImage.pixel_x = alternate_obj.pixel_x
-		theImage.pixel_y = alternate_obj.pixel_y
+		update_image()
 
 	theImage.layer = target.layer
 	theImage.layer = target.layer
@@ -134,6 +130,17 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
 		theImage.copy_overlays(other, cut_old)
+
+/datum/atom_hud/alternate_appearance/basic/proc/update_image()
+	if(!alternate_obj)
+		return
+
+	qdel(theImage)
+	theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
+	//This is necessary so that sprites are not layered
+	theImage.override = TRUE
+	theImage.pixel_x = alternate_obj.pixel_x
+	theImage.pixel_y = alternate_obj.pixel_y
 
 // Fake-image can see everyone
 /datum/atom_hud/alternate_appearance/basic/everyone

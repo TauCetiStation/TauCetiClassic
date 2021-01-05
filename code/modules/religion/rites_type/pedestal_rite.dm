@@ -59,15 +59,6 @@
 		to_chat(user, "<span class='warning'>You need more [rules.len - pedestals.len] pedestals.</span>")
 		return FALSE
 
-	var/rules_indx = 1
-	var/for_step = pedestals.len/rules.len
-	for(var/i in 1 to pedestals.len step for_step)
-		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
-		var/obj/structure/pedestal/cult/P = pedestals[i]
-		P.my_rite = src
-		INVOKE_ASYNC(P, /obj/structure/pedestal/cult.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
-		rules_indx += 1
-
 	return TRUE
 
 /datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -84,6 +75,16 @@
 		to_chat(user, "<span class='warning'>All pedestals is faded.</span>")
 		return FALSE
 	return TRUE
+
+/datum/religion_rites/pedestals/pre_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	var/rules_indx = 1
+	var/for_step = pedestals.len/rules.len
+	for(var/i in 1 to pedestals.len step for_step)
+		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
+		var/obj/structure/pedestal/cult/P = pedestals[i]
+		P.my_rite = src
+		INVOKE_ASYNC(P, /obj/structure/pedestal/cult.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
+		rules_indx += 1
 
 /datum/religion_rites/pedestals/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	var/obj/structure/pedestal/cult/P = involved_pedestals[current_stage]
