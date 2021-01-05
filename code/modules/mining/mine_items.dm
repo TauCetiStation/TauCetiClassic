@@ -723,7 +723,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				return FALSE
 	if(KA.get_remaining_mod_capacity() >= cost)
 		user.drop_from_inventory(src)
-		src.forceMove(KA)
+		forceMove(KA)
 		to_chat(user, "<span class='notice'>You install the modkit.</span>")
 		playsound(loc, 'sound/items/screwdriver.ogg', VOL_EFFECTS_MASTER)
 		KA.modkits += src
