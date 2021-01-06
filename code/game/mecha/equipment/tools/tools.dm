@@ -713,7 +713,7 @@
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
 
-/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
 	if(!RD.chassis)
 		stop()
 		RD.set_ready_state(1)
