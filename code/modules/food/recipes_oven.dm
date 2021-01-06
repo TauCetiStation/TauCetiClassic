@@ -187,7 +187,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 
-/datum/recipe/oven/fortunecookie/make_food(obj/container as obj)
+/datum/recipe/oven/fortunecookie/make_food(obj/container)
 	var/obj/item/weapon/paper/paper = locate() in container
 	paper.loc = null //prevent deletion
 	var/obj/item/weapon/reagent_containers/food/snacks/fortunecookie/being_cooked = ..(container)
