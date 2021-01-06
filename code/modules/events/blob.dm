@@ -1,9 +1,7 @@
 /datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
-
-/datum/event/blob/announce()
-	command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak. The station crew isolation protocols are now active.", "Biohazard Alert", "outbreak5")
+	announcement = new /datum/announcement/centcomm/blob/outbreak5
 
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)

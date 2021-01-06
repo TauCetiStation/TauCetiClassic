@@ -64,8 +64,7 @@
 	return
 
 /obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	if(loc != user)
+	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
 		return
