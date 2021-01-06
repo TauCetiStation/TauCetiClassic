@@ -49,23 +49,6 @@
 	M.mode()
 	return TRUE
 
-/datum/keybinding/mob/drop_item
-	hotkey_keys = list("Q")
-	name = "drop_item"
-	full_name = "Drop Item"
-	description = ""
-
-/datum/keybinding/mob/drop_item/down(client/user)
-	if(isrobot(user.mob)) //cyborgs can't drop items
-		return FALSE
-	var/mob/M = user.mob
-	var/obj/item/I = M.get_active_hand()
-	if(!I)
-		to_chat(user, "<span class='warning'>You have nothing to drop in your hand!</span>")
-	else
-		user.mob.drop_item()
-	return TRUE
-
 /datum/keybinding/mob/target_head_cycle
 	hotkey_keys = list("Numpad8")
 	name = "target_head_cycle"

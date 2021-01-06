@@ -32,3 +32,19 @@
 	var/mob/living/L = user.mob
 	L.set_m_intent(L.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
 	return TRUE
+
+/datum/keybinding/living/drop_item
+	hotkey_keys = list("Q")
+	name = "drop_item"
+	full_name = "Drop Item"
+	description = ""
+
+/datum/keybinding/living/drop_item/down(client/user)
+	if(isrobot(user.mob)) //cyborgs can't drop items
+		return FALSE
+	var/mob/living/L = user.mob
+	if(!L.get_active_hand() && !L.drop_combo_element())
+		to_chat(user, "<span class='warning'>You have nothing to drop in your hand!</span>")
+	else
+		L.drop_item()
+	return TRUE
