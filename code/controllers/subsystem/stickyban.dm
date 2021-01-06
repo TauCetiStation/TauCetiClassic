@@ -458,7 +458,7 @@ SUBSYSTEM_DEF(stickyban)
 	var/list/ckeys_list = SSstickyban.get_cached_sticky_banned_ckeys()
 	return ckeys_list ? ckeys_list : sortList(world.GetConfig("ban"))
 
-/proc/get_stickyban_from_ckey(var/ckey)
+/proc/get_stickyban_from_ckey(ckey)
 	// Return list of stickybans for client with by ckey
 	// If nothig found or error return null
 	// Update cache on timer

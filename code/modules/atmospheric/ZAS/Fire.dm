@@ -206,7 +206,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	firelevel = fl
 	SSair.active_hotspots.Add(src)
 
-/obj/fire/proc/fire_color(var/env_temperature)
+/obj/fire/proc/fire_color(env_temperature)
 	var/temperature = max(4000 * sqrt(firelevel / vsc.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 
