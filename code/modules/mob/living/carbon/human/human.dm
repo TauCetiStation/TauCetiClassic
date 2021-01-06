@@ -137,10 +137,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Destroy()
 	human_list -= src
 	if(my_master)
-		my_master.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_master)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_master = null
 	if(my_golem)
-		my_golem.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_golem)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_golem.death()
 	my_golem = null
 	return ..()
