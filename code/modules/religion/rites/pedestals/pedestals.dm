@@ -80,5 +80,6 @@
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
 			new /obj/effect/anomaly/bluespace/cult_portal(R.loc, TRUE)
+			qdel(R)
 			return TRUE
 	return FALSE

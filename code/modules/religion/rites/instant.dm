@@ -3,7 +3,7 @@
 	name = "Sacrifice"
 	desc = "Soul for the ancient gods."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "For my gods!!"
+	invoke_msg = "Для моих богов!!"
 	favor_cost = 50
 
 /datum/religion_rites/instant/sacrifice/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -14,7 +14,7 @@
 	if(S)
 		return TRUE
 	else if(!ishuman(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
+		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
 		return FALSE
 	return TRUE
 
@@ -61,3 +61,37 @@
 		sacrifice_favor  *= 0.5
 
 	return sacrifice_favor
+
+/datum/religion_rites/instant/convert
+	name = "Convert"
+	desc = "The best brainwashing in the galaxy!"
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Служи ему!!!"
+	favor_cost = 100
+
+/datum/religion_rites/instant/convert/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
+
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
+		return FALSE
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(religion.is_member(H) || H.stat == DEAD)
+		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
+		return FALSE
+	else if(!global.cult_religion.mode.is_convertable_to_cult(H.mind))
+		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
+		return FALSE
+	else if(jobban_isbanned(H, ROLE_CULTIST))
+		to_chat(user, "<span class='warning'>Ему не нужно такое тело.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/instant/convert/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+	..()
+	var/datum/religion/cult/cult = religion
+	cult.mode.add_cultist(AOG.buckled_mob.mind)
+	AOG.buckled_mob.mind.special_role = "Cultist"
+	to_chat(AOG.buckled_mob, "<span class='cult'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")

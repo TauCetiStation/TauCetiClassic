@@ -81,17 +81,15 @@
 /datum/rune/cult
 /datum/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
-	var/turf/destination
 	words = list("travel", "self", "hell")
 
 /datum/rune/cult/teleport_to_heaven/action(mob/living/carbon/user)
 	var/area/A = locate(religion.area_type)
 	var/turf/T = get_turf(pick(A.contents))
-	destination = T
 	var/list/companions = holder.handle_teleport_grab(T, usr)
 	user.forceMove(T)
 	user.eject_from_wall(TRUE, companions = companions)
-	if(user && (!destination || locate(/datum/rune/cult) in destination)) // user can gibbed
+	if(user && !(locate(/datum/rune/cult) in T)) // user can gibbed
 		var/obj/effect/rune/R = new(get_turf(user), religion)
 		R.power = new /datum/rune/cult/teleport_from_heaven(R, get_turf(holder))
 		R.icon = get_uristrune_cult(TRUE, R.power.words)
@@ -294,54 +292,6 @@
 			user.visible_message("<span class='userdanger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 				"<span class='cult'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
 				"<span class='userdanger'>You smell ozone.</span>")
-
-/datum/rune/cult/convert
-	words = list("join", "blood", "self")
-	only_rune = TRUE
-	var/in_use = FALSE
-
-/datum/rune/cult/convert/action(mob/living/carbon/user)
-	if(in_use)
-		to_chat(user, "<span class='cult'>This Rune is in use now!</span>")
-		return fizzle(user)
-	for(var/mob/living/carbon/M in get_turf(holder))
-		if(iscultist(M) || M.stat == DEAD)
-			continue
-		user.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
-		M.visible_message("<span class='userdanger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='cult'>AAAAAAHHHH!</span>", \
-			"<span class='userdanger'>You hear an anguished scream.</span>")
-		in_use = TRUE
-		if(alert(M, "Do you wanna to gave your soul to the Geometr?",,"Yes", "No") == "Yes")
-			to_chat(M, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth.\
-				The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
-
-			var/passed = TRUE
-			if(!global.cult_religion.mode.is_convertable_to_cult(M.mind))
-				passed = FALSE
-				to_chat(user, "<span class='cult'The mind of [M] Resists!</span>")
-				to_chat(M, "<span class='userdanger'Your Mind Resists!</span>")
-			else if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate"))
-				passed = FALSE
-				to_chat(user, "<span class='cult'Your god forbade recruitment of [M]!</span>")
-
-			else if(role_available_in_minutes(M, ROLE_CULTIST))
-				passed = FALSE
-				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
-
-			if(passed)
-				SSticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
-				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
-					One above all else. Bring It back.</span>")
-			else
-				to_chat(M, "<span class='userdanger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, \
-					stop it and its minions at all costs.</span>")
-		else
-			to_chat(user, "<span class='userdanger'>Filthy heretic has rejected your gift!</span>")
-		break
-	in_use = FALSE
-	return fizzle(user)
 
 /datum/rune/cult/emp
 	words = list("destroy", "see", "technology")
