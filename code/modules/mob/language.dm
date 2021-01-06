@@ -2,6 +2,8 @@
 	Datum based languages. Easily editable and modular.
 */
 
+#define MESSAGE_LIMIT 20
+
 /datum/language
 	var/name = "an unknown language" // Fluff name of language if any.
 	var/desc = "A language."         // Short description for 'Check Languages'.
@@ -34,8 +36,8 @@
 	var/input_size = length_char(input)
 	var/scrambled_text = ""
 
-	if(input_size > 20)
-		input_size = 20	//limitation on abracadabra
+	if(input_size > MESSAGE_LIMIT)
+		input_size = MESSAGE_LIMIT	//limitation on abracadabra
 
 	for(var/i in 1 to input_size)
 		scrambled_text += pick(syllables)
@@ -217,7 +219,7 @@
 	ask_verb = "hisses"
 	exclaim_verb = "hisses"
 	colour = "alien"
-	syllables = list("сс","хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
+	syllables = list("сс", "хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
 
 // Language handling.
 /mob/proc/add_language(language)
@@ -260,3 +262,5 @@
 	popup.open()
 
 	return
+
+#undef MESSAGE_LIMIT

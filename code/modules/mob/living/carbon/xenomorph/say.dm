@@ -1,8 +1,11 @@
 /mob/living/carbon/xenomorph/say(message)
 
+	if(silent)
+		return
+
 	message = sanitize(message)
 
-	if(!message || silent)
+	if(!message)
 		return
 
 	var/datum/language/xeno_language = all_languages["Xenomorph language"]
@@ -25,9 +28,12 @@
 
 /mob/living/carbon/xenomorph/facehugger/say(message)
 
+	if(silent)
+		return
+
 	message = sanitize(message)
 
-	if(!message || silent)
+	if(!message)
 		return
 
 	if(stat == DEAD)
@@ -53,7 +59,7 @@
 
 	for(var/mob/M in observer_list)
 		if(!M.client)
-			continue //skip monkeys, leavers and new players
+			continue
 		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
 			to_chat(M, tracker + rendered)
