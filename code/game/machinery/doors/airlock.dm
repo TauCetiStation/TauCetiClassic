@@ -700,7 +700,7 @@ var/list/airlock_overlays = list()
 		..()
 
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
+/obj/machinery/door/airlock/Topic(href, href_list, no_window = 0)
 	. = ..(href, href_list)
 	if(!.)
 		return

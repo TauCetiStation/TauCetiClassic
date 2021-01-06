@@ -168,6 +168,7 @@ function run_code_tests {
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
     run_test_fail "no invalid spans" "grep -REnr --include='*.dm' \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" code/"
+    run_test_fail "changed files contains proc argument starting with 'var'" "grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
@@ -215,7 +216,7 @@ function run_configured_tests {
         "LINTING")
             shopt -s globstar
             find_tool_deps
-            run_code_tests 
+            run_code_tests
             run_map_tests
         ;;
         "COMPILE") run_build_tests ;;
@@ -225,7 +226,7 @@ function run_configured_tests {
                 exit 1
             fi
 
-            run_unit_tests 
+            run_unit_tests
         ;;
         *) fail "invalid option for \$TEST: '$TEST'" ;;
     esac
