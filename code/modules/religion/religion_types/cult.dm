@@ -27,6 +27,7 @@
 	binding_rites = list(
 		/datum/religion_rites/pedestals/narsie,
 		/datum/religion_rites/instant/sacrifice,
+		/datum/religion_rites/instant/convert, // maybe not binding,
 	)
 
 	bible_type = /obj/item/weapon/storage/bible/tome

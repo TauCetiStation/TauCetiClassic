@@ -104,7 +104,7 @@
 	piety_cost = 10
 
 /datum/building_agent/rune/cult/capture_area
-	name = "Capture a area"
+	name = "Capture a Area"
 	rune_type = /datum/rune/cult/capture_area
 	favor_cost = 100
 	piety_cost = 10
@@ -116,10 +116,23 @@
 	piety_cost = 10
 
 /datum/building_agent/rune/cult/look_to_future
-	name = "Back to the Future"
+	name = "Back to The Future"
 	rune_type = /datum/rune/cult/look_to_future
 	favor_cost = 100
 	piety_cost = 10
+
+/datum/building_agent/rune/cult/teleport
+	name = "Teleport"
+	rune_type = /datum/rune/cult/teleport
+	favor_cost = 100
+	piety_cost = 10
+
+/datum/building_agent/rune/cult/item_port
+	name = "Item Teleport"
+	rune_type = /datum/rune/cult/item_port
+	favor_cost = 100
+	piety_cost = 10
+
 
 // For tech_table
 /datum/building_agent/tech

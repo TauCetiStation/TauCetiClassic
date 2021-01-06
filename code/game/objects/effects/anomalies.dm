@@ -275,6 +275,10 @@
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/create_shell(mob/slave, type)
 	var/mob/living/simple_animal/construct/C = new type(src.loc)
+
+	if(global.cult_religion)
+		SSticker.mode.add_cultist(C.mind)
+
 	C.key = slave.key
 	var/rand_num = rand(1, 3)
 	for(var/i in 1 to rand_num)

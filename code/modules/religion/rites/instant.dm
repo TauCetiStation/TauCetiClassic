@@ -95,3 +95,4 @@
 	cult.mode.add_cultist(AOG.buckled_mob.mind)
 	AOG.buckled_mob.mind.special_role = "Cultist"
 	to_chat(AOG.buckled_mob, "<span class='cult'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
+	religion.adjust_favor(300)

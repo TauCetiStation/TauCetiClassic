@@ -55,18 +55,7 @@
 		return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
-	if(!istype(power, /datum/rune/cult/teleport) && !istype(power, /datum/rune/cult/item_port))
-		return ..()
-	var/list/allrunes = list()
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, power.type) || R == src)
-			continue
-		var/datum/rune/cult/teleport/T = R.power
-		var/datum/rune/cult/teleport/self = power
-		if(T.id == self.id && !is_centcom_level(R.loc.z))
-			allrunes += R
-	if(length(allrunes) > 0)
-		user.forceMove(get_turf(pick(allrunes)))
+	power.ghost_action(user)
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_INTERACT)

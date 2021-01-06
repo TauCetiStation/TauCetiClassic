@@ -1683,34 +1683,22 @@
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	if(global.cult_religion)
-		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
-		mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Artificer. Вы самый слабый по всем характеристикам вид оболочки, но вы можете строить укрепления, чинить другие оболочки (нажав на них), а так же создавать новые оболочки и камни души.</span>")
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	if(global.cult_religion)
-		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
-		mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Wraith. Несмотря на вашу хрупкость, вы владеете самой большой подвижностью и можете проходить сквозь стены.</span>")
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	if(global.cult_religion)
-		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
-		mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Juggernaut. Ваша подвижность очень ограничена, но вы можете выдержать большое количество повреждений и рвать на куски стены и врагов.</span>")
 
 /mob/living/simple_animal/construct/behemoth/mind_initialize()
 	..()
 	mind.assigned_role = "Behemoth"
-	if(global.cult_religion)
-		global.cult_religion.add_member(src, HOLY_ROLE_PRIEST)
-		mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Behemoth. Вы самая сильная и живучая оболочка, но это не остановит Полкана.</span>")
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()

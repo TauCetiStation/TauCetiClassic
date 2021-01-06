@@ -4,10 +4,10 @@
 	var/name
 	var/obj/effect/rune/holder
 	var/datum/religion/religion
-	var/only_rune = FALSE
 	// Used only for sprite generation
-	// All words ("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 	var/list/words = list()
+
+	var/static/list/all_words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 /datum/rune/New(holder)
 	src.holder = holder
@@ -16,10 +16,8 @@
 	holder = null
 	return ..()
 
-/datum/rune/New(holder)
-	..()
-	if(global.cult_religion)
-		religion = global.cult_religion
+/datum/rune/proc/ghost_action(mob/living/carbon/user)
+	return
 
 /datum/rune/proc/can_action(mob/living/carbon/user)
 	return TRUE
@@ -87,7 +85,9 @@
 	var/area/A = locate(religion.area_type)
 	var/turf/T = get_turf(pick(A.contents))
 	var/list/companions = holder.handle_teleport_grab(T, usr)
+	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 	user.forceMove(T)
+	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
 	user.eject_from_wall(TRUE, companions = companions)
 	if(user && !(locate(/datum/rune/cult) in T)) // user can gibbed
 		var/obj/effect/rune/R = new(get_turf(user), religion)
@@ -115,7 +115,9 @@
 
 /datum/rune/cult/teleport_from_heaven/action(mob/living/carbon/user)
 	holder.handle_teleport_grab(destination, usr)
+	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 	user.forceMove(destination)
+	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
 
 /datum/rune/cult/capture_area
 	name = "Capture area"
@@ -129,11 +131,16 @@
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/area/area = get_area(user)
-	if(religion == area.religion)
+
+	if(is_centcom_level(user.z))
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
-	if(first_area_captured)
+	else if(religion == area.religion)
+		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
+		return FALSE
+
+	else if(first_area_captured)
 		if(!istype(religion, area.religion?.type))
 			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
 			return FALSE
@@ -212,86 +219,73 @@
 			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door", null, H, pick(religion.door_types), A)
 
 /datum/rune/cult/teleport
+	name = "Teleport"
 	words = list("travel", "self", "see")
 	var/id
 
-/datum/rune/cult/teleport/New(holder, id)
-	..()
+/datum/rune/cult/teleport/can_action(mob/living/carbon/user)
 	if(!id)
-		src.id = rand(1, 100000)
-	else
-		src.id = id
+		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
+	return TRUE
 
-/datum/rune/cult/teleport/action(mob/living/carbon/user)
-	var/list/allrunes = list()
+/datum/rune/cult/teleport/proc/get_tp_runes()
+	var/list/runes = list()
 	for(var/obj/effect/rune/R in religion.runes)
 		if(!istype(R.power, type) || R.power == src)
 			continue
 		var/datum/rune/cult/teleport/T = R.power
-		if(T.id == id && !is_centcom_level(R.loc.z))
-			allrunes += R
+		if(T.id == id && (!is_centcom_level(R.loc.z) || istype(get_area(R), religion.type)))
+			runes += R
+	return runes
 
-	var/length = length(allrunes)
-	if(length >= 5)
-		to_chat(user, "<span class='userdanger'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric.</span>")
-		user.take_overall_damage(5, 0)
-		return FALSE
-	else if(length)
-		user.visible_message("<span class='userdanger'>[user] disappears in a flash of red light!</span>", \
-			"<span class='cult'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
-			"<span class='userdanger'>You hear a sickening crunch and sloshing of viscera.</span>")
-		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
-		user.forceMove(get_turf(pick(allrunes)))
-		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+/datum/rune/cult/teleport/action(mob/living/carbon/user)
+	var/list/tp_runes = get_tp_runes()
 
-/datum/rune/cult/item_port
-	words = list("travel", "other", "see")
-	only_rune = TRUE
-	var/id
-
-/datum/rune/cult/item_port/New(holder, id)
-	..()
-	if(!id)
-		src.id = rand(1, 100000)
-	else
-		src.id = id
-
-/datum/rune/cult/item_port/action(mob/living/carbon/user)
-	var/list/allrunes = list()
-	var/list/acolytes = nearest_cultists(1, "Sas[pick("'","`")]so c'arta forbici tarem!")
-	if(length(acolytes) < 3)
-		return fizzle(user)
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type) || R.power == src)
-			continue
-		var/datum/rune/cult/item_port/I = R.power
-		if(!is_centcom_level(R.loc.z) && I.id == id)
-			allrunes += R
-
-	var/length = length(allrunes)
-	if(length >= 5)
-		to_chat(user, "<span class='cult'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric.</span>")
+	if(tp_runes.len >= 5)
+		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
 		user.take_overall_damage(5, 0)
 		return
-	else if(length)
-		var/obj/teleport_holder = pick(allrunes)
-		var/passed = FALSE
-		for(var/obj/O in holder.loc)
-			var/with_mob = FALSE
-			passed = TRUE
-			for(var/mob/living/L in O.contents)
-				with_mob = TRUE
-				break
-			if(!with_mob && !O.anchored && !O.freeze_movement)
-				O.visible_message("<span class='danger'>The [O] suddenly disappears!</span>")
-				O.forceMove(teleport_holder.loc)
-				O.visible_message("<span class='danger'>The [O] suddenly appears!</span>")
-		if(passed)
-			playsound(holder, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
-			playsound(teleport_holder, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
-			user.visible_message("<span class='userdanger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-				"<span class='cult'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-				"<span class='userdanger'>You smell ozone.</span>")
+	if(tp_runes.len)
+		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
+			"<span class='cult'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
+			"<span class='userdanger'>Вы слышите болезненный хруст и хлюпанье внутренностей.</span>")
+		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
+		user.forceMove(get_turf(pick(tp_runes)))
+		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+
+/datum/rune/cult/teleport/ghost_action(mob/living/carbon/user)
+	var/list/tp_runes = get_tp_runes()
+
+	if(tp_runes.len)
+		user.forceMove(get_turf(pick(tp_runes)))
+
+/datum/rune/cult/item_port
+	name = "Teleport item to Altar"
+	words = list("travel", "other", "see")
+
+/datum/rune/cult/item_port/can_action(mob/living/carbon/user)
+	if(!religion.altars.len)
+		to_chat(user, "<span class='warning'>У вас должен быть алтарь.</span>")
+		return FALSE
+	return TRUE
+
+/datum/rune/cult/item_port/action(mob/living/carbon/user)
+	var/obj/structure/altar_of_gods/cult/altar = pick(religion.altars)
+
+	for(var/obj/O in holder.loc)
+		var/with_mob = FALSE
+		for(var/mob/living/L in O.contents)
+			with_mob = TRUE
+			break
+		if(!with_mob && !O.anchored && !O.freeze_movement)
+			O.visible_message("<span class='danger'>[O] внезапно исчезает!</span>")
+			O.forceMove(altar.loc)
+			O.visible_message("<span class='danger'>[O] внезапно появляется!</span>")
+
+	playsound(altar, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
+	user.visible_message("<span class='userdanger'>Вы чувствуете, как воздух движется над руной.</span>", \
+		"<span class='cult'>Вы чувствуете, как воздух целенаправленной куда-то движется от руной.</span>", \
+		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
 /datum/rune/cult/emp
 	words = list("destroy", "see", "technology")
@@ -311,7 +305,6 @@
 
 /datum/rune/cult/drain
 	words = list("travel", "blood", "self")
-	only_rune = TRUE
 
 /mob/living/carbon/proc/drain_dot(loop_value) //recursive proc to Imitate "damage over time" mechanics
 	if(loop_value > 0 && src && stat != DEAD)
@@ -353,7 +346,6 @@
 
 /datum/rune/cult/seer
 	words = list("see", "hell", "join")
-	only_rune = TRUE
 
 /datum/rune/cult/seer/action(mob/living/carbon/human/user)
 	if(!istype(user)) // until only human life proc supporting seer
@@ -377,7 +369,6 @@
 
 /datum/rune/cult/raise
 	words = list("blood", "hell", "join")
-	only_rune = TRUE
 
 /datum/rune/cult/raise/action(mob/living/carbon/user)
 	var/mob/living/carbon/human/corpse_to_raise
@@ -447,7 +438,6 @@
 
 /datum/rune/cult/ajourney
 	words = list("hell", "travel", "self")
-	only_rune = TRUE
 	var/mob/living/ajourned
 	var/mob/dead/observer/ghost
 	var/cooldown = 0
@@ -504,7 +494,6 @@
 
 /datum/rune/cult/manifest
 	words = list("blood", "see", "travel")
-	only_rune = TRUE
 	var/mob/living/guider
 	var/list/dummies = list()
 
@@ -590,7 +579,6 @@
 
 /datum/rune/cult/wall
 	words = list("destroy", "travel", "self")
-	only_rune = TRUE
 
 /datum/rune/cult/wall/action(mob/living/carbon/user)
 	user.say("Khari[pick("'","`")]d! Eske'te tannin!")
@@ -604,7 +592,7 @@
 
 /datum/rune/cult/freedom
 	words = list("technology", "travel", "other")
-	only_rune = TRUE
+
 
 /datum/rune/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
@@ -658,7 +646,7 @@
 
 /datum/rune/cult/summon
 	words = list("join", "other", "self")
-	only_rune = TRUE
+
 
 /datum/rune/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
@@ -732,7 +720,7 @@
 
 /datum/rune/cult/bloodboil
 	words = list("destroy", "blood", "see")
-	only_rune = TRUE
+
 
 /datum/rune/cult/bloodboil/action(mob/living/carbon/user)
 	var/list/acolytes = nearest_cultists(1, "Dedo ol[pick("'","`")]btoh!")
@@ -794,7 +782,7 @@
 
 /datum/rune/cult/brainswap
 	words = list("travel", "blood", "other")
-	only_rune = TRUE
+
 	var/brainswapping = FALSE
 
 /datum/rune/cult/brainswap/action(mob/living/carbon/user)

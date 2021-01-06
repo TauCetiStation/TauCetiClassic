@@ -120,9 +120,15 @@
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
 		return
 
+	var/mob/living/L = user
+	L.take_overall_damage((rand(9) + 1) / 10)
+
 	var/obj/effect/rune/R = new choice.building_type(get_turf(user), religion)
 	R.icon = rune_choices_image[choice]
 	R.power = new choice.rune_type(R)
+	R.power.religion = religion
+	R.blood_DNA = list()
+	R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 	religion.adjust_favor(-choice.favor_cost)
 	religion.adjust_piety(-choice.piety_cost)
