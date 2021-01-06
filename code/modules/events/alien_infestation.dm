@@ -4,6 +4,8 @@
 	var/spawncount = 1
 	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
 
+	announcement = new /datum/announcement/centcomm/aliens
+
 
 /datum/event/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
@@ -11,7 +13,7 @@
 
 /datum/event/alien_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lifesigns")
+		announcement.play()
 
 /datum/event/alien_infestation/start()
 	if(!aliens_allowed)

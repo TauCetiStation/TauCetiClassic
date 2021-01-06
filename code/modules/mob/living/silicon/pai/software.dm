@@ -50,7 +50,7 @@
 #define INTERACTION_ANYBOT_TOGGLE_ACTIVE				2
 
 #define INTERACTION_SECBOT_ID_CHECKER					3
-#define INTERACTION_SECBOT_CHEKING_RECORDS				4
+#define INTERACTION_SECBOT_CHECKING_RECORDS				4
 
 #define INTERACTION_FARMBOT_PLANTS_WATERING				3
 #define INTERACTION_FARMBOT_TOGGLE_REFILLGING			4
@@ -539,9 +539,9 @@
 			if(istype(hackobj, /obj/machinery/bot/secbot))
 				var/obj/machinery/bot/secbot/Bot = hackobj
 				switch(interaction_type)
-					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID cheker
+					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID checker
 						Bot.idcheck = !Bot.idcheck
-					if(INTERACTION_SECBOT_CHEKING_RECORDS) //Toggle Checking records
+					if(INTERACTION_SECBOT_CHECKING_RECORDS) //Toggle Checking records
 						Bot.check_records = !Bot.check_records
 			if(istype(hackobj, /obj/machinery/bot/farmbot))
 				var/obj/machinery/bot/farmbot/Bot = hackobj
@@ -962,7 +962,7 @@
 					dat += "Security Bot.<br>"
 					var/obj/machinery/bot/secbot/Temp = hackobj
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_ID_CHECKER];sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHEKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHECKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
 				if(istype(hackobj, /obj/machinery/bot/farmbot))
 					botchecked = 1
 					dat += "Farm Bot.<br>"
@@ -1123,7 +1123,7 @@
 #undef INTERACTION_ANYBOT_TOGGLE_ACTIVE
 
 #undef INTERACTION_SECBOT_ID_CHECKER
-#undef INTERACTION_SECBOT_CHEKING_RECORDS
+#undef INTERACTION_SECBOT_CHECKING_RECORDS
 
 #undef INTERACTION_FARMBOT_PLANTS_WATERING
 #undef INTERACTION_FARMBOT_TOGGLE_REFILLGING

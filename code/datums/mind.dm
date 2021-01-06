@@ -4,9 +4,6 @@
 
 	Guidelines for using minds properly:
 
-	-	Never mind.transfer_to(ghost). The var/current and var/original of a mind must always be of type mob/living!
-		ghost.mind is however used as a reference to the ghost's corpse
-
 	-	When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
 		the existing mind of the old mob should be transfered to the new mob like so:
 
@@ -32,8 +29,8 @@
 /datum/mind
 	var/key
 	var/name				//replaces mob/var/original_name
-	var/mob/living/current
-	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
+	var/mob/current
+	var/mob/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
 	var/active = 0
 
 	var/memory
@@ -80,13 +77,9 @@
 	src.key = key
 	creation_time = world.time
 
-/datum/mind/proc/transfer_to(mob/living/new_character)
-	if(!istype(new_character))
-		world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+/datum/mind/proc/transfer_to(mob/new_character)
 	if(current)					//remove ourself from our old body's mind variable
-//			if(changeling)
-//				current.remove_changeling_powers()
-//				current.verbs -= /datum/changeling/proc/EvolutionMenu
+		SStgui.on_transfer(current, new_character)
 		current.mind = null
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
@@ -98,9 +91,6 @@
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
-
-//	if(changeling)
-//		new_character.make_changeling()
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -1584,9 +1574,11 @@
 	return
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
-	if(current && current.actions)
-		for(var/datum/action/A in current.actions)
-			A.Grant(new_character)
+	if(current && isliving(current))
+		var/mob/living/M = current
+		if(M.actions)
+			for(var/datum/action/A in M.actions)
+				A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)

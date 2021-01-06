@@ -9,7 +9,7 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/static/global_uid = 0
 	var/uid
@@ -228,7 +228,7 @@ var/list/ghostteleportlocs = list()
 		return
 	if( !fire )
 		fire = 1 // used for firedoor checks
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
@@ -249,7 +249,7 @@ var/list/ghostteleportlocs = list()
 /area/proc/firereset()
 	if(fire)
 		fire = 0 // used for firedoor checks
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
@@ -271,13 +271,13 @@ var/list/ghostteleportlocs = list()
 	if(!party)
 		party = 1
 		updateicon()
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	return
 
 /area/proc/partyreset()
 	if(party)
 		party = 0
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)

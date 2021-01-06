@@ -37,7 +37,7 @@
 		// You should always consider this with any text processing work
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
-		input = stip_non_ascii(input)
+		input = strip_non_ascii(input)
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
@@ -249,7 +249,7 @@
 		M += capitalize(w)
 	return jointext(M, " ")
 
-/proc/stip_non_ascii(text)
+/proc/strip_non_ascii(text)
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
@@ -419,3 +419,18 @@
 		new_text += new_char
 
 	return new_text
+
+/proc/russian_plural(n, one, two, five)
+	if(!five)
+		five = two
+	n = abs(n) % 100
+	if(5 <= n && n <= 20)
+		return five
+	n %= 10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five

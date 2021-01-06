@@ -18,6 +18,8 @@
 	var/victory_in_progress = FALSE
 	var/static/added_to_blobminds = FALSE
 
+	var/datum/announcement/centcomm/blob/critical/announcement = new
+
 /mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
@@ -70,7 +72,7 @@
 /mob/camera/blob/process()
 	if(blob_core && !victory_in_progress && (blobs.len >= blobwincount))
 		victory_in_progress = TRUE
-		command_alert("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		announcement.play()
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
