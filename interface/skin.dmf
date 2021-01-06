@@ -165,7 +165,7 @@ window "mainwindow"
 	elem "input"
 		type = INPUT
 		pos = 3,420
-		size = 477x20
+		size = 560x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		background-color = #d3b5b5
