@@ -429,7 +429,7 @@
 				return TRUE
 	return FALSE
 
-/obj/structure/stool/bed/chair/noose/proc/rip(mob/user, var/forced = FALSE)
+/obj/structure/stool/bed/chair/noose/proc/rip(mob/user, forced = FALSE)
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	if(has_buckled_mobs() && buckled_mob.mob_has_gravity())
 		buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
