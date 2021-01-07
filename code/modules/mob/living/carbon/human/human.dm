@@ -137,10 +137,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Destroy()
 	human_list -= src
 	if(my_master)
-		my_master.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_master)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_master = null
 	if(my_golem)
-		my_golem.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_golem)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_golem.death()
 	my_golem = null
 	return ..()
@@ -948,7 +950,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return 1//Humans can use guns and such
 
 
-/mob/living/carbon/human/abiotic(var/full_body = 0)
+/mob/living/carbon/human/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
 		return 1
 
@@ -2069,7 +2071,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	med_hud_set_health()
 	apply_brain_damage(deadtime)
 
-/mob/living/carbon/human/proc/apply_brain_damage(var/deadtime)
+/mob/living/carbon/human/proc/apply_brain_damage(deadtime)
 	if(deadtime < DEFIB_TIME_LOSS)
 		return
 

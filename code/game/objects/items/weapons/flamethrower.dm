@@ -203,7 +203,7 @@
 /obj/item/weapon/flamethrower/full/atom_init()
 	. = ..()
 	weldtool = new /obj/item/weapon/weldingtool(src)
-	weldtool.status = 0
+	weldtool.secured = FALSE
 	igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1

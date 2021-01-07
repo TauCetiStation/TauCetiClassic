@@ -326,7 +326,7 @@
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
 
-/datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)

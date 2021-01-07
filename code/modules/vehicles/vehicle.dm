@@ -83,7 +83,7 @@
 	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(T.welding)
+		if(T.isOn())
 			if(health < maxhealth)
 				if(open)
 					health = min(maxhealth, health + 20)

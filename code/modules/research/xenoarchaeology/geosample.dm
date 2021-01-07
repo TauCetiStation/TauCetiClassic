@@ -47,7 +47,7 @@
 	//all potential finds are initialised to null, so nullcheck before you access them
 	var/list/find_presence = list()
 
-/datum/geosample/New(var/turf/simulated/mineral/container)
+/datum/geosample/New(turf/simulated/mineral/container)
 
 	UpdateTurf(container)
 
