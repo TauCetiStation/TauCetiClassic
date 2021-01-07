@@ -135,6 +135,9 @@
 /obj/effect/projectile/emitter/impact
 	icon_state = "impact_emitter"
 
+/obj/effect/projectile/emitter/singularity_pull()
+	return
+
 //----------------------------
 // Stun beam
 //----------------------------

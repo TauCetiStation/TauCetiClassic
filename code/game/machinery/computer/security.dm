@@ -544,7 +544,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
 	return !src.authenticated || user.incapacitated()|| (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
 
-/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/icon/I = null
 	var/obj/item/weapon/photo/P = null
 	if(issilicon(user))

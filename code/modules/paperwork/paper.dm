@@ -55,7 +55,7 @@
 		return
 	icon_state = "paper"
 
-/obj/item/weapon/paper/proc/update_space(var/new_text)
+/obj/item/weapon/paper/proc/update_space(new_text)
 	if(!new_text)
 		return
 

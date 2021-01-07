@@ -43,7 +43,7 @@
 
 	if((iswelder(I)))
 		var/obj/item/weapon/weldingtool/W = I
-		if(!W.welding)
+		if(!W.isOn())
 			if(!status)
 				status = 1
 				bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"

@@ -344,7 +344,7 @@
 		use_power(step_energy_drain)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, non_native_bump)
+/obj/mecha/Bump(atom/obstacle, non_native_bump)
 	if(non_native_bump)
 		if(throwing)
 			..()
@@ -1290,7 +1290,7 @@
 /datum/global_iterator/mecha_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
 
-/datum/global_iterator/mecha_preserve_temp/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_preserve_temp/process(obj/mecha/mecha)
 	if(mecha.cabin_air && mecha.cabin_air.volume > 0)
 		var/delta = mecha.cabin_air.temperature - T20C
 		mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
@@ -1299,7 +1299,7 @@
 /datum/global_iterator/mecha_tank_give_air
 	delay = 15
 
-/datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_tank_give_air/process(obj/mecha/mecha)
 	if(mecha.internal_tank)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
@@ -1329,7 +1329,7 @@
 		return stop()
 	return
 
-/datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
+/datum/global_iterator/mecha_internal_damage/process(obj/mecha/mecha) // processing internal damage
 	if(!mecha.hasInternalDamage())
 		return stop()
 	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
@@ -1363,7 +1363,7 @@
 			mecha.diag_hud_set_mechcell()
 	return
 
-/datum/global_iterator/mecha_light/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_light/process(obj/mecha/mecha)
 	if(!mecha.lights)
 		return
 	if(mecha.has_charge(mecha.lights_power))

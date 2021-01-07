@@ -324,7 +324,7 @@
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
-/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
 /datum/species/unathi/on_gain(mob/living/M)
@@ -395,7 +395,7 @@
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
 
-/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.tajaran_equip(H)
 
 /datum/species/skrell
@@ -438,7 +438,7 @@
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
-/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
 
 /datum/species/vox
@@ -528,7 +528,7 @@
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
 
-/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, var/datum/outfit/O)
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)

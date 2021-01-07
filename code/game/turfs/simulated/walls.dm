@@ -212,7 +212,7 @@
 		for(var/i=0, i<number_rots, i++)
 			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/proc/thermitemelt(mob/user, var/seconds_to_melt)
+/turf/simulated/wall/proc/thermitemelt(mob/user, seconds_to_melt)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)

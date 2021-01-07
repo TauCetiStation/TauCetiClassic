@@ -53054,12 +53054,13 @@
 /turf/simulated/floor/engine/phoron,
 /area/station/engineering/atmos)
 "cab" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "cac" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -56198,12 +56199,17 @@
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "cjk" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
+/turf/simulated/floor/plating,
+/area/station/storage/tech/north)
 "cjl" = (
 /turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
@@ -65603,6 +65609,10 @@
 /turf/space,
 /area/space)
 "cGR" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -71531,6 +71541,18 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"iUO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/emergency3)
 "iWb" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -72897,6 +72919,18 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
+"lmg" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/construction)
 "lnm" = (
 /obj/machinery/light,
 /obj/machinery/power/apc{
@@ -78359,6 +78393,15 @@
 	icon_state = "boxing"
 	},
 /area/station/civilian/gym)
+"tfA" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/engineering)
 "tgb" = (
 /obj/decal/boxingrope{
 	dir = 5
@@ -102989,7 +103032,7 @@ aaa
 agO
 auM
 arv
-aKY
+cab
 aDo
 aKY
 agO
@@ -105889,7 +105932,7 @@ bIZ
 bXw
 cJH
 cJa
-cog
+tfA
 aJY
 aPF
 cpc
@@ -108962,7 +109005,7 @@ bVr
 bVp
 bZO
 bZD
-cch
+lmg
 cch
 cdK
 bVo
@@ -116185,7 +116228,7 @@ bTq
 ctl
 chU
 ciU
-cjk
+cjl
 cjl
 bVI
 aah
@@ -117970,7 +118013,7 @@ ccE
 cej
 ccE
 bVI
-cab
+bZY
 caD
 bZY
 bVI
@@ -125411,7 +125454,7 @@ lOb
 cak
 cbz
 cKv
-cfB
+iUO
 cEB
 bSY
 aah
@@ -129975,7 +130018,7 @@ avw
 awl
 aul
 ayU
-aAj
+cjk
 aAV
 awx
 aAT
