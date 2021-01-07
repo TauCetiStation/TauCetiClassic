@@ -116,7 +116,7 @@
 /datum/reagent/consumable/drink/watermelonjuice
 	name = "Арбузный сок"
 	id = "watermelonjuice"
-	description = "Вкусный сок приготовленный из арбуза."
+	description = "Вкусный сок выжатый из арбуза."
 	color = "#863333" // rgb: 134, 51, 51
 	taste_message = "арбуз"
 
