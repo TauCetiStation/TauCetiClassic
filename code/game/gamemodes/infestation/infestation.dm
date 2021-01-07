@@ -118,14 +118,14 @@
 				aliens["F_dead"] ++
 			else
 				aliens["F_live"] ++
-				aliens["F_key"] += " [A.key] "
+				aliens["F_key"] += " [A.key];"
 			continue
 		if(isxenolarva(A))
 			if(A.stat == DEAD || !A.key)
 				aliens["L_dead"] ++
 			else
 				aliens["L_live"] ++
-				aliens["L_key"] += " [A.key] "
+				aliens["L_key"] += " [A.key];"
 			continue
 		if(isxenohunter(A))
 			if(A.stat == DEAD || !A.key)
@@ -133,21 +133,21 @@
 				continue
 			else
 				aliens["H_live"] ++
-				aliens["H_key"] += " [A.key] "
+				aliens["H_key"] += " [A.key];"
 		if(isxenosentinel(A))
 			if(A.stat == DEAD || !A.key)
 				aliens["S_dead"] ++
 				continue
 			else
 				aliens["S_live"] ++
-				aliens["S_key"] += " [A.key] "
+				aliens["S_key"] += " [A.key];"
 		if(isxenodrone(A))
 			if(A.stat == DEAD || !A.key)
 				aliens["D_dead"] ++
 				continue
 			else
 				aliens["D_live"] ++
-				aliens["D_key"] += " [A.key] "
+				aliens["D_key"] += " [A.key];"
 		if(isxenoqueen(A))
 			if(A.stat == DEAD || !A.key)
 				aliens["Q_dead"] ++
@@ -157,12 +157,12 @@
 				aliens["Q_key"] = "[A.key]"	//there can only be one queen
 		count ++
 
-	message_admins("<span class='notice'>Qu: [aliens["Q"]] - [aliens["Q_key"]].\
-	Dr: [aliens["D"]] - [aliens["D_key"]]. \
-	Se: [aliens["S"]] - [aliens["S_key"]]. \
-	Hu: [aliens["H"]] - [aliens["H_key"]]. \
-	La: [aliens["L"]] - [aliens["L_key"]]. \
-	Fa: [aliens["F"]]</span>")	//for debug
+	message_admins("<span class='notice'>Qu: [aliens["Q_live"]] - [aliens["Q_key"]].\
+	Dr: [aliens["D_live"]] - [aliens["D_key"]]. \
+	Se: [aliens["S_live"]] - [aliens["S_key"]]. \
+	Hu: [aliens["H_live"]] - [aliens["H_key"]]. \
+	La: [aliens["L_live"]] - [aliens["L_key"]]. \
+	Fa: [aliens["F_live"]] - [aliens["F_key"]].</span>")	//for debug
 	if(in_detail)
 		return aliens
 	else
@@ -173,12 +173,12 @@
 	var/data = count_alien_percent()
 	if(station_was_nuked)
 		mode_result = "loss - station was nuked"
-		feedback_set_details("round_end_result",mode_result)
+		feedback_set_details("round_end_result", mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Станция была уничтожена!</span>"
 
-	else if(data[ALIEN_PERCENT] > WIN_PERCENT)
+	else if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		mode_result = "win - alien win"
-		feedback_set_details("round_end_result",mode_result)
+		feedback_set_details("round_end_result", mode_result)
 		score["roleswon"]++
 		completion_text += "<span style='color: green; font-weight: bold;'>Ксеноморфы захватили станцию!</span> ([data[ALIEN_PERCENT]]%)<br>"
 		completion_text += "<div class='label'>"
@@ -194,12 +194,12 @@
 
 	else if(data[ALIEN_PERCENT] == 0)
 		mode_result = "loss - all alien destroyed"
-		feedback_set_details("round_end_result",mode_result)
+		feedback_set_details("round_end_result", mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Все ксеноморфы были уничтожены или покинули станцию!</span>"
 
 	else
 		mode_result = "draw - aliens are not enough to take over the station"
-		feedback_set_details("round_end_result",mode_result)
+		feedback_set_details("round_end_result", mode_result)
 		completion_text += "<span style='color: orange; font-weight: bold;'>Ксеноморфов недостаточно для захвата станции. Экипаж всё ещё сопротивляется вторжению!</span> ([data[ALIEN_PERCENT]]%)<br>"
 		completion_text += "<div class='label'>"
 		if(data[TOTAL_ALIEN] == 1)
@@ -290,7 +290,7 @@
 	text += "<tr><td colspan='2'>Всего [xeno_name] было: [xeno_live + xeno_dead]</td></tr>"
 	text += {"<tr><td><img src="logo_[tempstate].png"></td><td>"}
 	if(xeno_live)
-		text += "<span style='color: green; font-weight: bold;'>Выжило: [xeno_live]</span> ([xeno_key])<br>"
+		text += "<span style='color: green; font-weight: bold;'>Выжило: [xeno_live]</span> ([xeno_key] )<br>"
 	if(xeno_dead)
 		text += "<span style='color: red; font-weight: bold;'>Погибло: [xeno_dead]</span>"
 	text += "</td></tr>"
@@ -321,7 +321,11 @@
 /datum/game_mode/infestation/proc/count_alien_percent()
 	var/total_human = check_crew()
 	var/total_alien = count_hive_power()
-	var/alien_percent = total_human ? round((total_alien * 100) / total_human) : round(total_alien * 100)	//do not divide by zero
+	var/alien_percent = 0
+	if(total_human && total_alien)
+		alien_percent = round(total_alien * 100 / total_human)
+	else if(!total_human && total_alien)
+		alien_percent = WIN_PERCENT
 	. = list(total_human, total_alien, alien_percent)
 
 /datum/game_mode/infestation/check_finished()
@@ -330,7 +334,7 @@
 	last_check = world.time
 	var/data = count_alien_percent()
 	message_admins("<span class='notice'>Чужие: [data[TOTAL_ALIEN]] Люди: [data[TOTAL_HUMAN]] Процент: [data[ALIEN_PERCENT]]</span>")	//for debug
-	if(data[ALIEN_PERCENT] > WIN_PERCENT)
+	if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
 	else
 		return ..()
