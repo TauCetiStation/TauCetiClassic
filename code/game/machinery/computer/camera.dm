@@ -67,9 +67,16 @@
 /obj/machinery/computer/security/ui_interact(mob/user)
 	tgui_interact(user)
 
+/obj/machinery/computer/security/proc/close_other_camera_uis(mob/user, datum/tgui/current_ui)
+	for(var/datum/tgui/ui in user.tgui_open_uis)
+		if((isnull(current_ui) || current_ui != ui) && ui.interface == "CameraConsole")
+			ui.close()
+
 /obj/machinery/computer/security/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	update_active_camera_screen()
+
+	close_other_camera_uis(user, ui)
 
 	if(!ui)
 		var/user_ref = "\ref[user]"
