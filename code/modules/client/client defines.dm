@@ -40,7 +40,6 @@
 		////////////
 		//SECURITY//
 		////////////
-	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
@@ -89,6 +88,7 @@
 	/// Last asset send job id.
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
+	var/list/topiclimiter
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to

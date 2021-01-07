@@ -86,7 +86,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/mob/camera/blob/say(var/message)
+/mob/camera/blob/say(message)
 	if (!message)
 		return
 

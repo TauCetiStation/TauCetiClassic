@@ -40,7 +40,7 @@
 	..()
 	SSsun.solars.Remove(src)
 
-/obj/machinery/power/solar/connect_to_network(var/process)
+/obj/machinery/power/solar/connect_to_network(process)
 	var/to_return = ..()
 	if(process)
 		SSsun.solars.Add(src)
