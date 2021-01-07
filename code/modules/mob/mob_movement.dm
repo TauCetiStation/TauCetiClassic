@@ -306,7 +306,7 @@
 	//Camera control: arrow keys.
 	if (machine && istype(machine, /obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
+		var/turf/T = get_turf(console.active_camera)
 		for(var/i;i<10;i++)
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)

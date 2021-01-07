@@ -43,11 +43,16 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
-
-	// The AI can interact with anything it can see nearby, or with cameras while wireless control is enabled.
-	if(!control_disabled && can_see(src_object))
-		return UI_INTERACTIVE
-	return UI_CLOSE
+	//hook our scary old nanoui topic check cos it handles all the states appropriately 
+	switch(can_use_topic(src_object))
+		if(STATUS_INTERACTIVE)
+			. = UI_INTERACTIVE
+		if(STATUS_UPDATE)
+			. = UI_UPDATE
+		if(STATUS_DISABLED)
+			. = UI_DISABLED
+		if(STATUS_CLOSE)
+			. = UI_CLOSE
 
 /mob/living/simple_animal/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
@@ -60,3 +65,22 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 		return UI_INTERACTIVE
 	else
 		return ..()
+
+/**
+ * tgui state: machinery_state
+ *
+ * Same as default state but this one checks if host is machine and if it's operational
+ */
+
+var/global/datum/tgui_state/machinery_state/machinery_state = new
+
+/datum/tgui_state/machinery_state/can_use_topic(src_object, mob/user)
+	. = user.default_can_use_topic(src_object)
+	if(. > UI_CLOSE)
+		return min(., can_use_machinery(src_object, user))
+
+/datum/tgui_state/machinery_state/proc/can_use_machinery(src_object, mob/user)
+	. = UI_CLOSE
+	var/obj/machinery/machine = src_object
+	if(istype(machine) && machine.is_interactable())
+		. = UI_INTERACTIVE
