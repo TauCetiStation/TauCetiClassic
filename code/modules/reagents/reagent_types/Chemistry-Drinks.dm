@@ -143,7 +143,7 @@
 /datum/reagent/consumable/drink/potato_juice
 	name = "Картофельный сок"
 	id = "potato"
-	description = "Бля, сок из картошки."
+	description = "Сок из картошки. Гадость."
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "блевотину, вы вполне уверены"
