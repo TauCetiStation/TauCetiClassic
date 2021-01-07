@@ -284,7 +284,7 @@ var/global/list/available_ui_styles = list(
 		mymob.client.screen += PM
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12(var/full = 0 as null)
+/mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
 

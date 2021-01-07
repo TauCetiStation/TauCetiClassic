@@ -346,7 +346,7 @@
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
 
-/datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
 	if (!istype(T))
 		return
