@@ -146,7 +146,7 @@
 
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
-	if(!active_camera?.can_use())
+	if(QDELETED(active_camera) || (istype(active_camera) && !active_camera.can_use()))
 		show_camera_static()
 		return
 
@@ -226,7 +226,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["activeCamera"] = null
-	if(active_camera)
+	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			status = active_camera.status,
@@ -240,9 +240,10 @@
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
-		data["cameras"] += list(list(
-			name = C.c_tag,
-		))
+		if(!QDELETED(C))
+			data["cameras"] += list(list(
+				name = C.c_tag,
+			))
 
 	return data
 

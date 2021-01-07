@@ -65,6 +65,7 @@
 			bug.current = null
 		bug = null
 	cameranet.cameras -= src
+	invalidateCameraCache()
 	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
