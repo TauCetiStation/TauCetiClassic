@@ -8,7 +8,7 @@
 	config_tag = "malfunction"
 	role_type = ROLE_MALF
 	required_players = 1
-	required_players_secret = 20
+	required_players_bundles = 20
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -24,6 +24,12 @@
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
+
+	var/datum/announcement/centcomm/malf/first/announce_first = new
+	var/datum/announcement/centcomm/malf/second/announce_second = new
+	var/datum/announcement/centcomm/malf/third/announce_third = new
+	var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+	var/datum/announcement/centcomm/malf/declared/announce_declared = new
 
 
 /datum/game_mode/malfunction/announce()
@@ -110,16 +116,16 @@
 
 	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
-		command_alert("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring", sound = "malf1")
+		announce_first.play()
 	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
-		command_alert("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring", sound = "malf2")
+		announce_second.play()
 	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
-		command_alert("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring", sound = "malf3")
+		announce_third.play()
 	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
-		command_alert("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring", sound = "malf4")
+		announce_forth.play()
 		takeover()
 
 
@@ -191,8 +197,7 @@
 		if(takeover_module)
 			qdel(takeover_module)
 
-	station_announce(sound = "malf")
-
+	announce_declared.play()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 

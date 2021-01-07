@@ -1,4 +1,3 @@
-#define HIDDEN_SCANNER 1
 /*
  * Data HUDs have been rewritten in a more generic way.
  * In short, they now use an observer-listener pattern.
@@ -72,13 +71,13 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
-	var/severity
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(!D.hidden[HIDDEN_SCANNER])
-			if(!threat || D.severity > threat) //a buffing virus gets an icon
-				threat = D.severity
-				severity = D.severity
+	var/severity = 0
+	for(var/id in virus2)
+		if(id in virusDB)
+			var/datum/disease2/disease/D = virus2[id]
+			if(!threat || D.stage > threat) //a buffing virus gets an icon
+				threat = D.stage
+				severity += D.stage
 	return severity
 
 //called when a human changes suit sensors
@@ -108,29 +107,22 @@
 	var/virus_threat = check_virus()
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
+	else if(has_brain_worms())
+		var/mob/living/simple_animal/borer/B = has_brain_worms()
+		if(B.controlling)
+			holder.icon_state = "hudbrainworm"
+		else
+			holder.icon_state = "hudhealthy"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		if(key || get_ghost(FALSE, TRUE))
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"
 	else
-		switch(virus_threat)
-			if(7)
-				holder.icon_state = "hudill5"
-			if(6)
-				holder.icon_state = "hudill4"
-			if(5)
-				holder.icon_state = "hudill3"
-			if(4)
-				holder.icon_state = "hudill2"
-			if(3)
-				holder.icon_state = "hudill1"
-			if(2)
-				holder.icon_state = "hudill0"
-			if(1)
-				holder.icon_state = "hudbuff"
-			else
-				holder.icon_state = "hudhealthy"
+		if(virus_threat == 0)
+			holder.icon_state = "hudhealthy"
+		else
+			holder.icon_state = "hudill[min(virus_threat, 7)]"
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
@@ -182,7 +174,7 @@
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
-	var/perpname = get_face_name(get_id_name(""))
+	var/perpname = get_visible_name(TRUE)
 	if(perpname && global.data_core)
 		var/datum/data/record/R = find_record("name", perpname, global.data_core.security)
 		if(R)
@@ -358,5 +350,3 @@
 			return "health-85"
 		else
 			return "health-100"
-
-#undef HIDDEN_SCANNER

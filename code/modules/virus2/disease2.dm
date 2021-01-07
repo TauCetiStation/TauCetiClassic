@@ -43,7 +43,7 @@
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
-/datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)
+/datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
 		return
 	if(effects.len < max_symptoms)

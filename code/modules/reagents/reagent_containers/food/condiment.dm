@@ -78,7 +78,7 @@
 		return 1
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(atom/target, mob/user, proximity, params)
-	if(get_dist(src, target) > 1)
+	if(!proximity)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
@@ -149,7 +149,7 @@
 
 /obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
-	if(get_dist(T, user) > 1)
+	if(!proximity)
 		return
 	if(!istype(T, /turf/simulated/wall))
 		return

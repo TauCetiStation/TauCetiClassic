@@ -307,7 +307,7 @@
 		dropitems(user = user, target = target, scatter = FALSE)
 	return
 
-/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, var/scatter = FALSE)
+/obj/item/weapon/storage/visuals/tray/proc/dropitems(mob/living/user, atom/target, scatter = FALSE)
 	for(var/obj/item/I in contents)
 		var/turf/T = get_turf(target)
 		remove_from_storage(I, new_location = T)

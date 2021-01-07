@@ -15,6 +15,7 @@
 	desc = "Used for the rapid introduction of chemicals from the internal storage."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
+	layer = BELOW_CONTAINERS_LAYER
 	density = 0
 	anchored = 1
 	state_open = 1
