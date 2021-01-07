@@ -207,8 +207,8 @@
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
 	if(shared_networks.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
