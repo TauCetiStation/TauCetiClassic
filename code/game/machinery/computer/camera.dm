@@ -80,7 +80,7 @@
 			concurrent_users += user_ref
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
-			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 			use_power(active_power_usage)
 		// Register map objects
 		user.client.register_map_obj(cam_screen)
@@ -110,7 +110,7 @@
 
 /obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
 	active_camera = camera_to_switch
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 	update_active_camera_screen()
 
@@ -189,7 +189,7 @@
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 		use_power(0)
 
 /obj/machinery/computer/security/proc/show_camera_static()
