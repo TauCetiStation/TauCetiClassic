@@ -202,24 +202,24 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.welding)
+		if(!WT.isOn())
 			return FALSE
-		if(!WT.use(0,user))
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-			return TRUE
-		switch(opened)
-			if(1)
+		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+			if(opened)
 				new /obj/item/stack/sheet/metal(loc)
-				visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>",
-								"<span class='notice'>You hear welding.</span>")
+				user.visible_message("[user] cut apart [src] with [WT].",
+				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
 				qdel(src)
 				return TRUE
-			if(0)
+			else
 				src.welded = !src.welded
 				src.update_icon()
-				visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>",
-								"<span class='warning'>You hear welding.</span>")
+				user.visible_message("[user] [welded?"welded":"unwelded"] [src]'s shutter with [WT].",
+				                     "<span class='notice'>You [welded?"welded":"remove weld from"] [src]'s shutter with [WT].</span>")
 				return TRUE
+		else
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			return TRUE
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
