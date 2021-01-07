@@ -174,7 +174,7 @@
 /datum/reagent/consumable/drink/milk/cream
 	name = "Сливки"
 	id = "cream"
-	description = "Жирная, тем не менее жидкая часть молока. Почему бы тебе не смешать это со скотчем, а?"
+	description = "Жирная, тем не менее жидкая часть молока. Почему бы не смешать это со скотчем, а?"
 	color = "#dfd7af" // rgb: 223, 215, 175
 	taste_message = "сливки"
 	diet_flags = DIET_DAIRY
