@@ -215,7 +215,7 @@
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Кофе со льдом"
 	id = "icecoffee"
-	description = "Кофе и лёд, освежает и прохлаждает."
+	description = "Кофе и лед, освежает и охлаждает."
 	color = "#102838" // rgb: 16, 40, 56
 	adj_temp = -5
 
