@@ -26,7 +26,7 @@
 /datum/reagent/consumable/drink/orangejuice
 	name = "Апельсиновый сок"
 	id = "orangejuice"
-	description = "Вкусный И богатый витамином C. Что тебе ещё нужно?"
+	description = "Одновременно вкусен и богат витамином C. Что ещё нужно?"
 	color = "#e78108" // rgb: 231, 129, 8
 	taste_message = "апельсин"
 
