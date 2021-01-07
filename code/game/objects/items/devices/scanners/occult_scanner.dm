@@ -17,6 +17,8 @@
 		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
 
 /obj/item/device/occult_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
