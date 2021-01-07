@@ -341,7 +341,7 @@
 	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
-	if(!in_range(user, src) || user.stat || user.restrained() || !ishuman(M))
+	if(!in_range(user, src) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
 		return FALSE
 
 	var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
@@ -357,7 +357,7 @@
 		return FALSE
 
 	add_fingerprint(user)
-	M.log_combat(user, "attempted to hang", src)
+	message_admins("[key_name_admin(user)] attempted to hang [key_name(M)]. [ADMIN_JMP(M)]")
 	M.visible_message("<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>")
 	if(user != M)
 		to_chat(user, "<span class='notice'>It will take 15 seconds and you have to stand still.</span>")
@@ -369,7 +369,7 @@
 			else
 				to_chat(M, "<span class='userdanger'>[user] ties \the [src] over your neck!</span>")
 			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
-			M.log_combat(user, "hanged", src)
+			message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
 			for(var/alert in M.alerts)
 				var/obj/screen/alert/A = M.alerts[alert]
 				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
