@@ -297,3 +297,12 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## This config option disables OOC after round start, and enables it back after round end.
 ## Comment it out to disable such behaviour.
 OOC_ROUND_ONLY
+
+## TOPIC RATE LIMITING
+## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 or comment out to disable.
+SECOND_TOPIC_LIMIT 10
+
+MINUTE_TOPIC_LIMIT 100

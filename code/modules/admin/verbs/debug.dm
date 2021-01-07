@@ -2052,7 +2052,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
-	set name = "Display Initialzie() Log"
+	set name = "Display Initialize() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
 	if(!length(SSatoms.BadInitializeCalls))
