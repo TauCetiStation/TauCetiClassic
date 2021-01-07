@@ -171,7 +171,12 @@
 /datum/game_mode/infestation/declare_completion()
 	completion_text += "<h3>Итоги режима ксеноморфы:</h3>"
 	var/data = count_alien_percent()
-	if(data[ALIEN_PERCENT] > WIN_PERCENT)
+	if(station_was_nuked)
+		mode_result = "loss - station was nuked"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Станция была уничтожена!</span>"
+
+	else if(data[ALIEN_PERCENT] > WIN_PERCENT)
 		mode_result = "win - alien win"
 		feedback_set_details("round_end_result",mode_result)
 		score["roleswon"]++
@@ -186,10 +191,12 @@
 		else
 			completion_text += " тогда как живых членов экипажа осталось [data[TOTAL_HUMAN]]. Остальные погибли или покинули станцию."
 		completion_text += "</div>"
+
 	else if(data[ALIEN_PERCENT] == 0)
 		mode_result = "loss - all alien destroyed"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Все ксеноморфы были уничтожены или покинули станцию!</span>"
+
 	else
 		mode_result = "draw - aliens are not enough to take over the station"
 		feedback_set_details("round_end_result",mode_result)
@@ -319,14 +326,14 @@
 
 /datum/game_mode/infestation/check_finished()
 	if((world.time - last_check) < CHECK_PERIOD)
-		return FALSE
+		return ..()
 	last_check = world.time
 	var/data = count_alien_percent()
 	message_admins("<span class='notice'>Чужие: [data[TOTAL_ALIEN]] Люди: [data[TOTAL_HUMAN]] Процент: [data[ALIEN_PERCENT]]</span>")	//for debug
 	if(data[ALIEN_PERCENT] > WIN_PERCENT)
 		return TRUE
 	else
-		return FALSE
+		return ..()
 
 #undef CHECK_PERIOD
 #undef TOTAL_HUMAN
