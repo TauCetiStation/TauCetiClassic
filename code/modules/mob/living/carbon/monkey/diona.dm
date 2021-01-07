@@ -311,7 +311,7 @@
 			return 1
 	return ..()
 
-/mob/living/carbon/monkey/diona/say(var/message)
+/mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
 

@@ -337,7 +337,7 @@
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
 	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
 
-/obj/item/weapon/storage/proc/gather_all(var/turf/T, var/mob/user)
+/obj/item/weapon/storage/proc/gather_all(turf/T, mob/user)
 	var/success = 0
 	var/failure = 0
 
