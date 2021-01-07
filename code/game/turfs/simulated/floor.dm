@@ -630,10 +630,25 @@ var/list/wood_icons = list("wood","wood-broken")
 			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
 	if(iswelder(C))
-		var/obj/item/weapon/weldingtool/welder = C
-		if(welder.isOn() && (is_plating()))
+		var/obj/item/weapon/weldingtool/W = C
+		var/turf/T = user.loc
+		if(user.a_intent == INTENT_HARM && is_plating())
+			if(W.use(0, user))
+				to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
+				if(W.use_tool(src, user, 100, 3, 100))
+					if(!is_plating())
+						return
+
+					if(user.loc == T && user.get_active_hand() == W)
+						to_chat(user, "<span class='notice'>You remove the plating.</span>")
+						new /obj/item/stack/rods(src)
+						new /obj/item/stack/tile/plasteel(src)
+						BreakToBase()
+			else
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+		else if(is_plating())
 			if(broken || burnt)
-				if(welder.use(0,user))
+				if(W.use(0,user))
 					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
 					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 					icon_state = "plating"
