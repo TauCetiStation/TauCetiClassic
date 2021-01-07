@@ -94,3 +94,14 @@
 /datum/keybinding/admin/readmin/down(client/user)
 	user.readmin_self()
 	return TRUE
+
+
+/datum/keybinding/admin/toggle_combo_hud
+	hotkey_keys = list("None")
+	name = "toggle_combo_hud"
+	full_name = "Toggle Combo HUD"
+	description = ""
+
+/datum/keybinding/admin/toggle_combo_hud/down(client/user)
+	user.toggle_combo_hud()
+	return TRUE
