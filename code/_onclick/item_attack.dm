@@ -98,17 +98,17 @@
 	if(!eat_speed)
 		return FALSE
 
-	src.visible_message("<span class='danger'>\The [src] is attempting to devour \the [victim] whole!</span>")
+	visible_message("<span class='danger'>\The [src] is attempting to devour \the [victim] whole!</span>")
 	var/mob/living/target = victim
 	if(isobj(victim))
 		target = src
-	if(!do_mob(src,target,eat_speed))
+	if(!do_mob(src, target,eat_speed))
 		return FALSE
-	src.visible_message("<span class='danger'>\The [src] devours \the [victim] whole!</span>")
+	visible_message("<span class='danger'>\The [src] devours \the [victim] whole!</span>")
 	if(ismob(victim))
 		target.log_combat(src, "Devoured")
 	else
-		src.drop_from_inventory(victim)
+		drop_from_inventory(victim)
 	move_to_stomach(victim)
 
 	return TRUE
