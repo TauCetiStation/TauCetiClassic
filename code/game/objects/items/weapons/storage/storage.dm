@@ -73,7 +73,7 @@
 			return
 		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
 			return
-		if(!istype(M.loc, /turf))
+		if(!isturf(M.loc))
 			return
 		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
