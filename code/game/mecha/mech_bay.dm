@@ -116,7 +116,7 @@
 		else
 			data += "<div class='Section'>Integrity: [recharge_port.recharging_mech.health]<BR>"
 			if(!recharge_port.recharging_mech.cell)
-				data += "<div class='Section'>No cell detected in the mech.<BR>"
+				data += "<span class='bad'>No cell detected in the mech.</span><BR>"
 			else
 				if(recharge_port.recharging_mech.cell.crit_fail)
 					data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
