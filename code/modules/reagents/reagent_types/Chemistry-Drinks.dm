@@ -97,7 +97,7 @@
 /datum/reagent/consumable/drink/grapesoda
 	name = "Виноградная газировка"
 	id = "grapesoda"
-	description = "Виноград превращённый в прекрасный напиток."
+	description = "Виноград превращенный в прекрасный напиток."
 	color = "#421c52" // rgb: 98, 57, 53
 	taste_message = "виноград"
 	adj_drowsy 	= 	-3
