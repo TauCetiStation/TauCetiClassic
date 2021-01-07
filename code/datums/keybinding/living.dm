@@ -48,3 +48,15 @@
 	else
 		L.drop_item()
 	return TRUE
+
+
+/datum/keybinding/living/rest
+	hotkey_keys = list("None")
+	name = "rest"
+	full_name = "Rest"
+	description = ""
+
+/datum/keybinding/living/rest/down(client/user)
+	var/mob/living/L = user.mob
+	L.lay_down()
+	return TRUE

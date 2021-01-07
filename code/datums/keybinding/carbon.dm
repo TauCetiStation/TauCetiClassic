@@ -81,3 +81,15 @@
 	var/mob/living/carbon/C = user.mob
 	C.give()
 	return TRUE
+
+
+/datum/keybinding/carbon/crawl
+	hotkey_keys = list("None")
+	name = "crawl"
+	full_name = "Crawl"
+	description = ""
+
+/datum/keybinding/carbon/crawl/down(client/user)
+	var/mob/living/carbon/C = user.mob
+	C.crawl()
+	return TRUE
