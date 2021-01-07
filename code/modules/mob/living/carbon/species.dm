@@ -469,10 +469,10 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
-		,HAS_TAIL = TRUE
+		//,HAS_TAIL = TRUE оставим до лучших времен(когда пофиксим покраску хвоста)
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
-		//,NO_FAT = TRUE оставим до лучших времен(когда пофиксим покраску хвоста)
+		,NO_FAT = TRUE 
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
