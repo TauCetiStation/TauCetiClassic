@@ -447,7 +447,7 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 	additional_languages = list("Tradeband")
-	//tail = "vox_prim" оставим до лучших времен(когда пофиксим покраску хвоста)
+	tail = "vox_prim"
 
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -469,7 +469,7 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
-		//,HAS_TAIL = TRUE оставим до лучших времен(когда пофиксим покраску хвоста)
+		,HAS_TAIL = TRUE 
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE 
