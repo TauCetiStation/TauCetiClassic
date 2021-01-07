@@ -126,6 +126,9 @@
 
 	return data
 
+/obj/item/weapon/tank/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/item/weapon/tank/tgui_act(action, params)
 	. = ..()
 	if(.)
