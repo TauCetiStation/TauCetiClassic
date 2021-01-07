@@ -50,7 +50,7 @@
 /datum/reagent/consumable/drink/limejuice
 	name = "Лаймовый сок"
 	id = "limejuice"
-	description = "Кислосладкий сок лайма."
+	description = "Кисло-сладкий сок лайма."
 	color = "#365e30" // rgb: 54, 94, 48
 	taste_message = "лайм"
 
