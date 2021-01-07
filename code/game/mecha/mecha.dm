@@ -108,6 +108,8 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
+	pr_internal_damage.stop()
+	pr_give_air.stop()
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -532,8 +534,6 @@
 	go_out()
 	var/turf/T = get_turf(src)
 	if(wreckage)
-		pr_internal_damage.stop()
-		pr_give_air.stop()
 		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
 		WR.reliability = rand(33) + 15
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
