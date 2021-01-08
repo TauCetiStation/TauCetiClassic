@@ -1,5 +1,5 @@
 
-// A small class that allows any type to assign a religious value
+// A small holder that allows any type to assign a religious value
 // Maybe rename
 /datum/building_agent
 	var/name
