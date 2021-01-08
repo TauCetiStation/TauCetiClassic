@@ -927,11 +927,14 @@ var/list/airlock_overlays = list()
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
 			if(W.use_tool(src, user, 30, volume = 100))
-				welded = !welded
-				update_icon()
-				user.visible_message("[user] [welded?"welds":"unwelds"] [src]'s shutters with [W].",
-				                     "<span class='notice'>You [welded? "weld":"remove welding from"] [src]'s shutters with [W].</span>")
-				return
+				if (!density == 1)
+					return
+				else
+					welded = !welded
+					update_icon()
+					user.visible_message("[user] [welded?"welds":"unwelds"] [src]'s shutters with [W].",
+					                     "<span class='notice'>You [welded? "weld":"remove welding from"] [src]'s shutters with [W].</span>")
+					return
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
