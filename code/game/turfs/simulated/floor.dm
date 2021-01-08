@@ -631,7 +631,6 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
-		var/turf/T = user.loc
 		if(user.a_intent == INTENT_HARM && is_plating())
 			if(W.use(0, user))
 				to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
@@ -639,11 +638,9 @@ var/list/wood_icons = list("wood","wood-broken")
 					if(!is_plating())
 						return
 
-					if(user.loc == T)
-						to_chat(user, "<span class='notice'>You remove the plating.</span>")
-						new /obj/item/stack/rods(src)
-						new /obj/item/stack/tile/plasteel(src)
-						BreakToBase()
+					to_chat(user, "<span class='notice'>You remove the plating.</span>")
+					new /obj/item/stack/tile/plasteel(src)
+					ReplaceWithLattice()
 			else
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 		else if(is_plating())

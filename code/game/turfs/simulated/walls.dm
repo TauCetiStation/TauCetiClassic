@@ -363,10 +363,10 @@
 			if(WT.use(0, user))
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				if(WT.use_tool(src, user, 100, 3, 100))
-					if(!istype(src, /turf/simulated/wall) || !T)
+					if(!istype(src, /turf/simulated/wall))
 						return
 
-					if(user.loc == T && user.get_active_hand() == WT)
+					if(user.get_active_hand() == WT)
 						to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 						dismantle_wall()
 			else
