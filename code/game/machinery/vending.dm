@@ -394,11 +394,11 @@
 		dat += "<tr>"
 		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]'></span></td>"
 		dat += "<td><B>[R.product_name]</B></td>"
-		dat += "<td class='collapsing' align='center'><span class='[R.amount > 1 ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
+		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
 			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] cr." : "FREE"]</A></td>"
 		else
-			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "$[R.price]" : "FREE"]</div></td>"
+			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price] cr." : "FREE"]</div></td>"
 		dat += "</tr>"
 	return dat
 
@@ -1045,7 +1045,7 @@
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
 	products = list(
-		/obj/item/weapon/tray = 8,
+		/obj/item/weapon/storage/visuals/tray = 8,
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
@@ -1091,9 +1091,11 @@
 	light_color = "#ffcc33"
 	icon_deny = "engivend-deny"
 	req_access = list(11) //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4, /obj/item/weapon/gun/energy/pyrometer/engineering = 4, /obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4, /obj/item/weapon/gun/energy/pyrometer/engineering = 4, /obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10,
+			    	/obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,/obj/item/weapon/stock_parts/capacitor = 5,
+					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
-	premium = list(/obj/item/weapon/storage/belt/utility = 3)
+	premium = list(/obj/item/weapon/storage/belt/utility = 3,/obj/item/weapon/storage/part_replacer=1)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
 
 //This one's from bay12
@@ -1150,7 +1152,7 @@
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
 	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/scarf/blue=2,/obj/item/clothing/mask/scarf/red=2,/obj/item/clothing/mask/scarf/green=2,
 	/obj/item/clothing/mask/scarf/yellow=2,/obj/item/clothing/mask/scarf/violet=2,
-	/obj/item/clothing/suit/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3,
+	/obj/item/clothing/suit/hooded/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3,
 	/obj/item/clothing/suit/storage/miljacket_army=3,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=2,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=2,
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
@@ -1178,7 +1180,7 @@
 	/obj/item/clothing/mask/bandana/black=40,/obj/item/clothing/mask/bandana/skull=40,/obj/item/clothing/mask/bandana/green=40,/obj/item/clothing/mask/bandana/gold=40,
 	/obj/item/clothing/mask/bandana/blue=40,/obj/item/clothing/mask/scarf/blue=30,/obj/item/clothing/mask/scarf/red=30,/obj/item/clothing/mask/scarf/green=30,
 	/obj/item/clothing/mask/scarf/yellow=30,/obj/item/clothing/mask/scarf/violet=30,
-	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50,
+	/obj/item/clothing/suit/hooded/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50,
 	/obj/item/clothing/suit/storage/miljacket_army=155,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=155,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=155,
 	/obj/item/clothing/suit/student_jacket=120,/obj/item/clothing/suit/shawl=144,/obj/item/clothing/suit/atlas_jacket=95,/obj/item/clothing/under/sukeban_pants=160,
 	/obj/item/clothing/under/sukeban_dress=140,/obj/item/clothing/suit/sukeban_coat=135,/obj/item/clothing/under/pinkpolo=75,/obj/item/clothing/under/pretty_dress=85,
@@ -1308,7 +1310,7 @@
 	icon_state = "Theater"
 	products = list(/obj/item/clothing/head/xenos = 5, /obj/item/clothing/suit/xenos = 5, /obj/item/clothing/suit/monkeysuit = 5, /obj/item/clothing/suit/syndicatefake = 5, /obj/item/clothing/head/syndicatefake = 5,
 					/obj/item/clothing/head/collectable/slime = 5, /obj/item/clothing/head/collectable/xenom = 5, /obj/item/clothing/head/collectable/petehat = 5, /obj/item/clothing/head/kitty = 5,
-					/obj/item/clothing/head/pumpkinhead = 5, /obj/item/clothing/head/ushanka = 5, /obj/item/clothing/head/cardborg = 5, /obj/item/clothing/suit/cardborg = 5, /obj/item/clothing/head/bearpelt = 5,
+					/obj/item/clothing/head/hardhat/pumpkinhead = 5, /obj/item/clothing/head/ushanka = 5, /obj/item/clothing/head/cardborg = 5, /obj/item/clothing/suit/cardborg = 5, /obj/item/clothing/head/bearpelt = 5,
 					/obj/item/clothing/mask/fakemoustache = 5, /obj/item/clothing/head/santahat = 5, /obj/item/clothing/suit/santa = 5, /obj/item/weapon/storage/backpack/santabag = 5,
 					/obj/item/clothing/mask/gas/sexyclown = 5, /obj/item/clothing/mask/gas/sexymime = 5, /obj/item/clothing/mask/horsehead = 5, /obj/item/clothing/suit/apron = 5, /obj/item/clothing/suit/apron/overalls = 5,
 					/obj/item/clothing/suit/chickensuit = 5, /obj/item/clothing/head/chicken = 5, /obj/item/clothing/under/fluff/tian_dress = 5, /obj/item/clothing/under/fluff/wyatt_1 = 5,

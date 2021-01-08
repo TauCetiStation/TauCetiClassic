@@ -107,7 +107,7 @@
 	if (cell.charge <= 0)
 		turn_off()
 		return
-	
+
 	if (cell.charge <= (cell.maxcharge * low_charge_warning_threshold_percent) && last_low_charge_warning_msg < world.time)
 		to_chat(user, "<span class='warning'>Cooling unit charge is below [round(cell.percent())]%.</span>")
 		playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
@@ -148,7 +148,7 @@
 	if (istype(I, /obj/item/weapon/stock_parts/cell))
 		if (cover_open)
 			if (cell)
-				to_chat(user, "<span class='info'>There is a [cell] already installed here.<span>")
+				to_chat(user, "<span class='info'>There is a [cell] already installed here.</span>")
 			else
 				user.drop_from_inventory(I, src)
 				cell = I

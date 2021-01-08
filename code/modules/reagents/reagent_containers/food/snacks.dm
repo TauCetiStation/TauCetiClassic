@@ -1792,7 +1792,7 @@
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
 			!(locate(/obj/machinery/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/tray) in src.loc) \
+			!(locate(/obj/item/weapon/storage/visuals/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return FALSE
@@ -3166,6 +3166,7 @@
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
+	item_state = "baton"
 	filling_color = "#7d5f46"
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/malper

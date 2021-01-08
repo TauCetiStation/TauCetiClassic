@@ -2,7 +2,7 @@
 	name = "epidemic"
 	config_tag = "epidemic"
 	required_players = 1
-	required_players_secret = 15
+	required_players_bundles = 15
 
 	var/checkwin_counter =0
 	var/finished = 0
@@ -13,6 +13,8 @@
 
 	var/stage = 0
 	var/doctors = 0
+
+	var/datum/announcement/centcomm/epidemic/cruiser/announce_cruiser = new
 
 ///////////////////////////
 //Announces the game type//
@@ -66,7 +68,7 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
@@ -90,7 +92,7 @@
 			comm.messagetitle.Add("Cent. Com. CONFIDENTIAL REPORT")
 			comm.messagetext.Add(intercepttext)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/epidemic/post_setup()
 	// make sure viral outbreak events don't happen on this mode
@@ -145,7 +147,7 @@
 		announce_to_kill_crew()
 		stage = 2
 	else if(stage == 2 && cruiser_seconds() <= 60 * 5)
-		command_alert("Inbound cruiser detected on collision course. Scans indicate the ship to be armed and ready to fire. Estimated time of arrival: 5 minutes.", "[station_name()] Early Warning System")
+		announce_cruiser.play()
 		stage = 3
 	else if(stage == 3 && cruiser_seconds() <= 0)
 		crew_lose()

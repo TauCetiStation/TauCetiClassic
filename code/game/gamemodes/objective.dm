@@ -10,7 +10,7 @@ var/global/list/all_objectives = list()
 
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor") // They can't be targets of any objective.
 
-/datum/objective/New(var/text)
+/datum/objective/New(text)
 	all_objectives |= src
 	if(text)
 		explanation_text = text

@@ -104,7 +104,7 @@
 		holo_build.icon_state = initial(build_this.icon_state)
 		holo_build.alpha = 160
 		holo_build.color = list(-1,0,0,0,-1,0,0,0,-1,1,1,1)
-		holo_build.mouse_opacity = FALSE
+		holo_build.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		to_chat(M, "Building [from_recipe.title] ...")
 		var/failed = FALSE
 		if(!do_after(M, from_recipe.time, target = M))

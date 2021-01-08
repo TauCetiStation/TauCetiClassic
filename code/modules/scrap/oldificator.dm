@@ -51,7 +51,7 @@
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0,stored_ammo.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item

@@ -114,7 +114,7 @@
 	if(!SSshuttle.online && SSshuttle.location == 0)
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
-		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
+		SSshuttle.announce_crew_called.play()
 		message_admins("A crew transfer vote has passed, calling the shuttle.")
 		log_admin("A crew transfer vote has passed, calling the shuttle.")
 

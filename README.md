@@ -1,8 +1,8 @@
 # Tau Ceti Classic
 
+[![Build Status](https://github.com/TauCetiStation/TauCetiClassic/workflows/CI%20Suite/badge.svg)](https://github.com/TauCetiStation/TauCetiClassic/actions?query=workflow%3A%22CI+Suite%22)
 [![taucetistation.org](https://img.shields.io/badge/site-taucetistation.org-blue.svg)](http://taucetistation.org/)
 [![Discord](https://discordapp.com/api/guilds/401030271417188353/widget.png)](https://discord.gg/YCWRjkb)
-[![Build Status](https://travis-ci.com/TauCetiStation/TauCetiClassic.svg?branch=master)](https://travis-ci.com/TauCetiStation/TauCetiClassic)
 [![Maintainers Wanted](https://img.shields.io/badge/maintainers-wanted-red.svg?style=flat)](https://github.com/TauCetiStation/TauCetiClassic)
 
 * **Code:** https://github.com/TauCetiStation/TauCetiClassic/
@@ -21,7 +21,7 @@
 
 ---
 
-[Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:  
+[Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:
 * [/tg/station13](https://tgstation13.org/)
 * [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
 * [/vg/station13](http://ss13.pomf.se/)
