@@ -101,13 +101,14 @@
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
 		else
-			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+			to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
 
 		cult_mind.special_role = "Cultist"
 		add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 	return ..()
 
+// TODO: Rework to /datum/objectives
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count in 1 to objectives.len)
 		var/explanation

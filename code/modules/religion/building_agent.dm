@@ -4,10 +4,10 @@
 /datum/building_agent
 	var/name
 	var/atom/building_type
-	var/favor_cost
-	var/deconstruct_favor_cost
-	var/piety_cost
-	var/deconstruct_piety_cost
+	var/favor_cost = 0
+	var/deconstruct_favor_cost = 0
+	var/piety_cost = 0
+	var/deconstruct_piety_cost = 0
 
 /datum/building_agent/proc/get_costs()
 	var/costs = ""
@@ -83,55 +83,63 @@
 	piety_cost = 10
 	deconstruct_piety_cost = 1
 
-// Remove runes for free
+/datum/building_agent/structure/cult/tech_table
+	name = "Tech Table"
+	building_type = /obj/structure/cult/tech_table
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
+/datum/building_agent/structure/cult/forge
+	name = "Forge"
+	building_type = /obj/structure/cult/forge
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
+/datum/building_agent/structure/cult/torture_table
+	name = "Torture Table"
+	building_type = /obj/machinery/optable/torture_table
+	favor_cost = 100
+	deconstruct_favor_cost = 50
+	piety_cost = 10
+	deconstruct_piety_cost = 1
+
 /datum/building_agent/rune
 	// Type of effect of rune
 	// Apply to the rune after creating the rune
 	var/datum/rune/rune_type
 	// Deconstruct costs is how much will be returned, not disappear
 
+// It was a bad idea to give them a costs
 /datum/building_agent/rune/cult
 	building_type = /obj/effect/rune
-
-/datum/building_agent/rune/cult/New()
-	deconstruct_favor_cost = favor_cost * 0.5
-	deconstruct_piety_cost = piety_cost * 0.5
 
 /datum/building_agent/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
 	rune_type = /datum/rune/cult/teleport_to_heaven
-	favor_cost = 100
-	piety_cost = 10
 
 /datum/building_agent/rune/cult/capture_area
 	name = "Capture a Area"
 	rune_type = /datum/rune/cult/capture_area
-	favor_cost = 100
-	piety_cost = 10
 
 /datum/building_agent/rune/cult/portal_beacon
 	name = "Beacon of Cult Portal"
 	rune_type = /datum/rune/cult/portal_beacon
-	favor_cost = 100
-	piety_cost = 10
 
 /datum/building_agent/rune/cult/look_to_future
 	name = "Back to The Future"
 	rune_type = /datum/rune/cult/look_to_future
-	favor_cost = 100
-	piety_cost = 10
 
 /datum/building_agent/rune/cult/teleport
 	name = "Teleport"
 	rune_type = /datum/rune/cult/teleport
-	favor_cost = 100
-	piety_cost = 10
 
 /datum/building_agent/rune/cult/item_port
 	name = "Item Teleport"
 	rune_type = /datum/rune/cult/item_port
-	favor_cost = 100
-	piety_cost = 10
 
 
 // For tech_table
@@ -170,6 +178,4 @@
 	name = "Tome"
 	building_type = /obj/item/weapon/storage/bible/tome
 	favor_cost = 100
-	deconstruct_favor_cost = 50
 	piety_cost = 10
-	deconstruct_piety_cost = 1

@@ -76,14 +76,15 @@
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
 		return FALSE
+
 	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(religion.is_member(H) || H.stat == DEAD)
+	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD])
 		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
 		return FALSE
-	else if(!global.cult_religion.mode.is_convertable_to_cult(H.mind))
+	if(!global.cult_religion.mode.is_convertable_to_cult(H.mind))
 		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
 		return FALSE
-	else if(jobban_isbanned(H, ROLE_CULTIST))
+	if(jobban_isbanned(H, ROLE_CULTIST))
 		to_chat(user, "<span class='warning'>Ему не нужно такое тело.</span>")
 		return FALSE
 
