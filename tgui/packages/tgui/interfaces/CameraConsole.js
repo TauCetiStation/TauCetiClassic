@@ -54,7 +54,7 @@ export const CameraConsole = (props, context) => {
       height={708}
       resizable>
       <div className="CameraConsole__left">
-        <Window.Content scrollable>
+        <Window.Content>
           <CameraConsoleContent />
         </Window.Content>
       </div>
