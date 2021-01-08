@@ -207,7 +207,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/effect/shadow_wight/Bump(var/atom/obstacle)
+/obj/effect/shadow_wight/Bump(atom/obstacle)
 	to_chat(obstacle, "<span class='warning'>You feel a chill run down your spine!</span>")
 
 
