@@ -72,7 +72,7 @@
 
 	if(target.mind)//if the victim has got a mind
 
-		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!

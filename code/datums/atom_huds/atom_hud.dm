@@ -14,6 +14,7 @@ var/global/list/huds[23]
 	huds[DATA_HUD_MEDICAL_ADV] = new/datum/atom_hud/data/medical/adv
 	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
 	huds[DATA_HUD_MINER] = new/datum/atom_hud/data/mine
+	huds[DATA_HUD_GOLEM] = new/datum/atom_hud/golem
 	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/broken
 	huds[ANTAG_HUD_CULT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_REV] = new/datum/atom_hud/antag

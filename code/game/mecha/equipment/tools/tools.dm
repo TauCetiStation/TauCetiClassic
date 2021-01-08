@@ -713,7 +713,7 @@
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
 
-/datum/global_iterator/mecha_repair_droid/process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
 	if(!RD.chassis)
 		stop()
 		RD.set_ready_state(1)
@@ -817,7 +817,7 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
-/datum/global_iterator/mecha_energy_relay/process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
+/datum/global_iterator/mecha_energy_relay/process(obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
 	if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 		stop()
 		ER.set_ready_state(1)
@@ -948,7 +948,7 @@
 	T.assume_air(GM)
 	return
 
-/datum/global_iterator/mecha_generator/process(var/obj/item/mecha_parts/mecha_equipment/generator/EG)
+/datum/global_iterator/mecha_generator/process(obj/item/mecha_parts/mecha_equipment/generator/EG)
 	if(!EG.chassis)
 		stop()
 		EG.set_ready_state(1)
@@ -1002,7 +1002,7 @@
 
 /datum/global_iterator/mecha_generator/nuclear
 
-/datum/global_iterator/mecha_generator/nuclear/process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
+/datum/global_iterator/mecha_generator/nuclear/process(obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
