@@ -214,7 +214,7 @@
 	short_report = new_short_report
 	tests_processed = TRUE
 
-/datum/guard/proc/load_geoip(var/force_reload = FALSE)
+/datum/guard/proc/load_geoip(force_reload = FALSE)
 	if(!config.guard_enabled || !config.guard_email)
 		return
 

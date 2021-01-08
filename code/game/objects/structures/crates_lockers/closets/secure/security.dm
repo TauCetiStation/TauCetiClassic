@@ -33,7 +33,7 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/captain(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -136,7 +136,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -182,7 +182,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -223,7 +223,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/ushanka(src)
 	#endif

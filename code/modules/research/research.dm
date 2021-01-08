@@ -348,9 +348,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	shortname = "Blue-space"
-	desc = "Research into the sub-reality known as 'blue-space'."
+	name = "'Bluespace' Research"
+	shortname = "Bluespace"
+	desc = "Research into the sub-reality known as 'bluespace'."
 	id = RESEARCH_BLUESPACE
 	rare = 2
 
@@ -1184,8 +1184,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 // Bluespace
 
 /datum/technology/basic_bluespace
-	name = "Basic 'Blue-space'"
-	desc = "Basic 'Blue-space'"
+	name = "Basic 'Bluespace'"
+	desc = "Basic 'Bluespace'"
 	id = "basic_bluespace"
 	tech_type = RESEARCH_BLUESPACE
 
