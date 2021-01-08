@@ -639,7 +639,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					if(!is_plating())
 						return
 
-					if(user.loc == T && user.get_active_hand() == W)
+					if(user.loc == T)
 						to_chat(user, "<span class='notice'>You remove the plating.</span>")
 						new /obj/item/stack/rods(src)
 						new /obj/item/stack/tile/plasteel(src)

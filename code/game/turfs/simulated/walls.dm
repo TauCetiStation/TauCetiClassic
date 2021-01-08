@@ -359,28 +359,26 @@
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		var/turf/TW = user.loc
-		if(user.a_intent == INTENT_HARM && istype(src, /turf/simulated/wall))
+		if(user.a_intent == INTENT_HARM)
 			if(WT.use(0, user))
 				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				if(WT.use_tool(src, user, 100, 3, 100))
-					if(!istype(src, /turf/simulated/wall) || !TW)
+					if(!istype(src, /turf/simulated/wall) || !T)
 						return
 
-					if(user.loc == TW && user.get_active_hand() == WT)
+					if(user.loc == T && user.get_active_hand() == WT)
 						to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 						dismantle_wall()
 			else
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-		else if(istype(src, /turf/simulated/wall))
-			if(damage)
-				if(WT.use(0,user))
-					to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
-					if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
-						to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
-						take_damage(-damage)
-				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+		else if(damage)
+			if(WT.use(0,user))
+				to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
+				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
+					take_damage(-damage)
+			else
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		if(user.is_busy(src))
