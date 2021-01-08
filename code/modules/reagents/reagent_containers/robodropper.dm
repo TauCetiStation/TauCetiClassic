@@ -10,6 +10,8 @@
 	var/filled = 0
 
 /obj/item/weapon/reagent_containers/robodropper/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!target.reagents) return
 
 	if(filled)

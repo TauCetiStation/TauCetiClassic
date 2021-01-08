@@ -2,7 +2,7 @@
 	var/datum/game_mode/mutiny/mode
 	var/list/special_orders
 
-/datum/directive/New(var/datum/game_mode/mutiny/M)
+/datum/directive/New(datum/game_mode/mutiny/M)
 	mode = M
 
 /datum/directive/proc/get_description()

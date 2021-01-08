@@ -2,6 +2,7 @@
 
 /datum/event/borer_infestation
 	announceWhen = 400
+	announcement = new /datum/announcement/centcomm/aliens
 
 	var/spawncount = 1
 	var/successSpawn = FALSE //So we don't make a command report if nothing gets spawned.
@@ -12,7 +13,7 @@
 
 /datum/event/borer_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", "lfesigns")
+		announcement.play()
 
 /datum/event/borer_infestation/start()
 	var/list/vents = get_vents()

@@ -215,7 +215,7 @@
 				toggle()
 	update_power_use()
 
-/obj/machinery/shield_gen/ex_act(var/severity)
+/obj/machinery/shield_gen/ex_act(severity)
 
 	if(active)
 		toggle()
