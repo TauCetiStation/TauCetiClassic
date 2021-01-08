@@ -122,7 +122,7 @@
 			is_W_lit = TRUE
 	else if(iswelder(I))
 		var/obj/item/weapon/weldingtool/O = I
-		if(O.welding)
+		if(O.isOn())
 			is_W_lit = TRUE
 
 	if(!is_W_lit)

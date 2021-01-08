@@ -364,7 +364,7 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/say(var/message)
+/mob/living/simple_animal/say(message)
 	if(stat)
 		return
 
