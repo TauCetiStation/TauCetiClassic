@@ -77,13 +77,13 @@
 			return
 		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
-		if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
-			return
 		if(M.a_intent == INTENT_HELP)
 			var/dir_target = get_dir(M.loc, over_location)
 			M.SetNextMove(CLICK_CD_MELEE)
 			for(var/obj/item/I in contents)
 				if(M.is_busy())
+					return
+				if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
 					return
 				if(!do_after(M, 2, target = M))
 					return
