@@ -43952,7 +43952,7 @@
 /area/station/civilian/theatre)
 "bDP" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Bay Entrance";
+	c_tag = "Central Hallway South-West";
 	dir = 4
 	},
 /obj/machinery/light{
