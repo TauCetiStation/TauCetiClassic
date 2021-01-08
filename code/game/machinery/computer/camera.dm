@@ -48,12 +48,11 @@
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
 	for(var/plane in subtypesof(/obj/screen/plane_master))
-		if(plane != /obj/screen/plane_master/parallax_white)
-			var/obj/screen/instance = new plane()
-			instance.assigned_map = map_name
-			instance.del_on_map_removal = FALSE
-			instance.screen_loc = "[map_name]:CENTER"
-			cam_plane_masters += instance
+		var/obj/screen/instance = new plane()
+		instance.assigned_map = map_name
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
