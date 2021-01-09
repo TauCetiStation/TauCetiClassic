@@ -144,10 +144,10 @@
 /datum/game_mode/cult/proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
 		return FALSE
+	if(mind.current.my_religion)
+		return FALSE
 	if(ishuman(mind.current))
 		if(mind.assigned_role == "Captain")
-			return FALSE
-		if(mind.current.my_religion)
 			return FALSE
 		if(mind.current.get_species() == GOLEM)
 			return FALSE
@@ -175,6 +175,10 @@
 	var/list/possible_targets = get_unconvertables()
 
 	if(possible_targets.len)
+		for(var/datum/mind/M in possible_targets)
+			if(M in started_cultists)
+				possible_targets -= M
+
 		sacrifice_target = pick(possible_targets)
 
 /datum/game_mode/cult/declare_completion()

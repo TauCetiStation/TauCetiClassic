@@ -992,7 +992,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/cult/recruit/New()
 	acolytes_needed = max(4, round(player_list.len * 0.1))
-	explanation_text = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] культистов улетят на шаттле, чтобы проложить исследования на других станциях."
+	explanation_text = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] [russian_plural(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы проложить исследования на других станциях."
 	..()
 
 /datum/objective/cult/recruit/find_target()
