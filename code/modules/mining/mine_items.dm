@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -832,6 +832,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
+		if(O.flags & NODROP || !O.canremove)
+			return 0
 		return 1
 	return 0
 

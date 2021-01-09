@@ -26,6 +26,6 @@
 //	new /obj/item/weapon/bee_net(src) //No more bees, March 2014
 	new /obj/item/clothing/gloves/botanic_leather(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/hydro(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/hydro(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif

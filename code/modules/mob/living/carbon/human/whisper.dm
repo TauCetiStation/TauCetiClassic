@@ -48,7 +48,7 @@
 
 //This is used by both the whisper verb and human/say() to handle whispering
 // Returns FALSE if speaking was not succesful.
-/mob/living/carbon/human/proc/whisper_say(var/message, var/datum/language/speaking = null, var/alt_name="", var/verb="whispers")
+/mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
 	if(speaking && (speaking.flags & SIGNLANG))
 		return FALSE

@@ -272,7 +272,7 @@
 
 	return ..()
 
-/obj/structure/table/proc/straight_table_check(var/direction)
+/obj/structure/table/proc/straight_table_check(direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))

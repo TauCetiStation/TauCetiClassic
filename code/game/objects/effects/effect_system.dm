@@ -8,7 +8,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/effect
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	unacidable = 1//So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -17,7 +17,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/Destroy()
 	if(reagents)
@@ -471,7 +471,7 @@ steam.start() -- spawns the effect
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	var/expand = 1
 	animate_movement = 0

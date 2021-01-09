@@ -22,7 +22,7 @@
 
 	var/emagged = 0
 
-/datum/song_info/New(var/list/json)
+/datum/song_info/New(list/json)
 	title  = json["title"]
 	artist = json["artist"]
 	album  = json["album"]

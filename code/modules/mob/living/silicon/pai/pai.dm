@@ -227,7 +227,7 @@
 
 /*
 // Debug command - Maybe should be added to admin verbs later
-/mob/verb/makePAI(var/turf/t in view())
+/mob/verb/makePAI(turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key

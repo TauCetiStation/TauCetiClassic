@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(events)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
 
-/datum/controller/subsystem/events/proc/event_complete(var/datum/event/E)
+/datum/controller/subsystem/events/proc/event_complete(datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"
 		log_debug("Event of '[E.type]' with missing meta-data has completed.")
 		return
@@ -54,11 +54,11 @@ SUBSYSTEM_DEF(events)
 
 	log_debug("Event '[EM.name]' has completed at [worldtime2text()].")
 
-/datum/controller/subsystem/events/proc/delay_events(var/severity, var/delay)
+/datum/controller/subsystem/events/proc/delay_events(severity, delay)
 	var/datum/event_container/EC = event_containers[severity]
 	EC.next_event_time += delay
 
-/datum/controller/subsystem/events/proc/Interact(var/mob/living/user)
+/datum/controller/subsystem/events/proc/Interact(mob/living/user)
 
 	var/html = GetInteractWindow()
 
