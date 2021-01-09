@@ -216,6 +216,9 @@ var/list/net_announcer_secret = list()
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
+	var/minutetopiclimit = 100
+	var/secondtopiclimit = 10
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -696,6 +699,12 @@ var/list/net_announcer_secret = list()
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE
+
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

@@ -11,7 +11,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			to_chat(C, msg)
 
 // do not use with formatted messages (html), we don't need it in logs
-/proc/admin_log_and_message_admins(var/message as text)
+/proc/admin_log_and_message_admins(message as text)
 	log_admin("[key_name(usr)] " + message)
 	message_admins("[key_name_admin(usr)] " + message, 1)
 

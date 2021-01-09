@@ -146,7 +146,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		get_hit()
 
-/obj/effect/meteor/proc/ram_turf(var/turf/T)
+/obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf
 	for(var/obj/structure/window/W in T)	// window protects grille
 		W.ex_act(hitpwr)
