@@ -446,6 +446,9 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
+	additional_languages = list("Tradeband")
+	tail = "vox_prim"
+
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
@@ -466,11 +469,19 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
+		,HAS_TAIL = TRUE 
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
-		,HAS_SKIN_COLOR = TRUE
-		,NO_FAT = TRUE
+		,NO_FAT = TRUE 
 	)
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/vox,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
+		O_LIVER   = /obj/item/organ/internal/liver/vox,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
+		)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
@@ -489,16 +500,22 @@
 		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
+							/obj/item/clothing/mask/gas/vox,
+							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
 	                          )
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 
-	min_age = 12
-	max_age = 20
+	min_age = 1
+	max_age = 100
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+	H.gender = NEUTER
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
@@ -510,16 +527,16 @@
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
 	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_STORE)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
 		H.internal = H.r_store
 	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
 		H.internal = H.l_store
 	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_R_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen(src), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
 		H.internal = H.l_hand
 	if(H.shoes)
 		qdel(H.shoes)

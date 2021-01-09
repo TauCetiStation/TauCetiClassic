@@ -137,10 +137,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/Destroy()
 	human_list -= src
 	if(my_master)
-		my_master.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_master)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_master = null
 	if(my_golem)
-		my_golem.mind.remove_antag_hud(ANTAG_HUD_GOLEM, my_golem)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
 		my_golem.death()
 	my_golem = null
 	return ..()
@@ -2045,9 +2047,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	last_massage = world.time
 
 	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = get_bodypart(BP_CHEST)
+		var/obj/item/organ/external/BP = Heart.parent_bodypart
 		BP.fracture()
-		to_chat(user, "<span class='warning'>You hear cracking in [src]'s chest!.</span>")
+		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
