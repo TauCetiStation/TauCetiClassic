@@ -599,7 +599,7 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/proc/filter_list(var/list/L, var/type)
+/proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)
 		if(istype(entry, type))

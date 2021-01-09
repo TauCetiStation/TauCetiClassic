@@ -53,6 +53,7 @@
 #define DATA_HUD_DIAGNOSTIC				3
 #define DATA_HUD_BROKEN					20
 #define DATA_HUD_MINER					21
+#define DATA_HUD_GOLEM					14
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          4
@@ -65,7 +66,6 @@
 #define ANTAG_HUD_CHANGELING    11
 #define ANTAG_HUD_ABDUCTOR      12
 #define ANTAG_HUD_GANGSTER      13
-#define ANTAG_HUD_GOLEM         14
 #define ANTAG_HUD_ALIEN         15
 #define ANTAG_HUD_DEATHCOM      16
 #define ANTAG_HUD_ERT           17

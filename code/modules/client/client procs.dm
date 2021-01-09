@@ -1,7 +1,13 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
+#define LIMITER_SIZE	5
+#define CURRENT_SECOND	1
+#define SECOND_COUNT	2
+#define CURRENT_MINUTE	3
+#define MINUTE_COUNT	4
+#define ADMINSWARNED_AT	5
+
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
 var/list/blacklisted_builds = list(
@@ -43,9 +49,35 @@ var/list/blacklisted_builds = list(
 		return chatOutput.Topic(href, href_list)
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
+	if (!holder && config.minutetopiclimit)
+		var/minute = round(world.time, 600)
+		if (!topiclimiter)
+			topiclimiter = new(LIMITER_SIZE)
+		if (minute != topiclimiter[CURRENT_MINUTE])
+			topiclimiter[CURRENT_MINUTE] = minute
+			topiclimiter[MINUTE_COUNT] = 0
+		topiclimiter[MINUTE_COUNT] += 1
+		if (topiclimiter[MINUTE_COUNT] > config.minutetopiclimit)
+			var/msg = "Your previous action was ignored because you've done too many in a minute."
+			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+				topiclimiter[ADMINSWARNED_AT] = minute
+				msg += " Administrators have been informed."
+				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute.")
+			to_chat(src, "<span class='danger'>[msg]</span>")
+			return
+
+	if (!holder && config.secondtopiclimit)
+		var/second = round(world.time, 10)
+		if (!topiclimiter)
+			topiclimiter = new(LIMITER_SIZE)
+		if (second != topiclimiter[CURRENT_SECOND])
+			topiclimiter[CURRENT_SECOND] = second
+			topiclimiter[SECOND_COUNT] = 0
+		topiclimiter[SECOND_COUNT] += 1
+		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
+			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second.</span>")
+			return
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
@@ -113,6 +145,13 @@ var/list/blacklisted_builds = list(
 			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
+
+#undef ADMINSWARNED_AT
+#undef MINUTE_COUNT
+#undef CURRENT_MINUTE
+#undef SECOND_COUNT
+#undef CURRENT_SECOND
+#undef LIMITER_SIZE
 
 /client/Destroy()
 	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
@@ -241,6 +280,11 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		add_admin_verbs()
 		admin_memo_show()
+		if(holder.rights & R_PERMISSIONS)
+			var/list/fluff_list = custom_item_premoderation_list()
+			var/fluff_count = fluff_list.len
+			if(fluff_count)
+				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -527,7 +571,6 @@ var/list/blacklisted_builds = list(
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 
 /client/Click(atom/object, atom/location, control, params)

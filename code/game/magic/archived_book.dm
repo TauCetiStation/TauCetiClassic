@@ -73,7 +73,7 @@ var/global/datum/book_manager/book_mgr = new()
 	var/list/icon/photos	 // in-game photos used
 
 // loads the book corresponding by the specified id
-/datum/archived_book/New(var/path)
+/datum/archived_book/New(path)
 	if(isnull(path))
 		return
 

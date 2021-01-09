@@ -198,7 +198,6 @@
 			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 			BP.implants -= obj
-			target.sec_hud_set_implants()
 			for(var/datum/wound/W in BP.wounds)
 				if(obj in W.embedded_objects)
 					W.embedded_objects -= obj
@@ -226,6 +225,8 @@
 		else
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
+
+		target.sec_hud_set_implants()
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
