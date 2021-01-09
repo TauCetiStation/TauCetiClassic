@@ -14,10 +14,10 @@
 	name = "infestation"
 	config_tag = "infestation"
 	role_type = ROLE_ALIEN
-	required_players = 1
+	required_players = 20
 	required_players_secret = 15
-	required_enemies = 1
-	recommended_enemies = 3
+	required_enemies = 2
+	recommended_enemies = 4
 	votable = 0
 	var/last_check = 0
 
@@ -93,32 +93,19 @@
 	GAME FINISH CHECKS
 */
 
-/datum/game_mode/proc/check_xeno_queen()
-	var/state = 0 // 0 = no queen
-	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
-		if(Q.stat != DEAD)
-			return 1
-		state = 2
-	return state
-
 /datum/game_mode/proc/count_hive_power(in_detail = FALSE)
 	var/count = 0
-	var/list/aliens = list("Q_live" = 0, "Q_dead" = 0, "Q_key" = "",
+	var/list/aliens = list(
+	"Q_live" = 0, "Q_dead" = 0, "Q_key" = "",
 	"D_live" = 0, "D_dead" = 0, "D_key" = "",
 	"S_live" = 0, "S_dead" = 0, "S_key" = "",
 	"H_live" = 0, "H_dead" = 0, "H_key" = "",
-	"L_live" = 0, "L_dead" = 0, "L_key" = "",
-	"F_live" = 0, "F_dead" = 0, "F_key" = "",)
+	"L_live" = 0, "L_dead" = 0, "L_key" = "")
 	for(var/mob/living/carbon/xenomorph/A in alien_list)
 		var/turf/xeno_loc = get_turf(A)
 		if(!is_station_level(xeno_loc.z))
 			continue
 		if(isfacehugger(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["F_dead"] ++
-			else
-				aliens["F_live"] ++
-				aliens["F_key"] += " [A.key];"
 			continue
 		if(isxenolarva(A))
 			if(A.stat == DEAD || !A.key)
@@ -157,12 +144,6 @@
 				aliens["Q_key"] = "[A.key]"	//there can only be one queen
 		count ++
 
-	message_admins("<span class='notice'>Qu: [aliens["Q_live"]] - [aliens["Q_key"]].\
-	Dr: [aliens["D_live"]] - [aliens["D_key"]]. \
-	Se: [aliens["S_live"]] - [aliens["S_key"]]. \
-	Hu: [aliens["H_live"]] - [aliens["H_key"]]. \
-	La: [aliens["L_live"]] - [aliens["L_key"]]. \
-	Fa: [aliens["F_live"]] - [aliens["F_key"]].</span>")	//for debug
 	if(in_detail)
 		return aliens
 	else
@@ -299,23 +280,15 @@
 
 /datum/game_mode/infestation/proc/check_crew()
 	var/total_human = 0
-	var/human_dead = 0
-	var/human_no_client = 0
-	var/outside_station = 0
 	for(var/mob/living/carbon/human/H in human_list)
 		var/turf/human_loc = get_turf(H)
 		if(!is_station_level(human_loc.z))
-			outside_station ++
 			continue
 		if(H.stat == DEAD)
-			human_dead ++
 			continue
 		if(!H.mind || !H.client)
-			human_no_client ++
-			message_admins("<span class='notice'>No client: [H.name].</span>")
 			continue
 		total_human ++
-	message_admins("<span class='notice'>Мертвых: [human_dead]. Без игрока: [human_no_client]. Не на станции: [outside_station].</span>")	//for debug
 	return total_human
 
 /datum/game_mode/infestation/proc/count_alien_percent()
@@ -333,7 +306,7 @@
 		return ..()
 	last_check = world.time
 	var/data = count_alien_percent()
-	message_admins("<span class='notice'>Чужие: [data[TOTAL_ALIEN]] Люди: [data[TOTAL_HUMAN]] Процент: [data[ALIEN_PERCENT]]</span>")	//for debug
+	//message_admins("<span class='notice'>Чужие: [data[TOTAL_ALIEN]] Люди: [data[TOTAL_HUMAN]] Процент: [data[ALIEN_PERCENT]]</span>")	//for debug
 	if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
 	else
