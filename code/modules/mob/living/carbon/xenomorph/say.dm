@@ -8,6 +8,9 @@
 	if(!message)
 		return
 
+	if(stat == DEAD)
+		return say_dead(message)
+
 	var/datum/language/xeno_language = all_languages["Xenomorph language"]
 
 	if(message[1] == "*")
@@ -17,10 +20,7 @@
 		if(department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
 			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
-			if(stat == DEAD)
-				return say_dead(message)
-			else
-				alien_talk(message)
+			alien_talk(message)
 		else
 			if(!stat)
 				playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
