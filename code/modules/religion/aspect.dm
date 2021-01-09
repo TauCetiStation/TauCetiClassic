@@ -25,7 +25,7 @@
 	return ..()
 
 // Return the amount of favour this item will give, if succesfully sacrificed.
-/datum/aspect/proc/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/proc/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return 0
 
 /datum/aspect/proc/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
@@ -54,7 +54,7 @@
 
 	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
 
-/datum/aspect/death/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/death/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
 		var/blood_am = 0
 		if(I.reagents)
@@ -95,7 +95,7 @@
 
 	god_desc = "Peasants are required to pay you food."
 
-/datum/aspect/food/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/food/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/reagent_containers/food) && I.reagents)
 		var/favour_amount = 0
 		for(var/datum/reagent/R in I.reagents.reagent_list)
@@ -124,7 +124,7 @@
 
 	god_desc = "May the workers bring diverse resources to your mercy."
 
-/datum/aspect/resources/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/resources/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/material = I
 		return material.amount * 5
@@ -176,7 +176,7 @@
 
 	god_desc = "Accept electrical energy and quality tech parts."
 
-/datum/aspect/technology/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/technology/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = I
 		return C.charge * 0.01
@@ -213,7 +213,7 @@
 
 	god_desc = "The Family urgently needs a lot of BANANAS and BANANIUM!!!"
 
-/datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/bananapeel/honk))
 		return 40
 	if(istype(I, /obj/item/weapon/bananapeel))
@@ -330,7 +330,7 @@
 
 	god_desc = "Not everything that shines is gold, sometimes dollar bills break the mold. You wish for wealth."
 
-/datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
+/datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05
 
 //Gives mana from: does not affect mana accumulation

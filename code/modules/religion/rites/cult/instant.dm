@@ -1,16 +1,18 @@
+/datum/religion_rites/instant/cult
+	religion_type = /datum/religion/cult
 
-/datum/religion_rites/instant/sacrifice
+/datum/religion_rites/instant/cult/sacrifice
 	name = "Sacrifice"
 	desc = "Soul for the ancient gods."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Для моих богов!!"
 	favor_cost = 50
 
-/datum/religion_rites/instant/sacrifice/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/sacrifice/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
-	var/mob/living/silicon/S = locate() in AOG.loc
+	var/mob/living/silicon/S = locate() in get_turf(AOG)
 	if(S)
 		return TRUE
 	else if(!ishuman(AOG.buckled_mob))
@@ -18,12 +20,12 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/instant/sacrifice/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/sacrifice/invoke_effect(mob/living/user, obj/AOG)
 	..()
 	var/datum/religion/cult/R = religion
 	var/datum/mind/sacrifice_target = R.mode.sacrifice_target
 
-	var/mob/living/silicon/S = locate() in AOG.loc
+	var/mob/living/silicon/S = locate() in get_turf(AOG)
 	if(S)
 		S.dust()
 		R.mode.sacrificed += S.mind
@@ -41,7 +43,7 @@
 
 	playsound(AOG, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
 
-/datum/religion_rites/instant/sacrifice/proc/calc_sacrifice_favor(mob/living/L)
+/datum/religion_rites/instant/cult/sacrifice/proc/calc_sacrifice_favor(mob/living/L)
 	if(!istype(L))
 		return 0
 
@@ -62,14 +64,14 @@
 
 	return sacrifice_favor
 
-/datum/religion_rites/instant/convert
+/datum/religion_rites/instant/cult/convert
 	name = "Convert"
 	desc = "The best brainwashing in the galaxy!"
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
 
-/datum/religion_rites/instant/convert/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -90,7 +92,7 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/convert/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
 	..()
 	var/datum/religion/cult/cult = religion
 	cult.mode.add_cultist(AOG.buckled_mob.mind)

@@ -1,5 +1,8 @@
+/datum/religion_rites/pedestals/cult
+	religion_type = /datum/religion/cult
 
-/datum/religion_rites/pedestals/narsie
+
+/datum/religion_rites/pedestals/cult/narsie
 	name = "Summon Nar-Sie"
 	desc = "Summons the ancient god, don't be afraid to sacrifice your friend's body parts."
 	ritual_length = (1 MINUTE)
@@ -13,7 +16,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
 	)
 
-/datum/religion_rites/pedestals/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -37,7 +40,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/AOG)
 	..()
 	var/datum/religion/cult/C = religion
 	var/datum/game_mode/cult/cur_mode = C.mode
@@ -46,7 +49,7 @@
 	new /obj/singularity/narsie/large(get_turf(AOG))
 	return TRUE
 
-/datum/religion_rites/pedestals/cult_portal
+/datum/religion_rites/pedestals/cult/cult_portal
 	name = "Summon portal"
 	desc = "Your subjects can come out of it."
 	ritual_length = (1 MINUTE)
@@ -67,9 +70,7 @@
 		ASPECT_DEATH = 1
 	)
 
-	religion_type = /datum/religion/cult
-
-/datum/religion_rites/pedestals/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -81,7 +82,7 @@
 		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/AOG)
 	..()
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
@@ -90,4 +91,4 @@
 			return TRUE
 	return FALSE
 
-/datum/religion_rites/pedestals/summon
+/datum/religion_rites/pedestals/cult/summon

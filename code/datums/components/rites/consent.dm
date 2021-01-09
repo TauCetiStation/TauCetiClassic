@@ -19,7 +19,7 @@
 	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_victim)
 
 // Send ask to victim
-/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/AOG)
 	// revert consent to it's default
 	consent = def_consent
 
@@ -32,7 +32,7 @@
 		to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")
 
 // Checks for a victim
-/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/AOG)
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return COMPONENT_CHECK_FAILED

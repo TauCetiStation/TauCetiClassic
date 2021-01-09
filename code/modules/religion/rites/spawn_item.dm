@@ -45,14 +45,14 @@
 		qdel(item)
 		item = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk(before_item_loc)
 
-/datum/religion_rites/standing/spawn_item/banana/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spawn_item/banana/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
+	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
 			M.flash_eyes()
 
@@ -82,14 +82,14 @@
 		ASPECT_RESOURCES = 1,
 	)
 
-/datum/religion_rites/standing/spawn_item/banana_ore/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spawn_item/banana_ore/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
+	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
 			M.flash_eyes()
 
@@ -163,7 +163,7 @@
 	else if (response == "Never for this round")
 		C.prefs.ignore_question += IGNORE_FAMILIAR
 
-/datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -208,7 +208,7 @@
 		god_name = god.name
 	sword.name = "[sword.name] of [god_name]"
 
-/datum/religion_rites/standing/spawn_item/create_sword/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spawn_item/create_sword/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -218,3 +218,15 @@
 			M.flash_eyes()
 
 	return TRUE
+
+/datum/religion_rites/standing/spawn_item/talisman
+	name = "Create talisman"
+	desc = "Create an empty talisman in which to place the ritual."
+	ritual_length = (1 MINUTE)
+	invoke_msg = "Portable magic!!!"
+	favor_cost = 75
+	spawn_type = /obj/item/weapon/paper/talisman/chaplain
+
+	needed_aspects = list(
+		ASPECT_RESOURCES = 1,
+	)

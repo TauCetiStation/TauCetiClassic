@@ -1,18 +1,30 @@
 /obj/item/weapon/paper/talisman
-	icon_state = "scrap_bloodied"
+	icon_state = "paper_talisman"
 	var/datum/religion_rites/rite
+	var/datum/religion/religion
 
-/obj/item/weapon/paper/talisman/New(mapload, datum/religion_rites/_rite)
+/obj/item/weapon/paper/talisman/atom_init(mapload, datum/religion/_religion, datum/religion_rites/_rite)
+	. = ..()
 	rite = _rite
+	religion = _religion
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!religion?.is_member(user))
 		user.examinate(src)
 		return
-	user.adjustBruteLoss(5)
-	rite?.action(user)
 
-/obj/item/weapon/paper/talisman/examine(mob/user)
+	user.adjustBruteLoss(5)
+	rite?.perform_rite(user, src)
+
+/obj/item/weapon/paper/talisman/chaplain/examine(mob/user)
 	..()
-	if(iscultist(user) && rite)
-		to_chat(user, "Кровью наскрябано: <span class='cult'>[rite.name]</span>.")
+	if(religion?.is_member(user) && rite)
+		to_chat(user, "<span class='piety'>Божественным почерком написано: [rite.name]</span>.")
+
+/obj/item/weapon/paper/talisman/cult
+	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/talisman/cult/examine(mob/user)
+	..()
+	if(religion?.is_member(user) && rite)
+		to_chat(user, "<span class='cult'>Кровью наскрябано: [rite.name]</span>.")

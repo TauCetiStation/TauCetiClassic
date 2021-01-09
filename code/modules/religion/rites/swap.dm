@@ -2,12 +2,12 @@
 	// item = item for which we are changing
 	var/list/swap_list
 
-/datum/religion_rites/standing/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/swap/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	for(var/obj/O in range(1, AOG.loc))
+	for(var/obj/O in range(1, get_turf(AOG)))
 		if(swap_list[O.type])
 			var/swapping = swap_list[O.type]
 			new swapping(O.loc)
@@ -16,8 +16,8 @@
 			qdel(O)
 	return TRUE
 
-/datum/religion_rites/standing/swap/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	for(var/obj/O in range(1, AOG.loc))
+/datum/religion_rites/standing/swap/rite_step(mob/living/user, obj/AOG, stage)
+	for(var/obj/O in range(1, get_turf(AOG)))
 		if(!swap_list[O.type])
 			continue
 		if(prob(20))

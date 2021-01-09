@@ -84,6 +84,9 @@
 		/datum/aspect/herd = 1,
 	)
 
+/datum/religion_sect/custom/chaplain
+	aspects_count = 3
+
 // This sect type allows user to select their aspects.
 /datum/religion_sect/custom
 	name = "Custom "
@@ -148,6 +151,13 @@
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list()
+
+/datum/religion_sect/custom/cult
+	name = "Custom Cult"
+
+	convert_opener = "Chaos is power."
+
+	aspects_count = 5
 
 /datum/religion_sect/preset/cult/test/New()
 	var/list/L = subtypesof(/datum/aspect)

@@ -38,25 +38,25 @@
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
-/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
+	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	spawn_food(AOG.loc, 4 + rand(2, 5))
+	spawn_food(get_turf(AOG), 4 + rand(2, 5))
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
 	if(prob(50))
-		spawn_food(AOG.loc, 1)
+		spawn_food(get_turf(AOG), 1)
 
 /*
  * Prayer
@@ -84,7 +84,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -98,7 +98,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/AOG, stage)
 	..()
 	religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
@@ -124,7 +124,7 @@
 		ASPECT_WACKY = 1,
 	)
 
-/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -135,7 +135,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 
@@ -159,11 +159,11 @@
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 	var/list/anim_items = list()
-	for(var/obj/item/O in AOG.loc)
+	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 	if(anim_items.len == 0)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
@@ -171,13 +171,13 @@
 	favor_cost = initial(favor_cost) * religion.members * anim_items
 	return TRUE
 
-/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	var/list/anim_items = list()
-	for(var/obj/item/O in AOG.loc)
+	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 
 	if(anim_items.len != 0)
@@ -213,7 +213,7 @@
 /datum/religion_rites/standing/spook/proc/remove_spook_effect(mob/living/carbon/M)
 	M.remove_alt_appearance("spookyscary")
 
-/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -265,7 +265,7 @@
 		ASPECT_LIGHT = 1,
 	)
 
-/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -323,7 +323,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 	if(!AOG)
@@ -349,7 +349,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE

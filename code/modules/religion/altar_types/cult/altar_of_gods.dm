@@ -6,7 +6,7 @@
 
 	look_piety = TRUE
 	change_preset_name = FALSE
-	custom_sect = FALSE
+	custom_sect_type = /datum/religion_sect/custom/cult
 
 	type_of_sects = /datum/religion_sect/preset/cult
 

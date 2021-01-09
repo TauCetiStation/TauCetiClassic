@@ -26,11 +26,11 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
-	var/mob/living/simple_animal/shade/god/god = locate() in AOG.loc
+	var/mob/living/simple_animal/shade/god/god = locate() in get_turf(AOG)
 	if(!istype(god))
 		if(!ishuman(AOG.buckled_mob))
 			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
@@ -46,7 +46,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))
@@ -55,18 +55,18 @@
 	var/mob/living/carbon/human/human2borg = AOG.buckled_mob
 	if(!istype(human2borg))
 		return FALSE
-	hgibs(AOG.loc, human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
+	hgibs(get_turf(AOG), human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
 	human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE)
 	religion.add_member(human2borg, HOLY_ROLE_PRIEST)
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/proc/convert_god(obj/structure/altar_of_gods/AOG)
-	var/mob/living/simple_animal/shade/god/god = locate() in AOG.loc
+/datum/religion_rites/standing/consent/synthconversion/proc/convert_god(obj/AOG)
+	var/mob/living/simple_animal/shade/god/god = locate() in get_turf(AOG)
 	if(!istype(god))
 		return FALSE
 	god.visible_message("<span class='notice'>[god] has been converted by the rite of [pick(religion.deity_names)]!</span>")
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(AOG.loc, "Son of Heaven", religion.bible_info.laws_type, FALSE)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
 	qdel(god)
@@ -97,7 +97,7 @@
 		ASPECT_DEATH = 1,
 	)
 
-/datum/religion_rites/standing/consent/sacrifice/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/sacrifice/invoke_effect(mob/living/user, obj/AOG)
 	..()
 
 	var/mob/living/L = AOG.buckled_mob
@@ -146,7 +146,7 @@
 		ASPECT_HERD = 1
 	)
 
-/datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -168,7 +168,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/clownconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/consent/clownconversion/invoke_effect(mob/living/user, obj/AOG)
 	..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob

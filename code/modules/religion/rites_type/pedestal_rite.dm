@@ -34,7 +34,7 @@
 /datum/religion_rites/pedestals/get_count_steps()
 	return rules.len
 
-/datum/religion_rites/pedestals/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/can_start(mob/living/user, obj/AOG)
 	if(!rules || !rules.len)
 		return FALSE
 
@@ -49,7 +49,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/on_chosen(mob/living/user, obj/AOG)
 	..()
 
 	init_pedestals(AOG)
@@ -60,8 +60,8 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG || !AOG.loc) // Due to the working beam, it will not be able to properly delete at this stage
+/datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/AOG)
+	if(!AOG || !get_turf(AOG)) // Due to the working beam, it will not be able to properly delete at this stage
 		if(user)
 			to_chat(user, "<span class='warning'>The altar is faded.</span>")
 		return FALSE
@@ -79,7 +79,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/pedestals/pre_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/pre_start(mob/living/user, obj/AOG)
 	var/rules_indx = 1
 	var/for_step = pedestals.len/rules.len
 	for(var/i in 1 to pedestals.len step for_step)
@@ -118,11 +118,11 @@
 		qdel(ill)
 		B.End()
 
-/datum/religion_rites/pedestals/end(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/end(mob/living/user, obj/AOG)
 	if(invoke_msg)
 		user.say(invoke_msg)
 
-/datum/religion_rites/pedestals/proc/init_pedestals(obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/proc/init_pedestals(obj/AOG)
 	pedestals = list()
 	for(var/obj/structure/pedestal/cult/P in spiral_range(search_radius_of_pedestals, AOG))
 		if(P.my_rite)

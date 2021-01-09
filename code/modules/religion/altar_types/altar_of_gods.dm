@@ -12,7 +12,7 @@
 	buckle_lying = TRUE
 
 	var/type_of_sects = /datum/religion_sect/preset/chaplain
-	var/custom_sect = TRUE
+	var/custom_sect_type = /datum/religion_sect/custom/chaplain
 
 	var/change_preset_name = TRUE
 
@@ -178,6 +178,10 @@
 		interact_bible(I, user)
 		return
 
+	else if(istype(I, /obj/item/weapon/paper/talisman))
+		interact_talisman(I, user)
+		return
+
 	// Except when it is not.
 	return FALSE
 
@@ -202,19 +206,7 @@
 		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
 		return
 
-	// Choices of rite in radial menu
-	var/list/rite_choices = list()
-	for(var/i in religion.rites_by_name)
-		var/aspect
-		var/aspect_power = 0
-		var/datum/religion_rites/rite = religion.rites_by_name[i]
-		for(var/asp in rite.needed_aspects)
-			if(rite.needed_aspects[asp] > aspect_power)
-				aspect = asp
-				aspect_power = rite.needed_aspects[asp]
-
-		var/datum/aspect/strongest_aspect = religion.aspects[aspect]
-		rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
+	var/list/rite_choices = get_rite_choices()
 
 	var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
 	if(!choosed_rite)
@@ -247,6 +239,36 @@
 	religion.sect.on_select(user, religion)
 	chosen_aspect = TRUE
 
+/obj/structure/altar_of_gods/proc/interact_talisman(obj/item/I, mob/user)
+	if(!chosen_aspect || !choosing_sects)
+		return
+
+	var/obj/item/weapon/paper/talisman/T = I
+	T.religion = religion
+	if(T.rite)
+		to_chat(user, "<span class='warning'>Талисман уже заряжен.</span>")
+		return
+
+	var/list/rite_choices = get_rite_choices()
+
+	var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
+	if(!choosed_rite)
+		return
+
+	var/datum/religion_rites/R = religion.rites_by_name[choosed_rite]
+	if(istype(R, /datum/religion_rites/pedestals))
+		to_chat(user, "<span class='warning'>Неподходящий ритуал.</span>")
+		return
+	if(!religion.check_costs(R.favor_cost*2, R.piety_cost*2, user))
+		return
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+
+	to_chat(user, "<span class='notice'>Вы успешно зарядили талисман.</span>")
+	T.rite = R
+	religion.adjust_favor(-R.favor_cost*2)
+	religion.adjust_piety(-R.piety_cost*2)
+
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	if(iswrench(C))
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
@@ -268,8 +290,8 @@
 /obj/structure/altar_of_gods/proc/generate_available_sects(mob/user)
 	var/list/variants = list()
 	var/list/sects = typesof(type_of_sects)
-	if(custom_sect)
-		sects += /datum/religion_sect/custom
+	if(custom_sect_type)
+		sects += custom_sect_type
 	for(var/type in sects)
 		var/datum/religion_sect/sect = new type(src)
 		if(!sect.name)
@@ -281,6 +303,22 @@
 		variants[sect.name] = sect
 
 	return variants
+
+/obj/structure/altar_of_gods/proc/get_rite_choices()
+	var/list/rite_choices = list()
+	for(var/i in religion.rites_by_name)
+		var/aspect
+		var/aspect_power = 0
+		var/datum/religion_rites/rite = religion.rites_by_name[i]
+		for(var/asp in rite.needed_aspects)
+			if(rite.needed_aspects[asp] > aspect_power)
+				aspect = asp
+				aspect_power = rite.needed_aspects[asp]
+
+		var/datum/aspect/strongest_aspect = religion.aspects[aspect]
+		rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
+
+	return rite_choices
 
 /obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))

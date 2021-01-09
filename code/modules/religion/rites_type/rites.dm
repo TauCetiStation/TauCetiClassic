@@ -44,27 +44,27 @@
 	return
 
 // Called after on_chosen and checks on cost
-/datum/religion_rites/proc/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/can_start(mob/living/user, obj/AOG)
 	return TRUE
 
 // Called before start()
-/datum/religion_rites/proc/pre_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/pre_start(mob/living/user, obj/AOG)
 	return
 
 // The main proc. It allows you to move from one step to the next
-/datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/can_invocate(mob/living/user, obj/AOG)
 	return TRUE
 
 // Event after can_invocate execution
-/datum/religion_rites/proc/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/proc/rite_step(mob/living/user, obj/AOG, current_stage)
 	return
 
 // Event after the end of the ritual, but before removing favor and invoke_effect
-/datum/religion_rites/proc/end(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/end(mob/living/user, obj/AOG)
 	return
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
-/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/AOG)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE
@@ -75,7 +75,7 @@
 
 
 
-/datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/can_start_wrapper(mob/living/user, obj/AOG)
 	if(SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)
 		return FALSE
 
@@ -89,17 +89,17 @@
 
 	return TRUE
 
-/datum/religion_rites/proc/start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/start(mob/living/user, obj/AOG)
 	SEND_SIGNAL(src, list(COMSIG_RITE_STARTED), user, AOG)
 	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), .proc/try_next_step)
 	try_next_step(src, user, AOG, 1)
 
-/datum/religion_rites/proc/try_next_step(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/proc/try_next_step(datum/source, mob/living/user, obj/AOG, current_stage)
 	if(!can_step(user, AOG, current_stage))
 		return FALSE
 	rite_step_wrapper(user, AOG, current_stage)
 
-/datum/religion_rites/proc/can_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/proc/can_step(mob/living/user, obj/AOG, current_stage)
 	if(current_stage > get_count_steps())
 		end_wrapper(user, AOG)
 		return FALSE
@@ -108,33 +108,35 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/proc/rite_step_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/proc/rite_step_wrapper(mob/living/user, obj/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_IN_STEP, user, AOG, current_stage)
 
 	rite_step(user, AOG, current_stage)
 
 	step_end(user, AOG, current_stage)
 
-/datum/religion_rites/proc/step_end(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/proc/step_end(mob/living/user, obj/AOG, current_stage)
 	SEND_SIGNAL(src, COMSIG_RITE_STEP_ENDED, user, AOG, current_stage + 1)
 
-/datum/religion_rites/proc/end_wrapper(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/end_wrapper(mob/living/user, obj/AOG)
 	end(user, AOG)
 	if(invoke_effect(user, AOG))
 		religion.adjust_favor(-favor_cost)
 	reset_rite_wrapper(src, user, AOG)
 
-/datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/AOG)
 	UnregisterSignal(src, list(COMSIG_RITE_STEP_ENDED, COMSIG_RITE_FAILED_CHECK))
-	AOG.reset_rite() // Very bad.
+	if(istype(AOG, /obj/structure/altar_of_gods))
+		var/obj/structure/altar_of_gods/A = AOG
+		A.reset_rite() // Very bad.
 	reset_rite()
 
-/datum/religion_rites/proc/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/on_chosen(mob/living/user, obj/AOG)
 	to_chat(user, "<span class='notice'>You begin preparations for the ritual...</span>")
 	SEND_SIGNAL(src, COMSIG_RITE_ON_CHOSEN, user, AOG)
 	return TRUE
 
-/datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/perform_rite(mob/living/user, obj/AOG)
 	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
 	if(!on_chosen(user, AOG))
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
