@@ -166,6 +166,9 @@
 /turf/simulated/snow/singularity_act()
 	return
 
+/turf/simulated/snow/temperature_act()
+	return
+
 /turf/simulated/snow/ice
 	name = "ice"
 	icon = 'icons/turf/snow2.dmi'
