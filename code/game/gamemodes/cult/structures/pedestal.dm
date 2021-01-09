@@ -1,7 +1,7 @@
 // Maybe rework on component
 /obj/structure/pedestal
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	pass_flags = PASSTABLE
 
 	var/holy_outline
@@ -15,6 +15,8 @@
 	var/list/lying_items = list()
 	// illusion = real
 	var/list/lying_illusions = list()
+
+	var/static/holo_cash = list()
 
 /obj/structure/pedestal/atom_init()
 	. = ..()
@@ -42,7 +44,7 @@
 
 	if(lying_illusions.len)
 		for(var/obj/effect/overlay/item_illusion/ill in lying_illusions)
-			if(!lying_illusions[ill] && I.type == ill.my_fake_type)
+			if(!lying_illusions[ill] && istype(I, ill.my_fake_type))
 				I.pixel_x = ill.pixel_x
 				I.pixel_y = ill.pixel_y
 				lying_illusions[ill] = I
@@ -63,31 +65,46 @@
 	for(var/key in L)
 		if(index == L[key])
 			return key
+	return null
 
 /obj/structure/pedestal/proc/check_current_items()
+	var/list/items = lying_items.Copy()
+	var/i = 1
 	for(var/obj/effect/overlay/item_illusion/ill in lying_illusions)
-		if(lying_illusions[ill])
-			continue
-		for(var/obj/item/I in lying_items)
-			if(I.type == ill.my_fake_type)
-				lying_illusions[ill] = I
-				I.pixel_x = ill.pixel_x
-				I.pixel_y = ill.pixel_y
-				ill.alpha = 0
+		if(lying_items.len < i)
+			break
 
-/obj/structure/pedestal/proc/get_off_useless_items()
-	for(var/obj/item/I in lying_items)
-		if(!get_key(lying_illusions, I))
-			I.throw_at(get_step(src, pick(alldirs)), rand(1, 3), 3)
+		var/obj/item/I = lying_items[i]
+		if(istype(I, ill.my_fake_type))
+			lying_illusions[ill] = I
+			I.pixel_x = ill.pixel_x
+			I.pixel_y = ill.pixel_y
+			ill.alpha = 0
+			items -= I
+		i++
+
+	get_off_useless_items(items)
+
+/obj/structure/pedestal/proc/get_off_useless_items(list/items)
+	for(var/obj/item/I in items)
+		I.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
+
+/obj/structure/pedestal/proc/get_holo_icon(atom/type)
+	if(holo_cash[type])
+		return holo_cash[type]
+
+	var/icon/holo_icon = getHologramIcon(icon(initial(type.icon), initial(type.icon_state)))
+	holo_cash[type] = holo_icon
+
+	return holo_icon
 
 /obj/structure/pedestal/proc/create_illusions(atom/type, count)
-	var/icon/holo_icon = getHologramIcon(icon(initial(type.icon), initial(type.icon_state)))
+	var/icon/holo_icon = get_holo_icon(type)
 
 	for(var/i in 1 to count)
 		create_illusion(type, holo_icon)
 
 	check_current_items()
-	get_off_useless_items()
 
 /obj/structure/pedestal/proc/create_illusion(atom/type, holo_icon)
 	var/obj/effect/overlay/item_illusion/I = new(loc)

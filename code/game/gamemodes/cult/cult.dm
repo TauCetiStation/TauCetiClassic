@@ -163,13 +163,11 @@
 	return ucs
 
 /datum/game_mode/cult/proc/check_cult_victory()
-	var/cult_fail = FALSE
 	for(var/datum/objective/O in objectives)
 		if(!O.check_completion())
-			cult_fail = TRUE
-			break
+			return FALSE
 
-	return cult_fail //if any objectives aren't met, failure
+	return TRUE
 
 /datum/game_mode/cult/proc/find_sacrifice_target()
 	var/list/possible_targets = get_unconvertables()
@@ -179,6 +177,7 @@
 			if(M in started_cultists)
 				possible_targets -= M
 
+	if(possible_targets.len)
 		sacrifice_target = pick(possible_targets)
 
 /datum/game_mode/cult/declare_completion()

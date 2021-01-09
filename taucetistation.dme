@@ -446,6 +446,7 @@
 #include "code\game\gamemodes\cult\cult_datums.dm"
 #include "code\game\gamemodes\cult\cult_items.dm"
 #include "code\game\gamemodes\cult\narsie.dm"
+#include "code\game\gamemodes\cult\talisman.dm"
 #include "code\game\gamemodes\cult\structures\cult_structures.dm"
 #include "code\game\gamemodes\cult\structures\forge.dm"
 #include "code\game\gamemodes\cult\structures\pedestal.dm"

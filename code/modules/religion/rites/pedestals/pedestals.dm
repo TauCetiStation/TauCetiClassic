@@ -18,15 +18,21 @@
 		return FALSE
 
 	if(istype(get_area(AOG), religion.area_type))
-		to_chat(user, "<span class='warning'>Вы можете проводить ритуал только на станции.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>Вы можете проводить ритуал только на станции.</span>")
 		return FALSE
 
 	if(religion.members.len < 3)
-		to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
 
-	if(SSticker.mode.nar_sie_has_risen)
-		to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
+	var/datum/religion/cult/C = religion
+	var/datum/game_mode/cult/cur_mode = C.mode
+
+	if(cur_mode.eldergod)
+		if(user)
+			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
 		return FALSE
 
 	return TRUE
@@ -35,7 +41,6 @@
 	..()
 	var/datum/religion/cult/C = religion
 	var/datum/game_mode/cult/cur_mode = C.mode
-	cur_mode.nar_sie_has_risen = TRUE
 	cur_mode.eldergod = TRUE
 
 	new /obj/singularity/narsie/large(get_turf(AOG))
@@ -69,11 +74,12 @@
 		return FALSE
 
 	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, /datum/rune/cult/portal_beacon))
-			to_chat(user, "<span class='warning'>Сначало разместите.</span>")
-			return FALSE
+		if(istype(R.power, /datum/rune/cult/portal_beacon))
+			return TRUE
 
-	return TRUE
+	if(user)
+		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
+	return FALSE
 
 /datum/religion_rites/pedestals/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
@@ -83,3 +89,5 @@
 			qdel(R)
 			return TRUE
 	return FALSE
+
+/datum/religion_rites/pedestals/summon

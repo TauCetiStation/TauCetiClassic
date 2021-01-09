@@ -70,7 +70,7 @@
 	return TRUE
 
 // Return the ritual variables to their original state or change them in some way
-/datum/religion_rites/proc/reset_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/reset_rite(mob/living/user, atom/AOG)
 	return
 
 

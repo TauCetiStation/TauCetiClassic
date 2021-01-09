@@ -152,4 +152,4 @@
 /datum/religion_sect/preset/cult/test/New()
 	var/list/L = subtypesof(/datum/aspect)
 	for(var/type in L)
-		aspect_preset[type] = 1
+		aspect_preset[type] = 5

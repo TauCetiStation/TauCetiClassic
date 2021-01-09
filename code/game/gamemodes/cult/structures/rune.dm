@@ -30,7 +30,10 @@
 /obj/effect/rune/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
 		to_chat(user, "[bicon(src)] That's <span class='cult'>руна!</span>")
-		to_chat(user, "Руной написано: <i>[power?.name]</i>.")
+		to_chat(user, "Руной написано: <span class='cult'>[power?.name]</span>.")
+		if(istype(power, /datum/rune/cult/teleport))
+			var/datum/rune/cult/teleport/R = power
+			to_chat(user, "Id телепорта - <span class='cult'>[R.id]</span>.")
 		return
 	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
 	if(issilicon(user))

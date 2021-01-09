@@ -130,6 +130,7 @@
 
 /obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
+	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn

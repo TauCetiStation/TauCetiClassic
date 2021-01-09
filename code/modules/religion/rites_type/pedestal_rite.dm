@@ -50,8 +50,7 @@
 	return TRUE
 
 /datum/religion_rites/pedestals/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!..())
-		return FALSE
+	..()
 
 	init_pedestals(AOG)
 
@@ -63,16 +62,20 @@
 
 /datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG || !AOG.loc) // Due to the working beam, it will not be able to properly delete at this stage
-		to_chat(user, "<span class='warning'>The altar is faded.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>The altar is faded.</span>")
 		return FALSE
 	if(waiting_time >= MAX_WAITING_TIME)
-		to_chat(user, "<span class='warning'>The ritual took too long.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>The ritual took too long.</span>")
 		return FALSE
 	if(!AOG.anchored)
-		to_chat(user, "<span class='warning'>The altar's fastenings were loosened.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>The altar's fastenings were loosened.</span>")
 		return FALSE
 	if(!involved_pedestals.len)
-		to_chat(user, "<span class='warning'>All pedestals is faded.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>All pedestals is faded.</span>")
 		return FALSE
 	return TRUE
 
@@ -83,7 +86,7 @@
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
 		var/obj/structure/pedestal/cult/P = pedestals[i]
 		P.my_rite = src
-		INVOKE_ASYNC(P, /obj/structure/pedestal/cult.proc/create_illusions, rules[rules_indx], rules[rules[rules_indx]])
+		P.create_illusions(rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
 /datum/religion_rites/pedestals/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
@@ -95,12 +98,12 @@
 		var/datum/beam/B = AOG.Beam(ill, "drainbeam", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 		sleep(ritual_length / items_to_spawn)
 		var/obj/item/item = P.lying_illusions[ill]
-		while(!item && P && can_invocate(user, AOG)) // waiting item with antilag
+		while(!item && P && can_invocate(null, AOG, FALSE)) // waiting item with antilag
 			item = P.lying_illusions[ill]
 			stoplag(5 SECONDS)
 			waiting_time += 1
 
-		if(!can_invocate(user, AOG))
+		if(!can_invocate(null, AOG, FALSE)) // null because i dont want message to be sent to user
 			break
 
 		if(ritual_invocations && (item_stage % phrase_frequency == 1))
@@ -109,10 +112,10 @@
 					M.say(ritual_invocations[phrase_indx])
 			phrase_indx += 1
 
-		qdel(item)
-		qdel(ill)
 		P.lying_items -= item
 		P.lying_illusions.Remove(ill)
+		qdel(item)
+		qdel(ill)
 		B.End()
 
 /datum/religion_rites/pedestals/end(mob/living/user, obj/structure/altar_of_gods/AOG)

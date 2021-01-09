@@ -222,10 +222,14 @@
 	name = "Teleport"
 	words = list("travel", "self", "see")
 	var/id
+	var/id_inputing = FALSE
 
 /datum/rune/cult/teleport/can_action(mob/living/carbon/user)
-	if(!id)
+	if(!id && !id_inputing)
+		id_inputing = TRUE
 		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
+		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='cult'>[id]</span>")
+		return FALSE // Without instant teleport
 	return TRUE
 
 /datum/rune/cult/teleport/proc/get_tp_runes()
@@ -284,7 +288,7 @@
 
 	playsound(altar, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='userdanger'>Вы чувствуете, как воздух движется над руной.</span>", \
-		"<span class='cult'>Вы чувствуете, как воздух целенаправленной куда-то движется от руной.</span>", \
+		"<span class='cult'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
 /datum/rune/cult/emp
